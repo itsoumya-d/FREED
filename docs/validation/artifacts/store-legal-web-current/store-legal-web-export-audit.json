@@ -1,0 +1,415 @@
+{
+  "schemaVersion": "freed-store-legal-web-export-audit-v1",
+  "generatedAt": "2026-06-11T02:51:14.941Z",
+  "sanitized": true,
+  "result": "pass",
+  "passCount": 21,
+  "failCount": 0,
+  "exportDir": "dist",
+  "routeExports": [
+    {
+      "contentChecks": [
+        {
+          "text": "FREED Privacy Policy",
+          "present": true
+        },
+        {
+          "text": "Effective date: June 6, 2026",
+          "present": true
+        },
+        {
+          "text": "Android Accessibility",
+          "present": true
+        },
+        {
+          "text": "DNS-only VPN",
+          "present": true
+        },
+        {
+          "text": "Family Controls",
+          "present": true
+        },
+        {
+          "text": "Purchase verification",
+          "present": true
+        },
+        {
+          "text": "support@freedrecovery.app",
+          "present": true
+        }
+      ],
+      "exists": true,
+      "htmlArtifact": "dist/privacy.html",
+      "id": "privacy",
+      "publicUrl": "https://freedrecovery.app/privacy",
+      "routePath": "/privacy",
+      "sha256": "sha256-23d6a477278fc04fe0269378c83b8fe040224878c5d5e8668d8a95694de81e5b",
+      "sizeBytes": 26133,
+      "sourceFile": "app/privacy.tsx"
+    },
+    {
+      "contentChecks": [
+        {
+          "text": "FREED Support",
+          "present": true
+        },
+        {
+          "text": "Protection setup help",
+          "present": true
+        },
+        {
+          "text": "Google Play",
+          "present": true
+        },
+        {
+          "text": "App Store",
+          "present": true
+        },
+        {
+          "text": "support@freedrecovery.app",
+          "present": true
+        }
+      ],
+      "exists": true,
+      "htmlArtifact": "dist/support.html",
+      "id": "support",
+      "publicUrl": "https://freedrecovery.app/support",
+      "routePath": "/support",
+      "sha256": "sha256-dc41a86b82ca7fca3a8096de5ace864ef22924f08c02519545fdef1fbb66cc69",
+      "sizeBytes": 24300,
+      "sourceFile": "app/support.tsx"
+    },
+    {
+      "contentChecks": [
+        {
+          "text": "FREED Account Deletion",
+          "present": true
+        },
+        {
+          "text": "Delete local app data",
+          "present": true
+        },
+        {
+          "text": "Request hosted data deletion",
+          "present": true
+        },
+        {
+          "text": "https://freedrecovery.app/account-deletion",
+          "present": true
+        },
+        {
+          "text": "support@freedrecovery.app",
+          "present": true
+        }
+      ],
+      "exists": true,
+      "htmlArtifact": "dist/account-deletion.html",
+      "id": "account-deletion",
+      "publicUrl": "https://freedrecovery.app/account-deletion",
+      "routePath": "/account-deletion",
+      "sha256": "sha256-89316b39748a776f2fac427af59ccc8eced7a2bfe6e9b7ad35de07a6f7ac9c99",
+      "sizeBytes": 24067,
+      "sourceFile": "app/account-deletion.tsx"
+    }
+  ],
+  "hostingRouteConfig": [
+    {
+      "exportArtifact": "dist/_redirects",
+      "exportCopied": true,
+      "exportFile": "_redirects",
+      "exportSha256": "sha256-c74f827165029e1a5d58b362ed5e39ad5784672d8f677ed6251d9ff21f0745ae",
+      "id": "netlify-cloudflare-clean-url-redirects",
+      "requiredTextChecks": [
+        {
+          "text": "/privacy /privacy.html 200",
+          "present": true
+        },
+        {
+          "text": "/privacy/ /privacy.html 200",
+          "present": true
+        },
+        {
+          "text": "/support /support.html 200",
+          "present": true
+        },
+        {
+          "text": "/support/ /support.html 200",
+          "present": true
+        },
+        {
+          "text": "/account-deletion /account-deletion.html 200",
+          "present": true
+        },
+        {
+          "text": "/account-deletion/ /account-deletion.html 200",
+          "present": true
+        }
+      ],
+      "sourceFile": "public/_redirects",
+      "sourceReady": true,
+      "sourceSha256": "sha256-c74f827165029e1a5d58b362ed5e39ad5784672d8f677ed6251d9ff21f0745ae",
+      "exportRequiredTextChecks": [
+        {
+          "text": "/privacy /privacy.html 200",
+          "present": true
+        },
+        {
+          "text": "/privacy/ /privacy.html 200",
+          "present": true
+        },
+        {
+          "text": "/support /support.html 200",
+          "present": true
+        },
+        {
+          "text": "/support/ /support.html 200",
+          "present": true
+        },
+        {
+          "text": "/account-deletion /account-deletion.html 200",
+          "present": true
+        },
+        {
+          "text": "/account-deletion/ /account-deletion.html 200",
+          "present": true
+        }
+      ]
+    },
+    {
+      "exportArtifact": "dist/_headers",
+      "exportCopied": true,
+      "exportFile": "_headers",
+      "exportSha256": "sha256-38a658e0add51b5d95ee41e0625fb8a1b8118bd018a2d32755c576ef70e0e225",
+      "id": "netlify-cloudflare-crawler-headers",
+      "requiredTextChecks": [
+        {
+          "text": "/privacy",
+          "present": true
+        },
+        {
+          "text": "/support",
+          "present": true
+        },
+        {
+          "text": "/account-deletion",
+          "present": true
+        },
+        {
+          "text": "Cache-Control: public, max-age=300",
+          "present": true
+        },
+        {
+          "text": "X-Robots-Tag: index, follow",
+          "present": true
+        }
+      ],
+      "sourceFile": "public/_headers",
+      "sourceReady": true,
+      "sourceSha256": "sha256-38a658e0add51b5d95ee41e0625fb8a1b8118bd018a2d32755c576ef70e0e225",
+      "exportRequiredTextChecks": [
+        {
+          "text": "/privacy",
+          "present": true
+        },
+        {
+          "text": "/support",
+          "present": true
+        },
+        {
+          "text": "/account-deletion",
+          "present": true
+        },
+        {
+          "text": "Cache-Control: public, max-age=300",
+          "present": true
+        },
+        {
+          "text": "X-Robots-Tag: index, follow",
+          "present": true
+        }
+      ]
+    },
+    {
+      "exportArtifact": "",
+      "exportCopied": null,
+      "exportFile": "",
+      "exportSha256": "",
+      "id": "vercel-clean-url-rewrites",
+      "requiredTextChecks": [
+        {
+          "text": "\"cleanUrls\": true",
+          "present": true
+        },
+        {
+          "text": "\"source\": \"/privacy\"",
+          "present": true
+        },
+        {
+          "text": "\"destination\": \"/privacy.html\"",
+          "present": true
+        },
+        {
+          "text": "\"source\": \"/support\"",
+          "present": true
+        },
+        {
+          "text": "\"destination\": \"/support.html\"",
+          "present": true
+        },
+        {
+          "text": "\"source\": \"/account-deletion\"",
+          "present": true
+        },
+        {
+          "text": "\"destination\": \"/account-deletion.html\"",
+          "present": true
+        },
+        {
+          "text": "\"key\": \"X-Robots-Tag\"",
+          "present": true
+        },
+        {
+          "text": "\"value\": \"index, follow\"",
+          "present": true
+        }
+      ],
+      "sourceFile": "vercel.json",
+      "sourceReady": true,
+      "sourceSha256": "sha256-d1521eb6aba607080aa7f61edf071b4f47b3d605f71da0cddd8a30153c6a9fce"
+    }
+  ],
+  "publicUrls": {
+    "privacy": "https://freedrecovery.app/privacy",
+    "support": "https://freedrecovery.app/support",
+    "account-deletion": "https://freedrecovery.app/account-deletion"
+  },
+  "releaseBoundary": "Local static-export proof only. Hosted page availability, DNS, CDN cache, legal review, store-console entry, and platform approval still gate production submission.",
+  "checks": [
+    {
+      "id": "expo-static-web-config",
+      "status": "pass",
+      "detail": "app.json configures Expo web output as static for crawler-readable store URLs.",
+      "next": "Set expo.web.output to static and rerun npm run export:web."
+    },
+    {
+      "id": "static-export-dir",
+      "status": "pass",
+      "detail": "dist exists and is a real directory.",
+      "next": "Run npm run export:web before running the web legal export audit."
+    },
+    {
+      "id": "source-route-privacy",
+      "status": "pass",
+      "detail": "app/privacy.tsx routes to PrivacyPolicyPage.",
+      "next": "Restore app/privacy.tsx so https://freedrecovery.app/privacy renders the expected legal page."
+    },
+    {
+      "id": "static-html-privacy",
+      "status": "pass",
+      "detail": "/privacy exports as dist/privacy.html.",
+      "next": ""
+    },
+    {
+      "id": "static-content-privacy",
+      "status": "pass",
+      "detail": "/privacy exported HTML includes required store-review legal text.",
+      "next": "Refresh app/privacy.tsx and rerun npm run export:web before store submission."
+    },
+    {
+      "id": "static-runtime-privacy",
+      "status": "pass",
+      "detail": "/privacy exported HTML includes Expo web runtime assets for client hydration.",
+      "next": ""
+    },
+    {
+      "id": "source-route-support",
+      "status": "pass",
+      "detail": "app/support.tsx routes to SupportPage.",
+      "next": "Restore app/support.tsx so https://freedrecovery.app/support renders the expected legal page."
+    },
+    {
+      "id": "static-html-support",
+      "status": "pass",
+      "detail": "/support exports as dist/support.html.",
+      "next": ""
+    },
+    {
+      "id": "static-content-support",
+      "status": "pass",
+      "detail": "/support exported HTML includes required store-review legal text.",
+      "next": "Refresh app/support.tsx and rerun npm run export:web before store submission."
+    },
+    {
+      "id": "static-runtime-support",
+      "status": "pass",
+      "detail": "/support exported HTML includes Expo web runtime assets for client hydration.",
+      "next": ""
+    },
+    {
+      "id": "source-route-account-deletion",
+      "status": "pass",
+      "detail": "app/account-deletion.tsx routes to AccountDeletionPage.",
+      "next": "Restore app/account-deletion.tsx so https://freedrecovery.app/account-deletion renders the expected legal page."
+    },
+    {
+      "id": "static-html-account-deletion",
+      "status": "pass",
+      "detail": "/account-deletion exports as dist/account-deletion.html.",
+      "next": ""
+    },
+    {
+      "id": "static-content-account-deletion",
+      "status": "pass",
+      "detail": "/account-deletion exported HTML includes required store-review legal text.",
+      "next": "Refresh app/account-deletion.tsx and rerun npm run export:web before store submission."
+    },
+    {
+      "id": "static-runtime-account-deletion",
+      "status": "pass",
+      "detail": "/account-deletion exported HTML includes Expo web runtime assets for client hydration.",
+      "next": ""
+    },
+    {
+      "id": "hosting-source-netlify-cloudflare-clean-url-redirects",
+      "status": "pass",
+      "detail": "public/_redirects contains clean URL routing rules for the legal pages.",
+      "next": "Restore public/_redirects so /privacy, /support, and /account-deletion resolve without .html suffixes."
+    },
+    {
+      "id": "hosting-export-netlify-cloudflare-clean-url-redirects",
+      "status": "pass",
+      "detail": "_redirects is present in dist with clean URL routing rules for the legal pages.",
+      "next": "Rerun npm run export:web so public hosting route files are copied into the static deploy root."
+    },
+    {
+      "id": "hosting-source-netlify-cloudflare-crawler-headers",
+      "status": "pass",
+      "detail": "public/_headers contains clean URL routing rules for the legal pages.",
+      "next": "Restore public/_headers so /privacy, /support, and /account-deletion resolve without .html suffixes."
+    },
+    {
+      "id": "hosting-export-netlify-cloudflare-crawler-headers",
+      "status": "pass",
+      "detail": "_headers is present in dist with clean URL routing rules for the legal pages.",
+      "next": "Rerun npm run export:web so public hosting route files are copied into the static deploy root."
+    },
+    {
+      "id": "hosting-source-vercel-clean-url-rewrites",
+      "status": "pass",
+      "detail": "vercel.json contains clean URL routing rules for the legal pages.",
+      "next": "Restore vercel.json so /privacy, /support, and /account-deletion resolve without .html suffixes."
+    },
+    {
+      "id": "store-crawler-route-set",
+      "status": "pass",
+      "detail": "Privacy, support, and account-deletion static HTML routes are present with required store-review content.",
+      "next": "Refresh the web export and do not enter store URLs until every public legal route passes this audit."
+    },
+    {
+      "id": "store-clean-url-hosting-config",
+      "status": "pass",
+      "detail": "Static host clean URL routing is configured for /privacy, /support, and /account-deletion.",
+      "next": "Add public/_redirects, public/_headers, and vercel.json routing rules, then rerun npm run export:web."
+    }
+  ]
+}

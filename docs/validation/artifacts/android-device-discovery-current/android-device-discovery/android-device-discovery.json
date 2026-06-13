@@ -1,0 +1,30 @@
+{
+  "schema": "freed-android-device-discovery-v1",
+  "sanitized": true,
+  "generatedAt": "2026-06-08T06:20:22.861Z",
+  "releaseGate": "android-real-browser-validation",
+  "result": "no-ready-android-device",
+  "runId": "android-device-discovery-current",
+  "outputDir": "docs/validation/artifacts/android-device-discovery-current/android-device-discovery",
+  "requestedDevice": null,
+  "requestedDeviceFound": null,
+  "requestedReadyDeviceFound": null,
+  "deviceCount": 0,
+  "readyDeviceCount": 0,
+  "readyPhysicalCandidateCount": 0,
+  "readyEmulatorLikeDeviceCount": 0,
+  "devices": [],
+  "next": "Connect a physical Android phone, enable USB debugging, authorize this Mac, then rerun npm run evidence:android-devices.",
+  "nextCommand": "npm run evidence:android-real-browser -- --device <serial> --adult-url <real-adult-url> --permission-proof --native-status-proof --dns-guard-proof --run-id android-device-discovery-current --output-dir docs/validation/artifacts/android-device-discovery-current/android-real-browser-capture",
+  "checks": {
+    "adbDeviceReady": false,
+    "physicalAndroidDeviceVerified": false,
+    "releaseEvidenceSatisfied": false,
+    "androidInstallLaunchQaCaptured": false,
+    "androidProtectionQaCaptured": false
+  },
+  "evidenceSatisfied": false,
+  "evidenceBoundary": "Device discovery is a setup handoff only. It does not prove physical-device status, installed upload-signed FREED APK, Accessibility consent, Usage Access consent, VPN/DNS Guard consent, app shielding, normal browsing allow, adult intercept, or challenge verification.",
+  "toolTimeoutMs": 30000,
+  "adbDevicesArtifact": "docs/validation/artifacts/android-device-discovery-current/android-device-discovery/adb-devices.txt"
+}

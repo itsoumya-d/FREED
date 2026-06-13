@@ -1,0 +1,65 @@
+{
+  "schema": "freed-eas-build-attempt-v1",
+  "generatedAt": "2026-06-11T08:44:22.464Z",
+  "sanitized": true,
+  "runId": "eas-build-current",
+  "result": "blocked-before-eas-build-auth",
+  "readyForCurrentSourceArtifact": false,
+  "releaseEvidenceSatisfied": false,
+  "status": "blocked-not-logged-in",
+  "attemptType": "auth-check",
+  "exitCode": 1,
+  "observedMessageCode": "not-logged-in",
+  "target": {
+    "artifactType": "apk",
+    "commandId": "android-internal-apk",
+    "platform": "android",
+    "profile": "internal",
+    "purpose": "Current-source Android APK for physical QA."
+  },
+  "commands": {
+    "authCheck": "npx eas-cli@latest whoami --non-interactive",
+    "build": "npm run eas:build:internal -- --platform android --non-interactive",
+    "login": "npx eas-cli@latest login"
+  },
+  "receipts": {
+    "artifactSha256": "",
+    "artifactSizeBytes": 0,
+    "buildId": "",
+    "buildUrl": "",
+    "physicalQaRunId": "",
+    "preflightReport": "",
+    "signingSummary": "",
+    "sourceRevision": ""
+  },
+  "summary": {
+    "passCount": 0,
+    "failCount": 3
+  },
+  "results": [
+    {
+      "id": "eas-authenticated",
+      "status": "FAIL",
+      "detail": "EAS CLI auth check reported not logged in before an EAS build could start.",
+      "next": "Run npx eas-cli@latest login in the Expo account that owns FREED, then rerun the target EAS build command."
+    },
+    {
+      "id": "eas-build-request-submitted",
+      "status": "FAIL",
+      "detail": "EAS build request was not submitted.",
+      "next": "npm run eas:build:internal -- --platform android --non-interactive"
+    },
+    {
+      "id": "eas-build-receipts-complete",
+      "status": "FAIL",
+      "detail": "Completed-build receipts are not complete yet.",
+      "next": "After EAS completes, record build URL, build ID, source revision, artifact SHA-256, byte size, and signing summary."
+    }
+  ],
+  "nextActions": [
+    "Run npx eas-cli@latest login with the Expo account that owns the FREED EAS project.",
+    "Retry npm run eas:build:internal -- --platform android --non-interactive.",
+    "After the build starts, rerun this receipt with status submitted or completed and the EAS build URL/ID."
+  ],
+  "releaseBoundary": "EAS build attempt receipt only. This does not prove an artifact exists, was installed on a physical device, passed protection QA, was uploaded to a store, or passed release evidence."
+}

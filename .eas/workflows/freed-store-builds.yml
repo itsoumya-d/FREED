@@ -1,0 +1,86 @@
+name: FREED Store Artifact Builds
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        type: choice
+        required: true
+        description: Store artifact build target.
+        default: all
+        options:
+          - all
+          - android
+          - ios
+
+concurrency:
+  cancel_in_progress: true
+  group: ${{ workflow.filename }}-${{ github.ref }}
+
+jobs:
+  production_gate_snapshot:
+    name: Release guard snapshot
+    type: custom
+    runs_on: linux-medium
+    environment: production
+    steps:
+      - uses: eas/checkout
+      - uses: eas/install_node_modules
+      - name: Audit EAS workflow wiring
+        run: npm run audit:eas-workflows
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Evidence template drift check
+        run: npm run evidence:templates
+      - name: Smoke harness audit
+        run: npm run audit:smoke-harnesses
+      - name: Production submit guard dry run
+        run: npm run eas:submit:production -- --dry-run
+
+  android_store_build:
+    name: Android Play AAB
+    needs:
+      - production_gate_snapshot
+    if: ${{ inputs.platform == 'all' || inputs.platform == 'android' }}
+    type: build
+    environment: production
+    params:
+      platform: android
+      profile: production
+      message: FREED Android Play artifact build
+
+  ios_store_build:
+    name: iOS App Store/TestFlight build
+    needs:
+      - production_gate_snapshot
+    if: ${{ inputs.platform == 'all' || inputs.platform == 'ios' }}
+    type: build
+    environment: production
+    params:
+      platform: ios
+      profile: production
+      message: FREED iOS App Store artifact build
+
+  store_handoff:
+    name: Store artifact handoff
+    after:
+      - android_store_build
+      - ios_store_build
+    type: doc
+    params:
+      md: |
+        # FREED store artifact handoff
+
+        This workflow creates store-grade build artifacts only. Do not run live production submission from EAS Workflows.
+
+        Android current-source artifact note:
+        - Local Android release builds on the current Mac can fail during `:app:configureCMakeRelWithDebInfo[arm64-v8a]` with CMake exit 137.
+        - Treat the EAS Android Play AAB as the preferred current-source store artifact when local CMake exit 137 is present.
+        - Before upload or submit, record the EAS build URL, source revision, artifact hash, signing mode, and production env preflight report under `docs/validation/artifacts/<run-id>`.
+        - Do not treat any older side-load APK as evidence for the latest native code or as Play upload evidence.
+
+        Submit path after all release evidence passes:
+        - Run `npm run verify:release -- --env-file <production-env-file> --artifact-dir docs/validation/artifacts/<run-id>`.
+        - Confirm strict release evidence has zero failures and store sandbox purchase/restore/ad evidence is promoted.
+        - Use `npm run eas:submit:internal` for draft/internal handoff, or set `FREED_STORE_PRODUCTION_SUBMIT_APPROVED=strict-release-evidence-pass` only after owner approval.
+        - Keep Play draft/internal and App Store/TestFlight-only until the final manual release decision.

@@ -1,0 +1,242 @@
+{
+  "schemaVersion": "freed-store-launch-catalog-audit-v1",
+  "generatedAt": "2026-06-11T08:34:41.697Z",
+  "sanitized": true,
+  "result": "pass",
+  "passCount": 29,
+  "failCount": 0,
+  "releaseBoundary": "Local catalog precheck only. This does not prove App Store Connect or Google Play Console products exist, are reviewed, or have passed sandbox purchases.",
+  "checks": [
+    {
+      "id": "catalog-schema",
+      "status": "pass",
+      "detail": "store/store-products.json schema is freed-store-products-v1.",
+      "next": ""
+    },
+    {
+      "id": "bundle-and-package",
+      "status": "pass",
+      "detail": "Catalog bundle/package match app.freed.recovery.",
+      "next": ""
+    },
+    {
+      "id": "premium-entitlement",
+      "status": "pass",
+      "detail": "Catalog entitlement is premium.",
+      "next": ""
+    },
+    {
+      "id": "launch-product-order",
+      "status": "pass",
+      "detail": "Launch products are yearly, monthly, lifetime in order.",
+      "next": ""
+    },
+    {
+      "id": "future-products-disabled",
+      "status": "pass",
+      "detail": "Future family/accountability/AI coach SKUs are disabled for v1.",
+      "next": ""
+    },
+    {
+      "id": "products-core3-only",
+      "status": "pass",
+      "detail": "Catalog products contain only Core 3 product IDs.",
+      "next": ""
+    },
+    {
+      "id": "yearly-catalog-product",
+      "status": "pass",
+      "detail": "yearly catalog product matches product ID and price.",
+      "next": ""
+    },
+    {
+      "id": "yearly-app-store-row",
+      "status": "pass",
+      "detail": "yearly App Store CSV row matches product, price, and entitlement.",
+      "next": ""
+    },
+    {
+      "id": "yearly-play-store-row",
+      "status": "pass",
+      "detail": "yearly Play CSV row matches product, price, and entitlement.",
+      "next": ""
+    },
+    {
+      "id": "yearly-screenshot-manifest",
+      "status": "pass",
+      "detail": "yearly screenshot manifest row exists.",
+      "next": ""
+    },
+    {
+      "id": "monthly-catalog-product",
+      "status": "pass",
+      "detail": "monthly catalog product matches product ID and price.",
+      "next": ""
+    },
+    {
+      "id": "monthly-app-store-row",
+      "status": "pass",
+      "detail": "monthly App Store CSV row matches product, price, and entitlement.",
+      "next": ""
+    },
+    {
+      "id": "monthly-play-store-row",
+      "status": "pass",
+      "detail": "monthly Play CSV row matches product, price, and entitlement.",
+      "next": ""
+    },
+    {
+      "id": "monthly-screenshot-manifest",
+      "status": "pass",
+      "detail": "monthly screenshot manifest row exists.",
+      "next": ""
+    },
+    {
+      "id": "lifetime-catalog-product",
+      "status": "pass",
+      "detail": "lifetime catalog product matches product ID and price.",
+      "next": ""
+    },
+    {
+      "id": "lifetime-app-store-row",
+      "status": "pass",
+      "detail": "lifetime App Store CSV row matches product, price, and entitlement.",
+      "next": ""
+    },
+    {
+      "id": "lifetime-play-store-row",
+      "status": "pass",
+      "detail": "lifetime Play CSV row matches product, price, and entitlement.",
+      "next": ""
+    },
+    {
+      "id": "lifetime-screenshot-manifest",
+      "status": "pass",
+      "detail": "lifetime screenshot manifest row exists.",
+      "next": ""
+    },
+    {
+      "id": "apple-product-types",
+      "status": "pass",
+      "detail": "App Store product types are subscription/subscription/non-consumable.",
+      "next": ""
+    },
+    {
+      "id": "google-product-types",
+      "status": "pass",
+      "detail": "Play product types are subscription/subscription/one-time non-consumable.",
+      "next": ""
+    },
+    {
+      "id": "app-store-csv-core3-only",
+      "status": "pass",
+      "detail": "App Store CSV contains only Core 3 product IDs.",
+      "next": ""
+    },
+    {
+      "id": "play-store-csv-core3-only",
+      "status": "pass",
+      "detail": "Play CSV contains only Core 3 product IDs.",
+      "next": ""
+    },
+    {
+      "id": "screenshots-core3-only",
+      "status": "pass",
+      "detail": "Screenshot manifest contains only Core 3 product screenshots.",
+      "next": ""
+    },
+    {
+      "id": "future-products-not-in-active-sources",
+      "status": "pass",
+      "detail": "Future SKUs are absent from active catalog, CSV, and screenshot rows.",
+      "next": ""
+    },
+    {
+      "id": "screenshot-hashes",
+      "status": "pass",
+      "detail": "Screenshot hashes match the manifest.",
+      "next": ""
+    },
+    {
+      "id": "screenshot-dimensions",
+      "status": "pass",
+      "detail": "Screenshot PNG dimensions match the manifest.",
+      "next": ""
+    },
+    {
+      "id": "console-packet-references",
+      "status": "pass",
+      "detail": "Console launch packet references catalog, CSVs, IAP screenshot manifest, and listing screenshot plan.",
+      "next": ""
+    },
+    {
+      "id": "listing-screenshot-plan",
+      "status": "pass",
+      "detail": "Listing screenshot plan defines public listing captures separately from IAP review screenshots and physical-device evidence.",
+      "next": ""
+    },
+    {
+      "id": "listing-screenshot-manifest-template",
+      "status": "pass",
+      "detail": "Listing screenshot manifest template covers the six public listing concepts and points to the final manifest path.",
+      "next": "Keep the template scoped to public listing assets; the final manifest must be generated from signed-build captures before store upload."
+    }
+  ],
+  "listingScreenshotReadiness": {
+    "expectedAssetIds": [
+      "turn-on-real-protection",
+      "block-adult-sites-safely",
+      "interrupt-app-loops",
+      "recover-in-the-moment",
+      "keep-privacy-local",
+      "upgrade-without-ad-breaks"
+    ],
+    "manifestPath": "store/screenshots/listing/manifest.json",
+    "requiredBeforeStoreUpload": true,
+    "templatePath": "store/screenshots/listing/manifest.template.json",
+    "assetCount": 0,
+    "blockers": [
+      "listing-screenshot-manifest-missing"
+    ],
+    "exists": false,
+    "next": "Capture signed-build public listing screenshots and write store/screenshots/listing/manifest.json.",
+    "readyForStoreUpload": false,
+    "status": "pending-capture"
+  },
+  "sourceArtifacts": {
+    "storeProductsCatalog": {
+      "path": "store/store-products.json",
+      "sha256": "sha256-66323a77ec71bc6aae51dd3c62e6d8393686123804f9987e5f86cac1e8fe8b84"
+    },
+    "appStoreConnectCsv": {
+      "path": "store/app-store/in-app-purchases.csv",
+      "sha256": "sha256-ad7ea81b6ec9240b1ca4f8e5e248464ed78ec792e7f4233ce50ee2a2e226f6b9"
+    },
+    "googlePlayProductsCsv": {
+      "path": "store/play-store/products.csv",
+      "sha256": "sha256-b33dd03139588b3562c92d58cf34747a1d3a5e5cf5a11381bec16774d728923b"
+    },
+    "screenshotManifest": {
+      "path": "store/screenshots/manifest.json",
+      "sha256": "sha256-86a0362d0e6a5e887e0d9fc732b91971816c9278b85dd9381c6c3af29dc4ab99"
+    },
+    "listingScreenshotPlan": {
+      "path": "store/screenshots/listing-screenshot-plan.md",
+      "sha256": "sha256-697adc5a9495a0483f7666fe00961641619ad8414852a8ff6a74f10b9ba0d0e9"
+    },
+    "listingScreenshotManifestTemplate": {
+      "path": "store/screenshots/listing/manifest.template.json",
+      "sha256": "sha256-18dfbe0634b6c2d6128e17a5adcfd647db3f6585655d641e191160320b05b463"
+    }
+  },
+  "launchProductIds": {
+    "yearly": "freed_premium_yearly",
+    "monthly": "freed_premium_monthly",
+    "lifetime": "freed_premium_lifetime"
+  },
+  "futureProductsDisabledForV1": [
+    "freed_family_yearly",
+    "freed_accountability_monthly",
+    "freed_ai_coach_monthly"
+  ]
+}

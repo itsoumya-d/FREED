@@ -1,0 +1,597 @@
+{
+  "schema": "freed-ios-device-discovery-v1",
+  "sanitized": true,
+  "generatedAt": "2026-06-10T23:33:36.118Z",
+  "releaseGate": "ios-physical-device-validation",
+  "result": "physical-device-offline",
+  "runId": "ios-device-discovery-current",
+  "outputDir": "docs/validation/artifacts/ios-device-discovery-current/ios-device-discovery",
+  "requestedDevice": null,
+  "requestedDeviceFound": null,
+  "requestedDeviceReady": null,
+  "physicalDeviceCount": 1,
+  "readyPhysicalDeviceCount": 0,
+  "readyDeviceCount": 0,
+  "readyPhysicalCandidateCount": 0,
+  "offlinePhysicalDeviceCount": 1,
+  "deviceNamesRedacted": true,
+  "devices": [
+    {
+      "identifier": "physical-ios-device-1",
+      "isPhysicalIosDevice": true,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": false,
+      "name": "Physical iPhone",
+      "deviceNameRedacted": true,
+      "osVersion": "26.5",
+      "source": "devices offline"
+    },
+    {
+      "identifier": "ios-simulator-2",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "Codex iPad Pro 13-inch (M5) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-3",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad (10th generation) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-4",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad (A16) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-5",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad (A16)",
+      "deviceNameRedacted": false,
+      "osVersion": "26.0.1",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-6",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad (A16) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-7",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad (A16) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-8",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Air 11-inch (M2) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-9",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Air 11-inch (M3) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-10",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Air 11-inch (M3)",
+      "deviceNameRedacted": false,
+      "osVersion": "26.0.1",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-11",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Air 11-inch (M3) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-12",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Air 11-inch (M4) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-13",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Air 13-inch (M2) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-14",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Air 13-inch (M3) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-15",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Air 13-inch (M3)",
+      "deviceNameRedacted": false,
+      "osVersion": "26.0.1",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-16",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Air 13-inch (M3) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-17",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Air 13-inch (M4) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-18",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Pro 11-inch (M4) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-19",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Pro 11-inch (M4) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-20",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Pro 11-inch (M5)",
+      "deviceNameRedacted": false,
+      "osVersion": "26.0.1",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-21",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Pro 11-inch (M5) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-22",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Pro 11-inch (M5) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-23",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Pro 13-inch (M4) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-24",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Pro 13-inch (M4) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-25",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Pro 13-inch (M5)",
+      "deviceNameRedacted": false,
+      "osVersion": "26.0.1",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-26",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Pro 13-inch (M5) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-27",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad Pro 13-inch (M5) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-28",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad mini (A17 Pro) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-29",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad mini (A17 Pro) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-30",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad mini (A17 Pro)",
+      "deviceNameRedacted": false,
+      "osVersion": "26.0.1",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-31",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad mini (A17 Pro) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-32",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPad mini (A17 Pro) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-33",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 16 Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-34",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 16 Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-35",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 16 Plus Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-36",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 16 Plus Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-37",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 16 Pro Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-38",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 16 Pro Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-39",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 16 Pro Max Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-40",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 16 Pro Max Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-41",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 16e Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-42",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 16e",
+      "deviceNameRedacted": false,
+      "osVersion": "26.0.1",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-43",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 16e Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-44",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 17",
+      "deviceNameRedacted": false,
+      "osVersion": "26.0.1",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-45",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 17 Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-46",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 17 Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-47",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 17 Pro",
+      "deviceNameRedacted": false,
+      "osVersion": "26.0.1",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-48",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 17 Pro Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-49",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 17 Pro Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-50",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 17 Pro Max",
+      "deviceNameRedacted": false,
+      "osVersion": "26.0.1",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-51",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 17 Pro Max Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-52",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 17 Pro Max Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-53",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone 17e Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-54",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone Air",
+      "deviceNameRedacted": false,
+      "osVersion": "26.0.1",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-55",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone Air Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.2",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-56",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone Air Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "26.5",
+      "source": "simulators"
+    },
+    {
+      "identifier": "ios-simulator-57",
+      "isPhysicalIosDevice": false,
+      "isReadyPhysicalIosDevice": false,
+      "isSimulator": true,
+      "name": "iPhone SE (3rd generation) Simulator",
+      "deviceNameRedacted": false,
+      "osVersion": "18.2",
+      "source": "simulators"
+    }
+  ],
+  "next": "A physical iPhone is listed offline. Unlock it, reconnect if needed, trust this Mac, and rerun npm run evidence:ios-devices.",
+  "evidenceSatisfied": false,
+  "evidenceBoundary": "Device discovery is a setup handoff only. It does not prove Family Controls authorization, Safari content blocking, DeviceActivity shielding, normal browsing allow, adult intercept, or challenge verification.",
+  "toolTimeoutMs": 15000,
+  "deviceListArtifact": "docs/validation/artifacts/ios-device-discovery-current/ios-device-discovery/xctrace-devices.txt",
+  "deviceListSource": "xctrace",
+  "xctraceDevicesArtifact": "docs/validation/artifacts/ios-device-discovery-current/ios-device-discovery/xctrace-devices.txt"
+}

@@ -1,0 +1,411 @@
+version: 2
+
+goal:
+  title: "Android Post-Paywall Protection Recovery"
+  slug: "android-setup-activation-recovery"
+  kind: recovery
+  tranche: "Recover the Android post-paywall setup and activation path on a USB-debugging physical device, then audit post-activation engagement screens."
+  status: active
+  oracle:
+    signal: "Physical Android walkthrough proves paywall-to-activation setup works through a one-step wizard, OS permission routing/return refresh works, Test Protection passes, real adult-domain/search host attempts are blocked or challenged, and normal browsing remains allowed."
+    cadence: "after each Worker package and at final audit"
+    final_proof: "Sanitized host-level Android physical-device evidence plus local checks mapped to task receipts, with no explicit-content screenshots or raw browsing history."
+  intake:
+    original_request: "Fix the broken/cluttered Android post-paywall real-permission setup and prove actual blocking works on a USB-debugging device."
+    interpreted_outcome: "A normal Android user can pass paywall, enable protection through a simple one-step setup flow, and get working adult-content blocking without diagnostic clutter."
+    input_shape: recovery
+    audience: "Android users after the FREED paywall"
+    authority: approved
+    proof_type: demo
+    completion_proof: "Physical-device walkthrough with sanitized host-level blocking proof, normal-browsing allow proof, and final audit receipt."
+    likely_misfire: "Improving copy or visual layout without proving permission routing and real blocking on a physical Android device."
+    blind_spots_considered:
+      - "Release APK/AAB remains separate because current local release builds hit CMake exit 137."
+      - "Adult-content proof must be host-level and sanitized, not explicit media capture."
+      - "Post-activation engagement screens should be audited only after setup activation is proven."
+    existing_plan_facts:
+      - "Use a one-step wizard instead of a scrolling diagnostics page."
+      - "Use debug-device builds for the first proof loop."
+      - "Open exact Android OS permission/consent surfaces, refresh on return, and auto-advance."
+      - "Hide diagnostics, policy text, counters, and route details behind Advanced/Details."
+      - "Use host-level adult-domain/search proof and normal-browsing allow proof."
+      - "Audit engagement screens after successful activation and queue only high-impact fixes."
+
+rules:
+  pm_owns_state: true
+  one_active_task: true
+  max_write_workers: 1
+  no_implementation_without_worker_or_pm_task: true
+  no_completion_without_judge_or_pm_audit: true
+  planning_is_not_completion: true
+  queued_required_worker_blocks_completion: true
+  continuous_until_full_outcome: true
+  missing_input_or_credentials_do_not_stop_goal: true
+  preserve_and_validate_existing_plan: true
+  intake_misfire_must_be_audited: true
+  goal_pressure_requires_oracle: true
+  no_completion_on_weak_proof: true
+  slice_policy:
+    max_consecutive_tiny_tasks: 2
+    prefer_vertical_slices: true
+    judge_picks_largest_safe_slice: true
+    worker_completes_whole_slice: true
+
+agents:
+  scout: installed
+  worker: installed
+  judge: installed
+
+visual_board:
+  selected: local
+  local:
+    status: live
+    url: "http://goalbuddy.localhost:41737/android-setup-activation-recovery/"
+    command: "npx goalbuddy board docs/goals/android-setup-activation-recovery"
+
+active_task: T009
+
+tasks:
+  - id: T001
+    type: scout
+    assignee: Scout
+    status: done
+    reasoning_hint: high
+    objective: "Map the current Android post-paywall setup flow, exact failure points, native permission APIs, and debug-device build/install commands."
+    inputs:
+      - "User-provided Android recovery plan"
+      - "Current app setup/paywall/protection source"
+      - "Android native protection module"
+      - "Existing validation and release-status artifacts"
+    constraints:
+      - "Read-only."
+      - "Do not edit implementation files."
+      - "Prefer concrete file paths, symbols, commands, and observed device/build state over generic UX advice."
+      - "Do not capture explicit adult content or raw private browsing data."
+    expected_output:
+      - "Current post-paywall setup flow map"
+      - "Exact reasons Continue or permission actions fail, if discoverable"
+      - "Available native permission/status APIs and missing APIs"
+      - "Debug-device build/install command list"
+      - "Candidate safe implementation files for one-step wizard"
+    receipt:
+      result: done
+      summary: "Mapped the Android post-paywall setup path. The app already computes the first missing required step, routes out-of-order taps back to it, refreshes on AppState return, syncs selected Android packages on return, and runs native activation diagnostics before activation can complete. The failure point is the default UI: it renders every permission row, separate DNS/app/test/disclosure cards, route hints, counters, long policy copy, and two bottom CTAs, so the single next action is buried. No new native permission API is needed for the first recovery slice."
+      findings:
+        - "Post-paywall routes to protectionSetup after paywall; handleSetupContinue blocks entry until activationComplete."
+        - "Android required order is reviewed feed sync, DNS Guard/VPN consent, Usage Access, Accessibility, selected app packages, then activation test."
+        - "FreedProtectionModule exposes VPN consent/DNS Guard, exact/fallback Accessibility and Usage Access settings routes, app package sync, adult feed sync, and runActivationDiagnostics."
+        - "Debug-device proof should use /Users/soumyadebnath16/Library/Android/sdk/platform-tools/adb because adb is not on PATH."
+        - "No debug APK was present under android/app/build/outputs/apk/debug; stale release APK exists under android/app/build/outputs/apk/release/app-release.apk."
+      evidence:
+        - "src/features/freed-app.tsx"
+        - "src/lib/protection-permissions.ts"
+        - "src/lib/protection-readiness.ts"
+        - "modules/freed-protection/src/index.ts"
+        - "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt"
+        - "package.json"
+      candidate_worker_files:
+        - "src/features/freed-app.tsx"
+        - "scripts/permission-flow-source-audit.js"
+        - "docs/goals/android-setup-activation-recovery/state.yaml"
+
+  - id: T002
+    type: scout
+    assignee: Scout
+    status: blocked
+    reasoning_hint: high
+    objective: "Run a physical Android baseline with the current debug build and capture sanitized host-level failure evidence."
+    inputs:
+      - "T001 receipt"
+      - "USB-debugging Android device"
+      - "Debug build/install commands"
+    constraints:
+      - "Read-only with respect to source code."
+      - "Use debug-device build for baseline."
+      - "Record host-level adult-domain/search proof only."
+      - "Do not store explicit-content screenshots, raw browsing history, private account data, or adult media."
+      - "If no physical device is attached or authorized, block only this task and continue with local implementation planning."
+    expected_output:
+      - "Device detection result"
+      - "Install/launch result"
+      - "Post-paywall setup failure transcript"
+      - "Permission routing/status evidence"
+      - "Host-level adult-blocking and normal-browsing baseline result, if reachable"
+    receipt:
+      result: blocked
+      blocker: "no-ready-android-device"
+      summary: "Physical baseline could not run because no USB-debugging Android device is attached or authorized in the local adb device list."
+      commands:
+        - cmd: "/Users/soumyadebnath16/Library/Android/sdk/platform-tools/adb devices -l"
+          status: "blocked"
+          output: "adb daemon started; List of devices attached was empty."
+      next: "Continue with the local one-step setup implementation and rerun physical proof when a device appears."
+
+  - id: T003
+    type: judge
+    assignee: Judge
+    status: done
+    reasoning_hint: high
+    objective: "Choose the smallest safe implementation slice for the Android one-step setup wizard and define exact Worker scope."
+    inputs:
+      - "T001 receipt"
+      - "T002 receipt, if available"
+      - "Goal oracle"
+    constraints:
+      - "Do not implement."
+      - "Pick the largest useful reversible slice that directly improves paywall-to-activation proof."
+      - "Keep release APK/AAB, store submission, payments, and legal hosting out of scope unless they block debug-device proof."
+    expected_output:
+      - "Decision: approved | blocked | needs_more_scouting"
+      - "Exact Worker objective"
+      - "allowed_files"
+      - "verify commands"
+      - "stop_if conditions"
+      - "Deferred release/store tasks, if any"
+    receipt:
+      result: done
+      decision: approved
+      full_outcome_complete: false
+      rationale: "The largest safe reversible slice is to replace the Android default setup surface with a one-step wizard that uses the existing nextRequiredStep, runStepAction, AppState refresh, auto-advance, and activation-test gate. Native APIs already cover the required permission routing, so native code is out of scope for this slice."
+      worker_objective: "Implement an Android-only one-step post-paywall setup wizard: one visible next action, short copy, progress, auto-routing through existing handlers, activation test when ready, and all checklist/diagnostics/disclosures hidden behind Advanced details."
+      allowed_files:
+        - "src/features/freed-app.tsx"
+        - "scripts/permission-flow-source-audit.js"
+        - "docs/validation/artifacts/permission-flow-current/permission-flow-source-audit.json"
+      verify:
+        - "/Users/soumyadebnath16/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node node_modules/typescript/bin/tsc --noEmit"
+        - "/Users/soumyadebnath16/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/run-ts-entry.js tests/core.test.ts"
+        - "/Users/soumyadebnath16/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/permission-flow-source-audit.js --report docs/validation/artifacts/permission-flow-current/permission-flow-source-audit.json"
+      stop_if:
+        - "The one-step UX requires a new native permission/status API."
+        - "TypeScript cannot represent the chosen state without widening shared contracts outside allowed files."
+        - "Verification fails twice for the same unexplained reason."
+
+  - id: T004
+    type: worker
+    assignee: Worker
+    status: done
+    reasoning_hint: medium
+    objective: "Implement the Android one-step post-paywall setup wizard and permission-return behavior selected by Judge."
+    allowed_files:
+      - "src/features/freed-app.tsx"
+      - "scripts/permission-flow-source-audit.js"
+      - "docs/validation/artifacts/permission-flow-current/permission-flow-source-audit.json"
+    verify:
+      - "/Users/soumyadebnath16/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node node_modules/typescript/bin/tsc --noEmit"
+      - "/Users/soumyadebnath16/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/run-ts-entry.js tests/core.test.ts"
+      - "/Users/soumyadebnath16/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/permission-flow-source-audit.js --report docs/validation/artifacts/permission-flow-current/permission-flow-source-audit.json"
+    stop_if:
+      - "Need files outside allowed_files."
+      - "The selected UX behavior conflicts with the goal oracle."
+      - "A required native permission/status API is missing and needs Judge/PM decision."
+      - "Verification fails twice for the same unexplained reason."
+    receipt:
+      result: done
+      changed_files:
+        - "src/features/freed-app.tsx"
+        - "scripts/permission-flow-source-audit.js"
+        - "docs/validation/artifacts/permission-flow-current/permission-flow-source-audit.json"
+      summary: "Implemented an Android-only one-step setup wizard after the paywall. The default Android path now shows one next action, short plain-language copy, progress, a single primary CTA, and hides the full checklist/route diagnostics behind Advanced details. It reuses existing ordered runStepAction, settings deep-link, AppState refresh, auto-advance, app-selection sync, and activation-test gates. Shared button text now shrinks/wraps safely. The permission-flow audit now guards the one-step Android contract."
+      commands:
+        - cmd: "/Users/soumyadebnath16/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node node_modules/typescript/bin/tsc --noEmit"
+          status: pass
+        - cmd: "/Users/soumyadebnath16/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/run-ts-entry.js tests/core.test.ts"
+          status: pass
+        - cmd: "/Users/soumyadebnath16/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/permission-flow-source-audit.js --report docs/validation/artifacts/permission-flow-current/permission-flow-source-audit.json"
+          status: pass
+          output: "passCount=23 failCount=0"
+
+  - id: T005
+    type: worker
+    assignee: Worker
+    status: blocked
+    reasoning_hint: medium
+    objective: "Verify the fixed Android setup on a USB physical device with paywall-to-activation walkthrough and sanitized host-level blocking proof."
+    allowed_files:
+      - "docs/validation/artifacts/**"
+    verify:
+      - "adb devices"
+      - "Debug install/launch command selected by T003/T004"
+      - "Typecheck/core/permission-flow commands selected by T003/T004"
+      - "Host-level adult-domain/search proof with no explicit-content screenshots"
+      - "Normal-browsing allow proof"
+    stop_if:
+      - "No USB-debugging Android device is attached and authorized."
+      - "Proof would require storing explicit adult content, raw browsing history, or private data."
+      - "Installed build cannot reach the post-paywall setup screen."
+      - "Native status contradicts UI completion."
+    receipt:
+      result: blocked
+      blocker: "no-ready-android-device"
+      summary: "Could not verify the fixed Android setup on a physical device because adb still reports no attached or authorized devices. No install, launch, permission walkthrough, host-level adult-domain proof, or normal-browsing proof was run."
+      commands:
+        - cmd: "/Users/soumyadebnath16/Library/Android/sdk/platform-tools/adb devices -l"
+          status: "blocked"
+          output: "List of devices attached was empty."
+      missing_evidence:
+        - "Debug install and launch on physical Android."
+        - "Paywall-to-one-step-setup walkthrough."
+        - "OS permission routing and return auto-refresh proof."
+        - "Test Protection pass."
+        - "Sanitized host-level adult-domain/search block proof."
+        - "Normal browsing allow proof."
+
+  - id: T006
+    type: scout
+    assignee: Scout
+    status: blocked
+    reasoning_hint: medium
+    objective: "Audit post-activation engagement screens after Android setup proof is green and queue only the highest-impact fixes."
+    inputs:
+      - "T005 receipt"
+      - "Activated app on physical Android device"
+      - "Main app engagement screens and challenge flows"
+    constraints:
+      - "Read-only unless PM converts findings into a bounded Worker task."
+      - "Do not expand into full store launch."
+      - "Prioritize screens that a newly activated Android user reaches naturally."
+    expected_output:
+      - "Engagement screen map"
+      - "Broken or confusing flows with evidence"
+      - "Ranked follow-up fixes"
+      - "Recommended next Worker task, if any"
+    receipt:
+      result: blocked
+      blocker: "android-activation-proof-not-green"
+      summary: "Post-activation engagement audit is intentionally blocked until T005 physical-device activation proof is green. The app is not proven activated on a real Android device yet."
+
+  - id: T007
+    type: worker
+    assignee: Worker
+    status: blocked
+    reasoning_hint: medium
+    objective: "Resume physical Android proof as soon as a USB-debugging device is attached and authorized."
+    allowed_files:
+      - "docs/validation/artifacts/**"
+    verify:
+      - "/Users/soumyadebnath16/Library/Android/sdk/platform-tools/adb devices -l"
+      - "Build/install/launch the current debug Android app on the detected device."
+      - "Walk paywall-to-one-step setup and capture sanitized permission-routing evidence."
+      - "Run Test Protection and record native status evidence."
+      - "Record sanitized host-level adult-domain/search block proof and normal-browsing allow proof."
+    stop_if:
+      - "No USB-debugging Android device is attached and authorized."
+      - "Proof would require explicit adult screenshots, raw browsing history, or private account data."
+      - "Native status contradicts UI completion."
+    receipt:
+      result: blocked
+      blocker: "no-ready-android-device"
+      summary: "Resume check still cannot start physical proof because adb reports no attached or authorized Android devices."
+      commands:
+        - cmd: "/Users/soumyadebnath16/Library/Android/sdk/platform-tools/adb devices -l"
+          status: blocked
+          output: "List of devices attached was empty."
+      next: "Prepare a current debug APK locally, then resume device proof when a USB-debugging device appears."
+
+  - id: T008
+    type: worker
+    assignee: Worker
+    status: done
+    reasoning_hint: medium
+    objective: "Build a current-source Android debug APK handoff for fast install once a USB Android device is available."
+    allowed_files:
+      - "android/app/build/**"
+      - "android/build/**"
+      - ".gradle/**"
+      - "/Users/soumyadebnath16/Downloads/FREED-debug-android-setup-recovery.apk"
+      - "docs/validation/artifacts/android-debug-setup-recovery/**"
+    verify:
+      - "cd android && ./gradlew :app:assembleDebug --no-daemon --console=plain"
+      - "Copy app-debug.apk to /Users/soumyadebnath16/Downloads/FREED-debug-android-setup-recovery.apk"
+      - "Record SHA-256 and build note under docs/validation/artifacts/android-debug-setup-recovery/"
+    stop_if:
+      - "Debug build fails twice for the same unexplained native/toolchain reason."
+      - "Build requires signing, credentials, or production store access."
+    receipt:
+      result: done
+      changed_files:
+        - "android/app/build/outputs/apk/debug/app-debug.apk"
+        - "/Users/soumyadebnath16/Downloads/FREED-debug-android-setup-recovery.apk"
+        - "docs/validation/artifacts/android-debug-setup-recovery/build-2026-06-13.md"
+      summary: "Built a current-source Android debug APK for the post-paywall setup recovery flow and copied it to Downloads for fast physical-device install once a USB-debugging Android device is attached and authorized. The successful build used an arm64-v8a debug target after universal and first arm64 New Architecture attempts were stopped for prolonged native compile time. ADB still reports no attached devices, so installation and activation proof remain blocked."
+      commands:
+        - cmd: "PATH=/Users/soumyadebnath16/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin:$PATH ./gradlew :app:assembleDebug -PnewArchEnabled=false -PreactNativeArchitectures=arm64-v8a --no-daemon --console=plain"
+          status: pass
+          output: "BUILD SUCCESSFUL in 12m 2s; 316 actionable tasks: 20 executed, 296 up-to-date."
+        - cmd: "cp android/app/build/outputs/apk/debug/app-debug.apk /Users/soumyadebnath16/Downloads/FREED-debug-android-setup-recovery.apk"
+          status: pass
+        - cmd: "shasum -a 256 /Users/soumyadebnath16/Downloads/FREED-debug-android-setup-recovery.apk"
+          status: pass
+          output: "601c7cb4612a8d0de24d29e1c9ebbe4c5f77160748c14e56efc939a55e8020d4"
+        - cmd: "/Users/soumyadebnath16/Library/Android/sdk/platform-tools/adb devices -l"
+          status: pass
+          output: "List of devices attached was empty; install/proof not attempted."
+
+  - id: T009
+    type: pm
+    assignee: PM
+    status: active
+    reasoning_hint: medium
+    objective: "Resume physical-device install, launch, and activation proof when ADB detects an attached authorized Android phone."
+    inputs:
+      - "T004 Android one-step setup implementation"
+      - "T008 current-source debug APK handoff"
+      - "USB-debugging Android device"
+    constraints:
+      - "Do not claim physical proof until adb detects a device and install/launch succeeds."
+      - "Use host-level adult-domain/search proof only."
+      - "Do not store explicit adult screenshots, raw browsing history, or private account data."
+      - "Keep store launch, release APK/AAB, payments, and legal tasks out of this tranche."
+    expected_output:
+      - "ADB device detection"
+      - "Install/launch receipt for /Users/soumyadebnath16/Downloads/FREED-debug-android-setup-recovery.apk"
+      - "Paywall-to-one-step-setup walkthrough evidence"
+      - "Permission routing, return refresh, Test Protection, adult-host block, and normal-browsing allow proof"
+    receipt: null
+
+  - id: T999
+    type: judge
+    assignee: Judge
+    status: done
+    reasoning_hint: high
+    objective: "Audit whether Android post-paywall setup recovery satisfies the original user outcome for this tranche."
+    inputs:
+      - "All done task receipts"
+      - "Latest physical-device proof"
+      - "Latest local verification"
+      - "Current dirty diff"
+    constraints:
+      - "Do not implement."
+      - "Reject completion if Android setup still requires diagnostic scrolling in the default path."
+      - "Reject completion if permission routing or app-return refresh is unproven."
+      - "Reject completion if real host-level blocking and normal-browsing allow proof are missing."
+      - "Reject completion if required Worker work is still queued or active."
+    expected_output:
+      - "complete | not_complete"
+      - "full_outcome_complete: true | false"
+      - "missing evidence"
+      - "next task if not complete"
+    receipt:
+      result: done
+      decision: not_complete
+      full_outcome_complete: false
+      summary: "The local Android one-step setup implementation and source gates are complete, but the tranche oracle is not satisfied because physical Android proof is missing."
+      proven:
+        - "Android post-paywall setup default path is now a one-step wizard in source."
+        - "Typecheck, core tests, and permission-flow source audit pass."
+      missing_evidence:
+        - "Physical-device install/launch."
+        - "Permission routing and app-return refresh on real Android."
+        - "Test Protection passing on real Android native status."
+        - "Sanitized host-level adult-domain/search block proof."
+        - "Normal browsing allow proof."
+        - "Post-activation engagement screen audit."
+      next_task: T009
+
+checks:
+  dirty_fingerprint: unknown
+  last_verification:
+    result: unknown
+    task: null
+    commands: []

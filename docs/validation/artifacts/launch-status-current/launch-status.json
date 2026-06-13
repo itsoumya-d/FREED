@@ -1,0 +1,2882 @@
+{
+  "schema": "freed-release-launch-status-v1",
+  "sanitized": true,
+  "generatedAt": "2026-06-11T09:11:11.906Z",
+  "runId": "launch-status",
+  "releaseReady": false,
+  "releaseReadyReason": "Launch remains blocked because the newest current Android rebuild failed after the served APK was produced; hosted legal URLs, final public listing screenshot manifest (store/screenshots/listing/manifest.json), production env, deployed reports, store sandbox, and physical-device evidence must also pass.",
+  "hostedLegalUrlsReady": false,
+  "storeListingScreenshotsReady": false,
+  "androidDownload": {
+    "artifact": "docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal-20260610-162547.apk",
+    "modifiedAt": "2026-06-10T11:30:06.021Z",
+    "sha256": "sha256-d8ce331f89ee0de6c121117ac8bbe240ac619895dc8fbb0f7c3b10f806017f05",
+    "sizeBytes": 147152008,
+    "currentBuildFailure": {
+      "artifact": "docs/validation/artifacts/android-current-apk-toolchain-retry/android-apk-build-report.json",
+      "attemptedCmakeVersion": "3.31.0",
+      "attemptedNdkVersion": "28.2.13676358",
+      "buildResult": "failed-during-gradle",
+      "candidateArtifacts": [
+        "docs/validation/artifacts/android-current-apk-toolchain-retry/android-apk-build-report.json",
+        "docs/validation/artifacts/android-current-apk-retry/android-apk-build-report.json",
+        "docs/validation/artifacts/continue-goal-android-current-artifacts/android-qa-universal-apk-build-failure-report.json",
+        "docs/validation/artifacts/continue-goal-android-current-artifacts/android-qa-arm64-apk-alt-toolchain-build-report.json"
+      ],
+      "cmakeExit137": true,
+      "exists": true,
+      "failedStage": "gradle-build",
+      "failedTask": ":app:configureCMakeRelWithDebInfo[arm64-v8a]",
+      "generatedAt": "2026-06-11T09:06:24.368Z",
+      "gradleCommand": [
+        "./gradlew",
+        ":app:assembleRelease",
+        "--no-daemon",
+        "--console=plain",
+        "--max-workers=1",
+        "-Dorg.gradle.parallel=false",
+        "-Pandroid.native.build.maxJobs=1",
+        "-PnewArchEnabled=true",
+        "-PreactNativeArchitectures=arm64-v8a",
+        "-PhermesEnabled=true",
+        "-Pfreed.androidNdkVersion=28.2.13676358",
+        "-Pfreed.androidCmakeVersion=3.31.0"
+      ],
+      "hostMemoryConstrainedLikely": true,
+      "hostTotalMemoryMb": 8192,
+      "newArchForcedByReactNative": false,
+      "newArchRequested": true,
+      "newerThanSelectedApk": true,
+      "reasonPreview": "./gradlew :app:assembleRelease --no-daemon --console=plain --max-workers=1 -Dorg.gradle.parallel=false -Pandroid.native.build.maxJobs=1 -PnewArchEnabled=true -PreactNativeArchitectures=arm64-v8a -PhermesEnabled=true -Pfreed.androidNdkVersion=28.2.13676358 -Pfreed.androidCmakeVersion=3.31.0 failed with exit code 1\n\nFAILURE: Build failed with an exception.\n\n* What went wrong:\nExecution failed for task ':app:configureCMakeRelWithDebInfo[arm64-v8a]'.\n> [CXX1429] error when building with cmake using ",
+      "result": "fail",
+      "sanitized": true,
+      "selectedApkArtifact": "docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal-20260610-162547.apk",
+      "selectedApkModifiedAt": "2026-06-10T11:30:06.021Z",
+      "staleDownloadWarning": true
+    },
+    "handoff": {
+      "apkExists": true,
+      "apkPath": "docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal.apk",
+      "artifact": "docs/validation/artifacts/android-download-current/android-apk-download-handoff.json",
+      "companionArtifacts": {
+        "handoffMarkdown": "docs/validation/artifacts/android-download-current/ANDROID_APK_DOWNLOAD_HANDOFF.md",
+        "physicalQaChecklist": "docs/validation/artifacts/android-download-current/ANDROID_PHYSICAL_QA_CHECKLIST.md",
+        "qrSvg": "docs/validation/artifacts/android-download-current/ANDROID_APK_DOWNLOAD_QR.svg"
+      },
+      "deviceDiscovery": {
+        "adbDevicesArtifact": "docs/validation/artifacts/android-device-discovery-current/adb-devices.txt",
+        "artifact": "docs/validation/artifacts/android-device-discovery-current/android-device-discovery.json",
+        "deviceCount": 0,
+        "evidenceBoundary": "Device discovery is a setup handoff only. It does not prove physical-device status, installed upload-signed FREED APK, Accessibility consent, Usage Access consent, VPN/DNS Guard consent, app shielding, normal browsing allow, adult intercept, or challenge verification.",
+        "evidenceSatisfied": false,
+        "exists": true,
+        "freshness": {
+          "ageMs": 2137527,
+          "ageMinutes": 35.63,
+          "fresh": false,
+          "status": "stale"
+        },
+        "generatedAt": "2026-06-11T08:35:34.359Z",
+        "next": "Connect a physical Android phone, enable USB debugging, authorize this Mac, then rerun npm run evidence:android-devices.",
+        "nextCommand": "npm run evidence:android-real-browser -- --device <serial> --adult-url <real-adult-url> --permission-proof --native-status-proof --dns-guard-proof --run-id android-device-discovery-current --output-dir docs/validation/artifacts/android-device-discovery-current/android-real-browser-capture",
+        "readyDeviceCount": 0,
+        "readyEmulatorLikeDeviceCount": 0,
+        "readyPhysicalCandidateCount": 0,
+        "releaseGate": "android-real-browser-validation",
+        "result": "no-ready-android-device",
+        "runId": "android-device-discovery-current",
+        "sanitized": true,
+        "schema": "freed-android-device-discovery-v1",
+        "status": "stale-device-discovery"
+      },
+      "deviceDiscoveryArtifact": "docs/validation/artifacts/android-device-discovery-current/android-device-discovery.json",
+      "deviceDiscoveryCommand": "npm run evidence:android-devices -- --run-id android-device-discovery-current --output-dir docs/validation/artifacts/android-device-discovery-current",
+      "deviceDiscoveryOutputDir": "docs/validation/artifacts/android-device-discovery-current",
+      "downloadServerCommand": "npm run qa:android-download -- --apk docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal.apk --host 0.0.0.0 --port 8788 --run-id android-download-current",
+      "downloadServerCurrentlyVerified": true,
+      "evidenceBoundary": "This download handoff proves only the selected APK, hash, local download route, and follow-up commands. It does not prove install, permission consent, browser blocking, or Play readiness.",
+      "exists": true,
+      "generatedAt": "2026-06-11T09:08:23.475Z",
+      "ensure": {
+        "artifact": "docs/validation/artifacts/android-download-current/android-apk-download-ensure.json",
+        "command": "npm run qa:android-download:ensure -- --handoff docs/validation/artifacts/android-download-current/android-apk-download-handoff.json --live-check-report docs/validation/artifacts/android-download-current/android-apk-download-live-check.json --report docs/validation/artifacts/android-download-current/android-apk-download-ensure.json --timeout-ms 5000 --start-if-needed",
+        "exists": true,
+        "failCount": 0,
+        "freshness": {
+          "ageMs": 154956,
+          "ageMinutes": 2.58,
+          "fresh": true,
+          "status": "current"
+        },
+        "generatedAt": "2026-06-11T09:08:36.930Z",
+        "latestLiveCheck": {
+          "exitCode": 0,
+          "label": "initial",
+          "passed": true,
+          "reportResult": "pass",
+          "target": {
+            "downloadUrl": "http://192.168.29.23:8788/download/FREED-release-universal.apk",
+            "pageUrl": "http://192.168.29.23:8788/",
+            "qrTargetUrl": "http://192.168.29.23:8788/"
+          }
+        },
+        "liveCheckReport": "docs/validation/artifacts/android-download-current/android-apk-download-live-check.json",
+        "passCount": 5,
+        "releaseBoundary": "Local Android APK side-load download ensure only. This does not prove install, Android permission consent, browser blocking, upload signing, Play Console readiness, or store approval.",
+        "result": "pass",
+        "sanitized": true,
+        "schema": "freed-android-apk-download-ensure-v1",
+        "serverStarted": false,
+        "startAttempted": false,
+        "startIfNeeded": true,
+        "status": "current",
+        "usableForCurrentDownload": true
+      },
+      "ensureArtifact": "docs/validation/artifacts/android-download-current/android-apk-download-ensure.json",
+      "ensureCommand": "npm run qa:android-download:ensure -- --handoff docs/validation/artifacts/android-download-current/android-apk-download-handoff.json --live-check-report docs/validation/artifacts/android-download-current/android-apk-download-live-check.json --report docs/validation/artifacts/android-download-current/android-apk-download-ensure.json --start-if-needed",
+      "liveCheck": {
+        "artifact": "docs/validation/artifacts/android-download-current/android-apk-download-live-check.json",
+        "downloadProbe": {
+          "contentLength": 147152008,
+          "contentType": "application/vnd.android.package-archive",
+          "status": 200,
+          "url": "http://192.168.29.23:8788/download/FREED-release-universal.apk"
+        },
+        "exists": true,
+        "failCount": 0,
+        "freshness": {
+          "ageMs": 154967,
+          "ageMinutes": 2.58,
+          "fresh": true,
+          "status": "current"
+        },
+        "generatedAt": "2026-06-11T09:08:36.918Z",
+        "pageProbe": {
+          "contentLength": 11788,
+          "contentType": "text/html; charset=utf-8",
+          "status": 200,
+          "url": "http://192.168.29.23:8788/"
+        },
+        "passCount": 49,
+        "releaseBoundary": "Local Android APK download live check only. This does not prove install, Android permission consent, browser blocking, upload signing, Play Console readiness, or store approval.",
+        "requiredBoundaryPageChecksPassed": true,
+        "requiredLiveCheckIds": [
+          "download-page-apk-use-boundary-section",
+          "download-page-side-load-qa-apk",
+          "download-page-not-play-upload-evidence",
+          "download-page-upload-signed-aab-command",
+          "download-page-same-device-evidence-section",
+          "download-page-same-device-install-qa",
+          "download-page-same-device-permission-wizard",
+          "download-page-same-device-real-browser"
+        ],
+        "missingRequiredContentCheckIds": [],
+        "result": "pass",
+        "sanitized": true,
+        "schema": "freed-android-apk-download-live-check-v1",
+        "status": "current",
+        "target": {
+          "downloadUrl": "http://192.168.29.23:8788/download/FREED-release-universal.apk",
+          "metadataUrl": "http://192.168.29.23:8788/metadata.json",
+          "pageUrl": "http://192.168.29.23:8788/",
+          "qrTargetUrl": "http://192.168.29.23:8788/"
+        },
+        "usableForCurrentDownload": true
+      },
+      "liveCheckArtifact": "docs/validation/artifacts/android-download-current/android-apk-download-live-check.json",
+      "liveCheckCommand": "npm run qa:android-download:live-check -- --handoff docs/validation/artifacts/android-download-current/android-apk-download-handoff.json --report docs/validation/artifacts/android-download-current/android-apk-download-live-check.json",
+      "installQaPlanArtifact": "docs/validation/artifacts/android-download-current/android-install-qa/android-install-qa-plan.json",
+      "installQaPlanCommand": "npm run qa:android-install -- --plan-only --apk docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal.apk --run-id android-download-current --output-dir docs/validation/artifacts/android-download-current/android-install-qa --report docs/validation/artifacts/android-download-current/android-install-qa/android-install-qa-plan.json",
+      "installQaPlan": {
+        "apkPath": "docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal.apk",
+        "apkPathMatchesHandoff": true,
+        "apkSha256": "sha256-d8ce331f89ee0de6c121117ac8bbe240ac619895dc8fbb0f7c3b10f806017f05",
+        "apkShaMatchesHandoff": true,
+        "artifact": "docs/validation/artifacts/android-download-current/android-install-qa/android-install-qa-plan.json",
+        "debugSigned": true,
+        "exists": true,
+        "finalInstallQaSchemaVersion": "freed-android-install-qa-report-v1",
+        "nonPromotableCaveat": true,
+        "physicalDeviceRequired": true,
+        "releaseEvidenceSatisfied": false,
+        "requestedRequireUploadSigning": false,
+        "requiredProofFlags": [
+          "--permission-proof",
+          "--native-status-proof",
+          "--dns-guard-proof"
+        ],
+        "requiredProofFlagsPresent": true,
+        "runId": "android-download-current",
+        "runIdMatchesHandoff": true,
+        "sanitized": true,
+        "schema": "freed-android-install-qa-plan-v1",
+        "status": "plan-only",
+        "usableForInstallHandoff": true
+      },
+      "installQaPlanExists": true,
+      "installQaCommand": "npm run qa:android-install -- --apk docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal.apk --run-id android-download-current --output-dir docs/validation/artifacts/android-download-current/android-install-qa",
+      "latestApkSha256": "sha256-d8ce331f89ee0de6c121117ac8bbe240ac619895dc8fbb0f7c3b10f806017f05",
+      "matchesLatestApkSha256": true,
+      "permissionWizardArtifact": "docs/validation/artifacts/android-download-current/android-real-browser-capture/android-permission-wizard-report.json",
+      "permissionWizardCommand": "npm run evidence:permission-wizard -- --platform android --run-id android-download-current-permission-wizard --report docs/validation/artifacts/android-download-current/android-real-browser-capture/android-permission-wizard-report.json --test-protection-passed --confirm-common-flow --confirm-android-flow --android-selected-app-count <count>",
+      "protectionEvidenceCommand": "npm run evidence:android-real-browser -- --device <serial> --adult-url <real-adult-url> --permission-proof --native-status-proof --dns-guard-proof --run-id android-download-current --output-dir docs/validation/artifacts/android-download-current/android-real-browser-capture",
+      "qrTargetUrl": "http://192.168.29.23:8788/",
+      "readyToServeSelectedApk": true,
+      "reportedApkSha256": "sha256-d8ce331f89ee0de6c121117ac8bbe240ac619895dc8fbb0f7c3b10f806017f05",
+      "reportShaMatchesFile": true,
+      "runId": "android-download-current",
+      "sanitized": true,
+      "schema": "freed-android-apk-download-handoff-v1",
+      "server": {
+        "downloadPath": "/download/FREED-release-universal.apk",
+        "host": "0.0.0.0",
+        "lanUrls": [
+          "http://127.0.0.1:8788/",
+          "http://192.168.29.23:8788/"
+        ],
+        "metadataPath": "/metadata.json",
+        "port": 8788,
+        "qrPath": "/qr.svg"
+      },
+      "useBoundary": {
+        "boundary": {
+          "classification": "Side-load QA APK",
+          "installReadyLabel": "Downloadable for local Android side-load QA",
+          "localUse": "Use this artifact to prove the current FREED build can be downloaded, installed, launched, and routed through Android setup on a physical QA phone.",
+          "storeReadyLabel": "Not Play upload evidence",
+          "blockedUse": "Do not submit this artifact to Google Play. Store upload still requires an upload-signed AAB/APK, production AdMob app id, release env preflight, and store sandbox evidence.",
+          "uploadSignedArtifactCommand": "npm run build:android-aab:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/android-aab-build-report.json",
+          "localQaDownloadReady": true,
+          "sameDeviceEvidenceRequired": true,
+          "storeSubmissionReady": false
+        },
+        "boundaryValid": true,
+        "localQaDownloadReady": true,
+        "requiredSameDeviceSteps": [
+          "Install QA report",
+          "Permission wizard",
+          "Real-browser evidence"
+        ],
+        "requiredSameDeviceStepsPresent": true,
+        "sameDeviceEvidenceRequired": true,
+        "sameDeviceEvidenceSequence": [
+          {
+            "proof": "Run install QA against this exact APK SHA-256 on the physical Android device, proving package install, launch/top-activity, screenshot/UI dump, and no crash loop.",
+            "step": "Install QA report"
+          },
+          {
+            "proof": "Run the Android permission wizard report after install, confirming the same setup order and the selected blocked-app count before activation is promoted.",
+            "step": "Permission wizard"
+          },
+          {
+            "proof": "Run Android real-browser evidence on the same device with permission, native-status, and DNS Guard proof so adult-block and normal-allow checks share one device context.",
+            "step": "Real-browser evidence"
+          }
+        ],
+        "sameDeviceEvidenceValid": true,
+        "sameDeviceProofTextPresent": true,
+        "storeSubmissionCorrectlyBlocked": true,
+        "storeSubmissionReady": false,
+        "usableForPhysicalQaHandoff": true
+      },
+      "usableForPhysicalQaHandoff": true
+    },
+    "note": "Local APK download/support artifact only; a newer current Android rebuild failed, so this APK is not evidence for the latest native code."
+  },
+  "androidUploadSigning": {
+    "aabReportArtifact": "docs/validation/artifacts/android-signing-current/android-aab-dry-run-report.json",
+    "preflightArtifact": "docs/validation/artifacts/android-signing-current/release-env-preflight-report.json",
+    "exists": true,
+    "status": "upload-signing-ready-admob-blocked",
+    "releaseEvidenceSatisfied": false,
+    "releaseBoundary": "Upload-signing proof only. Play/App Store release still requires production AdMob, production monetization/backend env, deployed smoke reports, and physical-device/store sandbox evidence.",
+    "aab": {
+      "artifactType": "aab",
+      "buildResult": "blocked-before-gradle",
+      "gradleInvoked": false,
+      "releaseEnvFileLoaded": true,
+      "releaseEnvFileSource": "~/.freed/android-upload/freed-upload.env merged with process.env",
+      "result": "fail",
+      "schema": "freed-android-release-build-report-v1",
+      "uploadSignedBuildProduced": false,
+      "reason": "Android upload signing requires a production Android AdMob app ID. Set EXPO_PUBLIC_ADMOB_APP_ID_ANDROID or EXPO_PUBLIC_ADMOB_APP_ID to a non-sample ca-app-pub-0000000000000000~0000000000 value."
+    },
+    "preflight": {
+      "passCount": 16,
+      "failCount": 15,
+      "productionAndroidSigningStatus": "pass",
+      "result": "fail",
+      "sanitized": true,
+      "source": "~/.freed/android-upload/freed-upload.env merged with process.env"
+    },
+    "signing": {
+      "mode": "upload-signing",
+      "missingInputs": [],
+      "playConsoleReady": true,
+      "required": true,
+      "storeFileConfigured": true,
+      "storeFileExists": true,
+      "uploadKeystore": {
+        "checked": true,
+        "debugSigned": false,
+        "certificateSha256Digest": "b75a9c887e138db8c4d5568149d5009d078fee481ec37537349abb36c9cd6a11"
+      }
+    }
+  },
+  "easBuildHandoff": {
+    "artifact": "docs/validation/artifacts/eas-build-current/eas-build-handoff.json",
+    "androidFailure": {
+      "artifact": "docs/validation/artifacts/android-current-apk-retry/android-apk-build-report.json",
+      "cmakeExit137": true,
+      "failedTask": ":app:configureCMakeRelWithDebInfo[arm64-v8a]",
+      "localBuildBlocked": true,
+      "newArchForcedByReactNative": true
+    },
+    "commands": {
+      "androidInternalApk": "npm run eas:build:internal -- --platform android --non-interactive",
+      "androidProductionAab": "npm run eas:build:production -- --platform android --non-interactive",
+      "iosInternal": "npm run eas:build:internal -- --platform ios --non-interactive",
+      "iosProduction": "npm run eas:build:production -- --platform ios --non-interactive",
+      "releasePreflight": "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/release-env-preflight-report.json",
+      "strictVerify": "npm run verify:release -- --env-file <production-env-file> --artifact-dir docs/validation/artifacts/<run-id>"
+    },
+    "cli": {
+      "easCliInvocation": "npx eas-cli@latest",
+      "npxAvailable": true,
+      "npxPath": "../../../../../opt/homebrew/bin/npx"
+    },
+    "exists": true,
+    "generatedAt": "2026-06-11T08:10:45.947Z",
+    "readyForApprovedEasBuild": true,
+    "releaseBoundary": "EAS handoff only. This report does not prove an EAS build was run, that artifacts exist, that stores accepted uploads, or that physical-device protection evidence passed.",
+    "releaseEvidenceSatisfied": false,
+    "requiredReceipts": [
+      "EAS build URL",
+      "EAS build ID",
+      "Git/source revision used by EAS",
+      "Profile name: internal for QA APK or production for Play AAB/App Store IPA",
+      "Platform: android or ios",
+      "Artifact type: apk, aab, app, or ipa",
+      "Artifact SHA-256 and byte size",
+      "Android signing mode or iOS distribution signing summary",
+      "Production env preflight report path for store artifacts",
+      "Physical-device install/protection QA run ID before evidence promotion"
+    ],
+    "result": "ready-for-approved-eas-build",
+    "sanitized": true,
+    "schema": "freed-eas-build-handoff-v1",
+    "summary": {
+      "passCount": 9,
+      "failCount": 0
+    }
+  },
+  "easBuildAttempt": {
+    "artifact": "docs/validation/artifacts/eas-build-current/eas-build-attempt.json",
+    "attemptType": "auth-check",
+    "commands": {
+      "authCheck": "npx eas-cli@latest whoami --non-interactive",
+      "build": "npm run eas:build:internal -- --platform android --non-interactive",
+      "login": "npx eas-cli@latest login"
+    },
+    "exists": true,
+    "exitCode": 1,
+    "generatedAt": "2026-06-11T08:44:22.464Z",
+    "observedMessageCode": "not-logged-in",
+    "readyForCurrentSourceArtifact": false,
+    "receipts": {
+      "artifactSha256": "",
+      "artifactSizeBytes": 0,
+      "buildIdPresent": false,
+      "buildUrl": "",
+      "physicalQaRunId": "",
+      "preflightReport": "",
+      "signingSummary": "",
+      "sourceRevisionPresent": false
+    },
+    "releaseBoundary": "EAS build attempt receipt only. This does not prove an artifact exists, was installed on a physical device, passed protection QA, was uploaded to a store, or passed release evidence.",
+    "releaseEvidenceSatisfied": false,
+    "result": "blocked-before-eas-build-auth",
+    "sanitized": true,
+    "schema": "freed-eas-build-attempt-v1",
+    "status": "blocked-not-logged-in",
+    "summary": {
+      "passCount": 0,
+      "failCount": 3
+    },
+    "target": {
+      "artifactType": "apk",
+      "commandId": "android-internal-apk",
+      "platform": "android",
+      "profile": "internal",
+      "purpose": "Current-source Android APK for physical QA."
+    }
+  },
+  "storeCatalog": {
+    "artifact": "docs/validation/artifacts/store-launch-catalog-current/store-launch-catalog-audit.json",
+    "exists": true,
+    "failCount": 0,
+    "futureProductsDisabledForV1": [
+      "freed_family_yearly",
+      "freed_accountability_monthly",
+      "freed_ai_coach_monthly"
+    ],
+    "listingScreenshotReadiness": {
+      "assetCount": 0,
+      "blockers": [
+        "listing-screenshot-manifest-missing"
+      ],
+      "expectedAssetIds": [
+        "turn-on-real-protection",
+        "block-adult-sites-safely",
+        "interrupt-app-loops",
+        "recover-in-the-moment",
+        "keep-privacy-local",
+        "upgrade-without-ad-breaks"
+      ],
+      "exists": false,
+      "manifestPath": "store/screenshots/listing/manifest.json",
+      "next": "Capture signed-build public listing screenshots and write store/screenshots/listing/manifest.json.",
+      "readyForStoreUpload": false,
+      "requiredBeforeStoreUpload": true,
+      "status": "pending-capture",
+      "templatePath": "store/screenshots/listing/manifest.template.json"
+    },
+    "launchProductIds": {
+      "yearly": "freed_premium_yearly",
+      "monthly": "freed_premium_monthly",
+      "lifetime": "freed_premium_lifetime"
+    },
+    "passCount": 29,
+    "releaseBoundary": "Local catalog precheck only. This does not prove App Store Connect or Google Play Console products exist, are reviewed, or have passed sandbox purchases.",
+    "result": "pass",
+    "sanitized": true,
+    "schema": "freed-store-launch-catalog-audit-v1",
+    "sourceArtifacts": {
+      "storeProductsCatalog": {
+        "path": "store/store-products.json",
+        "sha256": "sha256-66323a77ec71bc6aae51dd3c62e6d8393686123804f9987e5f86cac1e8fe8b84"
+      },
+      "appStoreConnectCsv": {
+        "path": "store/app-store/in-app-purchases.csv",
+        "sha256": "sha256-ad7ea81b6ec9240b1ca4f8e5e248464ed78ec792e7f4233ce50ee2a2e226f6b9"
+      },
+      "googlePlayProductsCsv": {
+        "path": "store/play-store/products.csv",
+        "sha256": "sha256-b33dd03139588b3562c92d58cf34747a1d3a5e5cf5a11381bec16774d728923b"
+      },
+      "screenshotManifest": {
+        "path": "store/screenshots/manifest.json",
+        "sha256": "sha256-86a0362d0e6a5e887e0d9fc732b91971816c9278b85dd9381c6c3af29dc4ab99"
+      },
+      "listingScreenshotPlan": {
+        "path": "store/screenshots/listing-screenshot-plan.md",
+        "sha256": "sha256-697adc5a9495a0483f7666fe00961641619ad8414852a8ff6a74f10b9ba0d0e9"
+      },
+      "listingScreenshotManifestTemplate": {
+        "path": "store/screenshots/listing/manifest.template.json",
+        "sha256": "sha256-18dfbe0634b6c2d6128e17a5adcfd647db3f6585655d641e191160320b05b463"
+      }
+    }
+  },
+  "storeListingScreenshotHandoff": {
+    "artifact": "docs/validation/artifacts/store-listing-screenshots-current/store-listing-screenshot-handoff.json",
+    "captureCommands": {
+      "refreshEasHandoff": "npm run evidence:eas-build-handoff -- --run-id eas-build-current --output-dir docs/validation/artifacts/eas-build-current",
+      "refreshLaunchStatus": "npm run status:launch -- --run-id launch-status --output-dir docs/validation/artifacts/launch-status-current",
+      "validateCatalog": "npm run audit:store-catalog -- --report docs/validation/artifacts/store-launch-catalog-current/store-launch-catalog-audit.json"
+    },
+    "captureRows": [
+      {
+        "headline": "TURN ON REAL PROTECTION",
+        "height": 2796,
+        "id": "turn-on-real-protection",
+        "screen": "protection setup checklist",
+        "width": 1290
+      },
+      {
+        "headline": "BLOCK ADULT SITES SAFELY",
+        "height": 2796,
+        "id": "block-adult-sites-safely",
+        "screen": "activation test passed",
+        "width": 1290
+      },
+      {
+        "headline": "INTERRUPT APP LOOPS",
+        "height": 2796,
+        "id": "interrupt-app-loops",
+        "screen": "selected app limits",
+        "width": 1290
+      },
+      {
+        "headline": "RECOVER IN THE MOMENT",
+        "height": 2796,
+        "id": "recover-in-the-moment",
+        "screen": "recovery challenge",
+        "width": 1290
+      },
+      {
+        "headline": "KEEP PRIVACY LOCAL",
+        "height": 2796,
+        "id": "keep-privacy-local",
+        "screen": "privacy controls",
+        "width": 1290
+      },
+      {
+        "headline": "UPGRADE WITHOUT AD BREAKS",
+        "height": 2796,
+        "id": "upgrade-without-ad-breaks",
+        "screen": "Core 3 paywall",
+        "width": 1290
+      }
+    ],
+    "exists": true,
+    "finalManifestExists": false,
+    "finalManifestPath": "store/screenshots/listing/manifest.json",
+    "finalManifestStatus": "pending-signed-build-capture",
+    "generatedAt": "2026-06-11T08:25:20.656Z",
+    "readyForSignedBuildCapture": true,
+    "readyForStoreUpload": false,
+    "releaseBoundary": "Store listing screenshot capture handoff only. This does not prove final screenshots exist, are from a signed build, were uploaded to stores, or satisfy physical-device protection evidence.",
+    "releaseEvidenceSatisfied": false,
+    "result": "ready-for-signed-build-capture",
+    "sanitized": true,
+    "schema": "freed-store-listing-screenshot-handoff-v1",
+    "summary": {
+      "passCount": 5,
+      "failCount": 0
+    }
+  },
+  "paywallLaunchScope": {
+    "artifact": "docs/validation/artifacts/paywall-launch-scope-current/paywall-launch-source-audit.json",
+    "exists": true,
+    "failCount": 0,
+    "futurePlanIdsDisabledForV1": [
+      "family",
+      "accountability",
+      "ai-coach"
+    ],
+    "launchPlanIds": [
+      "yearly",
+      "monthly",
+      "lifetime"
+    ],
+    "launchProductIds": {
+      "yearly": "freed_premium_yearly",
+      "monthly": "freed_premium_monthly",
+      "lifetime": "freed_premium_lifetime"
+    },
+    "passCount": 15,
+    "releaseBoundary": "Local paywall source precheck only. This does not prove the submitted native build, store products, rewarded ads, server receipt verification, or sandbox purchases passed.",
+    "result": "pass",
+    "sanitized": true,
+    "schema": "freed-paywall-launch-source-audit-v1",
+    "sourceArtifacts": {
+      "paywall": {
+        "path": "src/features/freed-app.tsx",
+        "sha256": "sha256-bba78e4c9902026c689672708f8bc2f52adf445ce8aa242b1da39741da069e26"
+      },
+      "monetization": {
+        "path": "src/lib/monetization.ts",
+        "sha256": "sha256-3a2ab320edae496a97038b48c8d2f29cf7f42567ddb5821697a365b97443c898"
+      }
+    }
+  },
+  "storeAdSandbox": {
+    "adMobActionPacket": {
+      "actionTimeConfirmationRequired": true,
+      "artifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/ADMOB_ACTION_PACKET.json",
+      "confirmationToken": "confirm-admob-app-and-rewarded-unit-creation-only",
+      "currentBlocker": "android-upload-signing-blocked-by-production-admob",
+      "envReady": false,
+      "exists": true,
+      "hardStopCount": 4,
+      "markdownArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/ADMOB_ACTION_PACKET.md",
+      "markdownExists": true,
+      "missingEnvKeys": [
+        "EXPO_PUBLIC_ADMOB_APP_ID_IOS",
+        "EXPO_PUBLIC_ADMOB_APP_ID_ANDROID",
+        "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS",
+        "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID"
+      ],
+      "noProductionApprovalGranted": true,
+      "placementPolicy": {
+        "allowedFormats": [
+          "rewarded"
+        ],
+        "forbiddenFormats": [
+          "banner",
+          "interstitial",
+          "app-open",
+          "native"
+        ],
+        "placement": "free recovery reset challenge gate"
+      },
+      "productionEnvConfiguredCount": 1,
+      "productionEnvKeyCount": 5,
+      "result": "blocked-before-admob-env-ready",
+      "runId": "store-ad-sandbox-current-admob-action",
+      "sanitized": true,
+      "schema": "freed-admob-action-packet-v1",
+      "sourceFreshness": {
+        "comparisons": [
+          {
+            "currentHash": "sha256-cf872b1f20149fd14ea40ecf864bba4e9a8f04e1fa41d1a5a2ee781c0d1dded3",
+            "currentPath": "store/console-launch-packet.md",
+            "hashMatchesCurrent": false,
+            "id": "admob-action-packet-source:store/console-launch-packet.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-57248c9caa29a4c4e1fd8483c74e2c68be0f2cb211ba6e87359375859144b16b",
+            "reportedPath": "store/console-launch-packet.md"
+          },
+          {
+            "currentHash": "sha256-cdd2a2fb532e6da29f8a42ec1ea157c675ef8bf9c766a41bca06598b04113acf",
+            "currentPath": "store/play-store/data-safety.md",
+            "hashMatchesCurrent": true,
+            "id": "admob-action-packet-source:store/play-store/data-safety.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-cdd2a2fb532e6da29f8a42ec1ea157c675ef8bf9c766a41bca06598b04113acf",
+            "reportedPath": "store/play-store/data-safety.md"
+          },
+          {
+            "currentHash": "sha256-64b3845f7f9f4b6e8a0a20aad457c9006887966e1e04fa6dfe4ef564c70ec228",
+            "currentPath": "store/app-store/app-privacy.md",
+            "hashMatchesCurrent": true,
+            "id": "admob-action-packet-source:store/app-store/app-privacy.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-64b3845f7f9f4b6e8a0a20aad457c9006887966e1e04fa6dfe4ef564c70ec228",
+            "reportedPath": "store/app-store/app-privacy.md"
+          },
+          {
+            "currentHash": "sha256-7fcbb0fb8d48de7e0793b6ac16f241c7f4cbec816e9162d16ceeec38aa92f474",
+            "currentPath": "docs/privacy-data-map.md",
+            "hashMatchesCurrent": true,
+            "id": "admob-action-packet-source:docs/privacy-data-map.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-7fcbb0fb8d48de7e0793b6ac16f241c7f4cbec816e9162d16ceeec38aa92f474",
+            "reportedPath": "docs/privacy-data-map.md"
+          },
+          {
+            "currentHash": "sha256-3a2ab320edae496a97038b48c8d2f29cf7f42567ddb5821697a365b97443c898",
+            "currentPath": "src/lib/monetization.ts",
+            "hashMatchesCurrent": true,
+            "id": "admob-action-packet-source:src/lib/monetization.ts",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-3a2ab320edae496a97038b48c8d2f29cf7f42567ddb5821697a365b97443c898",
+            "reportedPath": "src/lib/monetization.ts"
+          },
+          {
+            "currentHash": "sha256-096a608a8e57eb1c6dfefd2a2e830f17b1d51424752c1d51bc912af877b39912",
+            "currentPath": "src/lib/native-monetization-adapter.ts",
+            "hashMatchesCurrent": true,
+            "id": "admob-action-packet-source:src/lib/native-monetization-adapter.ts",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-096a608a8e57eb1c6dfefd2a2e830f17b1d51424752c1d51bc912af877b39912",
+            "reportedPath": "src/lib/native-monetization-adapter.ts"
+          },
+          {
+            "currentHash": "sha256-a909d2204c6991e7359508d1a6e9d321cedb62827f9505a34df7d49cdad5cc7d",
+            "currentPath": "src/lib/native-monetization-runtime.ts",
+            "hashMatchesCurrent": true,
+            "id": "admob-action-packet-source:src/lib/native-monetization-runtime.ts",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-a909d2204c6991e7359508d1a6e9d321cedb62827f9505a34df7d49cdad5cc7d",
+            "reportedPath": "src/lib/native-monetization-runtime.ts"
+          }
+        ],
+        "exists": true,
+        "reason": "admob-action-packet-source:store/console-launch-packet.md-hash-mismatch",
+        "staleReason": "admob-action-packet-source:store/console-launch-packet.md-hash-mismatch",
+        "status": "stale-source-drift"
+      },
+      "adMobEnvPatchTemplateArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/ADMOB_ENV_PATCH.template.env",
+      "adMobEnvPatchTemplateExists": true,
+      "readOnlyAdMobReadiness": {
+        "artifact": "docs/validation/artifacts/admob-console-current/admob-console-readiness.json",
+        "blockers": [
+          "browser-connector-unavailable",
+          "browser-native-module-load-failed",
+          "admob-console-not-observed",
+          "admob-ios-app-unconfirmed",
+          "admob-android-app-unconfirmed",
+          "ios-rewarded-reset-unit-unconfirmed",
+          "android-rewarded-reset-unit-unconfirmed",
+          "forbidden-ad-formats-unconfirmed"
+        ],
+        "browserConnector": {
+          "chromeNativeHostOk": null,
+          "codexExtensionPresentInOtherChromeProfile": false,
+          "connectorUnavailable": true,
+          "diagnosticIdentifiersRedacted": true,
+          "nativeModuleLoadFailed": true,
+          "profileNamesStored": false,
+          "profilePathsStored": false,
+          "repairHandoff": {
+            "accountIdentifiersStored": false,
+            "profileIdentifiersStored": false,
+            "required": true,
+            "status": "native-module-load-failed",
+            "steps": [
+              "Open Chrome in the signed-in profile intended for AdMob work.",
+              "Confirm the Codex Chrome Extension is installed and enabled in that same selected Chrome profile.",
+              "If the extension is enabled in a different Chrome profile, switch the connector to that profile or install/enable the extension in the selected profile.",
+              "If the Browser or Chrome plugin native module fails before tab discovery, repair or reinstall the bundled Browser/Chrome plugin and rerun this report.",
+              "If the native host is reported invalid, reinstall or repair the Chrome plugin from the Codex plugin UI.",
+              "Rerun the read-only AdMob readiness command before creating or editing AdMob apps or units."
+            ]
+          },
+          "selectedChromeProfileExtensionMissing": false,
+          "status": "native-module-load-failed"
+        },
+        "exists": true,
+        "failCount": 7,
+        "passCount": 2,
+        "readyForRewardedAdRequestProof": false,
+        "result": "blocked-before-admob-console-ready",
+        "sanitized": true,
+        "schema": "freed-admob-console-readiness-v1",
+        "nextActions": [
+          "Repair or reinstall the bundled Browser/Chrome plugin native module, then rerun this read-only AdMob report before creating or editing ad apps or units.",
+          "Create or identify the iOS AdMob app for FREED bundle app.freed.recovery.",
+          "Create or identify the Android AdMob app for FREED package app.freed.recovery.",
+          "Create exactly one rewarded reset ad unit per platform for the recovery challenge gate.",
+          "Store the four production AdMob IDs in the production env file outside the repo.",
+          "Rerun this read-only report, then fill rewarded-ad-request-report.template.json only after a real rewarded response loads on device."
+        ]
+      },
+      "readOnlyAdMobReadinessArtifact": "docs/validation/artifacts/admob-console-current/admob-console-readiness.json",
+      "readOnlyAdMobReadinessCommand": "npm run evidence:admob-console-browser -- --admob-console-observed --admob-ios-app-present --admob-android-app-present --ios-rewarded-unit-present --android-rewarded-unit-present --no-forbidden-formats-observed",
+      "status": "blocked-before-admob-env-ready",
+      "storeAdSandboxCommand": "npm run evidence:store-ad-sandbox -- --release-env-file <production-env-file> --run-id store-ad-sandbox-current --output-dir docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture",
+      "usableForAdMobConsoleAction": false
+    },
+    "appRecordActionPacket": {
+      "actionTimeConfirmationRequired": true,
+      "appStoreConnect": {
+        "appRecordStatus": "unconfirmed",
+        "destination": "App Store Connect > Apps > New App",
+        "licenseAgreementStatus": "unconfirmed",
+        "productSetupAllowed": false
+      },
+      "artifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_APP_RECORD_ACTION_PACKET.json",
+      "browserReadiness": {
+        "browserReportHash": "sha256-646db056da1f73f6a16e5a16fad4b2f4b9c5918a67cf08e55157187a86ae06ab",
+        "browserReportPath": "docs/validation/artifacts/store-console-browser-current/store-console-browser-readiness.json",
+        "freshness": {
+          "comparisons": [
+            {
+              "currentHash": "sha256-4b7a1212fc910f3297278f42beb98053e75d95b39dcd273f230633f6417be382",
+              "currentPath": "docs/validation/artifacts/store-console-browser-current/store-console-browser-readiness.json",
+              "hashMatchesCurrent": false,
+              "id": "store-console-browser-readiness-report",
+              "pathMatchesCurrent": true,
+              "reportedHash": "sha256-646db056da1f73f6a16e5a16fad4b2f4b9c5918a67cf08e55157187a86ae06ab",
+              "reportedPath": "docs/validation/artifacts/store-console-browser-current/store-console-browser-readiness.json"
+            }
+          ],
+          "exists": true,
+          "reason": "store-console-browser-readiness-report-hash-mismatch",
+          "staleReason": "store-console-browser-readiness-report-hash-mismatch",
+          "status": "stale-source-drift"
+        },
+        "readyForConsoleProductSetup": false,
+        "result": "blocked-before-console-product-setup"
+      },
+      "hostedLegalReadiness": {
+        "freshness": {
+          "comparisons": [
+            {
+              "currentHash": "sha256-beb04c914899d5446402aeb1e53a659f7d7e2ec0fba1ec3f9d98301e4b696cd3",
+              "currentPath": "docs/validation/artifacts/store-legal-hosted-current/store-legal-hosted-url-audit.json",
+              "hashMatchesCurrent": true,
+              "id": "store-legal-hosted-url-audit-report",
+              "pathMatchesCurrent": true,
+              "reportedHash": "sha256-beb04c914899d5446402aeb1e53a659f7d7e2ec0fba1ec3f9d98301e4b696cd3",
+              "reportedPath": "docs/validation/artifacts/store-legal-hosted-current/store-legal-hosted-url-audit.json"
+            }
+          ],
+          "exists": true,
+          "reason": "",
+          "staleReason": "",
+          "status": "current"
+        },
+        "hostedLegalUrlsVerified": false,
+        "hostedReportHash": "sha256-beb04c914899d5446402aeb1e53a659f7d7e2ec0fba1ec3f9d98301e4b696cd3",
+        "hostedReportPath": "docs/validation/artifacts/store-legal-hosted-current/store-legal-hosted-url-audit.json",
+        "result": "fail",
+        "urlEntryAllowed": false
+      },
+      "confirmationToken": "confirm-draft-store-app-record-creation-only",
+      "dataToTransmitCount": 8,
+      "exists": true,
+      "googlePlay": {
+        "appRecordStatus": "unconfirmed",
+        "destination": "Google Play Console > All apps > Create app",
+        "productSetupAllowed": false
+      },
+      "hardStopCount": 5,
+      "markdownArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_APP_RECORD_ACTION_PACKET.md",
+      "markdownExists": true,
+      "noProductionApprovalGranted": true,
+      "readOnlyBrowserInspection": true,
+      "requiredActionCount": 5,
+      "result": "blocked-before-hosted-legal-urls",
+      "runId": "store-ad-sandbox-current-store-app-record-action",
+      "sanitized": true,
+      "schema": "freed-store-app-record-action-packet-v1",
+      "sourceFreshness": {
+        "comparisons": [
+          {
+            "currentHash": "sha256-cf872b1f20149fd14ea40ecf864bba4e9a8f04e1fa41d1a5a2ee781c0d1dded3",
+            "currentPath": "store/console-launch-packet.md",
+            "hashMatchesCurrent": false,
+            "id": "app-record-packet-source:store/console-launch-packet.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-57248c9caa29a4c4e1fd8483c74e2c68be0f2cb211ba6e87359375859144b16b",
+            "reportedPath": "store/console-launch-packet.md"
+          },
+          {
+            "currentHash": "sha256-30efcda95058ca09ab2a7b41ab7f5ba8e3bdb850a60725c94ade53b0b8f92362",
+            "currentPath": "store/release-submission-checklist.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:store/release-submission-checklist.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-30efcda95058ca09ab2a7b41ab7f5ba8e3bdb850a60725c94ade53b0b8f92362",
+            "reportedPath": "store/release-submission-checklist.md"
+          },
+          {
+            "currentHash": "sha256-66323a77ec71bc6aae51dd3c62e6d8393686123804f9987e5f86cac1e8fe8b84",
+            "currentPath": "store/store-products.json",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:store/store-products.json",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-66323a77ec71bc6aae51dd3c62e6d8393686123804f9987e5f86cac1e8fe8b84",
+            "reportedPath": "store/store-products.json"
+          },
+          {
+            "currentHash": "sha256-2fc7ccf2e3c227f385bdcb3005a7d94a29f9f5caf0e901f5772f5db2b1da5954",
+            "currentPath": "store/app-store/metadata.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:store/app-store/metadata.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-2fc7ccf2e3c227f385bdcb3005a7d94a29f9f5caf0e901f5772f5db2b1da5954",
+            "reportedPath": "store/app-store/metadata.md"
+          },
+          {
+            "currentHash": "sha256-694664f55ec4c76779f73f895f75091718790fa4499023a7d80a11fa2e8ab12f",
+            "currentPath": "store/play-store/metadata.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:store/play-store/metadata.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-694664f55ec4c76779f73f895f75091718790fa4499023a7d80a11fa2e8ab12f",
+            "reportedPath": "store/play-store/metadata.md"
+          },
+          {
+            "currentHash": "sha256-cdd2a2fb532e6da29f8a42ec1ea157c675ef8bf9c766a41bca06598b04113acf",
+            "currentPath": "store/play-store/data-safety.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:store/play-store/data-safety.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-cdd2a2fb532e6da29f8a42ec1ea157c675ef8bf9c766a41bca06598b04113acf",
+            "reportedPath": "store/play-store/data-safety.md"
+          },
+          {
+            "currentHash": "sha256-64b3845f7f9f4b6e8a0a20aad457c9006887966e1e04fa6dfe4ef564c70ec228",
+            "currentPath": "store/app-store/app-privacy.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:store/app-store/app-privacy.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-64b3845f7f9f4b6e8a0a20aad457c9006887966e1e04fa6dfe4ef564c70ec228",
+            "reportedPath": "store/app-store/app-privacy.md"
+          },
+          {
+            "currentHash": "sha256-697adc5a9495a0483f7666fe00961641619ad8414852a8ff6a74f10b9ba0d0e9",
+            "currentPath": "store/screenshots/listing-screenshot-plan.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:store/screenshots/listing-screenshot-plan.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-697adc5a9495a0483f7666fe00961641619ad8414852a8ff6a74f10b9ba0d0e9",
+            "reportedPath": "store/screenshots/listing-screenshot-plan.md"
+          },
+          {
+            "currentHash": "sha256-7fcbb0fb8d48de7e0793b6ac16f241c7f4cbec816e9162d16ceeec38aa92f474",
+            "currentPath": "docs/privacy-data-map.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:docs/privacy-data-map.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-7fcbb0fb8d48de7e0793b6ac16f241c7f4cbec816e9162d16ceeec38aa92f474",
+            "reportedPath": "docs/privacy-data-map.md"
+          },
+          {
+            "currentHash": "sha256-6abf7383ac1d7c154232cb68a912232fc40d56ad7c2af506578573f41c5e39db",
+            "currentPath": "docs/store-policy/android-accessibility-and-fgs-disclosure.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:docs/store-policy/android-accessibility-and-fgs-disclosure.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-6abf7383ac1d7c154232cb68a912232fc40d56ad7c2af506578573f41c5e39db",
+            "reportedPath": "docs/store-policy/android-accessibility-and-fgs-disclosure.md"
+          },
+          {
+            "currentHash": "sha256-33918fc56d99db12105468effc8f30b486172ee9e273d78e3371dddbedae2cca",
+            "currentPath": "docs/store-policy/ios-screen-time-safari-dns-review.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:docs/store-policy/ios-screen-time-safari-dns-review.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-33918fc56d99db12105468effc8f30b486172ee9e273d78e3371dddbedae2cca",
+            "reportedPath": "docs/store-policy/ios-screen-time-safari-dns-review.md"
+          }
+        ],
+        "exists": true,
+        "reason": "app-record-packet-source:store/console-launch-packet.md-hash-mismatch",
+        "staleReason": "app-record-packet-source:store/console-launch-packet.md-hash-mismatch",
+        "status": "stale-source-drift"
+      },
+      "status": "blocked-before-hosted-legal-urls",
+      "storeMutationPerformed": false,
+      "usableForDraftAppRecordAction": false,
+      "recheckCommand": "npm run evidence:store-console-browser -- --play-console-observed --play-freed-app-present --app-store-connect-observed --app-store-freed-app-present --app-store-agreement-accepted"
+    },
+    "artifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/capture-manifest.json",
+    "commandHandoff": {
+      "purchaseSmokeCommand": "npm run smoke:purchase-verification",
+      "releasePreflightCommand": "npm run preflight:release-env"
+    },
+    "companionArtifacts": {
+      "consolePaymentHandoffArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_CONSOLE_PAYMENT_HANDOFF.md",
+      "evidenceFillTemplateArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/store-ad-sandbox-evidence-fill-template.json",
+      "rewardedAdRequestTemplateArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/rewarded-ad-request-report.template.json",
+      "paywallLaunchScopeTemplateArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/paywall-launch-scope-report.template.json",
+      "paywallLaunchSourceAuditArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/paywall-launch-source-audit.json",
+      "consoleProductSetupTemplateArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/store-console-product-setup-report.template.json",
+      "consoleExecutionRunbookArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_CONSOLE_EXECUTION_RUNBOOK.md",
+      "storeSandboxTestPlanArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_SANDBOX_TEST_PLAN.md",
+      "storeAppRecordActionPacketArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_APP_RECORD_ACTION_PACKET.json",
+      "storeAppRecordActionPacketMarkdownArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_APP_RECORD_ACTION_PACKET.md",
+      "adMobActionPacketArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/ADMOB_ACTION_PACKET.json",
+      "adMobActionPacketMarkdownArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/ADMOB_ACTION_PACKET.md",
+      "adMobEnvPatchTemplateArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/ADMOB_ENV_PATCH.template.env",
+      "interventionFlowTemplateArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/store-intervention-flow-report.templates.json",
+      "privacyDisclosureTemplateArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/store-privacy-disclosure-report.template.json",
+      "matrixArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/store-ad-sandbox-matrix.csv"
+    },
+    "consoleProductSetup": {
+      "appRecordReadiness": {
+        "accountIdentifiersRedacted": false,
+        "browserReportHash": "sha256-646db056da1f73f6a16e5a16fad4b2f4b9c5918a67cf08e55157187a86ae06ab",
+        "browserReportPath": "docs/validation/artifacts/store-console-browser-current/store-console-browser-readiness.json",
+        "browserReportRunId": "store-console-browser-current",
+        "checkFalseCount": 8,
+        "checkTotalCount": 8,
+        "checkTrueCount": 0,
+        "googlePlay": {
+          "appRecordPresent": false,
+          "observedViaBrowser": false,
+          "productSetupAllowed": false
+        },
+        "appStoreConnect": {
+          "appRecordPresent": false,
+          "licenseAgreementAccepted": false,
+          "observedViaBrowser": false,
+          "productSetupAllowed": false
+        },
+        "readOnlyBrowserInspection": false,
+        "readyForConsoleProductSetup": false,
+        "storeMutationPerformed": false
+      },
+      "appStoreConnect": {
+        "appRecordCreated": false,
+        "consoleHost": "appstoreconnect.apple.com",
+        "consolePathRedacted": "/apps/redacted-app-id/appstore/in-app-purchases",
+        "evidenceArtifactCount": 6,
+        "launchProductsCount": 3,
+        "pendingEvidenceArtifactCount": 6,
+        "screenIds": [
+          "app-record",
+          "subscription-group",
+          "yearly-subscription",
+          "monthly-subscription",
+          "lifetime-non-consumable",
+          "future-skus-inactive"
+        ]
+      },
+      "artifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/store-console-product-setup-report.template.json",
+      "checkFalseCount": 13,
+      "checkTotalCount": 13,
+      "checkTrueCount": 0,
+      "exists": true,
+      "googlePlay": {
+        "appRecordCreated": false,
+        "consoleHost": "play.google.com",
+        "consolePathRedacted": "/console/u/redacted-user/developers/redacted-developer-id/app/redacted-app-id/monetization",
+        "evidenceArtifactCount": 6,
+        "launchProductsCount": 3,
+        "pendingEvidenceArtifactCount": 6,
+        "screenIds": [
+          "app-record",
+          "subscriptions-list",
+          "yearly-base-plan",
+          "monthly-base-plan",
+          "lifetime-one-time-product",
+          "future-skus-inactive"
+        ]
+      },
+      "proofCaptured": false,
+      "proofUsableForManualEvidence": false,
+      "result": "pending-manual-console-setup",
+      "schema": "freed-store-console-product-setup-report-v1",
+      "setupRunId": "store-ad-sandbox-current-store-console-product-setup",
+      "sourceFreshness": {
+        "comparisons": [
+          {
+            "currentHash": "sha256-66323a77ec71bc6aae51dd3c62e6d8393686123804f9987e5f86cac1e8fe8b84",
+            "currentPath": "store/store-products.json",
+            "hashMatchesCurrent": true,
+            "id": "store-products-catalog",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-66323a77ec71bc6aae51dd3c62e6d8393686123804f9987e5f86cac1e8fe8b84",
+            "reportedPath": "store/store-products.json"
+          },
+          {
+            "currentHash": "sha256-ad7ea81b6ec9240b1ca4f8e5e248464ed78ec792e7f4233ce50ee2a2e226f6b9",
+            "currentPath": "store/app-store/in-app-purchases.csv",
+            "hashMatchesCurrent": true,
+            "id": "app-store-connect-csv",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-ad7ea81b6ec9240b1ca4f8e5e248464ed78ec792e7f4233ce50ee2a2e226f6b9",
+            "reportedPath": "store/app-store/in-app-purchases.csv"
+          },
+          {
+            "currentHash": "sha256-b33dd03139588b3562c92d58cf34747a1d3a5e5cf5a11381bec16774d728923b",
+            "currentPath": "store/play-store/products.csv",
+            "hashMatchesCurrent": true,
+            "id": "google-play-products-csv",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-b33dd03139588b3562c92d58cf34747a1d3a5e5cf5a11381bec16774d728923b",
+            "reportedPath": "store/play-store/products.csv"
+          },
+          {
+            "currentHash": "sha256-86a0362d0e6a5e887e0d9fc732b91971816c9278b85dd9381c6c3af29dc4ab99",
+            "currentPath": "store/screenshots/manifest.json",
+            "hashMatchesCurrent": true,
+            "id": "screenshot-manifest",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-86a0362d0e6a5e887e0d9fc732b91971816c9278b85dd9381c6c3af29dc4ab99",
+            "reportedPath": "store/screenshots/manifest.json"
+          }
+        ],
+        "exists": true,
+        "reason": "",
+        "staleReason": "",
+        "status": "current"
+      },
+      "status": "pending-manual-console-setup"
+    },
+    "configured": {
+      "adMobAppIdAndroidConfigured": false,
+      "adMobAppIdIosConfigured": false,
+      "adRequestCountryCode": "",
+      "androidLaunchProductIds": {
+        "yearly": "freed_premium_yearly",
+        "monthly": "freed_premium_monthly",
+        "lifetime": "freed_premium_lifetime"
+      },
+      "entitlementConfigured": false,
+      "iosLaunchProductIds": {
+        "yearly": "freed_premium_yearly",
+        "monthly": "freed_premium_monthly",
+        "lifetime": "freed_premium_lifetime"
+      },
+      "purchaseVerifyEndpointConfigured": false,
+      "rewardedAdUnitIdAndroidConfigured": false,
+      "rewardedAdUnitIdIosConfigured": false,
+      "storeProvider": "native-iap"
+    },
+    "exists": true,
+    "manualVerificationRequired": true,
+    "matrixRowCount": 15,
+    "missingProductionConfig": [
+      "EXPO_PUBLIC_PREMIUM_ENTITLEMENT_ID",
+      "EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT",
+      "EXPO_PUBLIC_ADMOB_APP_ID_IOS",
+      "EXPO_PUBLIC_ADMOB_APP_ID_ANDROID",
+      "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS",
+      "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID"
+    ],
+    "pendingManualQaCount": 15,
+    "releaseBoundary": "Store/ad sandbox handoff only. Release still requires real App Store Connect and Play Console products, production AdMob app and rewarded unit IDs, server receipt verification, sandbox purchase/restore, rewarded-ad behavior, premium no-ad proof, and promoted evidence.",
+    "releaseEnvFileLoaded": false,
+    "releaseGate": "store-ad-sandbox-validation",
+    "result": "capture-plan-created",
+    "runId": "store-ad-sandbox-current",
+    "sanitized": true,
+    "schema": "freed-store-ad-sandbox-capture-v1",
+    "sourceFreshness": {
+      "appRecordActionPacket": {
+        "comparisons": [
+          {
+            "currentHash": "sha256-cf872b1f20149fd14ea40ecf864bba4e9a8f04e1fa41d1a5a2ee781c0d1dded3",
+            "currentPath": "store/console-launch-packet.md",
+            "hashMatchesCurrent": false,
+            "id": "app-record-packet-source:store/console-launch-packet.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-57248c9caa29a4c4e1fd8483c74e2c68be0f2cb211ba6e87359375859144b16b",
+            "reportedPath": "store/console-launch-packet.md"
+          },
+          {
+            "currentHash": "sha256-30efcda95058ca09ab2a7b41ab7f5ba8e3bdb850a60725c94ade53b0b8f92362",
+            "currentPath": "store/release-submission-checklist.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:store/release-submission-checklist.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-30efcda95058ca09ab2a7b41ab7f5ba8e3bdb850a60725c94ade53b0b8f92362",
+            "reportedPath": "store/release-submission-checklist.md"
+          },
+          {
+            "currentHash": "sha256-66323a77ec71bc6aae51dd3c62e6d8393686123804f9987e5f86cac1e8fe8b84",
+            "currentPath": "store/store-products.json",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:store/store-products.json",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-66323a77ec71bc6aae51dd3c62e6d8393686123804f9987e5f86cac1e8fe8b84",
+            "reportedPath": "store/store-products.json"
+          },
+          {
+            "currentHash": "sha256-2fc7ccf2e3c227f385bdcb3005a7d94a29f9f5caf0e901f5772f5db2b1da5954",
+            "currentPath": "store/app-store/metadata.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:store/app-store/metadata.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-2fc7ccf2e3c227f385bdcb3005a7d94a29f9f5caf0e901f5772f5db2b1da5954",
+            "reportedPath": "store/app-store/metadata.md"
+          },
+          {
+            "currentHash": "sha256-694664f55ec4c76779f73f895f75091718790fa4499023a7d80a11fa2e8ab12f",
+            "currentPath": "store/play-store/metadata.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:store/play-store/metadata.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-694664f55ec4c76779f73f895f75091718790fa4499023a7d80a11fa2e8ab12f",
+            "reportedPath": "store/play-store/metadata.md"
+          },
+          {
+            "currentHash": "sha256-cdd2a2fb532e6da29f8a42ec1ea157c675ef8bf9c766a41bca06598b04113acf",
+            "currentPath": "store/play-store/data-safety.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:store/play-store/data-safety.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-cdd2a2fb532e6da29f8a42ec1ea157c675ef8bf9c766a41bca06598b04113acf",
+            "reportedPath": "store/play-store/data-safety.md"
+          },
+          {
+            "currentHash": "sha256-64b3845f7f9f4b6e8a0a20aad457c9006887966e1e04fa6dfe4ef564c70ec228",
+            "currentPath": "store/app-store/app-privacy.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:store/app-store/app-privacy.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-64b3845f7f9f4b6e8a0a20aad457c9006887966e1e04fa6dfe4ef564c70ec228",
+            "reportedPath": "store/app-store/app-privacy.md"
+          },
+          {
+            "currentHash": "sha256-697adc5a9495a0483f7666fe00961641619ad8414852a8ff6a74f10b9ba0d0e9",
+            "currentPath": "store/screenshots/listing-screenshot-plan.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:store/screenshots/listing-screenshot-plan.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-697adc5a9495a0483f7666fe00961641619ad8414852a8ff6a74f10b9ba0d0e9",
+            "reportedPath": "store/screenshots/listing-screenshot-plan.md"
+          },
+          {
+            "currentHash": "sha256-7fcbb0fb8d48de7e0793b6ac16f241c7f4cbec816e9162d16ceeec38aa92f474",
+            "currentPath": "docs/privacy-data-map.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:docs/privacy-data-map.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-7fcbb0fb8d48de7e0793b6ac16f241c7f4cbec816e9162d16ceeec38aa92f474",
+            "reportedPath": "docs/privacy-data-map.md"
+          },
+          {
+            "currentHash": "sha256-6abf7383ac1d7c154232cb68a912232fc40d56ad7c2af506578573f41c5e39db",
+            "currentPath": "docs/store-policy/android-accessibility-and-fgs-disclosure.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:docs/store-policy/android-accessibility-and-fgs-disclosure.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-6abf7383ac1d7c154232cb68a912232fc40d56ad7c2af506578573f41c5e39db",
+            "reportedPath": "docs/store-policy/android-accessibility-and-fgs-disclosure.md"
+          },
+          {
+            "currentHash": "sha256-33918fc56d99db12105468effc8f30b486172ee9e273d78e3371dddbedae2cca",
+            "currentPath": "docs/store-policy/ios-screen-time-safari-dns-review.md",
+            "hashMatchesCurrent": true,
+            "id": "app-record-packet-source:docs/store-policy/ios-screen-time-safari-dns-review.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-33918fc56d99db12105468effc8f30b486172ee9e273d78e3371dddbedae2cca",
+            "reportedPath": "docs/store-policy/ios-screen-time-safari-dns-review.md"
+          }
+        ],
+        "exists": true,
+        "reason": "app-record-packet-source:store/console-launch-packet.md-hash-mismatch",
+        "staleReason": "app-record-packet-source:store/console-launch-packet.md-hash-mismatch",
+        "status": "stale-source-drift"
+      },
+      "appRecordBrowserReadiness": {
+        "comparisons": [
+          {
+            "currentHash": "sha256-4b7a1212fc910f3297278f42beb98053e75d95b39dcd273f230633f6417be382",
+            "currentPath": "docs/validation/artifacts/store-console-browser-current/store-console-browser-readiness.json",
+            "hashMatchesCurrent": false,
+            "id": "store-console-browser-readiness-report",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-646db056da1f73f6a16e5a16fad4b2f4b9c5918a67cf08e55157187a86ae06ab",
+            "reportedPath": "docs/validation/artifacts/store-console-browser-current/store-console-browser-readiness.json"
+          }
+        ],
+        "exists": true,
+        "reason": "store-console-browser-readiness-report-hash-mismatch",
+        "staleReason": "store-console-browser-readiness-report-hash-mismatch",
+        "status": "stale-source-drift"
+      },
+      "adMobActionPacket": {
+        "comparisons": [
+          {
+            "currentHash": "sha256-cf872b1f20149fd14ea40ecf864bba4e9a8f04e1fa41d1a5a2ee781c0d1dded3",
+            "currentPath": "store/console-launch-packet.md",
+            "hashMatchesCurrent": false,
+            "id": "admob-action-packet-source:store/console-launch-packet.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-57248c9caa29a4c4e1fd8483c74e2c68be0f2cb211ba6e87359375859144b16b",
+            "reportedPath": "store/console-launch-packet.md"
+          },
+          {
+            "currentHash": "sha256-cdd2a2fb532e6da29f8a42ec1ea157c675ef8bf9c766a41bca06598b04113acf",
+            "currentPath": "store/play-store/data-safety.md",
+            "hashMatchesCurrent": true,
+            "id": "admob-action-packet-source:store/play-store/data-safety.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-cdd2a2fb532e6da29f8a42ec1ea157c675ef8bf9c766a41bca06598b04113acf",
+            "reportedPath": "store/play-store/data-safety.md"
+          },
+          {
+            "currentHash": "sha256-64b3845f7f9f4b6e8a0a20aad457c9006887966e1e04fa6dfe4ef564c70ec228",
+            "currentPath": "store/app-store/app-privacy.md",
+            "hashMatchesCurrent": true,
+            "id": "admob-action-packet-source:store/app-store/app-privacy.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-64b3845f7f9f4b6e8a0a20aad457c9006887966e1e04fa6dfe4ef564c70ec228",
+            "reportedPath": "store/app-store/app-privacy.md"
+          },
+          {
+            "currentHash": "sha256-7fcbb0fb8d48de7e0793b6ac16f241c7f4cbec816e9162d16ceeec38aa92f474",
+            "currentPath": "docs/privacy-data-map.md",
+            "hashMatchesCurrent": true,
+            "id": "admob-action-packet-source:docs/privacy-data-map.md",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-7fcbb0fb8d48de7e0793b6ac16f241c7f4cbec816e9162d16ceeec38aa92f474",
+            "reportedPath": "docs/privacy-data-map.md"
+          },
+          {
+            "currentHash": "sha256-3a2ab320edae496a97038b48c8d2f29cf7f42567ddb5821697a365b97443c898",
+            "currentPath": "src/lib/monetization.ts",
+            "hashMatchesCurrent": true,
+            "id": "admob-action-packet-source:src/lib/monetization.ts",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-3a2ab320edae496a97038b48c8d2f29cf7f42567ddb5821697a365b97443c898",
+            "reportedPath": "src/lib/monetization.ts"
+          },
+          {
+            "currentHash": "sha256-096a608a8e57eb1c6dfefd2a2e830f17b1d51424752c1d51bc912af877b39912",
+            "currentPath": "src/lib/native-monetization-adapter.ts",
+            "hashMatchesCurrent": true,
+            "id": "admob-action-packet-source:src/lib/native-monetization-adapter.ts",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-096a608a8e57eb1c6dfefd2a2e830f17b1d51424752c1d51bc912af877b39912",
+            "reportedPath": "src/lib/native-monetization-adapter.ts"
+          },
+          {
+            "currentHash": "sha256-a909d2204c6991e7359508d1a6e9d321cedb62827f9505a34df7d49cdad5cc7d",
+            "currentPath": "src/lib/native-monetization-runtime.ts",
+            "hashMatchesCurrent": true,
+            "id": "admob-action-packet-source:src/lib/native-monetization-runtime.ts",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-a909d2204c6991e7359508d1a6e9d321cedb62827f9505a34df7d49cdad5cc7d",
+            "reportedPath": "src/lib/native-monetization-runtime.ts"
+          }
+        ],
+        "exists": true,
+        "reason": "admob-action-packet-source:store/console-launch-packet.md-hash-mismatch",
+        "staleReason": "admob-action-packet-source:store/console-launch-packet.md-hash-mismatch",
+        "status": "stale-source-drift"
+      },
+      "consoleProductSetup": {
+        "comparisons": [
+          {
+            "currentHash": "sha256-66323a77ec71bc6aae51dd3c62e6d8393686123804f9987e5f86cac1e8fe8b84",
+            "currentPath": "store/store-products.json",
+            "hashMatchesCurrent": true,
+            "id": "store-products-catalog",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-66323a77ec71bc6aae51dd3c62e6d8393686123804f9987e5f86cac1e8fe8b84",
+            "reportedPath": "store/store-products.json"
+          },
+          {
+            "currentHash": "sha256-ad7ea81b6ec9240b1ca4f8e5e248464ed78ec792e7f4233ce50ee2a2e226f6b9",
+            "currentPath": "store/app-store/in-app-purchases.csv",
+            "hashMatchesCurrent": true,
+            "id": "app-store-connect-csv",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-ad7ea81b6ec9240b1ca4f8e5e248464ed78ec792e7f4233ce50ee2a2e226f6b9",
+            "reportedPath": "store/app-store/in-app-purchases.csv"
+          },
+          {
+            "currentHash": "sha256-b33dd03139588b3562c92d58cf34747a1d3a5e5cf5a11381bec16774d728923b",
+            "currentPath": "store/play-store/products.csv",
+            "hashMatchesCurrent": true,
+            "id": "google-play-products-csv",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-b33dd03139588b3562c92d58cf34747a1d3a5e5cf5a11381bec16774d728923b",
+            "reportedPath": "store/play-store/products.csv"
+          },
+          {
+            "currentHash": "sha256-86a0362d0e6a5e887e0d9fc732b91971816c9278b85dd9381c6c3af29dc4ab99",
+            "currentPath": "store/screenshots/manifest.json",
+            "hashMatchesCurrent": true,
+            "id": "screenshot-manifest",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-86a0362d0e6a5e887e0d9fc732b91971816c9278b85dd9381c6c3af29dc4ab99",
+            "reportedPath": "store/screenshots/manifest.json"
+          }
+        ],
+        "exists": true,
+        "reason": "",
+        "staleReason": "",
+        "status": "current"
+      },
+      "paywallLaunchSourceAudit": {
+        "comparisons": [
+          {
+            "currentHash": "sha256-bba78e4c9902026c689672708f8bc2f52adf445ce8aa242b1da39741da069e26",
+            "currentPath": "src/features/freed-app.tsx",
+            "hashMatchesCurrent": true,
+            "id": "paywall-source",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-bba78e4c9902026c689672708f8bc2f52adf445ce8aa242b1da39741da069e26",
+            "reportedPath": "src/features/freed-app.tsx"
+          },
+          {
+            "currentHash": "sha256-3a2ab320edae496a97038b48c8d2f29cf7f42567ddb5821697a365b97443c898",
+            "currentPath": "src/lib/monetization.ts",
+            "hashMatchesCurrent": true,
+            "id": "monetization-source",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-3a2ab320edae496a97038b48c8d2f29cf7f42567ddb5821697a365b97443c898",
+            "reportedPath": "src/lib/monetization.ts"
+          }
+        ],
+        "exists": true,
+        "reason": "",
+        "staleReason": "",
+        "status": "current",
+        "artifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/paywall-launch-source-audit.json",
+        "auditPassing": true,
+        "generatedAt": "2026-06-11T05:45:29.446Z",
+        "result": "pass",
+        "sanitized": true,
+        "schema": "freed-paywall-launch-source-audit-v1"
+      },
+      "staleReason": "app-record-action-packet: app-record-packet-source:store/console-launch-packet.md-hash-mismatch, app-record-browser-readiness: store-console-browser-readiness-report-hash-mismatch, admob-action-packet: admob-action-packet-source:store/console-launch-packet.md-hash-mismatch",
+      "status": "stale-source-drift"
+    }
+  },
+  "storeConsoleBrowserReadiness": {
+    "appStoreConnect": {
+      "appRecordPresent": false,
+      "appRecordStatus": "unconfirmed",
+      "consoleHost": "appstoreconnect.apple.com",
+      "licenseAgreementAccepted": false,
+      "licenseAgreementStatus": "unconfirmed",
+      "observedViaBrowser": false,
+      "productSetupAllowed": false
+    },
+    "artifact": "docs/validation/artifacts/store-console-browser-current/store-console-browser-readiness.json",
+    "blockers": [
+      "browser-connector-unavailable",
+      "browser-native-module-load-failed",
+      "google-play-console-not-observed",
+      "google-play-freed-app-record-unconfirmed",
+      "app-store-connect-not-observed",
+      "app-store-connect-freed-app-record-unconfirmed",
+      "app-store-connect-license-agreement-unconfirmed"
+    ],
+    "browserInspection": {
+      "accountIdentifiersRedacted": true,
+      "readOnly": true,
+      "storeMutationPerformed": false
+    },
+    "browserConnector": {
+      "chromeNativeHostOk": null,
+      "codexExtensionPresentInOtherChromeProfile": false,
+      "connectorUnavailable": true,
+      "diagnosticIdentifiersRedacted": true,
+      "nativeModuleLoadFailed": true,
+      "profileNamesStored": false,
+      "profilePathsStored": false,
+      "repairHandoff": {
+        "accountIdentifiersStored": false,
+        "profileIdentifiersStored": false,
+        "required": true,
+        "status": "native-module-load-failed",
+        "steps": [
+          "Open Chrome in the signed-in profile intended for Google Play Console and App Store Connect work.",
+          "Confirm the Codex Chrome Extension is installed and enabled in that same selected Chrome profile.",
+          "If the extension is enabled in a different Chrome profile, switch the connector to that profile or install/enable the extension in the selected profile.",
+          "If the Browser or Chrome plugin native module fails before tab discovery, repair or reinstall the bundled Browser/Chrome plugin and rerun this report.",
+          "If the native host is reported invalid, reinstall or repair the Chrome plugin from the Codex plugin UI.",
+          "Rerun the read-only store console readiness command before creating or editing store products."
+        ]
+      },
+      "selectedChromeProfileExtensionMissing": false,
+      "status": "native-module-load-failed"
+    },
+    "checkCount": 8,
+    "exists": true,
+    "failCount": 6,
+    "googlePlay": {
+      "appRecordPresent": false,
+      "appRecordStatus": "unconfirmed",
+      "consoleHost": "play.google.com",
+      "observedViaBrowser": false,
+      "productSetupAllowed": false
+    },
+    "markdownArtifact": "docs/validation/artifacts/store-console-browser-current/STORE_CONSOLE_BROWSER_READINESS.md",
+    "observedAt": "2026-06-11T08:29:43.931Z",
+    "passCount": 2,
+    "readyForConsoleProductSetup": false,
+    "result": "blocked-before-console-product-setup",
+    "runId": "store-console-browser-current",
+    "sanitized": true,
+    "schema": "freed-store-console-browser-readiness-v1",
+    "nextActions": [
+      "Repair or reinstall the bundled Browser/Chrome plugin native module, then rerun this read-only report before creating or editing store products.",
+      "Create or identify the Google Play app record for FREED package app.freed.recovery.",
+      "Have the Apple Account Holder accept any pending Apple Developer Program License Agreement.",
+      "Create or identify the App Store Connect app record for FREED bundle ID app.freed.recovery.",
+      "Only after both app records exist, configure the Core 3 yearly, monthly, and lifetime products from store/store-products.json.",
+      "Keep store products, builds, and review state in draft/internal/TestFlight until strict release evidence passes."
+    ]
+  },
+  "permissionFlow": {
+    "androidFlowOrder": "android-native-adult-domain-feed>android-dns-guard>android-usage-access>android-accessibility>android-doomscroll-apps>activation-test",
+    "artifact": "docs/validation/artifacts/permission-flow-current/permission-flow-source-audit.json",
+    "exists": true,
+    "failCount": 0,
+    "iosFlowOrder": "ios-screen-time>ios-adult-web-filter>ios-screen-time-targets>ios-selected-app-limit-monitor>ios-safari-content-blocker>activation-test",
+    "passCount": 22,
+    "releaseBoundary": "Source-level permission-flow contract only; physical Android/iOS device evidence, store sandbox purchases, and strict release audit still gate production submission.",
+    "result": "pass",
+    "sanitized": true,
+    "schema": "freed-permission-flow-source-audit-v1"
+  },
+  "storeLegal": {
+    "artifact": "docs/validation/artifacts/store-legal-policy-current/store-legal-policy-audit.json",
+    "bundleId": "app.freed.recovery",
+    "exists": true,
+    "failCount": 0,
+    "packageName": "app.freed.recovery",
+    "passCount": 14,
+    "publicUrls": {
+      "privacy": "https://freedrecovery.app/privacy",
+      "support": "https://freedrecovery.app/support",
+      "accountDeletion": "https://freedrecovery.app/account-deletion"
+    },
+    "releaseBoundary": "Local legal/metadata source precheck only; hosted page availability, legal review, store-console answers, platform approval, sandbox purchases, and physical-device evidence still gate production submission.",
+    "result": "pass",
+    "sanitized": true,
+    "schema": "freed-store-legal-policy-audit-v1"
+  },
+  "storeLegalWebExport": {
+    "artifact": "docs/validation/artifacts/store-legal-web-current/store-legal-web-export-audit.json",
+    "exists": true,
+    "exportDir": "dist",
+    "failCount": 0,
+    "passCount": 21,
+    "publicUrls": {
+      "privacy": "https://freedrecovery.app/privacy",
+      "support": "https://freedrecovery.app/support",
+      "account-deletion": "https://freedrecovery.app/account-deletion"
+    },
+    "releaseBoundary": "Local static-export proof only. Hosted page availability, DNS, CDN cache, legal review, store-console entry, and platform approval still gate production submission.",
+    "result": "pass",
+    "routeExports": [
+      {
+        "htmlArtifact": "dist/privacy.html",
+        "id": "privacy",
+        "publicUrl": "https://freedrecovery.app/privacy",
+        "routePath": "/privacy",
+        "sha256": "sha256-23d6a477278fc04fe0269378c83b8fe040224878c5d5e8668d8a95694de81e5b",
+        "sizeBytes": 26133
+      },
+      {
+        "htmlArtifact": "dist/support.html",
+        "id": "support",
+        "publicUrl": "https://freedrecovery.app/support",
+        "routePath": "/support",
+        "sha256": "sha256-dc41a86b82ca7fca3a8096de5ace864ef22924f08c02519545fdef1fbb66cc69",
+        "sizeBytes": 24300
+      },
+      {
+        "htmlArtifact": "dist/account-deletion.html",
+        "id": "account-deletion",
+        "publicUrl": "https://freedrecovery.app/account-deletion",
+        "routePath": "/account-deletion",
+        "sha256": "sha256-89316b39748a776f2fac427af59ccc8eced7a2bfe6e9b7ad35de07a6f7ac9c99",
+        "sizeBytes": 24067
+      }
+    ],
+    "sanitized": true,
+    "schema": "freed-store-legal-web-export-audit-v1"
+  },
+  "storeLegalHostedUrl": {
+    "artifact": "docs/validation/artifacts/store-legal-hosted-current/store-legal-hosted-url-audit.json",
+    "exists": true,
+    "failCount": 3,
+    "freshness": {
+      "ageMs": 22096471,
+      "ageMinutes": 368.27,
+      "fresh": true,
+      "status": "current"
+    },
+    "generatedAt": "2026-06-11T03:02:55.424Z",
+    "passCount": 0,
+    "publicUrls": {
+      "privacy": "https://freedrecovery.app/privacy",
+      "support": "https://freedrecovery.app/support",
+      "account-deletion": "https://freedrecovery.app/account-deletion"
+    },
+    "releaseBoundary": "Hosted URL availability proof only. Legal review, store-console entry, platform approval, sandbox purchases, and physical-device evidence still gate production submission.",
+    "result": "fail",
+    "routeResults": [
+      {
+        "contentType": "",
+        "finalUrl": "",
+        "id": "privacy",
+        "publicUrl": "https://freedrecovery.app/privacy",
+        "routePath": "/privacy",
+        "sizeBytes": 0,
+        "status": 0
+      },
+      {
+        "contentType": "",
+        "finalUrl": "",
+        "id": "support",
+        "publicUrl": "https://freedrecovery.app/support",
+        "routePath": "/support",
+        "sizeBytes": 0,
+        "status": 0
+      },
+      {
+        "contentType": "",
+        "finalUrl": "",
+        "id": "account-deletion",
+        "publicUrl": "https://freedrecovery.app/account-deletion",
+        "routePath": "/account-deletion",
+        "sizeBytes": 0,
+        "status": 0
+      }
+    ],
+    "sanitized": true,
+    "schema": "freed-store-legal-hosted-url-audit-v1",
+    "status": "failing",
+    "usableForStoreSubmission": false
+  },
+  "storeLegalWebDeploy": {
+    "artifact": "docs/validation/artifacts/store-legal-web-deploy-current/store-legal-web-deploy-packet.json",
+    "deployBlockedBy": [
+      "dns-not-resolving",
+      "eas-project-id-not-configured",
+      "eas-account-not-logged-in",
+      "eas-project-not-linked"
+    ],
+    "easDeployment": {
+      "accountLoggedIn": false,
+      "artifact": "docs/validation/artifacts/store-legal-web-deploy-current/eas-legal-web-deploy-readiness.json",
+      "approvedForDeploy": false,
+      "deploymentBlockedBy": [
+        "eas-project-id-not-configured",
+        "eas-account-not-logged-in",
+        "eas-project-not-linked"
+      ],
+      "deploymentAttempted": false,
+      "freshness": {
+        "newerSourceReports": [],
+        "staleReason": "",
+        "status": "current",
+        "usableForCurrentSourceReports": true
+      },
+      "generatedAt": "2026-06-11T03:03:18.666Z",
+      "projectIdConfigured": false,
+      "projectIdFormat": "env-missing",
+      "projectIdSource": "app.config.js:env-projectId-marker",
+      "projectLinked": false,
+      "readyForCurrentApprovedDeploy": false,
+      "readyForApprovedDeploy": false,
+      "result": "blocked-before-deploy",
+      "usableForCurrentSourceReports": true
+    },
+    "exists": true,
+    "hostedVerified": false,
+    "markdownArtifact": "docs/validation/artifacts/store-legal-web-deploy-current/STORE_LEGAL_WEB_DEPLOY_PACKET.md",
+    "publicUrls": {
+      "account-deletion": "https://freedrecovery.app/account-deletion",
+      "privacy": "https://freedrecovery.app/privacy",
+      "support": "https://freedrecovery.app/support"
+    },
+    "releaseBoundary": "Deployment handoff only. This does not prove DNS ownership, TLS issuance, hosted URL availability, legal review, store-console entry, platform approval, sandbox purchases, or physical-device evidence.",
+    "result": "static-export-ready-deploy-blocked",
+    "legalWebDeployEnvTemplate": {
+      "activeApprovalPrefilled": false,
+      "approvalEnv": "FREED_LEGAL_WEB_DEPLOY_APPROVED",
+      "approvalExpectedValue": "ready-to-deploy-legal-pages",
+      "artifact": "docs/validation/artifacts/store-legal-web-deploy-current/LEGAL_WEB_DEPLOY_ENV.template.env",
+      "created": true,
+      "keys": [
+        "EAS_PROJECT_ID",
+        "EXPO_PROJECT_ID",
+        "EXPO_OWNER",
+        "EXPO_TOKEN"
+      ],
+      "reason": "",
+      "sha256": "sha256-b9c577207f29d3ae4510eb523587c1f85ccd0852aee27b9482862420e8dc00ff"
+    },
+    "routeExports": [
+      {
+        "hostedStatus": 0,
+        "htmlArtifact": "dist/privacy.html",
+        "id": "privacy",
+        "publicUrl": "https://freedrecovery.app/privacy",
+        "routePath": "/privacy",
+        "sha256": "sha256-23d6a477278fc04fe0269378c83b8fe040224878c5d5e8668d8a95694de81e5b"
+      },
+      {
+        "hostedStatus": 0,
+        "htmlArtifact": "dist/support.html",
+        "id": "support",
+        "publicUrl": "https://freedrecovery.app/support",
+        "routePath": "/support",
+        "sha256": "sha256-dc41a86b82ca7fca3a8096de5ace864ef22924f08c02519545fdef1fbb66cc69"
+      },
+      {
+        "hostedStatus": 0,
+        "htmlArtifact": "dist/account-deletion.html",
+        "id": "account-deletion",
+        "publicUrl": "https://freedrecovery.app/account-deletion",
+        "routePath": "/account-deletion",
+        "sha256": "sha256-89316b39748a776f2fac427af59ccc8eced7a2bfe6e9b7ad35de07a6f7ac9c99"
+      }
+    ],
+    "sanitized": true,
+    "schema": "freed-store-legal-web-deploy-packet-v1",
+    "sourceFreshness": {
+      "comparisons": [
+        {
+          "currentHash": "sha256-23d6a477278fc04fe0269378c83b8fe040224878c5d5e8668d8a95694de81e5b",
+          "currentPath": "dist/privacy.html",
+          "hashMatchesCurrent": true,
+          "id": "legal-route-privacy",
+          "pathMatchesCurrent": true,
+          "reportedHash": "sha256-23d6a477278fc04fe0269378c83b8fe040224878c5d5e8668d8a95694de81e5b",
+          "reportedPath": "dist/privacy.html"
+        },
+        {
+          "currentHash": "sha256-dc41a86b82ca7fca3a8096de5ace864ef22924f08c02519545fdef1fbb66cc69",
+          "currentPath": "dist/support.html",
+          "hashMatchesCurrent": true,
+          "id": "legal-route-support",
+          "pathMatchesCurrent": true,
+          "reportedHash": "sha256-dc41a86b82ca7fca3a8096de5ace864ef22924f08c02519545fdef1fbb66cc69",
+          "reportedPath": "dist/support.html"
+        },
+        {
+          "currentHash": "sha256-89316b39748a776f2fac427af59ccc8eced7a2bfe6e9b7ad35de07a6f7ac9c99",
+          "currentPath": "dist/account-deletion.html",
+          "hashMatchesCurrent": true,
+          "id": "legal-route-account-deletion",
+          "pathMatchesCurrent": true,
+          "reportedHash": "sha256-89316b39748a776f2fac427af59ccc8eced7a2bfe6e9b7ad35de07a6f7ac9c99",
+          "reportedPath": "dist/account-deletion.html"
+        }
+      ],
+      "exists": true,
+      "reason": "",
+      "staleReason": "",
+      "status": "current"
+    },
+    "staticExportReady": true,
+    "staticHostingBundle": {
+      "archiveArtifact": "docs/validation/artifacts/store-legal-web-deploy-current/freed-store-legal-web-static-bundle.zip",
+      "archiveCreated": true,
+      "archiveSha256": "sha256-d0362e54847dd15d0585e58fa7c81e6ee3209eee1410b2987aa22ac94d761633",
+      "bundleDir": "docs/validation/artifacts/store-legal-web-deploy-current/static-hosting-bundle",
+      "fileCount": 8,
+      "generated": true,
+      "manifestArtifact": "docs/validation/artifacts/store-legal-web-deploy-current/static-hosting-bundle/static-hosting-manifest.json",
+      "manifestSha256": "sha256-00a9ccda77f2f2b10f2f73e029afb5c7ea053c36ef3296c2eaee5f4d734574ae",
+      "reason": "",
+      "totalBytes": 82282
+    }
+  },
+  "supabaseDeployment": {
+    "artifact": "docs/validation/artifacts/supabase-deployment-current/supabase-deployment-packet.json",
+    "backendBlockerGroupIds": [
+      "production-backend-infrastructure",
+      "production-adult-domain-feed",
+      "production-analytics-ingestion",
+      "production-notification-backend",
+      "production-monetization",
+      "production-ai-backend"
+    ],
+    "deployCommands": [
+      "supabase link --project-ref <production-project-ref>",
+      "supabase db push",
+      "supabase secrets set --env-file <production-env-file>",
+      "supabase functions deploy adult-domain-feed-sync",
+      "supabase functions deploy analytics-retention-cleanup"
+    ],
+    "deploymentTarget": {
+      "activeProjectConfirmed": false,
+      "projectName": "",
+      "projectRefConfigured": false,
+      "projectRefShapeOk": true,
+      "projectStatus": "",
+      "statusNote": "Production Supabase project selection is pending."
+    },
+    "exists": true,
+    "failCount": 0,
+    "fileHashes": {
+      "edgeConfig": "sha256-7e822681c53563c2e889065f462126bf16b1d05174e06be81f5a1007f51ab005",
+      "productionBackendPacket": "sha256-490a1bd5b630b0e3ca83ab4d6291fee4c8d69008b25fd8a341154b8b0bd1cebb",
+      "schema": "sha256-872b3acfd48a5a55f1e9f8cb8f1f3b8fa9cfa97703caf8bf06588a5558f9f48a"
+    },
+    "passCount": 13,
+    "pendingExternalActions": [
+      "Choose or create the FREED production Supabase project; do not use inactive or unrelated projects.",
+      "Push secrets through Supabase dashboard or supabase secrets set --env-file <production-env-file> without committing the env file.",
+      "Apply migrations and deploy both Edge Functions only after the project target is confirmed.",
+      "Run every smoke command in this packet and attach only sanitized JSON reports under docs/validation/artifacts/<run-id>/."
+    ],
+    "releaseBoundary": "Backend deployment handoff only. Release still requires a live production project, production env secrets outside the repo, deployed smoke reports, store sandbox evidence, and physical-device evidence.",
+    "result": "pending-live-project",
+    "sanitized": true,
+    "schema": "freed-supabase-deployment-packet-v1",
+    "secretValuesOmitted": true,
+    "sourceFreshness": {
+      "comparisons": [
+        {
+          "currentHash": "sha256-872b3acfd48a5a55f1e9f8cb8f1f3b8fa9cfa97703caf8bf06588a5558f9f48a",
+          "currentPath": "docs/backend/supabase-schema.sql",
+          "hashMatchesCurrent": true,
+          "id": "supabase-schema",
+          "pathMatchesCurrent": true,
+          "reportedHash": "sha256-872b3acfd48a5a55f1e9f8cb8f1f3b8fa9cfa97703caf8bf06588a5558f9f48a",
+          "reportedPath": "docs/backend/supabase-schema.sql"
+        },
+        {
+          "currentHash": "sha256-490a1bd5b630b0e3ca83ab4d6291fee4c8d69008b25fd8a341154b8b0bd1cebb",
+          "currentPath": "docs/backend/production-backend.md",
+          "hashMatchesCurrent": true,
+          "id": "production-backend-packet",
+          "pathMatchesCurrent": true,
+          "reportedHash": "sha256-490a1bd5b630b0e3ca83ab4d6291fee4c8d69008b25fd8a341154b8b0bd1cebb",
+          "reportedPath": "docs/backend/production-backend.md"
+        },
+        {
+          "currentHash": "sha256-7e822681c53563c2e889065f462126bf16b1d05174e06be81f5a1007f51ab005",
+          "currentPath": "supabase/config.toml",
+          "hashMatchesCurrent": true,
+          "id": "supabase-edge-config",
+          "pathMatchesCurrent": true,
+          "reportedHash": "sha256-7e822681c53563c2e889065f462126bf16b1d05174e06be81f5a1007f51ab005",
+          "reportedPath": "supabase/config.toml"
+        },
+        {
+          "currentHash": "sha256-4785bcb4caab5ab9794e2590363fc2003db0e2ae343aa8b923a3f05a6bad9d40",
+          "currentPath": "supabase/functions/_shared/freed_edge_contract.ts",
+          "hashMatchesCurrent": true,
+          "id": "supabase-edge-shared-contract",
+          "pathMatchesCurrent": true,
+          "reportedHash": "sha256-4785bcb4caab5ab9794e2590363fc2003db0e2ae343aa8b923a3f05a6bad9d40",
+          "reportedPath": "supabase/functions/_shared/freed_edge_contract.ts"
+        },
+        {
+          "currentHash": "sha256-0ef0743ae38e24537cb37c535fd7dcec9fc3dc10e2d66972e0f2b92cc0baabb8",
+          "currentPath": "supabase/migrations/20260518000100_freed_backend_core.sql",
+          "hashMatchesCurrent": true,
+          "id": "migration-20260518000100_freed_backend_core",
+          "pathMatchesCurrent": true,
+          "reportedHash": "sha256-0ef0743ae38e24537cb37c535fd7dcec9fc3dc10e2d66972e0f2b92cc0baabb8",
+          "reportedPath": "supabase/migrations/20260518000100_freed_backend_core.sql"
+        },
+        {
+          "currentHash": "sha256-32873145821a4bd508e71841187c8b7e1848752813e5f4007a9b7219dfcc4975",
+          "currentPath": "supabase/migrations/20260520000100_harden_analytics_privacy_keys.sql",
+          "hashMatchesCurrent": true,
+          "id": "migration-20260520000100_harden_analytics_privacy_keys",
+          "pathMatchesCurrent": true,
+          "reportedHash": "sha256-32873145821a4bd508e71841187c8b7e1848752813e5f4007a9b7219dfcc4975",
+          "reportedPath": "supabase/migrations/20260520000100_harden_analytics_privacy_keys.sql"
+        }
+      ],
+      "exists": true,
+      "reason": "",
+      "staleReason": "",
+      "status": "current"
+    },
+    "smokeCommands": [
+      "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/release-env-preflight-report.json",
+      "npm run smoke:backend-readiness -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/backend-readiness-smoke-report.json",
+      "npm run smoke:supabase-schema -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/supabase-schema-smoke-report.json",
+      "npm run smoke:adult-domain-feed -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/adult-domain-feed-smoke-report.json",
+      "npm run smoke:analytics-ingestion -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/analytics-ingestion-smoke-report.json",
+      "npm run smoke:remote-notifications -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/remote-notification-smoke-report.json",
+      "npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/purchase-verification-smoke-report.json",
+      "npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/ai-backend-smoke-report.json"
+    ],
+    "warnCount": 1
+  },
+  "preflight": {
+    "artifact": "docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+    "blockerGroups": [
+      {
+        "category": "production-env",
+        "captureHelperCommand": "",
+        "evidenceFile": "",
+        "id": "production-backend-infrastructure",
+        "requiredEnv": [
+          "SUPABASE_URL",
+          "SUPABASE_SERVICE_ROLE_KEY",
+          "EXPO_PUBLIC_SUPABASE_URL",
+          "EXPO_PUBLIC_SUPABASE_ANON_KEY",
+          "BACKEND_MAINTENANCE_SECRET or CRON_SECRET",
+          "UPSTASH_REDIS_REST_URL",
+          "UPSTASH_REDIS_REST_TOKEN"
+        ],
+        "requiredReports": [
+          "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+          "npm run smoke:backend-readiness -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/backend-readiness-smoke-report.json",
+          "npm run smoke:supabase-schema -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/supabase-schema-smoke-report.json"
+        ],
+        "status": "fail"
+      },
+      {
+        "category": "production-env",
+        "captureHelperCommand": "",
+        "evidenceFile": "",
+        "id": "production-analytics-ingestion",
+        "requiredEnv": [
+          "EXPO_PUBLIC_ANALYTICS_ENDPOINT"
+        ],
+        "requiredReports": [
+          "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+          "npm run smoke:analytics-ingestion -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/analytics-ingestion-smoke-report.json"
+        ],
+        "status": "fail"
+      },
+      {
+        "category": "production-env",
+        "captureHelperCommand": "",
+        "evidenceFile": "",
+        "id": "production-notification-backend",
+        "requiredEnv": [
+          "REMOTE_NOTIFICATION_DISPATCH_SECRET",
+          "FCM_SERVER_KEY, FCM_ACCESS_TOKEN + FIREBASE_PROJECT_ID, or FIREBASE_SERVICE_ACCOUNT_JSON(_BASE64)",
+          "APNS_KEY_ID + APNS_TEAM_ID + APNS_BUNDLE_ID + APNS_ENV=production + APNS_PRIVATE_KEY(_BASE64)"
+        ],
+        "requiredReports": [
+          "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+          "npm run smoke:remote-notifications -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/remote-notification-smoke-report.json"
+        ],
+        "status": "fail"
+      },
+      {
+        "category": "production-env",
+        "captureHelperCommand": "",
+        "evidenceFile": "",
+        "id": "production-adult-domain-feed",
+        "requiredEnv": [
+          "EXPO_PUBLIC_ADULT_DOMAIN_FEED_ENDPOINT",
+          "EXPO_PUBLIC_REQUIRE_REVIEWED_ADULT_DOMAIN_FEED=true",
+          "FREED_ADULT_DOMAIN_FEED_SOURCE_URLS"
+        ],
+        "requiredReports": [
+          "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+          "npm run smoke:adult-domain-feed -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/adult-domain-feed-smoke-report.json"
+        ],
+        "status": "fail"
+      },
+      {
+        "category": "production-env",
+        "captureHelperCommand": "",
+        "evidenceFile": "docs/validation/evidence/store-ad-sandbox.json",
+        "id": "production-monetization",
+        "requiredEnv": [
+          "EXPO_PUBLIC_MONETIZATION_MODE=native",
+          "EXPO_PUBLIC_STORE_PROVIDER=native-iap",
+          "EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT",
+          "EXPO_PUBLIC_IAP_PRODUCT_*",
+          "EXPO_PUBLIC_ADMOB_APP_ID_IOS",
+          "EXPO_PUBLIC_ADMOB_APP_ID_ANDROID",
+          "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS",
+          "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID",
+          "APP_STORE_BUNDLE_ID",
+          "APP_STORE_SERVER_API_ENV=production",
+          "App Store Server API credentials",
+          "GOOGLE_PLAY_PACKAGE_NAME",
+          "Google Play verification credentials"
+        ],
+        "requiredReports": [
+          "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+          "npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/purchase-verification-smoke-report.json"
+        ],
+        "status": "fail"
+      },
+      {
+        "category": "production-env",
+        "captureHelperCommand": "",
+        "evidenceFile": "",
+        "id": "production-android-signing",
+        "requiredEnv": [
+          "FREED_ANDROID_UPLOAD_STORE_FILE",
+          "FREED_ANDROID_UPLOAD_STORE_PASSWORD",
+          "FREED_ANDROID_UPLOAD_KEY_ALIAS",
+          "FREED_ANDROID_UPLOAD_KEY_PASSWORD"
+        ],
+        "requiredReports": [
+          "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+          "npm run build:android-apk:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/android-apk-build-report.json",
+          "npm run build:android-aab:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/android-aab-build-report.json"
+        ],
+        "status": "fail"
+      },
+      {
+        "category": "production-env",
+        "captureHelperCommand": "",
+        "evidenceFile": "docs/validation/evidence/ai-backend-smoke.json",
+        "id": "production-ai-backend",
+        "requiredEnv": [
+          "EXPO_PUBLIC_AI_COACH_MODE=remote",
+          "EXPO_PUBLIC_AI_COACH_ENDPOINT",
+          "EXPO_PUBLIC_AI_CHALLENGE_MODE=remote",
+          "EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT",
+          "OPENAI_API_KEY + OPENAI_MODEL, or GEMINI_API_KEY/GOOGLE_API_KEY/GOOGLE_GENAI_API_KEY + GEMINI_MODEL"
+        ],
+        "requiredReports": [
+          "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+          "npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/ai-backend-smoke-report.json"
+        ],
+        "status": "fail"
+      },
+      {
+        "category": "physical-evidence",
+        "captureHelperCommand": "npm run evidence:ios-physical-device -- --device <udid-or-name> --adult-host <real-adult-host> --app <signed-freed-app-or-ipa> --short-form-url <youtube-shorts-url> --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/ios-physical-device-capture",
+        "evidenceFile": "docs/validation/evidence/ios-physical-device.json",
+        "id": "ios-physical-device-validation",
+        "requiredEnv": [],
+        "requiredReports": [
+          "npm run build:ios-archive:release -- --report docs/validation/artifacts/release-env-current/ios-release-archive-report.json"
+        ],
+        "status": "external"
+      },
+      {
+        "category": "physical-evidence",
+        "captureHelperCommand": "npm run evidence:android-real-browser -- --device <serial> --adult-url <real-adult-url> --permission-proof --native-status-proof --dns-guard-proof --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/android-real-browser-capture",
+        "evidenceFile": "docs/validation/evidence/android-real-browser.json",
+        "id": "android-real-browser-validation",
+        "requiredEnv": [],
+        "requiredReports": [],
+        "status": "external"
+      },
+      {
+        "category": "physical-evidence",
+        "captureHelperCommand": "npm run evidence:normal-browsing-corpus -- --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/normal-browsing-corpus-capture",
+        "evidenceFile": "docs/validation/evidence/normal-browsing-corpus.json",
+        "id": "normal-browsing-corpus-validation",
+        "requiredEnv": [],
+        "requiredReports": [],
+        "status": "external"
+      },
+      {
+        "category": "physical-evidence",
+        "captureHelperCommand": "npm run evidence:performance-profile -- --ios-device <udid-or-name> --android-device <serial> --android-background-cpu-proof --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/performance-profile-capture",
+        "evidenceFile": "docs/validation/evidence/performance-profile.json",
+        "id": "performance-validation",
+        "requiredEnv": [],
+        "requiredReports": [],
+        "status": "external"
+      },
+      {
+        "category": "deployed-evidence",
+        "captureHelperCommand": "npm run evidence:store-ad-sandbox -- --release-env-file <production-env-file> --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/store-ad-sandbox-capture",
+        "evidenceFile": "docs/validation/evidence/store-ad-sandbox.json",
+        "id": "store-ad-sandbox-validation",
+        "requiredEnv": [
+          "store/ad production env from production-monetization"
+        ],
+        "requiredReports": [
+          "npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/purchase-verification-smoke-report.json"
+        ],
+        "status": "external"
+      },
+      {
+        "category": "deployed-evidence",
+        "captureHelperCommand": "npm run evidence:ai-backend-smoke -- --release-env-file <production-env-file> --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/ai-backend-smoke-capture",
+        "evidenceFile": "docs/validation/evidence/ai-backend-smoke.json",
+        "id": "ai-backend-smoke-validation",
+        "requiredEnv": [
+          "remote AI production env from production-ai-backend"
+        ],
+        "requiredReports": [
+          "npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/ai-backend-smoke-report.json"
+        ],
+        "status": "external"
+      }
+    ],
+    "exists": true,
+    "failCount": 22,
+    "passCount": 9,
+    "productionEnvGapChecklist": {
+      "artifact": "docs/validation/artifacts/release-env-current/PRODUCTION_ENV_GAP_CHECKLIST.md",
+      "checklistSha256": "sha256-6fb3a685e4c540d2af555dda3d7d7dc374527ff9f1d00843a506592fcbb501b1",
+      "checklistFailedProductionEnvGroupIds": [
+        "production-adult-domain-feed",
+        "production-ai-backend",
+        "production-analytics-ingestion",
+        "production-android-signing",
+        "production-backend-infrastructure",
+        "production-monetization",
+        "production-notification-backend"
+      ],
+      "currentPreflightReportSha256": "sha256-d9a738ed0afa6bce269fe5bd05e4b3005b450a235ed6154e7302d62ff557d16a",
+      "currentFailedProductionEnvGroupIds": [
+        "production-adult-domain-feed",
+        "production-ai-backend",
+        "production-analytics-ingestion",
+        "production-android-signing",
+        "production-backend-infrastructure",
+        "production-monetization",
+        "production-notification-backend"
+      ],
+      "envSkeleton": {
+        "activeKeyCount": 65,
+        "assignmentLineCount": 65,
+        "coversFailedProductionEnvGroups": true,
+        "exists": true,
+        "extraGroupMarkerIds": [],
+        "groupMarkerIds": [
+          "production-adult-domain-feed",
+          "production-ai-backend",
+          "production-analytics-ingestion",
+          "production-android-signing",
+          "production-backend-infrastructure",
+          "production-monetization",
+          "production-notification-backend"
+        ],
+        "malformedAssignmentLineCount": 0,
+        "missingGroupMarkerIds": [],
+        "missingPublicDefaultKeys": [],
+        "safeDefaultKeyCount": 15,
+        "unexpectedFilledValueKeys": [],
+        "publicDefaultsPresent": true,
+        "secretLikeValuesOmitted": true,
+        "status": "current"
+      },
+      "envSkeletonArtifact": "docs/validation/artifacts/release-env-current/PRODUCTION_ENV_MISSING_KEYS.env",
+      "envSkeletonExists": true,
+      "envSkeletonSha256": "sha256-0059612ba92dc4bfbdd485c98f2600e88b4e3e456d3de6414be529a65917b42e",
+      "exists": true,
+      "externalValidationGroupCount": 6,
+      "failedProductionEnvGroupCount": 7,
+      "freshForCurrentPreflight": true,
+      "generatedAt": "2026-06-10T23:01:10.720Z",
+      "groupIdsMatchCurrentPreflight": true,
+      "jsonArtifact": "docs/validation/artifacts/release-env-current/production-env-gap-checklist.json",
+      "jsonExists": true,
+      "outputFreshness": {
+        "comparisons": [
+          {
+            "currentHash": "sha256-6fb3a685e4c540d2af555dda3d7d7dc374527ff9f1d00843a506592fcbb501b1",
+            "currentPath": "docs/validation/artifacts/release-env-current/PRODUCTION_ENV_GAP_CHECKLIST.md",
+            "hashMatchesCurrent": true,
+            "id": "production-env-gap-checklist",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-6fb3a685e4c540d2af555dda3d7d7dc374527ff9f1d00843a506592fcbb501b1",
+            "reportedPath": "docs/validation/artifacts/release-env-current/PRODUCTION_ENV_GAP_CHECKLIST.md"
+          },
+          {
+            "currentHash": "sha256-0059612ba92dc4bfbdd485c98f2600e88b4e3e456d3de6414be529a65917b42e",
+            "currentPath": "docs/validation/artifacts/release-env-current/PRODUCTION_ENV_MISSING_KEYS.env",
+            "hashMatchesCurrent": true,
+            "id": "production-env-gap-env-skeleton",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-0059612ba92dc4bfbdd485c98f2600e88b4e3e456d3de6414be529a65917b42e",
+            "reportedPath": "docs/validation/artifacts/release-env-current/PRODUCTION_ENV_MISSING_KEYS.env"
+          }
+        ],
+        "exists": true,
+        "reason": "",
+        "staleReason": "",
+        "status": "current"
+      },
+      "result": "pending",
+      "sanitized": true,
+      "schema": "freed-production-env-gap-checklist-v1",
+      "skeletonUsableForCurrentPreflight": true,
+      "structuralIssues": [],
+      "sourceFreshness": {
+        "comparisons": [
+          {
+            "currentHash": "sha256-d9a738ed0afa6bce269fe5bd05e4b3005b450a235ed6154e7302d62ff557d16a",
+            "currentPath": "docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+            "hashMatchesCurrent": true,
+            "id": "production-env-gap-preflight",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-d9a738ed0afa6bce269fe5bd05e4b3005b450a235ed6154e7302d62ff557d16a",
+            "reportedPath": "docs/validation/artifacts/release-env-current/release-env-preflight-report.json"
+          }
+        ],
+        "exists": true,
+        "reason": "",
+        "staleReason": "",
+        "status": "current"
+      },
+      "sourcePreflightReport": "docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+      "sourcePreflightReportSha256": "sha256-d9a738ed0afa6bce269fe5bd05e4b3005b450a235ed6154e7302d62ff557d16a",
+      "status": "current"
+    },
+    "releaseBlockingGroupCount": 7,
+    "result": "fail",
+    "sanitized": true,
+    "schema": "freed-release-env-preflight-report-v1",
+    "source": "process.env"
+  },
+  "physicalDeviceReadiness": {
+    "android": {
+      "artifact": "docs/validation/artifacts/android-device-discovery-current/android-device-discovery.json",
+      "captureReady": false,
+      "discoveryFreshness": "stale",
+      "exists": true,
+      "generatedAt": "2026-06-11T08:35:34.359Z",
+      "deviceListArtifact": "",
+      "deviceListSource": "",
+      "devicectlErrorArtifact": "",
+      "errorArtifact": "",
+      "xctraceErrorArtifact": "",
+      "next": "Refresh Android device discovery; current discovery freshness is stale.",
+      "readyDeviceCount": 0,
+      "readyPhysicalCandidateCount": 0,
+      "result": "no-ready-android-device",
+      "status": "not-ready",
+      "staleReason": "device-discovery-stale",
+      "toolingFailed": false
+    },
+    "ios": {
+      "artifact": "docs/validation/artifacts/ios-device-discovery-current/ios-device-discovery.json",
+      "captureReady": false,
+      "discoveryFreshness": "stale",
+      "exists": true,
+      "generatedAt": "2026-06-11T08:35:36.965Z",
+      "deviceListArtifact": "docs/validation/artifacts/ios-device-discovery-current/xctrace-devices.txt",
+      "deviceListSource": "xctrace",
+      "devicectlErrorArtifact": "",
+      "errorArtifact": "",
+      "xctraceErrorArtifact": "",
+      "next": "Refresh iOS device discovery; current discovery freshness is stale.",
+      "readyDeviceCount": 0,
+      "readyPhysicalCandidateCount": 0,
+      "result": "no-physical-device",
+      "status": "not-ready",
+      "staleReason": "device-discovery-stale",
+      "toolingFailed": false
+    },
+    "overallStatus": "physical-device-capture-blocked",
+    "releaseBoundary": "Current device discovery only. Store release still requires promoted Android real-browser, iOS physical-device, normal-browsing, performance, store/ad sandbox, and AI backend evidence."
+  },
+  "handoffPackets": [
+    {
+      "id": "ios-device-discovery",
+      "label": "iOS Device Discovery",
+      "artifact": "docs/validation/artifacts/ios-device-discovery-current/ios-device-discovery.json",
+      "artifactCandidates": [
+        "docs/validation/artifacts/ios-device-discovery-current/ios-device-discovery.json",
+        "docs/validation/artifacts/ios-device-discovery-current/ios-device-discovery/ios-device-discovery.json"
+      ],
+      "requiredForRelease": false,
+      "appPackageProof": "",
+      "companionArtifacts": {},
+      "deviceDetailsArtifact": "",
+      "deviceListArtifact": "docs/validation/artifacts/ios-device-discovery-current/xctrace-devices.txt",
+      "deviceListSource": "xctrace",
+      "devicectlDevicesArtifact": "",
+      "devicectlErrorArtifact": "",
+      "errorArtifact": "",
+      "deviceSummary": null,
+      "evidenceBoundary": "Device discovery is a setup handoff only. It does not prove Family Controls authorization, Safari content blocking, DeviceActivity shielding, normal browsing allow, adult intercept, or challenge verification.",
+      "exists": true,
+      "generatedAt": "2026-06-11T08:35:36.965Z",
+      "deviceDiscoveryFreshness": {
+        "ageMs": 2134935,
+        "ageMinutes": 35.58,
+        "fresh": false,
+        "status": "stale"
+      },
+      "manualVerificationRequired": false,
+      "manualFlowCount": 0,
+      "next": "Connect an entitlement-approved physical iPhone, unlock it, trust this Mac, then rerun npm run evidence:ios-devices.",
+      "outputDir": "docs/validation/artifacts/ios-device-discovery-current",
+      "physicalDeviceCount": 0,
+      "readyDeviceCount": 0,
+      "readyPhysicalCandidateCount": 0,
+      "releaseEvidenceSatisfied": false,
+      "releaseGate": "ios-physical-device-validation",
+      "result": "no-physical-device",
+      "runId": "ios-device-discovery-current",
+      "schema": "freed-ios-device-discovery-v1",
+      "sourceArtifacts": [],
+      "sourceFreshness": null,
+      "staleReason": "device-discovery-stale",
+      "status": "stale-device-discovery",
+      "xctraceDevicesArtifact": "docs/validation/artifacts/ios-device-discovery-current/xctrace-devices.txt",
+      "xctraceErrorArtifact": "",
+      "deviceDiscoveryFreshnessStatus": "stale"
+    },
+    {
+      "id": "ios-physical-capture",
+      "label": "iOS Physical Capture Packet",
+      "artifact": "docs/validation/artifacts/ios-physical-current/ios-physical-device-capture/capture-manifest.json",
+      "requiredForRelease": true,
+      "artifactCandidates": [
+        "docs/validation/artifacts/ios-physical-current/ios-physical-device-capture/capture-manifest.json"
+      ],
+      "appPackageProof": "",
+      "companionArtifacts": {},
+      "deviceDetailsArtifact": "",
+      "deviceListArtifact": "",
+      "deviceListSource": "",
+      "devicectlDevicesArtifact": "",
+      "devicectlErrorArtifact": "",
+      "errorArtifact": "",
+      "deviceSummary": null,
+      "evidenceBoundary": "",
+      "exists": true,
+      "generatedAt": "2026-06-10T23:20:59.607Z",
+      "deviceDiscoveryFreshness": null,
+      "manualVerificationRequired": true,
+      "manualFlowCount": 25,
+      "next": "",
+      "outputDir": "docs/validation/artifacts/ios-physical-current/ios-physical-device-capture",
+      "physicalDeviceCount": null,
+      "readyDeviceCount": null,
+      "readyPhysicalCandidateCount": null,
+      "releaseEvidenceSatisfied": false,
+      "releaseGate": "ios-physical-device-validation",
+      "result": "plan-only",
+      "runId": "ios-physical-current",
+      "schema": "freed-ios-physical-device-capture-v1",
+      "sourceArtifacts": [],
+      "sourceFreshness": null,
+      "staleReason": "current-ios-device-discovery-has-no-ready-physical-device, current-ios-device-discovery-stale, current-ios-device-discovery-result-no-physical-device",
+      "status": "blocked-device-not-ready",
+      "xctraceDevicesArtifact": "",
+      "xctraceErrorArtifact": "",
+      "deviceReadyForCapture": false
+    },
+    {
+      "id": "android-device-discovery",
+      "label": "Android Device Discovery",
+      "artifact": "docs/validation/artifacts/android-device-discovery-current/android-device-discovery.json",
+      "artifactCandidates": [
+        "docs/validation/artifacts/android-device-discovery-current/android-device-discovery.json",
+        "docs/validation/artifacts/android-device-discovery-current/android-device-discovery/android-device-discovery.json"
+      ],
+      "requiredForRelease": false,
+      "appPackageProof": "",
+      "companionArtifacts": {},
+      "deviceDetailsArtifact": "",
+      "deviceListArtifact": "",
+      "deviceListSource": "",
+      "devicectlDevicesArtifact": "",
+      "devicectlErrorArtifact": "",
+      "errorArtifact": "",
+      "deviceSummary": null,
+      "evidenceBoundary": "Device discovery is a setup handoff only. It does not prove physical-device status, installed upload-signed FREED APK, Accessibility consent, Usage Access consent, VPN/DNS Guard consent, app shielding, normal browsing allow, adult intercept, or challenge verification.",
+      "exists": true,
+      "generatedAt": "2026-06-11T08:35:34.359Z",
+      "deviceDiscoveryFreshness": {
+        "ageMs": 2137541,
+        "ageMinutes": 35.63,
+        "fresh": false,
+        "status": "stale"
+      },
+      "manualVerificationRequired": false,
+      "manualFlowCount": 0,
+      "next": "Connect a physical Android phone, enable USB debugging, authorize this Mac, then rerun npm run evidence:android-devices.",
+      "outputDir": "docs/validation/artifacts/android-device-discovery-current",
+      "physicalDeviceCount": null,
+      "readyDeviceCount": 0,
+      "readyPhysicalCandidateCount": 0,
+      "releaseEvidenceSatisfied": false,
+      "releaseGate": "android-real-browser-validation",
+      "result": "no-ready-android-device",
+      "runId": "android-device-discovery-current",
+      "schema": "freed-android-device-discovery-v1",
+      "sourceArtifacts": [],
+      "sourceFreshness": null,
+      "staleReason": "device-discovery-stale",
+      "status": "stale-device-discovery",
+      "xctraceDevicesArtifact": "",
+      "xctraceErrorArtifact": "",
+      "deviceDiscoveryFreshnessStatus": "stale"
+    },
+    {
+      "id": "android-real-browser-capture",
+      "label": "Android Real-Browser Capture Packet",
+      "artifact": "docs/validation/artifacts/android-real-browser-current/android-real-browser-capture/capture-manifest.json",
+      "requiredForRelease": true,
+      "artifactCandidates": [
+        "docs/validation/artifacts/android-real-browser-current/android-real-browser-capture/capture-manifest.json"
+      ],
+      "appPackageProof": "",
+      "companionArtifacts": {},
+      "deviceDetailsArtifact": "",
+      "deviceListArtifact": "",
+      "deviceListSource": "",
+      "devicectlDevicesArtifact": "",
+      "devicectlErrorArtifact": "",
+      "errorArtifact": "",
+      "deviceSummary": null,
+      "evidenceBoundary": "",
+      "exists": true,
+      "generatedAt": "2026-06-10T23:22:45.770Z",
+      "deviceDiscoveryFreshness": null,
+      "manualVerificationRequired": true,
+      "manualFlowCount": 0,
+      "next": "",
+      "outputDir": "docs/validation/artifacts/android-real-browser-current/android-real-browser-capture",
+      "physicalDeviceCount": null,
+      "readyDeviceCount": null,
+      "readyPhysicalCandidateCount": null,
+      "releaseEvidenceSatisfied": false,
+      "releaseGate": "android-real-browser-validation",
+      "result": "plan-only",
+      "runId": "android-real-browser-current",
+      "schema": "freed-android-real-browser-capture-v1",
+      "sourceArtifacts": [],
+      "sourceFreshness": null,
+      "staleReason": "",
+      "status": "plan-only",
+      "xctraceDevicesArtifact": "",
+      "xctraceErrorArtifact": ""
+    },
+    {
+      "id": "store-ad-sandbox",
+      "label": "Store/Ad Sandbox",
+      "artifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/capture-manifest.json",
+      "requiredForRelease": true,
+      "artifactCandidates": [
+        "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/capture-manifest.json"
+      ],
+      "appPackageProof": "",
+      "companionArtifacts": {
+        "consolePaymentHandoffArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_CONSOLE_PAYMENT_HANDOFF.md",
+        "evidenceFillTemplateArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/store-ad-sandbox-evidence-fill-template.json",
+        "paywallLaunchScopeTemplateArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/paywall-launch-scope-report.template.json",
+        "consoleProductSetupTemplateArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/store-console-product-setup-report.template.json",
+        "rewardedAdRequestTemplateArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/rewarded-ad-request-report.template.json",
+        "paywallLaunchSourceAuditArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/paywall-launch-source-audit.json",
+        "storeSandboxTestPlanArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_SANDBOX_TEST_PLAN.md",
+        "privacyDisclosureTemplateArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/store-privacy-disclosure-report.template.json",
+        "matrixArtifact": "docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/store-ad-sandbox-matrix.csv"
+      },
+      "deviceDetailsArtifact": "",
+      "deviceListArtifact": "",
+      "deviceListSource": "",
+      "devicectlDevicesArtifact": "",
+      "devicectlErrorArtifact": "",
+      "errorArtifact": "",
+      "deviceSummary": null,
+      "evidenceBoundary": "",
+      "exists": true,
+      "generatedAt": "2026-06-11T05:45:29.440Z",
+      "deviceDiscoveryFreshness": null,
+      "manualVerificationRequired": true,
+      "manualFlowCount": 0,
+      "next": "",
+      "outputDir": "",
+      "physicalDeviceCount": null,
+      "readyDeviceCount": null,
+      "readyPhysicalCandidateCount": null,
+      "releaseEvidenceSatisfied": false,
+      "releaseGate": "store-ad-sandbox-validation",
+      "result": "capture-plan-created",
+      "runId": "store-ad-sandbox-current",
+      "schema": "freed-store-ad-sandbox-capture-v1",
+      "sourceArtifacts": [],
+      "sourceFreshness": null,
+      "staleReason": "app-record-action-packet: app-record-packet-source:store/console-launch-packet.md-hash-mismatch, app-record-browser-readiness: store-console-browser-readiness-report-hash-mismatch, admob-action-packet: admob-action-packet-source:store/console-launch-packet.md-hash-mismatch",
+      "status": "stale-store-source-drift",
+      "xctraceDevicesArtifact": "",
+      "xctraceErrorArtifact": "",
+      "storeSourceFreshnessStatus": "stale-source-drift"
+    },
+    {
+      "id": "normal-browsing-corpus",
+      "label": "Normal Browsing Corpus",
+      "artifact": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/capture-manifest.json",
+      "requiredForRelease": true,
+      "artifactCandidates": [
+        "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/capture-manifest.json"
+      ],
+      "appPackageProof": "",
+      "companionArtifacts": {
+        "evidenceFillTemplateArtifact": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/normal-browsing-evidence-fill-template.json",
+        "matrixArtifact": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/normal-browsing-corpus-matrix.csv"
+      },
+      "deviceDetailsArtifact": "",
+      "deviceListArtifact": "",
+      "deviceListSource": "",
+      "devicectlDevicesArtifact": "",
+      "devicectlErrorArtifact": "",
+      "errorArtifact": "",
+      "deviceSummary": null,
+      "evidenceBoundary": "",
+      "exists": true,
+      "generatedAt": "2026-06-10T03:55:45.176Z",
+      "deviceDiscoveryFreshness": null,
+      "manualVerificationRequired": true,
+      "manualFlowCount": 0,
+      "next": "",
+      "outputDir": "",
+      "physicalDeviceCount": null,
+      "readyDeviceCount": null,
+      "readyPhysicalCandidateCount": null,
+      "releaseEvidenceSatisfied": false,
+      "releaseGate": "normal-browsing-corpus-validation",
+      "result": "capture-matrix-created",
+      "runId": "normal-browsing-current",
+      "schema": "freed-normal-browsing-corpus-capture-v1",
+      "sourceArtifacts": [
+        {
+          "path": "docs/validation/templates/normal-browsing-corpus.template.json",
+          "sha256": "sha256-4d6cd8681f3d515692e21dd51d04c533448c127abe0d9b8daa7bbeff88952d5b"
+        },
+        {
+          "path": "scripts/classifier-safety-corpus.ts",
+          "sha256": "sha256-d12abd0c5721e265db23fce23a4521b7ea5294fe5c83282386a46a45280e1a92"
+        }
+      ],
+      "sourceFreshness": {
+        "comparisons": [
+          {
+            "currentHash": "sha256-4d6cd8681f3d515692e21dd51d04c533448c127abe0d9b8daa7bbeff88952d5b",
+            "currentPath": "docs/validation/templates/normal-browsing-corpus.template.json",
+            "hashMatchesCurrent": true,
+            "id": "normal-browsing-corpus-normal-browsing-corpus.template.json",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-4d6cd8681f3d515692e21dd51d04c533448c127abe0d9b8daa7bbeff88952d5b",
+            "reportedPath": "docs/validation/templates/normal-browsing-corpus.template.json"
+          },
+          {
+            "currentHash": "sha256-d12abd0c5721e265db23fce23a4521b7ea5294fe5c83282386a46a45280e1a92",
+            "currentPath": "scripts/classifier-safety-corpus.ts",
+            "hashMatchesCurrent": true,
+            "id": "normal-browsing-corpus-classifier-safety-corpus.ts",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-d12abd0c5721e265db23fce23a4521b7ea5294fe5c83282386a46a45280e1a92",
+            "reportedPath": "scripts/classifier-safety-corpus.ts"
+          }
+        ],
+        "exists": true,
+        "reason": "",
+        "staleReason": "",
+        "status": "current"
+      },
+      "staleReason": "",
+      "status": "capture-matrix-created",
+      "xctraceDevicesArtifact": "",
+      "xctraceErrorArtifact": "",
+      "sourceFreshnessStatus": "current"
+    },
+    {
+      "id": "performance-profile",
+      "label": "Performance Profile",
+      "artifact": "docs/validation/artifacts/performance-profile-current/performance-profile-capture/capture-manifest.json",
+      "requiredForRelease": true,
+      "artifactCandidates": [
+        "docs/validation/artifacts/performance-profile-current/performance-profile-capture/capture-manifest.json"
+      ],
+      "appPackageProof": "",
+      "companionArtifacts": {
+        "matrixArtifact": "docs/validation/artifacts/performance-profile-current/performance-profile-capture/performance-profile-matrix.csv"
+      },
+      "deviceDetailsArtifact": "",
+      "deviceListArtifact": "",
+      "deviceListSource": "",
+      "devicectlDevicesArtifact": "",
+      "devicectlErrorArtifact": "",
+      "errorArtifact": "",
+      "deviceSummary": null,
+      "evidenceBoundary": "Performance capture packets are setup handoffs only. They do not prove physical-device status, profiler thresholds, DNS latency, network-speed retention, routing boundaries, or battery/RAM/thermal behavior until real QA fills and validates performance-profile.json.",
+      "exists": true,
+      "generatedAt": "2026-06-10T01:55:49.467Z",
+      "deviceDiscoveryFreshness": null,
+      "manualVerificationRequired": true,
+      "manualFlowCount": 15,
+      "next": "",
+      "outputDir": "",
+      "physicalDeviceCount": null,
+      "readyDeviceCount": null,
+      "readyPhysicalCandidateCount": null,
+      "releaseEvidenceSatisfied": false,
+      "releaseGate": "performance-validation",
+      "result": "capture-plan-created",
+      "runId": "performance-profile-current",
+      "schema": "freed-performance-profile-capture-v1",
+      "sourceArtifacts": [
+        {
+          "path": "docs/validation/templates/performance-profile.template.json",
+          "sha256": "sha256-9a5ef483f7eccdbb79becffd78d6463b4867859bfc78230b541f68ff27a23dd6"
+        },
+        {
+          "path": "scripts/performance-profile-evidence.js",
+          "sha256": "sha256-06559aecdf8fc92435a33365e81d48284bb32188574333c2871a0e860c77fbd4"
+        },
+        {
+          "path": "scripts/performance-safety-audit.js",
+          "sha256": "sha256-6c6349eff57a9acef3316874fbbcc56e5f658accb05aaf07bf91f1cffc5aa9b1"
+        }
+      ],
+      "sourceFreshness": {
+        "comparisons": [
+          {
+            "currentHash": "sha256-9a5ef483f7eccdbb79becffd78d6463b4867859bfc78230b541f68ff27a23dd6",
+            "currentPath": "docs/validation/templates/performance-profile.template.json",
+            "hashMatchesCurrent": true,
+            "id": "performance-profile-performance-profile.template.json",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-9a5ef483f7eccdbb79becffd78d6463b4867859bfc78230b541f68ff27a23dd6",
+            "reportedPath": "docs/validation/templates/performance-profile.template.json"
+          },
+          {
+            "currentHash": "sha256-06559aecdf8fc92435a33365e81d48284bb32188574333c2871a0e860c77fbd4",
+            "currentPath": "scripts/performance-profile-evidence.js",
+            "hashMatchesCurrent": true,
+            "id": "performance-profile-performance-profile-evidence.js",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-06559aecdf8fc92435a33365e81d48284bb32188574333c2871a0e860c77fbd4",
+            "reportedPath": "scripts/performance-profile-evidence.js"
+          },
+          {
+            "currentHash": "sha256-6c6349eff57a9acef3316874fbbcc56e5f658accb05aaf07bf91f1cffc5aa9b1",
+            "currentPath": "scripts/performance-safety-audit.js",
+            "hashMatchesCurrent": true,
+            "id": "performance-profile-performance-safety-audit.js",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-6c6349eff57a9acef3316874fbbcc56e5f658accb05aaf07bf91f1cffc5aa9b1",
+            "reportedPath": "scripts/performance-safety-audit.js"
+          }
+        ],
+        "exists": true,
+        "reason": "",
+        "staleReason": "",
+        "status": "current"
+      },
+      "staleReason": "",
+      "status": "capture-plan-created",
+      "xctraceDevicesArtifact": "",
+      "xctraceErrorArtifact": "",
+      "sourceFreshnessStatus": "current"
+    },
+    {
+      "id": "ai-backend-smoke",
+      "label": "AI Backend Smoke",
+      "artifact": "docs/validation/artifacts/ai-backend-smoke-current/ai-backend-smoke-capture/capture-manifest.json",
+      "requiredForRelease": true,
+      "artifactCandidates": [
+        "docs/validation/artifacts/ai-backend-smoke-current/ai-backend-smoke-capture/capture-manifest.json"
+      ],
+      "appPackageProof": "",
+      "companionArtifacts": {
+        "evidenceFillTemplateArtifact": "docs/validation/artifacts/ai-backend-smoke-current/ai-backend-smoke-capture/ai-backend-smoke-evidence-fill-template.json",
+        "matrixArtifact": "docs/validation/artifacts/ai-backend-smoke-current/ai-backend-smoke-capture/ai-backend-smoke-matrix.csv"
+      },
+      "deviceDetailsArtifact": "",
+      "deviceListArtifact": "",
+      "deviceListSource": "",
+      "devicectlDevicesArtifact": "",
+      "devicectlErrorArtifact": "",
+      "errorArtifact": "",
+      "deviceSummary": null,
+      "evidenceBoundary": "AI backend smoke capture packets are setup handoffs only. They do not prove deployed CLARA, challenge, retention, model, safety eval, no-sensitive-echo, personalization, crisis fallback, or provider fallback behavior until real deployed-endpoint QA fills and validates ai-backend-smoke.json.",
+      "exists": true,
+      "generatedAt": "2026-06-09T01:37:56.204Z",
+      "deviceDiscoveryFreshness": null,
+      "manualVerificationRequired": true,
+      "manualFlowCount": 0,
+      "next": "",
+      "outputDir": "",
+      "physicalDeviceCount": null,
+      "readyDeviceCount": null,
+      "readyPhysicalCandidateCount": null,
+      "releaseEvidenceSatisfied": false,
+      "releaseGate": "ai-backend-smoke-validation",
+      "result": "capture-plan-created",
+      "runId": "ai-backend-smoke-current",
+      "schema": "freed-ai-backend-smoke-capture-v1",
+      "sourceArtifacts": [
+        {
+          "path": "docs/validation/templates/ai-backend-smoke.template.json",
+          "sha256": "sha256-387826c948306284133808161acd5674142f6fbda3cf5a1d6175fa1b659e46c8"
+        },
+        {
+          "path": "scripts/ai-backend-smoke-evidence.js",
+          "sha256": "sha256-97420337588870d787098b46b1148ada41c4429369780da30c1a3dec7e2f24d8"
+        },
+        {
+          "path": "scripts/ai-backend-smoke.ts",
+          "sha256": "sha256-4b041c595061584c227eb1d46ec28c10939ceeb90ccec1b4b2233adfbf1df777"
+        },
+        {
+          "path": "scripts/ai-safety-eval.ts",
+          "sha256": "sha256-c23a84fe100e3981a7cf84bdfc5c2427913701eef6d894f036d103e32738811d"
+        }
+      ],
+      "sourceFreshness": {
+        "comparisons": [
+          {
+            "currentHash": "sha256-387826c948306284133808161acd5674142f6fbda3cf5a1d6175fa1b659e46c8",
+            "currentPath": "docs/validation/templates/ai-backend-smoke.template.json",
+            "hashMatchesCurrent": true,
+            "id": "ai-backend-smoke-ai-backend-smoke.template.json",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-387826c948306284133808161acd5674142f6fbda3cf5a1d6175fa1b659e46c8",
+            "reportedPath": "docs/validation/templates/ai-backend-smoke.template.json"
+          },
+          {
+            "currentHash": "sha256-97420337588870d787098b46b1148ada41c4429369780da30c1a3dec7e2f24d8",
+            "currentPath": "scripts/ai-backend-smoke-evidence.js",
+            "hashMatchesCurrent": true,
+            "id": "ai-backend-smoke-ai-backend-smoke-evidence.js",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-97420337588870d787098b46b1148ada41c4429369780da30c1a3dec7e2f24d8",
+            "reportedPath": "scripts/ai-backend-smoke-evidence.js"
+          },
+          {
+            "currentHash": "sha256-4b041c595061584c227eb1d46ec28c10939ceeb90ccec1b4b2233adfbf1df777",
+            "currentPath": "scripts/ai-backend-smoke.ts",
+            "hashMatchesCurrent": true,
+            "id": "ai-backend-smoke-ai-backend-smoke.ts",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-4b041c595061584c227eb1d46ec28c10939ceeb90ccec1b4b2233adfbf1df777",
+            "reportedPath": "scripts/ai-backend-smoke.ts"
+          },
+          {
+            "currentHash": "sha256-c23a84fe100e3981a7cf84bdfc5c2427913701eef6d894f036d103e32738811d",
+            "currentPath": "scripts/ai-safety-eval.ts",
+            "hashMatchesCurrent": true,
+            "id": "ai-backend-smoke-ai-safety-eval.ts",
+            "pathMatchesCurrent": true,
+            "reportedHash": "sha256-c23a84fe100e3981a7cf84bdfc5c2427913701eef6d894f036d103e32738811d",
+            "reportedPath": "scripts/ai-safety-eval.ts"
+          }
+        ],
+        "exists": true,
+        "reason": "",
+        "staleReason": "",
+        "status": "current"
+      },
+      "staleReason": "",
+      "status": "capture-plan-created",
+      "xctraceDevicesArtifact": "",
+      "xctraceErrorArtifact": "",
+      "sourceFreshnessStatus": "current"
+    }
+  ],
+  "nextActions": [
+    {
+      "id": "production-backend-infrastructure",
+      "status": "fail",
+      "requiredEnv": [
+        "SUPABASE_URL",
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "EXPO_PUBLIC_SUPABASE_URL",
+        "EXPO_PUBLIC_SUPABASE_ANON_KEY",
+        "BACKEND_MAINTENANCE_SECRET or CRON_SECRET",
+        "UPSTASH_REDIS_REST_URL",
+        "UPSTASH_REDIS_REST_TOKEN"
+      ],
+      "requiredReports": [
+        "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+        "npm run smoke:backend-readiness -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/backend-readiness-smoke-report.json",
+        "npm run smoke:supabase-schema -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/supabase-schema-smoke-report.json"
+      ],
+      "captureHelperCommand": "",
+      "evidenceFile": ""
+    },
+    {
+      "id": "production-analytics-ingestion",
+      "status": "fail",
+      "requiredEnv": [
+        "EXPO_PUBLIC_ANALYTICS_ENDPOINT"
+      ],
+      "requiredReports": [
+        "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+        "npm run smoke:analytics-ingestion -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/analytics-ingestion-smoke-report.json"
+      ],
+      "captureHelperCommand": "",
+      "evidenceFile": ""
+    },
+    {
+      "id": "production-notification-backend",
+      "status": "fail",
+      "requiredEnv": [
+        "REMOTE_NOTIFICATION_DISPATCH_SECRET",
+        "FCM_SERVER_KEY, FCM_ACCESS_TOKEN + FIREBASE_PROJECT_ID, or FIREBASE_SERVICE_ACCOUNT_JSON(_BASE64)",
+        "APNS_KEY_ID + APNS_TEAM_ID + APNS_BUNDLE_ID + APNS_ENV=production + APNS_PRIVATE_KEY(_BASE64)"
+      ],
+      "requiredReports": [
+        "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+        "npm run smoke:remote-notifications -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/remote-notification-smoke-report.json"
+      ],
+      "captureHelperCommand": "",
+      "evidenceFile": ""
+    },
+    {
+      "id": "production-adult-domain-feed",
+      "status": "fail",
+      "requiredEnv": [
+        "EXPO_PUBLIC_ADULT_DOMAIN_FEED_ENDPOINT",
+        "EXPO_PUBLIC_REQUIRE_REVIEWED_ADULT_DOMAIN_FEED=true",
+        "FREED_ADULT_DOMAIN_FEED_SOURCE_URLS"
+      ],
+      "requiredReports": [
+        "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+        "npm run smoke:adult-domain-feed -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/adult-domain-feed-smoke-report.json"
+      ],
+      "captureHelperCommand": "",
+      "evidenceFile": ""
+    },
+    {
+      "id": "production-monetization",
+      "status": "fail",
+      "requiredEnv": [
+        "EXPO_PUBLIC_MONETIZATION_MODE=native",
+        "EXPO_PUBLIC_STORE_PROVIDER=native-iap",
+        "EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT",
+        "EXPO_PUBLIC_IAP_PRODUCT_*",
+        "EXPO_PUBLIC_ADMOB_APP_ID_IOS",
+        "EXPO_PUBLIC_ADMOB_APP_ID_ANDROID",
+        "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS",
+        "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID",
+        "APP_STORE_BUNDLE_ID",
+        "APP_STORE_SERVER_API_ENV=production",
+        "App Store Server API credentials",
+        "GOOGLE_PLAY_PACKAGE_NAME",
+        "Google Play verification credentials"
+      ],
+      "requiredReports": [
+        "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+        "npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/purchase-verification-smoke-report.json"
+      ],
+      "captureHelperCommand": "",
+      "evidenceFile": "docs/validation/evidence/store-ad-sandbox.json"
+    },
+    {
+      "id": "production-android-signing",
+      "status": "fail",
+      "requiredEnv": [
+        "FREED_ANDROID_UPLOAD_STORE_FILE",
+        "FREED_ANDROID_UPLOAD_STORE_PASSWORD",
+        "FREED_ANDROID_UPLOAD_KEY_ALIAS",
+        "FREED_ANDROID_UPLOAD_KEY_PASSWORD"
+      ],
+      "requiredReports": [
+        "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+        "npm run build:android-apk:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/android-apk-build-report.json",
+        "npm run build:android-aab:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/android-aab-build-report.json"
+      ],
+      "captureHelperCommand": "",
+      "evidenceFile": ""
+    },
+    {
+      "id": "production-ai-backend",
+      "status": "fail",
+      "requiredEnv": [
+        "EXPO_PUBLIC_AI_COACH_MODE=remote",
+        "EXPO_PUBLIC_AI_COACH_ENDPOINT",
+        "EXPO_PUBLIC_AI_CHALLENGE_MODE=remote",
+        "EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT",
+        "OPENAI_API_KEY + OPENAI_MODEL, or GEMINI_API_KEY/GOOGLE_API_KEY/GOOGLE_GENAI_API_KEY + GEMINI_MODEL"
+      ],
+      "requiredReports": [
+        "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+        "npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/ai-backend-smoke-report.json"
+      ],
+      "captureHelperCommand": "",
+      "evidenceFile": "docs/validation/evidence/ai-backend-smoke.json"
+    },
+    {
+      "id": "ios-physical-device-validation",
+      "status": "external",
+      "requiredEnv": [],
+      "requiredReports": [
+        "npm run build:ios-archive:release -- --report docs/validation/artifacts/release-env-current/ios-release-archive-report.json"
+      ],
+      "captureHelperCommand": "npm run evidence:ios-physical-device -- --device <udid-or-name> --adult-host <real-adult-host> --app <signed-freed-app-or-ipa> --short-form-url <youtube-shorts-url> --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/ios-physical-device-capture",
+      "evidenceFile": "docs/validation/evidence/ios-physical-device.json"
+    },
+    {
+      "id": "android-real-browser-validation",
+      "status": "external",
+      "requiredEnv": [],
+      "requiredReports": [],
+      "captureHelperCommand": "npm run evidence:android-real-browser -- --device <serial> --adult-url <real-adult-url> --permission-proof --native-status-proof --dns-guard-proof --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/android-real-browser-capture",
+      "evidenceFile": "docs/validation/evidence/android-real-browser.json"
+    },
+    {
+      "id": "normal-browsing-corpus-validation",
+      "status": "external",
+      "requiredEnv": [],
+      "requiredReports": [],
+      "captureHelperCommand": "npm run evidence:normal-browsing-corpus -- --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/normal-browsing-corpus-capture",
+      "evidenceFile": "docs/validation/evidence/normal-browsing-corpus.json"
+    },
+    {
+      "id": "performance-validation",
+      "status": "external",
+      "requiredEnv": [],
+      "requiredReports": [],
+      "captureHelperCommand": "npm run evidence:performance-profile -- --ios-device <udid-or-name> --android-device <serial> --android-background-cpu-proof --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/performance-profile-capture",
+      "evidenceFile": "docs/validation/evidence/performance-profile.json"
+    },
+    {
+      "id": "store-ad-sandbox-validation",
+      "status": "external",
+      "requiredEnv": [
+        "store/ad production env from production-monetization"
+      ],
+      "requiredReports": [
+        "npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/purchase-verification-smoke-report.json"
+      ],
+      "captureHelperCommand": "npm run evidence:store-ad-sandbox -- --release-env-file <production-env-file> --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/store-ad-sandbox-capture",
+      "evidenceFile": "docs/validation/evidence/store-ad-sandbox.json"
+    },
+    {
+      "id": "ai-backend-smoke-validation",
+      "status": "external",
+      "requiredEnv": [
+        "remote AI production env from production-ai-backend"
+      ],
+      "requiredReports": [
+        "npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/ai-backend-smoke-report.json"
+      ],
+      "captureHelperCommand": "npm run evidence:ai-backend-smoke -- --release-env-file <production-env-file> --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/ai-backend-smoke-capture",
+      "evidenceFile": "docs/validation/evidence/ai-backend-smoke.json"
+    }
+  ]
+}

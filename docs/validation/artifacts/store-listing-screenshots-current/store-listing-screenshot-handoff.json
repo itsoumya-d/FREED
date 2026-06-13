@@ -1,0 +1,164 @@
+{
+  "schema": "freed-store-listing-screenshot-handoff-v1",
+  "generatedAt": "2026-06-11T08:25:20.656Z",
+  "sanitized": true,
+  "runId": "store-listing-screenshots-current",
+  "result": "ready-for-signed-build-capture",
+  "readyForSignedBuildCapture": true,
+  "readyForStoreUpload": false,
+  "releaseEvidenceSatisfied": false,
+  "finalManifestPath": "store/screenshots/listing/manifest.json",
+  "finalManifestExists": false,
+  "finalManifestStatus": "pending-signed-build-capture",
+  "summary": {
+    "passCount": 5,
+    "failCount": 0
+  },
+  "results": [
+    {
+      "id": "listing-plan-present",
+      "status": "PASS",
+      "detail": "Listing screenshot plan exists.",
+      "next": ""
+    },
+    {
+      "id": "listing-copy-concepts-present",
+      "status": "PASS",
+      "detail": "Listing plan/template cover the six approved public listing concepts.",
+      "next": "Update listing-screenshot-plan.md and manifest.template.json so they agree on every concept."
+    },
+    {
+      "id": "listing-template-valid-for-capture",
+      "status": "PASS",
+      "detail": "Listing screenshot template has required concept, dimension, headline, screen, and review-boundary fields.",
+      "next": "Fix store/screenshots/listing/manifest.template.json before capture."
+    },
+    {
+      "id": "signed-build-dependency-ready",
+      "status": "PASS",
+      "detail": "EAS current-source build handoff is ready for an approved signed-build capture.",
+      "next": "Run npm run evidence:eas-build-handoff before final listing screenshots."
+    },
+    {
+      "id": "final-manifest-not-faked",
+      "status": "PASS",
+      "detail": "Final listing manifest is still absent, so no fake public screenshots are being treated as upload-ready.",
+      "next": "If final screenshots were captured, validate store/screenshots/listing/manifest.json with npm run audit:store-catalog."
+    }
+  ],
+  "sourceArtifacts": {
+    "easBuildHandoff": {
+      "path": "docs/validation/artifacts/eas-build-current/eas-build-handoff.json",
+      "exists": true,
+      "sha256": "sha256-765e73c338b522d7ee1d7ff8a51b37a1f9296fdfc0ad48183360b564a98f3096"
+    },
+    "plan": {
+      "path": "store/screenshots/listing-screenshot-plan.md",
+      "sha256": "sha256-697adc5a9495a0483f7666fe00961641619ad8414852a8ff6a74f10b9ba0d0e9"
+    },
+    "template": {
+      "path": "store/screenshots/listing/manifest.template.json",
+      "sha256": "sha256-18dfbe0634b6c2d6128e17a5adcfd647db3f6585655d641e191160320b05b463"
+    }
+  },
+  "captureRows": [
+    {
+      "deviceClass": "phone",
+      "finalAssetPath": "",
+      "headline": "TURN ON REAL PROTECTION",
+      "height": 2796,
+      "id": "turn-on-real-protection",
+      "platform": "universal",
+      "reviewBoundary": "Public store listing screenshot only; not physical-device protection evidence.",
+      "screen": "protection setup checklist",
+      "sourceBuild": "",
+      "sourceCapturePath": "",
+      "width": 1290
+    },
+    {
+      "deviceClass": "phone",
+      "finalAssetPath": "",
+      "headline": "BLOCK ADULT SITES SAFELY",
+      "height": 2796,
+      "id": "block-adult-sites-safely",
+      "platform": "universal",
+      "reviewBoundary": "Public store listing screenshot only; not physical-device protection evidence.",
+      "screen": "activation test passed",
+      "sourceBuild": "",
+      "sourceCapturePath": "",
+      "width": 1290
+    },
+    {
+      "deviceClass": "phone",
+      "finalAssetPath": "",
+      "headline": "INTERRUPT APP LOOPS",
+      "height": 2796,
+      "id": "interrupt-app-loops",
+      "platform": "universal",
+      "reviewBoundary": "Public store listing screenshot only; not physical-device protection evidence.",
+      "screen": "selected app limits",
+      "sourceBuild": "",
+      "sourceCapturePath": "",
+      "width": 1290
+    },
+    {
+      "deviceClass": "phone",
+      "finalAssetPath": "",
+      "headline": "RECOVER IN THE MOMENT",
+      "height": 2796,
+      "id": "recover-in-the-moment",
+      "platform": "universal",
+      "reviewBoundary": "Public store listing screenshot only; not physical-device protection evidence.",
+      "screen": "recovery challenge",
+      "sourceBuild": "",
+      "sourceCapturePath": "",
+      "width": 1290
+    },
+    {
+      "deviceClass": "phone",
+      "finalAssetPath": "",
+      "headline": "KEEP PRIVACY LOCAL",
+      "height": 2796,
+      "id": "keep-privacy-local",
+      "platform": "universal",
+      "reviewBoundary": "Public store listing screenshot only; not physical-device protection evidence.",
+      "screen": "privacy controls",
+      "sourceBuild": "",
+      "sourceCapturePath": "",
+      "width": 1290
+    },
+    {
+      "deviceClass": "phone",
+      "finalAssetPath": "",
+      "headline": "UPGRADE WITHOUT AD BREAKS",
+      "height": 2796,
+      "id": "upgrade-without-ad-breaks",
+      "platform": "universal",
+      "reviewBoundary": "Public store listing screenshot only; not physical-device protection evidence.",
+      "screen": "Core 3 paywall",
+      "sourceBuild": "",
+      "sourceCapturePath": "",
+      "width": 1290
+    }
+  ],
+  "captureCommands": {
+    "refreshEasHandoff": "npm run evidence:eas-build-handoff -- --run-id eas-build-current --output-dir docs/validation/artifacts/eas-build-current",
+    "validateCatalog": "npm run audit:store-catalog -- --report docs/validation/artifacts/store-launch-catalog-current/store-launch-catalog-audit.json",
+    "refreshLaunchStatus": "npm run status:launch -- --run-id launch-status --output-dir docs/validation/artifacts/launch-status-current"
+  },
+  "manifestRequirements": [
+    "id",
+    "platform",
+    "deviceClass",
+    "sourceBuild",
+    "sourceCapturePath",
+    "finalAssetPath",
+    "headline",
+    "screen",
+    "width",
+    "height",
+    "sha256",
+    "reviewBoundary"
+  ],
+  "releaseBoundary": "Store listing screenshot capture handoff only. This does not prove final screenshots exist, are from a signed build, were uploaded to stores, or satisfy physical-device protection evidence."
+}

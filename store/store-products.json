@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "freed-store-products-v1",
+  "bundleId": "app.freed.recovery",
+  "packageName": "app.freed.recovery",
+  "entitlementId": "premium",
+  "subscriptionGroupId": "freed_premium",
+  "priceLocale": "US",
+  "launchProductIds": ["freed_premium_yearly", "freed_premium_monthly", "freed_premium_lifetime"],
+  "consoleExportFiles": {
+    "appStoreConnectCsv": "store/app-store/in-app-purchases.csv",
+    "googlePlayCsv": "store/play-store/products.csv"
+  },
+  "launchEconomics": {
+    "schemaVersion": "freed-launch-economics-v1",
+    "source": "store/pricing-economics.md",
+    "conservativeStoreFeePercent": 30,
+    "optimizedStoreFeePercent": 15,
+    "monthlyReferenceGrossUsd": "9.99",
+    "serverVerificationRequired": true,
+    "rewardedAdsOnlyForFreeUsers": true,
+    "premiumNoAdChallengeEntry": true,
+    "plans": [
+      {
+        "planId": "yearly",
+        "productId": "freed_premium_yearly",
+        "grossUsd": "39.99",
+        "estimatedNetUsdAt30PercentStoreFee": "27.99",
+        "estimatedNetUsdAt15PercentStoreFee": "33.99",
+        "monthlyEquivalentGrossUsd": "3.33",
+        "annualizedGrossUsd": "39.99",
+        "discountVsMonthlyPercent": 67,
+        "profitabilityRole": "primary-value"
+      },
+      {
+        "planId": "monthly",
+        "productId": "freed_premium_monthly",
+        "grossUsd": "9.99",
+        "estimatedNetUsdAt30PercentStoreFee": "6.99",
+        "estimatedNetUsdAt15PercentStoreFee": "8.49",
+        "monthlyEquivalentGrossUsd": "9.99",
+        "annualizedGrossUsd": "119.88",
+        "discountVsMonthlyPercent": 0,
+        "profitabilityRole": "entry-recurring"
+      },
+      {
+        "planId": "lifetime",
+        "productId": "freed_premium_lifetime",
+        "grossUsd": "79.99",
+        "estimatedNetUsdAt30PercentStoreFee": "55.99",
+        "estimatedNetUsdAt15PercentStoreFee": "67.99",
+        "breakevenMonthsVsMonthly": 8,
+        "breakevenYearsVsYearly": 2,
+        "profitabilityRole": "cashflow-anchor"
+      }
+    ]
+  },
+  "products": [
+    {
+      "planId": "yearly",
+      "productId": "freed_premium_yearly",
+      "appleType": "auto-renewable-subscription",
+      "googleType": "subscription",
+      "displayName": "FREED Premium Annual",
+      "priceUsd": "39.99",
+      "description": "Annual premium recovery protection",
+      "apple": {
+        "productId": "freed_premium_yearly",
+        "referenceName": "FREED Premium Annual",
+        "productType": "auto-renewable-subscription",
+        "subscriptionGroupId": "freed_premium",
+        "duration": "P1Y",
+        "priceUsdIntent": "39.99",
+        "reviewScreenshot": "store/screenshots/paywall-yearly.png",
+        "localizations": {
+          "en-US": {
+            "displayName": "FREED Premium Annual",
+            "description": "Annual premium recovery protection with DNS Guard, app timers, and no-ad challenge entry."
+          }
+        }
+      },
+      "google": {
+        "productId": "freed_premium_yearly",
+        "productType": "subscription",
+        "basePlanId": "yearly",
+        "billingPeriod": "P1Y",
+        "offerId": "yearly-standard",
+        "priceUsdIntent": "39.99",
+        "status": "draft-until-sandbox-verified",
+        "localizations": {
+          "en-US": {
+            "displayName": "FREED Premium Annual",
+            "description": "Annual premium recovery protection with DNS Guard, app timers, and no-ad challenge entry."
+          }
+        }
+      }
+    },
+    {
+      "planId": "monthly",
+      "productId": "freed_premium_monthly",
+      "appleType": "auto-renewable-subscription",
+      "googleType": "subscription",
+      "displayName": "FREED Premium Monthly",
+      "priceUsd": "9.99",
+      "description": "Monthly premium recovery protection",
+      "apple": {
+        "productId": "freed_premium_monthly",
+        "referenceName": "FREED Premium Monthly",
+        "productType": "auto-renewable-subscription",
+        "subscriptionGroupId": "freed_premium",
+        "duration": "P1M",
+        "priceUsdIntent": "9.99",
+        "reviewScreenshot": "store/screenshots/paywall-monthly.png",
+        "localizations": {
+          "en-US": {
+            "displayName": "FREED Premium Monthly",
+            "description": "Monthly premium recovery protection with DNS Guard, app timers, and no-ad challenge entry."
+          }
+        }
+      },
+      "google": {
+        "productId": "freed_premium_monthly",
+        "productType": "subscription",
+        "basePlanId": "monthly",
+        "billingPeriod": "P1M",
+        "offerId": "monthly-standard",
+        "priceUsdIntent": "9.99",
+        "status": "draft-until-sandbox-verified",
+        "localizations": {
+          "en-US": {
+            "displayName": "FREED Premium Monthly",
+            "description": "Monthly premium recovery protection with DNS Guard, app timers, and no-ad challenge entry."
+          }
+        }
+      }
+    },
+    {
+      "planId": "lifetime",
+      "productId": "freed_premium_lifetime",
+      "appleType": "non-consumable",
+      "googleType": "one-time-product",
+      "displayName": "FREED Premium Lifetime",
+      "priceUsd": "79.99",
+      "description": "Lifetime premium recovery protection",
+      "apple": {
+        "productId": "freed_premium_lifetime",
+        "referenceName": "FREED Premium Lifetime",
+        "productType": "non-consumable",
+        "subscriptionGroupId": null,
+        "duration": "lifetime",
+        "priceUsdIntent": "79.99",
+        "reviewScreenshot": "store/screenshots/paywall-lifetime.png",
+        "localizations": {
+          "en-US": {
+            "displayName": "FREED Premium Lifetime",
+            "description": "Lifetime premium recovery protection with DNS Guard, app timers, and no-ad challenge entry."
+          }
+        }
+      },
+      "google": {
+        "productId": "freed_premium_lifetime",
+        "productType": "one-time-product",
+        "purchaseType": "non-consumable",
+        "basePlanId": "",
+        "billingPeriod": "lifetime",
+        "offerId": "",
+        "priceUsdIntent": "79.99",
+        "status": "draft-until-sandbox-verified",
+        "localizations": {
+          "en-US": {
+            "displayName": "FREED Premium Lifetime",
+            "description": "Lifetime premium recovery protection with DNS Guard, app timers, and no-ad challenge entry."
+          }
+        }
+      }
+    }
+  ],
+  "futureProductsDisabledForV1": [
+    "freed_family_yearly",
+    "freed_accountability_monthly",
+    "freed_ai_coach_monthly"
+  ]
+}

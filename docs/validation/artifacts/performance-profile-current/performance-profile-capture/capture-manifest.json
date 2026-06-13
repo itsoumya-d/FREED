@@ -1,0 +1,215 @@
+{
+  "generatedAt": "2026-06-10T01:55:49.467Z",
+  "manualFlows": [
+    {
+      "artifactField": "profile.platformProfiles.ios.profilerArtifact",
+      "metricField": "profile.platformProfiles.ios.durationMinutes/maxResidentMemoryMb/maxDeviceTemperatureC/batteryDrainPercent",
+      "runId": "performance-profile-current-ios-performance-profile",
+      "summary": "Run a 60+ minute physical-device profiler session with FREED protection enabled."
+    },
+    {
+      "artifactField": "profile.platformProfiles.ios.backgroundCpuArtifact",
+      "metricField": "profile.platformProfiles.ios.backgroundCpuPercent",
+      "runId": "performance-profile-current-ios-background-cpu",
+      "summary": "Capture idle and normal-browsing background CPU proof; threshold is 5% or less."
+    },
+    {
+      "artifactField": "profile.platformProfiles.ios.profilerArtifact",
+      "metricField": "profile.platformProfiles.ios.noForegroundPollingLoopObserved/noContinuousScreenshotOrOcrConfirmed/noContinuousImageClassificationConfirmed",
+      "runId": "performance-profile-current-ios-polling-loop-review",
+      "summary": "Attach profiler/log proof that FREED is not running a foreground polling loop, continuous screenshot/OCR analysis, or continuous image-classification loop."
+    },
+    {
+      "artifactField": "profile.platformProfiles.ios.routingProofArtifact",
+      "metricField": "profile.platformProfiles.ios.noFullTrafficProxyConfirmed/noPacketInspectionConfirmed/noMitmHttpsConfirmed",
+      "runId": "performance-profile-current-ios-proxy-routing-review",
+      "summary": "Attach routing proof that normal traffic is not sent through a full-traffic proxy, packet-inspected tunnel, or MITM HTTPS path."
+    },
+    {
+      "artifactField": "profile.platformProfiles.ios.networkSpeedArtifact",
+      "metricField": "profile.platformProfiles.ios.downloadMbpsBefore/downloadMbpsDuring",
+      "runId": "performance-profile-current-ios-network-speed",
+      "summary": "Measure download speed before and during protection while loading https://youtube.com/results?search_query=workout."
+    },
+    {
+      "artifactField": "profile.platformProfiles.ios.dnsLatencyArtifact",
+      "metricField": "profile.platformProfiles.ios.dnsLatencyP95Ms",
+      "runId": "performance-profile-current-ios-dns-latency",
+      "summary": "Measure DNS p95 latency while protection is active."
+    },
+    {
+      "artifactField": "profile.platformProfiles.android.profilerArtifact",
+      "metricField": "profile.platformProfiles.android.durationMinutes/maxResidentMemoryMb/maxDeviceTemperatureC/batteryDrainPercent",
+      "runId": "performance-profile-current-android-performance-profile",
+      "summary": "Run a 60+ minute physical-device profiler session with FREED protection enabled."
+    },
+    {
+      "artifactField": "profile.platformProfiles.android.backgroundCpuArtifact",
+      "metricField": "profile.platformProfiles.android.backgroundCpuPercent",
+      "runId": "performance-profile-current-android-background-cpu",
+      "summary": "Capture idle and normal-browsing background CPU proof; threshold is 5% or less."
+    },
+    {
+      "artifactField": "profile.platformProfiles.android.profilerArtifact",
+      "metricField": "profile.platformProfiles.android.noForegroundPollingLoopObserved/noContinuousScreenshotOrOcrConfirmed/noContinuousImageClassificationConfirmed",
+      "runId": "performance-profile-current-android-polling-loop-review",
+      "summary": "Attach profiler/log proof that FREED is not running a foreground polling loop, continuous screenshot/OCR analysis, or continuous image-classification loop."
+    },
+    {
+      "artifactField": "profile.platformProfiles.android.routingProofArtifact",
+      "metricField": "profile.platformProfiles.android.noFullTrafficProxyConfirmed/noPacketInspectionConfirmed/noMitmHttpsConfirmed",
+      "runId": "performance-profile-current-android-proxy-routing-review",
+      "summary": "Attach routing proof that normal traffic is not sent through a full-traffic proxy, packet-inspected tunnel, or MITM HTTPS path."
+    },
+    {
+      "artifactField": "profile.platformProfiles.android.networkSpeedArtifact",
+      "metricField": "profile.platformProfiles.android.downloadMbpsBefore/downloadMbpsDuring",
+      "runId": "performance-profile-current-android-network-speed",
+      "summary": "Measure download speed before and during protection while loading https://youtube.com/results?search_query=workout."
+    },
+    {
+      "artifactField": "profile.platformProfiles.android.dnsLatencyArtifact",
+      "metricField": "profile.platformProfiles.android.dnsLatencyP95Ms",
+      "runId": "performance-profile-current-android-dns-latency",
+      "summary": "Measure DNS p95 latency while protection is active."
+    },
+    {
+      "artifactField": "profile.platformProfiles.android.dnsResolverFailoverArtifact",
+      "metricField": "profile.platformProfiles.android.dnsResolverFailoverRunId",
+      "runId": "performance-profile-current-android-dns-resolver-failover",
+      "summary": "Disable or blackhole the primary DNS route and prove DNS Guard fails over to the secondary resolver."
+    },
+    {
+      "artifactField": "profile.platformProfiles.android.dnsServfailArtifact",
+      "metricField": "profile.platformProfiles.android.dnsServfailFallbackConfirmed",
+      "runId": "performance-profile-current-android-dns-servfail",
+      "summary": "Blackhole all configured DNS resolvers and prove allowed DNS receives bounded SERVFAIL instead of hanging silently."
+    },
+    {
+      "artifactField": "profile.platformProfiles.android.vpnRevocationArtifact",
+      "metricField": "profile.platformProfiles.android.vpnRevocationCleanupConfirmed",
+      "runId": "performance-profile-current-android-vpn-revocation",
+      "summary": "Revoke Android VPN permission or replace the active VPN slot and prove FREED cleans up foreground-service and TUN state."
+    }
+  ],
+  "manualVerificationRequired": true,
+  "normalUrl": "https://youtube.com/results?search_query=workout",
+  "platformProfiles": [
+    {
+      "backgroundCpuArtifact": "",
+      "backgroundCpuPercent": "",
+      "backgroundCpuRunId": "performance-profile-current-ios-background-cpu",
+      "routingProofRunId": "performance-profile-current-ios-routing-proof",
+      "batteryDrainPercent": "",
+      "deviceModel": "",
+      "dnsLatencyP95Ms": "",
+      "dnsLatencyRunId": "performance-profile-current-ios-dns-latency",
+      "dnsLatencyArtifact": "",
+      "downloadMbpsBefore": "",
+      "downloadMbpsDuring": "",
+      "durationMinutes": "",
+      "isPhysicalDevice": "",
+      "maxDeviceTemperatureC": "",
+      "maxResidentMemoryMb": "",
+      "networkSpeedRunId": "performance-profile-current-ios-network-speed",
+      "networkSpeedArtifact": "",
+      "noBatteryDrainRegression": "",
+      "noContinuousScreenshotOrOcrConfirmed": "",
+      "noForegroundPollingLoopObserved": "",
+      "noFullTrafficProxyConfirmed": "",
+      "noMitmHttpsConfirmed": "",
+      "noContinuousImageClassificationConfirmed": "",
+      "noOverheating": "",
+      "noPacketInspectionConfirmed": "",
+      "normalBrowsingSpeedAcceptable": "",
+      "osVersion": "",
+      "platform": "ios",
+      "profilerArtifact": "",
+      "protectionMode": "Screen Time ManagedSettings adult filter",
+      "routingProofArtifact": "",
+      "runId": "performance-profile-current-ios-performance-profile",
+      "status": "pending-manual-qa"
+    },
+    {
+      "backgroundCpuArtifact": "",
+      "backgroundCpuPercent": "",
+      "backgroundCpuRunId": "performance-profile-current-android-background-cpu",
+      "routingProofRunId": "performance-profile-current-android-routing-proof",
+      "batteryDrainPercent": "",
+      "deviceModel": "",
+      "dnsResolverFailoverArtifact": "",
+      "dnsResolverFailoverRunId": "performance-profile-current-android-dns-resolver-failover",
+      "dnsLatencyP95Ms": "",
+      "dnsLatencyRunId": "performance-profile-current-android-dns-latency",
+      "dnsLatencyArtifact": "",
+      "dnsServfailArtifact": "",
+      "dnsServfailFallbackConfirmed": "",
+      "dnsServfailRunId": "performance-profile-current-android-dns-servfail",
+      "downloadMbpsBefore": "",
+      "downloadMbpsDuring": "",
+      "durationMinutes": "",
+      "isPhysicalDevice": "",
+      "maxDeviceTemperatureC": "",
+      "maxResidentMemoryMb": "",
+      "networkSpeedRunId": "performance-profile-current-android-network-speed",
+      "networkSpeedArtifact": "",
+      "noBatteryDrainRegression": "",
+      "noContinuousScreenshotOrOcrConfirmed": "",
+      "noForegroundPollingLoopObserved": "",
+      "noFullTrafficProxyConfirmed": "",
+      "noMitmHttpsConfirmed": "",
+      "noContinuousImageClassificationConfirmed": "",
+      "noOverheating": "",
+      "noPacketInspectionConfirmed": "",
+      "normalBrowsingSpeedAcceptable": "",
+      "osVersion": "",
+      "platform": "android",
+      "profilerArtifact": "",
+      "protectionMode": "DNS Guard DNS-only fallback",
+      "routingProofArtifact": "",
+      "runId": "performance-profile-current-android-performance-profile",
+      "status": "pending-manual-qa",
+      "vpnRevocationArtifact": "",
+      "vpnRevocationCleanupConfirmed": "",
+      "vpnRevocationRunId": "performance-profile-current-android-vpn-revocation"
+    }
+  ],
+  "platforms": [
+    "ios",
+    "android"
+  ],
+  "plannedDurationMinutes": 60,
+  "releaseGate": "performance-validation",
+  "result": "capture-plan-created",
+  "runId": "performance-profile-current",
+  "schema": "freed-performance-profile-capture-v1",
+  "sourceArtifacts": [
+    {
+      "path": "docs/validation/templates/performance-profile.template.json",
+      "sha256": "sha256-9a5ef483f7eccdbb79becffd78d6463b4867859bfc78230b541f68ff27a23dd6"
+    },
+    {
+      "path": "scripts/performance-profile-evidence.js",
+      "sha256": "sha256-06559aecdf8fc92435a33365e81d48284bb32188574333c2871a0e860c77fbd4"
+    },
+    {
+      "path": "scripts/performance-safety-audit.js",
+      "sha256": "sha256-6c6349eff57a9acef3316874fbbcc56e5f658accb05aaf07bf91f1cffc5aa9b1"
+    }
+  ],
+  "deviceMetadataSkipped": true,
+  "evidenceSatisfied": false,
+  "evidenceBoundary": "Performance capture packets are setup handoffs only. They do not prove physical-device status, profiler thresholds, DNS latency, network-speed retention, routing boundaries, or battery/RAM/thermal behavior until real QA fills and validates performance-profile.json.",
+  "thresholds": {
+    "backgroundCpuPercentMax": 5,
+    "batteryDrainPercentMax": 8,
+    "dnsLatencyP95MsMax": 100,
+    "downloadMbpsDuringMinRatio": 0.8,
+    "durationMinutesMin": 30,
+    "maxDeviceTemperatureCMax": 42,
+    "maxResidentMemoryMbMax": 350
+  },
+  "toolTimeoutMs": 30000,
+  "toolArtifacts": [],
+  "matrixArtifact": "docs/validation/artifacts/performance-profile-current/performance-profile-capture/performance-profile-matrix.csv"
+}

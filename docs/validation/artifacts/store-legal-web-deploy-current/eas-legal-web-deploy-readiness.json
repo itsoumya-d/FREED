@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "freed-eas-legal-web-deploy-readiness-v1",
+  "generatedAt": "2026-06-11T03:03:18.666Z",
+  "sanitized": true,
+  "result": "blocked-before-deploy",
+  "mode": "readiness",
+  "passCount": 2,
+  "failCount": 3,
+  "staticExportReady": true,
+  "hostedAlreadyVerified": false,
+  "readyForApprovedDeploy": false,
+  "approval": {
+    "env": "FREED_LEGAL_WEB_DEPLOY_APPROVED",
+    "expectedValue": "ready-to-deploy-legal-pages",
+    "approvedForDeploy": false,
+    "requiredForDeploy": true
+  },
+  "easCli": {
+    "command": "npx eas-cli --version",
+    "exitCode": 0,
+    "outputSnippet": "eas-cli/20.1.0 darwin-arm64 node-v24.14.0",
+    "signal": null,
+    "status": "pass",
+    "timedOut": false
+  },
+  "easAccount": {
+    "loggedIn": false,
+    "accountName": "",
+    "command": "npx eas-cli whoami",
+    "status": "fail",
+    "outputSnippet": "Not logged in"
+  },
+  "easProject": {
+    "dynamicProjectIdSupported": true,
+    "linked": false,
+    "command": "npx eas-cli project:info",
+    "projectIdConfigured": false,
+    "projectIdEnvKeys": [
+      "EAS_PROJECT_ID",
+      "EXPO_PROJECT_ID"
+    ],
+    "projectIdFormat": "env-missing",
+    "projectIdSource": "app.config.js:env-projectId-marker",
+    "status": "fail",
+    "outputSnippet": "Skipped because EAS project link metadata is not configured."
+  },
+  "deploymentAttempted": false,
+  "deployCommand": null,
+  "deploymentBlockedBy": [
+    "eas-project-id-not-configured",
+    "eas-account-not-logged-in",
+    "eas-project-not-linked"
+  ],
+  "sourceReports": {
+    "hostedReport": "docs/validation/artifacts/store-legal-hosted-current/store-legal-hosted-url-audit.json",
+    "webExportReport": "docs/validation/artifacts/store-legal-web-current/store-legal-web-export-audit.json"
+  },
+  "commands": {
+    "exportWeb": "npm run export:web",
+    "auditStaticExport": "npm run audit:store-legal-web -- --report docs/validation/artifacts/store-legal-web-current/store-legal-web-export-audit.json",
+    "readiness": "npm run eas:deploy:legal-web -- --report docs/validation/artifacts/store-legal-web-deploy-current/eas-legal-web-deploy-readiness.json",
+    "approvedDeploy": "FREED_LEGAL_WEB_DEPLOY_APPROVED=ready-to-deploy-legal-pages npm run eas:deploy:legal-web -- --deploy --report docs/validation/artifacts/store-legal-web-deploy-current/eas-legal-web-deploy-readiness.json",
+    "hostedAudit": "npm run audit:store-legal-hosted -- --report docs/validation/artifacts/store-legal-hosted-current/store-legal-hosted-url-audit.json",
+    "refreshLaunchStatus": "npm run status:launch -- --run-id launch-status-current --output-dir docs/validation/artifacts/launch-status-current"
+  },
+  "checks": [
+    {
+      "id": "static-export-audit-ready",
+      "status": "pass",
+      "detail": "The current Expo static export contains crawler-readable privacy, support, and account-deletion HTML.",
+      "next": "Run npm run export:web and npm run audit:store-legal-web before deploying legal pages."
+    },
+    {
+      "id": "eas-cli-available",
+      "status": "pass",
+      "detail": "EAS CLI is available: eas-cli/20.1.0 darwin-arm64 node-v24.14.0",
+      "next": "Install or allow npx eas-cli, then rerun this readiness check."
+    },
+    {
+      "id": "eas-project-id-configured",
+      "status": "fail",
+      "detail": "app.config.js supports env-backed EAS project metadata, but EAS_PROJECT_ID or EXPO_PROJECT_ID is not set for this readiness run.",
+      "next": "Set EAS_PROJECT_ID or EXPO_PROJECT_ID from the linked Expo project for this run, or run npx eas-cli init with the correct Expo account/project and commit only public project link metadata."
+    },
+    {
+      "id": "eas-account-login",
+      "status": "fail",
+      "detail": "EAS account is not logged in: Not logged in",
+      "next": "Run npx eas-cli login, or set EXPO_TOKEN for CI, then rerun this readiness check."
+    },
+    {
+      "id": "eas-project-linked",
+      "status": "fail",
+      "detail": "EAS project metadata is not readable: Skipped because EAS project link metadata is not configured.",
+      "next": "Run npx eas-cli project:info after logging in, and run npx eas-cli init if this project is not linked."
+    }
+  ],
+  "releaseBoundary": "EAS legal web deploy readiness only. This does not prove DNS ownership, custom-domain attachment, TLS issuance, hosted URL availability, legal review, store-console entry, platform approval, sandbox purchases, or physical-device evidence."
+}

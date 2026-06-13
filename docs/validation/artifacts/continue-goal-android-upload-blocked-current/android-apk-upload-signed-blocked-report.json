@@ -1,0 +1,38 @@
+{
+  "schema": "freed-android-apk-build-report-v1",
+  "artifactType": "apk",
+  "generatedAt": "2026-06-07T06:27:06.704Z",
+  "sanitized": true,
+  "requested": {
+    "arch": "arm64-v8a",
+    "artifact": "apk",
+    "buildIdleTimeoutMs": 600000,
+    "buildTimeoutMs": 2700000,
+    "engine": "auto",
+    "requireUploadSigning": true,
+    "skipCopy": false
+  },
+  "buildResult": "blocked-before-gradle",
+  "result": "fail",
+  "blockedStage": "pre-gradle-prerequisite",
+  "summary": {
+    "passCount": 0,
+    "failCount": 1
+  },
+  "results": [
+    {
+      "id": "android-apk-pre-gradle-prerequisites",
+      "status": "FAIL",
+      "detail": "Android upload signing requires a production Android AdMob app ID. Set EXPO_PUBLIC_ADMOB_APP_ID_ANDROID or EXPO_PUBLIC_ADMOB_APP_ID to a non-sample ca-app-pub-0000000000000000~0000000000 value."
+    }
+  ],
+  "releaseBoundary": {
+    "gradleInvoked": false,
+    "uploadSignedBuildProduced": false,
+    "playUploadReady": false,
+    "localInstallArtifactProduced": false,
+    "reason": "Android upload signing requires a production Android AdMob app ID. Set EXPO_PUBLIC_ADMOB_APP_ID_ANDROID or EXPO_PUBLIC_ADMOB_APP_ID to a non-sample ca-app-pub-0000000000000000~0000000000 value."
+  },
+  "apk": null,
+  "aab": null
+}

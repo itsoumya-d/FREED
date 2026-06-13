@@ -1,0 +1,216 @@
+{
+  "schema": "freed-android-apk-build-report-v1",
+  "artifactType": "apk",
+  "generatedAt": "2026-06-07T08:17:19.302Z",
+  "sanitized": true,
+  "requested": {
+    "arch": "arm64-v8a",
+    "artifact": "apk",
+    "buildIdleTimeoutMs": 600000,
+    "buildTimeoutMs": 2700000,
+    "engine": "auto",
+    "requireUploadSigning": false,
+    "skipCopy": false
+  },
+  "adMob": {
+    "androidAppIdConfigured": false,
+    "androidAppIdSource": "",
+    "mode": "local-test-app-id",
+    "productionReady": false,
+    "runtimeManifestAppIdConfigured": true,
+    "runtimeManifestAppIdMode": "local-test-app-id",
+    "runtimeManifestAppIdSource": "local-google-sample-test-id",
+    "sampleAppIdUsed": true
+  },
+  "environment": {
+    "javaHome": "/opt/homebrew/Cellar/openjdk@17/17.0.19/libexec/openjdk.jdk/Contents/Home",
+    "gradleUserHome": "/tmp/freed-gradle-home",
+    "gradleProperties": "/tmp/freed-gradle-home/gradle.properties",
+    "foojayResolver": "already-compatible"
+  },
+  "hermesProbe": {
+    "ok": true,
+    "reason": "hermesc responded within 5s"
+  },
+  "selectedEngine": "hermes",
+  "signing": {
+    "missingInputs": [
+      "FREED_ANDROID_UPLOAD_STORE_FILE",
+      "FREED_ANDROID_UPLOAD_STORE_PASSWORD",
+      "FREED_ANDROID_UPLOAD_KEY_ALIAS",
+      "FREED_ANDROID_UPLOAD_KEY_PASSWORD"
+    ],
+    "mode": "debug-key-fallback",
+    "playConsoleReady": false,
+    "required": false,
+    "storeFileConfigured": false,
+    "storeFileExists": false,
+    "uploadKeystore": {
+      "certificateDn": "",
+      "certificateSha256Digest": "",
+      "checked": false,
+      "debugSigned": false
+    }
+  },
+  "gradleCommand": [
+    "./gradlew",
+    ":app:assembleRelease",
+    "--no-daemon",
+    "--console=plain",
+    "-PreactNativeArchitectures=arm64-v8a",
+    "-PhermesEnabled=true"
+  ],
+  "buildResult": "pass",
+  "result": "fail",
+  "summary": {
+    "passCount": 4,
+    "failCount": 3
+  },
+  "results": [
+    {
+      "id": "android-apk-build",
+      "status": "PASS",
+      "detail": "Release APK built successfully."
+    },
+    {
+      "id": "android-apk-upload-signing",
+      "status": "FAIL",
+      "detail": "Release APK used debug-key fallback; missing FREED_ANDROID_UPLOAD_STORE_FILE, FREED_ANDROID_UPLOAD_STORE_PASSWORD, FREED_ANDROID_UPLOAD_KEY_ALIAS, FREED_ANDROID_UPLOAD_KEY_PASSWORD."
+    },
+    {
+      "id": "android-apk-admob-app-id",
+      "status": "FAIL",
+      "detail": "Android AdMob application id uses the local Google sample fallback; this is allowed only for local QA artifacts."
+    },
+    {
+      "id": "android-apk-admob-runtime-manifest",
+      "status": "PASS",
+      "detail": "Merged Android manifest contains Google's local sample Mobile Ads application id, so local QA APKs can boot."
+    },
+    {
+      "id": "android-apk-signature",
+      "status": "FAIL",
+      "detail": "APK signature verifies with the Android Debug certificate; this is allowed only for local QA artifacts."
+    },
+    {
+      "id": "android-apk-react-native-bundle",
+      "status": "PASS",
+      "detail": "React Native release bundle is packaged in the APK."
+    },
+    {
+      "id": "android-apk-abi",
+      "status": "PASS",
+      "detail": "Packaged native ABIs: arm64-v8a."
+    }
+  ],
+  "finalEngine": "hermes",
+  "androidManifest": {
+    "exists": true,
+    "googleMobileAdsApplicationIdConfigured": true,
+    "googleMobileAdsApplicationIdMode": "local-test-app-id",
+    "path": "android/app/build/intermediates/merged_manifest/release/processReleaseMainManifest/AndroidManifest.xml",
+    "sampleAppIdUsed": true
+  },
+  "installHandoff": {
+    "copiedStableArtifact": "docs/validation/artifacts/continue-goal-feed-action-apk-current/apk/FREED-release-arm64.apk",
+    "copiedTimestampedArtifact": "docs/validation/artifacts/continue-goal-feed-action-apk-current/apk/FREED-release-arm64-20260607-133105.apk",
+    "activationReadinessRule": "Activation is saved only after native status confirms DNS Guard, Usage Access, Accessibility, selected app packages, and the activation test confirms adult domains are blocked while normal browsing is allowed.",
+    "deviceSelection": "Attach exactly one physical adb device, or add --device SERIAL to the command.",
+    "installQaOutputDir": "docs/validation/artifacts/android-install-20260607-134717/android-install-qa",
+    "localInstallSupported": true,
+    "playUploadArtifact": false,
+    "protectionFlowDetails": [
+      "android-native-adult-domain-feed: sync the reviewed adult-domain feed in FREED before OS permission prompts",
+      "android-dns-guard: request Android VpnService consent for DNS-only adult-domain blocking",
+      "android-usage-access: open Android Usage Access settings for aggregate selected-app timers",
+      "android-accessibility: open the FREED Accessibility service details screen for browser and selected-app interruption",
+      "android-doomscroll-apps: choose at least one supported app package and sync blocked-app config",
+      "activation-test: verify adult-domain blocking, normal browsing allow behavior, and fresh native readiness before saving activation"
+    ],
+    "protectionFlowOrder": [
+      "android-native-adult-domain-feed",
+      "android-dns-guard",
+      "android-usage-access",
+      "android-accessibility",
+      "android-doomscroll-apps",
+      "activation-test"
+    ],
+    "protectionFlowOrderString": "android-native-adult-domain-feed>android-dns-guard>android-usage-access>android-accessibility>android-doomscroll-apps>activation-test",
+    "installQaApk": "docs/validation/artifacts/continue-goal-feed-action-apk-current/apk/FREED-release-arm64.apk",
+    "installQaCommand": [
+      "npm",
+      "run",
+      "qa:android-install",
+      "--",
+      "--apk",
+      "docs/validation/artifacts/continue-goal-feed-action-apk-current/apk/FREED-release-arm64.apk",
+      "--run-id",
+      "android-install-20260607-134717",
+      "--output-dir",
+      "docs/validation/artifacts/android-install-20260607-134717/android-install-qa"
+    ],
+    "installQaCommandString": "npm run qa:android-install -- --apk docs/validation/artifacts/continue-goal-feed-action-apk-current/apk/FREED-release-arm64.apk --run-id android-install-20260607-134717 --output-dir docs/validation/artifacts/android-install-20260607-134717/android-install-qa",
+    "protectionQaOutputDir": "docs/validation/artifacts/android-install-20260607-134717/android-real-browser-capture",
+    "protectionQaRunId": "android-install-20260607-134717",
+    "protectionQaCommand": [
+      "npm",
+      "run",
+      "evidence:android-real-browser",
+      "--",
+      "--device",
+      "<serial>",
+      "--adult-url",
+      "<real-adult-url>",
+      "--permission-proof",
+      "--native-status-proof",
+      "--dns-guard-proof",
+      "--run-id",
+      "android-install-20260607-134717",
+      "--output-dir",
+      "docs/validation/artifacts/android-install-20260607-134717/android-real-browser-capture"
+    ],
+    "protectionQaCommandString": "npm run evidence:android-real-browser -- --device <serial> --adult-url <real-adult-url> --permission-proof --native-status-proof --dns-guard-proof --run-id android-install-20260607-134717 --output-dir docs/validation/artifacts/android-install-20260607-134717/android-real-browser-capture",
+    "protectionQaRequiredProofs": [
+      "permission-proof",
+      "native-status-proof",
+      "dns-guard-proof"
+    ],
+    "note": "Run install QA first, then run protection QA on the same physical Android device before treating the APK as activation-ready.",
+    "handoffDocument": "docs/validation/artifacts/continue-goal-feed-action-apk-current/apk/ANDROID_APK_INSTALL_HANDOFF.md",
+    "handoffDocumentWritten": true
+  },
+  "apk": {
+    "abis": [
+      "arm64-v8a"
+    ],
+    "copied": true,
+    "hasHermesBytecode": false,
+    "hasHermesRuntime": true,
+    "hasReactNativeBundle": true,
+    "hasJscRuntime": false,
+    "path": "docs/validation/artifacts/continue-goal-feed-action-apk-current/apk/FREED-release-arm64.apk",
+    "sha256": "e59acf32d767b1b980cb702bac4901bcad1ec1ecf1ddee773ed175bc3537e154",
+    "sizeBytes": 59098450,
+    "sizeMb": "56.4 MB",
+    "sourcePath": "android/app/build/outputs/apk/release/app-release.apk",
+    "stablePath": "docs/validation/artifacts/continue-goal-feed-action-apk-current/apk/FREED-release-arm64.apk",
+    "timestampedPath": "docs/validation/artifacts/continue-goal-feed-action-apk-current/apk/FREED-release-arm64-20260607-133105.apk",
+    "signature": {
+      "certificateDn": "CN=Android Debug, OU=Android, O=Unknown, L=Unknown, ST=Unknown, C=US",
+      "certificateSha256Digest": "fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c",
+      "debugSigned": true,
+      "keyAlgorithm": "RSA",
+      "keySizeBits": 2048,
+      "numberOfSigners": 1,
+      "sourceStampVerified": false,
+      "tool": "~/Library/Android/sdk/build-tools/36.0.0/apksigner",
+      "v1SchemeVerified": false,
+      "v2SchemeVerified": true,
+      "v3SchemeVerified": false,
+      "v31SchemeVerified": false,
+      "v4SchemeVerified": false,
+      "verified": true
+    }
+  },
+  "aab": null
+}

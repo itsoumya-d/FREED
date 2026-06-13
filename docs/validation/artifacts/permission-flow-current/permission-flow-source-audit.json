@@ -1,0 +1,203 @@
+{
+  "schemaVersion": "freed-permission-flow-source-audit-v1",
+  "generatedAt": "2026-06-12T23:56:23.135Z",
+  "sanitized": true,
+  "result": "pass",
+  "passCount": 23,
+  "failCount": 0,
+  "auditedSources": [
+    {
+      "path": "src/lib/protection-permissions.ts",
+      "sha256": "48ce250d7d33650cc3de11f6fc5c06f07de3300da41982bb650a0401fa518408"
+    },
+    {
+      "path": "src/lib/protection-readiness.ts",
+      "sha256": "1e1fbed76eaf5e2394c4c0a85dc4f7596e4d01e21fbd0796dae2b93f41e83343"
+    },
+    {
+      "path": "src/features/freed-app.tsx",
+      "sha256": "b76931b46d51c11de7a628f57429e2dea981ae9955616510d308072071d79fbf"
+    },
+    {
+      "path": "src/lib/recovery-notification-permission.ts",
+      "sha256": "52da7c3f04032179d29e200d1d751ad0ee4aea471cd3d8d138ff83810ec82f92"
+    },
+    {
+      "path": "modules/freed-protection/src/index.ts",
+      "sha256": "8e8506e4fca134dc7dce67dfc36d40a620fe2722e0249549b010b58786e45b05"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+      "sha256": "80f33c2034704cf575a40f56ca7c8fef5ffcbda4f4ad3247643e2e050fb4160f"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/AndroidManifest.xml",
+      "sha256": "cc3404c6468022792dc702a4c455880d4188f8c801ae7c8e7cd47704ed13b6f9"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/res/values/strings.xml",
+      "sha256": "d847193e9112ba1ff6afc245e8e3c5db65021e9feb122aa0e6924a3b1627ccd7"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedUsageAccessConfigActivity.kt",
+      "sha256": "ca9f6eb6daab7dd124d9c328f177dc2b8d383b5fd4241b2b2fc51e63ad0c4961"
+    },
+    {
+      "path": "modules/freed-protection/ios/FreedProtectionModule.swift",
+      "sha256": "959f95bdb96ff2655152c3ac99dc48ce8650a527c0a202ecf23aae4f6298999c"
+    },
+    {
+      "path": "docs/validation/README.md",
+      "sha256": "89bf22e76aa30a7c89e758e368adabe7ed2aa2280c7f8f7a142fc744c61c72a0"
+    },
+    {
+      "path": "docs/release-blockers.md",
+      "sha256": "a30f9084f49af328bb66989903b53a8b1efbca17fb1cc58799f1f12e6ea80e27"
+    }
+  ],
+  "requiredFlowOrders": {
+    "android": "android-native-adult-domain-feed>android-dns-guard>android-usage-access>android-accessibility>android-doomscroll-apps>activation-test",
+    "ios": "ios-screen-time>ios-adult-web-filter>ios-screen-time-targets>ios-selected-app-limit-monitor>ios-safari-content-blocker>activation-test"
+  },
+  "releaseBoundary": "Source-level permission-flow contract only; physical Android/iOS device evidence, store sandbox purchases, and strict release audit still gate production submission.",
+  "checks": [
+    {
+      "id": "android-required-step-order",
+      "status": "pass",
+      "detail": "Android required setup order is android-native-adult-domain-feed>android-dns-guard>android-usage-access>android-accessibility>android-doomscroll-apps>activation-test.",
+      "next": "Keep reviewed feed sync, DNS Guard, Usage Access, Accessibility, selected app packages, and activation test in strict order."
+    },
+    {
+      "id": "ios-required-step-order",
+      "status": "pass",
+      "detail": "iOS required setup order is ios-screen-time>ios-adult-web-filter>ios-screen-time-targets>ios-selected-app-limit-monitor>ios-safari-content-blocker>activation-test.",
+      "next": "Keep Family Controls, ManagedSettings, picker targets, DeviceActivity limits, Safari rules, and activation test in strict order."
+    },
+    {
+      "id": "android-step-actions",
+      "status": "pass",
+      "detail": "Android setup rows map to feed sync, DNS Guard/VPN consent, prompt-first recovery notification visibility, Usage Access, Accessibility, and in-app selected-package sync actions.",
+      "next": ""
+    },
+    {
+      "id": "ios-step-actions",
+      "status": "pass",
+      "detail": "iOS setup rows map to Family Controls authorization, ManagedSettings adult filter, FamilyActivityPicker, and Safari/settings handling.",
+      "next": ""
+    },
+    {
+      "id": "required-progress-gate",
+      "status": "pass",
+      "detail": "Permission progress only reports ready when every required row is complete.",
+      "next": ""
+    },
+    {
+      "id": "android-readiness-native-status-gate",
+      "status": "pass",
+      "detail": "Android activation readiness depends on DNS Guard runtime, Accessibility, Usage Access, native selected packages, and permission progress.",
+      "next": ""
+    },
+    {
+      "id": "ios-readiness-native-status-gate",
+      "status": "pass",
+      "detail": "iOS activation readiness depends on Screen Time authorization, ManagedSettings adult filter, selected targets, DeviceActivity scheduling, and permission progress.",
+      "next": ""
+    },
+    {
+      "id": "ui-enforces-next-missing-step",
+      "status": "pass",
+      "detail": "Setup UI redirects out-of-order taps to the first missing required step and labels buttons with the next required row.",
+      "next": ""
+    },
+    {
+      "id": "ui-refreshes-and-auto-advances-on-return",
+      "status": "pass",
+      "detail": "Setup refreshes native status on app return, waits for unfinished required OS settings rows, continues after optional Android settings routes, then auto-advances or runs Test Protection.",
+      "next": ""
+    },
+    {
+      "id": "android-one-step-setup-wizard",
+      "status": "pass",
+      "detail": "Android setup defaults to a one-step wizard with one primary action, short copy, progress, and advanced checklist/details hidden behind an explicit affordance.",
+      "next": "Keep Android post-paywall setup focused on the next missing required step; do not restore the full checklist as the default path."
+    },
+    {
+      "id": "ios-picker-resolves-before-auto-advance",
+      "status": "pass",
+      "detail": "iOS Screen Time authorization and picker flows resolve in-app before setup auto-advances instead of waiting for an external AppState return.",
+      "next": ""
+    },
+    {
+      "id": "android-app-selection-return-sync",
+      "status": "pass",
+      "detail": "Android app selection cannot finish with zero selected packages and returns to setup by syncing packages to native protection.",
+      "next": ""
+    },
+    {
+      "id": "activation-test-blocks-activation-save",
+      "status": "pass",
+      "detail": "Activation Complete is available only after local classifier checks, native diagnostics, fresh readiness, and the current permission/feed status signature pass.",
+      "next": ""
+    },
+    {
+      "id": "android-native-settings-and-consent-routes",
+      "status": "pass",
+      "detail": "Android native module opens exact/fallback OS surfaces for VPN consent, notification visibility, Accessibility, Usage Access, Private DNS, and app settings while recording the route plus a sanitized return instruction.",
+      "next": ""
+    },
+    {
+      "id": "android-recovery-notification-route",
+      "status": "pass",
+      "detail": "Android 13+ recovery notification visibility is declared, reported by native status, shown in setup/Profile, requested through the runtime prompt first, then routed to the exact app notification settings screen if still denied.",
+      "next": "Keep POST_NOTIFICATIONS, native status fields, TypeScript bridge types, the prompt helper, and the optional recovery-notification setup row aligned."
+    },
+    {
+      "id": "android-usage-access-config-rationale",
+      "status": "pass",
+      "detail": "Android declares a Settings-discoverable Usage Access config activity and localized reason so users see the bounded app-timer rationale before returning to FREED setup.",
+      "next": "Keep the Usage Access config activity, Settings metadata reason, native status fields, and bridge types aligned with Android Settings."
+    },
+    {
+      "id": "android-settings-return-deep-link",
+      "status": "pass",
+      "detail": "Android Usage Access return action opens the registered FREED setup deep link and the app routes it back to protection setup before intervention deep links.",
+      "next": "Keep Android Settings return links targeted to protection setup and refresh native status on return."
+    },
+    {
+      "id": "android-native-activation-diagnostics",
+      "status": "pass",
+      "detail": "Android native diagnostics fail closed on missing DNS Guard, resolver configuration, Accessibility, Usage Access, app packages, feed, adult block, or normal allow proof, and returns bounded Settings route, Private DNS, UsageStats, DNS Guard, and feed-checksum evidence.",
+      "next": ""
+    },
+    {
+      "id": "ios-native-protection-surfaces",
+      "status": "pass",
+      "detail": "iOS native module uses Family Controls, ManagedSettings, FamilyActivityPicker, DeviceActivity, Safari Content Blocker reload, and app settings routing.",
+      "next": ""
+    },
+    {
+      "id": "ios-native-activation-diagnostics",
+      "status": "pass",
+      "detail": "iOS native diagnostics fail closed on missing authorization, adult filter, targets, DeviceActivity schedule, Safari rules, adult block, or normal allow proof.",
+      "next": ""
+    },
+    {
+      "id": "ios-safari-disabled-settings-route",
+      "status": "pass",
+      "detail": "When Safari rules exist but the extension is disabled, setup opens iOS Settings instead of pretending sync is enough.",
+      "next": ""
+    },
+    {
+      "id": "native-bridge-exposes-required-actions",
+      "status": "pass",
+      "detail": "TypeScript native bridge exposes the OS-routing, feed/app sync, picker, Safari, and activation diagnostic calls used by setup.",
+      "next": ""
+    },
+    {
+      "id": "docs-match-permission-evidence-contract",
+      "status": "pass",
+      "detail": "Validation docs require permission-wizard artifacts, explanation proof, Test Protection, Android app-selection return sync, and platform permission reports.",
+      "next": ""
+    }
+  ]
+}

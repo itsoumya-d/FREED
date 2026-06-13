@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "freed-dependency-audit-v1",
+  "generatedAt": "2026-06-11T07:08:25.411Z",
+  "sanitized": true,
+  "result": "pass",
+  "passCount": 1,
+  "failCount": 0,
+  "vulnerabilitySummary": {
+    "critical": 0,
+    "high": 0,
+    "moderate": 0,
+    "low": 0,
+    "info": 0,
+    "total": 0
+  },
+  "audit": {
+    "command": "npm audit --omit=dev --json",
+    "timeoutMs": 180000,
+    "exitCode": 0,
+    "failureKind": null
+  },
+  "issues": []
+}

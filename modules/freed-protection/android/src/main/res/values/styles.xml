@@ -1,0 +1,13 @@
+<resources>
+  <style name="FreedInterventionTheme" parent="@android:style/Theme.Material.NoActionBar">
+    <item name="android:fontFamily">sans</item>
+    <item name="android:windowActionBar">false</item>
+    <item name="android:windowNoTitle">true</item>
+    <item name="android:windowLightStatusBar">false</item>
+    <item name="android:windowLightNavigationBar">false</item>
+    <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    <item name="android:statusBarColor">#071613</item>
+    <item name="android:navigationBarColor">#071613</item>
+    <item name="android:colorAccent">#8FE3C8</item>
+  </style>
+</resources>

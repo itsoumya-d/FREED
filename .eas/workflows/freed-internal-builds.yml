@@ -1,0 +1,83 @@
+name: FREED Internal QA Builds
+
+on:
+  workflow_dispatch:
+    inputs:
+      platform:
+        type: choice
+        required: true
+        description: Build target for internal QA.
+        default: all
+        options:
+          - all
+          - android
+          - ios
+
+concurrency:
+  cancel_in_progress: true
+  group: ${{ workflow.filename }}-${{ github.ref }}
+
+jobs:
+  internal_gate_snapshot:
+    name: Local launch guard snapshot
+    type: custom
+    runs_on: linux-medium
+    environment: preview
+    steps:
+      - uses: eas/checkout
+      - uses: eas/install_node_modules
+      - name: Audit EAS workflow wiring
+        run: npm run audit:eas-workflows
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Evidence template drift check
+        run: npm run evidence:templates
+      - name: Internal submit guard dry run
+        run: npm run eas:submit:internal -- --dry-run
+
+  android_internal_build:
+    name: Android internal APK
+    needs:
+      - internal_gate_snapshot
+    if: ${{ inputs.platform == 'all' || inputs.platform == 'android' }}
+    type: build
+    environment: preview
+    params:
+      platform: android
+      profile: internal
+      message: FREED internal Android QA build
+
+  ios_internal_build:
+    name: iOS internal build
+    needs:
+      - internal_gate_snapshot
+    if: ${{ inputs.platform == 'all' || inputs.platform == 'ios' }}
+    type: build
+    environment: preview
+    params:
+      platform: ios
+      profile: internal
+      refresh_ad_hoc_provisioning_profile: true
+      message: FREED internal iOS QA build
+
+  qa_handoff:
+    name: QA handoff
+    after:
+      - android_internal_build
+      - ios_internal_build
+    type: doc
+    params:
+      md: |
+        # FREED internal QA handoff
+
+        Internal builds are for physical-device validation only. Keep Play releases on the internal track and draft status, and keep iOS in internal distribution/TestFlight until strict release evidence passes.
+
+        Android current-source artifact note:
+        - Local Android release builds on the current Mac can fail during `:app:configureCMakeRelWithDebInfo[arm64-v8a]` with CMake exit 137.
+        - Treat EAS internal Android APK output as the preferred current-source artifact for physical QA when local CMake exit 137 is present.
+        - Do not use any older side-load APK as proof of the latest native code; compare the EAS build profile, git/source revision, artifact hash, and native permission flow before installing on QA phones.
+
+        Required next checks:
+        - Android physical browser, DNS Guard, Usage Access, Accessibility, app timer, reboot, unlock, and normal browsing evidence.
+        - iOS Screen Time, FamilyActivityPicker, DeviceActivity, Safari Content Blocker, shield, unlock, and normal browsing evidence.
+        - Store sandbox purchase/restore and rewarded-ad evidence before any production promotion.

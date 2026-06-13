@@ -1,0 +1,23 @@
+/privacy
+  Cache-Control: public, max-age=300
+  X-Robots-Tag: index, follow
+
+/privacy/
+  Cache-Control: public, max-age=300
+  X-Robots-Tag: index, follow
+
+/support
+  Cache-Control: public, max-age=300
+  X-Robots-Tag: index, follow
+
+/support/
+  Cache-Control: public, max-age=300
+  X-Robots-Tag: index, follow
+
+/account-deletion
+  Cache-Control: public, max-age=300
+  X-Robots-Tag: index, follow
+
+/account-deletion/
+  Cache-Control: public, max-age=300
+  X-Robots-Tag: index, follow

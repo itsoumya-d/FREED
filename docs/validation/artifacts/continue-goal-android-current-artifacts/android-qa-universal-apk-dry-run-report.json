@@ -1,0 +1,105 @@
+{
+  "schema": "freed-android-apk-build-report-v1",
+  "artifactType": "apk",
+  "generatedAt": "2026-06-11T06:04:02.169Z",
+  "sanitized": true,
+  "requested": {
+    "arch": "armeabi-v7a,arm64-v8a,x86,x86_64",
+    "artifact": "apk",
+    "buildIdleTimeoutMs": 600000,
+    "buildTimeoutMs": 2700000,
+    "cmakeVersion": "",
+    "engine": "hermes",
+    "envFileLoaded": false,
+    "gradleMaxWorkers": 1,
+    "newArchEnabled": true,
+    "nativeBuildJobs": 1,
+    "ndkVersion": "",
+    "requireUploadSigning": false,
+    "skipCopy": false
+  },
+  "adMob": {
+    "androidAppIdConfigured": false,
+    "androidAppIdSource": "",
+    "mode": "local-test-app-id",
+    "productionReady": false,
+    "runtimeManifestAppIdConfigured": true,
+    "runtimeManifestAppIdMode": "local-test-app-id",
+    "runtimeManifestAppIdSource": "local-google-sample-test-id",
+    "sampleAppIdUsed": true
+  },
+  "environment": {
+    "releaseEnvFileLoaded": false,
+    "releaseEnvFileSource": "",
+    "releaseEnvSecretValuesOmitted": true,
+    "javaHome": "/opt/homebrew/Cellar/openjdk@17/17.0.19/libexec/openjdk.jdk/Contents/Home",
+    "gradleUserHome": "/tmp/freed-gradle-home",
+    "gradleMaxWorkers": 1,
+    "newArchEnabled": true,
+    "nativeBuildJobs": 1,
+    "ndkVersion": "",
+    "cmakeVersion": "",
+    "gradleProperties": "/tmp/freed-gradle-home/gradle.properties",
+    "foojayResolver": "already-compatible"
+  },
+  "hermesProbe": {
+    "ok": true,
+    "reason": "hermesc responded within 5s"
+  },
+  "selectedEngine": "hermes",
+  "signing": {
+    "missingInputs": [
+      "FREED_ANDROID_UPLOAD_STORE_FILE",
+      "FREED_ANDROID_UPLOAD_STORE_PASSWORD",
+      "FREED_ANDROID_UPLOAD_KEY_ALIAS",
+      "FREED_ANDROID_UPLOAD_KEY_PASSWORD"
+    ],
+    "mode": "debug-key-fallback",
+    "playConsoleReady": false,
+    "required": false,
+    "storeFileConfigured": false,
+    "storeFileExists": false,
+    "uploadKeystore": {
+      "certificateDn": "",
+      "certificateSha256Digest": "",
+      "checked": false,
+      "debugSigned": false
+    }
+  },
+  "gradleCommand": [
+    "./gradlew",
+    ":app:assembleRelease",
+    "--no-daemon",
+    "--console=plain",
+    "--max-workers=1",
+    "-Dorg.gradle.parallel=false",
+    "-Pandroid.native.build.maxJobs=1",
+    "-PnewArchEnabled=true",
+    "-PreactNativeArchitectures=armeabi-v7a,arm64-v8a,x86,x86_64",
+    "-PhermesEnabled=true"
+  ],
+  "result": "dry-run",
+  "summary": {
+    "passCount": 1,
+    "failCount": 2
+  },
+  "results": [
+    {
+      "id": "android-apk-build",
+      "status": "PASS",
+      "detail": "Dry run completed without invoking Gradle."
+    },
+    {
+      "id": "android-apk-upload-signing",
+      "status": "FAIL",
+      "detail": "Release APK used debug-key fallback; missing FREED_ANDROID_UPLOAD_STORE_FILE, FREED_ANDROID_UPLOAD_STORE_PASSWORD, FREED_ANDROID_UPLOAD_KEY_ALIAS, FREED_ANDROID_UPLOAD_KEY_PASSWORD."
+    },
+    {
+      "id": "android-apk-admob-app-id",
+      "status": "FAIL",
+      "detail": "Android AdMob application id uses the local Google sample fallback; this is allowed only for local QA artifacts."
+    }
+  ],
+  "apk": null,
+  "aab": null
+}

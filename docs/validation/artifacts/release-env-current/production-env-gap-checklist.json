@@ -1,0 +1,448 @@
+{
+  "schema": "freed-production-env-gap-checklist-v1",
+  "sanitized": true,
+  "secretValuesOmitted": true,
+  "generatedAt": "2026-06-10T23:01:10.720Z",
+  "sourcePreflightReport": "docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+  "sourcePreflightReportSha256": "sha256-d9a738ed0afa6bce269fe5bd05e4b3005b450a235ed6154e7302d62ff557d16a",
+  "source": "process.env",
+  "preflight": {
+    "result": "fail",
+    "passCount": 9,
+    "failCount": 22,
+    "statusCounts": {
+      "fail": 7,
+      "external": 6
+    }
+  },
+  "result": "pending",
+  "failedProductionEnvGroups": [
+    {
+      "captureHelperCommand": "",
+      "category": "production-env",
+      "evidenceFile": "",
+      "failedPreflightChecks": [
+        {
+          "detail": "SUPABASE_URL is not configured, SUPABASE_SERVICE_ROLE_KEY must be a production-shaped service-role secret, EXPO_PUBLIC_SUPABASE_URL is required for Supabase public anon lockout proof and hosted auth, EXPO_PUBLIC_SUPABASE_ANON_KEY must be a public anon JWT for Supabase schema public-client lockout proof, BACKEND_MAINTENANCE_SECRET or CRON_SECRET must be a production-shaped maintenance secret",
+          "id": "supabase-backend-credentials",
+          "next": "Configure SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, EXPO_PUBLIC_SUPABASE_URL, EXPO_PUBLIC_SUPABASE_ANON_KEY, BACKEND_MAINTENANCE_SECRET or CRON_SECRET, and optional FREED_BACKEND_PROVIDER_TIMEOUT_MS / FREED_BACKEND_PROVIDER_RESPONSE_MAX_BYTES / FREED_SUPABASE_SCHEMA_SMOKE_TIMEOUT_MS with production values."
+        },
+        {
+          "detail": "UPSTASH_REDIS_REST_URL is not configured, UPSTASH_REDIS_REST_TOKEN must be a production-shaped Redis REST token",
+          "id": "redis-backend-infrastructure",
+          "next": "Configure UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN with server-only production values."
+        },
+        {
+          "detail": "backend readiness endpoint is not configured",
+          "id": "backend-readiness-endpoint",
+          "next": "Configure EXPO_PUBLIC_BACKEND_READINESS_ENDPOINT as the deployed /api/backend/readiness route, or let the smoke command derive it from another deployed app endpoint, and keep optional timeout values bounded."
+        }
+      ],
+      "id": "production-backend-infrastructure",
+      "next": "Configure Supabase, Redis/Upstash, public anon lockout proof, and maintenance secrets, then rerun release preflight plus deployed backend/schema smoke reports.",
+      "requiredEnv": [
+        "SUPABASE_URL",
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "EXPO_PUBLIC_SUPABASE_URL",
+        "EXPO_PUBLIC_SUPABASE_ANON_KEY",
+        "BACKEND_MAINTENANCE_SECRET or CRON_SECRET",
+        "UPSTASH_REDIS_REST_URL",
+        "UPSTASH_REDIS_REST_TOKEN"
+      ],
+      "requiredReports": [
+        "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+        "npm run smoke:backend-readiness -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/backend-readiness-smoke-report.json",
+        "npm run smoke:supabase-schema -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/supabase-schema-smoke-report.json"
+      ],
+      "status": "fail"
+    },
+    {
+      "captureHelperCommand": "",
+      "category": "production-env",
+      "evidenceFile": "",
+      "failedPreflightChecks": [
+        {
+          "detail": "remote analytics endpoint is not configured",
+          "id": "analytics-ingestion-endpoint",
+          "next": "Configure EXPO_PUBLIC_ANALYTICS_ENDPOINT as the deployed aggregate-only app/api/analytics route after privacy review; runtime sharing still requires explicit user consent, and optional analytics timeout/response-size values must stay within documented bounds."
+        }
+      ],
+      "id": "production-analytics-ingestion",
+      "next": "Configure the deployed aggregate-only /api/analytics endpoint and prove the sanitized analytics ingestion smoke report.",
+      "requiredEnv": [
+        "EXPO_PUBLIC_ANALYTICS_ENDPOINT"
+      ],
+      "requiredReports": [
+        "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+        "npm run smoke:analytics-ingestion -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/analytics-ingestion-smoke-report.json"
+      ],
+      "status": "fail"
+    },
+    {
+      "captureHelperCommand": "",
+      "category": "production-env",
+      "evidenceFile": "",
+      "failedPreflightChecks": [
+        {
+          "detail": "REMOTE_NOTIFICATION_DISPATCH_SECRET must be a production-shaped dispatch secret, FCM credentials must include a production FCM server key, Firebase service account JSON with project_id, or FCM_ACCESS_TOKEN plus FIREBASE_PROJECT_ID, APNs credentials must include production APNS_KEY_ID, APNS_TEAM_ID, APNS_BUNDLE_ID, APNS_ENV=production, and APNS_PRIVATE_KEY(_BASE64)",
+          "id": "remote-notification-provider-credentials",
+          "next": "Configure REMOTE_NOTIFICATION_DISPATCH_SECRET, optional FREED_REMOTE_NOTIFICATION_PROVIDER_TIMEOUT_MS, FREED_REMOTE_NOTIFICATION_PROVIDER_RESPONSE_MAX_BYTES, and FREED_REMOTE_NOTIFICATION_SMOKE_TIMEOUT_MS, FCM credentials with FIREBASE_PROJECT_ID or Firebase service-account project_id, and APNs production signing credentials for server-authorized recovery-safe push dispatch."
+        }
+      ],
+      "id": "production-notification-backend",
+      "next": "Configure server-side APNs/FCM dispatch credentials and prove the non-sending notification smoke report.",
+      "requiredEnv": [
+        "REMOTE_NOTIFICATION_DISPATCH_SECRET",
+        "FCM_SERVER_KEY, FCM_ACCESS_TOKEN + FIREBASE_PROJECT_ID, or FIREBASE_SERVICE_ACCOUNT_JSON(_BASE64)",
+        "APNS_KEY_ID + APNS_TEAM_ID + APNS_BUNDLE_ID + APNS_ENV=production + APNS_PRIVATE_KEY(_BASE64)"
+      ],
+      "requiredReports": [
+        "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+        "npm run smoke:remote-notifications -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/remote-notification-smoke-report.json"
+      ],
+      "status": "fail"
+    },
+    {
+      "captureHelperCommand": "",
+      "category": "production-env",
+      "evidenceFile": "",
+      "failedPreflightChecks": [
+        {
+          "detail": "adult domain feed endpoint is not configured",
+          "id": "adult-domain-feed-endpoint",
+          "next": "Configure EXPO_PUBLIC_ADULT_DOMAIN_FEED_ENDPOINT as an HTTPS non-local deployed API route."
+        },
+        {
+          "detail": "FREED_ADULT_DOMAIN_FEED_SOURCE_URLS must include at least one reviewed HTTPS source feed, EXPO_PUBLIC_REQUIRE_REVIEWED_ADULT_DOMAIN_FEED must be true for production release verification",
+          "id": "adult-domain-feed-sources",
+          "next": "Configure FREED_ADULT_DOMAIN_FEED_SOURCE_URLS with reviewed id|label|https://source-url entries such as OISD NSFW or StevenBlack-style adult lists, and keep optional feed cache/timeout/size values within documented bounds."
+        }
+      ],
+      "id": "production-adult-domain-feed",
+      "next": "Configure reviewed adult-domain feed sources and prove the deployed feed freshness/cache/source smoke report.",
+      "requiredEnv": [
+        "EXPO_PUBLIC_ADULT_DOMAIN_FEED_ENDPOINT",
+        "EXPO_PUBLIC_REQUIRE_REVIEWED_ADULT_DOMAIN_FEED=true",
+        "FREED_ADULT_DOMAIN_FEED_SOURCE_URLS"
+      ],
+      "requiredReports": [
+        "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+        "npm run smoke:adult-domain-feed -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/adult-domain-feed-smoke-report.json"
+      ],
+      "status": "fail"
+    },
+    {
+      "captureHelperCommand": "",
+      "category": "production-env",
+      "evidenceFile": "docs/validation/evidence/store-ad-sandbox.json",
+      "failedPreflightChecks": [
+        {
+          "detail": "EXPO_PUBLIC_MONETIZATION_MODE is not native.",
+          "id": "release-monetization-mode",
+          "next": "Set EXPO_PUBLIC_MONETIZATION_MODE=native for signed release verification."
+        },
+        {
+          "detail": "Launch Core 3 product identifiers are checked for non-placeholder values.",
+          "id": "iap-product-ids",
+          "next": "Configure EXPO_PUBLIC_IAP_PRODUCT_YEARLY, EXPO_PUBLIC_IAP_PRODUCT_MONTHLY, and EXPO_PUBLIC_IAP_PRODUCT_LIFETIME with real App Store / Play product IDs."
+        },
+        {
+          "detail": "purchase verify endpoint is not configured",
+          "id": "purchase-verify-endpoint",
+          "next": "Configure EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT as an HTTPS non-local deployed API route, and keep optional purchase verification timeout and response-size values within documented bounds."
+        },
+        {
+          "detail": "APP_STORE_SERVER_API_ENV is not production.",
+          "id": "app-store-environment",
+          "next": "Set APP_STORE_SERVER_API_ENV=production for the final release preflight."
+        },
+        {
+          "detail": "App Store bundle ID plus issuer/key/private-key credentials or JWT fallback are missing.",
+          "id": "app-store-verification-credentials",
+          "next": "Configure APP_STORE_BUNDLE_ID and either APP_STORE_ISSUER_ID + APP_STORE_KEY_ID + APP_STORE_PRIVATE_KEY(_BASE64), or APP_STORE_SERVER_API_JWT."
+        },
+        {
+          "detail": "Google Play package name plus service account credentials or access-token fallback are missing.",
+          "id": "google-play-verification-credentials",
+          "next": "Configure GOOGLE_PLAY_PACKAGE_NAME and either GOOGLE_PLAY_SERVICE_ACCOUNT_JSON(_BASE64), or GOOGLE_PLAY_ACCESS_TOKEN."
+        },
+        {
+          "detail": "iOS and Android AdMob app IDs are checked for production format and non-sample publisher IDs.",
+          "id": "admob-app-ids",
+          "next": "Configure EXPO_PUBLIC_ADMOB_APP_ID_IOS and EXPO_PUBLIC_ADMOB_APP_ID_ANDROID with real ca-app-pub IDs."
+        },
+        {
+          "detail": "iOS and Android rewarded reset units are checked for production format and non-sample publisher IDs.",
+          "id": "admob-rewarded-units",
+          "next": "Configure real rewarded unit IDs for both platforms."
+        },
+        {
+          "detail": "EXPO_PUBLIC_ADMOB_USE_TEST_ADS is not explicitly false.",
+          "id": "admob-test-ads-disabled",
+          "next": "Set EXPO_PUBLIC_ADMOB_USE_TEST_ADS=false for production release verification."
+        }
+      ],
+      "id": "production-monetization",
+      "next": "Configure native IAP, purchase verification, and AdMob env values, then prove purchase smoke plus store/ad sandbox evidence.",
+      "requiredEnv": [
+        "EXPO_PUBLIC_MONETIZATION_MODE=native",
+        "EXPO_PUBLIC_STORE_PROVIDER=native-iap",
+        "EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT",
+        "EXPO_PUBLIC_IAP_PRODUCT_*",
+        "EXPO_PUBLIC_ADMOB_APP_ID_IOS",
+        "EXPO_PUBLIC_ADMOB_APP_ID_ANDROID",
+        "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS",
+        "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID",
+        "APP_STORE_BUNDLE_ID",
+        "APP_STORE_SERVER_API_ENV=production",
+        "App Store Server API credentials",
+        "GOOGLE_PLAY_PACKAGE_NAME",
+        "Google Play verification credentials"
+      ],
+      "requiredReports": [
+        "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+        "npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/purchase-verification-smoke-report.json"
+      ],
+      "status": "fail"
+    },
+    {
+      "captureHelperCommand": "",
+      "category": "production-env",
+      "evidenceFile": "",
+      "failedPreflightChecks": [
+        {
+          "detail": "FREED_ANDROID_UPLOAD_STORE_FILE is not configured, FREED_ANDROID_UPLOAD_STORE_PASSWORD is not configured, FREED_ANDROID_UPLOAD_KEY_ALIAS is not configured, FREED_ANDROID_UPLOAD_KEY_PASSWORD is not configured",
+          "id": "android-release-signing",
+          "next": "Configure FREED_ANDROID_UPLOAD_STORE_FILE, FREED_ANDROID_UPLOAD_STORE_PASSWORD, FREED_ANDROID_UPLOAD_KEY_ALIAS, and FREED_ANDROID_UPLOAD_KEY_PASSWORD with secure production upload signing values."
+        }
+      ],
+      "id": "production-android-signing",
+      "next": "Run npm run setup:android-upload-keystore -- --generate-passwords or configure existing secure Android upload signing credentials, point the store-file env value at the secure CI/local keystore, then produce sanitized upload-signed APK and AAB build reports before Play upload.",
+      "requiredEnv": [
+        "FREED_ANDROID_UPLOAD_STORE_FILE",
+        "FREED_ANDROID_UPLOAD_STORE_PASSWORD",
+        "FREED_ANDROID_UPLOAD_KEY_ALIAS",
+        "FREED_ANDROID_UPLOAD_KEY_PASSWORD"
+      ],
+      "requiredReports": [
+        "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+        "npm run build:android-apk:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/android-apk-build-report.json",
+        "npm run build:android-aab:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/android-aab-build-report.json"
+      ],
+      "status": "fail"
+    },
+    {
+      "captureHelperCommand": "",
+      "category": "production-env",
+      "evidenceFile": "docs/validation/evidence/ai-backend-smoke.json",
+      "failedPreflightChecks": [
+        {
+          "detail": "EXPO_PUBLIC_AI_COACH_MODE is not remote.",
+          "id": "ai-coach-mode",
+          "next": "Set EXPO_PUBLIC_AI_COACH_MODE=remote for deployed backend verification."
+        },
+        {
+          "detail": "CLARA endpoint is not configured",
+          "id": "ai-coach-endpoint",
+          "next": "Configure EXPO_PUBLIC_AI_COACH_ENDPOINT as an HTTPS non-local deployed API route, and keep optional EXPO_PUBLIC_AI_COACH_TIMEOUT_MS within documented bounds."
+        },
+        {
+          "detail": "EXPO_PUBLIC_AI_CHALLENGE_MODE is not remote.",
+          "id": "ai-challenge-mode",
+          "next": "Set EXPO_PUBLIC_AI_CHALLENGE_MODE=remote for deployed backend verification."
+        },
+        {
+          "detail": "challenge endpoint is not configured",
+          "id": "ai-challenge-endpoint",
+          "next": "Configure EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT as an HTTPS non-local deployed API route, and keep optional EXPO_PUBLIC_AI_CHALLENGE_TIMEOUT_MS within documented bounds."
+        },
+        {
+          "detail": "OPENAI_API_KEY and OPENAI_MODEL, or GEMINI_API_KEY/GOOGLE_API_KEY/GOOGLE_GENAI_API_KEY and GEMINI_MODEL, are missing or malformed.",
+          "id": "server-ai-key",
+          "next": "Configure a real OpenAI or Google/Gemini API key plus concrete model only in the server environment, never as EXPO_PUBLIC_*, and keep optional server AI provider timeout and response-size values within documented bounds."
+        }
+      ],
+      "id": "production-ai-backend",
+      "next": "Configure remote CLARA/challenge endpoints and server AI provider credentials, then prove AI safety plus deployed backend smoke evidence.",
+      "requiredEnv": [
+        "EXPO_PUBLIC_AI_COACH_MODE=remote",
+        "EXPO_PUBLIC_AI_COACH_ENDPOINT",
+        "EXPO_PUBLIC_AI_CHALLENGE_MODE=remote",
+        "EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT",
+        "OPENAI_API_KEY + OPENAI_MODEL, or GEMINI_API_KEY/GOOGLE_API_KEY/GOOGLE_GENAI_API_KEY + GEMINI_MODEL"
+      ],
+      "requiredReports": [
+        "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+        "npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/ai-backend-smoke-report.json"
+      ],
+      "status": "fail"
+    }
+  ],
+  "passedProductionEnvGroupIds": [],
+  "externalValidationGroups": [
+    {
+      "captureHelperCommand": "npm run evidence:ios-physical-device -- --device <udid-or-name> --adult-host <real-adult-host> --app <signed-freed-app-or-ipa> --short-form-url <youtube-shorts-url> --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/ios-physical-device-capture",
+      "category": "physical-evidence",
+      "evidenceFile": "docs/validation/evidence/ios-physical-device.json",
+      "failedPreflightChecks": [],
+      "id": "ios-physical-device-validation",
+      "next": "Produce a sanitized signed iOS Release archive/IPA report, then capture entitlement-approved iOS hardware evidence for Screen Time, Safari, DNS settings boundaries, app shields, and challenge verification.",
+      "requiredEnv": [],
+      "requiredReports": [
+        "npm run build:ios-archive:release -- --report docs/validation/artifacts/release-env-current/ios-release-archive-report.json"
+      ],
+      "status": "external"
+    },
+    {
+      "captureHelperCommand": "npm run evidence:android-real-browser -- --device <serial> --adult-url <real-adult-url> --permission-proof --native-status-proof --dns-guard-proof --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/android-real-browser-capture",
+      "category": "physical-evidence",
+      "evidenceFile": "docs/validation/evidence/android-real-browser.json",
+      "failedPreflightChecks": [],
+      "id": "android-real-browser-validation",
+      "next": "Capture physical Android browser, DNS Guard, Accessibility, app shield, short-form, unlock, and Play policy evidence.",
+      "requiredEnv": [],
+      "requiredReports": [],
+      "status": "external"
+    },
+    {
+      "captureHelperCommand": "npm run evidence:normal-browsing-corpus -- --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/normal-browsing-corpus-capture",
+      "category": "physical-evidence",
+      "evidenceFile": "docs/validation/evidence/normal-browsing-corpus.json",
+      "failedPreflightChecks": [],
+      "id": "normal-browsing-corpus-validation",
+      "next": "Run the physical-browser normal browsing corpus and promote only after every allow/block matrix row passes.",
+      "requiredEnv": [],
+      "requiredReports": [],
+      "status": "external"
+    },
+    {
+      "captureHelperCommand": "npm run evidence:performance-profile -- --ios-device <udid-or-name> --android-device <serial> --android-background-cpu-proof --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/performance-profile-capture",
+      "category": "physical-evidence",
+      "evidenceFile": "docs/validation/evidence/performance-profile.json",
+      "failedPreflightChecks": [],
+      "id": "performance-validation",
+      "next": "Capture battery, RAM, thermal, background CPU, DNS latency, network speed, and no-full-VPN/no-screenshot proof.",
+      "requiredEnv": [],
+      "requiredReports": [],
+      "status": "external"
+    },
+    {
+      "captureHelperCommand": "npm run evidence:store-ad-sandbox -- --release-env-file <production-env-file> --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/store-ad-sandbox-capture",
+      "category": "deployed-evidence",
+      "evidenceFile": "docs/validation/evidence/store-ad-sandbox.json",
+      "failedPreflightChecks": [],
+      "id": "store-ad-sandbox-validation",
+      "next": "Capture Core 3-only console product setup, paywall proof, App Store/Play Billing sandbox purchases, restore, rewarded ad completion, and premium no-ad behavior without raw receipts/tokens.",
+      "requiredEnv": [
+        "store/ad production env from production-monetization"
+      ],
+      "requiredReports": [
+        "npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/purchase-verification-smoke-report.json"
+      ],
+      "status": "external"
+    },
+    {
+      "captureHelperCommand": "npm run evidence:ai-backend-smoke -- --release-env-file <production-env-file> --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/ai-backend-smoke-capture",
+      "category": "deployed-evidence",
+      "evidenceFile": "docs/validation/evidence/ai-backend-smoke.json",
+      "failedPreflightChecks": [],
+      "id": "ai-backend-smoke-validation",
+      "next": "Capture AI safety eval plus deployed CLARA/challenge smoke reports without raw prompts, private notes, or provider output.",
+      "requiredEnv": [
+        "remote AI production env from production-ai-backend"
+      ],
+      "requiredReports": [
+        "npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/ai-backend-smoke-report.json"
+      ],
+      "status": "external"
+    }
+  ],
+  "otherOpenGroups": [],
+  "launchPlatformEnvSetup": {
+    "id": "expo-eas-project-metadata",
+    "next": "Set EAS_PROJECT_ID or EXPO_PROJECT_ID from the linked Expo project, and optionally EXPO_OWNER, before EAS builds, submits, or legal web deploys.",
+    "requiredEnv": [
+      "EAS_PROJECT_ID",
+      "EXPO_PROJECT_ID",
+      "EXPO_OWNER"
+    ],
+    "skeletonLines": [
+      "# Expo/EAS project metadata for production builds, submits, and legal web deploys.",
+      "# EAS_PROJECT_ID and EXPO_PROJECT_ID are accepted aliases; set one real project ID.",
+      "EAS_PROJECT_ID=",
+      "EXPO_PROJECT_ID=",
+      "# Optional Expo account/organization owner.",
+      "EXPO_OWNER="
+    ]
+  },
+  "requiredEnv": [
+    "EAS_PROJECT_ID",
+    "EXPO_PROJECT_ID",
+    "EXPO_OWNER",
+    "SUPABASE_URL",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "EXPO_PUBLIC_SUPABASE_URL",
+    "EXPO_PUBLIC_SUPABASE_ANON_KEY",
+    "BACKEND_MAINTENANCE_SECRET or CRON_SECRET",
+    "UPSTASH_REDIS_REST_URL",
+    "UPSTASH_REDIS_REST_TOKEN",
+    "EXPO_PUBLIC_ANALYTICS_ENDPOINT",
+    "REMOTE_NOTIFICATION_DISPATCH_SECRET",
+    "FCM_SERVER_KEY, FCM_ACCESS_TOKEN + FIREBASE_PROJECT_ID, or FIREBASE_SERVICE_ACCOUNT_JSON(_BASE64)",
+    "APNS_KEY_ID + APNS_TEAM_ID + APNS_BUNDLE_ID + APNS_ENV=production + APNS_PRIVATE_KEY(_BASE64)",
+    "EXPO_PUBLIC_ADULT_DOMAIN_FEED_ENDPOINT",
+    "EXPO_PUBLIC_REQUIRE_REVIEWED_ADULT_DOMAIN_FEED=true",
+    "FREED_ADULT_DOMAIN_FEED_SOURCE_URLS",
+    "EXPO_PUBLIC_MONETIZATION_MODE=native",
+    "EXPO_PUBLIC_STORE_PROVIDER=native-iap",
+    "EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT",
+    "EXPO_PUBLIC_IAP_PRODUCT_*",
+    "EXPO_PUBLIC_ADMOB_APP_ID_IOS",
+    "EXPO_PUBLIC_ADMOB_APP_ID_ANDROID",
+    "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS",
+    "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID",
+    "APP_STORE_BUNDLE_ID",
+    "APP_STORE_SERVER_API_ENV=production",
+    "App Store Server API credentials",
+    "GOOGLE_PLAY_PACKAGE_NAME",
+    "Google Play verification credentials",
+    "FREED_ANDROID_UPLOAD_STORE_FILE",
+    "FREED_ANDROID_UPLOAD_STORE_PASSWORD",
+    "FREED_ANDROID_UPLOAD_KEY_ALIAS",
+    "FREED_ANDROID_UPLOAD_KEY_PASSWORD",
+    "EXPO_PUBLIC_AI_COACH_MODE=remote",
+    "EXPO_PUBLIC_AI_COACH_ENDPOINT",
+    "EXPO_PUBLIC_AI_CHALLENGE_MODE=remote",
+    "EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT",
+    "OPENAI_API_KEY + OPENAI_MODEL, or GEMINI_API_KEY/GOOGLE_API_KEY/GOOGLE_GENAI_API_KEY + GEMINI_MODEL"
+  ],
+  "requiredReports": [
+    "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
+    "npm run smoke:backend-readiness -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/backend-readiness-smoke-report.json",
+    "npm run smoke:supabase-schema -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/supabase-schema-smoke-report.json",
+    "npm run smoke:analytics-ingestion -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/analytics-ingestion-smoke-report.json",
+    "npm run smoke:remote-notifications -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/remote-notification-smoke-report.json",
+    "npm run smoke:adult-domain-feed -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/adult-domain-feed-smoke-report.json",
+    "npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/purchase-verification-smoke-report.json",
+    "npm run build:android-apk:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/android-apk-build-report.json",
+    "npm run build:android-aab:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/android-aab-build-report.json",
+    "npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/ai-backend-smoke-report.json",
+    "npm run build:ios-archive:release -- --report docs/validation/artifacts/release-env-current/ios-release-archive-report.json"
+  ],
+  "captureHelperCommands": [
+    "npm run evidence:ios-physical-device -- --device <udid-or-name> --adult-host <real-adult-host> --app <signed-freed-app-or-ipa> --short-form-url <youtube-shorts-url> --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/ios-physical-device-capture",
+    "npm run evidence:android-real-browser -- --device <serial> --adult-url <real-adult-url> --permission-proof --native-status-proof --dns-guard-proof --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/android-real-browser-capture",
+    "npm run evidence:normal-browsing-corpus -- --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/normal-browsing-corpus-capture",
+    "npm run evidence:performance-profile -- --ios-device <udid-or-name> --android-device <serial> --android-background-cpu-proof --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/performance-profile-capture",
+    "npm run evidence:store-ad-sandbox -- --release-env-file <production-env-file> --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/store-ad-sandbox-capture",
+    "npm run evidence:ai-backend-smoke -- --release-env-file <production-env-file> --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/ai-backend-smoke-capture"
+  ],
+  "releaseBoundary": "This checklist is a configuration handoff only. It does not prove deployed services, physical-device behavior, sandbox purchases, or store approval.",
+  "secretBoundary": "Do not paste real secrets, purchase receipts, raw purchase tokens, App Store private keys, Play service accounts, Supabase service-role keys, Redis tokens, APNs/FCM credentials, maintenance secrets, or AI provider keys into docs/validation artifacts.",
+  "runId": "release-env-current",
+  "checklistArtifact": "docs/validation/artifacts/release-env-current/PRODUCTION_ENV_GAP_CHECKLIST.md",
+  "envSkeletonArtifact": "docs/validation/artifacts/release-env-current/PRODUCTION_ENV_MISSING_KEYS.env",
+  "jsonArtifact": "docs/validation/artifacts/release-env-current/production-env-gap-checklist.json",
+  "checklistSha256": "sha256-6fb3a685e4c540d2af555dda3d7d7dc374527ff9f1d00843a506592fcbb501b1",
+  "envSkeletonSha256": "sha256-0059612ba92dc4bfbdd485c98f2600e88b4e3e456d3de6414be529a65917b42e"
+}

@@ -1,0 +1,130 @@
+{
+  "schema": "freed-android-apk-build-report-v1",
+  "generatedAt": "2026-05-24T06:16:44.261Z",
+  "sanitized": true,
+  "requested": {
+    "arch": "arm64-v8a",
+    "buildIdleTimeoutMs": 600000,
+    "buildTimeoutMs": 2700000,
+    "engine": "auto",
+    "requireUploadSigning": false,
+    "skipCopy": false
+  },
+  "adMob": {
+    "androidAppIdConfigured": false,
+    "androidAppIdSource": "",
+    "mode": "local-test-app-id",
+    "productionReady": false,
+    "sampleAppIdUsed": true
+  },
+  "environment": {
+    "javaHome": "/opt/homebrew/Cellar/openjdk@17/17.0.19/libexec/openjdk.jdk/Contents/Home",
+    "gradleUserHome": "/tmp/freed-gradle-home",
+    "gradleProperties": "/tmp/freed-gradle-home/gradle.properties",
+    "foojayResolver": "already-compatible"
+  },
+  "hermesProbe": {
+    "ok": true,
+    "reason": "hermesc responded within 5s"
+  },
+  "selectedEngine": "hermes",
+  "signing": {
+    "missingInputs": [
+      "FREED_ANDROID_UPLOAD_STORE_FILE",
+      "FREED_ANDROID_UPLOAD_STORE_PASSWORD",
+      "FREED_ANDROID_UPLOAD_KEY_ALIAS",
+      "FREED_ANDROID_UPLOAD_KEY_PASSWORD"
+    ],
+    "mode": "debug-key-fallback",
+    "playConsoleReady": false,
+    "required": false,
+    "storeFileConfigured": false,
+    "storeFileExists": false,
+    "uploadKeystore": {
+      "certificateDn": "",
+      "certificateSha256Digest": "",
+      "checked": false,
+      "debugSigned": false
+    }
+  },
+  "gradleCommand": [
+    "./gradlew",
+    ":app:assembleRelease",
+    "--no-daemon",
+    "--console=plain",
+    "-PreactNativeArchitectures=arm64-v8a",
+    "-PhermesEnabled=true"
+  ],
+  "buildResult": "pass",
+  "result": "fail",
+  "summary": {
+    "passCount": 3,
+    "failCount": 3
+  },
+  "results": [
+    {
+      "id": "android-apk-build",
+      "status": "PASS",
+      "detail": "Release APK assembled successfully."
+    },
+    {
+      "id": "android-apk-upload-signing",
+      "status": "FAIL",
+      "detail": "Release APK used debug-key fallback; missing FREED_ANDROID_UPLOAD_STORE_FILE, FREED_ANDROID_UPLOAD_STORE_PASSWORD, FREED_ANDROID_UPLOAD_KEY_ALIAS, FREED_ANDROID_UPLOAD_KEY_PASSWORD."
+    },
+    {
+      "id": "android-apk-admob-app-id",
+      "status": "FAIL",
+      "detail": "Android AdMob application id uses the local Google sample fallback; this is allowed only for local QA artifacts."
+    },
+    {
+      "id": "android-apk-signature",
+      "status": "FAIL",
+      "detail": "APK signature verifies with the Android Debug certificate; this is allowed only for local QA artifacts."
+    },
+    {
+      "id": "android-apk-react-native-bundle",
+      "status": "PASS",
+      "detail": "React Native release bundle is packaged in the APK."
+    },
+    {
+      "id": "android-apk-abi",
+      "status": "PASS",
+      "detail": "Packaged native ABIs: arm64-v8a."
+    }
+  ],
+  "finalEngine": "hermes",
+  "apk": {
+    "abis": [
+      "arm64-v8a"
+    ],
+    "copied": true,
+    "hasHermesBytecode": false,
+    "hasHermesRuntime": true,
+    "hasReactNativeBundle": true,
+    "hasJscRuntime": false,
+    "path": "~/Downloads/FREED-release-arm64.apk",
+    "sha256": "c081e43a98b461a7f83fab1f6a20de7817b1562f255d528e6f975b838732c911",
+    "signature": {
+      "certificateDn": "CN=Android Debug, OU=Android, O=Unknown, L=Unknown, ST=Unknown, C=US",
+      "certificateSha256Digest": "fac61745dc0903786fb9ede62a962b399f7348f0bb6f899b8332667591033b9c",
+      "debugSigned": true,
+      "keyAlgorithm": "RSA",
+      "keySizeBits": 2048,
+      "numberOfSigners": 1,
+      "sourceStampVerified": false,
+      "tool": "~/Library/Android/sdk/build-tools/36.0.0/apksigner",
+      "v1SchemeVerified": false,
+      "v2SchemeVerified": true,
+      "v3SchemeVerified": false,
+      "v31SchemeVerified": false,
+      "v4SchemeVerified": false,
+      "verified": true
+    },
+    "sizeBytes": 59070442,
+    "sizeMb": "56.3 MB",
+    "sourcePath": "android/app/build/outputs/apk/release/app-release.apk",
+    "stablePath": "~/Downloads/FREED-release-arm64.apk",
+    "timestampedPath": "~/Downloads/FREED-release-arm64-20260524-114608.apk"
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "schema": "freed-eas-build-handoff-v1",
+  "generatedAt": "2026-06-11T08:10:45.947Z",
+  "sanitized": true,
+  "runId": "eas-build-current",
+  "result": "ready-for-approved-eas-build",
+  "readyForApprovedEasBuild": true,
+  "releaseEvidenceSatisfied": false,
+  "summary": {
+    "passCount": 9,
+    "failCount": 0
+  },
+  "results": [
+    {
+      "id": "eas-json-present",
+      "status": "PASS",
+      "detail": "eas.json is present and parseable.",
+      "next": ""
+    },
+    {
+      "id": "internal-android-apk-profile",
+      "status": "PASS",
+      "detail": "EAS internal profile builds Android APK artifacts for physical QA.",
+      "next": "Set eas.json build.internal.android.buildType to apk."
+    },
+    {
+      "id": "production-android-aab-profile",
+      "status": "PASS",
+      "detail": "EAS production profile builds Android App Bundle artifacts for Play.",
+      "next": "Set eas.json build.production.android.buildType to app-bundle."
+    },
+    {
+      "id": "production-submit-draft-internal",
+      "status": "PASS",
+      "detail": "Production submit profile is constrained to Play internal track with draft release status.",
+      "next": "Keep production submit draft/internal until strict release evidence passes."
+    },
+    {
+      "id": "internal-workflow-manual",
+      "status": "PASS",
+      "detail": "Internal workflow is manually triggered and contains build jobs.",
+      "next": ""
+    },
+    {
+      "id": "store-workflow-manual-no-submit",
+      "status": "PASS",
+      "detail": "Store workflow is manually triggered, builds store artifacts, and does not auto-submit.",
+      "next": ""
+    },
+    {
+      "id": "eas-cli-runner-available",
+      "status": "PASS",
+      "detail": "npx is available for npx eas-cli@latest commands at ../../../../../opt/homebrew/bin/npx.",
+      "next": "Install Node/npm or run the EAS build commands from an environment where npx is available."
+    },
+    {
+      "id": "local-android-cmake-blocker-captured",
+      "status": "PASS",
+      "detail": "Current local Android source build blocker is captured as CMake exit 137.",
+      "next": "Rerun npm run build:android-apk:arm64 with a sanitized --report, or use EAS after owner approval."
+    },
+    {
+      "id": "legacy-apk-boundary-captured",
+      "status": "PASS",
+      "detail": "Legacy downloadable APK still exists only as a side-load support artifact.",
+      "next": "Do not use the legacy APK as current-source or Play upload evidence."
+    }
+  ],
+  "androidFailure": {
+    "artifact": "docs/validation/artifacts/android-current-apk-retry/android-apk-build-report.json",
+    "buildResult": "failed-during-gradle",
+    "cmakeExit137": true,
+    "exists": true,
+    "failedTask": ":app:configureCMakeRelWithDebInfo[arm64-v8a]",
+    "generatedAt": "2026-06-11T07:43:35.212Z",
+    "localBuildBlocked": true,
+    "newArchForcedByReactNative": true,
+    "requestedNewArchEnabled": false,
+    "result": "fail",
+    "sanitized": true,
+    "summary": {
+      "passCount": 0,
+      "failCount": 1
+    }
+  },
+  "easConfig": {
+    "artifact": "eas.json",
+    "sha256": "sha256-a55a85b1b645a5ab23fdab079aa2b9c156fdcbaeb630a0ce045e247a8bf6d439",
+    "internalAndroidBuildType": "apk",
+    "productionAndroidBuildType": "app-bundle",
+    "internalDistribution": "internal",
+    "productionChannel": "production",
+    "productionSubmitTrack": "internal",
+    "productionSubmitReleaseStatus": "draft"
+  },
+  "workflows": {
+    "internal": {
+      "artifact": ".eas/workflows/freed-internal-builds.yml",
+      "exists": true,
+      "sha256": "sha256-d2c6f9d8ce1a5c35ed1c6d3d3bf5cd9403850724cf8f86ded8d6076bff1cc2e8"
+    },
+    "store": {
+      "artifact": ".eas/workflows/freed-store-builds.yml",
+      "exists": true,
+      "sha256": "sha256-f8f5925c422c27cf4475d641b03373299d177317a6626df3d1cf94bf808c354f"
+    }
+  },
+  "cli": {
+    "npxAvailable": true,
+    "npxPath": "../../../../../opt/homebrew/bin/npx",
+    "easCliInvocation": "npx eas-cli@latest"
+  },
+  "commands": {
+    "androidInternalApk": "npm run eas:build:internal -- --platform android --non-interactive",
+    "androidProductionAab": "npm run eas:build:production -- --platform android --non-interactive",
+    "iosInternal": "npm run eas:build:internal -- --platform ios --non-interactive",
+    "iosProduction": "npm run eas:build:production -- --platform ios --non-interactive",
+    "releasePreflight": "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/release-env-preflight-report.json",
+    "strictVerify": "npm run verify:release -- --env-file <production-env-file> --artifact-dir docs/validation/artifacts/<run-id>"
+  },
+  "requiredReceipts": [
+    "EAS build URL",
+    "EAS build ID",
+    "Git/source revision used by EAS",
+    "Profile name: internal for QA APK or production for Play AAB/App Store IPA",
+    "Platform: android or ios",
+    "Artifact type: apk, aab, app, or ipa",
+    "Artifact SHA-256 and byte size",
+    "Android signing mode or iOS distribution signing summary",
+    "Production env preflight report path for store artifacts",
+    "Physical-device install/protection QA run ID before evidence promotion"
+  ],
+  "postBuildEvidence": {
+    "androidInternalApk": "Install the EAS internal Android APK on physical hardware, then run qa:android-install and evidence:android-real-browser against the same device.",
+    "androidProductionAab": "Use the EAS production Android AAB only for Play internal/draft upload after production env, AdMob, purchase verification, and store sandbox gates pass.",
+    "iosInternal": "Use the EAS internal iOS build for entitlement-approved physical-device Screen Time/Safari validation.",
+    "iosProduction": "Use the EAS production iOS artifact for TestFlight/App Store Connect only after strict release evidence passes."
+  },
+  "releaseBoundary": "EAS handoff only. This report does not prove an EAS build was run, that artifacts exist, that stores accepted uploads, or that physical-device protection evidence passed."
+}

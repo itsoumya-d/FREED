@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "freed-store-listing-screenshot-template-v1",
+  "finalManifestPath": "store/screenshots/listing/manifest.json",
+  "instructions": "Copy this template to manifest.json only after capturing final public listing screenshots from the signed build family. Fill sourceBuild, sourceCapturePath, finalAssetPath, width, height, and sha256 for every asset.",
+  "assets": [
+    {
+      "id": "turn-on-real-protection",
+      "platform": "universal",
+      "deviceClass": "phone",
+      "sourceBuild": "",
+      "sourceCapturePath": "",
+      "finalAssetPath": "",
+      "headline": "TURN ON REAL PROTECTION",
+      "screen": "protection setup checklist",
+      "width": 1290,
+      "height": 2796,
+      "sha256": "",
+      "reviewBoundary": "Public store listing screenshot only; not physical-device protection evidence."
+    },
+    {
+      "id": "block-adult-sites-safely",
+      "platform": "universal",
+      "deviceClass": "phone",
+      "sourceBuild": "",
+      "sourceCapturePath": "",
+      "finalAssetPath": "",
+      "headline": "BLOCK ADULT SITES SAFELY",
+      "screen": "activation test passed",
+      "width": 1290,
+      "height": 2796,
+      "sha256": "",
+      "reviewBoundary": "Public store listing screenshot only; not physical-device protection evidence."
+    },
+    {
+      "id": "interrupt-app-loops",
+      "platform": "universal",
+      "deviceClass": "phone",
+      "sourceBuild": "",
+      "sourceCapturePath": "",
+      "finalAssetPath": "",
+      "headline": "INTERRUPT APP LOOPS",
+      "screen": "selected app limits",
+      "width": 1290,
+      "height": 2796,
+      "sha256": "",
+      "reviewBoundary": "Public store listing screenshot only; not physical-device protection evidence."
+    },
+    {
+      "id": "recover-in-the-moment",
+      "platform": "universal",
+      "deviceClass": "phone",
+      "sourceBuild": "",
+      "sourceCapturePath": "",
+      "finalAssetPath": "",
+      "headline": "RECOVER IN THE MOMENT",
+      "screen": "recovery challenge",
+      "width": 1290,
+      "height": 2796,
+      "sha256": "",
+      "reviewBoundary": "Public store listing screenshot only; not physical-device protection evidence."
+    },
+    {
+      "id": "keep-privacy-local",
+      "platform": "universal",
+      "deviceClass": "phone",
+      "sourceBuild": "",
+      "sourceCapturePath": "",
+      "finalAssetPath": "",
+      "headline": "KEEP PRIVACY LOCAL",
+      "screen": "privacy controls",
+      "width": 1290,
+      "height": 2796,
+      "sha256": "",
+      "reviewBoundary": "Public store listing screenshot only; not physical-device protection evidence."
+    },
+    {
+      "id": "upgrade-without-ad-breaks",
+      "platform": "universal",
+      "deviceClass": "phone",
+      "sourceBuild": "",
+      "sourceCapturePath": "",
+      "finalAssetPath": "",
+      "headline": "UPGRADE WITHOUT AD BREAKS",
+      "screen": "Core 3 paywall",
+      "width": 1290,
+      "height": 2796,
+      "sha256": "",
+      "reviewBoundary": "Public store listing screenshot only; not physical-device protection evidence."
+    }
+  ]
+}

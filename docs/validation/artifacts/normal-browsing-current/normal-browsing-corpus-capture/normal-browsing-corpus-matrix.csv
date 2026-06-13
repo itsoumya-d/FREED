@@ -1,0 +1,101 @@
+testId,platform,browserName,browserPackage,group,expected,actualResult,url,artifact,status,notes,source
+ios-safari-allowed-1,ios,Safari,,allowed,allow,,https://google.com/search?q=weather,,pending-manual-qa,,normal-browsing-template
+ios-safari-allowed-2,ios,Safari,,allowed,allow,,https://youtube.com/results?search_query=workout,,pending-manual-qa,,normal-browsing-template
+ios-safari-allowed-3,ios,Safari,,allowed,allow,,https://instagram.com/explore,,pending-manual-qa,,normal-browsing-template
+ios-safari-allowed-4,ios,Safari,,allowed,allow,,https://x.com/home,,pending-manual-qa,,normal-browsing-template
+ios-safari-allowed-5,ios,Safari,,allowed,allow,,https://coursera.org/learn/math,,pending-manual-qa,,normal-browsing-template
+ios-safari-allowed-6,ios,Safari,,allowed,allow,,https://netflix.com/browse,,pending-manual-qa,,normal-browsing-template
+ios-safari-allowed-7,ios,Safari,,allowed,allow,,https://store.steampowered.com/app/123,,pending-manual-qa,,normal-browsing-template
+ios-safari-allowed-8,ios,Safari,,allowed,allow,,https://notion.so/workspace,,pending-manual-qa,,normal-browsing-template
+ios-safari-allowed-9,ios,Safari,,allowed,allow,,https://wikipedia.org/wiki/Exercise,,pending-manual-qa,,normal-browsing-template
+ios-safari-allowed-10,ios,Safari,,allowed,allow,,https://open.spotify.com/,,pending-manual-qa,,normal-browsing-template
+ios-safari-allowed-11,ios,Safari,,allowed,allow,,https://github.com/features/actions,,pending-manual-qa,,normal-browsing-template
+ios-safari-allowed-12,ios,Safari,,allowed,allow,,https://roblox.com/discover,,pending-manual-qa,,normal-browsing-template
+ios-safari-recovery-search-1,ios,Safari,,recovery-search,allow,,https://duckduckgo.com/?q=porn+addiction+therapy,,pending-manual-qa,,normal-browsing-template
+ios-safari-recovery-search-2,ios,Safari,,recovery-search,allow,,https://google.com/search?q=porn+recovery+accountability,,pending-manual-qa,,normal-browsing-template
+ios-safari-recovery-search-3,ios,Safari,,recovery-search,allow,,https://google.com/search?q=accountability+software+porn+addiction,,pending-manual-qa,,normal-browsing-template
+ios-safari-recovery-search-4,ios,Safari,,recovery-search,allow,,https://duckduckgo.com/?q=quit+porn+support+group,,pending-manual-qa,,normal-browsing-template
+ios-safari-adult-blocked-1,ios,Safari,,adult-blocked,block,,https://bing.com/search?q=porn,,pending-manual-qa,,normal-browsing-template
+ios-safari-adult-blocked-2,ios,Safari,,adult-blocked,block,,https://pornhub.com/,,pending-manual-qa,,normal-browsing-template
+ios-safari-adult-blocked-3,ios,Safari,,adult-blocked,block,,https://google.com/search?q=free+explicit+videos,,pending-manual-qa,,normal-browsing-template
+ios-safari-adult-blocked-4,ios,Safari,,adult-blocked,block,,https://xvideos.com/,,pending-manual-qa,,normal-browsing-template
+android-chrome-allowed-1,android,Chrome,com.android.chrome,allowed,allow,,https://google.com/search?q=weather,,pending-manual-qa,,normal-browsing-template
+android-chrome-allowed-2,android,Chrome,com.android.chrome,allowed,allow,,https://youtube.com/results?search_query=workout,,pending-manual-qa,,normal-browsing-template
+android-chrome-allowed-3,android,Chrome,com.android.chrome,allowed,allow,,https://instagram.com/explore,,pending-manual-qa,,normal-browsing-template
+android-chrome-allowed-4,android,Chrome,com.android.chrome,allowed,allow,,https://x.com/home,,pending-manual-qa,,normal-browsing-template
+android-chrome-allowed-5,android,Chrome,com.android.chrome,allowed,allow,,https://coursera.org/learn/math,,pending-manual-qa,,normal-browsing-template
+android-chrome-allowed-6,android,Chrome,com.android.chrome,allowed,allow,,https://netflix.com/browse,,pending-manual-qa,,normal-browsing-template
+android-chrome-allowed-7,android,Chrome,com.android.chrome,allowed,allow,,https://store.steampowered.com/app/123,,pending-manual-qa,,normal-browsing-template
+android-chrome-allowed-8,android,Chrome,com.android.chrome,allowed,allow,,https://notion.so/workspace,,pending-manual-qa,,normal-browsing-template
+android-chrome-allowed-9,android,Chrome,com.android.chrome,allowed,allow,,https://wikipedia.org/wiki/Exercise,,pending-manual-qa,,normal-browsing-template
+android-chrome-allowed-10,android,Chrome,com.android.chrome,allowed,allow,,https://open.spotify.com/,,pending-manual-qa,,normal-browsing-template
+android-chrome-allowed-11,android,Chrome,com.android.chrome,allowed,allow,,https://github.com/features/actions,,pending-manual-qa,,normal-browsing-template
+android-chrome-allowed-12,android,Chrome,com.android.chrome,allowed,allow,,https://roblox.com/discover,,pending-manual-qa,,normal-browsing-template
+android-chrome-recovery-search-1,android,Chrome,com.android.chrome,recovery-search,allow,,https://duckduckgo.com/?q=porn+addiction+therapy,,pending-manual-qa,,normal-browsing-template
+android-chrome-recovery-search-2,android,Chrome,com.android.chrome,recovery-search,allow,,https://google.com/search?q=porn+recovery+accountability,,pending-manual-qa,,normal-browsing-template
+android-chrome-recovery-search-3,android,Chrome,com.android.chrome,recovery-search,allow,,https://google.com/search?q=accountability+software+porn+addiction,,pending-manual-qa,,normal-browsing-template
+android-chrome-recovery-search-4,android,Chrome,com.android.chrome,recovery-search,allow,,https://duckduckgo.com/?q=quit+porn+support+group,,pending-manual-qa,,normal-browsing-template
+android-chrome-adult-blocked-1,android,Chrome,com.android.chrome,adult-blocked,block,,https://bing.com/search?q=porn,,pending-manual-qa,,normal-browsing-template
+android-chrome-adult-blocked-2,android,Chrome,com.android.chrome,adult-blocked,block,,https://pornhub.com/,,pending-manual-qa,,normal-browsing-template
+android-chrome-adult-blocked-3,android,Chrome,com.android.chrome,adult-blocked,block,,https://google.com/search?q=free+explicit+videos,,pending-manual-qa,,normal-browsing-template
+android-chrome-adult-blocked-4,android,Chrome,com.android.chrome,adult-blocked,block,,https://xvideos.com/,,pending-manual-qa,,normal-browsing-template
+android-firefox-allowed-1,android,Firefox,org.mozilla.firefox,allowed,allow,,https://google.com/search?q=weather,,pending-manual-qa,,normal-browsing-template
+android-firefox-allowed-2,android,Firefox,org.mozilla.firefox,allowed,allow,,https://youtube.com/results?search_query=workout,,pending-manual-qa,,normal-browsing-template
+android-firefox-allowed-3,android,Firefox,org.mozilla.firefox,allowed,allow,,https://instagram.com/explore,,pending-manual-qa,,normal-browsing-template
+android-firefox-allowed-4,android,Firefox,org.mozilla.firefox,allowed,allow,,https://x.com/home,,pending-manual-qa,,normal-browsing-template
+android-firefox-allowed-5,android,Firefox,org.mozilla.firefox,allowed,allow,,https://coursera.org/learn/math,,pending-manual-qa,,normal-browsing-template
+android-firefox-allowed-6,android,Firefox,org.mozilla.firefox,allowed,allow,,https://netflix.com/browse,,pending-manual-qa,,normal-browsing-template
+android-firefox-allowed-7,android,Firefox,org.mozilla.firefox,allowed,allow,,https://store.steampowered.com/app/123,,pending-manual-qa,,normal-browsing-template
+android-firefox-allowed-8,android,Firefox,org.mozilla.firefox,allowed,allow,,https://notion.so/workspace,,pending-manual-qa,,normal-browsing-template
+android-firefox-allowed-9,android,Firefox,org.mozilla.firefox,allowed,allow,,https://wikipedia.org/wiki/Exercise,,pending-manual-qa,,normal-browsing-template
+android-firefox-allowed-10,android,Firefox,org.mozilla.firefox,allowed,allow,,https://open.spotify.com/,,pending-manual-qa,,normal-browsing-template
+android-firefox-allowed-11,android,Firefox,org.mozilla.firefox,allowed,allow,,https://github.com/features/actions,,pending-manual-qa,,normal-browsing-template
+android-firefox-allowed-12,android,Firefox,org.mozilla.firefox,allowed,allow,,https://roblox.com/discover,,pending-manual-qa,,normal-browsing-template
+android-firefox-recovery-search-1,android,Firefox,org.mozilla.firefox,recovery-search,allow,,https://duckduckgo.com/?q=porn+addiction+therapy,,pending-manual-qa,,normal-browsing-template
+android-firefox-recovery-search-2,android,Firefox,org.mozilla.firefox,recovery-search,allow,,https://google.com/search?q=porn+recovery+accountability,,pending-manual-qa,,normal-browsing-template
+android-firefox-recovery-search-3,android,Firefox,org.mozilla.firefox,recovery-search,allow,,https://google.com/search?q=accountability+software+porn+addiction,,pending-manual-qa,,normal-browsing-template
+android-firefox-recovery-search-4,android,Firefox,org.mozilla.firefox,recovery-search,allow,,https://duckduckgo.com/?q=quit+porn+support+group,,pending-manual-qa,,normal-browsing-template
+android-firefox-adult-blocked-1,android,Firefox,org.mozilla.firefox,adult-blocked,block,,https://bing.com/search?q=porn,,pending-manual-qa,,normal-browsing-template
+android-firefox-adult-blocked-2,android,Firefox,org.mozilla.firefox,adult-blocked,block,,https://pornhub.com/,,pending-manual-qa,,normal-browsing-template
+android-firefox-adult-blocked-3,android,Firefox,org.mozilla.firefox,adult-blocked,block,,https://google.com/search?q=free+explicit+videos,,pending-manual-qa,,normal-browsing-template
+android-firefox-adult-blocked-4,android,Firefox,org.mozilla.firefox,adult-blocked,block,,https://xvideos.com/,,pending-manual-qa,,normal-browsing-template
+android-edge-allowed-1,android,Edge,com.microsoft.emmx,allowed,allow,,https://google.com/search?q=weather,,pending-manual-qa,,normal-browsing-template
+android-edge-allowed-2,android,Edge,com.microsoft.emmx,allowed,allow,,https://youtube.com/results?search_query=workout,,pending-manual-qa,,normal-browsing-template
+android-edge-allowed-3,android,Edge,com.microsoft.emmx,allowed,allow,,https://instagram.com/explore,,pending-manual-qa,,normal-browsing-template
+android-edge-allowed-4,android,Edge,com.microsoft.emmx,allowed,allow,,https://x.com/home,,pending-manual-qa,,normal-browsing-template
+android-edge-allowed-5,android,Edge,com.microsoft.emmx,allowed,allow,,https://coursera.org/learn/math,,pending-manual-qa,,normal-browsing-template
+android-edge-allowed-6,android,Edge,com.microsoft.emmx,allowed,allow,,https://netflix.com/browse,,pending-manual-qa,,normal-browsing-template
+android-edge-allowed-7,android,Edge,com.microsoft.emmx,allowed,allow,,https://store.steampowered.com/app/123,,pending-manual-qa,,normal-browsing-template
+android-edge-allowed-8,android,Edge,com.microsoft.emmx,allowed,allow,,https://notion.so/workspace,,pending-manual-qa,,normal-browsing-template
+android-edge-allowed-9,android,Edge,com.microsoft.emmx,allowed,allow,,https://wikipedia.org/wiki/Exercise,,pending-manual-qa,,normal-browsing-template
+android-edge-allowed-10,android,Edge,com.microsoft.emmx,allowed,allow,,https://open.spotify.com/,,pending-manual-qa,,normal-browsing-template
+android-edge-allowed-11,android,Edge,com.microsoft.emmx,allowed,allow,,https://github.com/features/actions,,pending-manual-qa,,normal-browsing-template
+android-edge-allowed-12,android,Edge,com.microsoft.emmx,allowed,allow,,https://roblox.com/discover,,pending-manual-qa,,normal-browsing-template
+android-edge-recovery-search-1,android,Edge,com.microsoft.emmx,recovery-search,allow,,https://duckduckgo.com/?q=porn+addiction+therapy,,pending-manual-qa,,normal-browsing-template
+android-edge-recovery-search-2,android,Edge,com.microsoft.emmx,recovery-search,allow,,https://google.com/search?q=porn+recovery+accountability,,pending-manual-qa,,normal-browsing-template
+android-edge-recovery-search-3,android,Edge,com.microsoft.emmx,recovery-search,allow,,https://google.com/search?q=accountability+software+porn+addiction,,pending-manual-qa,,normal-browsing-template
+android-edge-recovery-search-4,android,Edge,com.microsoft.emmx,recovery-search,allow,,https://duckduckgo.com/?q=quit+porn+support+group,,pending-manual-qa,,normal-browsing-template
+android-edge-adult-blocked-1,android,Edge,com.microsoft.emmx,adult-blocked,block,,https://bing.com/search?q=porn,,pending-manual-qa,,normal-browsing-template
+android-edge-adult-blocked-2,android,Edge,com.microsoft.emmx,adult-blocked,block,,https://pornhub.com/,,pending-manual-qa,,normal-browsing-template
+android-edge-adult-blocked-3,android,Edge,com.microsoft.emmx,adult-blocked,block,,https://google.com/search?q=free+explicit+videos,,pending-manual-qa,,normal-browsing-template
+android-edge-adult-blocked-4,android,Edge,com.microsoft.emmx,adult-blocked,block,,https://xvideos.com/,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-allowed-1,android,Samsung Internet,com.sec.android.app.sbrowser,allowed,allow,,https://google.com/search?q=weather,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-allowed-2,android,Samsung Internet,com.sec.android.app.sbrowser,allowed,allow,,https://youtube.com/results?search_query=workout,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-allowed-3,android,Samsung Internet,com.sec.android.app.sbrowser,allowed,allow,,https://instagram.com/explore,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-allowed-4,android,Samsung Internet,com.sec.android.app.sbrowser,allowed,allow,,https://x.com/home,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-allowed-5,android,Samsung Internet,com.sec.android.app.sbrowser,allowed,allow,,https://coursera.org/learn/math,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-allowed-6,android,Samsung Internet,com.sec.android.app.sbrowser,allowed,allow,,https://netflix.com/browse,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-allowed-7,android,Samsung Internet,com.sec.android.app.sbrowser,allowed,allow,,https://store.steampowered.com/app/123,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-allowed-8,android,Samsung Internet,com.sec.android.app.sbrowser,allowed,allow,,https://notion.so/workspace,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-allowed-9,android,Samsung Internet,com.sec.android.app.sbrowser,allowed,allow,,https://wikipedia.org/wiki/Exercise,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-allowed-10,android,Samsung Internet,com.sec.android.app.sbrowser,allowed,allow,,https://open.spotify.com/,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-allowed-11,android,Samsung Internet,com.sec.android.app.sbrowser,allowed,allow,,https://github.com/features/actions,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-allowed-12,android,Samsung Internet,com.sec.android.app.sbrowser,allowed,allow,,https://roblox.com/discover,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-recovery-search-1,android,Samsung Internet,com.sec.android.app.sbrowser,recovery-search,allow,,https://duckduckgo.com/?q=porn+addiction+therapy,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-recovery-search-2,android,Samsung Internet,com.sec.android.app.sbrowser,recovery-search,allow,,https://google.com/search?q=porn+recovery+accountability,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-recovery-search-3,android,Samsung Internet,com.sec.android.app.sbrowser,recovery-search,allow,,https://google.com/search?q=accountability+software+porn+addiction,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-recovery-search-4,android,Samsung Internet,com.sec.android.app.sbrowser,recovery-search,allow,,https://duckduckgo.com/?q=quit+porn+support+group,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-adult-blocked-1,android,Samsung Internet,com.sec.android.app.sbrowser,adult-blocked,block,,https://bing.com/search?q=porn,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-adult-blocked-2,android,Samsung Internet,com.sec.android.app.sbrowser,adult-blocked,block,,https://pornhub.com/,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-adult-blocked-3,android,Samsung Internet,com.sec.android.app.sbrowser,adult-blocked,block,,https://google.com/search?q=free+explicit+videos,,pending-manual-qa,,normal-browsing-template
+android-samsung-internet-adult-blocked-4,android,Samsung Internet,com.sec.android.app.sbrowser,adult-blocked,block,,https://xvideos.com/,,pending-manual-qa,,normal-browsing-template

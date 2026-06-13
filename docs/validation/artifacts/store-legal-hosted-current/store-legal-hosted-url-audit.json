@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "freed-store-legal-hosted-url-audit-v1",
+  "generatedAt": "2026-06-11T03:02:55.424Z",
+  "sanitized": true,
+  "result": "fail",
+  "passCount": 0,
+  "failCount": 3,
+  "timeoutMs": 10000,
+  "responseMaxBytes": 262144,
+  "publicUrls": {
+    "privacy": "https://freedrecovery.app/privacy",
+    "support": "https://freedrecovery.app/support",
+    "account-deletion": "https://freedrecovery.app/account-deletion"
+  },
+  "routeResults": [
+    {
+      "contentChecks": [
+        {
+          "text": "FREED Privacy Policy",
+          "present": false
+        },
+        {
+          "text": "Effective date: June 6, 2026",
+          "present": false
+        },
+        {
+          "text": "Android Accessibility",
+          "present": false
+        },
+        {
+          "text": "DNS-only VPN",
+          "present": false
+        },
+        {
+          "text": "Family Controls",
+          "present": false
+        },
+        {
+          "text": "Purchase verification",
+          "present": false
+        },
+        {
+          "text": "support@freedrecovery.app",
+          "present": false
+        }
+      ],
+      "contentType": "",
+      "expectedUrl": "https://freedrecovery.app/privacy",
+      "finalUrl": "",
+      "id": "privacy",
+      "publicUrl": "https://freedrecovery.app/privacy",
+      "routePath": "/privacy",
+      "status": 0
+    },
+    {
+      "contentChecks": [
+        {
+          "text": "FREED Support",
+          "present": false
+        },
+        {
+          "text": "Protection setup help",
+          "present": false
+        },
+        {
+          "text": "Google Play",
+          "present": false
+        },
+        {
+          "text": "App Store",
+          "present": false
+        },
+        {
+          "text": "support@freedrecovery.app",
+          "present": false
+        }
+      ],
+      "contentType": "",
+      "expectedUrl": "https://freedrecovery.app/support",
+      "finalUrl": "",
+      "id": "support",
+      "publicUrl": "https://freedrecovery.app/support",
+      "routePath": "/support",
+      "status": 0
+    },
+    {
+      "contentChecks": [
+        {
+          "text": "FREED Account Deletion",
+          "present": false
+        },
+        {
+          "text": "Delete local app data",
+          "present": false
+        },
+        {
+          "text": "Request hosted data deletion",
+          "present": false
+        },
+        {
+          "text": "https://freedrecovery.app/account-deletion",
+          "present": false
+        },
+        {
+          "text": "support@freedrecovery.app",
+          "present": false
+        }
+      ],
+      "contentType": "",
+      "expectedUrl": "https://freedrecovery.app/account-deletion",
+      "finalUrl": "",
+      "id": "account-deletion",
+      "publicUrl": "https://freedrecovery.app/account-deletion",
+      "routePath": "/account-deletion",
+      "status": 0
+    }
+  ],
+  "releaseBoundary": "Hosted URL availability proof only. Legal review, store-console entry, platform approval, sandbox purchases, and physical-device evidence still gate production submission.",
+  "checks": [
+    {
+      "id": "hosted-fetch-privacy",
+      "status": "fail",
+      "detail": "https://freedrecovery.app/privacy could not be fetched: fetch failed; code=ENOTFOUND; host=freedrecovery.app",
+      "next": "Deploy the static web export, verify DNS/CDN routing, then rerun the hosted legal URL audit."
+    },
+    {
+      "id": "hosted-fetch-support",
+      "status": "fail",
+      "detail": "https://freedrecovery.app/support could not be fetched: fetch failed; code=ENOTFOUND; host=freedrecovery.app",
+      "next": "Deploy the static web export, verify DNS/CDN routing, then rerun the hosted legal URL audit."
+    },
+    {
+      "id": "hosted-fetch-account-deletion",
+      "status": "fail",
+      "detail": "https://freedrecovery.app/account-deletion could not be fetched: fetch failed; code=ENOTFOUND; host=freedrecovery.app",
+      "next": "Deploy the static web export, verify DNS/CDN routing, then rerun the hosted legal URL audit."
+    }
+  ]
+}

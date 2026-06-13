@@ -1,0 +1,229 @@
+{
+  "schemaVersion": "freed-ios-release-archive-report-v1",
+  "generatedAt": "2026-06-07T09:29:13.824Z",
+  "sanitized": true,
+  "platform": "ios",
+  "result": "fail",
+  "archiveResult": "fail",
+  "exportResult": "fail",
+  "summary": {
+    "passCount": 0,
+    "failCount": 7
+  },
+  "results": [
+    {
+      "id": "ios-release-archive-build",
+      "status": "FAIL",
+      "detail": "iOS release signing requires FREED_IOS_DEVELOPMENT_TEAM or APPLE_TEAM_ID as a 10-character Apple team ID. This blocker snapshot is not release evidence."
+    },
+    {
+      "id": "ios-release-export",
+      "status": "FAIL",
+      "detail": "iOS release signing requires FREED_IOS_DEVELOPMENT_TEAM or APPLE_TEAM_ID as a 10-character Apple team ID. This blocker snapshot is not release evidence."
+    },
+    {
+      "id": "ios-release-signing",
+      "status": "FAIL",
+      "detail": "iOS release signing requires FREED_IOS_DEVELOPMENT_TEAM or APPLE_TEAM_ID as a 10-character Apple team ID. This blocker snapshot is not release evidence."
+    },
+    {
+      "id": "ios-release-bundle-id",
+      "status": "FAIL",
+      "detail": "iOS release signing requires FREED_IOS_DEVELOPMENT_TEAM or APPLE_TEAM_ID as a 10-character Apple team ID. This blocker snapshot is not release evidence."
+    },
+    {
+      "id": "ios-release-entitlements",
+      "status": "FAIL",
+      "detail": "iOS release signing requires FREED_IOS_DEVELOPMENT_TEAM or APPLE_TEAM_ID as a 10-character Apple team ID. This blocker snapshot is not release evidence."
+    },
+    {
+      "id": "ios-release-embedded-extensions",
+      "status": "FAIL",
+      "detail": "iOS release signing requires FREED_IOS_DEVELOPMENT_TEAM or APPLE_TEAM_ID as a 10-character Apple team ID. This blocker snapshot is not release evidence."
+    },
+    {
+      "id": "ios-release-safari-content-blocker",
+      "status": "FAIL",
+      "detail": "iOS release signing requires FREED_IOS_DEVELOPMENT_TEAM or APPLE_TEAM_ID as a 10-character Apple team ID. This blocker snapshot is not release evidence."
+    }
+  ],
+  "requested": {
+    "allowProvisioningUpdates": false,
+    "bundleId": "app.freed.recovery",
+    "configuration": "Release",
+    "destination": "generic/platform=iOS",
+    "requireReleaseSigning": true,
+    "scheme": "FREED",
+    "sdk": "iphoneos",
+    "skipExport": false
+  },
+  "exportOptions": {
+    "generated": false,
+    "method": "app-store-connect",
+    "path": "ios/build/FREED-export-options.plist",
+    "provisioningProfileBundleIds": [],
+    "signingStyle": "automatic",
+    "teamIdConfigured": false
+  },
+  "signing": {
+    "allSignedBundleTeamIdsMatch": false,
+    "appleDistributionSigned": false,
+    "debugSigned": false,
+    "mode": "not-app-store-distribution",
+    "required": true,
+    "teamIdConfigured": false
+  },
+  "archive": {
+    "appBundleIdentifier": "",
+    "appGroupEntitledBundleIds": [],
+    "appleDistributionSignedBundleIds": [],
+    "archivePath": "",
+    "bundlePath": "",
+    "codesignAvailableBundleIds": [],
+    "completeDataProtectionEntitledBundleIds": [],
+    "debugSignedBundleIds": [],
+    "embeddedExtensionBundleIds": [],
+    "embeddedExtensionNames": [],
+    "extensions": [
+      {
+        "appGroupPresent": false,
+        "appleDistributionSigned": false,
+        "bundleId": "",
+        "bundleName": "FREEDShieldConfiguration.appex",
+        "codesignAvailable": false,
+        "completeDataProtectionEntitled": false,
+        "debugSigned": false,
+        "embedded": false,
+        "entitlementsAvailable": false,
+        "extensionPoint": "",
+        "extensionPointMatches": false,
+        "familyControlsEntitled": false,
+        "expectedBundleId": "app.freed.recovery.shield-configuration",
+        "expectedBundleIdMatches": false,
+        "expectedExtensionPoint": "com.apple.ManagedSettingsUI.shield-configuration-service",
+        "expectedPrincipalClass": "ShieldConfigurationExtension",
+        "packetInspectionEntitled": false,
+        "packetTunnelProviderEntitled": false,
+        "principalClass": "",
+        "principalClassMatches": false,
+        "requiresFamilyControls": true,
+        "teamIdentifier": ""
+      },
+      {
+        "appGroupPresent": false,
+        "appleDistributionSigned": false,
+        "bundleId": "",
+        "bundleName": "FREEDShieldAction.appex",
+        "codesignAvailable": false,
+        "completeDataProtectionEntitled": false,
+        "debugSigned": false,
+        "embedded": false,
+        "entitlementsAvailable": false,
+        "extensionPoint": "",
+        "extensionPointMatches": false,
+        "familyControlsEntitled": false,
+        "expectedBundleId": "app.freed.recovery.shield-action",
+        "expectedBundleIdMatches": false,
+        "expectedExtensionPoint": "com.apple.ManagedSettings.shield-action-service",
+        "expectedPrincipalClass": "ShieldActionExtension",
+        "packetInspectionEntitled": false,
+        "packetTunnelProviderEntitled": false,
+        "principalClass": "",
+        "principalClassMatches": false,
+        "requiresFamilyControls": true,
+        "teamIdentifier": ""
+      },
+      {
+        "appGroupPresent": false,
+        "appleDistributionSigned": false,
+        "bundleId": "",
+        "bundleName": "FREEDDeviceActivityMonitor.appex",
+        "codesignAvailable": false,
+        "completeDataProtectionEntitled": false,
+        "debugSigned": false,
+        "embedded": false,
+        "entitlementsAvailable": false,
+        "extensionPoint": "",
+        "extensionPointMatches": false,
+        "familyControlsEntitled": false,
+        "expectedBundleId": "app.freed.recovery.device-activity-monitor",
+        "expectedBundleIdMatches": false,
+        "expectedExtensionPoint": "com.apple.deviceactivity.monitor-extension",
+        "expectedPrincipalClass": "DeviceActivityMonitorExtension",
+        "packetInspectionEntitled": false,
+        "packetTunnelProviderEntitled": false,
+        "principalClass": "",
+        "principalClassMatches": false,
+        "requiresFamilyControls": true,
+        "teamIdentifier": ""
+      },
+      {
+        "appGroupPresent": false,
+        "appleDistributionSigned": false,
+        "bundleId": "",
+        "bundleName": "FREEDSafariContentBlocker.appex",
+        "codesignAvailable": false,
+        "completeDataProtectionEntitled": false,
+        "debugSigned": false,
+        "embedded": false,
+        "entitlementsAvailable": false,
+        "extensionPoint": "",
+        "extensionPointMatches": false,
+        "familyControlsEntitled": false,
+        "expectedBundleId": "app.freed.recovery.safari-content-blocker",
+        "expectedBundleIdMatches": false,
+        "expectedExtensionPoint": "com.apple.Safari.content-blocker",
+        "expectedPrincipalClass": "ContentBlockerRequestHandler",
+        "packetInspectionEntitled": false,
+        "packetTunnelProviderEntitled": false,
+        "principalClass": "",
+        "principalClassMatches": false,
+        "requiresFamilyControls": false,
+        "teamIdentifier": ""
+      }
+    ],
+    "familyControlsEntitledBundleIds": [],
+    "missingOrMismatchedExtensions": [
+      "FREEDShieldConfiguration.appex",
+      "FREEDShieldAction.appex",
+      "FREEDDeviceActivityMonitor.appex",
+      "FREEDSafariContentBlocker.appex"
+    ],
+    "packetInspectionEntitled": false,
+    "packetTunnelProviderEntitled": false,
+    "safariRuleList": {
+      "adultDomainRulesPresent": false,
+      "allRulesBlock": false,
+      "available": false,
+      "missingSignals": [
+        "adult-domain-pornhub",
+        "adult-domain-xvideos",
+        "youtube-shorts-web",
+        "instagram-reels-web",
+        "tiktok-for-you-web"
+      ],
+      "ruleCount": 0,
+      "shortFormRulesPresent": false,
+      "usableForManualEvidence": false
+    },
+    "signedBundleTeamIds": [],
+    "expectedBundleId": "app.freed.recovery"
+  },
+  "ipa": {
+    "embeddedExtensionNames": [],
+    "exists": false,
+    "hasPayloadApp": false,
+    "ipaPath": "",
+    "sha256": "",
+    "sizeBytes": 0
+  },
+  "durations": {
+    "archiveDurationMs": 0,
+    "exportDurationMs": 0
+  },
+  "failure": {
+    "phase": "argument-validation",
+    "message": "iOS release signing requires FREED_IOS_DEVELOPMENT_TEAM or APPLE_TEAM_ID as a 10-character Apple team ID."
+  },
+  "logPath": "freed-ios-release-archive-2026-06-07T09-29-13-824Z.log"
+}

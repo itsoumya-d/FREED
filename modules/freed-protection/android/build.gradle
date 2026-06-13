@@ -1,0 +1,22 @@
+plugins {
+  id 'com.android.library'
+  id 'org.jetbrains.kotlin.android'
+}
+
+group = 'app.freed.protection'
+version = '0.1.0'
+
+android {
+  namespace 'app.freed.protection'
+  compileSdk 36
+
+  defaultConfig {
+    minSdk 24
+    targetSdk 36
+  }
+}
+
+dependencies {
+  implementation project(':expo-modules-core')
+  implementation 'com.google.mlkit:image-labeling:17.0.9'
+}

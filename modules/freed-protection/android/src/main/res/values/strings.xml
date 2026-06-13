@@ -1,0 +1,5 @@
+<resources>
+  <string name="freed_accessibility_description">Detect opted-in adult-site and doomscrolling risk moments from supported browser fields, selected app packages, and sustained short-form screens so FREED can open recovery challenges.</string>
+  <string name="freed_usage_access_config_label">FREED Usage Access</string>
+  <string name="freed_usage_access_reason">FREED uses Usage Access only to read aggregate foreground time for selected app packages so your app timers can trigger recovery challenges. It does not read screen contents, messages, keystrokes, browsing history, or raw usage events.</string>
+</resources>

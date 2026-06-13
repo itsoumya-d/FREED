@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "freed-static-legal-hosting-bundle-v1",
+  "generatedAt": "2026-06-11T03:03:27.642Z",
+  "sanitized": true,
+  "publicUrls": {
+    "account-deletion": "https://freedrecovery.app/account-deletion",
+    "privacy": "https://freedrecovery.app/privacy",
+    "support": "https://freedrecovery.app/support"
+  },
+  "uploadRoot": "docs/validation/artifacts/store-legal-web-deploy-current/static-hosting-bundle",
+  "routeMappings": [
+    {
+      "htmlArtifact": "dist/privacy.html",
+      "publicUrl": "https://freedrecovery.app/privacy",
+      "requiredCleanUrl": "/privacy",
+      "requiredMapping": "/privacy -> /privacy.html",
+      "sha256": "sha256-23d6a477278fc04fe0269378c83b8fe040224878c5d5e8668d8a95694de81e5b"
+    },
+    {
+      "htmlArtifact": "dist/support.html",
+      "publicUrl": "https://freedrecovery.app/support",
+      "requiredCleanUrl": "/support",
+      "requiredMapping": "/support -> /support.html",
+      "sha256": "sha256-dc41a86b82ca7fca3a8096de5ace864ef22924f08c02519545fdef1fbb66cc69"
+    },
+    {
+      "htmlArtifact": "dist/account-deletion.html",
+      "publicUrl": "https://freedrecovery.app/account-deletion",
+      "requiredCleanUrl": "/account-deletion",
+      "requiredMapping": "/account-deletion -> /account-deletion.html",
+      "sha256": "sha256-89316b39748a776f2fac427af59ccc8eced7a2bfe6e9b7ad35de07a6f7ac9c99"
+    }
+  ],
+  "routeConfigFiles": [
+    {
+      "exportArtifact": "dist/_redirects",
+      "exportCopied": true,
+      "exportFile": "_redirects",
+      "exportSha256": "sha256-c74f827165029e1a5d58b362ed5e39ad5784672d8f677ed6251d9ff21f0745ae",
+      "id": "netlify-cloudflare-clean-url-redirects",
+      "sourceFile": "public/_redirects",
+      "sourceReady": true,
+      "sourceSha256": "sha256-c74f827165029e1a5d58b362ed5e39ad5784672d8f677ed6251d9ff21f0745ae"
+    },
+    {
+      "exportArtifact": "dist/_headers",
+      "exportCopied": true,
+      "exportFile": "_headers",
+      "exportSha256": "sha256-38a658e0add51b5d95ee41e0625fb8a1b8118bd018a2d32755c576ef70e0e225",
+      "id": "netlify-cloudflare-crawler-headers",
+      "sourceFile": "public/_headers",
+      "sourceReady": true,
+      "sourceSha256": "sha256-38a658e0add51b5d95ee41e0625fb8a1b8118bd018a2d32755c576ef70e0e225"
+    },
+    {
+      "exportArtifact": "",
+      "exportCopied": null,
+      "exportFile": "",
+      "exportSha256": "",
+      "id": "vercel-clean-url-rewrites",
+      "sourceFile": "vercel.json",
+      "sourceReady": true,
+      "sourceSha256": "sha256-d1521eb6aba607080aa7f61edf071b4f47b3d605f71da0cddd8a30153c6a9fce"
+    }
+  ],
+  "includedFiles": [
+    {
+      "bytes": 26133,
+      "kind": "legal-route-html",
+      "sha256": "sha256-23d6a477278fc04fe0269378c83b8fe040224878c5d5e8668d8a95694de81e5b",
+      "source": "dist/privacy.html",
+      "target": "privacy.html"
+    },
+    {
+      "bytes": 24300,
+      "kind": "legal-route-html",
+      "sha256": "sha256-dc41a86b82ca7fca3a8096de5ace864ef22924f08c02519545fdef1fbb66cc69",
+      "source": "dist/support.html",
+      "target": "support.html"
+    },
+    {
+      "bytes": 24067,
+      "kind": "legal-route-html",
+      "sha256": "sha256-89316b39748a776f2fac427af59ccc8eced7a2bfe6e9b7ad35de07a6f7ac9c99",
+      "source": "dist/account-deletion.html",
+      "target": "account-deletion.html"
+    },
+    {
+      "bytes": 201,
+      "kind": "hosting-route-config",
+      "sha256": "sha256-c74f827165029e1a5d58b362ed5e39ad5784672d8f677ed6251d9ff21f0745ae",
+      "source": "dist/_redirects",
+      "target": "_redirects"
+    },
+    {
+      "bytes": 482,
+      "kind": "hosting-route-config",
+      "sha256": "sha256-38a658e0add51b5d95ee41e0625fb8a1b8118bd018a2d32755c576ef70e0e225",
+      "source": "dist/_headers",
+      "target": "_headers"
+    },
+    {
+      "bytes": 1361,
+      "kind": "hosting-route-config",
+      "sha256": "sha256-d1521eb6aba607080aa7f61edf071b4f47b3d605f71da0cddd8a30153c6a9fce",
+      "source": "vercel.json",
+      "target": "vercel.json"
+    }
+  ],
+  "providerNotes": [
+    "Upload the deploy root contents as the site root, not the repository root.",
+    "Netlify and Cloudflare Pages can use the exported _redirects and _headers files in the deploy root.",
+    "Vercel can use vercel.json cleanUrls, rewrites, and crawler headers from the repository root.",
+    "Any other static host must serve /privacy, /support, and /account-deletion as direct HTTPS 2xx HTML without requiring .html suffixes."
+  ],
+  "postDeployAuditOrder": [
+    "Confirm freedrecovery.app DNS points to the selected static host.",
+    "Wait for TLS certificate issuance on https://freedrecovery.app.",
+    "Run npm run audit:store-legal-hosted -- --report docs/validation/artifacts/store-legal-hosted-current/store-legal-hosted-url-audit.json.",
+    "Run npm run evidence:store-legal-web-deploy -- --run-id store-legal-web-deploy-current --output-dir docs/validation/artifacts/store-legal-web-deploy-current.",
+    "Run npm run status:launch -- --run-id launch-status-current --output-dir docs/validation/artifacts/launch-status-current."
+  ],
+  "releaseBoundary": "Static hosting upload bundle only. This does not prove DNS ownership, TLS issuance, hosted URL availability, legal review, store-console entry, platform approval, sandbox purchases, or physical-device evidence."
+}

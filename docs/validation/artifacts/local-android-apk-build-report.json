@@ -1,0 +1,88 @@
+{
+  "schema": "freed-android-apk-build-report-v1",
+  "generatedAt": "2026-05-23T09:26:25.613Z",
+  "sanitized": true,
+  "requested": {
+    "arch": "arm64-v8a",
+    "buildTimeoutMs": 1200000,
+    "engine": "auto",
+    "requireUploadSigning": false,
+    "skipCopy": false
+  },
+  "environment": {
+    "javaHome": "/Library/Java/JavaVirtualMachines/jdk-23.jdk/Contents/Home",
+    "gradleUserHome": "/tmp/freed-gradle-home",
+    "gradleProperties": "/tmp/freed-gradle-home/gradle.properties",
+    "foojayResolver": "already-compatible"
+  },
+  "hermesProbe": {
+    "ok": true,
+    "reason": "hermesc responded within 5s"
+  },
+  "selectedEngine": "hermes",
+  "signing": {
+    "missingInputs": [
+      "FREED_ANDROID_UPLOAD_STORE_FILE",
+      "FREED_ANDROID_UPLOAD_STORE_PASSWORD",
+      "FREED_ANDROID_UPLOAD_KEY_ALIAS",
+      "FREED_ANDROID_UPLOAD_KEY_PASSWORD"
+    ],
+    "mode": "debug-key-fallback",
+    "playConsoleReady": false,
+    "required": false,
+    "storeFileConfigured": false,
+    "storeFileExists": false
+  },
+  "gradleCommand": [
+    "./gradlew",
+    ":app:assembleRelease",
+    "--no-daemon",
+    "--console=plain",
+    "-PreactNativeArchitectures=arm64-v8a",
+    "-PhermesEnabled=true"
+  ],
+  "buildResult": "pass",
+  "result": "fail",
+  "summary": {
+    "passCount": 3,
+    "failCount": 1
+  },
+  "results": [
+    {
+      "id": "android-apk-build",
+      "status": "PASS",
+      "detail": "Release APK assembled successfully."
+    },
+    {
+      "id": "android-apk-upload-signing",
+      "status": "FAIL",
+      "detail": "Release APK used debug-key fallback; missing FREED_ANDROID_UPLOAD_STORE_FILE, FREED_ANDROID_UPLOAD_STORE_PASSWORD, FREED_ANDROID_UPLOAD_KEY_ALIAS, FREED_ANDROID_UPLOAD_KEY_PASSWORD."
+    },
+    {
+      "id": "android-apk-react-native-bundle",
+      "status": "PASS",
+      "detail": "React Native release bundle is packaged in the APK."
+    },
+    {
+      "id": "android-apk-abi",
+      "status": "PASS",
+      "detail": "Packaged native ABIs: arm64-v8a."
+    }
+  ],
+  "finalEngine": "hermes",
+  "apk": {
+    "abis": [
+      "arm64-v8a"
+    ],
+    "copied": true,
+    "hasHermesBytecode": false,
+    "hasReactNativeBundle": true,
+    "path": "~/Downloads/FREED-release-arm64.apk",
+    "sha256": "a715dcfab61a9560c9ff7f13c229152dc2f4ff1384afdbad3972fd7b3b3ddcac",
+    "sizeBytes": 59070418,
+    "sizeMb": "56.3 MB",
+    "sourcePath": "android/app/build/outputs/apk/release/app-release.apk",
+    "stablePath": "~/Downloads/FREED-release-arm64.apk",
+    "timestampedPath": "~/Downloads/FREED-release-arm64-20260523-145504.apk"
+  }
+}

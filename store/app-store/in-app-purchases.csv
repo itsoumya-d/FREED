@@ -1,0 +1,4 @@
+plan_id,product_id,apple_type,subscription_group_id,duration,price_usd_intent,entitlement_id,reference_name,display_name,description,review_screenshot
+yearly,freed_premium_yearly,auto-renewable-subscription,freed_premium,P1Y,39.99,premium,FREED Premium Annual,FREED Premium Annual,"Annual premium recovery protection with DNS Guard, app timers, and no-ad challenge entry.",store/screenshots/paywall-yearly.png
+monthly,freed_premium_monthly,auto-renewable-subscription,freed_premium,P1M,9.99,premium,FREED Premium Monthly,FREED Premium Monthly,"Monthly premium recovery protection with DNS Guard, app timers, and no-ad challenge entry.",store/screenshots/paywall-monthly.png
+lifetime,freed_premium_lifetime,non-consumable,,lifetime,79.99,premium,FREED Premium Lifetime,FREED Premium Lifetime,"Lifetime premium recovery protection with DNS Guard, app timers, and no-ad challenge entry.",store/screenshots/paywall-lifetime.png

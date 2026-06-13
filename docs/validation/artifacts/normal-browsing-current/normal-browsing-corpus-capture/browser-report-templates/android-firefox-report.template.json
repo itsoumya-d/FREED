@@ -1,0 +1,30 @@
+{
+  "templateStatus": "pending-manual-qa",
+  "manualVerificationRequired": true,
+  "instructions": "Replace pending device/pass fields after physical-browser QA, then reference this completed local JSON report from normalBrowsing.browserMatrix[].resultArtifact.",
+  "schemaVersion": "freed-normal-browsing-browser-report-v1",
+  "sanitized": true,
+  "runId": "normal-browsing-current-android-firefox-normal-browsing",
+  "platform": "android",
+  "browserName": "Firefox",
+  "browserPackage": "org.mozilla.firefox",
+  "counts": {
+    "allowedUrlCount": 12,
+    "recoverySearchUrlCount": 4,
+    "adultBlockedUrlCount": 4,
+    "allowedUrlPassCount": "",
+    "recoverySearchPassCount": "",
+    "adultBlockPassCount": "",
+    "falsePositiveCount": "",
+    "missedAdultBlockCount": ""
+  },
+  "checks": {
+    "physicalDevice": false,
+    "passed": false,
+    "allowedUrlsPassed": false,
+    "recoverySearchPassed": false,
+    "adultUrlsBlocked": false,
+    "noFalsePositives": false,
+    "noMissedAdultBlocks": false
+  }
+}

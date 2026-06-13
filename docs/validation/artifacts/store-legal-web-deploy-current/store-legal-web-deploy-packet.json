@@ -1,0 +1,303 @@
+{
+  "schemaVersion": "freed-store-legal-web-deploy-packet-v1",
+  "generatedAt": "2026-06-11T03:03:27.637Z",
+  "sanitized": true,
+  "result": "static-export-ready-deploy-blocked",
+  "runId": "store-legal-web-deploy-current",
+  "staticExportReady": true,
+  "hostedVerified": false,
+  "readyForApprovedDeploy": false,
+  "deployBlockedBy": [
+    "dns-not-resolving",
+    "eas-project-id-not-configured",
+    "eas-account-not-logged-in",
+    "eas-project-not-linked"
+  ],
+  "publicUrls": {
+    "account-deletion": "https://freedrecovery.app/account-deletion",
+    "privacy": "https://freedrecovery.app/privacy",
+    "support": "https://freedrecovery.app/support"
+  },
+  "easDeployment": {
+    "artifact": "docs/validation/artifacts/store-legal-web-deploy-current/eas-legal-web-deploy-readiness.json",
+    "exists": true,
+    "generatedAt": "2026-06-11T03:03:18.666Z",
+    "freshness": {
+      "generatedAt": "2026-06-11T03:03:18.666Z",
+      "newerSourceReports": [],
+      "sourceReports": [
+        {
+          "artifact": "docs/validation/artifacts/store-legal-web-current/store-legal-web-export-audit.json",
+          "exists": true,
+          "generatedAt": "2026-06-11T02:51:14.941Z",
+          "id": "web-export-report"
+        },
+        {
+          "artifact": "docs/validation/artifacts/store-legal-hosted-current/store-legal-hosted-url-audit.json",
+          "exists": true,
+          "generatedAt": "2026-06-11T03:02:55.424Z",
+          "id": "hosted-report"
+        }
+      ],
+      "staleReason": "",
+      "status": "current",
+      "usableForCurrentSourceReports": true
+    },
+    "result": "blocked-before-deploy",
+    "readyForApprovedDeploy": false,
+    "readyForCurrentApprovedDeploy": false,
+    "deploymentAttempted": false,
+    "deploymentBlockedBy": [
+      "eas-project-id-not-configured",
+      "eas-account-not-logged-in",
+      "eas-project-not-linked"
+    ],
+    "accountLoggedIn": false,
+    "projectIdConfigured": false,
+    "projectIdFormat": "env-missing",
+    "projectIdSource": "app.config.js:env-projectId-marker",
+    "projectLinked": false,
+    "approvalEnv": "FREED_LEGAL_WEB_DEPLOY_APPROVED",
+    "approvalExpectedValue": "ready-to-deploy-legal-pages",
+    "approvedForDeploy": false,
+    "usableForCurrentSourceReports": true,
+    "releaseBoundary": "EAS legal web deploy readiness only. This does not prove DNS ownership, custom-domain attachment, TLS issuance, hosted URL availability, legal review, store-console entry, platform approval, sandbox purchases, or physical-device evidence."
+  },
+  "manualStaticHosting": {
+    "deployRoot": "dist",
+    "cleanUrlRoutingReady": true,
+    "storeLegalUrlEntryAllowedAfterDeploy": false,
+    "routeMappings": [
+      {
+        "htmlArtifact": "dist/privacy.html",
+        "publicUrl": "https://freedrecovery.app/privacy",
+        "requiredCleanUrl": "/privacy",
+        "requiredMapping": "/privacy -> /privacy.html",
+        "sha256": "sha256-23d6a477278fc04fe0269378c83b8fe040224878c5d5e8668d8a95694de81e5b"
+      },
+      {
+        "htmlArtifact": "dist/support.html",
+        "publicUrl": "https://freedrecovery.app/support",
+        "requiredCleanUrl": "/support",
+        "requiredMapping": "/support -> /support.html",
+        "sha256": "sha256-dc41a86b82ca7fca3a8096de5ace864ef22924f08c02519545fdef1fbb66cc69"
+      },
+      {
+        "htmlArtifact": "dist/account-deletion.html",
+        "publicUrl": "https://freedrecovery.app/account-deletion",
+        "requiredCleanUrl": "/account-deletion",
+        "requiredMapping": "/account-deletion -> /account-deletion.html",
+        "sha256": "sha256-89316b39748a776f2fac427af59ccc8eced7a2bfe6e9b7ad35de07a6f7ac9c99"
+      }
+    ],
+    "routeConfigFiles": [
+      {
+        "exportArtifact": "dist/_redirects",
+        "exportCopied": true,
+        "exportFile": "_redirects",
+        "exportSha256": "sha256-c74f827165029e1a5d58b362ed5e39ad5784672d8f677ed6251d9ff21f0745ae",
+        "id": "netlify-cloudflare-clean-url-redirects",
+        "sourceFile": "public/_redirects",
+        "sourceReady": true,
+        "sourceSha256": "sha256-c74f827165029e1a5d58b362ed5e39ad5784672d8f677ed6251d9ff21f0745ae"
+      },
+      {
+        "exportArtifact": "dist/_headers",
+        "exportCopied": true,
+        "exportFile": "_headers",
+        "exportSha256": "sha256-38a658e0add51b5d95ee41e0625fb8a1b8118bd018a2d32755c576ef70e0e225",
+        "id": "netlify-cloudflare-crawler-headers",
+        "sourceFile": "public/_headers",
+        "sourceReady": true,
+        "sourceSha256": "sha256-38a658e0add51b5d95ee41e0625fb8a1b8118bd018a2d32755c576ef70e0e225"
+      },
+      {
+        "exportArtifact": "",
+        "exportCopied": null,
+        "exportFile": "",
+        "exportSha256": "",
+        "id": "vercel-clean-url-rewrites",
+        "sourceFile": "vercel.json",
+        "sourceReady": true,
+        "sourceSha256": "sha256-d1521eb6aba607080aa7f61edf071b4f47b3d605f71da0cddd8a30153c6a9fce"
+      }
+    ],
+    "providerNotes": [
+      "Upload the deploy root contents as the site root, not the repository root.",
+      "Netlify and Cloudflare Pages can use the exported _redirects and _headers files in the deploy root.",
+      "Vercel can use vercel.json cleanUrls, rewrites, and crawler headers from the repository root.",
+      "Any other static host must serve /privacy, /support, and /account-deletion as direct HTTPS 2xx HTML without requiring .html suffixes."
+    ],
+    "postDeployAuditOrder": [
+      "Confirm freedrecovery.app DNS points to the selected static host.",
+      "Wait for TLS certificate issuance on https://freedrecovery.app.",
+      "Run npm run audit:store-legal-hosted -- --report docs/validation/artifacts/store-legal-hosted-current/store-legal-hosted-url-audit.json.",
+      "Run npm run evidence:store-legal-web-deploy -- --run-id store-legal-web-deploy-current --output-dir docs/validation/artifacts/store-legal-web-deploy-current.",
+      "Run npm run status:launch -- --run-id launch-status-current --output-dir docs/validation/artifacts/launch-status-current."
+    ]
+  },
+  "legalWebDeployEnvTemplate": {
+    "activeApprovalPrefilled": false,
+    "approvalEnv": "FREED_LEGAL_WEB_DEPLOY_APPROVED",
+    "approvalExpectedValue": "ready-to-deploy-legal-pages",
+    "artifact": "docs/validation/artifacts/store-legal-web-deploy-current/LEGAL_WEB_DEPLOY_ENV.template.env",
+    "created": true,
+    "keys": [
+      "EAS_PROJECT_ID",
+      "EXPO_PROJECT_ID",
+      "EXPO_OWNER",
+      "EXPO_TOKEN"
+    ],
+    "reason": "",
+    "sha256": "sha256-b9c577207f29d3ae4510eb523587c1f85ccd0852aee27b9482862420e8dc00ff"
+  },
+  "staticHostingBundle": {
+    "archiveArtifact": "docs/validation/artifacts/store-legal-web-deploy-current/freed-store-legal-web-static-bundle.zip",
+    "archiveCreated": true,
+    "archiveError": "",
+    "archiveSha256": "sha256-d0362e54847dd15d0585e58fa7c81e6ee3209eee1410b2987aa22ac94d761633",
+    "bundleDir": "docs/validation/artifacts/store-legal-web-deploy-current/static-hosting-bundle",
+    "fileCount": 8,
+    "generated": true,
+    "includedFiles": [
+      {
+        "bytes": 26133,
+        "kind": "legal-route-html",
+        "sha256": "sha256-23d6a477278fc04fe0269378c83b8fe040224878c5d5e8668d8a95694de81e5b",
+        "source": "dist/privacy.html",
+        "target": "privacy.html"
+      },
+      {
+        "bytes": 24300,
+        "kind": "legal-route-html",
+        "sha256": "sha256-dc41a86b82ca7fca3a8096de5ace864ef22924f08c02519545fdef1fbb66cc69",
+        "source": "dist/support.html",
+        "target": "support.html"
+      },
+      {
+        "bytes": 24067,
+        "kind": "legal-route-html",
+        "sha256": "sha256-89316b39748a776f2fac427af59ccc8eced7a2bfe6e9b7ad35de07a6f7ac9c99",
+        "source": "dist/account-deletion.html",
+        "target": "account-deletion.html"
+      },
+      {
+        "bytes": 201,
+        "kind": "hosting-route-config",
+        "sha256": "sha256-c74f827165029e1a5d58b362ed5e39ad5784672d8f677ed6251d9ff21f0745ae",
+        "source": "dist/_redirects",
+        "target": "_redirects"
+      },
+      {
+        "bytes": 482,
+        "kind": "hosting-route-config",
+        "sha256": "sha256-38a658e0add51b5d95ee41e0625fb8a1b8118bd018a2d32755c576ef70e0e225",
+        "source": "dist/_headers",
+        "target": "_headers"
+      },
+      {
+        "bytes": 1361,
+        "kind": "hosting-route-config",
+        "sha256": "sha256-d1521eb6aba607080aa7f61edf071b4f47b3d605f71da0cddd8a30153c6a9fce",
+        "source": "vercel.json",
+        "target": "vercel.json"
+      },
+      {
+        "bytes": 5280,
+        "kind": "bundle-manifest",
+        "sha256": "sha256-00a9ccda77f2f2b10f2f73e029afb5c7ea053c36ef3296c2eaee5f4d734574ae",
+        "source": "",
+        "target": "static-hosting-manifest.json"
+      },
+      {
+        "bytes": 458,
+        "kind": "bundle-readme",
+        "sha256": "sha256-1e084f5586793196899ae9cd4e2a3c7efe0626f000c21da45b375b7ea7026a0c",
+        "source": "",
+        "target": "STATIC_HOSTING_README.md"
+      }
+    ],
+    "manifestArtifact": "docs/validation/artifacts/store-legal-web-deploy-current/static-hosting-bundle/static-hosting-manifest.json",
+    "manifestSha256": "sha256-00a9ccda77f2f2b10f2f73e029afb5c7ea053c36ef3296c2eaee5f4d734574ae",
+    "reason": "",
+    "totalBytes": 82282
+  },
+  "routeExports": [
+    {
+      "contentReady": true,
+      "hostedContentType": "",
+      "hostedFinalUrl": "",
+      "hostedStatus": 0,
+      "htmlArtifact": "dist/privacy.html",
+      "id": "privacy",
+      "publicUrl": "https://freedrecovery.app/privacy",
+      "routePath": "/privacy",
+      "sha256": "sha256-23d6a477278fc04fe0269378c83b8fe040224878c5d5e8668d8a95694de81e5b",
+      "sizeBytes": 26133
+    },
+    {
+      "contentReady": true,
+      "hostedContentType": "",
+      "hostedFinalUrl": "",
+      "hostedStatus": 0,
+      "htmlArtifact": "dist/support.html",
+      "id": "support",
+      "publicUrl": "https://freedrecovery.app/support",
+      "routePath": "/support",
+      "sha256": "sha256-dc41a86b82ca7fca3a8096de5ace864ef22924f08c02519545fdef1fbb66cc69",
+      "sizeBytes": 24300
+    },
+    {
+      "contentReady": true,
+      "hostedContentType": "",
+      "hostedFinalUrl": "",
+      "hostedStatus": 0,
+      "htmlArtifact": "dist/account-deletion.html",
+      "id": "account-deletion",
+      "publicUrl": "https://freedrecovery.app/account-deletion",
+      "routePath": "/account-deletion",
+      "sha256": "sha256-89316b39748a776f2fac427af59ccc8eced7a2bfe6e9b7ad35de07a6f7ac9c99",
+      "sizeBytes": 24067
+    }
+  ],
+  "sourceReports": {
+    "easReadinessReport": "docs/validation/artifacts/store-legal-web-deploy-current/eas-legal-web-deploy-readiness.json",
+    "hostedReport": "docs/validation/artifacts/store-legal-hosted-current/store-legal-hosted-url-audit.json",
+    "webExportReport": "docs/validation/artifacts/store-legal-web-current/store-legal-web-export-audit.json"
+  },
+  "commands": {
+    "exportWeb": "npm run export:web",
+    "auditStaticExport": "npm run audit:store-legal-web -- --report docs/validation/artifacts/store-legal-web-current/store-legal-web-export-audit.json",
+    "createDeployPacket": "npm run evidence:store-legal-web-deploy -- --run-id store-legal-web-deploy-current --output-dir docs/validation/artifacts/store-legal-web-deploy-current",
+    "checkEasLegalWebDeploy": "npm run eas:deploy:legal-web -- --report docs/validation/artifacts/store-legal-web-deploy-current/eas-legal-web-deploy-readiness.json",
+    "easHostingDeploy": "FREED_LEGAL_WEB_DEPLOY_APPROVED=ready-to-deploy-legal-pages npm run eas:deploy:legal-web -- --deploy --report docs/validation/artifacts/store-legal-web-deploy-current/eas-legal-web-deploy-readiness.json",
+    "hostedAudit": "npm run audit:store-legal-hosted -- --report docs/validation/artifacts/store-legal-hosted-current/store-legal-hosted-url-audit.json",
+    "refreshLaunchStatus": "npm run status:launch -- --run-id launch-status-current --output-dir docs/validation/artifacts/launch-status-current"
+  },
+  "dnsChecklist": [
+    "Select the static hosting target for the Expo web export and attach the custom domain freedrecovery.app.",
+    "Create the provider-required apex A/AAAA/ALIAS/ANAME or CNAME records for freedrecovery.app.",
+    "Optionally route www.freedrecovery.app to freedrecovery.app with HTTPS redirect.",
+    "Wait for DNS propagation and TLS certificate issuance before entering URLs in App Store Connect or Play Console.",
+    "Verify /privacy, /support, and /account-deletion return direct HTTPS 2xx HTML without noindex.",
+    "Rerun the hosted legal URL audit and refresh launch status after deployment."
+  ],
+  "hostedFailures": [
+    {
+      "detail": "https://freedrecovery.app/privacy could not be fetched: fetch failed; code=ENOTFOUND; host=freedrecovery.app",
+      "id": "hosted-fetch-privacy",
+      "next": "Deploy the static web export, verify DNS/CDN routing, then rerun the hosted legal URL audit."
+    },
+    {
+      "detail": "https://freedrecovery.app/support could not be fetched: fetch failed; code=ENOTFOUND; host=freedrecovery.app",
+      "id": "hosted-fetch-support",
+      "next": "Deploy the static web export, verify DNS/CDN routing, then rerun the hosted legal URL audit."
+    },
+    {
+      "detail": "https://freedrecovery.app/account-deletion could not be fetched: fetch failed; code=ENOTFOUND; host=freedrecovery.app",
+      "id": "hosted-fetch-account-deletion",
+      "next": "Deploy the static web export, verify DNS/CDN routing, then rerun the hosted legal URL audit."
+    }
+  ],
+  "releaseBoundary": "Deployment handoff only. This does not prove DNS ownership, TLS issuance, hosted URL availability, legal review, store-console entry, platform approval, sandbox purchases, or physical-device evidence."
+}

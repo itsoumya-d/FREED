@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "freed-android-apk-download-live-check-v1",
+  "generatedAt": "2026-06-09T01:52:58.018Z",
+  "sanitized": true,
+  "result": "pass",
+  "passCount": 11,
+  "failCount": 0,
+  "timeoutMs": 5000,
+  "sourceHandoff": "docs/validation/artifacts/android-download-current/android-apk-download-handoff.json",
+  "apk": {
+    "filename": "FREED-release-universal.apk",
+    "path": "docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal.apk",
+    "sha256": "5c2e989a543de7aaa2a0794c6c1e20f38e8b690323a2dcc2aa263e6ac96e96f4",
+    "sizeBytes": 147146920
+  },
+  "probes": {
+    "download": {
+      "contentLength": 147146920,
+      "contentType": "application/vnd.android.package-archive",
+      "elapsedMs": 5,
+      "error": "",
+      "ok": true,
+      "status": 200,
+      "url": "http://192.168.1.6:8787/download/FREED-release-universal.apk"
+    },
+    "metadata": {
+      "contentLength": 4153,
+      "contentType": "application/json; charset=utf-8",
+      "elapsedMs": 5,
+      "error": "",
+      "ok": true,
+      "status": 200,
+      "url": "http://192.168.1.6:8787/metadata.json"
+    },
+    "page": {
+      "contentLength": 5697,
+      "contentType": "text/html; charset=utf-8",
+      "elapsedMs": 7,
+      "error": "",
+      "ok": true,
+      "status": 200,
+      "url": "http://192.168.1.6:8787/"
+    },
+    "pageBody": {
+      "contentLength": 5697,
+      "contentType": "text/html; charset=utf-8",
+      "elapsedMs": 6,
+      "error": "",
+      "ok": true,
+      "status": 200,
+      "url": "http://192.168.1.6:8787/"
+    }
+  },
+  "checks": [
+    {
+      "id": "download-page-http-2xx",
+      "status": "pass",
+      "detail": "http://192.168.1.6:8787/ returned HTTP 200.",
+      "next": "Start the Android download server, then rerun this live check."
+    },
+    {
+      "id": "download-page-html",
+      "status": "pass",
+      "detail": "http://192.168.1.6:8787/ returned text/html; charset=utf-8.",
+      "next": "The download page should serve crawler/user-readable HTML."
+    },
+    {
+      "id": "download-page-current-sha256",
+      "status": "pass",
+      "detail": "http://192.168.1.6:8787/ includes the handoff APK SHA-256.",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page is current."
+    },
+    {
+      "id": "download-page-current-size",
+      "status": "pass",
+      "detail": "http://192.168.1.6:8787/ includes the handoff APK byte size.",
+      "next": "Restart the download server after rebuilding the APK so the phone-facing page is current."
+    },
+    {
+      "id": "metadata-route-http-2xx",
+      "status": "pass",
+      "detail": "http://192.168.1.6:8787/metadata.json returned HTTP 200.",
+      "next": "Start the Android download server, then rerun this live check."
+    },
+    {
+      "id": "metadata-route-json",
+      "status": "pass",
+      "detail": "http://192.168.1.6:8787/metadata.json returned application/json; charset=utf-8.",
+      "next": "Serve /metadata.json as the sanitized Android download handoff metadata."
+    },
+    {
+      "id": "metadata-route-current-sha256",
+      "status": "pass",
+      "detail": "http://192.168.1.6:8787/metadata.json matches the handoff APK SHA-256.",
+      "next": "Restart the download server after regenerating the handoff so /metadata.json is current."
+    },
+    {
+      "id": "metadata-route-current-size",
+      "status": "pass",
+      "detail": "http://192.168.1.6:8787/metadata.json matches the handoff APK byte size.",
+      "next": "Restart the download server after rebuilding the APK so /metadata.json is current."
+    },
+    {
+      "id": "apk-route-http-2xx",
+      "status": "pass",
+      "detail": "http://192.168.1.6:8787/download/FREED-release-universal.apk returned HTTP 200.",
+      "next": "Start the Android download server, then rerun this live check."
+    },
+    {
+      "id": "apk-route-content-type",
+      "status": "pass",
+      "detail": "http://192.168.1.6:8787/download/FREED-release-universal.apk returned application/vnd.android.package-archive.",
+      "next": "Serve the APK as application/vnd.android.package-archive."
+    },
+    {
+      "id": "apk-route-content-length",
+      "status": "pass",
+      "detail": "http://192.168.1.6:8787/download/FREED-release-universal.apk returned 147146920 bytes; expected 147146920.",
+      "next": "Regenerate the download handoff for the selected APK or restart the server with the matching APK."
+    }
+  ],
+  "releaseBoundary": "Local Android APK download live check only. This does not prove install, Android permission consent, browser blocking, upload signing, Play Console readiness, or store approval."
+}

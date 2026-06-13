@@ -1,0 +1,1 @@
+xcrun devicectl device info details --device 00008140-001D78D62ED0801C --json-output docs/validation/artifacts/ios-physical-current/ios-physical-device-capture/devicectl-details.json timed out after 30000ms

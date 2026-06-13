@@ -1,0 +1,500 @@
+{
+  "schemaVersion": "freed-supabase-deployment-packet-v1",
+  "generatedAt": "2026-06-07T08:28:25.363Z",
+  "sanitized": true,
+  "source": "local-workspace",
+  "summary": {
+    "passCount": 13,
+    "warnCount": 1,
+    "failCount": 0
+  },
+  "deploymentTarget": {
+    "projectRef": null,
+    "projectName": null,
+    "projectStatus": null,
+    "projectRefShapeOk": true,
+    "activeProjectConfirmed": false,
+    "productionTargetRequiredBeforeDeploy": true,
+    "inactiveOrUnrelatedProjectsMustNotBeUsed": true,
+    "statusNote": "Production Supabase project selection is pending."
+  },
+  "files": {
+    "schema": {
+      "path": "docs/backend/supabase-schema.sql",
+      "exists": true,
+      "lineCount": 396,
+      "sha256": "872b3acfd48a5a55f1e9f8cb8f1f3b8fa9cfa97703caf8bf06588a5558f9f48a"
+    },
+    "productionBackendPacket": {
+      "path": "docs/backend/production-backend.md",
+      "exists": true,
+      "lineCount": 149,
+      "sha256": "e60f1587e85c090647bc4a699da5ae9e6b660081c20388a78f5eb2bbaacb0c1d"
+    },
+    "migrations": [
+      {
+        "path": "supabase/migrations/20260518000100_freed_backend_core.sql",
+        "exists": true,
+        "lineCount": 398,
+        "sha256": "0ef0743ae38e24537cb37c535fd7dcec9fc3dc10e2d66972e0f2b92cc0baabb8"
+      },
+      {
+        "path": "supabase/migrations/20260520000100_harden_analytics_privacy_keys.sql",
+        "exists": true,
+        "lineCount": 118,
+        "sha256": "32873145821a4bd508e71841187c8b7e1848752813e5f4007a9b7219dfcc4975"
+      }
+    ],
+    "edgeConfig": {
+      "path": "supabase/config.toml",
+      "exists": true,
+      "lineCount": 13,
+      "sha256": "7e822681c53563c2e889065f462126bf16b1d05174e06be81f5a1007f51ab005"
+    },
+    "edgeShared": {
+      "path": "supabase/functions/_shared/freed_edge_contract.ts",
+      "exists": true,
+      "lineCount": 920,
+      "sha256": "4785bcb4caab5ab9794e2590363fc2003db0e2ae343aa8b923a3f05a6bad9d40"
+    }
+  },
+  "tableProof": [
+    {
+      "tableName": "recovery_analytics_events",
+      "migrationCreatesTable": true,
+      "schemaDocumentsTable": true,
+      "rlsEnabled": true,
+      "publicRolesRevoked": true,
+      "serviceRoleGrant": true
+    },
+    {
+      "tableName": "adult_domain_feed_versions",
+      "migrationCreatesTable": true,
+      "schemaDocumentsTable": true,
+      "rlsEnabled": true,
+      "publicRolesRevoked": true,
+      "serviceRoleGrant": true
+    },
+    {
+      "tableName": "encrypted_recovery_backups",
+      "migrationCreatesTable": true,
+      "schemaDocumentsTable": true,
+      "rlsEnabled": true,
+      "publicRolesRevoked": true,
+      "serviceRoleGrant": true
+    },
+    {
+      "tableName": "purchase_verification_events",
+      "migrationCreatesTable": true,
+      "schemaDocumentsTable": true,
+      "rlsEnabled": true,
+      "publicRolesRevoked": true,
+      "serviceRoleGrant": true
+    },
+    {
+      "tableName": "ai_backend_events",
+      "migrationCreatesTable": true,
+      "schemaDocumentsTable": true,
+      "rlsEnabled": true,
+      "publicRolesRevoked": true,
+      "serviceRoleGrant": true
+    },
+    {
+      "tableName": "backend_job_runs",
+      "migrationCreatesTable": true,
+      "schemaDocumentsTable": true,
+      "rlsEnabled": true,
+      "publicRolesRevoked": true,
+      "serviceRoleGrant": true
+    }
+  ],
+  "edgeFunctions": [
+    {
+      "id": "adult-domain-feed-sync",
+      "path": "supabase/functions/adult-domain-feed-sync/index.ts",
+      "exists": true,
+      "sha256": "57dbc9a72756a09b843fa85a0d4b41211229c7bd7cbee2ad9d285300bda3302f",
+      "lineCount": 291,
+      "verifyJwtDisabledByConfig": true,
+      "requiresMaintenanceAuth": true,
+      "hasRequiredMarkers": true,
+      "avoidsPublicEnvSecrets": true,
+      "sharedContractHasServiceRoleBoundary": true
+    },
+    {
+      "id": "analytics-retention-cleanup",
+      "path": "supabase/functions/analytics-retention-cleanup/index.ts",
+      "exists": true,
+      "sha256": "6352ec3cb5bf339315f0f64189571dfc225f2eeb7d247a8347726e88c6cfc0f2",
+      "lineCount": 132,
+      "verifyJwtDisabledByConfig": true,
+      "requiresMaintenanceAuth": true,
+      "hasRequiredMarkers": true,
+      "avoidsPublicEnvSecrets": true,
+      "sharedContractHasServiceRoleBoundary": true
+    }
+  ],
+  "secretBoundary": {
+    "secretValuesOmitted": true,
+    "serverOnlyKeysRequired": [
+      "SUPABASE_SERVICE_ROLE_KEY",
+      "BACKEND_MAINTENANCE_SECRET or CRON_SECRET",
+      "UPSTASH_REDIS_REST_TOKEN",
+      "FREED_ADULT_DOMAIN_FEED_SOURCE_URLS"
+    ],
+    "publicKeysAllowedForClientProof": [
+      "EXPO_PUBLIC_SUPABASE_URL",
+      "EXPO_PUBLIC_SUPABASE_ANON_KEY",
+      "EXPO_PUBLIC_ADULT_DOMAIN_FEED_ENDPOINT",
+      "EXPO_PUBLIC_ANALYTICS_ENDPOINT",
+      "EXPO_PUBLIC_BACKEND_READINESS_ENDPOINT"
+    ],
+    "forbiddenPublicSecretKeys": [
+      "EXPO_PUBLIC_SUPABASE_SERVICE_ROLE_KEY",
+      "EXPO_PUBLIC_UPSTASH_REDIS_REST_TOKEN",
+      "EXPO_PUBLIC_REMOTE_NOTIFICATION_DISPATCH_SECRET",
+      "EXPO_PUBLIC_BACKEND_MAINTENANCE_SECRET",
+      "EXPO_PUBLIC_CRON_SECRET"
+    ],
+    "noServiceRoleInPublicEnv": true,
+    "noRedisTokenInPublicEnv": true,
+    "noMaintenanceSecretInPublicEnv": true
+  },
+  "commands": {
+    "deploy": [
+      "supabase link --project-ref <production-project-ref>",
+      "supabase db push",
+      "supabase secrets set --env-file <production-env-file>",
+      "supabase functions deploy adult-domain-feed-sync",
+      "supabase functions deploy analytics-retention-cleanup"
+    ],
+    "smoke": [
+      "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/release-env-preflight-report.json",
+      "npm run smoke:backend-readiness -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/backend-readiness-smoke-report.json",
+      "npm run smoke:supabase-schema -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/supabase-schema-smoke-report.json",
+      "npm run smoke:adult-domain-feed -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/adult-domain-feed-smoke-report.json",
+      "npm run smoke:analytics-ingestion -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/analytics-ingestion-smoke-report.json",
+      "npm run smoke:remote-notifications -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/remote-notification-smoke-report.json",
+      "npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/purchase-verification-smoke-report.json",
+      "npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/ai-backend-smoke-report.json"
+    ]
+  },
+  "releaseBlockerHandoff": {
+    "artifactRoot": "docs/validation/artifacts/<run-id>",
+    "productionEnvChecklist": {
+      "clientKeys": [
+        "EXPO_PUBLIC_MONETIZATION_MODE=native",
+        "EXPO_PUBLIC_STORE_PROVIDER=native-iap",
+        "EXPO_PUBLIC_PREMIUM_ENTITLEMENT_ID",
+        "EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT",
+        "EXPO_PUBLIC_IAP_PRODUCT_YEARLY",
+        "EXPO_PUBLIC_IAP_PRODUCT_MONTHLY",
+        "EXPO_PUBLIC_IAP_PRODUCT_LIFETIME",
+        "EXPO_PUBLIC_ADMOB_APP_ID_IOS",
+        "EXPO_PUBLIC_ADMOB_APP_ID_ANDROID",
+        "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS",
+        "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID",
+        "EXPO_PUBLIC_ADMOB_USE_TEST_ADS=false",
+        "EXPO_PUBLIC_SUPABASE_URL",
+        "EXPO_PUBLIC_SUPABASE_ANON_KEY"
+      ],
+      "publicBackendKeys": [
+        "EXPO_PUBLIC_AI_COACH_MODE=remote",
+        "EXPO_PUBLIC_AI_COACH_ENDPOINT",
+        "EXPO_PUBLIC_AI_CHALLENGE_MODE=remote",
+        "EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT",
+        "EXPO_PUBLIC_ADULT_DOMAIN_FEED_ENDPOINT",
+        "EXPO_PUBLIC_ANALYTICS_ENDPOINT",
+        "EXPO_PUBLIC_BACKEND_READINESS_ENDPOINT",
+        "EXPO_PUBLIC_RECOVERY_BACKUP_SYNC_ENDPOINT when hosted backup sync is enabled",
+        "EXPO_PUBLIC_RETENTION_ENDPOINT when remote retention is enabled"
+      ],
+      "serverKeys": [
+        "APP_STORE_BUNDLE_ID",
+        "APP_STORE_SERVER_API_ENV=production",
+        "APP_STORE_ISSUER_ID + APP_STORE_KEY_ID + APP_STORE_PRIVATE_KEY(_BASE64), or APP_STORE_SERVER_API_JWT",
+        "GOOGLE_PLAY_PACKAGE_NAME",
+        "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON(_BASE64), or GOOGLE_PLAY_ACCESS_TOKEN",
+        "OPENAI_API_KEY and OPENAI_MODEL",
+        "GEMINI_API_KEY, GOOGLE_API_KEY, or GOOGLE_GENAI_API_KEY",
+        "GEMINI_MODEL",
+        "SUPABASE_URL",
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "BACKEND_MAINTENANCE_SECRET or CRON_SECRET",
+        "UPSTASH_REDIS_REST_URL",
+        "UPSTASH_REDIS_REST_TOKEN",
+        "FREED_ADULT_DOMAIN_FEED_SOURCE_URLS with reviewed id|label|https://source-url entries",
+        "REMOTE_NOTIFICATION_DISPATCH_SECRET",
+        "FCM credentials with FIREBASE_PROJECT_ID or Firebase service-account project_id",
+        "APNs production signing credentials: APNS_KEY_ID + APNS_TEAM_ID + APNS_PRIVATE_KEY(_BASE64)",
+        "iOS App Store archive signing: FREED_IOS_DEVELOPMENT_TEAM/APPLE_TEAM_ID plus Apple Distribution credentials and provisioning profiles outside the repo"
+      ],
+      "privateEvidenceWarning": "Do not put App Store private keys, Play service accounts, Supabase service-role keys, Redis tokens, push credentials, maintenance secrets, access tokens, purchase receipts, raw purchase tokens, or AI provider keys in any evidence JSON."
+    },
+    "productionBlockerGroups": [
+      {
+        "id": "production-backend-infrastructure",
+        "category": "production-env",
+        "requiredEnv": [
+          "SUPABASE_URL",
+          "SUPABASE_SERVICE_ROLE_KEY",
+          "EXPO_PUBLIC_SUPABASE_URL",
+          "EXPO_PUBLIC_SUPABASE_ANON_KEY",
+          "BACKEND_MAINTENANCE_SECRET or CRON_SECRET",
+          "UPSTASH_REDIS_REST_URL",
+          "UPSTASH_REDIS_REST_TOKEN"
+        ],
+        "requiredReports": [
+          "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/release-env-preflight-report.json",
+          "npm run smoke:backend-readiness -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/backend-readiness-smoke-report.json",
+          "npm run smoke:supabase-schema -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/supabase-schema-smoke-report.json"
+        ],
+        "preflightCheckIds": [
+          "server-secret-public-leakage",
+          "supabase-backend-credentials",
+          "redis-backend-infrastructure",
+          "backend-readiness-endpoint",
+          "optional-recovery-backup-sync-endpoint",
+          "optional-supabase-auth-client",
+          "optional-retention-endpoint"
+        ],
+        "evidenceFile": null,
+        "captureHelperCommand": null,
+        "next": "Configure Supabase, Redis/Upstash, public anon lockout proof, and maintenance secrets, then rerun release preflight plus deployed backend/schema smoke reports."
+      },
+      {
+        "id": "production-adult-domain-feed",
+        "category": "production-env",
+        "requiredEnv": [
+          "EXPO_PUBLIC_ADULT_DOMAIN_FEED_ENDPOINT",
+          "EXPO_PUBLIC_REQUIRE_REVIEWED_ADULT_DOMAIN_FEED=true",
+          "FREED_ADULT_DOMAIN_FEED_SOURCE_URLS"
+        ],
+        "requiredReports": [
+          "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/release-env-preflight-report.json",
+          "npm run smoke:adult-domain-feed -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/adult-domain-feed-smoke-report.json"
+        ],
+        "preflightCheckIds": [
+          "adult-domain-feed-endpoint",
+          "adult-domain-feed-sources"
+        ],
+        "evidenceFile": null,
+        "captureHelperCommand": null,
+        "next": "Configure reviewed adult-domain feed sources and prove the deployed feed freshness/cache/source smoke report."
+      },
+      {
+        "id": "production-analytics-ingestion",
+        "category": "production-env",
+        "requiredEnv": [
+          "EXPO_PUBLIC_ANALYTICS_ENDPOINT"
+        ],
+        "requiredReports": [
+          "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/release-env-preflight-report.json",
+          "npm run smoke:analytics-ingestion -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/analytics-ingestion-smoke-report.json"
+        ],
+        "preflightCheckIds": [
+          "server-secret-public-leakage",
+          "analytics-ingestion-endpoint"
+        ],
+        "evidenceFile": null,
+        "captureHelperCommand": null,
+        "next": "Configure the deployed aggregate-only /api/analytics endpoint and prove the sanitized analytics ingestion smoke report."
+      },
+      {
+        "id": "production-notification-backend",
+        "category": "production-env",
+        "requiredEnv": [
+          "REMOTE_NOTIFICATION_DISPATCH_SECRET",
+          "FCM_SERVER_KEY, FCM_ACCESS_TOKEN + FIREBASE_PROJECT_ID, or FIREBASE_SERVICE_ACCOUNT_JSON(_BASE64)",
+          "APNS_KEY_ID + APNS_TEAM_ID + APNS_BUNDLE_ID + APNS_ENV=production + APNS_PRIVATE_KEY(_BASE64)"
+        ],
+        "requiredReports": [
+          "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/release-env-preflight-report.json",
+          "npm run smoke:remote-notifications -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/remote-notification-smoke-report.json"
+        ],
+        "preflightCheckIds": [
+          "server-secret-public-leakage",
+          "remote-notification-provider-credentials"
+        ],
+        "evidenceFile": null,
+        "captureHelperCommand": null,
+        "next": "Configure server-side APNs/FCM dispatch credentials and prove the non-sending notification smoke report."
+      },
+      {
+        "id": "production-monetization",
+        "category": "production-env",
+        "requiredEnv": [
+          "EXPO_PUBLIC_MONETIZATION_MODE=native",
+          "EXPO_PUBLIC_STORE_PROVIDER=native-iap",
+          "EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT",
+          "EXPO_PUBLIC_IAP_PRODUCT_*",
+          "EXPO_PUBLIC_ADMOB_APP_ID_IOS",
+          "EXPO_PUBLIC_ADMOB_APP_ID_ANDROID",
+          "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS",
+          "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID",
+          "APP_STORE_BUNDLE_ID",
+          "APP_STORE_SERVER_API_ENV=production",
+          "App Store Server API credentials",
+          "GOOGLE_PLAY_PACKAGE_NAME",
+          "Google Play verification credentials"
+        ],
+        "requiredReports": [
+          "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/release-env-preflight-report.json",
+          "npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/purchase-verification-smoke-report.json"
+        ],
+        "preflightCheckIds": [
+          "server-secret-public-leakage",
+          "release-monetization-mode",
+          "store-provider",
+          "iap-product-ids",
+          "purchase-verify-endpoint",
+          "app-store-environment",
+          "app-store-verification-credentials",
+          "google-play-verification-credentials",
+          "revenuecat-fallback-keys",
+          "admob-app-ids",
+          "admob-rewarded-units",
+          "admob-test-ads-disabled",
+          "admob-request-country"
+        ],
+        "evidenceFile": "docs/validation/evidence/store-ad-sandbox.json",
+        "captureHelperCommand": null,
+        "next": "Configure native IAP, purchase verification, and AdMob env values, then prove purchase smoke plus store/ad sandbox evidence."
+      },
+      {
+        "id": "production-ai-backend",
+        "category": "production-env",
+        "requiredEnv": [
+          "EXPO_PUBLIC_AI_COACH_MODE=remote",
+          "EXPO_PUBLIC_AI_COACH_ENDPOINT",
+          "EXPO_PUBLIC_AI_CHALLENGE_MODE=remote",
+          "EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT",
+          "OPENAI_API_KEY + OPENAI_MODEL, or GEMINI_API_KEY/GOOGLE_API_KEY/GOOGLE_GENAI_API_KEY + GEMINI_MODEL"
+        ],
+        "requiredReports": [
+          "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/release-env-preflight-report.json",
+          "npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/ai-backend-smoke-report.json"
+        ],
+        "preflightCheckIds": [
+          "server-secret-public-leakage",
+          "ai-coach-mode",
+          "ai-coach-endpoint",
+          "ai-challenge-mode",
+          "ai-challenge-endpoint",
+          "server-ai-key",
+          "optional-retention-endpoint"
+        ],
+        "evidenceFile": "docs/validation/evidence/ai-backend-smoke.json",
+        "captureHelperCommand": null,
+        "next": "Configure remote CLARA/challenge endpoints and server AI provider credentials, then prove AI safety plus deployed backend smoke evidence."
+      }
+    ],
+    "reportArtifactCommands": [
+      "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/release-env-preflight-report.json",
+      "npm run build:android-apk:upload-signed -- --report docs/validation/artifacts/<run-id>/android-apk-build-report.json",
+      "npm run build:android-aab:upload-signed -- --report docs/validation/artifacts/<run-id>/android-aab-build-report.json",
+      "npm run build:ios-archive:release -- --report docs/validation/artifacts/<run-id>/ios-release-archive-report.json",
+      "npm run smoke:backend-readiness -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/backend-readiness-smoke-report.json",
+      "npm run smoke:supabase-schema -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/supabase-schema-smoke-report.json",
+      "npm run smoke:adult-domain-feed -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/adult-domain-feed-smoke-report.json",
+      "npm run smoke:analytics-ingestion -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/analytics-ingestion-smoke-report.json",
+      "npm run smoke:remote-notifications -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/remote-notification-smoke-report.json",
+      "npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/purchase-verification-smoke-report.json",
+      "npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/ai-backend-smoke-report.json",
+      "npm run audit:release:strict -- --report docs/validation/artifacts/<run-id>/release-readiness-report.json"
+    ],
+    "backendSmokeCommands": [
+      "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/release-env-preflight-report.json",
+      "npm run smoke:backend-readiness -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/backend-readiness-smoke-report.json",
+      "npm run smoke:supabase-schema -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/supabase-schema-smoke-report.json",
+      "npm run smoke:adult-domain-feed -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/adult-domain-feed-smoke-report.json",
+      "npm run smoke:analytics-ingestion -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/analytics-ingestion-smoke-report.json",
+      "npm run smoke:remote-notifications -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/remote-notification-smoke-report.json",
+      "npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/purchase-verification-smoke-report.json",
+      "npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/ai-backend-smoke-report.json"
+    ]
+  },
+  "pendingExternalActions": [
+    "Choose or create the FREED production Supabase project; do not use inactive or unrelated projects.",
+    "Push secrets through Supabase dashboard or supabase secrets set --env-file <production-env-file> without committing the env file.",
+    "Apply migrations and deploy both Edge Functions only after the project target is confirmed.",
+    "Run every smoke command in this packet and attach only sanitized JSON reports under docs/validation/artifacts/<run-id>/."
+  ],
+  "docsChecked": [
+    "https://supabase.com/docs/guides/functions/secrets",
+    "https://supabase.com/docs/guides/functions/examples/upstash-redis"
+  ],
+  "results": [
+    {
+      "id": "supabase-migration-files",
+      "status": "PASS",
+      "detail": "Core and analytics privacy hardening migrations are present in the required order."
+    },
+    {
+      "id": "supabase-schema-mirror",
+      "status": "PASS",
+      "detail": "docs/backend/supabase-schema.sql mirrors the expected production backend table family."
+    },
+    {
+      "id": "supabase-core-table-contracts",
+      "status": "PASS",
+      "detail": "All six backend tables are created, documented, RLS-enabled, revoked from public client roles, and granted only to service_role."
+    },
+    {
+      "id": "supabase-privacy-constraints",
+      "status": "PASS",
+      "detail": "Migrations include aggregate/privacy constraints and normalized forbidden-key scanning for receipts, tokens, raw browsing, and sensitive payloads."
+    },
+    {
+      "id": "supabase-edge-functions-present",
+      "status": "PASS",
+      "detail": "Both Supabase Edge Functions are present and contain their required cron/admin markers."
+    },
+    {
+      "id": "supabase-edge-verify-jwt-config",
+      "status": "PASS",
+      "detail": "supabase/config.toml disables Supabase JWT verification only for the two maintenance-secret-protected cron/admin functions."
+    },
+    {
+      "id": "supabase-edge-maintenance-auth",
+      "status": "PASS",
+      "detail": "Every non-OPTIONS Edge Function path is guarded by BACKEND_MAINTENANCE_SECRET or CRON_SECRET."
+    },
+    {
+      "id": "supabase-edge-secret-boundary",
+      "status": "PASS",
+      "detail": "Edge Function sources use server-only Supabase/Redis/maintenance values and do not reference EXPO_PUBLIC_* secrets."
+    },
+    {
+      "id": "supabase-production-packet-doc",
+      "status": "PASS",
+      "detail": "docs/backend/production-backend.md includes migration, function deploy, smoke, and secret-boundary handoff."
+    },
+    {
+      "id": "supabase-deploy-command-handoff",
+      "status": "PASS",
+      "detail": "Deployment handoff includes link, db push, secrets set, and both Edge Function deploy commands."
+    },
+    {
+      "id": "supabase-smoke-command-handoff",
+      "status": "PASS",
+      "detail": "Post-deploy handoff includes sanitized release preflight and deployed backend/Supabase smoke report commands."
+    },
+    {
+      "id": "supabase-shared-blocker-handoff",
+      "status": "PASS",
+      "detail": "Supabase deployment packet imports the canonical backend, adult-feed, analytics, notification, monetization, and AI release blocker handoff."
+    },
+    {
+      "id": "supabase-shared-env-checklist",
+      "status": "PASS",
+      "detail": "Supabase deployment packet uses the shared production env checklist for Supabase, Redis, adult-feed, analytics, payments, AI, and notifications."
+    },
+    {
+      "id": "supabase-live-project-target",
+      "status": "WARN",
+      "detail": "Production Supabase project selection is pending.",
+      "next": "Select or create the FREED production Supabase project, confirm billing/region/active health, then rerun this packet with --project-ref and --project-status active."
+    }
+  ]
+}

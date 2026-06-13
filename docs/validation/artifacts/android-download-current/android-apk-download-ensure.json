@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "freed-android-apk-download-ensure-v1",
+  "generatedAt": "2026-06-11T09:08:36.930Z",
+  "sanitized": true,
+  "result": "pass",
+  "passCount": 5,
+  "failCount": 0,
+  "sourceHandoff": "docs/validation/artifacts/android-download-current/android-apk-download-handoff.json",
+  "liveCheckReport": "docs/validation/artifacts/android-download-current/android-apk-download-live-check.json",
+  "startIfNeeded": true,
+  "startAttempted": false,
+  "serverStarted": false,
+  "pollAttempts": 6,
+  "pollDelayMs": 1000,
+  "timeoutMs": 5000,
+  "commands": {
+    "ensure": "npm run qa:android-download:ensure -- --handoff docs/validation/artifacts/android-download-current/android-apk-download-handoff.json --live-check-report docs/validation/artifacts/android-download-current/android-apk-download-live-check.json --report docs/validation/artifacts/android-download-current/android-apk-download-ensure.json --timeout-ms 5000 --start-if-needed",
+    "liveCheck": "npm run qa:android-download:live-check -- --handoff docs/validation/artifacts/android-download-current/android-apk-download-handoff.json --report docs/validation/artifacts/android-download-current/android-apk-download-live-check.json --timeout-ms 5000",
+    "startServer": ""
+  },
+  "serverStart": null,
+  "liveChecks": [
+    {
+      "label": "initial",
+      "command": "npm run qa:android-download:live-check -- --handoff docs/validation/artifacts/android-download-current/android-apk-download-handoff.json --report docs/validation/artifacts/android-download-current/android-apk-download-live-check.json --timeout-ms 5000",
+      "exitCode": 0,
+      "failCount": 0,
+      "generatedAt": "2026-06-11T09:08:36.918Z",
+      "passCount": 49,
+      "passed": true,
+      "reportExists": true,
+      "reportResult": "pass",
+      "reportSchema": "freed-android-apk-download-live-check-v1",
+      "stderr": "",
+      "stdout": "{\n  \"artifact\": \"docs/validation/artifacts/android-download-current/android-apk-download-live-check.json\",\n  \"failCount\": 0,\n  \"passCount\": 49,\n  \"result\": \"pass\",\n  \"sanitized\": true,\n  \"schemaVersion\": \"freed-android-apk-download-live-check-v1\"\n}",
+      "target": {
+        "downloadUrl": "http://192.168.29.23:8788/download/FREED-release-universal.apk",
+        "pageUrl": "http://192.168.29.23:8788/",
+        "qrTargetUrl": "http://192.168.29.23:8788/"
+      }
+    }
+  ],
+  "checks": [
+    {
+      "id": "initial-live-check-pass",
+      "status": "pass",
+      "detail": "The current Android download server already passed the strict live check.",
+      "next": "Run this ensure command with --start-if-needed or start the handoff server manually."
+    },
+    {
+      "id": "server-start-policy",
+      "status": "pass",
+      "detail": "No server start was needed.",
+      "next": "npm run qa:android-download:ensure -- --handoff docs/validation/artifacts/android-download-current/android-apk-download-handoff.json --live-check-report docs/validation/artifacts/android-download-current/android-apk-download-live-check.json --report docs/validation/artifacts/android-download-current/android-apk-download-ensure.json --timeout-ms 5000 --start-if-needed"
+    },
+    {
+      "id": "server-spawned-if-needed",
+      "status": "pass",
+      "detail": "The existing server was already current.",
+      "next": ""
+    },
+    {
+      "id": "final-live-check-pass",
+      "status": "pass",
+      "detail": "The Android download page, metadata route, and APK route are currently verified.",
+      "next": "npm run qa:android-download:live-check -- --handoff docs/validation/artifacts/android-download-current/android-apk-download-handoff.json --report docs/validation/artifacts/android-download-current/android-apk-download-live-check.json --timeout-ms 5000"
+    },
+    {
+      "id": "local-side-load-qa-boundary",
+      "status": "pass",
+      "detail": "This ensure report is local side-load QA only and is not Play Console, upload-signing, install, or protection evidence.",
+      "next": ""
+    }
+  ],
+  "releaseBoundary": "Local Android APK side-load download ensure only. This does not prove install, Android permission consent, browser blocking, upload signing, Play Console readiness, or store approval."
+}

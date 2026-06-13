@@ -1,0 +1,357 @@
+{
+  "schemaVersion": "freed-android-apk-download-live-check-v1",
+  "generatedAt": "2026-06-11T09:08:36.918Z",
+  "sanitized": true,
+  "result": "pass",
+  "passCount": 49,
+  "failCount": 0,
+  "timeoutMs": 5000,
+  "sourceHandoff": "docs/validation/artifacts/android-download-current/android-apk-download-handoff.json",
+  "target": {
+    "downloadUrl": "http://192.168.29.23:8788/download/FREED-release-universal.apk",
+    "metadataUrl": "http://192.168.29.23:8788/metadata.json",
+    "pageUrl": "http://192.168.29.23:8788/",
+    "qrTargetUrl": "http://192.168.29.23:8788/"
+  },
+  "apk": {
+    "filename": "FREED-release-universal.apk",
+    "path": "docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal.apk",
+    "sha256": "d8ce331f89ee0de6c121117ac8bbe240ac619895dc8fbb0f7c3b10f806017f05",
+    "sizeBytes": 147152008
+  },
+  "probes": {
+    "download": {
+      "contentLength": 147152008,
+      "contentType": "application/vnd.android.package-archive",
+      "elapsedMs": 44,
+      "error": "",
+      "ok": true,
+      "status": 200,
+      "url": "http://192.168.29.23:8788/download/FREED-release-universal.apk"
+    },
+    "metadata": {
+      "contentLength": 8269,
+      "contentType": "application/json; charset=utf-8",
+      "elapsedMs": 41,
+      "error": "",
+      "ok": true,
+      "status": 200,
+      "url": "http://192.168.29.23:8788/metadata.json"
+    },
+    "page": {
+      "contentLength": 11788,
+      "contentType": "text/html; charset=utf-8",
+      "elapsedMs": 39,
+      "error": "",
+      "ok": true,
+      "status": 200,
+      "url": "http://192.168.29.23:8788/"
+    },
+    "pageBody": {
+      "contentLength": 11788,
+      "contentType": "text/html; charset=utf-8",
+      "elapsedMs": 40,
+      "error": "",
+      "ok": true,
+      "status": 200,
+      "url": "http://192.168.29.23:8788/"
+    }
+  },
+  "checks": [
+    {
+      "id": "download-page-http-2xx",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ returned HTTP 200.",
+      "next": "Start the Android download server, then rerun this live check."
+    },
+    {
+      "id": "download-page-html",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ returned text/html; charset=utf-8.",
+      "next": "The download page should serve crawler/user-readable HTML."
+    },
+    {
+      "id": "download-page-current-sha256",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes the handoff APK SHA-256.",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page is current."
+    },
+    {
+      "id": "download-page-current-size",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes the handoff APK byte size.",
+      "next": "Restart the download server after rebuilding the APK so the phone-facing page is current."
+    },
+    {
+      "id": "download-page-install-troubleshooting-section",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Install Troubleshooting\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-apk-use-boundary-section",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"APK Use Boundary\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-current-build-status-section",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Current Android Build Status\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-side-load-qa-apk",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Side-load QA APK\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-not-play-upload-evidence",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Not Play upload evidence\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-upload-signed-aab-command",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"upload-signed AAB\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-troubleshooting-qr-target",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Phone cannot open the QR target\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-troubleshooting-unknown-apps",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Install unknown apps prompt appears\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-troubleshooting-allow-from-source",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Allow from this source\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-troubleshooting-package-conflicts",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"App not installed or package conflicts\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-troubleshooting-storage-low",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Install fails because storage is low\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-support-routes-section",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Support Routes\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-support-download-route",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Download route\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-support-metadata-route",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"/metadata.json\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-support-qr-route",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"/qr.svg\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-support-live-check-boundary",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"The live check must pass for the page route, metadata route, QR route, and APK route before phone-side install QA begins.\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-after-install-section",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"After Install\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-same-device-evidence-section",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Same-Device Evidence Sequence\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-same-device-install-qa",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Install QA report\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-same-device-permission-wizard",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"permission wizard\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-same-device-real-browser",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"real-browser evidence\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-activation-same-device-rule",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"adult-block plus normal-allow test pass on the same physical device\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-recovery-notifications-section",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Recovery Notifications\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-runtime-notification-prompt",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"runtime notification prompt\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-app-notification-settings-fallback",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Android app notification settings\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-notification-permission-report",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"android-notification-permission-report.json\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-flow-dns-guard",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"DNS Guard / VPN consent\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-flow-usage-access",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Usage Access\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-flow-accessibility",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"Accessibility consent\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-flow-activation-test",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"activation test\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-qa-commands-section",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"QA Commands\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-device-discovery-command",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"npm run evidence:android-devices\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-install-qa-plan-command",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"--plan-only\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-install-qa-command",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"npm run qa:android-install\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-permission-wizard-command",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"npm run evidence:permission-wizard\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-real-browser-command",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes \"npm run evidence:android-real-browser\".",
+      "next": "Restart the download server after regenerating the handoff so the phone-facing page includes install, setup, and evidence guidance."
+    },
+    {
+      "id": "download-page-current-build-stale-warning",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/ includes the stale APK warning for the newer failed Android rebuild.",
+      "next": "Regenerate the Android download handoff and restart the server so the phone-facing page clearly states when the downloadable APK is not evidence for the latest native code."
+    },
+    {
+      "id": "metadata-route-http-2xx",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/metadata.json returned HTTP 200.",
+      "next": "Start the Android download server, then rerun this live check."
+    },
+    {
+      "id": "metadata-route-json",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/metadata.json returned application/json; charset=utf-8.",
+      "next": "Serve /metadata.json as the sanitized Android download handoff metadata."
+    },
+    {
+      "id": "metadata-route-current-sha256",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/metadata.json matches the handoff APK SHA-256.",
+      "next": "Restart the download server after regenerating the handoff so /metadata.json is current."
+    },
+    {
+      "id": "metadata-route-current-size",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/metadata.json matches the handoff APK byte size.",
+      "next": "Restart the download server after rebuilding the APK so /metadata.json is current."
+    },
+    {
+      "id": "metadata-route-current-build-stale-warning",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/metadata.json matches the handoff stale APK warning.",
+      "next": "Restart the download server after regenerating the handoff so /metadata.json includes the current build status."
+    },
+    {
+      "id": "apk-route-http-2xx",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/download/FREED-release-universal.apk returned HTTP 200.",
+      "next": "Start the Android download server, then rerun this live check."
+    },
+    {
+      "id": "apk-route-content-type",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/download/FREED-release-universal.apk returned application/vnd.android.package-archive.",
+      "next": "Serve the APK as application/vnd.android.package-archive."
+    },
+    {
+      "id": "apk-route-content-length",
+      "status": "pass",
+      "detail": "http://192.168.29.23:8788/download/FREED-release-universal.apk returned 147152008 bytes; expected 147152008.",
+      "next": "Regenerate the download handoff for the selected APK or restart the server with the matching APK."
+    }
+  ],
+  "releaseBoundary": "Local Android APK download live check only. This does not prove install, Android permission consent, browser blocking, upload signing, Play Console readiness, or store approval."
+}

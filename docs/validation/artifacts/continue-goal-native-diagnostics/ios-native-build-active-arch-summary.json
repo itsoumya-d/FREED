@@ -1,0 +1,68 @@
+{
+  "id": "freed-ios-native-build-active-arch-2026-06-06",
+  "generatedAt": "2026-06-06T04:27:48Z",
+  "result": "pass",
+  "scope": "local-ios-simulator-debug-build",
+  "command": "npm run build:ios-simulator -- --destination id=413450C0-BF83-4FBD-8700-DE831777AA9D --build-setting ONLY_ACTIVE_ARCH=YES --timeout-ms 2400000 --idle-timeout-ms 300000 --log docs/validation/artifacts/continue-goal-native-diagnostics/ios-native-build-active-arch-long.log",
+  "durationMs": 1683296,
+  "logPath": "docs/validation/artifacts/continue-goal-native-diagnostics/ios-native-build-active-arch-long.log",
+  "buildOutput": {
+    "appBundle": "ios/build/Build/Products/Debug-iphonesimulator/FREED.app",
+    "bundleIdentifier": "app.freed.recovery",
+    "displayName": "FREED",
+    "shortVersion": "1.0.0",
+    "buildNumber": "1",
+    "supportedPlatforms": ["iPhoneSimulator"],
+    "sdk": "iphonesimulator26.5",
+    "xcodeBuild": "17F42",
+    "sizeKiB": 100120
+  },
+  "nativeProtectionArtifacts": {
+    "mainExecutablePresent": true,
+    "debugDylibPresent": true,
+    "embeddedExtensions": [
+      "FREEDDeviceActivityMonitor.appex",
+      "FREEDShieldAction.appex",
+      "FREEDShieldConfiguration.appex",
+      "FREEDSafariContentBlocker.appex"
+    ],
+    "safariContentBlockerExtensionPresent": true
+  },
+  "checks": [
+    {
+      "id": "xcodebuild-result",
+      "status": "pass",
+      "detail": "The bounded xcodebuild helper exited 0 and the log ended with ** BUILD SUCCEEDED **."
+    },
+    {
+      "id": "app-bundle-metadata",
+      "status": "pass",
+      "detail": "Built FREED.app contains Info.plist, PkgInfo, FREED, and FREED.debug.dylib with the expected simulator bundle metadata."
+    },
+    {
+      "id": "screen-time-extension-packaging",
+      "status": "pass",
+      "detail": "The simulator app bundle embeds DeviceActivity Monitor, Shield Action, Shield Configuration, and Safari Content Blocker extensions."
+    },
+    {
+      "id": "xcode-process-cleanup",
+      "status": "pass",
+      "detail": "No matching FREED xcodebuild, clang, or SwiftBuild process remained after the build."
+    },
+    {
+      "id": "store-readiness-scope",
+      "status": "fail",
+      "detail": "This is local simulator/debug evidence only. It is not App Store-signed, not entitlement-approved physical-device evidence, and not TestFlight sandbox purchase evidence."
+    }
+  ],
+  "hashes": {
+    "FREED": "sha256:42f3ff93a505c28c1a87c697ab68260828cf241e068ff195b54a173b5f16d97e",
+    "FREED.debug.dylib": "sha256:ee5ac40a3f19789bf17eebbbd6d6a062ed24a3416dab0a1125bee6a8658de48e"
+  },
+  "remainingReleaseBlockers": [
+    "App Store signing and TestFlight/App Store Connect upload are not complete.",
+    "Apple Family Controls, DeviceActivity, ManagedSettings, and optional DNS Settings entitlement approval must be verified on a physical device.",
+    "StoreKit sandbox purchase and restore evidence for monthly, yearly, and lifetime products is still required.",
+    "Production backend, analytics, adult-domain feed, notification, AI, AdMob, and payment verification credentials are still required before strict release readiness can pass."
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "freed-protection",
+  "version": "0.1.0",
+  "description": "Native protection bridge for FREED Screen Time and Android browser interception.",
+  "license": "UNLICENSED",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "private": true,
+  "expo-module": {
+    "apple": {
+      "modules": [
+        "FreedProtectionModule"
+      ],
+      "podspecPath": "ios/FreedProtection.podspec",
+      "swiftModuleName": "FreedProtection"
+    },
+    "android": {
+      "modules": [
+        "app.freed.protection.FreedProtectionModule"
+      ]
+    }
+  },
+  "peerDependencies": {
+    "expo": "*"
+  }
+}

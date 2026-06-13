@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "freed-store-screenshots-v1",
+  "generatedAt": "2026-06-07T00:00:00.000Z",
+  "source": "ref2 paywall reference captures copied into store review asset paths",
+  "assets": [
+    {
+      "id": "paywall-monthly",
+      "path": "store/screenshots/paywall-monthly.png",
+      "sourcePath": "ref2/paywall_0.png",
+      "purpose": "App Store Connect monthly IAP review screenshot",
+      "productId": "freed_premium_monthly",
+      "planId": "monthly",
+      "width": 1180,
+      "height": 2676,
+      "sha256": "723643d6c62c4a0b494a8f95369aa210acbb2e53fc659a17fe294330988a469a"
+    },
+    {
+      "id": "paywall-yearly",
+      "path": "store/screenshots/paywall-yearly.png",
+      "sourcePath": "ref2/paywall_1.png",
+      "purpose": "App Store Connect yearly IAP review screenshot",
+      "productId": "freed_premium_yearly",
+      "planId": "yearly",
+      "width": 1180,
+      "height": 2676,
+      "sha256": "27960938520f9ad47fb34c64b3c24d98e06fec616bfacc29a94a0df4ced6388a"
+    },
+    {
+      "id": "paywall-lifetime",
+      "path": "store/screenshots/paywall-lifetime.png",
+      "sourcePath": "ref2/paywall_2.png",
+      "purpose": "App Store Connect lifetime IAP review screenshot",
+      "productId": "freed_premium_lifetime",
+      "planId": "lifetime",
+      "width": 1180,
+      "height": 2676,
+      "sha256": "3cb40dfb16d70ccf56fff2cf56fda1e0ef18241ea72eda177a0db79f73c9b83c"
+    }
+  ],
+  "reviewBoundary": {
+    "core3Only": true,
+    "futureProductsHidden": [
+      "freed_family_yearly",
+      "freed_accountability_monthly",
+      "freed_ai_coach_monthly"
+    ],
+    "requiresFreshStoreSandboxScreenshotsBeforeProduction": true,
+    "notes": "These are checked-in IAP review assets for console setup. Before production submission, replace or validate them with fresh simulator/device screenshots from the exact build used for App Store and Play review."
+  }
+}

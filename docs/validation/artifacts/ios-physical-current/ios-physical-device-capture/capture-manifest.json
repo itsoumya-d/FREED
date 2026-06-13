@@ -1,0 +1,323 @@
+{
+  "appGroupId": "group.app.freed.recovery",
+  "appLimitActivityName": "freed.selectedAppDailyLimit",
+  "appLimitEventName": "freed.selectedAppDailyLimitReached",
+  "appLimitMinutes": 30,
+  "earnedUnlockActivityName": "freed.earnedUnlockWindow",
+  "earnedUnlockMinutes": 15,
+  "earnedUnlockSourceHost": "screen-time-shield.freed.local",
+  "bundleId": "app.freed.recovery",
+  "appPackageProof": null,
+  "appPackageProofExpected": false,
+  "appPath": null,
+  "adultInterceptedHost": "pornhub.com",
+  "device": null,
+  "deviceActivityName": "night-guard",
+  "deviceNamesRedacted": true,
+  "evidenceSatisfied": false,
+  "generatedAt": "2026-06-10T23:20:59.607Z",
+  "manualFlows": [
+    {
+      "artifactField": "ios.familyControlsEntitlementArtifact",
+      "check": "familyControlsEntitlement",
+      "releaseFields": [
+        "ios.familyControlsEntitlementTeamId",
+        "ios.familyControlsStatus=approved",
+        "ios.familyControlsEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true"
+      ],
+      "runId": "ios-physical-current-family-controls-entitlement",
+      "summary": "Attach the helper-generated signed-app package proof showing the production team has Family Controls entitlement on the app and Screen Time extensions."
+    },
+    {
+      "artifactField": "ios.appGroupProvisioningArtifact",
+      "check": "appGroupProvisioning",
+      "releaseFields": [
+        "ios.appGroupProvisioningProfileId",
+        "ios.appGroupProvisioningArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true"
+      ],
+      "runId": "ios-physical-current-app-group-provisioning",
+      "summary": "Attach the helper-generated signed-app package proof showing the app and every extension share group.app.freed.recovery."
+    },
+    {
+      "artifactField": "ios.completeDataProtectionEntitlementArtifact",
+      "check": "completeDataProtectionEntitlement",
+      "releaseFields": [
+        "ios.completeDataProtectionEntitlement=NSFileProtectionComplete",
+        "ios.completeDataProtectionEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true"
+      ],
+      "runId": "ios-physical-current-complete-data-protection-entitlement",
+      "summary": "Attach signed-app package proof showing the app and every embedded extension default local files to Complete Data Protection."
+    },
+    {
+      "artifactField": "ios.permissionWizardArtifact",
+      "check": "permissionSetupWizard",
+      "releaseFields": [
+        "ios.permissionWizardRunId",
+        "ios.permissionWizardArtifact local freed-permission-wizard-report-v1 JSON with sanitized=true",
+        "ios.permissionWizardFlowOrder=onboarding-goals>app-selection>paywall>protection-explanation>permission-setup>test-protection>activation-complete",
+        "ios.permissionExplanationShown=true",
+        "ios.permissionExplanationSummary includes monitor only selected apps/sites, block known adult domains, and harmful site/search/app-limit threshold copy",
+        "ios.permissionWizardTestProtectionPassed=true"
+      ],
+      "runId": "ios-physical-current-permission-wizard",
+      "summary": "Record the full release setup wizard: recovery goals, app selection, paywall, protection explanation, guided Screen Time/Safari setup, Test Protection, and Activation Complete."
+    },
+    {
+      "artifactField": "ios.familyControlsAuthorizationArtifact",
+      "check": "familyControlsAuthorization",
+      "releaseFields": [
+        "ios.familyControlsStatus=approved"
+      ],
+      "runId": "ios-physical-current-family-controls-authorization",
+      "summary": "Record Family Controls authorization returning approved status."
+    },
+    {
+      "artifactField": "ios.familyActivityPickerArtifact",
+      "check": "familyActivityPicker",
+      "releaseFields": [
+        "ios.familyActivityPickerAppLimitScheduledImmediately=true",
+        "ios.familyActivityPickerAppLimitActivityName=freed.selectedAppDailyLimit",
+        "ios.familyActivityPickerAppLimitEventName=freed.selectedAppDailyLimitReached"
+      ],
+      "runId": "ios-physical-current-family-activity-picker",
+      "summary": "Record FamilyActivityPicker selecting at least one app, category, or web-domain token, then immediately capture FREED status showing the selected-target daily-limit monitor is scheduled."
+    },
+    {
+      "artifactField": "ios.selectedShieldTokensArtifact",
+      "check": "selectedShieldTokens",
+      "releaseFields": [
+        "ios.selectedApplicationTokenCount",
+        "ios.selectedCategoryTokenCount",
+        "ios.selectedWebDomainTokenCount",
+        "ios.selectedTokenCounts>0"
+      ],
+      "runId": "ios-physical-current-selected-shield-tokens",
+      "summary": "Capture selected application/category/web-domain token counts."
+    },
+    {
+      "artifactField": "ios.selectedAppDailyLimitArtifact",
+      "check": "selectedAppDailyLimitThreshold",
+      "releaseFields": [
+        "ios.appLimitScheduled=true",
+        "ios.selectedAppDailyLimitMinutes=30",
+        "ios.selectedAppDailyLimitActivityName=freed.selectedAppDailyLimit",
+        "ios.selectedAppDailyLimitEventName=freed.selectedAppDailyLimitReached",
+        "ios.selectedAppDailyLimitReachedToday=true",
+        "ios.selectedAppDailyLimitReachedDate yyyy-MM-dd",
+        "ios.selectedAppDailyLimitArtifact local freed-ios-screen-time-app-limit-report-v1 JSON with sanitized=true"
+      ],
+      "runId": "ios-physical-current-selected-app-daily-limit",
+      "summary": "Record 'freed.selectedAppDailyLimit' firing 'freed.selectedAppDailyLimitReached' after 30 minutes and shielding the selected Screen Time target, backed by a sanitized freed-ios-screen-time-app-limit-report-v1 JSON artifact."
+    },
+    {
+      "artifactField": "ios.managedSettingsFilterArtifact",
+      "check": "managedSettingsAdultFilter",
+      "releaseFields": [
+        "ios.normalBrowsingAllowedUrl=https://youtube.com/results?search_query=workout"
+      ],
+      "runId": "ios-physical-current-managed-settings-filter",
+      "summary": "Prove ManagedSettings adult filter leaves normal browsing allowed for https://youtube.com/results?search_query=workout."
+    },
+    {
+      "artifactField": "ios.safariContentBlockerBuildArtifact",
+      "check": "safariContentBlockerReloaded",
+      "releaseFields": [
+        "ios.safariContentBlockerEmbedded=true",
+        "ios.safariContentBlockerIdentifier=app.freed.recovery.safari-content-blocker",
+        "ios.safariContentBlockerBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true"
+      ],
+      "runId": "ios-physical-current-safari-content-blocker-build",
+      "summary": "Capture a signed physical-device build report showing the FREEDSafariContentBlocker extension is embedded."
+    },
+    {
+      "artifactField": "ios.safariContentBlockerReloadArtifact",
+      "check": "safariContentBlockerReloaded",
+      "releaseFields": [
+        "ios.safariContentBlockerVersion",
+        "ios.safariContentBlockerChecksum=fnv1a32:<8-hex>",
+        "ios.safariContentBlockerRuleCount",
+        "ios.safariContentBlockerEnabled=true",
+        "ios.safariContentBlockerReloadArtifact local freed-ios-safari-content-blocker-report-v1 JSON"
+      ],
+      "runId": "ios-physical-current-safari-content-blocker-reload",
+      "summary": "Record Safari Content Blocker reload with the synced adult-domain feed version, checksum, rule count, and Safari enabled state visible in FREED status; promote a local freed-ios-safari-content-blocker-report-v1 JSON report."
+    },
+    {
+      "artifactField": "ios.safariContentBlockerAdultBlockArtifact",
+      "check": "safariContentBlockerAdultBlock",
+      "releaseFields": [
+        "ios.safariContentBlockerAdultBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON"
+      ],
+      "runId": "ios-physical-current-safari-content-blocker-adult-block",
+      "summary": "Prove Safari blocks an adult attempt for pornhub.com through the content-blocker layer; promote a local freed-ios-safari-content-blocker-report-v1 JSON report with no packet-inspection or app-screen-inspection checks."
+    },
+    {
+      "artifactField": "ios.safariContentBlockerShortFormBlockArtifact",
+      "check": "safariContentBlockerShortFormBlock",
+      "releaseFields": [
+        "ios.safariContentBlockerShortFormUrl=https://youtube.com/shorts/dQw4w9WgXcQ",
+        "ios.safariContentBlockerShortFormBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON"
+      ],
+      "runId": "ios-physical-current-safari-content-blocker-short-form-block",
+      "summary": "Prove Safari blocks the web short-form URL https://youtube.com/shorts/dQw4w9WgXcQ through the content-blocker layer; promote a local freed-ios-safari-content-blocker-report-v1 JSON report with no raw path or app-screen-inspection checks."
+    },
+    {
+      "artifactField": "ios.safariShortFormChallengeHandoffArtifact",
+      "check": "safariShortFormChallengeHandoff",
+      "releaseFields": [
+        "ios.safariShortFormChallengeHandoffRunId",
+        "ios.safariShortFormChallengeHandoffArtifact",
+        "ios.safariShortFormChallengeHandoffSource=ios-safari-short-form",
+        "ios.safariShortFormChallengeHandoffMatchedRule=short-form:youtube-shorts",
+        "ios.safariShortFormChallengeHandoffHost=youtube.com",
+        "ios.safariShortFormChallengeHandoffRawPathStored=false",
+        "ios.safariShortFormChallengeHandoffNativeUnlockActive=false",
+        "ios.safariShortFormChallengeHandoffSelectedShieldsStayedActive=true",
+        "ios.safariShortFormChallengeHandoffAdultFilterStillActive=true"
+      ],
+      "runId": "ios-physical-current-safari-short-form-challenge-handoff",
+      "summary": "Open FREED from the approved Safari web short-form challenge handoff and prove the app stores only the platform host, shows a browser challenge window, does not pause selected Screen Time shields, and leaves adult web filtering active."
+    },
+    {
+      "artifactField": "ios.earnedUnlockAppAllowArtifact",
+      "check": "earnedUnlockAllowsSelectedApps",
+      "releaseFields": [
+        "ios.earnedUnlockDurationMinutes",
+        "ios.earnedUnlockActivityName=freed.earnedUnlockWindow",
+        "ios.earnedUnlockSelectedTokenCount=ios.selectedTokenCounts",
+        "ios.earnedUnlockAdultFilterStillActive=true",
+        "ios.earnedUnlockSourceHost=screen-time-shield.freed.local",
+        "ios.earnedUnlockAppAllowArtifact local freed-ios-earned-unlock-report-v1 JSON with sanitized=true"
+      ],
+      "runId": "ios-physical-current-earned-unlock-app-allow",
+      "summary": "Record selected app shields pausing during a 15-minute earned unlock that starts from the iOS Screen Time shield handoff (screen-time-shield.freed.local), with the selected token count unchanged, adult web filtering still active, DeviceActivity monitor 'freed.earnedUnlockWindow' scheduled for relock, and a sanitized freed-ios-earned-unlock-report-v1 JSON artifact."
+    },
+    {
+      "artifactField": "ios.earnedUnlockRejectedSourceArtifact",
+      "check": "earnedUnlockRejectsNonScreenTimeSource",
+      "releaseFields": [
+        "ios.earnedUnlockRejectedSourceRunId",
+        "ios.earnedUnlockRejectedSourceArtifact",
+        "ios.earnedUnlockRejectedSourceHost=pornhub.com",
+        "ios.earnedUnlockRejectedSelectedShieldsStayedActive=true",
+        "ios.earnedUnlockRejectedAdultFilterStillActive=true",
+        "ios.earnedUnlockRejectedSourceArtifact local freed-ios-earned-unlock-report-v1 JSON with sanitized=true"
+      ],
+      "runId": "ios-physical-current-earned-unlock-rejected-source",
+      "summary": "Attempt an earned unlock from the blocked browser/adult source pornhub.com; prove this non-Screen-Time source does not pause selected app shields, leaves adult web filtering active, and writes a sanitized freed-ios-earned-unlock-report-v1 JSON artifact."
+    },
+    {
+      "artifactField": "ios.earnedUnlockRelockArtifact",
+      "check": "earnedUnlockAutoRelock",
+      "releaseFields": [
+        "ios.earnedUnlockRelockRunId",
+        "ios.earnedUnlockRelockArtifact",
+        "ios.earnedUnlockRelockArtifact local freed-ios-earned-unlock-report-v1 JSON with sanitized=true",
+        "same selected Screen Time target shielded again after expiry"
+      ],
+      "runId": "ios-physical-current-earned-unlock-relock",
+      "summary": "Record FREED automatically reapplying selected app shields after the earned unlock expires, backed by a sanitized freed-ios-earned-unlock-report-v1 JSON artifact."
+    },
+    {
+      "artifactField": "ios.challengePhotoArtifact",
+      "check": "challengePhotoVerifiedOnDevice",
+      "releaseFields": [
+        "ios.challengePhotoArtifact local freed-challenge-photo-report-v1 JSON with sanitized=true",
+        "ios.challengePhotoClassifier=Vision",
+        "ios.challengePhotoMatchedLabel",
+        "ios.challengePhotoConfidence>=0.45",
+        "ios.challengePhotoFreshCameraOnly=true",
+        "ios.challengePhotoNoBase64OrExif=true",
+        "ios.challengePhotoTemporaryFileDeleted=true",
+        "ios.challengePhotoArtifact checks onDeviceClassifier/onDemandOnly/rawPhotoNotPersisted/noContinuousImageClassification=true"
+      ],
+      "runId": "ios-physical-current-challenge-photo-verification",
+      "summary": "Record a fresh-camera photo challenge completing only after on-device, on-demand Vision classification, with no base64/EXIF payload retained, no raw photo persisted, no continuous image classification, and the temporary captured file deleted after classification."
+    },
+    {
+      "artifactField": "ios.challengeMotionArtifact",
+      "check": "challengeMotionVerified",
+      "releaseFields": [
+        "ios.challengeMotionArtifact local freed-challenge-motion-report-v1 JSON with sanitized=true",
+        "ios.challengeMotionRunId",
+        "ios.challengeMotionSamples>=6",
+        "ios.challengeMotionArtifact checks onDeviceSensorSamples/onDemandOnly/timerOnlyBypassRejected=true"
+      ],
+      "runId": "ios-physical-current-challenge-motion-verification",
+      "summary": "Record a motion challenge completing from a local on-device, on-demand CoreMotion report with enough live samples and a rejected timer-only bypass."
+    },
+    {
+      "artifactField": "ios.challengeStepsArtifact",
+      "check": "challengeStepsVerified",
+      "releaseFields": [
+        "ios.challengeStepsArtifact local freed-challenge-steps-report-v1 JSON with sanitized=true",
+        "ios.challengeStepsRunId",
+        "ios.challengeStepCount>=12",
+        "ios.challengeStepsArtifact checks pedometerOrHealthData/onDemandOnly/timerOnlyBypassRejected=true"
+      ],
+      "runId": "ios-physical-current-challenge-steps-verification",
+      "summary": "Record a walking challenge completing from a local on-demand HealthKit/CMPedometer report with enough steps and a rejected timer-only bypass."
+    },
+    {
+      "artifactField": "ios.challengeLocationArtifact",
+      "check": "challengeLocationVerified",
+      "releaseFields": [
+        "ios.challengeLocationArtifact local freed-challenge-location-report-v1 JSON with sanitized=true",
+        "ios.challengeLocationRunId",
+        "ios.challengeLocationDistanceMeters>=10",
+        "ios.challengeLocationSamples>=2",
+        "ios.challengeLocationBestAccuracyMeters<=80",
+        "ios.challengeLocationArtifact checks foregroundLocationOnly/onDemandOnly/multiSampleRoute/noRawCoordinatesPersisted=true"
+      ],
+      "runId": "ios-physical-current-challenge-location-verification",
+      "summary": "Record an outdoor challenge completing from a local foreground-only, on-demand location report with multiple accurate fixes and no raw coordinate retention."
+    },
+    {
+      "artifactField": "ios.shieldActionHandoffArtifact",
+      "check": "shieldActionHandoff",
+      "releaseFields": [
+        "ios.shieldActionInterventionId"
+      ],
+      "runId": "ios-physical-current-shield-action-handoff",
+      "summary": "Record Shield Action handoff opening FREED's relapse interruption flow."
+    },
+    {
+      "artifactField": "ios.deviceActivityNightGuardArtifact",
+      "check": "deviceActivityNightGuard",
+      "releaseFields": [
+        "ios.deviceActivityName=night-guard"
+      ],
+      "runId": "ios-physical-current-device-activity-night-guard",
+      "summary": "Capture DeviceActivity schedule 'night-guard'."
+    },
+    {
+      "artifactField": "ios.normalBrowsingArtifact",
+      "check": "normalBrowsingAllowed",
+      "releaseFields": [
+        "ios.normalBrowsingAllowedUrl=https://youtube.com/results?search_query=workout"
+      ],
+      "runId": "ios-physical-current-normal-browsing",
+      "summary": "Prove normal browsing allowed for https://youtube.com/results?search_query=workout."
+    },
+    {
+      "artifactField": "ios.adultInterceptArtifact",
+      "check": "adultAttemptIntercepted",
+      "releaseFields": [
+        "ios.adultInterceptedHost=pornhub.com"
+      ],
+      "runId": "ios-physical-current-adult-intercept",
+      "summary": "Prove adult attempt interception for pornhub.com."
+    }
+  ],
+  "manualVerificationRequired": true,
+  "normalBrowsingAllowedUrl": "https://youtube.com/results?search_query=workout",
+  "outputDir": "docs/validation/artifacts/ios-physical-current/ios-physical-device-capture",
+  "releaseGate": "ios-physical-device-validation",
+  "result": "plan-only",
+  "runId": "ios-physical-current",
+  "safariContentBlockerShortFormUrl": "https://youtube.com/shorts/dQw4w9WgXcQ",
+  "sanitized": true,
+  "schema": "freed-ios-physical-device-capture-v1",
+  "teamId": null,
+  "toolTimeoutMs": 15000
+}

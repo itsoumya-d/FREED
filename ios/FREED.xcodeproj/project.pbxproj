@@ -1,0 +1,1160 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		043D0EBF55BC15E9192C61FE /* FREEDSafariContentBlocker.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 2943985037EF00215AAC4718 /* FREEDSafariContentBlocker.appex */; };
+		12BED70A13F4B526C2C1A65D /* FamilyControls.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7C73B4BEB072201F870F91 /* FamilyControls.framework */; };
+		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		1967C6C66EF3313C90E6DA7F /* ShieldActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27CC86D535406A02351F5300 /* ShieldActionExtension.swift */; };
+		272EAA28243016501E05C581 /* FREEDDeviceActivityMonitor.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 1C9BFC7A60DEAEF0C82141AC /* FREEDDeviceActivityMonitor.appex */; };
+		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
+		4972EF25201B24588EC6808E /* FREEDShieldConfiguration.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 07F38B56071CDFC02F0DEDE4 /* FREEDShieldConfiguration.appex */; };
+		5654CEB4F9AA69BE6A8913A0 /* DeviceActivityMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395161065F262C610779DA24 /* DeviceActivityMonitorExtension.swift */; };
+		57D0E8B192B47C36DC4F3146 /* ShieldConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE87868C29884711DB8BF3C /* ShieldConfigurationExtension.swift */; };
+		6F6904823E72FD8AED0F6A09 /* ContentBlockerRequestHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5084433E0FB8EE4FDD362EA7 /* ContentBlockerRequestHandler.swift */; };
+		712D8F4857CF9DE425434940 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBE52B6045EB6271081B414B /* Foundation.framework */; };
+		77214562AE3D5AB65D680AC8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 786A3A9DE009ECF0259ED332 /* PrivacyInfo.xcprivacy */; };
+		7A676BBC561F3A675A01C7BE /* FREEDShieldAction.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 9DB15521004E85B28F54C8DA /* FREEDShieldAction.appex */; };
+		883A9E2B1FA91AA7D84DBFD8 /* ManagedSettings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15DA9051384FA2A530336AA7 /* ManagedSettings.framework */; };
+		8BA09A485D1CE45BD94F7277 /* ManagedSettingsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450386624240DADA77DC0F2B /* ManagedSettingsUI.framework */; };
+		8E116B3D2B26690D8B7E2BE3 /* libPods-FREED.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F01D9BBAB5CB7FB3B0D061 /* libPods-FREED.a */; };
+		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+		CE3A184CB802003794F45342 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B4F9CBB589018066B2DDF4 /* ExpoModulesProvider.swift */; };
+		D52AEF69737DDF21851BEB6B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBE52B6045EB6271081B414B /* Foundation.framework */; };
+		D77F8E45ADD55BF5D47CADBB /* ManagedSettings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15DA9051384FA2A530336AA7 /* ManagedSettings.framework */; };
+		E1B84FC0F53CCA86D3949BCE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBE52B6045EB6271081B414B /* Foundation.framework */; };
+		E82098554DC9D2D1F465D503 /* ManagedSettings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15DA9051384FA2A530336AA7 /* ManagedSettings.framework */; };
+		F07035CFF3B96E6E5D187CFF /* blockerList.json in Resources */ = {isa = PBXBuildFile; fileRef = 01A201F7A224AF79FFC26BAD /* blockerList.json */; };
+		F0B7FE80060631F0B8E9FCB4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBE52B6045EB6271081B414B /* Foundation.framework */; };
+		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
+		FB37D22755995AAFCBDA8655 /* DeviceActivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EF02C640481608C700BEDDD /* DeviceActivity.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4A08931585D73F7F63E72894 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1DC8F0F42174FDDD57D9900E;
+			remoteInfo = FREEDShieldAction;
+		};
+		65CD6315B4FF9915A2EAC79F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F48A47C7FDA9C5708E6D10F;
+			remoteInfo = FREEDDeviceActivityMonitor;
+		};
+		A526178BC8F60F3309CCA7E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A3307B62882D554815D49C0D;
+			remoteInfo = FREEDShieldConfiguration;
+		};
+		F5F3C3BC2E292121B6032D15 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B9AA8A8703E8488BFC0CF2C;
+			remoteInfo = FREEDSafariContentBlocker;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0779C877EB622242C6DA8823 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4972EF25201B24588EC6808E /* FREEDShieldConfiguration.appex in Embed App Extensions */,
+				7A676BBC561F3A675A01C7BE /* FREEDShieldAction.appex in Embed App Extensions */,
+				272EAA28243016501E05C581 /* FREEDDeviceActivityMonitor.appex in Embed App Extensions */,
+				043D0EBF55BC15E9192C61FE /* FREEDSafariContentBlocker.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		01A201F7A224AF79FFC26BAD /* blockerList.json */ = {isa = PBXFileReference; includeInIndex = 1; path = blockerList.json; sourceTree = "<group>"; };
+		07F38B56071CDFC02F0DEDE4 /* FREEDShieldConfiguration.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FREEDShieldConfiguration.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		0DE87868C29884711DB8BF3C /* ShieldConfigurationExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShieldConfigurationExtension.swift; sourceTree = "<group>"; };
+		102F97B63EDFDB1A1276266A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* FREED.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FREED.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = FREED/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = FREED/Info.plist; sourceTree = "<group>"; };
+		15DA9051384FA2A530336AA7 /* ManagedSettings.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ManagedSettings.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/ManagedSettings.framework; sourceTree = DEVELOPER_DIR; };
+		1C9BFC7A60DEAEF0C82141AC /* FREEDDeviceActivityMonitor.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FREEDDeviceActivityMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		27CC86D535406A02351F5300 /* ShieldActionExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ShieldActionExtension.swift; sourceTree = "<group>"; };
+		27F01D9BBAB5CB7FB3B0D061 /* libPods-FREED.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-FREED.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2943985037EF00215AAC4718 /* FREEDSafariContentBlocker.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FREEDSafariContentBlocker.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		395161065F262C610779DA24 /* DeviceActivityMonitorExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DeviceActivityMonitorExtension.swift; sourceTree = "<group>"; };
+		450386624240DADA77DC0F2B /* ManagedSettingsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ManagedSettingsUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/ManagedSettingsUI.framework; sourceTree = DEVELOPER_DIR; };
+		4BDCA09152AA9518C4B7ED78 /* Pods-FREED.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FREED.debug.xcconfig"; path = "Target Support Files/Pods-FREED/Pods-FREED.debug.xcconfig"; sourceTree = "<group>"; };
+		5084433E0FB8EE4FDD362EA7 /* ContentBlockerRequestHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ContentBlockerRequestHandler.swift; sourceTree = "<group>"; };
+		5D7C73B4BEB072201F870F91 /* FamilyControls.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FamilyControls.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/FamilyControls.framework; sourceTree = DEVELOPER_DIR; };
+		61E940798CD9AAE33647D179 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7244B3B91E896D6B96CA2E13 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		786A3A9DE009ECF0259ED332 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = FREED/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		893FCD836F4EF75F55EFF6E7 /* FREEDDeviceActivityMonitor.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = FREEDDeviceActivityMonitor.entitlements; sourceTree = "<group>"; };
+		8DB4E1F79FBF5B6A9325F3B8 /* FREEDShieldConfiguration.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = FREEDShieldConfiguration.entitlements; sourceTree = "<group>"; };
+		8EF02C640481608C700BEDDD /* DeviceActivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeviceActivity.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/DeviceActivity.framework; sourceTree = DEVELOPER_DIR; };
+		99483BEB3FD967B786A305F9 /* FREEDSafariContentBlocker.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = FREEDSafariContentBlocker.entitlements; sourceTree = "<group>"; };
+		9DB15521004E85B28F54C8DA /* FREEDShieldAction.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FREEDShieldAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = FREED/SplashScreen.storyboard; sourceTree = "<group>"; };
+		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		CBE52B6045EB6271081B414B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		CDE870372CFF4D12D3A3F70D /* FREEDShieldAction.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = FREEDShieldAction.entitlements; sourceTree = "<group>"; };
+		DC71D135F872A6C244B3914D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DE74894D39D9CF78BCA3D0B8 /* Pods-FREED.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FREED.release.xcconfig"; path = "Target Support Files/Pods-FREED/Pods-FREED.release.xcconfig"; sourceTree = "<group>"; };
+		E1B4F9CBB589018066B2DDF4 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-FREED/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = FREED/AppDelegate.swift; sourceTree = "<group>"; };
+		F11748442D0722820044C1D9 /* FREED-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "FREED-Bridging-Header.h"; path = "FREED/FREED-Bridging-Header.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8E116B3D2B26690D8B7E2BE3 /* libPods-FREED.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		49ED5B4F7A0C398CEC954B0D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D52AEF69737DDF21851BEB6B /* Foundation.framework in Frameworks */,
+				E82098554DC9D2D1F465D503 /* ManagedSettings.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		56CDA6CE8B4CF6ED7DAF5522 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				712D8F4857CF9DE425434940 /* Foundation.framework in Frameworks */,
+				FB37D22755995AAFCBDA8655 /* DeviceActivity.framework in Frameworks */,
+				883A9E2B1FA91AA7D84DBFD8 /* ManagedSettings.framework in Frameworks */,
+				12BED70A13F4B526C2C1A65D /* FamilyControls.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C31248F0C446187E1089B0DC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E1B84FC0F53CCA86D3949BCE /* Foundation.framework in Frameworks */,
+				D77F8E45ADD55BF5D47CADBB /* ManagedSettings.framework in Frameworks */,
+				8BA09A485D1CE45BD94F7277 /* ManagedSettingsUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F18704824F88BDBC27998CDC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0B7FE80060631F0B8E9FCB4 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0FD320ECFBFD375C0D4252DD /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				CBE52B6045EB6271081B414B /* Foundation.framework */,
+				15DA9051384FA2A530336AA7 /* ManagedSettings.framework */,
+				450386624240DADA77DC0F2B /* ManagedSettingsUI.framework */,
+				8EF02C640481608C700BEDDD /* DeviceActivity.framework */,
+				5D7C73B4BEB072201F870F91 /* FamilyControls.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		13B07FAE1A68108700A75B9A /* FREED */ = {
+			isa = PBXGroup;
+			children = (
+				F11748412D0307B40044C1D9 /* AppDelegate.swift */,
+				F11748442D0722820044C1D9 /* FREED-Bridging-Header.h */,
+				BB2F792B24A3F905000567C9 /* Supporting */,
+				13B07FB51A68108700A75B9A /* Images.xcassets */,
+				13B07FB61A68108700A75B9A /* Info.plist */,
+				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
+				786A3A9DE009ECF0259ED332 /* PrivacyInfo.xcprivacy */,
+			);
+			name = FREED;
+			sourceTree = "<group>";
+		};
+		17443670D1105699C2A5BD77 /* FREEDShieldConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				0DE87868C29884711DB8BF3C /* ShieldConfigurationExtension.swift */,
+				7244B3B91E896D6B96CA2E13 /* Info.plist */,
+				8DB4E1F79FBF5B6A9325F3B8 /* FREEDShieldConfiguration.entitlements */,
+			);
+			name = FREEDShieldConfiguration;
+			path = FREEDShieldConfiguration;
+			sourceTree = "<group>";
+		};
+		21174D62B3DC92B8F7BD9AC7 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				BC8BF1B572C66F1D1C799D35 /* FREED */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
+		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
+				27F01D9BBAB5CB7FB3B0D061 /* libPods-FREED.a */,
+				0FD320ECFBFD375C0D4252DD /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		625E30043302AB3F62AF098B /* FREEDShieldAction */ = {
+			isa = PBXGroup;
+			children = (
+				27CC86D535406A02351F5300 /* ShieldActionExtension.swift */,
+				102F97B63EDFDB1A1276266A /* Info.plist */,
+				CDE870372CFF4D12D3A3F70D /* FREEDShieldAction.entitlements */,
+			);
+			name = FREEDShieldAction;
+			path = FREEDShieldAction;
+			sourceTree = "<group>";
+		};
+		6A21D91D263885E6497E4165 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4BDCA09152AA9518C4B7ED78 /* Pods-FREED.debug.xcconfig */,
+				DE74894D39D9CF78BCA3D0B8 /* Pods-FREED.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		83CBB9F61A601CBA00E9B192 = {
+			isa = PBXGroup;
+			children = (
+				13B07FAE1A68108700A75B9A /* FREED */,
+				832341AE1AAA6A7D00B99B32 /* Libraries */,
+				83CBBA001A601CBA00E9B192 /* Products */,
+				2D16E6871FA4F8E400B85C8A /* Frameworks */,
+				6A21D91D263885E6497E4165 /* Pods */,
+				21174D62B3DC92B8F7BD9AC7 /* ExpoModulesProviders */,
+				17443670D1105699C2A5BD77 /* FREEDShieldConfiguration */,
+				625E30043302AB3F62AF098B /* FREEDShieldAction */,
+				951FCEA48075686406A6BA9A /* FREEDDeviceActivityMonitor */,
+				EDAC101E06A7823F401A4FE6 /* FREEDSafariContentBlocker */,
+			);
+			indentWidth = 2;
+			sourceTree = "<group>";
+			tabWidth = 2;
+			usesTabs = 0;
+		};
+		83CBBA001A601CBA00E9B192 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				13B07F961A680F5B00A75B9A /* FREED.app */,
+				07F38B56071CDFC02F0DEDE4 /* FREEDShieldConfiguration.appex */,
+				9DB15521004E85B28F54C8DA /* FREEDShieldAction.appex */,
+				1C9BFC7A60DEAEF0C82141AC /* FREEDDeviceActivityMonitor.appex */,
+				2943985037EF00215AAC4718 /* FREEDSafariContentBlocker.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		951FCEA48075686406A6BA9A /* FREEDDeviceActivityMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				395161065F262C610779DA24 /* DeviceActivityMonitorExtension.swift */,
+				DC71D135F872A6C244B3914D /* Info.plist */,
+				893FCD836F4EF75F55EFF6E7 /* FREEDDeviceActivityMonitor.entitlements */,
+			);
+			name = FREEDDeviceActivityMonitor;
+			path = FREEDDeviceActivityMonitor;
+			sourceTree = "<group>";
+		};
+		BB2F792B24A3F905000567C9 /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				BB2F792C24A3F905000567C9 /* Expo.plist */,
+			);
+			name = Supporting;
+			path = FREED/Supporting;
+			sourceTree = "<group>";
+		};
+		BC8BF1B572C66F1D1C799D35 /* FREED */ = {
+			isa = PBXGroup;
+			children = (
+				E1B4F9CBB589018066B2DDF4 /* ExpoModulesProvider.swift */,
+			);
+			name = FREED;
+			sourceTree = "<group>";
+		};
+		EDAC101E06A7823F401A4FE6 /* FREEDSafariContentBlocker */ = {
+			isa = PBXGroup;
+			children = (
+				5084433E0FB8EE4FDD362EA7 /* ContentBlockerRequestHandler.swift */,
+				61E940798CD9AAE33647D179 /* Info.plist */,
+				99483BEB3FD967B786A305F9 /* FREEDSafariContentBlocker.entitlements */,
+				01A201F7A224AF79FFC26BAD /* blockerList.json */,
+			);
+			name = FREEDSafariContentBlocker;
+			path = FREEDSafariContentBlocker;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		13B07F861A680F5B00A75B9A /* FREED */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "FREED" */;
+			buildPhases = (
+				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
+				8FF8FDACCBC7D718700176C0 /* [Expo] Configure project */,
+				13B07F871A680F5B00A75B9A /* Sources */,
+				13B07F8C1A680F5B00A75B9A /* Frameworks */,
+				13B07F8E1A680F5B00A75B9A /* Resources */,
+				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
+				C3A925D30F9FF69D99F7CFFD /* [CP] Embed Pods Frameworks */,
+				0779C877EB622242C6DA8823 /* Embed App Extensions */,
+				E9D9DDC9761E96BE8371B237 /* [CP-User] [RNGoogleMobileAds] Configuration */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4A0AC6F993687B362BAA9D81 /* PBXTargetDependency */,
+				F8C72DDF85798E3129F00F48 /* PBXTargetDependency */,
+				2ECD8189C2A028A6E1D4BF18 /* PBXTargetDependency */,
+				6A0F15C9E9DB3142F75D9A17 /* PBXTargetDependency */,
+			);
+			name = FREED;
+			productName = FREED;
+			productReference = 13B07F961A680F5B00A75B9A /* FREED.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1DC8F0F42174FDDD57D9900E /* FREEDShieldAction */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3B3610D38E3B3D2D84591571 /* Build configuration list for PBXNativeTarget "FREEDShieldAction" */;
+			buildPhases = (
+				1EE53BB5D65FB65DB49E2B5E /* Sources */,
+				49ED5B4F7A0C398CEC954B0D /* Frameworks */,
+				711442DDDFEF7853A6D55B63 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FREEDShieldAction;
+			productName = FREEDShieldAction;
+			productReference = 9DB15521004E85B28F54C8DA /* FREEDShieldAction.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		8B9AA8A8703E8488BFC0CF2C /* FREEDSafariContentBlocker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 504417199462AAFD6D97A94A /* Build configuration list for PBXNativeTarget "FREEDSafariContentBlocker" */;
+			buildPhases = (
+				65467771D85D3B515782B6F4 /* Sources */,
+				F18704824F88BDBC27998CDC /* Frameworks */,
+				F7ACA8D1BEE8D58434AF256E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FREEDSafariContentBlocker;
+			productName = FREEDSafariContentBlocker;
+			productReference = 2943985037EF00215AAC4718 /* FREEDSafariContentBlocker.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		8F48A47C7FDA9C5708E6D10F /* FREEDDeviceActivityMonitor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C99940889A274A58AA2F2E9 /* Build configuration list for PBXNativeTarget "FREEDDeviceActivityMonitor" */;
+			buildPhases = (
+				5D2BAA44091B9E22A3557F45 /* Sources */,
+				56CDA6CE8B4CF6ED7DAF5522 /* Frameworks */,
+				0D6C65D319FFF194806BEC7E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FREEDDeviceActivityMonitor;
+			productName = FREEDDeviceActivityMonitor;
+			productReference = 1C9BFC7A60DEAEF0C82141AC /* FREEDDeviceActivityMonitor.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		A3307B62882D554815D49C0D /* FREEDShieldConfiguration */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5EFFA9C6E6469F29E472C893 /* Build configuration list for PBXNativeTarget "FREEDShieldConfiguration" */;
+			buildPhases = (
+				C64C3779DE59485D69E5596F /* Sources */,
+				C31248F0C446187E1089B0DC /* Frameworks */,
+				3E7160BAEAD4D7FB3DA7B6F4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FREEDShieldConfiguration;
+			productName = FREEDShieldConfiguration;
+			productReference = 07F38B56071CDFC02F0DEDE4 /* FREEDShieldConfiguration.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		83CBB9F71A601CBA00E9B192 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1130;
+				TargetAttributes = {
+					13B07F861A680F5B00A75B9A = {
+						LastSwiftMigration = 1250;
+					};
+				};
+			};
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "FREED" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 83CBB9F61A601CBA00E9B192;
+			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				13B07F861A680F5B00A75B9A /* FREED */,
+				A3307B62882D554815D49C0D /* FREEDShieldConfiguration */,
+				1DC8F0F42174FDDD57D9900E /* FREEDShieldAction */,
+				8F48A47C7FDA9C5708E6D10F /* FREEDDeviceActivityMonitor */,
+				8B9AA8A8703E8488BFC0CF2C /* FREEDSafariContentBlocker */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0D6C65D319FFF194806BEC7E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		13B07F8E1A680F5B00A75B9A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
+				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
+				77214562AE3D5AB65D680AC8 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3E7160BAEAD4D7FB3DA7B6F4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		711442DDDFEF7853A6D55B63 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7ACA8D1BEE8D58434AF256E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F07035CFF3B96E6E5D187CFF /* blockerList.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.xcode.env",
+				"$(SRCROOT)/.xcode.env.local",
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ -f \"$PODS_ROOT/../.xcode.env\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env\"\nfi\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n# The project root by default is one level up from the ios directory\nexport PROJECT_ROOT=\"$PROJECT_DIR\"/..\n\nif [[ \"$CONFIGURATION\" = *Debug* ]]; then\n  export SKIP_BUNDLING=1\nfi\nif [[ -z \"$ENTRY_FILE\" ]]; then\n  # Set the entry JS file using the bundler's entry resolution.\n  export ENTRY_FILE=\"$(\"$NODE_BINARY\" -e \"require('expo/scripts/resolveAppEntry')\" \"$PROJECT_ROOT\" ios absolute | tail -n 1)\"\nfi\n\nif [[ -z \"$CLI_PATH\" ]]; then\n  # Use Expo CLI\n  export CLI_PATH=\"$(\"$NODE_BINARY\" --print \"require.resolve('@expo/cli', { paths: [require.resolve('expo/package.json')] })\")\"\nfi\nif [[ -z \"$BUNDLE_COMMAND\" ]]; then\n  # Default Expo CLI command for bundling\n  export BUNDLE_COMMAND=\"export:embed\"\nfi\n\n# Source .xcode.env.updates if it exists to allow\n# SKIP_BUNDLING to be unset if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.updates\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.updates\"\nfi\n# Source local changes to allow overrides\n# if needed\nif [[ -f \"$PODS_ROOT/../.xcode.env.local\" ]]; then\n  source \"$PODS_ROOT/../.xcode.env.local\"\nfi\n\n`\"$NODE_BINARY\" --print \"require('path').dirname(require.resolve('react-native/package.json')) + '/scripts/react-native-xcode.sh'\"`\n\n";
+		};
+		08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FREED-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FREED/Pods-FREED-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXApplication/ExpoApplication_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/EXConstants.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/EXConstants/ExpoConstants_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoFileSystem/ExpoFileSystem_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoNotifications/ExpoNotifications_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/ExpoSystemUI/ExpoSystemUI_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/Google-Mobile-Ads-SDK/GoogleMobileAdsResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUserMessagingPlatform/UserMessagingPlatformResources.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/PurchasesHybridCommon/PurchasesHybridCommon.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RCT-Folly/RCT-Folly_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RNSVG/RNSVGFilters.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-Core/React-Core_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/React-cxxreact/React-cxxreact_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/RevenueCat/RevenueCat.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage/SDWebImage.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/boost/boost_privacy.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/glog/glog_privacy.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoApplication_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/EXConstants.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoConstants_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoFileSystem_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoNotifications_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ExpoSystemUI_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleMobileAdsResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/UserMessagingPlatformResources.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/PurchasesHybridCommon.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RCT-Folly_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RNSVGFilters.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-Core_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/React-cxxreact_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RevenueCat.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SDWebImage.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/boost_privacy.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/glog_privacy.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FREED/Pods-FREED-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8FF8FDACCBC7D718700176C0 /* [Expo] Configure project */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/.xcode.env",
+				"$(SRCROOT)/.xcode.env.local",
+				"$(SRCROOT)/FREED/FREED.entitlements",
+				"$(SRCROOT)/Pods/Target Support Files/Pods-FREED/expo-configure-project.sh",
+			);
+			name = "[Expo] Configure project";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(SRCROOT)/Pods/Target Support Files/Pods-FREED/ExpoModulesProvider.swift",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-FREED/expo-configure-project.sh\"\n";
+		};
+		C3A925D30F9FF69D99F7CFFD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FREED/Pods-FREED-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermesvm.framework/hermesvm",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermesvm.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FREED/Pods-FREED-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E9D9DDC9761E96BE8371B237 /* [CP-User] [RNGoogleMobileAds] Configuration */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			name = "[CP-User] [RNGoogleMobileAds] Configuration";
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\n\n##########################################################################\n##########################################################################\n#\n#  NOTE THAT IF YOU CHANGE THIS FILE YOU MUST RUN pod install AFTERWARDS\n#\n#  This file is installed as an Xcode build script in the project file\n#  by cocoapods, and you will not see your changes until you pod install\n#\n##########################################################################\n##########################################################################\n\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_PROJECT_ABBREVIATION=\"RNGoogleMobileAds\"\n_JSON_ROOT=\"'react-native-google-mobile-ads'\"\n_JSON_FILE_NAME='app.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n_PACKAGE_JSON_NAME='package.json'\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"note:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"note:      '$1' already exists\"\n}\n\nfunction getJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -KU -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"note: -> ${_PROJECT_ABBREVIATION} build script started\"\necho \"note: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == *.generated ]]; then continue; fi\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"note:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | /usr/bin/head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"note:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -KU -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    if ! python3 --version >/dev/null 2>&1; then echo \"error: python3 not found, app.json file processing error.\" && exit 1; fi\n    _JSON_OUTPUT_BASE64=$(python3 -c 'import json,sys,base64;print(base64.b64encode(bytes(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"', '\"'rb'\"').read())['${_JSON_ROOT}']), '\"'utf-8'\"')).decode())' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"google_mobile_ads_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.delay_app_measurement_init\n  _DELAY_APP_MEASUREMENT=$(getJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"delay_app_measurement_init\")\n  if [[ $_DELAY_APP_MEASUREMENT == \"true\" ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GADDelayAppMeasurementInit\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"YES\")\n  fi\n\n  # config.ios_app_id\n  _IOS_APP_ID=$(getJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"ios_app_id\")\n  if [[ $_IOS_APP_ID ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GADApplicationIdentifier\")\n    _PLIST_ENTRY_TYPES+=(\"string\")\n    _PLIST_ENTRY_VALUES+=(\"$_IOS_APP_ID\")\n  fi\n\n  # config.sk_ad_network_items\n  _SK_AD_NETWORK_ITEMS=$(getJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"sk_ad_network_items\")\n  if [[ $_SK_AD_NETWORK_ITEMS ]]; then\n    _PLIST_ENTRY_KEYS+=(\"SKAdNetworkItems\")\n    _PLIST_ENTRY_TYPES+=(\"array\")\n    _PLIST_ENTRY_VALUES+=(\"\")\n\n    oldifs=$IFS\n    IFS=\"\n\"\n    array=($(echo \"$_SK_AD_NETWORK_ITEMS\"))\n    IFS=$oldifs\n    for i in \"${!array[@]}\"; do\n      _PLIST_ENTRY_KEYS+=(\"SKAdNetworkItems:$i:SKAdNetworkIdentifier\")\n      _PLIST_ENTRY_TYPES+=(\"string\")\n      _PLIST_ENTRY_VALUES+=(\"${array[i]}\")  \n    done\n  fi\n\n    # config.user_tracking_usage_description\n  _USER_TRACKING_USAGE_DESCRIPTION=$(getJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"user_tracking_usage_description\")\n  if [[ $_USER_TRACKING_USAGE_DESCRIPTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"NSUserTrackingUsageDescription\")\n    _PLIST_ENTRY_TYPES+=(\"string\")\n    _PLIST_ENTRY_VALUES+=(\"$_USER_TRACKING_USAGE_DESCRIPTION\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"google_mobile_ads_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"note:   An ${_JSON_FILE_NAME} file was not found, whilst this file is optional it is recommended to include it to auto-configure services.\"\nfi;\n\necho \"note: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nif ! [[ -f \"${_TARGET_PLIST}\" ]]; then\n  echo \"error: unable to locate Info.plist to set properties. App will crash without GADApplicationIdentifier set.\"\n  exit 1\nfi\n\nif ! [[ $_IOS_APP_ID ]]; then\n  echo \"warning:  ios_app_id key not found in react-native-google-mobile-ads key in app.json. App will crash without it. You may safely ignore this warning if you are using our Expo config plugin.\"\n  exit 0\nfi\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"note: <- ${_PROJECT_ABBREVIATION} build script finished\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		13B07F871A680F5B00A75B9A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
+				CE3A184CB802003794F45342 /* ExpoModulesProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1EE53BB5D65FB65DB49E2B5E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1967C6C66EF3313C90E6DA7F /* ShieldActionExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5D2BAA44091B9E22A3557F45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5654CEB4F9AA69BE6A8913A0 /* DeviceActivityMonitorExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65467771D85D3B515782B6F4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6F6904823E72FD8AED0F6A09 /* ContentBlockerRequestHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C64C3779DE59485D69E5596F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				57D0E8B192B47C36DC4F3146 /* ShieldConfigurationExtension.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2ECD8189C2A028A6E1D4BF18 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FREEDDeviceActivityMonitor;
+			target = 8F48A47C7FDA9C5708E6D10F /* FREEDDeviceActivityMonitor */;
+			targetProxy = 65CD6315B4FF9915A2EAC79F /* PBXContainerItemProxy */;
+		};
+		4A0AC6F993687B362BAA9D81 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FREEDShieldConfiguration;
+			target = A3307B62882D554815D49C0D /* FREEDShieldConfiguration */;
+			targetProxy = A526178BC8F60F3309CCA7E2 /* PBXContainerItemProxy */;
+		};
+		6A0F15C9E9DB3142F75D9A17 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FREEDSafariContentBlocker;
+			target = 8B9AA8A8703E8488BFC0CF2C /* FREEDSafariContentBlocker */;
+			targetProxy = F5F3C3BC2E292121B6032D15 /* PBXContainerItemProxy */;
+		};
+		F8C72DDF85798E3129F00F48 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FREEDShieldAction;
+			target = 1DC8F0F42174FDDD57D9900E /* FREEDShieldAction */;
+			targetProxy = 4A08931585D73F7F63E72894 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		13B07F941A680F5B00A75B9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4BDCA09152AA9518C4B7ED78 /* Pods-FREED.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = FREED/FREED.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_BITCODE = NO;
+				GAD_APPLICATION_IDENTIFIER = "ca-app-pub-3940256099942544~1458002511";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"FB_SONARKIT_ENABLED=1",
+				);
+				INFOPLIST_FILE = FREED/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = app.freed.recovery;
+				PRODUCT_NAME = FREED;
+				SWIFT_OBJC_BRIDGING_HEADER = "FREED/FREED-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		13B07F951A680F5B00A75B9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE74894D39D9CF78BCA3D0B8 /* Pods-FREED.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = FREED/FREED.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				GAD_APPLICATION_IDENTIFIER = "$(EXPO_PUBLIC_ADMOB_APP_ID_IOS)";
+				INFOPLIST_FILE = FREED/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
+				PRODUCT_BUNDLE_IDENTIFIER = app.freed.recovery;
+				PRODUCT_NAME = FREED;
+				SWIFT_OBJC_BRIDGING_HEADER = "FREED/FREED-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		518A7BE68668053FCCC92A10 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = FREEDShieldConfiguration/FREEDShieldConfiguration.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FREEDShieldConfiguration/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.freed.recovery.shield-configuration";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6ACBA13F576381550DBF073D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = FREEDDeviceActivityMonitor/FREEDDeviceActivityMonitor.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FREEDDeviceActivityMonitor/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.freed.recovery.device-activity-monitor";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6C90633F264346F506C3F6CA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = FREEDShieldConfiguration/FREEDShieldConfiguration.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FREEDShieldConfiguration/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.freed.recovery.shield-configuration";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		83CBBA201A601CBA00E9B192 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
+				USE_HERMES = true;
+			};
+			name = Debug;
+		};
+		83CBBA211A601CBA00E9B192 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					/usr/lib/swift,
+					"$(inherited)",
+				);
+				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_CPLUSPLUSFLAGS = "$(inherited)";
+				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
+				SDKROOT = iphoneos;
+				SWIFT_ENABLE_EXPLICIT_MODULES = NO;
+				USE_HERMES = true;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		86BEE55D027679701FB8F2FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = FREEDShieldAction/FREEDShieldAction.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FREEDShieldAction/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.freed.recovery.shield-action";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		96DCAFE68F083FAD48DB9A11 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = FREEDDeviceActivityMonitor/FREEDDeviceActivityMonitor.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FREEDDeviceActivityMonitor/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.freed.recovery.device-activity-monitor";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B7081444C198D2B38E80D749 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = FREEDShieldAction/FREEDShieldAction.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FREEDShieldAction/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.freed.recovery.shield-action";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D56DF1D2AFE8A8E0994F9CF0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = FREEDSafariContentBlocker/FREEDSafariContentBlocker.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FREEDSafariContentBlocker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "app.freed.recovery.safari-content-blocker";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FF46BD2704E2A460C8145FC1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = FREEDSafariContentBlocker/FREEDSafariContentBlocker.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FREEDSafariContentBlocker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "app.freed.recovery.safari-content-blocker";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "FREED" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				13B07F941A680F5B00A75B9A /* Debug */,
+				13B07F951A680F5B00A75B9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3B3610D38E3B3D2D84591571 /* Build configuration list for PBXNativeTarget "FREEDShieldAction" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B7081444C198D2B38E80D749 /* Release */,
+				86BEE55D027679701FB8F2FF /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		504417199462AAFD6D97A94A /* Build configuration list for PBXNativeTarget "FREEDSafariContentBlocker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D56DF1D2AFE8A8E0994F9CF0 /* Release */,
+				FF46BD2704E2A460C8145FC1 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5C99940889A274A58AA2F2E9 /* Build configuration list for PBXNativeTarget "FREEDDeviceActivityMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				96DCAFE68F083FAD48DB9A11 /* Release */,
+				6ACBA13F576381550DBF073D /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5EFFA9C6E6469F29E472C893 /* Build configuration list for PBXNativeTarget "FREEDShieldConfiguration" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6C90633F264346F506C3F6CA /* Release */,
+				518A7BE68668053FCCC92A10 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "FREED" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83CBBA201A601CBA00E9B192 /* Debug */,
+				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 83CBB9F71A601CBA00E9B192 /* Project object */;
+}

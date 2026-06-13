@@ -1,0 +1,183 @@
+{
+  "schemaVersion": "freed-admob-action-packet-v1",
+  "sanitized": true,
+  "generatedAt": "2026-06-11T05:45:29.440Z",
+  "runId": "store-ad-sandbox-current-admob-action",
+  "result": "blocked-before-admob-env-ready",
+  "releaseGate": "store-ad-sandbox-validation",
+  "currentBlocker": "android-upload-signing-blocked-by-production-admob",
+  "appIdentifiers": {
+    "appName": "FREED",
+    "bundleId": "app.freed.recovery",
+    "packageName": "app.freed.recovery"
+  },
+  "sourceFiles": [
+    {
+      "path": "store/console-launch-packet.md",
+      "hash": "sha256-57248c9caa29a4c4e1fd8483c74e2c68be0f2cb211ba6e87359375859144b16b"
+    },
+    {
+      "path": "store/play-store/data-safety.md",
+      "hash": "sha256-cdd2a2fb532e6da29f8a42ec1ea157c675ef8bf9c766a41bca06598b04113acf"
+    },
+    {
+      "path": "store/app-store/app-privacy.md",
+      "hash": "sha256-64b3845f7f9f4b6e8a0a20aad457c9006887966e1e04fa6dfe4ef564c70ec228"
+    },
+    {
+      "path": "docs/privacy-data-map.md",
+      "hash": "sha256-7fcbb0fb8d48de7e0793b6ac16f241c7f4cbec816e9162d16ceeec38aa92f474"
+    },
+    {
+      "path": "src/lib/monetization.ts",
+      "hash": "sha256-3a2ab320edae496a97038b48c8d2f29cf7f42567ddb5821697a365b97443c898"
+    },
+    {
+      "path": "src/lib/native-monetization-adapter.ts",
+      "hash": "sha256-096a608a8e57eb1c6dfefd2a2e830f17b1d51424752c1d51bc912af877b39912"
+    },
+    {
+      "path": "src/lib/native-monetization-runtime.ts",
+      "hash": "sha256-a909d2204c6991e7359508d1a6e9d321cedb62827f9505a34df7d49cdad5cc7d"
+    }
+  ],
+  "externalMutationBoundary": {
+    "browserPluginUseAllowedForConsoleSetup": true,
+    "createsExternalAdMobAppsOrAdUnits": true,
+    "actionTimeConfirmationRequired": true,
+    "confirmationToken": "confirm-admob-app-and-rewarded-unit-creation-only",
+    "confirmationPrompt": "Confirm before creating or identifying AdMob iOS/Android app records and rewarded reset ad units for FREED. This is not approval to enable production rollout or add banner/interstitial/app-open/native ad placements.",
+    "destinations": [
+      "https://apps.admob.com"
+    ],
+    "dataToTransmit": [
+      "FREED app name",
+      "app.freed.recovery",
+      "app.freed.recovery",
+      "rewarded reset challenge placement"
+    ],
+    "noProductionApprovalGranted": true
+  },
+  "hardStops": [
+    "Do not create banner, interstitial, app-open, or native ad units for v1.",
+    "Do not paste AdMob account IDs, payment IDs, ad response payloads, device identifiers, service-account JSON, or private account screenshots into evidence.",
+    "Do not enable personalized ad targeting from FREED recovery context; rewarded requests must remain non-personalized and coarse-country only.",
+    "Do not treat AdMob app/unit creation as release evidence until a real rewarded request and store/ad sandbox evidence pass."
+  ],
+  "requiredActionOrder": [
+    {
+      "stepId": "admob-ios-app",
+      "platform": "admob",
+      "requiredBefore": [
+        "ios-rewarded-reset-unit",
+        "ios-store-ad-sandbox"
+      ],
+      "action": "Create or identify the AdMob iOS app for bundle ID app.freed.recovery.",
+      "currentStatus": "missing-production-env"
+    },
+    {
+      "stepId": "admob-android-app",
+      "platform": "admob",
+      "requiredBefore": [
+        "android-rewarded-reset-unit",
+        "android-upload-signed-aab"
+      ],
+      "action": "Create or identify the AdMob Android app for package app.freed.recovery.",
+      "currentStatus": "missing-production-env"
+    },
+    {
+      "stepId": "ios-rewarded-reset-unit",
+      "platform": "admob",
+      "requiredBefore": [
+        "ios-rewarded-ad-request-proof"
+      ],
+      "action": "Create or identify exactly one iOS rewarded ad unit for the recovery reset challenge gate.",
+      "currentStatus": "missing-production-env"
+    },
+    {
+      "stepId": "android-rewarded-reset-unit",
+      "platform": "admob",
+      "requiredBefore": [
+        "android-rewarded-ad-request-proof"
+      ],
+      "action": "Create or identify exactly one Android rewarded ad unit for the recovery reset challenge gate.",
+      "currentStatus": "missing-production-env"
+    },
+    {
+      "stepId": "rewarded-request-proof",
+      "platform": "device-qa",
+      "requiredBefore": [
+        "store-ad-sandbox-validation"
+      ],
+      "action": "Fill rewarded-ad-request-report.template.json only after a real rewarded response loads with non-personalized/coarse-country request proof and no banner/interstitial/app-open/native requests.",
+      "currentStatus": "pending-manual-qa"
+    }
+  ],
+  "productionEnvKeys": [
+    {
+      "key": "EXPO_PUBLIC_ADMOB_APP_ID_IOS",
+      "expectedShape": "ca-app-pub-<16-digits>~<10-digits>",
+      "configured": false,
+      "evidenceValueStored": false
+    },
+    {
+      "key": "EXPO_PUBLIC_ADMOB_APP_ID_ANDROID",
+      "expectedShape": "ca-app-pub-<16-digits>~<10-digits>",
+      "configured": false,
+      "evidenceValueStored": false
+    },
+    {
+      "key": "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS",
+      "expectedShape": "ca-app-pub-<16-digits>/<10-digits>",
+      "configured": false,
+      "evidenceValueStored": false
+    },
+    {
+      "key": "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID",
+      "expectedShape": "ca-app-pub-<16-digits>/<10-digits>",
+      "configured": false,
+      "evidenceValueStored": false
+    },
+    {
+      "key": "EXPO_PUBLIC_ADMOB_USE_TEST_ADS",
+      "expectedValue": "false",
+      "configured": true,
+      "evidenceValueStored": false
+    }
+  ],
+  "adPlacementPolicy": {
+    "allowedFormats": [
+      "rewarded"
+    ],
+    "forbiddenFormats": [
+      "banner",
+      "interstitial",
+      "app-open",
+      "native"
+    ],
+    "placement": "free recovery reset challenge gate",
+    "premiumBehavior": "verified premium entitlement skips rewarded ads before challenge entry",
+    "failureBehavior": "ad load/show failure opens the recovery challenge without retry loops or punishment",
+    "personalization": "non-personalized request with coarse country context only"
+  },
+  "followUp": {
+    "readOnlyAdMobReadinessCommand": "npm run evidence:admob-console-browser -- --admob-console-observed --admob-ios-app-present --admob-android-app-present --ios-rewarded-unit-present --android-rewarded-unit-present --no-forbidden-formats-observed",
+    "readOnlyAdMobReadinessArtifact": "docs/validation/artifacts/admob-console-current/admob-console-readiness.json",
+    "adMobEnvPatchTemplate": "ADMOB_ENV_PATCH.template.env",
+    "preflightCommand": "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/store-ad-sandbox-current/release-env-preflight-report.json",
+    "storeAdSandboxCommand": "npm run evidence:store-ad-sandbox -- --release-env-file <production-env-file> --run-id store-ad-sandbox-current --output-dir docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture",
+    "rewardedAdRequestTemplate": "rewarded-ad-request-report.template.json",
+    "androidAabUploadSignedCommand": "npm run build:android-aab:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/android-aab-build-report.json"
+  },
+  "checks": {
+    "packetIsSanitized": true,
+    "actionTimeConfirmationRequired": true,
+    "accountIdentifiersOmitted": true,
+    "blocksProductionSubmission": true,
+    "rewardedOnlyBoundaryRetained": true,
+    "noAdNetworkSecretsStored": true,
+    "androidUploadSigningBlockerNamed": true,
+    "platformSpecificEnvRequired": true,
+    "envReady": false
+  }
+}

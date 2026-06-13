@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "freed-store-console-browser-readiness-v1",
+  "sanitized": true,
+  "generatedAt": "2026-06-11T08:29:43.933Z",
+  "observedAt": "2026-06-11T08:29:43.931Z",
+  "runId": "store-console-browser-current",
+  "result": "blocked-before-console-product-setup",
+  "readyForConsoleProductSetup": false,
+  "appIdentifiers": {
+    "appName": "FREED",
+    "bundleId": "app.freed.recovery",
+    "packageName": "app.freed.recovery"
+  },
+  "browserInspection": {
+    "readOnly": true,
+    "storeMutationPerformed": false,
+    "accountIdentifiersRedacted": true,
+    "screenshotsStored": false,
+    "personalNamesStored": false,
+    "emailsStored": false,
+    "teamIdsStored": false,
+    "accountIdsStored": false
+  },
+  "browserConnector": {
+    "status": "native-module-load-failed",
+    "connectorUnavailable": true,
+    "nativeModuleLoadFailed": true,
+    "selectedChromeProfileExtensionMissing": false,
+    "codexExtensionPresentInOtherChromeProfile": false,
+    "chromeNativeHostOk": null,
+    "diagnosticIdentifiersRedacted": true,
+    "profileNamesStored": false,
+    "profilePathsStored": false,
+    "repairHandoff": {
+      "required": true,
+      "status": "native-module-load-failed",
+      "profileIdentifiersStored": false,
+      "accountIdentifiersStored": false,
+      "steps": [
+        "Open Chrome in the signed-in profile intended for Google Play Console and App Store Connect work.",
+        "Confirm the Codex Chrome Extension is installed and enabled in that same selected Chrome profile.",
+        "If the extension is enabled in a different Chrome profile, switch the connector to that profile or install/enable the extension in the selected profile.",
+        "If the Browser or Chrome plugin native module fails before tab discovery, repair or reinstall the bundled Browser/Chrome plugin and rerun this report.",
+        "If the native host is reported invalid, reinstall or repair the Chrome plugin from the Codex plugin UI.",
+        "Rerun the read-only store console readiness command before creating or editing store products."
+      ]
+    }
+  },
+  "googlePlay": {
+    "consoleHost": "play.google.com",
+    "observedViaBrowser": false,
+    "appRecordPresent": false,
+    "appRecordStatus": "unconfirmed",
+    "packageName": "app.freed.recovery",
+    "productSetupAllowed": false,
+    "nextAction": "Create or identify the Play Console app record for FREED package app.freed.recovery."
+  },
+  "appStoreConnect": {
+    "consoleHost": "appstoreconnect.apple.com",
+    "observedViaBrowser": false,
+    "appRecordPresent": false,
+    "appRecordStatus": "unconfirmed",
+    "bundleId": "app.freed.recovery",
+    "licenseAgreementAccepted": false,
+    "licenseAgreementStatus": "unconfirmed",
+    "productSetupAllowed": false,
+    "nextAction": "Create or identify the App Store Connect app record for FREED bundle ID app.freed.recovery."
+  },
+  "checks": [
+    {
+      "id": "read-only-browser-inspection",
+      "status": "pass",
+      "detail": "Browser console check was captured without creating apps, products, payments, submissions, or external mutations.",
+      "next": "Rerun the browser check in read-only mode before using it as launch readiness evidence."
+    },
+    {
+      "id": "account-identifiers-redacted",
+      "status": "pass",
+      "detail": "Report stores console host/status signals only; account IDs, team IDs, emails, and personal names are intentionally omitted.",
+      "next": ""
+    },
+    {
+      "id": "browser-connector-usable",
+      "status": "fail",
+      "detail": "Browser connector could not be used for the read-only console check; diagnostics are stored as redacted booleans only.",
+      "next": "Install or enable the Codex Chrome Extension in the selected Chrome profile, or switch the connector to the Chrome profile where the extension is enabled, then rerun the read-only console report."
+    },
+    {
+      "id": "google-play-console-reachable",
+      "status": "fail",
+      "detail": "Google Play Console was not confirmed reachable in this report.",
+      "next": "Open Play Console with the signed-in browser and confirm the app list is visible."
+    },
+    {
+      "id": "google-play-freed-app-record-present",
+      "status": "fail",
+      "detail": "FREED app record for app.freed.recovery was not checked in Google Play Console.",
+      "next": "Create or identify the Google Play app record for FREED with package app.freed.recovery before configuring Play subscriptions or one-time products."
+    },
+    {
+      "id": "app-store-connect-reachable",
+      "status": "fail",
+      "detail": "App Store Connect apps page was not confirmed reachable in this report.",
+      "next": "Open App Store Connect with the signed-in browser and confirm the apps page is visible."
+    },
+    {
+      "id": "app-store-freed-app-record-present",
+      "status": "fail",
+      "detail": "FREED app record for app.freed.recovery was not checked in App Store Connect.",
+      "next": "Create or identify the App Store Connect app record for FREED with bundle ID app.freed.recovery before configuring in-app purchases."
+    },
+    {
+      "id": "app-store-license-agreement-accepted",
+      "status": "fail",
+      "detail": "App Store Connect license-agreement status was not checked.",
+      "next": "Have the Apple Account Holder accept the updated Apple Developer Program License Agreement before creating or submitting FREED."
+    }
+  ],
+  "passCount": 2,
+  "failCount": 6,
+  "blockers": [
+    "browser-connector-unavailable",
+    "browser-native-module-load-failed",
+    "google-play-console-not-observed",
+    "google-play-freed-app-record-unconfirmed",
+    "app-store-connect-not-observed",
+    "app-store-connect-freed-app-record-unconfirmed",
+    "app-store-connect-license-agreement-unconfirmed"
+  ],
+  "nextActions": [
+    "Repair or reinstall the bundled Browser/Chrome plugin native module, then rerun this read-only report before creating or editing store products.",
+    "Create or identify the Google Play app record for FREED package app.freed.recovery.",
+    "Have the Apple Account Holder accept any pending Apple Developer Program License Agreement.",
+    "Create or identify the App Store Connect app record for FREED bundle ID app.freed.recovery.",
+    "Only after both app records exist, configure the Core 3 yearly, monthly, and lifetime products from store/store-products.json.",
+    "Keep store products, builds, and review state in draft/internal/TestFlight until strict release evidence passes."
+  ],
+  "releaseBoundary": "Read-only browser console status only. This report does not prove store products, sandbox purchases, AdMob, legal hosted URLs, physical-device protection, or production submission readiness."
+}

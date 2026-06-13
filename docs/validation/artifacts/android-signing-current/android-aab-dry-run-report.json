@@ -1,0 +1,56 @@
+{
+  "schema": "freed-android-release-build-report-v1",
+  "artifactType": "aab",
+  "generatedAt": "2026-06-10T03:34:17.110Z",
+  "sanitized": true,
+  "requested": {
+    "arch": "arm64-v8a",
+    "artifact": "aab",
+    "buildIdleTimeoutMs": 600000,
+    "buildTimeoutMs": 2700000,
+    "engine": "auto",
+    "envFileLoaded": true,
+    "requireUploadSigning": true,
+    "skipCopy": false
+  },
+  "buildResult": "blocked-before-gradle",
+  "result": "fail",
+  "blockedStage": "pre-gradle-prerequisite",
+  "summary": {
+    "passCount": 0,
+    "failCount": 1
+  },
+  "results": [
+    {
+      "id": "android-aab-pre-gradle-prerequisites",
+      "status": "FAIL",
+      "detail": "Android upload signing requires a production Android AdMob app ID. Set EXPO_PUBLIC_ADMOB_APP_ID_ANDROID or EXPO_PUBLIC_ADMOB_APP_ID to a non-sample ca-app-pub-0000000000000000~0000000000 value."
+    }
+  ],
+  "signing": {
+    "missingInputs": [],
+    "mode": "upload-signing",
+    "playConsoleReady": true,
+    "required": true,
+    "storeFileConfigured": true,
+    "storeFileExists": true,
+    "uploadKeystore": {
+      "certificateDn": "CN=FREED Upload, OU=Release, O=FREED, L=Kolkata, ST=West Bengal, C=IN",
+      "certificateSha256Digest": "b75a9c887e138db8c4d5568149d5009d078fee481ec37537349abb36c9cd6a11",
+      "checked": true,
+      "debugSigned": false
+    }
+  },
+  "releaseBoundary": {
+    "gradleInvoked": false,
+    "releaseEnvFileLoaded": true,
+    "releaseEnvFileSource": "~/.freed/android-upload/freed-upload.env merged with process.env",
+    "releaseEnvSecretValuesOmitted": true,
+    "uploadSignedBuildProduced": false,
+    "playUploadReady": false,
+    "localInstallArtifactProduced": false,
+    "reason": "Android upload signing requires a production Android AdMob app ID. Set EXPO_PUBLIC_ADMOB_APP_ID_ANDROID or EXPO_PUBLIC_ADMOB_APP_ID to a non-sample ca-app-pub-0000000000000000~0000000000 value."
+  },
+  "apk": null,
+  "aab": null
+}

@@ -1,0 +1,270 @@
+{
+  "schemaVersion": "freed-store-app-record-action-packet-v1",
+  "sanitized": true,
+  "generatedAt": "2026-06-11T05:45:29.440Z",
+  "runId": "store-ad-sandbox-current-store-app-record-action",
+  "result": "blocked-before-hosted-legal-urls",
+  "releaseGate": "store-ad-sandbox-validation",
+  "appIdentifiers": {
+    "appName": "FREED",
+    "bundleId": "app.freed.recovery",
+    "packageName": "app.freed.recovery",
+    "appStoreSku": "app.freed.recovery"
+  },
+  "browserReadiness": {
+    "browserReportPath": "docs/validation/artifacts/store-console-browser-current/store-console-browser-readiness.json",
+    "browserReportHash": "sha256-646db056da1f73f6a16e5a16fad4b2f4b9c5918a67cf08e55157187a86ae06ab",
+    "browserReportSchemaVersion": "freed-store-console-browser-readiness-v1",
+    "browserReportRunId": "store-console-browser-current",
+    "result": "blocked-before-console-product-setup",
+    "readyForConsoleProductSetup": false,
+    "readOnlyBrowserInspection": true,
+    "storeMutationPerformed": false,
+    "accountIdentifiersRedacted": true,
+    "blockers": [
+      "browser-connector-unavailable",
+      "browser-native-module-load-failed",
+      "google-play-console-not-observed",
+      "google-play-freed-app-record-unconfirmed",
+      "app-store-connect-not-observed",
+      "app-store-connect-freed-app-record-unconfirmed",
+      "app-store-connect-license-agreement-unconfirmed"
+    ],
+    "googlePlay": {
+      "observedViaBrowser": false,
+      "appRecordStatus": "unconfirmed",
+      "productSetupAllowed": false
+    },
+    "appStoreConnect": {
+      "observedViaBrowser": false,
+      "appRecordStatus": "unconfirmed",
+      "licenseAgreementStatus": "unconfirmed",
+      "productSetupAllowed": false
+    }
+  },
+  "hostedLegalReadiness": {
+    "hostedReportPath": "docs/validation/artifacts/store-legal-hosted-current/store-legal-hosted-url-audit.json",
+    "hostedReportHash": "sha256-beb04c914899d5446402aeb1e53a659f7d7e2ec0fba1ec3f9d98301e4b696cd3",
+    "hostedReportSchemaVersion": "freed-store-legal-hosted-url-audit-v1",
+    "result": "fail",
+    "hostedLegalUrlsVerified": false,
+    "failCount": 3,
+    "publicUrls": {
+      "privacy": "https://freedrecovery.app/privacy",
+      "support": "https://freedrecovery.app/support",
+      "accountDeletion": "https://freedrecovery.app/account-deletion"
+    },
+    "failedChecks": [
+      "hosted-fetch-privacy",
+      "hosted-fetch-support",
+      "hosted-fetch-account-deletion"
+    ],
+    "urlEntryAllowed": false,
+    "next": "Deploy and verify /privacy, /support, and /account-deletion before entering legal URLs in Play Console or App Store Connect."
+  },
+  "sourceFiles": [
+    {
+      "path": "store/console-launch-packet.md",
+      "hash": "sha256-57248c9caa29a4c4e1fd8483c74e2c68be0f2cb211ba6e87359375859144b16b"
+    },
+    {
+      "path": "store/release-submission-checklist.md",
+      "hash": "sha256-30efcda95058ca09ab2a7b41ab7f5ba8e3bdb850a60725c94ade53b0b8f92362"
+    },
+    {
+      "path": "store/store-products.json",
+      "hash": "sha256-66323a77ec71bc6aae51dd3c62e6d8393686123804f9987e5f86cac1e8fe8b84"
+    },
+    {
+      "path": "store/app-store/metadata.md",
+      "hash": "sha256-2fc7ccf2e3c227f385bdcb3005a7d94a29f9f5caf0e901f5772f5db2b1da5954"
+    },
+    {
+      "path": "store/play-store/metadata.md",
+      "hash": "sha256-694664f55ec4c76779f73f895f75091718790fa4499023a7d80a11fa2e8ab12f"
+    },
+    {
+      "path": "store/play-store/data-safety.md",
+      "hash": "sha256-cdd2a2fb532e6da29f8a42ec1ea157c675ef8bf9c766a41bca06598b04113acf"
+    },
+    {
+      "path": "store/app-store/app-privacy.md",
+      "hash": "sha256-64b3845f7f9f4b6e8a0a20aad457c9006887966e1e04fa6dfe4ef564c70ec228"
+    },
+    {
+      "path": "store/screenshots/listing-screenshot-plan.md",
+      "hash": "sha256-697adc5a9495a0483f7666fe00961641619ad8414852a8ff6a74f10b9ba0d0e9"
+    },
+    {
+      "path": "docs/privacy-data-map.md",
+      "hash": "sha256-7fcbb0fb8d48de7e0793b6ac16f241c7f4cbec816e9162d16ceeec38aa92f474"
+    },
+    {
+      "path": "docs/store-policy/android-accessibility-and-fgs-disclosure.md",
+      "hash": "sha256-6abf7383ac1d7c154232cb68a912232fc40d56ad7c2af506578573f41c5e39db"
+    },
+    {
+      "path": "docs/store-policy/ios-screen-time-safari-dns-review.md",
+      "hash": "sha256-33918fc56d99db12105468effc8f30b486172ee9e273d78e3371dddbedae2cca"
+    }
+  ],
+  "externalMutationBoundary": {
+    "browserPluginUseAllowedForReadOnlyInspection": true,
+    "createsExternalStoreRecords": true,
+    "actionTimeConfirmationRequired": true,
+    "confirmationToken": "confirm-draft-store-app-record-creation-only",
+    "confirmationPrompt": "Confirm before creating draft Google Play Console and/or App Store Connect app records for FREED using the fields in this packet. This is not approval to submit for review, publish, roll out, or create paid products.",
+    "destinations": [
+      "https://play.google.com/console",
+      "https://appstoreconnect.apple.com"
+    ],
+    "legalUrlEntryAllowed": false,
+    "hostedLegalAuditRequiredBeforeUrlEntry": true,
+    "dataToTransmit": [
+      "FREED app name",
+      "app.freed.recovery",
+      "app.freed.recovery",
+      "Health & Fitness category",
+      "https://freedrecovery.app/privacy after hosted legal audit passes",
+      "https://freedrecovery.app/support after hosted legal audit passes",
+      "https://freedrecovery.app/account-deletion after hosted legal audit passes",
+      "support@freedrecovery.app"
+    ],
+    "noProductionApprovalGranted": true
+  },
+  "hardStops": [
+    "Do not enter privacy/support/account-deletion URLs into Play Console or App Store Connect until the hosted legal URL audit passes for every public route.",
+    "Do not click Submit for Review, Send for Review, Publish, Promote to production, Start rollout, or equivalent production actions.",
+    "Do not create subscriptions, one-time products, AdMob apps, or production releases until the read-only Browser readiness report proves both app records exist and the Apple agreement is accepted.",
+    "Do not proceed inside App Store Connect while the Apple Developer Program License Agreement is pending unless the Account Holder is the person accepting that agreement.",
+    "Do not paste account emails, team IDs, developer IDs, service-account JSON, private keys, purchase receipts, or raw screenshots into evidence."
+  ],
+  "requiredActionOrder": [
+    {
+      "stepId": "hosted-legal-url-validation",
+      "platform": "legal-web",
+      "requiredBefore": [
+        "google-play-app-record-url-fields",
+        "app-store-connect-app-record-url-fields"
+      ],
+      "operator": "Static hosting/DNS owner",
+      "action": "Deploy and verify https://freedrecovery.app/privacy, /support, and /account-deletion before entering legal URLs in store console fields.",
+      "currentStatus": "fail"
+    },
+    {
+      "stepId": "apple-license-agreement",
+      "platform": "app-store-connect",
+      "requiredBefore": [
+        "app-store-connect-app-record",
+        "app-store-connect-iap-setup"
+      ],
+      "operator": "Apple Account Holder",
+      "action": "Accept the pending Apple Developer Program License Agreement if App Store Connect still shows that blocker.",
+      "currentStatus": "unconfirmed"
+    },
+    {
+      "stepId": "google-play-app-record",
+      "platform": "google-play-console",
+      "requiredBefore": [
+        "google-play-product-setup",
+        "android-internal-release"
+      ],
+      "operator": "Google Play Console admin",
+      "action": "Create or identify the FREED draft app record for package app.freed.recovery.",
+      "currentStatus": "unconfirmed"
+    },
+    {
+      "stepId": "app-store-connect-app-record",
+      "platform": "app-store-connect",
+      "requiredBefore": [
+        "app-store-connect-iap-setup",
+        "testflight-review"
+      ],
+      "operator": "App Store Connect admin after agreement acceptance",
+      "action": "Create or identify the FREED app record for bundle ID app.freed.recovery.",
+      "currentStatus": "unconfirmed"
+    },
+    {
+      "stepId": "read-only-readiness-recheck",
+      "platform": "browser-evidence",
+      "requiredBefore": [
+        "core-3-product-setup"
+      ],
+      "operator": "Codex Browser read-only inspection",
+      "action": "Rerun npm run evidence:store-console-browser with both app records present and agreement accepted, with no store mutation performed during that read-only check.",
+      "currentStatus": "blocked-before-console-product-setup"
+    }
+  ],
+  "googlePlayAppRecordPayload": {
+    "destination": "Google Play Console > All apps > Create app",
+    "permittedAction": "Create or identify a draft app record only.",
+    "legalUrlEntryAllowed": false,
+    "prerequisites": [
+      "Hosted legal URL audit passes for privacy/support/account-deletion before entering URL fields."
+    ],
+    "fields": {
+      "appName": "FREED",
+      "defaultLanguage": "English (United States)",
+      "appOrGame": "App",
+      "freeOrPaid": "Free download with in-app purchases",
+      "packageName": "app.freed.recovery",
+      "category": "Health & Fitness",
+      "targetAudience": "Adults/recovery audience; not child-directed and not submitted to Families.",
+      "appAccess": "No restricted login required for reviewer access to core app surfaces.",
+      "privacyPolicyUrl": "https://freedrecovery.app/privacy",
+      "supportEmail": "support@freedrecovery.app",
+      "accountDeletionUrl": "https://freedrecovery.app/account-deletion"
+    },
+    "declarationsToPrepareAfterRecordExists": [
+      "Ads present because free users may see rewarded reset ads.",
+      "AccessibilityService declaration from docs/store-policy/android-accessibility-and-fgs-disclosure.md.",
+      "VpnService / DNS Guard disclosure as DNS-only adult-domain filtering, not full-traffic proxying.",
+      "Data Safety answers from store/play-store/data-safety.md and docs/privacy-data-map.md."
+    ],
+    "stopAfter": "App record exists in draft/internal-safe state; do not configure products until readiness recheck passes."
+  },
+  "appStoreConnectAppRecordPayload": {
+    "destination": "App Store Connect > Apps > New App",
+    "permittedAction": "Create or identify an app record only after the Apple agreement blocker is cleared.",
+    "legalUrlEntryAllowed": false,
+    "prerequisites": [
+      "Hosted legal URL audit passes for privacy/support/account-deletion before entering URL fields.",
+      "Apple Developer Program License Agreement accepted by Account Holder.",
+      "Bundle ID app.freed.recovery exists in the Apple developer account with required production capabilities/entitlements."
+    ],
+    "fields": {
+      "platform": "iOS",
+      "name": "FREED",
+      "primaryLanguage": "English (U.S.)",
+      "bundleId": "app.freed.recovery",
+      "sku": "app.freed.recovery",
+      "category": "Health & Fitness",
+      "privacyPolicyUrl": "https://freedrecovery.app/privacy",
+      "supportUrl": "https://freedrecovery.app/support",
+      "supportEmail": "support@freedrecovery.app"
+    },
+    "declarationsToPrepareAfterRecordExists": [
+      "App Privacy answers from store/app-store/app-privacy.md and docs/privacy-data-map.md.",
+      "Screen Time, FamilyControls, ManagedSettings, DeviceActivity, and Safari Content Blocker review notes from docs/store-policy/ios-screen-time-safari-dns-review.md.",
+      "In-app purchase group freed_premium only after app-record readiness recheck passes."
+    ],
+    "stopAfter": "App record exists in draft/TestFlight-safe state; do not create IAPs until readiness recheck passes."
+  },
+  "afterAppRecordsExist": {
+    "readOnlyBrowserReadinessCommand": "npm run evidence:store-console-browser -- --play-console-observed --play-freed-app-present --app-store-connect-observed --app-store-freed-app-present --app-store-agreement-accepted",
+    "regenerateSandboxPacketCommand": "npm run evidence:store-ad-sandbox -- --release-env-file <production-env-file> --run-id store-ad-sandbox-current --output-dir docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture",
+    "nextEvidenceArtifact": "store-console-product-setup-report.template.json"
+  },
+  "checks": {
+    "packetIsSanitized": true,
+    "actionTimeConfirmationRequired": true,
+    "accountIdentifiersOmitted": true,
+    "blocksProductionSubmission": true,
+    "blocksLegalUrlEntryUntilHostedLegalPasses": true,
+    "blocksProductSetupUntilReadinessPasses": true,
+    "core3OnlyBoundaryRetained": true,
+    "hostedLegalUrlsVerified": false,
+    "legalUrlEntryAllowed": false,
+    "currentReadinessBlocksIfAppRecordsMissing": true
+  }
+}

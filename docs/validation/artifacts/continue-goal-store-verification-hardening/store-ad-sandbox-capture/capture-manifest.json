@@ -1,0 +1,221 @@
+{
+  "commandHandoff": {
+    "purchaseSmokeCommand": "npm run smoke:purchase-verification",
+    "releasePreflightCommand": "npm run preflight:release-env"
+  },
+  "configured": {
+    "adRequestCountryCode": "",
+    "androidLaunchProductIds": {
+      "monthly": "freed_premium_monthly",
+      "yearly": "freed_premium_yearly",
+      "lifetime": "freed_premium_lifetime"
+    },
+    "androidPostLaunchProductIds": {
+      "family": "freed_family_yearly",
+      "accountability": "freed_accountability_monthly",
+      "ai-coach": "freed_ai_coach_monthly"
+    },
+    "androidProductId": "freed_premium_yearly",
+    "entitlementId": "",
+    "iosLaunchProductIds": {
+      "monthly": "freed_premium_monthly",
+      "yearly": "freed_premium_yearly",
+      "lifetime": "freed_premium_lifetime"
+    },
+    "iosPostLaunchProductIds": {
+      "family": "freed_family_yearly",
+      "accountability": "freed_accountability_monthly",
+      "ai-coach": "freed_ai_coach_monthly"
+    },
+    "iosProductId": "freed_premium_yearly",
+    "purchaseVerifyEndpoint": "",
+    "rewardedAdUnitId": "",
+    "storeProvider": "native-iap"
+  },
+  "forbiddenSensitiveFields": [
+    "iosReceipt",
+    "appStoreReceipt",
+    "appleReceipt",
+    "rawReceipt",
+    "receiptData",
+    "purchaseReceipt",
+    "rawPurchaseReceipt",
+    "customerId",
+    "customerIdentifier",
+    "appUserId",
+    "adNetworkSecret",
+    "adMobAppSecret",
+    "appStorePrivateKey",
+    "appStoreServerApiJwt",
+    "googlePlayServiceAccountJson",
+    "googlePlayAccessToken",
+    "androidPurchaseToken"
+  ],
+  "generatedAt": "2026-06-07T04:54:56.059Z",
+  "manualVerificationRequired": true,
+  "matrixRows": [
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "store.releasePreflightArtifact",
+      "metricFields": "store.releasePreflightCommand, store.releasePreflightRunId, checks.releaseEnvPreflightPassed",
+      "notes": "",
+      "runId": "continue-goal-store-verification-hardening-release-env-preflight",
+      "status": "pending-manual-qa",
+      "summary": "Run npm run preflight:release-env and attach the passing command log."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "store.purchaseVerificationArtifact",
+      "metricFields": "store.purchaseSmokeCommand, store.purchaseVerificationPassCount, store.purchaseVerificationFailedCount",
+      "notes": "",
+      "runId": "continue-goal-store-verification-hardening-purchase-verification-smoke",
+      "status": "pending-manual-qa",
+      "summary": "Run npm run smoke:purchase-verification with --report docs/validation/artifacts/continue-goal-store-verification-hardening/purchase-verification-smoke-report.json against the deployed purchase endpoint, attach that local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof, Core 3 monthly/yearly/lifetime fake-known PASS rows, matching launchProductIdsChecked as store.purchaseVerificationArtifact and as each launch matrix purchaseVerificationArtifact, and keep store.purchaseSmokeCommand in the sanctioned command shape."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "store.restoreVerificationArtifact",
+      "metricFields": "store.restoreVerificationReportId, store.restoreVerificationPassCount, store.restoreVerificationFailedCount",
+      "notes": "",
+      "runId": "continue-goal-store-verification-hardening-restore-verification-smoke",
+      "status": "pending-manual-qa",
+      "summary": "Attach a local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof, Core 3 monthly/yearly/lifetime fake-known PASS rows, matching launchProductIdsChecked, and the same required PASS result rows as store.restoreVerificationArtifact plus each launch matrix restoreVerificationArtifact, proving restore entitlement verification still uses the deployed fail-closed purchase endpoint without raw receipt or token echo."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "store.iosPurchaseArtifact",
+      "metricFields": "store.iosPurchaseTransactionId",
+      "notes": "",
+      "runId": "continue-goal-store-verification-hardening-ios-purchase-sandbox",
+      "status": "pending-manual-qa",
+      "summary": "Record an App Store sandbox purchase with a numeric StoreKit transaction ID."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "store.iosRestoreArtifact",
+      "metricFields": "store.iosRestoreTransactionId",
+      "notes": "",
+      "runId": "continue-goal-store-verification-hardening-ios-restore-sandbox",
+      "status": "pending-manual-qa",
+      "summary": "Record App Store restore and server entitlement verification."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "store.androidPurchaseArtifact",
+      "metricFields": "store.androidOrderId, store.androidPurchaseTokenHash",
+      "notes": "",
+      "runId": "continue-goal-store-verification-hardening-android-purchase-sandbox",
+      "status": "pending-manual-qa",
+      "summary": "Record Play Billing test purchase with GPA order ID and a sha256 hash label of the token."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "store.androidRestoreArtifact",
+      "metricFields": "store.restoreVerificationPassCount, store.restoreVerificationFailedCount",
+      "notes": "",
+      "runId": "continue-goal-store-verification-hardening-android-restore-sandbox",
+      "status": "pending-manual-qa",
+      "summary": "Record Play Billing restore and verified entitlement state."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "store.paywallLaunchScopeArtifact",
+      "metricFields": "store.paywallScopeRunId, checks.paywallCore3OnlyShown",
+      "notes": "",
+      "runId": "continue-goal-store-verification-hardening-paywall-launch-scope",
+      "status": "pending-manual-qa",
+      "summary": "Capture the submitted paywall UI and attach a local freed-paywall-launch-scope-report-v1 JSON proof that Core 3 monthly/yearly/lifetime are the only visible purchase products, post-launch family/accountability/AI-coach products are hidden, yearly is the value anchor, restore is visible, and purchase buttons are enabled."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "store.consoleProductSetupArtifact",
+      "metricFields": "store.consoleProductSetupRunId, checks.storeConsoleProductsConfigured",
+      "notes": "",
+      "runId": "continue-goal-store-verification-hardening-store-console-product-setup",
+      "status": "pending-manual-qa",
+      "summary": "Capture App Store Connect and Play Console product setup proof for Core 3 only: monthly/yearly subscriptions, lifetime non-consumable/one-time product, attached screenshots/localizations, server-verification metadata, future SKUs inactive, and draft/internal/TestFlight-only status until evidence passes."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "store.rewardedAdRequestArtifact",
+      "metricFields": "store.rewardedAdUnitId, store.rewardedAdFormat, store.rewardedAdResponseId, store.adRequestNonPersonalized, store.noInterstitialOrBannerAdRequestsConfirmed, store.adRequestCountryCode",
+      "notes": "",
+      "runId": "continue-goal-store-verification-hardening-rewarded-ad-request",
+      "status": "pending-manual-qa",
+      "summary": "Capture a loaded rewarded ad response using non-personalized settings and prove no banner, interstitial, app-open, or native ad request path was used."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "store.freeRewardedInterventionArtifact",
+      "metricFields": "store.freePostAdChallengeLatencyMs",
+      "notes": "",
+      "runId": "continue-goal-store-verification-hardening-free-rewarded-intervention",
+      "status": "pending-manual-qa",
+      "summary": "Record the free streak-risk intervention, rewarded ad gate, and generated challenge within 5000 ms."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "store.rewardedAdCompletionArtifact",
+      "metricFields": "checks.rewardedAdCompletionGrantsChallenge",
+      "notes": "",
+      "runId": "continue-goal-store-verification-hardening-rewarded-ad-completion",
+      "status": "pending-manual-qa",
+      "summary": "Record rewarded completion granting challenge access."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "store.adFailureFallbackArtifact",
+      "metricFields": "checks.adFailureFallbackUnlocksChallenge",
+      "notes": "",
+      "runId": "continue-goal-store-verification-hardening-ad-failure-fallback",
+      "status": "pending-manual-qa",
+      "summary": "Record ad load/show failure still opening a recovery challenge without punishing the user."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "store.premiumNoAdInterventionArtifact",
+      "metricFields": "store.premiumNoAdLatencyMs, store.premiumNoRewardedAdRequested",
+      "notes": "",
+      "runId": "continue-goal-store-verification-hardening-premium-no-ad-intervention",
+      "status": "pending-manual-qa",
+      "summary": "Record verified premium entitlement skipping rewarded ad requests and starting challenge mode within 3000 ms."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "store.privacyDisclosureArtifact",
+      "metricFields": "store.privacyDisclosureReviewId",
+      "notes": "",
+      "runId": "continue-goal-store-verification-hardening-store-privacy-review",
+      "status": "pending-manual-qa",
+      "summary": "Attach App Store / Play privacy disclosure review proof for billing, purchase verification, and rewarded ads."
+    }
+  ],
+  "releaseGate": "store-ad-sandbox-validation",
+  "releaseEnvFileLoaded": false,
+  "result": "capture-plan-created",
+  "runId": "continue-goal-store-verification-hardening",
+  "sanitizedOnly": true,
+  "schema": "freed-store-ad-sandbox-capture-v1",
+  "evidenceFillTemplateArtifact": "docs/validation/artifacts/continue-goal-store-verification-hardening/store-ad-sandbox-capture/store-ad-sandbox-evidence-fill-template.json",
+  "rewardedAdRequestTemplateArtifact": "docs/validation/artifacts/continue-goal-store-verification-hardening/store-ad-sandbox-capture/rewarded-ad-request-report.template.json",
+  "paywallLaunchScopeTemplateArtifact": "docs/validation/artifacts/continue-goal-store-verification-hardening/store-ad-sandbox-capture/paywall-launch-scope-report.template.json",
+  "consoleProductSetupTemplateArtifact": "docs/validation/artifacts/continue-goal-store-verification-hardening/store-ad-sandbox-capture/store-console-product-setup-report.template.json",
+  "interventionFlowTemplateArtifact": "docs/validation/artifacts/continue-goal-store-verification-hardening/store-ad-sandbox-capture/store-intervention-flow-report.templates.json",
+  "privacyDisclosureTemplateArtifact": "docs/validation/artifacts/continue-goal-store-verification-hardening/store-ad-sandbox-capture/store-privacy-disclosure-report.template.json",
+  "matrixArtifact": "docs/validation/artifacts/continue-goal-store-verification-hardening/store-ad-sandbox-capture/store-ad-sandbox-matrix.csv"
+}

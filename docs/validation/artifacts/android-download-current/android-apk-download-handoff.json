@@ -1,0 +1,119 @@
+{
+  "schemaVersion": "freed-android-apk-download-handoff-v1",
+  "generatedAt": "2026-06-11T09:08:23.475Z",
+  "sanitized": true,
+  "runId": "android-download-current",
+  "apk": {
+    "filename": "FREED-release-universal.apk",
+    "path": "docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal.apk",
+    "sha256": "d8ce331f89ee0de6c121117ac8bbe240ac619895dc8fbb0f7c3b10f806017f05",
+    "sizeBytes": 147152008,
+    "sizeLabel": "140.3 MB"
+  },
+  "currentBuildStatus": {
+    "apkModifiedAt": "2026-06-10T11:30:05.826Z",
+    "buildResult": "failed-during-gradle",
+    "candidateArtifacts": [
+      "docs/validation/artifacts/android-current-apk-toolchain-retry/android-apk-build-report.json",
+      "docs/validation/artifacts/android-current-apk-retry/android-apk-build-report.json",
+      "docs/validation/artifacts/continue-goal-android-current-artifacts/android-qa-universal-apk-build-failure-report.json",
+      "docs/validation/artifacts/continue-goal-android-current-artifacts/android-qa-arm64-apk-alt-toolchain-build-report.json"
+    ],
+    "cmakeExit137": true,
+    "failedStage": "gradle-build",
+    "failedTask": ":app:configureCMakeRelWithDebInfo[arm64-v8a]",
+    "hostMemoryConstrainedLikely": true,
+    "hostTotalMemoryMb": 8192,
+    "reportArtifact": "docs/validation/artifacts/android-current-apk-toolchain-retry/android-apk-build-report.json",
+    "reportExists": true,
+    "reportGeneratedAt": "2026-06-11T09:06:24.368Z",
+    "newArchForcedByReactNative": false,
+    "newArchRequested": true,
+    "result": "stale-apk-newer-rebuild-failed",
+    "staleDownloadWarning": true,
+    "summary": "A newer current Android rebuild failed after this APK was produced. Use this download only for legacy side-load QA, not as proof of the latest native code."
+  },
+  "apkUseBoundary": {
+    "classification": "Side-load QA APK",
+    "installReadyLabel": "Downloadable for local Android side-load QA",
+    "localUse": "Use this artifact to prove the current FREED build can be downloaded, installed, launched, and routed through Android setup on a physical QA phone.",
+    "storeReadyLabel": "Not Play upload evidence",
+    "blockedUse": "Do not submit this artifact to Google Play. Store upload still requires an upload-signed AAB/APK, production AdMob app id, release env preflight, and store sandbox evidence.",
+    "uploadSignedArtifactCommand": "npm run build:android-aab:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/android-aab-build-report.json",
+    "localQaDownloadReady": true,
+    "sameDeviceEvidenceRequired": true,
+    "storeSubmissionReady": false
+  },
+  "server": {
+    "host": "0.0.0.0",
+    "port": 8788,
+    "lanUrls": [
+      "http://127.0.0.1:8788/",
+      "http://192.168.29.23:8788/"
+    ],
+    "downloadPath": "/download/FREED-release-universal.apk",
+    "metadataPath": "/metadata.json",
+    "qrPath": "/qr.svg",
+    "qrTargetUrl": "http://192.168.29.23:8788/"
+  },
+  "report": "docs/validation/artifacts/android-download-current/android-apk-download-handoff.json",
+  "qaHandoff": {
+    "deviceDiscoveryCommand": "npm run evidence:android-devices -- --run-id android-device-discovery-current --output-dir docs/validation/artifacts/android-device-discovery-current",
+    "deviceDiscoveryArtifact": "docs/validation/artifacts/android-device-discovery-current/android-device-discovery.json",
+    "deviceDiscoveryOutputDir": "docs/validation/artifacts/android-device-discovery-current",
+    "downloadServerCommand": "npm run qa:android-download -- --apk docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal.apk --host 0.0.0.0 --port 8788 --run-id android-download-current",
+    "liveCheckArtifact": "docs/validation/artifacts/android-download-current/android-apk-download-live-check.json",
+    "liveCheckCommand": "npm run qa:android-download:live-check -- --handoff docs/validation/artifacts/android-download-current/android-apk-download-handoff.json --report docs/validation/artifacts/android-download-current/android-apk-download-live-check.json",
+    "ensureArtifact": "docs/validation/artifacts/android-download-current/android-apk-download-ensure.json",
+    "ensureCommand": "npm run qa:android-download:ensure -- --handoff docs/validation/artifacts/android-download-current/android-apk-download-handoff.json --live-check-report docs/validation/artifacts/android-download-current/android-apk-download-live-check.json --report docs/validation/artifacts/android-download-current/android-apk-download-ensure.json --start-if-needed",
+    "installQaPlanArtifact": "docs/validation/artifacts/android-download-current/android-install-qa/android-install-qa-plan.json",
+    "installQaPlanCommand": "npm run qa:android-install -- --plan-only --apk docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal.apk --run-id android-download-current --output-dir docs/validation/artifacts/android-download-current/android-install-qa --report docs/validation/artifacts/android-download-current/android-install-qa/android-install-qa-plan.json",
+    "installQaCommand": "npm run qa:android-install -- --apk docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal.apk --run-id android-download-current --output-dir docs/validation/artifacts/android-download-current/android-install-qa",
+    "permissionWizardArtifact": "docs/validation/artifacts/android-download-current/android-real-browser-capture/android-permission-wizard-report.json",
+    "permissionWizardCommand": "npm run evidence:permission-wizard -- --platform android --run-id android-download-current-permission-wizard --report docs/validation/artifacts/android-download-current/android-real-browser-capture/android-permission-wizard-report.json --test-protection-passed --confirm-common-flow --confirm-android-flow --android-selected-app-count <count>",
+    "protectionEvidenceCommand": "npm run evidence:android-real-browser -- --device <serial> --adult-url <real-adult-url> --permission-proof --native-status-proof --dns-guard-proof --run-id android-download-current --output-dir docs/validation/artifacts/android-download-current/android-real-browser-capture",
+    "installQaOutputDir": "docs/validation/artifacts/android-download-current/android-install-qa",
+    "browserEvidenceOutputDir": "docs/validation/artifacts/android-download-current/android-real-browser-capture",
+    "evidenceBoundary": "This download handoff proves only the selected APK, hash, local download route, and follow-up commands. It does not prove install, permission consent, browser blocking, or Play readiness."
+  },
+  "releaseBoundary": "Local Android side-load QA only. This page does not produce Play Console artifacts, upload signing proof, or physical-device release evidence.",
+  "protectionFlowOrder": [
+    "adult feed sync",
+    "DNS Guard / VPN consent",
+    "Usage Access",
+    "Accessibility consent",
+    "blocked-app package config",
+    "activation test"
+  ],
+  "sameDeviceEvidenceSequence": [
+    {
+      "step": "Install QA report",
+      "proof": "Run install QA against this exact APK SHA-256 on the physical Android device, proving package install, launch/top-activity, screenshot/UI dump, and no crash loop."
+    },
+    {
+      "step": "Permission wizard",
+      "proof": "Run the Android permission wizard report after install, confirming the same setup order and the selected blocked-app count before activation is promoted."
+    },
+    {
+      "step": "Real-browser evidence",
+      "proof": "Run Android real-browser evidence on the same device with permission, native-status, and DNS Guard proof so adult-block and normal-allow checks share one device context."
+    }
+  ],
+  "recoveryNotificationPrompt": {
+    "title": "Recovery Notifications",
+    "text": "On Android 13+, FREED asks for the runtime notification prompt in-app first, then opens Android app notification settings only if the permission remains denied. This is optional for activation but required for DNS Guard visible recovery-handoff evidence.",
+    "reportArtifact": "docs/validation/artifacts/android-download-current/android-real-browser-capture/android-notification-permission-report.json",
+    "evidenceFields": [
+      "android.notificationPermissionArtifact",
+      "android.notificationPermissionRequired=true",
+      "android.notificationPermissionGranted=true",
+      "android.notificationRuntimePromptShown=true",
+      "android.notificationSettingsFallbackOpenedIfDenied=true"
+    ]
+  },
+  "companionArtifacts": {
+    "handoffMarkdown": "docs/validation/artifacts/android-download-current/ANDROID_APK_DOWNLOAD_HANDOFF.md",
+    "physicalQaChecklist": "docs/validation/artifacts/android-download-current/ANDROID_PHYSICAL_QA_CHECKLIST.md",
+    "qrSvg": "docs/validation/artifacts/android-download-current/ANDROID_APK_DOWNLOAD_QR.svg"
+  }
+}

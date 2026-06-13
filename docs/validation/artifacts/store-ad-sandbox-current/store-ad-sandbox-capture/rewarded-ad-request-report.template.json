@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "freed-rewarded-ad-request-report-v1",
+  "templateStatus": "pending-manual-qa",
+  "sanitized": true,
+  "result": "pending-manual-qa",
+  "rewardedAdRequestProofUsableForManualEvidence": false,
+  "adMobAppIdAndroid": "",
+  "adMobAppIdIos": "",
+  "rewardedAdUnitId": "",
+  "rewardedAdUnitIdAndroid": "",
+  "rewardedAdUnitIdIos": "",
+  "adFormat": "rewarded",
+  "rewardedAdResponseId": "",
+  "adRequestNonPersonalized": false,
+  "adRequestCountryCode": "",
+  "noInterstitialOrBannerAdRequestsConfirmed": false,
+  "suggestedEvidenceFields": [
+    "store.rewardedAdRequestArtifact"
+  ],
+  "checks": {
+    "rewardedOnlyFormat": false,
+    "realAdMobRewardedUnitUsed": false,
+    "realLoadedAdResponseIdCaptured": false,
+    "nonPersonalizedRequest": false,
+    "coarseCountryOnly": false,
+    "noInterstitialRequested": false,
+    "noBannerRequested": false,
+    "noAppOpenRequested": false,
+    "noNativeAdRequested": false,
+    "noAdNetworkSecretsStored": false,
+    "noPreciseLocationStored": false,
+    "noRawDeviceIdentifiersStored": false
+  }
+}

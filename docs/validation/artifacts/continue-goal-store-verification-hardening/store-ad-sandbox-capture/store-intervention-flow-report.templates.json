@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "freed-store-intervention-flow-report-templates-v1",
+  "sanitized": true,
+  "templateStatus": "pending-manual-qa",
+  "artifactSchemaVersion": "freed-store-intervention-flow-report-v1",
+  "templates": {
+    "store.freeRewardedInterventionArtifact": {
+      "schemaVersion": "freed-store-intervention-flow-report-v1",
+      "templateStatus": "pending-manual-qa",
+      "sanitized": true,
+      "result": "pending-manual-qa",
+      "interventionFlowProofUsableForManualEvidence": false,
+      "flowType": "free-rewarded-intervention",
+      "runId": "continue-goal-store-verification-hardening-free-rewarded-intervention",
+      "suggestedEvidenceFields": [
+        "store.freeRewardedInterventionArtifact"
+      ],
+      "checks": {
+        "streakRiskContextShown": false,
+        "freePlanStateShown": false,
+        "rewardedAdBeforeChallenge": false,
+        "challengeGenerated": false,
+        "latencyWithinLimit": false,
+        "supportiveCopyShown": false,
+        "noPunitiveLanguage": false,
+        "noPremiumEntitlementBypass": false,
+        "noRawAdPayloadStored": false
+      },
+      "latencyMs": "",
+      "latencyField": "store.freePostAdChallengeLatencyMs",
+      "maxLatencyMs": 5000,
+      "rewardedAdRequested": false,
+      "premiumEntitlementActive": ""
+    },
+    "store.rewardedAdCompletionArtifact": {
+      "schemaVersion": "freed-store-intervention-flow-report-v1",
+      "templateStatus": "pending-manual-qa",
+      "sanitized": true,
+      "result": "pending-manual-qa",
+      "interventionFlowProofUsableForManualEvidence": false,
+      "flowType": "rewarded-ad-completion",
+      "runId": "continue-goal-store-verification-hardening-rewarded-ad-completion",
+      "suggestedEvidenceFields": [
+        "store.rewardedAdCompletionArtifact"
+      ],
+      "checks": {
+        "rewardedAdCompleted": false,
+        "challengeAccessGranted": false,
+        "temporaryChallengeAccessOnly": false,
+        "supportiveCopyShown": false,
+        "noPurchaseGranted": false,
+        "noRawAdPayloadStored": false
+      },
+      "rewardedAdCompleted": false,
+      "challengeAccessGranted": false
+    },
+    "store.adFailureFallbackArtifact": {
+      "schemaVersion": "freed-store-intervention-flow-report-v1",
+      "templateStatus": "pending-manual-qa",
+      "sanitized": true,
+      "result": "pending-manual-qa",
+      "interventionFlowProofUsableForManualEvidence": false,
+      "flowType": "ad-failure-fallback",
+      "runId": "continue-goal-store-verification-hardening-ad-failure-fallback",
+      "suggestedEvidenceFields": [
+        "store.adFailureFallbackArtifact"
+      ],
+      "checks": {
+        "adFailureObserved": false,
+        "challengeUnlockedWithoutPunishment": false,
+        "noRetryLoopRequired": false,
+        "supportiveCopyShown": false,
+        "noPremiumGranted": false,
+        "noRawAdErrorStored": false
+      },
+      "adFailureObserved": false,
+      "challengeAccessGranted": false,
+      "retryLoopRequired": true
+    },
+    "store.premiumNoAdInterventionArtifact": {
+      "schemaVersion": "freed-store-intervention-flow-report-v1",
+      "templateStatus": "pending-manual-qa",
+      "sanitized": true,
+      "result": "pending-manual-qa",
+      "interventionFlowProofUsableForManualEvidence": false,
+      "flowType": "premium-no-ad-intervention",
+      "runId": "continue-goal-store-verification-hardening-premium-no-ad-intervention",
+      "suggestedEvidenceFields": [
+        "store.premiumNoAdInterventionArtifact"
+      ],
+      "checks": {
+        "premiumEntitlementVerified": false,
+        "noRewardedAdRequested": false,
+        "challengeGenerated": false,
+        "latencyWithinLimit": false,
+        "supportiveCopyShown": false,
+        "noAdSdkRequest": false,
+        "noPremiumUpsellShown": false,
+        "noRawEntitlementTokenStored": false
+      },
+      "latencyMs": "",
+      "latencyField": "store.premiumNoAdLatencyMs",
+      "maxLatencyMs": 3000,
+      "premiumEntitlementActive": false,
+      "rewardedAdRequested": true
+    }
+  }
+}

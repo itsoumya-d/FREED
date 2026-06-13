@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "freed-android-install-qa-plan-v1",
+  "sanitized": true,
+  "generatedAt": "2026-06-07T04:35:48.894Z",
+  "runId": "continue-goal-android-install-plan",
+  "status": "plan-only",
+  "caveat": "No adb device was used. This plan cannot satisfy android.installQaArtifact or checks.androidInstallLaunchQa=true; run without --plan-only on a physical Android device.",
+  "apk": {
+    "path": "docs/validation/artifacts/continue-goal-android-download-current/apk/FREED-release-arm64.apk",
+    "exists": true,
+    "sha256": "46d591b620740cbb4b65280c64c67ed75401aa93b39d36316b63af94352903b7",
+    "sizeBytes": 59096538
+  },
+  "requested": {
+    "allowEmulator": false,
+    "appPackage": "app.freed.recovery",
+    "mainActivity": "app.freed.recovery/.MainActivity",
+    "skipInstall": false,
+    "skipLaunch": false,
+    "waitMs": 5000
+  },
+  "physicalDeviceRequired": true,
+  "finalInstallQaSchemaVersion": "freed-android-install-qa-report-v1",
+  "installCommand": [
+    "npm",
+    "run",
+    "qa:android-install",
+    "--",
+    "--device",
+    "<serial>",
+    "--apk",
+    "docs/validation/artifacts/continue-goal-android-download-current/apk/FREED-release-arm64.apk",
+    "--run-id",
+    "continue-goal-android-install-plan",
+    "--output-dir",
+    "docs/validation/artifacts/continue-goal-android-install-plan/android-install-qa"
+  ],
+  "installCommandString": "npm run qa:android-install -- --device <serial> --apk docs/validation/artifacts/continue-goal-android-download-current/apk/FREED-release-arm64.apk --run-id continue-goal-android-install-plan --output-dir docs/validation/artifacts/continue-goal-android-install-plan/android-install-qa",
+  "protectionHandoff": {
+    "required": true,
+    "reason": "Install QA only proves the APK downloads, installs, and launches. Android protection is activation-ready only after this physical-device evidence run proves permission flow, native status, DNS Guard/VPN consent, browser blocking, and normal browsing.",
+    "activationReadinessRule": "Activation is saved only after native status confirms DNS Guard, Usage Access, Accessibility, selected app packages, and the activation test confirms adult domains are blocked while normal browsing is allowed.",
+    "flowOrder": "android-native-adult-domain-feed>android-dns-guard>android-usage-access>android-accessibility>android-doomscroll-apps>activation-test",
+    "flowOrderSteps": [
+      "android-native-adult-domain-feed",
+      "android-dns-guard",
+      "android-usage-access",
+      "android-accessibility",
+      "android-doomscroll-apps",
+      "activation-test"
+    ],
+    "requiredProofFlags": [
+      "--permission-proof",
+      "--native-status-proof",
+      "--dns-guard-proof"
+    ],
+    "outputDir": "docs/validation/artifacts/continue-goal-android-install-plan/android-real-browser-capture",
+    "command": [
+      "npm",
+      "run",
+      "evidence:android-real-browser",
+      "--",
+      "--device",
+      "<serial>",
+      "--adult-url",
+      "<real-adult-url>",
+      "--permission-proof",
+      "--native-status-proof",
+      "--dns-guard-proof",
+      "--run-id",
+      "continue-goal-android-install-plan",
+      "--output-dir",
+      "docs/validation/artifacts/continue-goal-android-install-plan/android-real-browser-capture"
+    ],
+    "commandString": "npm run evidence:android-real-browser -- --device <serial> --adult-url <real-adult-url> --permission-proof --native-status-proof --dns-guard-proof --run-id continue-goal-android-install-plan --output-dir docs/validation/artifacts/continue-goal-android-install-plan/android-real-browser-capture"
+  }
+}

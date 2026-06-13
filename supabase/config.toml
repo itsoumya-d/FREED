@@ -1,0 +1,12 @@
+# FREED Supabase local/deploy configuration.
+#
+# These cron/admin Edge Functions implement their own maintenance-secret
+# authorization in _shared/freed_edge_contract.ts. Supabase JWT verification is
+# disabled here so scheduled jobs and external cron callers can reach the
+# function body, where BACKEND_MAINTENANCE_SECRET or CRON_SECRET is enforced.
+
+[functions.adult-domain-feed-sync]
+verify_jwt = false
+
+[functions.analytics-retention-cleanup]
+verify_jwt = false

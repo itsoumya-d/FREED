@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "freed-paywall-launch-scope-report-v1",
+  "templateStatus": "pending-manual-qa",
+  "sanitized": true,
+  "result": "pending-manual-qa",
+  "paywallLaunchScopeProofUsableForManualEvidence": false,
+  "runId": "continue-goal-monetization-env-current-paywall-launch-scope",
+  "suggestedEvidenceFields": [
+    "store.paywallLaunchScopeArtifact"
+  ],
+  "paywallSourcePath": "src/features/freed-app.tsx",
+  "paywallSourceHash": "sha256-7cbf8f9515b58fbf4b86107682db8f28eb4554ac14ee4c3a587864666d50b28b",
+  "monetizationSourcePath": "src/lib/monetization.ts",
+  "monetizationSourceHash": "sha256-5c261cefc23c010642bed843862d0a1ff59b47c906a3ebadc42443732b88cc48",
+  "launchPlanIdsShown": [
+    "monthly",
+    "yearly",
+    "lifetime"
+  ],
+  "iosLaunchProductIdsShown": {
+    "monthly": "freed_premium_monthly",
+    "yearly": "freed_premium_yearly",
+    "lifetime": "freed_premium_lifetime"
+  },
+  "androidLaunchProductIdsShown": {
+    "monthly": "freed_premium_monthly",
+    "yearly": "freed_premium_yearly",
+    "lifetime": "freed_premium_lifetime"
+  },
+  "postLaunchPlanIdsHidden": [
+    "family",
+    "accountability",
+    "ai-coach"
+  ],
+  "iosPostLaunchProductIdsHidden": {
+    "family": "freed_family_yearly",
+    "accountability": "freed_accountability_monthly",
+    "ai-coach": "freed_ai_coach_monthly"
+  },
+  "androidPostLaunchProductIdsHidden": {
+    "family": "freed_family_yearly",
+    "accountability": "freed_accountability_monthly",
+    "ai-coach": "freed_ai_coach_monthly"
+  },
+  "primaryValuePlanId": "yearly",
+  "restorePurchasesVisible": false,
+  "purchaseButtonsEnabled": false,
+  "yearlyValueAnchorVisible": false,
+  "checks": {
+    "core3PlanIdsVisible": false,
+    "onlyLaunchProductIdsVisible": false,
+    "postLaunchProductIdsHidden": false,
+    "yearlyValueAnchorVisible": false,
+    "monthlyRecurringVisible": false,
+    "lifetimeOneTimeVisible": false,
+    "restorePurchasesVisible": false,
+    "purchaseButtonsEnabled": false,
+    "serverVerificationCopyVisible": false,
+    "premiumNoAdBenefitVisible": false,
+    "noFamilyAccountabilityAiUpsellsVisible": false
+  }
+}

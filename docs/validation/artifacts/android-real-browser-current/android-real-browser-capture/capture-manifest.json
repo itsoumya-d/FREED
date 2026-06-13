@@ -1,0 +1,517 @@
+{
+  "appPackage": "app.freed.recovery",
+  "browsers": [
+    {
+      "label": "Chrome",
+      "packageName": "com.android.chrome"
+    },
+    {
+      "label": "Firefox",
+      "packageName": "org.mozilla.firefox"
+    },
+    {
+      "label": "Edge",
+      "packageName": "com.microsoft.emmx"
+    },
+    {
+      "label": "Samsung Internet",
+      "packageName": "com.sec.android.app.sbrowser"
+    }
+  ],
+  "manualProofs": [
+    "android.installQaRunId",
+    "android.installQaArtifact local freed-android-install-qa-report-v1 JSON",
+    "android.accessibilityPermissionRunId",
+    "android.accessibilityPermissionArtifact",
+    "android.usageAccessPermissionRunId",
+    "android.usageAccessPermissionArtifact",
+    "android.notificationPermissionRunId",
+    "android.notificationPermissionArtifact",
+    "android.usageStatsAuthorized=true",
+    "android.usageStatsObservedPackages",
+    "android.usageStatsObservedPackageNames",
+    "android.usageStatsTodayMinutes",
+    "android.usageStatsTodayMinutesByPackage",
+    "android.adultDomainFeedStatusRunId",
+    "android.adultDomainFeedStatusArtifact",
+    "android.dnsGuardBlockRunId",
+    "android.dnsGuardBlockArtifact",
+    "android.dnsGuardBlockArtifact local freed-dns-guard-block-report-v1 JSON",
+    "android.dnsGuardInterventionVisible=true",
+    "android.dnsGuardLifecycleArtifact",
+    "android.dnsGuardLifecycleArtifact local freed-dns-guard-lifecycle-report-v1 JSON",
+    "android.dnsGuardSessionQueries>=2",
+    "android.dnsGuardBlockedQueries>=1",
+    "android.dnsGuardAllowedQueries>=1",
+    "android.dnsGuardServfailResponses>=0",
+    "android.dnsGuardMalformedPackets>=0",
+    "android.adultDomainFeedAccessibilityRunId",
+    "android.adultDomainFeedAccessibilityArtifact",
+    "android.adultDomainFeedDnsGuardRunId",
+    "android.adultDomainFeedDnsGuardArtifact",
+    "android.adultDomainFeedDnsGuardArtifact local freed-dns-guard-block-report-v1 JSON",
+    "android.focusedBrowserSearchArtifact",
+    "android.focusedBrowserSearchRedactedHost=focused-search.app.freed.local",
+    "android.focusedBrowserSearchRawQueryStored=false",
+    "android.focusedWebViewPackage",
+    "android.focusedWebViewRunId",
+    "android.focusedWebViewArtifact",
+    "android.backStackCleanupRunId",
+    "android.backStackCleanupArtifact",
+    "android.configuredAppShieldInterventionId=configured-app:<package>",
+    "android.earnedUnlockDurationMinutes",
+    "android.earnedUnlockAppAllowArtifact local freed-android-earned-unlock-report-v1 JSON",
+    "android.earnedUnlockRelockArtifact local freed-android-earned-unlock-report-v1 JSON",
+    "android.earnedUnlockSourcePackage=<configured package>",
+    "android.earnedUnlockRelockUsageMinutes>=android.configuredAppShieldDailyLimitMinutes",
+    "android.browserEarnedUnlockNoAppUnlockRunId",
+    "android.browserEarnedUnlockNoAppUnlockArtifact",
+    "android.browserEarnedUnlockNoAppUnlockArtifact local freed-android-browser-earned-unlock-report-v1 JSON",
+    "android.browserEarnedUnlockSourceHost=<blocked browser/adult-domain source>",
+    "android.browserEarnedUnlockNativeAppUnlockActive=false",
+    "android.browserEarnedUnlockConfiguredAppStillShielded=true",
+    "android.browserEarnedUnlockAdultFilterStillActive=true",
+    "android.challengePhotoClassifier=ML Kit",
+    "android.challengePhotoNoBase64OrExif=true",
+    "android.challengePhotoTemporaryFileDeleted=true",
+    "android.challengeMotionSamples>=6",
+    "android.challengeStepCount>=12",
+    "android.challengeLocationBestAccuracyMeters<=80",
+    "android.configuredAppShieldBeforeLimitAllowArtifact local freed-android-app-intervention-report-v1 JSON",
+    "android.configuredAppShieldArtifact local freed-android-app-intervention-report-v1 JSON",
+    "android.shortFormBelowThresholdAllowArtifact local freed-android-app-intervention-report-v1 JSON",
+    "android.shortFormArtifact local freed-android-app-intervention-report-v1 JSON",
+    "android.shortFormUsageBeforeLimitMinutes<android.configuredAppShieldDailyLimitMinutes",
+    "android.shortFormSelectedSurfaceArtifact",
+    "android.shortFormSelectedSurfaceArtifact local freed-short-form-surface-report-v1 JSON",
+    "android.shortFormSelectedSurfaceVerified=true",
+    "android.shortFormInterventionId=short-form:youtube-shorts",
+    "android.instagramReelsUsageBeforeLimitMinutes<android.configuredAppShieldDailyLimitMinutes",
+    "android.instagramReelsArtifact local freed-android-app-intervention-report-v1 JSON",
+    "android.instagramReelsSelectedSurfaceArtifact",
+    "android.instagramReelsSelectedSurfaceArtifact local freed-short-form-surface-report-v1 JSON",
+    "android.instagramReelsSelectedSurfaceVerified=true",
+    "android.instagramReelsInterventionId=short-form:instagram-reels",
+    "android.tiktokFeedUsageBeforeLimitMinutes<android.configuredAppShieldDailyLimitMinutes",
+    "android.tiktokFeedArtifact local freed-android-app-intervention-report-v1 JSON",
+    "android.tiktokFeedSelectedSurfaceArtifact",
+    "android.tiktokFeedSelectedSurfaceArtifact local freed-short-form-surface-report-v1 JSON",
+    "android.tiktokFeedSelectedSurfaceVerified=true",
+    "android.tiktokFeedInterventionId=short-form:tiktok-feed",
+    "android.playPolicyAccessibilityReviewId",
+    "android.playPolicyAccessibilityArtifact local freed-android-play-policy-report-v1 JSON with sanitized=true",
+    "android.playPolicySpecialUseFgsReviewId",
+    "android.playPolicySpecialUseFgsArtifact local freed-android-play-policy-report-v1 JSON with sanitized=true"
+  ],
+  "adultDomainFeedHost": "pornhub.com",
+  "appScenarios": [
+    {
+      "app": {
+        "label": "Instagram",
+        "packageName": "com.instagram.android"
+      },
+      "configuredAppShieldProof": {
+        "artifactField": "android.configuredAppShieldBeforeLimitAllowArtifact",
+        "expectedPackage": "com.instagram.android",
+        "interventionReportSchema": "freed-android-app-intervention-report-v1",
+        "packageField": "android.configuredAppShieldPackage",
+        "runIdField": "android.configuredAppShieldBeforeLimitAllowRunId",
+        "usageMinutesField": "android.configuredAppShieldUsageBeforeLimitMinutes"
+      },
+      "expected": "allow",
+      "manualPrerequisite": "FREED Accessibility is enabled, this app package is selected in Shield settings, daily usage for the package is below the configured daily limit, and no earned unlock is active.",
+      "name": "configured-app-before-limit-allow",
+      "suggestedEvidenceField": "android.configuredAppShieldBeforeLimitAllowArtifact"
+    },
+    {
+      "app": {
+        "label": "Instagram",
+        "packageName": "com.instagram.android"
+      },
+      "configuredAppShieldProof": {
+        "artifactField": "android.configuredAppShieldArtifact",
+        "expectedInterventionId": "configured-app:com.instagram.android",
+        "expectedPackage": "com.instagram.android",
+        "interventionReportSchema": "freed-android-app-intervention-report-v1",
+        "interventionIdField": "android.configuredAppShieldInterventionId",
+        "packageField": "android.configuredAppShieldPackage",
+        "runIdField": "android.configuredAppShieldRunId",
+        "usageMinutesField": "android.configuredAppShieldUsageAtInterventionMinutes"
+      },
+      "expected": "block",
+      "manualPrerequisite": "FREED Accessibility is enabled, this app package is selected in Shield settings, daily usage for the package is at or above the configured daily limit, and no earned unlock is active.",
+      "name": "configured-app-shield",
+      "suggestedEvidenceField": "android.configuredAppShieldArtifact"
+    },
+    {
+      "app": {
+        "label": "Instagram",
+        "packageName": "com.instagram.android"
+      },
+      "earnedUnlockProof": {
+        "durationField": "android.earnedUnlockDurationMinutes",
+        "durationMinutes": 15,
+        "earnedUnlockReportSchema": "freed-android-earned-unlock-report-v1",
+        "expectedPackage": "com.instagram.android",
+        "packageField": "android.earnedUnlockSourcePackage",
+        "artifactField": "android.earnedUnlockAppAllowArtifact",
+        "check": "earnedUnlockAllowsConfiguredApp",
+        "runIdField": "android.earnedUnlockAppAllowRunId"
+      },
+      "expected": "allow",
+      "manualPrerequisite": "The same app package is selected in Shield settings and a 15-minute earned unlock window is currently active.",
+      "name": "earned-unlock-app-allow",
+      "suggestedEvidenceField": "android.earnedUnlockAppAllowArtifact"
+    },
+    {
+      "app": {
+        "label": "Instagram",
+        "packageName": "com.instagram.android"
+      },
+      "earnedUnlockProof": {
+        "durationField": "android.earnedUnlockDurationMinutes",
+        "durationMinutes": 15,
+        "earnedUnlockReportSchema": "freed-android-earned-unlock-report-v1",
+        "expectedPackage": "com.instagram.android",
+        "packageField": "android.earnedUnlockSourcePackage",
+        "artifactField": "android.earnedUnlockRelockArtifact",
+        "check": "earnedUnlockAutoRelock",
+        "relockUsageMinutesField": "android.earnedUnlockRelockUsageMinutes",
+        "relockUsageMustBeAtLeastField": "android.configuredAppShieldDailyLimitMinutes",
+        "runIdField": "android.earnedUnlockRelockRunId"
+      },
+      "expected": "block",
+      "manualPrerequisite": "The same app package is selected in Shield settings, the earned unlock window has expired, and daily usage is still at or above the configured limit.",
+      "name": "earned-unlock-relock",
+      "suggestedEvidenceField": "android.earnedUnlockRelockArtifact"
+    },
+    {
+      "app": {
+        "label": "Instagram",
+        "packageName": "com.instagram.android"
+      },
+      "browserEarnedUnlockNoAppUnlockProof": {
+        "adultFilterStillActiveField": "android.browserEarnedUnlockAdultFilterStillActive",
+        "artifactField": "android.browserEarnedUnlockNoAppUnlockArtifact",
+        "check": "browserEarnedUnlockDoesNotUnlockApps",
+        "durationField": "android.earnedUnlockDurationMinutes",
+        "durationMinutes": 15,
+        "earnedUnlockReportSchema": "freed-android-browser-earned-unlock-report-v1",
+        "configuredAppStillShieldedField": "android.browserEarnedUnlockConfiguredAppStillShielded",
+        "expectedAdultFilterStillActive": true,
+        "expectedConfiguredAppPackage": "com.instagram.android",
+        "expectedConfiguredAppStillShielded": true,
+        "expectedNativeAppUnlockActive": false,
+        "expectedSourceHost": "www.pornhub.com",
+        "nativeAppUnlockActiveField": "android.browserEarnedUnlockNativeAppUnlockActive",
+        "runIdField": "android.browserEarnedUnlockNoAppUnlockRunId",
+        "sourceHostField": "android.browserEarnedUnlockSourceHost"
+      },
+      "expected": "block",
+      "manualPrerequisite": "Complete a verified challenge from the real browser/adult-domain source, keep the configured app over its daily limit, and confirm the browser-sourced challenge window does not pause Android app shields.",
+      "name": "browser-earned-unlock-no-app-unlock",
+      "suggestedEvidenceField": "android.browserEarnedUnlockNoAppUnlockArtifact"
+    },
+    {
+      "app": {
+        "label": "YouTube Shorts",
+        "packageName": "com.google.android.youtube"
+      },
+      "expected": "allow",
+      "manualPrerequisite": "FREED Accessibility is enabled, com.google.android.youtube is selected in Shield settings, today's foreground usage for that package is below the configured daily app limit, the short-form threshold is 90s, no earned unlock is active, and the app is on the YouTube Shorts surface for less than the threshold.",
+      "name": "short-form-below-threshold-allow",
+      "observedSeconds": 60,
+      "shortFormProof": {
+        "artifactField": "android.shortFormBelowThresholdAllowArtifact",
+        "expectedPackage": "com.google.android.youtube",
+        "expectedThresholdSeconds": 90,
+        "interventionReportSchema": "freed-android-app-intervention-report-v1",
+        "observedSecondsField": "android.shortFormBelowThresholdSeconds",
+        "packageField": "android.shortFormPackage",
+        "releaseValidatorField": true,
+        "runIdField": "android.shortFormBelowThresholdAllowRunId",
+        "surface": "YouTube Shorts",
+        "usageBeforeLimitField": "android.shortFormUsageBeforeLimitMinutes",
+        "usageMustBeLowerThanField": "android.configuredAppShieldDailyLimitMinutes"
+      },
+      "suggestedEvidenceField": "android.shortFormBelowThresholdAllowArtifact",
+      "waitMs": 60000
+    },
+    {
+      "app": {
+        "label": "YouTube Shorts",
+        "packageName": "com.google.android.youtube"
+      },
+      "expected": "block",
+      "manualPrerequisite": "FREED Accessibility is enabled, com.google.android.youtube is selected in Shield settings, today's foreground usage for that package is below the configured daily app limit, the short-form threshold is 90s, no earned unlock is active, and the app stays on the YouTube Shorts surface until FREED opens the recovery handoff. Record selected/focused YouTube Shorts surface proof in `android.shortFormSelectedSurfaceArtifact` and `android.shortFormSelectedSurfaceVerified=true`.",
+      "name": "short-form-sustained-intervention",
+      "observedSeconds": 95,
+      "shortFormProof": {
+        "artifactField": "android.shortFormArtifact",
+        "expectedInterventionId": "short-form:youtube-shorts",
+        "expectedPackage": "com.google.android.youtube",
+        "expectedThresholdSeconds": 90,
+        "interventionReportSchema": "freed-android-app-intervention-report-v1",
+        "interventionIdField": "android.shortFormInterventionId",
+        "observedSecondsField": "android.shortFormAtInterventionSeconds",
+        "packageField": "android.shortFormPackage",
+        "releaseValidatorField": true,
+        "runIdField": "android.shortFormRunId",
+        "selectedSurfaceArtifactField": "android.shortFormSelectedSurfaceArtifact",
+        "selectedSurfaceExpected": true,
+        "selectedSurfaceReportSchema": "freed-short-form-surface-report-v1",
+        "selectedSurfaceVerifiedField": "android.shortFormSelectedSurfaceVerified",
+        "surface": "YouTube Shorts",
+        "usageBeforeLimitField": "android.shortFormUsageBeforeLimitMinutes",
+        "usageMustBeLowerThanField": "android.configuredAppShieldDailyLimitMinutes"
+      },
+      "suggestedEvidenceField": "android.shortFormArtifact",
+      "waitMs": 95000
+    }
+  ],
+  "backStackCheck": true,
+  "challengeVerificationProof": {
+    "manualExpectation": "Run these challenge proofs on the same Android hardware after FREED protection is active. Attach separate reports or recordings before setting the challenge verification checks.",
+    "proofs": [
+      {
+        "artifactField": "android.challengePhotoArtifact",
+        "check": "challengePhotoVerifiedOnDevice",
+        "releaseFields": [
+          "android.challengePhotoArtifact local freed-challenge-photo-report-v1 JSON with sanitized=true",
+          "android.challengePhotoClassifier=ML Kit",
+          "android.challengePhotoMatchedLabel",
+          "android.challengePhotoConfidence>=0.45",
+          "android.challengePhotoFreshCameraOnly=true",
+          "android.challengePhotoNoBase64OrExif=true",
+          "android.challengePhotoTemporaryFileDeleted=true",
+          "android.challengePhotoArtifact checks onDeviceClassifier/onDemandOnly/rawPhotoNotPersisted/noContinuousImageClassification=true"
+        ],
+        "runId": "android-real-browser-current-challenge-photo-verification",
+        "runIdField": "android.challengePhotoRunId",
+        "summary": "Record a fresh-camera photo challenge completing only after on-device, on-demand ML Kit image labeling, with no base64/EXIF payload retained, no raw photo persisted, no continuous image classification, and the temporary captured file deleted after classification."
+      },
+      {
+        "artifactField": "android.challengeMotionArtifact",
+        "check": "challengeMotionVerified",
+        "releaseFields": [
+          "android.challengeMotionArtifact local freed-challenge-motion-report-v1 JSON with sanitized=true",
+          "android.challengeMotionSamples>=6",
+          "android.challengeMotionArtifact checks onDeviceSensorSamples/onDemandOnly/timerOnlyBypassRejected=true"
+        ],
+        "runId": "android-real-browser-current-challenge-motion-verification",
+        "runIdField": "android.challengeMotionRunId",
+        "summary": "Record a motion challenge completing from a local on-device, on-demand sensor report with enough live samples and a rejected timer-only bypass."
+      },
+      {
+        "artifactField": "android.challengeStepsArtifact",
+        "check": "challengeStepsVerified",
+        "releaseFields": [
+          "android.challengeStepsArtifact local freed-challenge-steps-report-v1 JSON with sanitized=true",
+          "android.challengeStepCount>=12",
+          "android.challengeStepsArtifact checks pedometerOrHealthData/onDemandOnly/timerOnlyBypassRejected=true"
+        ],
+        "runId": "android-real-browser-current-challenge-steps-verification",
+        "runIdField": "android.challengeStepsRunId",
+        "summary": "Record a walking challenge completing from a local on-demand Health Connect/step report with enough steps and a rejected timer-only bypass."
+      },
+      {
+        "artifactField": "android.challengeLocationArtifact",
+        "check": "challengeLocationVerified",
+        "releaseFields": [
+          "android.challengeLocationArtifact local freed-challenge-location-report-v1 JSON with sanitized=true",
+          "android.challengeLocationDistanceMeters>=10",
+          "android.challengeLocationSamples>=2",
+          "android.challengeLocationBestAccuracyMeters<=80",
+          "android.challengeLocationArtifact checks foregroundLocationOnly/onDemandOnly/multiSampleRoute/noRawCoordinatesPersisted=true"
+        ],
+        "runId": "android-real-browser-current-challenge-location-verification",
+        "runIdField": "android.challengeLocationRunId",
+        "summary": "Record an outdoor challenge completing from a local foreground-only, on-demand location report with multiple accurate fixes and no raw coordinate retention."
+      }
+    ]
+  },
+  "permissionWizardProof": {
+    "artifactField": "android.permissionWizardArtifact",
+    "check": "permissionSetupWizard",
+    "flowOrder": "onboarding-goals>app-selection>paywall>protection-explanation>permission-setup>test-protection>activation-complete",
+    "manualExpectation": "Record the full release setup wizard on Android hardware: recovery goals, app selection, paywall, protection explanation, guided DNS Guard VPN consent, Usage Access, and targeted FREED Accessibility details setup, Test Protection, and Activation Complete.",
+    "releaseFields": [
+      "android.permissionWizardRunId",
+      "android.permissionWizardArtifact",
+      "android.permissionWizardArtifact local freed-permission-wizard-report-v1 JSON with sanitized=true and exact Android VPN consent/Usage Access/Accessibility route surfaces",
+      "android.permissionWizardFlowOrder=onboarding-goals>app-selection>paywall>protection-explanation>permission-setup>test-protection>activation-complete",
+      "android.permissionExplanationShown=true",
+      "android.permissionExplanationSummary includes monitor only selected apps/sites, block known adult domains, and harmful site/search/app-limit threshold copy",
+      "android.permissionWizardTestProtectionPassed=true",
+      "android.appSelectionZeroAppContinueDisabled=true",
+      "android.appSelectionReturnFromSetup=true",
+      "android.appSelectionReturnAutoSync=true",
+      "android.appSelectionReturnNativePackageSyncConfirmed=true",
+      "android.appSelectionReturnSelectedAppCount>0"
+    ],
+    "runId": "android-real-browser-current-permission-wizard",
+    "suggestedEvidenceFields": [
+      "android.permissionWizardRunId",
+      "android.permissionWizardArtifact",
+      "android.permissionWizardFlowOrder",
+      "android.permissionExplanationShown",
+      "android.permissionExplanationSummary",
+      "android.permissionWizardTestProtectionPassed",
+      "android.appSelectionZeroAppContinueDisabled",
+      "android.appSelectionReturnFromSetup",
+      "android.appSelectionReturnAutoSync",
+      "android.appSelectionReturnNativePackageSyncConfirmed",
+      "android.appSelectionReturnSelectedAppCount"
+    ]
+  },
+  "dnsGuardProof": {
+    "host": "pornhub.com",
+    "suggestedEvidenceFields": [
+      "android.dnsGuardBlockArtifact",
+      "android.dnsGuardInterventionVisible=true",
+      "android.adultDomainFeedDnsGuardArtifact"
+    ],
+    "visibleInterventionProof": "After DNS probes, the helper captures an activity screenshot, notification shade screenshot, notification dump, and UI dump for manual `android.dnsGuardInterventionVisible=true` review.",
+    "visibleWaitMs": 3000
+  },
+  "dnsGuardRestartProof": {
+    "suggestedEvidenceFields": [
+      "android.dnsGuardRestartRunId",
+      "android.dnsGuardRestartArtifact",
+      "android.dnsGuardRestartArtifact local freed-dns-guard-restart-report-v1 JSON with sanitized=true",
+      "android.dnsGuardRestartAction",
+      "android.dnsGuardRestartResult",
+      "android.dnsGuardRestartUserEnabled",
+      "android.dnsGuardRestartEligible",
+      "android.dnsGuardRestartSkippedRunId",
+      "android.dnsGuardRestartSkippedArtifact",
+      "android.dnsGuardRestartSkippedArtifact local freed-dns-guard-restart-report-v1 JSON with sanitized=true",
+      "android.dnsGuardRestartSkippedReason",
+      "android.dnsGuardRestartNoSilentPromptConfirmed"
+    ]
+  },
+  "outputDir": "docs/validation/artifacts/android-real-browser-current/android-real-browser-capture",
+  "toolTimeoutMs": 30000,
+  "nativeStatusProof": {
+    "suggestedEvidenceFields": [
+      "android.usageAccessPermissionArtifact",
+      "android.usageStatsAuthorized",
+      "android.usageStatsObservedPackages",
+      "android.usageStatsObservedPackageNames",
+      "android.usageStatsTodayMinutes",
+      "android.usageStatsTodayMinutesByPackage",
+      "android.adultDomainFeedStatusArtifact",
+      "android.adultDomainFeedVersion",
+      "android.adultDomainFeedChecksum",
+      "android.adultDomainFeedDomainCount",
+      "android.dnsGuardBlockArtifact",
+      "android.dnsGuardLifecycleArtifact",
+      "android.dnsGuardSessionQueries",
+      "android.dnsGuardBlockedQueries",
+      "android.dnsGuardAllowedQueries",
+      "android.dnsGuardServfailResponses",
+      "android.dnsGuardMalformedPackets"
+    ]
+  },
+  "permissionProof": {
+    "suggestedEvidenceFields": [
+      "android.permissionWizardRunId",
+      "android.permissionWizardArtifact",
+      "android.permissionWizardFlowOrder",
+      "android.permissionExplanationShown",
+      "android.permissionExplanationSummary",
+      "android.permissionWizardTestProtectionPassed",
+      "android.accessibilityPermissionRunId",
+      "android.accessibilityPermissionArtifact",
+      "android.usageAccessPermissionRunId",
+      "android.usageAccessPermissionArtifact",
+      "android.usageStatsAuthorized",
+      "android.usageStatsObservedPackages",
+      "android.usageStatsObservedPackageNames",
+      "android.usageStatsTodayMinutes",
+      "android.usageStatsTodayMinutesByPackage"
+    ]
+  },
+  "focusedWebViewProof": {
+    "packageName": "app.freed.qawebview",
+    "suggestedEvidenceFields": [
+      "android.focusedWebViewPackage",
+      "android.focusedWebViewRunId",
+      "android.focusedWebViewArtifact"
+    ]
+  },
+  "playPolicyProof": {
+    "reviewIdsStillRequired": [
+      "android.playPolicyAccessibilityReviewId",
+      "android.playPolicySpecialUseFgsReviewId"
+    ],
+    "suggestedEvidenceFields": [
+      "android.playPolicyAccessibilityArtifact",
+      "android.playPolicySpecialUseFgsArtifact"
+    ]
+  },
+  "runId": "android-real-browser-current",
+  "scenarios": [
+    {
+      "expected": "allow",
+      "name": "allowed",
+      "url": "https://youtube.com/results?search_query=workout"
+    },
+    {
+      "expected": "block",
+      "name": "adult",
+      "url": "https://www.pornhub.com/"
+    },
+    {
+      "expected": "block",
+      "focusedSearchProof": {
+        "expectedMatchedRule": "focused-search:pornography",
+        "expectedRedactedHost": "focused-search.app.freed.local",
+        "rawQueryStored": false
+      },
+      "manualPrerequisite": "After the browser opens, tap the address/search field, type the configured high-confidence adult-consumption search text, and confirm FREED opens before relying on loaded search results.",
+      "name": "focused-browser-search",
+      "suggestedEvidenceField": "android.focusedBrowserSearchArtifact",
+      "url": "https://youtube.com/results?search_query=workout",
+      "waitMs": 15000
+    },
+    {
+      "adultDomainFeedProof": {
+        "expectedClassifiedHost": "pornhub.com",
+        "expectedSource": "synced-adult-domain-feed",
+        "pairedDnsGuardEvidenceField": "android.adultDomainFeedDnsGuardArtifact"
+      },
+      "expected": "block",
+      "manualPrerequisite": "Use a reviewed synced-feed-only adult host that is present in the current native adult-domain feed version/checksum/domain count and absent from the embedded seed list.",
+      "name": "synced-adult-domain-feed",
+      "suggestedEvidenceField": "android.adultDomainFeedAccessibilityArtifact",
+      "url": "https://pornhub.com/"
+    }
+  ],
+  "webViewScenarios": [
+    {
+      "app": {
+        "label": "FREED WebView Fixture",
+        "packageName": "app.freed.qawebview"
+      },
+      "expected": "block",
+      "focusedWebViewProof": {
+        "expectedFixturePackage": "app.freed.qawebview",
+        "expectedRawFieldStorage": "none",
+        "expectedSurface": "focused-webview-url-field"
+      },
+      "manualPrerequisite": "Install the QA WebView fixture, keep FREED Accessibility enabled, open the fixture, tap Adult Test or focus the URL field with a high-confidence adult URL, and confirm FREED opens before relying on loaded WebView page content.",
+      "name": "focused-webview",
+      "suggestedEvidenceField": "android.focusedWebViewArtifact",
+      "waitMs": 15000
+    }
+  ],
+  "result": "plan-only",
+  "sanitized": true,
+  "schema": "freed-android-real-browser-capture-v1",
+  "attempts": [],
+  "evidenceSatisfied": false,
+  "generatedAt": "2026-06-10T23:22:45.770Z",
+  "manualVerificationRequired": true,
+  "releaseGate": "android-real-browser-validation"
+}

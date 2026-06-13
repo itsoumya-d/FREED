@@ -1,0 +1,337 @@
+{
+  "schemaVersion": "freed-store-console-product-setup-report-v1",
+  "templateStatus": "pending-manual-console-setup",
+  "sanitized": true,
+  "result": "pending-manual-console-setup",
+  "consoleProductSetupProofUsableForManualEvidence": false,
+  "setupRunId": "store-ad-sandbox-current-store-console-product-setup",
+  "suggestedEvidenceFields": [
+    "store.consoleProductSetupArtifact"
+  ],
+  "storeProductsCatalogPath": "store/store-products.json",
+  "storeProductsCatalogHash": "sha256-66323a77ec71bc6aae51dd3c62e6d8393686123804f9987e5f86cac1e8fe8b84",
+  "appStoreConnectCsvPath": "store/app-store/in-app-purchases.csv",
+  "appStoreConnectCsvHash": "sha256-ad7ea81b6ec9240b1ca4f8e5e248464ed78ec792e7f4233ce50ee2a2e226f6b9",
+  "googlePlayProductsCsvPath": "store/play-store/products.csv",
+  "googlePlayProductsCsvHash": "sha256-b33dd03139588b3562c92d58cf34747a1d3a5e5cf5a11381bec16774d728923b",
+  "screenshotManifestPath": "store/screenshots/manifest.json",
+  "screenshotManifestHash": "sha256-86a0362d0e6a5e887e0d9fc732b91971816c9278b85dd9381c6c3af29dc4ab99",
+  "bundleId": "app.freed.recovery",
+  "packageName": "app.freed.recovery",
+  "entitlementId": "premium",
+  "subscriptionGroupId": "freed_premium",
+  "launchPlanIdsConfigured": [
+    "yearly",
+    "monthly",
+    "lifetime"
+  ],
+  "iosLaunchProductIdsConfigured": {
+    "yearly": "freed_premium_yearly",
+    "monthly": "freed_premium_monthly",
+    "lifetime": "freed_premium_lifetime"
+  },
+  "androidLaunchProductIdsConfigured": {
+    "yearly": "freed_premium_yearly",
+    "monthly": "freed_premium_monthly",
+    "lifetime": "freed_premium_lifetime"
+  },
+  "iosPostLaunchProductIdsInactive": {
+    "family": "freed_family_yearly",
+    "accountability": "freed_accountability_monthly",
+    "ai-coach": "freed_ai_coach_monthly"
+  },
+  "androidPostLaunchProductIdsInactive": {
+    "family": "freed_family_yearly",
+    "accountability": "freed_accountability_monthly",
+    "ai-coach": "freed_ai_coach_monthly"
+  },
+  "appRecordReadiness": {
+    "proofSource": "read-only-browser-console-readiness",
+    "browserReportPath": "docs/validation/artifacts/store-console-browser-current/store-console-browser-readiness.json",
+    "browserReportHash": "sha256-646db056da1f73f6a16e5a16fad4b2f4b9c5918a67cf08e55157187a86ae06ab",
+    "browserReportSchemaVersion": "freed-store-console-browser-readiness-v1",
+    "browserReportRunId": "store-console-browser-current",
+    "readyForConsoleProductSetup": false,
+    "readOnlyBrowserInspection": false,
+    "storeMutationPerformed": false,
+    "accountIdentifiersRedacted": false,
+    "appIdentifiers": {
+      "appName": "FREED",
+      "bundleId": "app.freed.recovery",
+      "packageName": "app.freed.recovery"
+    },
+    "googlePlay": {
+      "consoleHost": "play.google.com",
+      "observedViaBrowser": false,
+      "appRecordPresent": false,
+      "packageName": "app.freed.recovery",
+      "productSetupAllowed": false
+    },
+    "appStoreConnect": {
+      "consoleHost": "appstoreconnect.apple.com",
+      "observedViaBrowser": false,
+      "appRecordPresent": false,
+      "bundleId": "app.freed.recovery",
+      "licenseAgreementAccepted": false,
+      "productSetupAllowed": false
+    },
+    "checks": {
+      "browserReadinessReportCurrent": false,
+      "readOnlyBrowserInspection": false,
+      "noStoreMutationDuringBrowserCheck": false,
+      "accountIdentifiersRedacted": false,
+      "googlePlayAppRecordPresent": false,
+      "appStoreConnectAppRecordPresent": false,
+      "appStoreLicenseAgreementAccepted": false,
+      "bothPlatformsProductSetupAllowed": false
+    }
+  },
+  "appStoreConnect": {
+    "appRecordCreated": false,
+    "bundleId": "app.freed.recovery",
+    "subscriptionGroupId": "freed_premium",
+    "consoleHost": "appstoreconnect.apple.com",
+    "consolePathRedacted": "/apps/redacted-app-id/appstore/in-app-purchases",
+    "consoleEvidenceArtifacts": [
+      {
+        "screenId": "app-record",
+        "artifactPath": "",
+        "artifactHash": "",
+        "capturedAt": "",
+        "redacted": false,
+        "accountIdentifiersRedacted": false
+      },
+      {
+        "screenId": "subscription-group",
+        "artifactPath": "",
+        "artifactHash": "",
+        "capturedAt": "",
+        "redacted": false,
+        "accountIdentifiersRedacted": false
+      },
+      {
+        "screenId": "yearly-subscription",
+        "artifactPath": "",
+        "artifactHash": "",
+        "capturedAt": "",
+        "redacted": false,
+        "accountIdentifiersRedacted": false
+      },
+      {
+        "screenId": "monthly-subscription",
+        "artifactPath": "",
+        "artifactHash": "",
+        "capturedAt": "",
+        "redacted": false,
+        "accountIdentifiersRedacted": false
+      },
+      {
+        "screenId": "lifetime-non-consumable",
+        "artifactPath": "",
+        "artifactHash": "",
+        "capturedAt": "",
+        "redacted": false,
+        "accountIdentifiersRedacted": false
+      },
+      {
+        "screenId": "future-skus-inactive",
+        "artifactPath": "",
+        "artifactHash": "",
+        "capturedAt": "",
+        "redacted": false,
+        "accountIdentifiersRedacted": false
+      }
+    ],
+    "launchProducts": [
+      {
+        "planId": "yearly",
+        "productId": "freed_premium_yearly",
+        "productType": "auto-renewable-subscription",
+        "referenceName": "FREED Premium Annual",
+        "subscriptionGroupId": "freed_premium",
+        "duration": "P1Y",
+        "priceUsdIntent": "39.99",
+        "reviewScreenshotPath": "store/screenshots/paywall-yearly.png",
+        "reviewScreenshotHash": "sha256-27960938520f9ad47fb34c64b3c24d98e06fec616bfacc29a94a0df4ced6388a",
+        "localizationLocales": [
+          "en-US"
+        ],
+        "consoleStatus": "pending-manual-console-setup",
+        "metadataConfigured": false,
+        "reviewScreenshotAttached": false,
+        "serverVerificationMetadataConfigured": false
+      },
+      {
+        "planId": "monthly",
+        "productId": "freed_premium_monthly",
+        "productType": "auto-renewable-subscription",
+        "referenceName": "FREED Premium Monthly",
+        "subscriptionGroupId": "freed_premium",
+        "duration": "P1M",
+        "priceUsdIntent": "9.99",
+        "reviewScreenshotPath": "store/screenshots/paywall-monthly.png",
+        "reviewScreenshotHash": "sha256-723643d6c62c4a0b494a8f95369aa210acbb2e53fc659a17fe294330988a469a",
+        "localizationLocales": [
+          "en-US"
+        ],
+        "consoleStatus": "pending-manual-console-setup",
+        "metadataConfigured": false,
+        "reviewScreenshotAttached": false,
+        "serverVerificationMetadataConfigured": false
+      },
+      {
+        "planId": "lifetime",
+        "productId": "freed_premium_lifetime",
+        "productType": "non-consumable",
+        "referenceName": "FREED Premium Lifetime",
+        "subscriptionGroupId": null,
+        "duration": "lifetime",
+        "priceUsdIntent": "79.99",
+        "reviewScreenshotPath": "store/screenshots/paywall-lifetime.png",
+        "reviewScreenshotHash": "sha256-3cb40dfb16d70ccf56fff2cf56fda1e0ef18241ea72eda177a0db79f73c9b83c",
+        "localizationLocales": [
+          "en-US"
+        ],
+        "consoleStatus": "pending-manual-console-setup",
+        "metadataConfigured": false,
+        "reviewScreenshotAttached": false,
+        "serverVerificationMetadataConfigured": false
+      }
+    ],
+    "futureProductIdsInactive": {
+      "family": "freed_family_yearly",
+      "accountability": "freed_accountability_monthly",
+      "ai-coach": "freed_ai_coach_monthly"
+    },
+    "noExtraLaunchProductsActive": false,
+    "draftOrSandboxOnlyUntilEvidencePasses": false
+  },
+  "googlePlay": {
+    "appRecordCreated": false,
+    "packageName": "app.freed.recovery",
+    "consoleHost": "play.google.com",
+    "consolePathRedacted": "/console/u/redacted-user/developers/redacted-developer-id/app/redacted-app-id/monetization",
+    "consoleEvidenceArtifacts": [
+      {
+        "screenId": "app-record",
+        "artifactPath": "",
+        "artifactHash": "",
+        "capturedAt": "",
+        "redacted": false,
+        "accountIdentifiersRedacted": false
+      },
+      {
+        "screenId": "subscriptions-list",
+        "artifactPath": "",
+        "artifactHash": "",
+        "capturedAt": "",
+        "redacted": false,
+        "accountIdentifiersRedacted": false
+      },
+      {
+        "screenId": "yearly-base-plan",
+        "artifactPath": "",
+        "artifactHash": "",
+        "capturedAt": "",
+        "redacted": false,
+        "accountIdentifiersRedacted": false
+      },
+      {
+        "screenId": "monthly-base-plan",
+        "artifactPath": "",
+        "artifactHash": "",
+        "capturedAt": "",
+        "redacted": false,
+        "accountIdentifiersRedacted": false
+      },
+      {
+        "screenId": "lifetime-one-time-product",
+        "artifactPath": "",
+        "artifactHash": "",
+        "capturedAt": "",
+        "redacted": false,
+        "accountIdentifiersRedacted": false
+      },
+      {
+        "screenId": "future-skus-inactive",
+        "artifactPath": "",
+        "artifactHash": "",
+        "capturedAt": "",
+        "redacted": false,
+        "accountIdentifiersRedacted": false
+      }
+    ],
+    "launchProducts": [
+      {
+        "planId": "yearly",
+        "productId": "freed_premium_yearly",
+        "productType": "subscription",
+        "basePlanId": "yearly",
+        "billingPeriod": "P1Y",
+        "offerId": "yearly-standard",
+        "purchaseType": "",
+        "priceUsdIntent": "39.99",
+        "localizationLocales": [
+          "en-US"
+        ],
+        "consoleStatus": "pending-manual-console-setup",
+        "metadataConfigured": false,
+        "serverVerificationMetadataConfigured": false
+      },
+      {
+        "planId": "monthly",
+        "productId": "freed_premium_monthly",
+        "productType": "subscription",
+        "basePlanId": "monthly",
+        "billingPeriod": "P1M",
+        "offerId": "monthly-standard",
+        "purchaseType": "",
+        "priceUsdIntent": "9.99",
+        "localizationLocales": [
+          "en-US"
+        ],
+        "consoleStatus": "pending-manual-console-setup",
+        "metadataConfigured": false,
+        "serverVerificationMetadataConfigured": false
+      },
+      {
+        "planId": "lifetime",
+        "productId": "freed_premium_lifetime",
+        "productType": "one-time-product",
+        "basePlanId": "",
+        "billingPeriod": "lifetime",
+        "offerId": "",
+        "purchaseType": "non-consumable",
+        "priceUsdIntent": "79.99",
+        "localizationLocales": [
+          "en-US"
+        ],
+        "consoleStatus": "pending-manual-console-setup",
+        "metadataConfigured": false,
+        "serverVerificationMetadataConfigured": false
+      }
+    ],
+    "futureProductIdsInactive": {
+      "family": "freed_family_yearly",
+      "accountability": "freed_accountability_monthly",
+      "ai-coach": "freed_ai_coach_monthly"
+    },
+    "noExtraLaunchProductsActive": false,
+    "draftOrSandboxOnlyUntilEvidencePasses": false
+  },
+  "checks": {
+    "core3ProductsCreated": false,
+    "appStoreMonthlyYearlySubscriptionGroupConfigured": false,
+    "appStoreLifetimeNonConsumableConfigured": false,
+    "playMonthlyYearlyBasePlansConfigured": false,
+    "playLifetimeOneTimeProductConfigured": false,
+    "launchPricesMatchCatalog": false,
+    "reviewScreenshotsAttached": false,
+    "productLocalizationsConfigured": false,
+    "serverVerificationMetadataConfigured": false,
+    "consoleEvidenceArtifactsCaptured": false,
+    "futureSkusInactive": false,
+    "noExtraLaunchProductsActive": false,
+    "draftOrSandboxOnlyUntilEvidencePasses": false
+  }
+}

@@ -1,0 +1,716 @@
+# FREED Launch Status
+
+Generated: 2026-06-11T09:11:11.906Z
+Run ID: launch-status
+Release ready: false
+
+Launch remains blocked because the newest current Android rebuild failed after the served APK was produced; hosted legal URLs, final public listing screenshot manifest (store/screenshots/listing/manifest.json), production env, deployed reports, store sandbox, and physical-device evidence must also pass.
+
+## Current Preflight
+
+- Artifact: `docs/validation/artifacts/release-env-current/release-env-preflight-report.json`
+- Sanitized: true
+- Source: process.env
+- Result: fail
+- Checks: 9 pass, 22 fail
+- Failed production-env groups: 7
+- Production env gap checklist: `docs/validation/artifacts/release-env-current/PRODUCTION_ENV_GAP_CHECKLIST.md`
+- Production env gap JSON: `docs/validation/artifacts/release-env-current/production-env-gap-checklist.json`
+- Missing-key env skeleton: `docs/validation/artifacts/release-env-current/PRODUCTION_ENV_MISSING_KEYS.env`
+- Env gap handoff status: current
+- Env gap source freshness: current
+- Env gap output freshness: current
+- Env gap failed-group coverage: current
+- Env skeleton usable for current preflight: true
+- Env skeleton active keys: 65
+- Env skeleton covers failing groups: true
+- Env skeleton public defaults present: true
+- Env skeleton secret-like values omitted: true
+- Env gap generated: 2026-06-10T23:01:10.720Z
+
+## Physical Device Readiness
+
+- Status: physical-device-capture-blocked
+- Boundary: Current device discovery only. Store release still requires promoted Android real-browser, iOS physical-device, normal-browsing, performance, store/ad sandbox, and AI backend evidence.
+- Android: not-ready
+  - Discovery artifact: `docs/validation/artifacts/android-device-discovery-current/android-device-discovery.json`
+  - Result: no-ready-android-device
+  - Freshness: stale
+  - Ready devices: 0
+  - Ready physical candidates: 0
+  - Next: Refresh Android device discovery; current discovery freshness is stale.
+  - Generated: 2026-06-11T08:35:34.359Z
+  - Stale reason: device-discovery-stale
+- iOS: not-ready
+  - Discovery artifact: `docs/validation/artifacts/ios-device-discovery-current/ios-device-discovery.json`
+  - Result: no-physical-device
+  - Freshness: stale
+  - Ready devices: 0
+  - Ready physical candidates: 0
+  - Next: Refresh iOS device discovery; current discovery freshness is stale.
+  - Device list source: xctrace
+  - Device list artifact: `docs/validation/artifacts/ios-device-discovery-current/xctrace-devices.txt`
+  - Generated: 2026-06-11T08:35:36.965Z
+  - Stale reason: device-discovery-stale
+
+## Backend/Supabase Deployment Packet
+
+- Artifact: `docs/validation/artifacts/supabase-deployment-current/supabase-deployment-packet.json`
+- Sanitized: true
+- Result: pending-live-project
+- Checks: 13 pass, 1 warn, 0 fail
+- Live project confirmed: false
+- Project ref configured: false
+- Project ref shape ok: true
+- Secret values omitted: true
+- Target note: Production Supabase project selection is pending.
+- Source freshness: current
+- Backend blocker groups covered: `production-backend-infrastructure`, `production-adult-domain-feed`, `production-analytics-ingestion`, `production-notification-backend`, `production-monetization`, `production-ai-backend`
+- Schema hash: `sha256-872b3acfd48a5a55f1e9f8cb8f1f3b8fa9cfa97703caf8bf06588a5558f9f48a`
+- Edge config hash: `sha256-7e822681c53563c2e889065f462126bf16b1d05174e06be81f5a1007f51ab005`
+- Backend doc hash: `sha256-490a1bd5b630b0e3ca83ab4d6291fee4c8d69008b25fd8a341154b8b0bd1cebb`
+- Deploy commands:
+  - `supabase link --project-ref <production-project-ref>`
+  - `supabase db push`
+  - `supabase secrets set --env-file <production-env-file>`
+  - `supabase functions deploy adult-domain-feed-sync`
+  - `supabase functions deploy analytics-retention-cleanup`
+- Post-deploy smoke commands:
+  - `npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/release-env-preflight-report.json`
+  - `npm run smoke:backend-readiness -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/backend-readiness-smoke-report.json`
+  - `npm run smoke:supabase-schema -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/supabase-schema-smoke-report.json`
+  - `npm run smoke:adult-domain-feed -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/adult-domain-feed-smoke-report.json`
+  - `npm run smoke:analytics-ingestion -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/analytics-ingestion-smoke-report.json`
+  - `npm run smoke:remote-notifications -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/remote-notification-smoke-report.json`
+  - `npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/purchase-verification-smoke-report.json`
+  - `npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/ai-backend-smoke-report.json`
+- Pending external actions:
+  - Choose or create the FREED production Supabase project; do not use inactive or unrelated projects.
+  - Push secrets through Supabase dashboard or supabase secrets set --env-file <production-env-file> without committing the env file.
+  - Apply migrations and deploy both Edge Functions only after the project target is confirmed.
+  - Run every smoke command in this packet and attach only sanitized JSON reports under docs/validation/artifacts/<run-id>/.
+- Boundary: Backend deployment handoff only. Release still requires a live production project, production env secrets outside the repo, deployed smoke reports, store sandbox evidence, and physical-device evidence.
+
+## Android Local Download
+
+- APK: `docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal-20260610-162547.apk`
+- Size bytes: 147152008
+- SHA-256: `sha256-d8ce331f89ee0de6c121117ac8bbe240ac619895dc8fbb0f7c3b10f806017f05`
+- Note: Local APK download/support artifact only; a newer current Android rebuild failed, so this APK is not evidence for the latest native code.
+- Current rebuild failure report: `docs/validation/artifacts/android-current-apk-toolchain-retry/android-apk-build-report.json`
+- Current rebuild failed after selected APK: true
+- Current rebuild stale-download warning: true
+- Current rebuild failed task: `:app:configureCMakeRelWithDebInfo[arm64-v8a]`
+- Current rebuild toolchain: CMake `3.31.0`, NDK `28.2.13676358`
+- Current rebuild CMake exit 137: true
+- Current rebuild host memory constrained: true (8192 MB)
+- Current rebuild requested new architecture: true
+- React Native forced New Architecture: false
+- Handoff report: `docs/validation/artifacts/android-download-current/android-apk-download-handoff.json`
+- Handoff sanitized: true
+- Handoff generated: 2026-06-11T09:08:23.475Z
+- Handoff APK: `docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal.apk`
+- Handoff APK exists: true
+- Handoff APK hash matches file: true
+- Handoff matches latest APK hash: true
+- Ready to serve selected APK: true
+- Usable for physical QA handoff: true
+- Download server currently verified: true
+- APK use boundary valid: true
+  - Local QA download ready: true
+  - Store submission ready: false
+  - Store submission correctly blocked: true
+  - Same-device evidence required: true
+  - Same-device evidence valid: true
+  - Same-device evidence steps: `Install QA report`, `Permission wizard`, `Real-browser evidence`
+  - Store artifact command: `npm run build:android-aab:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/android-aab-build-report.json`
+- Handoff APK SHA-256: `sha256-d8ce331f89ee0de6c121117ac8bbe240ac619895dc8fbb0f7c3b10f806017f05`
+- Download handoff doc: `docs/validation/artifacts/android-download-current/ANDROID_APK_DOWNLOAD_HANDOFF.md`
+- Physical QA checklist: `docs/validation/artifacts/android-download-current/ANDROID_PHYSICAL_QA_CHECKLIST.md`
+- QR SVG: `docs/validation/artifacts/android-download-current/ANDROID_APK_DOWNLOAD_QR.svg`
+- Current QR target URL: `http://192.168.29.23:8788/`
+- Android device discovery: no-ready-android-device
+  - Freshness: stale
+  - Artifact: `docs/validation/artifacts/android-device-discovery-current/android-device-discovery.json`
+  - Ready physical devices: 0
+  - Ready adb devices: 0
+  - Age minutes: 35.63
+  - Next: Connect a physical Android phone, enable USB debugging, authorize this Mac, then rerun npm run evidence:android-devices.
+- Download server live check: pass
+  - Freshness: current
+  - Generated: 2026-06-11T09:08:36.918Z
+  - Artifact: `docs/validation/artifacts/android-download-current/android-apk-download-live-check.json`
+  - Checks: 49 pass, 0 fail
+  - Required boundary/page checks passed: true
+  - Checked page URL: `http://192.168.29.23:8788/`
+  - Checked APK URL: `http://192.168.29.23:8788/download/FREED-release-universal.apk`
+  - Age minutes: 2.58
+  - Page: HTTP 200, text/html; charset=utf-8
+  - APK route: HTTP 200, 147152008 bytes, application/vnd.android.package-archive
+- Download server ensure: pass
+  - Freshness: current
+  - Generated: 2026-06-11T09:08:36.930Z
+  - Artifact: `docs/validation/artifacts/android-download-current/android-apk-download-ensure.json`
+  - Checks: 5 pass, 0 fail
+  - Server start attempted: false
+  - Server started: false
+  - Final live check: pass (initial)
+  - Live check report: `docs/validation/artifacts/android-download-current/android-apk-download-live-check.json`
+- LAN URLs in handoff: `http://127.0.0.1:8788/`, `http://192.168.29.23:8788/`
+- Download path: `/download/FREED-release-universal.apk`
+- Start download server: `npm run qa:android-download -- --apk docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal.apk --host 0.0.0.0 --port 8788 --run-id android-download-current`
+- Verify download server: `npm run qa:android-download:live-check -- --handoff docs/validation/artifacts/android-download-current/android-apk-download-handoff.json --report docs/validation/artifacts/android-download-current/android-apk-download-live-check.json`
+- Ensure download server: `npm run qa:android-download:ensure -- --handoff docs/validation/artifacts/android-download-current/android-apk-download-handoff.json --live-check-report docs/validation/artifacts/android-download-current/android-apk-download-live-check.json --report docs/validation/artifacts/android-download-current/android-apk-download-ensure.json --start-if-needed`
+- Refresh Android device discovery: `npm run evidence:android-devices -- --run-id android-device-discovery-current --output-dir docs/validation/artifacts/android-device-discovery-current`
+- Write install QA plan: `npm run qa:android-install -- --plan-only --apk docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal.apk --run-id android-download-current --output-dir docs/validation/artifacts/android-download-current/android-install-qa --report docs/validation/artifacts/android-download-current/android-install-qa/android-install-qa-plan.json`
+- Install QA plan artifact: `docs/validation/artifacts/android-download-current/android-install-qa/android-install-qa-plan.json`
+- Install QA plan exists: true
+- Install QA plan status: plan-only
+- Install QA plan usable for handoff: true
+- Install QA plan APK hash matches handoff: true
+- Install QA plan APK path matches handoff: true
+- Install QA plan run ID matches handoff: true
+- Install QA plan physical device required: true
+- Install QA plan release evidence satisfied: false
+- Install QA plan required proof flags present: true
+- Install QA plan required proof flags: `--permission-proof`, `--native-status-proof`, `--dns-guard-proof`
+- Install QA command: `npm run qa:android-install -- --apk docs/validation/artifacts/continue-goal-android-current-artifacts/apk/FREED-release-universal.apk --run-id android-download-current --output-dir docs/validation/artifacts/android-download-current/android-install-qa`
+- Permission wizard report command: `npm run evidence:permission-wizard -- --platform android --run-id android-download-current-permission-wizard --report docs/validation/artifacts/android-download-current/android-real-browser-capture/android-permission-wizard-report.json --test-protection-passed --confirm-common-flow --confirm-android-flow --android-selected-app-count <count>`
+- Protection evidence command: `npm run evidence:android-real-browser -- --device <serial> --adult-url <real-adult-url> --permission-proof --native-status-proof --dns-guard-proof --run-id android-download-current --output-dir docs/validation/artifacts/android-download-current/android-real-browser-capture`
+- Handoff boundary: This download handoff proves only the selected APK, hash, local download route, and follow-up commands. It does not prove install, permission consent, browser blocking, or Play readiness.
+
+## EAS Current-Source Build Handoff
+
+- Artifact: `docs/validation/artifacts/eas-build-current/eas-build-handoff.json`
+- Generated: 2026-06-11T08:10:45.947Z
+- Result: ready-for-approved-eas-build
+- Ready for approved EAS build: true
+- Release evidence satisfied: false
+- EAS CLI invocation: `npx eas-cli@latest`
+- npx available: true (../../../../../opt/homebrew/bin/npx)
+- Local Android blocked: true
+- Local Android CMake exit 137: true
+- Failed local task: `:app:configureCMakeRelWithDebInfo[arm64-v8a]`
+- React Native forced New Architecture: true
+- EAS Android internal APK: `npm run eas:build:internal -- --platform android --non-interactive`
+- EAS Android Play AAB: `npm run eas:build:production -- --platform android --non-interactive`
+- EAS iOS internal: `npm run eas:build:internal -- --platform ios --non-interactive`
+- EAS iOS production: `npm run eas:build:production -- --platform ios --non-interactive`
+- Required post-build receipts:
+  - EAS build URL
+  - EAS build ID
+  - Git/source revision used by EAS
+  - Profile name: internal for QA APK or production for Play AAB/App Store IPA
+  - Platform: android or ios
+  - Artifact type: apk, aab, app, or ipa
+  - Artifact SHA-256 and byte size
+  - Android signing mode or iOS distribution signing summary
+  - Production env preflight report path for store artifacts
+  - Physical-device install/protection QA run ID before evidence promotion
+- Boundary: EAS handoff only. This report does not prove an EAS build was run, that artifacts exist, that stores accepted uploads, or that physical-device protection evidence passed.
+
+## EAS Build Attempt
+
+- Artifact: `docs/validation/artifacts/eas-build-current/eas-build-attempt.json`
+- Generated: 2026-06-11T08:44:22.464Z
+- Result: blocked-before-eas-build-auth
+- Status: blocked-not-logged-in
+- Attempt type: auth-check
+- Target: android internal apk
+- Ready for current-source artifact: false
+- Release evidence satisfied: false
+- Exit code: 1
+- Observed message code: `not-logged-in`
+- Login command: `npx eas-cli@latest login`
+- Auth check: `npx eas-cli@latest whoami --non-interactive`
+- Target build command: `npm run eas:build:internal -- --platform android --non-interactive`
+- Boundary: EAS build attempt receipt only. This does not prove an artifact exists, was installed on a physical device, passed protection QA, was uploaded to a store, or passed release evidence.
+
+## Android Upload Signing
+
+- Status: upload-signing-ready-admob-blocked
+- AAB report: `docs/validation/artifacts/android-signing-current/android-aab-dry-run-report.json`
+- Signing preflight: `docs/validation/artifacts/android-signing-current/release-env-preflight-report.json`
+- Release evidence satisfied: false
+- Signing mode: `upload-signing`
+- Play Console ready signing: true
+- Upload keystore checked: true
+- Debug certificate: false
+- Upload certificate SHA-256: `b75a9c887e138db8c4d5568149d5009d078fee481ec37537349abb36c9cd6a11`
+- AAB dry-run result: fail
+- Build result: blocked-before-gradle
+- Gradle invoked: false
+- Release env file loaded: true
+- Env source: `~/.freed/android-upload/freed-upload.env merged with process.env`
+- Current artifact blocker: Android upload signing requires a production Android AdMob app ID. Set EXPO_PUBLIC_ADMOB_APP_ID_ANDROID or EXPO_PUBLIC_ADMOB_APP_ID to a non-sample ca-app-pub-0000000000000000~0000000000 value.
+- Signing preflight result: fail
+- Signing group: pass
+- Signing preflight checks: 16 pass, 15 fail
+- Boundary: Upload-signing proof only. Play/App Store release still requires production AdMob, production monetization/backend env, deployed smoke reports, and physical-device/store sandbox evidence.
+
+## Store Launch Catalog
+
+- Artifact: `docs/validation/artifacts/store-launch-catalog-current/store-launch-catalog-audit.json`
+- Sanitized: true
+- Result: pass
+- Checks: 29 pass, 0 fail
+- Launch products: yearly=`freed_premium_yearly`, monthly=`freed_premium_monthly`, lifetime=`freed_premium_lifetime`
+- Future SKUs disabled for v1: `freed_family_yearly`, `freed_accountability_monthly`, `freed_ai_coach_monthly`
+- Public listing screenshots: pending-capture
+  - Ready for store upload: false
+  - Final manifest: `store/screenshots/listing/manifest.json`
+  - Manifest exists: false
+  - Template: `store/screenshots/listing/manifest.template.json`
+  - Assets: 0
+  - Blockers: `listing-screenshot-manifest-missing`
+  - Next: Capture signed-build public listing screenshots and write store/screenshots/listing/manifest.json.
+- Boundary: Local catalog precheck only. This does not prove App Store Connect or Google Play Console products exist, are reviewed, or have passed sandbox purchases.
+
+## Store Listing Screenshot Handoff
+
+- Artifact: `docs/validation/artifacts/store-listing-screenshots-current/store-listing-screenshot-handoff.json`
+- Generated: 2026-06-11T08:25:20.656Z
+- Result: ready-for-signed-build-capture
+- Ready for signed-build capture: true
+- Ready for store upload: false
+- Final manifest: `store/screenshots/listing/manifest.json`
+- Final manifest exists: false
+- Final manifest status: pending-signed-build-capture
+- Capture rows: 6
+- Capture concepts:
+  - turn-on-real-protection: TURN ON REAL PROTECTION (1290x2796)
+  - block-adult-sites-safely: BLOCK ADULT SITES SAFELY (1290x2796)
+  - interrupt-app-loops: INTERRUPT APP LOOPS (1290x2796)
+  - recover-in-the-moment: RECOVER IN THE MOMENT (1290x2796)
+  - keep-privacy-local: KEEP PRIVACY LOCAL (1290x2796)
+  - upgrade-without-ad-breaks: UPGRADE WITHOUT AD BREAKS (1290x2796)
+- Refresh EAS handoff: `npm run evidence:eas-build-handoff -- --run-id eas-build-current --output-dir docs/validation/artifacts/eas-build-current`
+- Validate final manifest: `npm run audit:store-catalog -- --report docs/validation/artifacts/store-launch-catalog-current/store-launch-catalog-audit.json`
+- Boundary: Store listing screenshot capture handoff only. This does not prove final screenshots exist, are from a signed build, were uploaded to stores, or satisfy physical-device protection evidence.
+
+## Paywall Source Scope
+
+- Artifact: `docs/validation/artifacts/paywall-launch-scope-current/paywall-launch-source-audit.json`
+- Sanitized: true
+- Result: pass
+- Checks: 15 pass, 0 fail
+- Launch plan IDs: `yearly`, `monthly`, `lifetime`
+- Launch products: yearly=`freed_premium_yearly`, monthly=`freed_premium_monthly`, lifetime=`freed_premium_lifetime`
+- Future plans hidden for v1: `family`, `accountability`, `ai-coach`
+- Paywall source hash: `sha256-bba78e4c9902026c689672708f8bc2f52adf445ce8aa242b1da39741da069e26`
+- Boundary: Local paywall source precheck only. This does not prove the submitted native build, store products, rewarded ads, server receipt verification, or sandbox purchases passed.
+
+## Store/Ad Sandbox Setup
+
+- Artifact: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/capture-manifest.json`
+- Sanitized: true
+- Result: capture-plan-created
+- Release env file loaded: false
+- Manual QA rows: 15 pending of 15
+- Store provider: `native-iap`
+- Entitlement configured: false
+- Purchase verify endpoint configured: false
+- iOS AdMob app ID configured: false
+- Android AdMob app ID configured: false
+- iOS rewarded unit configured: false
+- Android rewarded unit configured: false
+- iOS launch products: yearly=`freed_premium_yearly`, monthly=`freed_premium_monthly`, lifetime=`freed_premium_lifetime`
+- Android launch products: yearly=`freed_premium_yearly`, monthly=`freed_premium_monthly`, lifetime=`freed_premium_lifetime`
+- Missing production config: `EXPO_PUBLIC_PREMIUM_ENTITLEMENT_ID`, `EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT`, `EXPO_PUBLIC_ADMOB_APP_ID_IOS`, `EXPO_PUBLIC_ADMOB_APP_ID_ANDROID`, `EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS`, `EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID`
+- Release preflight command: `npm run preflight:release-env`
+- Purchase smoke command: `npm run smoke:purchase-verification`
+- Console/payment handoff: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_CONSOLE_PAYMENT_HANDOFF.md`
+- Console execution runbook: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_CONSOLE_EXECUTION_RUNBOOK.md`
+- Store sandbox test plan: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_SANDBOX_TEST_PLAN.md`
+- Store app-record action packet: blocked-before-hosted-legal-urls
+  - Artifact: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_APP_RECORD_ACTION_PACKET.json`
+  - Handoff doc: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_APP_RECORD_ACTION_PACKET.md`
+  - Markdown exists: true
+  - Usable for confirmed draft app-record action: false
+  - Action-time confirmation required: true
+  - Confirmation token: `confirm-draft-store-app-record-creation-only`
+  - No production approval granted: true
+  - Google Play app record: unconfirmed
+  - App Store Connect app record: unconfirmed
+  - Apple license agreement: unconfirmed
+  - Hosted legal URL audit: fail
+  - Hosted legal URLs verified: false
+  - Store legal URL entry allowed: false
+  - Hosted legal report freshness: current
+  - Browser readiness report freshness: stale-source-drift
+  - Packet source freshness: stale-source-drift
+  - Recheck after app records: `npm run evidence:store-console-browser -- --play-console-observed --play-freed-app-present --app-store-connect-observed --app-store-freed-app-present --app-store-agreement-accepted`
+- AdMob action packet: blocked-before-admob-env-ready
+  - Artifact: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/ADMOB_ACTION_PACKET.json`
+  - Handoff doc: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/ADMOB_ACTION_PACKET.md`
+  - Markdown exists: true
+  - Env patch template: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/ADMOB_ENV_PATCH.template.env`
+  - Env patch template exists: true
+  - Usable for confirmed AdMob action: false
+  - Action-time confirmation required: true
+  - Confirmation token: `confirm-admob-app-and-rewarded-unit-creation-only`
+  - No production approval granted: true
+  - Current blocker: android-upload-signing-blocked-by-production-admob
+  - Env ready: false
+  - Production env keys configured: 1 of 5
+  - Missing env keys: `EXPO_PUBLIC_ADMOB_APP_ID_IOS`, `EXPO_PUBLIC_ADMOB_APP_ID_ANDROID`, `EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS`, `EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID`
+  - Allowed ad formats: `rewarded`
+  - Forbidden ad formats: `banner`, `interstitial`, `app-open`, `native`
+  - Packet source freshness: stale-source-drift
+  - Regenerate after AdMob env: `npm run evidence:store-ad-sandbox -- --release-env-file <production-env-file> --run-id store-ad-sandbox-current --output-dir docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture`
+  - Read-only AdMob readiness: `npm run evidence:admob-console-browser -- --admob-console-observed --admob-ios-app-present --admob-android-app-present --ios-rewarded-unit-present --android-rewarded-unit-present --no-forbidden-formats-observed`
+  - Read-only AdMob readiness artifact: `docs/validation/artifacts/admob-console-current/admob-console-readiness.json`
+  - Read-only AdMob readiness result: blocked-before-admob-console-ready
+  - Ready for rewarded-ad request proof: false
+  - AdMob browser connector: native-module-load-failed
+    - Connector unavailable: true
+    - Native module load failed: true
+    - Selected Chrome profile extension missing: false
+    - Extension present in another Chrome profile: false
+    - Native host manifest OK: null
+    - Repair handoff required: true
+    - Repair checklist:
+      - Open Chrome in the signed-in profile intended for AdMob work.
+      - Confirm the Codex Chrome Extension is installed and enabled in that same selected Chrome profile.
+      - If the extension is enabled in a different Chrome profile, switch the connector to that profile or install/enable the extension in the selected profile.
+      - If the Browser or Chrome plugin native module fails before tab discovery, repair or reinstall the bundled Browser/Chrome plugin and rerun this report.
+      - If the native host is reported invalid, reinstall or repair the Chrome plugin from the Codex plugin UI.
+      - Rerun the read-only AdMob readiness command before creating or editing AdMob apps or units.
+  - AdMob readiness next actions:
+    - Repair or reinstall the bundled Browser/Chrome plugin native module, then rerun this read-only AdMob report before creating or editing ad apps or units.
+    - Create or identify the iOS AdMob app for FREED bundle app.freed.recovery.
+    - Create or identify the Android AdMob app for FREED package app.freed.recovery.
+    - Create exactly one rewarded reset ad unit per platform for the recovery challenge gate.
+    - Store the four production AdMob IDs in the production env file outside the repo.
+    - Rerun this read-only report, then fill rewarded-ad-request-report.template.json only after a real rewarded response loads on device.
+- Rewarded ad request template: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/rewarded-ad-request-report.template.json`
+- Paywall source audit: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/paywall-launch-source-audit.json`
+- Source freshness: stale-source-drift
+  - Reason: app-record-action-packet: app-record-packet-source:store/console-launch-packet.md-hash-mismatch, app-record-browser-readiness: store-console-browser-readiness-report-hash-mismatch, admob-action-packet: admob-action-packet-source:store/console-launch-packet.md-hash-mismatch
+  - Paywall audit freshness: current
+    - Audit artifact: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/paywall-launch-source-audit.json`
+    - Audit passing: true
+  - Console setup source freshness: current
+- Console product setup proof: pending-manual-console-setup
+  - Artifact: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/store-console-product-setup-report.template.json`
+  - Result: pending-manual-console-setup
+  - Proof captured: false
+  - App-record Browser proof: false
+    - Browser report: `docs/validation/artifacts/store-console-browser-current/store-console-browser-readiness.json`
+    - Read-only Browser check: false
+    - Store mutation performed during Browser check: false
+    - Google Play product setup allowed: false
+    - App Store Connect product setup allowed: false
+  - Checks: 0 true, 13 false of 13
+  - App Store Connect evidence artifacts: 6 total, 6 pending
+  - Google Play evidence artifacts: 6 total, 6 pending
+- Browser console readiness: blocked-before-console-product-setup
+  - Artifact: `docs/validation/artifacts/store-console-browser-current/store-console-browser-readiness.json`
+  - Handoff doc: `docs/validation/artifacts/store-console-browser-current/STORE_CONSOLE_BROWSER_READINESS.md`
+  - Read-only: true
+  - Ready for product setup: false
+  - Browser connector: native-module-load-failed
+    - Connector unavailable: true
+    - Native module load failed: true
+    - Selected Chrome profile extension missing: false
+    - Extension present in another Chrome profile: false
+    - Native host manifest OK: null
+    - Repair handoff required: true
+    - Repair checklist:
+      - Open Chrome in the signed-in profile intended for Google Play Console and App Store Connect work.
+      - Confirm the Codex Chrome Extension is installed and enabled in that same selected Chrome profile.
+      - If the extension is enabled in a different Chrome profile, switch the connector to that profile or install/enable the extension in the selected profile.
+      - If the Browser or Chrome plugin native module fails before tab discovery, repair or reinstall the bundled Browser/Chrome plugin and rerun this report.
+      - If the native host is reported invalid, reinstall or repair the Chrome plugin from the Codex plugin UI.
+      - Rerun the read-only store console readiness command before creating or editing store products.
+  - Google Play app record: unconfirmed
+  - Google Play product setup allowed: false
+  - App Store Connect app record: unconfirmed
+  - App Store Connect license agreement: unconfirmed
+  - App Store Connect product setup allowed: false
+  - Blockers: `browser-connector-unavailable`, `browser-native-module-load-failed`, `google-play-console-not-observed`, `google-play-freed-app-record-unconfirmed`, `app-store-connect-not-observed`, `app-store-connect-freed-app-record-unconfirmed`, `app-store-connect-license-agreement-unconfirmed`
+  - Browser readiness next actions:
+    - Repair or reinstall the bundled Browser/Chrome plugin native module, then rerun this read-only report before creating or editing store products.
+    - Create or identify the Google Play app record for FREED package app.freed.recovery.
+    - Have the Apple Account Holder accept any pending Apple Developer Program License Agreement.
+    - Create or identify the App Store Connect app record for FREED bundle ID app.freed.recovery.
+    - Only after both app records exist, configure the Core 3 yearly, monthly, and lifetime products from store/store-products.json.
+    - Keep store products, builds, and review state in draft/internal/TestFlight until strict release evidence passes.
+- Boundary: Store/ad sandbox handoff only. Release still requires real App Store Connect and Play Console products, production AdMob app and rewarded unit IDs, server receipt verification, sandbox purchase/restore, rewarded-ad behavior, premium no-ad proof, and promoted evidence.
+
+## Permission Flow Source Audit
+
+- Artifact: `docs/validation/artifacts/permission-flow-current/permission-flow-source-audit.json`
+- Sanitized: true
+- Result: pass
+- Checks: 22 pass, 0 fail
+- Android order: `android-native-adult-domain-feed>android-dns-guard>android-usage-access>android-accessibility>android-doomscroll-apps>activation-test`
+- iOS order: `ios-screen-time>ios-adult-web-filter>ios-screen-time-targets>ios-selected-app-limit-monitor>ios-safari-content-blocker>activation-test`
+- Boundary: Source-level permission-flow contract only; physical Android/iOS device evidence, store sandbox purchases, and strict release audit still gate production submission.
+
+## Store Legal Policy
+
+- Artifact: `docs/validation/artifacts/store-legal-policy-current/store-legal-policy-audit.json`
+- Sanitized: true
+- Result: pass
+- Checks: 14 pass, 0 fail
+- Bundle/package: `app.freed.recovery` / `app.freed.recovery`
+- Privacy URL: `https://freedrecovery.app/privacy`
+- Support URL: `https://freedrecovery.app/support`
+- Account deletion URL: `https://freedrecovery.app/account-deletion`
+- Boundary: Local legal/metadata source precheck only; hosted page availability, legal review, store-console answers, platform approval, sandbox purchases, and physical-device evidence still gate production submission.
+
+## Store Legal Web Export
+
+- Artifact: `docs/validation/artifacts/store-legal-web-current/store-legal-web-export-audit.json`
+- Sanitized: true
+- Result: pass
+- Checks: 21 pass, 0 fail
+- Export dir: `dist`
+- /privacy: `dist/privacy.html`
+  - Public URL: `https://freedrecovery.app/privacy`
+  - Size bytes: 26133
+  - SHA-256: `sha256-23d6a477278fc04fe0269378c83b8fe040224878c5d5e8668d8a95694de81e5b`
+- /support: `dist/support.html`
+  - Public URL: `https://freedrecovery.app/support`
+  - Size bytes: 24300
+  - SHA-256: `sha256-dc41a86b82ca7fca3a8096de5ace864ef22924f08c02519545fdef1fbb66cc69`
+- /account-deletion: `dist/account-deletion.html`
+  - Public URL: `https://freedrecovery.app/account-deletion`
+  - Size bytes: 24067
+  - SHA-256: `sha256-89316b39748a776f2fac427af59ccc8eced7a2bfe6e9b7ad35de07a6f7ac9c99`
+- Boundary: Local static-export proof only. Hosted page availability, DNS, CDN cache, legal review, store-console entry, and platform approval still gate production submission.
+
+## Store Legal Hosted URLs
+
+- Artifact: `docs/validation/artifacts/store-legal-hosted-current/store-legal-hosted-url-audit.json`
+- Sanitized: true
+- Result: fail
+- Checks: 0 pass, 3 fail
+- Generated: 2026-06-11T03:02:55.424Z
+- Freshness: current
+- Usable for store submission: false
+  - Age minutes: 368.27
+- /privacy: HTTP 0
+  - Public URL: `https://freedrecovery.app/privacy`
+  - Final URL: ``
+  - Content type: ``
+  - Size bytes: 0
+- /support: HTTP 0
+  - Public URL: `https://freedrecovery.app/support`
+  - Final URL: ``
+  - Content type: ``
+  - Size bytes: 0
+- /account-deletion: HTTP 0
+  - Public URL: `https://freedrecovery.app/account-deletion`
+  - Final URL: ``
+  - Content type: ``
+  - Size bytes: 0
+- Boundary: Hosted URL availability proof only. Legal review, store-console entry, platform approval, sandbox purchases, and physical-device evidence still gate production submission.
+
+## Store Legal Web Deploy Packet
+
+- Artifact: `docs/validation/artifacts/store-legal-web-deploy-current/store-legal-web-deploy-packet.json`
+- Handoff doc: `docs/validation/artifacts/store-legal-web-deploy-current/STORE_LEGAL_WEB_DEPLOY_PACKET.md`
+- Sanitized: true
+- Result: static-export-ready-deploy-blocked
+- Static export ready: true
+- Hosted URLs verified: false
+- Source freshness: current
+- Deploy blocked by: `dns-not-resolving`, `eas-project-id-not-configured`, `eas-account-not-logged-in`, `eas-project-not-linked`
+- Static hosting bundle:
+  - Generated: true
+  - Bundle dir: `docs/validation/artifacts/store-legal-web-deploy-current/static-hosting-bundle`
+  - Archive created: true
+  - Archive: `docs/validation/artifacts/store-legal-web-deploy-current/freed-store-legal-web-static-bundle.zip`
+  - Archive SHA-256: `sha256-d0362e54847dd15d0585e58fa7c81e6ee3209eee1410b2987aa22ac94d761633`
+  - Manifest: `docs/validation/artifacts/store-legal-web-deploy-current/static-hosting-bundle/static-hosting-manifest.json`
+  - Manifest SHA-256: `sha256-00a9ccda77f2f2b10f2f73e029afb5c7ea053c36ef3296c2eaee5f4d734574ae`
+  - Files: 8
+  - Total bytes: 82282
+- Legal web deploy env template:
+  - Created: true
+  - Artifact: `docs/validation/artifacts/store-legal-web-deploy-current/LEGAL_WEB_DEPLOY_ENV.template.env`
+  - SHA-256: `sha256-b9c577207f29d3ae4510eb523587c1f85ccd0852aee27b9482862420e8dc00ff`
+  - Keys: `EAS_PROJECT_ID`, `EXPO_PROJECT_ID`, `EXPO_OWNER`, `EXPO_TOKEN`
+  - Approval env: FREED_LEGAL_WEB_DEPLOY_APPROVED=ready-to-deploy-legal-pages
+  - Active approval prefilled: false
+- EAS legal web deploy readiness:
+  - Artifact: `docs/validation/artifacts/store-legal-web-deploy-current/eas-legal-web-deploy-readiness.json`
+  - Generated: 2026-06-11T03:03:18.666Z
+  - Result: blocked-before-deploy
+  - Source freshness: current
+  - Usable for current source reports: true
+  - Ready for approved deploy: false
+  - Ready for current approved deploy: false
+  - Deployment attempted: false
+  - EAS account logged in: false
+  - EAS project ID configured: false
+  - EAS project ID source: app.config.js:env-projectId-marker
+  - EAS project ID format: env-missing
+  - EAS project linked: false
+  - Approval set now: false
+  - EAS blocked by: `eas-project-id-not-configured`, `eas-account-not-logged-in`, `eas-project-not-linked`
+- /privacy: `dist/privacy.html`
+  - Public URL: `https://freedrecovery.app/privacy`
+  - Hosted status: 0
+  - SHA-256: `sha256-23d6a477278fc04fe0269378c83b8fe040224878c5d5e8668d8a95694de81e5b`
+- /support: `dist/support.html`
+  - Public URL: `https://freedrecovery.app/support`
+  - Hosted status: 0
+  - SHA-256: `sha256-dc41a86b82ca7fca3a8096de5ace864ef22924f08c02519545fdef1fbb66cc69`
+- /account-deletion: `dist/account-deletion.html`
+  - Public URL: `https://freedrecovery.app/account-deletion`
+  - Hosted status: 0
+  - SHA-256: `sha256-89316b39748a776f2fac427af59ccc8eced7a2bfe6e9b7ad35de07a6f7ac9c99`
+- Boundary: Deployment handoff only. This does not prove DNS ownership, TLS issuance, hosted URL availability, legal review, store-console entry, platform approval, sandbox purchases, or physical-device evidence.
+
+## Handoff Packets
+
+- iOS Device Discovery: stale-device-discovery
+  - Artifact: `docs/validation/artifacts/ios-device-discovery-current/ios-device-discovery.json`
+  - Required for release: false
+  - Release evidence satisfied: false
+  - Result: no-physical-device
+  - Current device blocker: device-discovery-stale
+  - Discovery freshness: stale
+  - Discovery age minutes: 35.58
+  - Device list source: xctrace
+  - Device list artifact: `docs/validation/artifacts/ios-device-discovery-current/xctrace-devices.txt`
+  - Physical devices: 0
+  - Ready devices: 0
+  - Ready physical candidates: 0
+  - Output dir: `docs/validation/artifacts/ios-device-discovery-current`
+  - Boundary: Device discovery is a setup handoff only. It does not prove Family Controls authorization, Safari content blocking, DeviceActivity shielding, normal browsing allow, adult intercept, or challenge verification.
+- iOS Physical Capture Packet: blocked-device-not-ready
+  - Artifact: `docs/validation/artifacts/ios-physical-current/ios-physical-device-capture/capture-manifest.json`
+  - Required for release: true
+  - Release evidence satisfied: false
+  - Result: plan-only
+  - Current device blocker: current-ios-device-discovery-has-no-ready-physical-device, current-ios-device-discovery-stale, current-ios-device-discovery-result-no-physical-device
+  - Device ready for capture: false
+  - Manual flow rows: 25
+  - Output dir: `docs/validation/artifacts/ios-physical-current/ios-physical-device-capture`
+- Android Device Discovery: stale-device-discovery
+  - Artifact: `docs/validation/artifacts/android-device-discovery-current/android-device-discovery.json`
+  - Required for release: false
+  - Release evidence satisfied: false
+  - Result: no-ready-android-device
+  - Current device blocker: device-discovery-stale
+  - Discovery freshness: stale
+  - Discovery age minutes: 35.63
+  - Ready devices: 0
+  - Ready physical candidates: 0
+  - Output dir: `docs/validation/artifacts/android-device-discovery-current`
+  - Boundary: Device discovery is a setup handoff only. It does not prove physical-device status, installed upload-signed FREED APK, Accessibility consent, Usage Access consent, VPN/DNS Guard consent, app shielding, normal browsing allow, adult intercept, or challenge verification.
+- Android Real-Browser Capture Packet: plan-only
+  - Artifact: `docs/validation/artifacts/android-real-browser-current/android-real-browser-capture/capture-manifest.json`
+  - Required for release: true
+  - Release evidence satisfied: false
+  - Result: plan-only
+  - Output dir: `docs/validation/artifacts/android-real-browser-current/android-real-browser-capture`
+- Store/Ad Sandbox: stale-store-source-drift
+  - Artifact: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/capture-manifest.json`
+  - Required for release: true
+  - Release evidence satisfied: false
+  - Result: capture-plan-created
+  - Stale/current-state reason: app-record-action-packet: app-record-packet-source:store/console-launch-packet.md-hash-mismatch, app-record-browser-readiness: store-console-browser-readiness-report-hash-mismatch, admob-action-packet: admob-action-packet-source:store/console-launch-packet.md-hash-mismatch
+  - Source freshness: stale-source-drift
+  - Console/payment handoff: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_CONSOLE_PAYMENT_HANDOFF.md`
+  - Evidence fill template: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/store-ad-sandbox-evidence-fill-template.json`
+  - Store sandbox test plan: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/STORE_SANDBOX_TEST_PLAN.md`
+  - Paywall source audit: `docs/validation/artifacts/store-ad-sandbox-current/store-ad-sandbox-capture/paywall-launch-source-audit.json`
+- Normal Browsing Corpus: capture-matrix-created
+  - Artifact: `docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/capture-manifest.json`
+  - Required for release: true
+  - Release evidence satisfied: false
+  - Result: capture-matrix-created
+  - Source freshness: current
+  - Evidence fill template: `docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/normal-browsing-evidence-fill-template.json`
+- Performance Profile: capture-plan-created
+  - Artifact: `docs/validation/artifacts/performance-profile-current/performance-profile-capture/capture-manifest.json`
+  - Required for release: true
+  - Release evidence satisfied: false
+  - Result: capture-plan-created
+  - Source freshness: current
+  - Manual flow rows: 15
+  - Boundary: Performance capture packets are setup handoffs only. They do not prove physical-device status, profiler thresholds, DNS latency, network-speed retention, routing boundaries, or battery/RAM/thermal behavior until real QA fills and validates performance-profile.json.
+- AI Backend Smoke: capture-plan-created
+  - Artifact: `docs/validation/artifacts/ai-backend-smoke-current/ai-backend-smoke-capture/capture-manifest.json`
+  - Required for release: true
+  - Release evidence satisfied: false
+  - Result: capture-plan-created
+  - Source freshness: current
+  - Evidence fill template: `docs/validation/artifacts/ai-backend-smoke-current/ai-backend-smoke-capture/ai-backend-smoke-evidence-fill-template.json`
+  - Boundary: AI backend smoke capture packets are setup handoffs only. They do not prove deployed CLARA, challenge, retention, model, safety eval, no-sensitive-echo, personalization, crisis fallback, or provider fallback behavior until real deployed-endpoint QA fills and validates ai-backend-smoke.json.
+
+## Next Actions
+
+- production-backend-infrastructure: fail
+  - Required env: SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, EXPO_PUBLIC_SUPABASE_URL, EXPO_PUBLIC_SUPABASE_ANON_KEY, BACKEND_MAINTENANCE_SECRET or CRON_SECRET, UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN
+  - Required reports:
+    - `npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json`
+    - `npm run smoke:backend-readiness -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/backend-readiness-smoke-report.json`
+    - `npm run smoke:supabase-schema -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/supabase-schema-smoke-report.json`
+- production-analytics-ingestion: fail
+  - Required env: EXPO_PUBLIC_ANALYTICS_ENDPOINT
+  - Required reports:
+    - `npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json`
+    - `npm run smoke:analytics-ingestion -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/analytics-ingestion-smoke-report.json`
+- production-notification-backend: fail
+  - Required env: REMOTE_NOTIFICATION_DISPATCH_SECRET, FCM_SERVER_KEY, FCM_ACCESS_TOKEN + FIREBASE_PROJECT_ID, or FIREBASE_SERVICE_ACCOUNT_JSON(_BASE64), APNS_KEY_ID + APNS_TEAM_ID + APNS_BUNDLE_ID + APNS_ENV=production + APNS_PRIVATE_KEY(_BASE64)
+  - Required reports:
+    - `npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json`
+    - `npm run smoke:remote-notifications -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/remote-notification-smoke-report.json`
+- production-adult-domain-feed: fail
+  - Required env: EXPO_PUBLIC_ADULT_DOMAIN_FEED_ENDPOINT, EXPO_PUBLIC_REQUIRE_REVIEWED_ADULT_DOMAIN_FEED=true, FREED_ADULT_DOMAIN_FEED_SOURCE_URLS
+  - Required reports:
+    - `npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json`
+    - `npm run smoke:adult-domain-feed -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/adult-domain-feed-smoke-report.json`
+- production-monetization: fail
+  - Required env: EXPO_PUBLIC_MONETIZATION_MODE=native, EXPO_PUBLIC_STORE_PROVIDER=native-iap, EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT, EXPO_PUBLIC_IAP_PRODUCT_*, EXPO_PUBLIC_ADMOB_APP_ID_IOS, EXPO_PUBLIC_ADMOB_APP_ID_ANDROID, EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS, EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID, APP_STORE_BUNDLE_ID, APP_STORE_SERVER_API_ENV=production, App Store Server API credentials, GOOGLE_PLAY_PACKAGE_NAME, Google Play verification credentials
+  - Required reports:
+    - `npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json`
+    - `npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/purchase-verification-smoke-report.json`
+  - Evidence file: `docs/validation/evidence/store-ad-sandbox.json`
+- production-android-signing: fail
+  - Required env: FREED_ANDROID_UPLOAD_STORE_FILE, FREED_ANDROID_UPLOAD_STORE_PASSWORD, FREED_ANDROID_UPLOAD_KEY_ALIAS, FREED_ANDROID_UPLOAD_KEY_PASSWORD
+  - Required reports:
+    - `npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json`
+    - `npm run build:android-apk:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/android-apk-build-report.json`
+    - `npm run build:android-aab:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/android-aab-build-report.json`
+- production-ai-backend: fail
+  - Required env: EXPO_PUBLIC_AI_COACH_MODE=remote, EXPO_PUBLIC_AI_COACH_ENDPOINT, EXPO_PUBLIC_AI_CHALLENGE_MODE=remote, EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT, OPENAI_API_KEY + OPENAI_MODEL, or GEMINI_API_KEY/GOOGLE_API_KEY/GOOGLE_GENAI_API_KEY + GEMINI_MODEL
+  - Required reports:
+    - `npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/release-env-preflight-report.json`
+    - `npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/ai-backend-smoke-report.json`
+  - Evidence file: `docs/validation/evidence/ai-backend-smoke.json`
+- ios-physical-device-validation: external
+  - Required reports:
+    - `npm run build:ios-archive:release -- --report docs/validation/artifacts/release-env-current/ios-release-archive-report.json`
+  - Capture helper: `npm run evidence:ios-physical-device -- --device <udid-or-name> --adult-host <real-adult-host> --app <signed-freed-app-or-ipa> --short-form-url <youtube-shorts-url> --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/ios-physical-device-capture`
+  - Evidence file: `docs/validation/evidence/ios-physical-device.json`
+- android-real-browser-validation: external
+  - Capture helper: `npm run evidence:android-real-browser -- --device <serial> --adult-url <real-adult-url> --permission-proof --native-status-proof --dns-guard-proof --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/android-real-browser-capture`
+  - Evidence file: `docs/validation/evidence/android-real-browser.json`
+- normal-browsing-corpus-validation: external
+  - Capture helper: `npm run evidence:normal-browsing-corpus -- --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/normal-browsing-corpus-capture`
+  - Evidence file: `docs/validation/evidence/normal-browsing-corpus.json`
+- performance-validation: external
+  - Capture helper: `npm run evidence:performance-profile -- --ios-device <udid-or-name> --android-device <serial> --android-background-cpu-proof --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/performance-profile-capture`
+  - Evidence file: `docs/validation/evidence/performance-profile.json`
+- store-ad-sandbox-validation: external
+  - Required env: store/ad production env from production-monetization
+  - Required reports:
+    - `npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/purchase-verification-smoke-report.json`
+  - Capture helper: `npm run evidence:store-ad-sandbox -- --release-env-file <production-env-file> --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/store-ad-sandbox-capture`
+  - Evidence file: `docs/validation/evidence/store-ad-sandbox.json`
+- ai-backend-smoke-validation: external
+  - Required env: remote AI production env from production-ai-backend
+  - Required reports:
+    - `npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/release-env-current/ai-backend-smoke-report.json`
+  - Capture helper: `npm run evidence:ai-backend-smoke -- --release-env-file <production-env-file> --run-id release-env-current --output-dir docs/validation/artifacts/release-env-current/ai-backend-smoke-capture`
+  - Evidence file: `docs/validation/evidence/ai-backend-smoke.json`
+
+Do not submit production until releaseReady is true and strict release verification passes.
+

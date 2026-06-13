@@ -1,0 +1,271 @@
+{
+  "schemaVersion": "release-readiness-report-v1",
+  "generatedAt": "2026-06-06T02:21:36.986Z",
+  "sanitized": true,
+  "strict": false,
+  "summary": {
+    "passCount": 30,
+    "warnCount": 0,
+    "failCount": 13
+  },
+  "results": [
+    {
+      "id": "prototype-design-files",
+      "status": "pass",
+      "evidence": "Prototype files and exported visual references are present.",
+      "next": ""
+    },
+    {
+      "id": "app-surface",
+      "status": "pass",
+      "evidence": "Expo Router shell and FREED app surface are present, with explicit app selection before paywall, persisted paywall handoff, platform-scoped protection activation before main entry, source-aware intervention copy, and native setup readiness revocation returning users to setup.",
+      "next": ""
+    },
+    {
+      "id": "prompt-to-artifact-traceability",
+      "status": "pass",
+      "evidence": "Prompt-to-artifact checklist, completion audit, live research notes, release blockers, evidence rules, and evidence capture runbook are documented.",
+      "next": ""
+    },
+    {
+      "id": "release-verifier-command-sequence",
+      "status": "pass",
+      "evidence": "Fail-closed release verifier supports safe --env-file handling with validation evidence/artifact folder rejection, optional safe --artifact-dir sanitized report collection under docs/validation/artifacts/<run-id> with existing-path/symlink rejection, schema/pass-count/fail-count/proof checks, top-level sanitized report-marker checks on every report artifact plus pass result markers for preflight/APK reports, full release-env preflight check-manifest validation, required upload-signed Android APK result IDs, required deployed-smoke result IDs including configured AI retention smoke, concrete proof-value checks for Android upload signing, non-debug upload-keystore proof, Play Console readiness, production Android AdMob app-id proof with sample-id rejection, artifact-level APK signature verification with debug-certificate rejection, Hermes engine proof with no JSC fallback for upload-signed Android APKs, packaged Hermes runtime proof with JSC runtime rejection, packaged ABI/bundle/hash/size, wall-clock and no-output timeout bounds, endpoint paths, privacy/rejection booleans, timeout bounds, and checked secret-key-name arrays, plus secret-shaped report-value rejection for URL credentials, JWTs, bearer tokens, provider keys, push-token shapes, and local home-profile paths, has executable env-file, report-path, report-validation, and bounded iOS native-build helper self-tests in the smoke harness audit, preserves app-level env-file flags through node --, starts with release env preflight, then runs typecheck, core tests, smoke harness self-tests, web and Android bundle exports, upload-signed Android APK build, regenerated client bundle audits, backend readiness smoke, Supabase schema smoke, adult-domain feed smoke, analytics ingestion smoke, remote-notification smoke, AI smoke/safety, challenge/classifier/native-parity/accessibility/privacy/runtime-data/backend/performance/dependency audits, evidence requirements, checked artifact privacy, templates, gates, and strict release audit.",
+      "next": ""
+    },
+    {
+      "id": "release-env-preflight-harness",
+      "status": "pass",
+      "evidence": "Release environment preflight fails fast on unsafe env-file/report paths, duplicate or malformed env-file contents, including validation evidence/artifact folder env-file paths, EXPO_PUBLIC_* server-secret leakage, missing production monetization, purchase-verification endpoint configuration and client/provider timeout/response-size bounds, store verification, Android upload signing with keytool-based debug-keystore rejection, AdMob, remote AI configuration plus client/provider timeout/response-size bounds, Supabase/Redis backend secrets and schema smoke timeout/response-size bounds, deployed backend-readiness endpoint configuration and timeout bounds, remote notification dispatch credentials/provider response-size/smoke timeout bounds, adult-domain feed endpoint/source configuration plus source fetch timeout/size bounds, aggregate analytics ingestion endpoint configuration plus client timeout/response-size bounds, malformed optional iOS DNS settings, unsafe enabled challenge-weather endpoints, unsafe non-/api/analytics collectors, unsafe hosted-backup sync endpoints plus sync timeout/response-size bounds, optional Supabase Auth timeout/response-size bounds, unsafe timeout-bounded remote retention endpoints, and sanitized release blocker group summaries before expensive release verification steps.",
+      "next": ""
+    },
+    {
+      "id": "production-env-template",
+      "status": "pass",
+      "evidence": ".env.production.example includes production store, Android upload signing, ad, purchase-verification, AI, adult-domain feed, Supabase/Redis backend, notification, and optional fallback keys with safe release defaults and no duplicate active keys.",
+      "next": ""
+    },
+    {
+      "id": "store-launch-config",
+      "status": "pass",
+      "evidence": "EAS build/submit profiles, Core 3 product catalog, privacy policy, App Store metadata, Play metadata, policy disclosures, and submission checklist are present with production submit kept draft/internal until evidence passes.",
+      "next": ""
+    },
+    {
+      "id": "validation-evidence-workflow",
+      "status": "pass",
+      "evidence": "Schema-versioned evidence requirements, scaffold capture plans, machine-readable production env checklist, machine-readable handoff document commands, canonical capture-plan command sections, checked-in artifact privacy audit, checked-in draft-package plus handoff-doc production-env/no-secret drift checks, iOS physical-device, Android real-browser, normal-browsing corpus, performance, store/ad sandbox, and AI backend smoke capture helpers, unsafe draft-dir and capture output-dir rejection, draft validation, background CPU performance proof, and fail-closed promotion commands are wired and documented.",
+      "next": ""
+    },
+    {
+      "id": "adult-only-classifier",
+      "status": "pass",
+      "evidence": "Classifier safety corpus passes 49 normal, recovery, overmatch, adult-search, and adult-domain cases; adult feed route uses cached, timeout- and byte-bounded reviewed ingestion with checksum/304 sync headers, stale-if-error protection, 48-hour route freshness enforcement, future-date route rejection, fail-closed reviewed-source refresh handling, and client sync fallback for stale or future remote feeds.",
+      "next": ""
+    },
+    {
+      "id": "ios-screen-time-scaffold",
+      "status": "pass",
+      "evidence": "iOS app and extension targets include Family Controls/app-group entitlements, app/site-neutral shield copy, shield handoff with stale pending-record cleanup and host-only pending value normalization, registered freed:// handoff routing, picker bridge that schedules the selected-target daily-limit monitor after selection, DeviceActivity monitor code with selected-app threshold shielding that preserves the adult web filter across Night Guard interval changes, Safari content-blocker packaging and block-rule validation for adult domains plus web short-form paths, Profile-visible feed fallback warnings, optional DNS Settings status/error detail, an explicitly configured entitlement-gated matched-domain DNS settings sync with no packet tunnel/full VPN, and an App Store review pack for Screen Time, Safari, and DNS Settings boundaries.",
+      "next": ""
+    },
+    {
+      "id": "android-native-safety-contract",
+      "status": "pass",
+      "evidence": "Android native module is DNS-only by default, avoids overlay permission, reports Private DNS state for QA without silently changing it, covers supported browsers/focused WebViews including raw focused adult-search text, supports opt-in app package interruption with stale native handoff cleanup plus host/source-package normalization and JS allowlisted app unlock sources, normalizes DNS Guard blocked-host handoffs before persistence/notification, package-level Usage Access diagnostics and current selected Shorts/Reels/For You confirmation at short-form deadlines, exposes DNS Guard resolver/session lifecycle/restart counters, includes a QA WebView fixture, mirrors search-engine adult-intent classification, and has a Play policy disclosure pack for AccessibilityService plus special-use foreground-service review.",
+      "next": ""
+    },
+    {
+      "id": "challenge-verification-contract",
+      "status": "pass",
+      "evidence": "Challenge verification audit covers production challenge-family coverage and custom/fallback family inference, motion, steps, accurate foreground location fixes, photo labels, connection actions, and timer-only calm resets with native photo classifier wiring.",
+      "next": ""
+    },
+    {
+      "id": "challenge-personalization-context",
+      "status": "pass",
+      "evidence": "Challenge generation uses time, weekend, timezone, slip history, outcome history, aggregate recent failed-reset counts, preferences, production challenge-family scoring, coarse intervention context including app/short-form session-duration buckets, local urge forecast, and privacy-safe check-in/location-permission/weather context without raw browsing details.",
+      "next": ""
+    },
+    {
+      "id": "discipline-configuration-contract",
+      "status": "pass",
+      "evidence": "Daily limits, earned unlock duration, opt-in app shields including supported Android package aliases, intensity, outdoor/exercise/social preferences, strict/sleep/focus/work/weekend modes, verified-completion earned unlock history, native earned-unlock windows, iOS DeviceActivity selected-app threshold shielding with Screen Time source-scoped selected-token/adult-filter unlock status, daily-limit-aware Android app-shield sync, selected-surface Android short-form thresholds with current Shorts/Reels/For You deadline confirmation, source-scoped Android earned unlocks, and source-aware Android relock are persisted, expanded, and fed into challenge generation.",
+      "next": ""
+    },
+    {
+      "id": "accessibility-safety-contract",
+      "status": "pass",
+      "evidence": "Accessibility audit covers named buttons, radio choices, selected states, bottom tabs, and immediate urge support.",
+      "next": ""
+    },
+    {
+      "id": "privacy-safety-contract",
+      "status": "pass",
+      "evidence": "Privacy data map/audit exist, blocked attempt hosts and unlock sources are normalized before persistence with supported-app allowlisting for native app handoffs, iOS declares no tracking for the current build, iOS app/extension entitlements default local recovery and app-group files to Complete Data Protection, Android disables implicit OS backup/device transfer and source plus generated release manifests do not ship Ad ID, microphone, overlay, or media-library/storage permissions for on-demand camera challenges, AI, Redis, push, and store-verification provider secrets are server-only, optional weather context is disabled by default with coarse-coordinate and production-safe endpoint/transport safeguards, Android and iOS policy disclosures cover Accessibility/DNS Guard plus Screen Time/Safari/DNS Settings data boundaries, and setup activation testing avoids fake recovery history.",
+      "next": ""
+    },
+    {
+      "id": "runtime-data-integrity-contract",
+      "status": "pass",
+      "evidence": "Runtime data integrity audit prevents user-facing premium toggles, implicit or production mock monetization, test-lab recovery history, fake analytics metrics, fake urge forecasts, unguarded QA adult attempts, reserved fake adult seed domains, all-purpose adult-site intervention copy for app shields by requiring source-aware intervention copy, placeholder AdMob country codes, and overclaimed challenge verification copy while requiring real aggregate production metrics.",
+      "next": ""
+    },
+    {
+      "id": "backend-architecture-contract",
+      "status": "pass",
+      "evidence": "Backend contract covers the deployable Supabase migration plus Supabase Edge Function cron/admin paths, PostgreSQL analytics, feed versions, encrypted recovery backup sync, purchase verification audits, redacted AI events, retention cleanup, job runs, bounded public JSON request bodies, explicit public-client revokes with service-role-only grants, timeout-bounded Redis/Upstash rate limits and locks with production fail-closed behavior, server-authorized timeout-bounded FCM/APNs notification dispatch with validated provider credentials, and a no-secret readiness endpoint.",
+      "next": ""
+    },
+    {
+      "id": "production-backend-infrastructure",
+      "status": "fail",
+      "evidence": "Missing: Supabase: SUPABASE_SERVICE_ROLE_KEY, Supabase: SUPABASE_URL, Supabase public lockout proof: EXPO_PUBLIC_SUPABASE_URL, Supabase public lockout proof: EXPO_PUBLIC_SUPABASE_ANON_KEY, Redis: UPSTASH_REDIS_REST_TOKEN, Redis: UPSTASH_REDIS_REST_URL, encrypted recovery backup sync: SUPABASE_SERVICE_ROLE_KEY, encrypted recovery backup sync: SUPABASE_URL, retention cleanup: BACKEND_MAINTENANCE_SECRET or CRON_SECRET, retention cleanup: SUPABASE_SERVICE_ROLE_KEY, retention cleanup: SUPABASE_URL.",
+      "next": "Configure SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, EXPO_PUBLIC_SUPABASE_URL, EXPO_PUBLIC_SUPABASE_ANON_KEY, BACKEND_MAINTENANCE_SECRET or CRON_SECRET, UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN, and optional FREED_BACKEND_PROVIDER_TIMEOUT_MS / FREED_BACKEND_PROVIDER_RESPONSE_MAX_BYTES / FREED_SUPABASE_SCHEMA_SMOKE_TIMEOUT_MS with production values, then rerun npm run preflight:release-env."
+    },
+    {
+      "id": "production-analytics-ingestion",
+      "status": "fail",
+      "evidence": "Missing: remote analytics endpoint is not configured.",
+      "next": "Configure EXPO_PUBLIC_ANALYTICS_ENDPOINT as the deployed aggregate-only /api/analytics route after privacy review, while keeping runtime analytics sharing explicit opt-in and timeout/response-size-bounded."
+    },
+    {
+      "id": "production-notification-backend",
+      "status": "fail",
+      "evidence": "Missing: remote notification dispatch: APNs signing credential, remote notification dispatch: FCM server credential, remote notification dispatch: REMOTE_NOTIFICATION_DISPATCH_SECRET.",
+      "next": "Configure REMOTE_NOTIFICATION_DISPATCH_SECRET, optional FREED_REMOTE_NOTIFICATION_PROVIDER_TIMEOUT_MS / FREED_REMOTE_NOTIFICATION_PROVIDER_RESPONSE_MAX_BYTES, FCM credentials with FIREBASE_PROJECT_ID or Firebase service-account project_id, and APNs production signing credentials before enabling server-triggered recovery-safe push dispatch."
+    },
+    {
+      "id": "production-adult-domain-feed",
+      "status": "fail",
+      "evidence": "Missing: adult domain feed endpoint is not configured, reviewed adult-domain feed provenance requirement is not enabled, reviewed adult-domain feed source URL list.",
+      "next": "Configure EXPO_PUBLIC_ADULT_DOMAIN_FEED_ENDPOINT, EXPO_PUBLIC_REQUIRE_REVIEWED_ADULT_DOMAIN_FEED=true, and FREED_ADULT_DOMAIN_FEED_SOURCE_URLS with reviewed id|label|[redacted-url] entries before relying on dynamic adult-domain blocking."
+    },
+    {
+      "id": "production-android-signing",
+      "status": "fail",
+      "evidence": "Missing: FREED_ANDROID_UPLOAD_STORE_FILE, FREED_ANDROID_UPLOAD_STORE_PASSWORD, FREED_ANDROID_UPLOAD_KEY_ALIAS, FREED_ANDROID_UPLOAD_KEY_PASSWORD.",
+      "next": "Configure FREED_ANDROID_UPLOAD_STORE_FILE, FREED_ANDROID_UPLOAD_STORE_PASSWORD, FREED_ANDROID_UPLOAD_KEY_ALIAS, and FREED_ANDROID_UPLOAD_KEY_PASSWORD with secure upload signing values before producing Play Console artifacts."
+    },
+    {
+      "id": "dependency-security",
+      "status": "pass",
+      "evidence": "Production dependency audit reports 0 vulnerabilities.",
+      "next": ""
+    },
+    {
+      "id": "monetization-adapter-scaffold",
+      "status": "pass",
+      "evidence": "Native monetization adapter scaffolds exist for expo-iap entitlements, server-minted store verification, fail-closed validated purchase verification, AdMob-style rewarded ads, and dynamic Google Mobile Ads config without ignored root app.json keys.",
+      "next": ""
+    },
+    {
+      "id": "server-ai-routes",
+      "status": "pass",
+      "evidence": "Expo API routes for CLARA, dynamic challenge generation, and retention orchestration are present, and server AI runtime rejects placeholder provider keys/models while bounding provider calls.",
+      "next": ""
+    },
+    {
+      "id": "ai-safety-eval-harness",
+      "status": "pass",
+      "evidence": "AI safety eval script covers CLARA redaction, crisis local routing, challenge generation privacy, bounded route response reads, and API fallback safety.",
+      "next": ""
+    },
+    {
+      "id": "backend-readiness-smoke-harness",
+      "status": "pass",
+      "evidence": "Backend readiness smoke script validates the deployed no-store readiness route, core Supabase/Redis/backup/maintenance readiness, endpoint safety, data-boundary copy, no server-secret echo, and sanitized JSON report artifacts before release verification proceeds.",
+      "next": ""
+    },
+    {
+      "id": "supabase-schema-smoke-harness",
+      "status": "pass",
+      "evidence": "Supabase schema smoke script validates the deployed production Supabase REST schema with service-role credentials, public anon lockout, required backend tables/columns, bounded read-only limit=0 requests, no server-secret echo, and sanitized JSON report artifacts.",
+      "next": ""
+    },
+    {
+      "id": "adult-domain-feed-smoke-harness",
+      "status": "pass",
+      "evidence": "Adult-domain feed smoke script validates the deployed feed JSON, 48-hour freshness/cache/source-size headers, reviewed sanitized source reports, conditional 304 sync behavior, Safari content-blocker export, and sanitized metadata-only JSON report artifacts before release verification proceeds.",
+      "next": ""
+    },
+    {
+      "id": "analytics-ingestion-smoke-harness",
+      "status": "pass",
+      "evidence": "Analytics ingestion smoke script validates the deployed aggregate-only /api/analytics route, bounded endpoint safety, complete production-metric snapshot acceptance, future timestamp rejection, incomplete/mismatched aggregate rejection, raw private-field rejection without response echo, and sanitized JSON report artifacts before release verification proceeds.",
+      "next": ""
+    },
+    {
+      "id": "remote-notification-smoke-harness",
+      "status": "pass",
+      "evidence": "Remote notification smoke script validates the deployed dispatch route without sending a push by proving unauthorized rejection, supported-kind allowlist rejection, dispatch-secret-authorized private-field rejection, no exact smoke device-token, push-token, or secret echo, and sanitized non-sending JSON report artifacts.",
+      "next": ""
+    },
+    {
+      "id": "ai-backend-smoke-harness",
+      "status": "pass",
+      "evidence": "AI backend smoke script can validate configured model plus deployed timeout-bounded CLARA, challenge, optional aggregate-only retention, personalization profile, context-signal, aggregate risk-forecast, coarse session-duration bucket, aggregate failed-reset count, no-coordinate, and no-sensitive-echo endpoints with sanitized JSON report artifacts before release.",
+      "next": ""
+    },
+    {
+      "id": "purchase-verification-smoke-harness",
+      "status": "pass",
+      "evidence": "Purchase verification smoke script can validate deployed timeout-bounded purchase endpoint fail-closed and token-redaction behavior with sanitized JSON report artifacts.",
+      "next": ""
+    },
+    {
+      "id": "client-bundle-secret-audit-harness",
+      "status": "pass",
+      "evidence": "Client bundle secret audit can scan regenerated web and Android bundles for server-only store, AI, Supabase, Redis, notification, maintenance, and purchase-verifier leakage.",
+      "next": ""
+    },
+    {
+      "id": "production-monetization",
+      "status": "fail",
+      "evidence": "Missing: iOS purchase verify endpoint, iOS rewarded reset ad unit, iOS AdMob app ID, Android purchase verify endpoint, Android rewarded reset ad unit, Android AdMob app ID, App Store Server API production environment, App Store bundle ID, App Store server verification credentials, Google Play package name, Google Play verification credentials.",
+      "next": "Configure native IAP product IDs, purchase-verification endpoint, server-only App Store/Play verification credentials, platform AdMob env vars, optional purchase verification timeout/response-size bounds, and optional RevenueCat fallback only if selected; then validate store/ad and premium no-ad intervention sandboxes."
+    },
+    {
+      "id": "production-ai-backend",
+      "status": "fail",
+      "evidence": "Missing: remote coach provider or endpoint, remote challenge provider or endpoint, server OPENAI_API_KEY and OPENAI_MODEL, or GEMINI_API_KEY/GOOGLE_API_KEY/GOOGLE_GENAI_API_KEY and GEMINI_MODEL.",
+      "next": "Configure privacy-reviewed remote coach and challenge-generation endpoints or providers, keep optional FREED_AI_PROVIDER_TIMEOUT_MS and FREED_AI_PROVIDER_RESPONSE_MAX_BYTES bounded, then run npm run eval:ai-safety against the release build."
+    },
+    {
+      "id": "ios-physical-device-validation",
+      "status": "fail",
+      "evidence": "Missing iOS physical device evidence file: docs/validation/evidence/ios-physical-device.json.",
+      "next": "Run on an entitlement-approved iOS device and capture docs/validation/evidence/ios-physical-device.json."
+    },
+    {
+      "id": "android-real-browser-validation",
+      "status": "fail",
+      "evidence": "Missing Android real browsers evidence file: docs/validation/evidence/android-real-browser.json.",
+      "next": "Run on Android hardware across supported browsers and capture docs/validation/evidence/android-real-browser.json."
+    },
+    {
+      "id": "normal-browsing-corpus-validation",
+      "status": "fail",
+      "evidence": "Missing normal browsing false-positive corpus evidence file: docs/validation/evidence/normal-browsing-corpus.json.",
+      "next": "Run the normal-browsing false-positive corpus on real devices/browsers and capture docs/validation/evidence/normal-browsing-corpus.json."
+    },
+    {
+      "id": "performance-validation",
+      "status": "fail",
+      "evidence": "Missing battery/RAM/network profile evidence file: docs/validation/evidence/performance-profile.json.",
+      "next": "Profile battery, RAM, thermals, background CPU, DNS latency, and network speed, then capture docs/validation/evidence/performance-profile.json."
+    },
+    {
+      "id": "store-ad-sandbox-validation",
+      "status": "fail",
+      "evidence": "Missing store/ad sandbox evidence file: docs/validation/evidence/store-ad-sandbox.json.",
+      "next": "Validate IAP restore/purchase, rewarded ads, and premium no-ad intervention in store/ad sandboxes, then capture docs/validation/evidence/store-ad-sandbox.json."
+    },
+    {
+      "id": "ai-backend-smoke-validation",
+      "status": "fail",
+      "evidence": "Missing AI backend smoke evidence file: docs/validation/evidence/ai-backend-smoke.json.",
+      "next": "Run AI safety eval plus deployed backend smoke tests, then capture docs/validation/evidence/ai-backend-smoke.json."
+    }
+  ]
+}

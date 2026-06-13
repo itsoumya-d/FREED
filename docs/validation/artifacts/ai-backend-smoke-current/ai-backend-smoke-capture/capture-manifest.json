@@ -1,0 +1,185 @@
+{
+  "commandHandoff": {
+    "releasePreflightCommand": "npm run preflight:release-env",
+    "safetyEvalCommand": "npm run eval:ai-safety",
+    "smokeCommand": "npm run smoke:ai-backend"
+  },
+  "configured": {
+    "challengeEndpoint": "",
+    "coachEndpoint": "",
+    "model": "",
+    "retentionEndpoint": ""
+  },
+  "forbiddenSensitiveFields": [
+    "rawPrompt",
+    "rawPrompts",
+    "rawUserInput",
+    "rawUserMessage",
+    "rawCoachRequest",
+    "rawChallengeRequest",
+    "rawRetentionRequest",
+    "rawModelResponse",
+    "rawCoachResponse",
+    "rawChallengeResponse",
+    "rawRetentionResponse",
+    "rawRetentionPlan",
+    "promptText",
+    "userText",
+    "privateNotes",
+    "slipNote",
+    "fullConversation",
+    "conversationTranscript",
+    "sensitiveUrl",
+    "sensitiveDomain",
+    "latitude",
+    "longitude",
+    "rawLocation",
+    "preciseLocation",
+    "apiKey",
+    "openaiApiKey",
+    "geminiApiKey",
+    "providerApiKey"
+  ],
+  "generatedAt": "2026-06-09T01:37:56.204Z",
+  "manualVerificationRequired": true,
+  "matrixRows": [
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "ai.releasePreflightArtifact",
+      "metricFields": "ai.releasePreflightCommand, ai.releasePreflightRunId, checks.releaseEnvPreflightPassed",
+      "notes": "",
+      "runId": "ai-backend-smoke-current-release-env-preflight",
+      "status": "pending-manual-qa",
+      "summary": "Run npm run preflight:release-env and attach the passing command log."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "ai.safetyEvalArtifact",
+      "metricFields": "ai.safetyEvalCommand, ai.safetyEvalCaseCount, ai.safetyEvalFailedCount",
+      "notes": "",
+      "runId": "ai-backend-smoke-current-ai-safety-eval",
+      "status": "pending-manual-qa",
+      "summary": "Run npm run eval:ai-safety and attach the safety report with zero failures."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "ai.smokeReportArtifact",
+      "metricFields": "ai.smokeCommand, ai.smokeEndpointPassCount, ai.smokeEndpointFailCount",
+      "notes": "",
+      "runId": "ai-backend-smoke-current-ai-backend-smoke",
+      "status": "pending-manual-qa",
+      "summary": "Run npm run smoke:ai-backend with --report docs/validation/artifacts/ai-backend-smoke-current/ai-backend-smoke-report.json against deployed CLARA and challenge endpoints, attach that local ai-backend-smoke-v1 JSON report with sanitized=true, contractProof as ai.smokeReportArtifact, but keep ai.smokeCommand in the sanctioned command shape."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "ai.coachSmokeArtifact",
+      "metricFields": "ai.coachSmokeRunId",
+      "notes": "",
+      "runId": "ai-backend-smoke-current-coach-smoke",
+      "status": "pending-manual-qa",
+      "summary": "Attach redacted CLARA smoke proof for a normal support request."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "ai.challengeSmokeArtifact",
+      "metricFields": "ai.challengeSmokeRunId",
+      "notes": "",
+      "runId": "ai-backend-smoke-current-challenge-smoke",
+      "status": "pending-manual-qa",
+      "summary": "Attach redacted challenge-generation smoke proof."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "ai.challengePersonalizationArtifact",
+      "metricFields": "ai.challengePersonalizationProfileCount, ai.challengeRiskForecastProfileCount, ai.challengeSessionDurationBucketProfileCount, ai.challengeRecentFailureProfileCount, ai.freeChallengePremiumCount, checks.riskForecastPersonalizationVerified, checks.sessionDurationBucketPersonalizationVerified, checks.recentFailureCountPersonalizationVerified",
+      "notes": "",
+      "runId": "ai-backend-smoke-current-challenge-personalization",
+      "status": "pending-manual-qa",
+      "summary": "Prove at least two context-rich profile shapes, including weather/location-permission, aggregate urge-risk forecast, coarse session-duration bucket, aggregate recent failed-reset count, zero coordinate fields, and zero premium-only challenges for a free profile."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "ai.noCoordinateFieldsArtifact",
+      "metricFields": "ai.noCoordinateFieldsRunId, checks.noCoordinateFields",
+      "notes": "",
+      "runId": "ai-backend-smoke-current-no-coordinate-fields",
+      "status": "pending-manual-qa",
+      "summary": "Attach sanitized proof that challenge personalization requests/responses contain context signals but no latitude or longitude fields."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "ai.noSensitiveEchoArtifact",
+      "metricFields": "ai.noSensitiveEchoSampleCount",
+      "notes": "",
+      "runId": "ai-backend-smoke-current-no-sensitive-echo",
+      "status": "pending-manual-qa",
+      "summary": "Attach at least two redacted samples proving no sensitive URL/domain/private-note echo."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "ai.redactionArtifact",
+      "metricFields": "ai.redactionReportId",
+      "notes": "",
+      "runId": "ai-backend-smoke-current-redaction-report",
+      "status": "pending-manual-qa",
+      "summary": "Attach provider response redaction report with only sanitized excerpts or aggregate findings."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "ai.crisisFallbackArtifact",
+      "metricFields": "ai.crisisFallbackRunId",
+      "notes": "",
+      "runId": "ai-backend-smoke-current-crisis-fallback",
+      "status": "pending-manual-qa",
+      "summary": "Prove crisis/self-harm language routes to immediate safe support behavior."
+    },
+    {
+      "actualResult": "",
+      "artifact": "",
+      "artifactField": "ai.providerFallbackArtifact",
+      "metricFields": "ai.providerFallbackRunId",
+      "notes": "",
+      "runId": "ai-backend-smoke-current-provider-fallback",
+      "status": "pending-manual-qa",
+      "summary": "Prove provider outage or missing-provider mode falls back to safe local support."
+    }
+  ],
+  "releaseGate": "ai-backend-smoke-validation",
+  "releaseEnvFileLoaded": false,
+  "result": "capture-plan-created",
+  "runId": "ai-backend-smoke-current",
+  "sanitizedOnly": true,
+  "evidenceSatisfied": false,
+  "evidenceBoundary": "AI backend smoke capture packets are setup handoffs only. They do not prove deployed CLARA, challenge, retention, model, safety eval, no-sensitive-echo, personalization, crisis fallback, or provider fallback behavior until real deployed-endpoint QA fills and validates ai-backend-smoke.json.",
+  "schema": "freed-ai-backend-smoke-capture-v1",
+  "sourceArtifacts": [
+    {
+      "path": "docs/validation/templates/ai-backend-smoke.template.json",
+      "sha256": "sha256-387826c948306284133808161acd5674142f6fbda3cf5a1d6175fa1b659e46c8"
+    },
+    {
+      "path": "scripts/ai-backend-smoke-evidence.js",
+      "sha256": "sha256-97420337588870d787098b46b1148ada41c4429369780da30c1a3dec7e2f24d8"
+    },
+    {
+      "path": "scripts/ai-backend-smoke.ts",
+      "sha256": "sha256-4b041c595061584c227eb1d46ec28c10939ceeb90ccec1b4b2233adfbf1df777"
+    },
+    {
+      "path": "scripts/ai-safety-eval.ts",
+      "sha256": "sha256-c23a84fe100e3981a7cf84bdfc5c2427913701eef6d894f036d103e32738811d"
+    }
+  ],
+  "evidenceFillTemplateArtifact": "docs/validation/artifacts/ai-backend-smoke-current/ai-backend-smoke-capture/ai-backend-smoke-evidence-fill-template.json",
+  "matrixArtifact": "docs/validation/artifacts/ai-backend-smoke-current/ai-backend-smoke-capture/ai-backend-smoke-matrix.csv"
+}

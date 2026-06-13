@@ -1,0 +1,255 @@
+{
+  "schemaVersion": "freed-supabase-deployment-packet-v1",
+  "generatedAt": "2026-06-07T04:16:28.302Z",
+  "sanitized": true,
+  "source": "local-workspace",
+  "summary": {
+    "passCount": 11,
+    "warnCount": 1,
+    "failCount": 0
+  },
+  "deploymentTarget": {
+    "projectRef": null,
+    "projectName": null,
+    "projectStatus": null,
+    "projectRefShapeOk": true,
+    "activeProjectConfirmed": false,
+    "productionTargetRequiredBeforeDeploy": true,
+    "inactiveOrUnrelatedProjectsMustNotBeUsed": true,
+    "statusNote": "Production Supabase project selection is pending."
+  },
+  "files": {
+    "schema": {
+      "path": "docs/backend/supabase-schema.sql",
+      "exists": true,
+      "lineCount": 396,
+      "sha256": "872b3acfd48a5a55f1e9f8cb8f1f3b8fa9cfa97703caf8bf06588a5558f9f48a"
+    },
+    "productionBackendPacket": {
+      "path": "docs/backend/production-backend.md",
+      "exists": true,
+      "lineCount": 149,
+      "sha256": "409808ace826b25bf4e836d60384da47a4886bc1473f1fd0f52ef5088f75b88a"
+    },
+    "migrations": [
+      {
+        "path": "supabase/migrations/20260518000100_freed_backend_core.sql",
+        "exists": true,
+        "lineCount": 398,
+        "sha256": "0ef0743ae38e24537cb37c535fd7dcec9fc3dc10e2d66972e0f2b92cc0baabb8"
+      },
+      {
+        "path": "supabase/migrations/20260520000100_harden_analytics_privacy_keys.sql",
+        "exists": true,
+        "lineCount": 118,
+        "sha256": "32873145821a4bd508e71841187c8b7e1848752813e5f4007a9b7219dfcc4975"
+      }
+    ],
+    "edgeConfig": {
+      "path": "supabase/config.toml",
+      "exists": true,
+      "lineCount": 13,
+      "sha256": "7e822681c53563c2e889065f462126bf16b1d05174e06be81f5a1007f51ab005"
+    },
+    "edgeShared": {
+      "path": "supabase/functions/_shared/freed_edge_contract.ts",
+      "exists": true,
+      "lineCount": 920,
+      "sha256": "4785bcb4caab5ab9794e2590363fc2003db0e2ae343aa8b923a3f05a6bad9d40"
+    }
+  },
+  "tableProof": [
+    {
+      "tableName": "recovery_analytics_events",
+      "migrationCreatesTable": true,
+      "schemaDocumentsTable": true,
+      "rlsEnabled": true,
+      "publicRolesRevoked": true,
+      "serviceRoleGrant": true
+    },
+    {
+      "tableName": "adult_domain_feed_versions",
+      "migrationCreatesTable": true,
+      "schemaDocumentsTable": true,
+      "rlsEnabled": true,
+      "publicRolesRevoked": true,
+      "serviceRoleGrant": true
+    },
+    {
+      "tableName": "encrypted_recovery_backups",
+      "migrationCreatesTable": true,
+      "schemaDocumentsTable": true,
+      "rlsEnabled": true,
+      "publicRolesRevoked": true,
+      "serviceRoleGrant": true
+    },
+    {
+      "tableName": "purchase_verification_events",
+      "migrationCreatesTable": true,
+      "schemaDocumentsTable": true,
+      "rlsEnabled": true,
+      "publicRolesRevoked": true,
+      "serviceRoleGrant": true
+    },
+    {
+      "tableName": "ai_backend_events",
+      "migrationCreatesTable": true,
+      "schemaDocumentsTable": true,
+      "rlsEnabled": true,
+      "publicRolesRevoked": true,
+      "serviceRoleGrant": true
+    },
+    {
+      "tableName": "backend_job_runs",
+      "migrationCreatesTable": true,
+      "schemaDocumentsTable": true,
+      "rlsEnabled": true,
+      "publicRolesRevoked": true,
+      "serviceRoleGrant": true
+    }
+  ],
+  "edgeFunctions": [
+    {
+      "id": "adult-domain-feed-sync",
+      "path": "supabase/functions/adult-domain-feed-sync/index.ts",
+      "exists": true,
+      "sha256": "57dbc9a72756a09b843fa85a0d4b41211229c7bd7cbee2ad9d285300bda3302f",
+      "lineCount": 291,
+      "verifyJwtDisabledByConfig": true,
+      "requiresMaintenanceAuth": true,
+      "hasRequiredMarkers": true,
+      "avoidsPublicEnvSecrets": true,
+      "sharedContractHasServiceRoleBoundary": true
+    },
+    {
+      "id": "analytics-retention-cleanup",
+      "path": "supabase/functions/analytics-retention-cleanup/index.ts",
+      "exists": true,
+      "sha256": "6352ec3cb5bf339315f0f64189571dfc225f2eeb7d247a8347726e88c6cfc0f2",
+      "lineCount": 132,
+      "verifyJwtDisabledByConfig": true,
+      "requiresMaintenanceAuth": true,
+      "hasRequiredMarkers": true,
+      "avoidsPublicEnvSecrets": true,
+      "sharedContractHasServiceRoleBoundary": true
+    }
+  ],
+  "secretBoundary": {
+    "secretValuesOmitted": true,
+    "serverOnlyKeysRequired": [
+      "SUPABASE_SERVICE_ROLE_KEY",
+      "BACKEND_MAINTENANCE_SECRET or CRON_SECRET",
+      "UPSTASH_REDIS_REST_TOKEN",
+      "FREED_ADULT_DOMAIN_FEED_SOURCE_URLS"
+    ],
+    "publicKeysAllowedForClientProof": [
+      "EXPO_PUBLIC_SUPABASE_URL",
+      "EXPO_PUBLIC_SUPABASE_ANON_KEY",
+      "EXPO_PUBLIC_ADULT_DOMAIN_FEED_ENDPOINT",
+      "EXPO_PUBLIC_ANALYTICS_ENDPOINT",
+      "EXPO_PUBLIC_BACKEND_READINESS_ENDPOINT"
+    ],
+    "forbiddenPublicSecretKeys": [
+      "EXPO_PUBLIC_SUPABASE_SERVICE_ROLE_KEY",
+      "EXPO_PUBLIC_UPSTASH_REDIS_REST_TOKEN",
+      "EXPO_PUBLIC_REMOTE_NOTIFICATION_DISPATCH_SECRET",
+      "EXPO_PUBLIC_BACKEND_MAINTENANCE_SECRET",
+      "EXPO_PUBLIC_CRON_SECRET"
+    ],
+    "noServiceRoleInPublicEnv": true,
+    "noRedisTokenInPublicEnv": true,
+    "noMaintenanceSecretInPublicEnv": true
+  },
+  "commands": {
+    "deploy": [
+      "supabase link --project-ref <production-project-ref>",
+      "supabase db push",
+      "supabase secrets set --env-file <production-env-file>",
+      "supabase functions deploy adult-domain-feed-sync",
+      "supabase functions deploy analytics-retention-cleanup"
+    ],
+    "smoke": [
+      "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/release-env-preflight-report.json",
+      "npm run smoke:backend-readiness -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/backend-readiness-smoke-report.json",
+      "npm run smoke:supabase-schema -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/supabase-schema-smoke-report.json",
+      "npm run smoke:adult-domain-feed -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/adult-domain-feed-smoke-report.json",
+      "npm run smoke:analytics-ingestion -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/analytics-ingestion-smoke-report.json",
+      "npm run smoke:remote-notifications -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/remote-notification-smoke-report.json",
+      "npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/purchase-verification-smoke-report.json",
+      "npm run smoke:ai-backend -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/ai-backend-smoke-report.json"
+    ]
+  },
+  "pendingExternalActions": [
+    "Choose or create the FREED production Supabase project; do not use inactive or unrelated projects.",
+    "Push secrets through Supabase dashboard or supabase secrets set --env-file <production-env-file> without committing the env file.",
+    "Apply migrations and deploy both Edge Functions only after the project target is confirmed.",
+    "Run every smoke command in this packet and attach only sanitized JSON reports under docs/validation/artifacts/<run-id>/."
+  ],
+  "docsChecked": [
+    "https://supabase.com/docs/guides/functions/secrets",
+    "https://supabase.com/docs/guides/functions/examples/upstash-redis"
+  ],
+  "results": [
+    {
+      "id": "supabase-migration-files",
+      "status": "PASS",
+      "detail": "Core and analytics privacy hardening migrations are present in the required order."
+    },
+    {
+      "id": "supabase-schema-mirror",
+      "status": "PASS",
+      "detail": "docs/backend/supabase-schema.sql mirrors the expected production backend table family."
+    },
+    {
+      "id": "supabase-core-table-contracts",
+      "status": "PASS",
+      "detail": "All six backend tables are created, documented, RLS-enabled, revoked from public client roles, and granted only to service_role."
+    },
+    {
+      "id": "supabase-privacy-constraints",
+      "status": "PASS",
+      "detail": "Migrations include aggregate/privacy constraints and normalized forbidden-key scanning for receipts, tokens, raw browsing, and sensitive payloads."
+    },
+    {
+      "id": "supabase-edge-functions-present",
+      "status": "PASS",
+      "detail": "Both Supabase Edge Functions are present and contain their required cron/admin markers."
+    },
+    {
+      "id": "supabase-edge-verify-jwt-config",
+      "status": "PASS",
+      "detail": "supabase/config.toml disables Supabase JWT verification only for the two maintenance-secret-protected cron/admin functions."
+    },
+    {
+      "id": "supabase-edge-maintenance-auth",
+      "status": "PASS",
+      "detail": "Every non-OPTIONS Edge Function path is guarded by BACKEND_MAINTENANCE_SECRET or CRON_SECRET."
+    },
+    {
+      "id": "supabase-edge-secret-boundary",
+      "status": "PASS",
+      "detail": "Edge Function sources use server-only Supabase/Redis/maintenance values and do not reference EXPO_PUBLIC_* secrets."
+    },
+    {
+      "id": "supabase-production-packet-doc",
+      "status": "PASS",
+      "detail": "docs/backend/production-backend.md includes migration, function deploy, smoke, and secret-boundary handoff."
+    },
+    {
+      "id": "supabase-deploy-command-handoff",
+      "status": "PASS",
+      "detail": "Deployment handoff includes link, db push, secrets set, and both Edge Function deploy commands."
+    },
+    {
+      "id": "supabase-smoke-command-handoff",
+      "status": "PASS",
+      "detail": "Post-deploy handoff includes sanitized release preflight and deployed backend/Supabase smoke report commands."
+    },
+    {
+      "id": "supabase-live-project-target",
+      "status": "WARN",
+      "detail": "Production Supabase project selection is pending.",
+      "next": "Select or create the FREED production Supabase project, confirm billing/region/active health, then rerun this packet with --project-ref and --project-status active."
+    }
+  ]
+}

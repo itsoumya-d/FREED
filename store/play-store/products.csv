@@ -1,0 +1,4 @@
+plan_id,product_id,product_type,base_plan_id,billing_period,offer_id,price_usd_intent,entitlement_id,status,display_name,description
+yearly,freed_premium_yearly,subscription,yearly,P1Y,yearly-standard,39.99,premium,draft-until-sandbox-verified,FREED Premium Annual,"Annual premium recovery protection with DNS Guard, app timers, and no-ad challenge entry."
+monthly,freed_premium_monthly,subscription,monthly,P1M,monthly-standard,9.99,premium,draft-until-sandbox-verified,FREED Premium Monthly,"Monthly premium recovery protection with DNS Guard, app timers, and no-ad challenge entry."
+lifetime,freed_premium_lifetime,one-time-product,,lifetime,,79.99,premium,draft-until-sandbox-verified,FREED Premium Lifetime,"Lifetime premium recovery protection with DNS Guard, app timers, and no-ad challenge entry."

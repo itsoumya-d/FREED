@@ -1,0 +1,75 @@
+{
+  "expo": {
+    "name": "FREED",
+    "slug": "freed",
+    "scheme": "freed",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#151421"
+    },
+    "ios": {
+      "bundleIdentifier": "app.freed.recovery",
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "FREED uses device authentication to protect recovery settings.",
+        "NSCameraUsageDescription": "FREED uses the camera only when you choose a photo challenge that needs real-world image verification.",
+        "NSLocationWhenInUseUsageDescription": "FREED uses temporary foreground location only to verify outdoor recovery challenges.",
+        "NSMotionUsageDescription": "FREED uses motion data only during active challenges to verify real-world movement.",
+        "NSUserNotificationsUsageDescription": "FREED sends supportive recovery check-ins and urgent streak protection reminders."
+      }
+    },
+    "android": {
+      "package": "app.freed.recovery",
+      "allowBackup": false,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1B1929"
+      },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACTIVITY_RECOGNITION",
+        "android.permission.CAMERA",
+        "android.permission.POST_NOTIFICATIONS"
+      ],
+      "blockedPermissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.READ_MEDIA_VIDEO",
+        "android.permission.READ_MEDIA_AUDIO",
+        "android.permission.READ_MEDIA_VISUAL_USER_SELECTED",
+        "android.permission.ACCESS_MEDIA_LOCATION",
+        "android.permission.MANAGE_EXTERNAL_STORAGE"
+      ]
+    },
+    "web": {
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "FREED uses the camera only when you choose a photo challenge that needs real-world image verification.",
+          "microphonePermission": false,
+          "photosPermission": false
+        }
+      ],
+      "expo-location",
+      "expo-sqlite",
+      "expo-sensors",
+      "expo-notifications"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

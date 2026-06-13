@@ -1,0 +1,213 @@
+{
+  "browserReportTemplateArtifacts": [
+    {
+      "browserId": "ios-safari",
+      "artifact": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/browser-report-templates/ios-safari-report.template.json",
+      "runId": "normal-browsing-current-ios-safari-normal-browsing"
+    },
+    {
+      "browserId": "android-chrome",
+      "artifact": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/browser-report-templates/android-chrome-report.template.json",
+      "runId": "normal-browsing-current-android-chrome-normal-browsing"
+    },
+    {
+      "browserId": "android-firefox",
+      "artifact": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/browser-report-templates/android-firefox-report.template.json",
+      "runId": "normal-browsing-current-android-firefox-normal-browsing"
+    },
+    {
+      "browserId": "android-edge",
+      "artifact": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/browser-report-templates/android-edge-report.template.json",
+      "runId": "normal-browsing-current-android-edge-normal-browsing"
+    },
+    {
+      "browserId": "android-samsung-internet",
+      "artifact": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/browser-report-templates/android-samsung-internet-report.template.json",
+      "runId": "normal-browsing-current-android-samsung-internet-normal-browsing"
+    }
+  ],
+  "browserSummaryRows": [
+    {
+      "status": "pending-manual-qa",
+      "platform": "ios",
+      "isPhysicalDevice": false,
+      "deviceModel": "",
+      "osVersion": "",
+      "browserName": "Safari",
+      "runId": "normal-browsing-current-ios-safari-normal-browsing",
+      "resultArtifact": "",
+      "resultArtifactTemplate": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/browser-report-templates/ios-safari-report.template.json",
+      "allowedUrlCount": 12,
+      "recoverySearchUrlCount": 4,
+      "adultBlockedUrlCount": 4,
+      "allowedUrlPassCount": "",
+      "recoverySearchPassCount": "",
+      "adultBlockPassCount": "",
+      "falsePositiveCount": "",
+      "missedAdultBlockCount": "",
+      "passed": false,
+      "notes": "Fill device fields, resultArtifact, pass counts, zero failure counts, and passed=true only after physical-browser QA passes every URL row."
+    },
+    {
+      "status": "pending-manual-qa",
+      "platform": "android",
+      "isPhysicalDevice": false,
+      "deviceModel": "",
+      "osVersion": "",
+      "browserName": "Chrome",
+      "browserPackage": "com.android.chrome",
+      "runId": "normal-browsing-current-android-chrome-normal-browsing",
+      "resultArtifact": "",
+      "resultArtifactTemplate": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/browser-report-templates/android-chrome-report.template.json",
+      "allowedUrlCount": 12,
+      "recoverySearchUrlCount": 4,
+      "adultBlockedUrlCount": 4,
+      "allowedUrlPassCount": "",
+      "recoverySearchPassCount": "",
+      "adultBlockPassCount": "",
+      "falsePositiveCount": "",
+      "missedAdultBlockCount": "",
+      "passed": false,
+      "notes": "Fill device fields, resultArtifact, pass counts, zero failure counts, and passed=true only after physical-browser QA passes every URL row."
+    },
+    {
+      "status": "pending-manual-qa",
+      "platform": "android",
+      "isPhysicalDevice": false,
+      "deviceModel": "",
+      "osVersion": "",
+      "browserName": "Firefox",
+      "browserPackage": "org.mozilla.firefox",
+      "runId": "normal-browsing-current-android-firefox-normal-browsing",
+      "resultArtifact": "",
+      "resultArtifactTemplate": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/browser-report-templates/android-firefox-report.template.json",
+      "allowedUrlCount": 12,
+      "recoverySearchUrlCount": 4,
+      "adultBlockedUrlCount": 4,
+      "allowedUrlPassCount": "",
+      "recoverySearchPassCount": "",
+      "adultBlockPassCount": "",
+      "falsePositiveCount": "",
+      "missedAdultBlockCount": "",
+      "passed": false,
+      "notes": "Fill device fields, resultArtifact, pass counts, zero failure counts, and passed=true only after physical-browser QA passes every URL row."
+    },
+    {
+      "status": "pending-manual-qa",
+      "platform": "android",
+      "isPhysicalDevice": false,
+      "deviceModel": "",
+      "osVersion": "",
+      "browserName": "Edge",
+      "browserPackage": "com.microsoft.emmx",
+      "runId": "normal-browsing-current-android-edge-normal-browsing",
+      "resultArtifact": "",
+      "resultArtifactTemplate": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/browser-report-templates/android-edge-report.template.json",
+      "allowedUrlCount": 12,
+      "recoverySearchUrlCount": 4,
+      "adultBlockedUrlCount": 4,
+      "allowedUrlPassCount": "",
+      "recoverySearchPassCount": "",
+      "adultBlockPassCount": "",
+      "falsePositiveCount": "",
+      "missedAdultBlockCount": "",
+      "passed": false,
+      "notes": "Fill device fields, resultArtifact, pass counts, zero failure counts, and passed=true only after physical-browser QA passes every URL row."
+    },
+    {
+      "status": "pending-manual-qa",
+      "platform": "android",
+      "isPhysicalDevice": false,
+      "deviceModel": "",
+      "osVersion": "",
+      "browserName": "Samsung Internet",
+      "browserPackage": "com.sec.android.app.sbrowser",
+      "runId": "normal-browsing-current-android-samsung-internet-normal-browsing",
+      "resultArtifact": "",
+      "resultArtifactTemplate": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/browser-report-templates/android-samsung-internet-report.template.json",
+      "allowedUrlCount": 12,
+      "recoverySearchUrlCount": 4,
+      "adultBlockedUrlCount": 4,
+      "allowedUrlPassCount": "",
+      "recoverySearchPassCount": "",
+      "adultBlockPassCount": "",
+      "falsePositiveCount": "",
+      "missedAdultBlockCount": "",
+      "passed": false,
+      "notes": "Fill device fields, resultArtifact, pass counts, zero failure counts, and passed=true only after physical-browser QA passes every URL row."
+    }
+  ],
+  "browserRows": [
+    {
+      "platform": "ios",
+      "browserName": "Safari",
+      "browserPackage": "",
+      "id": "ios-safari"
+    },
+    {
+      "platform": "android",
+      "browserName": "Chrome",
+      "browserPackage": "com.android.chrome",
+      "id": "android-chrome"
+    },
+    {
+      "platform": "android",
+      "browserName": "Firefox",
+      "browserPackage": "org.mozilla.firefox",
+      "id": "android-firefox"
+    },
+    {
+      "platform": "android",
+      "browserName": "Edge",
+      "browserPackage": "com.microsoft.emmx",
+      "id": "android-edge"
+    },
+    {
+      "platform": "android",
+      "browserName": "Samsung Internet",
+      "browserPackage": "com.sec.android.app.sbrowser",
+      "id": "android-samsung-internet"
+    }
+  ],
+  "counts": {
+    "adultBlockedUrlCount": 4,
+    "allowedUrlCount": 12,
+    "browserRowCount": 5,
+    "classifierCorpusCaseCount": 49,
+    "manualQaCaseCount": 100,
+    "manualQaUrlCount": 20,
+    "recoverySearchUrlCount": 4,
+    "staticClassifierCaseCount": 49,
+    "uniqueUrlCount": 20
+  },
+  "generatedAt": "2026-06-10T03:55:45.176Z",
+  "evidenceSatisfied": false,
+  "manualVerificationRequired": true,
+  "releaseGate": "normal-browsing-corpus-validation",
+  "releaseBoundary": "Normal-browsing capture packets are setup handoffs only. They do not prove physical-device browser allow/block behavior, zero false positives, or zero missed adult blocks until real QA fills and validates normal-browsing-corpus.json.",
+  "result": "capture-matrix-created",
+  "runId": "normal-browsing-current",
+  "sanitized": true,
+  "schema": "freed-normal-browsing-corpus-capture-v1",
+  "schemaVersion": "freed-normal-browsing-corpus-capture-v1",
+  "sourceArtifacts": [
+    {
+      "path": "docs/validation/templates/normal-browsing-corpus.template.json",
+      "sha256": "sha256-4d6cd8681f3d515692e21dd51d04c533448c127abe0d9b8daa7bbeff88952d5b"
+    },
+    {
+      "path": "scripts/classifier-safety-corpus.ts",
+      "sha256": "sha256-d12abd0c5721e265db23fce23a4521b7ea5294fe5c83282386a46a45280e1a92"
+    }
+  ],
+  "sourceFiles": [
+    "docs/validation/templates/normal-browsing-corpus.template.json",
+    "scripts/classifier-safety-corpus.ts"
+  ],
+  "staticClassifierRowsAreManualBrowserTargets": false,
+  "browserChecklistArtifact": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/normal-browsing-browser-checklist.md",
+  "browserSummaryArtifact": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/normal-browsing-browser-summary.template.json",
+  "classifierCorpusArtifact": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/classifier-corpus-static.csv",
+  "evidenceFillTemplateArtifact": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/normal-browsing-evidence-fill-template.json",
+  "matrixArtifact": "docs/validation/artifacts/normal-browsing-current/normal-browsing-corpus-capture/normal-browsing-corpus-matrix.csv"
+}

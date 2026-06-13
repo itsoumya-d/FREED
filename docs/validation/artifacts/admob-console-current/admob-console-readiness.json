@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "freed-admob-console-readiness-v1",
+  "sanitized": true,
+  "generatedAt": "2026-06-11T08:29:43.970Z",
+  "observedAt": "2026-06-11T08:29:43.968Z",
+  "runId": "admob-console-current",
+  "result": "blocked-before-admob-console-ready",
+  "readyForRewardedAdRequestProof": false,
+  "appIdentifiers": {
+    "appName": "FREED",
+    "bundleId": "app.freed.recovery",
+    "packageName": "app.freed.recovery"
+  },
+  "browserInspection": {
+    "readOnly": true,
+    "storeMutationPerformed": false,
+    "accountIdentifiersRedacted": true,
+    "screenshotsStored": false,
+    "personalNamesStored": false,
+    "emailsStored": false,
+    "paymentIdsStored": false,
+    "accountIdsStored": false,
+    "adMobAppIdsStored": false,
+    "adUnitIdsStored": false
+  },
+  "browserConnector": {
+    "status": "native-module-load-failed",
+    "connectorUnavailable": true,
+    "nativeModuleLoadFailed": true,
+    "selectedChromeProfileExtensionMissing": false,
+    "codexExtensionPresentInOtherChromeProfile": false,
+    "chromeNativeHostOk": null,
+    "diagnosticIdentifiersRedacted": true,
+    "profileNamesStored": false,
+    "profilePathsStored": false,
+    "repairHandoff": {
+      "required": true,
+      "status": "native-module-load-failed",
+      "profileIdentifiersStored": false,
+      "accountIdentifiersStored": false,
+      "steps": [
+        "Open Chrome in the signed-in profile intended for AdMob work.",
+        "Confirm the Codex Chrome Extension is installed and enabled in that same selected Chrome profile.",
+        "If the extension is enabled in a different Chrome profile, switch the connector to that profile or install/enable the extension in the selected profile.",
+        "If the Browser or Chrome plugin native module fails before tab discovery, repair or reinstall the bundled Browser/Chrome plugin and rerun this report.",
+        "If the native host is reported invalid, reinstall or repair the Chrome plugin from the Codex plugin UI.",
+        "Rerun the read-only AdMob readiness command before creating or editing AdMob apps or units."
+      ]
+    }
+  },
+  "admob": {
+    "consoleHost": "apps.admob.com",
+    "observedViaBrowser": false,
+    "iosApp": {
+      "bundleId": "app.freed.recovery",
+      "status": "unconfirmed",
+      "productionEnvKey": "EXPO_PUBLIC_ADMOB_APP_ID_IOS"
+    },
+    "androidApp": {
+      "packageName": "app.freed.recovery",
+      "status": "unconfirmed",
+      "productionEnvKey": "EXPO_PUBLIC_ADMOB_APP_ID_ANDROID"
+    },
+    "iosRewardedUnit": {
+      "placement": "free recovery reset challenge gate",
+      "status": "unconfirmed",
+      "productionEnvKey": "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS"
+    },
+    "androidRewardedUnit": {
+      "placement": "free recovery reset challenge gate",
+      "status": "unconfirmed",
+      "productionEnvKey": "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID"
+    },
+    "allowedFormats": [
+      "rewarded"
+    ],
+    "forbiddenFormats": [
+      "banner",
+      "interstitial",
+      "app-open",
+      "native"
+    ],
+    "forbiddenFormatsObserved": false,
+    "noForbiddenFormatsObserved": false
+  },
+  "checks": [
+    {
+      "id": "read-only-admob-inspection",
+      "status": "pass",
+      "detail": "AdMob console check was captured without creating apps, ad units, payments, or external mutations.",
+      "next": "Rerun the AdMob check in read-only mode before using it as launch readiness evidence."
+    },
+    {
+      "id": "account-identifiers-redacted",
+      "status": "pass",
+      "detail": "Report stores AdMob host/status signals only; account IDs, payment IDs, app IDs, ad-unit IDs, emails, and personal names are intentionally omitted.",
+      "next": ""
+    },
+    {
+      "id": "browser-connector-usable",
+      "status": "fail",
+      "detail": "Browser connector could not be used for the read-only AdMob check; diagnostics are stored as redacted booleans only.",
+      "next": "Install or enable the Codex Chrome Extension in the selected Chrome profile, or switch the connector to the Chrome profile where the extension is enabled, then rerun the read-only AdMob report."
+    },
+    {
+      "id": "admob-console-reachable",
+      "status": "fail",
+      "detail": "AdMob console was not confirmed reachable in this report.",
+      "next": "Open AdMob with the signed-in browser and confirm the app list is visible."
+    },
+    {
+      "id": "admob-ios-app-record-present",
+      "status": "fail",
+      "detail": "FREED iOS AdMob app for app.freed.recovery was not checked.",
+      "next": "Create or identify the iOS AdMob app for FREED bundle app.freed.recovery, then store EXPO_PUBLIC_ADMOB_APP_ID_IOS outside the repo."
+    },
+    {
+      "id": "admob-android-app-record-present",
+      "status": "fail",
+      "detail": "FREED Android AdMob app for app.freed.recovery was not checked.",
+      "next": "Create or identify the Android AdMob app for FREED package app.freed.recovery, then store EXPO_PUBLIC_ADMOB_APP_ID_ANDROID outside the repo."
+    },
+    {
+      "id": "ios-rewarded-reset-unit-present",
+      "status": "fail",
+      "detail": "iOS rewarded reset ad unit was not checked.",
+      "next": "Create or identify exactly one iOS rewarded unit for the recovery reset gate, then store EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS outside the repo."
+    },
+    {
+      "id": "android-rewarded-reset-unit-present",
+      "status": "fail",
+      "detail": "Android rewarded reset ad unit was not checked.",
+      "next": "Create or identify exactly one Android rewarded unit for the recovery reset gate, then store EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID outside the repo."
+    },
+    {
+      "id": "no-forbidden-ad-formats-observed",
+      "status": "fail",
+      "detail": "Forbidden ad formats were not checked.",
+      "next": "Keep v1 monetization scoped to rewarded reset ads only; delete or leave inactive any banner, interstitial, app-open, or native units."
+    }
+  ],
+  "passCount": 2,
+  "failCount": 7,
+  "blockers": [
+    "browser-connector-unavailable",
+    "browser-native-module-load-failed",
+    "admob-console-not-observed",
+    "admob-ios-app-unconfirmed",
+    "admob-android-app-unconfirmed",
+    "ios-rewarded-reset-unit-unconfirmed",
+    "android-rewarded-reset-unit-unconfirmed",
+    "forbidden-ad-formats-unconfirmed"
+  ],
+  "nextActions": [
+    "Repair or reinstall the bundled Browser/Chrome plugin native module, then rerun this read-only AdMob report before creating or editing ad apps or units.",
+    "Create or identify the iOS AdMob app for FREED bundle app.freed.recovery.",
+    "Create or identify the Android AdMob app for FREED package app.freed.recovery.",
+    "Create exactly one rewarded reset ad unit per platform for the recovery challenge gate.",
+    "Store the four production AdMob IDs in the production env file outside the repo.",
+    "Rerun this read-only report, then fill rewarded-ad-request-report.template.json only after a real rewarded response loads on device."
+  ],
+  "releaseBoundary": "Read-only AdMob console status only. This report does not prove rewarded ads load, sandbox purchases pass, premium no-ad behavior works, physical-device protection works, or production submission readiness."
+}
