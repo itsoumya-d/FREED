@@ -1,0 +1,55 @@
+{
+  "$schema": "https://raw.githubusercontent.com/firebase/firebase-tools/master/schema/firebase-config.json",
+  "react-native": {
+    "app_data_collection_default_enabled": false,
+    "analytics_auto_collection_enabled": false,
+    "analytics_collection_deactivated": true,
+    "crashlytics_auto_collection_enabled": false,
+    "perf_auto_collection_enabled": false,
+    "perf_collection_deactivated": true,
+    "messaging_auto_init_enabled": false
+  },
+  "firestore": {
+    "database": "(default)",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "freed",
+      "runtime": "nodejs22",
+      "ignore": ["node_modules", ".git", "firebase-debug.log", "firebase-debug.*.log"]
+    }
+  ],
+  "hosting": [
+    {
+      "target": "web",
+      "public": "dist",
+      "ignore": ["firebase.json", ".firebaserc", "**/.*", "**/node_modules/**"],
+      "cleanUrls": true,
+      "trailingSlash": false,
+      "rewrites": [
+        { "source": "/auth/**", "destination": "/index.html" },
+        { "source": "/intervention/**", "destination": "/index.html" },
+        { "source": "/legal/**", "destination": "/index.html" },
+        { "source": "**", "destination": "/index.html" }
+      ]
+    }
+  ],
+  "remoteconfig": {
+    "template": "remoteconfig.template.json"
+  },
+  "emulators": {
+    "auth": { "port": 9099 },
+    "functions": { "port": 5001 },
+    "firestore": { "port": 8080 },
+    "hosting": { "port": 5000 },
+    "storage": { "port": 9199 },
+    "ui": { "enabled": true, "port": 4000 },
+    "singleProjectMode": true
+  }
+}

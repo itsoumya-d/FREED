@@ -282,8 +282,8 @@ const checks = [
       !envProductionExample.includes("EXPO_PUBLIC_REMOTE_NOTIFICATION") &&
       !envExample.includes("EXPO_PUBLIC_FCM") &&
       !envProductionExample.includes("EXPO_PUBLIC_FCM") &&
-      !envExample.includes("EXPO_PUBLIC_FIREBASE") &&
-      !envProductionExample.includes("EXPO_PUBLIC_FIREBASE") &&
+      !/\bEXPO_PUBLIC_FIREBASE_[A-Z0-9_]*(?:SERVICE_ACCOUNT|ADMIN|PRIVATE_KEY|SERVER_KEY|ACCESS_TOKEN|APPLICATION_CREDENTIALS|CREDENTIAL)[A-Z0-9_]*\b/.test(envExample) &&
+      !/\bEXPO_PUBLIC_FIREBASE_[A-Z0-9_]*(?:SERVICE_ACCOUNT|ADMIN|PRIVATE_KEY|SERVER_KEY|ACCESS_TOKEN|APPLICATION_CREDENTIALS|CREDENTIAL)[A-Z0-9_]*\b/.test(envProductionExample) &&
       !envExample.includes("EXPO_PUBLIC_APNS") &&
       !envProductionExample.includes("EXPO_PUBLIC_APNS") &&
       backendRetentionCleanup.includes("validateBackendMaintenanceAuth") &&

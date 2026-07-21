@@ -1,0 +1,13 @@
+{
+  "conditions": [],
+  "parameters": {
+    "firebase_foundation_enabled": {
+      "defaultValue": { "value": "false" },
+      "description": "Reserved for gradual client foundation rollout. It does not enable Firestore, Storage, or App Check enforcement."
+    },
+    "app_check_enforcement_enabled": {
+      "defaultValue": { "value": "false" },
+      "description": "Informational only until physical-provider registration and server enforcement are reviewed."
+    }
+  }
+}

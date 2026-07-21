@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyBNe4f6HCVyTE4ombSSoZISslk2FzqPZrk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>5477978760</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>app.freed.recovery</string>
+	<key>PROJECT_ID</key>
+	<string>freed-7d5ee</string>
+	<key>STORAGE_BUCKET</key>
+	<string>freed-7d5ee.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:5477978760:ios:006aeb00c496c4b4b3c53d</string>
+</dict>
+</plist>

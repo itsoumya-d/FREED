@@ -1,7 +1,6 @@
 import * as Haptics from "expo-haptics";
 import { File as ExpoFile } from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
-import * as ExpoLinking from "expo-linking";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Location from "expo-location";
 import { Accelerometer, Pedometer, type AccelerometerMeasurement } from "expo-sensors";
@@ -135,13 +134,8 @@ import {
   getRecoveryBackupClientSyncReadiness,
   uploadEncryptedRecoveryBackup
 } from "@/lib/recovery-backup-client-sync";
-import {
-  buildSupabaseOAuthUrl,
-  extractSupabaseAccessTokenFromUrl,
-  getSupabaseAuthReadiness,
-  requestSupabaseMagicLink,
-  type SupabaseAuthProvider
-} from "@/lib/supabase-auth-client";
+import { getFirebaseClientReadiness } from "@/lib/firebase-client";
+import { getFirebaseNativeAuthAdapter, startFirebaseClient } from "@/lib/firebase-native";
 import { safeUserFacingMessage } from "@/lib/user-facing-error";
 import {
   ANALYTICS_CONSENT_VERSION,
@@ -4539,29 +4533,29 @@ function RecoveryBackupCard({
   onRestore: (state: RecoveryState) => void;
 }) {
   const readiness = getRecoveryBackupReadiness();
-  const syncEndpointConfigured = Boolean(process.env.EXPO_PUBLIC_RECOVERY_BACKUP_SYNC_ENDPOINT?.trim());
-  const authRedirectUrl = React.useMemo(
-    () => process.env.EXPO_PUBLIC_SUPABASE_AUTH_REDIRECT_URL?.trim() || ExpoLinking.createURL("auth/callback"),
+  const syncEndpointConfigured = Boolean(process.env.EXPO_PUBLIC_FIREBASE_RECOVERY_BACKUP_SYNC_ENDPOINT?.trim());
+  const authContinueUrl = React.useMemo(
+    () => process.env.EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL?.trim() || "https://freed-7d5ee.web.app/auth/callback",
     []
   );
-  const supabaseAuthReadiness = React.useMemo(() => getSupabaseAuthReadiness(), []);
+  const firebaseAuthReadiness = React.useMemo(() => getFirebaseClientReadiness(), []);
   const [passphrase, setPassphrase] = React.useState("");
   const [backupText, setBackupText] = React.useState("");
   const [authEmail, setAuthEmail] = React.useState("");
-  const [syncToken, setSyncToken] = React.useState("");
+  const [firebaseAuthConnected, setFirebaseAuthConnected] = React.useState(false);
   const [busy, setBusy] = React.useState(false);
   const [authBusy, setAuthBusy] = React.useState(false);
   const [message, setMessage] = React.useState(readiness.status === "ready" ? "Encrypted backup is ready." : readiness.missing[0]);
   const disabled = busy || readiness.status !== "ready";
   const syncConfig = React.useMemo(
     () => ({
-      endpointUrl: process.env.EXPO_PUBLIC_RECOVERY_BACKUP_SYNC_ENDPOINT,
-      getAuthToken: () => syncToken.trim()
+      endpointUrl: process.env.EXPO_PUBLIC_FIREBASE_RECOVERY_BACKUP_SYNC_ENDPOINT,
+      getAuthToken: () => getFirebaseNativeAuthAdapter().getCurrentIdToken()
     }),
-    [syncToken]
+    []
   );
   const syncReadiness = React.useMemo(() => getRecoveryBackupClientSyncReadiness(syncConfig), [syncConfig]);
-  const syncDisabled = disabled || authBusy || !syncReadiness.ready || syncToken.trim().length < 16;
+  const syncDisabled = disabled || authBusy || !syncReadiness.ready || !firebaseAuthConnected;
   const runBackupAction = React.useCallback(
     (action: () => Promise<void>) => {
       setBusy(true);
@@ -4573,35 +4567,30 @@ function RecoveryBackupCard({
   );
   const applyAuthUrl = React.useCallback((url: string | null) => {
     if (!url) return;
-    const token = extractSupabaseAccessTokenFromUrl(url);
-    if (!token) return;
-    setSyncToken(token);
-    setMessage("Account session connected for hosted encrypted sync.");
-  }, []);
+    setAuthBusy(true);
+    getFirebaseNativeAuthAdapter()
+      .completeEmailLink({ email: authEmail, emailLink: url })
+      .then((result) => {
+        if (!result.ok) {
+          setMessage(safeUserFacingMessage(result.reason, "Account link could not be completed."));
+          return;
+        }
+        setFirebaseAuthConnected(true);
+        setMessage("Firebase account session connected for hosted encrypted sync.");
+      })
+      .catch(() => setMessage("Account link could not be completed."))
+      .finally(() => setAuthBusy(false));
+  }, [authEmail]);
   const requestEmailLink = React.useCallback(() => {
     setAuthBusy(true);
-    requestSupabaseMagicLink(authEmail, { redirectTo: authRedirectUrl })
+    getFirebaseNativeAuthAdapter()
+      .requestEmailLink(authEmail, { continueUrl: authContinueUrl })
       .then((result) => {
         setMessage(result.ok ? "Check your email for the FREED account link." : safeUserFacingMessage(result.reason, "Account link could not be sent."));
       })
       .catch(() => setMessage("Account link could not be sent."))
       .finally(() => setAuthBusy(false));
-  }, [authEmail, authRedirectUrl]);
-  const openOAuthProvider = React.useCallback(
-    (provider: SupabaseAuthProvider) => {
-      const result = buildSupabaseOAuthUrl(provider, { redirectTo: authRedirectUrl });
-      if (!result.ok || !result.url) {
-        setMessage(safeUserFacingMessage(result.reason, "Account sign-in could not start."));
-        return;
-      }
-      setAuthBusy(true);
-      Linking.openURL(result.url)
-        .then(() => setMessage("Finish account sign-in, then return to FREED."))
-        .catch(() => setMessage("Account sign-in could not open."))
-        .finally(() => setAuthBusy(false));
-    },
-    [authRedirectUrl]
-  );
+  }, [authEmail, authContinueUrl]);
 
   React.useEffect(() => {
     if (!syncEndpointConfigured) return undefined;
@@ -4611,6 +4600,12 @@ function RecoveryBackupCard({
     };
     Linking.getInitialURL().then(applyIfActive).catch(() => undefined);
     const subscription = Linking.addEventListener("url", ({ url }) => applyIfActive(url));
+    getFirebaseNativeAuthAdapter()
+      .getCurrentIdToken()
+      .then((token) => {
+        if (active && token) setFirebaseAuthConnected(true);
+      })
+      .catch(() => undefined);
     return () => {
       active = false;
       subscription.remove();
@@ -4720,7 +4715,7 @@ function RecoveryBackupCard({
       </View>
       {syncEndpointConfigured ? (
         <View style={{ marginTop: 12, paddingTop: 12, borderTopWidth: 1, borderTopColor: "rgba(255,255,255,0.09)" }}>
-          {supabaseAuthReadiness.ready ? (
+          {firebaseAuthReadiness.ready ? (
             <>
               <TextInput
                 value={authEmail}
@@ -4761,70 +4756,16 @@ function RecoveryBackupCard({
                     Email Link
                   </Text>
                 </Pressable>
-                <Pressable
-                  disabled={disabled || authBusy}
-                  onPress={() => openOAuthProvider("apple")}
-                  style={{
-                    flexGrow: 1,
-                    minWidth: 90,
-                    minHeight: 42,
-                    borderRadius: 999,
-                    backgroundColor: "rgba(255,255,255,0.07)",
-                    borderWidth: 1,
-                    borderColor: "rgba(255,255,255,0.12)",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    opacity: disabled || authBusy ? 0.5 : 1
-                  }}
-                >
-                  <Text selectable style={{ color: colors.text, fontWeight: typography.heavy }}>
-                    Apple
-                  </Text>
-                </Pressable>
-                <Pressable
-                  disabled={disabled || authBusy}
-                  onPress={() => openOAuthProvider("google")}
-                  style={{
-                    flexGrow: 1,
-                    minWidth: 90,
-                    minHeight: 42,
-                    borderRadius: 999,
-                    backgroundColor: "rgba(255,255,255,0.07)",
-                    borderWidth: 1,
-                    borderColor: "rgba(255,255,255,0.12)",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    opacity: disabled || authBusy ? 0.5 : 1
-                  }}
-                >
-                  <Text selectable style={{ color: colors.text, fontWeight: typography.heavy }}>
-                    Google
-                  </Text>
-                </Pressable>
               </View>
+              <Text selectable style={{ color: colors.text3, lineHeight: 18, marginBottom: 10 }}>
+                Apple and Google credentials are exchanged natively when their sign-in providers are configured; this app does not open browser OAuth flows.
+              </Text>
             </>
           ) : (
             <Text selectable style={{ color: colors.text2, lineHeight: 20, marginBottom: 10 }}>
-              Account sync needs Supabase Auth public URL and anon key before hosted backup can be enabled.
+              Account sync needs the Firebase production custom build. Staging remains unavailable until its Firebase project is provisioned.
             </Text>
           )}
-          <TextInput
-            value={syncToken}
-            onChangeText={setSyncToken}
-            secureTextEntry
-            placeholder="Account session token"
-            placeholderTextColor={colors.text3}
-            style={{
-              minHeight: 48,
-              borderRadius: 16,
-              borderWidth: 1,
-              borderColor: "rgba(255,255,255,0.10)",
-              color: colors.text,
-              paddingHorizontal: 14,
-              backgroundColor: "rgba(255,255,255,0.05)",
-              marginBottom: 10
-            }}
-          />
           <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
             <Pressable
               disabled={syncDisabled}
@@ -7583,6 +7524,10 @@ export default function FreedApp() {
   React.useEffect(() => {
     void refreshProtectionStatus();
   }, [refreshProtectionStatus]);
+
+  React.useEffect(() => {
+    void startFirebaseClient();
+  }, []);
 
   React.useEffect(() => {
     configureNativeMonetizationRuntime({ platform: getRuntimeMonetizationPlatform() }).catch(() => undefined);

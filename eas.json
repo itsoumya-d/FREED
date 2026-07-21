@@ -28,11 +28,24 @@
     "production": {
       "autoIncrement": true,
       "channel": "production",
+      "env": {
+        "EXPO_PUBLIC_FIREBASE_ENV": "production"
+      },
       "android": {
         "buildType": "app-bundle"
       },
       "ios": {
         "resourceClass": "m-medium"
+      }
+    },
+    "staging": {
+      "distribution": "internal",
+      "channel": "staging",
+      "env": {
+        "EXPO_PUBLIC_FIREBASE_ENV": "staging"
+      },
+      "android": {
+        "buildType": "apk"
       }
     }
   },

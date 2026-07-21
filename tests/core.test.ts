@@ -11208,7 +11208,8 @@ test("backend architecture contract covers server-side production slices without
   assert.match(readFileSync("src/lib/supabase-auth-client.ts", "utf8"), /EXPO_PUBLIC_SUPABASE_AUTH_RESPONSE_MAX_BYTES/);
   assert.match(readFileSync("src/lib/supabase-auth-client.ts", "utf8"), /getProductionBaseUrlIssues/);
   assert.match(readFileSync("src/lib/supabase-auth-client.ts", "utf8"), /readBoundedResponseJson/);
-  assert.match(readFileSync("src/features/freed-app.tsx", "utf8"), /requestSupabaseMagicLink/);
+  assert.match(readFileSync("src/features/freed-app.tsx", "utf8"), /getFirebaseNativeAuthAdapter/);
+  assert.match(readFileSync("src/features/freed-app.tsx", "utf8"), /EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL/);
   assert.match(route, /Cache-Control/);
   assert.equal(readiness.components.supabase.ready, true);
   assert.equal(readiness.components.redis.ready, true);

@@ -36,6 +36,20 @@
     <string>1</string>
     <key>GADApplicationIdentifier</key>
     <string>$(GAD_APPLICATION_IDENTIFIER)</string>
+    <key>FirebaseDataCollectionDefaultEnabled</key>
+    <false/>
+    <key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
+    <false/>
+    <key>FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED</key>
+    <true/>
+    <key>FirebaseCrashlyticsCollectionEnabled</key>
+    <false/>
+    <key>firebase_performance_collection_enabled</key>
+    <false/>
+    <key>firebase_performance_collection_deactivated</key>
+    <true/>
+    <key>FirebaseMessagingAutoInitEnabled</key>
+    <false/>
     <key>LSMinimumSystemVersion</key>
     <string>12.0</string>
     <key>LSRequiresIPhoneOS</key>
