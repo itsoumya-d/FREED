@@ -1,4 +1,11 @@
 import { requireNativeModule } from "expo-modules-core";
+import { sanitizeFocusShieldInterventionScope, sanitizeFocusShieldRule } from "../../../src/lib/focus-shield";
+import type {
+  FocusShieldCalibrationRequest,
+  FocusShieldCalibrationResult,
+  FocusShieldInterventionScope,
+  FocusShieldRule
+} from "../../../src/lib/focus-shield";
 
 export type ProtectionCapability = {
   platform: "ios" | "android" | "web" | "unknown";
@@ -106,6 +113,13 @@ export type PendingIntervention = {
   matchedRule: string;
   detectedAt: string;
   sessionDurationSec?: number;
+  scope?: FocusShieldInterventionScope;
+};
+
+export type FocusShieldRuleOperationResult = {
+  available: boolean;
+  rule: FocusShieldRule | null;
+  message: string;
 };
 
 export type ChallengePhotoClassification = {
@@ -199,6 +213,13 @@ type NativeFreedProtection = {
   ): Promise<ProtectionStatus>;
   clearDnsSettings?(): Promise<ProtectionStatus>;
   applyEarnedUnlockWindow?(expiresAt: string, sourceAttemptHost?: string): Promise<ProtectionStatus>;
+  startFocusShieldCalibration?(request: FocusShieldCalibrationRequest): Promise<FocusShieldCalibrationResult>;
+  cancelFocusShieldCalibration?(): Promise<FocusShieldCalibrationResult>;
+  getFocusShieldCalibration?(): Promise<FocusShieldCalibrationResult>;
+  configureFocusShieldRule?(rule: FocusShieldRule): Promise<FocusShieldRuleOperationResult>;
+  listFocusShieldRules?(): Promise<FocusShieldRule[]>;
+  removeFocusShieldRule?(ruleId: string): Promise<boolean>;
+  applyFocusShieldEarnedUnlock?(expiresAt: string, scope: FocusShieldInterventionScope): Promise<ProtectionStatus>;
   clearEarnedUnlockWindow?(): Promise<ProtectionStatus>;
   startRiskWindowMonitoring?(startHour: number, endHour: number, startMinute?: number, endMinute?: number): Promise<ProtectionStatus>;
   stopRiskWindowMonitoring?(): Promise<ProtectionStatus>;
@@ -253,6 +274,17 @@ const fallbackActivationDiagnostics: ProtectionActivationDiagnostics = {
   normalAllowed: false,
   issues: ["native protection module unavailable"],
   message: "Native activation diagnostics are unavailable in Expo Go/web preview."
+};
+
+const fallbackFocusShieldCalibration: FocusShieldCalibrationResult = {
+  state: "unavailable",
+  message: "Focus Shield calibration is unavailable in Expo Go/web preview."
+};
+
+const fallbackFocusShieldRuleOperation: FocusShieldRuleOperationResult = {
+  available: false,
+  rule: null,
+  message: "Focus Shield rule management is unavailable in Expo Go/web preview."
 };
 
 export async function getProtectionCapabilities() {
@@ -344,6 +376,86 @@ export async function clearDnsSettings() {
 
 export async function applyEarnedUnlockWindow(expiresAt: string, sourceAttemptHost?: string) {
   return (await getNativeModule()?.applyEarnedUnlockWindow?.(expiresAt, sourceAttemptHost)) ?? fallbackStatus;
+}
+
+export async function startFocusShieldCalibration(request: FocusShieldCalibrationRequest): Promise<FocusShieldCalibrationResult> {
+  const module = getNativeModule();
+  if (!module?.startFocusShieldCalibration) return fallbackFocusShieldCalibration;
+  return sanitizeFocusShieldCalibrationResult(await module.startFocusShieldCalibration(request));
+}
+
+export async function cancelFocusShieldCalibration(): Promise<FocusShieldCalibrationResult> {
+  const module = getNativeModule();
+  if (!module?.cancelFocusShieldCalibration) return fallbackFocusShieldCalibration;
+  return sanitizeFocusShieldCalibrationResult(await module.cancelFocusShieldCalibration());
+}
+
+export async function getFocusShieldCalibration(): Promise<FocusShieldCalibrationResult> {
+  const module = getNativeModule();
+  if (!module?.getFocusShieldCalibration) return fallbackFocusShieldCalibration;
+  return sanitizeFocusShieldCalibrationResult(await module.getFocusShieldCalibration());
+}
+
+export async function configureFocusShieldRule(rule: FocusShieldRule): Promise<FocusShieldRuleOperationResult> {
+  const sanitizedRule = sanitizeFocusShieldRule(rule);
+  if (!sanitizedRule) {
+    return {
+      available: false,
+      rule: null,
+      message: "Focus Shield rule is invalid and was not sent to native protection."
+    };
+  }
+
+  const module = getNativeModule();
+  if (!module?.configureFocusShieldRule) return fallbackFocusShieldRuleOperation;
+  return sanitizeFocusShieldRuleOperationResult(await module.configureFocusShieldRule(sanitizedRule));
+}
+
+export async function listFocusShieldRules(): Promise<FocusShieldRule[]> {
+  const module = getNativeModule();
+  if (!module?.listFocusShieldRules) return [];
+  return (await module.listFocusShieldRules())
+    .map((rule) => sanitizeFocusShieldRule(rule))
+    .filter((rule): rule is FocusShieldRule => rule !== null);
+}
+
+export async function removeFocusShieldRule(ruleId: string): Promise<boolean> {
+  const module = getNativeModule();
+  if (!module?.removeFocusShieldRule) return false;
+  return module.removeFocusShieldRule(ruleId);
+}
+
+export async function applyFocusShieldEarnedUnlock(expiresAt: string, scope: FocusShieldInterventionScope): Promise<ProtectionStatus> {
+  const sanitizedScope = sanitizeFocusShieldInterventionScope(scope);
+  if (!sanitizedScope) return fallbackStatus;
+
+  const module = getNativeModule();
+  if (!module?.applyFocusShieldEarnedUnlock) return fallbackStatus;
+  return module.applyFocusShieldEarnedUnlock(expiresAt, sanitizedScope);
+}
+
+function sanitizeFocusShieldCalibrationResult(value: unknown): FocusShieldCalibrationResult {
+  if (!isRecord(value) || !isFocusShieldCalibrationState(value.state)) return fallbackFocusShieldCalibration;
+
+  const rule = value.rule === undefined ? undefined : sanitizeFocusShieldRule(value.rule) ?? undefined;
+  const message = typeof value.message === "string" ? value.message.trim().slice(0, 240) || undefined : undefined;
+  return { state: value.state, rule, message };
+}
+
+function sanitizeFocusShieldRuleOperationResult(value: unknown): FocusShieldRuleOperationResult {
+  if (!isRecord(value)) return fallbackFocusShieldRuleOperation;
+
+  const rule = value.rule === null || value.rule === undefined ? null : sanitizeFocusShieldRule(value.rule);
+  const message = typeof value.message === "string" ? value.message.trim().slice(0, 240) : fallbackFocusShieldRuleOperation.message;
+  return { available: value.available === true, rule, message };
+}
+
+function isFocusShieldCalibrationState(value: unknown): value is FocusShieldCalibrationResult["state"] {
+  return value === "idle" || value === "calibrating" || value === "ready" || value === "cancelled" || value === "unavailable" || value === "failed";
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 export async function clearEarnedUnlockWindow() {

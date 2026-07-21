@@ -127,6 +127,15 @@ import {
 } from "../src/lib/recovery-analytics-ingestion";
 import { buildLocalUrgeRiskForecast } from "../src/lib/urge-risk-forecast";
 import {
+  FOCUS_SHIELD_PRESETS,
+  focusShieldScopesMatch,
+  getFocusShieldRuleDisplayName,
+  isAndroidSurfaceScopeActive,
+  sanitizeFocusShieldRule,
+  sanitizeFocusShieldInterventionScope,
+  validateFocusShieldRule
+} from "../src/lib/focus-shield";
+import {
   LAUNCH_PREMIUM_PLAN_IDS,
   LAUNCH_PREMIUM_PLAN_ECONOMICS,
   PREMIUM_PLANS,
@@ -1457,6 +1466,146 @@ function clearAiServerKeys() {
 function restoreAiServerKeys(previous: Record<(typeof aiServerKeyNames)[number], string | undefined>) {
   for (const key of aiServerKeyNames) restoreEnv(key, previous[key]);
 }
+
+test("Focus Shield presets carry stable surface metadata", () => {
+  const youtube = FOCUS_SHIELD_PRESETS.find((preset) => preset.id === "youtube-shorts");
+  const instagram = FOCUS_SHIELD_PRESETS.find((preset) => preset.id === "instagram-reels");
+  const tiktok = FOCUS_SHIELD_PRESETS.find((preset) => preset.id === "tiktok-for-you");
+
+  assert.deepEqual(
+    [youtube?.packageName, instagram?.packageName, tiktok?.packageName],
+    ["com.google.android.youtube", "com.instagram.android", "com.zhiliaoapp.musically"]
+  );
+  assert.equal(youtube?.version, 1);
+  assert.equal(youtube?.selector.packageName, youtube?.packageName);
+});
+
+test("Focus Shield sanitizes rules without persisting accessibility content", () => {
+  const rule = sanitizeFocusShieldRule({
+    version: 1,
+    id: "focus-rule-a7f9",
+    packageName: "com.google.android.youtube",
+    displayLabel: "My YouTube boundary",
+    kind: "custom",
+    enabled: true,
+    selector: {
+      packageName: "com.google.android.youtube",
+      viewId: "com.google.android.youtube:id/reel_player",
+      role: "android.view.View",
+      ancestorRoles: ["android.widget.FrameLayout"],
+      normalizedBounds: { x: 0.1, y: 0.2, width: 0.8, height: 0.6 },
+      nodeText: "private viewing text",
+      rawAccessibilityTree: { child: "private" }
+    }
+  });
+
+  assert.ok(rule);
+  assert.equal(validateFocusShieldRule(rule), true);
+  assert.equal(getFocusShieldRuleDisplayName(rule), "My YouTube boundary");
+  assert.equal(JSON.stringify(rule).includes("private"), false);
+  assert.deepEqual(Object.keys(rule.selector).sort(), ["ancestorRoles", "normalizedBounds", "packageName", "role", "viewId"]);
+});
+
+test("Focus Shield rejects coordinate-only custom rules", () => {
+  const rule = sanitizeFocusShieldRule({
+    version: 1,
+    id: "focus-rule-coordinate-only",
+    packageName: "com.instagram.android",
+    displayLabel: "Reels",
+    kind: "custom",
+    enabled: true,
+    selector: {
+      packageName: "com.instagram.android",
+      normalizedBounds: { x: 0, y: 0, width: 1, height: 1 }
+    }
+  });
+
+  assert.equal(rule, null);
+});
+
+test("Focus Shield only accepts preset-allowlisted custom view IDs", () => {
+  const rule = sanitizeFocusShieldRule({
+    version: 1,
+    id: "focus-rule-unlisted-view",
+    packageName: "com.google.android.youtube",
+    displayLabel: "YouTube boundary",
+    kind: "custom",
+    enabled: true,
+    selector: {
+      packageName: "com.google.android.youtube",
+      viewId: "com.google.android.youtube:id/unlisted_private_view",
+      role: "android.view.View"
+    }
+  });
+
+  assert.equal(rule, null);
+});
+
+test("Focus Shield omits bounds that collapse during normalization", () => {
+  const rule = sanitizeFocusShieldRule({
+    version: 1,
+    id: "focus-rule-tiny-bounds",
+    packageName: "com.google.android.youtube",
+    displayLabel: "YouTube boundary",
+    kind: "custom",
+    enabled: true,
+    selector: {
+      packageName: "com.google.android.youtube",
+      role: "android.view.View",
+      normalizedBounds: { x: 0, y: 0, width: 0.00004, height: 0.00004 }
+    }
+  });
+
+  assert.ok(rule);
+  assert.equal(rule.selector.normalizedBounds, undefined);
+});
+
+test("Focus Shield matches scoped interventions without browser or accessibility payloads", () => {
+  const surfaceScope = {
+    kind: "android-surface" as const,
+    packageName: "com.google.android.youtube",
+    ruleId: "focus-rule-a7f9"
+  };
+
+  assert.equal(
+    isAndroidSurfaceScopeActive(surfaceScope, {
+      id: "focus-rule-a7f9",
+      packageName: "com.google.android.youtube"
+    }),
+    true
+  );
+  assert.equal(
+    isAndroidSurfaceScopeActive(surfaceScope, {
+      id: "different-rule",
+      packageName: "com.google.android.youtube"
+    }),
+    false
+  );
+  assert.equal(focusShieldScopesMatch(surfaceScope, { ...surfaceScope }), true);
+  assert.equal(
+    focusShieldScopesMatch(surfaceScope, { kind: "android-package", packageName: "com.google.android.youtube" }),
+    false
+  );
+  assert.equal(
+    focusShieldScopesMatch(
+      { kind: "ios-token", tokenType: "application", token: "opaque-screen-time-token" },
+      { kind: "ios-token", tokenType: "application", token: "opaque-screen-time-token" }
+    ),
+    true
+  );
+  assert.deepEqual(
+    sanitizeFocusShieldInterventionScope({ ...surfaceScope, nodeText: "private text" }),
+    surfaceScope
+  );
+});
+
+test("Focus Shield bridge sanitizes runtime rule payloads before native calls", () => {
+  const bridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+
+  assert.match(bridge, /const sanitizedRule = sanitizeFocusShieldRule\(rule\);/);
+  assert.match(bridge, /module\.configureFocusShieldRule\(sanitizedRule\)/);
+  assert.match(bridge, /\.map\(\(rule\) => sanitizeFocusShieldRule\(rule\)\)/);
+});
 
 test("allows normal browsing domains by default", () => {
   for (const domain of DEFAULT_ALLOWED_NORMAL_DOMAINS) {
