@@ -1781,12 +1781,72 @@ test("Android Focus Shield distinguishes its overlay events from a real FREED ap
   assert.match(calibration, /AccessibilityWindowInfo\.TYPE_ACCESSIBILITY_OVERLAY/);
   assert.match(calibration, /window\.id == event\.windowId/);
   assert.match(calibration, /if \(isCalibrationOverlayEvent\(event\)\) return/);
+  assert.match(calibration, /AccessibilityEvent\.TYPE_WINDOW_STATE_CHANGED/);
+  assert.match(calibration, /AccessibilityEvent\.TYPE_WINDOWS_CHANGED/);
+  assert.match(calibration, /AccessibilityWindowInfo\.TYPE_APPLICATION/);
+  assert.match(calibration, /window\.isActive \|\| window\.isFocused/);
+  assert.match(calibration, /activeForegroundApplicationPackage/);
+  assert.match(calibration, /if \(activePackage == request\.packageName\) return/);
   assert.doesNotMatch(calibration, /packageName != service\.packageName/);
 
-  const shouldTerminate = (targetObserved: boolean, isTarget: boolean, isOwnOverlayWindow: boolean) =>
-    targetObserved && !isTarget && !isOwnOverlayWindow;
-  assert.equal(shouldTerminate(true, false, true), false);
-  assert.equal(shouldTerminate(true, false, false), true);
+  const shouldTerminate = (
+    targetObserved: boolean,
+    eventType: "content" | "text" | "scroll" | "window-state" | "windows-changed",
+    activeApplicationPackage: string | null
+  ) => targetObserved
+    && (eventType === "window-state" || eventType === "windows-changed")
+    && activeApplicationPackage !== null
+    && activeApplicationPackage !== "com.google.android.youtube";
+  assert.equal(shouldTerminate(true, "content", "com.android.systemui"), false);
+  assert.equal(shouldTerminate(true, "text", "com.android.inputmethod.latin"), false);
+  assert.equal(shouldTerminate(true, "windows-changed", "com.google.android.youtube"), false);
+  assert.equal(shouldTerminate(true, "window-state", "app.freed"), true);
+});
+
+test("Android Focus Shield failed starts invalidate an earlier queued or active calibration", () => {
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const module = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+    "utf8"
+  );
+
+  assert.match(calibration, /fun failStart\(message: String\)/);
+  assert.match(calibration, /fun failStart[\s\S]*stopFocusShieldCalibration\("failed", message\)[\s\S]*publish/);
+  assert.match(calibration, /fromPayload\(value\)[\s\S]*\?: return failStart/);
+  assert.match(module, /reactContext \?: return@AsyncFunction FreedFocusShieldCalibrationBridge\.failStart/);
+
+  let generation = 0;
+  const postedStarts: Array<() => boolean> = [];
+  const queueStart = () => {
+    const token = ++generation;
+    postedStarts.push(() => token === generation);
+  };
+  const failStart = () => { generation += 1; };
+  queueStart();
+  failStart();
+  assert.equal(postedStarts[0](), false);
+});
+
+test("Android Focus Shield overlay attachment failures terminate and clean the session", () => {
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const addViewCalls = calibration.match(/windowManager\.addView\(/g) ?? [];
+  const edge = calibration.slice(calibration.indexOf("private fun showEdgeHandle"), calibration.indexOf("private fun showSelectorOverlay"));
+  const selector = calibration.slice(calibration.indexOf("private fun showSelectorOverlay"), calibration.indexOf("private fun addOverlayView"));
+
+  assert.equal(addViewCalls.length, 1);
+  assert.match(calibration, /private fun addOverlayView\(/);
+  assert.match(calibration, /addOverlayView[\s\S]*catch \(_: Exception\)[\s\S]*finish\([\s\S]*state = "failed"/);
+  assert.match(calibration, /if \(!showEdgeHandle\(\)\) return/);
+  assert.match(calibration, /if \(!addOverlayView\(overlay, params\)\) return/);
+  assert.ok(edge.indexOf("handleView = handle") < edge.indexOf("addOverlayView(handle, params)"));
+  assert.ok(selector.indexOf("selectorView = overlay") < selector.indexOf("addOverlayView(overlay, params)"));
+  assert.match(calibration, /fun finish[\s\S]*removeOverlays\(\)[\s\S]*candidate = null/);
 });
 
 test("Focus Shield calibration states have one central shared contract", () => {

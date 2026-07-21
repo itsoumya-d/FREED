@@ -489,9 +489,8 @@ class FreedProtectionModule : Module() {
     }
 
     AsyncFunction("startFocusShieldCalibration") { request: Map<String, Any?> ->
-      val context = appContext.reactContext ?: return@AsyncFunction mapOf(
-        "state" to "unavailable",
-        "message" to "React context is unavailable, so calibration cannot start."
+      val context = appContext.reactContext ?: return@AsyncFunction FreedFocusShieldCalibrationBridge.failStart(
+        "React context is unavailable, so calibration cannot start."
       )
       if (!isAccessibilityServiceEnabled(context)) {
         return@AsyncFunction FreedFocusShieldCalibrationBridge.permissionRevoked()

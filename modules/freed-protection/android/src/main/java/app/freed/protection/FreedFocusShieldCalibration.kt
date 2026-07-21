@@ -102,12 +102,7 @@ internal object FreedFocusShieldCalibrationBridge {
   @Synchronized
   fun start(value: Map<String, Any?>): Map<String, Any> {
     val request = FreedFocusShieldCalibrationRequest.fromPayload(value)
-      ?: return publish(
-        FreedFocusShieldCalibrationResult(
-          state = "failed",
-          message = "Focus Shield calibration needs a valid local rule ID and Android package."
-        )
-      ).toPayload()
+      ?: return failStart("Focus Shield calibration needs a valid local rule ID and Android package.")
     val service = serviceReference.get()
       ?: return publish(
         FreedFocusShieldCalibrationResult(
@@ -123,6 +118,12 @@ internal object FreedFocusShieldCalibrationBridge {
     publish(initial)
     service.beginFocusShieldCalibration(request)
     return initial.toPayload()
+  }
+
+  @Synchronized
+  fun failStart(message: String): Map<String, Any> {
+    serviceReference.get()?.stopFocusShieldCalibration("failed", message)
+    return publish(FreedFocusShieldCalibrationResult("failed", message)).toPayload()
   }
 
   @Synchronized
@@ -189,7 +190,7 @@ internal class FreedFocusShieldCalibrationSession(
     }
     if (disposed) return
     try {
-      showEdgeHandle()
+      if (!showEdgeHandle()) return
       handler.postDelayed(timeoutRunnable, CALIBRATION_TIMEOUT_MS)
     } catch (_: Exception) {
       finish(
@@ -207,6 +208,12 @@ internal class FreedFocusShieldCalibrationSession(
     }
     if (!targetObserved) return
     if (isCalibrationOverlayEvent(event)) return
+    if (
+      event.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED &&
+      event.eventType != AccessibilityEvent.TYPE_WINDOWS_CHANGED
+    ) return
+    val activePackage = activeForegroundApplicationPackage(event) ?: return
+    if (activePackage == request.packageName) return
     finish(
       state = "app-switched",
       message = "Calibration stopped because the selected app was left. No selector was stored."
@@ -218,6 +225,16 @@ internal class FreedFocusShieldCalibrationSession(
     return service.windows.orEmpty().any { window ->
       window.id == event.windowId && window.type == AccessibilityWindowInfo.TYPE_ACCESSIBILITY_OVERLAY
     }
+  }
+
+  private fun activeForegroundApplicationPackage(event: AccessibilityEvent): String? {
+    val applicationWindows = service.windows.orEmpty().filter { window ->
+      window.type == AccessibilityWindowInfo.TYPE_APPLICATION && (window.isActive || window.isFocused)
+    }
+    val activeWindow = applicationWindows.firstOrNull { window -> window.id == event.windowId }
+      ?: applicationWindows.firstOrNull()
+      ?: return null
+    return activeWindow.root?.packageName?.toString()?.trim()?.lowercase(Locale.US)
   }
 
   fun finish(state: String, message: String) {
@@ -245,7 +262,7 @@ internal class FreedFocusShieldCalibrationSession(
     candidate = null
   }
 
-  private fun showEdgeHandle() {
+  private fun showEdgeHandle(): Boolean {
     val handle = Button(service).apply {
       text = "FREED"
       setTextColor(Color.WHITE)
@@ -266,8 +283,9 @@ internal class FreedFocusShieldCalibrationSession(
       gravity = Gravity.END or Gravity.CENTER_VERTICAL
       x = dp(4)
     }
-    windowManager.addView(handle, params)
     handleView = handle
+    if (!addOverlayView(handle, params)) return false
+    return true
   }
 
   private fun showSelectorOverlay() {
@@ -348,8 +366,21 @@ internal class FreedFocusShieldCalibrationSession(
       WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
       PixelFormat.TRANSLUCENT
     ).apply { gravity = Gravity.TOP or Gravity.START }
-    windowManager.addView(overlay, params)
     selectorView = overlay
+    if (!addOverlayView(overlay, params)) return
+  }
+
+  private fun addOverlayView(view: View, params: WindowManager.LayoutParams): Boolean {
+    return try {
+      windowManager.addView(view, params)
+      true
+    } catch (_: Exception) {
+      finish(
+        state = "failed",
+        message = "The temporary Accessibility overlay could not be created. No selector was stored."
+      )
+      false
+    }
   }
 
   private fun selectCandidate(x: Int, y: Int) {

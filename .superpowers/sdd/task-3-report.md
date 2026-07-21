@@ -148,4 +148,48 @@ The additional review tests also specify that only a FREED event whose exact win
 - `ANDROID_HOME=/Users/soumyadebnath16/Library/Android/sdk ./gradlew :freed-protection:compileDebugKotlin`: exit 0, `BUILD SUCCESSFUL`.
 - Full `npm run test:core`: continues past all Task 3 tests and exits 1 only at the same unrelated release-signing fixture documented above.
 
-Physical-device validation remains necessary for OEM Accessibility window enumeration behavior; if an overlay event cannot be proven to originate from a `TYPE_ACCESSIBILITY_OVERLAY` window, the implementation deliberately treats it as an app departure and tears down rather than risking a lingering selector.
+Physical-device validation remains necessary for OEM Accessibility window enumeration behavior. Overlay-origin events are ignored only when their window type is proven; all other departure decisions require a separately confirmed active/focused application window.
+
+## Second blocking review follow-up
+
+A second review identified three remaining fail-closed gaps:
+
+1. An invalid-request start and the native module's missing-React-context start returned terminal results without first invalidating an older queued or active calibration.
+2. The edge-handle `addView` was covered by the outer start catch, but the selector overlay was added later from a click listener with no WindowManager exception boundary.
+3. Any non-target package event could still end calibration, including transient System UI, IME, content, text, and scroll events while the selected app remained foreground.
+
+### Second follow-up RED
+
+Source/behavior regressions were added first. The initial run exited 1 at the foreground-window requirement:
+
+```text
+FAIL Android Focus Shield distinguishes its overlay events from a real FREED app switch
+The input did not match /AccessibilityEvent\.TYPE_WINDOW_STATE_CHANGED/
+```
+
+During the first green review, a stricter overlay cleanup assertion was added and observed failing because overlay references were assigned only after `WindowManager.addView` returned:
+
+```text
+FAIL Android Focus Shield overlay attachment failures terminate and clean the session
+edge.indexOf("handleView = handle") < edge.indexOf("addOverlayView(handle, params)") was false
+```
+
+This proved a partially attached view could not be found by terminal cleanup if `addView` threw after attaching it.
+
+### Second follow-up implementation
+
+- Added `FreedFocusShieldCalibrationBridge.failStart`. It calls `stopFocusShieldCalibration("failed", ...)` before publishing the failed result, so the service generation changes synchronously and any earlier posted start becomes stale.
+- Invalid request parsing and the native module's unavailable React context both use `failStart`; neither can leave an older handle/session alive.
+- Routed both WindowManager additions through `addOverlayView`, which catches every `Exception`, emits terminal `failed`, and runs normal overlay/candidate cleanup.
+- Registers handle and selector view references before attempting `addView`, allowing cleanup to remove a view even if WindowManager partially attached it before throwing.
+- App-switch evaluation now ignores content/text/scroll events and considers only `TYPE_WINDOW_STATE_CHANGED` or `TYPE_WINDOWS_CHANGED` transitions.
+- A departure is emitted only when an active/focused `TYPE_APPLICATION` window can be resolved and its root package differs from the calibration target. Overlay, System UI, and IME window types cannot by themselves trigger departure; a real FREED or other application foreground window still tears down safely.
+
+### Second follow-up verification
+
+- All Task 3 tests pass, including the new failed-start generation simulation, guarded overlay attachment/cleanup assertions, and foreground application-window behavior matrix.
+- `npm run typecheck`: exit 0.
+- `ANDROID_HOME=/Users/soumyadebnath16/Library/Android/sdk ./gradlew :freed-protection:compileDebugKotlin`: exit 0, `BUILD SUCCESSFUL`.
+- Full `npm run test:core`: passes all Task 3 tests and exits 1 only at the unchanged unrelated release-signing preflight fixture.
+
+Physical-device validation is still required for OEM window metadata. If Accessibility does not expose an active/focused application window during a transition, calibration retains its five-minute timeout instead of using an unconfirmed package event to tear down.
