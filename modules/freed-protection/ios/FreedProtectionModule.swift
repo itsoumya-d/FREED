@@ -67,6 +67,8 @@ public class FreedProtectionModule: Module {
   private let selectionCategoryCountKey = "freed.selection.categoryCount"
   private let selectionWebDomainCountKey = "freed.selection.webDomainCount"
   private let pendingInterventionRecordKey = "freed.pendingIntervention.record"
+  private let pendingInterventionConsumedIdsKey = "freed.pendingIntervention.consumedIds.v1"
+  private let maxPendingInterventionConsumedIds = 32
   private let pendingEarnedUnlockScopeKey = "freed.pendingIntervention.unlockScope"
   private let pendingInterventionMaxAgeSeconds: TimeInterval = 10 * 60
   private let pendingInterventionFutureSkewSeconds: TimeInterval = 60
@@ -83,6 +85,7 @@ public class FreedProtectionModule: Module {
   private let safariContentBlockerGeneratedAtKey = "freed.safariContentBlocker.generatedAt"
   private let safariContentBlockerRuleCountKey = "freed.safariContentBlocker.ruleCount"
   private let safariContentBlockerLastReloadErrorKey = "freed.safariContentBlocker.lastReloadError"
+  private let pendingInterventionClaimLock = NSLock()
   private let safariContentBlockerStateKnownKey = "freed.safariContentBlocker.stateKnown"
   private let safariContentBlockerEnabledKey = "freed.safariContentBlocker.enabled"
   private let safariContentBlockerStateCheckedAtKey = "freed.safariContentBlocker.stateCheckedAt"
@@ -582,14 +585,21 @@ public class FreedProtectionModule: Module {
       guard let record = self.pendingInterventionRecord() else {
         return nil
       }
+      guard let interventionId = self.sanitizedPendingInterventionId(record.id) else {
+        return nil
+      }
+      guard !self.isPendingInterventionConsumed(interventionId) else {
+        return nil
+      }
 
       guard self.isFreshPendingIntervention(record.detectedAt) else {
-        self.clearPendingInterventionDefaults()
+        _ = self.claimPendingIntervention(interventionId, stageEarnedUnlockScope: false)
         return nil
       }
 
       let host = self.sanitizedPendingHost(record.host)
       var payload: [String: Any] = [
+        "interventionId": interventionId,
         "url": "https://\(host)",
         "host": host,
         "sourcePackage": self.sanitizedPendingSourcePackage(record.sourcePackage),
@@ -603,21 +613,11 @@ public class FreedProtectionModule: Module {
       return payload
     }
 
-    AsyncFunction("clearPendingIntervention") { () -> Bool in
-      if
-        let record = self.pendingInterventionRecord(),
-        record.sourcePackage == self.screenTimeShieldSource,
-        let scope = record.scope,
-        scope.kind == "ios-token",
-        let encodedScope = try? JSONEncoder().encode(scope)
-      {
-        self.sharedDefaults().set(encodedScope, forKey: self.pendingEarnedUnlockScopeKey)
-      } else {
-        self.sharedDefaults().removeObject(forKey: self.pendingEarnedUnlockScopeKey)
+    AsyncFunction("clearPendingIntervention") { (expectedInterventionId: String) -> Bool in
+      guard let sanitizedInterventionId = self.sanitizedPendingInterventionId(expectedInterventionId) else {
+        return false
       }
-      self.clearPendingInterventionDefaults()
-
-      return true
+      return self.claimPendingIntervention(sanitizedInterventionId, stageEarnedUnlockScope: true)
     }
 
     AsyncFunction("classifyChallengePhoto") { (uri: String, expectedLabels: [String]) -> [String: Any] in
@@ -911,6 +911,57 @@ public class FreedProtectionModule: Module {
       return nil
     }
     return try? JSONDecoder().decode(PendingInterventionRecord.self, from: data)
+  }
+
+  private func claimPendingIntervention(_ expectedInterventionId: String, stageEarnedUnlockScope: Bool) -> Bool {
+    pendingInterventionClaimLock.lock()
+    defer { pendingInterventionClaimLock.unlock() }
+
+    guard
+      let record = pendingInterventionRecord(),
+      let currentInterventionId = sanitizedPendingInterventionId(record.id),
+      currentInterventionId == expectedInterventionId,
+      !isPendingInterventionConsumed(expectedInterventionId)
+    else {
+      return false
+    }
+
+    markPendingInterventionConsumed(expectedInterventionId)
+    guard stageEarnedUnlockScope else { return true }
+
+    if
+      record.sourcePackage == screenTimeShieldSource,
+      let scope = record.scope,
+      scope.kind == "ios-token",
+      let encodedScope = try? JSONEncoder().encode(scope)
+    {
+      sharedDefaults().set(encodedScope, forKey: pendingEarnedUnlockScopeKey)
+    } else {
+      sharedDefaults().removeObject(forKey: pendingEarnedUnlockScopeKey)
+    }
+    return true
+  }
+
+  private func markPendingInterventionConsumed(_ interventionId: String) {
+    let consumedIds = pendingInterventionConsumedIds()
+      .filter { $0 != interventionId } + [interventionId]
+    sharedDefaults().set(Array(consumedIds.suffix(maxPendingInterventionConsumedIds)), forKey: pendingInterventionConsumedIdsKey)
+  }
+
+  private func isPendingInterventionConsumed(_ interventionId: String) -> Bool {
+    pendingInterventionConsumedIds().contains(interventionId)
+  }
+
+  private func pendingInterventionConsumedIds() -> [String] {
+    let storedIds = sharedDefaults().stringArray(forKey: pendingInterventionConsumedIdsKey) ?? []
+    return storedIds.compactMap(sanitizedPendingInterventionId).suffix(maxPendingInterventionConsumedIds).map { $0 }
+  }
+
+  private func sanitizedPendingInterventionId(_ value: String?) -> String? {
+    guard let normalized = value?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased(), UUID(uuidString: normalized) != nil else {
+      return nil
+    }
+    return normalized
   }
 
   private func scopePayload(_ scope: InterventionScope?) -> [String: Any]? {

@@ -13,6 +13,7 @@ import {
 } from "./doomscroll-apps";
 
 export type NativePendingInterventionPayload = {
+  interventionId: string;
   url: string;
   host: string;
   sourcePackage: string;
@@ -30,6 +31,14 @@ export type NativeInterventionAttempt = BlockingAttempt & {
 export const PENDING_INTERVENTION_MAX_AGE_MS = 10 * 60 * 1000;
 export const SUPPORTED_NATIVE_INTERVENTION_APP_PACKAGES = SUPPORTED_DOOMSCROLL_APP_PACKAGES;
 
+export function sanitizeNativeInterventionId(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const normalized = value.trim().toLowerCase();
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(normalized)
+    ? normalized
+    : null;
+}
+
 const supportedNativeAppPackageSet = new Set<string>(SUPPORTED_NATIVE_INTERVENTION_APP_PACKAGES);
 const APP_INTERVENTION_FALLBACK_HOST = "selected-app.app.freed.local";
 const IOS_SCREEN_TIME_SHIELD_HOST = "screen-time-shield.freed.local";
@@ -44,6 +53,7 @@ export function isFreshPendingIntervention(
   pending: NativePendingInterventionPayload,
   nowMs = Date.now()
 ): boolean {
+  if (!sanitizeNativeInterventionId(pending.interventionId)) return false;
   const detectedMs = Date.parse(pending.detectedAt);
   if (Number.isNaN(detectedMs)) return false;
   return detectedMs <= nowMs + 60_000 && nowMs - detectedMs <= PENDING_INTERVENTION_MAX_AGE_MS;

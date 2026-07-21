@@ -112,6 +112,7 @@ export type ProtectionStatus = {
 };
 
 export type PendingIntervention = {
+  interventionId: string;
   url: string;
   host: string;
   sourcePackage: string;
@@ -230,7 +231,7 @@ type NativeFreedProtection = {
     requireReviewedAdultFeed?: boolean
   ): Promise<ProtectionActivationDiagnostics>;
   getPendingIntervention?(): Promise<PendingIntervention | null>;
-  clearPendingIntervention?(): Promise<boolean>;
+  clearPendingIntervention?(interventionId: string): Promise<boolean>;
   classifyChallengePhoto?(uri: string, expectedLabels: string[]): Promise<ChallengePhotoClassification>;
 };
 
@@ -528,17 +529,30 @@ export async function getPendingIntervention() {
   if (!module?.getPendingIntervention) return null;
   const pending = await module.getPendingIntervention();
   if (!pending) return null;
+  const interventionId = sanitizePendingInterventionId(pending.interventionId);
+  if (!interventionId) return null;
   const scope = sanitizeFocusShieldInterventionScope(pending.scope);
   return {
     ...pending,
+    interventionId,
     ...(scope ? { scope } : { scope: undefined })
   };
 }
 
-export async function clearPendingIntervention() {
+export async function clearPendingIntervention(interventionId: string) {
+  const sanitizedInterventionId = sanitizePendingInterventionId(interventionId);
+  if (!sanitizedInterventionId) return false;
   const module = getNativeModule();
   if (!module?.clearPendingIntervention) return false;
-  return module.clearPendingIntervention();
+  return module.clearPendingIntervention(sanitizedInterventionId);
+}
+
+function sanitizePendingInterventionId(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const normalized = value.trim().toLowerCase();
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(normalized)
+    ? normalized
+    : null;
 }
 
 export async function classifyChallengePhoto(uri: string, expectedLabels: string[]): Promise<ChallengePhotoClassification> {

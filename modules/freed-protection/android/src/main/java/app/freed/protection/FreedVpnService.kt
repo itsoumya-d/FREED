@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import java.util.UUID
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.concurrent.thread
 import kotlin.math.min
@@ -249,9 +250,11 @@ class FreedVpnService : VpnService() {
     lastBlockedKey = key
     lastBlockedElapsedMs = now
     val redactedUrl = "https://$host"
+    val interventionId = UUID.randomUUID().toString()
 
     getSharedPreferences(FreedAccessibilityService.PREFS_NAME, MODE_PRIVATE)
       .edit()
+      .putString(FreedAccessibilityService.PENDING_INTERVENTION_ID, interventionId)
       .putString(FreedAccessibilityService.PENDING_URL, redactedUrl)
       .putString(FreedAccessibilityService.PENDING_HOST, host)
       .putString(FreedAccessibilityService.PENDING_SOURCE_PACKAGE, "android-dns")

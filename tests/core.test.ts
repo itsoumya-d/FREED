@@ -1541,7 +1541,7 @@ test("Focus Shield UI models expose platform limits without retaining selector d
     },
     summaries
   );
-  assert.equal(android.calibrationAvailable, true);
+  assert.equal(android.calibrationAvailable, false);
   assert.match(android.description, /selected native-app surfaces/i);
   assert.match(android.diagnostics.join(" "), /permission.*revoked/i);
   assert.match(android.diagnostics.join(" "), /stale|degraded/i);
@@ -1553,7 +1553,7 @@ test("Focus Shield UI models expose platform limits without retaining selector d
       screenTime: false,
       managedSettings: false,
       dnsFiltering: false,
-      safariContentBlocker: true,
+      safariContentBlocker: false,
       localVpnFallback: false,
       notes: []
     },
@@ -1562,7 +1562,9 @@ test("Focus Shield UI models expose platform limits without retaining selector d
   );
   assert.equal(ios.calibrationAvailable, false);
   assert.match(ios.description, /cannot inspect native-app screens/i);
+  assert.match(ios.description, /Safari Focus Shield extension/i);
   assert.match(ios.diagnostics.join(" "), /Family Controls entitlement/i);
+  assert.match(ios.diagnostics.join(" "), /Safari Focus Shield extension/i);
 
   const preview = protection.getFocusShieldCapabilityModel(
     {
@@ -1591,6 +1593,7 @@ test("protection-triggered attempts bypass rewarded ads and only successful chal
   assert.equal(typeof protection.shouldBypassRewardedAdForAttempt, "function");
   assert.equal(typeof protection.getProtectionChallengeCompletionDecision, "function");
   const protectedAttempt = createNativeInterventionAttempt({
+    interventionId: "11111111-1111-4111-8111-111111111111",
     url: "https://selected-app.app.freed.local",
     host: "selected-app.app.freed.local",
     sourcePackage: "com.google.android.youtube",
@@ -1634,6 +1637,64 @@ test("React wires Focus Shield setup, single-consumption challenge routing, and 
   assert.match(appSurface, /getProtectionChallengeCompletionDecision\(activeAttempt, outcome\)/);
   assert.match(appSurface, /completionDecision\.grantEarnedUnlock/);
   assert.match(appSurface, /completionDecision\.applyFocusShieldScope/);
+});
+
+test("abandoning an interception clears its native scope before standalone challenges", () => {
+  const appSurface = readFileSync("src/features/freed-app.tsx", "utf8");
+
+  assert.match(appSurface, /const abandonActiveProtectionFlow = React\.useCallback/);
+  assert.match(appSurface, /setActiveAttempt\(null\);[\s\S]*setSelectedChallenge\(null\);[\s\S]*setScreen\("main"\)/);
+  assert.match(appSurface, /onClose=\{abandonActiveProtectionFlow\}/);
+  assert.match(appSurface, /onBack=\{abandonActiveProtectionFlow\}/);
+  assert.match(appSurface, /const startStandaloneChallenge = React\.useCallback/);
+  assert.match(appSurface, /setActiveAttempt\(null\);[\s\S]*startChallenge\(challenge\)/);
+  assert.match(appSurface, /onChallenge=\{\(\) => startStandaloneChallenge\(\)\}/);
+});
+
+test("pending intervention bridges require identity-bound claims on Android and iOS", () => {
+  const bridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+  const androidService = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+    "utf8"
+  );
+  const androidVpn = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedVpnService.kt",
+    "utf8"
+  );
+  const androidModule = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+    "utf8"
+  );
+  const iosModule = readFileSync("modules/freed-protection/ios/FreedProtectionModule.swift", "utf8");
+
+  assert.match(bridge, /interventionId: string/);
+  assert.match(bridge, /clearPendingIntervention\?\(interventionId: string\)/);
+  assert.match(bridge, /export async function clearPendingIntervention\(interventionId: string\)/);
+  assert.match(bridge, /module\.clearPendingIntervention\(sanitizedInterventionId\)/);
+
+  assert.match(androidService, /PENDING_INTERVENTION_ID/);
+  assert.equal((androidService.match(/UUID\.randomUUID\(\)\.toString\(\)/g) ?? []).length >= 2, true);
+  assert.match(androidVpn, /UUID\.randomUUID\(\)\.toString\(\)/);
+  assert.match(androidModule, /"interventionId" to interventionId/);
+  assert.match(androidModule, /val pendingSnapshot = prefs\.all/);
+  assert.match(androidModule, /pendingSnapshot\[FreedAccessibilityService\.PENDING_INTERVENTION_ID\]/);
+  assert.match(androidModule, /AsyncFunction\("clearPendingIntervention"\) \{ expectedInterventionId: String ->/);
+  assert.match(androidModule, /currentInterventionId != expectedInterventionId/);
+  assert.match(androidModule, /PENDING_CONSUMED_INTERVENTION_IDS/);
+  assert.match(androidModule, /markPendingInterventionConsumed/);
+
+  assert.match(iosModule, /"interventionId": interventionId/);
+  assert.match(iosModule, /AsyncFunction\("clearPendingIntervention"\) \{ \(expectedInterventionId: String\) -> Bool in/);
+  assert.match(iosModule, /claimPendingIntervention\(sanitizedInterventionId, stageEarnedUnlockScope: true\)/);
+  assert.match(iosModule, /currentInterventionId == expectedInterventionId/);
+  assert.match(iosModule, /pendingInterventionConsumedIdsKey/);
+  assert.match(iosModule, /markPendingInterventionConsumed/);
+  const iosClaim = iosModule.slice(
+    iosModule.indexOf("private func claimPendingIntervention"),
+    iosModule.indexOf("private func markPendingInterventionConsumed")
+  );
+  assert.ok(iosClaim.indexOf("currentInterventionId == expectedInterventionId") < iosClaim.indexOf("pendingEarnedUnlockScopeKey"));
+  assert.doesNotMatch(iosClaim, /clearPendingInterventionDefaults\(\)/);
 });
 
 test("Focus Shield sanitizes rules without persisting accessibility content", () => {
@@ -2218,6 +2279,7 @@ test("Focus Shield calibration states have one central shared contract", () => {
 
 test("Focus Shield integration routes scoped challenge unlocks without widening package access", () => {
   const pending = {
+    interventionId: "10101010-1010-4010-8010-101010101010",
     url: "https://youtube-shorts.app.freed.local",
     host: "youtube-shorts.app.freed.local",
     sourcePackage: "com.google.android.youtube",
@@ -2572,6 +2634,7 @@ test("panic interventions use self-urge metadata instead of fake adult domains",
 test("native pending interventions preserve block decisions after URL redaction", () => {
   const detectedAt = "2026-05-13T12:00:00.000Z";
   const safeHostSearchAttempt = createNativeInterventionAttempt({
+    interventionId: "30303030-3030-4030-8030-303030303030",
     url: "https://google.com",
     host: "google.com",
     sourcePackage: "com.android.chrome",
@@ -2580,6 +2643,7 @@ test("native pending interventions preserve block decisions after URL redaction"
     detectedAt
   });
   const rawAdultUrlAttempt = createNativeInterventionAttempt({
+    interventionId: "40404040-4040-4040-8040-404040404040",
     url: "https://user:secret@www.pornhub.com:443/watch?token=secret",
     host: "",
     sourcePackage: "com.android.chrome",
@@ -2601,6 +2665,7 @@ test("native pending interventions preserve block decisions after URL redaction"
   assert.equal(
     isFreshPendingIntervention(
       {
+        interventionId: "50505050-5050-4050-8050-505050505050",
         url: "https://google.com",
         host: "google.com",
         sourcePackage: "com.android.chrome",
@@ -2615,6 +2680,7 @@ test("native pending interventions preserve block decisions after URL redaction"
   assert.equal(
     isFreshPendingIntervention(
       {
+        interventionId: "60606060-6060-4060-8060-606060606060",
         url: "https://google.com",
         host: "google.com",
         sourcePackage: "com.android.chrome",
@@ -2630,6 +2696,7 @@ test("native pending interventions preserve block decisions after URL redaction"
 
 test("native configured app interventions become app-sourced recovery attempts", () => {
   const attempt = createNativeInterventionAttempt({
+    interventionId: "70707070-7070-4070-8070-707070707070",
     url: `https://${INSTAGRAM_ANDROID_PACKAGE}.app.freed.local`,
     host: `${INSTAGRAM_ANDROID_PACKAGE}.app.freed.local`,
     sourcePackage: INSTAGRAM_ANDROID_PACKAGE,
@@ -2639,6 +2706,7 @@ test("native configured app interventions become app-sourced recovery attempts",
     sessionDurationSec: 18 * 60
   });
   const tiktokAliasAttempt = createNativeInterventionAttempt({
+    interventionId: "80808080-8080-4080-8080-808080808080",
     url: "https://com.ss.android.ugc.trill.app.freed.local",
     host: "com.ss.android.ugc.trill.app.freed.local",
     sourcePackage: "com.ss.android.ugc.trill",
@@ -2647,6 +2715,7 @@ test("native configured app interventions become app-sourced recovery attempts",
     detectedAt: "2026-05-13T12:05:00.000Z"
   });
   const iosShieldAttempt = createNativeInterventionAttempt({
+    interventionId: "90909090-9090-4090-8090-909090909090",
     url: "https://screen-time-shield.freed.local",
     host: "screen-time-shield.freed.local",
     sourcePackage: "ios-screen-time",
@@ -2692,6 +2761,7 @@ test("native configured app interventions become app-sourced recovery attempts",
 
 test("native app interventions only keep supported app unlock sources", () => {
   const unsupportedConfiguredApp = createNativeInterventionAttempt({
+    interventionId: "12121212-1212-4212-8212-121212121212",
     url: "https://com.fake.scroll.app.freed.local/watch?private=true",
     host: "evil.example.com",
     sourcePackage: "com.fake.scroll",
@@ -2700,6 +2770,7 @@ test("native app interventions only keep supported app unlock sources", () => {
     detectedAt: "2026-05-13T12:06:00.000Z"
   });
   const shortFormWithoutTrustedPackage = createNativeInterventionAttempt({
+    interventionId: "13131313-1313-4313-8313-131313131313",
     url: "https://private.example.com/raw-path",
     host: "private.example.com",
     sourcePackage: "com.fake.youtube.clone",
@@ -3119,6 +3190,7 @@ test("challenge generation request uses recovery signals without browsing detail
 
   const appInterventionContext = buildInterventionContextFromAttempt(
     createNativeInterventionAttempt({
+      interventionId: "14141414-1414-4414-8414-141414141414",
       url: `https://${INSTAGRAM_ANDROID_PACKAGE}.app.freed.local`,
       host: `${INSTAGRAM_ANDROID_PACKAGE}.app.freed.local`,
       sourcePackage: INSTAGRAM_ANDROID_PACKAGE,
@@ -3757,6 +3829,7 @@ test("discipline settings persist and shape earned unlocks", () => {
     startedAt: "2026-05-11T09:00:00.000Z"
   });
   const appAttempt = createNativeInterventionAttempt({
+    interventionId: "15151515-1515-4515-8515-151515151515",
     url: "https://com.instagram.android.app.freed.local",
     host: "com.instagram.android.app.freed.local",
     sourcePackage: "com.instagram.android",
@@ -3775,6 +3848,7 @@ test("discipline settings persist and shape earned unlocks", () => {
     startedAt: "2026-05-11T09:05:00.000Z"
   });
   const iosShieldAttempt = createNativeInterventionAttempt({
+    interventionId: "16161616-1616-4616-8616-161616161616",
     url: "https://screen-time-shield.freed.local",
     host: "screen-time-shield.freed.local",
     sourcePackage: "ios-screen-time",
@@ -4231,6 +4305,7 @@ test("monthly growth report uses real aggregate progress without private details
     detectedAt: "2026-05-21T21:00:00"
   };
   const appAttempt = createNativeInterventionAttempt({
+    interventionId: "17171717-1717-4717-8717-171717171717",
     url: "https://instagram.com",
     host: "instagram.com",
     sourcePackage: "com.instagram.android",
@@ -4830,6 +4905,7 @@ test("analytics snapshot is aggregate-only and excludes private recovery details
   });
   const withAppIntervention = recordBlockingAttempt(withPanic, {
     ...createNativeInterventionAttempt({
+      interventionId: "18181818-1818-4818-8818-181818181818",
       url: "freed://intervention/app/com.instagram.android",
       host: "com.instagram.android.app.freed.local",
       sourcePackage: "com.instagram.android",
@@ -6458,7 +6534,8 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(androidModule, /PENDING_INTERVENTION_MAX_AGE_MS/);
   assert.match(androidModule, /PENDING_INTERVENTION_FUTURE_SKEW_MS/);
   assert.match(androidModule, /isFreshPendingIntervention\(detectedAt\)/);
-  assert.match(androidModule, /clearPendingInterventionPrefs\(prefs\)/);
+  assert.match(androidModule, /claimPendingIntervention\(prefs, interventionId\)/);
+  assert.match(androidModule, /isPendingInterventionConsumed\(prefs, interventionId\)/);
   assert.match(androidModule, /nowMs - detectedMs <= PENDING_INTERVENTION_MAX_AGE_MS/);
   assert.match(androidModule, /AsyncFunction\("configureBlockedAppPackages"/);
   assert.match(androidModule, /AsyncFunction\("openUsageAccessSettings"/);
@@ -6512,7 +6589,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(androidModule, /sanitizedPendingHost/);
   assert.match(androidModule, /sanitizedPendingSourcePackage/);
   assert.match(androidModule, /"sourcePackage" to sourcePackage/);
-  assert.match(androidModule, /"sessionDurationSec" to sanitizedPendingSessionDuration\(prefs\)/);
+  assert.match(androidModule, /"sessionDurationSec" to sanitizedPendingSessionDuration\(pendingSnapshot\)/);
   assert.match(androidModule, /remove\(FreedAccessibilityService\.PENDING_SESSION_DURATION_SECONDS\)/);
   assert.match(androidModule, /SUPPORTED_BLOCKED_APP_PACKAGES\.contains\(it\) \}\.orEmpty\(\)/);
   assert.doesNotMatch(androidModule, /"sourcePackage" to prefs\.getString\(FreedAccessibilityService\.PENDING_SOURCE_PACKAGE/);
@@ -23371,7 +23448,7 @@ async function runAsyncTests() {
       consumePendingInterventionOnce: (input: {
         tracker: unknown;
         getPending: () => Promise<Record<string, unknown> | null>;
-        clearPending: () => Promise<boolean>;
+        clearPending: (interventionId: string) => Promise<boolean>;
         nowMs: number;
       }) => Promise<BlockingAttempt | null>;
     };
@@ -23379,6 +23456,7 @@ async function runAsyncTests() {
     assert.equal(typeof protection.consumePendingInterventionOnce, "function");
     const nowMs = Date.now();
     const pending = {
+      interventionId: "11111111-1111-4111-8111-111111111111",
       url: "https://selected-app.app.freed.local",
       host: "selected-app.app.freed.local",
       sourcePackage: "com.google.android.youtube",
@@ -23402,9 +23480,9 @@ async function runAsyncTests() {
           await Promise.resolve();
           return pending;
         },
-        clearPending: async () => {
+        clearPending: async (interventionId) => {
           clears += 1;
-          return true;
+          return interventionId === pending.interventionId;
         },
         nowMs
       });
@@ -23417,6 +23495,51 @@ async function runAsyncTests() {
     const duplicate = await consume();
     assert.equal(duplicate, null);
     assert.equal(clears, 1);
+
+    const pendingB = {
+      ...pending,
+      interventionId: "22222222-2222-4222-8222-222222222222",
+      detectedAt: new Date(nowMs + 1).toISOString(),
+      matchedRule: "focus-shield:focus-rule-ui-b8f0",
+      scope: {
+        kind: "android-surface",
+        ruleId: "focus-rule-ui-b8f0",
+        packageName: "com.google.android.youtube"
+      }
+    };
+    const raceTracker = protection.createPendingInterventionTracker();
+    let currentPending: typeof pending | typeof pendingB = pending;
+    const racedA = await protection.consumePendingInterventionOnce({
+      tracker: raceTracker,
+      getPending: async () => currentPending,
+      clearPending: async (expectedInterventionId) => {
+        currentPending = pendingB;
+        return currentPending.interventionId === expectedInterventionId;
+      },
+      nowMs
+    });
+    assert.equal(racedA, null);
+
+    const claimedB = await protection.consumePendingInterventionOnce({
+      tracker: raceTracker,
+      getPending: async () => currentPending,
+      clearPending: async (expectedInterventionId) => currentPending.interventionId === expectedInterventionId,
+      nowMs
+    });
+    assert.equal((claimedB as BlockingAttempt & { scope?: { ruleId?: string } } | null)?.scope?.ruleId, "focus-rule-ui-b8f0");
+
+    let malformedClaimCalls = 0;
+    const malformed = await protection.consumePendingInterventionOnce({
+      tracker: protection.createPendingInterventionTracker(),
+      getPending: async () => ({ ...pending, interventionId: "not-valid" }),
+      clearPending: async () => {
+        malformedClaimCalls += 1;
+        return true;
+      },
+      nowMs
+    });
+    assert.equal(malformed, null);
+    assert.equal(malformedClaimCalls, 0);
   });
 
   await asyncTest("adult domain feed ingestion normalizes reviewed sources and rejects normal domains", async () => {

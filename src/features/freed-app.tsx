@@ -7544,6 +7544,20 @@ export default function FreedApp() {
     setScreen("challenge");
   }, []);
 
+  const startStandaloneChallenge = React.useCallback(
+    (challenge?: RecoveryChallenge) => {
+      setActiveAttempt(null);
+      startChallenge(challenge);
+    },
+    [startChallenge]
+  );
+
+  const abandonActiveProtectionFlow = React.useCallback(() => {
+    setActiveAttempt(null);
+    setSelectedChallenge(null);
+    setScreen("main");
+  }, []);
+
   const startPanicIntervention = React.useCallback(() => {
     const attempt = createPanicInterventionAttempt();
     setRecoveryState((current) => recordBlockingAttempt(current, attempt));
@@ -7803,7 +7817,7 @@ export default function FreedApp() {
   const consumePendingIntervention = React.useCallback(() => {
     if (!hydrated) return;
 
-    // The coordinator clears first, then gates UI handoff with isFreshPendingIntervention(pending).
+    // The coordinator claims the exact native ID, then gates UI handoff with isFreshPendingIntervention(pending).
     consumePendingInterventionOnce({
       tracker: pendingInterventionTracker.current,
       getPending: getPendingIntervention,
@@ -8150,7 +8164,7 @@ export default function FreedApp() {
           streakDays={streakDays}
           accountability={accountability}
           onMessagePartner={() => messageAccountabilityPartner()}
-          onClose={() => setScreen("main")}
+          onClose={abandonActiveProtectionFlow}
           onContinue={() => {
             if (premiumCapabilities.noAds || shouldBypassRewardedAdForAttempt(activeAttempt)) startChallenge();
             else setScreen("ad");
@@ -8181,10 +8195,7 @@ export default function FreedApp() {
           }}
           selected={selectedChallenge ?? undefined}
           onMessagePartner={hasUsableAccountabilityPartner(accountability) ? messageAccountabilityPartner : undefined}
-          onBack={() => {
-            setSelectedChallenge(null);
-            setScreen("main");
-          }}
+          onBack={abandonActiveProtectionFlow}
           onComplete={(challenge, outcome) => {
             const completionDecision = getProtectionChallengeCompletionDecision(activeAttempt, outcome);
             if (completionDecision.applyFocusShieldScope && activeAttempt?.scope?.kind === "android-surface") {
@@ -8221,7 +8232,7 @@ export default function FreedApp() {
           onSave={(input) => {
             const challenge = createCustomRecoveryChallenge(input);
             setRecoveryState((current) => addCustomRecoveryChallenge(current, challenge));
-            startChallenge(challenge);
+            startStandaloneChallenge(challenge);
           }}
         />
       );
@@ -8331,7 +8342,7 @@ export default function FreedApp() {
           {tab === "library" && (
             <LibraryScreen
               onBreathing={() => setScreen("breathing")}
-              onChallenge={() => startChallenge()}
+              onChallenge={() => startStandaloneChallenge()}
               onCustomChallenge={() => setScreen("customChallenge")}
               onCoach={() => setScreen("coach")}
               customChallengeCount={customChallenges.length}

@@ -27,12 +27,15 @@ import java.util.Date
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 private const val PHOTO_MATCH_MIN_CONFIDENCE = 0.45
 private const val FREED_APP_HOST_SUFFIX = ".app.freed.local"
 private const val PENDING_INTERVENTION_MAX_AGE_MS = 10 * 60 * 1000L
 private const val PENDING_INTERVENTION_FUTURE_SKEW_MS = 60 * 1000L
+private const val PENDING_CONSUMED_INTERVENTION_IDS = "pending_consumed_intervention_ids_v1"
+private const val MAX_PENDING_CONSUMED_INTERVENTION_IDS = 32
 private const val ACTION_ACCESSIBILITY_DETAILS_SETTINGS = "android.settings.ACCESSIBILITY_DETAILS_SETTINGS"
 private const val ACTION_PRIVATE_DNS_SETTINGS = "android.settings.PRIVATE_DNS_SETTINGS"
 private const val INTENT_CATEGORY_USAGE_ACCESS_CONFIG = "android.intent.category.USAGE_ACCESS_CONFIG"
@@ -43,6 +46,8 @@ private const val ANDROID_SETTINGS_ROUTE_ERROR = "freed_android_settings_route_e
 private const val ANDROID_SETTINGS_ROUTE_OPENED_AT = "freed_android_settings_route_opened_at"
 
 class FreedProtectionModule : Module() {
+  private val pendingInterventionClaimLock = Any()
+
   override fun definition() = ModuleDefinition {
     Name("FreedProtection")
 
@@ -703,35 +708,41 @@ class FreedProtectionModule : Module() {
     AsyncFunction("getPendingIntervention") {
       val context = appContext.reactContext ?: return@AsyncFunction null
       val prefs = context.getSharedPreferences(FreedAccessibilityService.PREFS_NAME, Context.MODE_PRIVATE)
-      val storedUrl = prefs.getString(FreedAccessibilityService.PENDING_URL, null) ?: return@AsyncFunction null
-      val detectedAt = prefs.getString(FreedAccessibilityService.PENDING_DETECTED_AT, "").orEmpty()
+      val pendingSnapshot = prefs.all
+      val storedUrl = pendingSnapshot[FreedAccessibilityService.PENDING_URL] as? String ?: return@AsyncFunction null
+      val interventionId = sanitizedPendingInterventionId(
+        pendingSnapshot[FreedAccessibilityService.PENDING_INTERVENTION_ID] as? String
+      ) ?: return@AsyncFunction null
+      if (isPendingInterventionConsumed(prefs, interventionId)) return@AsyncFunction null
+      val detectedAt = pendingSnapshot[FreedAccessibilityService.PENDING_DETECTED_AT] as? String ?: ""
 
       if (!isFreshPendingIntervention(detectedAt)) {
-        clearPendingInterventionPrefs(prefs)
+        claimPendingIntervention(prefs, interventionId)
         return@AsyncFunction null
       }
 
       val host = sanitizedPendingHost(
-        prefs.getString(FreedAccessibilityService.PENDING_HOST, "").orEmpty(),
+        pendingSnapshot[FreedAccessibilityService.PENDING_HOST] as? String ?: "",
         storedUrl
       )
       val url = "https://$host"
-      val matchedRule = prefs.getString(FreedAccessibilityService.PENDING_RULE, "").orEmpty()
+      val matchedRule = pendingSnapshot[FreedAccessibilityService.PENDING_RULE] as? String ?: ""
       val sourcePackage = sanitizedPendingSourcePackage(
-        prefs.getString(FreedAccessibilityService.PENDING_SOURCE_PACKAGE, null),
+        pendingSnapshot[FreedAccessibilityService.PENDING_SOURCE_PACKAGE] as? String,
         matchedRule
       )
 
       mutableMapOf<String, Any>(
+        "interventionId" to interventionId,
         "url" to url,
         "host" to host,
         "sourcePackage" to sourcePackage,
-        "reason" to prefs.getString(FreedAccessibilityService.PENDING_REASON, "").orEmpty(),
+        "reason" to (pendingSnapshot[FreedAccessibilityService.PENDING_REASON] as? String ?: ""),
         "matchedRule" to matchedRule,
         "detectedAt" to detectedAt,
-        "sessionDurationSec" to sanitizedPendingSessionDuration(prefs)
+        "sessionDurationSec" to sanitizedPendingSessionDuration(pendingSnapshot)
       ).apply {
-        val focusShieldRuleId = prefs.getString(FreedAccessibilityService.PENDING_FOCUS_SHIELD_RULE_ID, null)
+        val focusShieldRuleId = (pendingSnapshot[FreedAccessibilityService.PENDING_FOCUS_SHIELD_RULE_ID] as? String)
           ?.takeIf { storedRuleId -> FreedFocusShieldRules.list(context).any { rule -> rule.id == storedRuleId && rule.packageName == sourcePackage } }
         if (focusShieldRuleId != null) {
           put(
@@ -746,12 +757,12 @@ class FreedProtectionModule : Module() {
       }
     }
 
-    AsyncFunction("clearPendingIntervention") {
+    AsyncFunction("clearPendingIntervention") { expectedInterventionId: String ->
       val context = appContext.reactContext ?: return@AsyncFunction false
       val prefs = context.getSharedPreferences(FreedAccessibilityService.PREFS_NAME, Context.MODE_PRIVATE)
-      clearPendingInterventionPrefs(prefs)
-
-      true
+      val sanitizedExpectedInterventionId = sanitizedPendingInterventionId(expectedInterventionId)
+        ?: return@AsyncFunction false
+      claimPendingIntervention(prefs, sanitizedExpectedInterventionId)
     }
 
     AsyncFunction("classifyChallengePhoto") { uri: String, expectedLabels: List<String> ->
@@ -1556,6 +1567,7 @@ class FreedProtectionModule : Module() {
 
   private fun clearPendingInterventionPrefs(prefs: SharedPreferences) {
     prefs.edit()
+      .remove(FreedAccessibilityService.PENDING_INTERVENTION_ID)
       .remove(FreedAccessibilityService.PENDING_URL)
       .remove(FreedAccessibilityService.PENDING_HOST)
       .remove(FreedAccessibilityService.PENDING_SOURCE_PACKAGE)
@@ -1567,9 +1579,48 @@ class FreedProtectionModule : Module() {
       .apply()
   }
 
-  private fun sanitizedPendingSessionDuration(prefs: SharedPreferences): Long {
-    return prefs
-      .getLong(FreedAccessibilityService.PENDING_SESSION_DURATION_SECONDS, 0L)
+  private fun claimPendingIntervention(prefs: SharedPreferences, expectedInterventionId: String): Boolean =
+    synchronized(pendingInterventionClaimLock) {
+      val currentInterventionId = sanitizedPendingInterventionId(
+        prefs.getString(FreedAccessibilityService.PENDING_INTERVENTION_ID, null)
+      )
+      if (currentInterventionId != expectedInterventionId) {
+        false
+      } else if (isPendingInterventionConsumed(prefs, expectedInterventionId)) {
+        false
+      } else {
+        markPendingInterventionConsumed(prefs, expectedInterventionId)
+        true
+      }
+    }
+
+  private fun markPendingInterventionConsumed(prefs: SharedPreferences, interventionId: String) {
+    val consumedIds = pendingConsumedInterventionIds(prefs)
+      .filterNot { it == interventionId }
+      .plus(interventionId)
+      .takeLast(MAX_PENDING_CONSUMED_INTERVENTION_IDS)
+    prefs.edit().putString(PENDING_CONSUMED_INTERVENTION_IDS, consumedIds.joinToString(",")).commit()
+  }
+
+  private fun isPendingInterventionConsumed(prefs: SharedPreferences, interventionId: String): Boolean =
+    pendingConsumedInterventionIds(prefs).contains(interventionId)
+
+  private fun pendingConsumedInterventionIds(prefs: SharedPreferences): List<String> =
+    prefs.getString(PENDING_CONSUMED_INTERVENTION_IDS, "")
+      .orEmpty()
+      .split(',')
+      .mapNotNull(::sanitizedPendingInterventionId)
+      .takeLast(MAX_PENDING_CONSUMED_INTERVENTION_IDS)
+
+  private fun sanitizedPendingInterventionId(value: String?): String? {
+    val normalized = value?.trim()?.lowercase(Locale.US).orEmpty()
+    if (normalized.isBlank()) return null
+    val parsed = runCatching { UUID.fromString(normalized) }.getOrNull() ?: return null
+    return parsed.toString().takeIf { it == normalized }
+  }
+
+  private fun sanitizedPendingSessionDuration(pendingSnapshot: Map<String, *>): Long {
+    return ((pendingSnapshot[FreedAccessibilityService.PENDING_SESSION_DURATION_SECONDS] as? Number)?.toLong() ?: 0L)
       .coerceIn(0L, 4 * 60 * 60L)
   }
 

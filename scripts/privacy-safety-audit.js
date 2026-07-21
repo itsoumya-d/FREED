@@ -571,7 +571,7 @@ const checks = [
       nativeProtectionIndex.includes("sessionDurationSec?: number") &&
       androidAccessibilityService.includes("PENDING_SESSION_DURATION_SECONDS") &&
       androidAccessibilityService.includes("currentForegroundSessionMs") &&
-      androidProtectionModule.includes('"sessionDurationSec" to sanitizedPendingSessionDuration(prefs)') &&
+      androidProtectionModule.includes('"sessionDurationSec" to sanitizedPendingSessionDuration(pendingSnapshot)') &&
       challengeGenerator.includes("sessionDurationBucket") &&
       challengeGenerator.includes("Use session duration only as a coarse bucket") &&
       challengeGenerator.includes("Treat recent failed resets as aggregate count signals") &&

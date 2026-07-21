@@ -9,6 +9,7 @@ import {
 import {
   createNativeInterventionAttempt,
   isFreshPendingIntervention,
+  sanitizeNativeInterventionId,
   type NativeInterventionAttempt,
   type NativePendingInterventionPayload
 } from "./native-intervention";
@@ -85,7 +86,8 @@ export function getFocusShieldCapabilityModel(
     return {
       platform,
       available: capability?.accessibility === true,
-      calibrationAvailable: capability?.accessibility === true,
+      calibrationAvailable:
+        capability?.accessibility === true && status?.appInterventionAuthorized === true,
       ruleManagementAvailable: capability?.accessibility === true,
       description:
         "Android Focus Shield interrupts selected native-app surfaces using local selector fingerprints. FREED never keeps screen text, screenshots, or raw accessibility trees in recovery state.",
@@ -99,6 +101,9 @@ export function getFocusShieldCapabilityModel(
     } else if (status?.authorized !== true) {
       diagnostics.push("Screen Time permission was revoked. Authorize Family Controls again to restore selected shields.");
     }
+    if (capability?.safariContentBlocker !== true) {
+      diagnostics.push("The Safari Focus Shield extension is unavailable in this iOS build, so supported short-form web routes cannot hand off to recovery.");
+    }
     diagnostics.push(
       "iOS native-app limit: FREED cannot inspect native-app screens or calibrate individual in-app surfaces. Use opaque Screen Time app/category tokens instead."
     );
@@ -109,7 +114,7 @@ export function getFocusShieldCapabilityModel(
       calibrationAvailable: false,
       ruleManagementAvailable: false,
       description:
-        "iOS cannot inspect native-app screens. Focus Shield uses Screen Time selections for apps and the Safari content blocker for supported short-form web routes.",
+        "iOS cannot inspect native-app screens. Focus Shield uses Screen Time selections for apps and the Safari Focus Shield extension for supported short-form routes; Safari Content Blocker remains adult-domain-only.",
       diagnostics
     };
   }
@@ -157,7 +162,7 @@ export async function consumePendingInterventionOnce({
 }: {
   tracker: PendingInterventionTracker;
   getPending: () => Promise<NativePendingInterventionPayload | null>;
-  clearPending: () => Promise<boolean>;
+  clearPending: (interventionId: string) => Promise<boolean>;
   nowMs?: number;
 }): Promise<NativeInterventionAttempt | null> {
   if (tracker.inFlight) return null;
@@ -167,13 +172,14 @@ export async function consumePendingInterventionOnce({
     const pending = await getPending();
     if (!pending) return null;
 
-    const key = getPendingInterventionKey(pending);
+    const key = sanitizeNativeInterventionId(pending.interventionId);
+    if (!key) return null;
     if (tracker.consumedKeys.has(key)) return null;
     tracker.consumedKeys.add(key);
     trimConsumedInterventionKeys(tracker.consumedKeys);
 
     try {
-      const cleared = await clearPending();
+      const cleared = await clearPending(key);
       if (!cleared) {
         tracker.consumedKeys.delete(key);
         return null;
@@ -188,21 +194,6 @@ export async function consumePendingInterventionOnce({
   } finally {
     tracker.inFlight = false;
   }
-}
-
-function getPendingInterventionKey(pending: NativePendingInterventionPayload): string {
-  const scope = pending.scope;
-  const scopeKey =
-    scope?.kind === "android-surface"
-      ? `${scope.kind}:${scope.ruleId}:${scope.packageName}`
-      : scope?.kind === "android-package"
-        ? `${scope.kind}:${scope.packageName}`
-        : scope?.kind === "ios-token"
-          ? `${scope.kind}:${scope.tokenType}:${scope.token}`
-          : scope?.kind === "browser-domain"
-            ? `${scope.kind}:${scope.domain}`
-            : "unscoped";
-  return [pending.detectedAt, pending.matchedRule, pending.sourcePackage, pending.host, scopeKey].join("|");
 }
 
 function trimConsumedInterventionKeys(keys: Set<string>) {

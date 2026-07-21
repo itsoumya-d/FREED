@@ -287,10 +287,12 @@ const checks = [
     appSurface.includes("isFreshPendingIntervention(pending)") &&
       androidModule.includes("PENDING_INTERVENTION_MAX_AGE_MS") &&
       androidModule.includes("isFreshPendingIntervention(detectedAt)") &&
-      androidModule.includes("clearPendingInterventionPrefs(prefs)") &&
+      androidModule.includes("claimPendingIntervention(prefs, interventionId)") &&
+      androidModule.includes("isPendingInterventionConsumed(prefs, interventionId)") &&
       iosModule.includes("pendingInterventionMaxAgeSeconds") &&
       iosModule.includes("self.isFreshPendingIntervention(record.detectedAt)") &&
-      iosModule.includes("clearPendingInterventionDefaults()") &&
+      iosModule.includes("claimPendingIntervention(interventionId, stageEarnedUnlockScope: false)") &&
+      iosModule.includes("isPendingInterventionConsumed(interventionId)") &&
       iosModule.includes("sanitizedPendingHost") &&
       iosModule.includes("sanitizeHostForStorage") &&
       iosModule.includes('"url": "https://\\(host)"'),

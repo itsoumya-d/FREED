@@ -29,10 +29,12 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import java.util.UUID
 
 class FreedAccessibilityService : AccessibilityService() {
   companion object {
     const val PREFS_NAME = "freed_protection"
+    const val PENDING_INTERVENTION_ID = "pending_intervention_id"
     const val PENDING_URL = "pending_url"
     const val PENDING_HOST = "pending_host"
     const val PENDING_SOURCE_PACKAGE = "pending_source_package"
@@ -1180,9 +1182,11 @@ class FreedAccessibilityService : AccessibilityService() {
     lastBlockedKey = key
     lastLaunchElapsedMs = now
     val redactedUrl = "https://$host"
+    val interventionId = UUID.randomUUID().toString()
 
     getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
       .edit()
+      .putString(PENDING_INTERVENTION_ID, interventionId)
       .putString(PENDING_URL, redactedUrl)
       .putString(PENDING_HOST, host)
       .putString(PENDING_SOURCE_PACKAGE, sourcePackage)
@@ -1221,9 +1225,11 @@ class FreedAccessibilityService : AccessibilityService() {
     lastLaunchElapsedMs = now
     val host = FreedUrlClassifier.normalizeHostForStorage(hostOverride ?: appHostForPackage(packageName)).ifBlank { "redacted.freed.local" }
     val redactedUrl = "https://$host"
+    val interventionId = UUID.randomUUID().toString()
 
     getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
       .edit()
+      .putString(PENDING_INTERVENTION_ID, interventionId)
       .putString(PENDING_URL, redactedUrl)
       .putString(PENDING_HOST, host)
       .putString(PENDING_SOURCE_PACKAGE, packageName)
