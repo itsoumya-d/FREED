@@ -1607,6 +1607,60 @@ test("Focus Shield bridge sanitizes runtime rule payloads before native calls", 
   assert.match(bridge, /\.map\(\(rule\) => sanitizeFocusShieldRule\(rule\)\)/);
 });
 
+test("Android Focus Shield persists vetted local rules and enforces scoped surface unlocks", () => {
+  const ruleStorePath = "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldRules.kt";
+  const ruleStore = existsSync(ruleStorePath) ? readFileSync(ruleStorePath, "utf8") : "";
+  const module = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+    "utf8"
+  );
+  const service = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+    "utf8"
+  );
+  const interventionActivity = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedInterventionActivity.kt",
+    "utf8"
+  );
+
+  assert.match(ruleStore, /object FreedFocusShieldRules/);
+  assert.match(ruleStore, /FOCUS_SHIELD_RULES = "focus_shield_rules_v1"/);
+  assert.match(ruleStore, /youtube-shorts/);
+  assert.match(ruleStore, /instagram-reels/);
+  assert.match(ruleStore, /tiktok-for-you/);
+  assert.match(ruleStore, /com\.google\.android\.youtube:id\/reel_player/);
+  assert.match(ruleStore, /com\.instagram\.android:id\/clips_viewer/);
+  assert.match(ruleStore, /com\.zhiliaoapp\.musically:id\/pager/);
+  assert.match(ruleStore, /fun configure\(/);
+  assert.match(ruleStore, /fun list\(/);
+  assert.match(ruleStore, /fun remove\(/);
+  assert.match(ruleStore, /fun matchingPresetRules\(/);
+  assert.match(ruleStore, /fun isSurfaceUnlockActiveForRule\(/);
+  assert.match(ruleStore, /FOCUS_SHIELD_UNLOCK_RULE_ID/);
+  assert.doesNotMatch(ruleStore, /nodeText|rawAccessibilityTree|screenshot|coordinate/i);
+
+  assert.match(module, /AsyncFunction\("configureFocusShieldRule"\)/);
+  assert.match(module, /AsyncFunction\("listFocusShieldRules"\)/);
+  assert.match(module, /AsyncFunction\("removeFocusShieldRule"\)/);
+  assert.match(module, /AsyncFunction\("applyFocusShieldEarnedUnlock"\)/);
+  assert.match(module, /"focusShieldRuleCount"/);
+  assert.match(module, /"focusShieldEnabledRuleCount"/);
+  assert.match(module, /"focusShieldRuleStoreHealth"/);
+  assert.match(module, /"kind" to "android-surface"/);
+  assert.match(module, /PENDING_FOCUS_SHIELD_RULE_ID/);
+
+  const dailyLimitCheck = service.indexOf("isDailyAppLimitReached(normalizedPackage)");
+  const immediateFocusShieldCheck = service.indexOf("matchingFocusShieldRule");
+  assert.ok(dailyLimitCheck >= 0 && immediateFocusShieldCheck > dailyLimitCheck);
+  assert.match(service, /FreedFocusShieldRules\.matchingPresetRules/);
+  assert.match(service, /!FreedFocusShieldRules\.isSurfaceUnlockActiveForRule/);
+  assert.match(service, /launchFocusShieldIntervention/);
+  assert.match(service, /beginOrContinueShortFormSession/);
+  assert.match(service, /PENDING_FOCUS_SHIELD_RULE_ID/);
+  assert.match(service, /freed_focus_shield_rule_id/);
+  assert.match(interventionActivity, /freed_focus_shield_rule_id/);
+});
+
 test("allows normal browsing domains by default", () => {
   for (const domain of DEFAULT_ALLOWED_NORMAL_DOMAINS) {
     const result = classifyUrl(`https://${domain}/daily-path`);

@@ -141,6 +141,7 @@ class FreedInterventionActivity : Activity() {
       launchIntent.putExtra("freed_intervention_url", intent.getStringExtra("freed_intervention_url"))
       launchIntent.putExtra("freed_intervention_host", intent.getStringExtra("freed_intervention_host"))
       launchIntent.putExtra("freed_intervention_rule", intent.getStringExtra("freed_intervention_rule"))
+      launchIntent.putExtra("freed_focus_shield_rule_id", intent.getStringExtra("freed_focus_shield_rule_id"))
       startActivity(launchIntent)
     }
 

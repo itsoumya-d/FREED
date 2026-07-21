@@ -38,6 +38,7 @@ class FreedAccessibilityService : AccessibilityService() {
     const val PENDING_SOURCE_PACKAGE = "pending_source_package"
     const val PENDING_REASON = "pending_reason"
     const val PENDING_RULE = "pending_rule"
+    const val PENDING_FOCUS_SHIELD_RULE_ID = "pending_focus_shield_rule_id"
     const val PENDING_DETECTED_AT = "pending_detected_at"
     const val PENDING_SESSION_DURATION_SECONDS = "pending_session_duration_seconds"
     const val EARNED_UNLOCK_EXPIRES_AT = "earned_unlock_expires_at"
@@ -189,10 +190,15 @@ class FreedAccessibilityService : AccessibilityService() {
     val packageName = event?.packageName?.toString() ?: return
     val normalizedPackage = packageName.lowercase(Locale.US)
     trackForegroundUsage(normalizedPackage)
+    val configuredApp = isConfiguredBlockedApp(normalizedPackage)
+    val hasFocusShieldPresetRules = FreedFocusShieldRules.hasEnabledPresetRulesForPackage(this, normalizedPackage)
+    val detectedShortFormRule = if (configuredApp || hasFocusShieldPresetRules) {
+      shortFormRuleForEvent(normalizedPackage, event)
+    } else {
+      null
+    }
 
-    if (isConfiguredBlockedApp(normalizedPackage)) {
-      val detectedShortFormRule = shortFormRuleForEvent(normalizedPackage, event)
-
+    if (configuredApp) {
       if (isEarnedUnlockActiveForPackage(normalizedPackage)) {
         cancelAppLimitCheck(normalizedPackage)
         clearShortFormSession()
@@ -200,25 +206,43 @@ class FreedAccessibilityService : AccessibilityService() {
       } else if (isDailyAppLimitReached(normalizedPackage)) {
         launchAppIntervention(normalizedPackage)
         return
-      } else if (detectedShortFormRule != null) {
-        beginOrContinueShortFormSession(normalizedPackage, detectedShortFormRule)
-        scheduleAppLimitCheck(normalizedPackage)
-        return
       } else {
-        if (shortFormPackage == normalizedPackage) {
-          val activeShortFormRule = shortFormRule
-          if (activeShortFormRule == null || !isCurrentShortFormSurface(normalizedPackage, activeShortFormRule)) {
-            cancelShortFormSession(normalizedPackage)
-          }
-        } else if (shortFormPackage != null) {
-          clearShortFormSession()
+        val matchingFocusShieldRule = detectedShortFormRule
+          ?.let { rule -> FreedFocusShieldRules.matchingPresetRules(this, normalizedPackage, rule) }
+          ?.firstOrNull { rule -> !FreedFocusShieldRules.isSurfaceUnlockActiveForRule(this, rule) }
+        if (matchingFocusShieldRule != null) {
+          launchFocusShieldIntervention(normalizedPackage, detectedShortFormRule, matchingFocusShieldRule)
+          return
         }
-        scheduleAppLimitCheck(normalizedPackage)
+
+        if (detectedShortFormRule != null) {
+          beginOrContinueShortFormSession(normalizedPackage, detectedShortFormRule)
+          scheduleAppLimitCheck(normalizedPackage)
+          return
+        } else {
+          if (shortFormPackage == normalizedPackage) {
+            val activeShortFormRule = shortFormRule
+            if (activeShortFormRule == null || !isCurrentShortFormSurface(normalizedPackage, activeShortFormRule)) {
+              cancelShortFormSession(normalizedPackage)
+            }
+          } else if (shortFormPackage != null) {
+            clearShortFormSession()
+          }
+          scheduleAppLimitCheck(normalizedPackage)
+        }
       }
     } else {
       cancelAnyAppLimitCheck()
       clearShortFormSession()
       cancelEarnedUnlockRelock()
+
+      val matchingFocusShieldRule = detectedShortFormRule
+        ?.let { rule -> FreedFocusShieldRules.matchingPresetRules(this, normalizedPackage, rule) }
+        ?.firstOrNull { rule -> !FreedFocusShieldRules.isSurfaceUnlockActiveForRule(this, rule) }
+      if (matchingFocusShieldRule != null) {
+        launchFocusShieldIntervention(normalizedPackage, detectedShortFormRule, matchingFocusShieldRule)
+        return
+      }
     }
 
     if (!supportedBrowsers.contains(normalizedPackage) && !isWebViewContext(event)) return
@@ -978,6 +1002,7 @@ class FreedAccessibilityService : AccessibilityService() {
       .putString(PENDING_REASON, result.reason)
       .putString(PENDING_RULE, result.matchedRule)
       .putString(PENDING_DETECTED_AT, nowIsoString())
+      .remove(PENDING_FOCUS_SHIELD_RULE_ID)
       .remove(PENDING_SESSION_DURATION_SECONDS)
       .apply()
 
@@ -998,6 +1023,7 @@ class FreedAccessibilityService : AccessibilityService() {
     reason: String = "Configured app limit reached. FREED is opening an earned-reset challenge.",
     matchedRule: String? = null,
     hostOverride: String? = null,
+    focusShieldRuleId: String? = null,
     sessionDurationSeconds: Long = (currentForegroundSessionMs(packageName) / 1_000L).coerceAtLeast(0L)
   ) {
     val now = SystemClock.elapsedRealtime()
@@ -1018,6 +1044,11 @@ class FreedAccessibilityService : AccessibilityService() {
       .putString(PENDING_RULE, rule)
       .putString(PENDING_DETECTED_AT, nowIsoString())
       .apply {
+        if (focusShieldRuleId != null) {
+          putString(PENDING_FOCUS_SHIELD_RULE_ID, focusShieldRuleId)
+        } else {
+          remove(PENDING_FOCUS_SHIELD_RULE_ID)
+        }
         if (sessionDurationSeconds > 0L) {
           putLong(PENDING_SESSION_DURATION_SECONDS, sessionDurationSeconds.coerceAtMost(MAX_FOREGROUND_SEGMENT_MS / 1_000L))
         } else {
@@ -1026,14 +1057,15 @@ class FreedAccessibilityService : AccessibilityService() {
       }
       .apply()
 
-    val intent = buildAccessibilityInterventionIntent(packageName, redactedUrl, host, rule)
+    val intent = buildAccessibilityInterventionIntent(packageName, redactedUrl, host, rule, focusShieldRuleId)
     showAccessibilityInterventionNotification(
       title = "FREED opened a recovery challenge",
       sourceLabel = host,
       sourcePackage = packageName,
       redactedUrl = redactedUrl,
       host = host,
-      matchedRule = rule
+      matchedRule = rule,
+      focusShieldRuleId = focusShieldRuleId
     )
     runCatching { startActivity(intent) }
   }
@@ -1054,6 +1086,21 @@ class FreedAccessibilityService : AccessibilityService() {
     )
   }
 
+  private fun launchFocusShieldIntervention(
+    packageName: String,
+    shortFormRule: String,
+    focusShieldRule: FreedFocusShieldRule
+  ) {
+    clearShortFormSession()
+    launchAppIntervention(
+      packageName = packageName,
+      reason = "Focus Shield matched a configured surface rule. FREED is opening an earned-reset challenge.",
+      matchedRule = "focus-shield:${focusShieldRule.id}",
+      hostOverride = shortFormHostForRule(shortFormRule),
+      focusShieldRuleId = focusShieldRule.id
+    )
+  }
+
   private fun shortFormHostForRule(rule: String): String {
     return FreedDoomscrollApps.shortFormHostForRule(rule)
   }
@@ -1071,7 +1118,8 @@ class FreedAccessibilityService : AccessibilityService() {
     sourcePackage: String,
     redactedUrl: String,
     host: String,
-    matchedRule: String
+    matchedRule: String,
+    focusShieldRuleId: String? = null
   ): Intent {
     return Intent(this, FreedInterventionActivity::class.java).apply {
       action = Intent.ACTION_VIEW
@@ -1080,6 +1128,7 @@ class FreedAccessibilityService : AccessibilityService() {
       putExtra("freed_intervention_url", redactedUrl)
       putExtra("freed_intervention_host", host)
       putExtra("freed_intervention_rule", matchedRule)
+      focusShieldRuleId?.let { putExtra("freed_focus_shield_rule_id", it) }
     }
   }
 
@@ -1089,7 +1138,8 @@ class FreedAccessibilityService : AccessibilityService() {
     sourcePackage: String,
     redactedUrl: String,
     host: String,
-    matchedRule: String
+    matchedRule: String,
+    focusShieldRuleId: String? = null
   ) {
     val notificationManager = getSystemService(NotificationManager::class.java)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -1107,7 +1157,7 @@ class FreedAccessibilityService : AccessibilityService() {
     val pendingIntent = PendingIntent.getActivity(
       this,
       INTERVENTION_NOTIFICATION_ID,
-      buildAccessibilityInterventionIntent(sourcePackage, redactedUrl, host, matchedRule),
+      buildAccessibilityInterventionIntent(sourcePackage, redactedUrl, host, matchedRule, focusShieldRuleId),
       PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
     val icon = applicationInfo.icon.takeIf { it != 0 } ?: android.R.drawable.ic_lock_lock
