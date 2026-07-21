@@ -1321,6 +1321,7 @@ function runSelfTest() {
       minimumOSVersion: "15.4",
       minimumOSVersionAtLeast154: true,
       minimumSafariVersion: "15.4",
+      nativeAppIdentifierValid: true,
       nativeHandlerBinaryAvailable: true,
       nativeHandlerContractValid: true,
       nativeMessagingPermission: true,

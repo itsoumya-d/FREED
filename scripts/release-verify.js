@@ -431,6 +431,7 @@ const reportArtifactRequiredProofValues = {
     { path: "archive.safariFocusShield.contentUsesRuntimeMessaging", equals: true },
     { path: "archive.safariFocusShield.hostPermissionsScoped", equals: true },
     { path: "archive.safariFocusShield.infoAllowedDomainsScoped", equals: true },
+    { path: "archive.safariFocusShield.nativeAppIdentifierValid", equals: true },
     { path: "archive.safariFocusShield.nativePayloadSchemaValid", equals: true },
     { path: "archive.safariFocusShield.nativeHandlerContractValid", equals: true },
     { path: "archive.safariFocusShield.minimumOSVersionAtLeast154", equals: true },

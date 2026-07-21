@@ -25,6 +25,7 @@ const APPROVED_RULE_HOSTS = Object.freeze({
   "short-form:instagram-reels": "instagram.com",
   "short-form:tiktok-feed": "tiktok.com",
 });
+const SAFARI_FOCUS_NATIVE_APP_ID = "app.freed.recovery";
 
 function exactStringSet(actual, expected) {
   if (!Array.isArray(actual) || actual.some((value) => typeof value !== "string")) return false;
@@ -63,6 +64,12 @@ function inspectSafariFocusShieldContract({ manifest, info, background, content,
     background.includes("runtime.onMessage.addListener") &&
     background.includes("sendNativeMessage") &&
     background.includes("APPROVED_RULE_HOSTS");
+  const nativeMessageArguments = [...background.matchAll(/sendNativeMessage\s*\(\s*([^,\s)]+)/g)].map((match) => match[1]);
+  const nativeAppIdentifierValid =
+    background.includes(`const NATIVE_APP_ID = "${SAFARI_FOCUS_NATIVE_APP_ID}";`) &&
+    /browser\.runtime\s*\.sendNativeMessage\s*\(\s*NATIVE_APP_ID\s*,/s.test(background) &&
+    nativeMessageArguments.length > 0 &&
+    nativeMessageArguments.every((argument) => argument === "NATIVE_APP_ID");
   const fixedNativeEnvelope =
     background.includes('type: "record-pending-intervention"') &&
     background.includes('source: "ios-safari-short-form"');
@@ -98,6 +105,7 @@ function inspectSafariFocusShieldContract({ manifest, info, background, content,
     contentScriptsScoped &&
     infoAllowedDomainsScoped &&
     backgroundOwnsNativeMessaging &&
+    nativeAppIdentifierValid &&
     fixedNativeEnvelope &&
     approvedRuleHostsPresent &&
     nativePayloadSchemaValid &&
@@ -119,6 +127,7 @@ function inspectSafariFocusShieldContract({ manifest, info, background, content,
     minimumOSVersion,
     minimumOSVersionAtLeast154,
     minimumSafariVersion,
+    nativeAppIdentifierValid,
     nativeHandlerContractValid,
     nativeMessagingPermission,
     nativePayloadSchemaValid,
@@ -141,13 +150,14 @@ function validFixture() {
     NSExtension: { SFSafariWebsiteAccess: { Level: "Some", "Allowed Domains": [...SAFARI_FOCUS_ALLOWED_DOMAINS] } },
   };
   const background = `
+    const NATIVE_APP_ID = "app.freed.recovery";
     const APPROVED_RULE_HOSTS = {
       "short-form:youtube-shorts": "youtube.com",
       "short-form:instagram-reels": "instagram.com",
       "short-form:tiktok-feed": "tiktok.com"
     };
     function payload(host, rule) { return { type: "record-pending-intervention", source: "ios-safari-short-form", host, rule }; }
-    browser.runtime.onMessage.addListener(() => browser.runtime.sendNativeMessage("app.freed.recovery", payload("youtube.com", "short-form:youtube-shorts")));
+    browser.runtime.onMessage.addListener(() => browser.runtime.sendNativeMessage(NATIVE_APP_ID, payload("youtube.com", "short-form:youtube-shorts")));
   `;
   const content = "const runtime = browser.runtime; if (runtime?.sendMessage) runtime.sendMessage({host: 'youtube.com', rule: 'short-form:youtube-shorts'});";
   const nativeHandlerBinary = `record-pending-intervention ios-safari-short-form ${Object.entries(APPROVED_RULE_HOSTS).flat().join(" ")}`;
@@ -165,6 +175,7 @@ function assertSafariFocusShieldContractSelfTest() {
     { ...fixture, info: { ...fixture.info, NSExtension: { SFSafariWebsiteAccess: { Level: "All", "Allowed Domains": ["*"] } } } },
     { ...fixture, background: fixture.background.replace("APPROVED_RULE_HOSTS", "rules") },
     { ...fixture, background: fixture.background.replace('source: "ios-safari-short-form"', 'source: "unsafe"') },
+    { ...fixture, background: fixture.background.replace('"app.freed.recovery"', '"attacker.example"') },
     { ...fixture, nativeHandlerBinary: "record-pending-intervention" },
     { ...fixture, content: "browser.runtime.sendNativeMessage('app.freed.recovery', {})" },
   ];
@@ -175,6 +186,7 @@ function assertSafariFocusShieldContractSelfTest() {
 
 module.exports = {
   APPROVED_RULE_HOSTS,
+  SAFARI_FOCUS_NATIVE_APP_ID,
   SAFARI_FOCUS_ALLOWED_DOMAINS,
   SAFARI_FOCUS_HOST_PERMISSIONS,
   assertSafariFocusShieldContractSelfTest,

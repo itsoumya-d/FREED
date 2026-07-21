@@ -3681,6 +3681,7 @@ function iosAppPackageProofReportIssues(
     ["nativeMessagingPermission", true],
     ["hostPermissionsScoped", true],
     ["infoAllowedDomainsScoped", true],
+    ["nativeAppIdentifierValid", true],
     ["nativePayloadSchemaValid", true],
     ["nativeHandlerContractValid", true],
     ["usableForManualEvidence", true]

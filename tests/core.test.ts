@@ -6630,7 +6630,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /when the selected surface is visible/);
   assert.match(appSurface, /App and short-form earned unlocks pause only the package that earned them; browser challenge windows stay local/);
   assert.match(appSurface, /Required Android setup: reviewed adult-domain feed, DNS-only VPN, Usage Access, Accessibility, selected app timers, then Test Protection/);
-  assert.match(appSurface, /Required iOS setup: Screen Time authorization, adult web filter, selected targets, daily-limit monitoring, Safari rules, then Test Protection/);
+  assert.match(appSurface, /Required iOS setup: Screen Time authorization, adult-domain Safari Content Blocker, Safari Focus Shield for Shorts\/Reels, selected targets, daily-limit monitoring, then Test Protection\. iOS DNS filtering is unavailable/);
   assert.match(appSurface, /protectionSyncMessage=\{protectionSyncMessage\}/);
   assert.match(appSurface, /Native adult-domain feed loaded/);
   assert.match(appSurface, /Embedded adult-domain fallback is loaded/);
@@ -6707,7 +6707,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /Continue: \$\{nextRequiredStep\.title\}/);
   assert.match(appSurface, /Open: \$\{nextRequiredStep\.title\}/);
   assert.match(appSurface, /Required Android setup: reviewed adult-domain feed, DNS-only VPN, Usage Access, Accessibility, selected app timers, then Test Protection/);
-  assert.match(appSurface, /Required iOS setup: Screen Time authorization, adult web filter, selected targets, daily-limit monitoring, Safari rules, then Test Protection/);
+  assert.match(appSurface, /Required iOS setup: Screen Time authorization, adult-domain Safari Content Blocker, Safari Focus Shield for Shorts\/Reels, selected targets, daily-limit monitoring, then Test Protection\. iOS DNS filtering is unavailable/);
   assert.match(appSurface, /runFeedSync/);
   assert.match(appSurface, /runAppPackageSync/);
   assert.match(appSurface, /onSyncAppPackages/);
@@ -7283,6 +7283,7 @@ test("iOS release and evidence contracts package Safari Focus Shield as the only
   assert.match(physicalEvidence, /inspectSafariFocusShieldContract/);
   assert.match(safariFocusContract, /contentScriptsScoped/);
   assert.match(safariFocusContract, /infoAllowedDomainsScoped/);
+  assert.match(safariFocusContract, /nativeAppIdentifierValid/);
   assert.match(safariFocusContract, /nativePayloadSchemaValid/);
   assert.match(safariFocusContract, /nativeHandlerContractValid/);
   assert.match(safariFocusContract, /minimumOSVersionAtLeast154/);
@@ -14199,6 +14200,7 @@ test("validation evidence promotion validates every draft before copying", () =>
       nativeMessagingPermission: true,
       hostPermissionsScoped: true,
       infoAllowedDomainsScoped: true,
+      nativeAppIdentifierValid: true,
       nativePayloadSchemaValid: true,
       nativeHandlerContractValid: true,
       usableForManualEvidence: true
@@ -15976,6 +15978,7 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
       nativeMessagingPermission: true,
       hostPermissionsScoped: true,
       infoAllowedDomainsScoped: true,
+      nativeAppIdentifierValid: true,
       nativePayloadSchemaValid: true,
       nativeHandlerContractValid: true,
       usableForManualEvidence: true
