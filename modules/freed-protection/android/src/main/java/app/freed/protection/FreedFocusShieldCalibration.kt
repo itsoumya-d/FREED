@@ -10,7 +10,9 @@ import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
+import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import android.view.accessibility.AccessibilityWindowInfo
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -197,17 +199,24 @@ internal class FreedFocusShieldCalibrationSession(
     }
   }
 
-  fun onAccessibilityPackage(packageName: String) {
+  fun onAccessibilityEvent(event: AccessibilityEvent, packageName: String) {
     if (disposed) return
     if (packageName == request.packageName) {
       targetObserved = true
       return
     }
-    if (targetObserved && packageName != service.packageName) {
-      finish(
-        state = "app-switched",
-        message = "Calibration stopped because the selected app was left. No selector was stored."
-      )
+    if (!targetObserved) return
+    if (isCalibrationOverlayEvent(event)) return
+    finish(
+      state = "app-switched",
+      message = "Calibration stopped because the selected app was left. No selector was stored."
+    )
+  }
+
+  private fun isCalibrationOverlayEvent(event: AccessibilityEvent): Boolean {
+    if (event.packageName?.toString() != service.packageName || event.windowId < 0) return false
+    return service.windows.orEmpty().any { window ->
+      window.id == event.windowId && window.type == AccessibilityWindowInfo.TYPE_ACCESSIBILITY_OVERLAY
     }
   }
 

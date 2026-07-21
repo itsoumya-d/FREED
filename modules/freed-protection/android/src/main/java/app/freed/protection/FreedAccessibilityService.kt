@@ -29,6 +29,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
+import java.util.concurrent.atomic.AtomicLong
 
 class FreedAccessibilityService : AccessibilityService() {
   companion object {
@@ -142,6 +143,7 @@ class FreedAccessibilityService : AccessibilityService() {
   private var shortFormScrollCount = 0
   private var scheduledEarnedUnlockRelockPackage: String? = null
   private var focusShieldCalibrationSession: FreedFocusShieldCalibrationSession? = null
+  private val focusShieldCalibrationGeneration = AtomicLong(0L)
   private val appLimitRunnable = Runnable {
     val packageName = scheduledLimitPackage ?: return@Runnable
     if (
@@ -195,7 +197,7 @@ class FreedAccessibilityService : AccessibilityService() {
   override fun onAccessibilityEvent(event: AccessibilityEvent?) {
     val packageName = event?.packageName?.toString() ?: return
     val normalizedPackage = packageName.lowercase(Locale.US)
-    focusShieldCalibrationSession?.onAccessibilityPackage(normalizedPackage)
+    focusShieldCalibrationSession?.onAccessibilityEvent(event, normalizedPackage)
     trackForegroundUsage(normalizedPackage)
     val configuredApp = isConfiguredBlockedApp(normalizedPackage)
     val hasFocusShieldPresetRules = FreedFocusShieldRules.hasEnabledPresetRulesForPackage(this, normalizedPackage)
@@ -310,7 +312,9 @@ class FreedAccessibilityService : AccessibilityService() {
   }
 
   internal fun beginFocusShieldCalibration(request: FreedFocusShieldCalibrationRequest) {
+    val generation = focusShieldCalibrationGeneration.incrementAndGet()
     handler.post {
+      if (generation != focusShieldCalibrationGeneration.get()) return@post
       focusShieldCalibrationSession?.disposeWithoutResult()
       val session = FreedFocusShieldCalibrationSession(this, request, ::onFocusShieldCalibrationResult)
       focusShieldCalibrationSession = session
@@ -319,10 +323,15 @@ class FreedAccessibilityService : AccessibilityService() {
   }
 
   internal fun stopFocusShieldCalibration(state: String, message: String) {
+    focusShieldCalibrationGeneration.incrementAndGet()
     if (Looper.myLooper() != Looper.getMainLooper()) {
-      handler.post { stopFocusShieldCalibration(state, message) }
+      handler.post { finishFocusShieldCalibration(state, message) }
       return
     }
+    finishFocusShieldCalibration(state, message)
+  }
+
+  private fun finishFocusShieldCalibration(state: String, message: String) {
     val activeSession = focusShieldCalibrationSession
     if (activeSession == null) return
     activeSession.finish(state, message)
@@ -335,6 +344,7 @@ class FreedAccessibilityService : AccessibilityService() {
     if (focusShieldCalibrationSession !== session) return
     FreedFocusShieldCalibrationBridge.publish(result)
     if (result.state != "calibrating" && result.state != "ready") {
+      focusShieldCalibrationGeneration.incrementAndGet()
       focusShieldCalibrationSession = null
     }
   }

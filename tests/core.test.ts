@@ -1732,6 +1732,81 @@ test("Android Focus Shield calibration bridge exposes terminal cleanup states", 
   assert.match(bridge, /"revoked-permission"/);
 });
 
+test("Android Focus Shield calibration invalidates queued starts before terminal teardown", () => {
+  const service = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+    "utf8"
+  );
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const beginStart = service.indexOf("internal fun beginFocusShieldCalibration");
+  const stopStart = service.indexOf("internal fun stopFocusShieldCalibration");
+  const resultStart = service.indexOf("private fun onFocusShieldCalibrationResult");
+  const begin = service.slice(beginStart, stopStart);
+  const stop = service.slice(stopStart, resultStart);
+  const result = service.slice(resultStart, service.indexOf("private fun isConfiguredBlockedApp"));
+
+  assert.match(service, /focusShieldCalibrationGeneration\s*=\s*AtomicLong/);
+  assert.match(begin, /val generation = focusShieldCalibrationGeneration\.incrementAndGet\(\)/);
+  assert.match(
+    begin,
+    /handler\.post\s*\{\s*if \(generation != focusShieldCalibrationGeneration\.get\(\)\) return@post/
+  );
+  assert.ok(stop.indexOf("focusShieldCalibrationGeneration.incrementAndGet()") < stop.indexOf("handler.post"));
+  assert.match(result, /result\.state != "calibrating" && result\.state != "ready"[\s\S]*focusShieldCalibrationGeneration\.incrementAndGet\(\)/);
+
+  for (const lifecycle of ["onInterrupt", "onDestroy"]) {
+    const lifecycleStart = service.indexOf(`override fun ${lifecycle}`);
+    assert.ok(lifecycleStart >= 0);
+    assert.match(service.slice(lifecycleStart, lifecycleStart + 900), /stopFocusShieldCalibration/);
+  }
+  assert.match(service, /override fun onUnbind[\s\S]*FreedFocusShieldCalibrationBridge\.detach/);
+  assert.match(calibration, /fun detach[\s\S]*service\.stopFocusShieldCalibration/);
+  assert.match(calibration, /fun permissionRevoked[\s\S]*stopFocusShieldCalibration\("revoked-permission"/);
+});
+
+test("Android Focus Shield distinguishes its overlay events from a real FREED app switch", () => {
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const service = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+    "utf8"
+  );
+
+  assert.match(service, /onAccessibilityEvent\(event, normalizedPackage\)/);
+  assert.match(calibration, /AccessibilityWindowInfo\.TYPE_ACCESSIBILITY_OVERLAY/);
+  assert.match(calibration, /window\.id == event\.windowId/);
+  assert.match(calibration, /if \(isCalibrationOverlayEvent\(event\)\) return/);
+  assert.doesNotMatch(calibration, /packageName != service\.packageName/);
+
+  const shouldTerminate = (targetObserved: boolean, isTarget: boolean, isOwnOverlayWindow: boolean) =>
+    targetObserved && !isTarget && !isOwnOverlayWindow;
+  assert.equal(shouldTerminate(true, false, true), false);
+  assert.equal(shouldTerminate(true, false, false), true);
+});
+
+test("Focus Shield calibration states have one central shared contract", () => {
+  const contract = readFileSync("src/lib/focus-shield.ts", "utf8");
+  const bridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+  const requiredStates = [
+    "success",
+    "timeout",
+    "unsupported-tree",
+    "revoked-permission",
+    "app-switched",
+    "service-interrupted"
+  ];
+
+  for (const state of requiredStates) assert.match(contract, new RegExp(`"${state}"`));
+  assert.match(bridge, /FocusShieldCalibrationState,[\s\S]*FocusShieldCalibrationResult/);
+  assert.match(bridge, /export type \{[\s\S]*FocusShieldCalibrationState,[\s\S]*FocusShieldCalibrationResult/);
+  assert.doesNotMatch(bridge, /SharedFocusShieldCalibrationResult|Omit<SharedFocusShieldCalibrationResult/);
+});
+
 test("Focus Shield integration routes scoped challenge unlocks without widening package access", () => {
   const pending = {
     url: "https://youtube-shorts.app.freed.local",

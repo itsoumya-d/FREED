@@ -43,7 +43,19 @@ export type FocusShieldRule = {
   selector: FocusShieldSelectorFingerprint;
 };
 
-export type FocusShieldCalibrationState = "idle" | "calibrating" | "ready" | "cancelled" | "unavailable" | "failed";
+export type FocusShieldCalibrationState =
+  | "idle"
+  | "calibrating"
+  | "ready"
+  | "success"
+  | "cancelled"
+  | "timeout"
+  | "unsupported-tree"
+  | "revoked-permission"
+  | "app-switched"
+  | "service-interrupted"
+  | "unavailable"
+  | "failed";
 
 export type FocusShieldCalibrationRequest = {
   ruleId: FocusShieldRuleId;

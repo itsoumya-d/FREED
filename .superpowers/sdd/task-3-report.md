@@ -72,6 +72,7 @@ The full core command continues past the Focus Shield tests and exits 1 later on
 - `modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt`
 - `modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt`
 - `modules/freed-protection/src/index.ts`
+- `src/lib/focus-shield.ts`
 - `tests/core.test.ts`
 - `.superpowers/sdd/task-3-report.md`
 
@@ -112,3 +113,39 @@ Overall result: exit 1 only at the unrelated pre-existing `release env preflight
 ## Physical-device follow-up
 
 No physical-device validation is claimed. Device acceptance should verify overlay placement/touch behavior, active-window tree availability, vendor-ROM window event ordering, exact allowlisted view IDs in current YouTube/Instagram/TikTok builds, every teardown trigger, and that unsupported Compose/WebView trees return `unsupported-tree` without storing a rule.
+
+## Blocking review follow-up
+
+Review identified three integration defects in the first Task 3 commit:
+
+1. A start callback already queued on the service Handler could still create an overlay after cancellation, interruption, unbind, destruction, or bridge-reported permission revocation.
+2. The session ignored every event from FREED's package after reaching the target, so opening the actual FREED application could be mistaken for an overlay-origin event instead of an app switch.
+3. The module bridge locally widened `FocusShieldCalibrationResult` while the central shared contract retained the old state union.
+
+### Follow-up RED
+
+Regression tests were added before the fixes. `npm run test:core` exited 1 at:
+
+```text
+FAIL Android Focus Shield calibration invalidates queued starts before terminal teardown
+The input did not match /focusShieldCalibrationGeneration\s*=\s*AtomicLong/
+```
+
+The additional review tests also specify that only a FREED event whose exact window ID resolves to `TYPE_ACCESSIBILITY_OVERLAY` is ignored, and that every native state lives in the central Focus Shield contract.
+
+### Follow-up implementation
+
+- Added an atomic service generation counter. Each requested start captures a generation and checks it inside the posted callback before creating any session or overlay.
+- `stopFocusShieldCalibration` invalidates the generation synchronously before it posts main-thread view teardown. This covers cancel, `onInterrupt`, `onUnbind`, `onDestroy`, and bridge permission revocation even when no session has been installed yet.
+- Session-origin terminal results—including timeout, app switch, unsupported tree, confirmation, and selector cancellation—also invalidate the generation before clearing the service session.
+- Replaced the blanket FREED-package exemption with exact Accessibility window discrimination. Overlay-origin events must match a window whose ID equals the event window ID and whose type is `TYPE_ACCESSIBILITY_OVERLAY`; a real FREED application window therefore produces `app-switched` after the target has been observed.
+- Moved all native calibration states into `src/lib/focus-shield.ts`. The module bridge now imports and re-exports the central request/state/result types without a local duplicate union.
+
+### Follow-up verification
+
+- All six Task 3 source/behavior tests pass, including queued-start invalidation, window-aware app-switch handling, and central contract coverage.
+- `npm run typecheck`: exit 0.
+- `ANDROID_HOME=/Users/soumyadebnath16/Library/Android/sdk ./gradlew :freed-protection:compileDebugKotlin`: exit 0, `BUILD SUCCESSFUL`.
+- Full `npm run test:core`: continues past all Task 3 tests and exits 1 only at the same unrelated release-signing fixture documented above.
+
+Physical-device validation remains necessary for OEM Accessibility window enumeration behavior; if an overlay event cannot be proven to originate from a `TYPE_ACCESSIBILITY_OVERLAY` window, the implementation deliberately treats it as an app departure and tears down rather than risking a lingering selector.

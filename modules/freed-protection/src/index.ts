@@ -2,25 +2,16 @@ import { requireNativeModule } from "expo-modules-core";
 import { sanitizeFocusShieldInterventionScope, sanitizeFocusShieldRule } from "../../../src/lib/focus-shield";
 import type {
   FocusShieldCalibrationRequest,
-  FocusShieldCalibrationResult as SharedFocusShieldCalibrationResult,
+  FocusShieldCalibrationResult,
   FocusShieldInterventionScope,
   FocusShieldRule
 } from "../../../src/lib/focus-shield";
 
-export type { FocusShieldCalibrationRequest };
-
-export type FocusShieldCalibrationState =
-  | SharedFocusShieldCalibrationResult["state"]
-  | "success"
-  | "timeout"
-  | "unsupported-tree"
-  | "revoked-permission"
-  | "app-switched"
-  | "service-interrupted";
-
-export type FocusShieldCalibrationResult = Omit<SharedFocusShieldCalibrationResult, "state"> & {
-  state: FocusShieldCalibrationState;
-};
+export type {
+  FocusShieldCalibrationRequest,
+  FocusShieldCalibrationState,
+  FocusShieldCalibrationResult
+} from "../../../src/lib/focus-shield";
 
 export type ProtectionCapability = {
   platform: "ios" | "android" | "web" | "unknown";
