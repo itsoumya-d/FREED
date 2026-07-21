@@ -76,9 +76,15 @@ internal data class FreedFocusShieldCalibrationResult(
 }
 
 internal object FreedFocusShieldCalibrationBridge {
+  private data class AttachmentSnapshot(
+    val service: FreedAccessibilityService?,
+    val ownerEpoch: Long
+  )
+
   private val serviceReferenceLock = Any()
   private val handler = Handler(Looper.getMainLooper())
   private var serviceReference = WeakReference<FreedAccessibilityService>(null)
+  private var focusShieldCalibrationAttachmentEpoch = 0L
 
   @Volatile
   private var latestResult = FreedFocusShieldCalibrationResult(
@@ -87,17 +93,33 @@ internal object FreedFocusShieldCalibrationBridge {
   )
 
   fun attach(service: FreedAccessibilityService) {
-    synchronized(serviceReferenceLock) {
+    val previousOwner = synchronized(serviceReferenceLock) {
+      val previousService = serviceReference.get()
+      val previousOwnerEpoch = focusShieldCalibrationAttachmentEpoch
+      focusShieldCalibrationAttachmentEpoch += 1
+      val ownerEpoch = focusShieldCalibrationAttachmentEpoch
+      service.updateFocusShieldCalibrationOwner(ownerEpoch)
       serviceReference = WeakReference(service)
+      previousService?.let { it to previousOwnerEpoch }
+    }
+    previousOwner?.let { (previousService, previousOwnerEpoch) ->
+      previousService.invalidateFocusShieldCalibrationOwner(previousOwnerEpoch)
     }
   }
 
   fun detach(service: FreedAccessibilityService, state: String, message: String) {
-    synchronized(serviceReferenceLock) {
+    val detachedEpochs = synchronized(serviceReferenceLock) {
       if (serviceReference.get() !== service) return
-      service.stopFocusShieldCalibration(state, message)
+      val previousOwnerEpoch = focusShieldCalibrationAttachmentEpoch
+      focusShieldCalibrationAttachmentEpoch += 1
       serviceReference.clear()
+      previousOwnerEpoch to focusShieldCalibrationAttachmentEpoch
     }
+    service.invalidateFocusShieldCalibrationOwner(detachedEpochs.first)
+    publishWithoutOwner(
+      FreedFocusShieldCalibrationResult(state, message),
+      detachedEpochs.second
+    )
   }
 
   fun start(value: Map<String, Any?>): Map<String, Any> {
@@ -111,28 +133,21 @@ internal object FreedFocusShieldCalibrationBridge {
       state = "unavailable",
       message = "Enable FREED Accessibility protection before starting calibration."
     )
-    val service = synchronized(serviceReferenceLock) {
-      serviceReference.get()?.also {
-        it.beginFocusShieldCalibration(request)
-      } ?: run {
-        publish(unavailable)
-        null
-      }
+    val owner = attachmentSnapshot()
+    val service = owner.service
+    if (service == null) {
+      publishWithoutOwner(unavailable, owner.ownerEpoch)
+      return unavailable.toPayload()
     }
-    if (service == null) return unavailable.toPayload()
+    service.beginFocusShieldCalibration(request, owner.ownerEpoch)
     return initial.toPayload()
   }
 
   fun failStart(message: String): Map<String, Any> {
     val result = FreedFocusShieldCalibrationResult("failed", message)
-    synchronized(serviceReferenceLock) {
-      serviceReference.get()?.also {
-        it.stopFocusShieldCalibration("failed", message)
-      } ?: run {
-        publish(result)
-        null
-      }
-    }
+    val owner = attachmentSnapshot()
+    owner.service?.stopFocusShieldCalibration("failed", message, owner.ownerEpoch)
+      ?: publishWithoutOwner(result, owner.ownerEpoch)
     return result.toPayload()
   }
 
@@ -141,40 +156,80 @@ internal object FreedFocusShieldCalibrationBridge {
       "cancelled",
       "Focus Shield calibration was cancelled."
     )
-    synchronized(serviceReferenceLock) {
-      serviceReference.get()?.also {
-        it.stopFocusShieldCalibration(result.state, result.message)
-      } ?: run {
-        publish(result)
-        null
-      }
-    }
+    val owner = attachmentSnapshot()
+    owner.service?.stopFocusShieldCalibration(result.state, result.message, owner.ownerEpoch)
+      ?: publishWithoutOwner(result, owner.ownerEpoch)
     return result.toPayload()
   }
 
   fun permissionRevoked(): Map<String, Any> {
     val message = "Accessibility permission was revoked, so calibration stopped and no selector was stored."
     val result = FreedFocusShieldCalibrationResult("revoked-permission", message)
-    synchronized(serviceReferenceLock) {
-      serviceReference.get()?.also {
-        it.stopFocusShieldCalibration(result.state, result.message)
-      }.also {
-        if (it == null) publish(result)
-        serviceReference.clear()
-      }
+    val detachedOwner = synchronized(serviceReferenceLock) {
+      val previousService = serviceReference.get()
+      val previousOwnerEpoch = focusShieldCalibrationAttachmentEpoch
+      focusShieldCalibrationAttachmentEpoch += 1
+      serviceReference.clear()
+      Triple(previousService, previousOwnerEpoch, focusShieldCalibrationAttachmentEpoch)
     }
+    detachedOwner.first?.invalidateFocusShieldCalibrationOwner(detachedOwner.second)
+    publishWithoutOwner(result, detachedOwner.third)
     return result.toPayload()
   }
 
   fun get(): Map<String, Any> = latestResult.toPayload()
 
-  fun publish(result: FreedFocusShieldCalibrationResult): FreedFocusShieldCalibrationResult {
-    if (Looper.myLooper() == Looper.getMainLooper()) {
-      latestResult = result
-    } else {
-      handler.post { latestResult = result }
+  fun isCurrentOwner(service: FreedAccessibilityService, ownerEpoch: Long): Boolean {
+    return synchronized(serviceReferenceLock) {
+      serviceReference.get() === service &&
+        focusShieldCalibrationAttachmentEpoch == ownerEpoch
     }
-    return result
+  }
+
+  fun publish(
+    service: FreedAccessibilityService,
+    ownerEpoch: Long,
+    result: FreedFocusShieldCalibrationResult
+  ): Boolean {
+    if (Looper.myLooper() != Looper.getMainLooper()) {
+      handler.post { publish(service, ownerEpoch, result) }
+      return false
+    }
+    return synchronized(serviceReferenceLock) {
+      if (
+        serviceReference.get() !== service ||
+        focusShieldCalibrationAttachmentEpoch != ownerEpoch
+      ) {
+        false
+      } else {
+        latestResult = result
+        true
+      }
+    }
+  }
+
+  private fun attachmentSnapshot(): AttachmentSnapshot {
+    return synchronized(serviceReferenceLock) {
+      AttachmentSnapshot(serviceReference.get(), focusShieldCalibrationAttachmentEpoch)
+    }
+  }
+
+  private fun publishWithoutOwner(
+    result: FreedFocusShieldCalibrationResult,
+    expectedAttachmentEpoch: Long
+  ) {
+    if (Looper.myLooper() != Looper.getMainLooper()) {
+      handler.post { publishWithoutOwner(result, expectedAttachmentEpoch) }
+      return
+    }
+    synchronized(serviceReferenceLock) {
+      if (
+        serviceReference.get() == null &&
+        focusShieldCalibrationAttachmentEpoch == expectedAttachmentEpoch
+      ) {
+        latestResult = result
+      }
+    }
   }
 }
 
@@ -226,16 +281,16 @@ internal class FreedFocusShieldCalibrationSession(
 
   fun onAccessibilityEvent(event: AccessibilityEvent, packageName: String?) {
     if (disposed) return
+    val isWindowTransition =
+      event.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED ||
+        event.eventType == AccessibilityEvent.TYPE_WINDOWS_CHANGED
     if (packageName == request.packageName) {
       targetObserved = true
-      return
+      if (!isWindowTransition) return
     }
     if (!targetObserved) return
     if (isCalibrationOverlayEvent(event)) return
-    if (
-      event.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED &&
-      event.eventType != AccessibilityEvent.TYPE_WINDOWS_CHANGED
-    ) return
+    if (!isWindowTransition) return
     val activePackage = activeForegroundApplicationPackage(event) ?: return
     if (activePackage == request.packageName) return
     finish(

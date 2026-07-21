@@ -143,6 +143,9 @@ class FreedAccessibilityService : AccessibilityService() {
   private var scheduledEarnedUnlockRelockPackage: String? = null
   @Volatile
   private var focusShieldCalibrationSession: FreedFocusShieldCalibrationSession? = null
+  @Volatile
+  private var focusShieldCalibrationOwnerEpoch = 0L
+  private var focusShieldCalibrationSessionOwnerEpoch = 0L
   private val focusShieldCalibrationTransitionLock = Any()
   private var focusShieldCalibrationRequestedGeneration = 0L
   private val appLimitRunnable = Runnable {
@@ -317,44 +320,90 @@ class FreedAccessibilityService : AccessibilityService() {
     super.onDestroy()
   }
 
-  internal fun beginFocusShieldCalibration(request: FreedFocusShieldCalibrationRequest) {
+  internal fun updateFocusShieldCalibrationOwner(ownerEpoch: Long) {
+    focusShieldCalibrationOwnerEpoch = ownerEpoch
+  }
+
+  internal fun invalidateFocusShieldCalibrationOwner(ownerEpoch: Long) {
+    if (focusShieldCalibrationOwnerEpoch == ownerEpoch) {
+      focusShieldCalibrationOwnerEpoch = 0L
+      enqueueFocusShieldCalibrationTransition {
+        disposeFocusShieldCalibrationSessionForOwner(ownerEpoch)
+      }
+      return
+    }
+    handler.post {
+      synchronized(focusShieldCalibrationTransitionLock) {
+        disposeFocusShieldCalibrationSessionForOwner(ownerEpoch)
+      }
+    }
+  }
+
+  internal fun beginFocusShieldCalibration(
+    request: FreedFocusShieldCalibrationRequest,
+    ownerEpoch: Long
+  ) {
     val initial = FreedFocusShieldCalibrationResult(
       state = "calibrating",
       message = "Open the selected app, then tap the temporary FREED edge handle."
     )
-    enqueueFocusShieldCalibrationTransition { generation ->
-      focusShieldCalibrationSession?.disposeWithoutResult()
-      val session = FreedFocusShieldCalibrationSession(this, request) { finishedSession, result ->
-        onFocusShieldCalibrationResult(finishedSession, generation, result)
+    enqueueFocusShieldCalibrationTransition(ownerEpoch) { generation ->
+      if (!FreedFocusShieldCalibrationBridge.isCurrentOwner(this, ownerEpoch)) {
+        if (
+          focusShieldCalibrationOwnerEpoch == 0L ||
+          focusShieldCalibrationSessionOwnerEpoch == ownerEpoch
+        ) {
+          focusShieldCalibrationSession?.disposeWithoutResult()
+          focusShieldCalibrationSession = null
+          focusShieldCalibrationSessionOwnerEpoch = 0L
+        }
+      } else {
+        focusShieldCalibrationSession?.disposeWithoutResult()
+        val session = FreedFocusShieldCalibrationSession(this, request) { finishedSession, result ->
+          onFocusShieldCalibrationResult(finishedSession, generation, ownerEpoch, result)
+        }
+        focusShieldCalibrationSession = session
+        focusShieldCalibrationSessionOwnerEpoch = ownerEpoch
+        FreedFocusShieldCalibrationBridge.publish(this, ownerEpoch, initial)
+        session.start()
       }
-      focusShieldCalibrationSession = session
-      FreedFocusShieldCalibrationBridge.publish(initial)
-      session.start()
     }
   }
 
-  internal fun stopFocusShieldCalibration(state: String, message: String) {
+  internal fun stopFocusShieldCalibration(
+    state: String,
+    message: String,
+    ownerEpoch: Long = focusShieldCalibrationOwnerEpoch
+  ) {
     val terminalResult = FreedFocusShieldCalibrationResult(state, message)
-    enqueueFocusShieldCalibrationTransition {
-      val activeSession = focusShieldCalibrationSession
-      activeSession?.disposeWithoutResult()
-      focusShieldCalibrationSession = null
-      FreedFocusShieldCalibrationBridge.publish(terminalResult)
+    enqueueFocusShieldCalibrationTransition(ownerEpoch) {
+      if (
+        focusShieldCalibrationOwnerEpoch == 0L ||
+        focusShieldCalibrationSessionOwnerEpoch == ownerEpoch
+      ) {
+        val activeSession = focusShieldCalibrationSession
+        activeSession?.disposeWithoutResult()
+        focusShieldCalibrationSession = null
+        focusShieldCalibrationSessionOwnerEpoch = 0L
+      }
+      FreedFocusShieldCalibrationBridge.publish(this, ownerEpoch, terminalResult)
     }
   }
 
   private fun onFocusShieldCalibrationResult(
     session: FreedFocusShieldCalibrationSession,
     generation: Long,
+    ownerEpoch: Long,
     result: FreedFocusShieldCalibrationResult
   ) {
     handler.post result@{
       synchronized(focusShieldCalibrationTransitionLock) {
         if (generation != focusShieldCalibrationRequestedGeneration) return@result
         if (focusShieldCalibrationSession !== session) return@result
-        FreedFocusShieldCalibrationBridge.publish(result)
+        FreedFocusShieldCalibrationBridge.publish(this, ownerEpoch, result)
         if (result.state != "calibrating" && result.state != "ready") {
           focusShieldCalibrationSession = null
+          focusShieldCalibrationSessionOwnerEpoch = 0L
         }
       }
     }
@@ -373,6 +422,41 @@ class FreedAccessibilityService : AccessibilityService() {
         }
       }
     }
+  }
+
+  private fun enqueueFocusShieldCalibrationTransition(
+    ownerEpoch: Long,
+    operation: (Long) -> Unit
+  ) {
+    synchronized(focusShieldCalibrationTransitionLock) {
+      val currentOwnerEpoch = focusShieldCalibrationOwnerEpoch
+      if (
+        ownerEpoch != currentOwnerEpoch &&
+        FreedFocusShieldCalibrationBridge.isCurrentOwner(this, currentOwnerEpoch)
+      ) {
+        handler.post {
+          synchronized(focusShieldCalibrationTransitionLock) {
+            disposeFocusShieldCalibrationSessionForOwner(ownerEpoch)
+          }
+        }
+        return
+      }
+      focusShieldCalibrationRequestedGeneration += 1
+      val generation = focusShieldCalibrationRequestedGeneration
+      handler.post transition@{
+        synchronized(focusShieldCalibrationTransitionLock) {
+          if (generation != focusShieldCalibrationRequestedGeneration) return@transition
+          operation(generation)
+        }
+      }
+    }
+  }
+
+  private fun disposeFocusShieldCalibrationSessionForOwner(ownerEpoch: Long) {
+    if (focusShieldCalibrationSessionOwnerEpoch != ownerEpoch) return
+    focusShieldCalibrationSession?.disposeWithoutResult()
+    focusShieldCalibrationSession = null
+    focusShieldCalibrationSessionOwnerEpoch = 0L
   }
 
   private fun isConfiguredBlockedApp(packageName: String): Boolean {

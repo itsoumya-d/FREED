@@ -259,3 +259,38 @@ This was the expected failure because start and stop still used independent atom
 - All Task 3 tests pass within `npm run test:core`; the full command still exits 1 only at the unchanged unrelated release-signing fixture.
 - `npm run typecheck`: exit 0.
 - `ANDROID_HOME=/Users/soumyadebnath16/Library/Android/sdk ./gradlew :freed-protection:compileDebugKotlin`: exit 0, `BUILD SUCCESSFUL`, 45 actionable tasks (1 executed, 44 up-to-date).
+
+## Service replacement and target-window follow-up
+
+The latest review found two remaining Android lifecycle gaps:
+
+1. Main-Handler serialization was local to one `FreedAccessibilityService` instance. After Accessibility service replacement, an old instance could still publish a queued terminal result into the process-global bridge after the new instance published `calibrating`.
+2. A window-transition event carrying the target package returned immediately after setting `targetObserved`, so it did not verify the active/focused application window. Android can pair a target-window removal event with a newly active application window, which must end calibration.
+
+### Replacement/window RED
+
+Source-and-behavior regressions were added first for attachment ownership and target-package foreground verification. The first run exited 1 at the new owner-scoped publication requirement:
+
+```text
+FAIL Android Focus Shield serializes start and terminal transitions without TOCTOU publication
+The input did not match /publish\(this, ownerEpoch, initial\)/
+```
+
+The prior implementation published globally without service identity or attachment ownership.
+
+### Replacement/window implementation
+
+- Added a bridge-wide monotonically increasing attachment epoch. Each `attach` installs the new service identity and epoch before exposing it to bridge requests, then silently invalidates the prior owner.
+- Start, stop, and session-result publications now carry the service identity and captured owner epoch. The bridge accepts a publication only when both still match its current attachment.
+- Detach and permission revocation advance the attachment epoch, clear the owner, silently tear down the old service, and publish a no-owner terminal result only if no newer attachment has superseded that detached epoch.
+- Bridge locks are used only to snapshot/change ownership or commit a result; service transition methods are invoked after releasing the bridge lock. Handler transitions may check bridge ownership while holding their local lock without a reverse bridge-to-service lock path, avoiding lock inversion.
+- Each service tracks the owner of its installed session. Replacement teardown removes only the prior owner's overlay. A stale request for an older epoch cannot advance the current owner's local transition generation or dispose its session, including when Android reconnects the same service instance.
+- Target-package content/noise events still mark the target observed and return. For `TYPE_WINDOW_STATE_CHANGED` and `TYPE_WINDOWS_CHANGED`, target-package events continue to verified active/focused `TYPE_APPLICATION` window resolution; a genuinely different foreground app produces `app-switched`.
+
+### Replacement/window verification
+
+- Owner regression passes: an old service terminal after a new service's `calibrating` result is rejected, and old-owner overlay teardown remains silent.
+- Target-window regression passes: content noise does not terminate, a target foreground window remains active, and a target-package transition paired with FREED as the active application terminates.
+- All Task 3 tests pass within `npm run test:core`; full core status remains exit 1 only at the unrelated release-signing fixture whose temporary upload-keystore path is missing.
+- `npm run typecheck`: exit 0.
+- `ANDROID_HOME=/Users/soumyadebnath16/Library/Android/sdk ./gradlew :freed-protection:compileDebugKotlin`: exit 0, `BUILD SUCCESSFUL`.

@@ -1761,13 +1761,13 @@ test("Android Focus Shield serializes start and terminal transitions without TOC
   assert.match(transition, /if \(generation != focusShieldCalibrationRequestedGeneration\) return@transition/);
   assert.match(transition, /operation\(generation\)/);
 
-  assert.match(begin, /enqueueFocusShieldCalibrationTransition\s*\{ generation ->/);
+  assert.match(begin, /enqueueFocusShieldCalibrationTransition\(ownerEpoch\)\s*\{ generation ->/);
   assert.match(begin, /focusShieldCalibrationSession\?\.disposeWithoutResult\(\)/);
-  assert.match(begin, /focusShieldCalibrationSession = session[\s\S]*publish\(initial\)[\s\S]*session\.start\(\)/);
+  assert.match(begin, /focusShieldCalibrationSession = session[\s\S]*publish\(this, ownerEpoch, initial\)[\s\S]*session\.start\(\)/);
   assert.doesNotMatch(begin, /handler\.post/);
-  assert.match(stop, /enqueueFocusShieldCalibrationTransition\s*\{/);
+  assert.match(stop, /enqueueFocusShieldCalibrationTransition\(ownerEpoch\)\s*\{/);
   assert.match(stop, /activeSession\?\.disposeWithoutResult\(\)/);
-  assert.match(stop, /focusShieldCalibrationSession = null[\s\S]*publish\(terminalResult\)/);
+  assert.match(stop, /focusShieldCalibrationSession = null[\s\S]*publish\(this, ownerEpoch, terminalResult\)/);
   assert.doesNotMatch(stop, /val targetSession = focusShieldCalibrationSession/);
   assert.match(result, /handler\.post result@\{/);
   assert.match(result, /generation != focusShieldCalibrationRequestedGeneration/);
@@ -1780,9 +1780,9 @@ test("Android Focus Shield serializes start and terminal transitions without TOC
     assert.match(service.slice(lifecycleStart, lifecycleStart + 900), /stopFocusShieldCalibration/);
   }
   assert.match(service, /override fun onUnbind[\s\S]*FreedFocusShieldCalibrationBridge\.detach/);
-  assert.match(calibration, /fun detach[\s\S]*service\.stopFocusShieldCalibration/);
+  assert.match(calibration, /fun detach[\s\S]*service\.invalidateFocusShieldCalibrationOwner/);
   assert.match(calibration, /fun permissionRevoked[\s\S]*FreedFocusShieldCalibrationResult\("revoked-permission"/);
-  assert.match(calibration, /fun permissionRevoked[\s\S]*stopFocusShieldCalibration\(result\.state, result\.message\)/);
+  assert.match(calibration, /fun permissionRevoked[\s\S]*invalidateFocusShieldCalibrationOwner/);
 
   type Transition = { generation: number; run: () => void };
   let requestedGeneration = 0;
@@ -1825,6 +1825,50 @@ test("Android Focus Shield serializes start and terminal transitions without TOC
   drainOne();
   assert.equal(overlay, null);
   assert.deepEqual(results, ["calibrating", "cancelled"]);
+});
+
+test("Android Focus Shield rejects results from replaced Accessibility service owners", () => {
+  const service = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+    "utf8"
+  );
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const bridge = calibration.slice(
+    calibration.indexOf("internal object FreedFocusShieldCalibrationBridge"),
+    calibration.indexOf("internal class FreedFocusShieldCalibrationSession")
+  );
+
+  assert.match(bridge, /focusShieldCalibrationAttachmentEpoch\s*=\s*0L/);
+  assert.match(bridge, /fun attach[\s\S]*focusShieldCalibrationAttachmentEpoch \+= 1/);
+  assert.match(bridge, /updateFocusShieldCalibrationOwner\(ownerEpoch\)/);
+  assert.match(bridge, /previousService\.invalidateFocusShieldCalibrationOwner\(previousOwnerEpoch\)/);
+  assert.match(bridge, /fun isCurrentOwner\(service: FreedAccessibilityService, ownerEpoch: Long\)/);
+  assert.match(bridge, /serviceReference\.get\(\) === service[\s\S]*focusShieldCalibrationAttachmentEpoch == ownerEpoch/);
+  assert.match(bridge, /fun publish\([\s\S]*service: FreedAccessibilityService,[\s\S]*ownerEpoch: Long/);
+  assert.match(service, /focusShieldCalibrationOwnerEpoch\s*=\s*0L/);
+  assert.match(service, /fun invalidateFocusShieldCalibrationOwner[\s\S]*disposeWithoutResult\(\)[\s\S]*focusShieldCalibrationSession = null/);
+  assert.match(service, /beginFocusShieldCalibration\([\s\S]*ownerEpoch: Long/);
+  assert.match(service, /if \(!FreedFocusShieldCalibrationBridge\.isCurrentOwner\(this, ownerEpoch\)\)/);
+
+  let currentOwner = { service: "new", epoch: 2 };
+  let latestResult = "calibrating";
+  let oldOverlayAttached = true;
+  const publish = (serviceId: string, epoch: number, state: string) => {
+    if (currentOwner.service !== serviceId || currentOwner.epoch !== epoch) return false;
+    latestResult = state;
+    return true;
+  };
+  const invalidateOwner = (serviceId: string, epoch: number) => {
+    if (serviceId === "old" && epoch === 1) oldOverlayAttached = false;
+  };
+
+  invalidateOwner("old", 1);
+  assert.equal(publish("old", 1, "service-interrupted"), false);
+  assert.equal(latestResult, "calibrating");
+  assert.equal(oldOverlayAttached, false);
 });
 
 test("Android Focus Shield receives package-less window changes before generic enforcement returns", () => {
@@ -1887,6 +1931,43 @@ test("Android Focus Shield distinguishes its overlay events from a real FREED ap
   assert.equal(shouldTerminate(true, "window-state", "app.freed"), true);
 });
 
+test("Android Focus Shield verifies foreground windows for target-package transition events", () => {
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const eventHandler = calibration.slice(
+    calibration.indexOf("fun onAccessibilityEvent"),
+    calibration.indexOf("private fun isCalibrationOverlayEvent")
+  );
+
+  assert.match(eventHandler, /val isWindowTransition =/);
+  assert.match(
+    eventHandler,
+    /if \(packageName == request\.packageName\)[\s\S]*targetObserved = true[\s\S]*if \(!isWindowTransition\) return/
+  );
+  assert.match(eventHandler, /if \(!isWindowTransition\) return[\s\S]*activeForegroundApplicationPackage\(event\)/);
+
+  const shouldTerminate = (
+    eventPackage: string,
+    eventType: "content" | "window-state" | "windows-changed",
+    activeApplicationPackage: string
+  ) => {
+    let targetObserved = false;
+    const isWindowTransition = eventType === "window-state" || eventType === "windows-changed";
+    if (eventPackage === "com.google.android.youtube") {
+      targetObserved = true;
+      if (!isWindowTransition) return false;
+    }
+    if (!targetObserved || !isWindowTransition) return false;
+    return activeApplicationPackage !== "com.google.android.youtube";
+  };
+
+  assert.equal(shouldTerminate("com.google.android.youtube", "content", "app.freed"), false);
+  assert.equal(shouldTerminate("com.google.android.youtube", "windows-changed", "com.google.android.youtube"), false);
+  assert.equal(shouldTerminate("com.google.android.youtube", "window-state", "app.freed"), true);
+});
+
 test("Android Focus Shield failed starts invalidate an earlier queued or active calibration", () => {
   const calibration = readFileSync(
     "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
@@ -1898,8 +1979,8 @@ test("Android Focus Shield failed starts invalidate an earlier queued or active 
   );
 
   const failStartSource = calibration.slice(calibration.indexOf("fun failStart"), calibration.indexOf("fun cancel"));
-  assert.match(failStartSource, /stopFocusShieldCalibration\("failed", message\)/);
-  assert.match(failStartSource, /synchronized\(serviceReferenceLock\)[\s\S]*\?: run[\s\S]*publish\(result\)/);
+  assert.match(failStartSource, /stopFocusShieldCalibration\("failed", message, owner\.ownerEpoch\)/);
+  assert.match(failStartSource, /attachmentSnapshot\(\)[\s\S]*publishWithoutOwner\(result, owner\.ownerEpoch\)/);
   assert.match(failStartSource, /return result\.toPayload\(\)/);
   assert.match(calibration, /fromPayload\(value\)[\s\S]*\?: return failStart/);
   assert.match(module, /reactContext \?: return@AsyncFunction FreedFocusShieldCalibrationBridge\.failStart/);
