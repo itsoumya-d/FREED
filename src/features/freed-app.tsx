@@ -28,19 +28,25 @@ import {
   applyAdultContentFilter,
   applyEarnedUnlockWindow,
   applyFocusShieldEarnedUnlock,
+  cancelFocusShieldCalibration,
   classifyChallengePhoto,
   configureBlockedAppPackages,
+  configureFocusShieldRule,
   clearEarnedUnlockWindow,
   clearPendingIntervention,
+  getFocusShieldCalibration,
   getProtectionCapabilities,
   getPendingIntervention,
   getProtectionStatus,
+  listFocusShieldRules,
   openPrivateDnsSettings,
   openUsageAccessSettings,
   openProtectionSettings,
   presentFamilyActivityPicker,
   requestProtectionAuthorization,
+  removeFocusShieldRule,
   runActivationDiagnostics,
+  startFocusShieldCalibration,
   startRiskWindowMonitoring,
   stopAdultContentFilter,
   stopRiskWindowMonitoring
@@ -114,6 +120,11 @@ import {
   permissionStatusToChallengeSignal
 } from "@/lib/challenge-context";
 import {
+  FOCUS_SHIELD_PRESETS,
+  createFocusShieldPresetRule,
+  type FocusShieldCalibrationState
+} from "@/lib/focus-shield";
+import {
   createEncryptedRecoveryBackup,
   getRecoveryBackupReadiness,
   restoreEncryptedRecoveryBackup
@@ -163,9 +174,7 @@ import { configureNativeMonetizationRuntime } from "@/lib/native-monetization-ru
 import {
   appPackageForEarnedUnlockSource,
   createDeepLinkInterventionAttempt,
-  createNativeInterventionAttempt,
   getActiveNativeEarnedUnlock,
-  isFreshPendingIntervention,
   isIosScreenTimeShieldSource,
   unlockSourceForAttempt,
   type NativeInterventionAttempt
@@ -177,6 +186,15 @@ import {
   type ProtectionPermissionStep,
   type ProtectionPermissionStatus
 } from "@/lib/protection-permissions";
+import {
+  consumePendingInterventionOnce,
+  createPendingInterventionTracker,
+  getFocusShieldCapabilityModel,
+  getProtectionChallengeCompletionDecision,
+  shouldBypassRewardedAdForAttempt,
+  summarizeFocusShieldRules,
+  type FocusShieldRuleSummary
+} from "@/lib/protection-capabilities";
 import { getProtectionSetupReadiness } from "@/lib/protection-readiness";
 import {
   ChallengeHistorySignal,
@@ -1127,6 +1145,276 @@ function buildProtectionActivationSignature(
   });
 }
 
+function FocusShieldSection({
+  protectionCapability,
+  protectionStatus,
+  onRefresh
+}: {
+  protectionCapability: ProtectionCapability | null;
+  protectionStatus: ProtectionStatus | null;
+  onRefresh: () => Promise<ProtectionRefreshResult>;
+}) {
+  const [rules, setRules] = React.useState<FocusShieldRuleSummary[]>([]);
+  const [busyAction, setBusyAction] = React.useState<string | null>(null);
+  const [calibrationState, setCalibrationState] = React.useState<FocusShieldCalibrationState>("idle");
+  const [message, setMessage] = React.useState<string | null>(null);
+  const capabilityModel = React.useMemo(
+    () => getFocusShieldCapabilityModel(protectionCapability, protectionStatus, rules),
+    [protectionCapability, protectionStatus, rules]
+  );
+  const calibrationActive = calibrationState === "calibrating" || calibrationState === "ready";
+
+  const refreshRules = React.useCallback(async () => {
+    if (protectionCapability?.platform !== "android") {
+      setRules([]);
+      return;
+    }
+    try {
+      const nativeRules = await listFocusShieldRules();
+      setRules(summarizeFocusShieldRules(nativeRules));
+    } catch {
+      setMessage("Focus Shield local rules could not be loaded. Refresh native protection and try again.");
+    }
+  }, [protectionCapability?.platform]);
+
+  React.useEffect(() => {
+    void refreshRules();
+  }, [refreshRules, protectionStatus?.focusShieldRuleCount]);
+
+  React.useEffect(() => {
+    if (protectionCapability?.platform !== "android") return;
+    let cancelled = false;
+    getFocusShieldCalibration()
+      .then((result) => {
+        if (cancelled) return;
+        setCalibrationState(result.state);
+        if (result.message) setMessage(result.message);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [protectionCapability?.platform]);
+
+  React.useEffect(() => {
+    if (!calibrationActive) return;
+    let cancelled = false;
+    const poll = () => {
+      getFocusShieldCalibration()
+        .then((result) => {
+          if (cancelled) return;
+          setCalibrationState(result.state);
+          setMessage(result.message ?? `Calibration ${result.state.replace(/-/g, " ")}.`);
+          if (result.state === "success") {
+            void refreshRules();
+            void onRefresh();
+          }
+        })
+        .catch(() => {
+          if (!cancelled) setMessage("Calibration status could not be refreshed.");
+        });
+    };
+    poll();
+    const timer = setInterval(poll, 1_200);
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+    };
+  }, [calibrationActive, onRefresh, refreshRules]);
+
+  const enablePreset = React.useCallback(
+    async (preset: (typeof FOCUS_SHIELD_PRESETS)[number]) => {
+      const rule = createFocusShieldPresetRule(preset.id, `preset-${preset.id}`);
+      if (!rule) return;
+      setBusyAction(`enable:${preset.id}`);
+      try {
+        const result = await configureFocusShieldRule(rule);
+        setMessage(result.message);
+        await Promise.all([refreshRules(), onRefresh()]);
+      } catch {
+        setMessage(`${preset.displayName} could not be enabled.`);
+      } finally {
+        setBusyAction(null);
+      }
+    },
+    [onRefresh, refreshRules]
+  );
+
+  const beginCalibration = React.useCallback(
+    async (preset: (typeof FOCUS_SHIELD_PRESETS)[number]) => {
+      setBusyAction(`calibrate:${preset.id}`);
+      try {
+        const result = await startFocusShieldCalibration({
+          ruleId: `custom-${preset.id}`,
+          packageName: preset.packageName,
+          displayLabel: `${preset.displayName} calibrated`
+        });
+        setCalibrationState(result.state);
+        setMessage(result.message ?? `Calibration ${result.state.replace(/-/g, " ")}.`);
+      } catch {
+        setCalibrationState("failed");
+        setMessage(`${preset.displayName} calibration could not start.`);
+      } finally {
+        setBusyAction(null);
+      }
+    },
+    []
+  );
+
+  const cancelCalibration = React.useCallback(async () => {
+    setBusyAction("cancel-calibration");
+    try {
+      const result = await cancelFocusShieldCalibration();
+      setCalibrationState(result.state);
+      setMessage(result.message ?? "Focus Shield calibration cancelled.");
+    } catch {
+      setMessage("Focus Shield calibration could not be cancelled.");
+    } finally {
+      setBusyAction(null);
+    }
+  }, []);
+
+  const removeRule = React.useCallback(
+    async (rule: FocusShieldRuleSummary) => {
+      setBusyAction(`remove:${rule.id}`);
+      try {
+        const removed = await removeFocusShieldRule(rule.id);
+        setMessage(removed ? `${rule.displayLabel} removed.` : `${rule.displayLabel} was not found in local protection.`);
+        await Promise.all([refreshRules(), onRefresh()]);
+      } catch {
+        setMessage(`${rule.displayLabel} could not be removed.`);
+      } finally {
+        setBusyAction(null);
+      }
+    },
+    [onRefresh, refreshRules]
+  );
+
+  return (
+    <Card gradient={capabilityModel.available ? gradients.purple : undefined}>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
+        <ShieldCheck color={capabilityModel.available ? colors.mint : colors.text3} size={24} />
+        <View style={{ flex: 1 }}>
+          <Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>
+            Focus Shield
+          </Text>
+          <Text selectable style={{ color: colors.text3, marginTop: 2, textTransform: "capitalize" }}>
+            {capabilityModel.platform} capability
+          </Text>
+        </View>
+      </View>
+      <Text selectable style={{ color: colors.text2, lineHeight: 21, marginBottom: 12 }}>
+        {capabilityModel.description}
+      </Text>
+
+      {capabilityModel.platform === "android" ? (
+        <>
+          <Text selectable style={{ color: colors.text3, fontWeight: typography.heavy, letterSpacing: 0.8, marginBottom: 8 }}>
+            SUPPORTED PRESETS
+          </Text>
+          <View style={{ gap: 10, marginBottom: 12 }}>
+            {FOCUS_SHIELD_PRESETS.map((preset) => {
+              const enabled = rules.some((rule) => rule.presetId === preset.id || rule.id === `preset-${preset.id}`);
+              return (
+                <View key={preset.id} style={{ borderRadius: 16, padding: 12, backgroundColor: "rgba(255,255,255,0.05)", gap: 9 }}>
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                    <View style={{ flex: 1 }}>
+                      <Text selectable style={{ color: colors.text, fontWeight: typography.heavy }}>
+                        {preset.displayName}
+                      </Text>
+                      <Text selectable style={{ color: colors.text3, fontSize: 12, marginTop: 3 }}>
+                        Local rule · {preset.packageName}
+                      </Text>
+                    </View>
+                    {enabled ? <Check color={colors.mint} size={20} /> : null}
+                  </View>
+                  <View style={{ flexDirection: "row", gap: 8 }}>
+                    <View style={{ flex: 1 }}>
+                      <PillButton
+                        label={enabled ? "Preset On" : "Enable"}
+                        variant="ghost"
+                        disabled={enabled || busyAction !== null}
+                        onPress={() => void enablePreset(preset)}
+                      />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <PillButton
+                        label="Calibrate"
+                        variant="ghost"
+                        disabled={!capabilityModel.calibrationAvailable || calibrationActive || busyAction !== null}
+                        onPress={() => void beginCalibration(preset)}
+                      />
+                    </View>
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 12 }}>
+            <Text selectable style={{ color: calibrationActive ? colors.yellow : colors.text3, flex: 1, fontWeight: typography.bold }}>
+              Calibration: {calibrationState.replace(/-/g, " ")}
+            </Text>
+            {calibrationActive ? (
+              <Pressable
+                onPress={() => void cancelCalibration()}
+                disabled={busyAction !== null}
+                accessibilityRole="button"
+                accessibilityLabel="Cancel Focus Shield calibration"
+                style={{ paddingHorizontal: 12, paddingVertical: 8, borderRadius: 999, backgroundColor: "rgba(255,216,106,0.12)" }}
+              >
+                <Text selectable style={{ color: colors.yellow, fontWeight: typography.heavy }}>Cancel</Text>
+              </Pressable>
+            ) : null}
+          </View>
+
+          <Text selectable style={{ color: colors.text3, fontWeight: typography.heavy, letterSpacing: 0.8, marginBottom: 8 }}>
+            LOCAL RULES ({rules.length})
+          </Text>
+          {rules.length === 0 ? (
+            <Text selectable style={{ color: colors.text3, lineHeight: 19, marginBottom: 12 }}>
+              No local Focus Shield rules yet. Enable a supported preset or calibrate a selected surface.
+            </Text>
+          ) : (
+            <View style={{ gap: 8, marginBottom: 12 }}>
+              {rules.map((rule) => (
+                <View key={rule.id} style={{ flexDirection: "row", alignItems: "center", gap: 10, borderRadius: 14, padding: 11, backgroundColor: "rgba(255,255,255,0.05)" }}>
+                  <View style={{ flex: 1 }}>
+                    <Text selectable style={{ color: colors.text, fontWeight: typography.bold }}>{rule.displayLabel}</Text>
+                    <Text selectable style={{ color: colors.text3, fontSize: 12, marginTop: 3 }}>
+                      {rule.kind} · {rule.enabled ? "enabled" : "paused"}
+                    </Text>
+                  </View>
+                  <Pressable
+                    onPress={() => void removeRule(rule)}
+                    disabled={busyAction !== null}
+                    accessibilityRole="button"
+                    accessibilityLabel={`Remove ${rule.displayLabel}`}
+                    style={{ width: 38, height: 38, borderRadius: 14, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(255,81,72,0.12)" }}
+                  >
+                    <Trash2 color={colors.red2} size={17} />
+                  </Pressable>
+                </View>
+              ))}
+            </View>
+          )}
+        </>
+      ) : null}
+
+      {message ? (
+        <Text selectable style={{ color: colors.mint, lineHeight: 19, marginBottom: 10, fontWeight: typography.bold }}>
+          {message}
+        </Text>
+      ) : null}
+      {capabilityModel.diagnostics.map((diagnostic) => (
+        <Text key={diagnostic} selectable style={{ color: colors.yellow, lineHeight: 19, marginTop: 5 }}>
+          {diagnostic}
+        </Text>
+      ))}
+    </Card>
+  );
+}
+
 function ProtectionSetupScreen({
   protectionCapability,
   protectionStatus,
@@ -1964,6 +2252,12 @@ function ProtectionSetupScreen({
               {PROTECTION_PERMISSION_EXPLANATION}
             </Text>
           </LinearGradient>
+
+          <FocusShieldSection
+            protectionCapability={protectionCapability}
+            protectionStatus={protectionStatus}
+            onRefresh={onRefresh}
+          />
 
           <Card>
             <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 12 }}>
@@ -5369,6 +5663,12 @@ function ProfileScreen({
         onChange={onAccountabilityChange}
       />
 
+      <FocusShieldSection
+        protectionCapability={protectionCapability}
+        protectionStatus={protectionStatus}
+        onRefresh={refreshProtectionStatus}
+      />
+
       <Card>
         <Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy, marginBottom: 12 }}>
           Native Protection
@@ -6175,7 +6475,11 @@ function InterceptScreen({
             )}
           </View>
 
-          <PillButton label={premium || selfUrge ? "Start Recovery Challenge" : "Continue to Reset"} onPress={onContinue} icon={<Play color={colors.bg} size={18} fill={colors.bg} />} />
+          <PillButton
+            label={premium || selfUrge || shouldBypassRewardedAdForAttempt(attempt) ? "Start Recovery Challenge" : "Continue to Reset"}
+            onPress={onContinue}
+            icon={<Play color={colors.bg} size={18} fill={colors.bg} />}
+          />
         </ScrollView>
       </SafeAreaView>
     </AppBackground>
@@ -7091,7 +7395,7 @@ export default function FreedApp() {
   const [analyticsSendBusy, setAnalyticsSendBusy] = React.useState(false);
   const [analyticsSendMessage, setAnalyticsSendMessage] = React.useState<string | null>(null);
   const [unlockClockMs, setUnlockClockMs] = React.useState(Date.now());
-  const consumedNativeIntervention = React.useRef<string | null>(null);
+  const pendingInterventionTracker = React.useRef(createPendingInterventionTracker());
   const consumedDeepLinkIntervention = React.useRef<string | null>(null);
   const consumedProtectionSetupLink = React.useRef<string | null>(null);
   const isWide = width > 760;
@@ -7499,18 +7803,14 @@ export default function FreedApp() {
   const consumePendingIntervention = React.useCallback(() => {
     if (!hydrated) return;
 
-    getPendingIntervention()
-      .then(async (pending) => {
-        if (!pending) return;
-        const interventionKey = `${pending.detectedAt}:${pending.url}`;
-        if (consumedNativeIntervention.current === interventionKey) return;
-
-        consumedNativeIntervention.current = interventionKey;
-        await clearPendingIntervention();
-
-        if (!isFreshPendingIntervention(pending)) return;
-
-        const attempt = createNativeInterventionAttempt(pending);
+    // The coordinator clears first, then gates UI handoff with isFreshPendingIntervention(pending).
+    consumePendingInterventionOnce({
+      tracker: pendingInterventionTracker.current,
+      getPending: getPendingIntervention,
+      clearPending: clearPendingIntervention
+    })
+      .then((attempt) => {
+        if (!attempt) return;
         setRecoveryState((current) => recordBlockingAttempt(current, attempt));
         setActiveAttempt(attempt);
         setScreen("intercept");
@@ -7634,7 +7934,7 @@ export default function FreedApp() {
         defaultState.disciplineSettings.shortFormInterruptionSeconds
       )
     ]);
-    consumedNativeIntervention.current = null;
+    pendingInterventionTracker.current = createPendingInterventionTracker();
     consumedDeepLinkIntervention.current = null;
     setActiveAttempt(null);
     setSelectedChallenge(null);
@@ -7852,7 +8152,7 @@ export default function FreedApp() {
           onMessagePartner={() => messageAccountabilityPartner()}
           onClose={() => setScreen("main")}
           onContinue={() => {
-            if (premiumCapabilities.noAds || activeAttempt.source === "panic-button") startChallenge();
+            if (premiumCapabilities.noAds || shouldBypassRewardedAdForAttempt(activeAttempt)) startChallenge();
             else setScreen("ad");
           }}
         />
@@ -7886,7 +8186,8 @@ export default function FreedApp() {
             setScreen("main");
           }}
           onComplete={(challenge, outcome) => {
-            if (activeAttempt?.scope?.kind === "android-surface") {
+            const completionDecision = getProtectionChallengeCompletionDecision(activeAttempt, outcome);
+            if (completionDecision.applyFocusShieldScope && activeAttempt?.scope?.kind === "android-surface") {
               const focusShieldDurationMinutes = Math.max(1, Math.min(120, disciplineSettings.unlockDurationMinutes));
               const focusShieldExpiresAt = new Date(Date.now() + focusShieldDurationMinutes * 60_000).toISOString();
               void applyFocusShieldEarnedUnlock(focusShieldExpiresAt, activeAttempt.scope)
@@ -7897,6 +8198,7 @@ export default function FreedApp() {
             setRecoveryState((current) => {
               const sourceAttempt = unlockSourceForAttempt(activeAttempt);
               const completed = recordChallengeCompletion(current, challenge, undefined, sourceAttempt, outcome);
+              if (!completionDecision.grantEarnedUnlock) return completed;
               return recordEarnedUnlock(completed, challenge, {
                 durationMinutes: current.disciplineSettings.unlockDurationMinutes,
                 sourceAttemptHost: activeAttempt?.scope?.kind === "android-surface" ? undefined : sourceAttempt

@@ -1478,6 +1478,164 @@ test("Focus Shield presets carry stable surface metadata", () => {
   assert.equal(youtube?.selector.packageName, youtube?.packageName);
 });
 
+test("Focus Shield React coordination has a focused domain boundary", () => {
+  assert.equal(existsSync("src/lib/protection-capabilities.ts"), true);
+});
+
+test("Focus Shield UI models expose platform limits without retaining selector details", () => {
+  const protection = require("../src/lib/protection-capabilities") as {
+    summarizeFocusShieldRules: (rules: unknown[]) => unknown[];
+    getFocusShieldCapabilityModel: (
+      capability: Record<string, unknown> | null,
+      status: Record<string, unknown> | null,
+      rules: unknown[]
+    ) => {
+      calibrationAvailable: boolean;
+      description: string;
+      diagnostics: string[];
+    };
+  };
+  assert.equal(typeof protection.summarizeFocusShieldRules, "function");
+  assert.equal(typeof protection.getFocusShieldCapabilityModel, "function");
+  const summaries = protection.summarizeFocusShieldRules([
+    {
+      version: 1,
+      id: "focus-rule-ui-a7f9",
+      packageName: "com.google.android.youtube",
+      displayLabel: "YouTube boundary",
+      kind: "custom",
+      enabled: true,
+      selector: {
+        packageName: "com.google.android.youtube",
+        viewId: "com.google.android.youtube:id/reel_player",
+        role: "android.view.View",
+        nodeText: "private accessibility text",
+        rawAccessibilityTree: { child: "private" }
+      }
+    }
+  ]);
+
+  assert.deepEqual(Object.keys(summaries[0] as Record<string, unknown>).sort(), [
+    "displayLabel",
+    "enabled",
+    "id",
+    "kind",
+    "packageName"
+  ]);
+  assert.doesNotMatch(JSON.stringify(summaries), /selector|viewId|nodeText|accessibilityTree|private/i);
+
+  const android = protection.getFocusShieldCapabilityModel(
+    {
+      platform: "android",
+      accessibility: true,
+      screenTime: false,
+      managedSettings: false,
+      dnsFiltering: true,
+      localVpnFallback: true,
+      notes: []
+    },
+    {
+      appInterventionAuthorized: false,
+      focusShieldRuleCount: 2,
+      focusShieldRuleStoreHealth: "degraded"
+    },
+    summaries
+  );
+  assert.equal(android.calibrationAvailable, true);
+  assert.match(android.description, /selected native-app surfaces/i);
+  assert.match(android.diagnostics.join(" "), /permission.*revoked/i);
+  assert.match(android.diagnostics.join(" "), /stale|degraded/i);
+
+  const ios = protection.getFocusShieldCapabilityModel(
+    {
+      platform: "ios",
+      accessibility: false,
+      screenTime: false,
+      managedSettings: false,
+      dnsFiltering: false,
+      safariContentBlocker: true,
+      localVpnFallback: false,
+      notes: []
+    },
+    { authorized: false },
+    []
+  );
+  assert.equal(ios.calibrationAvailable, false);
+  assert.match(ios.description, /cannot inspect native-app screens/i);
+  assert.match(ios.diagnostics.join(" "), /Family Controls entitlement/i);
+
+  const preview = protection.getFocusShieldCapabilityModel(
+    {
+      platform: "web",
+      accessibility: false,
+      screenTime: false,
+      managedSettings: false,
+      dnsFiltering: false,
+      localVpnFallback: false,
+      notes: []
+    },
+    null,
+    []
+  );
+  assert.match(preview.diagnostics.join(" "), /preview build/i);
+});
+
+test("protection-triggered attempts bypass rewarded ads and only successful challenges unlock their scope", () => {
+  const protection = require("../src/lib/protection-capabilities") as {
+    shouldBypassRewardedAdForAttempt: (attempt: BlockingAttempt | null) => boolean;
+    getProtectionChallengeCompletionDecision: (
+      attempt: BlockingAttempt | null,
+      outcome: "helped" | "still-urging"
+    ) => { grantEarnedUnlock: boolean; applyFocusShieldScope: boolean };
+  };
+  assert.equal(typeof protection.shouldBypassRewardedAdForAttempt, "function");
+  assert.equal(typeof protection.getProtectionChallengeCompletionDecision, "function");
+  const protectedAttempt = createNativeInterventionAttempt({
+    url: "https://selected-app.app.freed.local",
+    host: "selected-app.app.freed.local",
+    sourcePackage: "com.google.android.youtube",
+    reason: "Selected surface reached",
+    matchedRule: "focus-shield:focus-rule-ui-a7f9",
+    detectedAt: new Date().toISOString(),
+    scope: {
+      kind: "android-surface",
+      ruleId: "focus-rule-ui-a7f9",
+      packageName: "com.google.android.youtube"
+    }
+  });
+  const manualAttempt = createBlockingAttempt("https://pornhub.com/watch", "manual-check");
+
+  assert.equal(protection.shouldBypassRewardedAdForAttempt(protectedAttempt), true);
+  assert.equal(protection.shouldBypassRewardedAdForAttempt(manualAttempt), false);
+  assert.deepEqual(protection.getProtectionChallengeCompletionDecision(protectedAttempt, "helped"), {
+    grantEarnedUnlock: true,
+    applyFocusShieldScope: true
+  });
+  assert.deepEqual(protection.getProtectionChallengeCompletionDecision(protectedAttempt, "still-urging"), {
+    grantEarnedUnlock: false,
+    applyFocusShieldScope: false
+  });
+});
+
+test("React wires Focus Shield setup, single-consumption challenge routing, and successful scoped unlocks", () => {
+  const appSurface = readFileSync("src/features/freed-app.tsx", "utf8");
+
+  assert.match(appSurface, /function FocusShieldSection/);
+  assert.match(appSurface, /FOCUS_SHIELD_PRESETS/);
+  assert.match(appSurface, /startFocusShieldCalibration/);
+  assert.match(appSurface, /cancelFocusShieldCalibration/);
+  assert.match(appSurface, /getFocusShieldCalibration/);
+  assert.match(appSurface, /configureFocusShieldRule/);
+  assert.match(appSurface, /listFocusShieldRules/);
+  assert.match(appSurface, /removeFocusShieldRule/);
+  assert.equal((appSurface.match(/<FocusShieldSection/g) ?? []).length >= 2, true);
+  assert.match(appSurface, /consumePendingInterventionOnce/);
+  assert.match(appSurface, /shouldBypassRewardedAdForAttempt\(activeAttempt\)/);
+  assert.match(appSurface, /getProtectionChallengeCompletionDecision\(activeAttempt, outcome\)/);
+  assert.match(appSurface, /completionDecision\.grantEarnedUnlock/);
+  assert.match(appSurface, /completionDecision\.applyFocusShieldScope/);
+});
+
 test("Focus Shield sanitizes rules without persisting accessibility content", () => {
   const rule = sanitizeFocusShieldRule({
     version: 1,
@@ -5862,6 +6020,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   const doomscrollApps = readFileSync("src/lib/doomscroll-apps.ts", "utf8");
   const recoveryStateSource = readFileSync("src/lib/recovery-state.ts", "utf8");
   const nativeIntervention = readFileSync("src/lib/native-intervention.ts", "utf8");
+  const protectionCoordination = readFileSync("src/lib/protection-capabilities.ts", "utf8");
   const androidEvidenceHelper = readFileSync("scripts/android-real-browser-evidence.js", "utf8");
   const androidDoomscrollScriptContract = readFileSync("scripts/lib/android-doomscroll-contract.js", "utf8");
   const iosEvidenceHelper = readFileSync("scripts/ios-physical-device-evidence.js", "utf8");
@@ -6583,7 +6742,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(shieldActionExtension, /screen-time-shield\.freed\.local/);
   assert.match(shieldConfigurationExtension, /selected app or site/);
   assert.doesNotMatch(shieldConfigurationExtension, /adult-content intent before the page loaded/);
-  assert.match(appSurface, /createNativeInterventionAttempt/);
+  assert.match(protectionCoordination, /createNativeInterventionAttempt/);
   assert.match(appSurface, /function interventionBodyForAttempt/);
   assert.match(appSurface, /selected app or short-form loop/);
   assert.match(appSurface, /explicit search before it could turn into a scroll loop/);
@@ -7100,8 +7259,9 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /sendGatedAnalyticsPayload\(recoveryState, recoveryState\.analyticsSharing\)/);
   assert.match(appSurface, /updateAnalyticsSharingSettings/);
   assert.match(appSurface, /Only aggregate counts and rates are sent after consent/);
-  assert.match(appSurface, /isFreshPendingIntervention\(pending\)/);
-  assert.match(appSurface, /createNativeInterventionAttempt\(pending\)/);
+  assert.match(appSurface, /consumePendingInterventionOnce/);
+  assert.match(protectionCoordination, /isFreshPendingIntervention\(pending, nowMs\)/);
+  assert.match(protectionCoordination, /createNativeInterventionAttempt\(pending\)/);
   assert.doesNotMatch(appSurface, /handleAttempt\(pending\.url, "browser"\)/);
   assert.match(extensionScript, /APP_GROUP = "group\.app\.freed\.recovery"/);
   assert.match(extensionScript, /"DeviceActivity", "ManagedSettings", "FamilyControls"/);
@@ -23205,6 +23365,60 @@ test("server AI provider rejects placeholder keys and model ids at runtime", () 
 });
 
 async function runAsyncTests() {
+  await asyncTest("pending native protection interventions are claimed and cleared exactly once", async () => {
+    const protection = require("../src/lib/protection-capabilities") as {
+      createPendingInterventionTracker: () => unknown;
+      consumePendingInterventionOnce: (input: {
+        tracker: unknown;
+        getPending: () => Promise<Record<string, unknown> | null>;
+        clearPending: () => Promise<boolean>;
+        nowMs: number;
+      }) => Promise<BlockingAttempt | null>;
+    };
+    assert.equal(typeof protection.createPendingInterventionTracker, "function");
+    assert.equal(typeof protection.consumePendingInterventionOnce, "function");
+    const nowMs = Date.now();
+    const pending = {
+      url: "https://selected-app.app.freed.local",
+      host: "selected-app.app.freed.local",
+      sourcePackage: "com.google.android.youtube",
+      reason: "Selected surface reached",
+      matchedRule: "focus-shield:focus-rule-ui-a7f9",
+      detectedAt: new Date(nowMs).toISOString(),
+      scope: {
+        kind: "android-surface",
+        ruleId: "focus-rule-ui-a7f9",
+        packageName: "com.google.android.youtube"
+      }
+    };
+    const tracker = protection.createPendingInterventionTracker();
+    let reads = 0;
+    let clears = 0;
+    const consume = () =>
+      protection.consumePendingInterventionOnce({
+        tracker,
+        getPending: async () => {
+          reads += 1;
+          await Promise.resolve();
+          return pending;
+        },
+        clearPending: async () => {
+          clears += 1;
+          return true;
+        },
+        nowMs
+      });
+
+    const [first, concurrent, repeated] = await Promise.all([consume(), consume(), consume()]);
+    assert.equal(reads, 1);
+    assert.equal(clears, 1);
+    assert.equal([first, concurrent, repeated].filter(Boolean).length, 1);
+
+    const duplicate = await consume();
+    assert.equal(duplicate, null);
+    assert.equal(clears, 1);
+  });
+
   await asyncTest("adult domain feed ingestion normalizes reviewed sources and rejects normal domains", async () => {
     const sourceConfig = [
       "oisd-nsfw|OISD NSFW|https://feeds.freedrecovery.app/oisd-nsfw.txt",
