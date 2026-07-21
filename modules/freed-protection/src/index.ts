@@ -556,7 +556,13 @@ export async function runActivationDiagnostics(
 export async function getPendingIntervention() {
   const module = getNativeModule();
   if (!module?.getPendingIntervention) return null;
-  return module.getPendingIntervention();
+  const pending = await module.getPendingIntervention();
+  if (!pending) return null;
+  const scope = sanitizeFocusShieldInterventionScope(pending.scope);
+  return {
+    ...pending,
+    ...(scope ? { scope } : { scope: undefined })
+  };
 }
 
 export async function clearPendingIntervention() {

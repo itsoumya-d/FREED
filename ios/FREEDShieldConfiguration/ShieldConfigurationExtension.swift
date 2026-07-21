@@ -8,11 +8,6 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     color: .white
   )
 
-  private let subtitle = ShieldConfiguration.Label(
-    text: "FREED paused this selected app or site. Take one recovery action now.",
-    color: UIColor(white: 1, alpha: 0.78)
-  )
-
   private let primary = ShieldConfiguration.Label(
     text: "Start recovery",
     color: .white
@@ -23,8 +18,15 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     color: UIColor(white: 1, alpha: 0.72)
   )
 
-  private func recoveryShield() -> ShieldConfiguration {
-    ShieldConfiguration(
+  private func recoveryShield(categoryWide: Bool = false) -> ShieldConfiguration {
+    let subtitle = ShieldConfiguration.Label(
+      text: categoryWide
+        ? "Category-wide recovery: completing a challenge unlocks this selected category only."
+        : "FREED paused this selected app or site. Completing a challenge unlocks only this target.",
+      color: UIColor(white: 1, alpha: 0.78)
+    )
+
+    return ShieldConfiguration(
       backgroundBlurStyle: .systemMaterialDark,
       backgroundColor: UIColor(red: 0.07, green: 0.06, blue: 0.12, alpha: 1),
       title: title,
@@ -40,7 +42,7 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
   }
 
   override func configuration(shielding application: Application, in category: ActivityCategory) -> ShieldConfiguration {
-    recoveryShield()
+    recoveryShield(categoryWide: true)
   }
 
   override func configuration(shielding webDomain: WebDomain) -> ShieldConfiguration {
@@ -48,6 +50,6 @@ final class ShieldConfigurationExtension: ShieldConfigurationDataSource {
   }
 
   override func configuration(shielding webDomain: WebDomain, in category: ActivityCategory) -> ShieldConfiguration {
-    recoveryShield()
+    recoveryShield(categoryWide: true)
   }
 }

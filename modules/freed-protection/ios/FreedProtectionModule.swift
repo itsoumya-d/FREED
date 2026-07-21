@@ -25,15 +25,28 @@ import DeviceActivity
 import ManagedSettings
 #endif
 
-#if canImport(NetworkExtension)
-import NetworkExtension
-#endif
-
 #if canImport(SafariServices)
 import SafariServices
 #endif
 
 public class FreedProtectionModule: Module {
+  private struct InterventionScope: Codable {
+    let kind: String
+    let tokenType: String?
+    let token: String?
+    let domain: String?
+  }
+
+  private struct PendingInterventionRecord: Codable {
+    let id: String
+    let host: String
+    let sourcePackage: String
+    let reason: String
+    let matchedRule: String
+    let detectedAt: String
+    let scope: InterventionScope?
+  }
+
   #if canImport(ManagedSettings)
   private let store = ManagedSettingsStore()
   #endif
@@ -53,18 +66,15 @@ public class FreedProtectionModule: Module {
   private let selectionAppCountKey = "freed.selection.appCount"
   private let selectionCategoryCountKey = "freed.selection.categoryCount"
   private let selectionWebDomainCountKey = "freed.selection.webDomainCount"
-  private let pendingInterventionUrlKey = "freed.pendingIntervention.url"
-  private let pendingInterventionHostKey = "freed.pendingIntervention.host"
-  private let pendingInterventionSourceKey = "freed.pendingIntervention.source"
-  private let pendingInterventionReasonKey = "freed.pendingIntervention.reason"
-  private let pendingInterventionRuleKey = "freed.pendingIntervention.rule"
-  private let pendingInterventionDetectedAtKey = "freed.pendingIntervention.detectedAt"
+  private let pendingInterventionRecordKey = "freed.pendingIntervention.record"
+  private let pendingEarnedUnlockScopeKey = "freed.pendingIntervention.unlockScope"
   private let pendingInterventionMaxAgeSeconds: TimeInterval = 10 * 60
   private let pendingInterventionFutureSkewSeconds: TimeInterval = 60
   private let screenTimeShieldHost = "screen-time-shield.freed.local"
   private let screenTimeShieldSource = "ios-screen-time"
   private let earnedUnlockExpiresAtKey = "freed.earnedUnlock.expiresAt"
   private let earnedUnlockSourceKey = "freed.earnedUnlock.source"
+  private let earnedUnlockScopeKey = "freed.earnedUnlock.scope"
   private let earnedUnlockActivityName = "freed.earnedUnlockWindow"
   private let safariContentBlockerIdentifier = "app.freed.recovery.safari-content-blocker"
   private let safariContentBlockerRulesFileName = "safari-content-blocker-rules.json"
@@ -77,10 +87,6 @@ public class FreedProtectionModule: Module {
   private let safariContentBlockerEnabledKey = "freed.safariContentBlocker.enabled"
   private let safariContentBlockerStateCheckedAtKey = "freed.safariContentBlocker.stateCheckedAt"
   private let safariContentBlockerStateErrorKey = "freed.safariContentBlocker.stateError"
-  private let dnsSettingsActiveKey = "freed.dnsSettings.active"
-  private let dnsSettingsProviderKey = "freed.dnsSettings.provider"
-  private let dnsSettingsMatchDomainCountKey = "freed.dnsSettings.matchDomainCount"
-  private let dnsSettingsLastErrorKey = "freed.dnsSettings.lastError"
 
   public func definition() -> ModuleDefinition {
     Name("FreedProtection")
@@ -91,14 +97,13 @@ public class FreedProtectionModule: Module {
         "screenTime": self.hasFamilyControls(),
         "managedSettings": self.hasManagedSettings(),
         "accessibility": false,
-        "dnsFiltering": self.hasDnsSettingsSupport(),
+        "dnsFiltering": false,
         "safariContentBlocker": self.hasSafariContentBlocker(),
         "localVpnFallback": false,
         "notes": [
           "Uses Apple FamilyControls authorization when entitlement is granted.",
           "Uses ManagedSettings web content policy for adult filtering.",
-          "Uses a Safari Content Blocker extension for synced adult-domain rules.",
-          "Optional NetworkExtension DNS settings require Apple's dns-settings entitlement, are matched-domain only, and never use a packet tunnel.",
+          "Uses Safari extensions with explicit host access for adult-domain and short-form web protection.",
           "Shield and DeviceActivity extensions must be added as app targets before App Store release."
         ]
       ]
@@ -106,7 +111,6 @@ public class FreedProtectionModule: Module {
 
     AsyncFunction("getStatus") { () async -> [String: Any] in
       self.refreshEarnedUnlockWindow()
-      await self.refreshDnsSettingsStatusIfAvailable()
       await self.refreshSafariContentBlockerStateIfAvailable()
       let authorized = self.isAuthorized()
       let filterActive = authorized && self.isAdultFilterActive()
@@ -139,7 +143,7 @@ public class FreedProtectionModule: Module {
           authorized: self.isAuthorized(),
           active: self.isAuthorized() && self.isAdultFilterActive(),
           scheduled: self.isRiskWindowMonitoringActive(),
-          message: "Safari Content Blocker rules synced with \(ruleCount) adult-domain and short-form web entries."
+          message: "Safari adult-domain blocker synced with \(ruleCount) entries. Short-form web paths are handled by Safari Focus Shield."
         )
       } catch {
         self.sharedDefaults().set(error.localizedDescription, forKey: self.safariContentBlockerLastReloadErrorKey)
@@ -150,101 +154,6 @@ public class FreedProtectionModule: Module {
           message: "Safari Content Blocker rules could not be synced: \(error.localizedDescription)"
         )
       }
-    }
-
-    AsyncFunction("configureDnsSettings") { (resolverURL: String, serverAddresses: [String], matchDomains: [String], providerLabel: String) async -> [String: Any] in
-      #if canImport(NetworkExtension)
-      if #available(iOS 14.0, *) {
-        do {
-          let input = try self.sanitizeDnsSettingsInput(
-            resolverURL: resolverURL,
-            serverAddresses: serverAddresses,
-            matchDomains: matchDomains,
-            providerLabel: providerLabel
-          )
-          let manager = NEDNSSettingsManager.shared()
-          try await self.loadDnsSettingsPreferences(manager)
-
-          let settings = NEDNSOverHTTPSSettings(servers: input.servers)
-          settings.serverURL = input.resolverURL
-          settings.matchDomains = input.matchDomains
-          settings.matchDomainsNoSearch = true
-
-          manager.localizedDescription = input.providerLabel
-          manager.dnsSettings = settings
-          try await self.saveDnsSettingsPreferences(manager)
-          try await self.loadDnsSettingsPreferences(manager)
-
-          let defaults = self.sharedDefaults()
-          defaults.set(manager.isEnabled, forKey: self.dnsSettingsActiveKey)
-          defaults.set(input.providerLabel, forKey: self.dnsSettingsProviderKey)
-          defaults.set(input.matchDomains.count, forKey: self.dnsSettingsMatchDomainCountKey)
-          defaults.removeObject(forKey: self.dnsSettingsLastErrorKey)
-
-          let dnsMessage = manager.isEnabled
-            ? "Matched-domain DNS-over-HTTPS settings are active for \(input.matchDomains.count) explicit domains. FREED does not use a full VPN on iOS."
-            : "Matched-domain DNS-over-HTTPS settings were saved for \(input.matchDomains.count) explicit domains. Enable the DNS profile in iOS Settings; FREED does not use a full VPN."
-
-          return self.statusPayload(
-            authorized: self.isAuthorized(),
-            active: self.isAuthorized() && self.isAdultFilterActive(),
-            scheduled: self.isRiskWindowMonitoringActive(),
-            message: dnsMessage
-          )
-        } catch {
-          self.sharedDefaults().set(error.localizedDescription, forKey: self.dnsSettingsLastErrorKey)
-          return self.statusPayload(
-            authorized: self.isAuthorized(),
-            active: self.isAuthorized() && self.isAdultFilterActive(),
-            scheduled: self.isRiskWindowMonitoringActive(),
-            message: "iOS DNS settings could not be configured: \(error.localizedDescription)"
-          )
-        }
-      }
-      #endif
-
-      return self.statusPayload(
-        authorized: self.isAuthorized(),
-        active: self.isAuthorized() && self.isAdultFilterActive(),
-        scheduled: self.isRiskWindowMonitoringActive(),
-        message: "NetworkExtension DNS settings require iOS 14+ and Apple's DNS Settings entitlement."
-      )
-    }
-
-    AsyncFunction("clearDnsSettings") { () async -> [String: Any] in
-      #if canImport(NetworkExtension)
-      if #available(iOS 14.0, *) {
-        do {
-          let manager = NEDNSSettingsManager.shared()
-          try await self.loadDnsSettingsPreferences(manager)
-          try await self.removeDnsSettingsPreferences(manager)
-
-          self.clearStoredDnsSettingsStatus()
-          return self.statusPayload(
-            authorized: self.isAuthorized(),
-            active: self.isAuthorized() && self.isAdultFilterActive(),
-            scheduled: self.isRiskWindowMonitoringActive(),
-            message: "iOS matched-domain DNS settings cleared. Screen Time and Safari protections are unchanged."
-          )
-        } catch {
-          self.sharedDefaults().set(error.localizedDescription, forKey: self.dnsSettingsLastErrorKey)
-          return self.statusPayload(
-            authorized: self.isAuthorized(),
-            active: self.isAuthorized() && self.isAdultFilterActive(),
-            scheduled: self.isRiskWindowMonitoringActive(),
-            message: "iOS DNS settings could not be cleared: \(error.localizedDescription)"
-          )
-        }
-      }
-      #endif
-
-      self.clearStoredDnsSettingsStatus()
-      return self.statusPayload(
-        authorized: self.isAuthorized(),
-        active: self.isAuthorized() && self.isAdultFilterActive(),
-        scheduled: self.isRiskWindowMonitoringActive(),
-        message: "NetworkExtension DNS settings are unavailable in this build."
-      )
     }
 
     AsyncFunction("requestAuthorization") { () async throws -> [String: Any] in
@@ -326,11 +235,27 @@ public class FreedProtectionModule: Module {
         )
       }
 
+      guard let unlockScope = self.pendingEarnedUnlockScope(), self.isSelectedScreenTimeScope(unlockScope) else {
+        self.clearEarnedUnlockState()
+        self.stopEarnedUnlockMonitoring()
+        self.applySelectedShieldsForCurrentState()
+        return self.statusPayload(
+          authorized: self.isAuthorized(),
+          active: self.isAuthorized() && self.isAdultFilterActive(),
+          scheduled: self.isRiskWindowMonitoringActive(),
+          message: "Screen Time unlock scope is unavailable. FREED shields remain active."
+        )
+      }
+
       let boundedExpiry = self.boundedEarnedUnlockExpiry(expiry, from: now)
       let boundedExpiresAt = self.formatIsoDate(boundedExpiry)
       self.sharedDefaults().set(boundedExpiresAt, forKey: self.earnedUnlockExpiresAtKey)
       self.sharedDefaults().set(self.screenTimeShieldHost, forKey: self.earnedUnlockSourceKey)
-      self.clearSelectedShields()
+      if let encodedScope = try? JSONEncoder().encode(unlockScope) {
+        self.sharedDefaults().set(encodedScope, forKey: self.earnedUnlockScopeKey)
+      }
+      self.sharedDefaults().removeObject(forKey: self.pendingEarnedUnlockScopeKey)
+      self.applySelectedShieldsExcludingEarnedUnlockScope(unlockScope)
       self.scheduleEarnedUnlockRelock(expiresAt: boundedExpiry)
       self.scheduleEarnedUnlockMonitoring(expiresAt: boundedExpiry)
 
@@ -338,7 +263,7 @@ public class FreedProtectionModule: Module {
         authorized: self.isAuthorized(),
         active: self.isAuthorized() && self.isAdultFilterActive(),
         scheduled: self.isRiskWindowMonitoringActive(),
-        message: "Selected app shields are paused for the Screen Time earned unlock. Adult web filtering stays active."
+        message: self.earnedUnlockMessage(for: unlockScope)
       )
     }
 
@@ -654,31 +579,42 @@ public class FreedProtectionModule: Module {
     }
 
     AsyncFunction("getPendingIntervention") { () -> [String: Any]? in
-      let defaults = self.sharedDefaults()
-      let pendingUrl = defaults.string(forKey: self.pendingInterventionUrlKey)
-      let pendingHost = defaults.string(forKey: self.pendingInterventionHostKey)
-      guard pendingUrl != nil || pendingHost != nil else {
+      guard let record = self.pendingInterventionRecord() else {
         return nil
       }
-      let detectedAt = defaults.string(forKey: self.pendingInterventionDetectedAtKey) ?? ""
 
-      guard self.isFreshPendingIntervention(detectedAt) else {
+      guard self.isFreshPendingIntervention(record.detectedAt) else {
         self.clearPendingInterventionDefaults()
         return nil
       }
 
-      let host = self.sanitizedPendingHost(pendingHost, pendingUrl)
-      return [
+      let host = self.sanitizedPendingHost(record.host)
+      var payload: [String: Any] = [
         "url": "https://\(host)",
         "host": host,
-        "sourcePackage": self.sanitizedPendingSourcePackage(defaults.string(forKey: self.pendingInterventionSourceKey)),
-        "reason": defaults.string(forKey: self.pendingInterventionReasonKey) ?? "Screen Time shield requested recovery support.",
-        "matchedRule": defaults.string(forKey: self.pendingInterventionRuleKey) ?? "ios-screen-time-shield",
-        "detectedAt": detectedAt
+        "sourcePackage": self.sanitizedPendingSourcePackage(record.sourcePackage),
+        "reason": record.reason,
+        "matchedRule": record.matchedRule,
+        "detectedAt": record.detectedAt
       ]
+      if let scopePayload = self.scopePayload(record.scope) {
+        payload["scope"] = scopePayload
+      }
+      return payload
     }
 
     AsyncFunction("clearPendingIntervention") { () -> Bool in
+      if
+        let record = self.pendingInterventionRecord(),
+        record.sourcePackage == self.screenTimeShieldSource,
+        let scope = record.scope,
+        scope.kind == "ios-token",
+        let encodedScope = try? JSONEncoder().encode(scope)
+      {
+        self.sharedDefaults().set(encodedScope, forKey: self.pendingEarnedUnlockScopeKey)
+      } else {
+        self.sharedDefaults().removeObject(forKey: self.pendingEarnedUnlockScopeKey)
+      }
       self.clearPendingInterventionDefaults()
 
       return true
@@ -709,210 +645,6 @@ public class FreedProtectionModule: Module {
     #else
     return false
     #endif
-  }
-
-  private func hasDnsSettingsSupport() -> Bool {
-    #if canImport(NetworkExtension)
-    if #available(iOS 14.0, *) {
-      return true
-    }
-    #endif
-    return false
-  }
-
-  private func hasDnsSettingsEntitlement() -> Bool {
-    #if canImport(NetworkExtension)
-    if #available(iOS 14.0, *) {
-      let defaults = sharedDefaults()
-      return defaults.bool(forKey: dnsSettingsActiveKey) || defaults.integer(forKey: dnsSettingsMatchDomainCountKey) > 0
-    }
-    #endif
-    return false
-  }
-
-  private func sanitizeDnsSettingsInput(
-    resolverURL: String,
-    serverAddresses: [String],
-    matchDomains: [String],
-    providerLabel: String
-  ) throws -> (resolverURL: URL, servers: [String], matchDomains: [String], providerLabel: String) {
-    let trimmedResolver = resolverURL.trimmingCharacters(in: .whitespacesAndNewlines)
-    guard
-      let parsedResolverURL = URL(string: trimmedResolver),
-      parsedResolverURL.scheme?.lowercased() == "https",
-      parsedResolverURL.host?.isEmpty == false,
-      parsedResolverURL.user == nil,
-      parsedResolverURL.password == nil,
-      parsedResolverURL.query == nil,
-      parsedResolverURL.fragment == nil
-    else {
-      throw makeFreedError("DNS-over-HTTPS resolver URL must be a valid HTTPS URL without credentials, query, or fragment.")
-    }
-
-    let sanitizedServers = serverAddresses
-      .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-      .filter { isAllowedDnsServerAddress($0) }
-    let uniqueServers = uniqueValues(sanitizedServers)
-    guard !uniqueServers.isEmpty else {
-      throw makeFreedError("At least one DNS server address is required for DNS-over-HTTPS settings.")
-    }
-
-    let sanitizedDomains = matchDomains
-      .map(normalizeDnsMatchDomain)
-      .filter(isAllowedDnsMatchDomain)
-    let uniqueDomains = uniqueValues(sanitizedDomains)
-    guard !uniqueDomains.isEmpty else {
-      throw makeFreedError("At least one explicit match domain is required; FREED will not install an all-traffic DNS profile.")
-    }
-    guard uniqueDomains.count <= 10_000 else {
-      throw makeFreedError("Matched-domain DNS settings are limited to 10,000 domains per sync.")
-    }
-
-    let label = providerLabel.trimmingCharacters(in: .whitespacesAndNewlines)
-    return (
-      resolverURL: parsedResolverURL,
-      servers: Array(uniqueServers.prefix(8)),
-      matchDomains: uniqueDomains,
-      providerLabel: label.isEmpty ? "FREED adult-domain DNS" : String(label.prefix(80))
-    )
-  }
-
-  private func normalizeDnsMatchDomain(_ value: String) -> String {
-    var domain = value.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-    if domain.hasPrefix("*.") {
-      domain.removeFirst(2)
-    }
-    while domain.hasPrefix(".") {
-      domain.removeFirst()
-    }
-    while domain.hasSuffix(".") {
-      domain.removeLast()
-    }
-    return domain
-  }
-
-  private func isAllowedDnsMatchDomain(_ domain: String) -> Bool {
-    guard
-      domain.contains("."),
-      !domain.isEmpty,
-      domain != "*",
-      domain != ".",
-      !domain.contains(":"),
-      !domain.contains("/"),
-      !domain.contains("*")
-    else {
-      return false
-    }
-
-    let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyz0123456789.-")
-    guard domain.unicodeScalars.allSatisfy({ allowedCharacters.contains($0) }) else {
-      return false
-    }
-
-    let parts = domain.split(separator: ".")
-    guard parts.count >= 2, parts.allSatisfy({ !$0.isEmpty }) else {
-      return false
-    }
-
-    let topLevelDomain = parts.last ?? ""
-    return topLevelDomain.count >= 2
-  }
-
-  private func isAllowedDnsServerAddress(_ server: String) -> Bool {
-    guard !server.isEmpty, !server.contains("/"), !server.contains(" "), !server.contains("\t") else {
-      return false
-    }
-
-    let allowedCharacters = CharacterSet(charactersIn: "0123456789abcdefABCDEF.:")
-    return server.unicodeScalars.allSatisfy { allowedCharacters.contains($0) }
-  }
-
-  private func uniqueValues(_ values: [String]) -> [String] {
-    var seen = Set<String>()
-    var unique: [String] = []
-    for value in values where !seen.contains(value) {
-      seen.insert(value)
-      unique.append(value)
-    }
-    return unique
-  }
-
-  #if canImport(NetworkExtension)
-  @available(iOS 14.0, *)
-  private func loadDnsSettingsPreferences(_ manager: NEDNSSettingsManager) async throws {
-    try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-      manager.loadFromPreferences { error in
-        if let error = error {
-          continuation.resume(throwing: error)
-        } else {
-          continuation.resume()
-        }
-      }
-    }
-  }
-
-  @available(iOS 14.0, *)
-  private func saveDnsSettingsPreferences(_ manager: NEDNSSettingsManager) async throws {
-    try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-      manager.saveToPreferences { error in
-        if let error = error {
-          continuation.resume(throwing: error)
-        } else {
-          continuation.resume()
-        }
-      }
-    }
-  }
-
-  @available(iOS 14.0, *)
-  private func removeDnsSettingsPreferences(_ manager: NEDNSSettingsManager) async throws {
-    try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-      manager.removeFromPreferences { error in
-        if let error = error {
-          continuation.resume(throwing: error)
-        } else {
-          continuation.resume()
-        }
-      }
-    }
-  }
-  #endif
-
-  private func refreshDnsSettingsStatusIfAvailable() async {
-    #if canImport(NetworkExtension)
-    if #available(iOS 14.0, *), hasDnsSettingsEntitlement() {
-      let manager = NEDNSSettingsManager.shared()
-      do {
-        try await loadDnsSettingsPreferences(manager)
-        let defaults = sharedDefaults()
-        defaults.set(manager.isEnabled && manager.dnsSettings != nil, forKey: dnsSettingsActiveKey)
-        if let provider = manager.localizedDescription, !provider.isEmpty {
-          defaults.set(provider, forKey: dnsSettingsProviderKey)
-        }
-        if let matchDomainCount = manager.dnsSettings?.matchDomains?.count, matchDomainCount > 0 {
-          defaults.set(matchDomainCount, forKey: dnsSettingsMatchDomainCountKey)
-        } else {
-          defaults.removeObject(forKey: dnsSettingsMatchDomainCountKey)
-        }
-        defaults.removeObject(forKey: dnsSettingsLastErrorKey)
-      } catch {
-        let defaults = sharedDefaults()
-        defaults.set(false, forKey: dnsSettingsActiveKey)
-        defaults.set(error.localizedDescription, forKey: dnsSettingsLastErrorKey)
-      }
-      return
-    }
-    #endif
-
-    sharedDefaults().set(false, forKey: dnsSettingsActiveKey)
-  }
-
-  private func clearStoredDnsSettingsStatus() {
-    let defaults = sharedDefaults()
-    defaults.set(false, forKey: dnsSettingsActiveKey)
-    defaults.removeObject(forKey: dnsSettingsProviderKey)
-    defaults.removeObject(forKey: dnsSettingsMatchDomainCountKey)
-    defaults.removeObject(forKey: dnsSettingsLastErrorKey)
   }
 
   private func isAuthorized() -> Bool {
@@ -1023,6 +755,8 @@ public class FreedProtectionModule: Module {
     let defaults = sharedDefaults()
     defaults.removeObject(forKey: earnedUnlockExpiresAtKey)
     defaults.removeObject(forKey: earnedUnlockSourceKey)
+    defaults.removeObject(forKey: earnedUnlockScopeKey)
+    defaults.removeObject(forKey: pendingEarnedUnlockScopeKey)
   }
 
   private func activeEarnedUnlockExpiresAt() -> String? {
@@ -1034,7 +768,7 @@ public class FreedProtectionModule: Module {
       return nil
     }
 
-    guard isScreenTimeUnlockSource(storedSource) else {
+    guard isScreenTimeUnlockSource(storedSource), let scope = activeEarnedUnlockScope(), isSelectedScreenTimeScope(scope) else {
       clearEarnedUnlockState()
       return nil
     }
@@ -1072,7 +806,9 @@ public class FreedProtectionModule: Module {
     }
 
     if isEarnedUnlockActive() {
-      clearSelectedShields()
+      if let scope = activeEarnedUnlockScope() {
+        applySelectedShieldsExcludingEarnedUnlockScope(scope)
+      }
       if let expiresAt = activeEarnedUnlockExpiresAt(), let expiry = parseIsoDate(expiresAt) {
         scheduleEarnedUnlockMonitoring(expiresAt: expiry)
       }
@@ -1168,6 +904,34 @@ public class FreedProtectionModule: Module {
     let now = Date()
     return detectedDate.timeIntervalSince(now) <= pendingInterventionFutureSkewSeconds &&
       now.timeIntervalSince(detectedDate) <= pendingInterventionMaxAgeSeconds
+  }
+
+  private func pendingInterventionRecord() -> PendingInterventionRecord? {
+    guard let data = sharedDefaults().data(forKey: pendingInterventionRecordKey) else {
+      return nil
+    }
+    return try? JSONDecoder().decode(PendingInterventionRecord.self, from: data)
+  }
+
+  private func scopePayload(_ scope: InterventionScope?) -> [String: Any]? {
+    guard let scope else { return nil }
+    if
+      scope.kind == "ios-token",
+      let tokenType = scope.tokenType,
+      ["application", "category", "domain"].contains(tokenType),
+      let token = scope.token,
+      token.count <= 8_192,
+      Data(base64Encoded: token) != nil
+    {
+      return ["kind": "ios-token", "tokenType": tokenType, "token": token]
+    }
+    if
+      scope.kind == "browser-domain",
+      let domain = sanitizeHostForStorage(scope.domain)
+    {
+      return ["kind": "browser-domain", "domain": domain]
+    }
+    return nil
   }
 
   private func sanitizedPendingHost(_ values: String?...) -> String {
@@ -1268,15 +1032,7 @@ public class FreedProtectionModule: Module {
   }
 
   private func clearPendingInterventionDefaults() {
-    let defaults = sharedDefaults()
-    [
-      pendingInterventionUrlKey,
-      pendingInterventionHostKey,
-      pendingInterventionSourceKey,
-      pendingInterventionReasonKey,
-      pendingInterventionRuleKey,
-      pendingInterventionDetectedAtKey
-    ].forEach { defaults.removeObject(forKey: $0) }
+    sharedDefaults().removeObject(forKey: pendingInterventionRecordKey)
   }
 
   private func selectedApplicationCount() -> Int {
@@ -1343,7 +1099,9 @@ public class FreedProtectionModule: Module {
 
   private func applySelectedShieldsForCurrentState() {
     if isEarnedUnlockActive() {
-      clearSelectedShields()
+      if let scope = activeEarnedUnlockScope() {
+        applySelectedShieldsExcludingEarnedUnlockScope(scope)
+      }
       return
     }
 
@@ -1359,7 +1117,9 @@ public class FreedProtectionModule: Module {
     #if canImport(ManagedSettings) && canImport(FamilyControls)
     if #available(iOS 15.0, *) {
       if isEarnedUnlockActive() {
-        clearSelectedShields()
+        if let scope = activeEarnedUnlockScope() {
+          applySelectedShieldsExcludingEarnedUnlockScope(scope)
+        }
         return
       }
 
@@ -1368,6 +1128,94 @@ public class FreedProtectionModule: Module {
       store.shield.applicationCategories = selection.categoryTokens.isEmpty ? nil : .specific(selection.categoryTokens)
       store.shield.webDomains = selection.webDomainTokens.isEmpty ? nil : selection.webDomainTokens
       store.shield.webDomainCategories = selection.categoryTokens.isEmpty ? nil : .specific(selection.categoryTokens)
+    }
+    #endif
+  }
+
+  private func pendingEarnedUnlockScope() -> InterventionScope? {
+    scopeStored(forKey: pendingEarnedUnlockScopeKey)
+  }
+
+  private func activeEarnedUnlockScope() -> InterventionScope? {
+    scopeStored(forKey: earnedUnlockScopeKey)
+  }
+
+  private func scopeStored(forKey key: String) -> InterventionScope? {
+    guard let data = sharedDefaults().data(forKey: key) else { return nil }
+    return try? JSONDecoder().decode(InterventionScope.self, from: data)
+  }
+
+  private func earnedUnlockMessage(for scope: InterventionScope) -> String {
+    switch scope.tokenType {
+    case "application":
+      return "Only the challenged Screen Time app is unlocked. Unrelated shields and adult web filtering stay active."
+    case "domain":
+      return "Only the challenged Screen Time web domain is unlocked. Unrelated shields and adult web filtering stay active."
+    case "category":
+      return "Category-wide recovery is active for the challenged category. Other categories, targets, and adult web filtering stay active."
+    default:
+      return "The challenged Screen Time target is unlocked. Unrelated shields and adult web filtering stay active."
+    }
+  }
+
+  private func isSelectedScreenTimeScope(_ scope: InterventionScope) -> Bool {
+    #if canImport(FamilyControls)
+    if #available(iOS 15.0, *) {
+      guard scope.kind == "ios-token", let tokenType = scope.tokenType, let token = decodedScopeTokenData(scope) else {
+        return false
+      }
+      let selection = loadFamilyActivitySelection()
+      switch tokenType {
+      case "application":
+        return (try? JSONDecoder().decode(ApplicationToken.self, from: token)).map(selection.applicationTokens.contains) ?? false
+      case "domain":
+        return (try? JSONDecoder().decode(WebDomainToken.self, from: token)).map(selection.webDomainTokens.contains) ?? false
+      case "category":
+        return (try? JSONDecoder().decode(ActivityCategoryToken.self, from: token)).map(selection.categoryTokens.contains) ?? false
+      default:
+        return false
+      }
+    }
+    #endif
+    return false
+  }
+
+  private func decodedScopeTokenData(_ scope: InterventionScope) -> Data? {
+    guard let encoded = scope.token, encoded.count <= 8_192 else { return nil }
+    return Data(base64Encoded: encoded)
+  }
+
+  private func applySelectedShieldsExcludingEarnedUnlockScope(_ scope: InterventionScope) {
+    #if canImport(ManagedSettings) && canImport(FamilyControls)
+    if #available(iOS 15.0, *) {
+      let selection = loadFamilyActivitySelection()
+      guard let tokenType = scope.tokenType, let tokenData = decodedScopeTokenData(scope) else {
+        applySelectedShieldsIfAvailable()
+        return
+      }
+
+      var remainingApplications = selection.applicationTokens
+      var remainingCategories = selection.categoryTokens
+      var remainingWebDomains = selection.webDomainTokens
+
+      switch tokenType {
+      case "application":
+        guard let token = try? JSONDecoder().decode(ApplicationToken.self, from: tokenData) else { return }
+        remainingApplications = selection.applicationTokens.subtracting([token])
+      case "domain":
+        guard let token = try? JSONDecoder().decode(WebDomainToken.self, from: tokenData) else { return }
+        remainingWebDomains = selection.webDomainTokens.subtracting([token])
+      case "category":
+        guard let token = try? JSONDecoder().decode(ActivityCategoryToken.self, from: tokenData) else { return }
+        remainingCategories = selection.categoryTokens.subtracting([token])
+      default:
+        return
+      }
+
+      store.shield.applications = remainingApplications.isEmpty ? nil : remainingApplications
+      store.shield.applicationCategories = remainingCategories.isEmpty ? nil : .specific(remainingCategories)
+      store.shield.webDomains = remainingWebDomains.isEmpty ? nil : remainingWebDomains
+      store.shield.webDomainCategories = remainingCategories.isEmpty ? nil : .specific(remainingCategories)
     }
     #endif
   }
@@ -1417,21 +1265,40 @@ public class FreedProtectionModule: Module {
       throw makeFreedError("Safari Content Blocker rules payload exceeds the 50,000 rule safety limit.")
     }
     try validateSafariContentBlockerRules(rules)
+    let adultBlockingRules = rules.filter { !isSafariFocusShieldRule($0) }
+    guard !adultBlockingRules.isEmpty else {
+      throw makeFreedError("Safari Content Blocker requires at least one adult-domain rule.")
+    }
+    let adultRuleData = try JSONSerialization.data(withJSONObject: adultBlockingRules)
     guard let rulesURL = safariContentBlockerRulesURL() else {
       throw makeFreedError("Shared app-group storage is unavailable for Safari Content Blocker rules.")
     }
 
     try FileManager.default.createDirectory(at: rulesURL.deletingLastPathComponent(), withIntermediateDirectories: true)
-    try data.write(to: rulesURL, options: .atomic)
+    try adultRuleData.write(to: rulesURL, options: .atomic)
 
     let defaults = sharedDefaults()
     defaults.set(version, forKey: safariContentBlockerVersionKey)
     defaults.set(checksum, forKey: safariContentBlockerChecksumKey)
     defaults.set(generatedAt, forKey: safariContentBlockerGeneratedAtKey)
-    defaults.set(rules.count, forKey: safariContentBlockerRuleCountKey)
+    defaults.set(adultBlockingRules.count, forKey: safariContentBlockerRuleCountKey)
     defaults.removeObject(forKey: safariContentBlockerLastReloadErrorKey)
 
-    return rules.count
+    return adultBlockingRules.count
+  }
+
+  private func isSafariFocusShieldRule(_ item: Any) -> Bool {
+    guard
+      let rule = item as? [String: Any],
+      let trigger = rule["trigger"] as? [String: Any],
+      let filter = trigger["url-filter"] as? String
+    else {
+      return false
+    }
+    return filter.contains("youtube\\.com/shorts") ||
+      filter.contains("youtube\\.com/feed/shorts") ||
+      filter.contains("instagram\\.com/reel") ||
+      filter.contains("tiktok\\.com/foryou")
   }
 
   private func validateSafariContentBlockerRules(_ rules: [Any]) throws {
@@ -1691,7 +1558,7 @@ public class FreedProtectionModule: Module {
     }
     if let activeUnlockExpiresAt = activeUnlockExpiresAt {
       payload["activeUnlockExpiresAt"] = activeUnlockExpiresAt
-      payload["selectedShieldsPausedForEarnedUnlock"] = selectedScreenTimeTokenCount > 0
+      payload["selectedShieldsPausedForEarnedUnlock"] = activeEarnedUnlockScope() != nil
     }
     if let version = sharedDefaults().string(forKey: safariContentBlockerVersionKey) {
       payload["safariContentBlockerVersion"] = version
@@ -1714,20 +1581,6 @@ public class FreedProtectionModule: Module {
     }
     if let reloadError = sharedDefaults().string(forKey: safariContentBlockerLastReloadErrorKey) {
       payload["safariContentBlockerLastReloadError"] = reloadError
-    }
-    let dnsSettingsEntitled = hasDnsSettingsEntitlement()
-    payload["dnsSettingsAvailable"] = hasDnsSettingsSupport()
-    payload["dnsSettingsEntitled"] = dnsSettingsEntitled
-    payload["dnsSettingsActive"] = dnsSettingsEntitled && sharedDefaults().bool(forKey: dnsSettingsActiveKey)
-    let dnsMatchDomainCount = sharedDefaults().integer(forKey: dnsSettingsMatchDomainCountKey)
-    if dnsMatchDomainCount > 0 {
-      payload["dnsSettingsMatchDomainCount"] = dnsMatchDomainCount
-    }
-    if let dnsProvider = sharedDefaults().string(forKey: dnsSettingsProviderKey) {
-      payload["dnsSettingsProvider"] = dnsProvider
-    }
-    if let dnsError = sharedDefaults().string(forKey: dnsSettingsLastErrorKey) {
-      payload["dnsSettingsLastError"] = dnsError
     }
     return payload
   }

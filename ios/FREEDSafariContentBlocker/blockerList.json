@@ -44,9 +44,5 @@
   {"trigger":{"url-filter":"^https?://([^/?#]+\\.)?xnxx\\.com([/:?#]|$)"},"action":{"type":"block"}},
   {"trigger":{"url-filter":"^https?://([^/?#]+\\.)?xvideos\\.com([/:?#]|$)"},"action":{"type":"block"}},
   {"trigger":{"url-filter":"^https?://([^/?#]+\\.)?youjizz\\.com([/:?#]|$)"},"action":{"type":"block"}},
-  {"trigger":{"url-filter":"^https?://([^/?#]+\\.)?youporn\\.com([/:?#]|$)"},"action":{"type":"block"}},
-  {"trigger":{"url-filter":"^https?://([^/?#]+\\.)?youtube\\.com/shorts([/?#]|$)"},"action":{"type":"block"}},
-  {"trigger":{"url-filter":"^https?://([^/?#]+\\.)?youtube\\.com/feed/shorts([/?#]|$)"},"action":{"type":"block"}},
-  {"trigger":{"url-filter":"^https?://([^/?#]+\\.)?instagram\\.com/reel(s)?([/?#]|/|$)"},"action":{"type":"block"}},
-  {"trigger":{"url-filter":"^https?://([^/?#]+\\.)?tiktok\\.com/foryou([/?#]|$)"},"action":{"type":"block"}}
+  {"trigger":{"url-filter":"^https?://([^/?#]+\\.)?youporn\\.com([/:?#]|$)"},"action":{"type":"block"}}
 ]

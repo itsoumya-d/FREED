@@ -23,6 +23,11 @@
 		883A9E2B1FA91AA7D84DBFD8 /* ManagedSettings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15DA9051384FA2A530336AA7 /* ManagedSettings.framework */; };
 		8BA09A485D1CE45BD94F7277 /* ManagedSettingsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 450386624240DADA77DC0F2B /* ManagedSettingsUI.framework */; };
 		8E116B3D2B26690D8B7E2BE3 /* libPods-FREED.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 27F01D9BBAB5CB7FB3B0D061 /* libPods-FREED.a */; };
+		A10000000000000000000001 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000007 /* SafariWebExtensionHandler.swift */; };
+		A10000000000000000000002 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000008 /* manifest.json */; };
+		A10000000000000000000003 /* content.js in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000009 /* content.js */; };
+		A10000000000000000000004 /* FREEDSafariFocusShield.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000C /* FREEDSafariFocusShield.appex */; };
+		A10000000000000000000005 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000D /* SafariServices.framework */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		CE3A184CB802003794F45342 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B4F9CBB589018066B2DDF4 /* ExpoModulesProvider.swift */; };
 		D52AEF69737DDF21851BEB6B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBE52B6045EB6271081B414B /* Foundation.framework */; };
@@ -49,6 +54,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8F48A47C7FDA9C5708E6D10F;
 			remoteInfo = FREEDDeviceActivityMonitor;
+		};
+		A10000000000000000000006 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A10000000000000000000010;
+			remoteInfo = FREEDSafariFocusShield;
 		};
 		A526178BC8F60F3309CCA7E2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -77,6 +89,7 @@
 				7A676BBC561F3A675A01C7BE /* FREEDShieldAction.appex in Embed App Extensions */,
 				272EAA28243016501E05C581 /* FREEDDeviceActivityMonitor.appex in Embed App Extensions */,
 				043D0EBF55BC15E9192C61FE /* FREEDSafariContentBlocker.appex in Embed App Extensions */,
+				A10000000000000000000004 /* FREEDSafariFocusShield.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -109,6 +122,13 @@
 		8EF02C640481608C700BEDDD /* DeviceActivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeviceActivity.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/DeviceActivity.framework; sourceTree = DEVELOPER_DIR; };
 		99483BEB3FD967B786A305F9 /* FREEDSafariContentBlocker.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = FREEDSafariContentBlocker.entitlements; sourceTree = "<group>"; };
 		9DB15521004E85B28F54C8DA /* FREEDShieldAction.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FREEDShieldAction.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000007 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		A10000000000000000000008 /* manifest.json */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
+		A10000000000000000000009 /* content.js */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.javascript; path = content.js; sourceTree = "<group>"; };
+		A1000000000000000000000A /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1000000000000000000000B /* FREEDSafariFocusShield.entitlements */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.entitlements; path = FREEDSafariFocusShield.entitlements; sourceTree = "<group>"; };
+		A1000000000000000000000C /* FREEDSafariFocusShield.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FREEDSafariFocusShield.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1000000000000000000000D /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = FREED/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
 		CBE52B6045EB6271081B414B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -147,6 +167,14 @@
 				FB37D22755995AAFCBDA8655 /* DeviceActivity.framework in Frameworks */,
 				883A9E2B1FA91AA7D84DBFD8 /* ManagedSettings.framework in Frameworks */,
 				12BED70A13F4B526C2C1A65D /* FamilyControls.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A1000000000000000000000E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000005 /* SafariServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,6 +248,7 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
+				A1000000000000000000000D /* SafariServices.framework */,
 				27F01D9BBAB5CB7FB3B0D061 /* libPods-FREED.a */,
 				0FD320ECFBFD375C0D4252DD /* iOS */,
 			);
@@ -267,6 +296,7 @@
 				625E30043302AB3F62AF098B /* FREEDShieldAction */,
 				951FCEA48075686406A6BA9A /* FREEDDeviceActivityMonitor */,
 				EDAC101E06A7823F401A4FE6 /* FREEDSafariContentBlocker */,
+				A1000000000000000000000F /* FREEDSafariFocusShield */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -281,6 +311,7 @@
 				9DB15521004E85B28F54C8DA /* FREEDShieldAction.appex */,
 				1C9BFC7A60DEAEF0C82141AC /* FREEDDeviceActivityMonitor.appex */,
 				2943985037EF00215AAC4718 /* FREEDSafariContentBlocker.appex */,
+				A1000000000000000000000C /* FREEDSafariFocusShield.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -294,6 +325,19 @@
 			);
 			name = FREEDDeviceActivityMonitor;
 			path = FREEDDeviceActivityMonitor;
+			sourceTree = "<group>";
+		};
+		A1000000000000000000000F /* FREEDSafariFocusShield */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000007 /* SafariWebExtensionHandler.swift */,
+				A10000000000000000000008 /* manifest.json */,
+				A10000000000000000000009 /* content.js */,
+				A1000000000000000000000A /* Info.plist */,
+				A1000000000000000000000B /* FREEDSafariFocusShield.entitlements */,
+			);
+			name = FREEDSafariFocusShield;
+			path = FREEDSafariFocusShield;
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -350,6 +394,7 @@
 				F8C72DDF85798E3129F00F48 /* PBXTargetDependency */,
 				2ECD8189C2A028A6E1D4BF18 /* PBXTargetDependency */,
 				6A0F15C9E9DB3142F75D9A17 /* PBXTargetDependency */,
+				A10000000000000000000013 /* PBXTargetDependency */,
 			);
 			name = FREED;
 			productName = FREED;
@@ -407,6 +452,23 @@
 			productReference = 1C9BFC7A60DEAEF0C82141AC /* FREEDDeviceActivityMonitor.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		A10000000000000000000010 /* FREEDSafariFocusShield */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10000000000000000000016 /* Build configuration list for PBXNativeTarget "FREEDSafariFocusShield" */;
+			buildPhases = (
+				A10000000000000000000012 /* Sources */,
+				A1000000000000000000000E /* Frameworks */,
+				A10000000000000000000011 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FREEDSafariFocusShield;
+			productName = FREEDSafariFocusShield;
+			productReference = A1000000000000000000000C /* FREEDSafariFocusShield.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		A3307B62882D554815D49C0D /* FREEDShieldConfiguration */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5EFFA9C6E6469F29E472C893 /* Build configuration list for PBXNativeTarget "FREEDShieldConfiguration" */;
@@ -455,6 +517,7 @@
 				1DC8F0F42174FDDD57D9900E /* FREEDShieldAction */,
 				8F48A47C7FDA9C5708E6D10F /* FREEDDeviceActivityMonitor */,
 				8B9AA8A8703E8488BFC0CF2C /* FREEDSafariContentBlocker */,
+				A10000000000000000000010 /* FREEDSafariFocusShield */,
 			);
 		};
 /* End PBXProject section */
@@ -489,6 +552,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A10000000000000000000011 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000002 /* manifest.json in Resources */,
+				A10000000000000000000003 /* content.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -683,6 +755,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A10000000000000000000012 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000001 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C64C3779DE59485D69E5596F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -711,6 +791,12 @@
 			name = FREEDSafariContentBlocker;
 			target = 8B9AA8A8703E8488BFC0CF2C /* FREEDSafariContentBlocker */;
 			targetProxy = F5F3C3BC2E292121B6032D15 /* PBXContainerItemProxy */;
+		};
+		A10000000000000000000013 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = FREEDSafariFocusShield;
+			target = A10000000000000000000010 /* FREEDSafariFocusShield */;
+			targetProxy = A10000000000000000000006 /* PBXContainerItemProxy */;
 		};
 		F8C72DDF85798E3129F00F48 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1028,6 +1114,51 @@
 			};
 			name = Release;
 		};
+		A10000000000000000000014 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = FREEDSafariFocusShield/FREEDSafariFocusShield.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FREEDSafariFocusShield/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.freed.recovery.safari-focus-shield";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A10000000000000000000015 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = FREEDSafariFocusShield/FREEDSafariFocusShield.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(DEVELOPMENT_TEAM)";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = FREEDSafariFocusShield/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
+				PRODUCT_BUNDLE_IDENTIFIER = "app.freed.recovery.safari-focus-shield";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		B7081444C198D2B38E80D749 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1065,6 +1196,7 @@
 				INFOPLIST_FILE = FREEDSafariContentBlocker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				MARKETING_VERSION = 1.0.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "app.freed.recovery.safari-content-blocker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1088,6 +1220,7 @@
 				INFOPLIST_FILE = FREEDSafariContentBlocker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				MARKETING_VERSION = 1.0.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "app.freed.recovery.safari-content-blocker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1150,6 +1283,15 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10000000000000000000016 /* Build configuration list for PBXNativeTarget "FREEDSafariFocusShield" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000000000000000000015 /* Release */,
+				A10000000000000000000014 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

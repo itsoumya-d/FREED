@@ -2196,7 +2196,7 @@ test("adult domain feed emits Safari content blocker rules and catches unsafe fe
   assert.equal(readiness.ready, true);
   assert.equal(readiness.domainCount, ADULT_DOMAIN_SEEDS.length);
   assert.equal(rules.length, ADULT_DOMAIN_SEEDS.length + SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length);
-  assert.deepEqual(bundledSafariRules, rules);
+  assert.deepEqual(bundledSafariRules, rules.slice(0, ADULT_DOMAIN_SEEDS.length));
   assert.equal(shortFormWebContract.DEFAULT_SHORT_FORM_WEB_URL, DEFAULT_SHORT_FORM_WEB_URL);
   assert.deepEqual(shortFormWebContract.SAFARI_SHORT_FORM_WEB_RULE_FILTERS, SAFARI_SHORT_FORM_WEB_RULE_FILTERS);
   assert.equal(shortFormWebContract.isShortFormWebUrl(DEFAULT_SHORT_FORM_WEB_URL), true);
@@ -6469,7 +6469,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosModule, /"selectedApplications": selectedApplicationCountValue/);
   assert.match(iosModule, /"selectedScreenTimeTokenCount": selectedScreenTimeTokenCount/);
   assert.match(iosModule, /"adultFilterStaysActiveDuringEarnedUnlock": activeUnlockExpiresAt != nil && active/);
-  assert.match(iosModule, /payload\["selectedShieldsPausedForEarnedUnlock"\] = selectedScreenTimeTokenCount > 0/);
+  assert.match(iosModule, /payload\["selectedShieldsPausedForEarnedUnlock"\] = activeEarnedUnlockScope\(\) != nil/);
   assert.match(iosModule, /earnedUnlockActivityName = "freed\.earnedUnlockWindow"/);
   assert.match(iosModule, /"earnedUnlockActivityName": earnedUnlockActivityName/);
   assert.match(iosModule, /scheduleEarnedUnlockMonitoring\(expiresAt: boundedExpiry\)/);
@@ -6482,14 +6482,14 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosModule, /store\.shield\.webDomains = .*selection\.webDomainTokens/);
   assert.match(iosModule, /AsyncFunction\("getPendingIntervention"/);
   assert.match(iosModule, /AsyncFunction\("clearPendingIntervention"/);
-  assert.match(iosModule, /pendingInterventionUrlKey/);
+  assert.match(iosModule, /pendingInterventionRecordKey/);
   assert.match(iosModule, /pendingInterventionMaxAgeSeconds/);
   assert.match(iosModule, /pendingInterventionFutureSkewSeconds/);
-  assert.match(iosModule, /isFreshPendingIntervention\(detectedAt\)/);
+  assert.match(iosModule, /isFreshPendingIntervention\(record\.detectedAt\)/);
   assert.match(iosModule, /sanitizedPendingHost/);
   assert.match(iosModule, /sanitizeHostForStorage/);
   assert.match(iosModule, /sanitizedPendingSourcePackage/);
-  assert.match(iosModule, /let host = self\.sanitizedPendingHost\(pendingHost, pendingUrl\)/);
+  assert.match(iosModule, /let host = self\.sanitizedPendingHost\(record\.host\)/);
   assert.ok(iosModule.includes('"url": "https://\\(host)"'));
   assert.match(iosModule, /"host": host/);
   assert.doesNotMatch(iosModule, /"url": url/);
@@ -6506,11 +6506,11 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosModule, /sanitizeHostForStorage\(trimmed\) == screenTimeShieldHost/);
   assert.match(iosModule, /set\(self\.screenTimeShieldHost, forKey: self\.earnedUnlockSourceKey\)/);
   assert.match(iosModule, /private func clearEarnedUnlockState\(\)/);
-  assert.match(iosModule, /guard isScreenTimeUnlockSource\(storedSource\) else/);
+  assert.match(iosModule, /guard isScreenTimeUnlockSource\(storedSource\), let scope = activeEarnedUnlockScope\(\), isSelectedScreenTimeScope\(scope\) else/);
   assert.match(iosModule, /defaults\.removeObject\(forKey: earnedUnlockSourceKey\)/);
   assert.match(iosModule, /source is not an iOS Screen Time shield/);
   assert.match(iosModule, /clearSelectedShields\(\)/);
-  assert.match(iosModule, /Screen Time earned unlock\. Adult web filtering stays active/);
+  assert.match(iosModule, /Unrelated shields and adult web filtering stay active/);
   assert.match(iosModule, /activeUnlockExpiresAt/);
   assert.match(iosModule, /maxEarnedUnlockMinutes = 120/);
   assert.match(iosModule, /boundedEarnedUnlockExpiry/);
@@ -6527,26 +6527,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosModule, /validateSafariContentBlockerRules/);
   assert.match(iosModule, /must use a block action/);
   assert.match(iosModule, /safari-content-blocker-rules\.json/);
-  assert.match(iosModule, /import NetworkExtension/);
-  assert.match(iosModule, /NEDNSSettingsManager/);
-  assert.match(iosModule, /NEDNSOverHTTPSSettings/);
-  assert.match(iosModule, /parsedResolverURL\.user == nil/);
-  assert.match(iosModule, /parsedResolverURL\.password == nil/);
-  assert.match(iosModule, /parsedResolverURL\.query == nil/);
-  assert.match(iosModule, /parsedResolverURL\.fragment == nil/);
-  assert.match(iosModule, /without credentials, query, or fragment/);
-  assert.match(iosModule, /settings\.matchDomains = input\.matchDomains/);
-  assert.match(iosModule, /settings\.matchDomainsNoSearch = true/);
-  assert.match(iosModule, /removeFromPreferences/);
-  assert.match(iosModule, /AsyncFunction\("configureDnsSettings"/);
-  assert.match(iosModule, /AsyncFunction\("clearDnsSettings"/);
-  assert.match(iosModule, /hasDnsSettingsEntitlement/);
-  assert.match(iosModule, /dns-settings/);
-  assert.match(iosModule, /At least one explicit match domain is required/);
-  assert.match(iosModule, /refreshDnsSettingsStatusIfAvailable/);
-  assert.match(iosModule, /payload\["dnsSettingsActive"\] = dnsSettingsEntitled &&/);
-  assert.match(iosModule, /payload\["dnsSettingsEntitled"\] = dnsSettingsEntitled/);
-  assert.doesNotMatch(iosModule, /manager\.isEnabled\s*=/);
+  assert.doesNotMatch(iosModule, /import NetworkExtension|NEDNSSettingsManager|NEDNSOverHTTPSSettings/);
   assert.doesNotMatch(iosModule, /NEPacketTunnelProvider|NETunnelProviderManager|NEVPNManager/);
   assert.match(iosInfoPlist, /NSCameraUsageDescription/);
   assert.doesNotMatch(iosInfoPlist, /NSMicrophoneUsageDescription|NSPhotoLibraryUsageDescription/);
@@ -6566,15 +6547,15 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   }
 
   const safariRules = JSON.parse(safariContentBlockerList) as Array<Record<string, unknown>>;
-  assert.equal(safariRules.length, ADULT_DOMAIN_SEEDS.length + SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length);
+  assert.equal(safariRules.length, ADULT_DOMAIN_SEEDS.length);
   assert.equal(
     safariRules.some((rule) =>
       JSON.stringify(rule).includes("pornhub\\\\.com")
     ),
     true
   );
-  assert.equal(safariContentBlockerList.includes("youtube\\\\.com/shorts"), true);
-  assert.equal(safariContentBlockerList.includes("instagram\\\\.com/reel"), true);
+  assert.equal(safariContentBlockerList.includes("youtube\\\\.com/shorts"), false);
+  assert.equal(safariContentBlockerList.includes("instagram\\\\.com/reel"), false);
   assert.match(iosProject, /FREEDSafariContentBlocker/);
   assert.match(iosProject, /blockerList\.json in Resources/);
   assert.match(safariContentBlockerInfo, /com\.apple\.Safari\.content-blocker/);
@@ -6604,7 +6585,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(deviceActivityExtension, /earnedUnlockSourceKey = "freed\.earnedUnlock\.source"/);
   assert.match(deviceActivityExtension, /screenTimeShieldHost = "screen-time-shield\.freed\.local"/);
   assert.match(deviceActivityExtension, /private func isScreenTimeUnlockSource\(_ source: String\?\) -> Bool/);
-  assert.match(deviceActivityExtension, /guard isScreenTimeUnlockSource\(storedSource\) else/);
+  assert.match(deviceActivityExtension, /guard isScreenTimeUnlockSource\(storedSource\), let scope = activeEarnedUnlockScope\(\), isSelectedScreenTimeScope\(scope\) else/);
   assert.match(deviceActivityExtension, /private func clearEarnedUnlockState\(\)/);
   assert.match(deviceActivityExtension, /store\.shield\.applications = .*selection\.applicationTokens/);
   assert.match(deviceActivityExtension, /store\.shield\.webDomains = .*selection\.webDomainTokens/);
@@ -7152,6 +7133,89 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(extensionScript, /FREEDSafariContentBlocker/);
   assert.match(extensionScript, /resources: \["blockerList\.json"\]/);
   assert.match(extensionScript, /family_controls: false/);
+});
+
+test("iOS shield handoff and Safari Focus Shield stay scoped and App Store safe", () => {
+  const shieldAction = readFileSync("ios/FREEDShieldAction/ShieldActionExtension.swift", "utf8");
+  const shieldConfiguration = readFileSync(
+    "ios/FREEDShieldConfiguration/ShieldConfigurationExtension.swift",
+    "utf8"
+  );
+  const deviceActivity = readFileSync(
+    "ios/FREEDDeviceActivityMonitor/DeviceActivityMonitorExtension.swift",
+    "utf8"
+  );
+  const iosModule = readFileSync("modules/freed-protection/ios/FreedProtectionModule.swift", "utf8");
+  const nativeBridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+  const iosProject = readFileSync("ios/FREED.xcodeproj/project.pbxproj", "utf8");
+  const appEntitlements = readFileSync("ios/FREED/FREED.entitlements", "utf8");
+  const safariExtensionDirectory = "ios/FREEDSafariFocusShield";
+
+  assert.equal(existsSync(`${safariExtensionDirectory}/manifest.json`), true);
+  assert.equal(existsSync(`${safariExtensionDirectory}/content.js`), true);
+  assert.equal(existsSync(`${safariExtensionDirectory}/SafariWebExtensionHandler.swift`), true);
+  assert.equal(existsSync(`${safariExtensionDirectory}/Info.plist`), true);
+
+  const safariManifest = readFileSync(`${safariExtensionDirectory}/manifest.json`, "utf8");
+  const safariContentScript = readFileSync(`${safariExtensionDirectory}/content.js`, "utf8");
+  const safariHandler = readFileSync(`${safariExtensionDirectory}/SafariWebExtensionHandler.swift`, "utf8");
+  const safariInfo = readFileSync(`${safariExtensionDirectory}/Info.plist`, "utf8");
+
+  assert.match(shieldAction, /pendingInterventionRecordKey = "freed\.pendingIntervention\.record"/);
+  assert.match(shieldAction, /JSONEncoder\(\)\.encode\(record\)/);
+  assert.match(shieldAction, /defaults\.set\(encodedRecord, forKey: pendingInterventionRecordKey\)/);
+  assert.match(shieldAction, /scopeForApplication|scopeForWebDomain|scopeForCategory/);
+  assert.match(shieldAction, /UNUserNotificationCenter\.current\(\)\.add\(request\)/);
+  assert.match(shieldAction, /content\.userInfo = \["kind": "freed-pending-intervention"\]/);
+  assert.match(shieldAction, /case \.primaryButtonPressed:[\s\S]*return \.close/);
+  assert.doesNotMatch(shieldAction, /return \.defer/);
+  assert.doesNotMatch(shieldAction, /UIApplication\.shared|openURL|originalURL|rewarded|advert/i);
+
+  assert.match(shieldConfiguration, /Category-wide recovery/);
+  assert.match(iosModule, /PendingInterventionRecord/);
+  assert.match(iosModule, /payload\["scope"\] = scopePayload/);
+  assert.match(nativeBridge, /sanitizeFocusShieldInterventionScope\(pending\.scope\)/);
+  assert.match(iosModule, /applySelectedShieldsExcludingEarnedUnlockScope/);
+  assert.match(iosModule, /selection\.applicationTokens\.subtracting/);
+  assert.match(iosModule, /selection\.webDomainTokens\.subtracting/);
+  assert.match(iosModule, /applicationCategories = remainingCategories\.isEmpty \? nil : \.specific\(remainingCategories\)/);
+  assert.match(deviceActivity, /applySelectedShieldsExcludingEarnedUnlockScope/);
+  assert.match(deviceActivity, /selection\.applicationTokens\.subtracting/);
+  assert.match(deviceActivity, /selection\.webDomainTokens\.subtracting/);
+  assert.doesNotMatch(iosModule, /import NetworkExtension|NEDNSSettingsManager|NEDNSOverHTTPSSettings/);
+
+  const parsedManifest = JSON.parse(safariManifest) as {
+    permissions?: string[];
+    host_permissions?: string[];
+    content_scripts?: Array<{ matches?: string[]; js?: string[] }>;
+  };
+  const expectedHosts = [
+    "*://youtube.com/*",
+    "*://*.youtube.com/*",
+    "*://instagram.com/*",
+    "*://*.instagram.com/*",
+    "*://tiktok.com/*",
+    "*://*.tiktok.com/*",
+    "https://intervention.freed.app/*"
+  ];
+  assert.deepEqual(parsedManifest.permissions, ["nativeMessaging"]);
+  assert.deepEqual(parsedManifest.host_permissions?.sort(), [...expectedHosts].sort());
+  assert.deepEqual(parsedManifest.content_scripts?.[0]?.matches?.sort(), [...expectedHosts].sort());
+  assert.deepEqual(parsedManifest.content_scripts?.[0]?.js, ["content.js"]);
+  assert.doesNotMatch(safariManifest, /<all_urls>|\*:\/\/\*\/\*/);
+  assert.match(safariContentScript, /\/shorts\/|\/feed\/shorts|\/reels?\/|\/foryou/);
+  assert.match(safariContentScript, /history\.pushState|history\.replaceState|popstate|MutationObserver/);
+  assert.match(safariContentScript, /https:\/\/intervention\.freed\.app\/intervention/);
+  assert.match(safariContentScript, /source:\s*"ios-safari-short-form"/);
+  assert.doesNotMatch(safariContentScript, /originalUrl|originalURL|searchParams\.set\(["']url|[?&]url=/);
+  assert.match(safariHandler, /browser-domain/);
+  assert.match(safariHandler, /pendingInterventionRecordKey/);
+  assert.match(safariHandler, /JSONEncoder\(\)\.encode\(record\)/);
+  assert.doesNotMatch(safariHandler, /rewarded|advert|NetworkExtension|NEPacketTunnel/i);
+  assert.match(safariInfo, /com\.apple\.Safari\.web-extension/);
+  assert.match(iosProject, /FREEDSafariFocusShield/);
+  assert.match(iosProject, /FREEDSafariFocusShield\.appex in Embed App Extensions/);
+  assert.match(appEntitlements, /applinks:intervention\.freed\.app/);
 });
 
 test("premium plans expose stable product identifiers", () => {
