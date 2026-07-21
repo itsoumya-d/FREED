@@ -47,3 +47,18 @@ The post-review implementation closes four gaps without changing Android product
 - The stale iOS NetworkExtension DNS Settings contract was removed from the TypeScript bridge, feed sync, setup UI, env/preflight/verifier checks, release audits, and current policy/store documentation. Android DNS Guard capability and entry-point assertions remain in the source-contract suite, and `git diff --name-only` reports no Android production file changes.
 
 Review tests were written first. The new source contracts initially failed because `background.js`, MV3 background wiring, category `except:` policies, and DNS-retirement conditions were absent. During the subsequent full `npm run test:core` run, the review-specific Safari/exclusion and iOS-DNS-retirement tests passed, as did the updated release-env preflight test; the parent requested that the still-running suite be interrupted before completion, so this follow-up does not claim a fresh complete core-suite pass. No new full workspace build was started. Final handoff-only checks completed with `git diff --check` clean, no remaining active iOS DNS Settings method/env/check identifiers outside negative regression assertions, and no Android production paths in the diff.
+
+## Second review checkpoint
+
+The Content Blocker compiler and adult-feed sync now produce and count adult-domain rules only. Release/archive/package-proof code now models `FREEDSafariFocusShield.appex`, validates its MV3 manifest, scoped hosts, `background.js` service worker, content-to-background messaging boundary, native relay, app-group/data-protection entitlements, and Safari 15.4 minimum, while the regeneration script creates and embeds the same target/resources. The physical-device evidence contract was migrated from Content Blocker short-form fields toward Safari Focus Shield build/block fields and a dedicated `freed-ios-safari-focus-shield-report-v1` boundary.
+
+Verification completed before the parent-requested checkpoint:
+
+- Red phase: `npm run test:core` failed with `50 !== 46`, proving the new adult-domain-only Content Blocker assertion detected the four stale short-form rules.
+- `npm run typecheck` passed after the runtime/release changes.
+- Node syntax checks for the archive builder, release verifier, and iOS physical-device helper passed; Ruby syntax for the extension regeneration script passed.
+- `node scripts/ios-physical-device-evidence.js --self-test` passed.
+- The archive self-test reached only a stale expected failure-count assertion (`8 !== 7`); that count was corrected, but the self-test was not rerun before this checkpoint.
+- Final `git diff --check` passed and no Android production path appears in the diff.
+
+The parent requested an immediate commit before the full core rerun or a final stale-current-claim sweep. Consequently this checkpoint does **not** claim a complete core-suite pass, a rerun archive self-test, or completion of every remaining historical/current iOS DNS wording cleanup.

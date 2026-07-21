@@ -48,6 +48,17 @@ EXTENSIONS = [
     frameworks: [],
     resources: ["blockerList.json"],
     family_controls: false
+  },
+  {
+    name: "FREEDSafariFocusShield",
+    bundle_id: "app.freed.recovery.safari-focus-shield",
+    source_dir: "FREEDSafariFocusShield",
+    swift_file: "SafariWebExtensionHandler.swift",
+    entitlements: "FREEDSafariFocusShield.entitlements",
+    frameworks: ["SafariServices"],
+    resources: ["manifest.json", "background.js", "content.js"],
+    family_controls: false,
+    deployment_target: "15.4"
   }
 ].freeze
 
@@ -81,7 +92,7 @@ EXTENSIONS.each do |extension|
   target = project.targets.find { |candidate| candidate.name == extension[:name] }
 
   unless target
-    target = project.new_target(:app_extension, extension[:name], :ios, "15.1")
+    target = project.new_target(:app_extension, extension[:name], :ios, extension.fetch(:deployment_target, "15.1"))
     products_group << target.product_reference unless products_group.children.include?(target.product_reference)
   end
 
@@ -94,7 +105,7 @@ EXTENSIONS.each do |extension|
     settings["DEVELOPMENT_TEAM"] = "$(DEVELOPMENT_TEAM)"
     settings["GENERATE_INFOPLIST_FILE"] = "NO"
     settings["INFOPLIST_FILE"] = "#{extension[:source_dir]}/Info.plist"
-    settings["IPHONEOS_DEPLOYMENT_TARGET"] = "15.1"
+    settings["IPHONEOS_DEPLOYMENT_TARGET"] = extension.fetch(:deployment_target, "15.1")
     settings["MARKETING_VERSION"] = "1.0.0"
     settings["PRODUCT_BUNDLE_IDENTIFIER"] = extension[:bundle_id]
     settings["PRODUCT_NAME"] = "$(TARGET_NAME)"

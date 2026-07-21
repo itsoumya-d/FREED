@@ -822,7 +822,7 @@ const checks = [
 	      iosPolicyPack.includes("No HealthKit history sync or export") &&
 	      iosPolicyPack.includes("No challenge media upload in the current local-first build") &&
       iosPolicyPack.includes("ios.familyControlsEntitlementArtifact") &&
-      iosPolicyPack.includes("ios.safariContentBlockerShortFormBlockRunId") &&
+      iosPolicyPack.includes("ios.safariFocusShieldShortFormBlockRunId") &&
       iosPolicyPack.includes("ios.safariShortFormChallengeHandoffSource=ios-safari-short-form") &&
       iosPolicyPack.includes("ios.safariShortFormChallengeHandoffRawPathStored=false") &&
       iosPolicyPack.includes("ios.safariShortFormChallengeHandoffNativeUnlockActive=false") &&

@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 
-import { SAFARI_SHORT_FORM_WEB_RULE_FILTERS } from "../src/lib/blocking-engine";
 import { formatEndpointIssues, getProductionEndpointIssues } from "../src/lib/endpoint-safety";
 import { fetchRemoteProviderResponse, readRemoteProviderJson } from "../src/lib/remote-provider-timeout";
 
@@ -481,7 +480,7 @@ function assertSafariContentBlockerBody(value: unknown, feedChecksum: string, fe
   const ingestion = asRecord(body.ingestion, "Safari content-blocker ingestion");
 
   assert.equal(body.checksum, feedChecksum);
-  assert.ok(rules.length >= feedDomainCount + SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length, "Safari content-blocker export must include adult domains and short-form web rules");
+  assert.ok(rules.length >= feedDomainCount, "Safari content-blocker export must include the adult-domain feed rules");
   assert.equal(typeof ingestion.rejectedNormalDomainCount, "number");
   assertSanitizedSourceReports(asArray(ingestion.sourceReports, "Safari source reports"));
   assertNoSecretEcho(body);

@@ -3,7 +3,6 @@ import {
   createAdultDomainFeed,
   getAdultDomainFeedReadiness,
   getEmbeddedAdultDomainFeed,
-  SAFARI_SHORT_FORM_WEB_RULE_FILTERS,
   type AdultDomainFeed,
   type AdultDomainFeedSource
 } from "@/lib/blocking-engine";
@@ -180,8 +179,8 @@ export function getConditionalAdultFeedChecksumForStatus(
     safariCanBePrimaryLayer ||
     !!safariChecksum ||
     safariRuleCount > 0;
-  const expectedSafariRuleCount = nativeDomainCount + SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length;
-  const minimumSafariRuleCount = SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length + 1;
+  const expectedSafariRuleCount = nativeDomainCount;
+  const minimumSafariRuleCount = 1;
   const safariLayerReady =
     !safariLayerExpected ||
     (!!safariChecksum &&

@@ -102,8 +102,7 @@ import {
   getAdultDomainFeedReadiness,
   getEmbeddedAdultDomainFeed,
   normalizeAdultDomainCandidate,
-  redactUrlForStorage,
-  SAFARI_SHORT_FORM_WEB_RULE_FILTERS
+  redactUrlForStorage
 } from "../src/lib/blocking-engine";
 import {
   buildCommunityMilestonePayload,
@@ -2194,28 +2193,22 @@ test("adult domain feed emits Safari content blocker rules and catches unsafe fe
 
   assert.equal(readiness.ready, true);
   assert.equal(readiness.domainCount, ADULT_DOMAIN_SEEDS.length);
-  assert.equal(rules.length, ADULT_DOMAIN_SEEDS.length + SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length);
-  assert.deepEqual(bundledSafariRules, rules.slice(0, ADULT_DOMAIN_SEEDS.length));
+  assert.equal(rules.length, ADULT_DOMAIN_SEEDS.length);
+  assert.deepEqual(bundledSafariRules, rules);
   assert.equal(shortFormWebContract.DEFAULT_SHORT_FORM_WEB_URL, DEFAULT_SHORT_FORM_WEB_URL);
-  assert.deepEqual(shortFormWebContract.SAFARI_SHORT_FORM_WEB_RULE_FILTERS, SAFARI_SHORT_FORM_WEB_RULE_FILTERS);
   assert.equal(shortFormWebContract.isShortFormWebUrl(DEFAULT_SHORT_FORM_WEB_URL), true);
   assert.equal(shortFormWebContract.isShortFormWebUrl("https://www.instagram.com/reels/"), true);
   assert.equal(shortFormWebContract.isShortFormWebUrl("https://m.tiktok.com/foryou/"), true);
   assert.equal(shortFormWebContract.isShortFormWebUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"), false);
   assert.equal(rules[0].action.type, "block");
   assert.match(JSON.stringify(rules), /url-filter/);
-  assert.ok(
-    SAFARI_SHORT_FORM_WEB_RULE_FILTERS.every((urlFilter) =>
-      rules.some((rule) => rule.trigger["url-filter"] === urlFilter)
-    )
-  );
-  assert.equal(JSON.stringify(rules).includes("youtube\\\\.com/shorts"), true);
-  assert.equal(JSON.stringify(rules).includes("instagram\\\\.com/reel"), true);
-  assert.equal(safariRuleMatches("https://m.youtube.com/shorts/dQw4w9WgXcQ?si=release"), true);
-  assert.equal(safariRuleMatches("https://www.youtube.com/feed/shorts"), true);
-  assert.equal(safariRuleMatches("https://www.instagram.com/reel/C123456789/"), true);
-  assert.equal(safariRuleMatches("https://www.instagram.com/reels/"), true);
-  assert.equal(safariRuleMatches("https://m.tiktok.com/foryou/"), true);
+  assert.equal(JSON.stringify(rules).includes("youtube\\\\.com/shorts"), false);
+  assert.equal(JSON.stringify(rules).includes("instagram\\\\.com/reel"), false);
+  assert.equal(safariRuleMatches("https://m.youtube.com/shorts/dQw4w9WgXcQ?si=release"), false);
+  assert.equal(safariRuleMatches("https://www.youtube.com/feed/shorts"), false);
+  assert.equal(safariRuleMatches("https://www.instagram.com/reel/C123456789/"), false);
+  assert.equal(safariRuleMatches("https://www.instagram.com/reels/"), false);
+  assert.equal(safariRuleMatches("https://m.tiktok.com/foryou/"), false);
   assert.equal(safariRuleMatches("https://www.youtube.com/watch?v=dQw4w9WgXcQ"), false);
   assert.equal(safariRuleMatches("https://www.instagram.com/freedrecovery/"), false);
   assert.equal(getAdultDomainFeedReadiness(unsafe).ready, false);
@@ -6019,7 +6012,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosPolicyPack, /No HealthKit history sync or export/);
   assert.match(iosPolicyPack, /ios\.familyControlsEntitlementArtifact/);
   assert.match(iosPolicyPack, /ios\.completeDataProtectionEntitlement=NSFileProtectionComplete/);
-  assert.match(iosPolicyPack, /ios\.safariContentBlockerShortFormBlockRunId/);
+  assert.match(iosPolicyPack, /ios\.safariFocusShieldShortFormBlockRunId/);
   assert.match(androidPolicyPack, /Play Console AccessibilityService declaration/);
   assert.match(androidPolicyPack, /not as a disability assistance feature/);
   assert.match(androidPolicyPack, /selected app packages/);
@@ -6945,11 +6938,9 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(doomscrollApps, /SHORT_FORM_RULE_HOSTS/);
   assert.match(doomscrollApps, /hostForShortFormRule/);
   assert.match(doomscrollApps, /packageForShortFormRule/);
-  assert.match(doomscrollApps, /SAFARI_SHORT_FORM_WEB_RULE_FILTERS/);
-  assert.match(blockingEngine, /from "@\/lib\/doomscroll-apps"/);
-  assert.doesNotMatch(blockingEngine, /export const SAFARI_SHORT_FORM_WEB_RULE_FILTERS = \[/);
+  assert.doesNotMatch(blockingEngine, /SAFARI_SHORT_FORM_WEB_RULE_FILTERS/);
+  assert.doesNotMatch(adultDomainFeedSync, /SAFARI_SHORT_FORM_WEB_RULE_FILTERS/);
   assert.match(shortFormWebScriptContract, /SHORT_FORM_WEB_SURFACES/);
-  assert.match(shortFormWebScriptContract, /SAFARI_SHORT_FORM_WEB_RULE_FILTERS/);
   assert.match(shortFormWebScriptContract, /isShortFormWebUrl/);
   assert.match(iosEvidenceHelper, /require\("\.\/lib\/short-form-web-contract"\)/);
   assert.match(iosEvidenceHelper, /isShortFormWebUrl/);
@@ -6957,6 +6948,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosEvidenceHelper, /challengePhotoVerifiedOnDevice/);
   assert.match(iosEvidenceHelper, /freed-ios-app-package-proof-v1/);
   assert.match(iosEvidenceHelper, /freed-ios-safari-content-blocker-report-v1/);
+  assert.match(iosEvidenceHelper, /freed-ios-safari-focus-shield-report-v1/);
   assert.match(iosEvidenceHelper, /freed-challenge-photo-report-v1/);
   assert.match(iosEvidenceHelper, /freed-challenge-motion-report-v1/);
   assert.match(iosEvidenceHelper, /freed-challenge-steps-report-v1/);
@@ -7116,6 +7108,9 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(extensionScript, /FREEDSafariContentBlocker/);
   assert.match(extensionScript, /resources: \["blockerList\.json"\]/);
   assert.match(extensionScript, /family_controls: false/);
+  assert.match(extensionScript, /name: "FREEDSafariFocusShield"/);
+  assert.match(extensionScript, /resources: \["manifest\.json", "background\.js", "content\.js"\]/);
+  assert.match(extensionScript, /deployment_target: "15\.4"/);
 });
 
 test("iOS shield handoff and Safari Focus Shield stay scoped and App Store safe", () => {
@@ -7256,6 +7251,37 @@ test("iOS DNS Settings retirement removes stale client and release contracts wit
   assert.match(androidModule, /"dnsFiltering" to true/);
   assert.match(androidModule, /AsyncFunction\("applyAdultContentFilter"/);
   assert.match(androidModule, /FreedVpnService\.startUserEnabledGuard\(context\)/);
+});
+
+test("iOS release and evidence contracts package Safari Focus Shield as the only short-form web path", () => {
+  const blockingEngine = readFileSync("src/lib/blocking-engine.ts", "utf8");
+  const adultDomainFeedSync = readFileSync("src/lib/adult-domain-feed-sync.ts", "utf8");
+  const archiveBuilder = readFileSync("scripts/build-ios-release-archive.js", "utf8");
+  const releaseVerifier = readFileSync("scripts/release-verify.js", "utf8");
+  const physicalEvidence = readFileSync("scripts/ios-physical-device-evidence.js", "utf8");
+  const validationEvidence = readFileSync("scripts/validation-evidence.ts", "utf8");
+  const extensionGenerator = readFileSync("scripts/add-ios-screen-time-extensions.rb", "utf8");
+
+  assert.doesNotMatch(blockingEngine, /SAFARI_SHORT_FORM_WEB_RULE_FILTERS/);
+  assert.doesNotMatch(adultDomainFeedSync, /SAFARI_SHORT_FORM_WEB_RULE_FILTERS/);
+  assert.match(archiveBuilder, /FREEDSafariFocusShield\.appex/);
+  assert.match(archiveBuilder, /inspectSafariFocusShieldResources/);
+  assert.match(archiveBuilder, /safariFocusShield\.usableForManualEvidence/);
+  assert.doesNotMatch(archiveBuilder, /shortFormRulesPresent/);
+  assert.match(releaseVerifier, /archive\.safariFocusShield\.usableForManualEvidence/);
+  assert.match(releaseVerifier, /FREEDSafariFocusShield\.appex/);
+  assert.doesNotMatch(releaseVerifier, /safariRuleList\.shortFormRulesPresent/);
+  assert.match(physicalEvidence, /FREEDSafariFocusShield\.appex/);
+  assert.match(physicalEvidence, /inspectSafariFocusShieldResources/);
+  assert.match(physicalEvidence, /freed-ios-safari-focus-shield-report-v1/);
+  assert.doesNotMatch(physicalEvidence, /shortFormRulesPresent/);
+  assert.match(validationEvidence, /FREEDSafariFocusShield\.appex/);
+  assert.match(validationEvidence, /safariFocusShieldEmbedded/);
+  assert.match(validationEvidence, /safariFocusShieldShortFormBlockArtifact/);
+  assert.doesNotMatch(validationEvidence, /safariContentBlockerShortFormBlock/);
+  assert.match(extensionGenerator, /name: "FREEDSafariFocusShield"/);
+  assert.match(extensionGenerator, /resources: \["manifest\.json", "background\.js", "content\.js"\]/);
+  assert.match(extensionGenerator, /deployment_target: "15\.4"/);
 });
 
 test("premium plans expose stable product identifiers", () => {
@@ -11318,9 +11344,9 @@ test("validation evidence scaffold writes drafts outside release evidence gate",
     assert.ok(iosRequirements.requiredChecks.includes("safariContentBlockerEnabled"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerEnabled=true"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerAdultBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/adult host and Safari adult-domain/no-packet-inspection checks"));
-    assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerShortFormBlockRunId"));
-    assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerShortFormBlockArtifact"));
-    assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerShortFormBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/short-form URL/rule and no raw path/no app-screen-inspection checks"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.safariFocusShieldShortFormBlockRunId"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.safariFocusShieldShortFormBlockArtifact"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.safariFocusShieldShortFormBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/short-form URL/rule and no raw path/no app-screen-inspection checks"));
     assert.ok(iosRequirements.requiredChecks.includes("safariShortFormChallengeHandoff"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariShortFormChallengeHandoffRunId"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariShortFormChallengeHandoffArtifact"));
@@ -12260,7 +12286,7 @@ test("validation evidence requirements expose field and command handoff details"
   assert.ok(ios.requiredChecks.includes("safariContentBlockerReloaded"));
   assert.ok(ios.requiredChecks.includes("safariContentBlockerEnabled"));
   assert.ok(ios.requiredChecks.includes("safariContentBlockerAdultBlock"));
-  assert.ok(ios.requiredChecks.includes("safariContentBlockerShortFormBlock"));
+  assert.ok(ios.requiredChecks.includes("safariFocusShieldShortFormBlock"));
   assert.ok(ios.requiredChecks.includes("safariShortFormChallengeHandoff"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerEmbedded=true"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerIdentifier=app.freed.recovery.safari-content-blocker"));
@@ -12277,10 +12303,10 @@ test("validation evidence requirements expose field and command handoff details"
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerAdultBlockRunId"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerAdultBlockArtifact"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerAdultBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/adult host and Safari adult-domain/no-packet-inspection checks"));
-  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerShortFormUrl"));
-  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerShortFormBlockRunId"));
-  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerShortFormBlockArtifact"));
-  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerShortFormBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/short-form URL/rule and no raw path/no app-screen-inspection checks"));
+  assert.ok(ios.requiredFields.includes("ios.safariFocusShieldShortFormUrl"));
+  assert.ok(ios.requiredFields.includes("ios.safariFocusShieldShortFormBlockRunId"));
+  assert.ok(ios.requiredFields.includes("ios.safariFocusShieldShortFormBlockArtifact"));
+  assert.ok(ios.requiredFields.includes("ios.safariFocusShieldShortFormBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/short-form URL/rule and no raw path/no app-screen-inspection checks"));
   assert.ok(ios.requiredFields.includes("ios.safariShortFormChallengeHandoffRunId"));
   assert.ok(ios.requiredFields.includes("ios.safariShortFormChallengeHandoffArtifact"));
   assert.ok(ios.requiredFields.includes("ios.safariShortFormChallengeHandoffSource=ios-safari-short-form"));
@@ -14260,11 +14286,11 @@ test("validation evidence promotion validates every draft before copying", () =>
             }
           }
         ),
-        safariContentBlockerShortFormUrl: "https://youtube.com/shorts/dQw4w9WgXcQ",
-        safariContentBlockerShortFormBlockRunId: "safari-content-blocker-short-form-block-release-run",
-        safariContentBlockerShortFormBlockArtifact: writeIosSafariContentBlockerArtifact(
-          "ios-safari-content-blocker-short-form-block-report.json",
-          "safari-content-blocker-short-form-block-release-run",
+        safariFocusShieldShortFormUrl: "https://youtube.com/shorts/dQw4w9WgXcQ",
+        safariFocusShieldShortFormBlockRunId: "safari-focus-shield-short-form-block-release-run",
+        safariFocusShieldShortFormBlockArtifact: writeIosSafariContentBlockerArtifact(
+          "ios-safari-focus-shield-short-form-block-report.json",
+          "safari-focus-shield-short-form-block-release-run",
           "short-form-block",
           {
             url: "https://youtube.com/shorts/dQw4w9WgXcQ",
@@ -15655,8 +15681,8 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
     }
   );
   writeIosSafariContentBlockerReport(
-    "ios-safari-content-blocker-short-form-block-report.json",
-    "safari-content-blocker-short-form-block-run",
+    "ios-safari-focus-shield-short-form-block-report.json",
+    "safari-focus-shield-short-form-block-run",
     "short-form-block",
     {
       url: "https://youtube.com/shorts/dQw4w9WgXcQ",
@@ -15954,9 +15980,9 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
     safariContentBlockerEnabled: true,
     safariContentBlockerAdultBlockRunId: "safari-content-blocker-adult-block-run",
     safariContentBlockerAdultBlockArtifact: "docs/validation/artifacts/ios-safari-content-blocker-adult-block-report.json",
-    safariContentBlockerShortFormUrl: "https://youtube.com/shorts/dQw4w9WgXcQ",
-    safariContentBlockerShortFormBlockRunId: "safari-content-blocker-short-form-block-run",
-    safariContentBlockerShortFormBlockArtifact: "docs/validation/artifacts/ios-safari-content-blocker-short-form-block-report.json",
+    safariFocusShieldShortFormUrl: "https://youtube.com/shorts/dQw4w9WgXcQ",
+    safariFocusShieldShortFormBlockRunId: "safari-focus-shield-short-form-block-run",
+    safariFocusShieldShortFormBlockArtifact: "docs/validation/artifacts/ios-safari-focus-shield-short-form-block-report.json",
     safariShortFormChallengeHandoffRunId: "safari-short-form-challenge-handoff-run",
     safariShortFormChallengeHandoffArtifact: "docs/validation/artifacts/ios-screen-time.mov",
     safariShortFormChallengeHandoffSource: "ios-safari-short-form",
@@ -16035,7 +16061,7 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
           safariContentBlockerReloaded: true,
           safariContentBlockerEnabled: true,
           safariContentBlockerAdultBlock: true,
-          safariContentBlockerShortFormBlock: true,
+          safariFocusShieldShortFormBlock: true,
           safariShortFormChallengeHandoff: true,
           selectedShieldTokens: true,
           selectedAppDailyLimitThreshold: true,
@@ -16319,8 +16345,8 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
     assert.equal(signedRemotePassing?.status, "pass");
 
     writeIosSafariContentBlockerReport(
-      "ios-safari-content-blocker-short-form-block-report.json",
-      "safari-content-blocker-short-form-block-run",
+      "ios-safari-focus-shield-short-form-block-report.json",
+      "safari-focus-shield-short-form-block-run",
       "short-form-block",
       {
         url: "https://m.tiktok.com/foryou/",
@@ -16334,7 +16360,7 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
     );
     writeIosEvidence(["docs/validation/artifacts/ios-screen-time.mov"], {
       ...validIosProof,
-      safariContentBlockerShortFormUrl: "https://m.tiktok.com/foryou/",
+      safariFocusShieldShortFormUrl: "https://m.tiktok.com/foryou/",
       safariShortFormChallengeHandoffMatchedRule: "short-form:tiktok-feed",
       safariShortFormChallengeHandoffHost: "m.tiktok.com"
     });
@@ -16343,8 +16369,8 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
     );
     assert.equal(alternateShortFormPassing?.status, "pass");
     writeIosSafariContentBlockerReport(
-      "ios-safari-content-blocker-short-form-block-report.json",
-      "safari-content-blocker-short-form-block-run",
+      "ios-safari-focus-shield-short-form-block-report.json",
+      "safari-focus-shield-short-form-block-run",
       "short-form-block",
       {
         url: "https://youtube.com/shorts/dQw4w9WgXcQ",
@@ -16359,7 +16385,7 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
 
     writeIosEvidence(["docs/validation/artifacts/ios-screen-time.mov"], {
       ...validIosProof,
-      safariContentBlockerShortFormUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      safariFocusShieldShortFormUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     });
     const shortFormUrlFailing = getValidationEvidenceResults(root).find(
       (result) => result.id === "ios-physical-device-validation"
@@ -16382,7 +16408,7 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
     );
     assert.equal(safariHandoffFailing?.status, "fail");
     assert.match(safariHandoffFailing?.evidence ?? "", /ios\.safariShortFormChallengeHandoffSource must be ios-safari-short-form/);
-    assert.match(safariHandoffFailing?.evidence ?? "", /ios\.safariShortFormChallengeHandoffMatchedRule must match ios\.safariContentBlockerShortFormUrl/);
+    assert.match(safariHandoffFailing?.evidence ?? "", /ios\.safariShortFormChallengeHandoffMatchedRule must match ios\.safariFocusShieldShortFormUrl/);
     assert.match(safariHandoffFailing?.evidence ?? "", /ios\.safariShortFormChallengeHandoffHost must be host-only/);
     assert.match(safariHandoffFailing?.evidence ?? "", /ios\.safariShortFormChallengeHandoffHost must match the short-form web host/);
     assert.match(safariHandoffFailing?.evidence ?? "", /ios\.safariShortFormChallengeHandoffRawPathStored must be false/);
@@ -16493,18 +16519,18 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
     );
     assert.match(safariContentBlockerFailing?.evidence ?? "", /ios\.safariContentBlockerBuildRunId/);
     assert.match(safariContentBlockerFailing?.evidence ?? "", /ios\.safariContentBlockerChecksum must use fnv1a32:<8-hex> format/);
-    assert.match(safariContentBlockerFailing?.evidence ?? "", /ios\.safariContentBlockerRuleCount > 4/);
+    assert.match(safariContentBlockerFailing?.evidence ?? "", /ios\.safariContentBlockerRuleCount >= 1/);
     assert.match(safariContentBlockerFailing?.evidence ?? "", /ios\.safariContentBlockerEnabled must be true/);
 
     writeIosEvidence(["docs/validation/artifacts/ios-screen-time.mov"], {
       ...validIosProof,
-      safariContentBlockerRuleCount: SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length
+      safariContentBlockerRuleCount: 0
     });
     const safariShortOnlyFailing = getValidationEvidenceResults(root).find(
       (result) => result.id === "ios-physical-device-validation"
     );
     assert.equal(safariShortOnlyFailing?.status, "fail");
-    assert.match(safariShortOnlyFailing?.evidence ?? "", /adult-domain rules plus short-form web rules/);
+    assert.match(safariShortOnlyFailing?.evidence ?? "", /adult-domain rules only/);
 
     writeIosEvidence(["docs/validation/artifacts/ios-screen-time.mov"], {
       ...validIosProof,
@@ -23401,7 +23427,7 @@ async function runAsyncTests() {
       assert.equal(JSON.stringify(result).includes("access_token=abc123"), false);
       assert.match(result.reason ?? "", /\[redacted-link\]|\[redacted-secret\]/);
       assert.equal(capturedInput?.feed.version, "feed-publication-test");
-      assert.equal(capturedInput?.safariRuleCount, ingested.feed.domains.length + SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length);
+      assert.equal(capturedInput?.safariRuleCount, ingested.feed.domains.length + 0);
       assert.match(publicationSource, /SUPABASE_ADULT_FEED_TABLE/);
       assert.match(publicationSource, /on_conflict=checksum/);
       assert.match(publicationSource, /resolution=merge-duplicates,return=minimal/);
@@ -24498,7 +24524,7 @@ async function runAsyncTests() {
           adultDomainFeedChecksum: checksum,
           adultDomainFeedDomainCount: 12,
           safariContentBlockerChecksum: checksum,
-          safariContentBlockerRuleCount: SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length + 12
+          safariContentBlockerRuleCount: 12
         },
         { platform: "ios", safariContentBlocker: true }
       ),
@@ -24514,7 +24540,7 @@ async function runAsyncTests() {
         },
         { platform: "ios", safariContentBlocker: true }
       ),
-      null
+      checksum
     );
     assert.equal(
       getConditionalAdultFeedChecksumForStatus(
@@ -24522,7 +24548,7 @@ async function runAsyncTests() {
           adultDomainFeedChecksum: checksum,
           adultDomainFeedDomainCount: 0,
           safariContentBlockerChecksum: checksum,
-          safariContentBlockerRuleCount: SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length + 12
+          safariContentBlockerRuleCount: 12
         },
         { platform: "ios", safariContentBlocker: true }
       ),
@@ -24534,7 +24560,7 @@ async function runAsyncTests() {
           adultDomainFeedChecksum: undefined,
           adultDomainFeedDomainCount: 0,
           safariContentBlockerChecksum: checksum,
-          safariContentBlockerRuleCount: SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length + 12
+          safariContentBlockerRuleCount: 12
         },
         { platform: "ios", safariContentBlocker: true }
       ),
@@ -24546,7 +24572,7 @@ async function runAsyncTests() {
           adultDomainFeedChecksum: undefined,
           adultDomainFeedDomainCount: 0,
           safariContentBlockerChecksum: checksum,
-          safariContentBlockerRuleCount: SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length
+          safariContentBlockerRuleCount: 0
         },
         { platform: "ios", safariContentBlocker: true }
       ),
@@ -24558,7 +24584,7 @@ async function runAsyncTests() {
           adultDomainFeedChecksum: undefined,
           adultDomainFeedDomainCount: 0,
           safariContentBlockerChecksum: checksum,
-          safariContentBlockerRuleCount: SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length + 12
+          safariContentBlockerRuleCount: 12
         },
         { platform: "android", safariContentBlocker: false }
       ),
@@ -24582,7 +24608,7 @@ async function runAsyncTests() {
           adultDomainFeedChecksum: checksum,
           adultDomainFeedDomainCount: 12,
           safariContentBlockerChecksum: "fnv1a32:ffffffff",
-          safariContentBlockerRuleCount: SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length + 12
+          safariContentBlockerRuleCount: 12
         },
         { platform: "ios", safariContentBlocker: true }
       ),

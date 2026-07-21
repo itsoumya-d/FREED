@@ -113,7 +113,7 @@ iOS physical-device evidence must include:
 - `ios.safariContentBlockerBuildRunId`
 - `ios.safariContentBlockerReloadRunId`
 - `ios.safariContentBlockerAdultBlockRunId`
-- `ios.safariContentBlockerShortFormBlockRunId`
+- `ios.safariFocusShieldShortFormBlockRunId`
 - `ios.safariShortFormChallengeHandoffSource=ios-safari-short-form`
 - `ios.safariShortFormChallengeHandoffRawPathStored=false`
 - `ios.safariShortFormChallengeHandoffNativeUnlockActive=false`

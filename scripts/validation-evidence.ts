@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { basename, isAbsolute, join, relative, resolve } from "node:path";
 
-import { classifyUrl, SAFARI_SHORT_FORM_WEB_RULE_FILTERS } from "../src/lib/blocking-engine";
+import { classifyUrl } from "../src/lib/blocking-engine";
 import { getCoachConfig } from "../src/lib/ai-coach";
 import { getChallengeGenerationConfig } from "../src/lib/challenge-generator";
 import { formatEndpointIssues, getProductionEndpointIssues } from "../src/lib/endpoint-safety";
@@ -45,7 +45,7 @@ export const validationEvidenceSpecs = JSON.parse(
   readFileSync(join(process.cwd(), "scripts/validation-evidence-specs.json"), "utf8")
 ) as EvidenceSpec[];
 
-const MIN_IOS_SAFARI_CONTENT_BLOCKER_RULE_COUNT = SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length + 1;
+const MIN_IOS_SAFARI_CONTENT_BLOCKER_RULE_COUNT = 1;
 const IOS_COMPLETE_DATA_PROTECTION_ENTITLEMENT = "NSFileProtectionComplete";
 const IOS_APP_PACKAGE_PROOF_SCHEMA_VERSION = "freed-ios-app-package-proof-v1";
 const IOS_APP_GROUP_ID = "group.app.freed.recovery";
@@ -53,20 +53,19 @@ const IOS_APP_PACKAGE_PROOF_ARTIFACT_FIELDS = [
   "familyControlsEntitlementArtifact",
   "appGroupProvisioningArtifact",
   "completeDataProtectionEntitlementArtifact",
-  "safariContentBlockerBuildArtifact"
+  "safariContentBlockerBuildArtifact",
+  "safariFocusShieldBuildArtifact"
 ];
 const IOS_APP_PACKAGE_REQUIRED_EXTENSIONS = [
   { bundleName: "FREEDShieldConfiguration.appex", requiresFamilyControls: true },
   { bundleName: "FREEDShieldAction.appex", requiresFamilyControls: true },
   { bundleName: "FREEDDeviceActivityMonitor.appex", requiresFamilyControls: true },
-  { bundleName: "FREEDSafariContentBlocker.appex", requiresFamilyControls: false, requiresSafariRuleList: true }
+  { bundleName: "FREEDSafariContentBlocker.appex", requiresFamilyControls: false, requiresSafariRuleList: true },
+  { bundleName: "FREEDSafariFocusShield.appex", requiresFamilyControls: false, requiresSafariFocusResources: true }
 ];
 const IOS_APP_PACKAGE_REQUIRED_SAFARI_RULE_SIGNALS = [
   "adult-domain-pornhub",
-  "adult-domain-xvideos",
-  "youtube-shorts-web",
-  "instagram-reels-web",
-  "tiktok-for-you-web"
+  "adult-domain-xvideos"
 ];
 const PERMISSION_WIZARD_FLOW_ORDER =
   "onboarding-goals>app-selection>paywall>protection-explanation>permission-setup>test-protection>activation-complete";
@@ -1541,11 +1540,11 @@ function safariShortFormUrlIssues(value: string, path: string): string[] {
   }
 
   const issues: string[] = [];
-  const coveredBySafariRule = SAFARI_SHORT_FORM_WEB_RULE_FILTERS.some((urlFilter) => new RegExp(urlFilter, "i").test(trimmed));
+  const coveredBySafariFocusShield = safariShortFormRuleForUrl(trimmed) !== null;
 
   if (parsed.protocol !== "https:") issues.push(`${path} must use HTTPS`);
-  if (!coveredBySafariRule) {
-    issues.push(`${path} must be a YouTube Shorts, Instagram Reels, or TikTok For You web URL covered by FREED's Safari content-blocker rules`);
+  if (!coveredBySafariFocusShield) {
+    issues.push(`${path} must be a YouTube Shorts, Instagram Reels, or TikTok For You web URL covered by FREED's Safari Focus Shield`);
   }
   return issues;
 }
@@ -3386,10 +3385,8 @@ function iosSafariContentBlockerReportIssues(
   config: {
     artifactField: string;
     runIdField: string;
-    reportKind: "reload" | "adult-block" | "short-form-block";
+    reportKind: "reload" | "adult-block";
     hostField?: string;
-    urlField?: string;
-    matchedRuleFromShortFormUrl?: boolean;
     requiredChecks: string[];
   }
 ): string[] {
@@ -3450,27 +3447,6 @@ function iosSafariContentBlockerReportIssues(
     }
   }
 
-  if (config.urlField) {
-    const expectedUrl = nonEmptyString(record[config.urlField]) ? record[config.urlField].trim() : "";
-    const reportUrl = nonEmptyString(payload.url) ? payload.url.trim() : "";
-    if (!reportUrl) {
-      reportIssues.push(`${path}.url`);
-    } else if (expectedUrl && reportUrl !== expectedUrl) {
-      reportIssues.push(`${path}.url must match ios.${config.urlField}`);
-    }
-  }
-
-  if (config.matchedRuleFromShortFormUrl) {
-    const expectedRule = nonEmptyString(record.safariContentBlockerShortFormUrl)
-      ? safariShortFormRuleForUrl(record.safariContentBlockerShortFormUrl)
-      : null;
-    if (!nonEmptyString(payload.matchedRule)) {
-      reportIssues.push(`${path}.matchedRule`);
-    } else if (expectedRule && payload.matchedRule.trim().toLowerCase() !== expectedRule) {
-      reportIssues.push(`${path}.matchedRule must match ios.safariContentBlockerShortFormUrl`);
-    }
-  }
-
   const requiredChecks = [
     "contentBlockerExtensionUsed",
     "safariContentBlockerLayer",
@@ -3487,6 +3463,64 @@ function iosSafariContentBlockerReportIssues(
     if (checks[check] !== true) reportIssues.push(`${path}.checks.${check}`);
   }
 
+  return reportIssues;
+}
+
+function iosSafariFocusShieldReportIssues(root: string, record: Record<string, unknown>): string[] {
+  const path = "ios.safariFocusShieldShortFormBlockArtifact";
+  const { payload, issues } = readLocalJsonEvidenceArtifact(
+    root,
+    record.safariFocusShieldShortFormBlockArtifact,
+    path,
+    "iOS Safari Focus Shield short-form inspection"
+  );
+  if (issues.length > 0 || !payload) return issues;
+  if (!isRecord(payload)) return [`${path} must contain a freed-ios-safari-focus-shield-report-v1 JSON object`];
+
+  const reportIssues: string[] = [];
+  const checks = isRecord(payload.checks) ? payload.checks : {};
+  if (payload.schemaVersion !== "freed-ios-safari-focus-shield-report-v1") {
+    reportIssues.push(`${path}.schemaVersion must be freed-ios-safari-focus-shield-report-v1`);
+  }
+  if (payload.sanitized !== true) reportIssues.push(`${path}.sanitized must be true`);
+  if (payload.runId !== record.safariFocusShieldShortFormBlockRunId) {
+    reportIssues.push(`${path}.runId must match ios.safariFocusShieldShortFormBlockRunId`);
+  }
+  if (normalizedReportPlatform(payload.platform) !== "ios") reportIssues.push(`${path}.platform must be ios`);
+  if (payload.reportKind !== "short-form-block") reportIssues.push(`${path}.reportKind must be short-form-block`);
+  if (payload.focusShieldIdentifier !== record.safariFocusShieldIdentifier) {
+    reportIssues.push(`${path}.focusShieldIdentifier must match ios.safariFocusShieldIdentifier`);
+  }
+  const expectedUrl = nonEmptyString(record.safariFocusShieldShortFormUrl)
+    ? record.safariFocusShieldShortFormUrl.trim()
+    : "";
+  const reportUrl = nonEmptyString(payload.url) ? payload.url.trim() : "";
+  if (!reportUrl) reportIssues.push(`${path}.url`);
+  else if (expectedUrl && reportUrl !== expectedUrl) {
+    reportIssues.push(`${path}.url must match ios.safariFocusShieldShortFormUrl`);
+  }
+  const expectedRule = expectedUrl ? safariShortFormRuleForUrl(expectedUrl) : null;
+  if (!nonEmptyString(payload.matchedRule)) reportIssues.push(`${path}.matchedRule`);
+  else if (expectedRule && payload.matchedRule.trim().toLowerCase() !== expectedRule) {
+    reportIssues.push(`${path}.matchedRule must match ios.safariFocusShieldShortFormUrl`);
+  }
+  for (const check of [
+    "focusShieldExtensionUsed",
+    "manifestV3",
+    "backgroundServiceWorkerUsed",
+    "contentScriptUsed",
+    "nativeRelayValidated",
+    "hostRuleAllowlistValidated",
+    "shortFormNavigationShielded",
+    "rawPathNotPersisted",
+    "noThirdPartyAppScreenInspection",
+    "noContinuousScreenRead",
+    "noPacketTunnel",
+    "noPacketInspection",
+    "noMitmHttps"
+  ]) {
+    if (checks[check] !== true) reportIssues.push(`${path}.checks.${check}`);
+  }
   return reportIssues;
 }
 
@@ -3595,8 +3629,13 @@ function iosAppPackageProofReportIssues(
       .map((entry) => [String(entry.bundleName), entry] as const)
   );
   const safariExtension = extensionByName.get("FREEDSafariContentBlocker.appex");
+  const safariFocusShieldExtension = extensionByName.get("FREEDSafariFocusShield.appex");
   const safariRuleList = safariExtension && isRecord(safariExtension.safariRuleList) ? safariExtension.safariRuleList : {};
   const safariRuleSignals = isRecord(safariRuleList.ruleSignals) ? safariRuleList.ruleSignals : {};
+  const safariFocusShield =
+    safariFocusShieldExtension && isRecord(safariFocusShieldExtension.safariFocusShield)
+      ? safariFocusShieldExtension.safariFocusShield
+      : {};
   const reportIssues: string[] = [];
 
   if (report.schemaVersion !== IOS_APP_PACKAGE_PROOF_SCHEMA_VERSION) {
@@ -3620,8 +3659,29 @@ function iosAppPackageProofReportIssues(
   if (Array.isArray(report.safariRuleFailures) && report.safariRuleFailures.length > 0) {
     reportIssues.push(`${path}.safariRuleFailures must be empty`);
   }
+  if (Array.isArray(report.safariFocusShieldFailures) && report.safariFocusShieldFailures.length > 0) {
+    reportIssues.push(`${path}.safariFocusShieldFailures must be empty`);
+  }
   if (Array.isArray(report.missingOrMismatchedExtensions) && report.missingOrMismatchedExtensions.length > 0) {
     reportIssues.push(`${path}.missingOrMismatchedExtensions must be empty`);
+  }
+
+  for (const [field, expectedValue] of [
+    ["manifestAvailable", true],
+    ["manifestVersion3", true],
+    ["minimumSafariVersion", "15.4"],
+    ["serviceWorker", "background.js"],
+    ["backgroundAvailable", true],
+    ["backgroundOwnsNativeMessaging", true],
+    ["contentAvailable", true],
+    ["contentUsesRuntimeMessaging", true],
+    ["nativeMessagingPermission", true],
+    ["hostPermissionsScoped", true],
+    ["usableForManualEvidence", true]
+  ] as const) {
+    if (safariFocusShield[field] !== expectedValue) {
+      reportIssues.push(`${path}.extensions.FREEDSafariFocusShield.appex.safariFocusShield.${field}`);
+    }
   }
 
   if (app.codesignEntitlementsAvailable !== true) {
@@ -3690,9 +3750,9 @@ function iosAppPackageProofReportIssues(
     }
     if (
       typeof safariRuleList.ruleCount !== "number" ||
-      safariRuleList.ruleCount <= SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length
+      safariRuleList.ruleCount < MIN_IOS_SAFARI_CONTENT_BLOCKER_RULE_COUNT
     ) {
-      reportIssues.push(`${path}.safariRuleList.ruleCount must include adult-domain rules plus short-form web rules`);
+      reportIssues.push(`${path}.safariRuleList.ruleCount must include adult-domain rules`);
     }
     if (Array.isArray(safariRuleList.missingSignals) && safariRuleList.missingSignals.length > 0) {
       reportIssues.push(`${path}.safariRuleList.missingSignals must be empty`);
@@ -3710,8 +3770,9 @@ function iosAppPackageProofReportIssues(
     "completeDataProtectionOnEmbeddedExtensions",
     "screenTimeExtensionsEmbedded",
     "safariContentBlockerEmbedded",
+    "safariFocusShieldEmbedded",
+    "safariFocusShieldResourcesValid",
     "adultDomainRulesPresent",
-    "shortFormRulesPresent",
     "safariRulesAllBlock",
     "noPacketTunnelEntitlement",
     "noPacketInspectionEntitlement"
@@ -3766,7 +3827,8 @@ function iosPhysicalDeviceIssues(payload: Record<string, unknown>, root: string)
     "safariContentBlockerBuildRunId",
     "safariContentBlockerReloadRunId",
     "safariContentBlockerAdultBlockRunId",
-    "safariContentBlockerShortFormBlockRunId",
+    "safariFocusShieldBuildRunId",
+    "safariFocusShieldShortFormBlockRunId",
     "safariShortFormChallengeHandoffRunId",
     "earnedUnlockAppAllowRunId",
     "earnedUnlockRejectedSourceRunId",
@@ -3803,7 +3865,8 @@ function iosPhysicalDeviceIssues(payload: Record<string, unknown>, root: string)
     "safariContentBlockerBuildArtifact",
     "safariContentBlockerReloadArtifact",
     "safariContentBlockerAdultBlockArtifact",
-    "safariContentBlockerShortFormBlockArtifact",
+    "safariFocusShieldBuildArtifact",
+    "safariFocusShieldShortFormBlockArtifact",
     "safariShortFormChallengeHandoffArtifact",
     "earnedUnlockAppAllowArtifact",
     "earnedUnlockRejectedSourceArtifact",
@@ -3882,16 +3945,14 @@ function iosPhysicalDeviceIssues(payload: Record<string, unknown>, root: string)
     safariContentBlockerRuleCount === null ||
     safariContentBlockerRuleCount < MIN_IOS_SAFARI_CONTENT_BLOCKER_RULE_COUNT
   ) {
-    issues.push(
-      `ios.safariContentBlockerRuleCount > ${SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length} (adult-domain rules plus short-form web rules)`
-    );
+    issues.push("ios.safariContentBlockerRuleCount >= 1 (adult-domain rules only)");
   }
   issues.push(
     ...iosSafariContentBlockerReportIssues(root, ios, {
       artifactField: "safariContentBlockerReloadArtifact",
       runIdField: "safariContentBlockerReloadRunId",
       reportKind: "reload",
-      requiredChecks: ["reloadedViaSafariApi", "adultRulesPresent", "shortFormRulesPresent"]
+      requiredChecks: ["reloadedViaSafariApi", "adultRulesPresent"]
     }),
     ...iosSafariContentBlockerReportIssues(root, ios, {
       artifactField: "safariContentBlockerAdultBlockArtifact",
@@ -3900,22 +3961,19 @@ function iosPhysicalDeviceIssues(payload: Record<string, unknown>, root: string)
       hostField: "adultInterceptedHost",
       requiredChecks: ["adultDomainRuleMatched", "adultNavigationBlocked", "rawUrlNotPersisted"]
     }),
-    ...iosSafariContentBlockerReportIssues(root, ios, {
-      artifactField: "safariContentBlockerShortFormBlockArtifact",
-      runIdField: "safariContentBlockerShortFormBlockRunId",
-      reportKind: "short-form-block",
-      urlField: "safariContentBlockerShortFormUrl",
-      matchedRuleFromShortFormUrl: true,
-      requiredChecks: ["shortFormWebRuleMatched", "shortFormNavigationBlocked", "rawPathNotPersisted"]
-    })
+    ...iosSafariFocusShieldReportIssues(root, ios)
   );
-  if (!nonEmptyString(ios.safariContentBlockerShortFormUrl)) {
-    issues.push("ios.safariContentBlockerShortFormUrl");
-  } else {
-    issues.push(...safariShortFormUrlIssues(ios.safariContentBlockerShortFormUrl, "ios.safariContentBlockerShortFormUrl"));
+  if (ios.safariFocusShieldEmbedded !== true) issues.push("ios.safariFocusShieldEmbedded must be true");
+  if (ios.safariFocusShieldIdentifier !== "app.freed.recovery.safari-focus-shield") {
+    issues.push("ios.safariFocusShieldIdentifier must be app.freed.recovery.safari-focus-shield");
   }
-  const safariShortFormUrlRule = nonEmptyString(ios.safariContentBlockerShortFormUrl)
-    ? safariShortFormRuleForUrl(ios.safariContentBlockerShortFormUrl)
+  if (!nonEmptyString(ios.safariFocusShieldShortFormUrl)) {
+    issues.push("ios.safariFocusShieldShortFormUrl");
+  } else {
+    issues.push(...safariShortFormUrlIssues(ios.safariFocusShieldShortFormUrl, "ios.safariFocusShieldShortFormUrl"));
+  }
+  const safariShortFormUrlRule = nonEmptyString(ios.safariFocusShieldShortFormUrl)
+    ? safariShortFormRuleForUrl(ios.safariFocusShieldShortFormUrl)
     : null;
   if (ios.safariShortFormChallengeHandoffSource !== IOS_SAFARI_SHORT_FORM_HANDOFF_SOURCE) {
     issues.push(`ios.safariShortFormChallengeHandoffSource must be ${IOS_SAFARI_SHORT_FORM_HANDOFF_SOURCE}`);
@@ -3931,7 +3989,7 @@ function iosPhysicalDeviceIssues(payload: Record<string, unknown>, root: string)
       "ios.safariShortFormChallengeHandoffMatchedRule must be short-form:youtube-shorts, short-form:instagram-reels, or short-form:tiktok-feed"
     );
   } else if (safariShortFormUrlRule && safariShortFormHandoffRule !== safariShortFormUrlRule) {
-    issues.push("ios.safariShortFormChallengeHandoffMatchedRule must match ios.safariContentBlockerShortFormUrl");
+    issues.push("ios.safariShortFormChallengeHandoffMatchedRule must match ios.safariFocusShieldShortFormUrl");
   }
   if (!nonEmptyString(ios.safariShortFormChallengeHandoffHost)) {
     issues.push("ios.safariShortFormChallengeHandoffHost");
