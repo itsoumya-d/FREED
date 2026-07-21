@@ -272,7 +272,6 @@ const expectedPreflightReportCheckIds = [
   "redis-backend-infrastructure",
   "backend-readiness-endpoint",
   "remote-notification-provider-credentials",
-  "optional-ios-dns-settings",
   "optional-challenge-weather-context",
   "analytics-ingestion-endpoint",
   "optional-recovery-backup-sync-endpoint",
@@ -1951,14 +1950,6 @@ function runSelfTest() {
     unsanitizedPreflightPayload.sanitized = false;
     writeJson(preflightReportPath, unsanitizedPreflightPayload);
     assertThrows(() => assertReportArtifact("preflight:release-env", artifactDir), /sanitized/);
-
-    const missingOptionalSafetyPreflightPayload = preflightSamplePayload();
-    missingOptionalSafetyPreflightPayload.checks = missingOptionalSafetyPreflightPayload.checks.filter(
-      (entry) => entry.id !== "optional-ios-dns-settings"
-    );
-    missingOptionalSafetyPreflightPayload.passCount -= 1;
-    writeJson(preflightReportPath, missingOptionalSafetyPreflightPayload);
-    assertThrows(() => assertReportArtifact("preflight:release-env", artifactDir), /optional-ios-dns-settings/);
 
     const unexpectedPreflightCheckPayload = preflightSamplePayload();
     unexpectedPreflightCheckPayload.checks.push({

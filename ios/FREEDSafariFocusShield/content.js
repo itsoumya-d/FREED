@@ -2,7 +2,6 @@
   "use strict";
 
   const OVERLAY_ID = "freed-safari-focus-shield";
-  const NATIVE_APP_ID = "app.freed.recovery";
   let lastRouteKey = "";
 
   // Approved routes: /shorts/, /feed/shorts, /reel/, /reels/, /foryou.
@@ -34,10 +33,8 @@
 
   function notifyNative(surface) {
     const runtime = globalThis.browser?.runtime;
-    if (!runtime?.sendNativeMessage) return;
-    runtime.sendNativeMessage(NATIVE_APP_ID, {
-      type: "record-pending-intervention",
-      source: "ios-safari-short-form",
+    if (!runtime?.sendMessage) return;
+    runtime.sendMessage({
       rule: surface.rule,
       host: surface.host
     }).catch(() => undefined);

@@ -1231,8 +1231,7 @@ function performanceRoutingProofReportIssues(
       ? [
           "screenTimeManagedSettingsOrSafariLayer",
           "noPacketTunnel",
-          "noNetworkExtensionPacketTunnel",
-          "dnsSettingsDisabledOrMatchedDomainsOnly"
+          "noNetworkExtensionPacketTunnel"
         ]
       : [])
   ];

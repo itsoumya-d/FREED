@@ -36,3 +36,14 @@ The first workspace build exposed missing generated CocoaPods support files (`Po
 ## Release follow-up
 
 Before device/App Store validation, serve a matching AASA file for `intervention.freed.app`, provision the associated-domain entitlement and extension App Group for the distribution team, enable the Safari extension, and validate notification-denied as well as notification-allowed recovery on a physical FamilyControls-capable device. The shared pending record remains the recovery source of truth when notification delivery is unavailable.
+
+## Review follow-up
+
+The post-review implementation closes four gaps without changing Android production sources:
+
+- Safari MV3 content code now sends only `{ host, rule }` to `background.js`. The background service worker independently allowlists the exact rule/host pairs, supplies the fixed native message type/source, and is the only JavaScript context that calls `sendNativeMessage`.
+- Both the app-side shield application and the Device Activity monitor use the public Managed Settings category policy overloads with exact `except:` application/web-domain token sets. An earned app or domain unlock therefore remains excluded even when its enclosing category shield is active.
+- The Safari Focus Shield target and manifest now require iOS/Safari 15.4, and `background.js` is included in the extension resources. The host app deployment target remains unchanged.
+- The stale iOS NetworkExtension DNS Settings contract was removed from the TypeScript bridge, feed sync, setup UI, env/preflight/verifier checks, release audits, and current policy/store documentation. Android DNS Guard capability and entry-point assertions remain in the source-contract suite, and `git diff --name-only` reports no Android production file changes.
+
+Review tests were written first. The new source contracts initially failed because `background.js`, MV3 background wiring, category `except:` policies, and DNS-retirement conditions were absent. During the subsequent full `npm run test:core` run, the review-specific Safari/exclusion and iOS-DNS-retirement tests passed, as did the updated release-env preflight test; the parent requested that the still-running suite be interrupted before completion, so this follow-up does not claim a fresh complete core-suite pass. No new full workspace build was started. Final handoff-only checks completed with `git diff --check` clean, no remaining active iOS DNS Settings method/env/check identifiers outside negative regression assertions, and no Android production paths in the diff.

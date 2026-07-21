@@ -134,17 +134,6 @@ export function buildProtectionPermissionPlan(
         dataBoundary: "Safari receives a domain rule list only; FREED does not inspect page contents.",
         action: "open-settings"
       },
-      {
-        id: "ios-dns-domain-filter",
-        title: "Optional DNS domain filter",
-        permissionLabel: "NetworkExtension DNS Settings",
-        platform,
-        required: false,
-        status: capability?.dnsFiltering ? (status?.dnsSettingsActive ? "complete" : "optional") : "unavailable",
-        reason: "Adds a matched-domain DNS-over-HTTPS layer for explicit domains only when Apple's DNS Settings entitlement is approved.",
-        dataBoundary: "Only configured adult-domain suffixes and resolver metadata are used; FREED does not full-tunnel traffic, inspect packets, or MITM HTTPS.",
-        action: "open-settings"
-      },
       ...sharedOnDemandPermissionSteps(platform)
     ];
   }

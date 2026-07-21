@@ -1123,9 +1123,7 @@ function buildProtectionActivationSignature(
     safariContentBlockerVersion: status?.safariContentBlockerVersion ?? "",
     safariContentBlockerChecksum: status?.safariContentBlockerChecksum ?? "",
     safariContentBlockerRuleCount: status?.safariContentBlockerRuleCount ?? 0,
-    safariContentBlockerEnabled: status?.safariContentBlockerEnabled === true,
-    dnsSettingsActive: status?.dnsSettingsActive === true,
-    dnsSettingsMatchDomainCount: status?.dnsSettingsMatchDomainCount ?? 0
+    safariContentBlockerEnabled: status?.safariContentBlockerEnabled === true
   });
 }
 
@@ -5160,30 +5158,6 @@ function ProfileScreen({
   const safariAdultFeedReviewed = hasReviewedSafariAdultDomainFeed(protectionStatus);
   const nativeAdultFeedVersionLabel = nativeAdultFeedReviewed ? "Reviewed adult-domain feed" : "Embedded adult-domain fallback";
   const safariAdultFeedVersionLabel = safariAdultFeedReviewed ? "Reviewed Safari content-blocker rules" : "Embedded Safari content-blocker fallback";
-  const iosDnsSettingsVisible = Boolean(
-    protectionStatus?.dnsSettingsAvailable ||
-      protectionStatus?.dnsSettingsEntitled ||
-      protectionStatus?.dnsSettingsActive ||
-      protectionStatus?.dnsSettingsMatchDomainCount ||
-      protectionStatus?.dnsSettingsLastError
-  );
-  const iosDnsSettingsStatusLabel = protectionStatus?.dnsSettingsActive
-    ? "active"
-    : protectionStatus?.dnsSettingsEntitled
-    ? "saved"
-    : protectionStatus?.dnsSettingsAvailable
-    ? "available"
-    : "unavailable";
-  const iosDnsSettingsStatusColor = protectionStatus?.dnsSettingsActive
-    ? colors.mint
-    : protectionStatus?.dnsSettingsLastError
-    ? colors.yellow
-    : colors.sky;
-  const iosDnsSettingsStatusBackground = protectionStatus?.dnsSettingsActive
-    ? "rgba(90,223,158,0.12)"
-    : protectionStatus?.dnsSettingsLastError
-    ? "rgba(255,216,106,0.12)"
-    : "rgba(130,206,255,0.12)";
   const nativeUnlockMinutes =
     protectionStatus?.activeUnlockExpiresAt
       ? Math.max(1, Math.ceil((Date.parse(protectionStatus.activeUnlockExpiresAt) - Date.now()) / 60_000))
@@ -5508,11 +5482,6 @@ function ProfileScreen({
               Safari blocker off
             </Text>
           ) : null}
-          {iosDnsSettingsVisible ? (
-            <Text selectable style={{ color: iosDnsSettingsStatusColor, backgroundColor: iosDnsSettingsStatusBackground, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 999, fontWeight: typography.bold }}>
-              iOS DNS {iosDnsSettingsStatusLabel}
-            </Text>
-          ) : null}
         </View>
         {protectionStatus?.adultDomainFeedVersion ? (
           <Text selectable style={{ color: colors.text3, lineHeight: 19, marginBottom: 12 }}>
@@ -5565,18 +5534,6 @@ function ProfileScreen({
             {protectionStatus?.earnedUnlockActivityName
               ? ` Earned unlock relock monitor ${protectionStatus.earnedUnlockActivityName}.`
               : ""}
-          </Text>
-        ) : null}
-        {iosDnsSettingsVisible ? (
-          <Text selectable style={{ color: colors.text3, lineHeight: 19, marginBottom: 12 }}>
-            {protectionStatus?.dnsSettingsMatchDomainCount
-              ? `iOS matched-domain DNS settings cover ${protectionStatus.dnsSettingsMatchDomainCount} adult-domain suffix${protectionStatus.dnsSettingsMatchDomainCount === 1 ? "" : "es"}${protectionStatus.dnsSettingsProvider ? ` via ${protectionStatus.dnsSettingsProvider}` : ""}. This is optional DNS Settings, not a packet tunnel or full VPN.`
-              : "iOS DNS Settings support is available for signed builds with Apple's dns-settings entitlement. Safari Content Blocker and Screen Time remain the primary protection layers."}
-          </Text>
-        ) : null}
-        {protectionStatus?.dnsSettingsLastError ? (
-          <Text selectable style={{ color: colors.yellow, lineHeight: 19, marginBottom: 12, fontWeight: typography.bold }}>
-            iOS DNS Settings sync needs entitlement, provisioning, or user enablement: {protectionStatus.dnsSettingsLastError}
           </Text>
         ) : null}
         {protectionCapability?.localVpnFallback && privateDnsActive ? (

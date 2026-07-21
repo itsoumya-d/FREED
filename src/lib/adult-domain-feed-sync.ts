@@ -51,20 +51,6 @@ export type AdultDomainFeedSyncResult =
       warning: null;
     };
 
-export type IosDnsSettingsRequest = {
-  resolverURL: string;
-  serverAddresses: string[];
-  matchDomains: string[];
-  providerLabel: string;
-};
-
-export type IosDnsSettingsConfig = {
-  resolverURL?: string | null;
-  serverAddresses?: string | string[] | null;
-  providerLabel?: string | null;
-  maxDomains?: number | string | null;
-};
-
 export type AdultDomainFeedResolveOptions = {
   timeoutMs?: number | string | null;
   maxBytes?: number | string | null;
@@ -81,9 +67,6 @@ const MIN_ADULT_DOMAIN_FEED_RESPONSE_MAX_BYTES = 100_000;
 const MAX_ADULT_DOMAIN_FEED_RESPONSE_MAX_BYTES = 10_000_000;
 const MAX_ADULT_FEED_AGE_MS = 48 * 60 * 60 * 1000;
 const MAX_ADULT_FEED_CLOCK_SKEW_MS = 5 * 60 * 1000;
-const DEFAULT_IOS_DNS_SETTINGS_PROVIDER_LABEL = "FREED adult-domain DNS";
-const DEFAULT_IOS_DNS_SETTINGS_MAX_DOMAINS = 5_000;
-const IOS_DNS_SETTINGS_MAX_DOMAINS = 10_000;
 
 export async function resolveAdultDomainFeed(
   fetcher: FetchLike = fetch,
@@ -143,7 +126,6 @@ export async function resolveAdultDomainFeed(
 export async function syncNativeAdultDomainFeed(fetcher: FetchLike = fetch): Promise<AdultDomainFeedSyncResult> {
   const {
     configureAdultDomainFeed,
-    configureDnsSettings,
     configureSafariContentBlockerRules,
     getProtectionCapabilities,
     getProtectionStatus
@@ -179,30 +161,7 @@ export async function syncNativeAdultDomainFeed(fetcher: FetchLike = fetch): Pro
     );
   }
 
-  let syncWarning = warning;
-  const dnsSettingsRequest = buildIosDnsSettingsRequest(feed);
-
-  const dnsSettingsAlreadySynced =
-    dnsSettingsRequest &&
-    status.dnsSettingsActive &&
-    status.dnsSettingsProvider === dnsSettingsRequest.providerLabel &&
-    status.dnsSettingsMatchDomainCount === dnsSettingsRequest.matchDomains.length;
-
-  if (dnsSettingsRequest && status.dnsSettingsAvailable && !dnsSettingsAlreadySynced) {
-    try {
-      status = await configureDnsSettings(
-        dnsSettingsRequest.resolverURL,
-        dnsSettingsRequest.serverAddresses,
-        dnsSettingsRequest.matchDomains,
-        dnsSettingsRequest.providerLabel
-    );
-  } catch (error) {
-      const message = safeUserFacingMessage(error, "iOS DNS settings sync failed.");
-      syncWarning = syncWarning ? `${syncWarning}; ${message}` : message;
-    }
-  }
-
-  return { feed, status, provider, warning: syncWarning };
+  return { feed, status, provider, warning };
 }
 
 export function getConditionalAdultFeedChecksumForStatus(
@@ -242,30 +201,6 @@ function buildConditionalFeedHeaders(checksum: string | null): HeadersInit | und
   };
 }
 
-export function buildIosDnsSettingsRequest(
-  feed: AdultDomainFeed,
-  config: IosDnsSettingsConfig = readIosDnsSettingsConfig()
-): IosDnsSettingsRequest | null {
-  const resolverURL = sanitizeHttpsUrl(config.resolverURL);
-  const serverAddresses = normalizeServerAddresses(config.serverAddresses);
-  if (!resolverURL || serverAddresses.length === 0) return null;
-
-  const maxDomains = normalizeMaxDomains(config.maxDomains);
-  const matchDomains = feed.domains
-    .map((domain) => domain.trim().toLowerCase())
-    .filter(Boolean)
-    .slice(0, maxDomains);
-
-  if (matchDomains.length === 0) return null;
-
-  return {
-    resolverURL,
-    serverAddresses,
-    matchDomains,
-    providerLabel: config.providerLabel?.trim() || DEFAULT_IOS_DNS_SETTINGS_PROVIDER_LABEL
-  };
-}
-
 function readFeedEndpoint() {
   return process.env.EXPO_PUBLIC_ADULT_DOMAIN_FEED_ENDPOINT?.trim() ?? "";
 }
@@ -282,53 +217,6 @@ function readFeedSyncTimeoutMs() {
 
 function readFeedResponseMaxBytes() {
   return process.env.EXPO_PUBLIC_ADULT_DOMAIN_FEED_RESPONSE_MAX_BYTES?.trim() ?? "";
-}
-
-function readIosDnsSettingsConfig(): IosDnsSettingsConfig {
-  return {
-    resolverURL: process.env.EXPO_PUBLIC_IOS_DNS_SETTINGS_RESOLVER_URL,
-    serverAddresses: process.env.EXPO_PUBLIC_IOS_DNS_SETTINGS_SERVER_ADDRESSES,
-    providerLabel: process.env.EXPO_PUBLIC_IOS_DNS_SETTINGS_PROVIDER_LABEL,
-    maxDomains: process.env.EXPO_PUBLIC_IOS_DNS_SETTINGS_MAX_DOMAINS
-  };
-}
-
-function sanitizeHttpsUrl(value: string | null | undefined) {
-  const trimmed = value?.trim() ?? "";
-  if (!trimmed) return null;
-
-  try {
-    const parsed = new URL(trimmed);
-    if (parsed.protocol !== "https:" || !parsed.hostname) return null;
-    if (parsed.username || parsed.password || parsed.search || parsed.hash) return null;
-    return parsed.toString();
-  } catch {
-    return null;
-  }
-}
-
-function normalizeServerAddresses(value: string | string[] | null | undefined) {
-  const raw = Array.isArray(value)
-    ? value
-    : (value ?? "")
-        .split(/[\n,]/)
-        .map((item) => item.trim());
-
-  const seen = new Set<string>();
-  const output: string[] = [];
-  for (const address of raw) {
-    const normalized = address.trim();
-    if (!normalized || seen.has(normalized)) continue;
-    seen.add(normalized);
-    output.push(normalized);
-  }
-  return output.slice(0, 8);
-}
-
-function normalizeMaxDomains(value: number | string | null | undefined) {
-  const parsed = typeof value === "number" ? value : Number.parseInt(value ?? "", 10);
-  if (!Number.isFinite(parsed)) return DEFAULT_IOS_DNS_SETTINGS_MAX_DOMAINS;
-  return Math.max(1, Math.min(IOS_DNS_SETTINGS_MAX_DOMAINS, Math.round(parsed)));
 }
 
 function normalizeFeedChecksum(value: string | null | undefined) {

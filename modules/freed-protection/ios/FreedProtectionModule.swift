@@ -1197,14 +1197,18 @@ public class FreedProtectionModule: Module {
       var remainingApplications = selection.applicationTokens
       var remainingCategories = selection.categoryTokens
       var remainingWebDomains = selection.webDomainTokens
+      var excludedApplications = Set<ApplicationToken>()
+      var excludedWebDomains = Set<WebDomainToken>()
 
       switch tokenType {
       case "application":
         guard let token = try? JSONDecoder().decode(ApplicationToken.self, from: tokenData) else { return }
         remainingApplications = selection.applicationTokens.subtracting([token])
+        excludedApplications.insert(token)
       case "domain":
         guard let token = try? JSONDecoder().decode(WebDomainToken.self, from: tokenData) else { return }
         remainingWebDomains = selection.webDomainTokens.subtracting([token])
+        excludedWebDomains.insert(token)
       case "category":
         guard let token = try? JSONDecoder().decode(ActivityCategoryToken.self, from: tokenData) else { return }
         remainingCategories = selection.categoryTokens.subtracting([token])
@@ -1213,9 +1217,13 @@ public class FreedProtectionModule: Module {
       }
 
       store.shield.applications = remainingApplications.isEmpty ? nil : remainingApplications
-      store.shield.applicationCategories = remainingCategories.isEmpty ? nil : .specific(remainingCategories)
+      store.shield.applicationCategories = remainingCategories.isEmpty
+        ? nil
+        : .specific(remainingCategories, except: excludedApplications)
       store.shield.webDomains = remainingWebDomains.isEmpty ? nil : remainingWebDomains
-      store.shield.webDomainCategories = remainingCategories.isEmpty ? nil : .specific(remainingCategories)
+      store.shield.webDomainCategories = remainingCategories.isEmpty
+        ? nil
+        : .specific(remainingCategories, except: excludedWebDomains)
     }
     #endif
   }

@@ -489,45 +489,6 @@ function checkEndpointWithTimeout(id, env, key, label, timeoutKey, min, max, exp
   );
 }
 
-function optionalIosDnsSettingsIssues(env) {
-  const resolverURL = readEnv(env, "EXPO_PUBLIC_IOS_DNS_SETTINGS_RESOLVER_URL");
-  const serverAddresses = readEnv(env, "EXPO_PUBLIC_IOS_DNS_SETTINGS_SERVER_ADDRESSES");
-  const maxDomains = readEnv(env, "EXPO_PUBLIC_IOS_DNS_SETTINGS_MAX_DOMAINS");
-  const issues = [];
-
-  if (!resolverURL && !serverAddresses) return issues;
-  if (!resolverURL) issues.push("EXPO_PUBLIC_IOS_DNS_SETTINGS_RESOLVER_URL is required when iOS DNS settings are enabled");
-  if (!serverAddresses) issues.push("EXPO_PUBLIC_IOS_DNS_SETTINGS_SERVER_ADDRESSES is required when iOS DNS settings are enabled");
-
-  if (resolverURL) {
-    const endpoint = endpointIssues(resolverURL, "iOS DNS Settings resolver URL");
-    const routeIssue = "iOS DNS Settings resolver URL must include a concrete API route path";
-    issues.push(...endpoint.filter((issue) => issue !== routeIssue));
-  }
-
-  if (serverAddresses) {
-    const addresses = serverAddresses
-      .split(/[\n,]/)
-      .map((entry) => entry.trim())
-      .filter(Boolean);
-    if (addresses.length === 0 || addresses.length > 8) {
-      issues.push("EXPO_PUBLIC_IOS_DNS_SETTINGS_SERVER_ADDRESSES must include 1-8 DNS server addresses");
-    }
-    if (addresses.some((address) => !/^[0-9A-Fa-f:.]+$/.test(address) || address.includes("/"))) {
-      issues.push("EXPO_PUBLIC_IOS_DNS_SETTINGS_SERVER_ADDRESSES must contain IP address literals only");
-    }
-  }
-
-  if (maxDomains) {
-    const parsed = Number.parseInt(maxDomains, 10);
-    if (!Number.isInteger(parsed) || parsed < 1 || parsed > 10_000) {
-      issues.push("EXPO_PUBLIC_IOS_DNS_SETTINGS_MAX_DOMAINS must be between 1 and 10000");
-    }
-  }
-
-  return issues;
-}
-
 function optionalChallengeWeatherContextIssues(env) {
   const issues = [
     ...boundedIntegerEnvIssues(env, "EXPO_PUBLIC_CHALLENGE_WEATHER_CONTEXT_TIMEOUT_MS", 500, 15_000),
@@ -990,7 +951,6 @@ function runPreflight(env, sourceLabel, reportPath) {
     ...boundedIntegerEnvIssues(env, "FREED_AI_PROVIDER_TIMEOUT_MS", 500, 60_000),
     ...boundedIntegerEnvIssues(env, "FREED_AI_PROVIDER_RESPONSE_MAX_BYTES", 10_000, 5_000_000)
   ];
-  const optionalIosDnsIssues = optionalIosDnsSettingsIssues(env);
   const optionalWeatherIssues = optionalChallengeWeatherContextIssues(env);
   const analyticsIssues = [...remoteAnalyticsEndpointIssues(env), ...analyticsRuntimeIssues(env)];
   const backendReadinessIssues = backendReadinessEndpointIssues(env);
@@ -1224,14 +1184,6 @@ function runPreflight(env, sourceLabel, reportPath) {
         ? "Remote notification dispatch secret, optional provider timeout/response-size/smoke bounds, and FCM/APNs provider credentials are production-shaped."
         : notificationIssues.join(", "),
       "Configure REMOTE_NOTIFICATION_DISPATCH_SECRET, optional FREED_REMOTE_NOTIFICATION_PROVIDER_TIMEOUT_MS, FREED_REMOTE_NOTIFICATION_PROVIDER_RESPONSE_MAX_BYTES, and FREED_REMOTE_NOTIFICATION_SMOKE_TIMEOUT_MS, FCM credentials with FIREBASE_PROJECT_ID or Firebase service-account project_id, and APNs production signing credentials for server-authorized recovery-safe push dispatch."
-    ),
-    check(
-      "optional-ios-dns-settings",
-      optionalIosDnsIssues.length === 0,
-      optionalIosDnsIssues.length === 0
-        ? "Optional iOS DNS Settings config is either disabled or production-safe."
-        : optionalIosDnsIssues.join(", "),
-      "Leave optional iOS DNS settings blank, or configure an HTTPS DoH resolver URL, 1-8 DNS server addresses, and a bounded domain count only after dns-settings entitlement approval."
     ),
     check(
       "optional-challenge-weather-context",

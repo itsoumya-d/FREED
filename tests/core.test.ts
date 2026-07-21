@@ -15,7 +15,6 @@ import {
   hasUsableSupportCircleMember
 } from "../src/lib/accountability";
 import {
-  buildIosDnsSettingsRequest,
   getConditionalAdultFeedChecksumForStatus,
   resolveAdultDomainFeed
 } from "../src/lib/adult-domain-feed-sync";
@@ -5204,9 +5203,7 @@ test("protection permission plan matches iOS and Android platform constraints", 
   assert.match(PROTECTION_PERMISSION_EXPLANATION, /recovery challenge/);
   assert.match(iosPlan.find((step) => step.id === "ios-screen-time")?.reason ?? "", /Screen Time-sourced earned unlocks/);
   assert.match(iosPlan.find((step) => step.id === "ios-safari-content-blocker")?.dataBoundary ?? "", /does not inspect page contents/);
-  assert.equal(iosPlan.find((step) => step.id === "ios-dns-domain-filter")?.required, false);
-  assert.equal(iosPlan.find((step) => step.id === "ios-dns-domain-filter")?.status, "optional");
-  assert.match(iosPlan.find((step) => step.id === "ios-dns-domain-filter")?.dataBoundary ?? "", /does not full-tunnel traffic/);
+  assert.equal(iosPlan.some((step) => step.id === "ios-dns-domain-filter"), false);
   assert.match(iosPlan.find((step) => step.id === "ios-selected-app-limit-monitor")?.permissionLabel ?? "", /DeviceActivity threshold events/);
   assert.match(iosPlan.find((step) => step.id === "ios-selected-app-limit-monitor")?.dataBoundary ?? "", /opaque Screen Time tokens/);
   assert.match(androidPlan.find((step) => step.id === "android-dns-guard")?.dataBoundary ?? "", /does not MITM HTTPS/);
@@ -6004,21 +6001,19 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosInfoPlist, /CFBundleURLSchemes[\s\S]*<string>app\.freed\.recovery<\/string>/);
   assert.match(appManifest, /<data android:scheme="freed"\/>/);
   assert.match(appManifest, /android:launchMode="singleTask"/);
-  assert.match(iosPolicyPack, /iOS Screen Time, Safari, And DNS Settings Review Pack/);
+  assert.match(iosPolicyPack, /iOS Screen Time And Safari Review Pack/);
   assert.match(iosPolicyPack, /Family Controls entitlement/);
   assert.match(iosPolicyPack, /FamilyActivityPicker/);
   assert.match(iosPolicyPack, /ManagedSettings adult web filtering/);
   assert.match(iosPolicyPack, /DeviceActivity schedules/);
   assert.match(iosPolicyPack, /Safari Content Blocker/);
-  assert.match(iosPolicyPack, /web short-form path blocking in Safari/);
-  assert.match(iosPolicyPack, /registered `freed` URL scheme/);
-  assert.match(iosPolicyPack, /NetworkExtension DNS Settings/);
+  assert.match(iosPolicyPack, /Safari Focus Shield/);
+  assert.match(iosPolicyPack, /https:\/\/intervention\.freed\.app\/intervention/);
   assert.match(iosPolicyPack, /FREED cannot and does not read third-party app screens on iOS/);
   assert.match(iosPolicyPack, /FREED cannot and does not detect Instagram Reels, TikTok, or YouTube Shorts inside native third-party apps on iOS/);
   assert.match(iosPolicyPack, /FREED does not take screenshots, run OCR, or perform continuous image classification for protection/);
   assert.match(iosPolicyPack, /FREED does not use `NEPacketTunnelProvider`, `NETunnelProviderManager`, or `NEVPNManager`/);
   assert.match(iosPolicyPack, /does not receive users' Safari browsing history/);
-  assert.match(iosPolicyPack, /No all-domain DNS profile/);
   assert.match(iosPolicyPack, /on-device Vision labels/);
   assert.match(iosPolicyPack, /does not sync HealthKit history/);
   assert.match(iosPolicyPack, /No HealthKit history sync or export/);
@@ -6910,15 +6905,11 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(nativeProtectionBridge, /openPrivateDnsSettings/);
   assert.match(nativeProtectionBridge, /openUsageAccessSettings/);
   assert.match(nativeProtectionBridge, /configureSafariContentBlockerRules/);
-  assert.match(nativeProtectionBridge, /configureDnsSettings/);
-  assert.match(nativeProtectionBridge, /clearDnsSettings/);
   assert.match(nativeProtectionBridge, /adultDomainFeedDomainCount\?: number/);
   assert.match(nativeProtectionBridge, /safariContentBlockerRuleCount\?: number/);
   assert.match(nativeProtectionBridge, /safariContentBlockerEnabled\?: boolean/);
   assert.match(nativeProtectionBridge, /safariContentBlockerStateCheckedAt\?: string/);
   assert.match(nativeProtectionBridge, /safariContentBlockerStateError\?: string/);
-  assert.match(nativeProtectionBridge, /dnsSettingsActive\?: boolean/);
-  assert.match(nativeProtectionBridge, /dnsSettingsEntitled\?: boolean/);
   assert.match(nativeProtectionBridge, /shortFormInterruptionSeconds\?: number/);
   assert.match(nativeProtectionBridge, /sessionDurationSec\?: number/);
   assert.match(nativeProtectionBridge, /usageStatsObservedPackageNames\?: string\[\]/);
@@ -7039,9 +7030,6 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /syncNativeAdultDomainFeed\(\)/);
   assert.match(appSurface, /protectionSyncMessage/);
   assert.match(appSurface, /safariContentBlockerRuleCount/);
-  assert.match(appSurface, /dnsSettingsAvailable/);
-  assert.match(appSurface, /dnsSettingsLastError/);
-  assert.match(appSurface, /iOS matched-domain DNS settings cover/);
   assert.match(appSurface, /protectionStatus\?\.adultFilterActive \?\?/);
   assert.match(appSurface, /DNS Guard session:/);
   assert.match(appSurface, /DNS Guard restart:/);
@@ -7068,11 +7056,6 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(adultDomainFeedSync, /minimumSafariRuleCount/);
   assert.match(appSurface, /kept the cached reviewed feed/);
   assert.match(adultDomainFeedSync, /configureSafariContentBlockerRules/);
-  assert.match(adultDomainFeedSync, /configureDnsSettings/);
-  assert.match(adultDomainFeedSync, /EXPO_PUBLIC_IOS_DNS_SETTINGS_RESOLVER_URL/);
-  assert.match(adultDomainFeedSync, /EXPO_PUBLIC_IOS_DNS_SETTINGS_MAX_DOMAINS/);
-  assert.match(adultDomainFeedSync, /parsed\.username \|\| parsed\.password/);
-  assert.match(adultDomainFeedSync, /parsed\.search \|\| parsed\.hash/);
   assert.match(appSurface, /parseClockTime\(disciplineSettings\.sleepStartTime\)/);
   assert.match(appSurface, /startRiskWindowMonitoring\(start\.hour, end\.hour, start\.minute, end\.minute\)/);
   assert.match(appSurface, /completionSubmittedRef\.current/);
@@ -7152,11 +7135,13 @@ test("iOS shield handoff and Safari Focus Shield stay scoped and App Store safe"
   const safariExtensionDirectory = "ios/FREEDSafariFocusShield";
 
   assert.equal(existsSync(`${safariExtensionDirectory}/manifest.json`), true);
+  assert.equal(existsSync(`${safariExtensionDirectory}/background.js`), true);
   assert.equal(existsSync(`${safariExtensionDirectory}/content.js`), true);
   assert.equal(existsSync(`${safariExtensionDirectory}/SafariWebExtensionHandler.swift`), true);
   assert.equal(existsSync(`${safariExtensionDirectory}/Info.plist`), true);
 
   const safariManifest = readFileSync(`${safariExtensionDirectory}/manifest.json`, "utf8");
+  const safariBackground = readFileSync(`${safariExtensionDirectory}/background.js`, "utf8");
   const safariContentScript = readFileSync(`${safariExtensionDirectory}/content.js`, "utf8");
   const safariHandler = readFileSync(`${safariExtensionDirectory}/SafariWebExtensionHandler.swift`, "utf8");
   const safariInfo = readFileSync(`${safariExtensionDirectory}/Info.plist`, "utf8");
@@ -7178,15 +7163,20 @@ test("iOS shield handoff and Safari Focus Shield stay scoped and App Store safe"
   assert.match(iosModule, /applySelectedShieldsExcludingEarnedUnlockScope/);
   assert.match(iosModule, /selection\.applicationTokens\.subtracting/);
   assert.match(iosModule, /selection\.webDomainTokens\.subtracting/);
-  assert.match(iosModule, /applicationCategories = remainingCategories\.isEmpty \? nil : \.specific\(remainingCategories\)/);
+  assert.match(iosModule, /applicationCategories = remainingCategories\.isEmpty\s*\? nil\s*: \.specific\(remainingCategories, except: excludedApplications\)/);
+  assert.match(iosModule, /webDomainCategories = remainingCategories\.isEmpty\s*\? nil\s*: \.specific\(remainingCategories, except: excludedWebDomains\)/);
   assert.match(deviceActivity, /applySelectedShieldsExcludingEarnedUnlockScope/);
   assert.match(deviceActivity, /selection\.applicationTokens\.subtracting/);
   assert.match(deviceActivity, /selection\.webDomainTokens\.subtracting/);
+  assert.match(deviceActivity, /applicationCategories = remainingCategories\.isEmpty\s*\? nil\s*: \.specific\(remainingCategories, except: excludedApplications\)/);
+  assert.match(deviceActivity, /webDomainCategories = remainingCategories\.isEmpty\s*\? nil\s*: \.specific\(remainingCategories, except: excludedWebDomains\)/);
   assert.doesNotMatch(iosModule, /import NetworkExtension|NEDNSSettingsManager|NEDNSOverHTTPSSettings/);
 
   const parsedManifest = JSON.parse(safariManifest) as {
     permissions?: string[];
     host_permissions?: string[];
+    background?: { service_worker?: string };
+    browser_specific_settings?: { safari?: { strict_min_version?: string } };
     content_scripts?: Array<{ matches?: string[]; js?: string[] }>;
   };
   const expectedHosts = [
@@ -7199,6 +7189,8 @@ test("iOS shield handoff and Safari Focus Shield stay scoped and App Store safe"
     "https://intervention.freed.app/*"
   ];
   assert.deepEqual(parsedManifest.permissions, ["nativeMessaging"]);
+  assert.equal(parsedManifest.background?.service_worker, "background.js");
+  assert.equal(parsedManifest.browser_specific_settings?.safari?.strict_min_version, "15.4");
   assert.deepEqual(parsedManifest.host_permissions?.sort(), [...expectedHosts].sort());
   assert.deepEqual(parsedManifest.content_scripts?.[0]?.matches?.sort(), [...expectedHosts].sort());
   assert.deepEqual(parsedManifest.content_scripts?.[0]?.js, ["content.js"]);
@@ -7207,7 +7199,15 @@ test("iOS shield handoff and Safari Focus Shield stay scoped and App Store safe"
   assert.match(safariContentScript, /history\.pushState|history\.replaceState|popstate|MutationObserver/);
   assert.match(safariContentScript, /https:\/\/intervention\.freed\.app\/intervention/);
   assert.match(safariContentScript, /source:\s*"ios-safari-short-form"/);
+  assert.match(safariContentScript, /runtime\?\.sendMessage/);
+  assert.doesNotMatch(safariContentScript, /sendNativeMessage/);
   assert.doesNotMatch(safariContentScript, /originalUrl|originalURL|searchParams\.set\(["']url|[?&]url=/);
+  assert.match(safariBackground, /runtime\.onMessage\.addListener/);
+  assert.match(safariBackground, /sendNativeMessage/);
+  assert.match(safariBackground, /short-form:youtube-shorts/);
+  assert.match(safariBackground, /short-form:instagram-reels/);
+  assert.match(safariBackground, /short-form:tiktok-feed/);
+  assert.doesNotMatch(safariBackground, /originalUrl|originalURL|[?&]url=|<all_urls>/);
   assert.match(safariHandler, /browser-domain/);
   assert.match(safariHandler, /pendingInterventionRecordKey/);
   assert.match(safariHandler, /JSONEncoder\(\)\.encode\(record\)/);
@@ -7215,7 +7215,47 @@ test("iOS shield handoff and Safari Focus Shield stay scoped and App Store safe"
   assert.match(safariInfo, /com\.apple\.Safari\.web-extension/);
   assert.match(iosProject, /FREEDSafariFocusShield/);
   assert.match(iosProject, /FREEDSafariFocusShield\.appex in Embed App Extensions/);
+  assert.match(iosProject, /background\.js in Resources/);
+  assert.equal(
+    [...iosProject.matchAll(/CODE_SIGN_ENTITLEMENTS = FREEDSafariFocusShield\/FREEDSafariFocusShield\.entitlements;[\s\S]{0,500}?IPHONEOS_DEPLOYMENT_TARGET = 15\.4;/g)].length,
+    2
+  );
   assert.match(appEntitlements, /applinks:intervention\.freed\.app/);
+});
+
+test("iOS DNS Settings retirement removes stale client and release contracts without removing Android DNS", () => {
+  const nativeProtectionBridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+  const adultDomainFeedSync = readFileSync("src/lib/adult-domain-feed-sync.ts", "utf8");
+  const protectionPermissions = readFileSync("src/lib/protection-permissions.ts", "utf8");
+  const appSurface = readFileSync("src/features/freed-app.tsx", "utf8");
+  const releaseEnvPreflight = readFileSync("scripts/release-env-preflight.js", "utf8");
+  const releaseReadiness = readFileSync("scripts/release-readiness.ts", "utf8");
+  const privacyAudit = readFileSync("scripts/privacy-safety-audit.js", "utf8");
+  const storeAudit = readFileSync("scripts/store-legal-policy-audit.js", "utf8");
+  const iosPolicyPack = readFileSync("docs/store-policy/ios-screen-time-safari-dns-review.md", "utf8");
+  const appStoreMetadata = readFileSync("store/app-store/metadata.md", "utf8");
+  const appStorePrivacy = readFileSync("store/app-store/app-privacy.md", "utf8");
+  const consolePacket = readFileSync("store/console-launch-packet.md", "utf8");
+  const androidModule = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+    "utf8"
+  );
+
+  assert.doesNotMatch(nativeProtectionBridge, /configureDnsSettings|clearDnsSettings|dnsSettingsAvailable|dnsSettingsEntitled/);
+  assert.doesNotMatch(adultDomainFeedSync, /configureDnsSettings|buildIosDnsSettingsRequest|EXPO_PUBLIC_IOS_DNS_SETTINGS/);
+  assert.doesNotMatch(protectionPermissions, /NetworkExtension DNS Settings|ios-dns-domain-filter/);
+  assert.doesNotMatch(appSurface, /iosDnsSettings|dnsSettingsAvailable|dnsSettingsEntitled|iOS matched-domain DNS settings/);
+  assert.doesNotMatch(releaseEnvPreflight, /EXPO_PUBLIC_IOS_DNS_SETTINGS|optional-ios-dns-settings/);
+  assert.doesNotMatch(releaseReadiness, /configureDnsSettings|EXPO_PUBLIC_IOS_DNS_SETTINGS|optional-ios-dns-settings/);
+  assert.doesNotMatch(privacyAudit, /NetworkExtension DNS Settings|optional iOS DNS settings/i);
+  assert.doesNotMatch(storeAudit, /Optional DNS Settings|Screen Time\/Safari\/DNS/);
+  assert.doesNotMatch(iosPolicyPack, /NetworkExtension DNS Settings|dns-settings entitlement|Optional DNS Settings/i);
+  assert.doesNotMatch(appStoreMetadata, /Optional DNS Settings|dns-settings entitlement/i);
+  assert.doesNotMatch(appStorePrivacy, /Optional DNS Settings|dns-settings entitlement/i);
+  assert.doesNotMatch(consolePacket, /Optional DNS Settings|dns-settings entitlement/i);
+  assert.match(androidModule, /"dnsFiltering" to true/);
+  assert.match(androidModule, /AsyncFunction\("applyAdultContentFilter"/);
+  assert.match(androidModule, /FreedVpnService\.startUserEnabledGuard\(context\)/);
 });
 
 test("premium plans expose stable product identifiers", () => {
@@ -8069,7 +8109,7 @@ test("release env preflight validates production store ad and AI configuration",
 
   const passing = runReleaseEnvPreflight(validEnv);
   assert.equal(passing.status, 0, passing.output);
-  assert.match(passing.output, /Result: 31 pass, 0 fail/);
+  assert.match(passing.output, /Result: 30 pass, 0 fail/);
 
   const fcmAccessTokenWithProjectId = runReleaseEnvPreflight(
     validEnv
@@ -8084,7 +8124,7 @@ test("release env preflight validates production store ad and AI configuration",
   assert.equal(passingReport.report.sanitized, true);
   assert.match(readFileSync("scripts/release-env-preflight.js", "utf8"), /sanitizeLocalHomePaths/);
   assert.match(readFileSync("scripts/release-env-preflight.js", "utf8"), /sanitizeReportCheck/);
-  assert.equal(passingReport.report.passCount, 31);
+  assert.equal(passingReport.report.passCount, 30);
   assert.equal(passingReport.report.failCount, 0);
   assert.ok(Array.isArray(passingReport.report.blockerGroups));
   const passingBlockerGroups = passingReport.report.blockerGroups as Array<{
@@ -8718,20 +8758,6 @@ test("release env preflight validates production store ad and AI configuration",
   assert.match(invalidRetentionClientTimeout.output, /optional-retention-endpoint/);
   assert.match(invalidRetentionClientTimeout.output, /EXPO_PUBLIC_RETENTION_TIMEOUT_MS must be an integer between 1000 and 12000/);
 
-  const unsafeIosDnsSettings = runReleaseEnvPreflight(
-    [
-      validEnv,
-      "EXPO_PUBLIC_IOS_DNS_SETTINGS_RESOLVER_URL=http://family.cloudflare-dns.com/dns-query",
-      "EXPO_PUBLIC_IOS_DNS_SETTINGS_SERVER_ADDRESSES=1.1.1.3,not-a-server",
-      "EXPO_PUBLIC_IOS_DNS_SETTINGS_MAX_DOMAINS=25000"
-    ].join("\n")
-  );
-  assert.notEqual(unsafeIosDnsSettings.status, 0);
-  assert.match(unsafeIosDnsSettings.output, /optional-ios-dns-settings/);
-  assert.match(unsafeIosDnsSettings.output, /must use HTTPS/);
-  assert.match(unsafeIosDnsSettings.output, /IP address literals only/);
-  assert.match(unsafeIosDnsSettings.output, /between 1 and 10000/);
-
   const failingReport = runReleaseEnvPreflight(
     validEnv.replace("GEMINI_API_KEY=AIzaSyA1234567890abcdefABCDEF_1234567890", "GEMINI_API_KEY=freed-prod-gemini-key"),
     {},
@@ -8777,7 +8803,12 @@ test("release env preflight validates production store ad and AI configuration",
   );
   assert.notEqual(debugAndroidSigning.status, 0);
   assert.match(debugAndroidSigning.output, /android-release-signing/);
-  assert.match(debugAndroidSigning.output, /must not use the Android debug keystore certificate/);
+  assert.match(
+    debugAndroidSigning.output,
+    existsSync(join(process.cwd(), "android/app/debug.keystore"))
+      ? /must not use the Android debug keystore certificate/
+      : /must point to an existing local upload keystore file/
+  );
 });
 
 test("release env preflight rejects unsafe env-file paths", () => {
@@ -9012,7 +9043,7 @@ test("release verifier lists env-file aware command order", () => {
   assert.match(verifier, /prototype-design-files/);
   assert.match(verifier, /requiredArrayFields/);
   assert.match(verifier, /expectedPreflightReportCheckIds/);
-  assert.match(verifier, /optional-ios-dns-settings/);
+  assert.doesNotMatch(verifier, /optional-ios-dns-settings/);
   assert.match(verifier, /optional-challenge-weather-context/);
   assert.match(verifier, /optional-recovery-backup-sync-endpoint/);
   assert.match(verifier, /optional-supabase-auth-client/);
@@ -10322,14 +10353,14 @@ test("performance safety audit covers event-driven native protection", () => {
   assert.match(output, /visible challenge path without screenshots or OCR/);
   assert.match(output, /per-session query\/blocked\/allowed\/SERVFAIL\/malformed counters/);
   assert.match(output, /android-vpn-revocation-cleanup/);
-  assert.match(output, /ios-dns-settings-no-full-vpn/);
+  assert.match(output, /ios-no-network-extension/);
   assert.match(output, /android-private-dns-diagnostics/);
   assert.match(output, /android-accessibility-event-driven-app-shield/);
   assert.match(output, /android-usage-stats-bridge/);
   assert.match(output, /android-supported-app-allowlist/);
   assert.match(output, /android-native-domain-feed-sync/);
   assert.match(output, /ios-safari-short-form-web-rules/);
-  assert.match(output, /web short-form path rules/);
+  assert.match(output, /background-worker contract/);
   assert.match(output, /android-short-form-heuristics-are-event-driven/);
   assert.match(output, /no-native-polling-loop/);
   assert.match(output, /runtime-no-continuous-screenshot-or-ocr/);
@@ -10353,7 +10384,7 @@ test("privacy safety audit covers platform store policy disclosure packs", () =>
   assert.match(output, /AccessibilityService disclosure/);
   assert.match(output, /special-use foreground-service justification/);
   assert.match(output, /ios-app-store-policy-review-pack/);
-  assert.match(output, /Screen Time, Safari Content Blocker, optional DNS Settings/);
+  assert.match(output, /Screen Time, Safari Content Blocker and Focus Shield/);
   assert.match(output, /production-endpoint-secret-barrier/);
   assert.match(output, /in-app-privacy-support-deletion/);
   assert.match(output, /Profile exposes privacy policy, support contact, server deletion request/);
@@ -10369,7 +10400,7 @@ test("privacy safety audit covers platform store policy disclosure packs", () =>
   assert.match(releaseOutput, /iOS app\/extension entitlements default local recovery and app-group files to Complete Data Protection/);
   assert.match(releaseOutput, /Android disables implicit OS backup\/device transfer and source plus generated release manifests do not ship Ad ID/);
   assert.match(releaseOutput, /Profile exposes privacy policy\/support\/server-deletion\/local-deletion controls/);
-  assert.match(releaseOutput, /Android and iOS policy disclosures cover Accessibility\/DNS Guard plus Screen Time\/Safari\/DNS Settings data boundaries/);
+  assert.match(releaseOutput, /Android and iOS policy disclosures cover Accessibility\/DNS Guard plus Screen Time\/Safari data boundaries/);
 });
 
 test("backend architecture contract covers server-side production slices without exposing secrets", () => {
@@ -24557,77 +24588,6 @@ async function runAsyncTests() {
       ),
       null
     );
-  });
-
-  test("iOS DNS settings request is explicit bounded matched-domain config", () => {
-    const feed = createAdultDomainFeed({
-      version: "dns-sync-test",
-      generatedAt: "2026-05-17T00:00:00.000Z",
-      domains: [
-        "adult-a.example",
-        "adult-b.example",
-        "adult-c.example",
-        "www.adult-d.example"
-      ],
-      exceptions: []
-    });
-
-    assert.equal(
-      buildIosDnsSettingsRequest(feed, {
-        resolverURL: "",
-        serverAddresses: "1.1.1.3,1.0.0.3"
-      }),
-      null
-    );
-    assert.equal(
-      buildIosDnsSettingsRequest(feed, {
-        resolverURL: "http://family.cloudflare-dns.com/dns-query",
-        serverAddresses: "1.1.1.3"
-      }),
-      null
-    );
-    assert.equal(
-      buildIosDnsSettingsRequest(feed, {
-        resolverURL: "https://user:pass@family.cloudflare-dns.com/dns-query",
-        serverAddresses: "1.1.1.3"
-      }),
-      null
-    );
-    assert.equal(
-      buildIosDnsSettingsRequest(feed, {
-        resolverURL: "https://family.cloudflare-dns.com/dns-query?token=secret",
-        serverAddresses: "1.1.1.3"
-      }),
-      null
-    );
-    assert.equal(
-      buildIosDnsSettingsRequest(feed, {
-        resolverURL: "https://family.cloudflare-dns.com/dns-query#access_token=secret",
-        serverAddresses: "1.1.1.3"
-      }),
-      null
-    );
-    assert.equal(
-      buildIosDnsSettingsRequest(feed, {
-        resolverURL: "https://family.cloudflare-dns.com/dns-query",
-        serverAddresses: ""
-      }),
-      null
-    );
-
-    const request = buildIosDnsSettingsRequest(feed, {
-      resolverURL: "https://family.cloudflare-dns.com/dns-query",
-      serverAddresses: "1.1.1.3, 1.0.0.3,1.1.1.3",
-      providerLabel: " FREED release DNS ",
-      maxDomains: 2
-    });
-
-    assert.deepEqual(request, {
-      resolverURL: "https://family.cloudflare-dns.com/dns-query",
-      serverAddresses: ["1.1.1.3", "1.0.0.3"],
-      matchDomains: ["adult-a.example", "adult-b.example"],
-      providerLabel: "FREED release DNS"
-    });
   });
 
   await asyncTest("challenge weather context stays coarse and bounded", async () => {

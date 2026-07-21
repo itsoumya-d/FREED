@@ -107,12 +107,6 @@ export type ProtectionStatus = {
   safariContentBlockerStateCheckedAt?: string;
   safariContentBlockerStateError?: string;
   safariContentBlockerLastReloadError?: string;
-  dnsSettingsAvailable?: boolean;
-  dnsSettingsActive?: boolean;
-  dnsSettingsEntitled?: boolean;
-  dnsSettingsProvider?: string;
-  dnsSettingsMatchDomainCount?: number;
-  dnsSettingsLastError?: string;
   mode: "screen-time" | "accessibility" | "dns" | "vpn-fallback" | "prototype";
   message: string;
 };
@@ -217,13 +211,6 @@ type NativeFreedProtection = {
   ): Promise<ProtectionStatus>;
   configureAdultDomainFeed?(domains: string[], version: string, checksum: string, generatedAt: string): Promise<ProtectionStatus>;
   configureSafariContentBlockerRules?(rulesJson: string, version: string, checksum: string, generatedAt: string): Promise<ProtectionStatus>;
-  configureDnsSettings?(
-    resolverURL: string,
-    serverAddresses: string[],
-    matchDomains: string[],
-    providerLabel: string
-  ): Promise<ProtectionStatus>;
-  clearDnsSettings?(): Promise<ProtectionStatus>;
   applyEarnedUnlockWindow?(expiresAt: string, sourceAttemptHost?: string): Promise<ProtectionStatus>;
   startFocusShieldCalibration?(request: FocusShieldCalibrationRequest): Promise<FocusShieldCalibrationResult>;
   cancelFocusShieldCalibration?(): Promise<FocusShieldCalibrationResult>;
@@ -367,23 +354,6 @@ export async function configureSafariContentBlockerRules(
   const module = getNativeModule();
   if (!module) return fallbackStatus;
   return (await module.configureSafariContentBlockerRules?.(rulesJson, version, checksum, generatedAt)) ?? module.getStatus();
-}
-
-export async function configureDnsSettings(
-  resolverURL: string,
-  serverAddresses: string[],
-  matchDomains: string[],
-  providerLabel = "FREED adult-domain DNS"
-) {
-  const module = getNativeModule();
-  if (!module) return fallbackStatus;
-  return (await module.configureDnsSettings?.(resolverURL, serverAddresses, matchDomains, providerLabel)) ?? module.getStatus();
-}
-
-export async function clearDnsSettings() {
-  const module = getNativeModule();
-  if (!module) return fallbackStatus;
-  return (await module.clearDnsSettings?.()) ?? module.getStatus();
 }
 
 export async function applyEarnedUnlockWindow(expiresAt: string, sourceAttemptHost?: string) {

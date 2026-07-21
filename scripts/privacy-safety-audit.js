@@ -682,7 +682,6 @@ const checks = [
       protectionPermissions.includes("app-limit threshold") &&
       protectionPermissions.includes("FamilyControls and ManagedSettings") &&
       protectionPermissions.includes("Safari Content Blocker") &&
-      protectionPermissions.includes("NetworkExtension DNS Settings") &&
       protectionPermissions.includes("DNS-only VPN permission") &&
       protectionPermissions.includes("Native feed sync") &&
 	      protectionPermissions.includes("feed version, checksum, and domain count") &&
@@ -764,7 +763,7 @@ const checks = [
       appSurface.includes("Native adult-domain feed loaded") &&
       appSurface.includes("native permission/feed status") &&
       appSurface.includes("without saving a blocked attempt"),
-	    "Protection setup explains platform permissions separately, documents Safari, Screen Time, optional iOS DNS settings, DNS-only VPN, native feed sync, Usage Access, Accessibility, and platform-aware on-demand challenge-verification data boundaries, and tests activation without writing fake recovery history."
+	    "Protection setup explains platform permissions separately, documents Safari, Screen Time, Android DNS-only VPN, native feed sync, Usage Access, Accessibility, and platform-aware on-demand challenge-verification data boundaries, and tests activation without writing fake recovery history."
 	  ),
   check(
     "android-play-policy-disclosure-pack",
@@ -801,15 +800,13 @@ const checks = [
 	  ),
   check(
     "ios-app-store-policy-review-pack",
-    iosPolicyPack.includes("iOS Screen Time, Safari, And DNS Settings Review Pack") &&
+    iosPolicyPack.includes("iOS Screen Time And Safari Review Pack") &&
       iosPolicyPack.includes("Family Controls entitlement") &&
       iosPolicyPack.includes("FamilyActivityPicker") &&
       iosPolicyPack.includes("ManagedSettings adult web filtering") &&
       iosPolicyPack.includes("DeviceActivity schedules") &&
       iosPolicyPack.includes("Safari Content Blocker") &&
-      iosPolicyPack.includes("web short-form path blocking in Safari") &&
-      iosPolicyPack.includes("NetworkExtension DNS Settings") &&
-      iosPolicyPack.includes("dns-settings") &&
+      iosPolicyPack.includes("Safari Focus Shield") &&
       iosPolicyPack.includes("FREED cannot and does not read third-party app screens on iOS") &&
       iosPolicyPack.includes("FREED cannot and does not detect Instagram Reels, TikTok, or YouTube Shorts inside native third-party apps on iOS") &&
       iosPolicyPack.includes("FREED does not take screenshots, run OCR, or perform continuous image classification for protection") &&
@@ -817,7 +814,6 @@ const checks = [
       iosPolicyPack.includes("FREED does not full-tunnel traffic") &&
       iosPolicyPack.includes("FREED does not inspect page contents") &&
       iosPolicyPack.includes("does not receive users' Safari browsing history") &&
-	      iosPolicyPack.includes("No all-domain DNS profile") &&
 	      iosPolicyPack.includes("No packet tunnel") &&
 	      iosPolicyPack.includes("No VPN manager") &&
 	      iosPolicyPack.includes("No TLS interception") &&
@@ -831,7 +827,7 @@ const checks = [
       iosPolicyPack.includes("ios.safariShortFormChallengeHandoffRawPathStored=false") &&
       iosPolicyPack.includes("ios.safariShortFormChallengeHandoffNativeUnlockActive=false") &&
       iosPolicyPack.includes("ios.selectedAppDailyLimitArtifact"),
-    "iOS App Store review pack documents Screen Time, Safari Content Blocker, optional DNS Settings, challenge-verification boundaries, and required physical-device artifacts."
+    "iOS App Store review pack documents Screen Time, Safari Content Blocker and Focus Shield, challenge-verification boundaries, and required physical-device artifacts."
   ),
   check(
     "store-console-privacy-answer-sheets",

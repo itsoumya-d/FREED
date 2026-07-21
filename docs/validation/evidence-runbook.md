@@ -29,7 +29,7 @@ The evidence scaffold, draft validator, and promotion CLIs fail on unknown flags
 
 Target file: `docs/validation/evidence/ios-physical-device.json`
 
-Run on a physical iPhone signed with Apple-approved Family Controls and the `group.app.freed.recovery` app group. Use `docs/store-policy/ios-screen-time-safari-dns-review.md` as the source copy for App Store review notes covering Screen Time, Safari Content Blocker, optional DNS Settings, and iOS platform boundaries.
+Run on a physical iPhone signed with Apple-approved Family Controls and the `group.app.freed.recovery` app group. Use `docs/store-policy/ios-screen-time-safari-dns-review.md` as the source copy for App Store review notes covering Screen Time, Safari Content Blocker, Safari Focus Shield, and iOS platform boundaries.
 
 Use the physical-device capture helper to collect device metadata and a manual QA manifest without marking the gate complete:
 
