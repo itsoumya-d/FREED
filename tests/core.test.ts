@@ -1636,7 +1636,11 @@ test("Android Focus Shield persists vetted local rules and enforces scoped surfa
   assert.match(ruleStore, /fun remove\(/);
   assert.match(ruleStore, /fun matchingPresetRules\(/);
   assert.match(ruleStore, /fun isSurfaceUnlockActiveForRule\(/);
-  assert.match(ruleStore, /FOCUS_SHIELD_UNLOCK_RULE_ID/);
+  assert.match(ruleStore, /FOCUS_SHIELD_UNLOCKS = "focus_shield_unlocks_v1"/);
+  assert.match(ruleStore, /fun activeSurfaceUnlocks\(/);
+  assert.match(ruleStore, /@Synchronized\s+fun configure\(/);
+  assert.match(ruleStore, /@Synchronized\s+fun remove\(/);
+  assert.match(ruleStore, /@Synchronized\s+fun applySurfaceUnlock\(/);
   assert.doesNotMatch(ruleStore, /nodeText|rawAccessibilityTree|screenshot|coordinate/i);
 
   assert.match(module, /AsyncFunction\("configureFocusShieldRule"\)/);
@@ -1652,13 +1656,55 @@ test("Android Focus Shield persists vetted local rules and enforces scoped surfa
   const dailyLimitCheck = service.indexOf("isDailyAppLimitReached(normalizedPackage)");
   const immediateFocusShieldCheck = service.indexOf("matchingFocusShieldRule");
   assert.ok(dailyLimitCheck >= 0 && immediateFocusShieldCheck > dailyLimitCheck);
-  assert.match(service, /FreedFocusShieldRules\.matchingPresetRules/);
+  assert.match(service, /val matchingFocusShieldRules = .*FreedFocusShieldRules\.matchingPresetRules/s);
+  assert.match(service, /matchingFocusShieldRules\s*\.firstOrNull/);
   assert.match(service, /!FreedFocusShieldRules\.isSurfaceUnlockActiveForRule/);
+  assert.match(service, /if \(matchingFocusShieldRules\.isEmpty\(\)\) \{\s*beginOrContinueShortFormSession/s);
   assert.match(service, /launchFocusShieldIntervention/);
   assert.match(service, /beginOrContinueShortFormSession/);
   assert.match(service, /PENDING_FOCUS_SHIELD_RULE_ID/);
   assert.match(service, /freed_focus_shield_rule_id/);
   assert.match(interventionActivity, /freed_focus_shield_rule_id/);
+});
+
+test("Focus Shield integration routes scoped challenge unlocks without widening package access", () => {
+  const pending = {
+    url: "https://youtube-shorts.app.freed.local",
+    host: "youtube-shorts.app.freed.local",
+    sourcePackage: "com.google.android.youtube",
+    reason: "Focus Shield matched a configured surface rule.",
+    matchedRule: "focus-shield:focus-rule-a7f9",
+    detectedAt: "2026-07-21T06:30:00.000Z",
+    scope: {
+      kind: "android-surface" as const,
+      ruleId: "focus-rule-a7f9",
+      packageName: "com.google.android.youtube"
+    }
+  };
+  const attempt = createNativeInterventionAttempt(pending);
+  const scopedAttempt = attempt as typeof attempt & { scope?: typeof pending.scope };
+  const appSurface = readFileSync("src/features/freed-app.tsx", "utf8");
+  const bridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+  const androidModule = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+    "utf8"
+  );
+
+  assert.equal(attempt.source, "app");
+  assert.equal(attempt.sourcePackage, "com.google.android.youtube");
+  assert.deepEqual(scopedAttempt.scope, pending.scope);
+  assert.match(appSurface, /applyFocusShieldEarnedUnlock/);
+  assert.match(appSurface, /activeAttempt\?\.scope\?\.kind === "android-surface"/);
+  assert.match(appSurface, /applyFocusShieldEarnedUnlock\(focusShieldExpiresAt, activeAttempt\.scope\)/);
+  assert.doesNotMatch(appSurface, /applyEarnedUnlockWindow\(focusShieldExpiresAt/);
+  assert.match(bridge, /focusShieldRuleCount\?: number/);
+  assert.match(bridge, /focusShieldEnabledRuleCount\?: number/);
+  assert.match(bridge, /focusShieldRuleStoreHealth\?: "empty" \| "ready" \| "degraded"/);
+  assert.match(bridge, /activeFocusShieldUnlockExpiresAt\?: string/);
+  assert.match(bridge, /activeFocusShieldUnlockRuleId\?: string/);
+  assert.match(bridge, /activeFocusShieldUnlockPackageName\?: string/);
+  assert.match(bridge, /sanitizeFocusShieldStatusFields/);
+  assert.doesNotMatch(androidModule, /clearEarnedUnlockPrefs\(context\)\s*\n\s*FreedFocusShieldRules\.clearSurfaceUnlock/);
 });
 
 test("allows normal browsing domains by default", () => {

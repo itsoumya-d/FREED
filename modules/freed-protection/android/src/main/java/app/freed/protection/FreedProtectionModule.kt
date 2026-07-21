@@ -627,7 +627,6 @@ class FreedProtectionModule : Module() {
         message = "React context is unavailable."
       )
       clearEarnedUnlockPrefs(context)
-      FreedFocusShieldRules.clearSurfaceUnlock(context)
 
       statusPayloadWithAndroidDiagnostics(context, statusPayload(
         authorized = isAccessibilityServiceEnabled(context) || FreedVpnService.isRunning,

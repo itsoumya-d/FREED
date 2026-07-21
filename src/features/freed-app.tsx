@@ -27,6 +27,7 @@ import {
   ProtectionStatus,
   applyAdultContentFilter,
   applyEarnedUnlockWindow,
+  applyFocusShieldEarnedUnlock,
   classifyChallengePhoto,
   configureBlockedAppPackages,
   clearEarnedUnlockWindow,
@@ -166,7 +167,8 @@ import {
   getActiveNativeEarnedUnlock,
   isFreshPendingIntervention,
   isIosScreenTimeShieldSource,
-  unlockSourceForAttempt
+  unlockSourceForAttempt,
+  type NativeInterventionAttempt
 } from "@/lib/native-intervention";
 import {
   getSelectedScreenTimeTargetCount,
@@ -7119,7 +7121,7 @@ export default function FreedApp() {
   const [screen, setScreen] = React.useState<Screen>("splash");
   const [tab, setTab] = React.useState<Tab>("home");
   const [quizIndex, setQuizIndex] = React.useState(0);
-  const [activeAttempt, setActiveAttempt] = React.useState<BlockingAttempt | null>(null);
+  const [activeAttempt, setActiveAttempt] = React.useState<NativeInterventionAttempt | null>(null);
   const [selectedChallenge, setSelectedChallenge] = React.useState<RecoveryChallenge | null>(null);
   const [protectionCapability, setProtectionCapability] = React.useState<ProtectionCapability | null>(null);
   const [protectionStatus, setProtectionStatus] = React.useState<ProtectionStatus | null>(null);
@@ -7927,12 +7929,20 @@ export default function FreedApp() {
             setScreen("main");
           }}
           onComplete={(challenge, outcome) => {
+            if (activeAttempt?.scope?.kind === "android-surface") {
+              const focusShieldDurationMinutes = Math.max(1, Math.min(120, disciplineSettings.unlockDurationMinutes));
+              const focusShieldExpiresAt = new Date(Date.now() + focusShieldDurationMinutes * 60_000).toISOString();
+              void applyFocusShieldEarnedUnlock(focusShieldExpiresAt, activeAttempt.scope)
+                .then((status) => setProtectionStatus(status))
+                .catch(() => undefined)
+                .finally(() => void refreshProtectionStatus());
+            }
             setRecoveryState((current) => {
               const sourceAttempt = unlockSourceForAttempt(activeAttempt);
               const completed = recordChallengeCompletion(current, challenge, undefined, sourceAttempt, outcome);
               return recordEarnedUnlock(completed, challenge, {
                 durationMinutes: current.disciplineSettings.unlockDurationMinutes,
-                sourceAttemptHost: sourceAttempt
+                sourceAttemptHost: activeAttempt?.scope?.kind === "android-surface" ? undefined : sourceAttempt
               });
             });
             setActiveAttempt(null);

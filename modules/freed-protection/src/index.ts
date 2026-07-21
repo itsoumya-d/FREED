@@ -45,6 +45,12 @@ export type ProtectionStatus = {
   appLimitReachedToday?: boolean;
   appLimitReachedDate?: string;
   shortFormInterruptionSeconds?: number;
+  focusShieldRuleCount?: number;
+  focusShieldEnabledRuleCount?: number;
+  focusShieldRuleStoreHealth?: "empty" | "ready" | "degraded";
+  activeFocusShieldUnlockExpiresAt?: string;
+  activeFocusShieldUnlockRuleId?: string;
+  activeFocusShieldUnlockPackageName?: string;
   activeUnlockExpiresAt?: string;
   activeUnlockSourcePackage?: string;
   vpnConsentRequired?: boolean;
@@ -292,7 +298,7 @@ export async function getProtectionCapabilities() {
 }
 
 export async function getProtectionStatus() {
-  return (await getNativeModule()?.getStatus()) ?? fallbackStatus;
+  return sanitizeFocusShieldStatusFields((await getNativeModule()?.getStatus()) ?? fallbackStatus);
 }
 
 export async function requestProtectionAuthorization() {
@@ -431,7 +437,49 @@ export async function applyFocusShieldEarnedUnlock(expiresAt: string, scope: Foc
 
   const module = getNativeModule();
   if (!module?.applyFocusShieldEarnedUnlock) return fallbackStatus;
-  return module.applyFocusShieldEarnedUnlock(expiresAt, sanitizedScope);
+  return sanitizeFocusShieldStatusFields(await module.applyFocusShieldEarnedUnlock(expiresAt, sanitizedScope));
+}
+
+export function sanitizeFocusShieldStatusFields(value: ProtectionStatus): ProtectionStatus {
+  const source = value as ProtectionStatus & Record<string, unknown>;
+  const sanitized: ProtectionStatus = { ...value };
+  delete sanitized.focusShieldRuleCount;
+  delete sanitized.focusShieldEnabledRuleCount;
+  delete sanitized.focusShieldRuleStoreHealth;
+  delete sanitized.activeFocusShieldUnlockExpiresAt;
+  delete sanitized.activeFocusShieldUnlockRuleId;
+  delete sanitized.activeFocusShieldUnlockPackageName;
+
+  const ruleCount = sanitizeFocusShieldCount(source.focusShieldRuleCount);
+  const enabledRuleCount = sanitizeFocusShieldCount(source.focusShieldEnabledRuleCount);
+  if (ruleCount !== undefined) sanitized.focusShieldRuleCount = ruleCount;
+  if (enabledRuleCount !== undefined && (ruleCount === undefined || enabledRuleCount <= ruleCount)) {
+    sanitized.focusShieldEnabledRuleCount = enabledRuleCount;
+  }
+  if (source.focusShieldRuleStoreHealth === "empty" || source.focusShieldRuleStoreHealth === "ready" || source.focusShieldRuleStoreHealth === "degraded") {
+    sanitized.focusShieldRuleStoreHealth = source.focusShieldRuleStoreHealth;
+  }
+
+  const activeScope = sanitizeFocusShieldInterventionScope({
+    kind: "android-surface",
+    ruleId: source.activeFocusShieldUnlockRuleId,
+    packageName: source.activeFocusShieldUnlockPackageName
+  });
+  const activeExpiresAt = typeof source.activeFocusShieldUnlockExpiresAt === "string"
+    && Number.isFinite(Date.parse(source.activeFocusShieldUnlockExpiresAt))
+    ? source.activeFocusShieldUnlockExpiresAt
+    : null;
+  if (activeScope?.kind === "android-surface" && activeExpiresAt) {
+    sanitized.activeFocusShieldUnlockExpiresAt = activeExpiresAt;
+    sanitized.activeFocusShieldUnlockRuleId = activeScope.ruleId;
+    sanitized.activeFocusShieldUnlockPackageName = activeScope.packageName;
+  }
+
+  return sanitized;
+}
+
+function sanitizeFocusShieldCount(value: unknown): number | undefined {
+  return typeof value === "number" && Number.isInteger(value) && value >= 0 && value <= 64 ? value : undefined;
 }
 
 function sanitizeFocusShieldCalibrationResult(value: unknown): FocusShieldCalibrationResult {

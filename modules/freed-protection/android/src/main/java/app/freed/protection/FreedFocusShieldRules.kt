@@ -70,11 +70,16 @@ internal data class FreedFocusShieldRuleSnapshot(
     get() = rules.count { it.enabled }
 }
 
+internal data class FreedFocusShieldUnlock(
+  val ruleId: String,
+  val packageName: String,
+  val expiresAt: String,
+  val expiryMs: Long
+)
+
 internal object FreedFocusShieldRules {
   const val FOCUS_SHIELD_RULES = "focus_shield_rules_v1"
-  const val FOCUS_SHIELD_UNLOCK_EXPIRES_AT = "focus_shield_unlock_expires_at"
-  const val FOCUS_SHIELD_UNLOCK_RULE_ID = "focus_shield_unlock_rule_id"
-  const val FOCUS_SHIELD_UNLOCK_PACKAGE = "focus_shield_unlock_package"
+  const val FOCUS_SHIELD_UNLOCKS = "focus_shield_unlocks_v1"
 
   private const val CONTRACT_VERSION = 1
   private const val MAX_RULES = 64
@@ -126,6 +131,7 @@ internal object FreedFocusShieldRules {
   private val presetById = presets.associateBy { it.id }
   private val allowedViewIds = presets.associate { it.packageName to setOf(it.viewId) }
 
+  @Synchronized
   fun configure(context: Context, value: Map<String, Any?>): FreedFocusShieldRule? {
     val rule = sanitizeRule(value) ?: return null
     val current = snapshot(context).rules
@@ -140,6 +146,7 @@ internal object FreedFocusShieldRules {
 
   fun list(context: Context): List<FreedFocusShieldRule> = snapshot(context).rules
 
+  @Synchronized
   fun remove(context: Context, rawRuleId: String): Boolean {
     val ruleId = sanitizeRuleId(rawRuleId) ?: return false
     val existing = snapshot(context).rules
@@ -195,6 +202,7 @@ internal object FreedFocusShieldRules {
     }
   }
 
+  @Synchronized
   fun applySurfaceUnlock(
     context: Context,
     expiresAt: String,
@@ -212,62 +220,100 @@ internal object FreedFocusShieldRules {
 
     val boundedExpiryMs = minOf(requestedExpiryMs, nowMs + MAX_UNLOCK_MINUTES * 60_000L)
     val boundedExpiresAt = formatIsoMillis(boundedExpiryMs)
-    prefs(context).edit()
-      .putString(FOCUS_SHIELD_UNLOCK_EXPIRES_AT, boundedExpiresAt)
-      .putString(FOCUS_SHIELD_UNLOCK_RULE_ID, rule.id)
-      .putString(FOCUS_SHIELD_UNLOCK_PACKAGE, rule.packageName)
-      .apply()
+    val unlocks = activeSurfaceUnlocks(context, nowMs)
+      .filterNot { unlock -> unlock.ruleId == rule.id && unlock.packageName == rule.packageName }
+      .plus(FreedFocusShieldUnlock(rule.id, rule.packageName, boundedExpiresAt, boundedExpiryMs))
+    writeSurfaceUnlocks(context, unlocks)
     return boundedExpiresAt
   }
 
   fun isSurfaceUnlockActiveForRule(context: Context, rule: FreedFocusShieldRule): Boolean {
-    val preferences = prefs(context)
-    val storedRuleId = preferences.getString(FOCUS_SHIELD_UNLOCK_RULE_ID, null)
-    val storedPackage = preferences.getString(FOCUS_SHIELD_UNLOCK_PACKAGE, null)
-      ?.lowercase(Locale.US)
-    val expiryMs = preferences.getString(FOCUS_SHIELD_UNLOCK_EXPIRES_AT, null)
-      ?.let(::parseIsoMillis)
-
-    if (storedRuleId == rule.id && storedPackage == rule.packageName && expiryMs != null && expiryMs > System.currentTimeMillis()) {
-      return true
+    return activeSurfaceUnlocks(context).any { unlock ->
+      unlock.ruleId == rule.id && unlock.packageName == rule.packageName
     }
-    if (expiryMs == null || expiryMs <= System.currentTimeMillis()) clearSurfaceUnlock(context)
-    return false
   }
 
   fun activeSurfaceUnlockExpiresAt(context: Context): String? {
-    val preferences = prefs(context)
-    val ruleId = preferences.getString(FOCUS_SHIELD_UNLOCK_RULE_ID, null) ?: return null
-    val packageName = preferences.getString(FOCUS_SHIELD_UNLOCK_PACKAGE, null) ?: return null
-    val rule = snapshot(context).rules.firstOrNull { it.enabled && it.id == ruleId && it.packageName == packageName }
-    if (rule == null) {
-      clearSurfaceUnlock(context)
-      return null
-    }
-    if (!isSurfaceUnlockActiveForRule(context, rule)) return null
-    return preferences.getString(FOCUS_SHIELD_UNLOCK_EXPIRES_AT, null)
+    return activeSurfaceUnlocks(context).firstOrNull()?.expiresAt
   }
 
   fun activeSurfaceUnlockRuleId(context: Context): String? {
-    if (activeSurfaceUnlockExpiresAt(context) == null) return null
-    return prefs(context).getString(FOCUS_SHIELD_UNLOCK_RULE_ID, null)
+    return activeSurfaceUnlocks(context).firstOrNull()?.ruleId
   }
 
   fun activeSurfaceUnlockPackage(context: Context): String? {
-    if (activeSurfaceUnlockExpiresAt(context) == null) return null
-    return prefs(context).getString(FOCUS_SHIELD_UNLOCK_PACKAGE, null)
+    return activeSurfaceUnlocks(context).firstOrNull()?.packageName
   }
 
+  @Synchronized
+  fun activeSurfaceUnlocks(context: Context, nowMs: Long = System.currentTimeMillis()): List<FreedFocusShieldUnlock> {
+    val raw = prefs(context).getString(FOCUS_SHIELD_UNLOCKS, null)?.trim().orEmpty()
+    if (raw.isBlank()) return emptyList()
+    val validRules = snapshot(context).rules
+      .filter { it.enabled }
+      .map { rule -> rule.id to rule.packageName }
+      .toSet()
+    var rejected = 0
+    val unlocks = try {
+      val array = JSONArray(raw)
+      buildList<FreedFocusShieldUnlock> {
+        for (index in 0 until array.length()) {
+          val item = array.optJSONObject(index)
+          val ruleId = sanitizeRuleId(item?.optString("ruleId"))
+          val packageName = sanitizePackageName(item?.optString("packageName"))
+          val expiresAt = item?.optString("expiresAt")?.takeIf { it.isNotBlank() }
+          val expiryMs = expiresAt?.let(::parseIsoMillis)
+          if (
+            ruleId == null ||
+            packageName == null ||
+            expiresAt == null ||
+            expiryMs == null ||
+            expiryMs <= nowMs ||
+            !validRules.contains(ruleId to packageName)
+          ) {
+            rejected += 1
+          } else if (none { unlock -> unlock.ruleId == ruleId && unlock.packageName == packageName }) {
+            add(FreedFocusShieldUnlock(ruleId, packageName, expiresAt, expiryMs))
+          } else {
+            rejected += 1
+          }
+        }
+      }
+    } catch (_: Exception) {
+      rejected += 1
+      emptyList()
+    }
+    val sorted = unlocks.sortedWith(compareByDescending<FreedFocusShieldUnlock> { it.expiryMs }.thenBy { it.ruleId })
+    if (rejected > 0) writeSurfaceUnlocks(context, sorted)
+    return sorted
+  }
+
+  @Synchronized
   fun clearSurfaceUnlock(context: Context) {
-    prefs(context).edit()
-      .remove(FOCUS_SHIELD_UNLOCK_EXPIRES_AT)
-      .remove(FOCUS_SHIELD_UNLOCK_RULE_ID)
-      .remove(FOCUS_SHIELD_UNLOCK_PACKAGE)
-      .apply()
+    prefs(context).edit().remove(FOCUS_SHIELD_UNLOCKS).apply()
   }
 
   private fun clearSurfaceUnlockIfRule(context: Context, ruleId: String) {
-    if (prefs(context).getString(FOCUS_SHIELD_UNLOCK_RULE_ID, null) == ruleId) clearSurfaceUnlock(context)
+    writeSurfaceUnlocks(context, activeSurfaceUnlocks(context).filterNot { unlock -> unlock.ruleId == ruleId })
+  }
+
+  private fun writeSurfaceUnlocks(context: Context, unlocks: List<FreedFocusShieldUnlock>) {
+    if (unlocks.isEmpty()) {
+      prefs(context).edit().remove(FOCUS_SHIELD_UNLOCKS).apply()
+      return
+    }
+    val array = JSONArray()
+    unlocks
+      .sortedWith(compareByDescending<FreedFocusShieldUnlock> { it.expiryMs }.thenBy { it.ruleId })
+      .forEach { unlock ->
+        array.put(
+          JSONObject()
+            .put("ruleId", unlock.ruleId)
+            .put("packageName", unlock.packageName)
+            .put("expiresAt", unlock.expiresAt)
+        )
+      }
+    prefs(context).edit().putString(FOCUS_SHIELD_UNLOCKS, array.toString()).apply()
   }
 
   private fun sanitizeRule(value: Map<String, Any?>): FreedFocusShieldRule? {

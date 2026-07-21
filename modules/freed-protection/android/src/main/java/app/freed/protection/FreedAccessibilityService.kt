@@ -207,18 +207,24 @@ class FreedAccessibilityService : AccessibilityService() {
         launchAppIntervention(normalizedPackage)
         return
       } else {
-        val matchingFocusShieldRule = detectedShortFormRule
+        val matchingFocusShieldRules = detectedShortFormRule
           ?.let { rule -> FreedFocusShieldRules.matchingPresetRules(this, normalizedPackage, rule) }
-          ?.firstOrNull { rule -> !FreedFocusShieldRules.isSurfaceUnlockActiveForRule(this, rule) }
-        if (matchingFocusShieldRule != null) {
+          .orEmpty()
+        val matchingFocusShieldRule = matchingFocusShieldRules
+          .firstOrNull { rule -> !FreedFocusShieldRules.isSurfaceUnlockActiveForRule(this, rule) }
+        if (matchingFocusShieldRule != null && detectedShortFormRule != null) {
           launchFocusShieldIntervention(normalizedPackage, detectedShortFormRule, matchingFocusShieldRule)
           return
         }
 
         if (detectedShortFormRule != null) {
-          beginOrContinueShortFormSession(normalizedPackage, detectedShortFormRule)
+          if (matchingFocusShieldRules.isEmpty()) {
+            beginOrContinueShortFormSession(normalizedPackage, detectedShortFormRule)
+          } else {
+            clearShortFormSession()
+          }
           scheduleAppLimitCheck(normalizedPackage)
-          return
+          if (matchingFocusShieldRules.isEmpty()) return
         } else {
           if (shortFormPackage == normalizedPackage) {
             val activeShortFormRule = shortFormRule
@@ -236,10 +242,12 @@ class FreedAccessibilityService : AccessibilityService() {
       clearShortFormSession()
       cancelEarnedUnlockRelock()
 
-      val matchingFocusShieldRule = detectedShortFormRule
+      val matchingFocusShieldRules = detectedShortFormRule
         ?.let { rule -> FreedFocusShieldRules.matchingPresetRules(this, normalizedPackage, rule) }
-        ?.firstOrNull { rule -> !FreedFocusShieldRules.isSurfaceUnlockActiveForRule(this, rule) }
-      if (matchingFocusShieldRule != null) {
+        .orEmpty()
+      val matchingFocusShieldRule = matchingFocusShieldRules
+        .firstOrNull { rule -> !FreedFocusShieldRules.isSurfaceUnlockActiveForRule(this, rule) }
+      if (matchingFocusShieldRule != null && detectedShortFormRule != null) {
         launchFocusShieldIntervention(normalizedPackage, detectedShortFormRule, matchingFocusShieldRule)
         return
       }
