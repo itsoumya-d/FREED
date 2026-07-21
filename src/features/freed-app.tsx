@@ -2268,7 +2268,7 @@ function ProtectionSetupScreen({
             {protectionCapability?.platform === "android"
               ? "Required Android setup: reviewed adult-domain feed, DNS-only VPN, Usage Access, Accessibility, selected app timers, then Test Protection. Notifications and challenge sensors are on demand."
               : protectionCapability?.platform === "ios"
-              ? "Required iOS setup: Screen Time authorization, adult web filter, selected targets, daily-limit monitoring, Safari rules, then Test Protection. DNS settings and challenge sensors are optional/on demand."
+              ? "Required iOS setup: Screen Time authorization, adult-domain Safari Content Blocker, Safari Focus Shield for Shorts/Reels, selected targets, daily-limit monitoring, then Test Protection. iOS DNS filtering is unavailable; challenge sensors are on demand."
               : "Native blocking requires a signed iOS or Android build."}
           </Text>
         </ScrollView>

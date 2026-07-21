@@ -8,6 +8,11 @@ const path = require("node:path");
 const { spawn, spawnSync } = require("node:child_process");
 const { sanitizeLocalHomePaths } = require("./lib/local-path-privacy");
 const { assertSafeReportPath } = require("./lib/report-path-safety");
+const {
+  SAFARI_FOCUS_HOST_PERMISSIONS,
+  assertSafariFocusShieldContractSelfTest,
+  inspectSafariFocusShieldContract,
+} = require("./lib/ios-safari-focus-shield-contract");
 
 const ROOT = path.resolve(__dirname, "..");
 const DEFAULT_WORKSPACE = "ios/FREED.xcworkspace";
@@ -71,15 +76,6 @@ const EXPECTED_EXTENSIONS = Object.freeze([
 const SAFARI_RULE_SIGNALS = Object.freeze([
   { key: "adult-domain-pornhub", pattern: /pornhub\\\.com/i },
   { key: "adult-domain-xvideos", pattern: /xvideos\\\.com/i },
-]);
-const SAFARI_FOCUS_HOST_PERMISSIONS = Object.freeze([
-  "*://youtube.com/*",
-  "*://*.youtube.com/*",
-  "*://instagram.com/*",
-  "*://*.instagram.com/*",
-  "*://tiktok.com/*",
-  "*://*.tiktok.com/*",
-  "https://intervention.freed.app/*",
 ]);
 
 function truthy(value) {
@@ -731,6 +727,7 @@ function inspectSafariFocusShieldResources(extensionPath) {
   const manifestPath = path.join(extensionPath, "manifest.json");
   const backgroundPath = path.join(extensionPath, "background.js");
   const contentPath = path.join(extensionPath, "content.js");
+  const info = readPlistJson(path.join(extensionPath, "Info.plist"));
   let manifest = {};
   let manifestAvailable = false;
   let manifestError = "";
@@ -742,39 +739,20 @@ function inspectSafariFocusShieldResources(extensionPath) {
   }
   const background = fs.existsSync(backgroundPath) ? fs.readFileSync(backgroundPath, "utf8") : "";
   const content = fs.existsSync(contentPath) ? fs.readFileSync(contentPath, "utf8") : "";
-  const hostPermissions = Array.isArray(manifest.host_permissions) ? [...manifest.host_permissions].sort() : [];
-  const expectedHostPermissions = [...SAFARI_FOCUS_HOST_PERMISSIONS].sort();
-  const hostPermissionsScoped = JSON.stringify(hostPermissions) === JSON.stringify(expectedHostPermissions);
-  const manifestVersion3 = manifest.manifest_version === 3;
-  const minimumSafariVersion = manifest.browser_specific_settings?.safari?.strict_min_version || "";
-  const serviceWorker = manifest.background?.service_worker || "";
-  const nativeMessagingPermission = Array.isArray(manifest.permissions) && manifest.permissions.includes("nativeMessaging");
-  const backgroundOwnsNativeMessaging =
-    background.includes("runtime.onMessage.addListener") && background.includes("sendNativeMessage");
-  const contentUsesRuntimeMessaging = content.includes("runtime?.sendMessage") && !content.includes("sendNativeMessage");
-  const usableForManualEvidence =
-    manifestAvailable &&
-    manifestVersion3 &&
-    minimumSafariVersion === "15.4" &&
-    serviceWorker === "background.js" &&
-    nativeMessagingPermission &&
-    hostPermissionsScoped &&
-    backgroundOwnsNativeMessaging &&
-    contentUsesRuntimeMessaging;
+  const executablePath = info.CFBundleExecutable ? path.join(extensionPath, info.CFBundleExecutable) : "";
+  const nativeHandlerBinary = executablePath && fs.existsSync(executablePath)
+    ? fs.readFileSync(executablePath).toString("latin1")
+    : "";
+  const contract = inspectSafariFocusShieldContract({ manifest, info, background, content, nativeHandlerBinary });
   return {
     backgroundAvailable: Boolean(background),
-    backgroundOwnsNativeMessaging,
     contentAvailable: Boolean(content),
-    contentUsesRuntimeMessaging,
-    hostPermissions,
-    hostPermissionsScoped,
     manifestAvailable,
     manifestError,
-    manifestVersion3,
-    minimumSafariVersion,
-    nativeMessagingPermission,
-    serviceWorker,
-    usableForManualEvidence,
+    nativeHandlerBinaryAvailable: Boolean(nativeHandlerBinary),
+    ...contract,
+    usableForManualEvidence:
+      manifestAvailable && Boolean(background) && Boolean(content) && Boolean(nativeHandlerBinary) && contract.usableForManualEvidence,
   };
 }
 
@@ -1259,6 +1237,7 @@ function runDryRun(options, exportOptions) {
 }
 
 function runSelfTest() {
+  assertSafariFocusShieldContractSelfTest();
   const options = parseArgs([
     "--team-id",
     "ABCDE12345",
@@ -1325,16 +1304,27 @@ function runSelfTest() {
       usableForManualEvidence: true,
     },
     safariFocusShield: {
+      allowedDomains: ["youtube.com", "*.youtube.com", "instagram.com", "*.instagram.com", "tiktok.com", "*.tiktok.com", "intervention.freed.app"],
+      approvedRuleHostsPresent: true,
       backgroundAvailable: true,
       backgroundOwnsNativeMessaging: true,
+      backgroundServiceWorkerValid: true,
       contentAvailable: true,
+      contentScriptsScoped: true,
       contentUsesRuntimeMessaging: true,
+      fixedNativeEnvelope: true,
       hostPermissions: [...SAFARI_FOCUS_HOST_PERMISSIONS],
       hostPermissionsScoped: true,
+      infoAllowedDomainsScoped: true,
       manifestAvailable: true,
       manifestVersion3: true,
+      minimumOSVersion: "15.4",
+      minimumOSVersionAtLeast154: true,
       minimumSafariVersion: "15.4",
+      nativeHandlerBinaryAvailable: true,
+      nativeHandlerContractValid: true,
       nativeMessagingPermission: true,
+      nativePayloadSchemaValid: true,
       serviceWorker: "background.js",
       usableForManualEvidence: true,
     },

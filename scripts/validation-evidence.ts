@@ -3670,13 +3670,19 @@ function iosAppPackageProofReportIssues(
     ["manifestAvailable", true],
     ["manifestVersion3", true],
     ["minimumSafariVersion", "15.4"],
+    ["minimumOSVersionAtLeast154", true],
     ["serviceWorker", "background.js"],
     ["backgroundAvailable", true],
     ["backgroundOwnsNativeMessaging", true],
+    ["backgroundServiceWorkerValid", true],
     ["contentAvailable", true],
+    ["contentScriptsScoped", true],
     ["contentUsesRuntimeMessaging", true],
     ["nativeMessagingPermission", true],
     ["hostPermissionsScoped", true],
+    ["infoAllowedDomainsScoped", true],
+    ["nativePayloadSchemaValid", true],
+    ["nativeHandlerContractValid", true],
     ["usableForManualEvidence", true]
   ] as const) {
     if (safariFocusShield[field] !== expectedValue) {

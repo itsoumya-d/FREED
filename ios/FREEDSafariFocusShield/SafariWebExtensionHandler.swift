@@ -28,7 +28,7 @@ final class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
 
   private let appGroupIdentifier = "group.app.freed.recovery"
   private let pendingInterventionRecordKey = "freed.pendingIntervention.record"
-  private let approvedRules = [
+  private let APPROVED_RULE_HOSTS = [
     "short-form:youtube-shorts": "youtube.com",
     "short-form:instagram-reels": "instagram.com",
     "short-form:tiktok-feed": "tiktok.com"
@@ -49,7 +49,7 @@ final class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
       let message = try? JSONDecoder().decode(NativeMessage.self, from: data),
       message.type == "record-pending-intervention",
       message.source == "ios-safari-short-form",
-      approvedRules[message.rule] == message.host
+      APPROVED_RULE_HOSTS[message.rule] == message.host
     else {
       return false
     }

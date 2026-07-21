@@ -7261,12 +7261,18 @@ test("iOS release and evidence contracts package Safari Focus Shield as the only
   const physicalEvidence = readFileSync("scripts/ios-physical-device-evidence.js", "utf8");
   const validationEvidence = readFileSync("scripts/validation-evidence.ts", "utf8");
   const extensionGenerator = readFileSync("scripts/add-ios-screen-time-extensions.rb", "utf8");
+  const safariFocusContract = readFileSync("scripts/lib/ios-safari-focus-shield-contract.js", "utf8");
 
   assert.doesNotMatch(blockingEngine, /SAFARI_SHORT_FORM_WEB_RULE_FILTERS/);
   assert.doesNotMatch(adultDomainFeedSync, /SAFARI_SHORT_FORM_WEB_RULE_FILTERS/);
   assert.match(archiveBuilder, /FREEDSafariFocusShield\.appex/);
   assert.match(archiveBuilder, /inspectSafariFocusShieldResources/);
   assert.match(archiveBuilder, /safariFocusShield\.usableForManualEvidence/);
+  assert.match(archiveBuilder, /contentScriptsScoped/);
+  assert.match(archiveBuilder, /infoAllowedDomainsScoped/);
+  assert.match(archiveBuilder, /nativePayloadSchemaValid/);
+  assert.match(archiveBuilder, /nativeHandlerContractValid/);
+  assert.match(archiveBuilder, /minimumOSVersionAtLeast154/);
   assert.doesNotMatch(archiveBuilder, /shortFormRulesPresent/);
   assert.match(releaseVerifier, /archive\.safariFocusShield\.usableForManualEvidence/);
   assert.match(releaseVerifier, /FREEDSafariFocusShield\.appex/);
@@ -7274,6 +7280,13 @@ test("iOS release and evidence contracts package Safari Focus Shield as the only
   assert.match(physicalEvidence, /FREEDSafariFocusShield\.appex/);
   assert.match(physicalEvidence, /inspectSafariFocusShieldResources/);
   assert.match(physicalEvidence, /freed-ios-safari-focus-shield-report-v1/);
+  assert.match(physicalEvidence, /inspectSafariFocusShieldContract/);
+  assert.match(safariFocusContract, /contentScriptsScoped/);
+  assert.match(safariFocusContract, /infoAllowedDomainsScoped/);
+  assert.match(safariFocusContract, /nativePayloadSchemaValid/);
+  assert.match(safariFocusContract, /nativeHandlerContractValid/);
+  assert.match(safariFocusContract, /minimumOSVersionAtLeast154/);
+  assert.match(physicalEvidence, /safariFocusShieldBuildRunId/);
   assert.doesNotMatch(physicalEvidence, /shortFormRulesPresent/);
   assert.match(validationEvidence, /FREEDSafariFocusShield\.appex/);
   assert.match(validationEvidence, /safariFocusShieldEmbedded/);
@@ -7282,6 +7295,8 @@ test("iOS release and evidence contracts package Safari Focus Shield as the only
   assert.match(extensionGenerator, /name: "FREEDSafariFocusShield"/);
   assert.match(extensionGenerator, /resources: \["manifest\.json", "background\.js", "content\.js"\]/);
   assert.match(extensionGenerator, /deployment_target: "15\.4"/);
+  assert.match(readFileSync("ios/FREEDSafariFocusShield/SafariWebExtensionHandler.swift", "utf8"), /APPROVED_RULE_HOSTS/);
+  assert.doesNotMatch(readFileSync("scripts/adult-domain-feed-smoke.ts", "utf8"), /SAFARI_SHORT_FORM_WEB_RULE_FILTERS|YouTube Shorts web paths|Instagram Reels web paths|TikTok For You web paths/);
 });
 
 test("premium plans expose stable product identifiers", () => {
@@ -11339,14 +11354,15 @@ test("validation evidence scaffold writes drafts outside release evidence gate",
     assert.ok(iosRequirements.requiredFields.includes("ios.completeDataProtectionEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements"));
     assert.ok(iosRequirements.requiredFields.includes("ios.familyControlsAuthorizationRunId"));
     assert.ok(iosRequirements.requiredFields.includes("ios.familyControlsAuthorizationArtifact"));
-    assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariContentBlocker.appex, adult-domain rules, short-form web rules, all-block actions, and no packet tunnel/packet inspection entitlements"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariContentBlocker.appex, adult-domain-only rules, all-block actions, and no packet tunnel/packet inspection entitlements"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerReloadArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/version/checksum/rule count and Safari reload/no-screen-read/no-packet-inspection checks"));
     assert.ok(iosRequirements.requiredChecks.includes("safariContentBlockerEnabled"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerEnabled=true"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerAdultBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/adult host and Safari adult-domain/no-packet-inspection checks"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.safariFocusShieldBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariFocusShield.appex, MV3 manifest, background.js service worker, content.js, scoped hosts, iOS 15.4 minimum, and app-group/Complete Data Protection entitlements"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariFocusShieldShortFormBlockRunId"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariFocusShieldShortFormBlockArtifact"));
-    assert.ok(iosRequirements.requiredFields.includes("ios.safariFocusShieldShortFormBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/short-form URL/rule and no raw path/no app-screen-inspection checks"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.safariFocusShieldShortFormBlockArtifact local freed-ios-safari-focus-shield-report-v1 JSON with sanitized=true, matching runId/short-form URL/rule and MV3 content-script/background-worker/no-raw-path checks"));
     assert.ok(iosRequirements.requiredChecks.includes("safariShortFormChallengeHandoff"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariShortFormChallengeHandoffRunId"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariShortFormChallengeHandoffArtifact"));
@@ -12292,21 +12308,22 @@ test("validation evidence requirements expose field and command handoff details"
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerIdentifier=app.freed.recovery.safari-content-blocker"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerBuildRunId"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerBuildArtifact"));
-  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariContentBlocker.appex, adult-domain rules, short-form web rules, all-block actions, and no packet tunnel/packet inspection entitlements"));
+  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariContentBlocker.appex, adult-domain-only rules, all-block actions, and no packet tunnel/packet inspection entitlements"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerReloadRunId"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerReloadArtifact"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerReloadArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/version/checksum/rule count and Safari reload/no-screen-read/no-packet-inspection checks"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerVersion"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerChecksum fnv1a32:<8-hex>"));
-  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerRuleCount>4"));
+  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerRuleCount>=1"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerEnabled=true"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerAdultBlockRunId"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerAdultBlockArtifact"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerAdultBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/adult host and Safari adult-domain/no-packet-inspection checks"));
+  assert.ok(ios.requiredFields.includes("ios.safariFocusShieldBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariFocusShield.appex, MV3 manifest, background.js service worker, content.js, scoped hosts, iOS 15.4 minimum, and app-group/Complete Data Protection entitlements"));
   assert.ok(ios.requiredFields.includes("ios.safariFocusShieldShortFormUrl"));
   assert.ok(ios.requiredFields.includes("ios.safariFocusShieldShortFormBlockRunId"));
   assert.ok(ios.requiredFields.includes("ios.safariFocusShieldShortFormBlockArtifact"));
-  assert.ok(ios.requiredFields.includes("ios.safariFocusShieldShortFormBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/short-form URL/rule and no raw path/no app-screen-inspection checks"));
+  assert.ok(ios.requiredFields.includes("ios.safariFocusShieldShortFormBlockArtifact local freed-ios-safari-focus-shield-report-v1 JSON with sanitized=true, matching runId/short-form URL/rule and MV3 content-script/background-worker/no-raw-path checks"));
   assert.ok(ios.requiredFields.includes("ios.safariShortFormChallengeHandoffRunId"));
   assert.ok(ios.requiredFields.includes("ios.safariShortFormChallengeHandoffArtifact"));
   assert.ok(ios.requiredFields.includes("ios.safariShortFormChallengeHandoffSource=ios-safari-short-form"));
@@ -12810,7 +12827,7 @@ test("validation evidence promotion validates every draft before copying", () =>
   const writeIosSafariContentBlockerArtifact = (
     name: string,
     reportRunId: string,
-    reportKind: "reload" | "adult-block" | "short-form-block",
+    reportKind: "reload" | "adult-block",
     options: {
       host?: string;
       url?: string;
@@ -12849,6 +12866,47 @@ test("validation evidence promotion validates every draft before copying", () =>
             noPacketInspection: true,
             noMitmHttps: true,
             ...(options.checks ?? {})
+          }
+        },
+        null,
+        2
+      )}\n`
+    );
+    return `docs/validation/artifacts/${runId}/${name}`;
+  };
+  const writeIosSafariFocusShieldArtifact = (
+    name: string,
+    reportRunId: string,
+    url: string,
+    matchedRule: string
+  ) => {
+    const path = join(artifactRoot, name);
+    writeFileSync(
+      path,
+      `${JSON.stringify(
+        {
+          schemaVersion: "freed-ios-safari-focus-shield-report-v1",
+          sanitized: true,
+          runId: reportRunId,
+          platform: "ios",
+          reportKind: "short-form-block",
+          focusShieldIdentifier: "app.freed.recovery.safari-focus-shield",
+          url,
+          matchedRule,
+          checks: {
+            focusShieldExtensionUsed: true,
+            manifestV3: true,
+            backgroundServiceWorkerUsed: true,
+            contentScriptUsed: true,
+            nativeRelayValidated: true,
+            hostRuleAllowlistValidated: true,
+            shortFormNavigationShielded: true,
+            rawPathNotPersisted: true,
+            noThirdPartyAppScreenInspection: true,
+            noContinuousScreenRead: true,
+            noPacketTunnel: true,
+            noPacketInspection: true,
+            noMitmHttps: true
           }
         },
         null,
@@ -14126,6 +14184,25 @@ test("validation evidence promotion validates every draft before copying", () =>
       requiresFamilyControls,
       ...extra
     });
+    const safariFocusShield = {
+      manifestAvailable: true,
+      manifestVersion3: true,
+      minimumSafariVersion: "15.4",
+      minimumOSVersionAtLeast154: true,
+      serviceWorker: "background.js",
+      backgroundAvailable: true,
+      backgroundOwnsNativeMessaging: true,
+      backgroundServiceWorkerValid: true,
+      contentAvailable: true,
+      contentScriptsScoped: true,
+      contentUsesRuntimeMessaging: true,
+      nativeMessagingPermission: true,
+      hostPermissionsScoped: true,
+      infoAllowedDomainsScoped: true,
+      nativePayloadSchemaValid: true,
+      nativeHandlerContractValid: true,
+      usableForManualEvidence: true
+    };
     const path = join(artifactRoot, name);
     writeFileSync(
       path,
@@ -14158,18 +14235,17 @@ test("validation evidence promotion validates every draft before copying", () =>
                 ruleCount: 1200,
                 ruleSignals: {
                   "adult-domain-pornhub": true,
-                  "adult-domain-xvideos": true,
-                  "youtube-shorts-web": true,
-                  "instagram-reels-web": true,
-                  "tiktok-for-you-web": true
+                  "adult-domain-xvideos": true
                 },
                 usableForManualEvidence: true
               }
-            })
+            }),
+            extension("FREEDSafariFocusShield.appex", false, { safariFocusShield })
           ],
           entitlementFailures: [],
           missingOrMismatchedExtensions: [],
           safariRuleFailures: [],
+          safariFocusShieldFailures: [],
           packageProofUsableForManualEvidence: true,
           checks: {
             codesignEntitlementsAvailable: true,
@@ -14179,8 +14255,9 @@ test("validation evidence promotion validates every draft before copying", () =>
             completeDataProtectionOnEmbeddedExtensions: true,
             screenTimeExtensionsEmbedded: true,
             safariContentBlockerEmbedded: true,
+            safariFocusShieldEmbedded: true,
+            safariFocusShieldResourcesValid: true,
             adultDomainRulesPresent: true,
-            shortFormRulesPresent: true,
             safariRulesAllBlock: true,
             noPacketTunnelEntitlement: true,
             noPacketInspectionEntitlement: true
@@ -14263,8 +14340,7 @@ test("validation evidence promotion validates every draft before copying", () =>
           {
             checks: {
               reloadedViaSafariApi: true,
-              adultRulesPresent: true,
-              shortFormRulesPresent: true
+              adultRulesPresent: true
             }
           }
         ),
@@ -14286,21 +14362,17 @@ test("validation evidence promotion validates every draft before copying", () =>
             }
           }
         ),
+        safariFocusShieldEmbedded: true,
+        safariFocusShieldIdentifier: "app.freed.recovery.safari-focus-shield",
+        safariFocusShieldBuildRunId: "safari-focus-shield-build-release-run",
+        safariFocusShieldBuildArtifact: iosAppPackageProofArtifact,
         safariFocusShieldShortFormUrl: "https://youtube.com/shorts/dQw4w9WgXcQ",
         safariFocusShieldShortFormBlockRunId: "safari-focus-shield-short-form-block-release-run",
-        safariFocusShieldShortFormBlockArtifact: writeIosSafariContentBlockerArtifact(
+        safariFocusShieldShortFormBlockArtifact: writeIosSafariFocusShieldArtifact(
           "ios-safari-focus-shield-short-form-block-report.json",
           "safari-focus-shield-short-form-block-release-run",
-          "short-form-block",
-          {
-            url: "https://youtube.com/shorts/dQw4w9WgXcQ",
-            matchedRule: "short-form:youtube-shorts",
-            checks: {
-              shortFormWebRuleMatched: true,
-              shortFormNavigationBlocked: true,
-              rawPathNotPersisted: true
-            }
-          }
+          "https://youtube.com/shorts/dQw4w9WgXcQ",
+          "short-form:youtube-shorts"
         ),
         safariShortFormChallengeHandoffRunId: "safari-short-form-challenge-handoff-release-run",
         safariShortFormChallengeHandoffArtifact: writeArtifact("ios-safari-short-form-challenge-handoff.mov"),
@@ -15614,7 +15686,7 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
   const writeIosSafariContentBlockerReport = (
     name: string,
     reportRunId: string,
-    reportKind: "reload" | "adult-block" | "short-form-block",
+    reportKind: "reload" | "adult-block",
     options: {
       host?: string;
       url?: string;
@@ -15660,11 +15732,50 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
         2
       )}\n`
     );
+  const writeIosSafariFocusShieldReport = (
+    name: string,
+    reportRunId: string,
+    url: string,
+    matchedRule: string,
+    overrides: Record<string, unknown> = {}
+  ) =>
+    writeFileSync(
+      join(artifactDir, name),
+      `${JSON.stringify(
+        {
+          schemaVersion: "freed-ios-safari-focus-shield-report-v1",
+          sanitized: true,
+          runId: reportRunId,
+          platform: "ios",
+          reportKind: "short-form-block",
+          focusShieldIdentifier: "app.freed.recovery.safari-focus-shield",
+          url,
+          matchedRule,
+          checks: {
+            focusShieldExtensionUsed: true,
+            manifestV3: true,
+            backgroundServiceWorkerUsed: true,
+            contentScriptUsed: true,
+            nativeRelayValidated: true,
+            hostRuleAllowlistValidated: true,
+            shortFormNavigationShielded: true,
+            rawPathNotPersisted: true,
+            noThirdPartyAppScreenInspection: true,
+            noContinuousScreenRead: true,
+            noPacketTunnel: true,
+            noPacketInspection: true,
+            noMitmHttps: true
+          },
+          ...overrides
+        },
+        null,
+        2
+      )}\n`
+    );
   writeIosSafariContentBlockerReport("ios-safari-content-blocker-reload-report.json", "safari-content-blocker-reload-run", "reload", {
     checks: {
       reloadedViaSafariApi: true,
-      adultRulesPresent: true,
-      shortFormRulesPresent: true
+      adultRulesPresent: true
     }
   });
   writeIosSafariContentBlockerReport(
@@ -15680,19 +15791,11 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
       }
     }
   );
-  writeIosSafariContentBlockerReport(
+  writeIosSafariFocusShieldReport(
     "ios-safari-focus-shield-short-form-block-report.json",
     "safari-focus-shield-short-form-block-run",
-    "short-form-block",
-    {
-      url: "https://youtube.com/shorts/dQw4w9WgXcQ",
-      matchedRule: "short-form:youtube-shorts",
-      checks: {
-        shortFormWebRuleMatched: true,
-        shortFormNavigationBlocked: true,
-        rawPathNotPersisted: true
-      }
-    }
+    "https://youtube.com/shorts/dQw4w9WgXcQ",
+    "short-form:youtube-shorts"
   );
   const writeIosSelectedAppDailyLimitReport = (
     name: string,
@@ -15858,12 +15961,28 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
       requiresFamilyControls,
       ...extra
     });
+    const safariFocusShield = {
+      manifestAvailable: true,
+      manifestVersion3: true,
+      minimumSafariVersion: "15.4",
+      minimumOSVersionAtLeast154: true,
+      serviceWorker: "background.js",
+      backgroundAvailable: true,
+      backgroundOwnsNativeMessaging: true,
+      backgroundServiceWorkerValid: true,
+      contentAvailable: true,
+      contentScriptsScoped: true,
+      contentUsesRuntimeMessaging: true,
+      nativeMessagingPermission: true,
+      hostPermissionsScoped: true,
+      infoAllowedDomainsScoped: true,
+      nativePayloadSchemaValid: true,
+      nativeHandlerContractValid: true,
+      usableForManualEvidence: true
+    };
     const safariRuleSignals = {
       "adult-domain-pornhub": true,
       "adult-domain-xvideos": true,
-      "youtube-shorts-web": true,
-      "instagram-reels-web": true,
-      "tiktok-for-you-web": true,
       ...(options.safariRuleSignals ?? {})
     };
     writeFileSync(
@@ -15898,11 +16017,13 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
                 ruleSignals: safariRuleSignals,
                 usableForManualEvidence: true
               }
-            })
+            }),
+            extension("FREEDSafariFocusShield.appex", false, { safariFocusShield })
           ],
           entitlementFailures: [],
           missingOrMismatchedExtensions: [],
           safariRuleFailures: [],
+          safariFocusShieldFailures: [],
           packageProofUsableForManualEvidence: true,
           checks: {
             codesignEntitlementsAvailable: true,
@@ -15912,8 +16033,9 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
             completeDataProtectionOnEmbeddedExtensions: true,
             screenTimeExtensionsEmbedded: true,
             safariContentBlockerEmbedded: true,
+            safariFocusShieldEmbedded: true,
+            safariFocusShieldResourcesValid: true,
             adultDomainRulesPresent: true,
-            shortFormRulesPresent: true,
             safariRulesAllBlock: true,
             noPacketTunnelEntitlement: true,
             noPacketInspectionEntitlement: true,
@@ -15980,6 +16102,10 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
     safariContentBlockerEnabled: true,
     safariContentBlockerAdultBlockRunId: "safari-content-blocker-adult-block-run",
     safariContentBlockerAdultBlockArtifact: "docs/validation/artifacts/ios-safari-content-blocker-adult-block-report.json",
+    safariFocusShieldEmbedded: true,
+    safariFocusShieldIdentifier: "app.freed.recovery.safari-focus-shield",
+    safariFocusShieldBuildRunId: "safari-focus-shield-build-run",
+    safariFocusShieldBuildArtifact: "docs/validation/artifacts/ios-app-package-proof.json",
     safariFocusShieldShortFormUrl: "https://youtube.com/shorts/dQw4w9WgXcQ",
     safariFocusShieldShortFormBlockRunId: "safari-focus-shield-short-form-block-run",
     safariFocusShieldShortFormBlockArtifact: "docs/validation/artifacts/ios-safari-focus-shield-short-form-block-report.json",
@@ -16061,6 +16187,7 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
           safariContentBlockerReloaded: true,
           safariContentBlockerEnabled: true,
           safariContentBlockerAdultBlock: true,
+          safariFocusShieldBuild: true,
           safariFocusShieldShortFormBlock: true,
           safariShortFormChallengeHandoff: true,
           selectedShieldTokens: true,
@@ -16344,19 +16471,11 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
     );
     assert.equal(signedRemotePassing?.status, "pass");
 
-    writeIosSafariContentBlockerReport(
+    writeIosSafariFocusShieldReport(
       "ios-safari-focus-shield-short-form-block-report.json",
       "safari-focus-shield-short-form-block-run",
-      "short-form-block",
-      {
-        url: "https://m.tiktok.com/foryou/",
-        matchedRule: "short-form:tiktok-feed",
-        checks: {
-          shortFormWebRuleMatched: true,
-          shortFormNavigationBlocked: true,
-          rawPathNotPersisted: true
-        }
-      }
+      "https://m.tiktok.com/foryou/",
+      "short-form:tiktok-feed"
     );
     writeIosEvidence(["docs/validation/artifacts/ios-screen-time.mov"], {
       ...validIosProof,
@@ -16368,19 +16487,11 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
       (result) => result.id === "ios-physical-device-validation"
     );
     assert.equal(alternateShortFormPassing?.status, "pass");
-    writeIosSafariContentBlockerReport(
+    writeIosSafariFocusShieldReport(
       "ios-safari-focus-shield-short-form-block-report.json",
       "safari-focus-shield-short-form-block-run",
-      "short-form-block",
-      {
-        url: "https://youtube.com/shorts/dQw4w9WgXcQ",
-        matchedRule: "short-form:youtube-shorts",
-        checks: {
-          shortFormWebRuleMatched: true,
-          shortFormNavigationBlocked: true,
-          rawPathNotPersisted: true
-        }
-      }
+      "https://youtube.com/shorts/dQw4w9WgXcQ",
+      "short-form:youtube-shorts"
     );
 
     writeIosEvidence(["docs/validation/artifacts/ios-screen-time.mov"], {
@@ -16391,7 +16502,7 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
       (result) => result.id === "ios-physical-device-validation"
     );
     assert.equal(shortFormUrlFailing?.status, "fail");
-    assert.match(shortFormUrlFailing?.evidence ?? "", /covered by FREED's Safari content-blocker rules/);
+    assert.match(shortFormUrlFailing?.evidence ?? "", /covered by FREED's Safari Focus Shield/);
 
     writeIosEvidence(["docs/validation/artifacts/ios-screen-time.mov"], {
       ...validIosProof,
@@ -24540,7 +24651,7 @@ async function runAsyncTests() {
         },
         { platform: "ios", safariContentBlocker: true }
       ),
-      checksum
+      null
     );
     assert.equal(
       getConditionalAdultFeedChecksumForStatus(
@@ -24600,7 +24711,7 @@ async function runAsyncTests() {
         },
         { platform: "ios", safariContentBlocker: true }
       ),
-      null
+      checksum
     );
     assert.equal(
       getConditionalAdultFeedChecksumForStatus(
