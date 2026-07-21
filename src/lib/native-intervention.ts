@@ -25,6 +25,7 @@ export type NativePendingInterventionPayload = {
 };
 
 export type NativeInterventionAttempt = BlockingAttempt & {
+  nativeInterventionId?: string;
   scope?: FocusShieldInterventionScope;
 };
 
@@ -69,6 +70,7 @@ export function createNativeInterventionAttempt(pending: NativePendingInterventi
       ? normalizeAppPendingHost(pending, matchedRule, sourcePackage)
       : normalizePendingHost(pending) || "screen-time-shield.freed.local";
   const scope = sanitizeNativePendingScope(pending.scope, matchedRule, sourcePackage);
+  const interventionId = sanitizeNativeInterventionId(pending.interventionId);
 
   return {
     url: `https://${host}`,
@@ -77,6 +79,7 @@ export function createNativeInterventionAttempt(pending: NativePendingInterventi
     source,
     sourcePackage,
     sessionDurationSec: source === "app" ? sanitizeSessionDurationSeconds(pending.sessionDurationSec) : undefined,
+    ...(interventionId ? { nativeInterventionId: interventionId } : {}),
     ...(scope ? { scope } : {}),
     result: {
       verdict: "block",

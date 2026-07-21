@@ -7693,7 +7693,11 @@ export default function FreedApp() {
 
     let cancelled = false;
     const syncUnlock = activeNativeUnlock
-      ? applyEarnedUnlockWindow(activeNativeUnlock.expiresAt, activeNativeUnlock.sourceAttemptHost)
+      ? applyEarnedUnlockWindow(
+          activeNativeUnlock.expiresAt,
+          activeNativeUnlock.sourceAttemptHost,
+          activeNativeUnlock.nativeInterventionId
+        )
       : clearEarnedUnlockWindow();
 
     syncUnlock
@@ -7708,7 +7712,14 @@ export default function FreedApp() {
     return () => {
       cancelled = true;
     };
-  }, [activeNativeUnlock?.expiresAt, activeNativeUnlock?.id, activeNativeUnlock?.sourceAttemptHost, hydrated, refreshProtectionStatus]);
+  }, [
+    activeNativeUnlock?.expiresAt,
+    activeNativeUnlock?.id,
+    activeNativeUnlock?.nativeInterventionId,
+    activeNativeUnlock?.sourceAttemptHost,
+    hydrated,
+    refreshProtectionStatus
+  ]);
 
   React.useEffect(() => {
     if (!hydrated) return undefined;
@@ -8212,6 +8223,7 @@ export default function FreedApp() {
               if (!completionDecision.grantEarnedUnlock) return completed;
               return recordEarnedUnlock(completed, challenge, {
                 durationMinutes: current.disciplineSettings.unlockDurationMinutes,
+                nativeInterventionId: activeAttempt?.nativeInterventionId,
                 sourceAttemptHost: activeAttempt?.scope?.kind === "android-surface" ? undefined : sourceAttempt
               });
             });

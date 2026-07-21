@@ -584,7 +584,7 @@ class FreedProtectionModule : Module() {
       ))
     }
 
-    AsyncFunction("applyEarnedUnlockWindow") { expiresAt: String, sourceAttemptHost: String? ->
+    AsyncFunction("applyEarnedUnlockWindow") { expiresAt: String, sourceAttemptHost: String?, _nativeInterventionId: String? ->
       val context = appContext.reactContext ?: return@AsyncFunction statusPayload(
         authorized = false,
         active = false,

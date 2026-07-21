@@ -319,6 +319,8 @@ const checks = [
       recoveryState.includes("[redacted-domain]") &&
       recoveryState.includes("[redacted-secret]") &&
       recoveryState.includes("sanitizeSourceAttemptHost") &&
+      recoveryState.includes("sanitizeNativeInterventionId(value.nativeInterventionId)") &&
+      nativeIntervention.includes("sanitizeNativeInterventionId(pending.interventionId)") &&
       androidClassifier.includes("fun normalizeHostForStorage(input: String): String") &&
       androidAccessibilityService.includes("FreedUrlClassifier.normalizeHostForStorage(result.host)") &&
       androidProtectionModule.includes("sanitizedPendingHost") &&

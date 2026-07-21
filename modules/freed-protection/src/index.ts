@@ -212,7 +212,11 @@ type NativeFreedProtection = {
   ): Promise<ProtectionStatus>;
   configureAdultDomainFeed?(domains: string[], version: string, checksum: string, generatedAt: string): Promise<ProtectionStatus>;
   configureSafariContentBlockerRules?(rulesJson: string, version: string, checksum: string, generatedAt: string): Promise<ProtectionStatus>;
-  applyEarnedUnlockWindow?(expiresAt: string, sourceAttemptHost?: string): Promise<ProtectionStatus>;
+  applyEarnedUnlockWindow?(
+    expiresAt: string,
+    sourceAttemptHost?: string,
+    nativeInterventionId?: string
+  ): Promise<ProtectionStatus>;
   startFocusShieldCalibration?(request: FocusShieldCalibrationRequest): Promise<FocusShieldCalibrationResult>;
   cancelFocusShieldCalibration?(): Promise<FocusShieldCalibrationResult>;
   getFocusShieldCalibration?(): Promise<FocusShieldCalibrationResult>;
@@ -357,8 +361,16 @@ export async function configureSafariContentBlockerRules(
   return (await module.configureSafariContentBlockerRules?.(rulesJson, version, checksum, generatedAt)) ?? module.getStatus();
 }
 
-export async function applyEarnedUnlockWindow(expiresAt: string, sourceAttemptHost?: string) {
-  return (await getNativeModule()?.applyEarnedUnlockWindow?.(expiresAt, sourceAttemptHost)) ?? fallbackStatus;
+export async function applyEarnedUnlockWindow(
+  expiresAt: string,
+  sourceAttemptHost?: string,
+  nativeInterventionId?: string
+) {
+  const sanitizedInterventionId = sanitizePendingInterventionId(nativeInterventionId);
+  return (
+    (await getNativeModule()?.applyEarnedUnlockWindow?.(expiresAt, sourceAttemptHost, sanitizedInterventionId ?? undefined)) ??
+    fallbackStatus
+  );
 }
 
 export async function startFocusShieldCalibration(request: FocusShieldCalibrationRequest): Promise<FocusShieldCalibrationResult> {

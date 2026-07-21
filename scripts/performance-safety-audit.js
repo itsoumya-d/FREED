@@ -267,7 +267,9 @@ const checks = [
       nativeIntervention.includes('platform === "ios"') &&
       nativeIntervention.includes('IOS_SCREEN_TIME_SHIELD_HOST = "screen-time-shield.freed.local"') &&
       iosModule.includes("isScreenTimeUnlockSource") &&
-      iosModule.includes("guard self.isScreenTimeUnlockSource(sourceAttemptHost) else") &&
+      iosModule.includes("self.isScreenTimeUnlockSource(sourceAttemptHost),") &&
+      iosModule.includes("consumePendingEarnedUnlockEnvelope(sanitizedExpectedInterventionId)") &&
+      iosModule.includes("envelope.interventionId == expectedInterventionId") &&
       iosModule.includes("sanitizeHostForStorage(trimmed) == screenTimeShieldHost") &&
       iosModule.includes('earnedUnlockSourceKey = "freed.earnedUnlock.source"') &&
       iosModule.includes("set(self.screenTimeShieldHost, forKey: self.earnedUnlockSourceKey)") &&
@@ -275,7 +277,7 @@ const checks = [
       iosDeviceActivity.includes('earnedUnlockSourceKey = "freed.earnedUnlock.source"') &&
       iosDeviceActivity.includes("guard isScreenTimeUnlockSource(storedSource), let scope = activeEarnedUnlockScope(), isSelectedScreenTimeScope(scope) else") &&
       appSurface.includes("getActiveNativeEarnedUnlock(recoveryState.earnedUnlocks, Platform.OS") &&
-      appSurface.includes("applyEarnedUnlockWindow(activeNativeUnlock.expiresAt, activeNativeUnlock.sourceAttemptHost)") &&
+      appSurface.includes("activeNativeUnlock.nativeInterventionId") &&
       nativeIntervention.includes('APP_INTERVENTION_FALLBACK_HOST = "selected-app.app.freed.local"') &&
       nativeIntervention.includes("configured-app:unsupported") &&
       nativeIntervention.includes("normalizePendingReason") &&

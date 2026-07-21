@@ -1608,6 +1608,7 @@ test("protection-triggered attempts bypass rewarded ads and only successful chal
   });
   const manualAttempt = createBlockingAttempt("https://pornhub.com/watch", "manual-check");
 
+  assert.equal(protectedAttempt.nativeInterventionId, "11111111-1111-4111-8111-111111111111");
   assert.equal(protection.shouldBypassRewardedAdForAttempt(protectedAttempt), true);
   assert.equal(protection.shouldBypassRewardedAdForAttempt(manualAttempt), false);
   assert.deepEqual(protection.getProtectionChallengeCompletionDecision(protectedAttempt, "helped"), {
@@ -1695,6 +1696,58 @@ test("pending intervention bridges require identity-bound claims on Android and 
   );
   assert.ok(iosClaim.indexOf("currentInterventionId == expectedInterventionId") < iosClaim.indexOf("pendingEarnedUnlockScopeKey"));
   assert.doesNotMatch(iosClaim, /clearPendingInterventionDefaults\(\)/);
+});
+
+test("iOS earned unlock A cannot consume staged intervention B before B applies", () => {
+  const nativeIntervention = readFileSync("src/lib/native-intervention.ts", "utf8");
+  const recoveryState = readFileSync("src/lib/recovery-state.ts", "utf8");
+  const appSurface = readFileSync("src/features/freed-app.tsx", "utf8");
+  const bridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+  const iosModule = readFileSync("modules/freed-protection/ios/FreedProtectionModule.swift", "utf8");
+
+  assert.match(nativeIntervention, /nativeInterventionId\?: string/);
+  assert.match(nativeIntervention, /nativeInterventionId: interventionId/);
+  assert.match(recoveryState, /nativeInterventionId\?: string/);
+  assert.match(recoveryState, /sanitizeNativeInterventionId\(value\.nativeInterventionId\)/);
+  assert.match(recoveryState, /sanitizeNativeInterventionId\(options\.nativeInterventionId\)/);
+  assert.match(appSurface, /nativeInterventionId: activeAttempt\?\.nativeInterventionId/);
+  assert.match(
+    appSurface,
+    /applyEarnedUnlockWindow\([\s\S]*activeNativeUnlock\.expiresAt,[\s\S]*activeNativeUnlock\.sourceAttemptHost,[\s\S]*activeNativeUnlock\.nativeInterventionId[\s\S]*\)/
+  );
+  assert.match(bridge, /applyEarnedUnlockWindow\?\([\s\S]*expiresAt: string,[\s\S]*sourceAttemptHost\?: string,[\s\S]*nativeInterventionId\?: string/);
+  assert.match(iosModule, /private struct PendingEarnedUnlockEnvelope: Codable/);
+  assert.match(iosModule, /let interventionId: String[\s\S]*let scope: InterventionScope/);
+  assert.match(iosModule, /PendingEarnedUnlockEnvelope\(interventionId: expectedInterventionId, scope: scope\)/);
+  assert.match(
+    iosModule,
+    /AsyncFunction\("applyEarnedUnlockWindow"\) \{ \(expiresAt: String, sourceAttemptHost: String\?, expectedInterventionId: String\?\)/
+  );
+  assert.match(iosModule, /envelope\.interventionId == expectedInterventionId/);
+  assert.match(iosModule, /consumePendingEarnedUnlockEnvelope\(sanitizedExpectedInterventionId\)/);
+
+  const consumeEnvelope = iosModule.slice(
+    iosModule.indexOf("private func consumePendingEarnedUnlockEnvelope"),
+    iosModule.indexOf("private func pendingEarnedUnlockEnvelope")
+  );
+  assert.match(consumeEnvelope, /pendingInterventionClaimLock\.lock\(\)/);
+  assert.match(consumeEnvelope, /envelope\.interventionId == expectedInterventionId/);
+  assert.match(consumeEnvelope, /removeObject\(forKey: pendingEarnedUnlockScopeKey\)/);
+  assert.ok(
+    consumeEnvelope.indexOf("envelope.interventionId == expectedInterventionId") <
+      consumeEnvelope.indexOf("removeObject(forKey: pendingEarnedUnlockScopeKey)")
+  );
+
+  const applyUnlock = iosModule.slice(
+    iosModule.indexOf('AsyncFunction("applyEarnedUnlockWindow")'),
+    iosModule.indexOf('AsyncFunction("clearEarnedUnlockWindow")')
+  );
+  const identityMatchIndex = applyUnlock.indexOf("consumePendingEarnedUnlockEnvelope(sanitizedExpectedInterventionId)");
+  const expiryIndex = applyUnlock.indexOf("parseIsoDate(expiresAt)");
+  assert.ok(identityMatchIndex >= 0 && identityMatchIndex < expiryIndex);
+  const mismatchBranch = applyUnlock.slice(0, expiryIndex);
+  assert.doesNotMatch(mismatchBranch, /removeObject\(forKey: self\.pendingEarnedUnlockScopeKey\)/);
+  assert.doesNotMatch(applyUnlock, /removeObject\(forKey: self\.pendingEarnedUnlockScopeKey\)/);
 });
 
 test("Focus Shield sanitizes rules without persisting accessibility content", () => {
@@ -3782,6 +3835,45 @@ test("challenge completion and earned unlock sources persist host-only metadata"
   assert.equal(serialized.includes(":443"), false);
   assert.equal(serialized.includes("/watch"), false);
   assert.equal(serialized.includes("/private/path"), false);
+});
+
+test("native earned unlock identities persist safely without appearing on manual unlocks", () => {
+  const challenge = challengeLibrary[0];
+  const nativeInterventionId = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
+  const nativeAttempt = createNativeInterventionAttempt({
+    interventionId: nativeInterventionId.toUpperCase(),
+    url: "https://screen-time-shield.freed.local",
+    host: "screen-time-shield.freed.local",
+    sourcePackage: "ios-screen-time",
+    reason: "Screen Time shield requested a recovery intervention.",
+    matchedRule: "ios-screen-time-shield",
+    detectedAt: "2026-05-11T19:00:00.000Z"
+  });
+  const nativeUnlock = recordEarnedUnlock(createDefaultRecoveryState(), challenge, {
+    durationMinutes: 10,
+    sourceAttemptHost: unlockSourceForAttempt(nativeAttempt),
+    nativeInterventionId: nativeAttempt.nativeInterventionId,
+    startedAt: "2026-05-11T19:00:00.000Z"
+  });
+  const manualUnlock = recordEarnedUnlock(createDefaultRecoveryState(), challenge, {
+    durationMinutes: 10,
+    sourceAttemptHost: "pornhub.com",
+    startedAt: "2026-05-11T19:00:00.000Z"
+  });
+  const hydratedValid = hydrateRecoveryState({
+    ...nativeUnlock,
+    earnedUnlocks: [{ ...nativeUnlock.earnedUnlocks[0], nativeInterventionId: nativeInterventionId.toUpperCase() }]
+  });
+  const hydratedMalformed = hydrateRecoveryState({
+    ...nativeUnlock,
+    earnedUnlocks: [{ ...nativeUnlock.earnedUnlocks[0], nativeInterventionId: "not-a-uuid" }]
+  });
+
+  assert.equal(nativeAttempt.nativeInterventionId, nativeInterventionId);
+  assert.equal(nativeUnlock.earnedUnlocks[0].nativeInterventionId, nativeInterventionId);
+  assert.equal(hydratedValid.earnedUnlocks[0].nativeInterventionId, nativeInterventionId);
+  assert.equal(hydratedMalformed.earnedUnlocks[0].nativeInterventionId, undefined);
+  assert.equal(manualUnlock.earnedUnlocks[0].nativeInterventionId, undefined);
 });
 
 test("discipline settings persist and shape earned unlocks", () => {
@@ -6725,14 +6817,14 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosModule, /AsyncFunction\("applyEarnedUnlockWindow"/);
   assert.match(iosModule, /earnedUnlockSourceKey = "freed\.earnedUnlock\.source"/);
   assert.match(iosModule, /private func isScreenTimeUnlockSource\(_ sourceAttemptHost: String\?\) -> Bool/);
-  assert.match(iosModule, /guard self\.isScreenTimeUnlockSource\(sourceAttemptHost\) else/);
+  assert.match(iosModule, /self\.isScreenTimeUnlockSource\(sourceAttemptHost\),[\s\S]*consumePendingEarnedUnlockEnvelope\(sanitizedExpectedInterventionId\)/);
   assert.match(iosModule, /trimmed == screenTimeShieldSource/);
   assert.match(iosModule, /sanitizeHostForStorage\(trimmed\) == screenTimeShieldHost/);
   assert.match(iosModule, /set\(self\.screenTimeShieldHost, forKey: self\.earnedUnlockSourceKey\)/);
   assert.match(iosModule, /private func clearEarnedUnlockState\(\)/);
   assert.match(iosModule, /guard isScreenTimeUnlockSource\(storedSource\), let scope = activeEarnedUnlockScope\(\), isSelectedScreenTimeScope\(scope\) else/);
   assert.match(iosModule, /defaults\.removeObject\(forKey: earnedUnlockSourceKey\)/);
-  assert.match(iosModule, /source is not an iOS Screen Time shield/);
+  assert.match(iosModule, /unlock identity does not match the claimed intervention/);
   assert.match(iosModule, /clearSelectedShields\(\)/);
   assert.match(iosModule, /Unrelated shields and adult web filtering stay active/);
   assert.match(iosModule, /activeUnlockExpiresAt/);
@@ -7294,7 +7386,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.doesNotMatch(appSurface, /return outcome === "helped"\s*\?\s*recordEarnedUnlock/s);
   assert.match(appSurface, /setScreen\(outcome === "still-urging" \? "coach" : "main"\)/);
   assert.match(appSurface, /getActiveNativeEarnedUnlock\(recoveryState\.earnedUnlocks, Platform\.OS/);
-  assert.match(appSurface, /applyEarnedUnlockWindow\(activeNativeUnlock\.expiresAt, activeNativeUnlock\.sourceAttemptHost\)/);
+  assert.match(appSurface, /applyEarnedUnlockWindow\([\s\S]*activeNativeUnlock\.nativeInterventionId[\s\S]*\)/);
   assert.match(appSurface, /createDeepLinkInterventionAttempt/);
   assert.match(appSurface, /isProtectionSetupDeepLink/);
   assert.match(appSurface, /consumeProtectionSetupDeepLink/);

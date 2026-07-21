@@ -47,6 +47,11 @@ public class FreedProtectionModule: Module {
     let scope: InterventionScope?
   }
 
+  private struct PendingEarnedUnlockEnvelope: Codable {
+    let interventionId: String
+    let scope: InterventionScope
+  }
+
   #if canImport(ManagedSettings)
   private let store = ManagedSettingsStore()
   #endif
@@ -212,10 +217,26 @@ public class FreedProtectionModule: Module {
       )
     }
 
-    AsyncFunction("applyEarnedUnlockWindow") { (expiresAt: String, sourceAttemptHost: String?) -> [String: Any] in
+    AsyncFunction("applyEarnedUnlockWindow") { (expiresAt: String, sourceAttemptHost: String?, expectedInterventionId: String?) -> [String: Any] in
+      guard
+        self.isScreenTimeUnlockSource(sourceAttemptHost),
+        let sanitizedExpectedInterventionId = self.sanitizedPendingInterventionId(expectedInterventionId),
+        let pendingEnvelope = self.consumePendingEarnedUnlockEnvelope(sanitizedExpectedInterventionId)
+      else {
+        self.clearActiveEarnedUnlockState()
+        self.stopEarnedUnlockMonitoring()
+        self.applySelectedShieldsForCurrentState()
+        return self.statusPayload(
+          authorized: self.isAuthorized(),
+          active: self.isAuthorized() && self.isAdultFilterActive(),
+          scheduled: self.isRiskWindowMonitoringActive(),
+          message: "Screen Time unlock identity does not match the claimed intervention. FREED shields remain active."
+        )
+      }
+
       let now = Date()
       guard let expiry = self.parseIsoDate(expiresAt), expiry > now else {
-        self.clearEarnedUnlockState()
+        self.clearActiveEarnedUnlockState()
         self.stopEarnedUnlockMonitoring()
         self.applySelectedShieldsForCurrentState()
         return self.statusPayload(
@@ -226,30 +247,7 @@ public class FreedProtectionModule: Module {
         )
       }
 
-      guard self.isScreenTimeUnlockSource(sourceAttemptHost) else {
-        self.clearEarnedUnlockState()
-        self.stopEarnedUnlockMonitoring()
-        self.applySelectedShieldsForCurrentState()
-        return self.statusPayload(
-          authorized: self.isAuthorized(),
-          active: self.isAuthorized() && self.isAdultFilterActive(),
-          scheduled: self.isRiskWindowMonitoringActive(),
-          message: "Earned unlock source is not an iOS Screen Time shield. FREED shields remain active."
-        )
-      }
-
-      guard let unlockScope = self.pendingEarnedUnlockScope(), self.isSelectedScreenTimeScope(unlockScope) else {
-        self.clearEarnedUnlockState()
-        self.stopEarnedUnlockMonitoring()
-        self.applySelectedShieldsForCurrentState()
-        return self.statusPayload(
-          authorized: self.isAuthorized(),
-          active: self.isAuthorized() && self.isAdultFilterActive(),
-          scheduled: self.isRiskWindowMonitoringActive(),
-          message: "Screen Time unlock scope is unavailable. FREED shields remain active."
-        )
-      }
-
+      let unlockScope = pendingEnvelope.scope
       let boundedExpiry = self.boundedEarnedUnlockExpiry(expiry, from: now)
       let boundedExpiresAt = self.formatIsoDate(boundedExpiry)
       self.sharedDefaults().set(boundedExpiresAt, forKey: self.earnedUnlockExpiresAtKey)
@@ -257,7 +255,6 @@ public class FreedProtectionModule: Module {
       if let encodedScope = try? JSONEncoder().encode(unlockScope) {
         self.sharedDefaults().set(encodedScope, forKey: self.earnedUnlockScopeKey)
       }
-      self.sharedDefaults().removeObject(forKey: self.pendingEarnedUnlockScopeKey)
       self.applySelectedShieldsExcludingEarnedUnlockScope(unlockScope)
       self.scheduleEarnedUnlockRelock(expiresAt: boundedExpiry)
       self.scheduleEarnedUnlockMonitoring(expiresAt: boundedExpiry)
@@ -752,11 +749,17 @@ public class FreedProtectionModule: Module {
   #endif
 
   private func clearEarnedUnlockState() {
+    clearActiveEarnedUnlockState()
+    pendingInterventionClaimLock.lock()
+    sharedDefaults().removeObject(forKey: pendingEarnedUnlockScopeKey)
+    pendingInterventionClaimLock.unlock()
+  }
+
+  private func clearActiveEarnedUnlockState() {
     let defaults = sharedDefaults()
     defaults.removeObject(forKey: earnedUnlockExpiresAtKey)
     defaults.removeObject(forKey: earnedUnlockSourceKey)
     defaults.removeObject(forKey: earnedUnlockScopeKey)
-    defaults.removeObject(forKey: pendingEarnedUnlockScopeKey)
   }
 
   private func activeEarnedUnlockExpiresAt() -> String? {
@@ -932,10 +935,14 @@ public class FreedProtectionModule: Module {
     if
       record.sourcePackage == screenTimeShieldSource,
       let scope = record.scope,
-      scope.kind == "ios-token",
-      let encodedScope = try? JSONEncoder().encode(scope)
+      scope.kind == "ios-token"
     {
-      sharedDefaults().set(encodedScope, forKey: pendingEarnedUnlockScopeKey)
+      let envelope = PendingEarnedUnlockEnvelope(interventionId: expectedInterventionId, scope: scope)
+      if let encodedEnvelope = try? JSONEncoder().encode(envelope) {
+        sharedDefaults().set(encodedEnvelope, forKey: pendingEarnedUnlockScopeKey)
+      } else {
+        sharedDefaults().removeObject(forKey: pendingEarnedUnlockScopeKey)
+      }
     } else {
       sharedDefaults().removeObject(forKey: pendingEarnedUnlockScopeKey)
     }
@@ -1183,8 +1190,32 @@ public class FreedProtectionModule: Module {
     #endif
   }
 
-  private func pendingEarnedUnlockScope() -> InterventionScope? {
-    scopeStored(forKey: pendingEarnedUnlockScopeKey)
+  private func consumePendingEarnedUnlockEnvelope(_ expectedInterventionId: String) -> PendingEarnedUnlockEnvelope? {
+    pendingInterventionClaimLock.lock()
+    defer { pendingInterventionClaimLock.unlock() }
+
+    guard
+      let envelope = pendingEarnedUnlockEnvelope(),
+      envelope.interventionId == expectedInterventionId,
+      isSelectedScreenTimeScope(envelope.scope)
+    else {
+      return nil
+    }
+
+    sharedDefaults().removeObject(forKey: pendingEarnedUnlockScopeKey)
+    return envelope
+  }
+
+  private func pendingEarnedUnlockEnvelope() -> PendingEarnedUnlockEnvelope? {
+    guard
+      let data = sharedDefaults().data(forKey: pendingEarnedUnlockScopeKey),
+      let envelope = try? JSONDecoder().decode(PendingEarnedUnlockEnvelope.self, from: data),
+      let interventionId = sanitizedPendingInterventionId(envelope.interventionId),
+      interventionId == envelope.interventionId
+    else {
+      return nil
+    }
+    return envelope
   }
 
   private func activeEarnedUnlockScope() -> InterventionScope? {
