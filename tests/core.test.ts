@@ -1720,8 +1720,9 @@ test("Android Focus Shield calibration bridge exposes terminal cleanup states", 
   assert.match(service, /onDestroy[\s\S]*stopFocusShieldCalibration/);
   assert.match(
     service,
-    /internal fun stopFocusShieldCalibration[\s\S]*Looper\.myLooper\(\) != Looper\.getMainLooper\(\)[\s\S]*handler\.post/
+    /internal fun stopFocusShieldCalibration[\s\S]*enqueueFocusShieldCalibrationTransition/
   );
+  assert.match(service, /private fun enqueueFocusShieldCalibrationTransition[\s\S]*handler\.post/);
   assert.match(calibration, /app-switched/);
   assert.match(calibration, /unsupported-tree/);
   assert.match(calibration, /timeout/);
@@ -1732,7 +1733,7 @@ test("Android Focus Shield calibration bridge exposes terminal cleanup states", 
   assert.match(bridge, /"revoked-permission"/);
 });
 
-test("Android Focus Shield calibration invalidates queued starts before terminal teardown", () => {
+test("Android Focus Shield serializes start and terminal transitions without TOCTOU publication", () => {
   const service = readFileSync(
     "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
     "utf8"
@@ -1744,25 +1745,34 @@ test("Android Focus Shield calibration invalidates queued starts before terminal
   const beginStart = service.indexOf("internal fun beginFocusShieldCalibration");
   const stopStart = service.indexOf("internal fun stopFocusShieldCalibration");
   const resultStart = service.indexOf("private fun onFocusShieldCalibrationResult");
+  const transitionStart = service.indexOf("private fun enqueueFocusShieldCalibrationTransition");
   const begin = service.slice(beginStart, stopStart);
   const stop = service.slice(stopStart, resultStart);
-  const result = service.slice(resultStart, service.indexOf("private fun isConfiguredBlockedApp"));
+  const result = service.slice(resultStart, transitionStart);
+  const transition = service.slice(transitionStart, service.indexOf("private fun isConfiguredBlockedApp"));
+  const bridgeStart = calibration.slice(calibration.indexOf("fun start(value"), calibration.indexOf("fun failStart"));
 
-  assert.match(service, /focusShieldCalibrationGeneration\s*=\s*AtomicLong/);
-  assert.match(begin, /val generation = focusShieldCalibrationGeneration\.incrementAndGet\(\)/);
-  assert.match(
-    begin,
-    /handler\.post\s*\{\s*if \(generation != focusShieldCalibrationGeneration\.get\(\)\) return@post/
-  );
-  assert.match(stop, /val stopGeneration = focusShieldCalibrationGeneration\.incrementAndGet\(\)/);
-  assert.match(stop, /val targetSession = focusShieldCalibrationSession/);
-  assert.match(stop, /val terminalResult = FreedFocusShieldCalibrationResult\(state, message\)/);
-  assert.ok(stop.indexOf("stopGeneration") < stop.indexOf("handler.post"));
-  assert.match(stop, /handler\.post[\s\S]*if \(stopGeneration != focusShieldCalibrationGeneration\.get\(\)\) return@post/);
-  assert.match(stop, /finishFocusShieldCalibration\(targetSession, stopGeneration, terminalResult\)/);
-  assert.match(stop, /focusShieldCalibrationSession !== targetSession/);
-  assert.match(stop, /targetSession == null[\s\S]*FreedFocusShieldCalibrationBridge\.publish\(terminalResult\)/);
-  assert.match(result, /result\.state != "calibrating" && result\.state != "ready"[\s\S]*focusShieldCalibrationGeneration\.incrementAndGet\(\)/);
+  assert.match(service, /focusShieldCalibrationTransitionLock\s*=\s*Any\(\)/);
+  assert.match(service, /focusShieldCalibrationRequestedGeneration\s*=\s*0L/);
+  assert.doesNotMatch(service, /AtomicLong/);
+  assert.match(transition, /synchronized\(focusShieldCalibrationTransitionLock\)/);
+  assert.match(transition, /focusShieldCalibrationRequestedGeneration \+= 1/);
+  assert.match(transition, /handler\.post transition@\{/);
+  assert.match(transition, /if \(generation != focusShieldCalibrationRequestedGeneration\) return@transition/);
+  assert.match(transition, /operation\(generation\)/);
+
+  assert.match(begin, /enqueueFocusShieldCalibrationTransition\s*\{ generation ->/);
+  assert.match(begin, /focusShieldCalibrationSession\?\.disposeWithoutResult\(\)/);
+  assert.match(begin, /focusShieldCalibrationSession = session[\s\S]*publish\(initial\)[\s\S]*session\.start\(\)/);
+  assert.doesNotMatch(begin, /handler\.post/);
+  assert.match(stop, /enqueueFocusShieldCalibrationTransition\s*\{/);
+  assert.match(stop, /activeSession\?\.disposeWithoutResult\(\)/);
+  assert.match(stop, /focusShieldCalibrationSession = null[\s\S]*publish\(terminalResult\)/);
+  assert.doesNotMatch(stop, /val targetSession = focusShieldCalibrationSession/);
+  assert.match(result, /handler\.post result@\{/);
+  assert.match(result, /generation != focusShieldCalibrationRequestedGeneration/);
+  assert.match(result, /focusShieldCalibrationSession !== session/);
+  assert.doesNotMatch(bridgeStart, /publish\(initial\)/);
 
   for (const lifecycle of ["onInterrupt", "onDestroy"]) {
     const lifecycleStart = service.indexOf(`override fun ${lifecycle}`);
@@ -1771,21 +1781,50 @@ test("Android Focus Shield calibration invalidates queued starts before terminal
   }
   assert.match(service, /override fun onUnbind[\s\S]*FreedFocusShieldCalibrationBridge\.detach/);
   assert.match(calibration, /fun detach[\s\S]*service\.stopFocusShieldCalibration/);
-  assert.match(calibration, /fun permissionRevoked[\s\S]*stopFocusShieldCalibration\("revoked-permission"/);
+  assert.match(calibration, /fun permissionRevoked[\s\S]*FreedFocusShieldCalibrationResult\("revoked-permission"/);
+  assert.match(calibration, /fun permissionRevoked[\s\S]*stopFocusShieldCalibration\(result\.state, result\.message\)/);
 
-  let generation = 0;
-  let activeSession = "old";
-  const stopGeneration = ++generation;
-  const stoppedSession = activeSession;
-  const runPostedStop = () => {
-    if (stopGeneration !== generation || activeSession !== stoppedSession) return false;
-    activeSession = "stopped";
-    return true;
+  type Transition = { generation: number; run: () => void };
+  let requestedGeneration = 0;
+  let transitionLocked = false;
+  let overlay: "old" | "new" | null = "old";
+  const results: string[] = [];
+  const queue: Transition[] = [];
+  const blockedRequests: Array<() => void> = [];
+  const enqueue = (run: () => void) => {
+    if (transitionLocked) {
+      blockedRequests.push(() => enqueue(run));
+      return;
+    }
+    requestedGeneration += 1;
+    queue.push({ generation: requestedGeneration, run });
   };
-  generation += 1;
-  activeSession = "new";
-  assert.equal(runPostedStop(), false);
-  assert.equal(activeSession, "new");
+  const drainOne = (duringTransition?: () => void) => {
+    const next = queue.shift();
+    if (!next || next.generation !== requestedGeneration) return;
+    transitionLocked = true;
+    duringTransition?.();
+    next.run();
+    transitionLocked = false;
+    blockedRequests.splice(0).forEach((request) => request());
+  };
+
+  // An old stop queued just before a newer start is stale and cannot publish over it.
+  enqueue(() => { overlay = null; results.push("old-stop"); });
+  enqueue(() => { overlay = "new"; results.push("calibrating"); });
+  drainOne();
+  drainOne();
+  assert.equal(overlay, "new");
+  assert.deepEqual(results, ["calibrating"]);
+
+  // A stop arriving after the start transition begins is ordered after installation and removes it.
+  overlay = null;
+  results.length = 0;
+  enqueue(() => { overlay = "new"; results.push("calibrating"); });
+  drainOne(() => enqueue(() => { overlay = null; results.push("cancelled"); }));
+  drainOne();
+  assert.equal(overlay, null);
+  assert.deepEqual(results, ["calibrating", "cancelled"]);
 });
 
 test("Android Focus Shield receives package-less window changes before generic enforcement returns", () => {
@@ -1858,8 +1897,10 @@ test("Android Focus Shield failed starts invalidate an earlier queued or active 
     "utf8"
   );
 
-  assert.match(calibration, /fun failStart\(message: String\)/);
-  assert.match(calibration, /fun failStart[\s\S]*stopFocusShieldCalibration\("failed", message\)[\s\S]*publish/);
+  const failStartSource = calibration.slice(calibration.indexOf("fun failStart"), calibration.indexOf("fun cancel"));
+  assert.match(failStartSource, /stopFocusShieldCalibration\("failed", message\)/);
+  assert.match(failStartSource, /synchronized\(serviceReferenceLock\)[\s\S]*\?: run[\s\S]*publish\(result\)/);
+  assert.match(failStartSource, /return result\.toPayload\(\)/);
   assert.match(calibration, /fromPayload\(value\)[\s\S]*\?: return failStart/);
   assert.match(module, /reactContext \?: return@AsyncFunction FreedFocusShieldCalibrationBridge\.failStart/);
 

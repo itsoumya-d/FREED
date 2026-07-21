@@ -228,3 +228,34 @@ The ordering simulation also requires an older posted stop to leave a newer sess
 - `npm run typecheck`: exit 0.
 - `ANDROID_HOME=/Users/soumyadebnath16/Library/Android/sdk ./gradlew :freed-protection:compileDebugKotlin`: exit 0, `BUILD SUCCESSFUL`, 45 actionable tasks (4 executed, 41 up-to-date).
 - Full `npm run test:core`: passes all Task 3 tests and exits 1 only at the unchanged unrelated release-signing fixture. The fixture expects a debug-keystore certificate message but fails earlier because its temporary upload-keystore path does not exist.
+
+## Final P1 TOCTOU follow-up
+
+Final review identified that separate atomic generation checks were still check-then-act operations. A stop from another thread could increment the generation after a start callback's check but before session installation, leaving the newly installed overlay outside the stop's captured-session cleanup. Conversely, a newer start request could arrive after an older stop callback's generation check but before that stop published its terminal result.
+
+### P1 RED
+
+The lifecycle regression was replaced with a source-and-behavior test that requires one serialized transition gate and models both reviewer interleavings. The first run exited 1 at:
+
+```text
+FAIL Android Focus Shield calibration bridge exposes terminal cleanup states
+The input did not match /internal fun stopFocusShieldCalibration[\s\S]*enqueueFocusShieldCalibrationTransition/
+```
+
+This was the expected failure because start and stop still used independent atomic checks and there was no serialized transition operation.
+
+### P1 implementation
+
+- Replaced the atomic check-then-act counter with a transition lock, a requested generation protected by that lock, and one main-Handler transition queue.
+- Registration and Handler execution use the same lock. The Handler holds it across generation validation and the complete state mutation: disposing/installing the session, creating/removing the overlay, clearing the active session, and publishing the corresponding shared result.
+- A stop requested after a start registration either supersedes the queued start before it installs anything or runs immediately after an already executing start transition and removes its overlay. It cannot interleave between validation and installation.
+- A newer start registration supersedes a queued older stop. If the older stop transition is already executing, registration waits until its atomic cleanup/publication finishes, after which the new start publishes `calibrating`; the old terminal result cannot overwrite the new state.
+- Session-origin results retain the generation of the session that produced them and are posted to the same Handler without incrementing the requested generation. They publish only if both generation and session identity still match, so an old session completion cannot cancel a newer request.
+- Bridge service-reference locking now covers request enqueue order without being acquired by Handler-side publication, avoiding lock inversion. Calls preserve their synchronous API result: start returns `calibrating`, while cancel/failure/revocation return their requested terminal payload immediately. Shared `latestResult` changes only from the serialized main transition; no-service fallback publication is posted to the main Looper in the same bridge request order.
+
+### P1 verification
+
+- The serialized lifecycle regression passes both modeled interleavings: stale old stop before new start installation produces no stale terminal result, and stop during an executing start transition leaves no overlay after the ordered stop runs.
+- All Task 3 tests pass within `npm run test:core`; the full command still exits 1 only at the unchanged unrelated release-signing fixture.
+- `npm run typecheck`: exit 0.
+- `ANDROID_HOME=/Users/soumyadebnath16/Library/Android/sdk ./gradlew :freed-protection:compileDebugKotlin`: exit 0, `BUILD SUCCESSFUL`, 45 actionable tasks (1 executed, 44 up-to-date).

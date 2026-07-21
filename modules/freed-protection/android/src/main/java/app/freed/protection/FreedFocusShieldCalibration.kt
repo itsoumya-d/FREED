@@ -76,6 +76,8 @@ internal data class FreedFocusShieldCalibrationResult(
 }
 
 internal object FreedFocusShieldCalibrationBridge {
+  private val serviceReferenceLock = Any()
+  private val handler = Handler(Looper.getMainLooper())
   private var serviceReference = WeakReference<FreedAccessibilityService>(null)
 
   @Volatile
@@ -84,72 +86,94 @@ internal object FreedFocusShieldCalibrationBridge {
     message = "Focus Shield calibration is not running."
   )
 
-  @Synchronized
   fun attach(service: FreedAccessibilityService) {
-    serviceReference = WeakReference(service)
-  }
-
-  @Synchronized
-  fun detach(service: FreedAccessibilityService, state: String, message: String) {
-    if (serviceReference.get() !== service) return
-    service.stopFocusShieldCalibration(state, message)
-    serviceReference.clear()
-    if (latestResult.state == "calibrating" || latestResult.state == "ready") {
-      latestResult = FreedFocusShieldCalibrationResult(state, message)
+    synchronized(serviceReferenceLock) {
+      serviceReference = WeakReference(service)
     }
   }
 
-  @Synchronized
+  fun detach(service: FreedAccessibilityService, state: String, message: String) {
+    synchronized(serviceReferenceLock) {
+      if (serviceReference.get() !== service) return
+      service.stopFocusShieldCalibration(state, message)
+      serviceReference.clear()
+    }
+  }
+
   fun start(value: Map<String, Any?>): Map<String, Any> {
     val request = FreedFocusShieldCalibrationRequest.fromPayload(value)
       ?: return failStart("Focus Shield calibration needs a valid local rule ID and Android package.")
-    val service = serviceReference.get()
-      ?: return publish(
-        FreedFocusShieldCalibrationResult(
-          state = "unavailable",
-          message = "Enable FREED Accessibility protection before starting calibration."
-        )
-      ).toPayload()
-
     val initial = FreedFocusShieldCalibrationResult(
       state = "calibrating",
       message = "Open the selected app, then tap the temporary FREED edge handle."
     )
-    publish(initial)
-    service.beginFocusShieldCalibration(request)
+    val unavailable = FreedFocusShieldCalibrationResult(
+      state = "unavailable",
+      message = "Enable FREED Accessibility protection before starting calibration."
+    )
+    val service = synchronized(serviceReferenceLock) {
+      serviceReference.get()?.also {
+        it.beginFocusShieldCalibration(request)
+      } ?: run {
+        publish(unavailable)
+        null
+      }
+    }
+    if (service == null) return unavailable.toPayload()
     return initial.toPayload()
   }
 
-  @Synchronized
   fun failStart(message: String): Map<String, Any> {
-    serviceReference.get()?.stopFocusShieldCalibration("failed", message)
-    return publish(FreedFocusShieldCalibrationResult("failed", message)).toPayload()
-  }
-
-  @Synchronized
-  fun cancel(): Map<String, Any> {
-    val service = serviceReference.get()
-    if (service != null) {
-      service.stopFocusShieldCalibration("cancelled", "Focus Shield calibration was cancelled.")
+    val result = FreedFocusShieldCalibrationResult("failed", message)
+    synchronized(serviceReferenceLock) {
+      serviceReference.get()?.also {
+        it.stopFocusShieldCalibration("failed", message)
+      } ?: run {
+        publish(result)
+        null
+      }
     }
-    publish(FreedFocusShieldCalibrationResult("cancelled", "Focus Shield calibration was cancelled."))
-    return latestResult.toPayload()
+    return result.toPayload()
   }
 
-  @Synchronized
+  fun cancel(): Map<String, Any> {
+    val result = FreedFocusShieldCalibrationResult(
+      "cancelled",
+      "Focus Shield calibration was cancelled."
+    )
+    synchronized(serviceReferenceLock) {
+      serviceReference.get()?.also {
+        it.stopFocusShieldCalibration(result.state, result.message)
+      } ?: run {
+        publish(result)
+        null
+      }
+    }
+    return result.toPayload()
+  }
+
   fun permissionRevoked(): Map<String, Any> {
     val message = "Accessibility permission was revoked, so calibration stopped and no selector was stored."
-    serviceReference.get()?.stopFocusShieldCalibration("revoked-permission", message)
-    serviceReference.clear()
-    publish(FreedFocusShieldCalibrationResult("revoked-permission", message))
-    return latestResult.toPayload()
+    val result = FreedFocusShieldCalibrationResult("revoked-permission", message)
+    synchronized(serviceReferenceLock) {
+      serviceReference.get()?.also {
+        it.stopFocusShieldCalibration(result.state, result.message)
+      }.also {
+        if (it == null) publish(result)
+        serviceReference.clear()
+      }
+    }
+    return result.toPayload()
   }
 
   fun get(): Map<String, Any> = latestResult.toPayload()
 
-  @Synchronized
   fun publish(result: FreedFocusShieldCalibrationResult): FreedFocusShieldCalibrationResult {
-    latestResult = result
+    if (Looper.myLooper() == Looper.getMainLooper()) {
+      latestResult = result
+    } else {
+      handler.post { latestResult = result }
+    }
     return result
   }
 }

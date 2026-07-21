@@ -29,7 +29,6 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
-import java.util.concurrent.atomic.AtomicLong
 
 class FreedAccessibilityService : AccessibilityService() {
   companion object {
@@ -144,7 +143,8 @@ class FreedAccessibilityService : AccessibilityService() {
   private var scheduledEarnedUnlockRelockPackage: String? = null
   @Volatile
   private var focusShieldCalibrationSession: FreedFocusShieldCalibrationSession? = null
-  private val focusShieldCalibrationGeneration = AtomicLong(0L)
+  private val focusShieldCalibrationTransitionLock = Any()
+  private var focusShieldCalibrationRequestedGeneration = 0L
   private val appLimitRunnable = Runnable {
     val packageName = scheduledLimitPackage ?: return@Runnable
     if (
@@ -318,54 +318,60 @@ class FreedAccessibilityService : AccessibilityService() {
   }
 
   internal fun beginFocusShieldCalibration(request: FreedFocusShieldCalibrationRequest) {
-    val generation = focusShieldCalibrationGeneration.incrementAndGet()
-    handler.post {
-      if (generation != focusShieldCalibrationGeneration.get()) return@post
+    val initial = FreedFocusShieldCalibrationResult(
+      state = "calibrating",
+      message = "Open the selected app, then tap the temporary FREED edge handle."
+    )
+    enqueueFocusShieldCalibrationTransition { generation ->
       focusShieldCalibrationSession?.disposeWithoutResult()
-      val session = FreedFocusShieldCalibrationSession(this, request, ::onFocusShieldCalibrationResult)
+      val session = FreedFocusShieldCalibrationSession(this, request) { finishedSession, result ->
+        onFocusShieldCalibrationResult(finishedSession, generation, result)
+      }
       focusShieldCalibrationSession = session
+      FreedFocusShieldCalibrationBridge.publish(initial)
       session.start()
     }
   }
 
   internal fun stopFocusShieldCalibration(state: String, message: String) {
-    val stopGeneration = focusShieldCalibrationGeneration.incrementAndGet()
-    val targetSession = focusShieldCalibrationSession
     val terminalResult = FreedFocusShieldCalibrationResult(state, message)
-    if (Looper.myLooper() != Looper.getMainLooper()) {
-      handler.post {
-        if (stopGeneration != focusShieldCalibrationGeneration.get()) return@post
-        finishFocusShieldCalibration(targetSession, stopGeneration, terminalResult)
-      }
-      return
-    }
-    finishFocusShieldCalibration(targetSession, stopGeneration, terminalResult)
-  }
-
-  private fun finishFocusShieldCalibration(
-    targetSession: FreedFocusShieldCalibrationSession?,
-    stopGeneration: Long,
-    terminalResult: FreedFocusShieldCalibrationResult
-  ) {
-    if (stopGeneration != focusShieldCalibrationGeneration.get()) return
-    if (targetSession == null) {
-      if (focusShieldCalibrationSession != null) return
+    enqueueFocusShieldCalibrationTransition {
+      val activeSession = focusShieldCalibrationSession
+      activeSession?.disposeWithoutResult()
+      focusShieldCalibrationSession = null
       FreedFocusShieldCalibrationBridge.publish(terminalResult)
-      return
     }
-    if (focusShieldCalibrationSession !== targetSession) return
-    targetSession.finish(terminalResult.state, terminalResult.message)
   }
 
   private fun onFocusShieldCalibrationResult(
     session: FreedFocusShieldCalibrationSession,
+    generation: Long,
     result: FreedFocusShieldCalibrationResult
   ) {
-    if (focusShieldCalibrationSession !== session) return
-    FreedFocusShieldCalibrationBridge.publish(result)
-    if (result.state != "calibrating" && result.state != "ready") {
-      focusShieldCalibrationGeneration.incrementAndGet()
-      focusShieldCalibrationSession = null
+    handler.post result@{
+      synchronized(focusShieldCalibrationTransitionLock) {
+        if (generation != focusShieldCalibrationRequestedGeneration) return@result
+        if (focusShieldCalibrationSession !== session) return@result
+        FreedFocusShieldCalibrationBridge.publish(result)
+        if (result.state != "calibrating" && result.state != "ready") {
+          focusShieldCalibrationSession = null
+        }
+      }
+    }
+  }
+
+  private fun enqueueFocusShieldCalibrationTransition(
+    operation: (Long) -> Unit
+  ) {
+    synchronized(focusShieldCalibrationTransitionLock) {
+      focusShieldCalibrationRequestedGeneration += 1
+      val generation = focusShieldCalibrationRequestedGeneration
+      handler.post transition@{
+        synchronized(focusShieldCalibrationTransitionLock) {
+          if (generation != focusShieldCalibrationRequestedGeneration) return@transition
+          operation(generation)
+        }
+      }
     }
   }
 
