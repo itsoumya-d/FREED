@@ -142,6 +142,7 @@ class FreedAccessibilityService : AccessibilityService() {
   private var shortFormScrollWindowStartedElapsedMs = 0L
   private var shortFormScrollCount = 0
   private var scheduledEarnedUnlockRelockPackage: String? = null
+  @Volatile
   private var focusShieldCalibrationSession: FreedFocusShieldCalibrationSession? = null
   private val focusShieldCalibrationGeneration = AtomicLong(0L)
   private val appLimitRunnable = Runnable {
@@ -195,14 +196,19 @@ class FreedAccessibilityService : AccessibilityService() {
   }
 
   override fun onAccessibilityEvent(event: AccessibilityEvent?) {
-    val packageName = event?.packageName?.toString() ?: return
-    val normalizedPackage = packageName.lowercase(Locale.US)
-    focusShieldCalibrationSession?.onAccessibilityEvent(event, normalizedPackage)
+    val accessibilityEvent = event ?: return
+    val normalizedPackage = accessibilityEvent.packageName
+      ?.toString()
+      ?.trim()
+      ?.lowercase(Locale.US)
+      ?.takeIf(String::isNotBlank)
+    focusShieldCalibrationSession?.onAccessibilityEvent(accessibilityEvent, normalizedPackage)
+    if (normalizedPackage == null) return
     trackForegroundUsage(normalizedPackage)
     val configuredApp = isConfiguredBlockedApp(normalizedPackage)
     val hasFocusShieldPresetRules = FreedFocusShieldRules.hasEnabledPresetRulesForPackage(this, normalizedPackage)
     val detectedShortFormRule = if (configuredApp || hasFocusShieldPresetRules) {
-      shortFormRuleForEvent(normalizedPackage, event)
+      shortFormRuleForEvent(normalizedPackage, accessibilityEvent)
     } else {
       null
     }
@@ -262,9 +268,9 @@ class FreedAccessibilityService : AccessibilityService() {
       }
     }
 
-    if (!supportedBrowsers.contains(normalizedPackage) && !isWebViewContext(event)) return
+    if (!supportedBrowsers.contains(normalizedPackage) && !isWebViewContext(accessibilityEvent)) return
 
-    val candidates = extractUrlCandidates(normalizedPackage, event)
+    val candidates = extractUrlCandidates(normalizedPackage, accessibilityEvent)
     val adultDomainFeed = FreedAdultDomainFeed.domains(this)
 
     for (candidate in candidates) {
@@ -323,18 +329,32 @@ class FreedAccessibilityService : AccessibilityService() {
   }
 
   internal fun stopFocusShieldCalibration(state: String, message: String) {
-    focusShieldCalibrationGeneration.incrementAndGet()
+    val stopGeneration = focusShieldCalibrationGeneration.incrementAndGet()
+    val targetSession = focusShieldCalibrationSession
+    val terminalResult = FreedFocusShieldCalibrationResult(state, message)
     if (Looper.myLooper() != Looper.getMainLooper()) {
-      handler.post { finishFocusShieldCalibration(state, message) }
+      handler.post {
+        if (stopGeneration != focusShieldCalibrationGeneration.get()) return@post
+        finishFocusShieldCalibration(targetSession, stopGeneration, terminalResult)
+      }
       return
     }
-    finishFocusShieldCalibration(state, message)
+    finishFocusShieldCalibration(targetSession, stopGeneration, terminalResult)
   }
 
-  private fun finishFocusShieldCalibration(state: String, message: String) {
-    val activeSession = focusShieldCalibrationSession
-    if (activeSession == null) return
-    activeSession.finish(state, message)
+  private fun finishFocusShieldCalibration(
+    targetSession: FreedFocusShieldCalibrationSession?,
+    stopGeneration: Long,
+    terminalResult: FreedFocusShieldCalibrationResult
+  ) {
+    if (stopGeneration != focusShieldCalibrationGeneration.get()) return
+    if (targetSession == null) {
+      if (focusShieldCalibrationSession != null) return
+      FreedFocusShieldCalibrationBridge.publish(terminalResult)
+      return
+    }
+    if (focusShieldCalibrationSession !== targetSession) return
+    targetSession.finish(terminalResult.state, terminalResult.message)
   }
 
   private fun onFocusShieldCalibrationResult(

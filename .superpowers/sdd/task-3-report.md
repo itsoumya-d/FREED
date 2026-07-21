@@ -70,6 +70,7 @@ The full core command continues past the Focus Shield tests and exits 1 later on
 
 - `modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt` (new)
 - `modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt`
+- `modules/freed-protection/android/src/main/res/xml/freed_accessibility_service.xml`
 - `modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt`
 - `modules/freed-protection/src/index.ts`
 - `src/lib/focus-shield.ts`
@@ -193,3 +194,37 @@ This proved a partially attached view could not be found by terminal cleanup if 
 - Full `npm run test:core`: passes all Task 3 tests and exits 1 only at the unchanged unrelated release-signing preflight fixture.
 
 Physical-device validation is still required for OEM window metadata. If Accessibility does not expose an active/focused application window during a transition, calibration retains its five-minute timeout instead of using an unconfirmed package event to tear down.
+
+## Third blocking review follow-up
+
+A third review found three lifecycle and event-delivery defects:
+
+1. A stop requested off the main thread posted an unguarded cleanup callback. If a newer calibration started before that callback ran, the old callback could finish the newer session or publish a stale terminal result.
+2. The service configuration did not subscribe to `TYPE_WINDOWS_CHANGED`, and the service returned early for package-less events before forwarding them to calibration. This could hide the only foreground-window transition signal on some Android implementations.
+3. A target app that was already foreground when the overlay opened was not marked observed until a later target-package event. Calibration could therefore fail to become ready for legitimate app-switch teardown.
+
+### Third follow-up RED
+
+Regression tests were added first for delayed stop ordering, package-less window-event routing, and observation of a verified target root. The first run exited 1 at:
+
+```text
+FAIL Android Focus Shield calibration invalidates queued starts before terminal teardown
+The input did not match /val stopGeneration = focusShieldCalibrationGeneration.incrementAndGet\(\)/
+```
+
+The ordering simulation also requires an older posted stop to leave a newer session untouched.
+
+### Third follow-up implementation
+
+- Every stop captures its own incremented generation, the exact target session, and an immutable terminal result before posting to the main Handler.
+- The posted callback rejects a stale generation. The teardown helper repeats the generation check and requires reference identity with the captured session before finishing it. A session-less stop publishes only when its generation remains current and no session has since been installed.
+- Added `typeWindowsChanged` to the Accessibility service event subscription.
+- Accessibility events are normalized and forwarded to calibration before the generic null-package return. Non-calibration enforcement retains its existing null-package early return.
+- A successfully validated `rootInActiveWindow` for the target package marks the target observed in both selector rendering and candidate-selection paths, before hit-testing.
+
+### Third follow-up verification
+
+- All Task 3 tests pass, including stale posted-stop ordering, package-less window delivery, and already-foreground target observation.
+- `npm run typecheck`: exit 0.
+- `ANDROID_HOME=/Users/soumyadebnath16/Library/Android/sdk ./gradlew :freed-protection:compileDebugKotlin`: exit 0, `BUILD SUCCESSFUL`, 45 actionable tasks (4 executed, 41 up-to-date).
+- Full `npm run test:core`: passes all Task 3 tests and exits 1 only at the unchanged unrelated release-signing fixture. The fixture expects a debug-keystore certificate message but fails earlier because its temporary upload-keystore path does not exist.

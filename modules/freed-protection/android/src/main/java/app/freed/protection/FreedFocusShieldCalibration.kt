@@ -200,7 +200,7 @@ internal class FreedFocusShieldCalibrationSession(
     }
   }
 
-  fun onAccessibilityEvent(event: AccessibilityEvent, packageName: String) {
+  fun onAccessibilityEvent(event: AccessibilityEvent, packageName: String?) {
     if (disposed) return
     if (packageName == request.packageName) {
       targetObserved = true
@@ -298,6 +298,7 @@ internal class FreedFocusShieldCalibrationSession(
       )
       return
     }
+    targetObserved = true
 
     removeView(handleView)
     handleView = null
@@ -393,6 +394,7 @@ internal class FreedFocusShieldCalibrationSession(
       )
       return
     }
+    targetObserved = true
 
     val selected = hitTest(rootNode, x, y, emptyList())
     if (selected == null) {

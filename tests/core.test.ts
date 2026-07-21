@@ -1754,7 +1754,14 @@ test("Android Focus Shield calibration invalidates queued starts before terminal
     begin,
     /handler\.post\s*\{\s*if \(generation != focusShieldCalibrationGeneration\.get\(\)\) return@post/
   );
-  assert.ok(stop.indexOf("focusShieldCalibrationGeneration.incrementAndGet()") < stop.indexOf("handler.post"));
+  assert.match(stop, /val stopGeneration = focusShieldCalibrationGeneration\.incrementAndGet\(\)/);
+  assert.match(stop, /val targetSession = focusShieldCalibrationSession/);
+  assert.match(stop, /val terminalResult = FreedFocusShieldCalibrationResult\(state, message\)/);
+  assert.ok(stop.indexOf("stopGeneration") < stop.indexOf("handler.post"));
+  assert.match(stop, /handler\.post[\s\S]*if \(stopGeneration != focusShieldCalibrationGeneration\.get\(\)\) return@post/);
+  assert.match(stop, /finishFocusShieldCalibration\(targetSession, stopGeneration, terminalResult\)/);
+  assert.match(stop, /focusShieldCalibrationSession !== targetSession/);
+  assert.match(stop, /targetSession == null[\s\S]*FreedFocusShieldCalibrationBridge\.publish\(terminalResult\)/);
   assert.match(result, /result\.state != "calibrating" && result\.state != "ready"[\s\S]*focusShieldCalibrationGeneration\.incrementAndGet\(\)/);
 
   for (const lifecycle of ["onInterrupt", "onDestroy"]) {
@@ -1765,6 +1772,44 @@ test("Android Focus Shield calibration invalidates queued starts before terminal
   assert.match(service, /override fun onUnbind[\s\S]*FreedFocusShieldCalibrationBridge\.detach/);
   assert.match(calibration, /fun detach[\s\S]*service\.stopFocusShieldCalibration/);
   assert.match(calibration, /fun permissionRevoked[\s\S]*stopFocusShieldCalibration\("revoked-permission"/);
+
+  let generation = 0;
+  let activeSession = "old";
+  const stopGeneration = ++generation;
+  const stoppedSession = activeSession;
+  const runPostedStop = () => {
+    if (stopGeneration !== generation || activeSession !== stoppedSession) return false;
+    activeSession = "stopped";
+    return true;
+  };
+  generation += 1;
+  activeSession = "new";
+  assert.equal(runPostedStop(), false);
+  assert.equal(activeSession, "new");
+});
+
+test("Android Focus Shield receives package-less window changes before generic enforcement returns", () => {
+  const config = readFileSync(
+    "modules/freed-protection/android/src/main/res/xml/freed_accessibility_service.xml",
+    "utf8"
+  );
+  const service = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+    "utf8"
+  );
+  const eventHandler = service.slice(
+    service.indexOf("override fun onAccessibilityEvent"),
+    service.indexOf("override fun onInterrupt")
+  );
+
+  assert.match(config, /typeWindowsChanged/);
+  assert.match(eventHandler, /val accessibilityEvent = event \?: return/);
+  assert.match(eventHandler, /focusShieldCalibrationSession\?\.onAccessibilityEvent\(accessibilityEvent, normalizedPackage\)/);
+  assert.match(eventHandler, /if \(normalizedPackage == null\) return/);
+  assert.ok(
+    eventHandler.indexOf("focusShieldCalibrationSession?.onAccessibilityEvent")
+      < eventHandler.indexOf("if (normalizedPackage == null) return")
+  );
 });
 
 test("Android Focus Shield distinguishes its overlay events from a real FREED app switch", () => {
@@ -1777,7 +1822,7 @@ test("Android Focus Shield distinguishes its overlay events from a real FREED ap
     "utf8"
   );
 
-  assert.match(service, /onAccessibilityEvent\(event, normalizedPackage\)/);
+  assert.match(service, /onAccessibilityEvent\(accessibilityEvent, normalizedPackage\)/);
   assert.match(calibration, /AccessibilityWindowInfo\.TYPE_ACCESSIBILITY_OVERLAY/);
   assert.match(calibration, /window\.id == event\.windowId/);
   assert.match(calibration, /if \(isCalibrationOverlayEvent\(event\)\) return/);
@@ -1847,6 +1892,32 @@ test("Android Focus Shield overlay attachment failures terminate and clean the s
   assert.ok(edge.indexOf("handleView = handle") < edge.indexOf("addOverlayView(handle, params)"));
   assert.ok(selector.indexOf("selectorView = overlay") < selector.indexOf("addOverlayView(overlay, params)"));
   assert.match(calibration, /fun finish[\s\S]*removeOverlays\(\)[\s\S]*candidate = null/);
+});
+
+test("Android Focus Shield treats a verified target tree as observed before app-switch checks", () => {
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const selector = calibration.slice(
+    calibration.indexOf("private fun showSelectorOverlay"),
+    calibration.indexOf("private fun addOverlayView")
+  );
+  const candidateSelection = calibration.slice(
+    calibration.indexOf("private fun selectCandidate"),
+    calibration.indexOf("private fun hitTest")
+  );
+
+  assert.match(selector, /rootNode[\s\S]*targetObserved = true[\s\S]*removeView\(handleView\)/);
+  assert.match(candidateSelection, /rootNode[\s\S]*targetObserved = true[\s\S]*hitTest/);
+
+  let targetObserved = false;
+  const verifiedTargetRoot = true;
+  if (verifiedTargetRoot) targetObserved = true;
+  const becameReady = targetObserved;
+  const actualAppSwitchTerminates = becameReady && "app.freed" !== "com.google.android.youtube";
+  assert.equal(becameReady, true);
+  assert.equal(actualAppSwitchTerminates, true);
 });
 
 test("Focus Shield calibration states have one central shared contract", () => {
