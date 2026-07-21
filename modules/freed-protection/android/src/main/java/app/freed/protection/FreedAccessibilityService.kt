@@ -141,6 +141,7 @@ class FreedAccessibilityService : AccessibilityService() {
   private var shortFormScrollWindowStartedElapsedMs = 0L
   private var shortFormScrollCount = 0
   private var scheduledEarnedUnlockRelockPackage: String? = null
+  private var focusShieldCalibrationSession: FreedFocusShieldCalibrationSession? = null
   private val appLimitRunnable = Runnable {
     val packageName = scheduledLimitPackage ?: return@Runnable
     if (
@@ -186,9 +187,15 @@ class FreedAccessibilityService : AccessibilityService() {
     }
   }
 
+  override fun onServiceConnected() {
+    super.onServiceConnected()
+    FreedFocusShieldCalibrationBridge.attach(this)
+  }
+
   override fun onAccessibilityEvent(event: AccessibilityEvent?) {
     val packageName = event?.packageName?.toString() ?: return
     val normalizedPackage = packageName.lowercase(Locale.US)
+    focusShieldCalibrationSession?.onAccessibilityPackage(normalizedPackage)
     trackForegroundUsage(normalizedPackage)
     val configuredApp = isConfiguredBlockedApp(normalizedPackage)
     val hasFocusShieldPresetRules = FreedFocusShieldRules.hasEnabledPresetRulesForPackage(this, normalizedPackage)
@@ -268,16 +275,68 @@ class FreedAccessibilityService : AccessibilityService() {
   }
 
   override fun onInterrupt() {
+    stopFocusShieldCalibration(
+      state = "service-interrupted",
+      message = "Accessibility service was interrupted, so calibration stopped and no selector was stored."
+    )
     handler.removeCallbacks(appLimitRunnable)
     handler.removeCallbacks(shortFormRunnable)
     handler.removeCallbacks(earnedUnlockRelockRunnable)
   }
 
+  override fun onUnbind(intent: Intent?): Boolean {
+    FreedFocusShieldCalibrationBridge.detach(
+      service = this,
+      state = "revoked-permission",
+      message = "Accessibility permission was revoked, so calibration stopped and no selector was stored."
+    )
+    return super.onUnbind(intent)
+  }
+
   override fun onDestroy() {
+    stopFocusShieldCalibration(
+      state = "service-interrupted",
+      message = "Accessibility service stopped, so calibration ended and no selector was stored."
+    )
+    FreedFocusShieldCalibrationBridge.detach(
+      service = this,
+      state = "service-interrupted",
+      message = "Accessibility service stopped, so calibration ended and no selector was stored."
+    )
     handler.removeCallbacks(appLimitRunnable)
     handler.removeCallbacks(shortFormRunnable)
     handler.removeCallbacks(earnedUnlockRelockRunnable)
     super.onDestroy()
+  }
+
+  internal fun beginFocusShieldCalibration(request: FreedFocusShieldCalibrationRequest) {
+    handler.post {
+      focusShieldCalibrationSession?.disposeWithoutResult()
+      val session = FreedFocusShieldCalibrationSession(this, request, ::onFocusShieldCalibrationResult)
+      focusShieldCalibrationSession = session
+      session.start()
+    }
+  }
+
+  internal fun stopFocusShieldCalibration(state: String, message: String) {
+    if (Looper.myLooper() != Looper.getMainLooper()) {
+      handler.post { stopFocusShieldCalibration(state, message) }
+      return
+    }
+    val activeSession = focusShieldCalibrationSession
+    if (activeSession == null) return
+    activeSession.finish(state, message)
+  }
+
+  private fun onFocusShieldCalibrationResult(
+    session: FreedFocusShieldCalibrationSession,
+    result: FreedFocusShieldCalibrationResult
+  ) {
+    if (focusShieldCalibrationSession !== session) return
+    FreedFocusShieldCalibrationBridge.publish(result)
+    if (result.state != "calibrating" && result.state != "ready") {
+      focusShieldCalibrationSession = null
+    }
   }
 
   private fun isConfiguredBlockedApp(packageName: String): Boolean {

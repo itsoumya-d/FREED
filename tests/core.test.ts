@@ -1667,6 +1667,71 @@ test("Android Focus Shield persists vetted local rules and enforces scoped surfa
   assert.match(interventionActivity, /freed_focus_shield_rule_id/);
 });
 
+test("Android Focus Shield calibration uses a five-minute Accessibility overlay without broad overlay permission", () => {
+  const calibrationPath = "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt";
+  const calibration = existsSync(calibrationPath) ? readFileSync(calibrationPath, "utf8") : "";
+  const manifest = readFileSync("modules/freed-protection/android/src/main/AndroidManifest.xml", "utf8");
+
+  assert.match(calibration, /CALIBRATION_TIMEOUT_MS\s*=\s*5\s*\*\s*60_000L/);
+  assert.match(calibration, /WindowManager\.LayoutParams\.TYPE_ACCESSIBILITY_OVERLAY/);
+  assert.match(calibration, /text\s*=\s*"FREED"/);
+  assert.match(calibration, /showSelectorOverlay/);
+  assert.doesNotMatch(manifest, /SYSTEM_ALERT_WINDOW|USE_FULL_SCREEN_INTENT/);
+  assert.doesNotMatch(calibration, /Settings\.canDrawOverlays|ACTION_MANAGE_OVERLAY_PERMISSION/);
+});
+
+test("Android Focus Shield calibration stores only confirmed stable selector fingerprints", () => {
+  const calibrationPath = "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt";
+  const calibration = existsSync(calibrationPath) ? readFileSync(calibrationPath, "utf8") : "";
+
+  assert.match(calibration, /rootInActiveWindow/);
+  assert.match(calibration, /viewIdResourceName/);
+  assert.match(calibration, /getBoundsInScreen/);
+  assert.match(calibration, /allowedViewIds/);
+  assert.match(calibration, /ancestorRoles/);
+  assert.match(calibration, /confirmButton/);
+  assert.match(calibration, /confirmCandidate/);
+  assert.match(calibration, /FreedFocusShieldRules\.configure/);
+  assert.ok(calibration.indexOf("confirmCandidate") < calibration.indexOf("FreedFocusShieldRules.configure"));
+  assert.doesNotMatch(calibration, /node\.(?:text|getText)|contentDescription|rawAccessibilityTree|screenshot/i);
+});
+
+test("Android Focus Shield calibration bridge exposes terminal cleanup states", () => {
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const service = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+    "utf8"
+  );
+  const module = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+    "utf8"
+  );
+  const bridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+
+  assert.match(module, /AsyncFunction\("startFocusShieldCalibration"\)/);
+  assert.match(module, /AsyncFunction\("cancelFocusShieldCalibration"\)/);
+  assert.match(module, /AsyncFunction\("getFocusShieldCalibration"\)/);
+  assert.match(service, /onServiceConnected/);
+  assert.match(service, /onInterrupt[\s\S]*service-interrupted/);
+  assert.match(service, /onUnbind[\s\S]*revoked-permission/);
+  assert.match(service, /onDestroy[\s\S]*stopFocusShieldCalibration/);
+  assert.match(
+    service,
+    /internal fun stopFocusShieldCalibration[\s\S]*Looper\.myLooper\(\) != Looper\.getMainLooper\(\)[\s\S]*handler\.post/
+  );
+  assert.match(calibration, /app-switched/);
+  assert.match(calibration, /unsupported-tree/);
+  assert.match(calibration, /timeout/);
+  assert.match(calibration, /removeViewImmediate/);
+  assert.match(bridge, /"success"/);
+  assert.match(bridge, /"timeout"/);
+  assert.match(bridge, /"unsupported-tree"/);
+  assert.match(bridge, /"revoked-permission"/);
+});
+
 test("Focus Shield integration routes scoped challenge unlocks without widening package access", () => {
   const pending = {
     url: "https://youtube-shorts.app.freed.local",

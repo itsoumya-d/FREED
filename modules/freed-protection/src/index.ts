@@ -2,10 +2,25 @@ import { requireNativeModule } from "expo-modules-core";
 import { sanitizeFocusShieldInterventionScope, sanitizeFocusShieldRule } from "../../../src/lib/focus-shield";
 import type {
   FocusShieldCalibrationRequest,
-  FocusShieldCalibrationResult,
+  FocusShieldCalibrationResult as SharedFocusShieldCalibrationResult,
   FocusShieldInterventionScope,
   FocusShieldRule
 } from "../../../src/lib/focus-shield";
+
+export type { FocusShieldCalibrationRequest };
+
+export type FocusShieldCalibrationState =
+  | SharedFocusShieldCalibrationResult["state"]
+  | "success"
+  | "timeout"
+  | "unsupported-tree"
+  | "revoked-permission"
+  | "app-switched"
+  | "service-interrupted";
+
+export type FocusShieldCalibrationResult = Omit<SharedFocusShieldCalibrationResult, "state"> & {
+  state: FocusShieldCalibrationState;
+};
 
 export type ProtectionCapability = {
   platform: "ios" | "android" | "web" | "unknown";
@@ -499,7 +514,18 @@ function sanitizeFocusShieldRuleOperationResult(value: unknown): FocusShieldRule
 }
 
 function isFocusShieldCalibrationState(value: unknown): value is FocusShieldCalibrationResult["state"] {
-  return value === "idle" || value === "calibrating" || value === "ready" || value === "cancelled" || value === "unavailable" || value === "failed";
+  return value === "idle"
+    || value === "calibrating"
+    || value === "ready"
+    || value === "success"
+    || value === "cancelled"
+    || value === "timeout"
+    || value === "unsupported-tree"
+    || value === "revoked-permission"
+    || value === "app-switched"
+    || value === "service-interrupted"
+    || value === "unavailable"
+    || value === "failed";
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
