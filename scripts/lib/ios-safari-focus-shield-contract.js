@@ -1,6 +1,7 @@
 "use strict";
 
 const assert = require("node:assert/strict");
+const vm = require("node:vm");
 
 const SAFARI_FOCUS_HOST_PERMISSIONS = Object.freeze([
   "*://youtube.com/*",
@@ -45,6 +46,62 @@ function versionAtLeast(value, minimum) {
   return true;
 }
 
+function stripJavaScriptComments(source) {
+  let output = "";
+  let quote = "";
+  let escaped = false;
+  for (let index = 0; index < source.length; index += 1) {
+    const current = source[index];
+    const next = source[index + 1];
+    if (quote) {
+      output += current;
+      if (escaped) escaped = false;
+      else if (current === "\\") escaped = true;
+      else if (current === quote) quote = "";
+      continue;
+    }
+    if (current === '"' || current === "'" || current === "`") {
+      quote = current;
+      output += current;
+      continue;
+    }
+    if (current === "/" && next === "/") {
+      output += "  ";
+      index += 2;
+      while (index < source.length && source[index] !== "\n") {
+        output += " ";
+        index += 1;
+      }
+      if (index < source.length) output += "\n";
+      continue;
+    }
+    if (current === "/" && next === "*") {
+      output += "  ";
+      index += 2;
+      while (index < source.length && !(source[index] === "*" && source[index + 1] === "/")) {
+        output += source[index] === "\n" ? "\n" : " ";
+        index += 1;
+      }
+      if (index < source.length) {
+        output += "  ";
+        index += 1;
+      }
+      continue;
+    }
+    output += current;
+  }
+  return output;
+}
+
+function isExecutableJavaScript(source) {
+  try {
+    new vm.Script(source, { filename: "SafariFocusShield-background.js" });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function inspectSafariFocusShieldContract({ manifest, info, background, content, nativeHandlerBinary }) {
   const contentScripts = Array.isArray(manifest?.content_scripts) ? manifest.content_scripts : [];
   const contentScriptsScoped =
@@ -60,25 +117,37 @@ function inspectSafariFocusShieldContract({ manifest, info, background, content,
     exactStringSet(allowedDomains, SAFARI_FOCUS_ALLOWED_DOMAINS);
   const serviceWorker = manifest?.background?.service_worker || "";
   const backgroundServiceWorkerValid = serviceWorker === "background.js";
+  const executableBackground = stripJavaScriptComments(background);
+  const backgroundIsExecutableJavaScript = isExecutableJavaScript(background);
   const backgroundOwnsNativeMessaging =
-    background.includes("runtime.onMessage.addListener") &&
-    background.includes("sendNativeMessage") &&
-    background.includes("APPROVED_RULE_HOSTS");
-  const nativeMessageArguments = [...background.matchAll(/sendNativeMessage\s*\(\s*([^,\s)]+)/g)].map((match) => match[1]);
+    executableBackground.includes("runtime.onMessage.addListener") &&
+    executableBackground.includes("sendNativeMessage") &&
+    executableBackground.includes("APPROVED_RULE_HOSTS");
+  const escapedNativeAppId = SAFARI_FOCUS_NATIVE_APP_ID.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const nativeAppIdDeclarations = [
+    ...executableBackground.matchAll(new RegExp(`\\bconst\\s+NATIVE_APP_ID\\s*=\\s*"${escapedNativeAppId}"\\s*;`, "g")),
+  ];
+  const directNativeMessageCalls = [
+    ...executableBackground.matchAll(
+      /\bbrowser\s*\.\s*runtime\s*\.\s*sendNativeMessage\s*\(\s*NATIVE_APP_ID\s*,\s*payload\s*\)/g,
+    ),
+  ];
+  const nativeMessageMentions = [...executableBackground.matchAll(/\bsendNativeMessage\b/g)];
   const nativeAppIdentifierValid =
-    background.includes(`const NATIVE_APP_ID = "${SAFARI_FOCUS_NATIVE_APP_ID}";`) &&
-    /browser\.runtime\s*\.sendNativeMessage\s*\(\s*NATIVE_APP_ID\s*,/s.test(background) &&
-    nativeMessageArguments.length > 0 &&
-    nativeMessageArguments.every((argument) => argument === "NATIVE_APP_ID");
+    backgroundIsExecutableJavaScript &&
+    nativeAppIdDeclarations.length === 1 &&
+    directNativeMessageCalls.length === 1 &&
+    nativeMessageMentions.length === directNativeMessageCalls.length &&
+    !/\bruntime\s*\[/.test(executableBackground);
   const fixedNativeEnvelope =
-    background.includes('type: "record-pending-intervention"') &&
-    background.includes('source: "ios-safari-short-form"');
+    executableBackground.includes('type: "record-pending-intervention"') &&
+    executableBackground.includes('source: "ios-safari-short-form"');
   const approvedRuleHostsPresent = Object.entries(APPROVED_RULE_HOSTS).every(
-    ([rule, host]) => background.includes(`"${rule}": "${host}"`) && nativeHandlerBinary.includes(rule) && nativeHandlerBinary.includes(host),
+    ([rule, host]) => executableBackground.includes(`"${rule}": "${host}"`) && nativeHandlerBinary.includes(rule) && nativeHandlerBinary.includes(host),
   );
   const nativePayloadSchemaValid =
-    /return\s*\{\s*type:\s*"record-pending-intervention",\s*source:\s*"ios-safari-short-form",\s*host,\s*rule\s*\}/s.test(background) &&
-    !/originalUrl|originalURL|pathname|searchParams/i.test(background);
+    /return\s*\{\s*type:\s*"record-pending-intervention",\s*source:\s*"ios-safari-short-form",\s*host,\s*rule\s*\}/s.test(executableBackground) &&
+    !/originalUrl|originalURL|pathname|searchParams/i.test(executableBackground);
   const nativeHandlerContractValid =
     nativeHandlerBinary.includes("record-pending-intervention") &&
     nativeHandlerBinary.includes("ios-safari-short-form") &&
@@ -115,6 +184,7 @@ function inspectSafariFocusShieldContract({ manifest, info, background, content,
   return {
     allowedDomains: Array.isArray(allowedDomains) ? allowedDomains : [],
     approvedRuleHostsPresent,
+    backgroundIsExecutableJavaScript,
     backgroundOwnsNativeMessaging,
     backgroundServiceWorkerValid,
     contentScriptsScoped,
@@ -156,8 +226,11 @@ function validFixture() {
       "short-form:instagram-reels": "instagram.com",
       "short-form:tiktok-feed": "tiktok.com"
     };
-    function payload(host, rule) { return { type: "record-pending-intervention", source: "ios-safari-short-form", host, rule }; }
-    browser.runtime.onMessage.addListener(() => browser.runtime.sendNativeMessage(NATIVE_APP_ID, payload("youtube.com", "short-form:youtube-shorts")));
+    function approvedNativePayload(host, rule) { return { type: "record-pending-intervention", source: "ios-safari-short-form", host, rule }; }
+    browser.runtime.onMessage.addListener(() => {
+      const payload = approvedNativePayload("youtube.com", "short-form:youtube-shorts");
+      return browser.runtime.sendNativeMessage(NATIVE_APP_ID, payload);
+    });
   `;
   const content = "const runtime = browser.runtime; if (runtime?.sendMessage) runtime.sendMessage({host: 'youtube.com', rule: 'short-form:youtube-shorts'});";
   const nativeHandlerBinary = `record-pending-intervention ios-safari-short-form ${Object.entries(APPROVED_RULE_HOSTS).flat().join(" ")}`;
@@ -176,6 +249,13 @@ function assertSafariFocusShieldContractSelfTest() {
     { ...fixture, background: fixture.background.replace("APPROVED_RULE_HOSTS", "rules") },
     { ...fixture, background: fixture.background.replace('source: "ios-safari-short-form"', 'source: "unsafe"') },
     { ...fixture, background: fixture.background.replace('"app.freed.recovery"', '"attacker.example"') },
+    {
+      ...fixture,
+      background: fixture.background.replace(
+        "return browser.runtime.sendNativeMessage(NATIVE_APP_ID, payload);",
+        'const method = "sendNativeMessage"; return browser.runtime[method]("attacker.example", payload); /* return browser.runtime.sendNativeMessage(NATIVE_APP_ID, payload); */',
+      ),
+    },
     { ...fixture, nativeHandlerBinary: "record-pending-intervention" },
     { ...fixture, content: "browser.runtime.sendNativeMessage('app.freed.recovery', {})" },
   ];

@@ -2289,8 +2289,11 @@ async function runSelfTest() {
         path.join(extensionPath, "background.js"),
         `const NATIVE_APP_ID = "app.freed.recovery";
          const APPROVED_RULE_HOSTS = { "short-form:youtube-shorts": "youtube.com", "short-form:instagram-reels": "instagram.com", "short-form:tiktok-feed": "tiktok.com" };
-         function payload(host, rule) { return { type: "record-pending-intervention", source: "ios-safari-short-form", host, rule }; }
-         browser.runtime.onMessage.addListener(() => browser.runtime.sendNativeMessage(NATIVE_APP_ID, payload("youtube.com", "short-form:youtube-shorts")));`,
+         function approvedNativePayload(host, rule) { return { type: "record-pending-intervention", source: "ios-safari-short-form", host, rule }; }
+         browser.runtime.onMessage.addListener(() => {
+           const payload = approvedNativePayload("youtube.com", "short-form:youtube-shorts");
+           return browser.runtime.sendNativeMessage(NATIVE_APP_ID, payload);
+         });`,
       );
       fs.writeFileSync(
         path.join(extensionPath, "content.js"),
