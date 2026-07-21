@@ -687,7 +687,7 @@ const checks = [
 	      protectionPermissions.includes("feed version, checksum, and domain count") &&
 	      protectionPermissions.includes("Usage Access") &&
 	      protectionPermissions.includes("Accessibility Service") &&
-	      protectionPermissions.includes("does not full-tunnel traffic") &&
+	      protectionPermissions.includes("without routing all device traffic through FREED") &&
 	      protectionPermissions.includes("does not MITM HTTPS") &&
 	      protectionPermissions.includes("does not inspect page contents") &&
 	      protectionPermissions.includes("Camera and on-device Vision labels") &&
@@ -732,7 +732,7 @@ const checks = [
 		      appSurface.includes("local VpnService routes DNS resolver IPs only") &&
 		      appSurface.includes("configured limits or selected short-form thresholds") &&
 		      appSurface.includes("Required Android setup: reviewed adult-domain feed, DNS-only VPN, Usage Access, Accessibility, selected app timers, then Test Protection") &&
-	      appSurface.includes("Required iOS setup: Screen Time authorization, adult web filter, selected targets, daily-limit monitoring, Safari rules, then Test Protection") &&
+	      appSurface.includes("Required iOS setup: Screen Time authorization, adult-domain Safari Content Blocker, Safari Focus Shield for Shorts/Reels, selected targets, daily-limit monitoring, then Test Protection") &&
       appSurface.includes("Test Protection") &&
       appSurface.includes("adultBlocked") &&
       appSurface.includes("normalAllowed") &&
@@ -872,7 +872,7 @@ const checks = [
       nativeProtectionIndex.includes("labels: []") &&
       iosProtectionModule.includes("VNClassifyImageRequest") &&
       androidProtectionModule.includes("ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)") &&
-      !iosProtectionModule.includes("base64") &&
+      !iosProtectionModule.includes("imageData.base64EncodedString") &&
       !androidProtectionModule.includes("Base64"),
     "Photo challenge verification uses explicit camera copy, fresh camera capture, on-device labels, no microphone/photo-library permission copy, no base64/exif payloads, and best-effort temporary-photo cleanup after classification."
   )

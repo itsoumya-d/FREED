@@ -35,6 +35,9 @@ Explicit platform boundaries:
 - FREED does not take screenshots, run OCR, or perform continuous image classification for protection.
 - FREED does not use `NEPacketTunnelProvider`, `NETunnelProviderManager`, or `NEVPNManager`.
 - FREED does not include a packet-tunnel provider.
+- FREED does not full-tunnel traffic.
+- No VPN manager is used.
+- No TLS interception is used.
 - No packet tunnel, VPN manager, full traffic proxying, packet inspection, or MITM HTTPS is used.
 
 ## Screen Time Entitlement Request

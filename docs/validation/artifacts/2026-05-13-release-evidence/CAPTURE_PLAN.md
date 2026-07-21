@@ -178,7 +178,7 @@ Release blocker groups:
   - Evidence file: `docs/validation/evidence/ios-physical-device.json`
   - Capture helper: `npm run evidence:ios-physical-device -- --device <udid-or-name> --adult-host <real-adult-host> --app <signed-freed-app-or-ipa> --short-form-url <youtube-shorts-url> --run-id 2026-05-13-release-evidence --output-dir docs/validation/artifacts/2026-05-13-release-evidence/ios-physical-device-capture`
   - Report: `npm run build:ios-archive:release -- --report docs/validation/artifacts/2026-05-13-release-evidence/ios-release-archive-report.json`
-  - Next: Produce a sanitized signed iOS Release archive/IPA report, then capture entitlement-approved iOS hardware evidence for Screen Time, Safari, DNS settings boundaries, app shields, and challenge verification.
+  - Next: Produce a sanitized signed iOS Release archive/IPA report, then capture entitlement-approved iOS hardware evidence for Screen Time, Safari Content Blocker, Safari Focus Shield, app shields, and challenge verification.
 
 - `android-real-browser-validation` (physical-evidence)
   - Evidence file: `docs/validation/evidence/android-real-browser.json`
@@ -247,7 +247,8 @@ Required checks:
 - [ ] `checks.safariContentBlockerReloaded`
 - [ ] `checks.safariContentBlockerEnabled`
 - [ ] `checks.safariContentBlockerAdultBlock`
-- [ ] `checks.safariContentBlockerShortFormBlock`
+- [ ] `checks.safariFocusShieldBuild`
+- [ ] `checks.safariFocusShieldShortFormBlock`
 - [ ] `checks.safariShortFormChallengeHandoff`
 - [ ] `checks.selectedShieldTokens`
 - [ ] `checks.selectedAppDailyLimitThreshold`
@@ -283,13 +284,13 @@ Required fields:
 - [ ] `ios.permissionWizardArtifact checks include Screen Time authorization return refresh, FamilyActivityPicker return refresh, Safari Settings return refresh, and auto-advance continuation`
 - [ ] `ios.familyControlsEntitlementTeamId`
 - [ ] `ios.familyControlsEntitlementArtifact`
-- [ ] `ios.familyControlsEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements`
+- [ ] `ios.familyControlsEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time, Safari Content Blocker, and Safari Focus Shield extensions, and no packet tunnel/packet inspection entitlements`
 - [ ] `ios.appGroupProvisioningProfileId`
 - [ ] `ios.appGroupProvisioningArtifact`
-- [ ] `ios.appGroupProvisioningArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements`
+- [ ] `ios.appGroupProvisioningArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time, Safari Content Blocker, and Safari Focus Shield extensions, and no packet tunnel/packet inspection entitlements`
 - [ ] `ios.completeDataProtectionEntitlement=NSFileProtectionComplete`
 - [ ] `ios.completeDataProtectionEntitlementArtifact`
-- [ ] `ios.completeDataProtectionEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements`
+- [ ] `ios.completeDataProtectionEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time, Safari Content Blocker, and Safari Focus Shield extensions, and no packet tunnel/packet inspection entitlements`
 - [ ] `ios.familyControlsAuthorizationRunId`
 - [ ] `ios.familyControlsAuthorizationArtifact`
 - [ ] `ios.familyControlsStatus=approved`
@@ -319,21 +320,26 @@ Required fields:
 - [ ] `ios.safariContentBlockerIdentifier=app.freed.recovery.safari-content-blocker`
 - [ ] `ios.safariContentBlockerBuildRunId`
 - [ ] `ios.safariContentBlockerBuildArtifact`
-- [ ] `ios.safariContentBlockerBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariContentBlocker.appex, adult-domain rules, short-form web rules, all-block actions, and no packet tunnel/packet inspection entitlements`
+- [ ] `ios.safariContentBlockerBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariContentBlocker.appex, adult-domain-only rules, all-block actions, and no packet tunnel/packet inspection entitlements`
 - [ ] `ios.safariContentBlockerReloadRunId`
 - [ ] `ios.safariContentBlockerReloadArtifact`
 - [ ] `ios.safariContentBlockerReloadArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/version/checksum/rule count and Safari reload/no-screen-read/no-packet-inspection checks`
 - [ ] `ios.safariContentBlockerVersion`
 - [ ] `ios.safariContentBlockerChecksum fnv1a32:<8-hex>`
-- [ ] `ios.safariContentBlockerRuleCount>4`
+- [ ] `ios.safariContentBlockerRuleCount>=1`
 - [ ] `ios.safariContentBlockerEnabled=true`
 - [ ] `ios.safariContentBlockerAdultBlockRunId`
 - [ ] `ios.safariContentBlockerAdultBlockArtifact`
 - [ ] `ios.safariContentBlockerAdultBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/adult host and Safari adult-domain/no-packet-inspection checks`
-- [ ] `ios.safariContentBlockerShortFormUrl`
-- [ ] `ios.safariContentBlockerShortFormBlockRunId`
-- [ ] `ios.safariContentBlockerShortFormBlockArtifact`
-- [ ] `ios.safariContentBlockerShortFormBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/short-form URL/rule and no raw path/no app-screen-inspection checks`
+- [ ] `ios.safariFocusShieldEmbedded=true`
+- [ ] `ios.safariFocusShieldIdentifier=app.freed.recovery.safari-focus-shield`
+- [ ] `ios.safariFocusShieldBuildRunId`
+- [ ] `ios.safariFocusShieldBuildArtifact`
+- [ ] `ios.safariFocusShieldBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariFocusShield.appex, MV3 manifest, background.js service worker, content.js, scoped hosts, iOS 15.4 minimum, and app-group/Complete Data Protection entitlements`
+- [ ] `ios.safariFocusShieldShortFormUrl`
+- [ ] `ios.safariFocusShieldShortFormBlockRunId`
+- [ ] `ios.safariFocusShieldShortFormBlockArtifact`
+- [ ] `ios.safariFocusShieldShortFormBlockArtifact local freed-ios-safari-focus-shield-report-v1 JSON with sanitized=true, matching runId/short-form URL/rule and MV3 content-script/background-worker/no-raw-path checks`
 - [ ] `ios.safariShortFormChallengeHandoffRunId`
 - [ ] `ios.safariShortFormChallengeHandoffArtifact`
 - [ ] `ios.safariShortFormChallengeHandoffSource=ios-safari-short-form`

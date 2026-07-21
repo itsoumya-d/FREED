@@ -1476,7 +1476,9 @@ function runSelfTest() {
   const tempDir = fs.mkdtempSync(path.join(ROOT, "docs", "validation", "artifacts", "android-apk-build-self-test-"));
   const envTempDir = fs.mkdtempSync(path.join(os.tmpdir(), "freed-android-build-env-"));
   const reportFile = path.join(tempDir, "android-apk-build-report.json");
+  const signingFixtureFile = path.join(tempDir, "upload-signing-fixture.keystore");
   try {
+    fs.writeFileSync(signingFixtureFile, "self-test fixture; certificate parsing is injected below\n", "utf8");
     assert.throws(
       () => parseArgs(["--report", "docs/validation/evidence/android-apk-build-report.json"]),
       /docs\/validation\/evidence/,
@@ -1779,7 +1781,7 @@ function runSelfTest() {
     assert.equal(debugKeystoreProof.debugSigned, true);
     assert.equal(debugKeystoreProof.certificateSha256Digest, ANDROID_DEBUG_CERT_SHA256);
     const uploadSigningEnv = {
-      FREED_ANDROID_UPLOAD_STORE_FILE: "android/app/debug.keystore",
+      FREED_ANDROID_UPLOAD_STORE_FILE: signingFixtureFile,
       FREED_ANDROID_UPLOAD_STORE_PASSWORD: "android",
       FREED_ANDROID_UPLOAD_KEY_ALIAS: "androiddebugkey",
       FREED_ANDROID_UPLOAD_KEY_PASSWORD: "android",

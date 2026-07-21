@@ -199,7 +199,6 @@ const checks = [
   check(
     "ios-safari-short-form-web-rules",
     doomscrollApps.includes("SAFARI_SHORT_FORM_WEB_RULE_FILTERS") &&
-      blockingEngine.includes('from "@/lib/doomscroll-apps"') &&
       !blockingEngine.includes("export const SAFARI_SHORT_FORM_WEB_RULE_FILTERS = [") &&
       shortFormWebContract.includes("SHORT_FORM_WEB_SURFACES") &&
       shortFormWebContract.includes("isShortFormWebUrl") &&
@@ -272,9 +271,9 @@ const checks = [
       iosModule.includes("sanitizeHostForStorage(trimmed) == screenTimeShieldHost") &&
       iosModule.includes('earnedUnlockSourceKey = "freed.earnedUnlock.source"') &&
       iosModule.includes("set(self.screenTimeShieldHost, forKey: self.earnedUnlockSourceKey)") &&
-      iosModule.includes("guard isScreenTimeUnlockSource(storedSource) else") &&
+      iosModule.includes("guard isScreenTimeUnlockSource(storedSource), let scope = activeEarnedUnlockScope(), isSelectedScreenTimeScope(scope) else") &&
       iosDeviceActivity.includes('earnedUnlockSourceKey = "freed.earnedUnlock.source"') &&
-      iosDeviceActivity.includes("guard isScreenTimeUnlockSource(storedSource) else") &&
+      iosDeviceActivity.includes("guard isScreenTimeUnlockSource(storedSource), let scope = activeEarnedUnlockScope(), isSelectedScreenTimeScope(scope) else") &&
       appSurface.includes("getActiveNativeEarnedUnlock(recoveryState.earnedUnlocks, Platform.OS") &&
       appSurface.includes("applyEarnedUnlockWindow(activeNativeUnlock.expiresAt, activeNativeUnlock.sourceAttemptHost)") &&
       nativeIntervention.includes('APP_INTERVENTION_FALLBACK_HOST = "selected-app.app.freed.local"') &&
@@ -290,7 +289,7 @@ const checks = [
       androidModule.includes("isFreshPendingIntervention(detectedAt)") &&
       androidModule.includes("clearPendingInterventionPrefs(prefs)") &&
       iosModule.includes("pendingInterventionMaxAgeSeconds") &&
-      iosModule.includes("isFreshPendingIntervention(detectedAt)") &&
+      iosModule.includes("self.isFreshPendingIntervention(record.detectedAt)") &&
       iosModule.includes("clearPendingInterventionDefaults()") &&
       iosModule.includes("sanitizedPendingHost") &&
       iosModule.includes("sanitizeHostForStorage") &&
@@ -447,7 +446,6 @@ const checks = [
       adultFeedSync.includes("safariCanBePrimaryLayer") &&
       adultFeedSync.includes("safariLayerExpected") &&
       adultFeedSync.includes("minimumSafariRuleCount") &&
-      adultFeedSync.includes("SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length") &&
       adultFeedSync.includes("EXPO_PUBLIC_ADULT_DOMAIN_FEED_SYNC_TIMEOUT_MS") &&
       adultFeedSync.includes("EXPO_PUBLIC_ADULT_DOMAIN_FEED_RESPONSE_MAX_BYTES") &&
       adultFeedSync.includes("fetchRemoteFeedPayload") &&

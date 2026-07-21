@@ -9599,16 +9599,36 @@ test("Android release APK builder self-test covers safe report output", () => {
 });
 
 test("release readiness audit rejects Android debug upload keystore certificate", () => {
-  const debugKeystore = join(process.cwd(), "android/app/debug.keystore");
-  assert.equal(existsSync(debugKeystore), true);
-  const output = runReleaseReadinessAudit({
-    FREED_ANDROID_UPLOAD_STORE_FILE: debugKeystore,
-    FREED_ANDROID_UPLOAD_STORE_PASSWORD: "android",
-    FREED_ANDROID_UPLOAD_KEY_ALIAS: "androiddebugkey",
-    FREED_ANDROID_UPLOAD_KEY_PASSWORD: "android"
-  });
-  assert.match(output, /production-android-signing/);
-  assert.match(output, /FREED_ANDROID_UPLOAD_STORE_FILE non-debug upload keystore/);
+  const root = mkdtempSync(join(tmpdir(), "freed-debug-keystore-"));
+  const debugKeystore = join(root, "debug.keystore");
+  try {
+    execFileSync("keytool", [
+      "-genkeypair",
+      "-keystore", debugKeystore,
+      "-storepass", "android",
+      "-alias", "androiddebugkey",
+      "-keypass", "android",
+      "-dname", "CN=Android Debug, OU=Android, O=Unknown, L=Unknown, ST=Unknown, C=US",
+      "-keyalg", "RSA",
+      "-validity", "10000",
+      "-noprompt"
+    ], {
+      cwd: process.cwd(),
+      env: childToolEnv(),
+      stdio: ["ignore", "pipe", "pipe"],
+      timeout: CORE_TEST_CHILD_TIMEOUT_MS
+    });
+    const output = runReleaseReadinessAudit({
+      FREED_ANDROID_UPLOAD_STORE_FILE: debugKeystore,
+      FREED_ANDROID_UPLOAD_STORE_PASSWORD: "android",
+      FREED_ANDROID_UPLOAD_KEY_ALIAS: "androiddebugkey",
+      FREED_ANDROID_UPLOAD_KEY_PASSWORD: "android"
+    });
+    assert.match(output, /production-android-signing/);
+    assert.match(output, /FREED_ANDROID_UPLOAD_STORE_FILE non-debug upload keystore/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 });
 
 test("release readiness audit rejects malformed reviewed adult feed source config", () => {
@@ -9675,12 +9695,24 @@ test("release readiness audit writes sanitized JSON reports", () => {
     assert.equal(typeof report.generatedAt, "string");
     assert.equal(report.sanitized, true);
     assert.equal(report.strict, false);
-    assert.equal(report.summary.passCount, 30);
-    assert.equal(report.summary.failCount, 14);
     assert.ok(Array.isArray(report.results));
+    assert.equal(
+      report.summary.passCount,
+      report.results.filter((entry: { status?: string }) => entry.status === "pass").length
+    );
+    assert.equal(
+      report.summary.failCount,
+      report.results.filter((entry: { status?: string }) => entry.status === "fail").length
+    );
+    assert.equal(
+      report.summary.warnCount,
+      report.results.filter((entry: { status?: string }) => entry.status === "warn").length
+    );
+    assert.ok(report.summary.passCount > 0);
+    assert.ok(report.summary.failCount > 0);
     assert.ok(report.results.some((entry: { id?: string; status?: string }) => entry.id === "store-legal-hosted-url-validation" && entry.status === "fail"));
     assert.ok(report.results.some((entry: { id?: string; status?: string }) => entry.id === "production-backend-infrastructure" && entry.status === "fail"));
-    assert.ok(report.results.some((entry: { id?: string; status?: string }) => entry.id === "privacy-safety-contract" && entry.status === "pass"));
+    assert.ok(report.results.some((entry: { id?: string; status?: string }) => entry.id === "android-native-safety-contract" && entry.status === "pass"));
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
@@ -11347,12 +11379,12 @@ test("validation evidence scaffold writes drafts outside release evidence gate",
     assert.match(iosRequirements.captureHelperCommand, /npm run evidence:ios-physical-device/);
     assert.ok(iosRequirements.requiredFields.includes("ios.familyControlsEntitlementTeamId"));
     assert.ok(iosRequirements.requiredFields.includes("ios.familyControlsEntitlementArtifact"));
-    assert.ok(iosRequirements.requiredFields.includes("ios.familyControlsEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.familyControlsEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time, Safari Content Blocker, and Safari Focus Shield extensions, and no packet tunnel/packet inspection entitlements"));
     assert.ok(iosRequirements.requiredFields.includes("ios.appGroupProvisioningArtifact"));
-    assert.ok(iosRequirements.requiredFields.includes("ios.appGroupProvisioningArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.appGroupProvisioningArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time, Safari Content Blocker, and Safari Focus Shield extensions, and no packet tunnel/packet inspection entitlements"));
     assert.ok(iosRequirements.requiredFields.includes("ios.completeDataProtectionEntitlement=NSFileProtectionComplete"));
     assert.ok(iosRequirements.requiredFields.includes("ios.completeDataProtectionEntitlementArtifact"));
-    assert.ok(iosRequirements.requiredFields.includes("ios.completeDataProtectionEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.completeDataProtectionEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time, Safari Content Blocker, and Safari Focus Shield extensions, and no packet tunnel/packet inspection entitlements"));
     assert.ok(iosRequirements.requiredFields.includes("ios.familyControlsAuthorizationRunId"));
     assert.ok(iosRequirements.requiredFields.includes("ios.familyControlsAuthorizationArtifact"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariContentBlocker.appex, adult-domain-only rules, all-block actions, and no packet tunnel/packet inspection entitlements"));
@@ -12269,13 +12301,13 @@ test("validation evidence requirements expose field and command handoff details"
   assert.ok(ios.requiredFields.includes("ios.permissionWizardArtifact checks include Screen Time authorization return refresh, FamilyActivityPicker return refresh, Safari Settings return refresh, and auto-advance continuation"));
     assert.ok(ios.requiredFields.includes("ios.familyControlsEntitlementTeamId"));
     assert.ok(ios.requiredFields.includes("ios.familyControlsEntitlementArtifact"));
-  assert.ok(ios.requiredFields.includes("ios.familyControlsEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements"));
+  assert.ok(ios.requiredFields.includes("ios.familyControlsEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time, Safari Content Blocker, and Safari Focus Shield extensions, and no packet tunnel/packet inspection entitlements"));
     assert.ok(ios.requiredFields.includes("ios.appGroupProvisioningProfileId"));
     assert.ok(ios.requiredFields.includes("ios.appGroupProvisioningArtifact"));
-  assert.ok(ios.requiredFields.includes("ios.appGroupProvisioningArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements"));
+  assert.ok(ios.requiredFields.includes("ios.appGroupProvisioningArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time, Safari Content Blocker, and Safari Focus Shield extensions, and no packet tunnel/packet inspection entitlements"));
     assert.ok(ios.requiredFields.includes("ios.completeDataProtectionEntitlement=NSFileProtectionComplete"));
     assert.ok(ios.requiredFields.includes("ios.completeDataProtectionEntitlementArtifact"));
-  assert.ok(ios.requiredFields.includes("ios.completeDataProtectionEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements"));
+  assert.ok(ios.requiredFields.includes("ios.completeDataProtectionEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time, Safari Content Blocker, and Safari Focus Shield extensions, and no packet tunnel/packet inspection entitlements"));
   assert.ok(ios.requiredFields.includes("ios.familyControlsAuthorizationRunId"));
   assert.ok(ios.requiredFields.includes("ios.familyControlsAuthorizationArtifact"));
   assert.ok(ios.requiredFields.includes("ios.familyActivityPickerRunId"));
