@@ -38,6 +38,18 @@ The repository test now extracts every exported `onCall` declaration from the Ty
 
 Verification: `npm run test:firebase-repository`, `npm run test:firebase-functions`, `npm --prefix functions run build`, and `npm run typecheck` passed.
 
+## Fail-closed export and option re-review
+
+The AST policy extractor now discovers only top-level values created by the locally imported `firebase-functions/v2/https` `onCall` binding, including aliases. It resolves both direct exports and `export { localName }` re-exports, and unwraps parenthesized, `as`, and `satisfies` initializers. Callable options are evaluated in declaration order: a spread makes a prior policy unprovable until a later explicit `true` replaces it. The UID guard is accepted only as a direct callback-body expression or variable initializer, never from a nested callback or conditional branch.
+
+Fixtures prove re-exported and aliased/wrapped insecure callables are detected, later option spreads fail, final explicit options can restore a safe policy, and nested/conditional UID calls fail. `npm run test:firebase-repository`, `npm run test:firebase-functions`, `npm --prefix functions run build`, and `npm run typecheck` passed.
+
+## Effective policy and export resolution re-review
+
+Callable discovery now trusts only the local `onCall` binding imported from `firebase-functions/v2/https`; direct exports and named local re-exports are both resolved, including aliased/parenthesized/`as`/`satisfies` initializers. Object options are evaluated in order, with spreads invalidating a prior explicit security value until a later explicit property restores it. A consumed limited-use token followed by a spread is also rejected for non-deletion callables. UID validation is restricted to direct callback statements or variable initializers, excluding nested callbacks and conditional branches.
+
+Fixtures cover every one of those failure modes. `npm run test:firebase-repository`, `npm run test:firebase-functions`, `npm --prefix functions run build`, and `npm run typecheck` passed.
+
 ## Syntax-aware callable re-review
 
 The source-level extractor now uses the TypeScript AST and accepts only actual exported variable declarations initialized by `onCall`. It inspects actual object-literal booleans and actual `requireUid(request.auth?.uid)` call expressions in callback bodies. Adversarial fixtures confirm that comments or string literals cannot provide fake App Check/UID policy tokens, and string/comment text cannot create a fake callable declaration.

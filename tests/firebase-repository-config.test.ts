@@ -12,6 +12,7 @@ const remoteConfig = JSON.parse(readFileSync("remoteconfig.template.json", "utf8
 const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
 const environmentExample = readFileSync(".env.example", "utf8");
 const productionEnvironmentExample = readFileSync(".env.production.example", "utf8");
+const onCallImport = `import { onCall } from "firebase-functions/v2/https";`;
 
 assert.equal(aliases.projects.production, "freed-7d5ee");
 assert.equal(aliases.projects.staging, "freed-staging-7d5ee");
@@ -37,24 +38,67 @@ assert.match(functionSource, /function requireUid\(uid: string \| undefined\)/);
 assert.match(functionSource, /A Firebase Auth session is required/);
 assertCallablePolicies(extractExportedOnCalls(functionSource));
 assert.throws(
-  () => assertCallablePolicies(extractExportedOnCalls(`export const unsafe = onCall({}, async (request) => { requireUid(request.auth?.uid); });`)),
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const unsafe = onCall({}, async (request) => { requireUid(request.auth?.uid); });`)),
   /unsafe.*enforceAppCheck/i
 );
 assert.throws(
-  () => assertCallablePolicies(extractExportedOnCalls(`export const unsafe = onCall({ enforceAppCheck: true }, async () => {});`)),
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const unsafe = onCall({ enforceAppCheck: true }, async () => {});`)),
   /unsafe.*UID auth gate/i
 );
 assert.throws(
-  () => assertCallablePolicies(extractExportedOnCalls(`export const other = onCall({ consumeAppCheckToken: true, enforceAppCheck: true }, async (request) => { requireUid(request.auth?.uid); });`)),
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const other = onCall({ consumeAppCheckToken: true, enforceAppCheck: true }, async (request) => { requireUid(request.auth?.uid); });`)),
   /only requestAccountDeletion/i
 );
 assert.throws(
-  () => assertCallablePolicies(extractExportedOnCalls(`export const unsafe = onCall({ /* enforceAppCheck: true */ }, async (request) => { /* requireUid(request.auth?.uid) */ });`)),
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const unsafe = onCall({ /* enforceAppCheck: true */ }, async (request) => { /* requireUid(request.auth?.uid) */ });`)),
   /unsafe.*enforceAppCheck/i
 );
 assert.throws(
-  () => assertCallablePolicies(extractExportedOnCalls(`export const unsafe = onCall({ policy: "enforceAppCheck: true" }, async (request) => { const text = "requireUid(request.auth?.uid)"; });`)),
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const unsafe = onCall({ policy: "enforceAppCheck: true" }, async (request) => { const text = "requireUid(request.auth?.uid)"; });`)),
   /unsafe.*enforceAppCheck/i
+);
+assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} const unsafe = onCall({}, async (request) => { requireUid(request.auth?.uid); }); export { unsafe };`)),
+  /unsafe.*enforceAppCheck/i
+);
+assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`import { onCall as callable } from "firebase-functions/v2/https"; const unsafe = (callable({}, async (request) => { requireUid(request.auth?.uid); })) as unknown; export { unsafe };`)),
+  /unsafe.*enforceAppCheck/i
+);
+assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`import { onCall as callable } from "firebase-functions/v2/https"; const unsafe = (callable({}, async (request) => { requireUid(request.auth?.uid); })) satisfies unknown; export { unsafe };`)),
+  /unsafe.*enforceAppCheck/i
+);
+assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const unsafe = onCall({ enforceAppCheck: true, ...unknownOptions }, async (request) => { requireUid(request.auth?.uid); });`)),
+  /unsafe.*enforceAppCheck/i
+);
+assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const requestAccountDeletion = onCall({ enforceAppCheck: true, consumeAppCheckToken: true, ...unknownOptions, enforceAppCheck: true }, async (request) => { requireUid(request.auth?.uid); });`)),
+  /requestAccountDeletion.*limited-use/i
+);
+assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const other = onCall({ enforceAppCheck: true, consumeAppCheckToken: true, ...unknownOptions, enforceAppCheck: true }, async (request) => { requireUid(request.auth?.uid); });`)),
+  /only requestAccountDeletion/i
+);
+assert.doesNotThrow(
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const safe = onCall({ ...unknownOptions, enforceAppCheck: true }, async (request) => { const uid = requireUid(request.auth?.uid); });`))
+);
+assert.doesNotThrow(
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const requestAccountDeletion = onCall({ ...unknownOptions, enforceAppCheck: true, consumeAppCheckToken: true }, async (request) => { const uid = requireUid(request.auth?.uid); });`))
+);
+assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const unsafe = onCall({ enforceAppCheck: true }, async (request) => { const deferred = () => requireUid(request.auth?.uid); });`)),
+  /unsafe.*UID auth gate/i
+);
+assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const unsafe = onCall({ enforceAppCheck: true }, async (request) => { if (false) requireUid(request.auth?.uid); });`)),
+  /unsafe.*UID auth gate/i
+);
+assert.equal(
+  extractExportedOnCalls(`export const fake = onCall({ enforceAppCheck: true }, async (request) => { requireUid(request.auth?.uid); });`).length,
+  0,
+  "A non-imported local onCall identifier must not be trusted as the Firebase v2 binding."
 );
 assert.equal(
   extractExportedOnCalls(`const fixture = "export const fake = onCall({ enforceAppCheck: true }, async (request) => { requireUid(request.auth?.uid); })";`).length,
@@ -95,39 +139,55 @@ assert.match(productionEnvironmentExample, /EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_U
 assert.match(productionEnvironmentExample, /EXPO_PUBLIC_FIREBASE_EMAIL_LINK_DOMAIN=freed-7d5ee\.firebaseapp\.com/);
 console.log("firebase repository configuration tests passed");
 
-type ExportedOnCall = { name: string; options: ts.ObjectLiteralExpression; body: ts.Block };
+type ExportedOnCall = { name: string; options: ts.ObjectLiteralExpression | null; body: ts.Block | null };
 
-/** Enumerates syntax nodes only: comments and strings are not declarations. */
+/**
+ * Enumerates only actual top-level values created by the locally imported v2
+ * onCall binding, then resolves direct and named exports. Unsupported syntax is
+ * retained as an invalid handler so the policy check fails closed.
+ */
 function extractExportedOnCalls(source: string): ExportedOnCall[] {
   const sourceFile = ts.createSourceFile("functions/src/index.ts", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const handlers: ExportedOnCall[] = [];
+  const onCallBindings = importedOnCallBindings(sourceFile);
+  const localCallables = new Map<string, ExportedOnCall>();
+  const directlyExported = new Set<string>();
+  const reExported = new Set<string>();
+
   for (const statement of sourceFile.statements) {
-    if (!ts.isVariableStatement(statement) || !hasExportModifier(statement)) continue;
-    for (const declaration of statement.declarationList.declarations) {
-      if (!ts.isIdentifier(declaration.name) || !declaration.initializer || !ts.isCallExpression(declaration.initializer)) continue;
-      const [options, callback] = declaration.initializer.arguments;
-      if (!ts.isIdentifier(declaration.initializer.expression) || declaration.initializer.expression.text !== "onCall") continue;
-      if (!options || !ts.isObjectLiteralExpression(options) || !callback || !isBlockCallback(callback)) continue;
-      handlers.push({ name: declaration.name.text, options, body: callback.body });
+    if (ts.isVariableStatement(statement)) {
+      for (const declaration of statement.declarationList.declarations) {
+        if (!ts.isIdentifier(declaration.name) || !declaration.initializer) continue;
+        const callable = callableFromInitializer(declaration.name.text, declaration.initializer, onCallBindings);
+        if (!callable) continue;
+        localCallables.set(callable.name, callable);
+        if (hasExportModifier(statement)) directlyExported.add(callable.name);
+      }
+    }
+    if (ts.isExportDeclaration(statement) && !statement.moduleSpecifier && statement.exportClause && ts.isNamedExports(statement.exportClause)) {
+      for (const specifier of statement.exportClause.elements) {
+        reExported.add((specifier.propertyName ?? specifier.name).text);
+      }
     }
   }
-  return handlers;
+
+  return [...localCallables.values()].filter((handler) => directlyExported.has(handler.name) || reExported.has(handler.name));
 }
 
 function assertCallablePolicies(handlers: ExportedOnCall[]) {
   assert.ok(handlers.length > 0, "No exported onCall handlers were found.");
   for (const handler of handlers) {
-    if (!hasTrueOption(handler.options, "enforceAppCheck")) {
+    const enforceAppCheck = handler.options ? effectiveOption(handler.options, "enforceAppCheck") : null;
+    if (!enforceAppCheck || enforceAppCheck.state !== "true") {
       throw new Error(`${handler.name} must set enforceAppCheck: true.`);
     }
-    if (!usesSharedUidGate(handler.body)) {
+    if (!handler.body || !usesSharedUidGate(handler.body)) {
       throw new Error(`${handler.name} must use the shared UID auth gate.`);
     }
-    const consumesLimitedUseToken = hasTrueOption(handler.options, "consumeAppCheckToken");
-    if (handler.name === "requestAccountDeletion" && !consumesLimitedUseToken) {
+    const consumeAppCheckToken = effectiveOption(handler.options, "consumeAppCheckToken");
+    if (handler.name === "requestAccountDeletion" && consumeAppCheckToken.state !== "true") {
       throw new Error("requestAccountDeletion must consume a limited-use App Check token.");
     }
-    if (handler.name !== "requestAccountDeletion" && consumesLimitedUseToken) {
+    if (handler.name !== "requestAccountDeletion" && (consumeAppCheckToken.state === "true" || consumeAppCheckToken.trueOverriddenBySpread)) {
       throw new Error("Only requestAccountDeletion may consume a limited-use App Check token.");
     }
   }
@@ -137,15 +197,70 @@ function hasExportModifier(statement: ts.VariableStatement) {
   return statement.modifiers?.some((modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword) ?? false;
 }
 
+function importedOnCallBindings(sourceFile: ts.SourceFile) {
+  const bindings = new Set<string>();
+  for (const statement of sourceFile.statements) {
+    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier)) continue;
+    if (statement.moduleSpecifier.text !== "firebase-functions/v2/https") continue;
+    const namedImports = statement.importClause?.namedBindings;
+    if (!namedImports || !ts.isNamedImports(namedImports)) continue;
+    for (const specifier of namedImports.elements) {
+      const importedName = (specifier.propertyName ?? specifier.name).text;
+      if (importedName === "onCall") bindings.add(specifier.name.text);
+    }
+  }
+  return bindings;
+}
+
+function callableFromInitializer(name: string, initializer: ts.Expression, onCallBindings: Set<string>): ExportedOnCall | null {
+  const expression = unwrapExpression(initializer);
+  if (!ts.isCallExpression(expression) || !ts.isIdentifier(expression.expression) || !onCallBindings.has(expression.expression.text)) return null;
+  const [rawOptions, rawCallback] = expression.arguments;
+  const options = rawOptions && ts.isObjectLiteralExpression(unwrapExpression(rawOptions)) ? unwrapExpression(rawOptions) as ts.ObjectLiteralExpression : null;
+  const callback = rawCallback ? unwrapExpression(rawCallback) : null;
+  return { name, options, body: callback && isBlockCallback(callback) ? callback.body : null };
+}
+
+function unwrapExpression(expression: ts.Expression): ts.Expression {
+  let current = expression;
+  while (ts.isParenthesizedExpression(current) || ts.isAsExpression(current) || ts.isSatisfiesExpression(current)) {
+    current = current.expression;
+  }
+  return current;
+}
+
 function isBlockCallback(node: ts.Expression): node is ts.ArrowFunction | ts.FunctionExpression {
   return (ts.isArrowFunction(node) || ts.isFunctionExpression(node)) && ts.isBlock(node.body);
 }
 
-function hasTrueOption(options: ts.ObjectLiteralExpression, name: string) {
-  return options.properties.some((property) => {
-    if (!ts.isPropertyAssignment(property) || propertyName(property.name) !== name) return false;
-    return property.initializer.kind === ts.SyntaxKind.TrueKeyword;
-  });
+type OptionState = "true" | "not-true" | "unknown";
+type OptionEvaluation = { state: OptionState; trueOverriddenBySpread: boolean };
+
+/** Applies object declaration order; spread values are unprovable until overwritten. */
+function effectiveOption(options: ts.ObjectLiteralExpression, name: string): OptionEvaluation {
+  let state: OptionState = "not-true";
+  let trueOverriddenBySpread = false;
+  for (const property of options.properties) {
+    if (ts.isSpreadAssignment(property)) {
+      if (state === "true") trueOverriddenBySpread = true;
+      state = "unknown";
+      continue;
+    }
+    const propertyKey = propertyName(property.name);
+    if (propertyKey === null) {
+      if (state === "true") trueOverriddenBySpread = true;
+      state = "unknown";
+      continue;
+    }
+    if (propertyKey !== name) continue;
+    if (ts.isPropertyAssignment(property)) {
+      state = unwrapExpression(property.initializer).kind === ts.SyntaxKind.TrueKeyword ? "true" : "not-true";
+    } else {
+      state = "unknown";
+    }
+    if (state !== "unknown") trueOverriddenBySpread = false;
+  }
+  return { state, trueOverriddenBySpread };
 }
 
 function propertyName(name: ts.PropertyName): string | null {
@@ -154,17 +269,18 @@ function propertyName(name: ts.PropertyName): string | null {
 }
 
 function usesSharedUidGate(body: ts.Block) {
-  let found = false;
-  const visit = (node: ts.Node): void => {
-    if (found) return;
-    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "requireUid") {
-      const [argument] = node.arguments;
-      if (argument && isRequestAuthUid(argument)) found = true;
-    }
-    ts.forEachChild(node, visit);
-  };
-  ts.forEachChild(body, visit);
-  return found;
+  return body.statements.some((statement) => {
+    if (ts.isExpressionStatement(statement)) return isSharedUidCall(statement.expression);
+    if (!ts.isVariableStatement(statement)) return false;
+    return statement.declarationList.declarations.some((declaration) => Boolean(declaration.initializer && isSharedUidCall(declaration.initializer)));
+  });
+}
+
+function isSharedUidCall(expression: ts.Expression) {
+  const node = unwrapExpression(expression);
+  if (!ts.isCallExpression(node) || !ts.isIdentifier(node.expression) || node.expression.text !== "requireUid") return false;
+  const [argument] = node.arguments;
+  return Boolean(argument && isRequestAuthUid(argument));
 }
 
 function isRequestAuthUid(node: ts.Expression): boolean {
