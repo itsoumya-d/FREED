@@ -21,6 +21,7 @@ import {
   createFirebaseAuthAdapter,
   getFirebaseAppCheckProviderConfig,
   getFirebaseClientReadiness,
+  getFirebaseEmailLinkReadiness,
   getFirebaseMessagingRegistrationContract,
   type FirebaseAuthNativeApi,
   type FirebaseMessagingRegistration
@@ -51,7 +52,9 @@ export function startFirebaseClient(): Promise<FirebaseStartupResult> {
 }
 
 export function getFirebaseNativeAuthAdapter() {
-  return createFirebaseAuthAdapter(firebaseAuthNativeApi());
+  return createFirebaseAuthAdapter(firebaseAuthNativeApi(), {
+    emailLinkReady: getFirebaseEmailLinkReadiness().ready
+  });
 }
 
 export async function getFirebaseMessagingRegistrationAfterPermission(

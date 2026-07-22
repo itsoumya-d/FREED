@@ -62,6 +62,13 @@
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
         <data android:scheme="freed"/>
+        <data android:scheme="app.freed.recovery"/>
+      </intent-filter>
+      <intent-filter android:autoVerify="true">
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+        <category android:name="android.intent.category.BROWSABLE"/>
+        <data android:scheme="https" android:host="freed-7d5ee.web.app" android:pathPrefix="/auth/callback"/>
       </intent-filter>
     </activity>
   </application>

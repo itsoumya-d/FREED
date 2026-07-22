@@ -8,6 +8,7 @@ const appGradle = readFileSync("android/app/build.gradle", "utf8");
 const podfileProperties = readFileSync("ios/Podfile.properties.json", "utf8");
 const androidManifest = readFileSync("android/app/src/main/AndroidManifest.xml", "utf8");
 const iosInfo = readFileSync("ios/FREED/Info.plist", "utf8");
+const iosEntitlements = readFileSync("ios/FREED/FREED.entitlements", "utf8");
 const appConfig = readFileSync("app.config.js", "utf8");
 const easConfig = readFileSync("eas.json", "utf8");
 
@@ -29,7 +30,10 @@ assert.match(androidManifest, /firebase_analytics_collection_deactivated" androi
 assert.match(androidManifest, /firebase_crashlytics_collection_enabled" android:value="false"/);
 assert.match(androidManifest, /firebase_performance_collection_deactivated" android:value="true"/);
 assert.match(androidManifest, /firebase_messaging_auto_init_enabled" android:value="false"/);
+assert.match(androidManifest, /<intent-filter android:autoVerify="true">[\s\S]*<data android:scheme="https" android:host="freed-7d5ee\.web\.app" android:pathPrefix="\/auth\/callback"\/>[\s\S]*<\/intent-filter>/);
+assert.match(androidManifest, /<data android:scheme="app\.freed\.recovery"\/>/);
 assert.match(iosInfo, /<key>FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED<\/key>\s*<true\/>/);
 assert.match(iosInfo, /<key>FirebaseCrashlyticsCollectionEnabled<\/key>\s*<false\/>/);
 assert.match(iosInfo, /<key>firebase_performance_collection_deactivated<\/key>\s*<true\/>/);
+assert.match(iosEntitlements, /<string>applinks:freed-7d5ee\.web\.app<\/string>/);
 console.log("firebase native integration tests passed");

@@ -134,7 +134,7 @@ import {
   getRecoveryBackupClientSyncReadiness,
   uploadEncryptedRecoveryBackup
 } from "@/lib/recovery-backup-client-sync";
-import { getFirebaseClientReadiness } from "@/lib/firebase-client";
+import { getFirebaseClientReadiness, getFirebaseEmailLinkReadiness, isFirebaseEmailLinkCallbackUrl } from "@/lib/firebase-client";
 import { getFirebaseNativeAuthAdapter, startFirebaseClient } from "@/lib/firebase-native";
 import { safeUserFacingMessage } from "@/lib/user-facing-error";
 import {
@@ -4527,18 +4527,21 @@ function RetentionPlanCard({ plan }: { plan: RetentionPlan }) {
 
 function RecoveryBackupCard({
   recoveryState,
-  onRestore
+  onRestore,
+  pendingFirebaseEmailLink,
+  onPendingFirebaseEmailLinkHandled
 }: {
   recoveryState: RecoveryState;
   onRestore: (state: RecoveryState) => void;
+  pendingFirebaseEmailLink: string | null;
+  onPendingFirebaseEmailLinkHandled: () => void;
 }) {
   const readiness = getRecoveryBackupReadiness();
   const syncEndpointConfigured = Boolean(process.env.EXPO_PUBLIC_FIREBASE_RECOVERY_BACKUP_SYNC_ENDPOINT?.trim());
-  const authContinueUrl = React.useMemo(
-    () => process.env.EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL?.trim() || "https://freed-7d5ee.web.app/auth/callback",
-    []
-  );
   const firebaseAuthReadiness = React.useMemo(() => getFirebaseClientReadiness(), []);
+  const firebaseEmailLinkReadiness = React.useMemo(() => getFirebaseEmailLinkReadiness(), []);
+  const authContinueUrl = firebaseEmailLinkReadiness.callbackUrl;
+  const emailLinkEnabled = syncEndpointConfigured && firebaseAuthReadiness.ready && firebaseEmailLinkReadiness.ready;
   const [passphrase, setPassphrase] = React.useState("");
   const [backupText, setBackupText] = React.useState("");
   const [authEmail, setAuthEmail] = React.useState("");
@@ -4567,6 +4570,10 @@ function RecoveryBackupCard({
   );
   const applyAuthUrl = React.useCallback((url: string | null) => {
     if (!url) return;
+    if (!emailLinkEnabled) {
+      setMessage("Email-link sign-in is disabled until the signed app-link association is deployed and physically verified.");
+      return;
+    }
     setAuthBusy(true);
     getFirebaseNativeAuthAdapter()
       .completeEmailLink({ email: authEmail, emailLink: url })
@@ -4577,11 +4584,16 @@ function RecoveryBackupCard({
         }
         setFirebaseAuthConnected(true);
         setMessage("Firebase account session connected for hosted encrypted sync.");
+        onPendingFirebaseEmailLinkHandled();
       })
       .catch(() => setMessage("Account link could not be completed."))
       .finally(() => setAuthBusy(false));
-  }, [authEmail]);
+  }, [authEmail, emailLinkEnabled, onPendingFirebaseEmailLinkHandled]);
   const requestEmailLink = React.useCallback(() => {
+    if (!emailLinkEnabled) {
+      setMessage("Email-link sign-in is disabled until the signed app-link association is deployed and physically verified.");
+      return;
+    }
     setAuthBusy(true);
     getFirebaseNativeAuthAdapter()
       .requestEmailLink(authEmail, { continueUrl: authContinueUrl })
@@ -4590,16 +4602,11 @@ function RecoveryBackupCard({
       })
       .catch(() => setMessage("Account link could not be sent."))
       .finally(() => setAuthBusy(false));
-  }, [authEmail, authContinueUrl]);
+  }, [authEmail, authContinueUrl, emailLinkEnabled]);
 
   React.useEffect(() => {
-    if (!syncEndpointConfigured) return undefined;
+    if (!emailLinkEnabled) return undefined;
     let active = true;
-    const applyIfActive = (url: string | null) => {
-      if (active) applyAuthUrl(url);
-    };
-    Linking.getInitialURL().then(applyIfActive).catch(() => undefined);
-    const subscription = Linking.addEventListener("url", ({ url }) => applyIfActive(url));
     getFirebaseNativeAuthAdapter()
       .getCurrentIdToken()
       .then((token) => {
@@ -4608,9 +4615,14 @@ function RecoveryBackupCard({
       .catch(() => undefined);
     return () => {
       active = false;
-      subscription.remove();
     };
-  }, [applyAuthUrl, syncEndpointConfigured]);
+  }, [emailLinkEnabled]);
+
+  React.useEffect(() => {
+    if (pendingFirebaseEmailLink && emailLinkEnabled) {
+      setMessage("Account link opened. Enter the email address that requested it, then complete sign-in.");
+    }
+  }, [emailLinkEnabled, pendingFirebaseEmailLink]);
 
   return (
     <Card gradient={[`${colors.sky}1F`, colors.surface]}>
@@ -4715,7 +4727,7 @@ function RecoveryBackupCard({
       </View>
       {syncEndpointConfigured ? (
         <View style={{ marginTop: 12, paddingTop: 12, borderTopWidth: 1, borderTopColor: "rgba(255,255,255,0.09)" }}>
-          {firebaseAuthReadiness.ready ? (
+          {emailLinkEnabled ? (
             <>
               <TextInput
                 value={authEmail}
@@ -4756,6 +4768,28 @@ function RecoveryBackupCard({
                     Email Link
                   </Text>
                 </Pressable>
+                {pendingFirebaseEmailLink ? (
+                  <Pressable
+                    disabled={disabled || authBusy}
+                    onPress={() => applyAuthUrl(pendingFirebaseEmailLink)}
+                    style={{
+                      flexGrow: 1,
+                      minWidth: 150,
+                      minHeight: 42,
+                      borderRadius: 999,
+                      backgroundColor: "rgba(90,223,158,0.14)",
+                      borderWidth: 1,
+                      borderColor: "rgba(90,223,158,0.22)",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      opacity: disabled || authBusy ? 0.5 : 1
+                    }}
+                  >
+                    <Text selectable style={{ color: colors.mint, fontWeight: typography.heavy }}>
+                      Complete Email Link
+                    </Text>
+                  </Pressable>
+                ) : null}
               </View>
               <Text selectable style={{ color: colors.text3, lineHeight: 18, marginBottom: 10 }}>
                 Apple and Google credentials are exchanged natively when their sign-in providers are configured; this app does not open browser OAuth flows.
@@ -4763,7 +4797,7 @@ function RecoveryBackupCard({
             </>
           ) : (
             <Text selectable style={{ color: colors.text2, lineHeight: 20, marginBottom: 10 }}>
-              Account sync needs the Firebase production custom build. Staging remains unavailable until its Firebase project is provisioned.
+              Email-link sign-in is disabled until the signed app-link association is deployed and physically verified.
             </Text>
           )}
           <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
@@ -5340,7 +5374,9 @@ function ProfileScreen({
   protectionCapability,
   protectionStatus,
   protectionSyncMessage,
-  refreshProtectionStatus
+  refreshProtectionStatus,
+  pendingFirebaseEmailLink,
+  onPendingFirebaseEmailLinkHandled
 }: {
   recoveryState: RecoveryState;
   premium: boolean;
@@ -5372,6 +5408,8 @@ function ProfileScreen({
   protectionStatus: ProtectionStatus | null;
   protectionSyncMessage: string | null;
   refreshProtectionStatus: () => Promise<ProtectionRefreshResult>;
+  pendingFirebaseEmailLink: string | null;
+  onPendingFirebaseEmailLinkHandled: () => void;
 }) {
   const [protectionBusy, setProtectionBusy] = React.useState(false);
   const [protectionActionMessage, setProtectionActionMessage] = React.useState<string | null>(null);
@@ -5584,7 +5622,12 @@ function ProfileScreen({
 
       <RetentionPlanCard plan={retentionPlan} />
 
-      <RecoveryBackupCard recoveryState={recoveryState} onRestore={onRestoreBackup} />
+      <RecoveryBackupCard
+        recoveryState={recoveryState}
+        onRestore={onRestoreBackup}
+        pendingFirebaseEmailLink={pendingFirebaseEmailLink}
+        onPendingFirebaseEmailLinkHandled={onPendingFirebaseEmailLinkHandled}
+      />
 
       <PrivacySupportCard onDeleteLocalData={onDeleteLocalData} />
 
@@ -7322,6 +7365,7 @@ export default function FreedApp() {
   const { state: recoveryState, setRecoveryState, hydrated, storageError } = usePersistentRecoveryState();
   const [screen, setScreen] = React.useState<Screen>("splash");
   const [tab, setTab] = React.useState<Tab>("home");
+  const [pendingFirebaseEmailLink, setPendingFirebaseEmailLink] = React.useState<string | null>(null);
   const [quizIndex, setQuizIndex] = React.useState(0);
   const [activeAttempt, setActiveAttempt] = React.useState<NativeInterventionAttempt | null>(null);
   const [selectedChallenge, setSelectedChallenge] = React.useState<RecoveryChallenge | null>(null);
@@ -7388,6 +7432,7 @@ export default function FreedApp() {
     () => buildChallengePreferenceSignal(disciplineSettings),
     [disciplineSettings]
   );
+  const firebaseEmailLinkReadiness = React.useMemo(() => getFirebaseEmailLinkReadiness(), []);
   const activeUnlock = getActiveEarnedUnlock(recoveryState, new Date(unlockClockMs).toISOString());
   const activeNativeUnlock = React.useMemo(
     () => getActiveNativeEarnedUnlock(recoveryState.earnedUnlocks, Platform.OS, new Date(unlockClockMs).toISOString()),
@@ -7821,6 +7866,14 @@ export default function FreedApp() {
     [hydrated, refreshProtectionStatus]
   );
 
+  const consumeFirebaseEmailLink = React.useCallback((url: string | null) => {
+    if (!firebaseEmailLinkReadiness.ready || !isFirebaseEmailLinkCallbackUrl(url)) return false;
+    setPendingFirebaseEmailLink(url);
+    setTab("profile");
+    setScreen("main");
+    return true;
+  }, [firebaseEmailLinkReadiness.ready]);
+
   const messageAccountabilityPartner = React.useCallback(
     (challenge?: RecoveryChallenge) => {
       const url = buildAccountabilityDeepLink(
@@ -7932,6 +7985,7 @@ export default function FreedApp() {
     if (!hydrated) return undefined;
 
     const consumeFreedLink = (url: string | null) => {
+      if (consumeFirebaseEmailLink(url)) return;
       if (consumeProtectionSetupDeepLink(url)) return;
       consumeDeepLinkIntervention(url);
     };
@@ -7951,7 +8005,7 @@ export default function FreedApp() {
       cancelled = true;
       subscription.remove();
     };
-  }, [consumeDeepLinkIntervention, consumeProtectionSetupDeepLink, hydrated]);
+  }, [consumeDeepLinkIntervention, consumeFirebaseEmailLink, consumeProtectionSetupDeepLink, hydrated]);
 
   React.useEffect(() => {
     if (!hydrated || !reminders.enabled) return undefined;
@@ -8340,6 +8394,8 @@ export default function FreedApp() {
               protectionStatus={protectionStatus}
               protectionSyncMessage={protectionSyncMessage}
               refreshProtectionStatus={refreshProtectionStatus}
+              pendingFirebaseEmailLink={pendingFirebaseEmailLink}
+              onPendingFirebaseEmailLinkHandled={() => setPendingFirebaseEmailLink(null)}
             />
           )}
           <BottomNav tab={tab} setTab={setTab} onPanic={startPanicIntervention} />

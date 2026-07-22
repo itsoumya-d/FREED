@@ -21,6 +21,12 @@ export type FirebaseAppCheckProviderConfig = {
   debugToken: string | undefined;
 };
 
+export type FirebaseEmailLinkReadiness = {
+  ready: boolean;
+  callbackUrl: string;
+  missing: string[];
+};
+
 export type FirebaseAuthActionResult = {
   ok: boolean;
   status: "sent" | "authenticated" | "invalid" | "error" | "unconfigured";
@@ -73,9 +79,12 @@ const STAGING_PROJECT_ID = "freed-staging-7d5ee";
 const FUNCTIONS_REGION = "asia-south1";
 const APP_CHECK_DEBUG_PROVIDER_ENV = "EXPO_PUBLIC_FIREBASE_APP_CHECK_DEBUG_PROVIDER";
 const APP_CHECK_DEBUG_TOKEN_ENV = "EXPO_PUBLIC_FIREBASE_APP_CHECK_DEBUG_TOKEN";
+const EMAIL_LINK_ASSOCIATION_READY_ENV = "EXPO_PUBLIC_FIREBASE_EMAIL_LINK_ASSOCIATION_READY";
+const EMAIL_LINK_ASSOCIATION_READY_VALUE = "deployed-and-verified";
 const FIREBASE_PUBLIC_SECRET_PATTERN = /(?:SERVICE_ACCOUNT|ADMIN|PRIVATE_KEY|SERVER_KEY|ACCESS_TOKEN|GOOGLE_APPLICATION_CREDENTIALS|CREDENTIAL)/i;
-const SAFE_CONTINUE_SCHEMES = new Set(["freed:", "app.freed.recovery:"]);
-const SAFE_FIREBASE_AUTH_CONTINUE_HOSTS = new Set(["freed-7d5ee.web.app", "freed-7d5ee.firebaseapp.com"]);
+export const FIREBASE_EMAIL_LINK_CALLBACK_URL = "https://freed-7d5ee.web.app/auth/callback";
+const EMAIL_LINK_ASSOCIATION_UNCONFIGURED_REASON =
+  "Firebase email-link sign-in is unavailable until Hosting app-link association is deployed and verified.";
 
 export function getFirebaseClientReadiness(env: Env = process.env): FirebaseClientReadiness {
   const requestedEnvironment = readEnv(env, "EXPO_PUBLIC_FIREBASE_ENV") ?? "production";
@@ -109,6 +118,50 @@ export function getFirebaseClientReadiness(env: Env = process.env): FirebaseClie
   };
 }
 
+/**
+ * Email links are intentionally separate from base Firebase readiness: Auth and
+ * provider credentials can be configured while Universal/App Link delivery is
+ * still unsafe. The public marker is only set after the generated Hosting
+ * associations are deployed and verified against signed native builds.
+ */
+export function getFirebaseEmailLinkReadiness(env: Env = process.env): FirebaseEmailLinkReadiness {
+  const requestedEnvironment = readEnv(env, "EXPO_PUBLIC_FIREBASE_ENV") ?? "production";
+  const configuredCallbackUrl = readEnv(env, "EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL");
+  const associationReady = readEnv(env, EMAIL_LINK_ASSOCIATION_READY_ENV);
+  const missing = [
+    ...(requestedEnvironment === "production" ? [] : ["Firebase email-link sign-in is only enabled for the production Firebase environment"]),
+    ...(configuredCallbackUrl && configuredCallbackUrl !== FIREBASE_EMAIL_LINK_CALLBACK_URL
+      ? [`EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL must equal ${FIREBASE_EMAIL_LINK_CALLBACK_URL}`]
+      : []),
+    ...(associationReady === EMAIL_LINK_ASSOCIATION_READY_VALUE
+      ? []
+      : [
+          `${EMAIL_LINK_ASSOCIATION_READY_ENV} must equal ${EMAIL_LINK_ASSOCIATION_READY_VALUE} only after Hosting association deployment and signed-device verification`
+        ])
+  ];
+
+  return {
+    ready: missing.length === 0,
+    callbackUrl: FIREBASE_EMAIL_LINK_CALLBACK_URL,
+    missing
+  };
+}
+
+export function isFirebaseEmailLinkCallbackUrl(value: string | null | undefined) {
+  if (!value) return false;
+  try {
+    const parsed = new URL(value);
+    return (
+      parsed.username === "" &&
+      parsed.password === "" &&
+      parsed.hash === "" &&
+      `${parsed.origin}${parsed.pathname}` === FIREBASE_EMAIL_LINK_CALLBACK_URL
+    );
+  } catch {
+    return false;
+  }
+}
+
 export function getFirebaseAppCheckProviderConfig(
   platform: FirebaseAppCheckPlatform,
   readiness: FirebaseClientReadiness
@@ -123,12 +176,17 @@ export function getFirebaseAppCheckProviderConfig(
   };
 }
 
-export function createFirebaseAuthAdapter(nativeAuth: FirebaseAuthNativeApi) {
+export function createFirebaseAuthAdapter(
+  nativeAuth: FirebaseAuthNativeApi,
+  options: { emailLinkReady?: boolean } = {}
+) {
+  const emailLinkReady = options.emailLinkReady === true;
   return {
     async requestEmailLink(
       email: string,
       options: { continueUrl: string }
     ): Promise<FirebaseAuthActionResult> {
+      if (!emailLinkReady) return emailLinkUnconfiguredResult();
       const normalizedEmail = sanitizeEmail(email);
       if (!normalizedEmail) return invalidResult("Enter a valid account email address.");
       if (!isSafeContinueUrl(options.continueUrl)) return invalidResult("Firebase email links must return to the FREED auth callback.");
@@ -147,6 +205,7 @@ export function createFirebaseAuthAdapter(nativeAuth: FirebaseAuthNativeApi) {
     },
 
     async completeEmailLink(input: { email: string; emailLink: string }): Promise<FirebaseAuthActionResult> {
+      if (!emailLinkReady) return emailLinkUnconfiguredResult();
       const normalizedEmail = sanitizeEmail(input.email);
       if (!normalizedEmail) return invalidResult("Enter the email address used for the link.");
       if (!isUsableEmailLink(input.emailLink) || !(await nativeAuth.isSignInWithEmailLink(input.emailLink.trim()))) {
@@ -222,6 +281,10 @@ function invalidResult(reason: string): FirebaseAuthActionResult {
   return { ok: false, status: "invalid", reason };
 }
 
+function emailLinkUnconfiguredResult(): FirebaseAuthActionResult {
+  return { ok: false, status: "unconfigured", reason: EMAIL_LINK_ASSOCIATION_UNCONFIGURED_REASON };
+}
+
 function publicFirebaseSecretIssues(env: Env) {
   return Object.keys(env)
     .filter((key) => key.startsWith("EXPO_PUBLIC_") && FIREBASE_PUBLIC_SECRET_PATTERN.test(key))
@@ -244,18 +307,7 @@ function sanitizeEmail(value: string) {
 }
 
 function isSafeContinueUrl(value: string) {
-  try {
-    const parsed = new URL(value.trim());
-    if (parsed.protocol === "https:" && SAFE_FIREBASE_AUTH_CONTINUE_HOSTS.has(parsed.hostname)) {
-      return parsed.pathname === "/auth/callback" && !parsed.username && !parsed.password && !parsed.search && !parsed.hash;
-    }
-    if (!SAFE_CONTINUE_SCHEMES.has(parsed.protocol)) return false;
-    const callbackPath = parsed.hostname === "auth" && parsed.pathname === "/callback";
-    const tripleSlashCallback = !parsed.hostname && parsed.pathname === "/auth/callback";
-    return callbackPath || tripleSlashCallback;
-  } catch {
-    return false;
-  }
+  return value.trim() === FIREBASE_EMAIL_LINK_CALLBACK_URL;
 }
 
 function isUsableEmailLink(value: string) {

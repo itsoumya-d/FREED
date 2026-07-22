@@ -22,6 +22,10 @@ assert.equal(config.emulators.functions.port, 5001);
 assert.equal(config.emulators.firestore.port, 8080);
 assert.equal(config.emulators.hosting.port, 5000);
 assert.equal(config.emulators.storage.port, 9199);
+const hosting = config.hosting.find((entry: { target: string }) => entry.target === "web");
+assert.ok(hosting);
+assert.deepEqual(hosting.predeploy, ["npm run prepare:firebase-hosting"]);
+assert.ok(!hosting.ignore.includes("**/.*"), "Hosting must not ignore generated .well-known association files.");
 assert.match(firestoreRules, /allow read, write: if false/);
 assert.match(storageRules, /allow read, write: if false/);
 assert.match(functionSource, /onCall/);
@@ -34,6 +38,13 @@ assert.equal(
 assert.equal(
   packageJson.scripts["audit:firebase-privacy"],
   "node -- scripts/run-ts-entry.js scripts/firebase-privacy-audit.ts",
+);
+assert.equal(packageJson.scripts["preflight:firebase-email-links"], "node -- scripts/firebase-hosting-preflight.js");
+assert.equal(packageJson.scripts["prepare:firebase-hosting"], "node -- scripts/firebase-hosting-predeploy.js");
+assert.equal(packageJson.scripts["audit:firebase-email-links"], "node -- scripts/firebase-email-link-delivery-audit.js");
+assert.equal(
+  packageJson.scripts["test:firebase-email-links"],
+  "node -- scripts/run-ts-entry.js tests/firebase-email-link-delivery-audit.test.ts"
 );
 assert.equal(config["react-native"].analytics_collection_deactivated, true);
 assert.equal(config["react-native"].crashlytics_auto_collection_enabled, false);
