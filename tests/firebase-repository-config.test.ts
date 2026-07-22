@@ -4,6 +4,7 @@ import * as ts from "typescript";
 
 const aliases = JSON.parse(readFileSync(".firebaserc", "utf8"));
 const config = JSON.parse(readFileSync("firebase.json", "utf8"));
+const firestoreIndexes = JSON.parse(readFileSync("firestore.indexes.json", "utf8"));
 const firestoreRules = readFileSync("firestore.rules", "utf8");
 const storageRules = readFileSync("storage.rules", "utf8");
 const functionSource = readFileSync("functions/src/index.ts", "utf8");
@@ -18,6 +19,24 @@ assert.equal(aliases.projects.production, "freed-7d5ee");
 assert.equal(aliases.projects.staging, "freed-staging-7d5ee");
 assert.equal(config.firestore.rules, "firestore.rules");
 assert.equal(config.firestore.indexes, "firestore.indexes.json");
+assert.deepEqual(firestoreIndexes.indexes.filter((index: { collectionGroup: string }) => index.collectionGroup === "notification_jobs"), [
+  {
+    collectionGroup: "notification_jobs",
+    queryScope: "COLLECTION",
+    fields: [
+      { fieldPath: "status", order: "ASCENDING" },
+      { fieldPath: "scheduledAt", order: "ASCENDING" }
+    ]
+  },
+  {
+    collectionGroup: "notification_jobs",
+    queryScope: "COLLECTION",
+    fields: [
+      { fieldPath: "status", order: "ASCENDING" },
+      { fieldPath: "claimedAt", order: "ASCENDING" }
+    ]
+  }
+]);
 assert.equal(config.storage.rules, "storage.rules");
 assert.equal(config.remoteconfig.template, "remoteconfig.template.json");
 assert.equal(config.emulators.auth.port, 9099);

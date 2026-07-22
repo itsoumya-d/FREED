@@ -11,12 +11,15 @@ import {
   NOTIFICATION_BATCH_LIMIT,
   NOTIFICATION_CLAIM_LEASE_MS,
   NOTIFICATION_TOKEN_LIMIT,
+  NotificationProviderNotSubmittedError,
+  NotificationProviderUnknownOutcomeError,
   buildReviewedNotificationPayload,
   claimNotificationJob,
   completeNotificationClaim,
   createNotificationDispatchService,
   createRemoteNotificationGateReader,
   createReviewedNotificationJob,
+  deleteInvalidTokensTransactionally,
   isFcmRegistrationToken,
   type FirebaseAdminNotificationMessage,
   type NotificationClaim,
@@ -151,36 +154,61 @@ async function listActiveTokens(uid: string, now: number, limit: number) {
 }
 
 async function sendFirebaseAdminMessages(messages: readonly FirebaseAdminNotificationMessage[]) {
-  if (messages.length === 0 || messages.length > NOTIFICATION_TOKEN_LIMIT) throw new Error("Invalid notification batch.");
+  if (messages.length === 0 || messages.length > NOTIFICATION_TOKEN_LIMIT) {
+    throw new NotificationProviderNotSubmittedError("Invalid notification batch.");
+  }
   const first = messages[0]!;
   for (const message of messages) {
     if (message.notification.title !== first.notification.title || message.notification.body !== first.notification.body ||
         message.data.route !== first.data.route || message.data.kind !== first.data.kind) {
-      throw new Error("Mixed notification templates are not permitted.");
+      throw new NotificationProviderNotSubmittedError("Mixed notification templates are not permitted.");
     }
   }
   // The Admin SDK routes the same FCM registration-token contract to Android
   // and Firebase-configured APNs. There is intentionally no direct APNs sender.
-  const response = await withProviderTimeout(getMessaging().sendEachForMulticast({
-    tokens: messages.map((message) => message.token),
-    notification: first.notification,
-    data: first.data,
-    android: { priority: "normal" },
-    apns: { headers: { "apns-priority": "5" } }
-  }, false));
+  let operation: ReturnType<ReturnType<typeof getMessaging>["sendEachForMulticast"]>;
+  try {
+    operation = getMessaging().sendEachForMulticast({
+      tokens: messages.map((message) => message.token),
+      notification: first.notification,
+      data: first.data,
+      android: { priority: "normal" },
+      apns: { headers: { "apns-priority": "5" } }
+    }, false);
+  } catch {
+    throw new NotificationProviderNotSubmittedError();
+  }
+  let response: Awaited<typeof operation>;
+  try {
+    response = await withProviderTimeout(operation);
+  } catch {
+    // A rejected or timed-out Admin SDK promise may have reached FCM. It is
+    // terminal because a retry could duplicate a late successful delivery.
+    throw new NotificationProviderUnknownOutcomeError();
+  }
   return response.responses.map((result) => ({
     success: result.success,
     ...(result.error?.code ? { errorCode: result.error.code } : {})
   }));
 }
 
-async function deleteInvalidTokens(tokenIds: readonly string[]): Promise<void> {
-  if (tokenIds.length === 0) return;
-  const batch = db.batch();
-  for (const tokenId of [...new Set(tokenIds)].slice(0, NOTIFICATION_TOKEN_LIMIT)) {
-    batch.delete(db.collection(COLLECTIONS.pushTokens).doc(tokenId));
-  }
-  await batch.commit();
+async function deleteInvalidTokens(invalidTokens: readonly { id: string; token: string }[]): Promise<void> {
+  await deleteInvalidTokensTransactionally(invalidTokens, async (operation) => db.runTransaction(async (transaction) => {
+    await operation({
+      async readTokens(ids) {
+        const references = ids.map((id) => db.collection(COLLECTIONS.pushTokens).doc(id));
+        const snapshots = await Promise.all(references.map((reference) => transaction.get(reference)));
+        const storedTokens = new Map(snapshots.flatMap((snapshot) => {
+          const stored = snapshot.data()?.token;
+          return snapshot.exists && typeof stored === "string" ? [[snapshot.id, stored] as const] : [];
+        }));
+        return storedTokens;
+      },
+      deleteTokens(tokens) {
+        for (const token of tokens) transaction.delete(db.collection(COLLECTIONS.pushTokens).doc(token.id));
+      }
+    });
+  }));
 }
 
 async function completeClaim(

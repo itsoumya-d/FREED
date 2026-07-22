@@ -60,6 +60,14 @@ export type NotificationJobCompletion = {
 };
 
 export type NotificationToken = { id: string; token: string };
+export type InvalidNotificationToken = NotificationToken;
+export type InvalidTokenCleanupTransaction = {
+  readTokens(ids: readonly string[]): Promise<ReadonlyMap<string, string>>;
+  deleteTokens(tokens: readonly InvalidNotificationToken[]): Promise<void> | void;
+};
+export type InvalidTokenTransactionRunner = (
+  operation: (transaction: InvalidTokenCleanupTransaction) => Promise<void>
+) => Promise<void>;
 export type FirebaseAdminNotificationMessage = {
   token: string;
   notification: { title: string; body: string };
@@ -76,7 +84,7 @@ export type NotificationDispatchDependencies = {
   prepareProviderInvocation(claim: NotificationClaim): Promise<boolean>;
   listActiveTokens(uid: string, now: number, limit: number): Promise<readonly NotificationToken[]>;
   sendFirebaseAdminMessages(messages: readonly FirebaseAdminNotificationMessage[]): Promise<readonly FirebaseAdminSendResult[]>;
-  deleteInvalidTokens(tokenIds: readonly string[]): Promise<void>;
+  deleteInvalidTokens(tokens: readonly InvalidNotificationToken[]): Promise<void>;
   completeClaim(claim: NotificationClaim, completion: NotificationJobCompletion, now: number): Promise<boolean>;
 };
 
@@ -87,6 +95,22 @@ export type NotificationDispatchSummary = {
   failed: number;
   canceled: number;
 };
+
+/** The provider boundary proved the request was never submitted. */
+export class NotificationProviderNotSubmittedError extends Error {
+  constructor(message = "Firebase Messaging request was not submitted.") {
+    super(message);
+    this.name = "NotificationProviderNotSubmittedError";
+  }
+}
+
+/** The request may still complete remotely, so retrying could duplicate delivery. */
+export class NotificationProviderUnknownOutcomeError extends Error {
+  constructor(message = "Firebase Messaging outcome is unknown.") {
+    super(message);
+    this.name = "NotificationProviderUnknownOutcomeError";
+  }
+}
 
 const REVIEWED_NOTIFICATION_CATALOG: Readonly<Record<NotificationTemplateId, {
   title: string;
@@ -187,6 +211,32 @@ export function createRemoteNotificationGateReader(
       return "unavailable";
     }
   };
+}
+
+/** Compare-and-delete decision used inside a Firestore transaction. */
+export function selectUnchangedInvalidTokens(
+  failedTokens: readonly InvalidNotificationToken[],
+  storedTokens: ReadonlyMap<string, string>
+): InvalidNotificationToken[] {
+  return failedTokens.filter((failed) => storedTokens.get(failed.id) === failed.token);
+}
+
+/**
+ * The runner must provide optimistic transaction retries. A token rotated
+ * after the read therefore causes the operation to re-read and preserve it.
+ */
+export async function deleteInvalidTokensTransactionally(
+  failedTokens: readonly InvalidNotificationToken[],
+  runTransaction: InvalidTokenTransactionRunner
+): Promise<void> {
+  const deduplicated = [...new Map(failedTokens.map((entry) => [entry.id, entry])).values()]
+    .slice(0, NOTIFICATION_TOKEN_LIMIT);
+  if (deduplicated.length === 0) return;
+  await runTransaction(async (transaction) => {
+    const storedTokens = await transaction.readTokens(deduplicated.map((entry) => entry.id));
+    const unchanged = selectUnchangedInvalidTokens(deduplicated, storedTokens);
+    if (unchanged.length > 0) await transaction.deleteTokens(unchanged);
+  });
 }
 
 export function claimNotificationJob(
@@ -299,17 +349,19 @@ async function dispatchOne(
   try {
     const responses = await dependencies.sendFirebaseAdminMessages(messages);
     completion = classifyProviderResponses(tokens, responses, claim.attemptCount);
-    const invalidIds = responses.flatMap((response, index) =>
-      !response.success && isInvalidTokenError(response.errorCode) && tokens[index] ? [tokens[index].id] : []
+    const invalidTokens = responses.flatMap((response, index) =>
+      !response.success && isInvalidTokenError(response.errorCode) && tokens[index] ? [tokens[index]] : []
     );
-    if (invalidIds.length > 0) {
+    if (invalidTokens.length > 0) {
       // Delivery already happened. Cleanup is best effort so a Firestore
       // failure cannot convert provider success into a duplicate-send retry.
-      await dependencies.deleteInvalidTokens(invalidIds).catch(() => undefined);
+      await dependencies.deleteInvalidTokens(invalidTokens).catch(() => undefined);
     }
-  } catch {
+  } catch (error) {
     completion = {
-      outcome: claim.attemptCount < NOTIFICATION_JOB_MAX_ATTEMPTS ? "retry" : "failed",
+      outcome: error instanceof NotificationProviderNotSubmittedError && claim.attemptCount < NOTIFICATION_JOB_MAX_ATTEMPTS
+        ? "retry"
+        : "failed",
       successCount: 0,
       failureCount: tokens.length,
       invalidTokenCount: 0
@@ -323,7 +375,15 @@ function classifyProviderResponses(
   responses: readonly FirebaseAdminSendResult[],
   attemptCount: number
 ): NotificationJobCompletion {
-  const bounded = tokens.map((_token, index) => responses[index] ?? ({ success: false, errorCode: "messaging/internal-error" }));
+  if (responses.length !== tokens.length) {
+    return {
+      outcome: "failed",
+      successCount: 0,
+      failureCount: tokens.length,
+      invalidTokenCount: 0
+    };
+  }
+  const bounded = tokens.map((_token, index) => responses[index]!);
   const successCount = bounded.filter((response) => response.success).length;
   const invalidTokenCount = bounded.filter((response) => isInvalidTokenError(response.errorCode)).length;
   const failureCount = bounded.length - successCount;
@@ -354,7 +414,7 @@ function isInvalidTokenError(errorCode: string | undefined): boolean {
 }
 
 function isTransientMessagingError(errorCode: string | undefined): boolean {
-  return errorCode === undefined || [
+  return errorCode !== undefined && [
     "messaging/internal-error",
     "messaging/server-unavailable",
     "messaging/quota-exceeded",

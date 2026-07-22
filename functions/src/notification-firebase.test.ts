@@ -21,7 +21,16 @@ test("production adapter persists Firestore timestamps and rechecks a deletion f
   assert.match(source, /COLLECTIONS\.deletionTombstones/);
   assert.match(source, /prepareProviderInvocation/);
   assert.match(source, /db\.runTransaction/);
+  assert.match(source, /deleteInvalidTokensTransactionally/);
+  assert.match(source, /storedTokens/);
   assert.doesNotMatch(source, /console\.(?:log|warn|error)/);
+});
+
+test("ambiguous Firebase Admin promise outcomes become terminal instead of retryable", () => {
+  const source = readFileSync("src/notification-firebase.ts", "utf8");
+  assert.match(source, /NotificationProviderUnknownOutcomeError/);
+  assert.match(source, /NotificationProviderNotSubmittedError/);
+  assert.match(source, /withProviderTimeout/);
 });
 
 test("push registration remains Auth, App Check, rate, idempotency, deletion, and Timestamp fenced", () => {

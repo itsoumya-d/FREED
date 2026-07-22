@@ -5,13 +5,17 @@ import {
   FCM_TOKEN_MAX_LENGTH,
   NOTIFICATION_JOB_MAX_ATTEMPTS,
   NOTIFICATION_TEMPLATE_IDS,
+  NotificationProviderNotSubmittedError,
+  NotificationProviderUnknownOutcomeError,
   buildReviewedNotificationPayload,
   claimNotificationJob,
   completeNotificationClaim,
   createNotificationDispatchService,
   createReviewedNotificationJob,
   createRemoteNotificationGateReader,
+  deleteInvalidTokensTransactionally,
   isFcmRegistrationToken,
+  selectUnchangedInvalidTokens,
   readRemoteNotificationGateTemplate,
   type NotificationClaim,
   type NotificationJob,
@@ -184,7 +188,7 @@ test("dispatcher rechecks deletion after claim and after token load before Fireb
 
 test("dispatcher sends catalog-only Firebase Admin payloads, deletes invalid tokens, and records aggregate results", async () => {
   const claimed = claimNotificationJob(job({ templateId: "morning-checkin" }), NOW)!;
-  const invalidTokenIds: string[][] = [];
+  const invalidTokens: Array<Array<{ id: string; token: string }>> = [];
   const completions: NotificationJobCompletion[] = [];
   const capturedMessages: unknown[] = [];
   const service = createNotificationDispatchService({
@@ -201,11 +205,11 @@ test("dispatcher sends catalog-only Firebase Admin payloads, deletes invalid tok
         { success: true }
       ];
     },
-    deleteInvalidTokens: async (ids) => { invalidTokenIds.push([...ids]); },
+    deleteInvalidTokens: async (entries) => { invalidTokens.push([...entries]); },
     completeClaim: async (_claim, completionValue) => { completions.push(completionValue); return true; }
   });
   assert.deepEqual(await service.run(), { gate: "enabled", claimed: 1, sent: 1, failed: 0, canceled: 0 });
-  assert.deepEqual(invalidTokenIds, [["ios-install"]]);
+  assert.deepEqual(invalidTokens, [[{ id: "ios-install", token: `${REAL_FCM_TOKEN}_ios-install` }]]);
   assert.deepEqual(completions, [{ outcome: "dispatched", successCount: 1, failureCount: 1, invalidTokenCount: 1 }]);
   assert.equal(capturedMessages.length, 2);
   for (const message of capturedMessages as Array<Record<string, unknown>>) {
@@ -224,7 +228,8 @@ test("transient failures retry with a strict cap while permanent failures do not
   for (const scenario of [
     { errorCode: "messaging/server-unavailable", attemptCount: 1, expected: "retry" },
     { errorCode: "messaging/server-unavailable", attemptCount: NOTIFICATION_JOB_MAX_ATTEMPTS, expected: "failed" },
-    { errorCode: "messaging/sender-id-mismatch", attemptCount: 1, expected: "failed" }
+    { errorCode: "messaging/sender-id-mismatch", attemptCount: 1, expected: "failed" },
+    { errorCode: undefined, attemptCount: 1, expected: "failed" }
   ] as const) {
     const claim: NotificationClaim = {
       jobId: "job_12345678",
@@ -250,7 +255,7 @@ test("transient failures retry with a strict cap while permanent failures do not
   }
 });
 
-test("unexpected provider errors remain retryable and provider bodies never enter completion data", async () => {
+test("a malformed partial provider result is terminal rather than inventing a transient failure", async () => {
   const claimed = claimNotificationJob(job(), NOW)!;
   const completions: NotificationJobCompletion[] = [];
   await createNotificationDispatchService({
@@ -260,13 +265,132 @@ test("unexpected provider errors remain retryable and provider bodies never ente
     claimJob: async () => claimed.claim,
     prepareProviderInvocation: async () => true,
     listActiveTokens: async () => [token("device-install")],
-    sendFirebaseAdminMessages: async () => { throw new Error(`provider leaked ${REAL_FCM_TOKEN}`); },
+    sendFirebaseAdminMessages: async () => [],
+    deleteInvalidTokens: async () => undefined,
+    completeClaim: async (_claim, completionValue) => { completions.push(completionValue); return true; }
+  }).run();
+  assert.deepEqual(completions, [{ outcome: "failed", successCount: 0, failureCount: 1, invalidTokenCount: 0 }]);
+});
+
+test("ambiguous provider errors are terminal and provider bodies never enter completion data", async () => {
+  const claimed = claimNotificationJob(job(), NOW)!;
+  const completions: NotificationJobCompletion[] = [];
+  await createNotificationDispatchService({
+    now: () => NOW,
+    getGate: async () => "enabled",
+    listDueJobIds: async () => [claimed.claim.jobId],
+    claimJob: async () => claimed.claim,
+    prepareProviderInvocation: async () => true,
+    listActiveTokens: async () => [token("device-install")],
+    sendFirebaseAdminMessages: async () => { throw new NotificationProviderUnknownOutcomeError(`provider leaked ${REAL_FCM_TOKEN}`); },
+    deleteInvalidTokens: async () => undefined,
+    completeClaim: async (_claim, completionValue) => { completions.push(completionValue); return true; }
+  }).run();
+  assert.deepEqual(completions, [{ outcome: "failed", successCount: 0, failureCount: 1, invalidTokenCount: 0 }]);
+  assert.equal(JSON.stringify(completions).includes("provider leaked"), false);
+  assert.equal(JSON.stringify(completions).includes(REAL_FCM_TOKEN), false);
+});
+
+test("only a definitely-not-submitted failure remains retryable", async () => {
+  const claimed = claimNotificationJob(job(), NOW)!;
+  const completions: NotificationJobCompletion[] = [];
+  await createNotificationDispatchService({
+    now: () => NOW,
+    getGate: async () => "enabled",
+    listDueJobIds: async () => [claimed.claim.jobId],
+    claimJob: async () => claimed.claim,
+    prepareProviderInvocation: async () => true,
+    listActiveTokens: async () => [token("device-install")],
+    sendFirebaseAdminMessages: async () => { throw new NotificationProviderNotSubmittedError(); },
     deleteInvalidTokens: async () => undefined,
     completeClaim: async (_claim, completionValue) => { completions.push(completionValue); return true; }
   }).run();
   assert.deepEqual(completions, [{ outcome: "retry", successCount: 0, failureCount: 1, invalidTokenCount: 0 }]);
-  assert.equal(JSON.stringify(completions).includes("provider leaked"), false);
-  assert.equal(JSON.stringify(completions).includes(REAL_FCM_TOKEN), false);
+});
+
+test("a timed-out send that later succeeds is terminal and the next scheduler run cannot resend", async () => {
+  let current = job();
+  let sendCount = 0;
+  let lateProviderSuccess = 0;
+  let settleLateSend: (() => void) | undefined;
+  const run = () => createNotificationDispatchService({
+    now: () => NOW,
+    getGate: async () => "enabled",
+    listDueJobIds: async () => ["job_12345678"],
+    claimJob: async () => {
+      const claimed = claimNotificationJob(current, NOW);
+      if (!claimed) return null;
+      current = claimed.job;
+      return claimed.claim;
+    },
+    prepareProviderInvocation: async () => current.status === "claimed",
+    listActiveTokens: async () => [token("device-install")],
+    sendFirebaseAdminMessages: async () => {
+      sendCount += 1;
+      const lateSend = new Promise<readonly [{ success: true }]>((resolve) => {
+        settleLateSend = () => { lateProviderSuccess += 1; resolve([{ success: true }]); };
+      });
+      return Promise.race([
+        lateSend,
+        new Promise<never>((_resolve, reject) => setTimeout(
+          () => reject(new NotificationProviderUnknownOutcomeError("Firebase Messaging outcome is unknown.")),
+          2
+        ))
+      ]);
+    },
+    deleteInvalidTokens: async () => undefined,
+    completeClaim: async (claim, completionValue, completedAt) => {
+      const completed = completeNotificationClaim(current, claim, completionValue, completedAt);
+      if (!completed) return false;
+      current = completed;
+      return true;
+    }
+  }).run();
+
+  await run();
+  assert.equal(current.status, "failed");
+  settleLateSend?.();
+  await Promise.resolve();
+  assert.equal(lateProviderSuccess, 1);
+  await run();
+  assert.equal(sendCount, 1, "terminal unknown outcome must not be reclaimed or resent");
+});
+
+test("invalid token cleanup compares the failed value so a concurrently rotated token survives", () => {
+  const failed = [{ id: "device-install", token: `${REAL_FCM_TOKEN}_old` }];
+  assert.deepEqual(selectUnchangedInvalidTokens(failed, new Map([
+    ["device-install", `${REAL_FCM_TOKEN}_rotated`]
+  ])), []);
+  assert.deepEqual(selectUnchangedInvalidTokens(failed, new Map([
+    ["device-install", `${REAL_FCM_TOKEN}_old`]
+  ])), failed);
+});
+
+test("invalid-token cleanup transaction retries after rotation and preserves the new token", async () => {
+  const failed = [{ id: "device-install", token: `${REAL_FCM_TOKEN}_old` }];
+  let storedToken = failed[0]!.token;
+  let version = 1;
+  let attempts = 0;
+  await deleteInvalidTokensTransactionally(failed, async (operation) => {
+    while (true) {
+      attempts += 1;
+      const readVersion = version;
+      const pendingDeletes: string[] = [];
+      await operation({
+        readTokens: async () => new Map([["device-install", storedToken]]),
+        deleteTokens: (entries) => { pendingDeletes.push(...entries.map((entry) => entry.id)); }
+      });
+      if (attempts === 1) {
+        storedToken = `${REAL_FCM_TOKEN}_rotated`;
+        version += 1;
+      }
+      if (readVersion !== version) continue;
+      if (pendingDeletes.includes("device-install")) storedToken = "";
+      return;
+    }
+  });
+  assert.equal(attempts, 2, "the optimistic transaction should retry after concurrent rotation");
+  assert.equal(storedToken, `${REAL_FCM_TOKEN}_rotated`);
 });
 
 test("invalid-token cleanup failure cannot turn a successful provider result into a duplicate-delivery retry", async () => {
