@@ -2,6 +2,7 @@
 export const COLLECTIONS = {
   aggregateAnalytics: "aggregate_analytics",
   backupMetadata: "backup_metadata",
+  purchaseClaims: "purchase_claims",
   purchaseAudits: "purchase_audits",
   redactedAiEvents: "redacted_ai_events",
   backendJobs: "backend_jobs",
@@ -38,7 +39,17 @@ export type BackupMetadataDocument = {
   verifiedAt?: unknown;
   expiresAt: unknown;
 };
-export type PurchaseAuditDocument = { uid: string; provider: string; productId: string; status: string; verifiedAt: unknown; expiresAt: unknown };
+export type PurchaseClaimDocument = {
+  uid: string;
+  provider: string;
+  productId: string;
+  status: string;
+  storeReferenceHash: string;
+  orderReferenceHash?: string;
+  verifiedAt: unknown;
+  entitlementExpiresAt?: unknown;
+};
+export type PurchaseAuditDocument = PurchaseClaimDocument & { expiresAt: unknown };
 export type RedactedAiEventDocument = {
   uid: string;
   eventType: string;
@@ -76,7 +87,12 @@ const SERVER_DOCUMENT_FIELDS: Record<string, readonly string[]> = {
     "uploadSessionId", "sentinelGeneration", "objectGeneration",
     "createdAt", "updatedAt", "verifiedAt", "expiresAt"
   ],
-  [COLLECTIONS.purchaseAudits]: ["uid", "provider", "productId", "status", "verifiedAt", "expiresAt"],
+  [COLLECTIONS.purchaseClaims]: [
+    "uid", "provider", "productId", "status", "storeReferenceHash", "orderReferenceHash", "verifiedAt", "entitlementExpiresAt"
+  ],
+  [COLLECTIONS.purchaseAudits]: [
+    "uid", "provider", "productId", "status", "storeReferenceHash", "orderReferenceHash", "verifiedAt", "entitlementExpiresAt", "expiresAt"
+  ],
   [COLLECTIONS.redactedAiEvents]: [
     "uid", "eventType", "outcome", "provider", "model", "crisisFallback", "inputCharacterCount",
     "outputCharacterCount", "generatedItemCount", "createdAt", "expiresAt"

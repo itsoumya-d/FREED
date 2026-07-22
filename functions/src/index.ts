@@ -38,6 +38,7 @@ import { runProtectedMutation, type TransactionalStore } from "./transactional.j
 
 export { getReviewedAdultDomainFeed, refreshReviewedAdultDomainFeed } from "./adult-feed-firebase.js";
 export { generateClaraReply, generateChallenges, generateRetentionPlan } from "./ai-firebase.js";
+export { verifyStorePurchase } from "./purchase-firebase.js";
 
 if (!getApps().length) initializeApp();
 

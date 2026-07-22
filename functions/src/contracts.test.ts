@@ -72,6 +72,24 @@ test("redacted AI audit documents have an exact operational metadata allowlist",
   }
 });
 
+test("purchase claim and audit schemas permit hashes but never raw store references", () => {
+  const claim = {
+    uid: "firebaseUid123",
+    provider: "apple",
+    productId: "freed_premium_monthly",
+    status: "verified",
+    storeReferenceHash: "a".repeat(64),
+    orderReferenceHash: "b".repeat(64),
+    verifiedAt: 1
+  };
+  assert.deepEqual(validateServerDocument(COLLECTIONS.purchaseClaims, claim), claim);
+  assert.deepEqual(validateServerDocument(COLLECTIONS.purchaseAudits, { ...claim, expiresAt: 2 }), { ...claim, expiresAt: 2 });
+  for (const forbidden of ["transactionId", "purchaseToken", "orderId", "signedTransactionInfo", "providerBody", "rawError"]) {
+    assert.throws(() => validateServerDocument(COLLECTIONS.purchaseClaims, { ...claim, [forbidden]: "never" }), /sensitive or unsupported/i);
+    assert.throws(() => validateServerDocument(COLLECTIONS.purchaseAudits, { ...claim, expiresAt: 2, [forbidden]: "never" }), /sensitive or unsupported/i);
+  }
+});
+
 test("anonymous aggregate analytics documents cannot contain a Firebase UID", () => {
   assert.deepEqual(
     validateServerDocument(COLLECTIONS.aggregateAnalytics, {

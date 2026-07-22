@@ -13,6 +13,7 @@ export const USER_LINKED_RECORD_SCOPES = [
   "rate_limits",
   "leases",
   "idempotency",
+  "purchase_claims",
   "purchase_audits"
 ] as const;
 

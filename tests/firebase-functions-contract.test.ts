@@ -7,10 +7,12 @@ import {
   parseFirebaseClaraResult,
   parseFirebaseReviewedAdultDomainFeed,
   parseFirebaseRetentionResult,
+  parseFirebaseVerifyStorePurchaseResult,
   type FirebaseChallengeRequest,
   type FirebaseClaraRequest,
   type FirebaseReviewedAdultDomainFeed,
   type FirebaseRetentionRequest,
+  type FirebaseVerifyStorePurchaseRequest,
   type FirebaseCallableTransport
 } from "../src/lib/firebase-client";
 
@@ -36,6 +38,14 @@ async function run() {
         }
       };
       if (name === "requestAccountDeletion") return { ok: true, status: "deleting" };
+      if (name === "verifyStorePurchase") return {
+        active: true,
+        entitlementId: "premium",
+        productId: "freed_premium_monthly",
+        platform: "ios",
+        status: "verified",
+        expiresAt: "2099-07-22T12:01:00.000Z"
+      };
       if (name === "generateClaraReply") return {
         text: "Put the phone down and take three slow breaths. A brief pause gives you room to choose the next action.",
         provider: "remote",
@@ -98,6 +108,26 @@ async function run() {
   );
   assert.deepEqual(await callables.requestAccountDeletion({ clientEventId: "evt_12345678" }), { ok: true, status: "deleting" });
   assert.equal(calls[5]?.name, "requestAccountDeletion");
+  const purchasePayload: FirebaseVerifyStorePurchaseRequest = {
+    platform: "ios",
+    productId: "freed_premium_monthly",
+    transactionId: "2000001234567890",
+    clientEventId: "purchase_event_123",
+    restore: false
+  };
+  assert.deepEqual(await callables.verifyStorePurchase(purchasePayload), {
+    active: true,
+    entitlementId: "premium",
+    productId: "freed_premium_monthly",
+    platform: "ios",
+    status: "verified",
+    expiresAt: "2099-07-22T12:01:00.000Z"
+  });
+  assert.deepEqual(calls[6], { name: "verifyStorePurchase", data: purchasePayload });
+  await assert.rejects(
+    () => callables.verifyStorePurchase({ ...purchasePayload, receipt: "unsigned" } as never),
+    /not permitted/i
+  );
   const exactFeed: FirebaseReviewedAdultDomainFeed = await callables.getReviewedAdultDomainFeed();
   type ExactFeedHasObjectKey = "objectKey" extends keyof typeof exactFeed ? true : false;
   const exactFeedHasObjectKey: ExactFeedHasObjectKey = false;
@@ -110,7 +140,7 @@ async function run() {
     source: { id: "oisd-nsfw-small", label: "OISD NSFW Small", url: "https://nsfw-small.oisd.nl/" },
     domains: ["example.xxx"]
   });
-  assert.deepEqual(calls[6], { name: "getReviewedAdultDomainFeed", data: undefined });
+  assert.deepEqual(calls[7], { name: "getReviewedAdultDomainFeed", data: undefined });
 
   const claraPayload: FirebaseClaraRequest = {
     clientEventId: "evt_clara123",
@@ -172,6 +202,38 @@ async function run() {
   }
   const { domains: _missingDomains, ...missingDomains } = validFeed;
   assert.throws(() => parseFirebaseReviewedAdultDomainFeed(missingDomains), /invalid reviewed adult-domain feed/i);
+
+  const validPurchase = {
+    active: true,
+    entitlementId: "premium",
+    productId: "freed_premium_yearly",
+    platform: "android",
+    status: "verified",
+    expiresAt: "2099-07-22T12:01:00.000Z"
+  };
+  assert.deepEqual(parseFirebaseVerifyStorePurchaseResult(validPurchase), validPurchase);
+  assert.deepEqual(parseFirebaseVerifyStorePurchaseResult({
+    ...validPurchase,
+    productId: "freed_premium_lifetime",
+    expiresAt: null
+  }), { ...validPurchase, productId: "freed_premium_lifetime", expiresAt: null });
+  for (const invalid of [
+    { ...validPurchase, active: false },
+    { ...validPurchase, entitlementId: "attacker" },
+    { ...validPurchase, productId: "attacker_product" },
+    { ...validPurchase, platform: "web" },
+    { ...validPurchase, status: "inactive" },
+    { ...validPurchase, expiresAt: "2020-01-01T00:00:00.000Z" },
+    { ...validPurchase, transactionId: "2000001234567890" },
+    { ...validPurchase, purchaseToken: "play-token-private" },
+    { ...validPurchase, orderId: "GPA.private" },
+    { ...validPurchase, provider: "apple" },
+    { ...validPurchase, rawError: "private" },
+    { ...validPurchase, productId: "freed_premium_lifetime", expiresAt: "2099-07-22T12:01:00.000Z" },
+    { ...validPurchase, active: false, status: "rejected", expiresAt: "2099-07-22T12:01:00.000Z" }
+  ]) {
+    assert.throws(() => parseFirebaseVerifyStorePurchaseResult(invalid), /invalid firebase purchase/i);
+  }
 
   const indexSource = readFileSync("functions/src/index.ts", "utf8");
   const aiFunctionSource = readFileSync("functions/src/ai-firebase.ts", "utf8");

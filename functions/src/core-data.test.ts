@@ -271,6 +271,7 @@ test("account deletion removes every user-linked record and identity but preserv
     "rate_limits",
     "leases",
     "idempotency",
+    "purchase_claims",
     "purchase_audits"
   ]);
   assert.equal(api.USER_LINKED_RECORD_SCOPES.includes("aggregate_analytics"), false);

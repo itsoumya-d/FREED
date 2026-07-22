@@ -88,7 +88,38 @@ export type FirebaseCallableName =
   | "generateClaraReply"
   | "generateChallenges"
   | "generateRetentionPlan"
+  | "verifyStorePurchase"
   | "backendReadiness";
+
+export type FirebaseCoreProductId =
+  | "freed_premium_monthly"
+  | "freed_premium_yearly"
+  | "freed_premium_lifetime";
+
+export type FirebaseVerifyStorePurchaseRequest =
+  | {
+      platform: "ios";
+      productId: FirebaseCoreProductId;
+      transactionId: string;
+      clientEventId: string;
+      restore: boolean;
+    }
+  | {
+      platform: "android";
+      productId: FirebaseCoreProductId;
+      purchaseToken: string;
+      clientEventId: string;
+      restore: boolean;
+    };
+
+export type FirebaseVerifyStorePurchaseResult = {
+  active: boolean;
+  entitlementId: "premium";
+  productId: FirebaseCoreProductId;
+  platform: "ios" | "android";
+  status: "verified" | "inactive" | "rejected" | "unavailable";
+  expiresAt: string | null;
+};
 
 export type FirebaseAiFallbackReason =
   | "provider-disabled"
@@ -334,6 +365,9 @@ const REVIEWED_FEED_LABEL = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
 const AI_FALLBACK_REASONS = [
   "provider-disabled", "configuration-unavailable", "crisis-support", "duplicate-request",
   "provider-unavailable", "invalid-provider-response"
+] as const;
+const FIREBASE_CORE_PRODUCT_IDS = [
+  "freed_premium_monthly", "freed_premium_yearly", "freed_premium_lifetime"
 ] as const;
 const AI_CATEGORIES = ["physical", "breathing", "reflection", "connection", "reset"] as const;
 const AI_INTENSITIES = ["calm", "medium", "strong"] as const;
@@ -689,6 +723,10 @@ export function createFirebaseCallableContracts(transport: FirebaseCallableTrans
       assertCallablePayload(payload, ["clientEventId"]);
       return transport.call("requestAccountDeletion", payload);
     },
+    verifyStorePurchase: async (payload: FirebaseVerifyStorePurchaseRequest): Promise<FirebaseVerifyStorePurchaseResult> => {
+      assertFirebaseVerifyStorePurchaseRequest(payload);
+      return parseFirebaseVerifyStorePurchaseResult(await transport.call("verifyStorePurchase", payload));
+    },
     getReviewedAdultDomainFeed: async (): Promise<FirebaseReviewedAdultDomainFeed> =>
       parseFirebaseReviewedAdultDomainFeed(await transport.call("getReviewedAdultDomainFeed", undefined)),
     generateClaraReply: async (payload: FirebaseClaraRequest): Promise<FirebaseClaraResult> => {
@@ -704,6 +742,32 @@ export function createFirebaseCallableContracts(transport: FirebaseCallableTrans
       return parseFirebaseRetentionResult(await transport.call("generateRetentionPlan", payload));
     },
     backendReadiness: () => transport.call("backendReadiness", undefined)
+  };
+}
+
+export function parseFirebaseVerifyStorePurchaseResult(value: unknown): FirebaseVerifyStorePurchaseResult {
+  if (!isExactRecord(value, ["active", "entitlementId", "productId", "platform", "status", "expiresAt"] as const) ||
+    typeof value.active !== "boolean" || value.entitlementId !== "premium" ||
+    !isEnum(value.productId, FIREBASE_CORE_PRODUCT_IDS) || !isEnum(value.platform, ["ios", "android"] as const) ||
+    !isEnum(value.status, ["verified", "inactive", "rejected", "unavailable"] as const)) {
+    invalidPurchaseResponse();
+  }
+  const verified = value.status === "verified";
+  const lifetime = value.productId === "freed_premium_lifetime";
+  const validExpiry = verified
+    ? lifetime
+      ? value.expiresAt === null
+      : isCanonicalFutureIsoTimestamp(value.expiresAt)
+    : value.expiresAt === null;
+  if (value.active !== verified || !validExpiry) invalidPurchaseResponse();
+  const expiresAt = value.expiresAt as string | null;
+  return {
+    active: value.active,
+    entitlementId: "premium",
+    productId: value.productId,
+    platform: value.platform,
+    status: value.status,
+    expiresAt
   };
 }
 
@@ -779,6 +843,23 @@ function assertFirebaseClaraRequest(value: FirebaseClaraRequest): void {
     (value.context.slipTrigger === null || isEnum(value.context.slipTrigger, AI_RECOVERY_TRIGGERS)) &&
     aiPayloadBytes(value) <= 8 * 1024;
   if (!valid) invalidAiRequest();
+}
+
+function assertFirebaseVerifyStorePurchaseRequest(value: FirebaseVerifyStorePurchaseRequest): void {
+  const common = isRecord(value) && isEnum(value.productId, FIREBASE_CORE_PRODUCT_IDS) &&
+    isAiEventId(value.clientEventId) && typeof value.restore === "boolean" && purchasePayloadBytes(value) <= 16 * 1024;
+  if (value.platform === "ios") {
+    if (!common || !isExactRecord(value, ["platform", "productId", "transactionId", "clientEventId", "restore"] as const) ||
+      typeof value.transactionId !== "string" || !/^\d{8,32}$/.test(value.transactionId)) invalidPurchaseRequest();
+    return;
+  }
+  if (value.platform === "android") {
+    if (!common || !isExactRecord(value, ["platform", "productId", "purchaseToken", "clientEventId", "restore"] as const) ||
+      typeof value.purchaseToken !== "string" || value.purchaseToken.length < 16 || value.purchaseToken.length > 4096 ||
+      !/^[\x21-\x7E]+$/.test(value.purchaseToken) || value.purchaseToken.includes("://")) invalidPurchaseRequest();
+    return;
+  }
+  invalidPurchaseRequest();
 }
 
 function assertFirebaseChallengeRequest(value: FirebaseChallengeRequest): void {
@@ -1017,10 +1098,34 @@ function isExactRecord<const Keys extends readonly string[]>(
   return keys.length === allowedKeys.length && keys.every((key) => allowedKeys.includes(key));
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
 function isCanonicalIsoTimestamp(value: unknown): value is string {
   if (typeof value !== "string" || value.length !== 24) return false;
   const milliseconds = Date.parse(value);
   return Number.isFinite(milliseconds) && new Date(milliseconds).toISOString() === value;
+}
+
+function isCanonicalFutureIsoTimestamp(value: unknown): value is string {
+  return isCanonicalIsoTimestamp(value) && Date.parse(value) > Date.now();
+}
+
+function purchasePayloadBytes(value: unknown): number {
+  try {
+    return new TextEncoder().encode(JSON.stringify(value)).byteLength;
+  } catch {
+    return Number.POSITIVE_INFINITY;
+  }
+}
+
+function invalidPurchaseRequest(): never {
+  throw new Error("This data is not permitted in Firebase purchase callable payloads.");
+}
+
+function invalidPurchaseResponse(): never {
+  throw new Error("Invalid Firebase purchase callable response.");
 }
 
 function isCanonicalFeedDomain(value: string): boolean {
