@@ -5,6 +5,7 @@ import {
   APPROVED_ADULT_FEED_SOURCE,
   MAX_SOURCE_BYTES,
   SOURCE_TIMEOUT_MS,
+  assertFeedPublicationFence,
   assertEmptyRetrievalPayload,
   createDomainPayload,
   fetchApprovedSourceText,
@@ -12,6 +13,7 @@ import {
   readLatestReviewedFeed,
   refreshReviewedFeed,
   type AdultFeedMetadata,
+  type FeedLeaseClaim,
   type FeedObject,
   type FeedResponse
 } from "./adult-feed.js";
@@ -46,6 +48,7 @@ test("retrieval callable accepts no client-selected source or object path", () =
 
 test("hosts, plain-domain, and adblock rules normalize, deduplicate, and sort deterministically", () => {
   assert.deepEqual(parseApprovedSource([
+    "[Adblock Plus]",
     "# reviewed source",
     "0.0.0.0 B.example.xxx",
     "127.0.0.1 a.example.xxx # inline comment",
@@ -54,6 +57,16 @@ test("hosts, plain-domain, and adblock rules normalize, deduplicate, and sort de
     "! adblock comment",
     ""
   ].join("\n")), ["a.example.xxx", "b.example.xxx", "c.example.xxx"]);
+});
+
+test("only the standard live-source Adblock Plus header is ignored", () => {
+  assert.deepEqual(parseApprovedSource("[Adblock Plus]\n! Title: OISD NSFW Small\n||example.xxx^"), ["example.xxx"]);
+  for (const malformed of [
+    "[Adblock]", "[Adblock Plus 2.0]", "[Adblock Plus] trailing", "[arbitrary]",
+    "[Adblock Plus]\n[Adblock Plus]"
+  ]) {
+    assert.throws(() => parseApprovedSource(`${malformed}\n||example.xxx^`), /invalid reviewed feed/i, malformed);
+  }
 });
 
 test("malformed, public-suffix-only, empty, and protected normal-domain sources fail closed", () => {
@@ -112,6 +125,33 @@ test("source fetch rejects unsuccessful, oversized, truncated, malformed UTF-8, 
   assert.equal(aborted, true);
 });
 
+test("source fetch requires an identity representation and rejects encoded responses", async () => {
+  const liveShape = "[Adblock Plus]\n! Title: OISD NSFW Small\n||example.xxx^\n".padEnd(362_969, "x");
+  await assert.rejects(
+    () => fetchApprovedSourceText({
+      fetcher: async () => response([liveShape], { contentLength: 103_485, contentEncoding: "gzip" })
+    }),
+    /invalid/i
+  );
+  assert.equal(await fetchApprovedSourceText({
+    fetcher: async () => response([liveShape], { contentLength: 362_969, contentEncoding: "identity" })
+  }), liveShape);
+});
+
+test("source fetch disables redirects and requests identity encoding", async () => {
+  let redirectMode: unknown;
+  let acceptEncoding: unknown;
+  await assert.rejects(() => fetchApprovedSourceText({
+    fetcher: async (_url, init) => {
+      redirectMode = (init as { redirect?: unknown }).redirect;
+      acceptEncoding = init.headers["accept-encoding"];
+      throw new Error("redirected response blocked");
+    }
+  }), /unavailable/i);
+  assert.equal(redirectMode, "error");
+  assert.equal(acceptEncoding, "identity");
+});
+
 test("domain payload checksum is deterministic", () => {
   const first = createDomainPayload(["b.example.xxx", "a.example.xxx"]);
   const second = createDomainPayload(["a.example.xxx", "b.example.xxx"]);
@@ -127,8 +167,8 @@ test("refresh writes an immutable object before metadata and is idempotent by ch
     now: () => NOW,
     owner: "scheduler-run-123",
     fetcher: async () => response(["b.example.xxx\na.example.xxx\n"]),
-    acquireLease: async (lease) => { events.push(`lease:${lease.owner}`); return "acquired"; },
-    releaseLease: async () => { events.push("release"); },
+    acquireLease: async (request) => { events.push(`lease:${request.owner}`); return leaseClaim(request.owner); },
+    releaseLease: async (claim) => { events.push(`release:${claim.token}`); },
     findByChecksum: async () => latest,
     writeImmutableObject: async (_key, body) => {
       events.push("storage");
@@ -140,10 +180,10 @@ test("refresh writes an immutable object before metadata and is idempotent by ch
         domains: ["a.example.xxx", "b.example.xxx"]
       });
     },
-    publishMetadata: async (metadata) => { events.push("metadata"); latest = metadata; }
+    publishMetadata: async (metadata, claim) => { events.push(`metadata:${claim.token}`); latest = metadata; }
   });
   assert.equal(result.status, "published");
-  assert.deepEqual(events, ["lease:scheduler-run-123", "storage", "metadata", "release"]);
+  assert.deepEqual(events, ["lease:scheduler-run-123", "storage", "metadata:1", "release:1"]);
   assert.equal(latest?.domainCount, 2);
 
   events.length = 0;
@@ -151,18 +191,18 @@ test("refresh writes an immutable object before metadata and is idempotent by ch
     now: () => NOW + 1_000,
     owner: "scheduler-run-456",
     fetcher: async () => response(["a.example.xxx\nb.example.xxx\n"]),
-    acquireLease: async () => "acquired",
-    releaseLease: async () => { events.push("release"); },
+    acquireLease: async (request) => leaseClaim(request.owner, 2),
+    releaseLease: async (claim) => { events.push(`release:${claim.token}`); },
     findByChecksum: async () => latest,
     writeImmutableObject: async () => { events.push("storage"); },
-    publishMetadata: async (metadata) => {
-      events.push("metadata");
+    publishMetadata: async (metadata, claim) => {
+      events.push(`metadata:${claim.token}`);
       assert.equal(metadata.generatedAt, new Date(NOW + 1_000).toISOString());
       assert.equal(metadata.objectKey, latest?.objectKey);
     }
   });
   assert.equal(duplicate.status, "unchanged");
-  assert.deepEqual(events, ["metadata", "release"]);
+  assert.deepEqual(events, ["metadata:2", "release:2"]);
 });
 
 test("busy lease skips refresh and Storage failure never publishes Firestore metadata", async () => {
@@ -185,13 +225,76 @@ test("busy lease skips refresh and Storage failure never publishes Firestore met
     now: () => NOW,
     owner: "scheduler-run-fail",
     fetcher: async () => response(["example.xxx"]),
-    acquireLease: async () => "acquired",
+    acquireLease: async (request) => leaseClaim(request.owner),
     releaseLease: async () => {},
     findByChecksum: async () => undefined,
     writeImmutableObject: async () => { throw new Error("bucket name and object provider error"); },
     publishMetadata: async () => { metadataPublished = true; }
   }), /refresh failed/i);
   assert.equal(metadataPublished, false);
+});
+
+test("publication fence rejects an expired or superseded monotonic lease token", () => {
+  const claim = leaseClaim("worker-old", 7);
+  assert.doesNotThrow(() => assertFeedPublicationFence(claim, claim, NOW));
+  assert.throws(() => assertFeedPublicationFence({ ...claim, token: 8 }, claim, NOW), /lease/i);
+  assert.throws(() => assertFeedPublicationFence(claim, claim, claim.expiresAt), /lease/i);
+});
+
+test("an overlapping newer worker publishes while the stale worker leaves only an orphan object", async () => {
+  let clock = NOW;
+  let token = 0;
+  let active: FeedLeaseClaim | undefined;
+  let latest: AdultFeedMetadata | undefined;
+  const objects: string[] = [];
+  let releaseOldStorage!: () => void;
+  let oldStorageStarted!: () => void;
+  const oldStorageGate = new Promise<void>((resolve) => { releaseOldStorage = resolve; });
+  const oldStorageReady = new Promise<void>((resolve) => { oldStorageStarted = resolve; });
+
+  const acquireLease = async (request: { owner: string; acquiredAt: number; expiresAt: number }) => {
+    if (active && active.expiresAt > request.acquiredAt) return "busy" as const;
+    active = { owner: request.owner, token: ++token, expiresAt: request.expiresAt };
+    return active;
+  };
+  const releaseLease = async (claim: FeedLeaseClaim) => {
+    if (active?.owner === claim.owner && active.token === claim.token) active = { ...active, expiresAt: 0 };
+  };
+  const publishMetadata = async (metadata: AdultFeedMetadata, claim: FeedLeaseClaim) => {
+    assertFeedPublicationFence(active, claim, clock);
+    latest = metadata;
+  };
+
+  const oldRefresh = refreshReviewedFeed({
+    now: () => clock,
+    owner: "worker-old",
+    fetcher: async () => response(["old.example.xxx"]),
+    acquireLease,
+    releaseLease,
+    findByChecksum: async () => undefined,
+    writeImmutableObject: async (key) => { objects.push(key); oldStorageStarted(); await oldStorageGate; },
+    publishMetadata
+  });
+  await oldStorageReady;
+
+  clock = NOW + 2 * 60 * 1_000 + 1;
+  const newer = await refreshReviewedFeed({
+    now: () => clock,
+    owner: "worker-new",
+    fetcher: async () => response(["new.example.xxx"]),
+    acquireLease,
+    releaseLease,
+    findByChecksum: async () => undefined,
+    writeImmutableObject: async (key) => { objects.push(key); },
+    publishMetadata
+  });
+  const newerChecksum = newer.metadata?.checksum;
+  releaseOldStorage();
+  await assert.rejects(() => oldRefresh, /refresh failed/i);
+
+  assert.equal(latest?.checksum, newerChecksum);
+  assert.equal(objects.length, 2);
+  assert.equal(token, 2);
 });
 
 test("latest callable payload validates freshness, future skew, checksum, count, and missing version", async () => {
@@ -226,13 +329,19 @@ test("latest callable payload validates freshness, future skew, checksum, count,
 
 function response(
   chunks: Array<string | Uint8Array>,
-  options: { ok?: boolean; status?: number; contentLength?: number } = {}
+  options: { ok?: boolean; status?: number; contentLength?: number; contentEncoding?: string } = {}
 ) {
   const encoded = chunks.map((chunk) => typeof chunk === "string" ? new TextEncoder().encode(chunk) : chunk);
   return {
     ok: options.ok ?? true,
     status: options.status ?? 200,
-    headers: { get: (name: string) => name.toLowerCase() === "content-length" && options.contentLength !== undefined ? String(options.contentLength) : null },
+    headers: {
+      get: (name: string) => {
+        if (name.toLowerCase() === "content-length" && options.contentLength !== undefined) return String(options.contentLength);
+        if (name.toLowerCase() === "content-encoding" && options.contentEncoding !== undefined) return options.contentEncoding;
+        return null;
+      }
+    },
     body: (async function* () { for (const chunk of encoded) yield chunk; })()
   };
 }
@@ -265,4 +374,8 @@ async function assertReadFailure(
     getLatestMetadata: async () => metadata,
     readObject: async () => JSON.stringify(object)
   }), pattern);
+}
+
+function leaseClaim(owner: string, token = 1): FeedLeaseClaim {
+  return { owner, token, expiresAt: NOW + 2 * 60 * 1_000 };
 }

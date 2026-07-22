@@ -10,9 +10,11 @@ import {
   APPROVED_ADULT_FEED_SOURCE,
   MAX_SOURCE_BYTES,
   assertEmptyRetrievalPayload,
+  assertFeedPublicationFence,
   readLatestReviewedFeed,
   refreshReviewedFeed,
   type AdultFeedMetadata,
+  type FeedLeaseClaim,
   type SourceFetchResponse
 } from "./adult-feed.js";
 import { COLLECTIONS, validateServerDocument } from "./contracts.js";
@@ -66,9 +68,9 @@ function requireAuthenticatedUid(uid: string | undefined): string {
 
 async function fetchApprovedSource(
   url: string,
-  init: { signal: AbortSignal; headers: Readonly<Record<string, string>> }
+  init: { signal: AbortSignal; redirect: "error"; headers: Readonly<Record<string, string>> }
 ): Promise<SourceFetchResponse> {
-  const response = await fetch(url, { signal: init.signal, headers: init.headers });
+  const response = await fetch(url, { signal: init.signal, redirect: init.redirect, headers: init.headers });
   return {
     ok: response.ok,
     status: response.status,
@@ -77,24 +79,34 @@ async function fetchApprovedSource(
   };
 }
 
-async function acquireLease(lease: { owner: string; acquiredAt: number; expiresAt: number }): Promise<"acquired" | "busy"> {
+async function acquireLease(lease: { owner: string; acquiredAt: number; expiresAt: number }): Promise<FeedLeaseClaim | "busy"> {
   const reference = db.collection(COLLECTIONS.leases).doc(LEASE_ID);
   return db.runTransaction(async (transaction) => {
     const snapshot = await transaction.get(reference);
-    const existing = snapshot.exists ? snapshot.data() as { owner?: unknown; expiresAt?: unknown } : undefined;
+    const existing = snapshot.exists ? snapshot.data() as Record<string, unknown> : undefined;
     if (existing && typeof existing.owner === "string" && typeof existing.expiresAt === "number" && existing.expiresAt > lease.acquiredAt) {
       return "busy";
     }
-    transaction.set(reference, validateServerDocument(COLLECTIONS.leases, lease));
-    return "acquired";
+    const previousToken = existing?.token === undefined ? 0 : requiredLeaseToken(existing.token);
+    const claim = { owner: lease.owner, token: previousToken + 1, expiresAt: lease.expiresAt };
+    transaction.set(reference, validateServerDocument(COLLECTIONS.leases, { ...lease, token: claim.token }));
+    return claim;
   });
 }
 
-async function releaseLease(owner: string): Promise<void> {
+async function releaseLease(claim: FeedLeaseClaim): Promise<void> {
   const reference = db.collection(COLLECTIONS.leases).doc(LEASE_ID);
   await db.runTransaction(async (transaction) => {
     const snapshot = await transaction.get(reference);
-    if (snapshot.exists && snapshot.data()?.owner === owner) transaction.delete(reference);
+    if (!snapshot.exists) return;
+    const active = leaseClaimFromDocument(snapshot.data());
+    if (active.owner !== claim.owner || active.token !== claim.token) return;
+    transaction.set(reference, validateServerDocument(COLLECTIONS.leases, {
+      owner: active.owner,
+      acquiredAt: typeof snapshot.data()?.acquiredAt === "number" ? snapshot.data()?.acquiredAt : 0,
+      expiresAt: 0,
+      token: active.token
+    }));
   });
 }
 
@@ -125,16 +137,37 @@ async function writeImmutableObject(key: string, body: string): Promise<void> {
   }
 }
 
-async function publishMetadata(metadata: AdultFeedMetadata): Promise<void> {
+async function publishMetadata(metadata: AdultFeedMetadata, claim: FeedLeaseClaim): Promise<void> {
   const versionReference = db.collection(COLLECTIONS.adultFeedMetadata).doc(versionDocumentId(metadata.checksum));
   const latestReference = db.collection(COLLECTIONS.adultFeedMetadata).doc(LATEST_ID);
+  const leaseReference = db.collection(COLLECTIONS.leases).doc(LEASE_ID);
   const safe = validateServerDocument(COLLECTIONS.adultFeedMetadata, metadataDocument(metadata));
   await db.runTransaction(async (transaction) => {
-    const existing = await transaction.get(versionReference);
+    const [existing, leaseSnapshot] = await Promise.all([
+      transaction.get(versionReference),
+      transaction.get(leaseReference)
+    ]);
+    assertFeedPublicationFence(
+      leaseSnapshot.exists ? leaseClaimFromDocument(leaseSnapshot.data()) : undefined,
+      claim,
+      Date.now()
+    );
     if (!existing.exists) transaction.create(versionReference, safe);
     else assertSameStoredVersion(metadataFromDocument(existing.data()), metadata);
     transaction.set(latestReference, safe);
   });
+}
+
+function leaseClaimFromDocument(value: unknown): FeedLeaseClaim {
+  if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("Adult-feed lease is invalid.");
+  const record = value as Record<string, unknown>;
+  if (typeof record.owner !== "string" || typeof record.expiresAt !== "number") throw new Error("Adult-feed lease is invalid.");
+  return { owner: record.owner, token: requiredLeaseToken(record.token), expiresAt: record.expiresAt };
+}
+
+function requiredLeaseToken(value: unknown): number {
+  if (!Number.isSafeInteger(value) || (value as number) < 1) throw new Error("Adult-feed lease token is invalid.");
+  return value as number;
 }
 
 async function readValidatedObject(key: string): Promise<string> {

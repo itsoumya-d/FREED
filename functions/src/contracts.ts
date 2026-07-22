@@ -42,7 +42,7 @@ export type PurchaseAuditDocument = { uid: string; provider: string; productId: 
 export type RedactedAiEventDocument = { uid: string; eventType: string; outcome: string; createdAt: unknown; expiresAt: unknown };
 export type BackendJobDocument = { kind: string; uid?: string; status: string; createdAt: unknown; expiresAt: unknown };
 export type RateLimitDocument = { count: number; windowStartedAt: number; expiresAt: number };
-export type LeaseDocument = { owner: string; acquiredAt: number; expiresAt: number };
+export type LeaseDocument = { owner: string; acquiredAt: number; expiresAt: number; token?: number };
 export type PushTokenDocument = { uid: string; installationId: string; token: string; updatedAt: unknown; expiresAt: unknown };
 export type DeletionTombstoneDocument =
   | { uid: string; requestedAt: unknown; status: "deleting"; expiresAt?: never }
@@ -68,7 +68,7 @@ const SERVER_DOCUMENT_FIELDS: Record<string, readonly string[]> = {
   [COLLECTIONS.redactedAiEvents]: ["uid", "eventType", "outcome", "createdAt", "expiresAt"],
   [COLLECTIONS.backendJobs]: ["kind", "uid", "status", "createdAt", "expiresAt"],
   [COLLECTIONS.rateLimits]: ["count", "windowStartedAt", "expiresAt"],
-  [COLLECTIONS.leases]: ["owner", "acquiredAt", "expiresAt"],
+  [COLLECTIONS.leases]: ["owner", "acquiredAt", "expiresAt", "token"],
   [COLLECTIONS.pushTokens]: ["uid", "installationId", "token", "updatedAt", "expiresAt"],
   [COLLECTIONS.deletionTombstones]: ["uid", "requestedAt", "status", "expiresAt"],
   [COLLECTIONS.adultFeedMetadata]: ["version", "checksum", "source", "generatedAt", "publishedAt", "domainCount", "objectKey"],

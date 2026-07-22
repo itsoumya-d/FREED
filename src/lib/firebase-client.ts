@@ -137,6 +137,17 @@ export type FirebaseBackupMutationPayload = { backupId: string; clientEventId: s
 export type FirebaseBackupDownloadPayload = { backupId: string };
 export type FirebaseDeletionRequestPayload = { clientEventId: string };
 
+const REVIEWED_FEED_SOURCE = Object.freeze({
+  id: "oisd-nsfw-small",
+  label: "OISD NSFW Small",
+  url: "https://nsfw-small.oisd.nl/"
+});
+const REVIEWED_FEED_KEYS = ["version", "generatedAt", "publishedAt", "checksum", "source", "domains"] as const;
+const REVIEWED_FEED_SOURCE_KEYS = ["id", "label", "url"] as const;
+const MAX_REVIEWED_FEED_DOMAINS = 100_000;
+const MAX_REVIEWED_FEED_DOMAIN_BYTES = 2_000_000;
+const REVIEWED_FEED_LABEL = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
+
 const PRODUCTION_PROJECT_ID = "freed-7d5ee";
 const STAGING_PROJECT_ID = "freed-staging-7d5ee";
 const FUNCTIONS_REGION = "asia-south1";
@@ -151,6 +162,47 @@ export const FIREBASE_EMAIL_LINK_DOMAIN = "freed-7d5ee.firebaseapp.com";
 export const FIREBASE_EMAIL_LINK_PATH = "/__/auth/links";
 const EMAIL_LINK_ASSOCIATION_UNCONFIGURED_REASON =
   "Firebase email-link sign-in is unavailable until Hosting app-link association is deployed and verified.";
+
+export function parseFirebaseReviewedAdultDomainFeed(value: unknown): FirebaseReviewedAdultDomainFeed {
+  if (!isExactRecord(value, REVIEWED_FEED_KEYS)) throw new Error("Invalid reviewed adult-domain feed response.");
+  const source = value.source;
+  if (
+    !isExactRecord(source, REVIEWED_FEED_SOURCE_KEYS) || source.id !== REVIEWED_FEED_SOURCE.id ||
+    source.label !== REVIEWED_FEED_SOURCE.label || source.url !== REVIEWED_FEED_SOURCE.url
+  ) {
+    throw new Error("Invalid reviewed adult-domain feed response.");
+  }
+  if (
+    typeof value.checksum !== "string" || !/^[a-f0-9]{64}$/.test(value.checksum) ||
+    typeof value.version !== "string" || value.version !== `oisd-nsfw-small-${value.checksum.slice(0, 16)}` ||
+    !isCanonicalIsoTimestamp(value.generatedAt) || !isCanonicalIsoTimestamp(value.publishedAt) ||
+    Date.parse(value.publishedAt) < Date.parse(value.generatedAt) ||
+    !Array.isArray(value.domains) || value.domains.length < 1 || value.domains.length > MAX_REVIEWED_FEED_DOMAINS
+  ) {
+    throw new Error("Invalid reviewed adult-domain feed response.");
+  }
+
+  let domainBytes = 0;
+  let previous = "";
+  const domains: string[] = [];
+  for (const domain of value.domains) {
+    if (typeof domain !== "string" || !isCanonicalFeedDomain(domain) || domain <= previous) {
+      throw new Error("Invalid reviewed adult-domain feed response.");
+    }
+    domainBytes += domain.length + 1;
+    if (domainBytes > MAX_REVIEWED_FEED_DOMAIN_BYTES) throw new Error("Invalid reviewed adult-domain feed response.");
+    domains.push(domain);
+    previous = domain;
+  }
+  return {
+    version: value.version,
+    generatedAt: value.generatedAt,
+    publishedAt: value.publishedAt,
+    checksum: value.checksum,
+    source: { ...REVIEWED_FEED_SOURCE },
+    domains
+  };
+}
 
 export function getFirebaseClientReadiness(env: Env = process.env): FirebaseClientReadiness {
   const requestedEnvironment = readEnv(env, "EXPO_PUBLIC_FIREBASE_ENV") ?? "production";
@@ -374,7 +426,8 @@ export function createFirebaseCallableContracts(transport: FirebaseCallableTrans
       assertCallablePayload(payload, ["clientEventId"]);
       return transport.call("requestAccountDeletion", payload);
     },
-    getReviewedAdultDomainFeed: () => transport.call("getReviewedAdultDomainFeed", undefined),
+    getReviewedAdultDomainFeed: async (): Promise<FirebaseReviewedAdultDomainFeed> =>
+      parseFirebaseReviewedAdultDomainFeed(await transport.call("getReviewedAdultDomainFeed", undefined)),
     backendReadiness: () => transport.call("backendReadiness", undefined)
   };
 }
@@ -389,6 +442,28 @@ function assertCallablePayload(payload: object, allowed: readonly string[]) {
       throw new Error("This data is not permitted in Firebase callable payloads.");
     }
   }
+}
+
+function isExactRecord<const Keys extends readonly string[]>(
+  value: unknown,
+  allowedKeys: Keys
+): value is Record<Keys[number], unknown> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return false;
+  const keys = Object.keys(value);
+  return keys.length === allowedKeys.length && keys.every((key) => allowedKeys.includes(key));
+}
+
+function isCanonicalIsoTimestamp(value: unknown): value is string {
+  if (typeof value !== "string" || value.length !== 24) return false;
+  const milliseconds = Date.parse(value);
+  return Number.isFinite(milliseconds) && new Date(milliseconds).toISOString() === value;
+}
+
+function isCanonicalFeedDomain(value: string): boolean {
+  if (value.length > 253 || value !== value.toLowerCase() || !/^[a-z0-9.-]+$/.test(value)) return false;
+  const labels = value.split(".");
+  if (labels.length < 2 || labels.some((label) => !REVIEWED_FEED_LABEL.test(label))) return false;
+  return /^(?:[a-z]{2,63}|xn--[a-z0-9-]{2,59})$/.test(labels.at(-1) ?? "");
 }
 
 function providerCredential(

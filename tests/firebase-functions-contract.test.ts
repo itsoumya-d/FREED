@@ -3,6 +3,8 @@ import { readFileSync } from "node:fs";
 
 import {
   createFirebaseCallableContracts,
+  parseFirebaseReviewedAdultDomainFeed,
+  type FirebaseReviewedAdultDomainFeed,
   type FirebaseCallableTransport
 } from "../src/lib/firebase-client";
 
@@ -12,7 +14,7 @@ async function run() {
     call: async (name, data) => {
       calls.push({ name, data });
       if (name === "getReviewedAdultDomainFeed") return {
-        version: "oisd-nsfw-small-0123456789abcdef",
+        version: "oisd-nsfw-small-0000000000000000",
         generatedAt: "2026-07-22T06:30:00.000Z",
         publishedAt: "2026-07-22T06:30:00.000Z",
         checksum: "0".repeat(64),
@@ -73,8 +75,12 @@ async function run() {
   );
   assert.deepEqual(await callables.requestAccountDeletion({ clientEventId: "evt_12345678" }), { ok: true, status: "deleting" });
   assert.equal(calls[5]?.name, "requestAccountDeletion");
-  assert.deepEqual(await callables.getReviewedAdultDomainFeed(), {
-    version: "oisd-nsfw-small-0123456789abcdef",
+  const exactFeed: FirebaseReviewedAdultDomainFeed = await callables.getReviewedAdultDomainFeed();
+  type ExactFeedHasObjectKey = "objectKey" extends keyof typeof exactFeed ? true : false;
+  const exactFeedHasObjectKey: ExactFeedHasObjectKey = false;
+  assert.equal(exactFeedHasObjectKey, false);
+  assert.deepEqual(exactFeed, {
+    version: "oisd-nsfw-small-0000000000000000",
     generatedAt: "2026-07-22T06:30:00.000Z",
     publishedAt: "2026-07-22T06:30:00.000Z",
     checksum: "0".repeat(64),
@@ -82,6 +88,31 @@ async function run() {
     domains: ["example.xxx"]
   });
   assert.deepEqual(calls[6], { name: "getReviewedAdultDomainFeed", data: undefined });
+
+  const validFeed = {
+    version: "oisd-nsfw-small-0000000000000000",
+    generatedAt: "2026-07-22T06:30:00.000Z",
+    publishedAt: "2026-07-22T06:30:00.000Z",
+    checksum: "0".repeat(64),
+    source: { id: "oisd-nsfw-small", label: "OISD NSFW Small", url: "https://nsfw-small.oisd.nl/" },
+    domains: ["example.xxx"]
+  };
+  for (const invalid of [
+    { ...validFeed, checksum: "not-a-checksum" },
+    { ...validFeed, generatedAt: "not-a-timestamp" },
+    { ...validFeed, publishedAt: "2026-07-22T06:29:59.999Z" },
+    { ...validFeed, source: { ...validFeed.source, url: "https://attacker.example/" } },
+    { ...validFeed, domains: ["Example.xxx"] },
+    { ...validFeed, domains: ["example.xxx/path"] },
+    { ...validFeed, domains: ["b.example.xxx", "a.example.xxx"] },
+    { ...validFeed, objectKey: "adult-domain-feeds/internal.json" },
+    { ...validFeed, source: { ...validFeed.source, objectKey: "internal" } },
+    { ...validFeed, domains: Array.from({ length: 100_001 }, (_, index) => `d${String(index).padStart(6, "0")}.example.xxx`) }
+  ]) {
+    assert.throws(() => parseFirebaseReviewedAdultDomainFeed(invalid), /invalid reviewed adult-domain feed/i);
+  }
+  const { domains: _missingDomains, ...missingDomains } = validFeed;
+  assert.throws(() => parseFirebaseReviewedAdultDomainFeed(missingDomains), /invalid reviewed adult-domain feed/i);
 
   const indexSource = readFileSync("functions/src/index.ts", "utf8");
   const feedFunctionSource = readFileSync("functions/src/adult-feed-firebase.ts", "utf8");

@@ -42,7 +42,7 @@ export type SourceFetchResponse = {
 
 export type SourceFetcher = (
   url: string,
-  init: { signal: AbortSignal; headers: Readonly<Record<string, string>> }
+  init: { signal: AbortSignal; redirect: "error"; headers: Readonly<Record<string, string>> }
 ) => Promise<SourceFetchResponse>;
 
 export type FeedObject = {
@@ -63,6 +63,12 @@ export type AdultFeedMetadata = {
   objectKey: string;
 };
 
+export type FeedLeaseClaim = {
+  owner: string;
+  token: number;
+  expiresAt: number;
+};
+
 export type FeedResponse = Omit<AdultFeedMetadata, "domainCount" | "objectKey"> & { domains: string[] };
 
 type TimerHandle = ReturnType<typeof setTimeout> | number;
@@ -71,6 +77,19 @@ export function assertEmptyRetrievalPayload(value: unknown): void {
   if (value === undefined || value === null) return;
   if (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0) return;
   throw new Error("Callable payload is not permitted.");
+}
+
+export function assertFeedPublicationFence(
+  active: FeedLeaseClaim | undefined,
+  claim: FeedLeaseClaim,
+  now: number
+): void {
+  if (
+    !active || active.owner !== claim.owner || active.token !== claim.token ||
+    active.expiresAt !== claim.expiresAt || active.expiresAt <= now
+  ) {
+    throw new Error("The adult-feed publication lease is no longer valid.");
+  }
 }
 
 export async function fetchApprovedSourceText(deps: {
@@ -85,11 +104,14 @@ export async function fetchApprovedSourceText(deps: {
   try {
     const result = await deps.fetcher(APPROVED_ADULT_FEED_SOURCE.url, {
       signal: controller.signal,
-      headers: Object.freeze({ accept: "text/plain" })
+      redirect: "error",
+      headers: Object.freeze({ accept: "text/plain", "accept-encoding": "identity" })
     });
     if (!result.ok || result.status < 200 || result.status >= 300 || !result.body) {
       throw new Error("Approved source unavailable.");
     }
+    const contentEncoding = result.headers.get("content-encoding")?.trim().toLowerCase();
+    if (contentEncoding && contentEncoding !== "identity") throw new Error("Approved source response is invalid.");
     const declaredLength = parseContentLength(result.headers.get("content-length"));
     if (declaredLength !== undefined && declaredLength > MAX_SOURCE_BYTES) {
       throw new Error("Approved source response is invalid.");
@@ -133,9 +155,15 @@ export async function fetchApprovedSourceText(deps: {
 export function parseApprovedSource(text: string): string[] {
   if (typeof text !== "string" || !text.trim()) throw new Error("Reviewed feed is empty.");
   const domains = new Set<string>();
+  let headerSeen = false;
   for (const rawLine of text.split(/\r?\n/)) {
     const line = rawLine.trim();
     if (!line || line.startsWith("#") || line.startsWith("!")) continue;
+    if (line === "[Adblock Plus]") {
+      if (headerSeen || domains.size > 0) throw new Error("Invalid reviewed feed rule.");
+      headerSeen = true;
+      continue;
+    }
     const candidate = extractCandidate(line);
     const domain = canonicalDomain(candidate);
     if (isProtectedNormalDomain(domain)) throw new Error("Reviewed feed contains a protected normal domain.");
@@ -159,15 +187,15 @@ export async function refreshReviewedFeed(deps: {
   now: () => number;
   owner: string;
   fetcher: SourceFetcher;
-  acquireLease: (lease: { owner: string; acquiredAt: number; expiresAt: number }) => Promise<"acquired" | "busy">;
-  releaseLease: (owner: string) => Promise<void>;
+  acquireLease: (lease: { owner: string; acquiredAt: number; expiresAt: number }) => Promise<FeedLeaseClaim | "busy">;
+  releaseLease: (claim: FeedLeaseClaim) => Promise<void>;
   findByChecksum: (checksum: string) => Promise<AdultFeedMetadata | undefined>;
   writeImmutableObject: (key: string, body: string) => Promise<void>;
-  publishMetadata: (metadata: AdultFeedMetadata) => Promise<void>;
+  publishMetadata: (metadata: AdultFeedMetadata, claim: FeedLeaseClaim) => Promise<void>;
 }): Promise<{ status: "published" | "unchanged" | "busy"; metadata?: AdultFeedMetadata }> {
   const startedAt = deps.now();
-  const lease = await deps.acquireLease({ owner: deps.owner, acquiredAt: startedAt, expiresAt: startedAt + FEED_LEASE_MS });
-  if (lease === "busy") return { status: "busy" };
+  const claim = await deps.acquireLease({ owner: deps.owner, acquiredAt: startedAt, expiresAt: startedAt + FEED_LEASE_MS });
+  if (claim === "busy") return { status: "busy" };
   try {
     const text = await fetchApprovedSourceText({ fetcher: deps.fetcher });
     const { domains, checksum } = createDomainPayload(parseApprovedSource(text));
@@ -176,7 +204,7 @@ export async function refreshReviewedFeed(deps: {
     if (existing) {
       assertStoredIdentity(existing, checksum, domains.length);
       const renewed = { ...existing, generatedAt, publishedAt: generatedAt };
-      await deps.publishMetadata(renewed);
+      await deps.publishMetadata(renewed, claim);
       return { status: "unchanged", metadata: renewed };
     }
 
@@ -199,12 +227,12 @@ export async function refreshReviewedFeed(deps: {
       objectKey
     };
     await deps.writeImmutableObject(objectKey, JSON.stringify(object));
-    await deps.publishMetadata(metadata);
+    await deps.publishMetadata(metadata, claim);
     return { status: "published", metadata };
   } catch {
     throw new Error("Reviewed adult feed refresh failed.");
   } finally {
-    await deps.releaseLease(deps.owner);
+    await deps.releaseLease(claim);
   }
 }
 
