@@ -676,7 +676,8 @@ export function getFirebaseMessagingRegistrationContract(input: {
   installationId: string;
   token: string;
 }): FirebaseMessagingRegistration | null {
-  if (!isToken(input.installationId) || !isToken(input.token)) return null;
+  if (!isExactRecord(input, ["installationId", "token"] as const) ||
+      !isToken(input.installationId) || !isFcmRegistrationToken(input.token)) return null;
   return {
     installationId: input.installationId,
     token: input.token,
@@ -1201,4 +1202,10 @@ function isUsableEmailLink(value: string) {
 
 function isToken(value: unknown): value is string {
   return typeof value === "string" && value.trim().length >= 8 && value.trim().length <= 16_384 && !/\s/.test(value);
+}
+
+function isFcmRegistrationToken(value: unknown): value is string {
+  return typeof value === "string" && value.trim() === value && /^[A-Za-z0-9:_-]{20,4096}$/.test(value) &&
+    !/(?:placeholder|replace(?:[_-]?me)?|example|your[_-]?fcm|test[_-]?token|dummy)/i.test(value) &&
+    !/^([A-Za-z0-9])\1{19,}$/.test(value);
 }

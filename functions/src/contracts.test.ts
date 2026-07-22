@@ -41,16 +41,54 @@ test("backup handshake stores metadata and cryptographic identifiers but no enve
 });
 
 test("push token and deletion callable contracts are minimal", () => {
+  const realFcmToken = "fcmRegistrationPrefix123:APA91bG9uZ19yZWFsX3NoYXBlZF90b2tlbi0xMjM0NTY3ODkw";
   assert.deepEqual(
-    parsePushTokenRegistration({ installationId: "iid_12345678", token: "fcm_12345678", clientEventId: "evt_abcdefgh" }),
-    { installationId: "iid_12345678", token: "fcm_12345678", clientEventId: "evt_abcdefgh" }
+    parsePushTokenRegistration({ installationId: "iid_12345678", token: realFcmToken, clientEventId: "evt_abcdefgh" }),
+    { installationId: "iid_12345678", token: realFcmToken, clientEventId: "evt_abcdefgh" }
   );
+  for (const invalid of ["short", "your-fcm-token-placeholder", `prefix:${"x".repeat(4_096)}`]) {
+    assert.throws(
+      () => parsePushTokenRegistration({ installationId: "iid_12345678", token: invalid, clientEventId: "evt_abcdefgh" }),
+      /unsupported/i
+    );
+  }
+  assert.throws(() => parsePushTokenRegistration({
+    installationId: "iid_12345678",
+    token: realFcmToken,
+    clientEventId: "evt_abcdefgh",
+    title: "arbitrary copy"
+  }), /unsupported/i);
   assert.deepEqual(parseDeletionRequest({ clientEventId: "evt_abcdefgh" }), { clientEventId: "evt_abcdefgh" });
 });
 
 test("server document schemas reject forbidden fields on every collection family", () => {
   assert.deepEqual(validateServerDocument("adult_feed_metadata", { version: "v1", checksum: "a".repeat(64) }), { version: "v1", checksum: "a".repeat(64) });
   assert.throws(() => validateServerDocument("redacted_ai_events", { eventType: "coach", privateNote: "never" }), /sensitive or unsupported/i);
+});
+
+test("notification job documents allow only reviewed queue metadata and aggregate counts", () => {
+  const document = {
+    uid: "firebaseUid123",
+    templateId: "night-guard",
+    route: "checkin",
+    status: "dispatched",
+    scheduledAt: 1,
+    createdAt: 1,
+    claimedAt: 2,
+    dispatchedAt: 3,
+    attemptCount: 1,
+    expiresAt: 4,
+    successCount: 1,
+    failureCount: 1,
+    invalidTokenCount: 1
+  };
+  assert.deepEqual(validateServerDocument(COLLECTIONS.notificationJobs, document), document);
+  for (const forbidden of ["token", "title", "body", "url", "domain", "providerBody", "recoveryNote"]) {
+    assert.throws(
+      () => validateServerDocument(COLLECTIONS.notificationJobs, { ...document, [forbidden]: "never" }),
+      /sensitive or unsupported/i
+    );
+  }
 });
 
 test("redacted AI audit documents have an exact operational metadata allowlist", () => {

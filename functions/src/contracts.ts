@@ -1,3 +1,5 @@
+import { isFcmRegistrationToken } from "./notifications.js";
+
 /** Server-only callable contracts. Never reuse these types in mobile persistence. */
 export const COLLECTIONS = {
   aggregateAnalytics: "aggregate_analytics",
@@ -9,6 +11,7 @@ export const COLLECTIONS = {
   rateLimits: "rate_limits",
   leases: "leases",
   pushTokens: "push_tokens",
+  notificationJobs: "notification_jobs",
   deletionTombstones: "deletion_tombstones",
   adultFeedMetadata: "adult_feed_metadata",
   idempotency: "idempotency"
@@ -66,7 +69,22 @@ export type RedactedAiEventDocument = {
 export type BackendJobDocument = { kind: string; uid?: string; status: string; createdAt: unknown; expiresAt: unknown };
 export type RateLimitDocument = { count: number; windowStartedAt: number; expiresAt: number };
 export type LeaseDocument = { owner: string; acquiredAt: number; expiresAt: number; token?: number };
-export type PushTokenDocument = { uid: string; installationId: string; token: string; updatedAt: unknown; expiresAt: unknown };
+export type PushTokenDocument = { uid: string; installationId: string; token: string; createdAt: unknown; updatedAt: unknown; expiresAt: unknown };
+export type NotificationJobDocument = {
+  uid: string;
+  templateId: string;
+  route: "checkin";
+  status: string;
+  scheduledAt: unknown;
+  createdAt: unknown;
+  claimedAt?: unknown;
+  dispatchedAt?: unknown;
+  attemptCount: number;
+  expiresAt: unknown;
+  successCount?: number;
+  failureCount?: number;
+  invalidTokenCount?: number;
+};
 export type DeletionTombstoneDocument =
   | { uid: string; requestedAt: unknown; status: "deleting"; expiresAt?: never }
   | { uid: string; requestedAt: unknown; status: "cooldown"; expiresAt: unknown };
@@ -100,7 +118,11 @@ const SERVER_DOCUMENT_FIELDS: Record<string, readonly string[]> = {
   [COLLECTIONS.backendJobs]: ["kind", "uid", "status", "createdAt", "expiresAt"],
   [COLLECTIONS.rateLimits]: ["count", "windowStartedAt", "expiresAt"],
   [COLLECTIONS.leases]: ["owner", "acquiredAt", "expiresAt", "token"],
-  [COLLECTIONS.pushTokens]: ["uid", "installationId", "token", "updatedAt", "expiresAt"],
+  [COLLECTIONS.pushTokens]: ["uid", "installationId", "token", "createdAt", "updatedAt", "expiresAt"],
+  [COLLECTIONS.notificationJobs]: [
+    "uid", "templateId", "route", "status", "scheduledAt", "createdAt", "claimedAt", "dispatchedAt",
+    "attemptCount", "expiresAt", "successCount", "failureCount", "invalidTokenCount"
+  ],
   [COLLECTIONS.deletionTombstones]: ["uid", "requestedAt", "status", "expiresAt"],
   [COLLECTIONS.adultFeedMetadata]: ["version", "checksum", "source", "generatedAt", "publishedAt", "domainCount", "objectKey"],
   [COLLECTIONS.idempotency]: ["createdAt", "expiresAt"]
@@ -177,9 +199,10 @@ export function parseDeleteBackup(value: unknown): BackupMutationInput {
 
 export function parsePushTokenRegistration(value: unknown): PushTokenInput {
   const record = strictRecord(value, ["installationId", "token", "clientEventId"]);
+  if (!isFcmRegistrationToken(record.token)) throw new Error("Unsupported FCM registration token.");
   return {
     installationId: requiredIdentifier(record, "installationId"),
-    token: requiredIdentifier(record, "token"),
+    token: record.token,
     clientEventId: requiredIdentifier(record, "clientEventId")
   };
 }

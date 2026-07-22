@@ -124,6 +124,8 @@ for (const parameter of ["ai_clara_enabled", "ai_challenges_enabled", "ai_retent
   assert.equal(remoteConfig.parameters[parameter].defaultValue.value, "false", `${parameter} must fail closed by default`);
   assert.match(remoteConfig.parameters[parameter].description, /server-side|server provider/i);
 }
+assert.equal(remoteConfig.parameters.remote_notifications_enabled.defaultValue.value, "false");
+assert.match(remoteConfig.parameters.remote_notifications_enabled.description, /signed-device.*FCM\/APNs proof/i);
 assert.equal(
   packageJson.scripts["audit:firebase-config"],
   "node -- scripts/run-ts-entry.js scripts/firebase-config-audit.ts",

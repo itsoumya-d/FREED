@@ -266,6 +266,7 @@ test("account deletion removes every user-linked record and identity but preserv
   assert.deepEqual(api.USER_LINKED_RECORD_SCOPES, [
     "backup_metadata",
     "push_tokens",
+    "notification_jobs",
     "redacted_ai_events",
     "backend_jobs",
     "rate_limits",

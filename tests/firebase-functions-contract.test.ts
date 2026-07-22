@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 
 import {
   createFirebaseCallableContracts,
+  getFirebaseMessagingRegistrationContract,
   parseFirebaseChallengeResult,
   parseFirebaseClaraResult,
   parseFirebaseReviewedAdultDomainFeed,
@@ -67,6 +68,20 @@ async function run() {
     }
   };
   const callables = createFirebaseCallableContracts(transport);
+
+  const realFcmToken = "fcmRegistrationPrefix123:APA91bG9uZ19yZWFsX3NoYXBlZF90b2tlbi0xMjM0NTY3ODkw";
+  assert.deepEqual(getFirebaseMessagingRegistrationContract({
+    installationId: "firebase-installation-id",
+    token: realFcmToken
+  }), { installationId: "firebase-installation-id", token: realFcmToken, recoveryContentIncluded: false });
+  for (const invalid of ["short", "your-fcm-token-placeholder", `prefix:${"x".repeat(4_096)}`]) {
+    assert.equal(getFirebaseMessagingRegistrationContract({ installationId: "firebase-installation-id", token: invalid }), null);
+  }
+  assert.equal(getFirebaseMessagingRegistrationContract({
+    installationId: "firebase-installation-id",
+    token: realFcmToken,
+    body: "arbitrary"
+  } as never), null);
 
   assert.deepEqual(
     await callables.ingestAggregateAnalytics({ day: "2026-07-22", checkIns: 1, completedChallenges: 0, clientEventId: "evt_12345678" }),
@@ -250,6 +265,11 @@ async function run() {
   }
   assert.equal(aiFunctionSource.match(/enforceAppCheck:\s*true/g)?.length, 3);
   assert.equal(aiFunctionSource.match(/secrets:\s*\[OPENAI_API_KEY\]/g)?.length, 3);
+
+  const notificationFunctionSource = readFileSync("functions/src/notification-firebase.ts", "utf8");
+  assert.match(indexSource, /dispatchReviewedNotifications/);
+  assert.doesNotMatch(indexSource, /export const (?:enqueue|dispatch)Notification\w*\s*=\s*onCall/i);
+  assert.match(notificationFunctionSource, /getMessaging/);
 
   for (const ruleFile of ["firestore.rules", "storage.rules"]) {
     const rules = readFileSync(ruleFile, "utf8");

@@ -39,6 +39,7 @@ import { runProtectedMutation, type TransactionalStore } from "./transactional.j
 export { getReviewedAdultDomainFeed, refreshReviewedAdultDomainFeed } from "./adult-feed-firebase.js";
 export { generateClaraReply, generateChallenges, generateRetentionPlan } from "./ai-firebase.js";
 export { verifyStorePurchase } from "./purchase-firebase.js";
+export { dispatchReviewedNotifications } from "./notification-firebase.js";
 
 if (!getApps().length) initializeApp();
 
@@ -216,6 +217,7 @@ export const registerPushToken = onCall({ enforceAppCheck: true }, async (reques
       uid,
       installationId: input.installationId,
       token: input.token,
+      createdAt: FieldValue.serverTimestamp(),
       updatedAt: FieldValue.serverTimestamp(),
       expiresAt: Timestamp.fromMillis(Date.now() + 90 * DAY_MS)
     });

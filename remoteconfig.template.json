@@ -20,6 +20,10 @@
     "ai_retention_enabled": {
       "defaultValue": { "value": "false" },
       "description": "Enables only the server-side retention-plan OpenAI provider path after staging smoke tests and signed-device App Check proof."
+    },
+    "remote_notifications_enabled": {
+      "defaultValue": { "value": "false" },
+      "description": "Enables server-side reviewed remote notification dispatch only after staging signed-device FCM/APNs proof."
     }
   }
 }

@@ -8,6 +8,7 @@ export const ACCOUNT_DELETION_COOLDOWN_MS = 2 * 60 * 60 * 1000;
 export const USER_LINKED_RECORD_SCOPES = [
   "backup_metadata",
   "push_tokens",
+  "notification_jobs",
   "redacted_ai_events",
   "backend_jobs",
   "rate_limits",
