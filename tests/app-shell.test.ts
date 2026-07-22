@@ -23,3 +23,19 @@ assert.doesNotMatch(profileSource, /FocusShieldSection/);
 assert.doesNotMatch(profileSource, /requestProtectionAuthorization|applyAdultContentFilter|presentFamilyActivityPicker/);
 assert.match(shieldSource, /Protection health/);
 assert.match(shieldSource, /Open protection setup/);
+
+assert.match(profileSource, /<RecoveryBackupCard/);
+assert.match(profileSource, /pendingFirebaseEmailLink=\{pendingFirebaseEmailLink\}/);
+assert.match(profileSource, /onPendingFirebaseEmailLinkHandled=\{onPendingFirebaseEmailLinkHandled\}/);
+assert.match(profileSource, /<PrivacySupportCard/);
+assert.match(profileSource, /<ReminderSettingsCard/);
+assert.match(profileSource, /<AccountabilitySettingsCard/);
+assert.doesNotMatch(profileSource, /label="Complete email sign-in"/);
+
+const backupStart = source.indexOf("function RecoveryBackupCard(");
+const privacyStart = source.indexOf("function PrivacySupportCard(");
+assert.ok(backupStart >= 0 && privacyStart > backupStart);
+const backupSource = source.slice(backupStart, privacyStart);
+assert.match(backupSource, /\.completeEmailLink\(\{ email: authEmail, emailLink: url \}\)/);
+assert.match(backupSource, /if \(!result\.ok\)/);
+assert.match(backupSource, /onPendingFirebaseEmailLinkHandled\(\);/);

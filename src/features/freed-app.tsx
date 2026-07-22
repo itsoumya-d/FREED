@@ -7365,16 +7365,23 @@ function BreathingScreen({ onBack }: { onBack: () => void }) {
   );
 }
 
-function ProfileScreen({ recoveryState, premium, streakDays, bestStreakDays, attempts, relapseCount, onManagePlan, onLogSlip, onOpenShield, pendingFirebaseEmailLink, onPendingFirebaseEmailLinkHandled }: {
-  recoveryState: RecoveryState; premium: boolean; streakDays: number; bestStreakDays: number; attempts: BlockingAttempt[]; relapseCount: number;
-  onManagePlan: () => void; onLogSlip: () => void; onOpenShield: () => void; pendingFirebaseEmailLink: string | null; onPendingFirebaseEmailLinkHandled: () => void;
+function ProfileScreen({ recoveryState, premium, premiumCapabilities, streakDays, bestStreakDays, attempts, relapseCount, reminders, smartReminderSuggestion, retentionPlan, accountability, supportCircle, reminderBusy, onReminderChange, onAccountabilityChange, onSendSponsorReport, onSendSupportCircleReport, onSupportCircleChange, onSupportCircleRemove, onRestoreBackup, onDeleteLocalData, onManagePlan, onLogSlip, onOpenShield, pendingFirebaseEmailLink, onPendingFirebaseEmailLinkHandled }: {
+  recoveryState: RecoveryState; premium: boolean; premiumCapabilities: PremiumCapabilitySet; streakDays: number; bestStreakDays: number; attempts: BlockingAttempt[]; relapseCount: number;
+  reminders: ReminderPreferences; smartReminderSuggestion: SmartReminderSuggestion; retentionPlan: RetentionPlan; accountability: AccountabilityPartner; supportCircle: SupportCircleMember[]; reminderBusy: boolean;
+  onReminderChange: (update: Partial<ReminderPreferences>) => void; onAccountabilityChange: (update: Partial<AccountabilityPartner>) => void; onSendSponsorReport: () => void; onSendSupportCircleReport: (memberId: string) => void;
+  onSupportCircleChange: (memberId: string, update: Partial<Omit<SupportCircleMember, "id" | "updatedAt" | "lastContactedAt">>) => void; onSupportCircleRemove: (memberId: string) => void;
+  onRestoreBackup: (state: RecoveryState) => void; onDeleteLocalData: () => Promise<void> | void; onManagePlan: () => void; onLogSlip: () => void; onOpenShield: () => void; pendingFirebaseEmailLink: string | null; onPendingFirebaseEmailLinkHandled: () => void;
 }) {
   return <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 20, paddingBottom: 112, gap: 18 }}>
     <Text selectable style={{ color: colors.text, fontSize: 30, fontWeight: typography.heavy }}>Profile</Text>
     <Card gradient={gradients.purple}><Text selectable style={{ color: colors.text, fontSize: 22, fontWeight: typography.heavy }}>FREED Member</Text><Text selectable style={{ color: colors.peach, marginTop: 6, fontWeight: typography.heavy }}>{streakDays} DAY STREAK · BEST {bestStreakDays}</Text></Card>
-    {pendingFirebaseEmailLink ? <Card><Text selectable style={{ color: colors.text2 }}>Your email sign-in link is ready to complete.</Text><PillButton label="Complete email sign-in" onPress={onPendingFirebaseEmailLinkHandled} /></Card> : null}
     <Card><Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Recovery account</Text><Text selectable style={{ color: colors.text2, marginTop: 6 }}>Recovery data, backup, reminders, accountability, privacy, and support stay available here.</Text><View style={{ marginTop: 12 }}><PillButton label={premium ? "Membership active" : "Manage membership"} variant="ghost" onPress={onManagePlan} /></View></Card>
     <Card><Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Recovery history</Text><Text selectable style={{ color: colors.text2, marginTop: 6 }}>{attempts.length} protected attempts · {relapseCount} slips logged privately.</Text><View style={{ marginTop: 12 }}><PillButton label="Log Slip Safely" variant="ghost" onPress={onLogSlip} /></View></Card>
+    <RetentionPlanCard plan={retentionPlan} />
+    <RecoveryBackupCard recoveryState={recoveryState} onRestore={onRestoreBackup} pendingFirebaseEmailLink={pendingFirebaseEmailLink} onPendingFirebaseEmailLinkHandled={onPendingFirebaseEmailLinkHandled} />
+    <PrivacySupportCard onDeleteLocalData={onDeleteLocalData} />
+    <ReminderSettingsCard reminders={reminders} busy={reminderBusy} smartSuggestion={smartReminderSuggestion} onChange={onReminderChange} />
+    <AccountabilitySettingsCard partner={accountability} supportCircle={supportCircle} recoveryState={recoveryState} canSendSponsorReport={premiumCapabilities.sponsorAccountability} canUseSupportCircle={premiumCapabilities.familySupport || premiumCapabilities.sponsorAccountability} onSendReport={onSendSponsorReport} onSendSupportCircleReport={onSendSupportCircleReport} onManagePlan={onManagePlan} onSupportCircleChange={onSupportCircleChange} onSupportCircleRemove={onSupportCircleRemove} onChange={onAccountabilityChange} />
     <Card><Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Focus Shield</Text><Text selectable style={{ color: colors.text2, marginTop: 6 }}>Protection configuration is managed in Shield.</Text><View style={{ marginTop: 12 }}><PillButton label="Open Shield" variant="ghost" onPress={onOpenShield} accessibilityHint="Opens Focus Shield configuration." /></View></Card>
   </ScrollView>;
 }
@@ -8427,10 +8434,25 @@ export default function FreedApp() {
             <ProfileScreen
               recoveryState={recoveryState}
               premium={premium}
+              premiumCapabilities={premiumCapabilities}
               streakDays={streakDays}
               bestStreakDays={bestStreakDays}
               attempts={attempts}
               relapseCount={relapseRecords.length}
+              reminders={reminders}
+              smartReminderSuggestion={smartReminderSuggestion}
+              retentionPlan={retentionPlan}
+              accountability={accountability}
+              supportCircle={supportCircle}
+              reminderBusy={reminderBusy}
+              onReminderChange={changeReminderPreferences}
+              onAccountabilityChange={(update) => setRecoveryState((current) => updateAccountabilityPartner(current, update))}
+              onSendSponsorReport={sendSponsorReport}
+              onSendSupportCircleReport={sendSupportCircleReport}
+              onSupportCircleChange={(memberId, update) => setRecoveryState((current) => updateSupportCircleMember(current, memberId, update))}
+              onSupportCircleRemove={(memberId) => setRecoveryState((current) => removeSupportCircleMember(current, memberId))}
+              onRestoreBackup={setRecoveryState}
+              onDeleteLocalData={deleteLocalRecoveryData}
               onManagePlan={() => setScreen("paywall")}
               onLogSlip={() => setScreen("slip")}
               onOpenShield={() => setTab("shield")}
