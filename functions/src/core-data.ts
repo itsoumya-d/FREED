@@ -12,29 +12,99 @@ export const USER_LINKED_RECORD_SCOPES = [
   "rate_limits",
   "leases",
   "idempotency",
-  "purchase_audits",
-  "deletion_tombstones"
+  "purchase_audits"
 ] as const;
 
 const PATH_SEGMENT = /^[A-Za-z0-9_-]{1,200}$/;
 const SHA256 = /^[a-f0-9]{64}$/;
+const GENERATION = /^\d+$/;
+
+export type BackupGenerationState = {
+  expectedBytes: number;
+  ciphertextSha256: string;
+  objectPath: string;
+  status: "preparing" | "uploading" | "verifying" | "verified" | "invalid";
+  uploadSessionId: string;
+  sentinelGeneration?: string;
+  objectGeneration?: string;
+};
+
+export type VerificationClaim = {
+  uploadSessionId: string;
+  sentinelGeneration: string;
+  objectGeneration: string;
+  expectedBytes: number;
+  ciphertextSha256: string;
+  objectPath: string;
+};
 
 export function getBackupObjectPath(uid: string, backupId: string): string {
   if (!PATH_SEGMENT.test(uid) || !PATH_SEGMENT.test(backupId)) throw new Error("Invalid backup identity.");
   return `recovery-backups/${uid}/${backupId}.bin`;
 }
 
-export function getSignedUrlSpec(action: "read" | "write", now: number, expectedBytes?: number) {
+export function getSignedUrlSpec(
+  action: "read" | "write",
+  now: number,
+  expectedBytes: number | undefined,
+  generation: string
+) {
+  if (!GENERATION.test(generation)) throw new Error("Invalid object generation.");
   const common = { version: "v4" as const, action, expires: now + SIGNED_URL_TTL_MS };
-  if (action === "read") return common;
+  if (action === "read") return { ...common, queryParams: { generation } as Record<string, string> };
   if (!Number.isInteger(expectedBytes) || expectedBytes === undefined || expectedBytes < 0 || expectedBytes > BACKUP_MAX_BYTES) {
     throw new Error("Invalid encrypted backup size.");
   }
   return {
     ...common,
     contentType: "application/octet-stream",
-    extensionHeaders: { "content-length": String(expectedBytes) }
+    extensionHeaders: { "content-length": String(expectedBytes) },
+    queryParams: { ifGenerationMatch: generation } as Record<string, string>
   };
+}
+
+export function assertBackupStartAllowed(metadata: BackupGenerationState | undefined): void {
+  if (metadata && metadata.status !== "invalid") throw new Error("This backup ID is already active.");
+}
+
+export function createVerificationClaim(
+  metadata: BackupGenerationState,
+  objectGeneration: string
+): VerificationClaim {
+  if (metadata.status !== "uploading" || !metadata.sentinelGeneration) {
+    throw new Error("The backup is not ready for finalization.");
+  }
+  if (!GENERATION.test(objectGeneration) || objectGeneration === metadata.sentinelGeneration) {
+    throw new Error("A fresh uploaded generation is required.");
+  }
+  return {
+    uploadSessionId: metadata.uploadSessionId,
+    sentinelGeneration: metadata.sentinelGeneration,
+    objectGeneration,
+    expectedBytes: metadata.expectedBytes,
+    ciphertextSha256: metadata.ciphertextSha256,
+    objectPath: metadata.objectPath
+  };
+}
+
+export function assertVerificationCommit(metadata: BackupGenerationState, claim: VerificationClaim): void {
+  if (
+    metadata.status !== "verifying" ||
+    metadata.uploadSessionId !== claim.uploadSessionId ||
+    metadata.sentinelGeneration !== claim.sentinelGeneration ||
+    metadata.objectGeneration !== claim.objectGeneration ||
+    metadata.expectedBytes !== claim.expectedBytes ||
+    metadata.ciphertextSha256 !== claim.ciphertextSha256 ||
+    metadata.objectPath !== claim.objectPath
+  ) {
+    throw new Error("The verification session changed.");
+  }
+}
+
+export function assertAcceptableContentEncoding(contentEncoding: string | undefined): void {
+  if (contentEncoding !== undefined && contentEncoding !== "identity") {
+    throw new Error("Ciphertext content encoding is not permitted.");
+  }
 }
 
 export async function verifyCiphertext(input: {

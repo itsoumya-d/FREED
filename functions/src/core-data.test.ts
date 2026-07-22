@@ -10,13 +10,18 @@ type CoreDataApi = {
   SIGNED_URL_TTL_MS: number;
   USER_LINKED_RECORD_SCOPES: readonly string[];
   getBackupObjectPath: (uid: string, backupId: string) => string;
-  getSignedUrlSpec: (action: "read" | "write", now: number, expectedBytes?: number) => {
+  getSignedUrlSpec: (action: "read" | "write", now: number, expectedBytes: number | undefined, generation: string) => {
     version: "v4";
     action: "read" | "write";
     expires: number;
     contentType?: string;
     extensionHeaders?: Readonly<Record<string, string>>;
+    queryParams: Readonly<Record<string, string>>;
   };
+  assertBackupStartAllowed: (metadata: BackupState | undefined) => void;
+  createVerificationClaim: (metadata: BackupState, objectGeneration: string) => VerificationClaim;
+  assertVerificationCommit: (metadata: BackupState, claim: VerificationClaim) => void;
+  assertAcceptableContentEncoding: (contentEncoding: string | undefined) => void;
   verifyCiphertext: (input: {
     source: AsyncIterable<Uint8Array>;
     expectedBytes: number;
@@ -41,6 +46,27 @@ type CoreDataApi = {
   }) => Promise<void>;
 };
 
+type BackupState = {
+  uid: string;
+  backupId: string;
+  expectedBytes: number;
+  ciphertextSha256: string;
+  objectPath: string;
+  status: "preparing" | "uploading" | "verifying" | "verified" | "invalid";
+  uploadSessionId: string;
+  sentinelGeneration?: string;
+  objectGeneration?: string;
+};
+
+type VerificationClaim = {
+  uploadSessionId: string;
+  sentinelGeneration: string;
+  objectGeneration: string;
+  expectedBytes: number;
+  ciphertextSha256: string;
+  objectPath: string;
+};
+
 const api = coreData as unknown as CoreDataApi;
 
 test("Firebase core data workflow module is available", async () => {
@@ -56,18 +82,61 @@ test("backup paths are server-derived and V4 signed URLs expire within ten minut
     api.getBackupObjectPath?.("firebaseUid123", "bkp_12345678"),
     "recovery-backups/firebaseUid123/bkp_12345678.bin"
   );
-  assert.deepEqual(api.getSignedUrlSpec?.("write", 1_000, 42), {
+  assert.deepEqual(api.getSignedUrlSpec?.("write", 1_000, 42, "17"), {
     version: "v4",
     action: "write",
     expires: 601_000,
     contentType: "application/octet-stream",
-    extensionHeaders: { "content-length": "42" }
+    extensionHeaders: { "content-length": "42" },
+    queryParams: { ifGenerationMatch: "17" }
   });
-  assert.deepEqual(api.getSignedUrlSpec?.("read", 1_000), {
+  assert.deepEqual(api.getSignedUrlSpec?.("read", 1_000, undefined, "29"), {
     version: "v4",
     action: "read",
-    expires: 601_000
+    expires: 601_000,
+    queryParams: { generation: "29" }
   });
+});
+
+test("concurrent starts and verified overwrite attempts are refused", () => {
+  const preparing = backupState({ status: "preparing" });
+  assert.throws(() => api.assertBackupStartAllowed?.(preparing), /backup id is already active/i);
+  assert.throws(() => api.assertBackupStartAllowed?.(backupState({ status: "verifying" })), /backup id is already active/i);
+  assert.throws(() => api.assertBackupStartAllowed?.(backupState({ status: "verified" })), /backup id is already active/i);
+  assert.doesNotThrow(() => api.assertBackupStartAllowed?.(undefined));
+  assert.doesNotThrow(() => api.assertBackupStartAllowed?.(backupState({ status: "invalid" })));
+});
+
+test("concurrent finalize and stale generations cannot commit verification", () => {
+  const uploading = backupState({ status: "uploading", sentinelGeneration: "17" });
+  const claim = api.createVerificationClaim?.(uploading, "18");
+  assert.deepEqual(claim, {
+    uploadSessionId: uploading.uploadSessionId,
+    sentinelGeneration: "17",
+    objectGeneration: "18",
+    expectedBytes: uploading.expectedBytes,
+    ciphertextSha256: uploading.ciphertextSha256,
+    objectPath: uploading.objectPath
+  });
+  assert.throws(() => api.createVerificationClaim?.({ ...uploading, status: "verifying" }, "18"), /not ready for finalization/i);
+  assert.throws(() => api.createVerificationClaim?.(uploading, "17"), /fresh uploaded generation/i);
+
+  const verifying = { ...uploading, status: "verifying" as const, objectGeneration: "18" };
+  assert.doesNotThrow(() => api.assertVerificationCommit?.(verifying, claim));
+  assert.throws(
+    () => api.assertVerificationCommit?.({ ...verifying, uploadSessionId: "stale_session_123" }, claim),
+    /verification session changed/i
+  );
+  assert.throws(
+    () => api.assertVerificationCommit?.({ ...verifying, objectGeneration: "19" }, claim),
+    /verification session changed/i
+  );
+});
+
+test("compressed ciphertext metadata is rejected", () => {
+  assert.doesNotThrow(() => api.assertAcceptableContentEncoding?.(undefined));
+  assert.doesNotThrow(() => api.assertAcceptableContentEncoding?.("identity"));
+  assert.throws(() => api.assertAcceptableContentEncoding?.("gzip"), /content encoding is not permitted/i);
 });
 
 test("ciphertext finalization verifies byte count and SHA-256 without parsing an envelope", async () => {
@@ -149,13 +218,14 @@ test("account deletion removes every user-linked record and identity but preserv
     "rate_limits",
     "leases",
     "idempotency",
-    "purchase_audits",
-    "deletion_tombstones"
+    "purchase_audits"
   ]);
   assert.equal(api.USER_LINKED_RECORD_SCOPES.includes("aggregate_analytics"), false);
+  assert.equal(api.USER_LINKED_RECORD_SCOPES.includes("deletion_tombstones"), false);
 
   const records = new Map(api.USER_LINKED_RECORD_SCOPES.map((scope) => [scope, new Set(["firebaseUid123", "otherUid"])]));
   const aggregateAnalytics = new Map([["2026-07-22", { checkIns: 4 }]]);
+  const deletionSafetyTombstone = new Map([["firebaseUid123", { status: "deleting" }]]);
   const identities = new Set(["firebaseUid123", "otherUid"]);
   const calls: string[] = [];
   await api.deleteFirebaseAccountData?.("firebaseUid123", {
@@ -167,6 +237,7 @@ test("account deletion removes every user-linked record and identity but preserv
   for (const scope of api.USER_LINKED_RECORD_SCOPES) assert.deepEqual([...records.get(scope)!], ["otherUid"]);
   assert.equal(identities.has("firebaseUid123"), false);
   assert.deepEqual([...aggregateAnalytics.entries()], [["2026-07-22", { checkIns: 4 }]]);
+  assert.equal(deletionSafetyTombstone.get("firebaseUid123")?.status, "deleting");
   assert.equal(calls.at(-1), "auth:firebaseUid123");
 });
 
@@ -211,10 +282,39 @@ test("callable integration uses anonymous daily increments and the complete back
   assert.match(source, /getBackupObjectPath\(uid, input\.backupId\)/);
   assert.match(source, /verifyCiphertext\(/);
   assert.match(source, /requireVerifiedBackup\(/);
-  assert.match(source, /if \(existing\.status === "verified"\) \{[\s\S]*?return \{ ok: true, duplicate: true, status: "verified"/);
+  assert.match(source, /if \(owned\.status === "verified"\) \{[\s\S]*?return \{ ok: true, duplicate: true, status: "verified"/);
   assert.match(source, /deleteFirebaseAccountData\(uid/);
+});
+
+test("callable integration binds Storage and verification to immutable generations", () => {
+  const source = readFileSync("src/index.ts", "utf8");
+  assert.match(source, /createUploadSentinel\(/);
+  assert.match(source, /status: "preparing"/);
+  assert.match(source, /uploadSessionId/);
+  assert.match(source, /sentinelGeneration/);
+  assert.match(source, /objectGeneration/);
+  assert.match(source, /createVerificationClaim\(/);
+  assert.match(source, /assertVerificationCommit\(/);
+  assert.match(source, /createReadStream\(\{ decompress: false \}\)/);
+  assert.match(source, /assertAcceptableContentEncoding\(/);
+  assert.match(source, /accountTombstonePath:/);
+  assert.match(source, /ensureAccountActive\(uid\)/);
 });
 
 async function* asAsyncBytes(chunks: readonly Uint8Array[]) {
   for (const chunk of chunks) yield chunk;
+}
+
+function backupState(overrides: Partial<BackupState>): BackupState {
+  return {
+    uid: "firebaseUid123",
+    backupId: "bkp_12345678",
+    expectedBytes: 42,
+    ciphertextSha256: "a".repeat(64),
+    objectPath: "recovery-backups/firebaseUid123/bkp_12345678.bin",
+    status: "uploading",
+    uploadSessionId: "session_12345678",
+    sentinelGeneration: "17",
+    ...overrides
+  };
 }

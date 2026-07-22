@@ -126,3 +126,21 @@ test("finalize, download, and delete backup payloads expose no object path or co
   assert.throws(() => api.parseBackupDownload?.({ backupId: "bkp_12345678", url: "https://private.example" }), /unsupported/i);
   assert.throws(() => api.parseDeleteBackup?.({ backupId: "bkp_12345678", encryptedEnvelope: "never" }), /unsupported/i);
 });
+
+test("backup metadata can bind only server-owned upload sessions and object generations", () => {
+  const document = {
+    uid: "firebaseUid123",
+    backupId: "bkp_12345678",
+    expectedBytes: 42,
+    ciphertextSha256: "a".repeat(64),
+    objectPath: "recovery-backups/firebaseUid123/bkp_12345678.bin",
+    status: "verifying",
+    uploadSessionId: "session_12345678",
+    sentinelGeneration: "17",
+    objectGeneration: "18",
+    createdAt: 1,
+    updatedAt: 2,
+    expiresAt: 3
+  };
+  assert.deepEqual(validateServerDocument(COLLECTIONS.backupMetadata, document), document);
+});

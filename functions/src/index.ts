@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+
 import { getApps, initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 import { FieldPath, FieldValue, getFirestore, Timestamp, type Transaction } from "firebase-admin/firestore";
@@ -19,12 +21,17 @@ import {
   validateServerDocument
 } from "./contracts.js";
 import {
+  assertAcceptableContentEncoding,
+  assertBackupStartAllowed,
+  assertVerificationCommit,
+  createVerificationClaim,
   deleteEncryptedBackup as deleteEncryptedBackupObject,
   deleteFirebaseAccountData,
   getBackupObjectPath,
   getSignedUrlSpec,
   requireVerifiedBackup,
-  verifyCiphertext
+  verifyCiphertext,
+  type VerificationClaim
 } from "./core-data.js";
 import { runProtectedMutation, type TransactionalStore } from "./transactional.js";
 
@@ -67,34 +74,39 @@ export const startEncryptedBackupUpload = onCall({ enforceAppCheck: true }, asyn
   const uid = requireUid(request.auth?.uid);
   const input = parseOrHttpsError(() => parseStartBackupUpload(request.data));
   const objectPath = getBackupObjectPath(uid, input.backupId);
-  const duplicate = await mutate(uid, "backup-start", input.clientEventId, 10, async (transaction) => {
-    setServerDocument(transaction, COLLECTIONS.backupMetadata, `${uid}_${input.backupId}`, {
-      uid,
-      backupId: input.backupId,
-      expectedBytes: input.encryptedBytes,
-      ciphertextSha256: input.ciphertextSha256,
-      objectPath,
-      status: "uploading",
-      createdAt: FieldValue.serverTimestamp(),
-      updatedAt: FieldValue.serverTimestamp(),
-      expiresAt: Timestamp.fromMillis(Date.now() + 400 * DAY_MS)
-    });
-  });
-
-  const metadata = await getBackupMetadata(uid, input.backupId);
-  if (
-    !metadata || metadata.uid !== uid || metadata.backupId !== input.backupId ||
-    metadata.objectPath !== objectPath || metadata.expectedBytes !== input.encryptedBytes ||
-    metadata.ciphertextSha256 !== input.ciphertextSha256
-  ) {
+  const uploadSessionId = randomUUID();
+  let claim: Awaited<ReturnType<typeof claimBackupStart>>;
+  try {
+    claim = await claimBackupStart(uid, input, objectPath, uploadSessionId);
+  } catch (error) {
+    if (error instanceof HttpsError) throw error;
     throw new HttpsError("failed-precondition", "The encrypted backup upload could not be started.");
   }
+  let metadata = claim.metadata;
+  if (!matchesBackupRequest(metadata, uid, input.backupId, objectPath, input.encryptedBytes, input.ciphertextSha256)) {
+    throw new HttpsError("failed-precondition", "The encrypted backup upload could not be started.");
+  }
+  if (metadata.status !== "preparing" && metadata.status !== "uploading") {
+    throw new HttpsError("failed-precondition", "This backup ID is already active.");
+  }
+
+  let sentinelGeneration = metadata.sentinelGeneration;
+  if (!sentinelGeneration) {
+    sentinelGeneration = await createUploadSentinel(objectPath, claim.previousObjectGeneration);
+    try {
+      await bindUploadSentinel(uid, input.backupId, metadata.uploadSessionId, sentinelGeneration);
+    } catch {
+      await safeDeleteObjectGeneration(objectPath, sentinelGeneration);
+      throw new HttpsError("failed-precondition", "The encrypted backup upload could not be started.");
+    }
+    metadata = (await getActiveBackupMetadata(uid, input.backupId)) ?? metadata;
+  }
   const now = Date.now();
-  const spec = getSignedUrlSpec("write", now, input.encryptedBytes);
+  const spec = getSignedUrlSpec("write", now, input.encryptedBytes, sentinelGeneration);
   const [signedUrl] = await bucket.file(objectPath).getSignedUrl(spec);
   return {
     ok: true,
-    duplicate,
+    duplicate: claim.duplicate,
     status: metadata.status,
     signedUrl,
     objectKey: objectPath,
@@ -110,58 +122,55 @@ export const startEncryptedBackupUpload = onCall({ enforceAppCheck: true }, asyn
 export const finalizeEncryptedBackupUpload = onCall({ enforceAppCheck: true }, async (request) => {
   const uid = requireUid(request.auth?.uid);
   const input = parseOrHttpsError(() => parseFinalizeBackupUpload(request.data));
-  const existing = await getBackupMetadata(uid, input.backupId);
+  const existing = await getActiveBackupMetadata(uid, input.backupId);
   const objectPath = requireOwnedBackup(uid, input.backupId, existing);
-  if (!existing) throw new HttpsError("not-found", "The encrypted backup metadata is unavailable.");
-  if (existing.status === "verified") {
-    return { ok: true, duplicate: true, status: "verified", verifiedBytes: existing.verifiedBytes };
+  // requireOwnedBackup has already established that metadata is present.
+  const owned = existing as BackupMetadataDocument;
+  if (owned.status === "verified") {
+    return { ok: true, duplicate: true, status: "verified", verifiedBytes: owned.verifiedBytes };
   }
-  if (existing.status === "invalid") {
+  if (owned.status === "invalid") {
     await safeDeleteObject(objectPath);
     throw new HttpsError("failed-precondition", "The encrypted backup failed verification.");
   }
-  const duplicate = await mutate(uid, "backup-finalize", input.clientEventId, 10, async (transaction) => {
-    setServerDocument(transaction, COLLECTIONS.backupMetadata, `${uid}_${input.backupId}`, {
-      status: "verifying",
-      updatedAt: FieldValue.serverTimestamp()
-    }, true);
-  });
-  const metadata = await getBackupMetadata(uid, input.backupId);
-  if (!metadata) throw new HttpsError("not-found", "The encrypted backup metadata is unavailable.");
-  if (metadata.status === "verified") {
-    return { ok: true, duplicate: true, status: "verified", verifiedBytes: metadata.verifiedBytes };
+
+  let claim: VerificationClaim;
+  if (owned.status === "uploading") {
+    const [objectMetadata] = await bucket.file(objectPath).getMetadata();
+    claim = createVerificationClaim(owned, requiredGeneration(objectMetadata.generation));
+  } else if (owned.status === "verifying") {
+    claim = verificationClaimFromMetadata(owned);
+  } else {
+    throw new HttpsError("failed-precondition", "The encrypted backup is not ready for finalization.");
   }
-  if (metadata.status === "invalid") {
-    await safeDeleteObject(objectPath);
+  const duplicate = await claimBackupFinalization(uid, input.backupId, input.clientEventId, claim);
+  const generationFile = bucket.file(objectPath, { generation: claim.objectGeneration });
+  const [objectMetadata] = await generationFile.getMetadata();
+  try {
+    assertAcceptableContentEncoding(objectMetadata.contentEncoding);
+  } catch {
+    await safeDeleteObjectGeneration(objectPath, claim.objectGeneration);
+    await commitBackupVerification(uid, input.backupId, claim, "invalid", 0);
     throw new HttpsError("failed-precondition", "The encrypted backup failed verification.");
   }
 
   let result: Awaited<ReturnType<typeof verifyCiphertext>>;
   try {
     result = await verifyCiphertext({
-      source: bucket.file(objectPath).createReadStream() as AsyncIterable<Uint8Array>,
-      expectedBytes: metadata.expectedBytes,
-      expectedSha256: metadata.ciphertextSha256,
-      removeInvalid: () => safeDeleteObject(objectPath)
+      source: generationFile.createReadStream({ decompress: false }) as AsyncIterable<Uint8Array>,
+      expectedBytes: claim.expectedBytes,
+      expectedSha256: claim.ciphertextSha256,
+      removeInvalid: () => safeDeleteObjectGeneration(objectPath, claim.objectGeneration)
     });
   } catch {
     throw new HttpsError("failed-precondition", "The encrypted backup could not be verified.");
   }
 
   if (!result.ok) {
-    await setBackupMetadata(uid, input.backupId, {
-      status: "invalid",
-      verifiedBytes: result.verifiedBytes,
-      updatedAt: FieldValue.serverTimestamp()
-    });
+    await commitBackupVerification(uid, input.backupId, claim, "invalid", result.verifiedBytes);
     throw new HttpsError("failed-precondition", "The encrypted backup failed verification.");
   }
-  await setBackupMetadata(uid, input.backupId, {
-    status: "verified",
-    verifiedBytes: result.verifiedBytes,
-    verifiedAt: FieldValue.serverTimestamp(),
-    updatedAt: FieldValue.serverTimestamp()
-  });
+  await commitBackupVerification(uid, input.backupId, claim, "verified", result.verifiedBytes);
   return { ok: true, duplicate, status: "verified", verifiedBytes: result.verifiedBytes };
 });
 
@@ -169,15 +178,16 @@ export const finalizeEncryptedBackupUpload = onCall({ enforceAppCheck: true }, a
 export const getEncryptedBackupDownload = onCall({ enforceAppCheck: true }, async (request) => {
   const uid = requireUid(request.auth?.uid);
   const input = parseOrHttpsError(() => parseBackupDownload(request.data));
-  const metadata = await getBackupMetadata(uid, input.backupId);
+  const metadata = await getActiveBackupMetadata(uid, input.backupId);
   let objectPath: string;
   try {
     objectPath = requireVerifiedBackup({ requesterUid: uid, backupId: input.backupId, metadata });
   } catch {
     throw new HttpsError("not-found", "A verified encrypted backup is unavailable.");
   }
-  const spec = getSignedUrlSpec("read", Date.now());
-  const [signedUrl] = await bucket.file(objectPath).getSignedUrl(spec);
+  if (!metadata?.objectGeneration) throw new HttpsError("not-found", "A verified encrypted backup is unavailable.");
+  const spec = getSignedUrlSpec("read", Date.now(), undefined, metadata.objectGeneration);
+  const [signedUrl] = await bucket.file(objectPath, { generation: metadata.objectGeneration }).getSignedUrl(spec);
   return { ok: true, status: "verified", signedUrl, objectKey: objectPath, expiresAt: new Date(spec.expires).toISOString() };
 });
 
@@ -222,7 +232,7 @@ export const requestAccountDeletion = onCall({ enforceAppCheck: true, consumeApp
       expiresAt,
       status: "deleting"
     });
-  });
+  }, false);
   try {
     await deleteFirebaseAccountData(uid, {
       deleteBackupObjects: async (ownerUid) => bucket.deleteFiles({ prefix: `recovery-backups/${ownerUid}/` }),
@@ -258,7 +268,8 @@ async function mutate(
   operation: string,
   clientEventId: string,
   perMinute: number,
-  write: (transaction: Transaction) => Promise<void> | void
+  write: (transaction: Transaction) => Promise<void> | void,
+  gateAccount = true
 ): Promise<boolean> {
   return db.runTransaction(async (transaction) => {
     const store = firestoreTransactionStore(transaction);
@@ -269,9 +280,11 @@ async function mutate(
       now,
       windowMs: RATE_LIMIT_TTL_MS,
       limit: perMinute,
-      idempotencyTtlMs: IDEMPOTENCY_TTL_MS
+      idempotencyTtlMs: IDEMPOTENCY_TTL_MS,
+      accountTombstonePath: gateAccount ? `${COLLECTIONS.deletionTombstones}/${uid}` : undefined
     }, () => write(transaction));
     if (result === "rate-limited") throw new HttpsError("resource-exhausted", "Try again shortly.");
+    if (result === "account-deleting") throw new HttpsError("failed-precondition", "This account is being deleted.");
     return result === "duplicate";
   });
 }
@@ -302,9 +315,176 @@ function setServerDocument(
   else transaction.set(reference, safe);
 }
 
-async function getBackupMetadata(uid: string, backupId: string): Promise<BackupMetadataDocument | undefined> {
-  const snapshot = await db.collection(COLLECTIONS.backupMetadata).doc(`${uid}_${backupId}`).get();
-  return snapshot.exists ? snapshot.data() as BackupMetadataDocument : undefined;
+async function claimBackupStart(
+  uid: string,
+  input: ReturnType<typeof parseStartBackupUpload>,
+  objectPath: string,
+  uploadSessionId: string
+): Promise<{ duplicate: boolean; metadata: BackupMetadataDocument; previousObjectGeneration?: string }> {
+  const metadataReference = db.collection(COLLECTIONS.backupMetadata).doc(`${uid}_${input.backupId}`);
+  return db.runTransaction(async (transaction) => {
+    const snapshot = await transaction.get(metadataReference);
+    const existing = snapshot.exists ? snapshot.data() as BackupMetadataDocument : undefined;
+    const metadata: BackupMetadataDocument = {
+      uid,
+      backupId: input.backupId,
+      expectedBytes: input.encryptedBytes,
+      ciphertextSha256: input.ciphertextSha256,
+      objectPath,
+      status: "preparing",
+      uploadSessionId,
+      createdAt: FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
+      expiresAt: Timestamp.fromMillis(Date.now() + 400 * DAY_MS)
+    };
+    const result = await runProtectedMutation(firestoreTransactionStore(transaction), {
+      rateLimitPath: `${COLLECTIONS.rateLimits}/${uid}_backup-start`,
+      idempotencyPath: `${COLLECTIONS.idempotency}/${uid}_backup-start_${input.clientEventId}`,
+      accountTombstonePath: `${COLLECTIONS.deletionTombstones}/${uid}`,
+      now: Date.now(),
+      windowMs: RATE_LIMIT_TTL_MS,
+      limit: 10,
+      idempotencyTtlMs: IDEMPOTENCY_TTL_MS
+    }, () => {
+      assertBackupStartAllowed(existing);
+      transaction.set(metadataReference, validateServerDocument(COLLECTIONS.backupMetadata, metadata));
+    });
+    assertProtectedMutationAllowed(result);
+    if (result === "duplicate") {
+      if (!existing) throw new HttpsError("failed-precondition", "The encrypted backup upload could not be resumed.");
+      return { duplicate: true, metadata: existing };
+    }
+    return {
+      duplicate: false,
+      metadata,
+      previousObjectGeneration: existing?.objectGeneration ?? existing?.sentinelGeneration
+    };
+  });
+}
+
+async function createUploadSentinel(objectPath: string, previousGeneration?: string): Promise<string> {
+  if (previousGeneration) await safeDeleteObjectGeneration(objectPath, previousGeneration);
+  const file = bucket.file(objectPath);
+  try {
+    await file.save(Buffer.alloc(0), {
+      contentType: "application/octet-stream",
+      resumable: false,
+      validation: false,
+      preconditionOpts: { ifGenerationMatch: 0 }
+    });
+  } catch (error) {
+    if (!isStoragePreconditionFailure(error)) throw error;
+  }
+  const [metadata] = await file.getMetadata();
+  assertAcceptableContentEncoding(metadata.contentEncoding);
+  if (Number(metadata.size) !== 0) throw new Error("The upload sentinel is not empty.");
+  return requiredGeneration(metadata.generation);
+}
+
+async function bindUploadSentinel(
+  uid: string,
+  backupId: string,
+  uploadSessionId: string,
+  sentinelGeneration: string
+): Promise<void> {
+  const reference = db.collection(COLLECTIONS.backupMetadata).doc(`${uid}_${backupId}`);
+  await db.runTransaction(async (transaction) => {
+    const [tombstone, snapshot] = await Promise.all([
+      transaction.get(db.collection(COLLECTIONS.deletionTombstones).doc(uid)),
+      transaction.get(reference)
+    ]);
+    if (tombstone.exists) throw new HttpsError("failed-precondition", "This account is being deleted.");
+    const metadata = snapshot.exists ? snapshot.data() as BackupMetadataDocument : undefined;
+    if (
+      !metadata || metadata.uploadSessionId !== uploadSessionId ||
+      (metadata.status !== "preparing" && metadata.status !== "uploading") ||
+      (metadata.sentinelGeneration && metadata.sentinelGeneration !== sentinelGeneration)
+    ) {
+      throw new Error("The upload session changed.");
+    }
+    transaction.set(reference, validateServerDocument(COLLECTIONS.backupMetadata, {
+      status: "uploading",
+      sentinelGeneration,
+      updatedAt: FieldValue.serverTimestamp()
+    }), { merge: true });
+  });
+}
+
+async function claimBackupFinalization(
+  uid: string,
+  backupId: string,
+  clientEventId: string,
+  claim: VerificationClaim
+): Promise<boolean> {
+  const reference = db.collection(COLLECTIONS.backupMetadata).doc(`${uid}_${backupId}`);
+  return db.runTransaction(async (transaction) => {
+    const snapshot = await transaction.get(reference);
+    const metadata = snapshot.exists ? snapshot.data() as BackupMetadataDocument : undefined;
+    if (!metadata) throw new HttpsError("not-found", "The encrypted backup metadata is unavailable.");
+    const result = await runProtectedMutation(firestoreTransactionStore(transaction), {
+      rateLimitPath: `${COLLECTIONS.rateLimits}/${uid}_backup-finalize`,
+      idempotencyPath: `${COLLECTIONS.idempotency}/${uid}_backup-finalize_${clientEventId}`,
+      accountTombstonePath: `${COLLECTIONS.deletionTombstones}/${uid}`,
+      now: Date.now(),
+      windowMs: RATE_LIMIT_TTL_MS,
+      limit: 10,
+      idempotencyTtlMs: IDEMPOTENCY_TTL_MS
+    }, () => {
+      const currentClaim = createVerificationClaim(metadata, claim.objectGeneration);
+      if (!sameVerificationClaim(currentClaim, claim)) throw new Error("The verification session changed.");
+      transaction.set(reference, validateServerDocument(COLLECTIONS.backupMetadata, {
+        status: "verifying",
+        objectGeneration: claim.objectGeneration,
+        updatedAt: FieldValue.serverTimestamp()
+      }), { merge: true });
+    });
+    assertProtectedMutationAllowed(result);
+    if (result === "duplicate") assertVerificationCommit(metadata, claim);
+    return result === "duplicate";
+  });
+}
+
+async function commitBackupVerification(
+  uid: string,
+  backupId: string,
+  claim: VerificationClaim,
+  status: "verified" | "invalid",
+  verifiedBytes: number
+): Promise<void> {
+  const reference = db.collection(COLLECTIONS.backupMetadata).doc(`${uid}_${backupId}`);
+  await db.runTransaction(async (transaction) => {
+    const [tombstone, snapshot] = await Promise.all([
+      transaction.get(db.collection(COLLECTIONS.deletionTombstones).doc(uid)),
+      transaction.get(reference)
+    ]);
+    if (tombstone.exists) throw new HttpsError("failed-precondition", "This account is being deleted.");
+    const metadata = snapshot.exists ? snapshot.data() as BackupMetadataDocument : undefined;
+    if (!metadata) throw new HttpsError("not-found", "The encrypted backup metadata is unavailable.");
+    assertVerificationCommit(metadata, claim);
+    transaction.set(reference, validateServerDocument(COLLECTIONS.backupMetadata, {
+      status,
+      verifiedBytes,
+      ...(status === "verified" ? { verifiedAt: FieldValue.serverTimestamp() } : {}),
+      updatedAt: FieldValue.serverTimestamp()
+    }), { merge: true });
+  });
+}
+
+async function ensureAccountActive(uid: string): Promise<void> {
+  const tombstone = await db.collection(COLLECTIONS.deletionTombstones).doc(uid).get();
+  if (tombstone.exists) throw new HttpsError("failed-precondition", "This account is being deleted.");
+}
+
+async function getActiveBackupMetadata(uid: string, backupId: string): Promise<BackupMetadataDocument | undefined> {
+  await ensureAccountActive(uid);
+  return db.runTransaction(async (transaction) => {
+    const [tombstone, snapshot] = await Promise.all([
+      transaction.get(db.collection(COLLECTIONS.deletionTombstones).doc(uid)),
+      transaction.get(db.collection(COLLECTIONS.backupMetadata).doc(`${uid}_${backupId}`))
+    ]);
+    if (tombstone.exists) throw new HttpsError("failed-precondition", "This account is being deleted.");
+    return snapshot.exists ? snapshot.data() as BackupMetadataDocument : undefined;
+  });
 }
 
 function requireOwnedBackup(
@@ -317,11 +497,6 @@ function requireOwnedBackup(
     throw new HttpsError("not-found", "The encrypted backup metadata is unavailable.");
   }
   return expectedPath;
-}
-
-async function setBackupMetadata(uid: string, backupId: string, value: object): Promise<void> {
-  const safe = validateServerDocument(COLLECTIONS.backupMetadata, value);
-  await db.collection(COLLECTIONS.backupMetadata).doc(`${uid}_${backupId}`).set(safe, { merge: true });
 }
 
 async function deleteEncryptedBackupData(uid: string, backupId: string, objectPath: string): Promise<void> {
@@ -341,9 +516,71 @@ async function safeDeleteObject(objectPath: string): Promise<void> {
   }
 }
 
+async function safeDeleteObjectGeneration(objectPath: string, generation: string): Promise<void> {
+  try {
+    await bucket.file(objectPath, { generation }).delete({
+      ignoreNotFound: true,
+      ifGenerationMatch: generation
+    });
+  } catch (error) {
+    if (!isStorageNotFound(error)) throw error;
+  }
+}
+
+function isStoragePreconditionFailure(error: unknown): boolean {
+  const code = (error as { code?: number | string } | undefined)?.code;
+  return code === 409 || code === "409" || code === 412 || code === "412";
+}
+
 function isStorageNotFound(error: unknown): boolean {
   const code = (error as { code?: number | string } | undefined)?.code;
   return code === 404 || code === "404";
+}
+
+function requiredGeneration(value: string | number | undefined): string {
+  const generation = String(value ?? "");
+  if (!/^\d+$/.test(generation)) throw new Error("Storage did not return an object generation.");
+  return generation;
+}
+
+function verificationClaimFromMetadata(metadata: BackupMetadataDocument): VerificationClaim {
+  if (!metadata.sentinelGeneration || !metadata.objectGeneration) throw new Error("The verification generation is unavailable.");
+  const claim = {
+    uploadSessionId: metadata.uploadSessionId,
+    sentinelGeneration: metadata.sentinelGeneration,
+    objectGeneration: metadata.objectGeneration,
+    expectedBytes: metadata.expectedBytes,
+    ciphertextSha256: metadata.ciphertextSha256,
+    objectPath: metadata.objectPath
+  };
+  assertVerificationCommit(metadata, claim);
+  return claim;
+}
+
+function sameVerificationClaim(left: VerificationClaim, right: VerificationClaim): boolean {
+  return left.uploadSessionId === right.uploadSessionId &&
+    left.sentinelGeneration === right.sentinelGeneration &&
+    left.objectGeneration === right.objectGeneration &&
+    left.expectedBytes === right.expectedBytes &&
+    left.ciphertextSha256 === right.ciphertextSha256 &&
+    left.objectPath === right.objectPath;
+}
+
+function matchesBackupRequest(
+  metadata: BackupMetadataDocument,
+  uid: string,
+  backupId: string,
+  objectPath: string,
+  expectedBytes: number,
+  ciphertextSha256: string
+): boolean {
+  return metadata.uid === uid && metadata.backupId === backupId && metadata.objectPath === objectPath &&
+    metadata.expectedBytes === expectedBytes && metadata.ciphertextSha256 === ciphertextSha256;
+}
+
+function assertProtectedMutationAllowed(result: Awaited<ReturnType<typeof runProtectedMutation>>): void {
+  if (result === "rate-limited") throw new HttpsError("resource-exhausted", "Try again shortly.");
+  if (result === "account-deleting") throw new HttpsError("failed-precondition", "This account is being deleted.");
 }
 
 async function deleteUserRecords(scope: string, uid: string): Promise<void> {
@@ -354,10 +591,6 @@ async function deleteUserRecords(scope: string, uid: string): Promise<void> {
   if (scope === COLLECTIONS.leases) {
     await deleteDocumentsByField(scope, "owner", uid);
     await deleteDocumentsByIdPrefix(scope, `${uid}_`);
-    return;
-  }
-  if (scope === COLLECTIONS.deletionTombstones) {
-    await db.collection(scope).doc(uid).delete();
     return;
   }
   await deleteDocumentsByField(scope, "uid", uid);

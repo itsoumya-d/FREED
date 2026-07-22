@@ -13,9 +13,10 @@ export type ProtectedMutationOptions = {
   windowMs: number;
   limit: number;
   idempotencyTtlMs: number;
+  accountTombstonePath?: string;
 };
 
-export type ProtectedMutationResult = "applied" | "duplicate" | "rate-limited";
+export type ProtectedMutationResult = "applied" | "duplicate" | "rate-limited" | "account-deleting";
 
 /**
  * Firestore transactions require every document read before their first write.
@@ -27,10 +28,15 @@ export async function runProtectedMutation(
   options: ProtectedMutationOptions,
   write: () => Promise<void> | void
 ): Promise<ProtectedMutationResult> {
-  const [rateLimit, idempotency] = await Promise.all([
+  const [rateLimit, idempotency, accountTombstone] = await Promise.all([
     store.get<{ count: number; windowStartedAt: number; expiresAt: number }>(options.rateLimitPath),
-    store.get<{ expiresAt: number }>(options.idempotencyPath)
+    store.get<{ expiresAt: number }>(options.idempotencyPath),
+    options.accountTombstonePath
+      ? store.get<{ status: string }>(options.accountTombstonePath)
+      : Promise.resolve({ value: undefined })
   ]);
+
+  if (accountTombstone.value) return "account-deleting";
 
   const currentRate = rateLimit.value;
   const inWindow = currentRate !== undefined && currentRate.windowStartedAt + options.windowMs > options.now;

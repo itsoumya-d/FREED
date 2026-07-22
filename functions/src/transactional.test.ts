@@ -65,3 +65,23 @@ test("protected mutation reads rate-limit and idempotency controls before every 
     assert.equal(businessWriteCount, 1);
   }
 });
+
+test("an account deletion tombstone blocks control and business writes", async () => {
+  const store = new MemoryStore();
+  store.values.set("deletion_tombstones/user", { status: "deleting" });
+  let businessWrites = 0;
+  const options = {
+    rateLimitPath: "rate_limits/user_operation",
+    idempotencyPath: "idempotency/user_operation_event",
+    accountTombstonePath: "deletion_tombstones/user",
+    now: 100,
+    windowMs: 60_000,
+    limit: 10,
+    idempotencyTtlMs: 1_000
+  } as Parameters<typeof runProtectedMutation>[1];
+  const result = await runProtectedMutation(store, options, async () => { businessWrites += 1; });
+  assert.equal(result as string, "account-deleting");
+  assert.equal(businessWrites, 0);
+  assert.equal(store.values.has("rate_limits/user_operation"), false);
+  assert.equal(store.values.has("idempotency/user_operation_event"), false);
+});

@@ -29,7 +29,10 @@ export type BackupMetadataDocument = {
   verifiedBytes?: number;
   ciphertextSha256: string;
   objectPath: string;
-  status: "uploading" | "verifying" | "verified" | "invalid";
+  status: "preparing" | "uploading" | "verifying" | "verified" | "invalid";
+  uploadSessionId: string;
+  sentinelGeneration?: string;
+  objectGeneration?: string;
   createdAt: unknown;
   updatedAt: unknown;
   verifiedAt?: unknown;
@@ -48,6 +51,7 @@ const SERVER_DOCUMENT_FIELDS: Record<string, readonly string[]> = {
   [COLLECTIONS.aggregateAnalytics]: ["day", "checkIns", "completedChallenges", "updatedAt", "expiresAt"],
   [COLLECTIONS.backupMetadata]: [
     "uid", "backupId", "expectedBytes", "verifiedBytes", "ciphertextSha256", "objectPath", "status",
+    "uploadSessionId", "sentinelGeneration", "objectGeneration",
     "createdAt", "updatedAt", "verifiedAt", "expiresAt"
   ],
   [COLLECTIONS.purchaseAudits]: ["uid", "provider", "productId", "status", "verifiedAt", "expiresAt"],
