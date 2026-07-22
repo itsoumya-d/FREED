@@ -82,6 +82,14 @@ assert.throws(
   /only requestAccountDeletion/i
 );
 assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const other = onCall({ enforceAppCheck: true, consumeAppCheckToken: runtimeConfig }, async (request) => { requireUid(request.auth?.uid); });`)),
+  /only requestAccountDeletion/i
+);
+assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const other = onCall({ enforceAppCheck: true, consumeAppCheckToken: runtimeConfig as boolean }, async (request) => { requireUid(request.auth?.uid); });`)),
+  /only requestAccountDeletion/i
+);
+assert.throws(
   () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const safe = onCall({ ...unknownOptions, enforceAppCheck: true }, async (request) => { const uid = requireUid(request.auth?.uid); });`)),
   /only requestAccountDeletion/i
 );
@@ -252,7 +260,12 @@ function effectiveOption(options: ts.ObjectLiteralExpression, name: string): Opt
     }
     if (propertyKey !== name) continue;
     if (ts.isPropertyAssignment(property)) {
-      state = unwrapExpression(property.initializer).kind === ts.SyntaxKind.TrueKeyword ? "true" : "not-true";
+      const initializer = unwrapExpression(property.initializer);
+      state = initializer.kind === ts.SyntaxKind.TrueKeyword
+        ? "true"
+        : initializer.kind === ts.SyntaxKind.FalseKeyword
+          ? "not-true"
+          : "unknown";
     } else {
       state = "unknown";
     }

@@ -38,6 +38,12 @@ The repository test now extracts every exported `onCall` declaration from the Ty
 
 Verification: `npm run test:firebase-repository`, `npm run test:firebase-functions`, `npm --prefix functions run build`, and `npm run typecheck` passed.
 
+## Dynamic limited-use option correction
+
+The option evaluator now treats only literal `true` and literal `false` as proven values. A direct dynamic value or an asserted dynamic boolean is unknown and rejected for non-deletion callables; deletion still requires literal `true`. Fixtures cover both dynamic forms.
+
+Verification: `npm run test:firebase-repository`, `npm run test:firebase-functions`, `npm --prefix functions run build`, and `npm run typecheck` passed.
+
 ## Fail-closed export and option re-review
 
 The AST policy extractor now discovers only top-level values created by the locally imported `firebase-functions/v2/https` `onCall` binding, including aliases. It resolves both direct exports and `export { localName }` re-exports, and unwraps parenthesized, `as`, and `satisfies` initializers. Callable options are evaluated in declaration order: a spread makes a prior policy unprovable until a later explicit `true` replaces it. The UID guard is accepted only as a direct callback-body expression or variable initializer, never from a nested callback or conditional branch.
