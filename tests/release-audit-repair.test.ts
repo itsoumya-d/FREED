@@ -42,7 +42,6 @@ assert.doesNotMatch(
 
 const swiftInterpolation = '"url": "https://\\(host)"';
 const overEscapedSwiftInterpolation = '"url": "https://\\\\(host)"';
-assert.equal(swiftInterpolation.includes(swiftInterpolation), true);
 assert.equal(overEscapedSwiftInterpolation.includes(swiftInterpolation), false);
 assert.ok(
   readFileSync("scripts/release-readiness.ts", "utf8").includes(`module.includes('"url": "https://\\\\(host)"')`),
