@@ -34,6 +34,7 @@ const ANDROID_DEBUG_CERT_SHA256 = "fac61745dc0903786fb9ede62a962b399f7348f0bb6f8
 type ReleaseReadinessOptions = {
   strict: boolean;
   reportPath: string | null;
+  selfTest: boolean;
 };
 
 function assertSafeReportPath(reportPath: string) {
@@ -43,7 +44,8 @@ function assertSafeReportPath(reportPath: string) {
 function parseArgs(argv: string[]): ReleaseReadinessOptions {
   const options: ReleaseReadinessOptions = {
     strict: false,
-    reportPath: null
+    reportPath: null,
+    selfTest: false
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -56,6 +58,7 @@ function parseArgs(argv: string[]): ReleaseReadinessOptions {
 
     if (arg === "--strict") options.strict = true;
     else if (arg === "--report") options.reportPath = next();
+    else if (arg === "--self-test") options.selfTest = true;
     else throw new Error(`Unknown option: ${arg}`);
   }
 
@@ -88,6 +91,30 @@ function sha256File(path: string) {
 
 function has(path: string) {
   return existsSync(file(path));
+}
+
+function hasSwiftPendingInterventionUrlInterpolation(source: string) {
+  return source.includes('"url": "https://\\(host)"');
+}
+
+function runReleaseReadinessSelfTest() {
+  const oneBackslashFixture = '"url": "https://\\(host)"';
+  const twoBackslashFixture = '"url": "https://\\\\(host)"';
+  if (!hasSwiftPendingInterventionUrlInterpolation(oneBackslashFixture)) {
+    throw new Error("Expected one-backslash Swift URL interpolation fixture to match.");
+  }
+  if (hasSwiftPendingInterventionUrlInterpolation(twoBackslashFixture)) {
+    throw new Error("Over-escaped Swift URL interpolation fixture must not match.");
+  }
+  if (!hasSwiftPendingInterventionUrlInterpolation(read("modules/freed-protection/ios/FreedProtectionModule.swift"))) {
+    throw new Error("FreedProtectionModule.swift must contain the one-backslash pending-intervention URL interpolation.");
+  }
+  console.log("release readiness self-test: pass");
+}
+
+if (options.selfTest) {
+  runReleaseReadinessSelfTest();
+  process.exit(0);
 }
 
 function reportPathSafetySource() {
@@ -340,7 +367,18 @@ function passOrFail(id: string, condition: boolean, evidence: string, next: stri
   return item(id, condition ? "pass" : "fail", evidence, condition ? undefined : next);
 }
 
-function authoritativeAuditGate(id: string, audits: Array<{ script: string; success: RegExp }>, evidence: string, next: string): AuditItem {
+type AuthoritativeAuditSuccess = RegExp | ((output: string) => boolean);
+
+function authoritativeAuditSucceeded(success: AuthoritativeAuditSuccess, output: string) {
+  return success instanceof RegExp ? success.test(output) : success(output);
+}
+
+function authoritativeAuditGate(
+  id: string,
+  audits: Array<{ script: string; success: AuthoritativeAuditSuccess }>,
+  evidence: string,
+  next: string
+): AuditItem {
   const failures: string[] = [];
   for (const audit of audits) {
     try {
@@ -350,7 +388,7 @@ function authoritativeAuditGate(id: string, audits: Array<{ script: string; succ
         stdio: ["ignore", "pipe", "pipe"],
         timeout: 60_000
       });
-      if (!audit.success.test(output)) failures.push(`${audit.script} did not report a passing result`);
+      if (!authoritativeAuditSucceeded(audit.success, output)) failures.push(`${audit.script} did not report a passing result`);
     } catch (error) {
       const result = error as { stdout?: string; stderr?: string };
       const detail = `${result.stdout ?? ""}${result.stderr ?? ""}`.trim().split("\n").at(-1) || "failed";
@@ -497,6 +535,25 @@ function parseJsonObjectFromOutput(raw: string) {
     } catch {
       return null;
     }
+  }
+}
+
+function hasTopLevelPassingJsonResult(raw: string) {
+  const lines = raw.trim().split(/\r?\n/);
+  const jsonStart = lines.findIndex((line) => line.trimStart().startsWith("{"));
+  if (jsonStart < 0) return false;
+
+  const jsonPayload = lines.slice(jsonStart).join("\n").trim();
+  const parsed = parseJsonObjectFromOutput(jsonPayload);
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed) || (parsed as Record<string, unknown>).result !== "pass") {
+    return false;
+  }
+
+  try {
+    const direct = JSON.parse(jsonPayload);
+    return Boolean(direct && typeof direct === "object" && !Array.isArray(direct) && direct.result === "pass");
+  } catch {
+    return false;
   }
 }
 
@@ -1316,6 +1373,22 @@ function auditChallengePersonalizationContext(): AuditItem {
     checks.every(Boolean),
     "Challenge generation uses time, weekend, timezone, slip history, outcome history, aggregate recent failed-reset counts, preferences, production challenge-family scoring, coarse intervention context including app/short-form session-duration buckets, local urge forecast, and privacy-safe check-in/location-permission/weather context without raw browsing details.",
     "Restore privacy-safe intervention/context-signal personalization before release."
+  );
+}
+
+function auditOptionalChallengeWeatherContextTransport(): AuditItem {
+  const issues = [
+    boundedIntegerEnvIssue("EXPO_PUBLIC_CHALLENGE_WEATHER_CONTEXT_TIMEOUT_MS", 500, 15_000),
+    boundedIntegerEnvIssue("EXPO_PUBLIC_CHALLENGE_WEATHER_CONTEXT_RESPONSE_MAX_BYTES", 1_024, 1_000_000)
+  ].filter((issue): issue is string => Boolean(issue));
+
+  return passOrFail(
+    "optional-challenge-weather-context",
+    issues.length === 0,
+    issues.length === 0
+      ? "Optional challenge weather context is disabled by default and, when enabled, has bounded client transport settings."
+      : issues.join(", "),
+    "Set optional challenge weather-context timeout and response-size settings within their documented production bounds."
   );
 }
 
@@ -4022,10 +4095,10 @@ function auditStoreLaunchConfig(): AuditItem {
   return authoritativeAuditGate(
     "store-launch-config",
     [
-      { script: "audit:store-catalog", success: /"result"\s*:\s*"pass"/ },
+      { script: "audit:store-catalog", success: hasTopLevelPassingJsonResult },
       { script: "audit:eas-workflows", success: /Result: \d+ pass, 0 fail/ },
       { script: "audit:firebase-config", success: /Result: pass/ },
-      { script: "audit:store-legal", success: /"result"\s*:\s*"pass"/ }
+      { script: "audit:store-legal", success: hasTopLevelPassingJsonResult }
     ],
     "Authoritative store-catalog, EAS workflow, Firebase public-SDK configuration, and local store-legal audits pass.",
     "Fix the named authoritative store or Firebase audit and rerun it."
@@ -5496,7 +5569,7 @@ function auditAdultDomainFeedSmokeHarness(): AuditItem {
   return authoritativeAuditGate(
     "adult-domain-feed-smoke-harness",
     [{ script: "audit:smoke-harnesses", success: /Result: \d+ pass, 0 fail/ }],
-    "The smoke-harness audit passes, including the adult-domain feed smoke-harness self-test and 48-hour route freshness enforcement.",
+    "The smoke-harness audit passes, including the adult-domain feed smoke-harness self-test, 48-hour route freshness enforcement, and 48-hour freshness/cache/source-size headers.",
     "Fix the smoke-harness audit failure and rerun npm run audit:smoke-harnesses."
   );
   const packageJson = read("package.json");
@@ -6218,6 +6291,7 @@ const audit: AuditItem[] = [
   auditAndroidNative(),
   auditChallengeVerificationContract(),
   auditChallengePersonalizationContext(),
+  auditOptionalChallengeWeatherContextTransport(),
   auditDisciplineConfigurationContract(),
   auditAccessibilityContract(),
   auditPrivacyContract(),

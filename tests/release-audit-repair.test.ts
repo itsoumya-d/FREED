@@ -13,6 +13,9 @@ function run(command: string, args: string[]) {
 const androidSelfTest = run("node", ["scripts/android-install-qa.js", "--self-test"]);
 assert.match(androidSelfTest, /android install qa self-test: pass/);
 
+const releaseSelfTest = run("node", ["scripts/run-ts-entry.js", "scripts/release-readiness.ts", "--self-test"]);
+assert.match(releaseSelfTest, /release readiness self-test: pass/);
+
 const legalAudit = run("npm", ["run", "audit:store-legal"]);
 assert.match(legalAudit, /"result": "pass"/);
 
@@ -30,7 +33,7 @@ for (const gate of [
 }
 assert.match(
   releaseAudit,
-  /adult-domain-feed-smoke-harness \| The smoke-harness audit passes, including the adult-domain feed smoke-harness self-test and 48-hour route freshness enforcement/
+  /adult-domain-feed-smoke-harness \| The smoke-harness audit passes, including the adult-domain feed smoke-harness self-test, 48-hour route freshness enforcement/
 );
 assert.doesNotMatch(
   releaseAudit,

@@ -611,6 +611,7 @@ const expectedReleaseReadinessGateIds = [
   "android-native-safety-contract",
   "challenge-verification-contract",
   "challenge-personalization-context",
+  "optional-challenge-weather-context",
   "discipline-configuration-contract",
   "accessibility-safety-contract",
   "privacy-safety-contract",

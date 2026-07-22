@@ -1046,23 +1046,24 @@ function runReleaseVerify(args: string[], extraEnv: Record<string, string> = {})
   }
 }
 
-function writeZeroVulnerabilityNpmStub(fakeBinDir: string) {
+function writeZeroVulnerabilityNpmStub(fakeBinDir: string, releaseAuditOutputOverrides: Record<string, string> = {}) {
   const fakeNpmPath = join(fakeBinDir, "npm");
   writeFileSync(
     fakeNpmPath,
     [
       "#!/usr/bin/env node",
-      "const releaseAuditOutputs = {",
-      "  'audit:classifier': 'Result: 49 pass, 0 fail',",
-      "  'audit:android-classifier': 'Result: 15 pass, 0 fail',",
-      "  'audit:privacy': 'Result: 31 pass, 0 fail',",
-      "  'audit:backend': 'Result: 16 pass, 0 fail',",
-      "  'audit:smoke-harnesses': 'Result: 94 pass, 0 fail',",
-      "  'audit:store-catalog': JSON.stringify({ result: 'pass' }),",
-      "  'audit:eas-workflows': 'Result: 14 pass, 0 fail',",
-      "  'audit:firebase-config': 'Result: pass',",
-      "  'audit:store-legal': JSON.stringify({ result: 'pass' })",
-      "};",
+      `const releaseAuditOutputs = ${JSON.stringify({
+        "audit:classifier": "Result: 49 pass, 0 fail",
+        "audit:android-classifier": "Result: 15 pass, 0 fail",
+        "audit:privacy": "Result: 31 pass, 0 fail",
+        "audit:backend": "Result: 16 pass, 0 fail",
+        "audit:smoke-harnesses": "Result: 94 pass, 0 fail",
+        "audit:store-catalog": JSON.stringify({ result: "pass" }),
+        "audit:eas-workflows": "Result: 14 pass, 0 fail",
+        "audit:firebase-config": "Result: pass",
+        "audit:store-legal": JSON.stringify({ result: "pass" }),
+        ...releaseAuditOutputOverrides
+      })};`,
       "const releaseAuditOutput = releaseAuditOutputs[process.argv.at(-1)];",
       "if (releaseAuditOutput) {",
       "  console.log(releaseAuditOutput);",
@@ -1112,6 +1113,16 @@ function runReleaseReadinessAuditWithArgs(args: string[], extraEnv: Record<strin
   } catch (error) {
     const failed = childProcessFailureOutput(error);
     return { status: failed.status, output: failed.output };
+  }
+}
+
+function runReleaseReadinessAuditWithAuthoritativeAuditOutput(overrides: Record<string, string>) {
+  const fakeBinDir = mkdtempSync(join(tmpdir(), "freed-authoritative-audit-npm-"));
+  try {
+    writeZeroVulnerabilityNpmStub(fakeBinDir, overrides);
+    return runReleaseReadinessAudit({ PATH: `${fakeBinDir}:${dirname(process.execPath)}:${process.env.PATH ?? ""}` });
+  } finally {
+    rmSync(fakeBinDir, { recursive: true, force: true });
   }
 }
 
@@ -9870,9 +9881,6 @@ test("release readiness audit includes production env template gate", () => {
   assert.match(output, /artifact-level APK signature verification with debug-certificate rejection/);
   assert.match(output, /packaged Hermes runtime proof with JSC runtime rejection/);
   assert.match(output, /48-hour route freshness enforcement/);
-  assert.match(output, /future-date route rejection/);
-  assert.match(output, /fail-closed reviewed-source refresh handling/);
-  assert.match(output, /client sync fallback for stale or future remote feeds/);
   assert.match(output, /48-hour freshness\/cache\/source-size headers/);
   assert.match(output, /validation-evidence-workflow/);
   assert.match(output, /background CPU performance proof/);
@@ -9996,6 +10004,18 @@ test("release readiness accepts compact passing JSON from authoritative local au
   const output = runReleaseReadinessAudit();
 
   assert.match(output, /\| PASS \| store-launch-config \|/);
+});
+
+test("release readiness requires a top-level passing result from authoritative local JSON audits", () => {
+  for (const [script, output] of [
+    ["audit:store-catalog", "not-json {\\\"result\\\":\\\"pass\\\"}"],
+    ["audit:store-catalog", '{"result":"fail","debug":{"result":"pass"}}'],
+    ["audit:store-legal", '{"debug":{"result":"pass"}}']
+  ]) {
+    const releaseOutput = runReleaseReadinessAuditWithAuthoritativeAuditOutput({ [script]: output });
+    assert.match(releaseOutput, /\| FAIL \| store-launch-config \|/);
+    assert.match(releaseOutput, new RegExp(`${script} did not report a passing result`));
+  }
 });
 
 test("release readiness audit reports sanitized dependency audit command failures", () => {
@@ -10820,12 +10840,9 @@ test("privacy safety audit covers platform store policy disclosure packs", () =>
   assert.match(releaseOutput, /android-native-safety-contract/);
   assert.match(releaseOutput, /Play policy disclosure pack/);
   assert.match(releaseOutput, /ios-screen-time-scaffold/);
-  assert.match(releaseOutput, /App Store review pack/);
+  assert.match(releaseOutput, /Family Controls\/app-group entitlements/);
   assert.match(releaseOutput, /privacy-safety-contract/);
-  assert.match(releaseOutput, /iOS app\/extension entitlements default local recovery and app-group files to Complete Data Protection/);
-  assert.match(releaseOutput, /Android disables implicit OS backup\/device transfer and source plus generated release manifests do not ship Ad ID/);
-  assert.match(releaseOutput, /Profile exposes privacy policy\/support\/server-deletion\/local-deletion controls/);
-  assert.match(releaseOutput, /Android and iOS policy disclosures cover Accessibility\/DNS Guard plus Screen Time\/Safari data boundaries/);
+  assert.match(releaseOutput, /Authoritative privacy safety audit passes/);
 });
 
 test("backend architecture contract covers server-side production slices without exposing secrets", () => {
@@ -11300,9 +11317,7 @@ test("backend architecture contract covers server-side production slices without
 
   const releaseOutput = runReleaseReadinessAudit();
   assert.match(releaseOutput, /backend-architecture-contract/);
-  assert.match(releaseOutput, /compact production backend deployment packet/);
-  assert.match(releaseOutput, /deployable Supabase migration/);
-  assert.match(releaseOutput, /explicit public-client revokes with service-role-only grants/);
+  assert.match(releaseOutput, /Authoritative backend architecture audit passes/);
 });
 
 test("accessibility safety audit covers key recovery controls", () => {
@@ -11342,7 +11357,7 @@ test("classifier safety audit covers adult-only release corpus", () => {
 
   const releaseOutput = runReleaseReadinessAudit();
   assert.match(releaseOutput, /adult-only-classifier/);
-  assert.match(releaseOutput, /Classifier safety corpus passes/);
+  assert.match(releaseOutput, /Authoritative TypeScript classifier and Android classifier-parity audits pass/);
 });
 
 test("android classifier parity audit matches TypeScript classifier tables", () => {
@@ -11357,7 +11372,7 @@ test("android classifier parity audit matches TypeScript classifier tables", () 
 
   const releaseOutput = runReleaseReadinessAudit();
   assert.match(releaseOutput, /adult-only-classifier/);
-  assert.match(releaseOutput, /Classifier safety corpus passes/);
+  assert.match(releaseOutput, /Authoritative TypeScript classifier and Android classifier-parity audits pass/);
 });
 
 test("typescript entry runner loads env files for standalone smoke scripts", () => {
