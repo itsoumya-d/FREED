@@ -1,8 +1,29 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 
 const source = readFileSync("src/lib/firebase-native.ts", "utf8");
+const webBoundaryPath = "src/lib/firebase-native.web.ts";
 const appSurface = readFileSync("src/features/freed-app.tsx", "utf8");
+
+assert.ok(existsSync(webBoundaryPath), "Firebase web builds need a platform-resolved, native-module-free boundary.");
+const webSource = readFileSync(webBoundaryPath, "utf8");
+
+for (const moduleName of ["@react-native-firebase/", "react-native/Libraries/"]) {
+  assert.doesNotMatch(webSource, new RegExp(moduleName.replaceAll("/", "\\/")));
+}
+
+for (const exportedName of [
+  "startFirebaseClient",
+  "getFirebaseNativeAuthAdapter",
+  "getFirebaseMessagingRegistrationAfterPermission",
+  "callFirebaseBackendReadiness",
+  "getFirebaseCallableContracts"
+]) {
+  assert.match(webSource, new RegExp(`export (?:async )?function ${exportedName}`));
+}
+
+assert.match(webSource, /status: "unsupported"/);
+assert.match(webSource, /return null/);
 
 for (const moduleName of [
   "@react-native-firebase/app",
