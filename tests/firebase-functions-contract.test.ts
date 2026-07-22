@@ -37,17 +37,19 @@ async function run() {
       };
       if (name === "requestAccountDeletion") return { ok: true, status: "deleting" };
       if (name === "generateClaraReply") return {
-        text: "Put the phone down and take three slow breaths.", provider: "remote", status: "ok"
+        text: "Put the phone down and take three slow breaths. A brief pause gives you room to choose the next action.",
+        provider: "remote",
+        status: "ok"
       };
       if (name === "generateChallenges") return {
         challenges: validChallenges(), provider: "remote", status: "ok"
       };
       if (name === "generateRetentionPlan") return {
-        headline: "Protect tonight's progress.",
-        nextBestAction: "Set the guard reminder and leave the phone outside the bedroom.",
-        checkInPrompt: "What will make the next hour easier?",
+        headline: "Protect today's progress and the next clean day.",
+        nextBestAction: "Set the guard reminder, then keep the phone outside the highest-risk room tonight.",
+        checkInPrompt: "What is the smallest change that would make the next hour easier?",
         suggestedGuardTime: "21:45",
-        focusTags: ["guard-time", "phone-boundary"],
+        focusTags: ["guard time", "phone boundary"],
         provider: "remote",
         status: "ok"
       };
@@ -116,7 +118,9 @@ async function run() {
     context: { streakDays: 4, attemptsToday: 2, premium: false, slipsThisWeek: 0, slipWindow: null, slipTrigger: null }
   };
   assert.deepEqual(await callables.generateClaraReply(claraPayload), {
-    text: "Put the phone down and take three slow breaths.", provider: "remote", status: "ok"
+    text: "Put the phone down and take three slow breaths. A brief pause gives you room to choose the next action.",
+    provider: "remote",
+    status: "ok"
   });
   assert.equal(calls.at(-1)?.name, "generateClaraReply");
 
@@ -194,17 +198,18 @@ async function run() {
 }
 
 const validRemotePlan = {
-  headline: "Protect tonight's progress.",
-  nextBestAction: "Set the guard reminder and leave the phone outside the bedroom.",
-  checkInPrompt: "What will make the next hour easier?",
+  headline: "Protect today's progress and the next clean day.",
+  nextBestAction: "Set the guard reminder, then keep the phone outside the highest-risk room tonight.",
+  checkInPrompt: "What is the smallest change that would make the next hour easier?",
   suggestedGuardTime: "21:45",
-  focusTags: ["guard-time", "phone-boundary"],
+  focusTags: ["guard time", "phone boundary"],
   provider: "remote" as const,
   status: "ok" as const
 };
 
 for (const invalid of [
   { text: "Safe reply", provider: "remote", status: "ok", model: "gpt-5.6-terra" },
+  { text: "Punishing reset", provider: "remote", status: "ok" },
   { text: "https://private.example", provider: "remote", status: "ok" },
   { text: "Sprint until you vomit.", provider: "remote", status: "ok" },
   { text: "x".repeat(1_001), provider: "remote", status: "ok" }
@@ -213,6 +218,13 @@ for (const invalid of [
 }
 for (const invalid of [
   { challenges: validChallenges().slice(0, 2), provider: "remote", status: "ok" },
+  {
+    challenges: validChallenges().map((item, index) => index === 0
+      ? { ...item, title: "Punishing reset", steps: ["Do 99 burpees without stopping.", "Then return."] }
+      : item),
+    provider: "remote",
+    status: "ok"
+  },
   { challenges: validChallenges().map((item, index) => index === 0 ? { ...item, premium: true } : item), provider: "remote", status: "ok" },
   { challenges: validChallenges().map((item, index) => index === 0 ? { ...item, steps: ["Hold a plank for 20 minutes.", "Come back."] } : item), provider: "remote", status: "ok" },
   { challenges: validChallenges(), provider: "remote", status: "ok", providerBody: {} }
@@ -221,6 +233,13 @@ for (const invalid of [
 }
 for (const invalid of [
   { ...validRemotePlan, focusTags: [] },
+  {
+    ...validRemotePlan,
+    headline: "Punishing reset",
+    nextBestAction: "Do 99 burpees without stopping.",
+    checkInPrompt: "Did you obey?",
+    focusTags: ["punishing"]
+  },
   { ...validRemotePlan, suggestedGuardTime: "25:00" },
   { ...validRemotePlan, nextBestAction: "Double your medication dose tonight." },
   { ...validRemotePlan, objectKey: "internal" }
@@ -230,18 +249,25 @@ for (const invalid of [
 
 function validChallenges() {
   return [
-    challenge("reset-breathe", "Breathing reset", "breathing", "calm"),
-    challenge("reset-room", "Change rooms", "reset", "medium"),
-    challenge("reset-note", "Name the next step", "reflection", "calm")
+    {
+      id: "breathing-reset", title: "Take three slow breaths", category: "breathing" as const, durationSec: 60,
+      intensity: "calm" as const, premium: false as const, icon: "Waves",
+      steps: ["Put the phone down.", "Breathe in slowly, then exhale longer."],
+      why: "Slower breathing creates a short pause before the next action."
+    },
+    {
+      id: "change-room", title: "Change your environment", category: "reset" as const, durationSec: 120,
+      intensity: "medium" as const, premium: false as const, icon: "Footprints",
+      steps: ["Stand up and leave the current room.", "Keep the phone out of reach for two minutes."],
+      why: "Changing place interrupts the cue and gives the urge time to settle."
+    },
+    {
+      id: "next-safe-step", title: "Name the next safe step", category: "reflection" as const, durationSec: 90,
+      intensity: "calm" as const, premium: false as const, icon: "Notebook",
+      steps: ["Name what you need for the next ten minutes.", "Choose one small action that supports it."],
+      why: "A specific next step makes the automatic loop less powerful."
+    }
   ];
-}
-
-function challenge(id: string, title: string, category: "breathing" | "reset" | "reflection", intensity: "calm" | "medium") {
-  return {
-    id, title, category, durationSec: 120, intensity, premium: false as const, icon: "Activity",
-    steps: ["Put the phone down.", "Take three slow breaths."],
-    why: "A short reset interrupts the automatic loop."
-  };
 }
 
 function validChallengeRequest(): FirebaseChallengeRequest {

@@ -120,11 +120,7 @@ const retentionRequest = {
 };
 
 const remoteChallenges = {
-  challenges: [
-    challenge("reset-breathe", "Breathing reset", "breathing", "calm"),
-    challenge("reset-room", "Change rooms", "reset", "medium"),
-    challenge("reset-note", "Name the next step", "reflection", "calm")
-  ]
+  challengeIds: ["breathing-reset", "change-room", "next-safe-step"]
 };
 
 test("AI inputs use exact bounded aggregate allowlists", () => {
@@ -215,11 +211,11 @@ test("established crisis phrases override duplicate/idempotency handling", async
 
 test("OpenAI request is one bounded, non-stored, strict Responses API call with no identity metadata", async () => {
   const harness = serviceHarness({
-    response: openAiResponse({ text: "Put the phone down, take three slow breaths, and step into another room." })
+    response: openAiResponse({ replyId: "breathing-pause" })
   });
   const result = await harness.service.generateClara("firebase-uid-secret", claraRequest);
   assert.deepEqual(result, {
-    text: "Put the phone down, take three slow breaths, and step into another room.",
+    text: "Put the phone down and take three slow breaths. A brief pause gives you room to choose the next action.",
     provider: "remote",
     status: "ok"
   });
@@ -240,6 +236,108 @@ test("OpenAI request is one bounded, non-stored, strict Responses API call with 
   assert.doesNotMatch(serialized, /firebase-uid-secret|evt_clara123|private\.example/i);
   assert.equal(harness.events.length, 1);
   assertNoSensitiveAuditFields(harness.events[0]);
+});
+
+test("provider output selects only server-owned safe-copy catalog IDs", async () => {
+  const clara = serviceHarness({ response: openAiResponse({ replyId: "change-room" }) });
+  assert.deepEqual(await clara.service.generateClara("uid-safe", claraRequest), {
+    text: "Put the phone down and move to another room for two minutes. Changing place interrupts the automatic loop.",
+    provider: "remote",
+    status: "ok"
+  });
+  const claraSchema = JSON.parse(String(clara.fetchCalls[0]?.init.body)) as {
+    text: { format: { schema: { properties: Record<string, unknown> } } };
+  };
+  assert.deepEqual(Object.keys(claraSchema.text.format.schema.properties), ["replyId"]);
+  assert.deepEqual((claraSchema.text.format.schema.properties.replyId as { enum: string[] }).enum, [
+    "breathing-pause", "change-room", "urge-wave", "stress-reset", "low-sleep-reset", "trusted-support"
+  ]);
+
+  const challenges = serviceHarness({
+    response: openAiResponse({ challengeIds: ["breathing-reset", "change-room", "next-safe-step"] })
+  });
+  const challengeResult = await challenges.service.generateChallenges("uid-safe", challengeRequest);
+  assert.equal(challengeResult.provider, "remote");
+  assert.deepEqual(challengeResult.challenges.map((item) => item.id), ["breathing-reset", "change-room", "next-safe-step"]);
+  const challengeSchema = JSON.parse(String(challenges.fetchCalls[0]?.init.body)) as {
+    text: { format: { schema: { properties: Record<string, unknown> } } };
+  };
+  assert.deepEqual(Object.keys(challengeSchema.text.format.schema.properties), ["challengeIds"]);
+  assert.deepEqual(
+    (challengeSchema.text.format.schema.properties.challengeIds as { items: { enum: string[] } }).items.enum,
+    ["breathing-reset", "change-room", "next-safe-step", "cool-water-pause", "phone-boundary", "trusted-check-in"]
+  );
+
+  const retention = serviceHarness({
+    response: openAiResponse({
+      headlineId: "protect-progress",
+      actionId: "guard-and-boundary",
+      checkInId: "make-hour-easier",
+      guardTimeDecision: "keep",
+      focusTagIds: ["guard-time", "phone-boundary"]
+    })
+  });
+  assert.deepEqual(await retention.service.generateRetentionPlan("uid-safe", retentionRequest), {
+    headline: "Protect today's progress and the next clean day.",
+    nextBestAction: "Set the guard reminder, then keep the phone outside the highest-risk room tonight.",
+    checkInPrompt: "What is the smallest change that would make the next hour easier?",
+    suggestedGuardTime: "21:45",
+    focusTags: ["guard time", "phone boundary"],
+    provider: "remote",
+    status: "ok"
+  });
+  const retentionSchema = JSON.parse(String(retention.fetchCalls[0]?.init.body)) as {
+    text: { format: { schema: { properties: Record<string, unknown> } } };
+  };
+  assert.deepEqual(Object.keys(retentionSchema.text.format.schema.properties), [
+    "headlineId", "actionId", "checkInId", "guardTimeDecision", "focusTagIds"
+  ]);
+  assert.deepEqual(
+    (retentionSchema.text.format.schema.properties.headlineId as { enum: string[] }).enum,
+    ["protect-progress", "start-next-hour", "use-pattern-kindly", "add-friction", "protect-sleep"]
+  );
+  assert.deepEqual(
+    (retentionSchema.text.format.schema.properties.actionId as { enum: string[] }).enum,
+    ["guard-and-boundary", "honest-check-in", "body-reset", "bedroom-boundary", "repeat-safe-reset"]
+  );
+  assert.deepEqual(
+    (retentionSchema.text.format.schema.properties.checkInId as { enum: string[] }).enum,
+    ["make-hour-easier", "smallest-action", "first-safer-move", "barrier-before-tap"]
+  );
+  assert.deepEqual(
+    (retentionSchema.text.format.schema.properties.focusTagIds as { items: { enum: string[] } }).items.enum,
+    ["guard-time", "phone-boundary", "reset", "check-in", "sleep", "early-friction", "body-reset", "support"]
+  );
+});
+
+test("reviewer bypass strings cannot be represented as provider selections", async () => {
+  const clara = serviceHarness({ response: openAiResponse({ text: "Punishing reset" }) });
+  assert.equal((await clara.service.generateClara("uid-safe", claraRequest)).provider, "fallback");
+
+  const unsafeChallenges = {
+    challenges: [{
+      id: "punishing-reset",
+      title: "Punishing reset",
+      category: "physical",
+      durationSec: 120,
+      intensity: "strong",
+      premium: false,
+      icon: "Activity",
+      steps: ["Do 99 burpees without stopping.", "Then return."],
+      why: "Punishment proves commitment."
+    }]
+  };
+  const challenges = serviceHarness({ response: openAiResponse(unsafeChallenges) });
+  assert.equal((await challenges.service.generateChallenges("uid-safe", challengeRequest)).provider, "fallback");
+
+  const retention = serviceHarness({ response: openAiResponse({
+    headline: "Punishing reset",
+    nextBestAction: "Do 99 burpees without stopping.",
+    checkInPrompt: "Did you obey?",
+    suggestedGuardTime: null,
+    focusTags: ["punishing"]
+  }) });
+  assert.equal((await retention.service.generateRetentionPlan("uid-safe", retentionRequest)).provider, "fallback");
 });
 
 test("provider failures and invalid envelopes collapse to fixed local fallbacks", async () => {
@@ -292,10 +390,10 @@ test("challenge output is exact, non-premium, sanitized, unique, bounded, and sa
   assert.match(providerProfile, /recentChallengeSummary/);
 
   for (const invalid of [
-    { challenges: remoteChallenges.challenges.slice(0, 2) },
-    { challenges: remoteChallenges.challenges.map((item, index) => index === 0 ? { ...item, premium: true } : item) },
-    { challenges: remoteChallenges.challenges.map((item, index) => index === 0 ? { ...item, steps: ["Drive to another place", "Come back"] } : item) },
-    { challenges: remoteChallenges.challenges.map((item) => ({ ...item, id: "duplicate" })) }
+    { challengeIds: remoteChallenges.challengeIds.slice(0, 2) },
+    { challengeIds: ["breathing-reset", "change-room", "unknown-template"] },
+    { challengeIds: ["breathing-reset", "breathing-reset", "next-safe-step"] },
+    { challengeIds: remoteChallenges.challengeIds, challenges: [{ title: "arbitrary" }] }
   ]) {
     const invalidHarness = serviceHarness({ response: openAiResponse(invalid) });
     const fallback = await invalidHarness.service.generateChallenges("uid-safe", challengeRequest);
@@ -306,7 +404,7 @@ test("challenge output is exact, non-premium, sanitized, unique, bounded, and sa
   }
 });
 
-test("all remote output routes reject unsafe recovery language without rejecting safe copy", async () => {
+test("all remote output routes reject arbitrary user-facing copy, whether unsafe or apparently safe", async () => {
   for (const text of [
     "You are disgusting and weak.",
     "Double your medication dose tonight.",
@@ -320,9 +418,7 @@ test("all remote output routes reject unsafe recovery language without rejecting
   }
 
   for (const unsafeStep of ["Sprint until you vomit.", "Hold a plank for 20 minutes.", "Do 500 pushups without stopping."]) {
-    const unsafe = {
-      challenges: remoteChallenges.challenges.map((item, index) => index === 0 ? { ...item, steps: [unsafeStep, "Come back when finished."] } : item)
-    };
+    const unsafe = { challenges: [{ title: "Arbitrary challenge", steps: [unsafeStep, "Come back when finished."] }] };
     const harness = serviceHarness({ response: openAiResponse(unsafe) });
     const result = await harness.service.generateChallenges("uid-safe", challengeRequest);
     assert.equal(result.provider, "fallback");
@@ -348,21 +444,29 @@ test("all remote output routes reject unsafe recovery language without rejecting
     "Do not use punishment; choose one calm reset and treat the setback as useful data."
   ]) {
     const safeHarness = serviceHarness({ response: openAiResponse({ text }) });
-    assert.equal((await safeHarness.service.generateClara("uid-safe", claraRequest)).provider, "remote");
+    assert.equal((await safeHarness.service.generateClara("uid-safe", claraRequest)).provider, "fallback");
   }
 });
 
 test("retention uses only aggregate input and enforces its exact normalized schema", async () => {
   const remote = {
-    headline: "Protect tonight's steady progress.",
-    nextBestAction: "Set the guard reminder, then leave the phone outside the bedroom.",
-    checkInPrompt: "What will make the next hour easier?",
-    suggestedGuardTime: "21:45",
-    focusTags: ["guard-time", "phone-boundary"]
+    headlineId: "protect-progress",
+    actionId: "guard-and-boundary",
+    checkInId: "make-hour-easier",
+    guardTimeDecision: "keep",
+    focusTagIds: ["guard-time", "phone-boundary"]
   };
   const harness = serviceHarness({ response: openAiResponse(remote) });
   const result = await harness.service.generateRetentionPlan("uid-safe", retentionRequest);
-  assert.deepEqual(result, { ...remote, provider: "remote", status: "ok" });
+  assert.deepEqual(result, {
+    headline: "Protect today's progress and the next clean day.",
+    nextBestAction: "Set the guard reminder, then keep the phone outside the highest-risk room tonight.",
+    checkInPrompt: "What is the smallest change that would make the next hour easier?",
+    suggestedGuardTime: "21:45",
+    focusTags: ["guard time", "phone boundary"],
+    provider: "remote",
+    status: "ok"
+  });
   const outbound = JSON.parse(String(harness.fetchCalls[0]?.init.body)) as {
     input: Array<{ role: string; content: Array<{ text: string }> }>;
   };
@@ -370,10 +474,11 @@ test("retention uses only aggregate input and enforces its exact normalized sche
   assert.doesNotMatch(userPayload, /evt_retention123|uid-safe|notes|contacts|history|transcript/i);
 
   for (const invalid of [
-    { ...remote, suggestedGuardTime: "25:00" },
-    { ...remote, focusTags: [] },
+    { ...remote, guardTimeDecision: "tomorrow" },
+    { ...remote, focusTagIds: [] },
+    { ...remote, headlineId: "arbitrary-headline" },
     { ...remote, provider: "openai" },
-    { ...remote, headline: "x".repeat(91) }
+    { ...remote, headline: "arbitrary text" }
   ]) {
     const invalidHarness = serviceHarness({ response: openAiResponse(invalid) });
     const fallback = await invalidHarness.service.generateRetentionPlan("uid-safe", retentionRequest);
@@ -430,7 +535,7 @@ function serviceHarness(options: {
         });
       }
       if (options.response instanceof Error) throw options.response;
-      return options.response ?? openAiResponse({ text: "Take one slow breath and move the phone out of reach." });
+      return options.response ?? openAiResponse({ replyId: "breathing-pause" });
     },
     timeoutMs: options.timeoutMs
   };
@@ -452,20 +557,6 @@ function openAiRefusalResponse(): Response {
     status: "completed",
     output: [{ type: "message", content: [{ type: "refusal", refusal: "cannot comply" }] }]
   });
-}
-
-function challenge(id: string, title: string, category: string, intensity: string) {
-  return {
-    id,
-    title,
-    category,
-    durationSec: 120,
-    intensity,
-    premium: false,
-    icon: "Activity",
-    steps: ["Put the phone down.", "Take three slow breaths."],
-    why: "A short reset interrupts the automatic loop."
-  };
 }
 
 function assertNoSensitiveAuditFields(event: AiAuditEvent | undefined) {

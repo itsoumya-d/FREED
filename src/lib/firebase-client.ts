@@ -346,6 +346,67 @@ const AI_RECOVERY_RISK_DRIVERS = [
   "sleep-mode", "risk-rising", "reset-needed", "no-elevated-risk"
 ] as const;
 const AI_RECOVERY_MOMENTUM = ["needs-more-signal", "risk-rising", "risk-easing", "stable"] as const;
+const AI_REMOTE_CLARA_COPY = [
+  "Put the phone down and take three slow breaths. A brief pause gives you room to choose the next action.",
+  "Put the phone down and move to another room for two minutes. Changing place interrupts the automatic loop.",
+  "Keep the phone out of reach and let the urge rise and fall for two minutes. You only need to protect the next choice.",
+  "Unclench your hands, exhale slowly, and choose one small task for the next five minutes. A simple action can lower the pressure.",
+  "Lower stimulation and move the phone away from where you rest. Tired moments need a gentler boundary, not more pressure.",
+  "Move the phone out of reach and contact a trusted person for a brief check-in. Support can make the next safe action easier."
+] as const;
+const AI_APPROVED_CHALLENGES: readonly FirebaseRecoveryChallenge[] = [
+  {
+    id: "breathing-reset", title: "Take three slow breaths", category: "breathing", durationSec: 60, intensity: "calm",
+    premium: false, icon: "Waves", steps: ["Put the phone down.", "Breathe in slowly, then exhale longer."],
+    why: "Slower breathing creates a short pause before the next action."
+  },
+  {
+    id: "change-room", title: "Change your environment", category: "reset", durationSec: 120, intensity: "medium",
+    premium: false, icon: "Footprints", steps: ["Stand up and leave the current room.", "Keep the phone out of reach for two minutes."],
+    why: "Changing place interrupts the cue and gives the urge time to settle."
+  },
+  {
+    id: "next-safe-step", title: "Name the next safe step", category: "reflection", durationSec: 90, intensity: "calm",
+    premium: false, icon: "Notebook", steps: ["Name what you need for the next ten minutes.", "Choose one small action that supports it."],
+    why: "A specific next step makes the automatic loop less powerful."
+  },
+  {
+    id: "cool-water-pause", title: "Take a cool water pause", category: "reset", durationSec: 90, intensity: "calm",
+    premium: false, icon: "GlassWater", steps: ["Put the phone down.", "Drink a glass of cool water slowly."],
+    why: "A simple physical pause creates distance from the automatic tap."
+  },
+  {
+    id: "phone-boundary", title: "Move the phone out of reach", category: "reset", durationSec: 120, intensity: "medium",
+    premium: false, icon: "Shield", steps: ["Place the phone across the room.", "Stay where you are for two quiet minutes."],
+    why: "Physical distance adds enough friction to make the next choice deliberate."
+  },
+  {
+    id: "trusted-check-in", title: "Make a trusted check-in", category: "connection", durationSec: 180, intensity: "calm",
+    premium: false, icon: "Users", steps: ["Choose one trusted person.", "Send a brief message asking for a check-in."],
+    why: "A small connection can make the next safe step easier."
+  }
+] as const;
+const AI_REMOTE_RETENTION_HEADLINES = [
+  "Protect today's progress and the next clean day.", "Start with the next clean hour.",
+  "Use the pattern without judging yourself.", "Add friction before the pattern builds.",
+  "Protect sleep and lower stimulation tonight."
+] as const;
+const AI_REMOTE_RETENTION_ACTIONS = [
+  "Set the guard reminder, then keep the phone outside the highest-risk room tonight.",
+  "Complete one honest check-in, then choose one small action for the next hour.",
+  "Start one short breathing or environment reset now, then keep the phone out of reach.",
+  "Put the phone outside the bedroom before the evening wind-down begins.",
+  "Repeat one previously helpful reset before the next risk window."
+] as const;
+const AI_REMOTE_RETENTION_CHECK_INS = [
+  "What is the smallest change that would make the next hour easier?",
+  "What is one small action you can complete now?",
+  "What is the first safer move when the pattern appears?",
+  "What small barrier would make the next risky tap less automatic?"
+] as const;
+const AI_REMOTE_RETENTION_TAGS = [
+  "guard time", "phone boundary", "reset", "check-in", "sleep", "early friction", "body reset", "support"
+] as const;
 const AI_SAFE_ID = /^[A-Za-z0-9][A-Za-z0-9_-]{2,79}$/;
 const AI_EVENT_ID = /^[A-Za-z0-9][A-Za-z0-9_-]{7,127}$/;
 const AI_RAW_LINK = /https?:\/\/|\b(?:[a-z0-9-]+\.)+[a-z]{2,63}(?:\/\S*)?/i;
@@ -654,6 +715,7 @@ export function parseFirebaseClaraResult(value: unknown): FirebaseClaraResult {
     return { text: value.text, provider: "fallback", status: "fallback", reason: value.reason };
   }
   if (value.provider !== "remote" || value.status !== "ok") invalidAiResponse();
+  if (!isEnum(value.text, AI_REMOTE_CLARA_COPY)) invalidAiResponse();
   return { text: value.text, provider: "remote", status: "ok" };
 }
 
@@ -665,6 +727,7 @@ export function parseFirebaseChallengeResult(value: unknown): FirebaseChallengeR
   if (new Set(challenges.map((item) => item.id)).size !== 3) invalidAiResponse();
   if (fallback) return { challenges, provider: "fallback", status: "fallback", reason: value.reason };
   if (value.provider !== "remote" || value.status !== "ok") invalidAiResponse();
+  if (challenges.some((challenge) => !matchesApprovedFirebaseChallenge(challenge))) invalidAiResponse();
   return { challenges, provider: "remote", status: "ok" };
 }
 
@@ -693,6 +756,14 @@ export function parseFirebaseRetentionResult(value: unknown): FirebaseRetentionR
   };
   if (fallback) return { ...plan, provider: "fallback", status: "fallback", reason: value.reason };
   if (value.provider !== "remote" || value.status !== "ok") invalidAiResponse();
+  if (
+    !isEnum(plan.headline, AI_REMOTE_RETENTION_HEADLINES) ||
+    !isEnum(plan.nextBestAction, AI_REMOTE_RETENTION_ACTIONS) ||
+    !isEnum(plan.checkInPrompt, AI_REMOTE_RETENTION_CHECK_INS) ||
+    !plan.focusTags.every((tag) => isEnum(tag, AI_REMOTE_RETENTION_TAGS))
+  ) {
+    invalidAiResponse();
+  }
   return { ...plan, provider: "remote", status: "ok" };
 }
 
@@ -789,6 +860,16 @@ function parseFirebaseChallenge(value: unknown): FirebaseRecoveryChallenge {
     steps: value.steps as string[],
     why: value.why
   };
+}
+
+function matchesApprovedFirebaseChallenge(value: FirebaseRecoveryChallenge): boolean {
+  const approved = AI_APPROVED_CHALLENGES.find((item) => item.id === value.id);
+  return Boolean(
+    approved && value.title === approved.title && value.category === approved.category &&
+    value.durationSec === approved.durationSec && value.intensity === approved.intensity &&
+    value.premium === false && value.icon === approved.icon && value.why === approved.why &&
+    value.steps.length === approved.steps.length && value.steps.every((step, index) => step === approved.steps[index])
+  );
 }
 
 function isAiFallbackEnvelope(value: unknown): value is { provider: "fallback"; status: "fallback"; reason: FirebaseAiFallbackReason } & Record<string, unknown> {

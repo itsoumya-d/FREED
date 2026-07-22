@@ -248,7 +248,6 @@ const RETENTION_PROFILE_KEYS = [
 ] as const;
 
 const CATEGORIES = ["physical", "breathing", "reflection", "connection", "reset"] as const;
-const INTENSITIES = ["calm", "medium", "strong"] as const;
 const RECOVERY_WINDOWS = ["late-night", "morning", "afternoon", "evening"] as const;
 const CURRENT_RISK_WINDOWS = [...RECOVERY_WINDOWS, "sleep-mode", "focus-protection"] as const;
 const RECOVERY_TRIGGERS = ["stress", "night-low-sleep", "scrolling", "boredom-isolation", "connection-stress", "urge", "logged"] as const;
@@ -258,6 +257,84 @@ const RECOVERY_RISK_DRIVERS = [
   "sleep-mode", "risk-rising", "reset-needed", "no-elevated-risk"
 ] as const;
 const RECOVERY_MOMENTUM = ["needs-more-signal", "risk-rising", "risk-easing", "stable"] as const;
+const CLARA_REPLY_IDS = ["breathing-pause", "change-room", "urge-wave", "stress-reset", "low-sleep-reset", "trusted-support"] as const;
+const CLARA_REPLY_CATALOG: Record<(typeof CLARA_REPLY_IDS)[number], string> = {
+  "breathing-pause": "Put the phone down and take three slow breaths. A brief pause gives you room to choose the next action.",
+  "change-room": "Put the phone down and move to another room for two minutes. Changing place interrupts the automatic loop.",
+  "urge-wave": "Keep the phone out of reach and let the urge rise and fall for two minutes. You only need to protect the next choice.",
+  "stress-reset": "Unclench your hands, exhale slowly, and choose one small task for the next five minutes. A simple action can lower the pressure.",
+  "low-sleep-reset": "Lower stimulation and move the phone away from where you rest. Tired moments need a gentler boundary, not more pressure.",
+  "trusted-support": "Move the phone out of reach and contact a trusted person for a brief check-in. Support can make the next safe action easier."
+};
+const APPROVED_CHALLENGE_IDS = [
+  "breathing-reset", "change-room", "next-safe-step", "cool-water-pause", "phone-boundary", "trusted-check-in"
+] as const;
+const APPROVED_CHALLENGE_CATALOG: Record<(typeof APPROVED_CHALLENGE_IDS)[number], RecoveryChallenge> = {
+  "breathing-reset": {
+    id: "breathing-reset", title: "Take three slow breaths", category: "breathing", durationSec: 60, intensity: "calm",
+    premium: false, icon: "Waves", steps: ["Put the phone down.", "Breathe in slowly, then exhale longer."],
+    why: "Slower breathing creates a short pause before the next action."
+  },
+  "change-room": {
+    id: "change-room", title: "Change your environment", category: "reset", durationSec: 120, intensity: "medium",
+    premium: false, icon: "Footprints", steps: ["Stand up and leave the current room.", "Keep the phone out of reach for two minutes."],
+    why: "Changing place interrupts the cue and gives the urge time to settle."
+  },
+  "next-safe-step": {
+    id: "next-safe-step", title: "Name the next safe step", category: "reflection", durationSec: 90, intensity: "calm",
+    premium: false, icon: "Notebook", steps: ["Name what you need for the next ten minutes.", "Choose one small action that supports it."],
+    why: "A specific next step makes the automatic loop less powerful."
+  },
+  "cool-water-pause": {
+    id: "cool-water-pause", title: "Take a cool water pause", category: "reset", durationSec: 90, intensity: "calm",
+    premium: false, icon: "GlassWater", steps: ["Put the phone down.", "Drink a glass of cool water slowly."],
+    why: "A simple physical pause creates distance from the automatic tap."
+  },
+  "phone-boundary": {
+    id: "phone-boundary", title: "Move the phone out of reach", category: "reset", durationSec: 120, intensity: "medium",
+    premium: false, icon: "Shield", steps: ["Place the phone across the room.", "Stay where you are for two quiet minutes."],
+    why: "Physical distance adds enough friction to make the next choice deliberate."
+  },
+  "trusted-check-in": {
+    id: "trusted-check-in", title: "Make a trusted check-in", category: "connection", durationSec: 180, intensity: "calm",
+    premium: false, icon: "Users", steps: ["Choose one trusted person.", "Send a brief message asking for a check-in."],
+    why: "A small connection can make the next safe step easier."
+  }
+};
+const RETENTION_HEADLINE_IDS = ["protect-progress", "start-next-hour", "use-pattern-kindly", "add-friction", "protect-sleep"] as const;
+const RETENTION_HEADLINE_CATALOG: Record<(typeof RETENTION_HEADLINE_IDS)[number], string> = {
+  "protect-progress": "Protect today's progress and the next clean day.",
+  "start-next-hour": "Start with the next clean hour.",
+  "use-pattern-kindly": "Use the pattern without judging yourself.",
+  "add-friction": "Add friction before the pattern builds.",
+  "protect-sleep": "Protect sleep and lower stimulation tonight."
+};
+const RETENTION_ACTION_IDS = ["guard-and-boundary", "honest-check-in", "body-reset", "bedroom-boundary", "repeat-safe-reset"] as const;
+const RETENTION_ACTION_CATALOG: Record<(typeof RETENTION_ACTION_IDS)[number], string> = {
+  "guard-and-boundary": "Set the guard reminder, then keep the phone outside the highest-risk room tonight.",
+  "honest-check-in": "Complete one honest check-in, then choose one small action for the next hour.",
+  "body-reset": "Start one short breathing or environment reset now, then keep the phone out of reach.",
+  "bedroom-boundary": "Put the phone outside the bedroom before the evening wind-down begins.",
+  "repeat-safe-reset": "Repeat one previously helpful reset before the next risk window."
+};
+const RETENTION_CHECK_IN_IDS = ["make-hour-easier", "smallest-action", "first-safer-move", "barrier-before-tap"] as const;
+const RETENTION_CHECK_IN_CATALOG: Record<(typeof RETENTION_CHECK_IN_IDS)[number], string> = {
+  "make-hour-easier": "What is the smallest change that would make the next hour easier?",
+  "smallest-action": "What is one small action you can complete now?",
+  "first-safer-move": "What is the first safer move when the pattern appears?",
+  "barrier-before-tap": "What small barrier would make the next risky tap less automatic?"
+};
+const RETENTION_FOCUS_TAG_IDS = ["guard-time", "phone-boundary", "reset", "check-in", "sleep", "early-friction", "body-reset", "support"] as const;
+const RETENTION_FOCUS_TAG_CATALOG: Record<(typeof RETENTION_FOCUS_TAG_IDS)[number], string> = {
+  "guard-time": "guard time",
+  "phone-boundary": "phone boundary",
+  reset: "reset",
+  "check-in": "check-in",
+  sleep: "sleep",
+  "early-friction": "early friction",
+  "body-reset": "body reset",
+  support: "support"
+};
 const SAFE_ID = /^[a-zA-Z0-9][a-zA-Z0-9_-]{2,79}$/;
 const CLIENT_EVENT_ID = /^[A-Za-z0-9][A-Za-z0-9_-]{7,127}$/;
 const TIME = /^([01]\d|2[0-3]):[0-5]\d$/;
@@ -411,7 +488,7 @@ export function createAiService(dependencies: AiServiceDependencies) {
       if (gateReason) return retentionFallback(dependencies, uid, input, gateReason);
       try {
         const remote = await callOpenAi(dependencies, "retention", retentionProviderInput(input), RETENTION_SCHEMA, "freed_retention");
-        const plan = parseRetentionOutput(remote);
+        const plan = parseRetentionOutput(remote, input);
         const outputLength = plan.headline.length + plan.nextBestAction.length + plan.checkInPrompt.length + plan.focusTags.join("").length;
         await audit(dependencies, event(dependencies, uid, "retention", "remote", JSON.stringify(input.profile).length, outputLength, undefined, false));
         return { ...plan, provider: "remote", status: "ok" };
@@ -463,9 +540,9 @@ function retentionProviderInput(input: RetentionInput) {
 }
 
 const SYSTEM_INSTRUCTIONS: Record<AiRoute, string> = {
-  clara: "You are CLARA, a concise adult recovery coach. Give one immediate safe action first. Be calm, nonjudgmental, nonsexualized, and non-shaming. Never include links, domains, browsing details, medical directions, or crisis improvisation. Return only the required JSON.",
-  challenges: "Generate exactly three immediately doable recovery challenges. Be calm and non-shaming. Never prescribe driving, unsafe exercise, fasting, medical intervention, sexual content, punishment, or water hotter than 41°C. Set premium false. Return only the required JSON.",
-  retention: "Generate one practical retention plan from aggregate recovery signals only. Never request or include notes, contacts, browsing history, links, domains, transcripts, sexual detail, shame, or medical directions. Return only the required JSON."
+  clara: "Select exactly one approved CLARA reply ID from the provided JSON schema. Do not write user-facing copy. Return only the required JSON.",
+  challenges: "Select exactly three distinct approved recovery-challenge IDs from the provided JSON schema. Do not write user-facing copy. Return only the required JSON.",
+  retention: "Select approved retention headline, action, check-in, guard-time decision, and focus-tag IDs from the provided JSON schema. Do not write user-facing copy. Return only the required JSON."
 };
 
 class ProviderFailure extends Error {
@@ -581,54 +658,37 @@ function parseResponseEnvelope(value: unknown): unknown {
 }
 
 function parseClaraOutput(value: unknown): { text: string } {
-  const record = exactOutputRecord(value, ["text"] as const);
-  const text = outputText(record.text, 1_000);
-  if (!text) throw new ProviderFailure("invalid");
-  assertSafeAiOutput(text);
-  return { text };
+  const record = exactOutputRecord(value, ["replyId"] as const);
+  const replyId = outputEnum(record.replyId, CLARA_REPLY_IDS);
+  return { text: CLARA_REPLY_CATALOG[replyId] };
 }
 
 function parseChallengeOutput(value: unknown): RecoveryChallenge[] {
-  const root = exactOutputRecord(value, ["challenges"] as const);
-  if (!Array.isArray(root.challenges) || root.challenges.length !== 3) throw new ProviderFailure("invalid");
-  const challenges = root.challenges.map((value) => {
-    const item = exactOutputRecord(value, ["id", "title", "category", "durationSec", "intensity", "premium", "icon", "steps", "why"] as const);
-    if (item.premium !== false || !Array.isArray(item.steps) || item.steps.length < 2 || item.steps.length > 4) throw new ProviderFailure("invalid");
-    const challenge: RecoveryChallenge = {
-      id: outputIdentifier(item.id),
-      title: requiredOutputText(item.title, 64),
-      category: outputEnum(item.category, CATEGORIES),
-      durationSec: outputInteger(item.durationSec, 30, 900),
-      intensity: outputEnum(item.intensity, INTENSITIES),
-      premium: false,
-      icon: outputIcon(item.icon),
-      steps: item.steps.map((step) => requiredOutputText(step, 120)),
-      why: requiredOutputText(item.why, 160)
-    };
-    [challenge.title, challenge.why, ...challenge.steps].forEach(assertSafeAiOutput);
-    return challenge;
-  });
-  if (new Set(challenges.map((challenge) => challenge.id)).size !== 3) throw new ProviderFailure("invalid");
-  return challenges;
+  const root = exactOutputRecord(value, ["challengeIds"] as const);
+  if (!Array.isArray(root.challengeIds) || root.challengeIds.length !== 3) throw new ProviderFailure("invalid");
+  const challengeIds = root.challengeIds.map((id) => outputEnum(id, APPROVED_CHALLENGE_IDS));
+  if (new Set(challengeIds).size !== 3) throw new ProviderFailure("invalid");
+  return challengeIds.map((id) => cloneChallenge(APPROVED_CHALLENGE_CATALOG[id]));
 }
 
-function parseRetentionOutput(value: unknown) {
-  const item = exactOutputRecord(value, ["headline", "nextBestAction", "checkInPrompt", "suggestedGuardTime", "focusTags"] as const);
-  if (!Array.isArray(item.focusTags) || item.focusTags.length < 1 || item.focusTags.length > 4) throw new ProviderFailure("invalid");
-  if (item.suggestedGuardTime !== null && (typeof item.suggestedGuardTime !== "string" || !TIME.test(item.suggestedGuardTime))) {
-    throw new ProviderFailure("invalid");
-  }
-  const focusTags = item.focusTags.map((tag) => requiredOutputText(tag, 32));
-  if (new Set(focusTags.map((tag) => tag.toLowerCase())).size !== focusTags.length) throw new ProviderFailure("invalid");
-  const plan = {
-    headline: requiredOutputText(item.headline, 90),
-    nextBestAction: requiredOutputText(item.nextBestAction, 180),
-    checkInPrompt: requiredOutputText(item.checkInPrompt, 140),
-    suggestedGuardTime: item.suggestedGuardTime as string | null,
-    focusTags
+function parseRetentionOutput(value: unknown, input: RetentionInput) {
+  const item = exactOutputRecord(value, ["headlineId", "actionId", "checkInId", "guardTimeDecision", "focusTagIds"] as const);
+  const headlineId = outputEnum(item.headlineId, RETENTION_HEADLINE_IDS);
+  const actionId = outputEnum(item.actionId, RETENTION_ACTION_IDS);
+  const checkInId = outputEnum(item.checkInId, RETENTION_CHECK_IN_IDS);
+  const guardTimeDecision = outputEnum(item.guardTimeDecision, ["keep", "none"] as const);
+  if (!Array.isArray(item.focusTagIds) || item.focusTagIds.length < 1 || item.focusTagIds.length > 4) throw new ProviderFailure("invalid");
+  const focusTagIds = item.focusTagIds.map((id) => outputEnum(id, RETENTION_FOCUS_TAG_IDS));
+  if (new Set(focusTagIds).size !== focusTagIds.length) throw new ProviderFailure("invalid");
+  return {
+    headline: RETENTION_HEADLINE_CATALOG[headlineId],
+    nextBestAction: RETENTION_ACTION_CATALOG[actionId],
+    checkInPrompt: RETENTION_CHECK_IN_CATALOG[checkInId],
+    suggestedGuardTime: guardTimeDecision === "keep" && input.profile.smartGuardSource !== "default"
+      ? input.profile.smartGuardTime
+      : null,
+    focusTags: focusTagIds.map((id) => RETENTION_FOCUS_TAG_CATALOG[id])
   };
-  [plan.headline, plan.nextBestAction, plan.checkInPrompt, ...plan.focusTags].forEach(assertSafeAiOutput);
-  return plan;
 }
 
 async function claraFallback(
@@ -659,23 +719,11 @@ async function retentionFallback(deps: AiServiceDependencies, uid: string, input
 }
 
 function localChallenges(): RecoveryChallenge[] {
-  return [
-    {
-      id: "local-breath-reset", title: "Take three slow breaths", category: "breathing", durationSec: 60, intensity: "calm",
-      premium: false, icon: "Waves", steps: ["Put the phone down.", "Breathe in slowly, then exhale longer."],
-      why: "Slower breathing creates a short pause before the next action."
-    },
-    {
-      id: "local-room-reset", title: "Change your environment", category: "reset", durationSec: 120, intensity: "medium",
-      premium: false, icon: "Footprints", steps: ["Stand up and leave the current room.", "Keep the phone out of reach for two minutes."],
-      why: "Changing place interrupts the cue and gives the urge time to settle."
-    },
-    {
-      id: "local-reflect-reset", title: "Name the next safe step", category: "reflection", durationSec: 90, intensity: "calm",
-      premium: false, icon: "Notebook", steps: ["Name what you need for the next ten minutes.", "Choose one small action that supports it."],
-      why: "A specific next step makes the automatic loop less powerful."
-    }
-  ];
+  return APPROVED_CHALLENGE_IDS.slice(0, 3).map((id) => cloneChallenge(APPROVED_CHALLENGE_CATALOG[id]));
+}
+
+function cloneChallenge(challenge: RecoveryChallenge): RecoveryChallenge {
+  return { ...challenge, steps: [...challenge.steps] };
 }
 
 function localRetention(input: RetentionInput) {
@@ -730,40 +778,26 @@ function providerReason(error: unknown): AiFallbackReason {
 }
 
 const CLARA_SCHEMA = {
-  type: "object", additionalProperties: false, required: ["text"],
-  properties: { text: { type: "string", minLength: 1, maxLength: 1_000 } }
+  type: "object", additionalProperties: false, required: ["replyId"],
+  properties: { replyId: { type: "string", enum: CLARA_REPLY_IDS } }
 };
 
 const CHALLENGE_SCHEMA = {
-  type: "object", additionalProperties: false, required: ["challenges"],
+  type: "object", additionalProperties: false, required: ["challengeIds"],
   properties: {
-    challenges: {
-      type: "array", minItems: 3, maxItems: 3,
-      items: {
-        type: "object", additionalProperties: false,
-        required: ["id", "title", "category", "durationSec", "intensity", "premium", "icon", "steps", "why"],
-        properties: {
-          id: { type: "string", minLength: 3, maxLength: 80 }, title: { type: "string", minLength: 1, maxLength: 64 },
-          category: { type: "string", enum: CATEGORIES }, durationSec: { type: "integer", minimum: 30, maximum: 900 },
-          intensity: { type: "string", enum: INTENSITIES }, premium: { type: "boolean", enum: [false] },
-          icon: { type: "string", minLength: 1, maxLength: 40 },
-          steps: { type: "array", minItems: 2, maxItems: 4, items: { type: "string", minLength: 1, maxLength: 120 } },
-          why: { type: "string", minLength: 1, maxLength: 160 }
-        }
-      }
-    }
+    challengeIds: { type: "array", minItems: 3, maxItems: 3, items: { type: "string", enum: APPROVED_CHALLENGE_IDS } }
   }
 };
 
 const RETENTION_SCHEMA = {
   type: "object", additionalProperties: false,
-  required: ["headline", "nextBestAction", "checkInPrompt", "suggestedGuardTime", "focusTags"],
+  required: ["headlineId", "actionId", "checkInId", "guardTimeDecision", "focusTagIds"],
   properties: {
-    headline: { type: "string", minLength: 1, maxLength: 90 },
-    nextBestAction: { type: "string", minLength: 1, maxLength: 180 },
-    checkInPrompt: { type: "string", minLength: 1, maxLength: 140 },
-    suggestedGuardTime: { type: ["string", "null"] },
-    focusTags: { type: "array", minItems: 1, maxItems: 4, items: { type: "string", minLength: 1, maxLength: 32 } }
+    headlineId: { type: "string", enum: RETENTION_HEADLINE_IDS },
+    actionId: { type: "string", enum: RETENTION_ACTION_IDS },
+    checkInId: { type: "string", enum: RETENTION_CHECK_IN_IDS },
+    guardTimeDecision: { type: "string", enum: ["keep", "none"] },
+    focusTagIds: { type: "array", minItems: 1, maxItems: 4, items: { type: "string", enum: RETENTION_FOCUS_TAG_IDS } }
   }
 };
 
@@ -935,55 +969,6 @@ function redactText(value: string, max: number) {
     .replace(/\s+/g, " ")
     .trim()
     .slice(0, max);
-}
-
-function outputText(value: unknown, max: number) {
-  if (typeof value !== "string" || !value.trim() || value.length > max) throw new ProviderFailure("invalid");
-  return redactText(value, max);
-}
-
-function requiredOutputText(value: unknown, max: number) {
-  const text = outputText(value, max);
-  if (!text) throw new ProviderFailure("invalid");
-  return text;
-}
-
-function assertSafeAiOutput(value: string): void {
-  const lower = value.toLowerCase();
-  const shaming = /\b(?:you(?:'re| are)|this makes you)\s+(?:disgusting|pathetic|weak|dirty|bad|a failure)\b|\b(?:prove|show)\s+you(?:'re| are)?\s+not\s+(?:a\s+)?failure\b|\b(?:should|need to)\s+be\s+ashamed\b/i;
-  const sexual = /\b(?:porn|sexual|sexually|explicit sexual|nsfw)\b/i;
-  const prescriptiveMedical = /\b(?:take|stop|skip|double|increase|decrease|change|inject)\b[^.!?]{0,35}\b(?:medication|medicine|dose|pills?|drug)\b|\b(?:diagnose|diagnosis|medical treatment|replace professional care)\b/i;
-  const forbiddenAction = /\b(?:drive|driving|fasting|starve|scald|boiling)\b/i;
-  const unsafeUntil = /\b(?:sprint|run|exercise|plank|push[- ]?ups?|sit[- ]?ups?|squats?|burpees?)\b[^.!?]{0,60}\buntil\s+(?:you\s+)?(?:vomit(?:ing)?|throw up|collapse|pass out|hurt|feel pain|exhausted|cannot continue|can't continue)\b/i;
-  const unsafeCount = /\b[1-9]\d{2,}\s*(?:push[- ]?ups?|sit[- ]?ups?|squats?|burpees?|repetitions?|reps?)\b/i;
-  const unsafeDuration = /\b(?:plank|sprint|burpees?|push[- ]?ups?)\b[^.!?\d]{0,35}\b(?:[1-9]\d|[2-9]\d{2,})\s*(?:minutes?|mins?)\b/i;
-  const reversedUnsafeDuration = /\b(?:[1-9]\d|[2-9]\d{2,})\s*[- ]?(?:minutes?|mins?)(?:\s+of)?\s+(?:a\s+)?(?:plank|sprinting|burpees?|push[- ]?ups?)\b/i;
-  const unsafeHeat = /(?:hot|warm)\s+(?:bath|shower|water)[^.!?]{0,30}(?:4[2-9]|[5-9]\d)\s*°?c/i;
-  const unsafeBreathHold = /hold\s+(?:your\s+)?breath[^.!?]{0,30}(?:minutes?|until)/i;
-  const punitive = /\b(?:punishment|punish yourself|punitive)\b/i.test(lower) &&
-    !/\b(?:avoid|never|do not|don't|without)\s+(?:(?:use|using)\s+)?(?:punishment|punish(?:ing)? yourself|punitive)\b/i.test(lower);
-  if (
-    shaming.test(value) || sexual.test(value) || prescriptiveMedical.test(value) || forbiddenAction.test(value) ||
-    unsafeUntil.test(value) || unsafeCount.test(value) || unsafeDuration.test(value) || reversedUnsafeDuration.test(value) || unsafeHeat.test(value) ||
-    unsafeBreathHold.test(value) || punitive
-  ) {
-    throw new ProviderFailure("invalid");
-  }
-}
-
-function outputIdentifier(value: unknown) {
-  if (typeof value !== "string" || !SAFE_ID.test(value) || RAW_LINK.test(value)) throw new ProviderFailure("invalid");
-  return value;
-}
-
-function outputIcon(value: unknown) {
-  if (typeof value !== "string" || !/^[A-Za-z][A-Za-z0-9]{0,39}$/.test(value)) throw new ProviderFailure("invalid");
-  return value;
-}
-
-function outputInteger(value: unknown, min: number, max: number) {
-  if (typeof value !== "number" || !Number.isInteger(value) || value < min || value > max) throw new ProviderFailure("invalid");
-  return value;
 }
 
 function outputEnum<const T extends readonly string[]>(value: unknown, allowed: T): T[number] {
