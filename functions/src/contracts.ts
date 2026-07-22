@@ -39,7 +39,19 @@ export type BackupMetadataDocument = {
   expiresAt: unknown;
 };
 export type PurchaseAuditDocument = { uid: string; provider: string; productId: string; status: string; verifiedAt: unknown; expiresAt: unknown };
-export type RedactedAiEventDocument = { uid: string; eventType: string; outcome: string; createdAt: unknown; expiresAt: unknown };
+export type RedactedAiEventDocument = {
+  uid: string;
+  eventType: string;
+  outcome: string;
+  provider: string;
+  model: string;
+  crisisFallback: boolean;
+  inputCharacterCount: number;
+  outputCharacterCount?: number;
+  generatedItemCount?: number;
+  createdAt: unknown;
+  expiresAt: unknown;
+};
 export type BackendJobDocument = { kind: string; uid?: string; status: string; createdAt: unknown; expiresAt: unknown };
 export type RateLimitDocument = { count: number; windowStartedAt: number; expiresAt: number };
 export type LeaseDocument = { owner: string; acquiredAt: number; expiresAt: number; token?: number };
@@ -65,7 +77,10 @@ const SERVER_DOCUMENT_FIELDS: Record<string, readonly string[]> = {
     "createdAt", "updatedAt", "verifiedAt", "expiresAt"
   ],
   [COLLECTIONS.purchaseAudits]: ["uid", "provider", "productId", "status", "verifiedAt", "expiresAt"],
-  [COLLECTIONS.redactedAiEvents]: ["uid", "eventType", "outcome", "createdAt", "expiresAt"],
+  [COLLECTIONS.redactedAiEvents]: [
+    "uid", "eventType", "outcome", "provider", "model", "crisisFallback", "inputCharacterCount",
+    "outputCharacterCount", "generatedItemCount", "createdAt", "expiresAt"
+  ],
   [COLLECTIONS.backendJobs]: ["kind", "uid", "status", "createdAt", "expiresAt"],
   [COLLECTIONS.rateLimits]: ["count", "windowStartedAt", "expiresAt"],
   [COLLECTIONS.leases]: ["owner", "acquiredAt", "expiresAt", "token"],

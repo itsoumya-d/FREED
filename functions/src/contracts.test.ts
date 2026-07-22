@@ -53,6 +53,25 @@ test("server document schemas reject forbidden fields on every collection family
   assert.throws(() => validateServerDocument("redacted_ai_events", { eventType: "coach", privateNote: "never" }), /sensitive or unsupported/i);
 });
 
+test("redacted AI audit documents have an exact operational metadata allowlist", () => {
+  const event = {
+    uid: "firebaseUid123",
+    eventType: "clara",
+    outcome: "fallback",
+    provider: "local",
+    model: "gpt-5.6-terra",
+    crisisFallback: true,
+    inputCharacterCount: 24,
+    outputCharacterCount: 180,
+    createdAt: 1,
+    expiresAt: 2
+  };
+  assert.deepEqual(validateServerDocument(COLLECTIONS.redactedAiEvents, event), event);
+  for (const forbidden of ["prompt", "response", "privateNote", "url", "providerBody", "providerRequestId", "rawError"]) {
+    assert.throws(() => validateServerDocument(COLLECTIONS.redactedAiEvents, { ...event, [forbidden]: "never" }), /sensitive or unsupported/i);
+  }
+});
+
 test("anonymous aggregate analytics documents cannot contain a Firebase UID", () => {
   assert.deepEqual(
     validateServerDocument(COLLECTIONS.aggregateAnalytics, {

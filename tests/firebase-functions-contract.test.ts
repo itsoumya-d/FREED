@@ -3,8 +3,14 @@ import { readFileSync } from "node:fs";
 
 import {
   createFirebaseCallableContracts,
+  parseFirebaseChallengeResult,
+  parseFirebaseClaraResult,
   parseFirebaseReviewedAdultDomainFeed,
+  parseFirebaseRetentionResult,
+  type FirebaseChallengeRequest,
+  type FirebaseClaraRequest,
   type FirebaseReviewedAdultDomainFeed,
+  type FirebaseRetentionRequest,
   type FirebaseCallableTransport
 } from "../src/lib/firebase-client";
 
@@ -30,6 +36,21 @@ async function run() {
         }
       };
       if (name === "requestAccountDeletion") return { ok: true, status: "deleting" };
+      if (name === "generateClaraReply") return {
+        text: "Put the phone down and take three slow breaths.", provider: "remote", status: "ok"
+      };
+      if (name === "generateChallenges") return {
+        challenges: validChallenges(), provider: "remote", status: "ok"
+      };
+      if (name === "generateRetentionPlan") return {
+        headline: "Protect tonight's progress.",
+        nextBestAction: "Set the guard reminder and leave the phone outside the bedroom.",
+        checkInPrompt: "What will make the next hour easier?",
+        suggestedGuardTime: "21:45",
+        focusTags: ["guard-time", "phone-boundary"],
+        provider: "remote",
+        status: "ok"
+      };
       return { ok: true };
     }
   };
@@ -89,6 +110,29 @@ async function run() {
   });
   assert.deepEqual(calls[6], { name: "getReviewedAdultDomainFeed", data: undefined });
 
+  const claraPayload: FirebaseClaraRequest = {
+    clientEventId: "evt_clara123",
+    input: "Help me reset.",
+    context: { streakDays: 4, attemptsToday: 2, premium: false, slipsThisWeek: 0, slipWindow: null, slipTrigger: null }
+  };
+  assert.deepEqual(await callables.generateClaraReply(claraPayload), {
+    text: "Put the phone down and take three slow breaths.", provider: "remote", status: "ok"
+  });
+  assert.equal(calls.at(-1)?.name, "generateClaraReply");
+
+  const challengePayload = validChallengeRequest();
+  assert.equal((await callables.generateChallenges(challengePayload)).challenges.length, 3);
+  assert.equal(calls.at(-1)?.name, "generateChallenges");
+
+  const retentionPayload = validRetentionRequest();
+  assert.equal((await callables.generateRetentionPlan(retentionPayload)).provider, "remote");
+  assert.equal(calls.at(-1)?.name, "generateRetentionPlan");
+
+  await assert.rejects(
+    () => callables.generateClaraReply({ ...claraPayload, recentRiskHosts: ["private.example"] } as never),
+    /not permitted/i
+  );
+
   const validFeed = {
     version: "oisd-nsfw-small-0000000000000000",
     generatedAt: "2026-07-22T06:30:00.000Z",
@@ -115,6 +159,7 @@ async function run() {
   assert.throws(() => parseFirebaseReviewedAdultDomainFeed(missingDomains), /invalid reviewed adult-domain feed/i);
 
   const indexSource = readFileSync("functions/src/index.ts", "utf8");
+  const aiFunctionSource = readFileSync("functions/src/ai-firebase.ts", "utf8");
   const feedFunctionSource = readFileSync("functions/src/adult-feed-firebase.ts", "utf8");
   assert.match(indexSource, /getReviewedAdultDomainFeed/);
   assert.match(indexSource, /refreshReviewedAdultDomainFeed/);
@@ -122,6 +167,12 @@ async function run() {
   assert.match(feedFunctionSource, /requireAuthenticatedUid\(request\.auth\?\.uid\)/);
   assert.match(feedFunctionSource, /onSchedule\(\{[\s\S]*schedule:\s*"every 24 hours"[\s\S]*timeZone:\s*"Asia\/Kolkata"/);
   assert.equal(feedFunctionSource.match(/region:\s*"asia-south1"/g)?.length, 2);
+  for (const callable of ["generateClaraReply", "generateChallenges", "generateRetentionPlan"]) {
+    assert.match(indexSource, new RegExp(callable));
+    assert.match(aiFunctionSource, new RegExp(`export const ${callable}`));
+  }
+  assert.equal(aiFunctionSource.match(/enforceAppCheck:\s*true/g)?.length, 3);
+  assert.equal(aiFunctionSource.match(/secrets:\s*\[OPENAI_API_KEY\]/g)?.length, 3);
 
   for (const ruleFile of ["firestore.rules", "storage.rules"]) {
     const rules = readFileSync(ruleFile, "utf8");
@@ -129,6 +180,81 @@ async function run() {
     assert.doesNotMatch(rules, /allow\s+(?:read|write)(?:,\s*(?:read|write))?\s*:\s*if\s+(?!false\b)/);
   }
   console.log("firebase callable contract tests passed");
+}
+
+const validRemotePlan = {
+  headline: "Protect tonight's progress.",
+  nextBestAction: "Set the guard reminder and leave the phone outside the bedroom.",
+  checkInPrompt: "What will make the next hour easier?",
+  suggestedGuardTime: "21:45",
+  focusTags: ["guard-time", "phone-boundary"],
+  provider: "remote" as const,
+  status: "ok" as const
+};
+
+for (const invalid of [
+  { text: "Safe reply", provider: "remote", status: "ok", model: "gpt-5.6-terra" },
+  { text: "https://private.example", provider: "remote", status: "ok" },
+  { text: "x".repeat(1_001), provider: "remote", status: "ok" }
+]) {
+  assert.throws(() => parseFirebaseClaraResult(invalid), /invalid firebase ai/i);
+}
+for (const invalid of [
+  { challenges: validChallenges().slice(0, 2), provider: "remote", status: "ok" },
+  { challenges: validChallenges().map((item, index) => index === 0 ? { ...item, premium: true } : item), provider: "remote", status: "ok" },
+  { challenges: validChallenges(), provider: "remote", status: "ok", providerBody: {} }
+]) {
+  assert.throws(() => parseFirebaseChallengeResult(invalid), /invalid firebase ai/i);
+}
+for (const invalid of [
+  { ...validRemotePlan, focusTags: [] },
+  { ...validRemotePlan, suggestedGuardTime: "25:00" },
+  { ...validRemotePlan, objectKey: "internal" }
+]) {
+  assert.throws(() => parseFirebaseRetentionResult(invalid), /invalid firebase ai/i);
+}
+
+function validChallenges() {
+  return [
+    challenge("reset-breathe", "Breathing reset", "breathing", "calm"),
+    challenge("reset-room", "Change rooms", "reset", "medium"),
+    challenge("reset-note", "Name the next step", "reflection", "calm")
+  ];
+}
+
+function challenge(id: string, title: string, category: "breathing" | "reset" | "reflection", intensity: "calm" | "medium") {
+  return {
+    id, title, category, durationSec: 120, intensity, premium: false as const, icon: "Activity",
+    steps: ["Put the phone down.", "Take three slow breaths."],
+    why: "A short reset interrupts the automatic loop."
+  };
+}
+
+function validChallengeRequest(): FirebaseChallengeRequest {
+  return {
+    clientEventId: "evt_challenge123",
+    profile: {
+      streakDays: 4, premium: false, attemptsToday: 2, mood: "stressed", hour: 21, dayPart: "evening",
+      isWeekend: false, timezoneOffsetMinutes: -330, slipsThisWeek: 0, slipWindow: null, slipTrigger: null,
+      interventionContext: null, disciplinePreferences: null, contextSignals: null, riskForecast: null,
+      recentFailureCount: 0, preferredCategories: ["breathing", "reset"]
+    },
+    recentChallengeHistory: []
+  };
+}
+
+function validRetentionRequest(): FirebaseRetentionRequest {
+  return {
+    clientEventId: "evt_retention123",
+    profile: {
+      premium: false, streakDays: 4, bestStreakDays: 9, attemptsThisWeek: 7, slipsThisWeek: 0,
+      checkInsThisWeek: 4, completedChallengesThisWeek: 3, averageUrge: 2.5, averageSleep: 3.5, steadyDays: 3,
+      riskWindow: "late-evening", slipWindow: null, slipTrigger: null, bestIntervention: "breathing-reset", momentum: "steady",
+      urgeRiskForecast: { level: "low", score: 20, confidence: "medium", currentWindow: "late-evening", drivers: ["sleep"] },
+      enabledReminderKeys: ["morning", "guard"], smartGuardTime: "21:45", smartGuardSource: "risk-window",
+      localDateKey: "2026-07-22", timezoneOffsetMinutes: -330
+    }
+  };
 }
 
 run().catch((error) => {

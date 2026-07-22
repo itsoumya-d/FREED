@@ -120,6 +120,10 @@ assert.equal(
   "A comment must not be treated as a callable declaration."
 );
 assert.equal(remoteConfig.parameters.firebase_foundation_enabled.defaultValue.value, "false");
+for (const parameter of ["ai_clara_enabled", "ai_challenges_enabled", "ai_retention_enabled"]) {
+  assert.equal(remoteConfig.parameters[parameter].defaultValue.value, "false", `${parameter} must fail closed by default`);
+  assert.match(remoteConfig.parameters[parameter].description, /server-side|server provider/i);
+}
 assert.equal(
   packageJson.scripts["audit:firebase-config"],
   "node -- scripts/run-ts-entry.js scripts/firebase-config-audit.ts",

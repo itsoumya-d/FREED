@@ -8,6 +8,18 @@
     "app_check_enforcement_enabled": {
       "defaultValue": { "value": "false" },
       "description": "Informational only until physical-provider registration and server enforcement are reviewed."
+    },
+    "ai_clara_enabled": {
+      "defaultValue": { "value": "false" },
+      "description": "Enables only the server-side CLARA OpenAI provider path after staging smoke tests and signed-device App Check proof."
+    },
+    "ai_challenges_enabled": {
+      "defaultValue": { "value": "false" },
+      "description": "Enables only the server-side challenge-generation OpenAI provider path after staging smoke tests and signed-device App Check proof."
+    },
+    "ai_retention_enabled": {
+      "defaultValue": { "value": "false" },
+      "description": "Enables only the server-side retention-plan OpenAI provider path after staging smoke tests and signed-device App Check proof."
     }
   }
 }

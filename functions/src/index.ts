@@ -37,6 +37,7 @@ import {
 import { runProtectedMutation, type TransactionalStore } from "./transactional.js";
 
 export { getReviewedAdultDomainFeed, refreshReviewedAdultDomainFeed } from "./adult-feed-firebase.js";
+export { generateClaraReply, generateChallenges, generateRetentionPlan } from "./ai-firebase.js";
 
 if (!getApps().length) initializeApp();
 

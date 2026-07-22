@@ -85,7 +85,164 @@ export type FirebaseCallableName =
   | "registerPushToken"
   | "requestAccountDeletion"
   | "getReviewedAdultDomainFeed"
+  | "generateClaraReply"
+  | "generateChallenges"
+  | "generateRetentionPlan"
   | "backendReadiness";
+
+export type FirebaseAiFallbackReason =
+  | "provider-disabled"
+  | "configuration-unavailable"
+  | "crisis-support"
+  | "duplicate-request"
+  | "provider-unavailable"
+  | "invalid-provider-response";
+
+export type FirebaseClaraRequest = {
+  clientEventId: string;
+  input: string;
+  context: {
+    streakDays: number | null;
+    attemptsToday: number | null;
+    premium: boolean | null;
+    slipsThisWeek: number | null;
+    slipWindow: string | null;
+    slipTrigger: string | null;
+  };
+};
+
+export type FirebaseClaraResult =
+  | { text: string; provider: "remote"; status: "ok" }
+  | { text: string; provider: "fallback"; status: "fallback"; reason: FirebaseAiFallbackReason };
+
+export type FirebaseRecoveryChallenge = {
+  id: string;
+  title: string;
+  category: "physical" | "breathing" | "reflection" | "connection" | "reset";
+  durationSec: number;
+  intensity: "calm" | "medium" | "strong";
+  premium: false;
+  icon: string;
+  steps: string[];
+  why: string;
+};
+
+export type FirebaseChallengeRequest = {
+  clientEventId: string;
+  profile: {
+    streakDays: number;
+    premium: boolean;
+    attemptsToday: number;
+    mood: "low" | "steady" | "energized" | "stressed";
+    hour: number;
+    dayPart: "morning" | "afternoon" | "evening" | "late-night";
+    isWeekend: boolean | null;
+    timezoneOffsetMinutes: number | null;
+    slipsThisWeek: number | null;
+    slipWindow: string | null;
+    slipTrigger: string | null;
+    interventionContext: {
+      source: "browser" | "search" | "manual-check" | "panic-button" | "app";
+      category: "adult" | "adult-search-intent" | "known-safe" | "unknown" | "self-reported";
+      surface: "adult-site" | "adult-search" | "search" | "social" | "video" | "forum" | "self-urge" | "unknown";
+      ruleFamily: string | null;
+      sessionDurationBucket: "under-1m" | "1-5m" | "5-15m" | "15-30m" | "30m-plus" | null;
+    } | null;
+    disciplinePreferences: {
+      challengeIntensity: "gentle" | "balanced" | "strong";
+      outdoorFrequency: "low" | "balanced" | "high";
+      exercisePreference: "low" | "balanced" | "high";
+      socialFrequency: "off" | "low" | "balanced" | "high";
+      emergencyStrictMode: boolean;
+      sleepModeActive: boolean;
+      deepFocusModeActive: boolean;
+      weekendModeEnabled: boolean;
+      unlockDurationMinutes: number;
+      dailyLimitMinutes: number;
+    } | null;
+    contextSignals: {
+      energyLevel: "low" | "steady" | "high" | null;
+      urgeLevel: number | null;
+      sleepQuality: number | null;
+      locationPermission: "granted" | "denied" | "undetermined" | "unavailable" | "unknown" | null;
+      weatherCondition: "clear" | "cloudy" | "rain" | "snow" | "storm" | "hot" | "cold" | "unknown" | null;
+      temperatureC: number | null;
+    } | null;
+    riskForecast: {
+      level: "low" | "elevated" | "high";
+      score: number;
+      confidence: "low" | "medium" | "high";
+      currentWindow: string | null;
+      drivers: string[];
+    } | null;
+    recentFailureCount: number;
+    preferredCategories: FirebaseRecoveryChallenge["category"][];
+  };
+  recentChallengeHistory: Array<{
+    id: string;
+    category: FirebaseRecoveryChallenge["category"];
+    outcome: "helped" | "still-urging";
+    completedAt: string;
+  }>;
+};
+
+export type FirebaseChallengeResult =
+  | { challenges: FirebaseRecoveryChallenge[]; provider: "remote"; status: "ok" }
+  | { challenges: FirebaseRecoveryChallenge[]; provider: "fallback"; status: "fallback"; reason: FirebaseAiFallbackReason };
+
+export type FirebaseRetentionRequest = {
+  clientEventId: string;
+  profile: {
+    premium: boolean;
+    streakDays: number;
+    bestStreakDays: number;
+    attemptsThisWeek: number;
+    slipsThisWeek: number;
+    checkInsThisWeek: number;
+    completedChallengesThisWeek: number;
+    averageUrge: number;
+    averageSleep: number;
+    steadyDays: number;
+    riskWindow: string | null;
+    slipWindow: string | null;
+    slipTrigger: string | null;
+    bestIntervention: string | null;
+    momentum: string;
+    urgeRiskForecast: {
+      level: "low" | "elevated" | "high";
+      score: number;
+      confidence: "low" | "medium" | "high";
+      currentWindow: string | null;
+      drivers: string[];
+    };
+    enabledReminderKeys: Array<"morning" | "evening" | "guard">;
+    smartGuardTime: string;
+    smartGuardSource: "risk-window" | "slip-window" | "default";
+    localDateKey: string;
+    timezoneOffsetMinutes: number;
+  };
+};
+
+export type FirebaseRetentionResult =
+  | {
+      headline: string;
+      nextBestAction: string;
+      checkInPrompt: string;
+      suggestedGuardTime: string | null;
+      focusTags: string[];
+      provider: "remote";
+      status: "ok";
+    }
+  | {
+      headline: string;
+      nextBestAction: string;
+      checkInPrompt: string;
+      suggestedGuardTime: string | null;
+      focusTags: string[];
+      provider: "fallback";
+      status: "fallback";
+      reason: FirebaseAiFallbackReason;
+    };
 
 export type FirebaseReviewedAdultDomainFeed = {
   version: string;
@@ -119,7 +276,7 @@ export type FirebaseCallableResult = {
   domains?: string[];
 };
 export type FirebaseCallableTransport = {
-  call: (name: FirebaseCallableName, data: unknown) => Promise<FirebaseCallableResult>;
+  call: (name: FirebaseCallableName, data: unknown) => Promise<unknown>;
 };
 export type FirebaseAggregateAnalyticsPayload = {
   day: string;
@@ -147,6 +304,15 @@ const REVIEWED_FEED_SOURCE_KEYS = ["id", "label", "url"] as const;
 const MAX_REVIEWED_FEED_DOMAINS = 100_000;
 const MAX_REVIEWED_FEED_DOMAIN_BYTES = 2_000_000;
 const REVIEWED_FEED_LABEL = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
+const AI_FALLBACK_REASONS = [
+  "provider-disabled", "configuration-unavailable", "crisis-support", "duplicate-request",
+  "provider-unavailable", "invalid-provider-response"
+] as const;
+const AI_CATEGORIES = ["physical", "breathing", "reflection", "connection", "reset"] as const;
+const AI_INTENSITIES = ["calm", "medium", "strong"] as const;
+const AI_SAFE_ID = /^[A-Za-z0-9][A-Za-z0-9_-]{2,79}$/;
+const AI_EVENT_ID = /^[A-Za-z0-9][A-Za-z0-9_-]{7,127}$/;
+const AI_RAW_LINK = /https?:\/\/|\b(?:[a-z0-9-]+\.)+[a-z]{2,63}(?:\/\S*)?/i;
 
 const PRODUCTION_PROJECT_ID = "freed-7d5ee";
 const STAGING_PROJECT_ID = "freed-staging-7d5ee";
@@ -428,8 +594,274 @@ export function createFirebaseCallableContracts(transport: FirebaseCallableTrans
     },
     getReviewedAdultDomainFeed: async (): Promise<FirebaseReviewedAdultDomainFeed> =>
       parseFirebaseReviewedAdultDomainFeed(await transport.call("getReviewedAdultDomainFeed", undefined)),
+    generateClaraReply: async (payload: FirebaseClaraRequest): Promise<FirebaseClaraResult> => {
+      assertFirebaseClaraRequest(payload);
+      return parseFirebaseClaraResult(await transport.call("generateClaraReply", payload));
+    },
+    generateChallenges: async (payload: FirebaseChallengeRequest): Promise<FirebaseChallengeResult> => {
+      assertFirebaseChallengeRequest(payload);
+      return parseFirebaseChallengeResult(await transport.call("generateChallenges", payload));
+    },
+    generateRetentionPlan: async (payload: FirebaseRetentionRequest): Promise<FirebaseRetentionResult> => {
+      assertFirebaseRetentionRequest(payload);
+      return parseFirebaseRetentionResult(await transport.call("generateRetentionPlan", payload));
+    },
     backendReadiness: () => transport.call("backendReadiness", undefined)
   };
+}
+
+export function parseFirebaseClaraResult(value: unknown): FirebaseClaraResult {
+  const fallback = isAiFallbackEnvelope(value);
+  const allowed = fallback ? ["text", "provider", "status", "reason"] as const : ["text", "provider", "status"] as const;
+  if (!isExactRecord(value, allowed) || !isSafeAiText(value.text, 1_000)) invalidAiResponse();
+  if (fallback) {
+    return { text: value.text, provider: "fallback", status: "fallback", reason: value.reason };
+  }
+  if (value.provider !== "remote" || value.status !== "ok") invalidAiResponse();
+  return { text: value.text, provider: "remote", status: "ok" };
+}
+
+export function parseFirebaseChallengeResult(value: unknown): FirebaseChallengeResult {
+  const fallback = isAiFallbackEnvelope(value);
+  const allowed = fallback ? ["challenges", "provider", "status", "reason"] as const : ["challenges", "provider", "status"] as const;
+  if (!isExactRecord(value, allowed) || !Array.isArray(value.challenges) || value.challenges.length !== 3) invalidAiResponse();
+  const challenges = value.challenges.map(parseFirebaseChallenge);
+  if (new Set(challenges.map((item) => item.id)).size !== 3) invalidAiResponse();
+  if (fallback) return { challenges, provider: "fallback", status: "fallback", reason: value.reason };
+  if (value.provider !== "remote" || value.status !== "ok") invalidAiResponse();
+  return { challenges, provider: "remote", status: "ok" };
+}
+
+export function parseFirebaseRetentionResult(value: unknown): FirebaseRetentionResult {
+  const fallback = isAiFallbackEnvelope(value);
+  const base = ["headline", "nextBestAction", "checkInPrompt", "suggestedGuardTime", "focusTags", "provider", "status"] as const;
+  const allowed = fallback ? [...base, "reason"] as const : base;
+  if (
+    !isExactRecord(value, allowed) ||
+    !isSafeAiText(value.headline, 90) ||
+    !isSafeAiText(value.nextBestAction, 180) ||
+    !isSafeAiText(value.checkInPrompt, 140) ||
+    !(value.suggestedGuardTime === null || (typeof value.suggestedGuardTime === "string" && /^([01]\d|2[0-3]):[0-5]\d$/.test(value.suggestedGuardTime))) ||
+    !Array.isArray(value.focusTags) || value.focusTags.length < 1 || value.focusTags.length > 4 ||
+    value.focusTags.some((tag) => !isSafeAiText(tag, 32)) ||
+    new Set(value.focusTags.map((tag) => String(tag).toLowerCase())).size !== value.focusTags.length
+  ) {
+    invalidAiResponse();
+  }
+  const plan = {
+    headline: value.headline,
+    nextBestAction: value.nextBestAction,
+    checkInPrompt: value.checkInPrompt,
+    suggestedGuardTime: value.suggestedGuardTime,
+    focusTags: value.focusTags as string[]
+  };
+  if (fallback) return { ...plan, provider: "fallback", status: "fallback", reason: value.reason };
+  if (value.provider !== "remote" || value.status !== "ok") invalidAiResponse();
+  return { ...plan, provider: "remote", status: "ok" };
+}
+
+function assertFirebaseClaraRequest(value: FirebaseClaraRequest): void {
+  const valid = isExactRecord(value, ["clientEventId", "input", "context"] as const) &&
+    isAiEventId(value.clientEventId) && isBoundedString(value.input, 1, 1_200) &&
+    isExactRecord(value.context, ["streakDays", "attemptsToday", "premium", "slipsThisWeek", "slipWindow", "slipTrigger"] as const) &&
+    isNullableInteger(value.context.streakDays, 0, 10_000) &&
+    isNullableInteger(value.context.attemptsToday, 0, 100) &&
+    (value.context.premium === null || typeof value.context.premium === "boolean") &&
+    isNullableInteger(value.context.slipsThisWeek, 0, 100) &&
+    isNullableSignal(value.context.slipWindow, 64) && isNullableSignal(value.context.slipTrigger, 64) &&
+    aiPayloadBytes(value) <= 8 * 1024;
+  if (!valid) invalidAiRequest();
+}
+
+function assertFirebaseChallengeRequest(value: FirebaseChallengeRequest): void {
+  if (!isExactRecord(value, ["clientEventId", "profile", "recentChallengeHistory"] as const) || !isAiEventId(value.clientEventId)) {
+    invalidAiRequest();
+  }
+  const profile = value.profile;
+  const validProfile = isExactRecord(profile, [
+    "streakDays", "premium", "attemptsToday", "mood", "hour", "dayPart", "isWeekend", "timezoneOffsetMinutes",
+    "slipsThisWeek", "slipWindow", "slipTrigger", "interventionContext", "disciplinePreferences", "contextSignals",
+    "riskForecast", "recentFailureCount", "preferredCategories"
+  ] as const) &&
+    isInteger(profile.streakDays, 0, 10_000) && typeof profile.premium === "boolean" &&
+    isInteger(profile.attemptsToday, 0, 100) && isEnum(profile.mood, ["low", "steady", "energized", "stressed"] as const) &&
+    isInteger(profile.hour, 0, 23) && isEnum(profile.dayPart, ["morning", "afternoon", "evening", "late-night"] as const) &&
+    (profile.isWeekend === null || typeof profile.isWeekend === "boolean") &&
+    isNullableInteger(profile.timezoneOffsetMinutes, -840, 840) && isNullableInteger(profile.slipsThisWeek, 0, 100) &&
+    isNullableSignal(profile.slipWindow, 64) && isNullableSignal(profile.slipTrigger, 64) &&
+    isFirebaseIntervention(profile.interventionContext) && isFirebaseDiscipline(profile.disciplinePreferences) &&
+    isFirebaseContextSignals(profile.contextSignals) && isFirebaseRisk(profile.riskForecast, true) &&
+    isInteger(profile.recentFailureCount, 0, 10) && isEnumArray(profile.preferredCategories, AI_CATEGORIES, 5);
+  const validHistory = Array.isArray(value.recentChallengeHistory) && value.recentChallengeHistory.length <= 10 &&
+    value.recentChallengeHistory.every((entry) =>
+      isExactRecord(entry, ["id", "category", "outcome", "completedAt"] as const) &&
+      isAiIdentifier(entry.id) && isEnum(entry.category, AI_CATEGORIES) &&
+      isEnum(entry.outcome, ["helped", "still-urging"] as const) && isCanonicalIsoTimestamp(entry.completedAt)
+    );
+  if (!validProfile || !validHistory || aiPayloadBytes(value) > 24 * 1024) invalidAiRequest();
+}
+
+function assertFirebaseRetentionRequest(value: FirebaseRetentionRequest): void {
+  if (!isExactRecord(value, ["clientEventId", "profile"] as const) || !isAiEventId(value.clientEventId)) invalidAiRequest();
+  const profile = value.profile;
+  const valid = isExactRecord(profile, [
+    "premium", "streakDays", "bestStreakDays", "attemptsThisWeek", "slipsThisWeek", "checkInsThisWeek",
+    "completedChallengesThisWeek", "averageUrge", "averageSleep", "steadyDays", "riskWindow", "slipWindow", "slipTrigger",
+    "bestIntervention", "momentum", "urgeRiskForecast", "enabledReminderKeys", "smartGuardTime", "smartGuardSource",
+    "localDateKey", "timezoneOffsetMinutes"
+  ] as const) && typeof profile.premium === "boolean" && isInteger(profile.streakDays, 0, 10_000) &&
+    isInteger(profile.bestStreakDays, 0, 10_000) && isInteger(profile.attemptsThisWeek, 0, 100) &&
+    isInteger(profile.slipsThisWeek, 0, 100) && isInteger(profile.checkInsThisWeek, 0, 7) &&
+    isInteger(profile.completedChallengesThisWeek, 0, 100) && isNumber(profile.averageUrge, 0, 5) &&
+    isNumber(profile.averageSleep, 0, 5) && isInteger(profile.steadyDays, 0, 7) &&
+    isNullableSignal(profile.riskWindow, 72) && isNullableSignal(profile.slipWindow, 72) &&
+    isNullableSignal(profile.slipTrigger, 64) && isNullableSignal(profile.bestIntervention, 96) &&
+    isSignal(profile.momentum, 72) && isFirebaseRisk(profile.urgeRiskForecast, false) &&
+    isEnumArray(profile.enabledReminderKeys, ["morning", "evening", "guard"] as const, 3) &&
+    new Set(profile.enabledReminderKeys).size === profile.enabledReminderKeys.length &&
+    /^([01]\d|2[0-3]):[0-5]\d$/.test(profile.smartGuardTime) &&
+    isEnum(profile.smartGuardSource, ["risk-window", "slip-window", "default"] as const) &&
+    isCanonicalLocalDate(profile.localDateKey) && isInteger(profile.timezoneOffsetMinutes, -840, 840);
+  if (!valid || aiPayloadBytes(value) > 16 * 1024) invalidAiRequest();
+}
+
+function parseFirebaseChallenge(value: unknown): FirebaseRecoveryChallenge {
+  if (!isExactRecord(value, ["id", "title", "category", "durationSec", "intensity", "premium", "icon", "steps", "why"] as const)) {
+    invalidAiResponse();
+  }
+  if (
+    !isAiIdentifier(value.id) || !isSafeAiText(value.title, 64) || !isEnum(value.category, AI_CATEGORIES) ||
+    !isInteger(value.durationSec, 30, 900) || !isEnum(value.intensity, AI_INTENSITIES) || value.premium !== false ||
+    typeof value.icon !== "string" || !/^[A-Za-z][A-Za-z0-9]{0,39}$/.test(value.icon) ||
+    !Array.isArray(value.steps) || value.steps.length < 2 || value.steps.length > 4 ||
+    value.steps.some((step) => !isSafeAiText(step, 120)) || !isSafeAiText(value.why, 160)
+  ) {
+    invalidAiResponse();
+  }
+  return {
+    id: value.id,
+    title: value.title,
+    category: value.category,
+    durationSec: value.durationSec,
+    intensity: value.intensity,
+    premium: false,
+    icon: value.icon,
+    steps: value.steps as string[],
+    why: value.why
+  };
+}
+
+function isAiFallbackEnvelope(value: unknown): value is { provider: "fallback"; status: "fallback"; reason: FirebaseAiFallbackReason } & Record<string, unknown> {
+  return Boolean(
+    value && typeof value === "object" && !Array.isArray(value) &&
+    (value as Record<string, unknown>).provider === "fallback" &&
+    (value as Record<string, unknown>).status === "fallback" &&
+    isEnum((value as Record<string, unknown>).reason, AI_FALLBACK_REASONS)
+  );
+}
+
+function isFirebaseIntervention(value: unknown): boolean {
+  if (value === null) return true;
+  return isExactRecord(value, ["source", "category", "surface", "ruleFamily", "sessionDurationBucket"] as const) &&
+    isEnum(value.source, ["browser", "search", "manual-check", "panic-button", "app"] as const) &&
+    isEnum(value.category, ["adult", "adult-search-intent", "known-safe", "unknown", "self-reported"] as const) &&
+    isEnum(value.surface, ["adult-site", "adult-search", "search", "social", "video", "forum", "self-urge", "unknown"] as const) &&
+    (value.ruleFamily === null || isAiIdentifier(value.ruleFamily)) &&
+    (value.sessionDurationBucket === null || isEnum(value.sessionDurationBucket, ["under-1m", "1-5m", "5-15m", "15-30m", "30m-plus"] as const));
+}
+
+function isFirebaseDiscipline(value: unknown): boolean {
+  if (value === null) return true;
+  return isExactRecord(value, [
+    "challengeIntensity", "outdoorFrequency", "exercisePreference", "socialFrequency", "emergencyStrictMode", "sleepModeActive",
+    "deepFocusModeActive", "weekendModeEnabled", "unlockDurationMinutes", "dailyLimitMinutes"
+  ] as const) && isEnum(value.challengeIntensity, ["gentle", "balanced", "strong"] as const) &&
+    isEnum(value.outdoorFrequency, ["low", "balanced", "high"] as const) &&
+    isEnum(value.exercisePreference, ["low", "balanced", "high"] as const) &&
+    isEnum(value.socialFrequency, ["off", "low", "balanced", "high"] as const) &&
+    typeof value.emergencyStrictMode === "boolean" && typeof value.sleepModeActive === "boolean" &&
+    typeof value.deepFocusModeActive === "boolean" && typeof value.weekendModeEnabled === "boolean" &&
+    isInteger(value.unlockDurationMinutes, 5, 60) && isInteger(value.dailyLimitMinutes, 5, 240);
+}
+
+function isFirebaseContextSignals(value: unknown): boolean {
+  if (value === null) return true;
+  return isExactRecord(value, ["energyLevel", "urgeLevel", "sleepQuality", "locationPermission", "weatherCondition", "temperatureC"] as const) &&
+    (value.energyLevel === null || isEnum(value.energyLevel, ["low", "steady", "high"] as const)) &&
+    isNullableInteger(value.urgeLevel, 0, 5) && isNullableInteger(value.sleepQuality, 1, 5) &&
+    (value.locationPermission === null || isEnum(value.locationPermission, ["granted", "denied", "undetermined", "unavailable", "unknown"] as const)) &&
+    (value.weatherCondition === null || isEnum(value.weatherCondition, ["clear", "cloudy", "rain", "snow", "storm", "hot", "cold", "unknown"] as const)) &&
+    isNullableInteger(value.temperatureC, -60, 60);
+}
+
+function isFirebaseRisk(value: unknown, nullable: boolean): boolean {
+  if (value === null) return nullable;
+  return isExactRecord(value, ["level", "score", "confidence", "currentWindow", "drivers"] as const) &&
+    isEnum(value.level, ["low", "elevated", "high"] as const) && isInteger(value.score, 0, 100) &&
+    isEnum(value.confidence, ["low", "medium", "high"] as const) && isNullableSignal(value.currentWindow, 72) &&
+    Array.isArray(value.drivers) && value.drivers.length <= 4 && value.drivers.every((item) => isSignal(item, 56));
+}
+
+function isAiEventId(value: unknown): value is string {
+  return typeof value === "string" && AI_EVENT_ID.test(value);
+}
+
+function isAiIdentifier(value: unknown): value is string {
+  return typeof value === "string" && AI_SAFE_ID.test(value) && !AI_RAW_LINK.test(value);
+}
+
+function isBoundedString(value: unknown, min: number, max: number): value is string {
+  return typeof value === "string" && value.trim().length >= min && value.length <= max;
+}
+
+function isSafeAiText(value: unknown, max: number): value is string {
+  return isBoundedString(value, 1, max) && !AI_RAW_LINK.test(value);
+}
+
+function isSignal(value: unknown, max: number): value is string {
+  return isSafeAiText(value, max);
+}
+
+function isNullableSignal(value: unknown, max: number): value is string | null {
+  return value === null || isSignal(value, max);
+}
+
+function isInteger(value: unknown, min: number, max: number): value is number {
+  return typeof value === "number" && Number.isInteger(value) && value >= min && value <= max;
+}
+
+function isNullableInteger(value: unknown, min: number, max: number): value is number | null {
+  return value === null || isInteger(value, min, max);
+}
+
+function isNumber(value: unknown, min: number, max: number): value is number {
+  return typeof value === "number" && Number.isFinite(value) && value >= min && value <= max;
+}
+
+function isEnum<const T extends readonly string[]>(value: unknown, allowed: T): value is T[number] {
+  return typeof value === "string" && allowed.includes(value);
+}
+
+function isEnumArray<const T extends readonly string[]>(value: unknown, allowed: T, max: number): value is T[number][] {
+  return Array.isArray(value) && value.length <= max && value.every((item) => isEnum(item, allowed));
+}
+
+function aiPayloadBytes(value: unknown): number {
+  return new TextEncoder().encode(JSON.stringify(value)).byteLength;
+}
+
+function isCanonicalLocalDate(value: unknown): value is string {
+  if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const timestamp = Date.parse(`${value}T00:00:00.000Z`);
+  return Number.isFinite(timestamp) && new Date(timestamp).toISOString().slice(0, 10) === value;
+}
+
+function invalidAiRequest(): never {
+  throw new Error("This data is not permitted in Firebase AI callable payloads.");
+}
+
+function invalidAiResponse(): never {
+  throw new Error("Invalid Firebase AI callable response.");
 }
 
 function assertCallablePayload(payload: object, allowed: readonly string[]) {

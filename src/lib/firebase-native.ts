@@ -25,7 +25,6 @@ import {
   getFirebaseEmailLinkReadiness,
   getFirebaseMessagingRegistrationContract,
   type FirebaseAuthNativeApi,
-  type FirebaseCallableResult,
   type FirebaseMessagingRegistration
 } from "@/lib/firebase-client";
 
@@ -108,8 +107,8 @@ export function getFirebaseCallableContracts() {
   if (!readiness.ready || Platform.OS === "web") return null;
   const functions = getConfiguredFunctions();
   return createFirebaseCallableContracts({
-    async call(name, data): Promise<FirebaseCallableResult> {
-      const callable = httpsCallable<unknown, FirebaseCallableResult>(functions, name);
+    async call(name, data): Promise<unknown> {
+      const callable = httpsCallable<unknown, unknown>(functions, name);
       return (await callable(data)).data;
     }
   });
