@@ -1,0 +1,21 @@
+# Task 7A follow-up review fixes
+
+## Transaction ordering
+
+`runProtectedMutation` now fetches rate-limit and idempotency documents before its first write. The shared `mutate` wrapper uses that helper, so readiness, aggregate analytics, backup metadata, push-token registration, and deletion follow Firestore's all-reads-before-writes requirement. A strict in-memory transaction harness throws on any read after write and exercises each operation name.
+
+## Callable readiness
+
+The deleted `firebaseFoundation` callable has been removed from the native client. `callFirebaseBackendReadiness` initializes native App Check and calls the actual Auth + App Check-protected `backendReadiness` endpoint. It does not downgrade failed Auth/App Check checks to a fallback call.
+
+## Emulator reproducibility
+
+`functions/package.json` pins `firebase-tools` to `14.7.0`, whose supported engine range includes Node 22. The emulator command uses `./node_modules/.bin/firebase`, builds before startup, and runs read-only compiled tests after emulator startup. It has no global CLI or unpinned `npx` dependency.
+
+## Verification
+
+- `npm --prefix functions test`: 9 passing tests.
+- `npm --prefix functions run test:emulator`: Auth, Firestore, Storage, and Functions emulators started; all six Functions loaded; 9 tests passed; command exited 0.
+- `npm run test:firebase-runtime` and `npm run typecheck`: passed.
+
+The emulator host used Node 26 locally; production deployment remains Node 22 by `functions/package.json` and was not attempted.

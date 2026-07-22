@@ -34,10 +34,11 @@ export type FirebaseStartupResult = {
   reason?: string;
 };
 
-export type FirebaseFoundationCallableResult = {
+export type FirebaseBackendReadinessCallableResult = {
   ok: boolean;
   acceptsRecoveryContent: false;
   projectRegion: "asia-south1";
+  appCheckRequired: true;
 };
 
 let startupPromise: Promise<FirebaseStartupResult> | null = null;
@@ -79,13 +80,20 @@ export async function getFirebaseMessagingRegistrationAfterPermission(
   return getFirebaseMessagingRegistrationContract({ installationId, token });
 }
 
-export async function callFirebaseFoundation(): Promise<FirebaseFoundationCallableResult | null> {
+/**
+ * Calls the deployed Auth + App Check protected readiness endpoint only after
+ * native App Check initialization. Authentication/App Check errors propagate
+ * rather than being converted into a less-protected fallback request.
+ */
+export async function callFirebaseBackendReadiness(): Promise<FirebaseBackendReadinessCallableResult | null> {
   const readiness = getFirebaseClientReadiness();
   if (!readiness.ready || Platform.OS === "web" || !readiness.functionsRegion) return null;
+  const startup = await startFirebaseClient();
+  if (startup.status !== "started") return null;
 
-  const callable = httpsCallable<undefined, FirebaseFoundationCallableResult>(
+  const callable = httpsCallable<undefined, FirebaseBackendReadinessCallableResult>(
     getConfiguredFunctions(),
-    "firebaseFoundation"
+    "backendReadiness"
   );
   const result = await callable(undefined);
   return result.data;

@@ -1,12 +1,30 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { acquireLease, claimIdempotency, consumeRateLimit, type TransactionalStore } from "./transactional.js";
+import {
+  acquireLease,
+  claimIdempotency,
+  consumeRateLimit,
+  runProtectedMutation,
+  type TransactionalStore
+} from "./transactional.js";
 
 class MemoryStore implements TransactionalStore {
   readonly values = new Map<string, object>();
   async get<T extends object>(path: string) { return { value: this.values.get(path) as T | undefined }; }
   async set(path: string, value: object) { this.values.set(path, value); }
+}
+
+class StrictReadBeforeWriteStore extends MemoryStore {
+  writesStarted = false;
+  override async get<T extends object>(path: string) {
+    if (this.writesStarted) throw new Error(`Firestore read after write: ${path}`);
+    return super.get<T>(path);
+  }
+  override async set(path: string, value: object) {
+    this.writesStarted = true;
+    return super.set(path, value);
+  }
 }
 
 test("idempotency claims expire and can be reclaimed", async () => {
@@ -29,4 +47,21 @@ test("leases reject a second owner until the TTL expires", async () => {
   assert.deepEqual(await acquireLease(store, "leases/job", "a", 100, 10), { acquired: true, leaseUntil: 110 });
   assert.deepEqual(await acquireLease(store, "leases/job", "b", 105, 10), { acquired: false, leaseUntil: 110 });
   assert.deepEqual(await acquireLease(store, "leases/job", "b", 110, 10), { acquired: true, leaseUntil: 120 });
+});
+
+test("protected mutation reads rate-limit and idempotency controls before every write", async () => {
+  for (const operation of ["readiness", "analytics", "backup-metadata", "push-token", "deletion"]) {
+    const store = new StrictReadBeforeWriteStore();
+    let businessWriteCount = 0;
+    const result = await runProtectedMutation(store, {
+      rateLimitPath: `rate_limits/user_${operation}`,
+      idempotencyPath: `idempotency/user_${operation}_event`,
+      now: 100,
+      windowMs: 60_000,
+      limit: 10,
+      idempotencyTtlMs: 1_000
+    }, async () => { businessWriteCount += 1; });
+    assert.equal(result, "applied");
+    assert.equal(businessWriteCount, 1);
+  }
 });

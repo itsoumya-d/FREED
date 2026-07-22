@@ -6,6 +6,55 @@ export interface TransactionalStore {
   set(path: string, value: object): Promise<void>;
 }
 
+export type ProtectedMutationOptions = {
+  rateLimitPath: string;
+  idempotencyPath: string;
+  now: number;
+  windowMs: number;
+  limit: number;
+  idempotencyTtlMs: number;
+};
+
+export type ProtectedMutationResult = "applied" | "duplicate" | "rate-limited";
+
+/**
+ * Firestore transactions require every document read before their first write.
+ * This shared mutation gate reads both controls together, then persists control
+ * state and finally invokes the business write in the same transaction.
+ */
+export async function runProtectedMutation(
+  store: TransactionalStore,
+  options: ProtectedMutationOptions,
+  write: () => Promise<void> | void
+): Promise<ProtectedMutationResult> {
+  const [rateLimit, idempotency] = await Promise.all([
+    store.get<{ count: number; windowStartedAt: number; expiresAt: number }>(options.rateLimitPath),
+    store.get<{ expiresAt: number }>(options.idempotencyPath)
+  ]);
+
+  const currentRate = rateLimit.value;
+  const inWindow = currentRate !== undefined && currentRate.windowStartedAt + options.windowMs > options.now;
+  const count = inWindow && currentRate ? currentRate.count : 0;
+  if (count >= options.limit) return "rate-limited";
+
+  const windowStartedAt = inWindow && currentRate ? currentRate.windowStartedAt : options.now;
+  const isNew = !idempotency.value || idempotency.value.expiresAt <= options.now;
+
+  await store.set(options.rateLimitPath, {
+    count: count + 1,
+    windowStartedAt,
+    expiresAt: windowStartedAt + options.windowMs
+  });
+  if (!isNew) return "duplicate";
+
+  await store.set(options.idempotencyPath, {
+    createdAt: options.now,
+    expiresAt: options.now + options.idempotencyTtlMs
+  });
+  await write();
+  return "applied";
+}
+
 /** Pure transaction logic used by the Admin SDK adapter and isolated test harness. */
 export async function claimIdempotency(
   store: TransactionalStore,

@@ -35,7 +35,7 @@ by `firestore.indexes.json`.
 Clients use Play Integrity on Android and App Attest with DeviceCheck fallback on
 iOS. Debug App Check requires an explicit non-production build setting. Enforcement
 stays disabled until physical provider registration completes. The
-`firebaseFoundation` callable is data-free; deployment remains blocked while
+`backendReadiness` callable is data-free and requires Firebase Auth plus App Check; deployment remains blocked while
 production billing is disabled.
 
 ## Authentication and backup integration

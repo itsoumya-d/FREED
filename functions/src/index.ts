@@ -12,7 +12,7 @@ import {
   parsePushTokenRegistration,
   validateServerDocument
 } from "./contracts.js";
-import { claimIdempotency, consumeRateLimit, type TransactionalStore } from "./transactional.js";
+import { runProtectedMutation, type TransactionalStore } from "./transactional.js";
 
 if (!getApps().length) initializeApp();
 
@@ -135,12 +135,16 @@ async function mutate(
   return db.runTransaction(async (transaction) => {
     const store = firestoreTransactionStore(transaction);
     const now = Date.now();
-    const withinLimit = await consumeRateLimit(store, `${COLLECTIONS.rateLimits}/${uid}_${operation}`, now, RATE_LIMIT_TTL_MS, perMinute);
-    if (!withinLimit) throw new HttpsError("resource-exhausted", "Try again shortly.");
-    const isNew = await claimIdempotency(store, `${COLLECTIONS.idempotency}/${uid}_${operation}_${clientEventId}`, now, IDEMPOTENCY_TTL_MS);
-    if (!isNew) return true;
-    await write(transaction);
-    return false;
+    const result = await runProtectedMutation(store, {
+      rateLimitPath: `${COLLECTIONS.rateLimits}/${uid}_${operation}`,
+      idempotencyPath: `${COLLECTIONS.idempotency}/${uid}_${operation}_${clientEventId}`,
+      now,
+      windowMs: RATE_LIMIT_TTL_MS,
+      limit: perMinute,
+      idempotencyTtlMs: IDEMPOTENCY_TTL_MS
+    }, () => write(transaction));
+    if (result === "rate-limited") throw new HttpsError("resource-exhausted", "Try again shortly.");
+    return result === "duplicate";
   });
 }
 

@@ -21,7 +21,9 @@ for (const moduleName of [
 assert.match(source, /initializeAppCheck/);
 assert.match(source, /getFirebaseAppCheckProviderConfig\("android", readiness\)/);
 assert.match(source, /getFirebaseAppCheckProviderConfig\("ios", readiness\)/);
-assert.match(source, /firebaseFoundation/);
+assert.match(source, /callFirebaseBackendReadiness/);
+assert.match(source, /backendReadiness/);
+assert.doesNotMatch(source, /firebaseFoundation/);
 assert.match(source, /getFirebaseMessagingRegistrationContract/);
 assert.match(source, /const emailLinkReadiness = getFirebaseEmailLinkReadiness\(\);[\s\S]*emailLinkReady: emailLinkReadiness\.ready,[\s\S]*emailLinkDomain: emailLinkReadiness\.linkDomain/);
 assert.match(source, /crashlytics\.setCrashlyticsCollectionEnabled\(false\)/);
