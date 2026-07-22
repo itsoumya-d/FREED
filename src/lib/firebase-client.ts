@@ -76,6 +76,31 @@ export type FirebaseMessagingRegistration = {
   recoveryContentIncluded: false;
 };
 
+export type FirebaseCallableName =
+  | "ingestAggregateAnalytics"
+  | "registerEncryptedBackupMetadata"
+  | "registerPushToken"
+  | "requestAccountDeletion"
+  | "backendReadiness";
+
+export type FirebaseCallableResult = { ok: boolean; duplicate?: boolean; status?: string };
+export type FirebaseCallableTransport = {
+  call: (name: FirebaseCallableName, data: unknown) => Promise<FirebaseCallableResult>;
+};
+export type FirebaseAggregateAnalyticsPayload = {
+  day: string;
+  checkIns: number;
+  completedChallenges: number;
+  clientEventId: string;
+};
+export type FirebaseBackupMetadataPayload = {
+  backupId: string;
+  encryptedBytes: number;
+  ciphertextSha256: string;
+  clientEventId: string;
+};
+export type FirebaseDeletionRequestPayload = { clientEventId: string };
+
 const PRODUCTION_PROJECT_ID = "freed-7d5ee";
 const STAGING_PROJECT_ID = "freed-staging-7d5ee";
 const FUNCTIONS_REGION = "asia-south1";
@@ -272,6 +297,48 @@ export function getFirebaseMessagingRegistrationContract(input: {
     token: input.token,
     recoveryContentIncluded: false
   };
+}
+
+/**
+ * Mobile-side boundary for Firebase Functions. It intentionally exposes only
+ * bounded aggregates and encrypted-backup metadata, never recovery content.
+ */
+export function createFirebaseCallableContracts(transport: FirebaseCallableTransport) {
+  return {
+    ingestAggregateAnalytics: async (payload: FirebaseAggregateAnalyticsPayload) => {
+      assertCallablePayload(payload, ["day", "checkIns", "completedChallenges", "clientEventId"]);
+      return transport.call("ingestAggregateAnalytics", payload);
+    },
+    registerBackupMetadata: async (payload: FirebaseBackupMetadataPayload) => {
+      assertCallablePayload(payload, ["backupId", "encryptedBytes", "ciphertextSha256", "clientEventId"]);
+      return transport.call("registerEncryptedBackupMetadata", payload);
+    },
+    registerPushToken: async (payload: FirebaseMessagingRegistration & { clientEventId: string }) => {
+      assertCallablePayload(payload, ["installationId", "token", "recoveryContentIncluded", "clientEventId"]);
+      if (payload.recoveryContentIncluded !== false) throw new Error("Recovery content is not permitted in Firebase callable payloads.");
+      return transport.call("registerPushToken", {
+        installationId: payload.installationId,
+        token: payload.token,
+        clientEventId: payload.clientEventId
+      });
+    },
+    requestAccountDeletion: async (payload: FirebaseDeletionRequestPayload) => {
+      assertCallablePayload(payload, ["clientEventId"]);
+      return transport.call("requestAccountDeletion", payload);
+    },
+    backendReadiness: () => transport.call("backendReadiness", undefined)
+  };
+}
+
+function assertCallablePayload(payload: object, allowed: readonly string[]) {
+  for (const key of Object.keys(payload)) {
+    if (
+      !allowed.includes(key) ||
+      (/(?:url|host|recovery|receipt|note|accessibility|envelope|content|text|body)/i.test(key) && key !== "recoveryContentIncluded")
+    ) {
+      throw new Error("This data is not permitted in Firebase callable payloads.");
+    }
+  }
 }
 
 function providerCredential(

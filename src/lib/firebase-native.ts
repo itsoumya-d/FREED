@@ -19,11 +19,13 @@ import remoteConfigModule from "@react-native-firebase/remote-config";
 
 import {
   createFirebaseAuthAdapter,
+  createFirebaseCallableContracts,
   getFirebaseAppCheckProviderConfig,
   getFirebaseClientReadiness,
   getFirebaseEmailLinkReadiness,
   getFirebaseMessagingRegistrationContract,
   type FirebaseAuthNativeApi,
+  type FirebaseCallableResult,
   type FirebaseMessagingRegistration
 } from "@/lib/firebase-client";
 
@@ -87,6 +89,22 @@ export async function callFirebaseFoundation(): Promise<FirebaseFoundationCallab
   );
   const result = await callable(undefined);
   return result.data;
+}
+
+/**
+ * Callable transport is native-only and region-pinned. Consumers receive the
+ * allowlisted contracts from firebase-client rather than raw callable access.
+ */
+export function getFirebaseCallableContracts() {
+  const readiness = getFirebaseClientReadiness();
+  if (!readiness.ready || Platform.OS === "web") return null;
+  const functions = getConfiguredFunctions();
+  return createFirebaseCallableContracts({
+    async call(name, data): Promise<FirebaseCallableResult> {
+      const callable = httpsCallable<unknown, FirebaseCallableResult>(functions, name);
+      return (await callable(data)).data;
+    }
+  });
 }
 
 async function initializeFirebaseClient(): Promise<FirebaseStartupResult> {
