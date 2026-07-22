@@ -37,3 +37,9 @@ Verification after the assertion update:
 The repository test now extracts every exported `onCall` declaration from the TypeScript source using balanced option/body blocks. It checks each discovered callable for App Check enforcement and the shared UID gate, regardless of whitespace or option-property order. The deletion policy is exclusive: `requestAccountDeletion` must consume a limited-use token and every other callable must not. Deliberate bad fixtures prove failures for missing App Check, missing UID gating, and a non-deletion limited-use token.
 
 Verification: `npm run test:firebase-repository`, `npm run test:firebase-functions`, `npm --prefix functions run build`, and `npm run typecheck` passed.
+
+## Syntax-aware callable re-review
+
+The source-level extractor now uses the TypeScript AST and accepts only actual exported variable declarations initialized by `onCall`. It inspects actual object-literal booleans and actual `requireUid(request.auth?.uid)` call expressions in callback bodies. Adversarial fixtures confirm that comments or string literals cannot provide fake App Check/UID policy tokens, and string/comment text cannot create a fake callable declaration.
+
+Verification: `npm run test:firebase-repository`, `npm run test:firebase-functions`, `npm --prefix functions run build`, and `npm run typecheck` passed.

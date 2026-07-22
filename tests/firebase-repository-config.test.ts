@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import * as ts from "typescript";
 
 const aliases = JSON.parse(readFileSync(".firebaserc", "utf8"));
 const config = JSON.parse(readFileSync("firebase.json", "utf8"));
@@ -47,6 +48,24 @@ assert.throws(
   () => assertCallablePolicies(extractExportedOnCalls(`export const other = onCall({ consumeAppCheckToken: true, enforceAppCheck: true }, async (request) => { requireUid(request.auth?.uid); });`)),
   /only requestAccountDeletion/i
 );
+assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`export const unsafe = onCall({ /* enforceAppCheck: true */ }, async (request) => { /* requireUid(request.auth?.uid) */ });`)),
+  /unsafe.*enforceAppCheck/i
+);
+assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`export const unsafe = onCall({ policy: "enforceAppCheck: true" }, async (request) => { const text = "requireUid(request.auth?.uid)"; });`)),
+  /unsafe.*enforceAppCheck/i
+);
+assert.equal(
+  extractExportedOnCalls(`const fixture = "export const fake = onCall({ enforceAppCheck: true }, async (request) => { requireUid(request.auth?.uid); })";`).length,
+  0,
+  "A string literal must not be treated as a callable declaration."
+);
+assert.equal(
+  extractExportedOnCalls(`/* export const fake = onCall({ enforceAppCheck: true }, async (request) => { requireUid(request.auth?.uid); }); */`).length,
+  0,
+  "A comment must not be treated as a callable declaration."
+);
 assert.equal(remoteConfig.parameters.firebase_foundation_enabled.defaultValue.value, "false");
 assert.equal(
   packageJson.scripts["audit:firebase-config"],
@@ -76,38 +95,35 @@ assert.match(productionEnvironmentExample, /EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_U
 assert.match(productionEnvironmentExample, /EXPO_PUBLIC_FIREBASE_EMAIL_LINK_DOMAIN=freed-7d5ee\.firebaseapp\.com/);
 console.log("firebase repository configuration tests passed");
 
-type ExportedOnCall = { name: string; options: string; body: string };
+type ExportedOnCall = { name: string; options: ts.ObjectLiteralExpression; body: ts.Block };
 
-/** Extracts exported v2 onCall declarations without relying on option order or formatting. */
+/** Enumerates syntax nodes only: comments and strings are not declarations. */
 function extractExportedOnCalls(source: string): ExportedOnCall[] {
+  const sourceFile = ts.createSourceFile("functions/src/index.ts", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const handlers: ExportedOnCall[] = [];
-  const declaration = /export\s+const\s+([A-Za-z_$][\w$]*)\s*=\s*onCall\s*\(/g;
-  let match: RegExpExecArray | null;
-  while ((match = declaration.exec(source))) {
-    const optionsStart = nextNonWhitespace(source, declaration.lastIndex);
-    if (source[optionsStart] !== "{") throw new Error(`Exported callable ${match[1]} must use explicit options.`);
-    const options = readBalanced(source, optionsStart, "{", "}");
-    const arrow = source.indexOf("=>", options.end);
-    if (arrow < 0) throw new Error(`Exported callable ${match[1]} must define a handler.`);
-    const bodyStart = nextNonWhitespace(source, arrow + 2);
-    if (source[bodyStart] !== "{") throw new Error(`Exported callable ${match[1]} must use a block handler.`);
-    const body = readBalanced(source, bodyStart, "{", "}");
-    handlers.push({ name: match[1]!, options: options.content, body: body.content });
-    declaration.lastIndex = body.end + 1;
+  for (const statement of sourceFile.statements) {
+    if (!ts.isVariableStatement(statement) || !hasExportModifier(statement)) continue;
+    for (const declaration of statement.declarationList.declarations) {
+      if (!ts.isIdentifier(declaration.name) || !declaration.initializer || !ts.isCallExpression(declaration.initializer)) continue;
+      const [options, callback] = declaration.initializer.arguments;
+      if (!ts.isIdentifier(declaration.initializer.expression) || declaration.initializer.expression.text !== "onCall") continue;
+      if (!options || !ts.isObjectLiteralExpression(options) || !callback || !isBlockCallback(callback)) continue;
+      handlers.push({ name: declaration.name.text, options, body: callback.body });
+    }
   }
-  if (handlers.length === 0) throw new Error("No exported onCall handlers were found.");
   return handlers;
 }
 
 function assertCallablePolicies(handlers: ExportedOnCall[]) {
+  assert.ok(handlers.length > 0, "No exported onCall handlers were found.");
   for (const handler of handlers) {
-    if (!/\benforceAppCheck\s*:\s*true\b/.test(handler.options)) {
+    if (!hasTrueOption(handler.options, "enforceAppCheck")) {
       throw new Error(`${handler.name} must set enforceAppCheck: true.`);
     }
-    if (!/\brequireUid\s*\(\s*request\s*\.\s*auth\s*\?\.\s*uid\s*\)/.test(handler.body)) {
+    if (!usesSharedUidGate(handler.body)) {
       throw new Error(`${handler.name} must use the shared UID auth gate.`);
     }
-    const consumesLimitedUseToken = /\bconsumeAppCheckToken\s*:\s*true\b/.test(handler.options);
+    const consumesLimitedUseToken = hasTrueOption(handler.options, "consumeAppCheckToken");
     if (handler.name === "requestAccountDeletion" && !consumesLimitedUseToken) {
       throw new Error("requestAccountDeletion must consume a limited-use App Check token.");
     }
@@ -117,41 +133,48 @@ function assertCallablePolicies(handlers: ExportedOnCall[]) {
   }
 }
 
-function nextNonWhitespace(source: string, start: number) {
-  let index = start;
-  while (/\s/.test(source[index] ?? "")) index += 1;
-  return index;
+function hasExportModifier(statement: ts.VariableStatement) {
+  return statement.modifiers?.some((modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword) ?? false;
 }
 
-function readBalanced(source: string, start: number, open: string, close: string) {
-  let depth = 0;
-  let quote: "'" | '"' | "`" | null = null;
-  let lineComment = false;
-  let blockComment = false;
-  for (let index = start; index < source.length; index += 1) {
-    const character = source[index]!;
-    const next = source[index + 1];
-    if (lineComment) {
-      if (character === "\n") lineComment = false;
-      continue;
+function isBlockCallback(node: ts.Expression): node is ts.ArrowFunction | ts.FunctionExpression {
+  return (ts.isArrowFunction(node) || ts.isFunctionExpression(node)) && ts.isBlock(node.body);
+}
+
+function hasTrueOption(options: ts.ObjectLiteralExpression, name: string) {
+  return options.properties.some((property) => {
+    if (!ts.isPropertyAssignment(property) || propertyName(property.name) !== name) return false;
+    return property.initializer.kind === ts.SyntaxKind.TrueKeyword;
+  });
+}
+
+function propertyName(name: ts.PropertyName): string | null {
+  if (ts.isIdentifier(name) || ts.isStringLiteral(name)) return name.text;
+  return null;
+}
+
+function usesSharedUidGate(body: ts.Block) {
+  let found = false;
+  const visit = (node: ts.Node): void => {
+    if (found) return;
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "requireUid") {
+      const [argument] = node.arguments;
+      if (argument && isRequestAuthUid(argument)) found = true;
     }
-    if (blockComment) {
-      if (character === "*" && next === "/") { blockComment = false; index += 1; }
-      continue;
-    }
-    if (quote) {
-      if (character === "\\") { index += 1; continue; }
-      if (character === quote) quote = null;
-      continue;
-    }
-    if (character === "/" && next === "/") { lineComment = true; index += 1; continue; }
-    if (character === "/" && next === "*") { blockComment = true; index += 1; continue; }
-    if (character === "'" || character === '"' || character === "`") { quote = character; continue; }
-    if (character === open) depth += 1;
-    if (character === close) {
-      depth -= 1;
-      if (depth === 0) return { content: source.slice(start + 1, index), end: index };
-    }
-  }
-  throw new Error(`Unterminated ${open}${close} block in Firebase callable source.`);
+    ts.forEachChild(node, visit);
+  };
+  ts.forEachChild(body, visit);
+  return found;
+}
+
+function isRequestAuthUid(node: ts.Expression): boolean {
+  return (
+    ts.isPropertyAccessExpression(node) &&
+    node.name.text === "uid" &&
+    node.questionDotToken !== undefined &&
+    ts.isPropertyAccessExpression(node.expression) &&
+    node.expression.name.text === "auth" &&
+    ts.isIdentifier(node.expression.expression) &&
+    node.expression.expression.text === "request"
+  );
 }
