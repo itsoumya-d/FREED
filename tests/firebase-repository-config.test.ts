@@ -81,8 +81,9 @@ assert.throws(
   () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const other = onCall({ enforceAppCheck: true, consumeAppCheckToken: true, ...unknownOptions, enforceAppCheck: true }, async (request) => { requireUid(request.auth?.uid); });`)),
   /only requestAccountDeletion/i
 );
-assert.doesNotThrow(
-  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const safe = onCall({ ...unknownOptions, enforceAppCheck: true }, async (request) => { const uid = requireUid(request.auth?.uid); });`))
+assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const safe = onCall({ ...unknownOptions, enforceAppCheck: true }, async (request) => { const uid = requireUid(request.auth?.uid); });`)),
+  /only requestAccountDeletion/i
 );
 assert.doesNotThrow(
   () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const requestAccountDeletion = onCall({ ...unknownOptions, enforceAppCheck: true, consumeAppCheckToken: true }, async (request) => { const uid = requireUid(request.auth?.uid); });`))
@@ -187,7 +188,7 @@ function assertCallablePolicies(handlers: ExportedOnCall[]) {
     if (handler.name === "requestAccountDeletion" && consumeAppCheckToken.state !== "true") {
       throw new Error("requestAccountDeletion must consume a limited-use App Check token.");
     }
-    if (handler.name !== "requestAccountDeletion" && (consumeAppCheckToken.state === "true" || consumeAppCheckToken.trueOverriddenBySpread)) {
+    if (handler.name !== "requestAccountDeletion" && consumeAppCheckToken.state !== "not-true") {
       throw new Error("Only requestAccountDeletion may consume a limited-use App Check token.");
     }
   }
@@ -234,21 +235,18 @@ function isBlockCallback(node: ts.Expression): node is ts.ArrowFunction | ts.Fun
 }
 
 type OptionState = "true" | "not-true" | "unknown";
-type OptionEvaluation = { state: OptionState; trueOverriddenBySpread: boolean };
+type OptionEvaluation = { state: OptionState };
 
 /** Applies object declaration order; spread values are unprovable until overwritten. */
 function effectiveOption(options: ts.ObjectLiteralExpression, name: string): OptionEvaluation {
   let state: OptionState = "not-true";
-  let trueOverriddenBySpread = false;
   for (const property of options.properties) {
     if (ts.isSpreadAssignment(property)) {
-      if (state === "true") trueOverriddenBySpread = true;
       state = "unknown";
       continue;
     }
     const propertyKey = propertyName(property.name);
     if (propertyKey === null) {
-      if (state === "true") trueOverriddenBySpread = true;
       state = "unknown";
       continue;
     }
@@ -258,9 +256,8 @@ function effectiveOption(options: ts.ObjectLiteralExpression, name: string): Opt
     } else {
       state = "unknown";
     }
-    if (state !== "unknown") trueOverriddenBySpread = false;
   }
-  return { state, trueOverriddenBySpread };
+  return { state };
 }
 
 function propertyName(name: ts.PropertyName): string | null {

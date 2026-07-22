@@ -50,6 +50,12 @@ Callable discovery now trusts only the local `onCall` binding imported from `fir
 
 Fixtures cover every one of those failure modes. `npm run test:firebase-repository`, `npm run test:firebase-functions`, `npm --prefix functions run build`, and `npm run typecheck` passed.
 
+## Limited-use App Check certainty correction
+
+Non-deletion callables must now prove `consumeAppCheckToken` is absent or explicitly false. Any unknown effective value from an object spread fails closed, even when `enforceAppCheck: true` is explicitly restored later. Account deletion still requires a provably true limited-use option. The former prior-spread fixture now deliberately rejects.
+
+Verification: `npm run test:firebase-repository`, `npm run test:firebase-functions`, `npm --prefix functions run build`, and `npm run typecheck` passed.
+
 ## Syntax-aware callable re-review
 
 The source-level extractor now uses the TypeScript AST and accepts only actual exported variable declarations initialized by `onCall`. It inspects actual object-literal booleans and actual `requireUid(request.auth?.uid)` call expressions in callback bodies. Adversarial fixtures confirm that comments or string literals cannot provide fake App Check/UID policy tokens, and string/comment text cannot create a fake callable declaration.
