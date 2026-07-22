@@ -9992,6 +9992,12 @@ test("release readiness audit rejects malformed reviewed adult feed source confi
   assert.match(output, /FREED_ADULT_DOMAIN_FEED_SOURCE_URLS line 4 must use id\/label\/https:\/\/source-url/);
 });
 
+test("release readiness accepts compact passing JSON from authoritative local audits", () => {
+  const output = runReleaseReadinessAudit();
+
+  assert.match(output, /\| PASS \| store-launch-config \|/);
+});
+
 test("release readiness audit reports sanitized dependency audit command failures", () => {
   const fakeBinDir = mkdtempSync(join(tmpdir(), "freed-fake-npm-"));
   const fakeNpmPath = join(fakeBinDir, "npm");

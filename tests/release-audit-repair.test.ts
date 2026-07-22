@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 
 function run(command: string, args: string[]) {
   return execFileSync(command, args, {
@@ -27,6 +28,22 @@ for (const gate of [
 ]) {
   assert.match(releaseAudit, new RegExp(`\\| PASS \\| ${gate} \\|`));
 }
-assert.match(releaseAudit, /48-hour route freshness enforcement/);
+assert.match(
+  releaseAudit,
+  /adult-domain-feed-smoke-harness \| The smoke-harness audit passes, including the adult-domain feed smoke-harness self-test and 48-hour route freshness enforcement/
+);
+assert.doesNotMatch(
+  releaseAudit,
+  /adult-only-classifier \|[^\n]*48-hour route freshness enforcement/
+);
+
+const swiftInterpolation = '"url": "https://\\(host)"';
+const overEscapedSwiftInterpolation = '"url": "https://\\\\(host)"';
+assert.equal(swiftInterpolation.includes(swiftInterpolation), true);
+assert.equal(overEscapedSwiftInterpolation.includes(swiftInterpolation), false);
+assert.ok(
+  readFileSync("scripts/release-readiness.ts", "utf8").includes(`module.includes('"url": "https://\\\\(host)"')`),
+  "release audit must look for the one-backslash Swift interpolation emitted by the native source"
+);
 
 console.log("release audit repair test: pass");

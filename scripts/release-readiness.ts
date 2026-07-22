@@ -507,7 +507,7 @@ function auditClassifier(): AuditItem {
       { script: "audit:classifier", success: /Result: \d+ pass, 0 fail/ },
       { script: "audit:android-classifier", success: /Result: \d+ pass, 0 fail/ }
     ],
-    "Authoritative TypeScript classifier and Android classifier-parity audits pass, including adult-domain feed 48-hour route freshness enforcement.",
+    "Authoritative TypeScript classifier and Android classifier-parity audits pass.",
     "Fix classifier source or parity and rerun the authoritative audits."
   );
   const failures = classifierSafetyCorpus.filter((entry) => classifyUrl(entry.url).verdict !== entry.expected);
@@ -1630,7 +1630,7 @@ function auditIosNative(): AuditItem {
     safariFocusManifest.includes('\"strict_min_version\": \"15.4\"') && safariFocusManifest.includes('\"service_worker\": \"background.js\"'),
     safariFocusBackground.includes("approvedNativePayload") && safariFocusHandler.includes("APPROVED_RULE_HOSTS[message.rule] == message.host"),
     module.includes("self.isFreshPendingIntervention(record.detectedAt)") &&
-      module.includes('"url": "https://\\\\(host)"') &&
+      module.includes('"url": "https://\\(host)"') &&
       module.includes("consumePendingEarnedUnlockEnvelope(sanitizedExpectedInterventionId)"),
     !module.includes("import NetworkExtension") && policyPack.includes("does not receive users' Safari browsing history")
   ];
@@ -4022,10 +4022,10 @@ function auditStoreLaunchConfig(): AuditItem {
   return authoritativeAuditGate(
     "store-launch-config",
     [
-      { script: "audit:store-catalog", success: /"result": "pass"/ },
+      { script: "audit:store-catalog", success: /"result"\s*:\s*"pass"/ },
       { script: "audit:eas-workflows", success: /Result: \d+ pass, 0 fail/ },
       { script: "audit:firebase-config", success: /Result: pass/ },
-      { script: "audit:store-legal", success: /"result": "pass"/ }
+      { script: "audit:store-legal", success: /"result"\s*:\s*"pass"/ }
     ],
     "Authoritative store-catalog, EAS workflow, Firebase public-SDK configuration, and local store-legal audits pass.",
     "Fix the named authoritative store or Firebase audit and rerun it."
@@ -5496,7 +5496,7 @@ function auditAdultDomainFeedSmokeHarness(): AuditItem {
   return authoritativeAuditGate(
     "adult-domain-feed-smoke-harness",
     [{ script: "audit:smoke-harnesses", success: /Result: \d+ pass, 0 fail/ }],
-    "The smoke-harness audit passes, including the adult-domain feed smoke-harness self-test.",
+    "The smoke-harness audit passes, including the adult-domain feed smoke-harness self-test and 48-hour route freshness enforcement.",
     "Fix the smoke-harness audit failure and rerun npm run audit:smoke-harnesses."
   );
   const packageJson = read("package.json");

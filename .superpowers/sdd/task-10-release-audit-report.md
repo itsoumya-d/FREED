@@ -36,3 +36,12 @@ This work intentionally does not supply production credentials, signing material
 `npm run test:core` exposed a fixture mismatch after the aggregate audit began invoking authoritative npm sub-audits: the isolated fake npm accepted only `npm audit` and rejected the new `npm run audit:*` commands. The fixture now emits explicit passing outputs for every new authoritative command. Classifier success evidence also retains the behavior-significant 48-hour adult-domain-feed route-freshness boundary. This repair does not bypass a sub-audit: a non-passing/missing authoritative result still fails the aggregate gate.
 
 Verification for the regression repair: `npm run test:core`, `node scripts/run-ts-entry.js tests/release-audit-repair.test.ts`, and `npm run typecheck` completed after the fixture and evidence updates. The focused release test invokes `npm run audit:release`; non-strict release readiness continues to report its real external prerequisites separately.
+
+## P1 truthfulness and validation-contract repair
+
+- The authoritative local-store JSON matcher now accepts valid compact or pretty JSON (`"result"\s*:\s*"pass"`) while still requiring the exact passing result.
+- Classifier/parity evidence is limited to classifier coverage. The 48-hour adult-feed route-freshness statement is retained on the adult-domain-feed smoke-harness gate, which is the authoritative checker for that behavior.
+- The iOS Focus Shield static check now matches the native Swift source's single interpolation backslash in `"url": "https://\(host)"`; the focused test distinguishes the one-backslash source fixture from an over-escaped two-backslash fixture.
+- `docs/validation/README.md` and `docs/validation/evidence-runbook.md` now document the 12 canonical iOS picker, Vision, fill-template, performance-report, Safari Content Blocker embedding/reload/checksum/adult-block, and `safariRuleFailures` capture contracts that the release audit requires.
+
+Final verification: `npm run evidence:templates` reported 9 pass / 0 fail, `npm run test:core` completed, `node scripts/run-ts-entry.js tests/release-audit-repair.test.ts` completed, `npm run typecheck` passed, and a direct `npm run audit:smoke-harnesses` reported 94 pass / 0 fail. The final aggregate snapshot reported 28 pass / 16 fail: 15 remaining failures are external prerequisites. Its additional adult-domain-feed smoke-harness failure was a nonreproducible concurrent-artifact/timing race; immediately rerunning that direct smoke audit passed all 94 checks.
