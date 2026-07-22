@@ -1,6 +1,11 @@
 # Firebase Email-Link Delivery Gate
 
-The Firebase email callback is fixed at `https://freed-7d5ee.web.app/auth/callback`. It is intentionally disabled in the native app until the deployed Hosting association files and signed native builds have been verified together.
+Firebase email-link configuration has two distinct URLs:
+
+- `ActionCodeSettings.url` is the post-action continue URL: `https://freed-7d5ee.web.app/auth/callback`.
+- `ActionCodeSettings.linkDomain` is the mobile delivery host: `freed-7d5ee.firebaseapp.com`. Firebase Auth opens the native association at `https://freed-7d5ee.firebaseapp.com/__/auth/links`.
+
+The native path is intentionally disabled until the deployed Hosting association files and signed native builds have been verified together. Never substitute the continue URL for `linkDomain`.
 
 ## Release inputs and Hosting deployment
 
@@ -24,14 +29,14 @@ npm run preflight:firebase-email-links
 
 It refuses to deploy when either release input is missing, malformed, or uses the Android debug certificate. Do not hand-author or commit a certificate fingerprint or Apple Team ID to replace this generation step.
 
-After deployment, fetch both exact production endpoints and confirm that their JSON matches the current signing identities and is served as `application/json`:
+After deployment, fetch both exact Firebase Auth link-domain endpoints and confirm that their JSON matches the current signing identities and is served as `application/json`:
 
 ```sh
-curl --fail --silent --show-error --location https://freed-7d5ee.web.app/.well-known/assetlinks.json
-curl --fail --silent --show-error --location https://freed-7d5ee.web.app/apple-app-site-association
+curl --fail --silent --show-error --location https://freed-7d5ee.firebaseapp.com/.well-known/assetlinks.json
+curl --fail --silent --show-error --location https://freed-7d5ee.firebaseapp.com/apple-app-site-association
 ```
 
-Also confirm `freed-7d5ee.web.app` remains an authorized Firebase Auth domain and that the Firebase email action URL returns to `/auth/callback` without a query or fragment override.
+In Firebase Authentication, authorize the continue URL domain and configure `freed-7d5ee.firebaseapp.com` as the Firebase Auth email-link `linkDomain`. Confirm the delivery URL reaches exactly `/__/auth/links`; keep the continue URL as the post-action callback, not as the mobile delivery host.
 
 ## Physical verification gate
 

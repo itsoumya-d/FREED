@@ -12,6 +12,7 @@ assert.equal(
 );
 
 const association = require("../scripts/lib/firebase-email-link-association.js") as {
+  ANDROID_APP_LINK_HOST: string;
   APPLE_APP_LINK_PATH: string;
   ANDROID_APP_LINK_PATH: string;
   assertFirebaseEmailLinkAssociationConfig: (env: Record<string, string | undefined>) => {
@@ -26,8 +27,9 @@ const association = require("../scripts/lib/firebase-email-link-association.js")
 
 assert.equal(typeof association.assertFirebaseEmailLinkAssociationConfig, "function");
 assert.equal(typeof association.writeFirebaseEmailLinkAssociationFiles, "function");
-assert.equal(association.ANDROID_APP_LINK_PATH, "/auth/callback");
-assert.equal(association.APPLE_APP_LINK_PATH, "/auth/callback");
+assert.equal(association.ANDROID_APP_LINK_HOST, "freed-7d5ee.firebaseapp.com");
+assert.equal(association.ANDROID_APP_LINK_PATH, "/__/auth/links");
+assert.equal(association.APPLE_APP_LINK_PATH, "/__/auth/links");
 
 assert.throws(
   () => association.assertFirebaseEmailLinkAssociationConfig({}),
@@ -63,7 +65,7 @@ assert.deepEqual(assetLinks, [
 assert.deepEqual(appleAppSiteAssociation, {
   applinks: {
     apps: [],
-    details: [{ appID: "AB12CD34EF.app.freed.recovery", components: [{ "/": "/auth/callback" }] }]
+    details: [{ appID: "AB12CD34EF.app.freed.recovery", components: [{ "/": "/__/auth/links" }] }]
   }
 });
 

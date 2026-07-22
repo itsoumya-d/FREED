@@ -68,7 +68,7 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="https" android:host="freed-7d5ee.web.app" android:pathPrefix="/auth/callback"/>
+        <data android:scheme="https" android:host="freed-7d5ee.firebaseapp.com" android:pathPrefix="/__/auth/links"/>
       </intent-filter>
     </activity>
   </application>

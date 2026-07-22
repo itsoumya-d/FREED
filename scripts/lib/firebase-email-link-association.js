@@ -3,9 +3,9 @@
 const { mkdirSync, writeFileSync } = require("node:fs");
 const { join, resolve } = require("node:path");
 
-const ANDROID_APP_LINK_HOST = "freed-7d5ee.web.app";
-const ANDROID_APP_LINK_PATH = "/auth/callback";
-const APPLE_APP_LINK_PATH = "/auth/callback";
+const ANDROID_APP_LINK_HOST = "freed-7d5ee.firebaseapp.com";
+const ANDROID_APP_LINK_PATH = "/__/auth/links";
+const APPLE_APP_LINK_PATH = "/__/auth/links";
 const ANDROID_APPLICATION_ID = "app.freed.recovery";
 const ANDROID_SIGNING_SHA256_ENV = "FREED_ANDROID_APP_LINK_SIGNING_SHA256";
 const APPLE_TEAM_ID_ENV = "FREED_IOS_DEVELOPMENT_TEAM";

@@ -134,7 +134,7 @@ import {
   getRecoveryBackupClientSyncReadiness,
   uploadEncryptedRecoveryBackup
 } from "@/lib/recovery-backup-client-sync";
-import { getFirebaseClientReadiness, getFirebaseEmailLinkReadiness, isFirebaseEmailLinkCallbackUrl } from "@/lib/firebase-client";
+import { getFirebaseClientReadiness, getFirebaseEmailLinkReadiness, isFirebaseEmailLinkDeliveryUrl } from "@/lib/firebase-client";
 import { getFirebaseNativeAuthAdapter, startFirebaseClient } from "@/lib/firebase-native";
 import { safeUserFacingMessage } from "@/lib/user-facing-error";
 import {
@@ -7867,7 +7867,7 @@ export default function FreedApp() {
   );
 
   const consumeFirebaseEmailLink = React.useCallback((url: string | null) => {
-    if (!firebaseEmailLinkReadiness.ready || !isFirebaseEmailLinkCallbackUrl(url)) return false;
+    if (!firebaseEmailLinkReadiness.ready || !isFirebaseEmailLinkDeliveryUrl(url)) return false;
     setPendingFirebaseEmailLink(url);
     setTab("profile");
     setScreen("main");

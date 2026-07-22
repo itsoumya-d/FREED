@@ -12,6 +12,7 @@ function run() {
   const androidManifest = source("android/app/src/main/AndroidManifest.xml");
   const iosEntitlements = source("ios/FREED/FREED.entitlements");
   const firebase = JSON.parse(source("firebase.json"));
+  const aliases = JSON.parse(source(".firebaserc"));
   const packageJson = JSON.parse(source("package.json"));
   const firebaseClient = source("src/lib/firebase-client.ts");
   const firebaseNative = source("src/lib/firebase-native.ts");
@@ -22,9 +23,9 @@ function run() {
 
   check(
     "android-app-link-route",
-    /<intent-filter android:autoVerify="true">[\s\S]*<action android:name="android\.intent\.action\.VIEW"\/>[\s\S]*<category android:name="android\.intent\.category\.DEFAULT"\/>[\s\S]*<category android:name="android\.intent\.category\.BROWSABLE"\/>[\s\S]*<data android:scheme="https" android:host="freed-7d5ee\.web\.app" android:pathPrefix="\/auth\/callback"\/>[\s\S]*<\/intent-filter>/.test(androidManifest),
-    "Main activity claims the production HTTPS Firebase email-link callback with Android auto verification.",
-    "Keep the exact deployed Hosting host and /auth/callback path in the MainActivity intent filter."
+    /<intent-filter android:autoVerify="true">[\s\S]*<action android:name="android\.intent\.action\.VIEW"\/>[\s\S]*<category android:name="android\.intent\.category\.DEFAULT"\/>[\s\S]*<category android:name="android\.intent\.category\.BROWSABLE"\/>[\s\S]*<data android:scheme="https" android:host="freed-7d5ee\.firebaseapp\.com" android:pathPrefix="\/__\/auth\/links"\/>[\s\S]*<\/intent-filter>/.test(androidManifest),
+    "Main activity claims the Firebase Auth linkDomain delivery path with Android auto verification.",
+    "Keep the exact Firebase Auth link domain and /__/auth/links path in the MainActivity intent filter."
   );
   check(
     "android-fallback-schemes",
@@ -35,9 +36,9 @@ function run() {
   check(
     "ios-universal-link-route",
     /<string>applinks:intervention\.freed\.app<\/string>/.test(iosEntitlements) &&
-      /<string>applinks:freed-7d5ee\.web\.app<\/string>/.test(iosEntitlements),
-    "Main app keeps the intervention association and adds the production Universal Link domain.",
-    "Keep the intervention entitlement and the freed-7d5ee.web.app association on the main app target."
+      /<string>applinks:freed-7d5ee\.firebaseapp\.com<\/string>/.test(iosEntitlements),
+    "Main app keeps the intervention association and adds the Firebase Auth Universal Link domain.",
+    "Keep the intervention entitlement and the freed-7d5ee.firebaseapp.com association on the main app target."
   );
   check(
     "hosting-association-predeploy",
@@ -74,18 +75,30 @@ function run() {
     "Provide the production signing SHA-256 and existing Apple Team ID only through release environment inputs."
   );
   check(
+    "firebase-auth-link-domain",
+    /FIREBASE_EMAIL_LINK_DOMAIN = "freed-7d5ee\.firebaseapp\.com"/.test(firebaseClient) &&
+      /FIREBASE_EMAIL_LINK_PATH = "\/__\/auth\/links"/.test(firebaseClient) &&
+      /EXPO_PUBLIC_FIREBASE_EMAIL_LINK_DOMAIN/.test(firebaseClient) &&
+      /linkDomain: emailLinkDomain/.test(firebaseClient) &&
+      !/linkDomain: options\.continueUrl/.test(firebaseClient) &&
+      Array.isArray(aliases.targets?.["freed-7d5ee"]?.hosting?.web) &&
+      aliases.targets["freed-7d5ee"].hosting.web.includes("freed-7d5ee"),
+    "The validated Firebase Auth linkDomain, not the continue URL, drives native delivery and the deployed Hosting target serves its association files.",
+    "Keep freed-7d5ee.firebaseapp.com authorized/configured as Firebase Auth linkDomain and deploy the web Hosting target before enabling email links."
+  );
+  check(
     "email-link-fail-closed-adapter",
     /getFirebaseEmailLinkReadiness/.test(firebaseClient) &&
       /EXPO_PUBLIC_FIREBASE_EMAIL_LINK_ASSOCIATION_READY/.test(firebaseClient) &&
       /emailLinkUnconfiguredResult/.test(firebaseClient) &&
       /FIREBASE_EMAIL_LINK_CALLBACK_URL/.test(firebaseClient) &&
-      /emailLinkReady: getFirebaseEmailLinkReadiness\(\)\.ready/.test(firebaseNative),
+      /const emailLinkReadiness = getFirebaseEmailLinkReadiness\(\);[\s\S]*emailLinkReady: emailLinkReadiness\.ready,[\s\S]*emailLinkDomain: emailLinkReadiness\.linkDomain/.test(firebaseNative),
     "The native Auth adapter refuses email-link send and completion until the association marker is explicitly production-ready.",
     "Set the public association marker only after deployed association and signed-device verification."
   );
   check(
     "cold-warm-link-delivery-contract",
-    /const consumeFirebaseEmailLink = React\.useCallback\([\s\S]*isFirebaseEmailLinkCallbackUrl\(url\)[\s\S]*setPendingFirebaseEmailLink\(url\);[\s\S]*setTab\("profile"\);[\s\S]*setScreen\("main"\);/.test(appSurface) &&
+    /const consumeFirebaseEmailLink = React\.useCallback\([\s\S]*isFirebaseEmailLinkDeliveryUrl\(url\)[\s\S]*setPendingFirebaseEmailLink\(url\);[\s\S]*setTab\("profile"\);[\s\S]*setScreen\("main"\);/.test(appSurface) &&
       /if \(consumeFirebaseEmailLink\(url\)\) return;[\s\S]*Linking\.getInitialURL\(\)[\s\S]*Linking\.addEventListener\("url"/.test(appSurface) &&
       /pendingFirebaseEmailLink=\{pendingFirebaseEmailLink\}/.test(appSurface) &&
       /Email-link sign-in is disabled until the signed app-link association is deployed and physically verified\./.test(appSurface),

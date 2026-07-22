@@ -29,7 +29,8 @@
       "autoIncrement": true,
       "channel": "production",
       "env": {
-        "EXPO_PUBLIC_FIREBASE_ENV": "production"
+        "EXPO_PUBLIC_FIREBASE_ENV": "production",
+        "EXPO_PUBLIC_FIREBASE_EMAIL_LINK_DOMAIN": "freed-7d5ee.firebaseapp.com"
       },
       "android": {
         "buildType": "app-bundle"

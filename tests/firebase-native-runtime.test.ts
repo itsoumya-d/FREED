@@ -23,7 +23,7 @@ assert.match(source, /getFirebaseAppCheckProviderConfig\("android", readiness\)/
 assert.match(source, /getFirebaseAppCheckProviderConfig\("ios", readiness\)/);
 assert.match(source, /firebaseFoundation/);
 assert.match(source, /getFirebaseMessagingRegistrationContract/);
-assert.match(source, /getFirebaseEmailLinkReadiness\(\)\.ready/);
+assert.match(source, /const emailLinkReadiness = getFirebaseEmailLinkReadiness\(\);[\s\S]*emailLinkReady: emailLinkReadiness\.ready,[\s\S]*emailLinkDomain: emailLinkReadiness\.linkDomain/);
 assert.match(source, /crashlytics\.setCrashlyticsCollectionEnabled\(false\)/);
 assert.match(source, /performance\.setPerformanceCollectionEnabled\(false\)/);
 assert.doesNotMatch(source, /setUserId\(/);
@@ -32,6 +32,7 @@ assert.doesNotMatch(source, /firestore\(/i);
 assert.doesNotMatch(source, /storage\(/i);
 assert.match(appSurface, /getFirebaseNativeAuthAdapter/);
 assert.match(appSurface, /getFirebaseEmailLinkReadiness/);
+assert.match(appSurface, /isFirebaseEmailLinkDeliveryUrl/);
 assert.match(appSurface, /const emailLinkEnabled = syncEndpointConfigured && firebaseAuthReadiness\.ready && firebaseEmailLinkReadiness\.ready/);
 assert.match(appSurface, /const consumeFirebaseEmailLink = React\.useCallback/);
 assert.match(appSurface, /setPendingFirebaseEmailLink\(url\);[\s\S]*setTab\("profile"\);[\s\S]*setScreen\("main"\);/);
@@ -40,6 +41,7 @@ assert.match(appSurface, /pendingFirebaseEmailLink=\{pendingFirebaseEmailLink\}/
 assert.match(appSurface, /Email-link sign-in is disabled until the signed app-link association is deployed and physically verified\./);
 assert.match(appSurface, /void startFirebaseClient\(\)/);
 assert.match(appSurface, /firebaseEmailLinkReadiness\.callbackUrl/);
+assert.doesNotMatch(appSurface, /isFirebaseEmailLinkCallbackUrl/);
 assert.match(appSurface, /EXPO_PUBLIC_FIREBASE_RECOVERY_BACKUP_SYNC_ENDPOINT/);
 assert.doesNotMatch(appSurface, /EXPO_PUBLIC_RECOVERY_BACKUP_SYNC_ENDPOINT/);
 assert.match(appSurface, /getCurrentIdToken/);

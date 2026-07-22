@@ -6,7 +6,7 @@ import {
   getFirebaseClientReadiness,
   getFirebaseEmailLinkReadiness,
   getFirebaseMessagingRegistrationContract,
-  isFirebaseEmailLinkCallbackUrl
+  isFirebaseEmailLinkDeliveryUrl
 } from "../src/lib/firebase-client";
 
 async function run() {
@@ -41,21 +41,32 @@ async function run() {
   const emailLinkWrongCallback = getFirebaseEmailLinkReadiness({
     EXPO_PUBLIC_FIREBASE_ENV: "production",
     EXPO_PUBLIC_FIREBASE_EMAIL_LINK_ASSOCIATION_READY: "deployed-and-verified",
-    EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL: "https://freed-7d5ee.firebaseapp.com/auth/callback"
+    EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL: "https://freed-7d5ee.firebaseapp.com/auth/callback",
+    EXPO_PUBLIC_FIREBASE_EMAIL_LINK_DOMAIN: "freed-7d5ee.firebaseapp.com"
+  });
+  const emailLinkWrongDomain = getFirebaseEmailLinkReadiness({
+    EXPO_PUBLIC_FIREBASE_ENV: "production",
+    EXPO_PUBLIC_FIREBASE_EMAIL_LINK_ASSOCIATION_READY: "deployed-and-verified",
+    EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL: "https://freed-7d5ee.web.app/auth/callback",
+    EXPO_PUBLIC_FIREBASE_EMAIL_LINK_DOMAIN: "https://freed-7d5ee.firebaseapp.com"
   });
   const emailLinkReady = getFirebaseEmailLinkReadiness({
     EXPO_PUBLIC_FIREBASE_ENV: "production",
     EXPO_PUBLIC_FIREBASE_EMAIL_LINK_ASSOCIATION_READY: "deployed-and-verified",
-    EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL: "https://freed-7d5ee.web.app/auth/callback"
+    EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL: "https://freed-7d5ee.web.app/auth/callback",
+    EXPO_PUBLIC_FIREBASE_EMAIL_LINK_DOMAIN: "freed-7d5ee.firebaseapp.com"
   });
   assert.equal(emailLinkDisabled.ready, false);
   assert.ok(emailLinkDisabled.missing.some((issue) => issue.includes("EXPO_PUBLIC_FIREBASE_EMAIL_LINK_ASSOCIATION_READY")));
   assert.equal(emailLinkWrongCallback.ready, false);
   assert.ok(emailLinkWrongCallback.missing.some((issue) => issue.includes("freed-7d5ee.web.app/auth/callback")));
+  assert.equal(emailLinkWrongDomain.ready, false);
+  assert.ok(emailLinkWrongDomain.missing.some((issue) => issue.includes("EXPO_PUBLIC_FIREBASE_EMAIL_LINK_DOMAIN")));
   assert.equal(emailLinkReady.ready, true);
   assert.equal(emailLinkReady.callbackUrl, "https://freed-7d5ee.web.app/auth/callback");
-  assert.equal(isFirebaseEmailLinkCallbackUrl("https://freed-7d5ee.web.app/auth/callback?mode=signIn&oobCode=valid"), true);
-  assert.equal(isFirebaseEmailLinkCallbackUrl("https://freed-7d5ee.web.app/intervention?mode=signIn&oobCode=valid"), false);
+  assert.equal(emailLinkReady.linkDomain, "freed-7d5ee.firebaseapp.com");
+  assert.equal(isFirebaseEmailLinkDeliveryUrl("https://freed-7d5ee.firebaseapp.com/__/auth/links?mode=signIn&oobCode=valid"), true);
+  assert.equal(isFirebaseEmailLinkDeliveryUrl("https://freed-7d5ee.web.app/auth/callback?mode=signIn&oobCode=valid"), false);
 
   const calls: Array<{ name: string; values: unknown[] }> = [];
   const adapter = createFirebaseAuthAdapter({
@@ -134,7 +145,7 @@ async function run() {
       signInWithCredential: async () => ({ user: { uid: "unused-user", getIdToken: async () => "unused-token" } }),
       currentUser: () => null
     },
-    { emailLinkReady: true }
+    { emailLinkReady: true, emailLinkDomain: "freed-7d5ee.firebaseapp.com" }
   );
   assert.deepEqual(await enabledEmailSender.requestEmailLink("person@example.com", { continueUrl: "freed://auth/callback" }), {
     ok: false,
@@ -147,6 +158,13 @@ async function run() {
     }),
     { ok: true, status: "sent" }
   );
+  assert.deepEqual(calls.find((call) => call.name === "enabledSendSignInLinkToEmail")?.values[1], {
+    handleCodeInApp: true,
+    url: "https://freed-7d5ee.web.app/auth/callback",
+    linkDomain: "freed-7d5ee.firebaseapp.com",
+    android: { packageName: "app.freed.recovery", installApp: true },
+    iOS: { bundleId: "app.freed.recovery" }
+  });
 
   const asyncLinkValidator = createFirebaseAuthAdapter({
     sendSignInLinkToEmail: async () => undefined,

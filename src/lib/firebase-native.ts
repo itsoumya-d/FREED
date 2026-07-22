@@ -52,8 +52,10 @@ export function startFirebaseClient(): Promise<FirebaseStartupResult> {
 }
 
 export function getFirebaseNativeAuthAdapter() {
+  const emailLinkReadiness = getFirebaseEmailLinkReadiness();
   return createFirebaseAuthAdapter(firebaseAuthNativeApi(), {
-    emailLinkReady: getFirebaseEmailLinkReadiness().ready
+    emailLinkReady: emailLinkReadiness.ready,
+    emailLinkDomain: emailLinkReadiness.linkDomain ?? undefined
   });
 }
 

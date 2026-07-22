@@ -40,9 +40,11 @@ production billing is disabled.
 
 ## Authentication and backup integration
 
-The native UI uses Firebase email-link sign-in with the hosted callback
-`https://freed-7d5ee.web.app/auth/callback`; enable Email link authentication
-and authorize that domain in Firebase Authentication before release. Apple and
+The native UI uses `https://freed-7d5ee.web.app/auth/callback` only as the
+Firebase email-link continue URL. Configure
+`freed-7d5ee.firebaseapp.com` as the Firebase Auth `linkDomain`; its exact
+native delivery path is `/__/auth/links`. Enable Email link authentication and
+authorize/configure both Firebase Auth domains before release. Apple and
 Google credential-exchange interfaces are present in the native adapter, but
 their provider registration and client IDs remain release prerequisites.
 

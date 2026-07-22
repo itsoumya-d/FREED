@@ -24,6 +24,7 @@ export type FirebaseAppCheckProviderConfig = {
 export type FirebaseEmailLinkReadiness = {
   ready: boolean;
   callbackUrl: string;
+  linkDomain: string | null;
   missing: string[];
 };
 
@@ -52,6 +53,7 @@ export type FirebaseAuthNativeApi = {
 export type FirebaseEmailLinkSettings = {
   handleCodeInApp: true;
   url: string;
+  linkDomain: string;
   android: {
     packageName: "app.freed.recovery";
     installApp: true;
@@ -81,8 +83,11 @@ const APP_CHECK_DEBUG_PROVIDER_ENV = "EXPO_PUBLIC_FIREBASE_APP_CHECK_DEBUG_PROVI
 const APP_CHECK_DEBUG_TOKEN_ENV = "EXPO_PUBLIC_FIREBASE_APP_CHECK_DEBUG_TOKEN";
 const EMAIL_LINK_ASSOCIATION_READY_ENV = "EXPO_PUBLIC_FIREBASE_EMAIL_LINK_ASSOCIATION_READY";
 const EMAIL_LINK_ASSOCIATION_READY_VALUE = "deployed-and-verified";
+const EMAIL_LINK_DOMAIN_ENV = "EXPO_PUBLIC_FIREBASE_EMAIL_LINK_DOMAIN";
 const FIREBASE_PUBLIC_SECRET_PATTERN = /(?:SERVICE_ACCOUNT|ADMIN|PRIVATE_KEY|SERVER_KEY|ACCESS_TOKEN|GOOGLE_APPLICATION_CREDENTIALS|CREDENTIAL)/i;
 export const FIREBASE_EMAIL_LINK_CALLBACK_URL = "https://freed-7d5ee.web.app/auth/callback";
+export const FIREBASE_EMAIL_LINK_DOMAIN = "freed-7d5ee.firebaseapp.com";
+export const FIREBASE_EMAIL_LINK_PATH = "/__/auth/links";
 const EMAIL_LINK_ASSOCIATION_UNCONFIGURED_REASON =
   "Firebase email-link sign-in is unavailable until Hosting app-link association is deployed and verified.";
 
@@ -127,12 +132,16 @@ export function getFirebaseClientReadiness(env: Env = process.env): FirebaseClie
 export function getFirebaseEmailLinkReadiness(env: Env = process.env): FirebaseEmailLinkReadiness {
   const requestedEnvironment = readEnv(env, "EXPO_PUBLIC_FIREBASE_ENV") ?? "production";
   const configuredCallbackUrl = readEnv(env, "EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL");
+  const configuredLinkDomain = readEnv(env, EMAIL_LINK_DOMAIN_ENV);
   const associationReady = readEnv(env, EMAIL_LINK_ASSOCIATION_READY_ENV);
   const missing = [
     ...(requestedEnvironment === "production" ? [] : ["Firebase email-link sign-in is only enabled for the production Firebase environment"]),
     ...(configuredCallbackUrl && configuredCallbackUrl !== FIREBASE_EMAIL_LINK_CALLBACK_URL
       ? [`EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL must equal ${FIREBASE_EMAIL_LINK_CALLBACK_URL}`]
       : []),
+    ...(isFirebaseEmailLinkDomain(configuredLinkDomain)
+      ? []
+      : [`${EMAIL_LINK_DOMAIN_ENV} must equal the production-safe Firebase Auth link domain ${FIREBASE_EMAIL_LINK_DOMAIN} without a scheme, path, port, query, or fragment`]),
     ...(associationReady === EMAIL_LINK_ASSOCIATION_READY_VALUE
       ? []
       : [
@@ -143,11 +152,12 @@ export function getFirebaseEmailLinkReadiness(env: Env = process.env): FirebaseE
   return {
     ready: missing.length === 0,
     callbackUrl: FIREBASE_EMAIL_LINK_CALLBACK_URL,
+    linkDomain: isFirebaseEmailLinkDomain(configuredLinkDomain) ? configuredLinkDomain : null,
     missing
   };
 }
 
-export function isFirebaseEmailLinkCallbackUrl(value: string | null | undefined) {
+export function isFirebaseEmailLinkDeliveryUrl(value: string | null | undefined) {
   if (!value) return false;
   try {
     const parsed = new URL(value);
@@ -155,7 +165,10 @@ export function isFirebaseEmailLinkCallbackUrl(value: string | null | undefined)
       parsed.username === "" &&
       parsed.password === "" &&
       parsed.hash === "" &&
-      `${parsed.origin}${parsed.pathname}` === FIREBASE_EMAIL_LINK_CALLBACK_URL
+      parsed.protocol === "https:" &&
+      parsed.hostname === FIREBASE_EMAIL_LINK_DOMAIN &&
+      parsed.port === "" &&
+      parsed.pathname === FIREBASE_EMAIL_LINK_PATH
     );
   } catch {
     return false;
@@ -178,15 +191,16 @@ export function getFirebaseAppCheckProviderConfig(
 
 export function createFirebaseAuthAdapter(
   nativeAuth: FirebaseAuthNativeApi,
-  options: { emailLinkReady?: boolean } = {}
+  options: { emailLinkReady?: boolean; emailLinkDomain?: string } = {}
 ) {
   const emailLinkReady = options.emailLinkReady === true;
+  const emailLinkDomain = options.emailLinkDomain;
   return {
     async requestEmailLink(
       email: string,
       options: { continueUrl: string }
     ): Promise<FirebaseAuthActionResult> {
-      if (!emailLinkReady) return emailLinkUnconfiguredResult();
+      if (!emailLinkReady || !isFirebaseEmailLinkDomain(emailLinkDomain)) return emailLinkUnconfiguredResult();
       const normalizedEmail = sanitizeEmail(email);
       if (!normalizedEmail) return invalidResult("Enter a valid account email address.");
       if (!isSafeContinueUrl(options.continueUrl)) return invalidResult("Firebase email links must return to the FREED auth callback.");
@@ -195,6 +209,7 @@ export function createFirebaseAuthAdapter(
         await nativeAuth.sendSignInLinkToEmail(normalizedEmail, {
           handleCodeInApp: true,
           url: options.continueUrl.trim(),
+          linkDomain: emailLinkDomain,
           android: { packageName: "app.freed.recovery", installApp: true },
           iOS: { bundleId: "app.freed.recovery" }
         });
@@ -308,6 +323,10 @@ function sanitizeEmail(value: string) {
 
 function isSafeContinueUrl(value: string) {
   return value.trim() === FIREBASE_EMAIL_LINK_CALLBACK_URL;
+}
+
+function isFirebaseEmailLinkDomain(value: string | undefined): value is typeof FIREBASE_EMAIL_LINK_DOMAIN {
+  return value === FIREBASE_EMAIL_LINK_DOMAIN;
 }
 
 function isUsableEmailLink(value: string) {
