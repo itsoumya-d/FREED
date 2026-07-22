@@ -45,6 +45,26 @@ test("Firestore emulator prevents post-tombstone mutation recreation and preserv
   assert.equal((await db.doc(`idempotency/${uid}_push-token_event1234`).get()).exists, false);
   assert.deepEqual((await aggregate.get()).data(), { day: aggregate.id, checkIns: 7, completedChallenges: 3 });
 
+  await tombstone.set({ uid, status: "cooldown", expiresAt: new Date(Date.now() + 60_000) });
+  const cooldownBusiness = db.collection("push_tokens").doc(`${uid}_cooldown-installation`);
+  const cooldownResult = await db.runTransaction(async (transaction) => runProtectedMutation({
+    get: async <T extends object>(path: string) => {
+      const snapshot = await transaction.get(db.doc(path));
+      return { value: snapshot.exists ? snapshot.data() as T : undefined };
+    },
+    set: async (path: string, value: object) => { transaction.set(db.doc(path), value); }
+  } satisfies TransactionalStore, {
+    rateLimitPath: `rate_limits/${uid}_cooldown-push-token`,
+    idempotencyPath: `idempotency/${uid}_cooldown-push-token_event1234`,
+    accountTombstonePath: `deletion_tombstones/${uid}`,
+    now: Date.now(),
+    windowMs: 60_000,
+    limit: 10,
+    idempotencyTtlMs: 60_000
+  }, () => { transaction.set(cooldownBusiness, { uid, token: "never-created" }); }));
+  assert.equal(cooldownResult, "account-deleting");
+  assert.equal((await cooldownBusiness.get()).exists, false);
+
   await Promise.all([tombstone.delete(), aggregate.delete()]);
   assert.ok(projectId);
 });
@@ -66,7 +86,8 @@ test("Storage emulator exercises sentinel generation, stale precondition, and de
   const sentinelGenerationNumber = Number(sentinelGeneration);
   assert.equal(Number.isSafeInteger(sentinelGenerationNumber), true);
   const signedSpec = getSignedUrlSpec("write", 1_000, 10, sentinelGeneration);
-  assert.deepEqual(signedSpec.queryParams, { ifGenerationMatch: sentinelGeneration });
+  assert.equal(signedSpec.extensionHeaders["x-goog-if-generation-match"], sentinelGeneration);
+  assert.equal("queryParams" in signedSpec, false);
 
   await file.save(Buffer.from("ciphertext"), {
     resumable: false,

@@ -44,7 +44,9 @@ export type BackendJobDocument = { kind: string; uid?: string; status: string; c
 export type RateLimitDocument = { count: number; windowStartedAt: number; expiresAt: number };
 export type LeaseDocument = { owner: string; acquiredAt: number; expiresAt: number };
 export type PushTokenDocument = { uid: string; installationId: string; token: string; updatedAt: unknown; expiresAt: unknown };
-export type DeletionTombstoneDocument = { uid: string; requestedAt: unknown; status: "deleting"; expiresAt: unknown };
+export type DeletionTombstoneDocument =
+  | { uid: string; requestedAt: unknown; status: "deleting"; expiresAt?: never }
+  | { uid: string; requestedAt: unknown; status: "cooldown"; expiresAt: unknown };
 export type AdultFeedMetadataDocument = { version: string; checksum: string; source?: string; publishedAt?: unknown; expiresAt?: unknown };
 
 const SERVER_DOCUMENT_FIELDS: Record<string, readonly string[]> = {

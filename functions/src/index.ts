@@ -26,10 +26,11 @@ import {
   assertVerificationCommit,
   createVerificationClaim,
   deleteEncryptedBackup as deleteEncryptedBackupObject,
-  deleteFirebaseAccountData,
+  getDeletionFenceAction,
   getBackupObjectPath,
   getSignedUrlSpec,
   requireVerifiedBackup,
+  sweepFirebaseAccountDeletion,
   verifyCiphertext,
   type VerificationClaim
 } from "./core-data.js";
@@ -113,7 +114,8 @@ export const startEncryptedBackupUpload = onCall({ enforceAppCheck: true }, asyn
     expiresAt: new Date(spec.expires).toISOString(),
     requiredHeaders: {
       "content-type": "application/octet-stream",
-      "content-length": String(input.encryptedBytes)
+      "content-length": String(input.encryptedBytes),
+      "x-goog-if-generation-match": sentinelGeneration
     }
   };
 });
@@ -217,7 +219,7 @@ export const registerPushToken = onCall({ enforceAppCheck: true }, async (reques
   return { ok: true, duplicate };
 });
 
-/** Completes deletion synchronously; limited-use App Check consumption is enforced in production. */
+/** Starts a fenced deletion sweep; completion is deferred until its cooldown marker expires. */
 export const requestAccountDeletion = onCall({ enforceAppCheck: true, consumeAppCheckToken: true }, async (request) => {
   if (process.env.FUNCTIONS_EMULATOR !== "true" && request.app?.alreadyConsumed) {
     throw new HttpsError("permission-denied", "A fresh App Check token is required.");
@@ -225,30 +227,42 @@ export const requestAccountDeletion = onCall({ enforceAppCheck: true, consumeApp
   const uid = requireUid(request.auth?.uid);
   const input = parseOrHttpsError(() => parseDeletionRequest(request.data));
   await mutate(uid, "deletion", input.clientEventId, 2, async (transaction) => {
-    const expiresAt = Timestamp.fromMillis(Date.now() + 30 * DAY_MS);
     setServerDocument(transaction, COLLECTIONS.deletionTombstones, uid, {
       uid,
       requestedAt: FieldValue.serverTimestamp(),
-      expiresAt,
       status: "deleting"
     });
   }, false);
   try {
-    await deleteFirebaseAccountData(uid, {
-      deleteBackupObjects: async (ownerUid) => bucket.deleteFiles({ prefix: `recovery-backups/${ownerUid}/` }),
-      deleteRecords: deleteUserRecords,
-      deleteAuthIdentity: deleteAuthIdentity
-    });
+    const cooldown = await sweepFirebaseAccountDeletion(uid, Date.now(), accountDeletionDependencies());
+    await transitionDeletionToCooldown(uid, cooldown.expiresAt);
   } catch {
     throw new HttpsError("internal", "Account deletion did not complete. Retry the request.");
   }
-  return { ok: true, status: "completed" };
+  return { ok: true, status: "deleting" };
+});
+
+/** Retries partial deletion sweeps while their non-expiring safety fence remains. */
+export const retryPendingAccountDeletions = onSchedule({ schedule: "every 15 minutes", timeZone: "Asia/Kolkata" }, async () => {
+  const pending = await db.collection(COLLECTIONS.deletionTombstones).where("status", "==", "deleting").limit(100).get();
+  for (const document of pending.docs) {
+    const data = document.data() as { uid?: string; status?: string };
+    if (data.uid !== document.id || data.status !== "deleting") continue;
+    try {
+      const cooldown = await sweepFirebaseAccountDeletion(document.id, Date.now(), accountDeletionDependencies());
+      await transitionDeletionToCooldown(document.id, cooldown.expiresAt);
+    } catch {
+      // The durable deleting fence remains for the next scheduled retry.
+    }
+  }
 });
 
 /** Deletes TTL-expired server records; it never scans or decrypts user backup content. */
 export const cleanupExpiredServerRecords = onSchedule({ schedule: "every 24 hours", timeZone: "Asia/Kolkata" }, async () => {
   const now = Timestamp.now();
-  const collections = Object.values(COLLECTIONS).filter((name) => name !== COLLECTIONS.idempotency);
+  const collections = Object.values(COLLECTIONS).filter(
+    (name) => name !== COLLECTIONS.idempotency && name !== COLLECTIONS.deletionTombstones
+  );
   let deleted = 0;
   for (const collection of [...collections, COLLECTIONS.idempotency]) {
     const expired = await db.collection(collection).where("expiresAt", "<=", now).limit(400).get();
@@ -258,10 +272,55 @@ export const cleanupExpiredServerRecords = onSchedule({ schedule: "every 24 hour
     await batch.commit();
     deleted += expired.size;
   }
+  deleted += await cleanupExpiredDeletionCooldowns(now);
   // Scheduled functions deliberately emit no user data. The deletion count is
   // only useful to Cloud logging and is not returned by the scheduler API.
   void deleted;
 });
+
+function accountDeletionDependencies(): Parameters<typeof sweepFirebaseAccountDeletion>[2] {
+  return {
+    deleteBackupObjects: async (ownerUid) => bucket.deleteFiles({ prefix: `recovery-backups/${ownerUid}/` }),
+    deleteRecords: deleteUserRecords,
+    deleteAuthIdentity
+  };
+}
+
+async function transitionDeletionToCooldown(uid: string, expiresAt: number): Promise<void> {
+  const reference = db.collection(COLLECTIONS.deletionTombstones).doc(uid);
+  await db.runTransaction(async (transaction) => {
+    const snapshot = await transaction.get(reference);
+    if (!snapshot.exists) throw new Error("The deletion fence is unavailable.");
+    const tombstone = snapshot.data() as { uid?: string; status?: string };
+    if (tombstone.uid !== uid) throw new Error("The deletion fence owner changed.");
+    if (tombstone.status === "cooldown") return;
+    if (tombstone.status !== "deleting") throw new Error("The deletion fence state changed.");
+    transaction.set(reference, validateServerDocument(COLLECTIONS.deletionTombstones, {
+      status: "cooldown",
+      expiresAt: Timestamp.fromMillis(expiresAt)
+    }), { merge: true });
+  });
+}
+
+async function cleanupExpiredDeletionCooldowns(now: Timestamp): Promise<number> {
+  const candidates = await db.collection(COLLECTIONS.deletionTombstones).where("expiresAt", "<=", now).limit(400).get();
+  let deleted = 0;
+  for (const candidate of candidates.docs) {
+    const removed = await db.runTransaction(async (transaction) => {
+      const snapshot = await transaction.get(candidate.ref);
+      if (!snapshot.exists) return false;
+      const tombstone = snapshot.data() as { status?: string; expiresAt?: Timestamp };
+      const fence = tombstone.status === "cooldown" && tombstone.expiresAt instanceof Timestamp
+        ? { status: "cooldown" as const, expiresAt: tombstone.expiresAt.toMillis() }
+        : { status: "deleting" as const };
+      if (tombstone.status !== "cooldown" || getDeletionFenceAction(fence, now.toMillis()) !== "remove") return false;
+      transaction.delete(candidate.ref);
+      return true;
+    });
+    if (removed) deleted += 1;
+  }
+  return deleted;
+}
 
 async function mutate(
   uid: string,

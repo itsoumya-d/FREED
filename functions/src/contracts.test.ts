@@ -144,3 +144,17 @@ test("backup metadata can bind only server-owned upload sessions and object gene
   };
   assert.deepEqual(validateServerDocument(COLLECTIONS.backupMetadata, document), document);
 });
+
+test("deletion tombstones distinguish non-expiring deletion from bounded cooldown", () => {
+  assert.deepEqual(validateServerDocument(COLLECTIONS.deletionTombstones, {
+    uid: "firebaseUid123",
+    requestedAt: 1,
+    status: "deleting"
+  }), { uid: "firebaseUid123", requestedAt: 1, status: "deleting" });
+  assert.deepEqual(validateServerDocument(COLLECTIONS.deletionTombstones, {
+    uid: "firebaseUid123",
+    requestedAt: 1,
+    status: "cooldown",
+    expiresAt: 2
+  }), { uid: "firebaseUid123", requestedAt: 1, status: "cooldown", expiresAt: 2 });
+});

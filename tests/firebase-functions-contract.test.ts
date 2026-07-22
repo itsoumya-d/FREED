@@ -11,6 +11,15 @@ async function run() {
   const transport: FirebaseCallableTransport = {
     call: async (name, data) => {
       calls.push({ name, data });
+      if (name === "startEncryptedBackupUpload") return {
+        ok: true,
+        requiredHeaders: {
+          "content-type": "application/octet-stream",
+          "content-length": "10",
+          "x-goog-if-generation-match": "17"
+        }
+      };
+      if (name === "requestAccountDeletion") return { ok: true, status: "deleting" };
       return { ok: true };
     }
   };
@@ -29,7 +38,14 @@ async function run() {
     encryptedBytes: 10,
     ciphertextSha256: "a".repeat(64),
     clientEventId: "evt_upload123"
-  }), { ok: true });
+  }), {
+    ok: true,
+    requiredHeaders: {
+      "content-type": "application/octet-stream",
+      "content-length": "10",
+      "x-goog-if-generation-match": "17"
+    }
+  });
   assert.equal(calls[1]?.name, "startEncryptedBackupUpload");
   assert.deepEqual(await callables.finalizeBackupUpload({ backupId: "bkp_12345678", clientEventId: "evt_finish123" }), { ok: true });
   assert.equal(calls[2]?.name, "finalizeEncryptedBackupUpload");
@@ -47,7 +63,7 @@ async function run() {
     } as never),
     /not permitted/i
   );
-  assert.deepEqual(await callables.requestAccountDeletion({ clientEventId: "evt_12345678" }), { ok: true });
+  assert.deepEqual(await callables.requestAccountDeletion({ clientEventId: "evt_12345678" }), { ok: true, status: "deleting" });
   assert.equal(calls[5]?.name, "requestAccountDeletion");
 
   for (const ruleFile of ["firestore.rules", "storage.rules"]) {

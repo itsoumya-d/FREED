@@ -4,6 +4,7 @@ import { createHash } from "node:crypto";
 
 export const BACKUP_MAX_BYTES = 100 * 1024 * 1024;
 export const SIGNED_URL_TTL_MS = 10 * 60 * 1000;
+export const ACCOUNT_DELETION_COOLDOWN_MS = 2 * 60 * 60 * 1000;
 export const USER_LINKED_RECORD_SCOPES = [
   "backup_metadata",
   "push_tokens",
@@ -44,6 +45,24 @@ export function getBackupObjectPath(uid: string, backupId: string): string {
 }
 
 export function getSignedUrlSpec(
+  action: "read",
+  now: number,
+  expectedBytes: undefined,
+  generation: string
+): { version: "v4"; action: "read"; expires: number; queryParams: Record<string, string> };
+export function getSignedUrlSpec(
+  action: "write",
+  now: number,
+  expectedBytes: number | undefined,
+  generation: string
+): {
+  version: "v4";
+  action: "write";
+  expires: number;
+  contentType: string;
+  extensionHeaders: { "content-length": string; "x-goog-if-generation-match": string };
+};
+export function getSignedUrlSpec(
   action: "read" | "write",
   now: number,
   expectedBytes: number | undefined,
@@ -58,8 +77,10 @@ export function getSignedUrlSpec(
   return {
     ...common,
     contentType: "application/octet-stream",
-    extensionHeaders: { "content-length": String(expectedBytes) },
-    queryParams: { ifGenerationMatch: generation } as Record<string, string>
+    extensionHeaders: {
+      "content-length": String(expectedBytes),
+      "x-goog-if-generation-match": generation
+    }
   };
 }
 
@@ -174,4 +195,21 @@ export async function deleteFirebaseAccountData(
   await deps.deleteBackupObjects(uid);
   for (const scope of USER_LINKED_RECORD_SCOPES) await deps.deleteRecords(scope, uid);
   await deps.deleteAuthIdentity(uid);
+}
+
+export async function sweepFirebaseAccountDeletion(
+  uid: string,
+  now: number,
+  deps: Parameters<typeof deleteFirebaseAccountData>[1]
+): Promise<{ status: "cooldown"; expiresAt: number }> {
+  await deleteFirebaseAccountData(uid, deps);
+  return { status: "cooldown", expiresAt: now + ACCOUNT_DELETION_COOLDOWN_MS };
+}
+
+export function getDeletionFenceAction(
+  fence: { status: "deleting" } | { status: "cooldown"; expiresAt: number },
+  now: number
+): "retry" | "retain" | "remove" {
+  if (fence.status === "deleting") return "retry";
+  return fence.expiresAt <= now ? "remove" : "retain";
 }

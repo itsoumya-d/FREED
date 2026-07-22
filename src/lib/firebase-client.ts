@@ -86,6 +86,12 @@ export type FirebaseCallableName =
   | "requestAccountDeletion"
   | "backendReadiness";
 
+export type FirebaseBackupUploadRequiredHeaders = Readonly<{
+  "content-type": "application/octet-stream";
+  "content-length": string;
+  "x-goog-if-generation-match": string;
+}>;
+
 export type FirebaseCallableResult = {
   ok: boolean;
   duplicate?: boolean;
@@ -93,7 +99,7 @@ export type FirebaseCallableResult = {
   signedUrl?: string;
   objectKey?: string;
   expiresAt?: string;
-  requiredHeaders?: Readonly<Record<string, string>>;
+  requiredHeaders?: FirebaseBackupUploadRequiredHeaders;
   verifiedBytes?: number;
 };
 export type FirebaseCallableTransport = {

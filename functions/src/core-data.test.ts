@@ -1,13 +1,16 @@
 import assert from "node:assert/strict";
-import { createHash } from "node:crypto";
+import { createHash, generateKeyPairSync } from "node:crypto";
 import { readFileSync } from "node:fs";
 import test from "node:test";
+
+import { Storage } from "@google-cloud/storage";
 
 import * as coreData from "./core-data.js";
 
 type CoreDataApi = {
   BACKUP_MAX_BYTES: number;
   SIGNED_URL_TTL_MS: number;
+  ACCOUNT_DELETION_COOLDOWN_MS: number;
   USER_LINKED_RECORD_SCOPES: readonly string[];
   getBackupObjectPath: (uid: string, backupId: string) => string;
   getSignedUrlSpec: (action: "read" | "write", now: number, expectedBytes: number | undefined, generation: string) => {
@@ -16,7 +19,7 @@ type CoreDataApi = {
     expires: number;
     contentType?: string;
     extensionHeaders?: Readonly<Record<string, string>>;
-    queryParams: Readonly<Record<string, string>>;
+    queryParams?: Readonly<Record<string, string>>;
   };
   assertBackupStartAllowed: (metadata: BackupState | undefined) => void;
   createVerificationClaim: (metadata: BackupState, objectGeneration: string) => VerificationClaim;
@@ -44,6 +47,20 @@ type CoreDataApi = {
     deleteRecords: (scope: string, uid: string) => Promise<void>;
     deleteAuthIdentity: (uid: string) => Promise<void>;
   }) => Promise<void>;
+  sweepFirebaseAccountDeletion: (uid: string, now: number, deps: AccountDeletionDeps) => Promise<{
+    status: "cooldown";
+    expiresAt: number;
+  }>;
+  getDeletionFenceAction: (
+    fence: { status: "deleting" } | { status: "cooldown"; expiresAt: number },
+    now: number
+  ) => "retry" | "retain" | "remove";
+};
+
+type AccountDeletionDeps = {
+  deleteBackupObjects: (uid: string) => Promise<void>;
+  deleteRecords: (scope: string, uid: string) => Promise<void>;
+  deleteAuthIdentity: (uid: string) => Promise<void>;
 };
 
 type BackupState = {
@@ -87,8 +104,10 @@ test("backup paths are server-derived and V4 signed URLs expire within ten minut
     action: "write",
     expires: 601_000,
     contentType: "application/octet-stream",
-    extensionHeaders: { "content-length": "42" },
-    queryParams: { ifGenerationMatch: "17" }
+    extensionHeaders: {
+      "content-length": "42",
+      "x-goog-if-generation-match": "17"
+    }
   });
   assert.deepEqual(api.getSignedUrlSpec?.("read", 1_000, undefined, "29"), {
     version: "v4",
@@ -96,6 +115,40 @@ test("backup paths are server-derived and V4 signed URLs expire within ten minut
     expires: 601_000,
     queryParams: { generation: "29" }
   });
+});
+
+test("production signed-upload contract rejects stale and replayed generations", () => {
+  const spec = api.getSignedUrlSpec?.("write", 1_000, 42, "17");
+  assert.equal(spec?.extensionHeaders?.["x-goog-if-generation-match"], "17");
+  assert.equal(spec?.queryParams?.ifGenerationMatch, undefined);
+
+  let currentGeneration = "17";
+  const applyProductionPrecondition = () => {
+    const signedGeneration = spec?.extensionHeaders?.["x-goog-if-generation-match"];
+    if (signedGeneration !== currentGeneration) throw new Error("generation precondition failed");
+    currentGeneration = "18";
+  };
+  assert.doesNotThrow(applyProductionPrecondition);
+  assert.throws(applyProductionPrecondition, /generation precondition failed/i);
+  currentGeneration = "19";
+  assert.throws(applyProductionPrecondition, /generation precondition failed/i);
+});
+
+test("Google Cloud V4 signer includes the generation precondition in signed headers", async () => {
+  const { privateKey } = generateKeyPairSync("rsa", { modulusLength: 2048 });
+  const storage = new Storage({
+    projectId: "contract-project",
+    credentials: {
+      client_email: "signer@contract-project.iam.gserviceaccount.com",
+      private_key: privateKey.export({ type: "pkcs8", format: "pem" }).toString()
+    }
+  });
+  const [signedUrl] = await storage.bucket("contract-bucket").file("backup.bin").getSignedUrl(
+    api.getSignedUrlSpec("write", Date.now(), 42, "17")
+  );
+  const parsed = new URL(signedUrl);
+  assert.match(parsed.searchParams.get("X-Goog-SignedHeaders") ?? "", /(?:^|;)x-goog-if-generation-match(?:;|$)/);
+  assert.equal(parsed.searchParams.has("ifGenerationMatch"), false);
 });
 
 test("concurrent starts and verified overwrite attempts are refused", () => {
@@ -260,6 +313,40 @@ test("partial account deletion fails closed and can be retried before deleting A
   assert.equal(identityExists, false);
 });
 
+test("failed deletion keeps a non-expiring retry fence and retries to cooldown", async () => {
+  const deleting = { status: "deleting" as const };
+  assert.equal(api.getDeletionFenceAction?.(deleting, Number.MAX_SAFE_INTEGER), "retry");
+  let failOnce = true;
+  let authDeletes = 0;
+  const deps: AccountDeletionDeps = {
+    deleteBackupObjects: async () => undefined,
+    deleteRecords: async (scope) => {
+      if (scope === "backend_jobs" && failOnce) {
+        failOnce = false;
+        throw new Error("temporary Firestore failure");
+      }
+    },
+    deleteAuthIdentity: async () => { authDeletes += 1; }
+  };
+
+  await assert.rejects(() => api.sweepFirebaseAccountDeletion?.("firebaseUid123", 1_000, deps), /temporary Firestore failure/i);
+  assert.equal(authDeletes, 0);
+  assert.equal(api.getDeletionFenceAction?.(deleting, Number.MAX_SAFE_INTEGER), "retry");
+
+  const cooldown = await api.sweepFirebaseAccountDeletion?.("firebaseUid123", 1_000, deps);
+  assert.deepEqual(cooldown, { status: "cooldown", expiresAt: 1_000 + api.ACCOUNT_DELETION_COOLDOWN_MS });
+  assert.equal(authDeletes, 1);
+});
+
+test("deletion cooldown is retained until its safe expiry and only then removed", () => {
+  assert.ok(api.ACCOUNT_DELETION_COOLDOWN_MS >= 60 * 60 * 1000);
+  assert.ok(api.ACCOUNT_DELETION_COOLDOWN_MS > api.SIGNED_URL_TTL_MS);
+  const expiresAt = 1_000 + api.ACCOUNT_DELETION_COOLDOWN_MS;
+  const cooldown = { status: "cooldown" as const, expiresAt };
+  assert.equal(api.getDeletionFenceAction?.(cooldown, expiresAt - 1), "retain");
+  assert.equal(api.getDeletionFenceAction?.(cooldown, expiresAt), "remove");
+});
+
 test("callable integration uses anonymous daily increments and the complete backup workflow", () => {
   const source = readFileSync("src/index.ts", "utf8");
   for (const callable of [
@@ -283,7 +370,7 @@ test("callable integration uses anonymous daily increments and the complete back
   assert.match(source, /verifyCiphertext\(/);
   assert.match(source, /requireVerifiedBackup\(/);
   assert.match(source, /if \(owned\.status === "verified"\) \{[\s\S]*?return \{ ok: true, duplicate: true, status: "verified"/);
-  assert.match(source, /deleteFirebaseAccountData\(uid/);
+  assert.match(source, /sweepFirebaseAccountDeletion\(uid/);
 });
 
 test("callable integration binds Storage and verification to immutable generations", () => {
@@ -299,6 +386,27 @@ test("callable integration binds Storage and verification to immutable generatio
   assert.match(source, /assertAcceptableContentEncoding\(/);
   assert.match(source, /accountTombstonePath:/);
   assert.match(source, /ensureAccountActive\(uid\)/);
+  assert.match(source, /"x-goog-if-generation-match": sentinelGeneration/);
+  assert.match(source, /requiredHeaders:[\s\S]*?"x-goog-if-generation-match": sentinelGeneration/);
+});
+
+test("account deletion integration reports a fence, retries deleting records, and only expires cooldown", () => {
+  const source = readFileSync("src/index.ts", "utf8");
+  const deletionHandler = source.slice(
+    source.indexOf("export const requestAccountDeletion"),
+    source.indexOf("export const cleanupExpiredServerRecords")
+  );
+  assert.doesNotMatch(deletionHandler, /status:\s*"completed"/);
+  assert.match(deletionHandler, /status:\s*"deleting"/);
+  const initialFenceWrite = deletionHandler.slice(
+    deletionHandler.indexOf("await mutate(uid, \"deletion\""),
+    deletionHandler.indexOf("}, false);")
+  );
+  assert.doesNotMatch(initialFenceWrite, /expiresAt/);
+  assert.match(source, /export const retryPendingAccountDeletions = onSchedule/);
+  assert.match(source, /where\("status", "==", "deleting"\)/);
+  assert.match(source, /status !== "cooldown"/);
+  assert.match(source, /Object\.values\(COLLECTIONS\)\.filter\([\s\S]*COLLECTIONS\.deletionTombstones/);
 });
 
 async function* asAsyncBytes(chunks: readonly Uint8Array[]) {
