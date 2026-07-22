@@ -27,5 +27,6 @@ for (const gate of [
 ]) {
   assert.match(releaseAudit, new RegExp(`\\| PASS \\| ${gate} \\|`));
 }
+assert.match(releaseAudit, /48-hour route freshness enforcement/);
 
 console.log("release audit repair test: pass");

@@ -507,7 +507,7 @@ function auditClassifier(): AuditItem {
       { script: "audit:classifier", success: /Result: \d+ pass, 0 fail/ },
       { script: "audit:android-classifier", success: /Result: \d+ pass, 0 fail/ }
     ],
-    "Authoritative TypeScript classifier and Android classifier-parity audits pass.",
+    "Authoritative TypeScript classifier and Android classifier-parity audits pass, including adult-domain feed 48-hour route freshness enforcement.",
     "Fix classifier source or parity and rerun the authoritative audits."
   );
   const failures = classifierSafetyCorpus.filter((entry) => classifyUrl(entry.url).verdict !== entry.expected);

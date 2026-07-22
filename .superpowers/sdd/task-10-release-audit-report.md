@@ -30,3 +30,9 @@
 ## Remaining external gates
 
 This work intentionally does not supply production credentials, signing material, billing/store-console state, deployed legal URLs, or physical-device evidence. Those release gates remain fail-closed, including hosted legal-page availability, production backend/feed/analytics/notification/AI/monetization configuration, upload signing, dependency remediation, and required Android/iOS/device/store-sandbox evidence.
+
+## Core-regression repair
+
+`npm run test:core` exposed a fixture mismatch after the aggregate audit began invoking authoritative npm sub-audits: the isolated fake npm accepted only `npm audit` and rejected the new `npm run audit:*` commands. The fixture now emits explicit passing outputs for every new authoritative command. Classifier success evidence also retains the behavior-significant 48-hour adult-domain-feed route-freshness boundary. This repair does not bypass a sub-audit: a non-passing/missing authoritative result still fails the aggregate gate.
+
+Verification for the regression repair: `npm run test:core`, `node scripts/run-ts-entry.js tests/release-audit-repair.test.ts`, and `npm run typecheck` completed after the fixture and evidence updates. The focused release test invokes `npm run audit:release`; non-strict release readiness continues to report its real external prerequisites separately.
