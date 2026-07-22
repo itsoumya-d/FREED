@@ -147,6 +147,7 @@
   },
   "devDependencies": {
     "@types/react": "^19.2.7",
+    "babel-preset-expo": "~55.0.24",
     "esbuild": "^0.27.7",
     "typescript": "^5.9.3"
   },
