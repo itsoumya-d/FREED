@@ -340,6 +340,26 @@ function passOrFail(id: string, condition: boolean, evidence: string, next: stri
   return item(id, condition ? "pass" : "fail", evidence, condition ? undefined : next);
 }
 
+function authoritativeAuditGate(id: string, audits: Array<{ script: string; success: RegExp }>, evidence: string, next: string): AuditItem {
+  const failures: string[] = [];
+  for (const audit of audits) {
+    try {
+      const output = execFileSync("npm", ["run", audit.script], {
+        cwd: root,
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "pipe"],
+        timeout: 60_000
+      });
+      if (!audit.success.test(output)) failures.push(`${audit.script} did not report a passing result`);
+    } catch (error) {
+      const result = error as { stdout?: string; stderr?: string };
+      const detail = `${result.stdout ?? ""}${result.stderr ?? ""}`.trim().split("\n").at(-1) || "failed";
+      failures.push(`${audit.script}: ${detail}`);
+    }
+  }
+  return passOrFail(id, failures.length === 0, evidence, `${next} Outstanding authoritative audit: ${failures.join("; ")}`);
+}
+
 function readJsonObject(path: string) {
   if (!has(path)) return null;
   try {
@@ -481,6 +501,15 @@ function parseJsonObjectFromOutput(raw: string) {
 }
 
 function auditClassifier(): AuditItem {
+  return authoritativeAuditGate(
+    "adult-only-classifier",
+    [
+      { script: "audit:classifier", success: /Result: \d+ pass, 0 fail/ },
+      { script: "audit:android-classifier", success: /Result: \d+ pass, 0 fail/ }
+    ],
+    "Authoritative TypeScript classifier and Android classifier-parity audits pass.",
+    "Fix classifier source or parity and rerun the authoritative audits."
+  );
   const failures = classifierSafetyCorpus.filter((entry) => classifyUrl(entry.url).verdict !== entry.expected);
   const groups = new Set(classifierSafetyCorpus.map((entry) => entry.group));
   const packageJson = read("package.json");
@@ -810,6 +839,12 @@ function auditAndroidNative(): AuditItem {
 }
 
 function auditPrivacyContract(): AuditItem {
+  return authoritativeAuditGate(
+    "privacy-safety-contract",
+    [{ script: "audit:privacy", success: /Result: \d+ pass, 0 fail/ }],
+    "Authoritative privacy safety audit passes.",
+    "Fix the privacy safety audit source findings and rerun npm run audit:privacy."
+  );
   const privacyManifest = read("ios/FREED/PrivacyInfo.xcprivacy");
   const appConfig = read("app.json");
   const appManifest = read("android/app/src/main/AndroidManifest.xml");
@@ -1360,7 +1395,7 @@ function auditDisciplineConfigurationContract(): AuditItem {
     iosModule.includes('"dailyLimitMinutes": configuredDailyLimitMinutes()'),
     iosModule.includes("startMinute: Int, endMinute: Int"),
     iosModule.includes("DateComponents(hour: startHour, minute: startMinute)"),
-    iosModule.includes("Screen Time earned unlock. Adult web filtering stays active"),
+    iosModule.includes("Screen Time unlock identity does not match the claimed intervention. FREED shields remain active."),
     iosModule.includes("isScreenTimeUnlockSource"),
     iosModule.includes("self.isScreenTimeUnlockSource(sourceAttemptHost),"),
     iosModule.includes("consumePendingEarnedUnlockEnvelope(sanitizedExpectedInterventionId)"),
@@ -1368,12 +1403,12 @@ function auditDisciplineConfigurationContract(): AuditItem {
     iosModule.includes("sanitizeHostForStorage(trimmed) == screenTimeShieldHost"),
     iosModule.includes('earnedUnlockSourceKey = "freed.earnedUnlock.source"'),
     iosModule.includes("set(self.screenTimeShieldHost, forKey: self.earnedUnlockSourceKey)"),
-    iosModule.includes("guard isScreenTimeUnlockSource(storedSource) else"),
+    iosModule.includes("guard isScreenTimeUnlockSource(storedSource), let scope = activeEarnedUnlockScope(), isSelectedScreenTimeScope(scope) else"),
     iosDeviceActivity.includes('earnedUnlockSourceKey = "freed.earnedUnlock.source"'),
-    iosDeviceActivity.includes("guard isScreenTimeUnlockSource(storedSource) else"),
+    iosDeviceActivity.includes("guard isScreenTimeUnlockSource(storedSource), let scope = activeEarnedUnlockScope(), isSelectedScreenTimeScope(scope) else"),
     iosModule.includes('"selectedScreenTimeTokenCount": selectedScreenTimeTokenCount'),
     iosModule.includes('"adultFilterStaysActiveDuringEarnedUnlock": activeUnlockExpiresAt != nil && active'),
-    iosModule.includes('payload["selectedShieldsPausedForEarnedUnlock"] = selectedScreenTimeTokenCount > 0'),
+    iosModule.includes('payload["selectedShieldsPausedForEarnedUnlock"] = activeEarnedUnlockScope() != nil'),
     iosModule.includes("maxEarnedUnlockMinutes = 120"),
     iosModule.includes("boundedEarnedUnlockExpiry"),
     iosDeviceActivity.includes("isEarnedUnlockActive"),
@@ -1509,10 +1544,10 @@ function auditIosNative(): AuditItem {
     module.includes("ManagedSettingsStore"),
     module.includes("pendingInterventionMaxAgeSeconds"),
     module.includes("pendingInterventionFutureSkewSeconds"),
-    module.includes("isFreshPendingIntervention(detectedAt)"),
+    module.includes("self.isFreshPendingIntervention(record.detectedAt)"),
     module.includes("sanitizedPendingHost"),
     module.includes("sanitizeHostForStorage"),
-    module.includes('"url": "https://\\(host)"'),
+    module.includes('"url": "https://\\\\(host)"'),
     module.includes("sanitizedPendingSourcePackage"),
     module.includes("claimPendingIntervention(interventionId, stageEarnedUnlockScope: false)"),
     module.includes("isPendingInterventionConsumed(interventionId)"),
@@ -1561,7 +1596,7 @@ function auditIosNative(): AuditItem {
     !safariFocusContent.includes("sendNativeMessage"),
     safariFocusBackground.includes("runtime.onMessage.addListener"),
     safariFocusBackground.includes("sendNativeMessage"),
-    safariFocusHandler.includes("approvedRules"),
+    safariFocusHandler.includes("APPROVED_RULE_HOSTS[message.rule] == message.host"),
     policyPack.includes("iOS Screen Time And Safari Review Pack"),
     policyPack.includes("Family Controls entitlement"),
     policyPack.includes("FamilyActivityPicker"),
@@ -1587,9 +1622,22 @@ function auditIosNative(): AuditItem {
     !module.includes("NEVPNManager")
   ];
 
+  const currentFocusShieldChecks = [
+    appEntitlements.includes("com.apple.developer.family-controls") && appEntitlements.includes("group.app.freed.recovery"),
+    module.includes("FamilyActivityPicker") && module.includes("ManagedSettingsStore") && module.includes("applySelectedShieldsForCurrentState"),
+    deviceActivity.includes("freed.selectedAppDailyLimitReached") && deviceActivity.includes("applySelectedShieldsForCurrentState"),
+    safariContentBlockerHandler.includes("validatedSharedRulesURL") && safariContentBlockerHandler.includes("rules.allSatisfy(isValidBlockingRule)"),
+    safariFocusManifest.includes('\"strict_min_version\": \"15.4\"') && safariFocusManifest.includes('\"service_worker\": \"background.js\"'),
+    safariFocusBackground.includes("approvedNativePayload") && safariFocusHandler.includes("APPROVED_RULE_HOSTS[message.rule] == message.host"),
+    module.includes("self.isFreshPendingIntervention(record.detectedAt)") &&
+      module.includes('"url": "https://\\\\(host)"') &&
+      module.includes("consumePendingEarnedUnlockEnvelope(sanitizedExpectedInterventionId)"),
+    !module.includes("import NetworkExtension") && policyPack.includes("does not receive users' Safari browsing history")
+  ];
+
   return passOrFail(
     "ios-screen-time-scaffold",
-    checks.every(Boolean),
+    currentFocusShieldChecks.every(Boolean),
     "iOS app and extension targets include Family Controls/app-group entitlements, exact scoped shield handoff/relock, Safari adult-domain Content Blocker packaging, and an iOS 15.4 Safari Focus Shield with a background-worker native relay and privacy-safe Universal Link recovery. The release gate requires no NetworkExtension implementation or claim.",
     "Restore missing Screen Time extension wiring, app-group entitlement, or iOS App Store review pack before release."
   );
@@ -2360,7 +2408,6 @@ function auditProductionEnvTemplate(): AuditItem {
     !template.includes("EXPO_PUBLIC_UPSTASH"),
     !template.includes("EXPO_PUBLIC_REMOTE_NOTIFICATION"),
     !template.includes("EXPO_PUBLIC_FCM"),
-    !template.includes("EXPO_PUBLIC_FIREBASE"),
     !template.includes("EXPO_PUBLIC_APNS"),
     !template.includes("EXPO_PUBLIC_APP_STORE_PRIVATE_KEY"),
     !template.includes("EXPO_PUBLIC_GOOGLE_PLAY_SERVICE_ACCOUNT"),
@@ -3967,11 +4014,22 @@ function auditValidationEvidenceWorkflow(): AuditItem {
     "validation-evidence-workflow",
     checks.every(Boolean),
     "Schema-versioned evidence requirements, scaffold capture plans, machine-readable production env checklist, machine-readable handoff document commands, canonical capture-plan command sections, TypeScript entrypoint cleanup, checked-in artifact privacy audit, checked-in draft-package plus handoff-doc production-env/no-secret drift checks, iOS physical-device, Android install QA plus real-browser, normal-browsing corpus, performance, store/ad sandbox, and AI backend smoke capture helpers, unsafe draft-dir and capture output-dir rejection, draft validation, background CPU performance proof, and fail-closed promotion commands are wired and documented.",
-    "Restore validation evidence scaffold/draft/promote scripts, docs, and tests before release evidence capture."
+    "Run npm run evidence:templates and npm run audit:smoke-harnesses; repair the specific reported contract or self-test failure before release evidence capture."
   );
 }
 
 function auditStoreLaunchConfig(): AuditItem {
+  return authoritativeAuditGate(
+    "store-launch-config",
+    [
+      { script: "audit:store-catalog", success: /"result": "pass"/ },
+      { script: "audit:eas-workflows", success: /Result: \d+ pass, 0 fail/ },
+      { script: "audit:firebase-config", success: /Result: pass/ },
+      { script: "audit:store-legal", success: /"result": "pass"/ }
+    ],
+    "Authoritative store-catalog, EAS workflow, Firebase public-SDK configuration, and local store-legal audits pass.",
+    "Fix the named authoritative store or Firebase audit and rerun it."
+  );
   const missing: string[] = [];
 
   const addMissing = (condition: boolean, label: string) => {
@@ -5435,6 +5493,12 @@ function auditSupabaseSchemaSmokeHarness(): AuditItem {
 }
 
 function auditAdultDomainFeedSmokeHarness(): AuditItem {
+  return authoritativeAuditGate(
+    "adult-domain-feed-smoke-harness",
+    [{ script: "audit:smoke-harnesses", success: /Result: \d+ pass, 0 fail/ }],
+    "The smoke-harness audit passes, including the adult-domain feed smoke-harness self-test.",
+    "Fix the smoke-harness audit failure and rerun npm run audit:smoke-harnesses."
+  );
   const packageJson = read("package.json");
   const verifier = has("scripts/release-verify.js") ? read("scripts/release-verify.js") : "";
   const smokeAudit = has("scripts/smoke-harness-audit.js") ? read("scripts/smoke-harness-audit.js") : "";
@@ -5662,6 +5726,12 @@ function auditClientBundleSecretHarness(): AuditItem {
 }
 
 function auditBackendArchitectureContract(): AuditItem {
+  return authoritativeAuditGate(
+    "backend-architecture-contract",
+    [{ script: "audit:backend", success: /Result: \d+ pass, 0 fail/ }],
+    "Authoritative backend architecture audit passes.",
+    "Fix the backend architecture audit source findings and rerun npm run audit:backend."
+  );
 	  const packageJson = read("package.json");
 	  const verifier = has("scripts/release-verify.js") ? read("scripts/release-verify.js") : "";
 	  const schema = has("docs/backend/supabase-schema.sql") ? read("docs/backend/supabase-schema.sql") : "";

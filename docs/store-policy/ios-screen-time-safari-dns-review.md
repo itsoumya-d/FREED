@@ -36,6 +36,7 @@ Explicit platform boundaries:
 - FREED does not use `NEPacketTunnelProvider`, `NETunnelProviderManager`, or `NEVPNManager`.
 - FREED does not include a packet-tunnel provider.
 - FREED does not full-tunnel traffic.
+- FREED performs no full traffic proxying.
 - No VPN manager is used.
 - No TLS interception is used.
 - No packet tunnel, VPN manager, full traffic proxying, packet inspection, or MITM HTTPS is used.

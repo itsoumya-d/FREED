@@ -772,7 +772,12 @@ offline-1 offline product:bad model:bad
   assert.throws(() => validateAndroidPackage("bad package", "--app-package"), /package name/);
   assert.throws(() => validateLaunchComponent("bad", "--main-activity"), /component/);
   assert.throws(() => resolveWorkspacePath("../outside.apk", "--apk"), /workspace/);
-  assert.throws(() => parseArgs(["--output-dir", "docs/validation/evidence/install"]), /docs\/validation\/evidence/);
+  assert.doesNotThrow(() => parseArgs(["--self-test"]));
+  assert.throws(() => parseArgs(["--apk", "android/app/build/outputs/apk/release/missing.apk"]), /APK does not exist/);
+  assert.throws(
+    () => parseArgs(["--self-test", "--output-dir", "docs/validation/evidence/install"]),
+    /docs\/validation\/evidence/
+  );
   const summary = parsePackageSummary(
     `Package [app.freed.recovery] (123):
       versionCode=1 minSdk=26 targetSdk=36
