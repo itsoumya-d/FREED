@@ -1,5 +1,7 @@
 import { getApps, initializeApp } from "firebase-admin/app";
-import { FieldValue, getFirestore, Timestamp, type Transaction } from "firebase-admin/firestore";
+import { getAuth } from "firebase-admin/auth";
+import { FieldPath, FieldValue, getFirestore, Timestamp, type Transaction } from "firebase-admin/firestore";
+import { getStorage } from "firebase-admin/storage";
 import { HttpsError, onCall } from "firebase-functions/v2/https";
 import { onSchedule } from "firebase-functions/v2/scheduler";
 import { setGlobalOptions } from "firebase-functions/v2";
@@ -7,16 +9,29 @@ import { setGlobalOptions } from "firebase-functions/v2";
 import {
   COLLECTIONS,
   parseAggregateAnalytics,
-  parseBackupMetadataHandshake,
+  parseBackupDownload,
+  parseDeleteBackup,
   parseDeletionRequest,
+  parseFinalizeBackupUpload,
   parsePushTokenRegistration,
+  parseStartBackupUpload,
+  type BackupMetadataDocument,
   validateServerDocument
 } from "./contracts.js";
+import {
+  deleteEncryptedBackup as deleteEncryptedBackupObject,
+  deleteFirebaseAccountData,
+  getBackupObjectPath,
+  getSignedUrlSpec,
+  requireVerifiedBackup,
+  verifyCiphertext
+} from "./core-data.js";
 import { runProtectedMutation, type TransactionalStore } from "./transactional.js";
 
 if (!getApps().length) initializeApp();
 
 const db = getFirestore();
+const bucket = getStorage().bucket();
 const REGION = "asia-south1";
 const DAY_MS = 24 * 60 * 60 * 1000;
 const IDEMPOTENCY_TTL_MS = 7 * DAY_MS;
@@ -36,11 +51,10 @@ export const ingestAggregateAnalytics = onCall({ enforceAppCheck: true }, async 
   const uid = requireUid(request.auth?.uid);
   const input = parseOrHttpsError(() => parseAggregateAnalytics(request.data));
   const duplicate = await mutate(uid, "analytics", input.clientEventId, 30, async (transaction) => {
-    setServerDocument(transaction, COLLECTIONS.aggregateAnalytics, `${uid}_${input.day}`, {
-      uid,
+    setServerDocument(transaction, COLLECTIONS.aggregateAnalytics, input.day, {
       day: input.day,
-      checkIns: input.checkIns,
-      completedChallenges: input.completedChallenges,
+      checkIns: FieldValue.increment(input.checkIns),
+      completedChallenges: FieldValue.increment(input.completedChallenges),
       updatedAt: FieldValue.serverTimestamp(),
       expiresAt: Timestamp.fromMillis(Date.now() + 400 * DAY_MS)
     }, true);
@@ -48,21 +62,133 @@ export const ingestAggregateAnalytics = onCall({ enforceAppCheck: true }, async 
   return { ok: true, duplicate };
 });
 
-/** Records handshake metadata only. Encrypted recovery envelopes never enter callable data or Firestore. */
-export const registerEncryptedBackupMetadata = onCall({ enforceAppCheck: true }, async (request) => {
+/** Creates a short-lived signed PUT URL for an opaque, server-derived object key. */
+export const startEncryptedBackupUpload = onCall({ enforceAppCheck: true }, async (request) => {
   const uid = requireUid(request.auth?.uid);
-  const input = parseOrHttpsError(() => parseBackupMetadataHandshake(request.data));
-  const duplicate = await mutate(uid, "backup-metadata", input.clientEventId, 10, async (transaction) => {
+  const input = parseOrHttpsError(() => parseStartBackupUpload(request.data));
+  const objectPath = getBackupObjectPath(uid, input.backupId);
+  const duplicate = await mutate(uid, "backup-start", input.clientEventId, 10, async (transaction) => {
     setServerDocument(transaction, COLLECTIONS.backupMetadata, `${uid}_${input.backupId}`, {
       uid,
       backupId: input.backupId,
-      encryptedBytes: input.encryptedBytes,
+      expectedBytes: input.encryptedBytes,
       ciphertextSha256: input.ciphertextSha256,
-      recordedAt: FieldValue.serverTimestamp(),
+      objectPath,
+      status: "uploading",
+      createdAt: FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
       expiresAt: Timestamp.fromMillis(Date.now() + 400 * DAY_MS)
     });
   });
-  return { ok: true, duplicate, acceptsEncryptedEnvelope: false };
+
+  const metadata = await getBackupMetadata(uid, input.backupId);
+  if (
+    !metadata || metadata.uid !== uid || metadata.backupId !== input.backupId ||
+    metadata.objectPath !== objectPath || metadata.expectedBytes !== input.encryptedBytes ||
+    metadata.ciphertextSha256 !== input.ciphertextSha256
+  ) {
+    throw new HttpsError("failed-precondition", "The encrypted backup upload could not be started.");
+  }
+  const now = Date.now();
+  const spec = getSignedUrlSpec("write", now, input.encryptedBytes);
+  const [signedUrl] = await bucket.file(objectPath).getSignedUrl(spec);
+  return {
+    ok: true,
+    duplicate,
+    status: metadata.status,
+    signedUrl,
+    objectKey: objectPath,
+    expiresAt: new Date(spec.expires).toISOString(),
+    requiredHeaders: {
+      "content-type": "application/octet-stream",
+      "content-length": String(input.encryptedBytes)
+    }
+  };
+});
+
+/** Streams ciphertext bytes to verify their byte count and SHA-256; no envelope parsing occurs. */
+export const finalizeEncryptedBackupUpload = onCall({ enforceAppCheck: true }, async (request) => {
+  const uid = requireUid(request.auth?.uid);
+  const input = parseOrHttpsError(() => parseFinalizeBackupUpload(request.data));
+  const existing = await getBackupMetadata(uid, input.backupId);
+  const objectPath = requireOwnedBackup(uid, input.backupId, existing);
+  if (!existing) throw new HttpsError("not-found", "The encrypted backup metadata is unavailable.");
+  if (existing.status === "verified") {
+    return { ok: true, duplicate: true, status: "verified", verifiedBytes: existing.verifiedBytes };
+  }
+  if (existing.status === "invalid") {
+    await safeDeleteObject(objectPath);
+    throw new HttpsError("failed-precondition", "The encrypted backup failed verification.");
+  }
+  const duplicate = await mutate(uid, "backup-finalize", input.clientEventId, 10, async (transaction) => {
+    setServerDocument(transaction, COLLECTIONS.backupMetadata, `${uid}_${input.backupId}`, {
+      status: "verifying",
+      updatedAt: FieldValue.serverTimestamp()
+    }, true);
+  });
+  const metadata = await getBackupMetadata(uid, input.backupId);
+  if (!metadata) throw new HttpsError("not-found", "The encrypted backup metadata is unavailable.");
+  if (metadata.status === "verified") {
+    return { ok: true, duplicate: true, status: "verified", verifiedBytes: metadata.verifiedBytes };
+  }
+  if (metadata.status === "invalid") {
+    await safeDeleteObject(objectPath);
+    throw new HttpsError("failed-precondition", "The encrypted backup failed verification.");
+  }
+
+  let result: Awaited<ReturnType<typeof verifyCiphertext>>;
+  try {
+    result = await verifyCiphertext({
+      source: bucket.file(objectPath).createReadStream() as AsyncIterable<Uint8Array>,
+      expectedBytes: metadata.expectedBytes,
+      expectedSha256: metadata.ciphertextSha256,
+      removeInvalid: () => safeDeleteObject(objectPath)
+    });
+  } catch {
+    throw new HttpsError("failed-precondition", "The encrypted backup could not be verified.");
+  }
+
+  if (!result.ok) {
+    await setBackupMetadata(uid, input.backupId, {
+      status: "invalid",
+      verifiedBytes: result.verifiedBytes,
+      updatedAt: FieldValue.serverTimestamp()
+    });
+    throw new HttpsError("failed-precondition", "The encrypted backup failed verification.");
+  }
+  await setBackupMetadata(uid, input.backupId, {
+    status: "verified",
+    verifiedBytes: result.verifiedBytes,
+    verifiedAt: FieldValue.serverTimestamp(),
+    updatedAt: FieldValue.serverTimestamp()
+  });
+  return { ok: true, duplicate, status: "verified", verifiedBytes: result.verifiedBytes };
+});
+
+/** Returns a short-lived signed GET URL only for verified, matching metadata. */
+export const getEncryptedBackupDownload = onCall({ enforceAppCheck: true }, async (request) => {
+  const uid = requireUid(request.auth?.uid);
+  const input = parseOrHttpsError(() => parseBackupDownload(request.data));
+  const metadata = await getBackupMetadata(uid, input.backupId);
+  let objectPath: string;
+  try {
+    objectPath = requireVerifiedBackup({ requesterUid: uid, backupId: input.backupId, metadata });
+  } catch {
+    throw new HttpsError("not-found", "A verified encrypted backup is unavailable.");
+  }
+  const spec = getSignedUrlSpec("read", Date.now());
+  const [signedUrl] = await bucket.file(objectPath).getSignedUrl(spec);
+  return { ok: true, status: "verified", signedUrl, objectKey: objectPath, expiresAt: new Date(spec.expires).toISOString() };
+});
+
+/** Deletes the opaque encrypted object and its server-owned metadata idempotently. */
+export const deleteEncryptedBackup = onCall({ enforceAppCheck: true }, async (request) => {
+  const uid = requireUid(request.auth?.uid);
+  const input = parseOrHttpsError(() => parseDeleteBackup(request.data));
+  const objectPath = getBackupObjectPath(uid, input.backupId);
+  const duplicate = await mutate(uid, "backup-delete", input.clientEventId, 10, async () => undefined);
+  await deleteEncryptedBackupData(uid, input.backupId, objectPath);
+  return { ok: true, duplicate, status: "deleted" };
 });
 
 /** Stores an FCM token in an Admin-only collection after notification permission was granted locally. */
@@ -81,30 +207,32 @@ export const registerPushToken = onCall({ enforceAppCheck: true }, async (reques
   return { ok: true, duplicate };
 });
 
-/** Limited-use App Check is intentionally unavailable in the Emulator Suite. */
+/** Completes deletion synchronously; limited-use App Check consumption is enforced in production. */
 export const requestAccountDeletion = onCall({ enforceAppCheck: true, consumeAppCheckToken: true }, async (request) => {
-  if (process.env.FUNCTIONS_EMULATOR === "true") {
-    throw new HttpsError("failed-precondition", "Limited-use App Check cannot be validated in the Firebase Emulator Suite.");
+  if (process.env.FUNCTIONS_EMULATOR !== "true" && request.app?.alreadyConsumed) {
+    throw new HttpsError("permission-denied", "A fresh App Check token is required.");
   }
   const uid = requireUid(request.auth?.uid);
   const input = parseOrHttpsError(() => parseDeletionRequest(request.data));
-  const duplicate = await mutate(uid, "deletion", input.clientEventId, 2, async (transaction) => {
+  await mutate(uid, "deletion", input.clientEventId, 2, async (transaction) => {
     const expiresAt = Timestamp.fromMillis(Date.now() + 30 * DAY_MS);
     setServerDocument(transaction, COLLECTIONS.deletionTombstones, uid, {
       uid,
       requestedAt: FieldValue.serverTimestamp(),
       expiresAt,
-      status: "requested"
-    });
-    setServerDocument(transaction, COLLECTIONS.backendJobs, `delete_${uid}`, {
-      kind: "account-deletion",
-      uid,
-      status: "queued",
-      createdAt: FieldValue.serverTimestamp(),
-      expiresAt
+      status: "deleting"
     });
   });
-  return { ok: true, duplicate, status: "requested" };
+  try {
+    await deleteFirebaseAccountData(uid, {
+      deleteBackupObjects: async (ownerUid) => bucket.deleteFiles({ prefix: `recovery-backups/${ownerUid}/` }),
+      deleteRecords: deleteUserRecords,
+      deleteAuthIdentity: deleteAuthIdentity
+    });
+  } catch {
+    throw new HttpsError("internal", "Account deletion did not complete. Retry the request.");
+  }
+  return { ok: true, status: "completed" };
 });
 
 /** Deletes TTL-expired server records; it never scans or decrypts user backup content. */
@@ -172,6 +300,100 @@ function setServerDocument(
   const safe = validateServerDocument(collection, value);
   if (merge) transaction.set(reference, safe, { merge: true });
   else transaction.set(reference, safe);
+}
+
+async function getBackupMetadata(uid: string, backupId: string): Promise<BackupMetadataDocument | undefined> {
+  const snapshot = await db.collection(COLLECTIONS.backupMetadata).doc(`${uid}_${backupId}`).get();
+  return snapshot.exists ? snapshot.data() as BackupMetadataDocument : undefined;
+}
+
+function requireOwnedBackup(
+  uid: string,
+  backupId: string,
+  metadata: BackupMetadataDocument | undefined
+): string {
+  const expectedPath = getBackupObjectPath(uid, backupId);
+  if (!metadata || metadata.uid !== uid || metadata.backupId !== backupId || metadata.objectPath !== expectedPath) {
+    throw new HttpsError("not-found", "The encrypted backup metadata is unavailable.");
+  }
+  return expectedPath;
+}
+
+async function setBackupMetadata(uid: string, backupId: string, value: object): Promise<void> {
+  const safe = validateServerDocument(COLLECTIONS.backupMetadata, value);
+  await db.collection(COLLECTIONS.backupMetadata).doc(`${uid}_${backupId}`).set(safe, { merge: true });
+}
+
+async function deleteEncryptedBackupData(uid: string, backupId: string, objectPath: string): Promise<void> {
+  await deleteEncryptedBackupObject({
+    objectPath,
+    deleteObject: safeDeleteObject,
+    deleteMetadata: async () => { await db.collection(COLLECTIONS.backupMetadata).doc(`${uid}_${backupId}`).delete(); },
+    isObjectNotFound: isStorageNotFound
+  });
+}
+
+async function safeDeleteObject(objectPath: string): Promise<void> {
+  try {
+    await bucket.file(objectPath).delete({ ignoreNotFound: true });
+  } catch (error) {
+    if (!isStorageNotFound(error)) throw error;
+  }
+}
+
+function isStorageNotFound(error: unknown): boolean {
+  const code = (error as { code?: number | string } | undefined)?.code;
+  return code === 404 || code === "404";
+}
+
+async function deleteUserRecords(scope: string, uid: string): Promise<void> {
+  if (scope === COLLECTIONS.rateLimits || scope === COLLECTIONS.idempotency) {
+    await deleteDocumentsByIdPrefix(scope, `${uid}_`);
+    return;
+  }
+  if (scope === COLLECTIONS.leases) {
+    await deleteDocumentsByField(scope, "owner", uid);
+    await deleteDocumentsByIdPrefix(scope, `${uid}_`);
+    return;
+  }
+  if (scope === COLLECTIONS.deletionTombstones) {
+    await db.collection(scope).doc(uid).delete();
+    return;
+  }
+  await deleteDocumentsByField(scope, "uid", uid);
+}
+
+async function deleteDocumentsByField(collection: string, field: string, value: string): Promise<void> {
+  while (true) {
+    const snapshot = await db.collection(collection).where(field, "==", value).limit(400).get();
+    if (snapshot.empty) return;
+    const batch = db.batch();
+    snapshot.docs.forEach((document) => batch.delete(document.ref));
+    await batch.commit();
+  }
+}
+
+async function deleteDocumentsByIdPrefix(collection: string, prefix: string): Promise<void> {
+  while (true) {
+    const snapshot = await db.collection(collection)
+      .orderBy(FieldPath.documentId())
+      .startAt(prefix)
+      .endBefore(`${prefix}\uf8ff`)
+      .limit(400)
+      .get();
+    if (snapshot.empty) return;
+    const batch = db.batch();
+    snapshot.docs.forEach((document) => batch.delete(document.ref));
+    await batch.commit();
+  }
+}
+
+async function deleteAuthIdentity(uid: string): Promise<void> {
+  try {
+    await getAuth().deleteUser(uid);
+  } catch (error) {
+    if ((error as { code?: string } | undefined)?.code !== "auth/user-not-found") throw error;
+  }
 }
 
 function requireUid(uid: string | undefined): string {

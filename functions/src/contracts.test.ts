@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  COLLECTIONS,
   parseAggregateAnalytics,
   parseBackupMetadataHandshake,
   parseDeletionRequest,
@@ -9,6 +10,8 @@ import {
   redactAndValidate,
   validateServerDocument
 } from "./contracts.js";
+
+import * as contracts from "./contracts.js";
 
 test("aggregate analytics accepts only bounded aggregate values", () => {
   assert.deepEqual(
@@ -48,4 +51,78 @@ test("push token and deletion callable contracts are minimal", () => {
 test("server document schemas reject forbidden fields on every collection family", () => {
   assert.deepEqual(validateServerDocument("adult_feed_metadata", { version: "v1", checksum: "a".repeat(64) }), { version: "v1", checksum: "a".repeat(64) });
   assert.throws(() => validateServerDocument("redacted_ai_events", { eventType: "coach", privateNote: "never" }), /sensitive or unsupported/i);
+});
+
+test("anonymous aggregate analytics documents cannot contain a Firebase UID", () => {
+  assert.deepEqual(
+    validateServerDocument(COLLECTIONS.aggregateAnalytics, {
+      day: "2026-07-22",
+      checkIns: 2,
+      completedChallenges: 1,
+      updatedAt: 1,
+      expiresAt: 2
+    }),
+    { day: "2026-07-22", checkIns: 2, completedChallenges: 1, updatedAt: 1, expiresAt: 2 }
+  );
+  assert.throws(
+    () => validateServerDocument(COLLECTIONS.aggregateAnalytics, {
+      uid: "firebase-user-123",
+      day: "2026-07-22",
+      checkIns: 2,
+      completedChallenges: 1,
+      updatedAt: 1,
+      expiresAt: 2
+    }),
+    /sensitive or unsupported/i
+  );
+});
+
+test("encrypted backup callable payloads are strict allowlists with a 100 MiB ceiling", () => {
+  const api = contracts as unknown as Record<string, (value: unknown) => unknown>;
+  assert.equal(typeof api.parseStartBackupUpload, "function");
+  assert.deepEqual(
+    api.parseStartBackupUpload?.({
+      backupId: "bkp_12345678",
+      encryptedBytes: 100 * 1024 * 1024,
+      ciphertextSha256: "a".repeat(64),
+      clientEventId: "evt_abcdefgh"
+    }),
+    {
+      backupId: "bkp_12345678",
+      encryptedBytes: 100 * 1024 * 1024,
+      ciphertextSha256: "a".repeat(64),
+      clientEventId: "evt_abcdefgh"
+    }
+  );
+  assert.throws(() => api.parseStartBackupUpload?.({
+    backupId: "bkp_12345678",
+    encryptedBytes: 100 * 1024 * 1024 + 1,
+    ciphertextSha256: "a".repeat(64),
+    clientEventId: "evt_abcdefgh"
+  }), /unsupported/i);
+  assert.throws(() => api.parseStartBackupUpload?.({
+    backupId: "bkp_12345678",
+    encryptedBytes: 42,
+    ciphertextSha256: "a".repeat(64),
+    clientEventId: "evt_abcdefgh",
+    objectPath: "client/chosen.bin"
+  }), /unsupported/i);
+});
+
+test("finalize, download, and delete backup payloads expose no object path or content", () => {
+  const api = contracts as unknown as Record<string, (value: unknown) => unknown>;
+  assert.equal(typeof api.parseFinalizeBackupUpload, "function");
+  assert.equal(typeof api.parseBackupDownload, "function");
+  assert.equal(typeof api.parseDeleteBackup, "function");
+  assert.deepEqual(api.parseFinalizeBackupUpload?.({ backupId: "bkp_12345678", clientEventId: "evt_finalize1" }), {
+    backupId: "bkp_12345678",
+    clientEventId: "evt_finalize1"
+  });
+  assert.deepEqual(api.parseBackupDownload?.({ backupId: "bkp_12345678" }), { backupId: "bkp_12345678" });
+  assert.deepEqual(api.parseDeleteBackup?.({ backupId: "bkp_12345678", clientEventId: "evt_delete12" }), {
+    backupId: "bkp_12345678",
+    clientEventId: "evt_delete12"
+  });
+  assert.throws(() => api.parseBackupDownload?.({ backupId: "bkp_12345678", url: "https://private.example" }), /unsupported/i);
+  assert.throws(() => api.parseDeleteBackup?.({ backupId: "bkp_12345678", encryptedEnvelope: "never" }), /unsupported/i);
 });

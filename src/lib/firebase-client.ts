@@ -78,12 +78,24 @@ export type FirebaseMessagingRegistration = {
 
 export type FirebaseCallableName =
   | "ingestAggregateAnalytics"
-  | "registerEncryptedBackupMetadata"
+  | "startEncryptedBackupUpload"
+  | "finalizeEncryptedBackupUpload"
+  | "getEncryptedBackupDownload"
+  | "deleteEncryptedBackup"
   | "registerPushToken"
   | "requestAccountDeletion"
   | "backendReadiness";
 
-export type FirebaseCallableResult = { ok: boolean; duplicate?: boolean; status?: string };
+export type FirebaseCallableResult = {
+  ok: boolean;
+  duplicate?: boolean;
+  status?: string;
+  signedUrl?: string;
+  objectKey?: string;
+  expiresAt?: string;
+  requiredHeaders?: Readonly<Record<string, string>>;
+  verifiedBytes?: number;
+};
 export type FirebaseCallableTransport = {
   call: (name: FirebaseCallableName, data: unknown) => Promise<FirebaseCallableResult>;
 };
@@ -99,6 +111,8 @@ export type FirebaseBackupMetadataPayload = {
   ciphertextSha256: string;
   clientEventId: string;
 };
+export type FirebaseBackupMutationPayload = { backupId: string; clientEventId: string };
+export type FirebaseBackupDownloadPayload = { backupId: string };
 export type FirebaseDeletionRequestPayload = { clientEventId: string };
 
 const PRODUCTION_PROJECT_ID = "freed-7d5ee";
@@ -309,9 +323,21 @@ export function createFirebaseCallableContracts(transport: FirebaseCallableTrans
       assertCallablePayload(payload, ["day", "checkIns", "completedChallenges", "clientEventId"]);
       return transport.call("ingestAggregateAnalytics", payload);
     },
-    registerBackupMetadata: async (payload: FirebaseBackupMetadataPayload) => {
+    startBackupUpload: async (payload: FirebaseBackupMetadataPayload) => {
       assertCallablePayload(payload, ["backupId", "encryptedBytes", "ciphertextSha256", "clientEventId"]);
-      return transport.call("registerEncryptedBackupMetadata", payload);
+      return transport.call("startEncryptedBackupUpload", payload);
+    },
+    finalizeBackupUpload: async (payload: FirebaseBackupMutationPayload) => {
+      assertCallablePayload(payload, ["backupId", "clientEventId"]);
+      return transport.call("finalizeEncryptedBackupUpload", payload);
+    },
+    getBackupDownload: async (payload: FirebaseBackupDownloadPayload) => {
+      assertCallablePayload(payload, ["backupId"]);
+      return transport.call("getEncryptedBackupDownload", payload);
+    },
+    deleteBackup: async (payload: FirebaseBackupMutationPayload) => {
+      assertCallablePayload(payload, ["backupId", "clientEventId"]);
+      return transport.call("deleteEncryptedBackup", payload);
     },
     registerPushToken: async (payload: FirebaseMessagingRegistration & { clientEventId: string }) => {
       assertCallablePayload(payload, ["installationId", "token", "recoveryContentIncluded", "clientEventId"]);
@@ -334,7 +360,8 @@ function assertCallablePayload(payload: object, allowed: readonly string[]) {
   for (const key of Object.keys(payload)) {
     if (
       !allowed.includes(key) ||
-      (/(?:url|host|recovery|receipt|note|accessibility|envelope|content|text|body)/i.test(key) && key !== "recoveryContentIncluded")
+      (/(?:url|host|recovery|receipt|note|accessibility|envelope|content|text|body)/i.test(key) &&
+        key !== "recoveryContentIncluded" && key !== "ciphertextSha256")
     ) {
       throw new Error("This data is not permitted in Firebase callable payloads.");
     }

@@ -15,24 +15,41 @@ export const COLLECTIONS = {
 
 export type AggregateAnalyticsInput = { day: string; checkIns: number; completedChallenges: number; clientEventId: string };
 export type BackupMetadataInput = { backupId: string; encryptedBytes: number; ciphertextSha256: string; clientEventId: string };
+export type BackupIdentifierInput = { backupId: string };
+export type BackupMutationInput = BackupIdentifierInput & { clientEventId: string };
 export type PushTokenInput = { installationId: string; token: string; clientEventId: string };
 export type DeletionRequestInput = { clientEventId: string };
 
 /** These document shapes are server-only; direct mobile Firestore access is denied. */
-export type AggregateAnalyticsDocument = { uid: string; day: string; checkIns: number; completedChallenges: number; updatedAt: unknown; expiresAt: unknown };
-export type BackupMetadataDocument = { uid: string; backupId: string; encryptedBytes: number; ciphertextSha256: string; recordedAt: unknown; expiresAt: unknown };
+export type AggregateAnalyticsDocument = { day: string; checkIns: number; completedChallenges: number; updatedAt: unknown; expiresAt: unknown };
+export type BackupMetadataDocument = {
+  uid: string;
+  backupId: string;
+  expectedBytes: number;
+  verifiedBytes?: number;
+  ciphertextSha256: string;
+  objectPath: string;
+  status: "uploading" | "verifying" | "verified" | "invalid";
+  createdAt: unknown;
+  updatedAt: unknown;
+  verifiedAt?: unknown;
+  expiresAt: unknown;
+};
 export type PurchaseAuditDocument = { uid: string; provider: string; productId: string; status: string; verifiedAt: unknown; expiresAt: unknown };
 export type RedactedAiEventDocument = { uid: string; eventType: string; outcome: string; createdAt: unknown; expiresAt: unknown };
 export type BackendJobDocument = { kind: string; uid?: string; status: string; createdAt: unknown; expiresAt: unknown };
 export type RateLimitDocument = { count: number; windowStartedAt: number; expiresAt: number };
 export type LeaseDocument = { owner: string; acquiredAt: number; expiresAt: number };
 export type PushTokenDocument = { uid: string; installationId: string; token: string; updatedAt: unknown; expiresAt: unknown };
-export type DeletionTombstoneDocument = { uid: string; requestedAt: unknown; status: "requested" | "completed"; expiresAt: unknown };
+export type DeletionTombstoneDocument = { uid: string; requestedAt: unknown; status: "deleting"; expiresAt: unknown };
 export type AdultFeedMetadataDocument = { version: string; checksum: string; source?: string; publishedAt?: unknown; expiresAt?: unknown };
 
 const SERVER_DOCUMENT_FIELDS: Record<string, readonly string[]> = {
-  [COLLECTIONS.aggregateAnalytics]: ["uid", "day", "checkIns", "completedChallenges", "updatedAt", "expiresAt"],
-  [COLLECTIONS.backupMetadata]: ["uid", "backupId", "encryptedBytes", "ciphertextSha256", "recordedAt", "expiresAt"],
+  [COLLECTIONS.aggregateAnalytics]: ["day", "checkIns", "completedChallenges", "updatedAt", "expiresAt"],
+  [COLLECTIONS.backupMetadata]: [
+    "uid", "backupId", "expectedBytes", "verifiedBytes", "ciphertextSha256", "objectPath", "status",
+    "createdAt", "updatedAt", "verifiedAt", "expiresAt"
+  ],
   [COLLECTIONS.purchaseAudits]: ["uid", "provider", "productId", "status", "verifiedAt", "expiresAt"],
   [COLLECTIONS.redactedAiEvents]: ["uid", "eventType", "outcome", "createdAt", "expiresAt"],
   [COLLECTIONS.backendJobs]: ["kind", "uid", "status", "createdAt", "expiresAt"],
@@ -91,6 +108,23 @@ export function parseBackupMetadataHandshake(value: unknown): BackupMetadataInpu
   return { backupId, encryptedBytes, ciphertextSha256, clientEventId };
 }
 
+export function parseStartBackupUpload(value: unknown): BackupMetadataInput {
+  return parseBackupMetadataHandshake(value);
+}
+
+export function parseFinalizeBackupUpload(value: unknown): BackupMutationInput {
+  return parseBackupMutation(value);
+}
+
+export function parseBackupDownload(value: unknown): BackupIdentifierInput {
+  const record = strictRecord(value, ["backupId"]);
+  return { backupId: requiredIdentifier(record, "backupId") };
+}
+
+export function parseDeleteBackup(value: unknown): BackupMutationInput {
+  return parseBackupMutation(value);
+}
+
 export function parsePushTokenRegistration(value: unknown): PushTokenInput {
   const record = strictRecord(value, ["installationId", "token", "clientEventId"]);
   return {
@@ -103,6 +137,14 @@ export function parsePushTokenRegistration(value: unknown): PushTokenInput {
 export function parseDeletionRequest(value: unknown): DeletionRequestInput {
   const record = strictRecord(value, ["clientEventId"]);
   return { clientEventId: requiredIdentifier(record, "clientEventId") };
+}
+
+function parseBackupMutation(value: unknown): BackupMutationInput {
+  const record = strictRecord(value, ["backupId", "clientEventId"]);
+  return {
+    backupId: requiredIdentifier(record, "backupId"),
+    clientEventId: requiredIdentifier(record, "clientEventId")
+  };
 }
 
 function strictRecord(value: unknown, allowedKeys: readonly string[]): Record<string, unknown> {
