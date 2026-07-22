@@ -87,6 +87,8 @@ import {
 import React from "react";
 
 import { colors, gradients, radii, shadow, starField, typography } from "@/constants/design";
+import { ROOT_DESTINATIONS, type RootDestinationId } from "@/design-system/navigation";
+import { getLayoutClass } from "@/design-system/theme";
 import {
   hasReviewedNativeAdultDomainFeed,
   hasReviewedSafariAdultDomainFeed,
@@ -296,6 +298,7 @@ type Screen =
   | "appSelection"
   | "paywall"
   | "protectionSetup"
+  | "library"
   | "main"
   | "intercept"
   | "ad"
@@ -305,7 +308,7 @@ type Screen =
   | "coach"
   | "slip"
   | "customChallenge";
-type Tab = "home" | "analytics" | "shield" | "library" | "profile";
+type Tab = RootDestinationId;
 
 const FREED_PRIVACY_POLICY_URL = "https://freedrecovery.app/privacy";
 const FREED_SUPPORT_EMAIL = "support@freedrecovery.app";
@@ -2950,6 +2953,7 @@ function HomeScreen({
   onPanic,
   onAttempt,
   onHabitToggle,
+  onOpenLibrary,
   premium
 }: {
   recoveryState: RecoveryState;
@@ -2962,6 +2966,7 @@ function HomeScreen({
   onPanic: () => void;
   onAttempt: (url: string) => void;
   onHabitToggle: (habit: HabitItem) => void;
+  onOpenLibrary: () => void;
   premium: boolean;
 }) {
   const [nowMs, setNowMs] = React.useState(Date.now());
@@ -3187,6 +3192,10 @@ function HomeScreen({
             </Text>
           </LinearGradient>
         </Pressable>
+      </View>
+
+      <View style={{ paddingHorizontal: 20, paddingBottom: 18 }}>
+        <PillButton label="Open Recovery Tools" variant="ghost" onPress={onOpenLibrary} accessibilityHint="Opens the full-screen Library of recovery tools." />
       </View>
 
       {showQaControls ? (
@@ -3866,15 +3875,34 @@ function ShieldScreen({
   onAttempt,
   disciplineSettings,
   activeUnlock,
-  onDisciplineChange
+  onDisciplineChange,
+  protectionCapability,
+  protectionStatus,
+  onRefreshProtection,
+  onOpenProtectionSetup
 }: {
   onAttempt: (url: string) => void;
   disciplineSettings: DisciplineSettings;
   activeUnlock: EarnedUnlock | null;
   onDisciplineChange: (update: Partial<Omit<DisciplineSettings, "updatedAt">>) => void;
+  protectionCapability: ProtectionCapability | null;
+  protectionStatus: ProtectionStatus | null;
+  onRefreshProtection: () => Promise<ProtectionRefreshResult>;
+  onOpenProtectionSetup: () => void;
 }) {
   const [input, setInput] = React.useState("https://google.com/search?q=productivity");
   const [result, setResult] = React.useState<ClassificationResult | null>(null);
+  const [advancedDiagnosticsOpen, setAdvancedDiagnosticsOpen] = React.useState(false);
+  const temporaryUnlock = Boolean(protectionStatus?.activeUnlockExpiresAt && Date.parse(protectionStatus.activeUnlockExpiresAt) > Date.now());
+  const protectionHealth = !protectionCapability || !protectionStatus
+    ? { title: "Protection needs attention", detail: "Protection status is unavailable. Refresh setup before relying on it." }
+    : temporaryUnlock
+      ? { title: "Protection temporarily unlocked", detail: "A time-limited earned unlock is active; protection will resume when it ends." }
+      : protectionStatus.active
+        ? { title: "Protection is active", detail: protectionStatus.message }
+        : protectionCapability.platform !== "ios" && protectionCapability.platform !== "android"
+          ? { title: "Protection unsupported here", detail: "Native protection is available in an iOS or Android device build." }
+          : { title: "Protection needs attention", detail: protectionStatus.message };
   const blockedPackageSet = React.useMemo(() => new Set(disciplineSettings.blockedAppPackages), [disciplineSettings.blockedAppPackages]);
   const toggleBlockedPackage = React.useCallback(
     (androidPackage: string) => {
@@ -3891,6 +3919,33 @@ function ShieldScreen({
       <Text selectable style={{ color: colors.text, fontSize: 30, fontWeight: typography.heavy }}>
         Shield
       </Text>
+      <Card gradient={protectionStatus?.active && !temporaryUnlock ? gradients.mint : undefined}>
+        <Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Protection health</Text>
+        <Text selectable style={{ color: colors.mint, fontWeight: typography.heavy, marginTop: 6 }}>{protectionHealth.title}</Text>
+        <Text selectable style={{ color: colors.text2, lineHeight: 21, marginTop: 6 }}>{protectionHealth.detail}</Text>
+        <View style={{ marginTop: 12 }}>
+          <PillButton label="Open protection setup" onPress={onOpenProtectionSetup} accessibilityHint="Opens the full-screen native protection setup route." />
+        </View>
+      </Card>
+
+      <Card>
+        <Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy, marginBottom: 10 }}>Apps & schedules</Text>
+        <Text selectable style={{ color: colors.text2, lineHeight: 21 }}>Choose the apps and schedules you want FREED to protect. Native authorization stays in protection setup.</Text>
+      </Card>
+
+      <FocusShieldSection protectionCapability={protectionCapability} protectionStatus={protectionStatus} onRefresh={onRefreshProtection} />
+
+      <Card>
+        <Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Web safety</Text>
+        <Text selectable style={{ color: colors.text2, lineHeight: 21, marginTop: 6 }}>Adult-domain protection preserves normal browsing and keeps intervention challenges ad-free.</Text>
+      </Card>
+
+      <Card>
+        <Pressable accessibilityRole="button" accessibilityLabel={advancedDiagnosticsOpen ? "Hide advanced diagnostics" : "Show advanced diagnostics"} onPress={() => setAdvancedDiagnosticsOpen((value) => !value)} style={{ minHeight: 48, justifyContent: "center" }}>
+          <Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Advanced diagnostics</Text>
+        </Pressable>
+        {advancedDiagnosticsOpen ? <Text selectable style={{ color: colors.text3, lineHeight: 20 }}>{protectionStatus?.message ?? "No native protection status is available yet."}</Text> : null}
+      </Card>
       <Card gradient={gradients.mint}>
         <View style={{ flexDirection: "row", gap: 12 }}>
           <ShieldCheck color={colors.mint} size={30} />
@@ -4095,6 +4150,7 @@ function ShieldScreen({
 }
 
 function LibraryScreen({
+  onBack,
   onBreathing,
   onChallenge,
   onCustomChallenge,
@@ -4102,6 +4158,7 @@ function LibraryScreen({
   customChallengeCount,
   customChallengesEnabled
 }: {
+  onBack: () => void;
   onBreathing: () => void;
   onChallenge: () => void;
   onCustomChallenge: () => void;
@@ -4126,9 +4183,10 @@ function LibraryScreen({
 
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 20, paddingBottom: 112, gap: 18 }}>
-      <Text selectable style={{ color: colors.text, fontSize: 30, fontWeight: typography.heavy }}>
-        Library
-      </Text>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+        <Pressable onPress={onBack} accessibilityRole="button" accessibilityLabel="Back to Today" accessibilityHint="Returns to Today." style={{ width: 48, height: 48, borderRadius: 16, backgroundColor: colors.surface2, alignItems: "center", justifyContent: "center" }}><ChevronLeft color={colors.text2} size={20} /></Pressable>
+        <Text selectable style={{ color: colors.text, fontSize: 30, fontWeight: typography.heavy }}>Library</Text>
+      </View>
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
         {items.map((item) => (
           <Pressable key={item.title} onPress={item.action} style={{ width: "48%" }}>
@@ -5344,7 +5402,7 @@ function getMembershipCapabilityLabels(capabilities: PremiumCapabilitySet) {
   return labels;
 }
 
-function ProfileScreen({
+function LegacyProfileScreen({
   recoveryState,
   premium,
   premiumCapabilities,
@@ -7307,26 +7365,32 @@ function BreathingScreen({ onBack }: { onBack: () => void }) {
   );
 }
 
+function ProfileScreen({ recoveryState, premium, streakDays, bestStreakDays, attempts, relapseCount, onManagePlan, onLogSlip, onOpenShield, pendingFirebaseEmailLink, onPendingFirebaseEmailLinkHandled }: {
+  recoveryState: RecoveryState; premium: boolean; streakDays: number; bestStreakDays: number; attempts: BlockingAttempt[]; relapseCount: number;
+  onManagePlan: () => void; onLogSlip: () => void; onOpenShield: () => void; pendingFirebaseEmailLink: string | null; onPendingFirebaseEmailLinkHandled: () => void;
+}) {
+  return <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 20, paddingBottom: 112, gap: 18 }}>
+    <Text selectable style={{ color: colors.text, fontSize: 30, fontWeight: typography.heavy }}>Profile</Text>
+    <Card gradient={gradients.purple}><Text selectable style={{ color: colors.text, fontSize: 22, fontWeight: typography.heavy }}>FREED Member</Text><Text selectable style={{ color: colors.peach, marginTop: 6, fontWeight: typography.heavy }}>{streakDays} DAY STREAK · BEST {bestStreakDays}</Text></Card>
+    {pendingFirebaseEmailLink ? <Card><Text selectable style={{ color: colors.text2 }}>Your email sign-in link is ready to complete.</Text><PillButton label="Complete email sign-in" onPress={onPendingFirebaseEmailLinkHandled} /></Card> : null}
+    <Card><Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Recovery account</Text><Text selectable style={{ color: colors.text2, marginTop: 6 }}>Recovery data, backup, reminders, accountability, privacy, and support stay available here.</Text><View style={{ marginTop: 12 }}><PillButton label={premium ? "Membership active" : "Manage membership"} variant="ghost" onPress={onManagePlan} /></View></Card>
+    <Card><Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Recovery history</Text><Text selectable style={{ color: colors.text2, marginTop: 6 }}>{attempts.length} protected attempts · {relapseCount} slips logged privately.</Text><View style={{ marginTop: 12 }}><PillButton label="Log Slip Safely" variant="ghost" onPress={onLogSlip} /></View></Card>
+    <Card><Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Focus Shield</Text><Text selectable style={{ color: colors.text2, marginTop: 6 }}>Protection configuration is managed in Shield.</Text><View style={{ marginTop: 12 }}><PillButton label="Open Shield" variant="ghost" onPress={onOpenShield} accessibilityHint="Opens Focus Shield configuration." /></View></Card>
+  </ScrollView>;
+}
+
 function BottomNav({ tab, setTab, onPanic }: { tab: Tab; setTab: (tab: Tab) => void; onPanic: () => void }) {
-  const items = [
-    ["home", Home],
-    ["analytics", BarChart3],
-    ["shield", Shield],
-    ["library", BookOpen],
-    ["profile", CircleUserRound]
-  ] as const;
-  const navLabels: Record<Tab, string> = {
-    home: "Home",
-    analytics: "Analytics",
-    shield: "Shield",
-    library: "Library",
-    profile: "Profile"
-  };
+  const icons: Record<RootDestinationId, typeof Home> = { today: Home, shield: Shield, progress: BarChart3, profile: CircleUserRound };
+  const navLabels: Record<Tab, string> = ROOT_DESTINATIONS.reduce(
+    (labels, destination) => ({ ...labels, [destination.id]: destination.accessibilityLabel }),
+    {} as Record<Tab, string>
+  );
 
   return (
     <View style={{ position: "absolute", left: 12, right: 12, bottom: 16, flexDirection: "row", gap: 10, alignItems: "center" }}>
       <View style={{ flex: 1, minHeight: 70, borderRadius: 35, backgroundColor: "#1E1C2E", borderWidth: 1.4, borderColor: "rgba(255,255,255,0.1)", flexDirection: "row", alignItems: "center", padding: 6, ...shadow.soft }}>
-        {items.map(([id, Icon]) => {
+        {ROOT_DESTINATIONS.map(({ id, accessibilityLabel, compactLabel }) => {
+          const Icon = icons[id];
           const active = tab === id;
           return (
             <Pressable
@@ -7341,6 +7405,7 @@ function BottomNav({ tab, setTab, onPanic }: { tab: Tab; setTab: (tab: Tab) => v
               style={{ flex: 1, height: 58, borderRadius: 29, alignItems: "center", justifyContent: "center", backgroundColor: active ? "rgba(184,152,255,0.18)" : "transparent" }}
             >
               <Icon color={active ? colors.purple : "rgba(240,236,248,0.4)"} size={22} strokeWidth={active ? 2.6 : 2.1} />
+              <Text selectable numberOfLines={1} style={{ color: active ? colors.text : colors.text3, fontSize: 10, fontWeight: typography.bold }}>{compactLabel}</Text>
             </Pressable>
           );
         })}
@@ -7364,7 +7429,7 @@ export default function FreedApp() {
   const { width } = useWindowDimensions();
   const { state: recoveryState, setRecoveryState, hydrated, storageError } = usePersistentRecoveryState();
   const [screen, setScreen] = React.useState<Screen>("splash");
-  const [tab, setTab] = React.useState<Tab>("home");
+  const [tab, setTab] = React.useState<Tab>("today");
   const [pendingFirebaseEmailLink, setPendingFirebaseEmailLink] = React.useState<string | null>(null);
   const [quizIndex, setQuizIndex] = React.useState(0);
   const [activeAttempt, setActiveAttempt] = React.useState<NativeInterventionAttempt | null>(null);
@@ -7964,7 +8029,7 @@ export default function FreedApp() {
     setProtectionStatus(null);
     setProtectionSyncMessage(null);
     setRecoveryState(defaultState);
-    setTab("home");
+    setTab("today");
     setScreen("welcome");
   }, [setRecoveryState]);
 
@@ -8015,7 +8080,7 @@ export default function FreedApp() {
 
     listenForReminderResponses((route) => {
       if (route !== "checkin") return;
-      setTab("home");
+      setTab("today");
       setScreen("checkin");
     })
       .then((dispose) => {
@@ -8165,6 +8230,9 @@ export default function FreedApp() {
         />
       );
     }
+    if (screen === "library") {
+      return <AppBackground><SafeAreaView style={{ flex: 1 }}><LibraryScreen onBack={() => { setTab("today"); setScreen("main"); }} onBreathing={() => setScreen("breathing")} onChallenge={() => startStandaloneChallenge()} onCustomChallenge={() => setScreen("customChallenge")} onCoach={() => setScreen("coach")} customChallengeCount={customChallenges.length} customChallengesEnabled={premiumCapabilities.customChallenges} /></SafeAreaView></AppBackground>;
+    }
     if (screen === "intercept" && activeAttempt) {
       return (
         <InterceptScreen
@@ -8270,7 +8338,7 @@ export default function FreedApp() {
           onBack={() => setScreen("main")}
           onSave={(input) => {
             setRecoveryState((current) => recordDailyCheckIn(current, input));
-            setTab("home");
+            setTab("today");
             setScreen("main");
           }}
         />
@@ -8285,7 +8353,7 @@ export default function FreedApp() {
           onSave={(input) => {
             setRecoveryState((current) => recordRelapse(current, input));
             setActiveAttempt(null);
-            setTab("home");
+            setTab("today");
             setScreen("main");
           }}
         />
@@ -8294,8 +8362,8 @@ export default function FreedApp() {
 
     return (
       <AppBackground>
-        <SafeAreaView style={{ flex: 1, alignSelf: "center", width: "100%", maxWidth: isWide ? 520 : undefined }}>
-          {tab === "home" && (
+        <SafeAreaView style={{ flex: 1, alignSelf: "center", width: "100%", maxWidth: getLayoutClass(width) === "compact" ? 520 : 760 }}>
+          {tab === "today" && (
             <HomeScreen
               recoveryState={recoveryState}
               streakDays={streakDays}
@@ -8307,6 +8375,7 @@ export default function FreedApp() {
               premium={premium}
               onPanic={startPanicIntervention}
               onAttempt={(url) => handleAttempt(url)}
+              onOpenLibrary={() => setScreen("library")}
               onHabitToggle={(habit) => {
                 setRecoveryState((current) =>
                   recordDailyHabitCompletion(current, {
@@ -8318,7 +8387,7 @@ export default function FreedApp() {
               }}
             />
           )}
-          {tab === "analytics" && (
+          {tab === "progress" && (
             <AnalyticsScreen
               streakDays={streakDays}
               bestStreakDays={bestStreakDays}
@@ -8348,52 +8417,23 @@ export default function FreedApp() {
               disciplineSettings={disciplineSettings}
               activeUnlock={activeUnlock}
               onDisciplineChange={(update) => setRecoveryState((current) => updateDisciplineSettings(current, update))}
-            />
-          )}
-          {tab === "library" && (
-            <LibraryScreen
-              onBreathing={() => setScreen("breathing")}
-              onChallenge={() => startStandaloneChallenge()}
-              onCustomChallenge={() => setScreen("customChallenge")}
-              onCoach={() => setScreen("coach")}
-              customChallengeCount={customChallenges.length}
-              customChallengesEnabled={premiumCapabilities.customChallenges}
+              protectionCapability={protectionCapability}
+              protectionStatus={protectionStatus}
+              onRefreshProtection={refreshProtectionStatus}
+              onOpenProtectionSetup={() => setScreen("protectionSetup")}
             />
           )}
           {tab === "profile" && (
             <ProfileScreen
               recoveryState={recoveryState}
               premium={premium}
-              premiumCapabilities={premiumCapabilities}
               streakDays={streakDays}
               bestStreakDays={bestStreakDays}
               attempts={attempts}
               relapseCount={relapseRecords.length}
-              lastRelapseAt={lastRelapseAt}
-              reminders={reminders}
-              smartReminderSuggestion={smartReminderSuggestion}
-              retentionPlan={retentionPlan}
-              accountability={accountability}
-              supportCircle={supportCircle}
-              disciplineSettings={disciplineSettings}
-              reminderBusy={reminderBusy}
-              onReminderChange={changeReminderPreferences}
-              onAccountabilityChange={(update) => setRecoveryState((current) => updateAccountabilityPartner(current, update))}
-              onSendSponsorReport={sendSponsorReport}
-              onSendSupportCircleReport={sendSupportCircleReport}
-              onSupportCircleChange={(memberId, update) =>
-                setRecoveryState((current) => updateSupportCircleMember(current, memberId, update))
-              }
-              onSupportCircleRemove={(memberId) => setRecoveryState((current) => removeSupportCircleMember(current, memberId))}
-              onRestoreBackup={setRecoveryState}
-              onDeleteLocalData={deleteLocalRecoveryData}
               onManagePlan={() => setScreen("paywall")}
               onLogSlip={() => setScreen("slip")}
-              storageError={storageError}
-              protectionCapability={protectionCapability}
-              protectionStatus={protectionStatus}
-              protectionSyncMessage={protectionSyncMessage}
-              refreshProtectionStatus={refreshProtectionStatus}
+              onOpenShield={() => setTab("shield")}
               pendingFirebaseEmailLink={pendingFirebaseEmailLink}
               onPendingFirebaseEmailLinkHandled={() => setPendingFirebaseEmailLink(null)}
             />
@@ -8403,10 +8443,6 @@ export default function FreedApp() {
       </AppBackground>
     );
   })();
-
-  if (screen === "main" && tab === "profile") {
-    return body;
-  }
 
   return body;
 }
