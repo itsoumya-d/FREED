@@ -18,6 +18,33 @@ export type AiFallbackReason =
   | "provider-unavailable"
   | "invalid-provider-response";
 
+export type RecoveryWindowSignal = "late-night" | "morning" | "afternoon" | "evening";
+export type CurrentRiskWindowSignal = RecoveryWindowSignal | "sleep-mode" | "focus-protection";
+export type RecoveryTriggerSignal =
+  | "stress"
+  | "night-low-sleep"
+  | "scrolling"
+  | "boredom-isolation"
+  | "connection-stress"
+  | "urge"
+  | "logged";
+export type RecoveryRiskDriverSignal =
+  | "high-urge"
+  | "moderate-urge"
+  | "low-sleep"
+  | "mood-support"
+  | "no-check-in"
+  | "protected-risk-today"
+  | "weekly-risk-cluster"
+  | "recent-risk"
+  | "recent-slip"
+  | "matches-slip-window"
+  | "matches-risk-window"
+  | "sleep-mode"
+  | "risk-rising"
+  | "reset-needed"
+  | "no-elevated-risk";
+
 export type ClaraInput = {
   clientEventId: string;
   input: string;
@@ -26,8 +53,8 @@ export type ClaraInput = {
     attemptsToday: number | null;
     premium: boolean | null;
     slipsThisWeek: number | null;
-    slipWindow: string | null;
-    slipTrigger: string | null;
+    slipWindow: RecoveryWindowSignal | null;
+    slipTrigger: RecoveryTriggerSignal | null;
   };
 };
 
@@ -57,8 +84,8 @@ export type ChallengeInput = {
     isWeekend: boolean | null;
     timezoneOffsetMinutes: number | null;
     slipsThisWeek: number | null;
-    slipWindow: string | null;
-    slipTrigger: string | null;
+    slipWindow: RecoveryWindowSignal | null;
+    slipTrigger: RecoveryTriggerSignal | null;
     interventionContext: {
       source: "browser" | "search" | "manual-check" | "panic-button" | "app";
       category: "adult" | "adult-search-intent" | "known-safe" | "unknown" | "self-reported";
@@ -90,8 +117,8 @@ export type ChallengeInput = {
       level: "low" | "elevated" | "high";
       score: number;
       confidence: "low" | "medium" | "high";
-      currentWindow: string | null;
-      drivers: string[];
+      currentWindow: CurrentRiskWindowSignal | null;
+      drivers: RecoveryRiskDriverSignal[];
     } | null;
     recentFailureCount: number;
     preferredCategories: ChallengeCategory[];
@@ -117,17 +144,17 @@ export type RetentionInput = {
     averageUrge: number;
     averageSleep: number;
     steadyDays: number;
-    riskWindow: string | null;
-    slipWindow: string | null;
-    slipTrigger: string | null;
-    bestIntervention: string | null;
-    momentum: string;
+    riskWindow: RecoveryWindowSignal | null;
+    slipWindow: RecoveryWindowSignal | null;
+    slipTrigger: RecoveryTriggerSignal | null;
+    bestIntervention: ChallengeCategory | null;
+    momentum: "needs-more-signal" | "risk-rising" | "risk-easing" | "stable";
     urgeRiskForecast: {
       level: "low" | "elevated" | "high";
       score: number;
       confidence: "low" | "medium" | "high";
-      currentWindow: string | null;
-      drivers: string[];
+      currentWindow: CurrentRiskWindowSignal | null;
+      drivers: RecoveryRiskDriverSignal[];
     };
     enabledReminderKeys: Array<"morning" | "evening" | "guard">;
     smartGuardTime: string;
@@ -222,13 +249,21 @@ const RETENTION_PROFILE_KEYS = [
 
 const CATEGORIES = ["physical", "breathing", "reflection", "connection", "reset"] as const;
 const INTENSITIES = ["calm", "medium", "strong"] as const;
+const RECOVERY_WINDOWS = ["late-night", "morning", "afternoon", "evening"] as const;
+const CURRENT_RISK_WINDOWS = [...RECOVERY_WINDOWS, "sleep-mode", "focus-protection"] as const;
+const RECOVERY_TRIGGERS = ["stress", "night-low-sleep", "scrolling", "boredom-isolation", "connection-stress", "urge", "logged"] as const;
+const RECOVERY_RISK_DRIVERS = [
+  "high-urge", "moderate-urge", "low-sleep", "mood-support", "no-check-in", "protected-risk-today",
+  "weekly-risk-cluster", "recent-risk", "recent-slip", "matches-slip-window", "matches-risk-window",
+  "sleep-mode", "risk-rising", "reset-needed", "no-elevated-risk"
+] as const;
+const RECOVERY_MOMENTUM = ["needs-more-signal", "risk-rising", "risk-easing", "stable"] as const;
 const SAFE_ID = /^[a-zA-Z0-9][a-zA-Z0-9_-]{2,79}$/;
 const CLIENT_EVENT_ID = /^[A-Za-z0-9][A-Za-z0-9_-]{7,127}$/;
 const TIME = /^([01]\d|2[0-3]):[0-5]\d$/;
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const RAW_LINK = /https?:\/\/|\b(?:[a-z0-9-]+\.)+[a-z]{2,63}(?:\/\S*)?/i;
-const UNSAFE_CHALLENGE = /\b(?:drive|driving|fasting|starve|doctor|medicine|medication|medical|sexual|sex|porn|shame|punish|scald|boiling)\b|(?:hot|warm)\s+(?:bath|shower|water)[^.!?]{0,30}(?:4[2-9]|[5-9]\d)\s*°?c|until\s+(?:you\s+)?(?:collapse|exhausted)|\b[1-9]\d{2,}\s*(?:push[- ]?ups?|sit[- ]?ups?|squats?|burpees?|repetitions?|reps?)\b|hold\s+(?:your\s+)?breath[^.!?]{0,30}(?:minutes?|until)/i;
-const CRISIS_PATTERN = /\b(?:kill myself|end my life|ending it all|suicide|suicidal|hurt myself|harm myself|self[- ]harm|going to die|immediate danger|(?:do not|don't) want to live|no reason to live)\b/i;
+const CRISIS_PATTERN = /\b(?:kill myself|end my life|ending it all|suicide|suicidal|hurt myself|harm myself|self[- ]harm|going to die|want to die|immediate danger|(?:do not|don't) want to live|no reason to live|(?:cannot|can't) stay safe)\b/i;
 
 export function parseClaraRequest(value: unknown): ClaraInput {
   const input = exactRecord(value, CLARA_KEYS);
@@ -241,8 +276,8 @@ export function parseClaraRequest(value: unknown): ClaraInput {
       attemptsToday: nullableInteger(context.attemptsToday, 0, 100),
       premium: nullableBoolean(context.premium),
       slipsThisWeek: nullableInteger(context.slipsThisWeek, 0, 100),
-      slipWindow: nullableSignal(context.slipWindow, 64),
-      slipTrigger: nullableSignal(context.slipTrigger, 64)
+      slipWindow: nullableEnum(context.slipWindow, RECOVERY_WINDOWS),
+      slipTrigger: nullableEnum(context.slipTrigger, RECOVERY_TRIGGERS)
     }
   };
   boundedPayload(parsed, 8 * 1024);
@@ -280,8 +315,8 @@ export function parseChallengeRequest(value: unknown): ChallengeInput {
       isWeekend: nullableBoolean(profile.isWeekend),
       timezoneOffsetMinutes: nullableInteger(profile.timezoneOffsetMinutes, -840, 840),
       slipsThisWeek: nullableInteger(profile.slipsThisWeek, 0, 100),
-      slipWindow: nullableSignal(profile.slipWindow, 64),
-      slipTrigger: nullableSignal(profile.slipTrigger, 64),
+      slipWindow: nullableEnum(profile.slipWindow, RECOVERY_WINDOWS),
+      slipTrigger: nullableEnum(profile.slipTrigger, RECOVERY_TRIGGERS),
       interventionContext: intervention,
       disciplinePreferences: discipline,
       contextSignals,
@@ -314,11 +349,11 @@ export function parseRetentionRequest(value: unknown): RetentionInput {
       averageUrge: decimal(profile.averageUrge, 0, 5),
       averageSleep: decimal(profile.averageSleep, 0, 5),
       steadyDays: integer(profile.steadyDays, 0, 7),
-      riskWindow: nullableSignal(profile.riskWindow, 72),
-      slipWindow: nullableSignal(profile.slipWindow, 72),
-      slipTrigger: nullableSignal(profile.slipTrigger, 64),
-      bestIntervention: nullableSignal(profile.bestIntervention, 96),
-      momentum: signal(profile.momentum, 72),
+      riskWindow: nullableEnum(profile.riskWindow, RECOVERY_WINDOWS),
+      slipWindow: nullableEnum(profile.slipWindow, RECOVERY_WINDOWS),
+      slipTrigger: nullableEnum(profile.slipTrigger, RECOVERY_TRIGGERS),
+      bestIntervention: nullableEnum(profile.bestIntervention, CATEGORIES),
+      momentum: enumValue(profile.momentum, RECOVERY_MOMENTUM),
       urgeRiskForecast: risk,
       enabledReminderKeys: reminders,
       smartGuardTime: timeValue(profile.smartGuardTime),
@@ -335,11 +370,11 @@ export function createAiService(dependencies: AiServiceDependencies) {
   return {
     async generateClara(uid: string, value: unknown): Promise<ClaraResult> {
       const input = parseClaraRequest(value);
-      const authorization = await authorize(dependencies, uid, "clara", input.clientEventId, 30);
-      if (authorization === "duplicate") return claraFallback(dependencies, uid, input, "duplicate-request");
       if (CRISIS_PATTERN.test(input.input)) {
         return claraFallback(dependencies, uid, input, "crisis-support", true);
       }
+      const authorization = await authorize(dependencies, uid, "clara", input.clientEventId, 30);
+      if (authorization === "duplicate") return claraFallback(dependencies, uid, input, "duplicate-request");
       const gateReason = await featureGateReason(dependencies, "clara");
       if (gateReason) return claraFallback(dependencies, uid, input, gateReason);
       try {
@@ -408,7 +443,19 @@ function claraProviderInput(input: ClaraInput) {
 }
 
 function challengeProviderInput(input: ChallengeInput) {
-  return { profile: input.profile, recentChallengeHistory: input.recentChallengeHistory };
+  const categoryCounts = Object.fromEntries(CATEGORIES.map((category) => [
+    category,
+    input.recentChallengeHistory.filter((item) => item.category === category).length
+  ]));
+  return {
+    profile: input.profile,
+    recentChallengeSummary: {
+      attempted: input.recentChallengeHistory.length,
+      helped: input.recentChallengeHistory.filter((item) => item.outcome === "helped").length,
+      stillUrging: input.recentChallengeHistory.filter((item) => item.outcome === "still-urging").length,
+      categoryCounts
+    }
+  };
 }
 
 function retentionProviderInput(input: RetentionInput) {
@@ -537,6 +584,7 @@ function parseClaraOutput(value: unknown): { text: string } {
   const record = exactOutputRecord(value, ["text"] as const);
   const text = outputText(record.text, 1_000);
   if (!text) throw new ProviderFailure("invalid");
+  assertSafeAiOutput(text);
   return { text };
 }
 
@@ -557,9 +605,7 @@ function parseChallengeOutput(value: unknown): RecoveryChallenge[] {
       steps: item.steps.map((step) => requiredOutputText(step, 120)),
       why: requiredOutputText(item.why, 160)
     };
-    if ([challenge.title, challenge.why, ...challenge.steps].some((text) => UNSAFE_CHALLENGE.test(text))) {
-      throw new ProviderFailure("invalid");
-    }
+    [challenge.title, challenge.why, ...challenge.steps].forEach(assertSafeAiOutput);
     return challenge;
   });
   if (new Set(challenges.map((challenge) => challenge.id)).size !== 3) throw new ProviderFailure("invalid");
@@ -574,13 +620,15 @@ function parseRetentionOutput(value: unknown) {
   }
   const focusTags = item.focusTags.map((tag) => requiredOutputText(tag, 32));
   if (new Set(focusTags.map((tag) => tag.toLowerCase())).size !== focusTags.length) throw new ProviderFailure("invalid");
-  return {
+  const plan = {
     headline: requiredOutputText(item.headline, 90),
     nextBestAction: requiredOutputText(item.nextBestAction, 180),
     checkInPrompt: requiredOutputText(item.checkInPrompt, 140),
     suggestedGuardTime: item.suggestedGuardTime as string | null,
     focusTags
   };
+  [plan.headline, plan.nextBestAction, plan.checkInPrompt, ...plan.focusTags].forEach(assertSafeAiOutput);
+  return plan;
 }
 
 async function claraFallback(
@@ -771,8 +819,8 @@ function parseRequiredRisk(value: unknown) {
     level: enumValue(item.level, ["low", "elevated", "high"] as const),
     score: integer(item.score, 0, 100),
     confidence: enumValue(item.confidence, ["low", "medium", "high"] as const),
-    currentWindow: nullableSignal(item.currentWindow, 72),
-    drivers: signalArray(item.drivers, 4, 56)
+    currentWindow: nullableEnum(item.currentWindow, CURRENT_RISK_WINDOWS),
+    drivers: enumArray(item.drivers, RECOVERY_RISK_DRIVERS, 4)
   };
 }
 
@@ -815,22 +863,6 @@ function userText(value: unknown, max: number) {
   const cleaned = value.replace(/\s+/g, " ").trim();
   if (!cleaned || cleaned.length > max) invalid();
   return cleaned;
-}
-
-function signal(value: unknown, max: number) {
-  if (typeof value !== "string") invalid();
-  const cleaned = value.replace(/\s+/g, " ").trim();
-  if (!cleaned || cleaned.length > max || RAW_LINK.test(cleaned)) invalid();
-  return cleaned;
-}
-
-function nullableSignal(value: unknown, max: number) {
-  return value === null ? null : signal(value, max);
-}
-
-function signalArray(value: unknown, maxItems: number, maxLength: number): string[] {
-  if (!Array.isArray(value) || value.length > maxItems) invalid();
-  return value.map((item) => signal(item, maxLength));
 }
 
 function integer(value: unknown, min: number, max: number) {
@@ -914,6 +946,29 @@ function requiredOutputText(value: unknown, max: number) {
   const text = outputText(value, max);
   if (!text) throw new ProviderFailure("invalid");
   return text;
+}
+
+function assertSafeAiOutput(value: string): void {
+  const lower = value.toLowerCase();
+  const shaming = /\b(?:you(?:'re| are)|this makes you)\s+(?:disgusting|pathetic|weak|dirty|bad|a failure)\b|\b(?:prove|show)\s+you(?:'re| are)?\s+not\s+(?:a\s+)?failure\b|\b(?:should|need to)\s+be\s+ashamed\b/i;
+  const sexual = /\b(?:porn|sexual|sexually|explicit sexual|nsfw)\b/i;
+  const prescriptiveMedical = /\b(?:take|stop|skip|double|increase|decrease|change|inject)\b[^.!?]{0,35}\b(?:medication|medicine|dose|pills?|drug)\b|\b(?:diagnose|diagnosis|medical treatment|replace professional care)\b/i;
+  const forbiddenAction = /\b(?:drive|driving|fasting|starve|scald|boiling)\b/i;
+  const unsafeUntil = /\b(?:sprint|run|exercise|plank|push[- ]?ups?|sit[- ]?ups?|squats?|burpees?)\b[^.!?]{0,60}\buntil\s+(?:you\s+)?(?:vomit(?:ing)?|throw up|collapse|pass out|hurt|feel pain|exhausted|cannot continue|can't continue)\b/i;
+  const unsafeCount = /\b[1-9]\d{2,}\s*(?:push[- ]?ups?|sit[- ]?ups?|squats?|burpees?|repetitions?|reps?)\b/i;
+  const unsafeDuration = /\b(?:plank|sprint|burpees?|push[- ]?ups?)\b[^.!?\d]{0,35}\b(?:[1-9]\d|[2-9]\d{2,})\s*(?:minutes?|mins?)\b/i;
+  const reversedUnsafeDuration = /\b(?:[1-9]\d|[2-9]\d{2,})\s*[- ]?(?:minutes?|mins?)(?:\s+of)?\s+(?:a\s+)?(?:plank|sprinting|burpees?|push[- ]?ups?)\b/i;
+  const unsafeHeat = /(?:hot|warm)\s+(?:bath|shower|water)[^.!?]{0,30}(?:4[2-9]|[5-9]\d)\s*°?c/i;
+  const unsafeBreathHold = /hold\s+(?:your\s+)?breath[^.!?]{0,30}(?:minutes?|until)/i;
+  const punitive = /\b(?:punishment|punish yourself|punitive)\b/i.test(lower) &&
+    !/\b(?:avoid|never|do not|don't|without)\s+(?:(?:use|using)\s+)?(?:punishment|punish(?:ing)? yourself|punitive)\b/i.test(lower);
+  if (
+    shaming.test(value) || sexual.test(value) || prescriptiveMedical.test(value) || forbiddenAction.test(value) ||
+    unsafeUntil.test(value) || unsafeCount.test(value) || unsafeDuration.test(value) || reversedUnsafeDuration.test(value) || unsafeHeat.test(value) ||
+    unsafeBreathHold.test(value) || punitive
+  ) {
+    throw new ProviderFailure("invalid");
+  }
 }
 
 function outputIdentifier(value: unknown) {

@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 
+import { createAiService } from "./ai.js";
+
 import {
   AI_REMOTE_CONFIG_PARAMETERS,
   createAiFeatureGateReader,
@@ -52,6 +54,36 @@ test("expired or failed Remote Config reads never reuse stale enabled state", as
   clock += 60_001;
   assert.equal(await reader("clara"), "unavailable");
   assert.equal(calls, 2);
+});
+
+test("Remote Config retrieval has a hard timeout and returns unavailable", async () => {
+  const startedAt = Date.now();
+  let providerCalls = 0;
+  const reader = createAiFeatureGateReader(
+    () => new Promise(() => undefined),
+    () => 1_000,
+    60_000,
+    5
+  );
+  const service = createAiService({
+    now: () => 1_000,
+    getFeatureGate: reader,
+    getApiKey: () => "unused-secret",
+    authorize: async () => "allowed",
+    persistEvent: async () => undefined,
+    fetch: async () => {
+      providerCalls += 1;
+      return Response.json({});
+    }
+  });
+  const result = await service.generateClara("uid-safe", {
+    clientEventId: "evt_timeout123",
+    input: "Help me reset.",
+    context: { streakDays: 1, attemptsToday: 1, premium: false, slipsThisWeek: 0, slipWindow: null, slipTrigger: null }
+  });
+  assert.equal(result.provider, "fallback");
+  assert.equal(providerCalls, 0);
+  assert.ok(Date.now() - startedAt < 100, "Remote Config timeout must fail closed promptly in the test harness.");
 });
 
 test("all AI callables bind Auth, App Check, region, and the Secret Manager key", () => {

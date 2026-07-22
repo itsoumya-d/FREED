@@ -25,7 +25,7 @@ const claraRequest = {
     attemptsToday: 2,
     premium: false,
     slipsThisWeek: 1,
-    slipWindow: "late evening",
+    slipWindow: "evening",
     slipTrigger: "stress"
   }
 };
@@ -42,7 +42,7 @@ const challengeRequest = {
     isWeekend: false,
     timezoneOffsetMinutes: -330,
     slipsThisWeek: 1,
-    slipWindow: "late-evening",
+    slipWindow: "evening",
     slipTrigger: "stress",
     interventionContext: {
       source: "app",
@@ -75,8 +75,8 @@ const challengeRequest = {
       level: "elevated",
       score: 65,
       confidence: "medium",
-      currentWindow: "late-evening",
-      drivers: ["sleep", "stress"]
+      currentWindow: "evening",
+      drivers: ["low-sleep", "mood-support"]
     },
     recentFailureCount: 1,
     preferredCategories: ["breathing", "reset"]
@@ -99,17 +99,17 @@ const retentionRequest = {
     averageUrge: 2.5,
     averageSleep: 3.5,
     steadyDays: 3,
-    riskWindow: "late-evening",
-    slipWindow: "late-evening",
+    riskWindow: "evening",
+    slipWindow: "evening",
     slipTrigger: "stress",
-    bestIntervention: "breathing-reset",
-    momentum: "steady",
+    bestIntervention: "breathing",
+    momentum: "stable",
     urgeRiskForecast: {
       level: "elevated",
       score: 65,
       confidence: "medium",
-      currentWindow: "late-evening",
-      drivers: ["sleep", "stress"]
+      currentWindow: "evening",
+      drivers: ["low-sleep", "mood-support"]
     },
     enabledReminderKeys: ["morning", "guard"],
     smartGuardTime: "21:45",
@@ -147,6 +147,26 @@ test("AI inputs use exact bounded aggregate allowlists", () => {
   assert.throws(() => parseRetentionRequest({ ...retentionRequest, profile: { ...retentionRequest.profile, browsingHistory: [] } }), /not permitted/i);
 });
 
+test("provider-bound profile text accepts only established coarse signal values", () => {
+  for (const profile of [
+    { ...challengeRequest.profile, slipWindow: "private diary details about last night" },
+    { ...challengeRequest.profile, slipTrigger: "argument with a named person" },
+    { ...challengeRequest.profile, riskForecast: { ...challengeRequest.profile.riskForecast, drivers: ["private note content"] } },
+    { ...challengeRequest.profile, riskForecast: { ...challengeRequest.profile.riskForecast, currentWindow: "after messaging a named person" } }
+  ]) {
+    assert.throws(() => parseChallengeRequest({ ...challengeRequest, profile }), /not permitted/i);
+  }
+  for (const profile of [
+    { ...retentionRequest.profile, riskWindow: "private journal detail" },
+    { ...retentionRequest.profile, slipTrigger: "named contact and secret" },
+    { ...retentionRequest.profile, bestIntervention: "my custom private note" },
+    { ...retentionRequest.profile, momentum: "private narrative about a relapse" },
+    { ...retentionRequest.profile, urgeRiskForecast: { ...retentionRequest.profile.urgeRiskForecast, drivers: ["private transcript"] } }
+  ]) {
+    assert.throws(() => parseRetentionRequest({ ...retentionRequest, profile }), /not permitted/i);
+  }
+});
+
 test("kill switches fail safe without calling OpenAI", async () => {
   for (const gate of ["disabled", "unavailable"] satisfies AiFeatureGate[]) {
     const harness = serviceHarness({ gate });
@@ -175,6 +195,22 @@ test("crisis input returns fixed local support before feature gates or OpenAI", 
   assert.equal(harness.events.length, 1);
   assert.equal(harness.events[0]?.crisisFallback, true);
   assertNoSensitiveAuditFields(harness.events[0]);
+});
+
+test("established crisis phrases override duplicate/idempotency handling", async () => {
+  for (const input of ["I want to die", "I can't stay safe", "I cannot stay safe"]) {
+    const harness = serviceHarness({ gate: "enabled", authorization: "duplicate" });
+    const result = await harness.service.generateClara("uid-safe", { ...claraRequest, input });
+    assert.deepEqual(result, {
+      text: CRISIS_REPLY,
+      provider: "fallback",
+      status: "fallback",
+      reason: "crisis-support"
+    });
+    assert.equal(harness.authorizationCalls.length, 0);
+    assert.equal(harness.gateCalls.length, 0);
+    assert.equal(harness.fetchCalls.length, 0);
+  }
 });
 
 test("OpenAI request is one bounded, non-stored, strict Responses API call with no identity metadata", async () => {
@@ -248,6 +284,12 @@ test("challenge output is exact, non-premium, sanitized, unique, bounded, and sa
     assert.ok(item.durationSec >= 30 && item.durationSec <= 900);
     assert.ok(item.steps.length >= 2 && item.steps.length <= 4);
   }
+  const providerBody = JSON.parse(String(harness.fetchCalls[0]?.init.body)) as {
+    input: Array<{ role: string; content: Array<{ text: string }> }>;
+  };
+  const providerProfile = providerBody.input.find((item) => item.role === "user")?.content[0]?.text ?? "";
+  assert.doesNotMatch(providerProfile, /breathing-478|completedAt|2026-07-21T20:00:00\.000Z/);
+  assert.match(providerProfile, /recentChallengeSummary/);
 
   for (const invalid of [
     { challenges: remoteChallenges.challenges.slice(0, 2) },
@@ -261,6 +303,52 @@ test("challenge output is exact, non-premium, sanitized, unique, bounded, and sa
     assert.equal(fallback.status, "fallback");
     assert.equal(fallback.challenges.length, 3);
     assert.equal(fallback.reason, "invalid-provider-response");
+  }
+});
+
+test("all remote output routes reject unsafe recovery language without rejecting safe copy", async () => {
+  for (const text of [
+    "You are disgusting and weak.",
+    "Double your medication dose tonight.",
+    "Use explicit sexual content as a reward."
+  ]) {
+    const harness = serviceHarness({ response: openAiResponse({ text }) });
+    const result = await harness.service.generateClara("uid-safe", claraRequest);
+    assert.equal(result.provider, "fallback");
+    if (result.provider !== "fallback") assert.fail("Unsafe CLARA output must fail closed.");
+    assert.equal(result.reason, "invalid-provider-response");
+  }
+
+  for (const unsafeStep of ["Sprint until you vomit.", "Hold a plank for 20 minutes.", "Do 500 pushups without stopping."]) {
+    const unsafe = {
+      challenges: remoteChallenges.challenges.map((item, index) => index === 0 ? { ...item, steps: [unsafeStep, "Come back when finished."] } : item)
+    };
+    const harness = serviceHarness({ response: openAiResponse(unsafe) });
+    const result = await harness.service.generateChallenges("uid-safe", challengeRequest);
+    assert.equal(result.provider, "fallback");
+    if (result.provider !== "fallback") assert.fail("Unsafe challenge output must fail closed.");
+    assert.equal(result.reason, "invalid-provider-response");
+  }
+
+  const unsafeRetention = {
+    headline: "Prove you are not a failure.",
+    nextBestAction: "Sprint until you vomit.",
+    checkInPrompt: "Did punishment work?",
+    suggestedGuardTime: "21:45",
+    focusTags: ["punishment"]
+  };
+  const unsafeHarness = serviceHarness({ response: openAiResponse(unsafeRetention) });
+  const unsafeResult = await unsafeHarness.service.generateRetentionPlan("uid-safe", retentionRequest);
+  assert.equal(unsafeResult.provider, "fallback");
+  if (unsafeResult.provider !== "fallback") assert.fail("Unsafe retention output must fail closed.");
+  assert.equal(unsafeResult.reason, "invalid-provider-response");
+
+  for (const text of [
+    "Take a short walk, breathe slowly, and contact a trusted person if you need support.",
+    "Do not use punishment; choose one calm reset and treat the setback as useful data."
+  ]) {
+    const safeHarness = serviceHarness({ response: openAiResponse({ text }) });
+    assert.equal((await safeHarness.service.generateClara("uid-safe", claraRequest)).provider, "remote");
   }
 });
 
@@ -319,6 +407,7 @@ function serviceHarness(options: {
   const fetchCalls: Array<{ url: string; init: RequestInit }> = [];
   const events: AiAuditEvent[] = [];
   const gateCalls: AiRoute[] = [];
+  const authorizationCalls: Array<{ route: AiRoute; clientEventId: string }> = [];
   const dependencies: AiServiceDependencies = {
     now: () => now,
     getFeatureGate: async (route) => {
@@ -326,7 +415,10 @@ function serviceHarness(options: {
       return options.gate ?? "enabled";
     },
     getApiKey: () => "server-secret",
-    authorize: async () => options.authorization ?? "allowed",
+    authorize: async (input) => {
+      authorizationCalls.push({ route: input.route, clientEventId: input.clientEventId });
+      return options.authorization ?? "allowed";
+    },
     persistEvent: async (event) => {
       events.push(event);
     },
@@ -342,7 +434,7 @@ function serviceHarness(options: {
     },
     timeoutMs: options.timeoutMs
   };
-  return { service: createAiService(dependencies), fetchCalls, events, gateCalls };
+  return { service: createAiService(dependencies), fetchCalls, events, gateCalls, authorizationCalls };
 }
 
 function openAiResponse(value: unknown): Response {

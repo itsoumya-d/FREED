@@ -25,6 +25,7 @@ const REGION = "asia-south1";
 const RATE_WINDOW_MS = 60 * 1_000;
 const IDEMPOTENCY_TTL_MS = 7 * 24 * 60 * 60 * 1_000;
 const AI_GATE_CACHE_TTL_MS = 60 * 1_000;
+const AI_REMOTE_CONFIG_TIMEOUT_MS = 2_000;
 
 export const AI_REMOTE_CONFIG_PARAMETERS = Object.freeze({
   clara: "ai_clara_enabled",
@@ -54,14 +55,15 @@ export function readAiFeatureGateTemplate(template: unknown, route: AiRoute): Ai
 export function createAiFeatureGateReader(
   fetchTemplate: () => Promise<RemoteConfigTemplateLike>,
   now: () => number,
-  cacheTtlMs = AI_GATE_CACHE_TTL_MS
+  cacheTtlMs = AI_GATE_CACHE_TTL_MS,
+  fetchTimeoutMs = AI_REMOTE_CONFIG_TIMEOUT_MS
 ) {
   let cached: { expiresAt: number; gates: Record<AiRoute, AiFeatureGate> } | null = null;
   return async (route: AiRoute): Promise<AiFeatureGate> => {
     const currentTime = now();
     if (cached && cached.expiresAt > currentTime) return cached.gates[route];
     try {
-      const template = await fetchTemplate();
+      const template = await withHardTimeout(fetchTemplate(), fetchTimeoutMs);
       const gates = {
         clara: readAiFeatureGateTemplate(template, "clara"),
         challenges: readAiFeatureGateTemplate(template, "challenges"),
@@ -78,6 +80,20 @@ export function createAiFeatureGateReader(
       return "unavailable";
     }
   };
+}
+
+async function withHardTimeout<T>(operation: Promise<T>, timeoutMs: number): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      operation,
+      new Promise<never>((_resolve, reject) => {
+        timer = setTimeout(() => reject(new Error("Remote Config unavailable.")), timeoutMs);
+      })
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
 }
 
 const getFeatureGate = createAiFeatureGateReader(

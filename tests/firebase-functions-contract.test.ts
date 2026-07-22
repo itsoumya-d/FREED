@@ -132,6 +132,17 @@ async function run() {
     () => callables.generateClaraReply({ ...claraPayload, recentRiskHosts: ["private.example"] } as never),
     /not permitted/i
   );
+  await assert.rejects(
+    () => callables.generateChallenges({
+      ...challengePayload,
+      profile: { ...challengePayload.profile, riskForecast: { level: "high", score: 90, confidence: "high", currentWindow: "evening", drivers: ["private transcript"] } }
+    } as never),
+    /not permitted/i
+  );
+  await assert.rejects(
+    () => callables.generateRetentionPlan({ ...retentionPayload, profile: { ...retentionPayload.profile, momentum: "private relapse note" } } as never),
+    /not permitted/i
+  );
 
   const validFeed = {
     version: "oisd-nsfw-small-0000000000000000",
@@ -195,6 +206,7 @@ const validRemotePlan = {
 for (const invalid of [
   { text: "Safe reply", provider: "remote", status: "ok", model: "gpt-5.6-terra" },
   { text: "https://private.example", provider: "remote", status: "ok" },
+  { text: "Sprint until you vomit.", provider: "remote", status: "ok" },
   { text: "x".repeat(1_001), provider: "remote", status: "ok" }
 ]) {
   assert.throws(() => parseFirebaseClaraResult(invalid), /invalid firebase ai/i);
@@ -202,6 +214,7 @@ for (const invalid of [
 for (const invalid of [
   { challenges: validChallenges().slice(0, 2), provider: "remote", status: "ok" },
   { challenges: validChallenges().map((item, index) => index === 0 ? { ...item, premium: true } : item), provider: "remote", status: "ok" },
+  { challenges: validChallenges().map((item, index) => index === 0 ? { ...item, steps: ["Hold a plank for 20 minutes.", "Come back."] } : item), provider: "remote", status: "ok" },
   { challenges: validChallenges(), provider: "remote", status: "ok", providerBody: {} }
 ]) {
   assert.throws(() => parseFirebaseChallengeResult(invalid), /invalid firebase ai/i);
@@ -209,6 +222,7 @@ for (const invalid of [
 for (const invalid of [
   { ...validRemotePlan, focusTags: [] },
   { ...validRemotePlan, suggestedGuardTime: "25:00" },
+  { ...validRemotePlan, nextBestAction: "Double your medication dose tonight." },
   { ...validRemotePlan, objectKey: "internal" }
 ]) {
   assert.throws(() => parseFirebaseRetentionResult(invalid), /invalid firebase ai/i);
@@ -249,8 +263,8 @@ function validRetentionRequest(): FirebaseRetentionRequest {
     profile: {
       premium: false, streakDays: 4, bestStreakDays: 9, attemptsThisWeek: 7, slipsThisWeek: 0,
       checkInsThisWeek: 4, completedChallengesThisWeek: 3, averageUrge: 2.5, averageSleep: 3.5, steadyDays: 3,
-      riskWindow: "late-evening", slipWindow: null, slipTrigger: null, bestIntervention: "breathing-reset", momentum: "steady",
-      urgeRiskForecast: { level: "low", score: 20, confidence: "medium", currentWindow: "late-evening", drivers: ["sleep"] },
+      riskWindow: "evening", slipWindow: null, slipTrigger: null, bestIntervention: "breathing", momentum: "stable",
+      urgeRiskForecast: { level: "low", score: 20, confidence: "medium", currentWindow: "evening", drivers: ["low-sleep"] },
       enabledReminderKeys: ["morning", "guard"], smartGuardTime: "21:45", smartGuardSource: "risk-window",
       localDateKey: "2026-07-22", timezoneOffsetMinutes: -330
     }

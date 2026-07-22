@@ -98,6 +98,33 @@ export type FirebaseAiFallbackReason =
   | "provider-unavailable"
   | "invalid-provider-response";
 
+export type FirebaseRecoveryWindowSignal = "late-night" | "morning" | "afternoon" | "evening";
+export type FirebaseCurrentRiskWindowSignal = FirebaseRecoveryWindowSignal | "sleep-mode" | "focus-protection";
+export type FirebaseRecoveryTriggerSignal =
+  | "stress"
+  | "night-low-sleep"
+  | "scrolling"
+  | "boredom-isolation"
+  | "connection-stress"
+  | "urge"
+  | "logged";
+export type FirebaseRecoveryRiskDriverSignal =
+  | "high-urge"
+  | "moderate-urge"
+  | "low-sleep"
+  | "mood-support"
+  | "no-check-in"
+  | "protected-risk-today"
+  | "weekly-risk-cluster"
+  | "recent-risk"
+  | "recent-slip"
+  | "matches-slip-window"
+  | "matches-risk-window"
+  | "sleep-mode"
+  | "risk-rising"
+  | "reset-needed"
+  | "no-elevated-risk";
+
 export type FirebaseClaraRequest = {
   clientEventId: string;
   input: string;
@@ -106,8 +133,8 @@ export type FirebaseClaraRequest = {
     attemptsToday: number | null;
     premium: boolean | null;
     slipsThisWeek: number | null;
-    slipWindow: string | null;
-    slipTrigger: string | null;
+    slipWindow: FirebaseRecoveryWindowSignal | null;
+    slipTrigger: FirebaseRecoveryTriggerSignal | null;
   };
 };
 
@@ -139,8 +166,8 @@ export type FirebaseChallengeRequest = {
     isWeekend: boolean | null;
     timezoneOffsetMinutes: number | null;
     slipsThisWeek: number | null;
-    slipWindow: string | null;
-    slipTrigger: string | null;
+    slipWindow: FirebaseRecoveryWindowSignal | null;
+    slipTrigger: FirebaseRecoveryTriggerSignal | null;
     interventionContext: {
       source: "browser" | "search" | "manual-check" | "panic-button" | "app";
       category: "adult" | "adult-search-intent" | "known-safe" | "unknown" | "self-reported";
@@ -172,8 +199,8 @@ export type FirebaseChallengeRequest = {
       level: "low" | "elevated" | "high";
       score: number;
       confidence: "low" | "medium" | "high";
-      currentWindow: string | null;
-      drivers: string[];
+      currentWindow: FirebaseCurrentRiskWindowSignal | null;
+      drivers: FirebaseRecoveryRiskDriverSignal[];
     } | null;
     recentFailureCount: number;
     preferredCategories: FirebaseRecoveryChallenge["category"][];
@@ -203,17 +230,17 @@ export type FirebaseRetentionRequest = {
     averageUrge: number;
     averageSleep: number;
     steadyDays: number;
-    riskWindow: string | null;
-    slipWindow: string | null;
-    slipTrigger: string | null;
-    bestIntervention: string | null;
-    momentum: string;
+    riskWindow: FirebaseRecoveryWindowSignal | null;
+    slipWindow: FirebaseRecoveryWindowSignal | null;
+    slipTrigger: FirebaseRecoveryTriggerSignal | null;
+    bestIntervention: FirebaseRecoveryChallenge["category"] | null;
+    momentum: "needs-more-signal" | "risk-rising" | "risk-easing" | "stable";
     urgeRiskForecast: {
       level: "low" | "elevated" | "high";
       score: number;
       confidence: "low" | "medium" | "high";
-      currentWindow: string | null;
-      drivers: string[];
+      currentWindow: FirebaseCurrentRiskWindowSignal | null;
+      drivers: FirebaseRecoveryRiskDriverSignal[];
     };
     enabledReminderKeys: Array<"morning" | "evening" | "guard">;
     smartGuardTime: string;
@@ -310,6 +337,15 @@ const AI_FALLBACK_REASONS = [
 ] as const;
 const AI_CATEGORIES = ["physical", "breathing", "reflection", "connection", "reset"] as const;
 const AI_INTENSITIES = ["calm", "medium", "strong"] as const;
+const AI_RECOVERY_WINDOWS = ["late-night", "morning", "afternoon", "evening"] as const;
+const AI_CURRENT_RISK_WINDOWS = [...AI_RECOVERY_WINDOWS, "sleep-mode", "focus-protection"] as const;
+const AI_RECOVERY_TRIGGERS = ["stress", "night-low-sleep", "scrolling", "boredom-isolation", "connection-stress", "urge", "logged"] as const;
+const AI_RECOVERY_RISK_DRIVERS = [
+  "high-urge", "moderate-urge", "low-sleep", "mood-support", "no-check-in", "protected-risk-today",
+  "weekly-risk-cluster", "recent-risk", "recent-slip", "matches-slip-window", "matches-risk-window",
+  "sleep-mode", "risk-rising", "reset-needed", "no-elevated-risk"
+] as const;
+const AI_RECOVERY_MOMENTUM = ["needs-more-signal", "risk-rising", "risk-easing", "stable"] as const;
 const AI_SAFE_ID = /^[A-Za-z0-9][A-Za-z0-9_-]{2,79}$/;
 const AI_EVENT_ID = /^[A-Za-z0-9][A-Za-z0-9_-]{7,127}$/;
 const AI_RAW_LINK = /https?:\/\/|\b(?:[a-z0-9-]+\.)+[a-z]{2,63}(?:\/\S*)?/i;
@@ -668,7 +704,8 @@ function assertFirebaseClaraRequest(value: FirebaseClaraRequest): void {
     isNullableInteger(value.context.attemptsToday, 0, 100) &&
     (value.context.premium === null || typeof value.context.premium === "boolean") &&
     isNullableInteger(value.context.slipsThisWeek, 0, 100) &&
-    isNullableSignal(value.context.slipWindow, 64) && isNullableSignal(value.context.slipTrigger, 64) &&
+    (value.context.slipWindow === null || isEnum(value.context.slipWindow, AI_RECOVERY_WINDOWS)) &&
+    (value.context.slipTrigger === null || isEnum(value.context.slipTrigger, AI_RECOVERY_TRIGGERS)) &&
     aiPayloadBytes(value) <= 8 * 1024;
   if (!valid) invalidAiRequest();
 }
@@ -688,7 +725,8 @@ function assertFirebaseChallengeRequest(value: FirebaseChallengeRequest): void {
     isInteger(profile.hour, 0, 23) && isEnum(profile.dayPart, ["morning", "afternoon", "evening", "late-night"] as const) &&
     (profile.isWeekend === null || typeof profile.isWeekend === "boolean") &&
     isNullableInteger(profile.timezoneOffsetMinutes, -840, 840) && isNullableInteger(profile.slipsThisWeek, 0, 100) &&
-    isNullableSignal(profile.slipWindow, 64) && isNullableSignal(profile.slipTrigger, 64) &&
+    (profile.slipWindow === null || isEnum(profile.slipWindow, AI_RECOVERY_WINDOWS)) &&
+    (profile.slipTrigger === null || isEnum(profile.slipTrigger, AI_RECOVERY_TRIGGERS)) &&
     isFirebaseIntervention(profile.interventionContext) && isFirebaseDiscipline(profile.disciplinePreferences) &&
     isFirebaseContextSignals(profile.contextSignals) && isFirebaseRisk(profile.riskForecast, true) &&
     isInteger(profile.recentFailureCount, 0, 10) && isEnumArray(profile.preferredCategories, AI_CATEGORIES, 5);
@@ -714,9 +752,11 @@ function assertFirebaseRetentionRequest(value: FirebaseRetentionRequest): void {
     isInteger(profile.slipsThisWeek, 0, 100) && isInteger(profile.checkInsThisWeek, 0, 7) &&
     isInteger(profile.completedChallengesThisWeek, 0, 100) && isNumber(profile.averageUrge, 0, 5) &&
     isNumber(profile.averageSleep, 0, 5) && isInteger(profile.steadyDays, 0, 7) &&
-    isNullableSignal(profile.riskWindow, 72) && isNullableSignal(profile.slipWindow, 72) &&
-    isNullableSignal(profile.slipTrigger, 64) && isNullableSignal(profile.bestIntervention, 96) &&
-    isSignal(profile.momentum, 72) && isFirebaseRisk(profile.urgeRiskForecast, false) &&
+    (profile.riskWindow === null || isEnum(profile.riskWindow, AI_RECOVERY_WINDOWS)) &&
+    (profile.slipWindow === null || isEnum(profile.slipWindow, AI_RECOVERY_WINDOWS)) &&
+    (profile.slipTrigger === null || isEnum(profile.slipTrigger, AI_RECOVERY_TRIGGERS)) &&
+    (profile.bestIntervention === null || isEnum(profile.bestIntervention, AI_CATEGORIES)) &&
+    isEnum(profile.momentum, AI_RECOVERY_MOMENTUM) && isFirebaseRisk(profile.urgeRiskForecast, false) &&
     isEnumArray(profile.enabledReminderKeys, ["morning", "evening", "guard"] as const, 3) &&
     new Set(profile.enabledReminderKeys).size === profile.enabledReminderKeys.length &&
     /^([01]\d|2[0-3]):[0-5]\d$/.test(profile.smartGuardTime) &&
@@ -798,8 +838,9 @@ function isFirebaseRisk(value: unknown, nullable: boolean): boolean {
   if (value === null) return nullable;
   return isExactRecord(value, ["level", "score", "confidence", "currentWindow", "drivers"] as const) &&
     isEnum(value.level, ["low", "elevated", "high"] as const) && isInteger(value.score, 0, 100) &&
-    isEnum(value.confidence, ["low", "medium", "high"] as const) && isNullableSignal(value.currentWindow, 72) &&
-    Array.isArray(value.drivers) && value.drivers.length <= 4 && value.drivers.every((item) => isSignal(item, 56));
+    isEnum(value.confidence, ["low", "medium", "high"] as const) &&
+    (value.currentWindow === null || isEnum(value.currentWindow, AI_CURRENT_RISK_WINDOWS)) &&
+    isEnumArray(value.drivers, AI_RECOVERY_RISK_DRIVERS, 4);
 }
 
 function isAiEventId(value: unknown): value is string {
@@ -815,15 +856,7 @@ function isBoundedString(value: unknown, min: number, max: number): value is str
 }
 
 function isSafeAiText(value: unknown, max: number): value is string {
-  return isBoundedString(value, 1, max) && !AI_RAW_LINK.test(value);
-}
-
-function isSignal(value: unknown, max: number): value is string {
-  return isSafeAiText(value, max);
-}
-
-function isNullableSignal(value: unknown, max: number): value is string | null {
-  return value === null || isSignal(value, max);
+  return isBoundedString(value, 1, max) && !AI_RAW_LINK.test(value) && !isUnsafeFirebaseAiOutput(value);
 }
 
 function isInteger(value: unknown, min: number, max: number): value is number {
@@ -848,6 +881,24 @@ function isEnumArray<const T extends readonly string[]>(value: unknown, allowed:
 
 function aiPayloadBytes(value: unknown): number {
   return new TextEncoder().encode(JSON.stringify(value)).byteLength;
+}
+
+function isUnsafeFirebaseAiOutput(value: string): boolean {
+  const lower = value.toLowerCase();
+  const punitive = /\b(?:punishment|punish yourself|punitive)\b/i.test(lower) &&
+    !/\b(?:avoid|never|do not|don't|without)\s+(?:(?:use|using)\s+)?(?:punishment|punish(?:ing)? yourself|punitive)\b/i.test(lower);
+  return (
+    /\b(?:you(?:'re| are)|this makes you)\s+(?:disgusting|pathetic|weak|dirty|bad|a failure)\b|\b(?:prove|show)\s+you(?:'re| are)?\s+not\s+(?:a\s+)?failure\b|\b(?:should|need to)\s+be\s+ashamed\b/i.test(value) ||
+    /\b(?:porn|sexual|sexually|explicit sexual|nsfw)\b/i.test(value) ||
+    /\b(?:take|stop|skip|double|increase|decrease|change|inject)\b[^.!?]{0,35}\b(?:medication|medicine|dose|pills?|drug)\b|\b(?:diagnose|diagnosis|medical treatment|replace professional care)\b/i.test(value) ||
+    /\b(?:drive|driving|fasting|starve|scald|boiling)\b/i.test(value) ||
+    /\b(?:sprint|run|exercise|plank|push[- ]?ups?|sit[- ]?ups?|squats?|burpees?)\b[^.!?]{0,60}\buntil\s+(?:you\s+)?(?:vomit(?:ing)?|throw up|collapse|pass out|hurt|feel pain|exhausted|cannot continue|can't continue)\b/i.test(value) ||
+    /\b[1-9]\d{2,}\s*(?:push[- ]?ups?|sit[- ]?ups?|squats?|burpees?|repetitions?|reps?)\b/i.test(value) ||
+    /\b(?:plank|sprint|burpees?|push[- ]?ups?)\b[^.!?\d]{0,35}\b(?:[1-9]\d|[2-9]\d{2,})\s*(?:minutes?|mins?)\b/i.test(value) ||
+    /\b(?:[1-9]\d|[2-9]\d{2,})\s*[- ]?(?:minutes?|mins?)(?:\s+of)?\s+(?:a\s+)?(?:plank|sprinting|burpees?|push[- ]?ups?)\b/i.test(value) ||
+    /(?:hot|warm)\s+(?:bath|shower|water)[^.!?]{0,30}(?:4[2-9]|[5-9]\d)\s*°?c/i.test(value) ||
+    /hold\s+(?:your\s+)?breath[^.!?]{0,30}(?:minutes?|until)/i.test(value) || punitive
+  );
 }
 
 function isCanonicalLocalDate(value: unknown): value is string {
