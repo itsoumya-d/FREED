@@ -36,6 +36,8 @@ import {
 } from "./core-data.js";
 import { runProtectedMutation, type TransactionalStore } from "./transactional.js";
 
+export { getReviewedAdultDomainFeed, refreshReviewedAdultDomainFeed } from "./adult-feed-firebase.js";
+
 if (!getApps().length) initializeApp();
 
 const db = getFirestore();

@@ -84,7 +84,17 @@ export type FirebaseCallableName =
   | "deleteEncryptedBackup"
   | "registerPushToken"
   | "requestAccountDeletion"
+  | "getReviewedAdultDomainFeed"
   | "backendReadiness";
+
+export type FirebaseReviewedAdultDomainFeed = {
+  version: string;
+  generatedAt: string;
+  publishedAt: string;
+  checksum: string;
+  source: { id: string; label: string; url: string };
+  domains: string[];
+};
 
 export type FirebaseBackupUploadRequiredHeaders = Readonly<{
   "content-type": "application/octet-stream";
@@ -93,7 +103,7 @@ export type FirebaseBackupUploadRequiredHeaders = Readonly<{
 }>;
 
 export type FirebaseCallableResult = {
-  ok: boolean;
+  ok?: boolean;
   duplicate?: boolean;
   status?: string;
   signedUrl?: string;
@@ -101,6 +111,12 @@ export type FirebaseCallableResult = {
   expiresAt?: string;
   requiredHeaders?: FirebaseBackupUploadRequiredHeaders;
   verifiedBytes?: number;
+  version?: string;
+  generatedAt?: string;
+  publishedAt?: string;
+  checksum?: string;
+  source?: { id: string; label: string; url: string };
+  domains?: string[];
 };
 export type FirebaseCallableTransport = {
   call: (name: FirebaseCallableName, data: unknown) => Promise<FirebaseCallableResult>;
@@ -358,6 +374,7 @@ export function createFirebaseCallableContracts(transport: FirebaseCallableTrans
       assertCallablePayload(payload, ["clientEventId"]);
       return transport.call("requestAccountDeletion", payload);
     },
+    getReviewedAdultDomainFeed: () => transport.call("getReviewedAdultDomainFeed", undefined),
     backendReadiness: () => transport.call("backendReadiness", undefined)
   };
 }

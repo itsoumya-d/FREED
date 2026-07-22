@@ -11,6 +11,14 @@ async function run() {
   const transport: FirebaseCallableTransport = {
     call: async (name, data) => {
       calls.push({ name, data });
+      if (name === "getReviewedAdultDomainFeed") return {
+        version: "oisd-nsfw-small-0123456789abcdef",
+        generatedAt: "2026-07-22T06:30:00.000Z",
+        publishedAt: "2026-07-22T06:30:00.000Z",
+        checksum: "0".repeat(64),
+        source: { id: "oisd-nsfw-small", label: "OISD NSFW Small", url: "https://nsfw-small.oisd.nl/" },
+        domains: ["example.xxx"]
+      };
       if (name === "startEncryptedBackupUpload") return {
         ok: true,
         requiredHeaders: {
@@ -65,6 +73,24 @@ async function run() {
   );
   assert.deepEqual(await callables.requestAccountDeletion({ clientEventId: "evt_12345678" }), { ok: true, status: "deleting" });
   assert.equal(calls[5]?.name, "requestAccountDeletion");
+  assert.deepEqual(await callables.getReviewedAdultDomainFeed(), {
+    version: "oisd-nsfw-small-0123456789abcdef",
+    generatedAt: "2026-07-22T06:30:00.000Z",
+    publishedAt: "2026-07-22T06:30:00.000Z",
+    checksum: "0".repeat(64),
+    source: { id: "oisd-nsfw-small", label: "OISD NSFW Small", url: "https://nsfw-small.oisd.nl/" },
+    domains: ["example.xxx"]
+  });
+  assert.deepEqual(calls[6], { name: "getReviewedAdultDomainFeed", data: undefined });
+
+  const indexSource = readFileSync("functions/src/index.ts", "utf8");
+  const feedFunctionSource = readFileSync("functions/src/adult-feed-firebase.ts", "utf8");
+  assert.match(indexSource, /getReviewedAdultDomainFeed/);
+  assert.match(indexSource, /refreshReviewedAdultDomainFeed/);
+  assert.match(feedFunctionSource, /onCall\(\{[^}]*enforceAppCheck:\s*true[^}]*\}/);
+  assert.match(feedFunctionSource, /requireAuthenticatedUid\(request\.auth\?\.uid\)/);
+  assert.match(feedFunctionSource, /onSchedule\(\{[\s\S]*schedule:\s*"every 24 hours"[\s\S]*timeZone:\s*"Asia\/Kolkata"/);
+  assert.equal(feedFunctionSource.match(/region:\s*"asia-south1"/g)?.length, 2);
 
   for (const ruleFile of ["firestore.rules", "storage.rules"]) {
     const rules = readFileSync(ruleFile, "utf8");

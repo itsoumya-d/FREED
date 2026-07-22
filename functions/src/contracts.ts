@@ -47,7 +47,15 @@ export type PushTokenDocument = { uid: string; installationId: string; token: st
 export type DeletionTombstoneDocument =
   | { uid: string; requestedAt: unknown; status: "deleting"; expiresAt?: never }
   | { uid: string; requestedAt: unknown; status: "cooldown"; expiresAt: unknown };
-export type AdultFeedMetadataDocument = { version: string; checksum: string; source?: string; publishedAt?: unknown; expiresAt?: unknown };
+export type AdultFeedMetadataDocument = {
+  version: string;
+  checksum: string;
+  source: string;
+  generatedAt: unknown;
+  publishedAt: unknown;
+  domainCount: number;
+  objectKey: string;
+};
 
 const SERVER_DOCUMENT_FIELDS: Record<string, readonly string[]> = {
   [COLLECTIONS.aggregateAnalytics]: ["day", "checkIns", "completedChallenges", "updatedAt", "expiresAt"],
@@ -63,7 +71,7 @@ const SERVER_DOCUMENT_FIELDS: Record<string, readonly string[]> = {
   [COLLECTIONS.leases]: ["owner", "acquiredAt", "expiresAt"],
   [COLLECTIONS.pushTokens]: ["uid", "installationId", "token", "updatedAt", "expiresAt"],
   [COLLECTIONS.deletionTombstones]: ["uid", "requestedAt", "status", "expiresAt"],
-  [COLLECTIONS.adultFeedMetadata]: ["version", "checksum", "source", "publishedAt", "expiresAt"],
+  [COLLECTIONS.adultFeedMetadata]: ["version", "checksum", "source", "generatedAt", "publishedAt", "domainCount", "objectKey"],
   [COLLECTIONS.idempotency]: ["createdAt", "expiresAt"]
 };
 
@@ -87,11 +95,16 @@ export function validateServerDocument(collection: string, value: unknown): Reco
   }
   const document = value as Record<string, unknown>;
   for (const key of Object.keys(document)) {
-    if (!SERVER_DOCUMENT_FIELDS[collection].includes(key) || (DISALLOWED_KEYS.test(key) && key !== "ciphertextSha256")) {
+    if (!SERVER_DOCUMENT_FIELDS[collection].includes(key) || (DISALLOWED_KEYS.test(key) && !allowedSensitiveNamedIdentifier(collection, key))) {
       throw new Error("Sensitive or unsupported server document.");
     }
   }
   return document;
+}
+
+function allowedSensitiveNamedIdentifier(collection: string, key: string): boolean {
+  return key === "ciphertextSha256" ||
+    (collection === COLLECTIONS.adultFeedMetadata && (key === "domainCount" || key === "objectKey"));
 }
 
 export function parseAggregateAnalytics(value: unknown): AggregateAnalyticsInput {
