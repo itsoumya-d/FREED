@@ -31,3 +31,9 @@ Verification after the assertion update:
 - `npm --prefix functions run build`: passed.
 - `npm run typecheck`: passed.
 - `npm run test:firebase-config` and `npm run test:firebase-privacy`: passed.
+
+## Callable-policy extractor re-review
+
+The repository test now extracts every exported `onCall` declaration from the TypeScript source using balanced option/body blocks. It checks each discovered callable for App Check enforcement and the shared UID gate, regardless of whitespace or option-property order. The deletion policy is exclusive: `requestAccountDeletion` must consume a limited-use token and every other callable must not. Deliberate bad fixtures prove failures for missing App Check, missing UID gating, and a non-deletion limited-use token.
+
+Verification: `npm run test:firebase-repository`, `npm run test:firebase-functions`, `npm --prefix functions run build`, and `npm run typecheck` passed.

@@ -32,14 +32,21 @@ assert.match(storageRules, /allow read, write: if false/);
 assert.equal(functionsPackageJson.main, "lib/index.js");
 assert.equal(functionsPackageJson.engines.node, "22");
 assert.ok(config.functions.some((entry: { source: string; runtime: string }) => entry.source === "functions" && entry.runtime === "nodejs22"));
-assert.match(functionSource, /export const backendReadiness = onCall\(\{ enforceAppCheck: true \}/);
-assert.match(functionSource, /export const ingestAggregateAnalytics = onCall\(\{ enforceAppCheck: true \}/);
-assert.match(functionSource, /export const registerEncryptedBackupMetadata = onCall\(\{ enforceAppCheck: true \}/);
-assert.match(functionSource, /export const registerPushToken = onCall\(\{ enforceAppCheck: true \}/);
-assert.match(functionSource, /export const requestAccountDeletion = onCall\(\{ enforceAppCheck: true, consumeAppCheckToken: true \}/);
 assert.match(functionSource, /function requireUid\(uid: string \| undefined\)/);
 assert.match(functionSource, /A Firebase Auth session is required/);
-assert.doesNotMatch(functionSource, /enforceAppCheck: false/);
+assertCallablePolicies(extractExportedOnCalls(functionSource));
+assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`export const unsafe = onCall({}, async (request) => { requireUid(request.auth?.uid); });`)),
+  /unsafe.*enforceAppCheck/i
+);
+assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`export const unsafe = onCall({ enforceAppCheck: true }, async () => {});`)),
+  /unsafe.*UID auth gate/i
+);
+assert.throws(
+  () => assertCallablePolicies(extractExportedOnCalls(`export const other = onCall({ consumeAppCheckToken: true, enforceAppCheck: true }, async (request) => { requireUid(request.auth?.uid); });`)),
+  /only requestAccountDeletion/i
+);
 assert.equal(remoteConfig.parameters.firebase_foundation_enabled.defaultValue.value, "false");
 assert.equal(
   packageJson.scripts["audit:firebase-config"],
@@ -68,3 +75,83 @@ assert.match(productionEnvironmentExample, /EXPO_PUBLIC_FIREBASE_ENV=production/
 assert.match(productionEnvironmentExample, /EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL=https:\/\/freed-7d5ee\.web\.app\/auth\/callback/);
 assert.match(productionEnvironmentExample, /EXPO_PUBLIC_FIREBASE_EMAIL_LINK_DOMAIN=freed-7d5ee\.firebaseapp\.com/);
 console.log("firebase repository configuration tests passed");
+
+type ExportedOnCall = { name: string; options: string; body: string };
+
+/** Extracts exported v2 onCall declarations without relying on option order or formatting. */
+function extractExportedOnCalls(source: string): ExportedOnCall[] {
+  const handlers: ExportedOnCall[] = [];
+  const declaration = /export\s+const\s+([A-Za-z_$][\w$]*)\s*=\s*onCall\s*\(/g;
+  let match: RegExpExecArray | null;
+  while ((match = declaration.exec(source))) {
+    const optionsStart = nextNonWhitespace(source, declaration.lastIndex);
+    if (source[optionsStart] !== "{") throw new Error(`Exported callable ${match[1]} must use explicit options.`);
+    const options = readBalanced(source, optionsStart, "{", "}");
+    const arrow = source.indexOf("=>", options.end);
+    if (arrow < 0) throw new Error(`Exported callable ${match[1]} must define a handler.`);
+    const bodyStart = nextNonWhitespace(source, arrow + 2);
+    if (source[bodyStart] !== "{") throw new Error(`Exported callable ${match[1]} must use a block handler.`);
+    const body = readBalanced(source, bodyStart, "{", "}");
+    handlers.push({ name: match[1]!, options: options.content, body: body.content });
+    declaration.lastIndex = body.end + 1;
+  }
+  if (handlers.length === 0) throw new Error("No exported onCall handlers were found.");
+  return handlers;
+}
+
+function assertCallablePolicies(handlers: ExportedOnCall[]) {
+  for (const handler of handlers) {
+    if (!/\benforceAppCheck\s*:\s*true\b/.test(handler.options)) {
+      throw new Error(`${handler.name} must set enforceAppCheck: true.`);
+    }
+    if (!/\brequireUid\s*\(\s*request\s*\.\s*auth\s*\?\.\s*uid\s*\)/.test(handler.body)) {
+      throw new Error(`${handler.name} must use the shared UID auth gate.`);
+    }
+    const consumesLimitedUseToken = /\bconsumeAppCheckToken\s*:\s*true\b/.test(handler.options);
+    if (handler.name === "requestAccountDeletion" && !consumesLimitedUseToken) {
+      throw new Error("requestAccountDeletion must consume a limited-use App Check token.");
+    }
+    if (handler.name !== "requestAccountDeletion" && consumesLimitedUseToken) {
+      throw new Error("Only requestAccountDeletion may consume a limited-use App Check token.");
+    }
+  }
+}
+
+function nextNonWhitespace(source: string, start: number) {
+  let index = start;
+  while (/\s/.test(source[index] ?? "")) index += 1;
+  return index;
+}
+
+function readBalanced(source: string, start: number, open: string, close: string) {
+  let depth = 0;
+  let quote: "'" | '"' | "`" | null = null;
+  let lineComment = false;
+  let blockComment = false;
+  for (let index = start; index < source.length; index += 1) {
+    const character = source[index]!;
+    const next = source[index + 1];
+    if (lineComment) {
+      if (character === "\n") lineComment = false;
+      continue;
+    }
+    if (blockComment) {
+      if (character === "*" && next === "/") { blockComment = false; index += 1; }
+      continue;
+    }
+    if (quote) {
+      if (character === "\\") { index += 1; continue; }
+      if (character === quote) quote = null;
+      continue;
+    }
+    if (character === "/" && next === "/") { lineComment = true; index += 1; continue; }
+    if (character === "/" && next === "*") { blockComment = true; index += 1; continue; }
+    if (character === "'" || character === '"' || character === "`") { quote = character; continue; }
+    if (character === open) depth += 1;
+    if (character === close) {
+      depth -= 1;
+      if (depth === 0) return { content: source.slice(start + 1, index), end: index };
+    }
+  }
+  throw new Error(`Unterminated ${open}${close} block in Firebase callable source.`);
+}
