@@ -19,3 +19,15 @@ The deleted `firebaseFoundation` callable has been removed from the native clien
 - `npm run test:firebase-runtime` and `npm run typecheck`: passed.
 
 The emulator host used Node 26 locally; production deployment remains Node 22 by `functions/package.json` and was not attempted.
+
+## Repository policy re-review
+
+The repository configuration test now reads `functions/src/index.ts`, verifies the Node 22 v2 Functions target, and requires App Check for every callable. It also requires the shared Firebase Auth UID gate and limited-use App Check token consumption for account deletion. The previous test-first execution failed with `ENOENT` because it attempted to read the removed `functions/index.js` entrypoint.
+
+Verification after the assertion update:
+
+- `npm run test:firebase-repository`: passed.
+- `npm run test:firebase-functions`: passed.
+- `npm --prefix functions run build`: passed.
+- `npm run typecheck`: passed.
+- `npm run test:firebase-config` and `npm run test:firebase-privacy`: passed.
