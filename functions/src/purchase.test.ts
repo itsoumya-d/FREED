@@ -359,6 +359,18 @@ test("Google subscription verification rejects wrong product, state, or expiry",
   }
 });
 
+test("Google verified-response mismatches remain rejected rather than provider-unavailable", async () => {
+  const provider = googleProviderReturning({
+    subscriptionState: "SUBSCRIPTION_STATE_ACTIVE",
+    acknowledgementState: "ACKNOWLEDGEMENT_STATE_ACKNOWLEDGED",
+    lineItems: [{ productId: "freed_premium_yearly", expiryTime: "2026-07-22T12:01:00.000Z" }]
+  });
+  await assert.rejects(
+    () => provider.verify({ productId: "freed_premium_monthly", purchaseToken: "play-token_1234567890" }),
+    (error: unknown) => error instanceof PurchaseProviderError && error.status === "rejected"
+  );
+});
+
 test("Google lifetime uses products v2 and requires purchased, unconsumed, unrefunded quantity", async () => {
   const requests: string[] = [];
   const valid = {
@@ -412,6 +424,28 @@ test("Google provider fails closed for timeout, redirect, non-JSON, oversized, m
       (error: unknown) => error instanceof PurchaseProviderError && !String(error).includes("play-token")
     );
   }
+});
+
+test("Google deadline remains active until a streaming response body fully closes", async () => {
+  const token = "play-token_stream-timeout_123";
+  const provider = createGooglePlayProvider(googleServiceAccount(), {
+    getAuthorizationHeaders: async () => ({ authorization: "Bearer server-only" }),
+    fetch: async () => new Response(new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(new TextEncoder().encode("{"));
+        // Intentionally never close: the provider deadline must cancel this body.
+      }
+    }), { status: 200, headers: { "content-type": "application/json" } })
+  }, () => NOW, 5);
+  const startedAt = Date.now();
+  await assert.rejects(
+    Promise.race([
+      provider.verify({ productId: "freed_premium_monthly", purchaseToken: token }),
+      new Promise<never>((_resolve, reject) => setTimeout(() => reject(new Error(`test guard leaked ${token}`)), 100))
+    ]),
+    (error: unknown) => error instanceof PurchaseProviderError && !String(error).includes(token)
+  );
+  assert.ok(Date.now() - startedAt < 100, "the configured provider deadline must include body streaming");
 });
 
 function iosRequest() {

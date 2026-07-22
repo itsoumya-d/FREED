@@ -5,6 +5,7 @@ import test from "node:test";
 import {
   PURCHASE_SECRET_NAMES,
   commitVerifiedPurchaseClaim,
+  type PurchaseClaimDocument,
   type PurchaseClaimTransactionStore
 } from "./purchase-firebase.js";
 import type { PurchaseClaimInput } from "./purchase.js";
@@ -88,4 +89,85 @@ test("claim persistence failure returns unavailable and cannot produce an active
     writeClaimAndAudit: async () => { throw new Error("temporary Firestore failure"); }
   };
   await assert.rejects(() => commitVerifiedPurchaseClaim(store, claim), /Firestore failure/);
+});
+
+test("the same owner can atomically transition monthly to yearly on one subscription lineage", async () => {
+  let persisted: PurchaseClaimDocument | undefined = {
+    uid: claim.uid,
+    provider: "apple",
+    productId: "freed_premium_monthly",
+    storeReferenceHash: claim.storeReferenceHash,
+    status: "verified"
+  };
+  const yearly = { ...claim, productId: "freed_premium_yearly" as const };
+  const result = await commitVerifiedPurchaseClaim({
+    readDeletionTombstone: async () => false,
+    readClaim: async () => persisted,
+    writeClaimAndAudit: async (input) => {
+      persisted = { ...input, status: "verified" };
+    }
+  }, yearly);
+  assert.equal(result, "owned");
+  assert.equal(persisted?.productId, "freed_premium_yearly");
+});
+
+test("subscription and lifetime ownership classes can never mutate into each other", async () => {
+  for (const [existingProduct, requestedProduct] of [
+    ["freed_premium_monthly", "freed_premium_lifetime"],
+    ["freed_premium_lifetime", "freed_premium_yearly"]
+  ] as const) {
+    let writes = 0;
+    const result = await commitVerifiedPurchaseClaim({
+      readDeletionTombstone: async () => false,
+      readClaim: async () => ({
+        uid: claim.uid,
+        provider: claim.provider,
+        productId: existingProduct,
+        storeReferenceHash: claim.storeReferenceHash,
+        status: "verified"
+      }),
+      writeClaimAndAudit: async () => { writes += 1; }
+    }, { ...claim, productId: requestedProduct });
+    assert.equal(result, "conflict");
+    assert.equal(writes, 0);
+  }
+
+  let malformedWrites = 0;
+  assert.equal(await commitVerifiedPurchaseClaim({
+    readDeletionTombstone: async () => false,
+    readClaim: async () => ({
+      uid: claim.uid,
+      provider: claim.provider,
+      productId: "unexpected_product" as never,
+      storeReferenceHash: claim.storeReferenceHash,
+      status: "verified"
+    }),
+    writeClaimAndAudit: async () => { malformedWrites += 1; }
+  }, claim), "conflict");
+  assert.equal(malformedWrites, 0);
+});
+
+test("concurrent cross-UID claims serialize so exactly one owner wins", async () => {
+  let persisted: PurchaseClaimDocument | undefined;
+  let queue = Promise.resolve();
+  const runTransaction = async (uid: string) => {
+    const previous = queue;
+    let release: () => void = () => {};
+    queue = new Promise<void>((resolve) => { release = resolve; });
+    await previous;
+    try {
+      return await commitVerifiedPurchaseClaim({
+        readDeletionTombstone: async () => false,
+        readClaim: async () => persisted,
+        writeClaimAndAudit: async (input) => {
+          persisted = { ...input, status: "verified" };
+        }
+      }, { ...claim, uid });
+    } finally {
+      release();
+    }
+  };
+  const results = await Promise.all([runTransaction("firebaseUid123"), runTransaction("otherFirebaseUid")]);
+  assert.deepEqual(results, ["claimed", "conflict"]);
+  assert.equal(persisted?.uid, "firebaseUid123");
 });

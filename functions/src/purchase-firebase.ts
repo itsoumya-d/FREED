@@ -72,12 +72,22 @@ export async function commitVerifiedPurchaseClaim(
     store.readClaim(input.storeReferenceHash)
   ]);
   if (deleting) return "account-deleting";
-  if (existing && (
-    existing.uid !== input.uid || existing.provider !== input.provider || existing.productId !== input.productId ||
-    existing.storeReferenceHash !== input.storeReferenceHash || existing.status !== "verified"
-  )) return "conflict";
+  if (existing) {
+    const sameIdentity = existing.uid === input.uid && existing.provider === input.provider &&
+      existing.storeReferenceHash === input.storeReferenceHash && existing.status === "verified";
+    const existingClass = purchaseOwnershipClass(existing.productId);
+    const requestedClass = purchaseOwnershipClass(input.productId);
+    const sameOwnershipClass = existingClass !== null && existingClass === requestedClass;
+    if (!sameIdentity || !sameOwnershipClass) return "conflict";
+  }
   await store.writeClaimAndAudit(input);
   return existing ? "owned" : "claimed";
+}
+
+function purchaseOwnershipClass(productId: string): "subscription" | "lifetime" | null {
+  if (productId === "freed_premium_lifetime") return "lifetime";
+  if (productId === "freed_premium_monthly" || productId === "freed_premium_yearly") return "subscription";
+  return null;
 }
 
 export const verifyStorePurchase = onCall(

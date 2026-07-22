@@ -270,30 +270,34 @@ export function createAppleStoreProvider(
       let config: ReturnType<typeof parseAppleConfig>;
       try {
         config = parseAppleConfig(unvalidatedConfig);
-      } catch {
+      } catch (error) {
+        if (error instanceof PurchaseProviderError) throw error;
         throw new PurchaseProviderError("unavailable");
       }
+      const deadline = createProviderDeadline(timeoutMs);
       try {
-        return await verifyAppleEnvironment("Production", config, library, {
-          transactionId,
-          productId,
-          expectedAppAccountToken
-        }, now(), timeoutMs);
-      } catch (error) {
-        if (!library.isNotFoundOrEnvironmentMismatch(error)) {
-          if (error instanceof PurchaseProviderError) throw error;
-          throw new PurchaseProviderError("unavailable");
+        try {
+          return await verifyAppleEnvironment("Production", config, library, {
+            transactionId,
+            productId,
+            expectedAppAccountToken
+          }, now(), deadline);
+        } catch (error) {
+          if (!library.isNotFoundOrEnvironmentMismatch(error)) {
+            if (error instanceof PurchaseProviderError) throw error;
+            throw new PurchaseProviderError("unavailable");
+          }
         }
-      }
-      try {
         return await verifyAppleEnvironment("Sandbox", config, library, {
           transactionId,
           productId,
           expectedAppAccountToken
-        }, now(), timeoutMs);
+        }, now(), deadline);
       } catch (error) {
         if (error instanceof PurchaseProviderError) throw error;
         throw new PurchaseProviderError("unavailable");
+      } finally {
+        deadline.dispose();
       }
     }
   };
@@ -305,7 +309,7 @@ async function verifyAppleEnvironment(
   library: AppleLibraryBoundary,
   input: { transactionId: string; productId: CoreProductId; expectedAppAccountToken: string },
   now: number,
-  timeoutMs: number
+  deadline: ProviderDeadline
 ): Promise<VerifiedStorePurchase> {
   const client = library.createClient({
     privateKey: config.privateKey,
@@ -314,7 +318,7 @@ async function verifyAppleEnvironment(
     bundleId: APPLE_BUNDLE_ID,
     environment
   });
-  const response = await withTimeout(client.getTransactionInfo(input.transactionId), timeoutMs);
+  const response = await deadline.run(client.getTransactionInfo(input.transactionId));
   if (!isCompactJws(response.signedTransactionInfo)) throw new PurchaseProviderError("rejected");
   const verifier = library.createVerifier({
     rootCertificates: config.rootCertificates,
@@ -325,7 +329,7 @@ async function verifyAppleEnvironment(
   });
   let decoded: Record<string, unknown>;
   try {
-    decoded = await withTimeout(verifier.verifyAndDecodeTransaction(response.signedTransactionInfo), timeoutMs);
+    decoded = await deadline.run(verifier.verifyAndDecodeTransaction(response.signedTransactionInfo));
   } catch (error) {
     if (library.isNotFoundOrEnvironmentMismatch(error)) throw error;
     throw new PurchaseProviderError("rejected");
@@ -433,36 +437,34 @@ export function createGooglePlayProvider(
       let serviceAccount: Record<string, string>;
       try { serviceAccount = parseGoogleServiceAccount(serviceAccountJson); }
       catch { throw new PurchaseProviderError("unavailable"); }
-      let headers: Record<string, string>;
+      const deadline = createProviderDeadline(timeoutMs);
       try {
-        headers = await withTimeout(
-          boundary.getAuthorizationHeaders(serviceAccount, [GOOGLE_ANDROID_PUBLISHER_SCOPE]),
-          timeoutMs
+        const headers = await deadline.run(
+          boundary.getAuthorizationHeaders(serviceAccount, [GOOGLE_ANDROID_PUBLISHER_SCOPE])
         );
-      } catch {
-        throw new PurchaseProviderError("unavailable");
-      }
-      const authorization = Object.entries(headers).find(([key]) => key.toLowerCase() === "authorization")?.[1];
-      if (typeof authorization !== "string" || !/^Bearer \S{8,4096}$/.test(authorization)) {
-        throw new PurchaseProviderError("unavailable");
-      }
-      const resource = input.productId === "freed_premium_lifetime" ? "productsv2" : "subscriptionsv2";
-      const url = `https://androidpublisher.googleapis.com/androidpublisher/v3/applications/${encodeURIComponent(GOOGLE_PACKAGE_NAME)}/purchases/${resource}/tokens/${encodeURIComponent(input.purchaseToken)}`;
-      let body: unknown;
-      try {
-        const response = await fetchWithHardTimeout(boundary.fetch, url, {
+        const authorization = Object.entries(headers).find(([key]) => key.toLowerCase() === "authorization")?.[1];
+        if (typeof authorization !== "string" || !/^Bearer \S{8,4096}$/.test(authorization)) {
+          throw new PurchaseProviderError("unavailable");
+        }
+        const resource = input.productId === "freed_premium_lifetime" ? "productsv2" : "subscriptionsv2";
+        const url = `https://androidpublisher.googleapis.com/androidpublisher/v3/applications/${encodeURIComponent(GOOGLE_PACKAGE_NAME)}/purchases/${resource}/tokens/${encodeURIComponent(input.purchaseToken)}`;
+        const response = await deadline.run(boundary.fetch(url, {
           method: "GET",
           redirect: "error",
-          headers: { accept: "application/json", authorization }
-        }, timeoutMs);
-        body = await readBoundedJson(response, 512 * 1024);
-      } catch {
+          headers: { accept: "application/json", authorization },
+          signal: deadline.signal
+        }));
+        const body = await deadline.run(readBoundedJson(response, 512 * 1024, deadline.signal));
+        if (input.productId === "freed_premium_lifetime") {
+          return validateGoogleLifetime(body, input.productId, input.purchaseToken, now());
+        }
+        return validateGoogleSubscription(body, input.productId, input.purchaseToken, now());
+      } catch (error) {
+        if (error instanceof PurchaseProviderError) throw error;
         throw new PurchaseProviderError("unavailable");
+      } finally {
+        deadline.dispose();
       }
-      if (input.productId === "freed_premium_lifetime") {
-        return validateGoogleLifetime(body, input.productId, input.purchaseToken, now());
-      }
-      return validateGoogleSubscription(body, input.productId, input.purchaseToken, now());
     }
   };
 }
@@ -513,34 +515,35 @@ function validateGoogleLifetime(
   };
 }
 
-async function fetchWithHardTimeout(
-  fetcher: GooglePlayBoundary["fetch"],
-  url: string,
-  init: RequestInit,
-  timeoutMs: number
-): Promise<Response> {
-  const controller = new AbortController();
-  return withTimeout(fetcher(url, { ...init, signal: controller.signal }), timeoutMs, () => controller.abort());
-}
+type ProviderDeadline = {
+  signal: AbortSignal;
+  run<T>(operation: Promise<T>): Promise<T>;
+  dispose(): void;
+};
 
-async function withTimeout<T>(operation: Promise<T>, timeoutMs: number, onTimeout?: () => void): Promise<T> {
-  let timer: ReturnType<typeof setTimeout> | undefined;
-  try {
-    return await Promise.race([
-      operation,
-      new Promise<never>((_resolve, reject) => {
-        timer = setTimeout(() => {
-          onTimeout?.();
-          reject(new Error("Provider unavailable."));
-        }, timeoutMs);
-      })
-    ]);
-  } finally {
-    if (timer) clearTimeout(timer);
+function createProviderDeadline(timeoutMs: number): ProviderDeadline {
+  if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 60_000) {
+    throw new PurchaseProviderError("unavailable");
   }
+  const controller = new AbortController();
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const expired = new Promise<never>((_resolve, reject) => {
+    timer = setTimeout(() => {
+      controller.abort();
+      reject(new Error("Provider unavailable."));
+    }, timeoutMs);
+  });
+  return {
+    signal: controller.signal,
+    run: <T>(operation: Promise<T>) => Promise.race([operation, expired]),
+    dispose() {
+      if (timer) clearTimeout(timer);
+      timer = undefined;
+    }
+  };
 }
 
-async function readBoundedJson(response: Response, maxBytes: number): Promise<unknown> {
+async function readBoundedJson(response: Response, maxBytes: number, signal: AbortSignal): Promise<unknown> {
   if (!response.ok || response.redirected || response.type === "opaqueredirect") throw new Error("Provider unavailable.");
   const contentType = response.headers.get("content-type")?.split(";", 1)[0]?.trim().toLowerCase();
   if (contentType !== "application/json") throw new Error("Provider unavailable.");
@@ -548,20 +551,30 @@ async function readBoundedJson(response: Response, maxBytes: number): Promise<un
   if (declared !== null && (!/^\d+$/.test(declared) || Number(declared) > maxBytes)) throw new Error("Provider unavailable.");
   if (!response.body) throw new Error("Provider unavailable.");
   const reader = response.body.getReader();
+  if (signal.aborted) {
+    await reader.cancel();
+    throw new Error("Provider unavailable.");
+  }
+  const abort = () => { void reader.cancel(); };
+  signal.addEventListener("abort", abort, { once: true });
   const chunks: Uint8Array[] = [];
   let total = 0;
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    total += value.byteLength;
-    if (total > maxBytes) {
-      await reader.cancel();
-      throw new Error("Provider unavailable.");
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.byteLength;
+      if (total > maxBytes) {
+        await reader.cancel();
+        throw new Error("Provider unavailable.");
+      }
+      chunks.push(value);
     }
-    chunks.push(value);
+    const bytes = Buffer.concat(chunks, total);
+    return JSON.parse(bytes.toString("utf8")) as unknown;
+  } finally {
+    signal.removeEventListener("abort", abort);
   }
-  const bytes = Buffer.concat(chunks, total);
-  return JSON.parse(bytes.toString("utf8")) as unknown;
 }
 
 function parseGoogleServiceAccount(value: string): Record<string, string> {
