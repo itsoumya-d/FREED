@@ -249,6 +249,7 @@ export type EarnedUnlock = {
   durationMinutes: number;
   sourceChallengeId: string;
   sourceAttemptHost?: string;
+  nativeInterventionId?: string;
 };
 
 export type AppUsageSession = {
@@ -598,6 +599,14 @@ function sanitizeSourceAttemptHost(value: unknown): string | undefined {
   return normalized;
 }
 
+function sanitizeNativeInterventionId(value: unknown): string | undefined {
+  if (typeof value !== "string") return undefined;
+  const normalized = value.trim().toLowerCase();
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(normalized)
+    ? normalized
+    : undefined;
+}
+
 function sanitizeCompletion(value: unknown): ChallengeCompletion | null {
   if (!isRecord(value)) return null;
   if (typeof value.id !== "string" || typeof value.title !== "string") return null;
@@ -889,6 +898,7 @@ function sanitizeEarnedUnlock(value: unknown): EarnedUnlock | null {
     typeof value.sourceChallengeId === "string" && value.sourceChallengeId.trim().length > 0
       ? value.sourceChallengeId.trim().slice(0, 96)
       : "unknown-challenge";
+  const nativeInterventionId = sanitizeNativeInterventionId(value.nativeInterventionId);
 
   return {
     id,
@@ -896,7 +906,8 @@ function sanitizeEarnedUnlock(value: unknown): EarnedUnlock | null {
     expiresAt: boundedExpiresAt,
     durationMinutes,
     sourceChallengeId,
-    sourceAttemptHost: sanitizeSourceAttemptHost(value.sourceAttemptHost)
+    sourceAttemptHost: sanitizeSourceAttemptHost(value.sourceAttemptHost),
+    ...(nativeInterventionId ? { nativeInterventionId } : {})
   };
 }
 
@@ -1774,18 +1785,20 @@ export function getActiveEarnedUnlock(state: RecoveryState, at: Date | string = 
 export function recordEarnedUnlock(
   state: RecoveryState,
   challenge: RecoveryChallenge,
-  options: { durationMinutes?: number; sourceAttemptHost?: string; startedAt?: string } = {}
+  options: { durationMinutes?: number; sourceAttemptHost?: string; nativeInterventionId?: string; startedAt?: string } = {}
 ): RecoveryState {
   const startedAt = validIso(options.startedAt) ?? new Date().toISOString();
   const durationMinutes = clampInteger(options.durationMinutes, state.disciplineSettings.unlockDurationMinutes, 1, MAX_EARNED_UNLOCK_MINUTES);
   const expiresAt = new Date(Date.parse(startedAt) + durationMinutes * 60_000).toISOString();
+  const nativeInterventionId = sanitizeNativeInterventionId(options.nativeInterventionId);
   const unlock: EarnedUnlock = {
     id: `unlock-${Date.parse(startedAt)}-${challenge.id}`,
     startedAt,
     expiresAt,
     durationMinutes,
     sourceChallengeId: challenge.id,
-    sourceAttemptHost: sanitizeSourceAttemptHost(options.sourceAttemptHost)
+    sourceAttemptHost: sanitizeSourceAttemptHost(options.sourceAttemptHost),
+    ...(nativeInterventionId ? { nativeInterventionId } : {})
   };
 
   return hydrateRecoveryState({

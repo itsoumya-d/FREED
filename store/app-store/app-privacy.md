@@ -49,5 +49,5 @@ Declare these only when the corresponding production feature is enabled and evid
 
 - Family Controls, ManagedSettings, DeviceActivity, FamilyActivityPicker, and Safari Content Blocker are protection APIs, not third-party app screen reading.
 - iOS Screen Time targets are opaque tokens and local counts. FREED cannot and does not inspect native third-party app screens, private messages, Reels/Shorts/TikTok content, or in-app content.
-- Optional DNS Settings must stay disabled unless Apple grants the `dns-settings` entitlement and evidence proves matched-domain DNS without packet tunnel, VPN manager, full traffic proxying, packet inspection, or HTTPS interception.
+- iOS protection uses Screen Time, Safari Content Blocker, and Safari Focus Shield. It does not use a packet tunnel, VPN manager, full traffic proxy, packet inspection, or HTTPS interception.
 - If remote community, crash analytics, additional ad networks, personalized ads, account profiles, or family/accountability/AI add-on SKUs are enabled after v1, update App Privacy before submitting that build.

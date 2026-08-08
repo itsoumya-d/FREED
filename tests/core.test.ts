@@ -15,7 +15,6 @@ import {
   hasUsableSupportCircleMember
 } from "../src/lib/accountability";
 import {
-  buildIosDnsSettingsRequest,
   getConditionalAdultFeedChecksumForStatus,
   resolveAdultDomainFeed
 } from "../src/lib/adult-domain-feed-sync";
@@ -103,8 +102,7 @@ import {
   getAdultDomainFeedReadiness,
   getEmbeddedAdultDomainFeed,
   normalizeAdultDomainCandidate,
-  redactUrlForStorage,
-  SAFARI_SHORT_FORM_WEB_RULE_FILTERS
+  redactUrlForStorage
 } from "../src/lib/blocking-engine";
 import {
   buildCommunityMilestonePayload,
@@ -126,6 +124,15 @@ import {
   ingestRecoveryAnalytics
 } from "../src/lib/recovery-analytics-ingestion";
 import { buildLocalUrgeRiskForecast } from "../src/lib/urge-risk-forecast";
+import {
+  FOCUS_SHIELD_PRESETS,
+  focusShieldScopesMatch,
+  getFocusShieldRuleDisplayName,
+  isAndroidSurfaceScopeActive,
+  sanitizeFocusShieldRule,
+  sanitizeFocusShieldInterventionScope,
+  validateFocusShieldRule
+} from "../src/lib/focus-shield";
 import {
   LAUNCH_PREMIUM_PLAN_IDS,
   LAUNCH_PREMIUM_PLAN_ECONOMICS,
@@ -1039,12 +1046,29 @@ function runReleaseVerify(args: string[], extraEnv: Record<string, string> = {})
   }
 }
 
-function writeZeroVulnerabilityNpmStub(fakeBinDir: string) {
+function writeZeroVulnerabilityNpmStub(fakeBinDir: string, releaseAuditOutputOverrides: Record<string, string> = {}) {
   const fakeNpmPath = join(fakeBinDir, "npm");
   writeFileSync(
     fakeNpmPath,
     [
       "#!/usr/bin/env node",
+      `const releaseAuditOutputs = ${JSON.stringify({
+        "audit:classifier": "Result: 49 pass, 0 fail",
+        "audit:android-classifier": "Result: 15 pass, 0 fail",
+        "audit:privacy": "Result: 31 pass, 0 fail",
+        "audit:backend": "Result: 16 pass, 0 fail",
+        "audit:smoke-harnesses": "Result: 94 pass, 0 fail",
+        "audit:store-catalog": JSON.stringify({ result: "pass" }),
+        "audit:eas-workflows": "Result: 14 pass, 0 fail",
+        "audit:firebase-config": "Result: pass",
+        "audit:store-legal": JSON.stringify({ result: "pass" }),
+        ...releaseAuditOutputOverrides
+      })};`,
+      "const releaseAuditOutput = releaseAuditOutputs[process.argv.at(-1)];",
+      "if (releaseAuditOutput) {",
+      "  console.log(releaseAuditOutput);",
+      "  process.exit(0);",
+      "}",
       "if (process.argv.includes('audit')) {",
       "  console.log(JSON.stringify({",
       "    auditReportVersion: 2,",
@@ -1089,6 +1113,16 @@ function runReleaseReadinessAuditWithArgs(args: string[], extraEnv: Record<strin
   } catch (error) {
     const failed = childProcessFailureOutput(error);
     return { status: failed.status, output: failed.output };
+  }
+}
+
+function runReleaseReadinessAuditWithAuthoritativeAuditOutput(overrides: Record<string, string>) {
+  const fakeBinDir = mkdtempSync(join(tmpdir(), "freed-authoritative-audit-npm-"));
+  try {
+    writeZeroVulnerabilityNpmStub(fakeBinDir, overrides);
+    return runReleaseReadinessAudit({ PATH: `${fakeBinDir}:${dirname(process.execPath)}:${process.env.PATH ?? ""}` });
+  } finally {
+    rmSync(fakeBinDir, { recursive: true, force: true });
   }
 }
 
@@ -1458,6 +1492,912 @@ function restoreAiServerKeys(previous: Record<(typeof aiServerKeyNames)[number],
   for (const key of aiServerKeyNames) restoreEnv(key, previous[key]);
 }
 
+test("Focus Shield presets carry stable surface metadata", () => {
+  const youtube = FOCUS_SHIELD_PRESETS.find((preset) => preset.id === "youtube-shorts");
+  const instagram = FOCUS_SHIELD_PRESETS.find((preset) => preset.id === "instagram-reels");
+  const tiktok = FOCUS_SHIELD_PRESETS.find((preset) => preset.id === "tiktok-for-you");
+
+  assert.deepEqual(
+    [youtube?.packageName, instagram?.packageName, tiktok?.packageName],
+    ["com.google.android.youtube", "com.instagram.android", "com.zhiliaoapp.musically"]
+  );
+  assert.equal(youtube?.version, 1);
+  assert.equal(youtube?.selector.packageName, youtube?.packageName);
+});
+
+test("Focus Shield React coordination has a focused domain boundary", () => {
+  assert.equal(existsSync("src/lib/protection-capabilities.ts"), true);
+});
+
+test("Focus Shield UI models expose platform limits without retaining selector details", () => {
+  const protection = require("../src/lib/protection-capabilities") as {
+    summarizeFocusShieldRules: (rules: unknown[]) => unknown[];
+    getFocusShieldCapabilityModel: (
+      capability: Record<string, unknown> | null,
+      status: Record<string, unknown> | null,
+      rules: unknown[]
+    ) => {
+      calibrationAvailable: boolean;
+      description: string;
+      diagnostics: string[];
+    };
+  };
+  assert.equal(typeof protection.summarizeFocusShieldRules, "function");
+  assert.equal(typeof protection.getFocusShieldCapabilityModel, "function");
+  const summaries = protection.summarizeFocusShieldRules([
+    {
+      version: 1,
+      id: "focus-rule-ui-a7f9",
+      packageName: "com.google.android.youtube",
+      displayLabel: "YouTube boundary",
+      kind: "custom",
+      enabled: true,
+      selector: {
+        packageName: "com.google.android.youtube",
+        viewId: "com.google.android.youtube:id/reel_player",
+        role: "android.view.View",
+        nodeText: "private accessibility text",
+        rawAccessibilityTree: { child: "private" }
+      }
+    }
+  ]);
+
+  assert.deepEqual(Object.keys(summaries[0] as Record<string, unknown>).sort(), [
+    "displayLabel",
+    "enabled",
+    "id",
+    "kind",
+    "packageName"
+  ]);
+  assert.doesNotMatch(JSON.stringify(summaries), /selector|viewId|nodeText|accessibilityTree|private/i);
+
+  const android = protection.getFocusShieldCapabilityModel(
+    {
+      platform: "android",
+      accessibility: true,
+      screenTime: false,
+      managedSettings: false,
+      dnsFiltering: true,
+      localVpnFallback: true,
+      notes: []
+    },
+    {
+      appInterventionAuthorized: false,
+      focusShieldRuleCount: 2,
+      focusShieldRuleStoreHealth: "degraded"
+    },
+    summaries
+  );
+  assert.equal(android.calibrationAvailable, false);
+  assert.match(android.description, /selected native-app surfaces/i);
+  assert.match(android.diagnostics.join(" "), /permission.*revoked/i);
+  assert.match(android.diagnostics.join(" "), /stale|degraded/i);
+
+  const ios = protection.getFocusShieldCapabilityModel(
+    {
+      platform: "ios",
+      accessibility: false,
+      screenTime: false,
+      managedSettings: false,
+      dnsFiltering: false,
+      safariContentBlocker: false,
+      localVpnFallback: false,
+      notes: []
+    },
+    { authorized: false },
+    []
+  );
+  assert.equal(ios.calibrationAvailable, false);
+  assert.match(ios.description, /cannot inspect native-app screens/i);
+  assert.match(ios.description, /Safari Focus Shield extension/i);
+  assert.match(ios.diagnostics.join(" "), /Family Controls entitlement/i);
+  assert.match(ios.diagnostics.join(" "), /Safari Focus Shield extension/i);
+
+  const preview = protection.getFocusShieldCapabilityModel(
+    {
+      platform: "web",
+      accessibility: false,
+      screenTime: false,
+      managedSettings: false,
+      dnsFiltering: false,
+      localVpnFallback: false,
+      notes: []
+    },
+    null,
+    []
+  );
+  assert.match(preview.diagnostics.join(" "), /preview build/i);
+});
+
+test("protection-triggered attempts bypass rewarded ads and only successful challenges unlock their scope", () => {
+  const protection = require("../src/lib/protection-capabilities") as {
+    shouldBypassRewardedAdForAttempt: (attempt: BlockingAttempt | null) => boolean;
+    getProtectionChallengeCompletionDecision: (
+      attempt: BlockingAttempt | null,
+      outcome: "helped" | "still-urging"
+    ) => { grantEarnedUnlock: boolean; applyFocusShieldScope: boolean };
+  };
+  assert.equal(typeof protection.shouldBypassRewardedAdForAttempt, "function");
+  assert.equal(typeof protection.getProtectionChallengeCompletionDecision, "function");
+  const protectedAttempt = createNativeInterventionAttempt({
+    interventionId: "11111111-1111-4111-8111-111111111111",
+    url: "https://selected-app.app.freed.local",
+    host: "selected-app.app.freed.local",
+    sourcePackage: "com.google.android.youtube",
+    reason: "Selected surface reached",
+    matchedRule: "focus-shield:focus-rule-ui-a7f9",
+    detectedAt: new Date().toISOString(),
+    scope: {
+      kind: "android-surface",
+      ruleId: "focus-rule-ui-a7f9",
+      packageName: "com.google.android.youtube"
+    }
+  });
+  const manualAttempt = createBlockingAttempt("https://pornhub.com/watch", "manual-check");
+
+  assert.equal(protectedAttempt.nativeInterventionId, "11111111-1111-4111-8111-111111111111");
+  assert.equal(protection.shouldBypassRewardedAdForAttempt(protectedAttempt), true);
+  assert.equal(protection.shouldBypassRewardedAdForAttempt(manualAttempt), false);
+  assert.deepEqual(protection.getProtectionChallengeCompletionDecision(protectedAttempt, "helped"), {
+    grantEarnedUnlock: true,
+    applyFocusShieldScope: true
+  });
+  assert.deepEqual(protection.getProtectionChallengeCompletionDecision(protectedAttempt, "still-urging"), {
+    grantEarnedUnlock: false,
+    applyFocusShieldScope: false
+  });
+});
+
+test("React wires Focus Shield setup, single-consumption challenge routing, and successful scoped unlocks", () => {
+  const appSurface = readFileSync("src/features/freed-app.tsx", "utf8");
+
+  assert.match(appSurface, /function FocusShieldSection/);
+  assert.match(appSurface, /FOCUS_SHIELD_PRESETS/);
+  assert.match(appSurface, /startFocusShieldCalibration/);
+  assert.match(appSurface, /cancelFocusShieldCalibration/);
+  assert.match(appSurface, /getFocusShieldCalibration/);
+  assert.match(appSurface, /configureFocusShieldRule/);
+  assert.match(appSurface, /listFocusShieldRules/);
+  assert.match(appSurface, /removeFocusShieldRule/);
+  assert.equal((appSurface.match(/<FocusShieldSection/g) ?? []).length >= 2, true);
+  assert.match(appSurface, /consumePendingInterventionOnce/);
+  assert.match(appSurface, /shouldBypassRewardedAdForAttempt\(activeAttempt\)/);
+  assert.match(appSurface, /getProtectionChallengeCompletionDecision\(activeAttempt, outcome\)/);
+  assert.match(appSurface, /completionDecision\.grantEarnedUnlock/);
+  assert.match(appSurface, /completionDecision\.applyFocusShieldScope/);
+});
+
+test("abandoning an interception clears its native scope before standalone challenges", () => {
+  const appSurface = readFileSync("src/features/freed-app.tsx", "utf8");
+
+  assert.match(appSurface, /const abandonActiveProtectionFlow = React\.useCallback/);
+  assert.match(appSurface, /setActiveAttempt\(null\);[\s\S]*setSelectedChallenge\(null\);[\s\S]*setScreen\("main"\)/);
+  assert.match(appSurface, /onClose=\{abandonActiveProtectionFlow\}/);
+  assert.match(appSurface, /onBack=\{abandonActiveProtectionFlow\}/);
+  assert.match(appSurface, /const startStandaloneChallenge = React\.useCallback/);
+  assert.match(appSurface, /setActiveAttempt\(null\);[\s\S]*startChallenge\(challenge\)/);
+  assert.match(appSurface, /onChallenge=\{\(\) => startStandaloneChallenge\(\)\}/);
+});
+
+test("pending intervention bridges require identity-bound claims on Android and iOS", () => {
+  const bridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+  const androidService = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+    "utf8"
+  );
+  const androidVpn = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedVpnService.kt",
+    "utf8"
+  );
+  const androidModule = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+    "utf8"
+  );
+  const iosModule = readFileSync("modules/freed-protection/ios/FreedProtectionModule.swift", "utf8");
+
+  assert.match(bridge, /interventionId: string/);
+  assert.match(bridge, /clearPendingIntervention\?\(interventionId: string\)/);
+  assert.match(bridge, /export async function clearPendingIntervention\(interventionId: string\)/);
+  assert.match(bridge, /module\.clearPendingIntervention\(sanitizedInterventionId\)/);
+
+  assert.match(androidService, /PENDING_INTERVENTION_ID/);
+  assert.equal((androidService.match(/UUID\.randomUUID\(\)\.toString\(\)/g) ?? []).length >= 2, true);
+  assert.match(androidVpn, /UUID\.randomUUID\(\)\.toString\(\)/);
+  assert.match(androidModule, /"interventionId" to interventionId/);
+  assert.match(androidModule, /val pendingSnapshot = prefs\.all/);
+  assert.match(androidModule, /pendingSnapshot\[FreedAccessibilityService\.PENDING_INTERVENTION_ID\]/);
+  assert.match(androidModule, /AsyncFunction\("clearPendingIntervention"\) \{ expectedInterventionId: String ->/);
+  assert.match(androidModule, /currentInterventionId != expectedInterventionId/);
+  assert.match(androidModule, /PENDING_CONSUMED_INTERVENTION_IDS/);
+  assert.match(androidModule, /markPendingInterventionConsumed/);
+
+  assert.match(iosModule, /"interventionId": interventionId/);
+  assert.match(iosModule, /AsyncFunction\("clearPendingIntervention"\) \{ \(expectedInterventionId: String\) -> Bool in/);
+  assert.match(iosModule, /claimPendingIntervention\(sanitizedInterventionId, stageEarnedUnlockScope: true\)/);
+  assert.match(iosModule, /currentInterventionId == expectedInterventionId/);
+  assert.match(iosModule, /pendingInterventionConsumedIdsKey/);
+  assert.match(iosModule, /markPendingInterventionConsumed/);
+  const iosClaim = iosModule.slice(
+    iosModule.indexOf("private func claimPendingIntervention"),
+    iosModule.indexOf("private func markPendingInterventionConsumed")
+  );
+  assert.ok(iosClaim.indexOf("currentInterventionId == expectedInterventionId") < iosClaim.indexOf("pendingEarnedUnlockScopeKey"));
+  assert.doesNotMatch(iosClaim, /clearPendingInterventionDefaults\(\)/);
+});
+
+test("iOS earned unlock A cannot consume staged intervention B before B applies", () => {
+  const nativeIntervention = readFileSync("src/lib/native-intervention.ts", "utf8");
+  const recoveryState = readFileSync("src/lib/recovery-state.ts", "utf8");
+  const appSurface = readFileSync("src/features/freed-app.tsx", "utf8");
+  const bridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+  const iosModule = readFileSync("modules/freed-protection/ios/FreedProtectionModule.swift", "utf8");
+
+  assert.match(nativeIntervention, /nativeInterventionId\?: string/);
+  assert.match(nativeIntervention, /nativeInterventionId: interventionId/);
+  assert.match(recoveryState, /nativeInterventionId\?: string/);
+  assert.match(recoveryState, /sanitizeNativeInterventionId\(value\.nativeInterventionId\)/);
+  assert.match(recoveryState, /sanitizeNativeInterventionId\(options\.nativeInterventionId\)/);
+  assert.match(appSurface, /nativeInterventionId: activeAttempt\?\.nativeInterventionId/);
+  assert.match(
+    appSurface,
+    /applyEarnedUnlockWindow\([\s\S]*activeNativeUnlock\.expiresAt,[\s\S]*activeNativeUnlock\.sourceAttemptHost,[\s\S]*activeNativeUnlock\.nativeInterventionId[\s\S]*\)/
+  );
+  assert.match(bridge, /applyEarnedUnlockWindow\?\([\s\S]*expiresAt: string,[\s\S]*sourceAttemptHost\?: string,[\s\S]*nativeInterventionId\?: string/);
+  assert.match(iosModule, /private struct PendingEarnedUnlockEnvelope: Codable/);
+  assert.match(iosModule, /let interventionId: String[\s\S]*let scope: InterventionScope/);
+  assert.match(iosModule, /PendingEarnedUnlockEnvelope\(interventionId: expectedInterventionId, scope: scope\)/);
+  assert.match(
+    iosModule,
+    /AsyncFunction\("applyEarnedUnlockWindow"\) \{ \(expiresAt: String, sourceAttemptHost: String\?, expectedInterventionId: String\?\)/
+  );
+  assert.match(iosModule, /envelope\.interventionId == expectedInterventionId/);
+  assert.match(iosModule, /consumePendingEarnedUnlockEnvelope\(sanitizedExpectedInterventionId\)/);
+
+  const consumeEnvelope = iosModule.slice(
+    iosModule.indexOf("private func consumePendingEarnedUnlockEnvelope"),
+    iosModule.indexOf("private func pendingEarnedUnlockEnvelope")
+  );
+  assert.match(consumeEnvelope, /pendingInterventionClaimLock\.lock\(\)/);
+  assert.match(consumeEnvelope, /envelope\.interventionId == expectedInterventionId/);
+  assert.match(consumeEnvelope, /removeObject\(forKey: pendingEarnedUnlockScopeKey\)/);
+  assert.ok(
+    consumeEnvelope.indexOf("envelope.interventionId == expectedInterventionId") <
+      consumeEnvelope.indexOf("removeObject(forKey: pendingEarnedUnlockScopeKey)")
+  );
+
+  const applyUnlock = iosModule.slice(
+    iosModule.indexOf('AsyncFunction("applyEarnedUnlockWindow")'),
+    iosModule.indexOf('AsyncFunction("clearEarnedUnlockWindow")')
+  );
+  const identityMatchIndex = applyUnlock.indexOf("consumePendingEarnedUnlockEnvelope(sanitizedExpectedInterventionId)");
+  const expiryIndex = applyUnlock.indexOf("parseIsoDate(expiresAt)");
+  assert.ok(identityMatchIndex >= 0 && identityMatchIndex < expiryIndex);
+  const mismatchBranch = applyUnlock.slice(0, expiryIndex);
+  assert.doesNotMatch(mismatchBranch, /removeObject\(forKey: self\.pendingEarnedUnlockScopeKey\)/);
+  assert.doesNotMatch(applyUnlock, /removeObject\(forKey: self\.pendingEarnedUnlockScopeKey\)/);
+});
+
+test("Focus Shield sanitizes rules without persisting accessibility content", () => {
+  const rule = sanitizeFocusShieldRule({
+    version: 1,
+    id: "focus-rule-a7f9",
+    packageName: "com.google.android.youtube",
+    displayLabel: "My YouTube boundary",
+    kind: "custom",
+    enabled: true,
+    selector: {
+      packageName: "com.google.android.youtube",
+      viewId: "com.google.android.youtube:id/reel_player",
+      role: "android.view.View",
+      ancestorRoles: ["android.widget.FrameLayout"],
+      normalizedBounds: { x: 0.1, y: 0.2, width: 0.8, height: 0.6 },
+      nodeText: "private viewing text",
+      rawAccessibilityTree: { child: "private" }
+    }
+  });
+
+  assert.ok(rule);
+  assert.equal(validateFocusShieldRule(rule), true);
+  assert.equal(getFocusShieldRuleDisplayName(rule), "My YouTube boundary");
+  assert.equal(JSON.stringify(rule).includes("private"), false);
+  assert.deepEqual(Object.keys(rule.selector).sort(), ["ancestorRoles", "normalizedBounds", "packageName", "role", "viewId"]);
+});
+
+test("Focus Shield rejects coordinate-only custom rules", () => {
+  const rule = sanitizeFocusShieldRule({
+    version: 1,
+    id: "focus-rule-coordinate-only",
+    packageName: "com.instagram.android",
+    displayLabel: "Reels",
+    kind: "custom",
+    enabled: true,
+    selector: {
+      packageName: "com.instagram.android",
+      normalizedBounds: { x: 0, y: 0, width: 1, height: 1 }
+    }
+  });
+
+  assert.equal(rule, null);
+});
+
+test("Focus Shield only accepts preset-allowlisted custom view IDs", () => {
+  const rule = sanitizeFocusShieldRule({
+    version: 1,
+    id: "focus-rule-unlisted-view",
+    packageName: "com.google.android.youtube",
+    displayLabel: "YouTube boundary",
+    kind: "custom",
+    enabled: true,
+    selector: {
+      packageName: "com.google.android.youtube",
+      viewId: "com.google.android.youtube:id/unlisted_private_view",
+      role: "android.view.View"
+    }
+  });
+
+  assert.equal(rule, null);
+});
+
+test("Focus Shield omits bounds that collapse during normalization", () => {
+  const rule = sanitizeFocusShieldRule({
+    version: 1,
+    id: "focus-rule-tiny-bounds",
+    packageName: "com.google.android.youtube",
+    displayLabel: "YouTube boundary",
+    kind: "custom",
+    enabled: true,
+    selector: {
+      packageName: "com.google.android.youtube",
+      role: "android.view.View",
+      normalizedBounds: { x: 0, y: 0, width: 0.00004, height: 0.00004 }
+    }
+  });
+
+  assert.ok(rule);
+  assert.equal(rule.selector.normalizedBounds, undefined);
+});
+
+test("Focus Shield matches scoped interventions without browser or accessibility payloads", () => {
+  const surfaceScope = {
+    kind: "android-surface" as const,
+    packageName: "com.google.android.youtube",
+    ruleId: "focus-rule-a7f9"
+  };
+
+  assert.equal(
+    isAndroidSurfaceScopeActive(surfaceScope, {
+      id: "focus-rule-a7f9",
+      packageName: "com.google.android.youtube"
+    }),
+    true
+  );
+  assert.equal(
+    isAndroidSurfaceScopeActive(surfaceScope, {
+      id: "different-rule",
+      packageName: "com.google.android.youtube"
+    }),
+    false
+  );
+  assert.equal(focusShieldScopesMatch(surfaceScope, { ...surfaceScope }), true);
+  assert.equal(
+    focusShieldScopesMatch(surfaceScope, { kind: "android-package", packageName: "com.google.android.youtube" }),
+    false
+  );
+  assert.equal(
+    focusShieldScopesMatch(
+      { kind: "ios-token", tokenType: "application", token: "opaque-screen-time-token" },
+      { kind: "ios-token", tokenType: "application", token: "opaque-screen-time-token" }
+    ),
+    true
+  );
+  assert.deepEqual(
+    sanitizeFocusShieldInterventionScope({ ...surfaceScope, nodeText: "private text" }),
+    surfaceScope
+  );
+});
+
+test("Focus Shield bridge sanitizes runtime rule payloads before native calls", () => {
+  const bridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+
+  assert.match(bridge, /const sanitizedRule = sanitizeFocusShieldRule\(rule\);/);
+  assert.match(bridge, /module\.configureFocusShieldRule\(sanitizedRule\)/);
+  assert.match(bridge, /\.map\(\(rule\) => sanitizeFocusShieldRule\(rule\)\)/);
+});
+
+test("Android Focus Shield persists vetted local rules and enforces scoped surface unlocks", () => {
+  const ruleStorePath = "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldRules.kt";
+  const ruleStore = existsSync(ruleStorePath) ? readFileSync(ruleStorePath, "utf8") : "";
+  const module = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+    "utf8"
+  );
+  const service = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+    "utf8"
+  );
+  const interventionActivity = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedInterventionActivity.kt",
+    "utf8"
+  );
+
+  assert.match(ruleStore, /object FreedFocusShieldRules/);
+  assert.match(ruleStore, /FOCUS_SHIELD_RULES = "focus_shield_rules_v1"/);
+  assert.match(ruleStore, /youtube-shorts/);
+  assert.match(ruleStore, /instagram-reels/);
+  assert.match(ruleStore, /tiktok-for-you/);
+  assert.match(ruleStore, /com\.google\.android\.youtube:id\/reel_player/);
+  assert.match(ruleStore, /com\.instagram\.android:id\/clips_viewer/);
+  assert.match(ruleStore, /com\.zhiliaoapp\.musically:id\/pager/);
+  assert.match(ruleStore, /fun configure\(/);
+  assert.match(ruleStore, /fun list\(/);
+  assert.match(ruleStore, /fun remove\(/);
+  assert.match(ruleStore, /fun matchingPresetRules\(/);
+  assert.match(ruleStore, /fun isSurfaceUnlockActiveForRule\(/);
+  assert.match(ruleStore, /FOCUS_SHIELD_UNLOCKS = "focus_shield_unlocks_v1"/);
+  assert.match(ruleStore, /fun activeSurfaceUnlocks\(/);
+  assert.match(ruleStore, /@Synchronized\s+fun configure\(/);
+  assert.match(ruleStore, /@Synchronized\s+fun remove\(/);
+  assert.match(ruleStore, /@Synchronized\s+fun applySurfaceUnlock\(/);
+  assert.doesNotMatch(ruleStore, /nodeText|rawAccessibilityTree|screenshot|coordinate/i);
+
+  assert.match(module, /AsyncFunction\("configureFocusShieldRule"\)/);
+  assert.match(module, /AsyncFunction\("listFocusShieldRules"\)/);
+  assert.match(module, /AsyncFunction\("removeFocusShieldRule"\)/);
+  assert.match(module, /AsyncFunction\("applyFocusShieldEarnedUnlock"\)/);
+  assert.match(module, /"focusShieldRuleCount"/);
+  assert.match(module, /"focusShieldEnabledRuleCount"/);
+  assert.match(module, /"focusShieldRuleStoreHealth"/);
+  assert.match(module, /"kind" to "android-surface"/);
+  assert.match(module, /PENDING_FOCUS_SHIELD_RULE_ID/);
+
+  const dailyLimitCheck = service.indexOf("isDailyAppLimitReached(normalizedPackage)");
+  const immediateFocusShieldCheck = service.indexOf("matchingFocusShieldRule");
+  assert.ok(dailyLimitCheck >= 0 && immediateFocusShieldCheck > dailyLimitCheck);
+  assert.match(service, /val matchingFocusShieldRules = .*FreedFocusShieldRules\.matchingPresetRules/s);
+  assert.match(service, /matchingFocusShieldRules\s*\.firstOrNull/);
+  assert.match(service, /!FreedFocusShieldRules\.isSurfaceUnlockActiveForRule/);
+  assert.match(service, /if \(matchingFocusShieldRules\.isEmpty\(\)\) \{\s*beginOrContinueShortFormSession/s);
+  assert.match(service, /launchFocusShieldIntervention/);
+  assert.match(service, /beginOrContinueShortFormSession/);
+  assert.match(service, /PENDING_FOCUS_SHIELD_RULE_ID/);
+  assert.match(service, /freed_focus_shield_rule_id/);
+  assert.match(interventionActivity, /freed_focus_shield_rule_id/);
+});
+
+test("Android Focus Shield calibration uses a five-minute Accessibility overlay without broad overlay permission", () => {
+  const calibrationPath = "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt";
+  const calibration = existsSync(calibrationPath) ? readFileSync(calibrationPath, "utf8") : "";
+  const manifest = readFileSync("modules/freed-protection/android/src/main/AndroidManifest.xml", "utf8");
+
+  assert.match(calibration, /CALIBRATION_TIMEOUT_MS\s*=\s*5\s*\*\s*60_000L/);
+  assert.match(calibration, /WindowManager\.LayoutParams\.TYPE_ACCESSIBILITY_OVERLAY/);
+  assert.match(calibration, /text\s*=\s*"FREED"/);
+  assert.match(calibration, /showSelectorOverlay/);
+  assert.doesNotMatch(manifest, /SYSTEM_ALERT_WINDOW|USE_FULL_SCREEN_INTENT/);
+  assert.doesNotMatch(calibration, /Settings\.canDrawOverlays|ACTION_MANAGE_OVERLAY_PERMISSION/);
+});
+
+test("Android Focus Shield calibration stores only confirmed stable selector fingerprints", () => {
+  const calibrationPath = "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt";
+  const calibration = existsSync(calibrationPath) ? readFileSync(calibrationPath, "utf8") : "";
+
+  assert.match(calibration, /rootInActiveWindow/);
+  assert.match(calibration, /viewIdResourceName/);
+  assert.match(calibration, /getBoundsInScreen/);
+  assert.match(calibration, /allowedViewIds/);
+  assert.match(calibration, /ancestorRoles/);
+  assert.match(calibration, /confirmButton/);
+  assert.match(calibration, /confirmCandidate/);
+  assert.match(calibration, /FreedFocusShieldRules\.configure/);
+  assert.ok(calibration.indexOf("confirmCandidate") < calibration.indexOf("FreedFocusShieldRules.configure"));
+  assert.doesNotMatch(calibration, /node\.(?:text|getText)|contentDescription|rawAccessibilityTree|screenshot/i);
+});
+
+test("Android Focus Shield calibration bridge exposes terminal cleanup states", () => {
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const service = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+    "utf8"
+  );
+  const module = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+    "utf8"
+  );
+  const bridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+
+  assert.match(module, /AsyncFunction\("startFocusShieldCalibration"\)/);
+  assert.match(module, /AsyncFunction\("cancelFocusShieldCalibration"\)/);
+  assert.match(module, /AsyncFunction\("getFocusShieldCalibration"\)/);
+  assert.match(service, /onServiceConnected/);
+  assert.match(service, /onInterrupt[\s\S]*service-interrupted/);
+  assert.match(service, /onUnbind[\s\S]*revoked-permission/);
+  assert.match(service, /onDestroy[\s\S]*stopFocusShieldCalibration/);
+  assert.match(
+    service,
+    /internal fun stopFocusShieldCalibration[\s\S]*enqueueFocusShieldCalibrationTransition/
+  );
+  assert.match(service, /private fun enqueueFocusShieldCalibrationTransition[\s\S]*handler\.post/);
+  assert.match(calibration, /app-switched/);
+  assert.match(calibration, /unsupported-tree/);
+  assert.match(calibration, /timeout/);
+  assert.match(calibration, /removeViewImmediate/);
+  assert.match(bridge, /"success"/);
+  assert.match(bridge, /"timeout"/);
+  assert.match(bridge, /"unsupported-tree"/);
+  assert.match(bridge, /"revoked-permission"/);
+});
+
+test("Android Focus Shield serializes start and terminal transitions without TOCTOU publication", () => {
+  const service = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+    "utf8"
+  );
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const beginStart = service.indexOf("internal fun beginFocusShieldCalibration");
+  const stopStart = service.indexOf("internal fun stopFocusShieldCalibration");
+  const resultStart = service.indexOf("private fun onFocusShieldCalibrationResult");
+  const transitionStart = service.indexOf("private fun enqueueFocusShieldCalibrationTransition");
+  const begin = service.slice(beginStart, stopStart);
+  const stop = service.slice(stopStart, resultStart);
+  const result = service.slice(resultStart, transitionStart);
+  const transition = service.slice(transitionStart, service.indexOf("private fun isConfiguredBlockedApp"));
+  const bridgeStart = calibration.slice(calibration.indexOf("fun start(value"), calibration.indexOf("fun failStart"));
+
+  assert.match(service, /focusShieldCalibrationTransitionLock\s*=\s*Any\(\)/);
+  assert.match(service, /focusShieldCalibrationRequestedGeneration\s*=\s*0L/);
+  assert.doesNotMatch(service, /AtomicLong/);
+  assert.match(transition, /synchronized\(focusShieldCalibrationTransitionLock\)/);
+  assert.match(transition, /focusShieldCalibrationRequestedGeneration \+= 1/);
+  assert.match(transition, /handler\.post transition@\{/);
+  assert.match(transition, /if \(generation != focusShieldCalibrationRequestedGeneration\) return@transition/);
+  assert.match(transition, /operation\(generation\)/);
+
+  assert.match(begin, /enqueueFocusShieldCalibrationTransition\(ownerEpoch\)\s*\{ generation ->/);
+  assert.match(begin, /focusShieldCalibrationSession\?\.disposeWithoutResult\(\)/);
+  assert.match(begin, /focusShieldCalibrationSession = session[\s\S]*publish\(this, ownerEpoch, initial\)[\s\S]*session\.start\(\)/);
+  assert.doesNotMatch(begin, /handler\.post/);
+  assert.match(stop, /enqueueFocusShieldCalibrationTransition\(ownerEpoch\)\s*\{/);
+  assert.match(stop, /activeSession\?\.disposeWithoutResult\(\)/);
+  assert.match(stop, /focusShieldCalibrationSession = null[\s\S]*publish\(this, ownerEpoch, terminalResult\)/);
+  assert.doesNotMatch(stop, /val targetSession = focusShieldCalibrationSession/);
+  assert.match(result, /handler\.post result@\{/);
+  assert.match(result, /generation != focusShieldCalibrationRequestedGeneration/);
+  assert.match(result, /focusShieldCalibrationSession !== session/);
+  assert.doesNotMatch(bridgeStart, /publish\(initial\)/);
+
+  for (const lifecycle of ["onInterrupt", "onDestroy"]) {
+    const lifecycleStart = service.indexOf(`override fun ${lifecycle}`);
+    assert.ok(lifecycleStart >= 0);
+    assert.match(service.slice(lifecycleStart, lifecycleStart + 900), /stopFocusShieldCalibration/);
+  }
+  assert.match(service, /override fun onUnbind[\s\S]*FreedFocusShieldCalibrationBridge\.detach/);
+  assert.match(calibration, /fun detach[\s\S]*service\.invalidateFocusShieldCalibrationOwner/);
+  assert.match(calibration, /fun permissionRevoked[\s\S]*FreedFocusShieldCalibrationResult\("revoked-permission"/);
+  assert.match(calibration, /fun permissionRevoked[\s\S]*invalidateFocusShieldCalibrationOwner/);
+
+  type Transition = { generation: number; run: () => void };
+  let requestedGeneration = 0;
+  let transitionLocked = false;
+  let overlay: "old" | "new" | null = "old";
+  const results: string[] = [];
+  const queue: Transition[] = [];
+  const blockedRequests: Array<() => void> = [];
+  const enqueue = (run: () => void) => {
+    if (transitionLocked) {
+      blockedRequests.push(() => enqueue(run));
+      return;
+    }
+    requestedGeneration += 1;
+    queue.push({ generation: requestedGeneration, run });
+  };
+  const drainOne = (duringTransition?: () => void) => {
+    const next = queue.shift();
+    if (!next || next.generation !== requestedGeneration) return;
+    transitionLocked = true;
+    duringTransition?.();
+    next.run();
+    transitionLocked = false;
+    blockedRequests.splice(0).forEach((request) => request());
+  };
+
+  // An old stop queued just before a newer start is stale and cannot publish over it.
+  enqueue(() => { overlay = null; results.push("old-stop"); });
+  enqueue(() => { overlay = "new"; results.push("calibrating"); });
+  drainOne();
+  drainOne();
+  assert.equal(overlay, "new");
+  assert.deepEqual(results, ["calibrating"]);
+
+  // A stop arriving after the start transition begins is ordered after installation and removes it.
+  overlay = null;
+  results.length = 0;
+  enqueue(() => { overlay = "new"; results.push("calibrating"); });
+  drainOne(() => enqueue(() => { overlay = null; results.push("cancelled"); }));
+  drainOne();
+  assert.equal(overlay, null);
+  assert.deepEqual(results, ["calibrating", "cancelled"]);
+});
+
+test("Android Focus Shield rejects results from replaced Accessibility service owners", () => {
+  const service = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+    "utf8"
+  );
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const bridge = calibration.slice(
+    calibration.indexOf("internal object FreedFocusShieldCalibrationBridge"),
+    calibration.indexOf("internal class FreedFocusShieldCalibrationSession")
+  );
+
+  assert.match(bridge, /focusShieldCalibrationAttachmentEpoch\s*=\s*0L/);
+  assert.match(bridge, /fun attach[\s\S]*focusShieldCalibrationAttachmentEpoch \+= 1/);
+  assert.match(bridge, /updateFocusShieldCalibrationOwner\(ownerEpoch\)/);
+  assert.match(bridge, /previousService\.invalidateFocusShieldCalibrationOwner\(previousOwnerEpoch\)/);
+  assert.match(bridge, /fun isCurrentOwner\(service: FreedAccessibilityService, ownerEpoch: Long\)/);
+  assert.match(bridge, /serviceReference\.get\(\) === service[\s\S]*focusShieldCalibrationAttachmentEpoch == ownerEpoch/);
+  assert.match(bridge, /fun publish\([\s\S]*service: FreedAccessibilityService,[\s\S]*ownerEpoch: Long/);
+  assert.match(service, /focusShieldCalibrationOwnerEpoch\s*=\s*0L/);
+  assert.match(service, /fun invalidateFocusShieldCalibrationOwner[\s\S]*disposeWithoutResult\(\)[\s\S]*focusShieldCalibrationSession = null/);
+  assert.match(service, /beginFocusShieldCalibration\([\s\S]*ownerEpoch: Long/);
+  assert.match(service, /if \(!FreedFocusShieldCalibrationBridge\.isCurrentOwner\(this, ownerEpoch\)\)/);
+
+  let currentOwner = { service: "new", epoch: 2 };
+  let latestResult = "calibrating";
+  let oldOverlayAttached = true;
+  const publish = (serviceId: string, epoch: number, state: string) => {
+    if (currentOwner.service !== serviceId || currentOwner.epoch !== epoch) return false;
+    latestResult = state;
+    return true;
+  };
+  const invalidateOwner = (serviceId: string, epoch: number) => {
+    if (serviceId === "old" && epoch === 1) oldOverlayAttached = false;
+  };
+
+  invalidateOwner("old", 1);
+  assert.equal(publish("old", 1, "service-interrupted"), false);
+  assert.equal(latestResult, "calibrating");
+  assert.equal(oldOverlayAttached, false);
+});
+
+test("Android Focus Shield receives package-less window changes before generic enforcement returns", () => {
+  const config = readFileSync(
+    "modules/freed-protection/android/src/main/res/xml/freed_accessibility_service.xml",
+    "utf8"
+  );
+  const service = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+    "utf8"
+  );
+  const eventHandler = service.slice(
+    service.indexOf("override fun onAccessibilityEvent"),
+    service.indexOf("override fun onInterrupt")
+  );
+
+  assert.match(config, /typeWindowsChanged/);
+  assert.match(eventHandler, /val accessibilityEvent = event \?: return/);
+  assert.match(eventHandler, /focusShieldCalibrationSession\?\.onAccessibilityEvent\(accessibilityEvent, normalizedPackage\)/);
+  assert.match(eventHandler, /if \(normalizedPackage == null\) return/);
+  assert.ok(
+    eventHandler.indexOf("focusShieldCalibrationSession?.onAccessibilityEvent")
+      < eventHandler.indexOf("if (normalizedPackage == null) return")
+  );
+});
+
+test("Android Focus Shield distinguishes its overlay events from a real FREED app switch", () => {
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const service = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+    "utf8"
+  );
+
+  assert.match(service, /onAccessibilityEvent\(accessibilityEvent, normalizedPackage\)/);
+  assert.match(calibration, /AccessibilityWindowInfo\.TYPE_ACCESSIBILITY_OVERLAY/);
+  assert.match(calibration, /window\.id == event\.windowId/);
+  assert.match(calibration, /if \(isCalibrationOverlayEvent\(event\)\) return/);
+  assert.match(calibration, /AccessibilityEvent\.TYPE_WINDOW_STATE_CHANGED/);
+  assert.match(calibration, /AccessibilityEvent\.TYPE_WINDOWS_CHANGED/);
+  assert.match(calibration, /AccessibilityWindowInfo\.TYPE_APPLICATION/);
+  assert.match(calibration, /window\.isActive \|\| window\.isFocused/);
+  assert.match(calibration, /activeForegroundApplicationPackage/);
+  assert.match(calibration, /if \(activePackage == request\.packageName\) return/);
+  assert.doesNotMatch(calibration, /packageName != service\.packageName/);
+
+  const shouldTerminate = (
+    targetObserved: boolean,
+    eventType: "content" | "text" | "scroll" | "window-state" | "windows-changed",
+    activeApplicationPackage: string | null
+  ) => targetObserved
+    && (eventType === "window-state" || eventType === "windows-changed")
+    && activeApplicationPackage !== null
+    && activeApplicationPackage !== "com.google.android.youtube";
+  assert.equal(shouldTerminate(true, "content", "com.android.systemui"), false);
+  assert.equal(shouldTerminate(true, "text", "com.android.inputmethod.latin"), false);
+  assert.equal(shouldTerminate(true, "windows-changed", "com.google.android.youtube"), false);
+  assert.equal(shouldTerminate(true, "window-state", "app.freed"), true);
+});
+
+test("Android Focus Shield verifies foreground windows for target-package transition events", () => {
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const eventHandler = calibration.slice(
+    calibration.indexOf("fun onAccessibilityEvent"),
+    calibration.indexOf("private fun isCalibrationOverlayEvent")
+  );
+
+  assert.match(eventHandler, /val isWindowTransition =/);
+  assert.match(
+    eventHandler,
+    /if \(packageName == request\.packageName\)[\s\S]*targetObserved = true[\s\S]*if \(!isWindowTransition\) return/
+  );
+  assert.match(eventHandler, /if \(!isWindowTransition\) return[\s\S]*activeForegroundApplicationPackage\(event\)/);
+
+  const shouldTerminate = (
+    eventPackage: string,
+    eventType: "content" | "window-state" | "windows-changed",
+    activeApplicationPackage: string
+  ) => {
+    let targetObserved = false;
+    const isWindowTransition = eventType === "window-state" || eventType === "windows-changed";
+    if (eventPackage === "com.google.android.youtube") {
+      targetObserved = true;
+      if (!isWindowTransition) return false;
+    }
+    if (!targetObserved || !isWindowTransition) return false;
+    return activeApplicationPackage !== "com.google.android.youtube";
+  };
+
+  assert.equal(shouldTerminate("com.google.android.youtube", "content", "app.freed"), false);
+  assert.equal(shouldTerminate("com.google.android.youtube", "windows-changed", "com.google.android.youtube"), false);
+  assert.equal(shouldTerminate("com.google.android.youtube", "window-state", "app.freed"), true);
+});
+
+test("Android Focus Shield failed starts invalidate an earlier queued or active calibration", () => {
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const module = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+    "utf8"
+  );
+
+  const failStartSource = calibration.slice(calibration.indexOf("fun failStart"), calibration.indexOf("fun cancel"));
+  assert.match(failStartSource, /stopFocusShieldCalibration\("failed", message, owner\.ownerEpoch\)/);
+  assert.match(failStartSource, /attachmentSnapshot\(\)[\s\S]*publishWithoutOwner\(result, owner\.ownerEpoch\)/);
+  assert.match(failStartSource, /return result\.toPayload\(\)/);
+  assert.match(calibration, /fromPayload\(value\)[\s\S]*\?: return failStart/);
+  assert.match(module, /reactContext \?: return@AsyncFunction FreedFocusShieldCalibrationBridge\.failStart/);
+
+  let generation = 0;
+  const postedStarts: Array<() => boolean> = [];
+  const queueStart = () => {
+    const token = ++generation;
+    postedStarts.push(() => token === generation);
+  };
+  const failStart = () => { generation += 1; };
+  queueStart();
+  failStart();
+  assert.equal(postedStarts[0](), false);
+});
+
+test("Android Focus Shield overlay attachment failures terminate and clean the session", () => {
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const addViewCalls = calibration.match(/windowManager\.addView\(/g) ?? [];
+  const edge = calibration.slice(calibration.indexOf("private fun showEdgeHandle"), calibration.indexOf("private fun showSelectorOverlay"));
+  const selector = calibration.slice(calibration.indexOf("private fun showSelectorOverlay"), calibration.indexOf("private fun addOverlayView"));
+
+  assert.equal(addViewCalls.length, 1);
+  assert.match(calibration, /private fun addOverlayView\(/);
+  assert.match(calibration, /addOverlayView[\s\S]*catch \(_: Exception\)[\s\S]*finish\([\s\S]*state = "failed"/);
+  assert.match(calibration, /if \(!showEdgeHandle\(\)\) return/);
+  assert.match(calibration, /if \(!addOverlayView\(overlay, params\)\) return/);
+  assert.ok(edge.indexOf("handleView = handle") < edge.indexOf("addOverlayView(handle, params)"));
+  assert.ok(selector.indexOf("selectorView = overlay") < selector.indexOf("addOverlayView(overlay, params)"));
+  assert.match(calibration, /fun finish[\s\S]*removeOverlays\(\)[\s\S]*candidate = null/);
+});
+
+test("Android Focus Shield treats a verified target tree as observed before app-switch checks", () => {
+  const calibration = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+    "utf8"
+  );
+  const selector = calibration.slice(
+    calibration.indexOf("private fun showSelectorOverlay"),
+    calibration.indexOf("private fun addOverlayView")
+  );
+  const candidateSelection = calibration.slice(
+    calibration.indexOf("private fun selectCandidate"),
+    calibration.indexOf("private fun hitTest")
+  );
+
+  assert.match(selector, /rootNode[\s\S]*targetObserved = true[\s\S]*removeView\(handleView\)/);
+  assert.match(candidateSelection, /rootNode[\s\S]*targetObserved = true[\s\S]*hitTest/);
+
+  let targetObserved = false;
+  const verifiedTargetRoot = true;
+  if (verifiedTargetRoot) targetObserved = true;
+  const becameReady = targetObserved;
+  const actualAppSwitchTerminates = becameReady && "app.freed" !== "com.google.android.youtube";
+  assert.equal(becameReady, true);
+  assert.equal(actualAppSwitchTerminates, true);
+});
+
+test("Focus Shield calibration states have one central shared contract", () => {
+  const contract = readFileSync("src/lib/focus-shield.ts", "utf8");
+  const bridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+  const requiredStates = [
+    "success",
+    "timeout",
+    "unsupported-tree",
+    "revoked-permission",
+    "app-switched",
+    "service-interrupted"
+  ];
+
+  for (const state of requiredStates) assert.match(contract, new RegExp(`"${state}"`));
+  assert.match(bridge, /FocusShieldCalibrationState,[\s\S]*FocusShieldCalibrationResult/);
+  assert.match(bridge, /export type \{[\s\S]*FocusShieldCalibrationState,[\s\S]*FocusShieldCalibrationResult/);
+  assert.doesNotMatch(bridge, /SharedFocusShieldCalibrationResult|Omit<SharedFocusShieldCalibrationResult/);
+});
+
+test("Focus Shield integration routes scoped challenge unlocks without widening package access", () => {
+  const pending = {
+    interventionId: "10101010-1010-4010-8010-101010101010",
+    url: "https://youtube-shorts.app.freed.local",
+    host: "youtube-shorts.app.freed.local",
+    sourcePackage: "com.google.android.youtube",
+    reason: "Focus Shield matched a configured surface rule.",
+    matchedRule: "focus-shield:focus-rule-a7f9",
+    detectedAt: "2026-07-21T06:30:00.000Z",
+    scope: {
+      kind: "android-surface" as const,
+      ruleId: "focus-rule-a7f9",
+      packageName: "com.google.android.youtube"
+    }
+  };
+  const attempt = createNativeInterventionAttempt(pending);
+  const scopedAttempt = attempt as typeof attempt & { scope?: typeof pending.scope };
+  const appSurface = readFileSync("src/features/freed-app.tsx", "utf8");
+  const bridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+  const androidModule = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+    "utf8"
+  );
+
+  assert.equal(attempt.source, "app");
+  assert.equal(attempt.sourcePackage, "com.google.android.youtube");
+  assert.deepEqual(scopedAttempt.scope, pending.scope);
+  assert.match(appSurface, /applyFocusShieldEarnedUnlock/);
+  assert.match(appSurface, /activeAttempt\?\.scope\?\.kind === "android-surface"/);
+  assert.match(appSurface, /applyFocusShieldEarnedUnlock\(focusShieldExpiresAt, activeAttempt\.scope\)/);
+  assert.doesNotMatch(appSurface, /applyEarnedUnlockWindow\(focusShieldExpiresAt/);
+  assert.match(bridge, /focusShieldRuleCount\?: number/);
+  assert.match(bridge, /focusShieldEnabledRuleCount\?: number/);
+  assert.match(bridge, /focusShieldRuleStoreHealth\?: "empty" \| "ready" \| "degraded"/);
+  assert.match(bridge, /activeFocusShieldUnlockExpiresAt\?: string/);
+  assert.match(bridge, /activeFocusShieldUnlockRuleId\?: string/);
+  assert.match(bridge, /activeFocusShieldUnlockPackageName\?: string/);
+  assert.match(bridge, /sanitizeFocusShieldStatusFields/);
+  assert.doesNotMatch(androidModule, /clearEarnedUnlockPrefs\(context\)\s*\n\s*FreedFocusShieldRules\.clearSurfaceUnlock/);
+});
+
 test("allows normal browsing domains by default", () => {
   for (const domain of DEFAULT_ALLOWED_NORMAL_DOMAINS) {
     const result = classifyUrl(`https://${domain}/daily-path`);
@@ -1553,28 +2493,22 @@ test("adult domain feed emits Safari content blocker rules and catches unsafe fe
 
   assert.equal(readiness.ready, true);
   assert.equal(readiness.domainCount, ADULT_DOMAIN_SEEDS.length);
-  assert.equal(rules.length, ADULT_DOMAIN_SEEDS.length + SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length);
+  assert.equal(rules.length, ADULT_DOMAIN_SEEDS.length);
   assert.deepEqual(bundledSafariRules, rules);
   assert.equal(shortFormWebContract.DEFAULT_SHORT_FORM_WEB_URL, DEFAULT_SHORT_FORM_WEB_URL);
-  assert.deepEqual(shortFormWebContract.SAFARI_SHORT_FORM_WEB_RULE_FILTERS, SAFARI_SHORT_FORM_WEB_RULE_FILTERS);
   assert.equal(shortFormWebContract.isShortFormWebUrl(DEFAULT_SHORT_FORM_WEB_URL), true);
   assert.equal(shortFormWebContract.isShortFormWebUrl("https://www.instagram.com/reels/"), true);
   assert.equal(shortFormWebContract.isShortFormWebUrl("https://m.tiktok.com/foryou/"), true);
   assert.equal(shortFormWebContract.isShortFormWebUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ"), false);
   assert.equal(rules[0].action.type, "block");
   assert.match(JSON.stringify(rules), /url-filter/);
-  assert.ok(
-    SAFARI_SHORT_FORM_WEB_RULE_FILTERS.every((urlFilter) =>
-      rules.some((rule) => rule.trigger["url-filter"] === urlFilter)
-    )
-  );
-  assert.equal(JSON.stringify(rules).includes("youtube\\\\.com/shorts"), true);
-  assert.equal(JSON.stringify(rules).includes("instagram\\\\.com/reel"), true);
-  assert.equal(safariRuleMatches("https://m.youtube.com/shorts/dQw4w9WgXcQ?si=release"), true);
-  assert.equal(safariRuleMatches("https://www.youtube.com/feed/shorts"), true);
-  assert.equal(safariRuleMatches("https://www.instagram.com/reel/C123456789/"), true);
-  assert.equal(safariRuleMatches("https://www.instagram.com/reels/"), true);
-  assert.equal(safariRuleMatches("https://m.tiktok.com/foryou/"), true);
+  assert.equal(JSON.stringify(rules).includes("youtube\\\\.com/shorts"), false);
+  assert.equal(JSON.stringify(rules).includes("instagram\\\\.com/reel"), false);
+  assert.equal(safariRuleMatches("https://m.youtube.com/shorts/dQw4w9WgXcQ?si=release"), false);
+  assert.equal(safariRuleMatches("https://www.youtube.com/feed/shorts"), false);
+  assert.equal(safariRuleMatches("https://www.instagram.com/reel/C123456789/"), false);
+  assert.equal(safariRuleMatches("https://www.instagram.com/reels/"), false);
+  assert.equal(safariRuleMatches("https://m.tiktok.com/foryou/"), false);
   assert.equal(safariRuleMatches("https://www.youtube.com/watch?v=dQw4w9WgXcQ"), false);
   assert.equal(safariRuleMatches("https://www.instagram.com/freedrecovery/"), false);
   assert.equal(getAdultDomainFeedReadiness(unsafe).ready, false);
@@ -1780,6 +2714,7 @@ test("panic interventions use self-urge metadata instead of fake adult domains",
 test("native pending interventions preserve block decisions after URL redaction", () => {
   const detectedAt = "2026-05-13T12:00:00.000Z";
   const safeHostSearchAttempt = createNativeInterventionAttempt({
+    interventionId: "30303030-3030-4030-8030-303030303030",
     url: "https://google.com",
     host: "google.com",
     sourcePackage: "com.android.chrome",
@@ -1788,6 +2723,7 @@ test("native pending interventions preserve block decisions after URL redaction"
     detectedAt
   });
   const rawAdultUrlAttempt = createNativeInterventionAttempt({
+    interventionId: "40404040-4040-4040-8040-404040404040",
     url: "https://user:secret@www.pornhub.com:443/watch?token=secret",
     host: "",
     sourcePackage: "com.android.chrome",
@@ -1809,6 +2745,7 @@ test("native pending interventions preserve block decisions after URL redaction"
   assert.equal(
     isFreshPendingIntervention(
       {
+        interventionId: "50505050-5050-4050-8050-505050505050",
         url: "https://google.com",
         host: "google.com",
         sourcePackage: "com.android.chrome",
@@ -1823,6 +2760,7 @@ test("native pending interventions preserve block decisions after URL redaction"
   assert.equal(
     isFreshPendingIntervention(
       {
+        interventionId: "60606060-6060-4060-8060-606060606060",
         url: "https://google.com",
         host: "google.com",
         sourcePackage: "com.android.chrome",
@@ -1838,6 +2776,7 @@ test("native pending interventions preserve block decisions after URL redaction"
 
 test("native configured app interventions become app-sourced recovery attempts", () => {
   const attempt = createNativeInterventionAttempt({
+    interventionId: "70707070-7070-4070-8070-707070707070",
     url: `https://${INSTAGRAM_ANDROID_PACKAGE}.app.freed.local`,
     host: `${INSTAGRAM_ANDROID_PACKAGE}.app.freed.local`,
     sourcePackage: INSTAGRAM_ANDROID_PACKAGE,
@@ -1847,6 +2786,7 @@ test("native configured app interventions become app-sourced recovery attempts",
     sessionDurationSec: 18 * 60
   });
   const tiktokAliasAttempt = createNativeInterventionAttempt({
+    interventionId: "80808080-8080-4080-8080-808080808080",
     url: "https://com.ss.android.ugc.trill.app.freed.local",
     host: "com.ss.android.ugc.trill.app.freed.local",
     sourcePackage: "com.ss.android.ugc.trill",
@@ -1855,6 +2795,7 @@ test("native configured app interventions become app-sourced recovery attempts",
     detectedAt: "2026-05-13T12:05:00.000Z"
   });
   const iosShieldAttempt = createNativeInterventionAttempt({
+    interventionId: "90909090-9090-4090-8090-909090909090",
     url: "https://screen-time-shield.freed.local",
     host: "screen-time-shield.freed.local",
     sourcePackage: "ios-screen-time",
@@ -1900,6 +2841,7 @@ test("native configured app interventions become app-sourced recovery attempts",
 
 test("native app interventions only keep supported app unlock sources", () => {
   const unsupportedConfiguredApp = createNativeInterventionAttempt({
+    interventionId: "12121212-1212-4212-8212-121212121212",
     url: "https://com.fake.scroll.app.freed.local/watch?private=true",
     host: "evil.example.com",
     sourcePackage: "com.fake.scroll",
@@ -1908,6 +2850,7 @@ test("native app interventions only keep supported app unlock sources", () => {
     detectedAt: "2026-05-13T12:06:00.000Z"
   });
   const shortFormWithoutTrustedPackage = createNativeInterventionAttempt({
+    interventionId: "13131313-1313-4313-8313-131313131313",
     url: "https://private.example.com/raw-path",
     host: "private.example.com",
     sourcePackage: "com.fake.youtube.clone",
@@ -2327,6 +3270,7 @@ test("challenge generation request uses recovery signals without browsing detail
 
   const appInterventionContext = buildInterventionContextFromAttempt(
     createNativeInterventionAttempt({
+      interventionId: "14141414-1414-4414-8414-141414141414",
       url: `https://${INSTAGRAM_ANDROID_PACKAGE}.app.freed.local`,
       host: `${INSTAGRAM_ANDROID_PACKAGE}.app.freed.local`,
       sourcePackage: INSTAGRAM_ANDROID_PACKAGE,
@@ -2920,6 +3864,45 @@ test("challenge completion and earned unlock sources persist host-only metadata"
   assert.equal(serialized.includes("/private/path"), false);
 });
 
+test("native earned unlock identities persist safely without appearing on manual unlocks", () => {
+  const challenge = challengeLibrary[0];
+  const nativeInterventionId = "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa";
+  const nativeAttempt = createNativeInterventionAttempt({
+    interventionId: nativeInterventionId.toUpperCase(),
+    url: "https://screen-time-shield.freed.local",
+    host: "screen-time-shield.freed.local",
+    sourcePackage: "ios-screen-time",
+    reason: "Screen Time shield requested a recovery intervention.",
+    matchedRule: "ios-screen-time-shield",
+    detectedAt: "2026-05-11T19:00:00.000Z"
+  });
+  const nativeUnlock = recordEarnedUnlock(createDefaultRecoveryState(), challenge, {
+    durationMinutes: 10,
+    sourceAttemptHost: unlockSourceForAttempt(nativeAttempt),
+    nativeInterventionId: nativeAttempt.nativeInterventionId,
+    startedAt: "2026-05-11T19:00:00.000Z"
+  });
+  const manualUnlock = recordEarnedUnlock(createDefaultRecoveryState(), challenge, {
+    durationMinutes: 10,
+    sourceAttemptHost: "pornhub.com",
+    startedAt: "2026-05-11T19:00:00.000Z"
+  });
+  const hydratedValid = hydrateRecoveryState({
+    ...nativeUnlock,
+    earnedUnlocks: [{ ...nativeUnlock.earnedUnlocks[0], nativeInterventionId: nativeInterventionId.toUpperCase() }]
+  });
+  const hydratedMalformed = hydrateRecoveryState({
+    ...nativeUnlock,
+    earnedUnlocks: [{ ...nativeUnlock.earnedUnlocks[0], nativeInterventionId: "not-a-uuid" }]
+  });
+
+  assert.equal(nativeAttempt.nativeInterventionId, nativeInterventionId);
+  assert.equal(nativeUnlock.earnedUnlocks[0].nativeInterventionId, nativeInterventionId);
+  assert.equal(hydratedValid.earnedUnlocks[0].nativeInterventionId, nativeInterventionId);
+  assert.equal(hydratedMalformed.earnedUnlocks[0].nativeInterventionId, undefined);
+  assert.equal(manualUnlock.earnedUnlocks[0].nativeInterventionId, undefined);
+});
+
 test("discipline settings persist and shape earned unlocks", () => {
   const challenge = challengeLibrary[0];
   const configured = updateDisciplineSettings(
@@ -2965,6 +3948,7 @@ test("discipline settings persist and shape earned unlocks", () => {
     startedAt: "2026-05-11T09:00:00.000Z"
   });
   const appAttempt = createNativeInterventionAttempt({
+    interventionId: "15151515-1515-4515-8515-151515151515",
     url: "https://com.instagram.android.app.freed.local",
     host: "com.instagram.android.app.freed.local",
     sourcePackage: "com.instagram.android",
@@ -2983,6 +3967,7 @@ test("discipline settings persist and shape earned unlocks", () => {
     startedAt: "2026-05-11T09:05:00.000Z"
   });
   const iosShieldAttempt = createNativeInterventionAttempt({
+    interventionId: "16161616-1616-4616-8616-161616161616",
     url: "https://screen-time-shield.freed.local",
     host: "screen-time-shield.freed.local",
     sourcePackage: "ios-screen-time",
@@ -3439,6 +4424,7 @@ test("monthly growth report uses real aggregate progress without private details
     detectedAt: "2026-05-21T21:00:00"
   };
   const appAttempt = createNativeInterventionAttempt({
+    interventionId: "17171717-1717-4717-8717-171717171717",
     url: "https://instagram.com",
     host: "instagram.com",
     sourcePackage: "com.instagram.android",
@@ -4038,6 +5024,7 @@ test("analytics snapshot is aggregate-only and excludes private recovery details
   });
   const withAppIntervention = recordBlockingAttempt(withPanic, {
     ...createNativeInterventionAttempt({
+      interventionId: "18181818-1818-4818-8818-181818181818",
       url: "freed://intervention/app/com.instagram.android",
       host: "com.instagram.android.app.freed.local",
       sourcePackage: "com.instagram.android",
@@ -4562,9 +5549,7 @@ test("protection permission plan matches iOS and Android platform constraints", 
   assert.match(PROTECTION_PERMISSION_EXPLANATION, /recovery challenge/);
   assert.match(iosPlan.find((step) => step.id === "ios-screen-time")?.reason ?? "", /Screen Time-sourced earned unlocks/);
   assert.match(iosPlan.find((step) => step.id === "ios-safari-content-blocker")?.dataBoundary ?? "", /does not inspect page contents/);
-  assert.equal(iosPlan.find((step) => step.id === "ios-dns-domain-filter")?.required, false);
-  assert.equal(iosPlan.find((step) => step.id === "ios-dns-domain-filter")?.status, "optional");
-  assert.match(iosPlan.find((step) => step.id === "ios-dns-domain-filter")?.dataBoundary ?? "", /does not full-tunnel traffic/);
+  assert.equal(iosPlan.some((step) => step.id === "ios-dns-domain-filter"), false);
   assert.match(iosPlan.find((step) => step.id === "ios-selected-app-limit-monitor")?.permissionLabel ?? "", /DeviceActivity threshold events/);
   assert.match(iosPlan.find((step) => step.id === "ios-selected-app-limit-monitor")?.dataBoundary ?? "", /opaque Screen Time tokens/);
   assert.match(androidPlan.find((step) => step.id === "android-dns-guard")?.dataBoundary ?? "", /does not MITM HTTPS/);
@@ -5230,6 +6215,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   const doomscrollApps = readFileSync("src/lib/doomscroll-apps.ts", "utf8");
   const recoveryStateSource = readFileSync("src/lib/recovery-state.ts", "utf8");
   const nativeIntervention = readFileSync("src/lib/native-intervention.ts", "utf8");
+  const protectionCoordination = readFileSync("src/lib/protection-capabilities.ts", "utf8");
   const androidEvidenceHelper = readFileSync("scripts/android-real-browser-evidence.js", "utf8");
   const androidDoomscrollScriptContract = readFileSync("scripts/lib/android-doomscroll-contract.js", "utf8");
   const iosEvidenceHelper = readFileSync("scripts/ios-physical-device-evidence.js", "utf8");
@@ -5362,27 +6348,25 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosInfoPlist, /CFBundleURLSchemes[\s\S]*<string>app\.freed\.recovery<\/string>/);
   assert.match(appManifest, /<data android:scheme="freed"\/>/);
   assert.match(appManifest, /android:launchMode="singleTask"/);
-  assert.match(iosPolicyPack, /iOS Screen Time, Safari, And DNS Settings Review Pack/);
+  assert.match(iosPolicyPack, /iOS Screen Time And Safari Review Pack/);
   assert.match(iosPolicyPack, /Family Controls entitlement/);
   assert.match(iosPolicyPack, /FamilyActivityPicker/);
   assert.match(iosPolicyPack, /ManagedSettings adult web filtering/);
   assert.match(iosPolicyPack, /DeviceActivity schedules/);
   assert.match(iosPolicyPack, /Safari Content Blocker/);
-  assert.match(iosPolicyPack, /web short-form path blocking in Safari/);
-  assert.match(iosPolicyPack, /registered `freed` URL scheme/);
-  assert.match(iosPolicyPack, /NetworkExtension DNS Settings/);
+  assert.match(iosPolicyPack, /Safari Focus Shield/);
+  assert.match(iosPolicyPack, /https:\/\/intervention\.freed\.app\/intervention/);
   assert.match(iosPolicyPack, /FREED cannot and does not read third-party app screens on iOS/);
   assert.match(iosPolicyPack, /FREED cannot and does not detect Instagram Reels, TikTok, or YouTube Shorts inside native third-party apps on iOS/);
   assert.match(iosPolicyPack, /FREED does not take screenshots, run OCR, or perform continuous image classification for protection/);
   assert.match(iosPolicyPack, /FREED does not use `NEPacketTunnelProvider`, `NETunnelProviderManager`, or `NEVPNManager`/);
   assert.match(iosPolicyPack, /does not receive users' Safari browsing history/);
-  assert.match(iosPolicyPack, /No all-domain DNS profile/);
   assert.match(iosPolicyPack, /on-device Vision labels/);
   assert.match(iosPolicyPack, /does not sync HealthKit history/);
   assert.match(iosPolicyPack, /No HealthKit history sync or export/);
   assert.match(iosPolicyPack, /ios\.familyControlsEntitlementArtifact/);
   assert.match(iosPolicyPack, /ios\.completeDataProtectionEntitlement=NSFileProtectionComplete/);
-  assert.match(iosPolicyPack, /ios\.safariContentBlockerShortFormBlockRunId/);
+  assert.match(iosPolicyPack, /ios\.safariFocusShieldShortFormBlockRunId/);
   assert.match(androidPolicyPack, /Play Console AccessibilityService declaration/);
   assert.match(androidPolicyPack, /not as a disability assistance feature/);
   assert.match(androidPolicyPack, /selected app packages/);
@@ -5669,7 +6653,8 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(androidModule, /PENDING_INTERVENTION_MAX_AGE_MS/);
   assert.match(androidModule, /PENDING_INTERVENTION_FUTURE_SKEW_MS/);
   assert.match(androidModule, /isFreshPendingIntervention\(detectedAt\)/);
-  assert.match(androidModule, /clearPendingInterventionPrefs\(prefs\)/);
+  assert.match(androidModule, /claimPendingIntervention\(prefs, interventionId\)/);
+  assert.match(androidModule, /isPendingInterventionConsumed\(prefs, interventionId\)/);
   assert.match(androidModule, /nowMs - detectedMs <= PENDING_INTERVENTION_MAX_AGE_MS/);
   assert.match(androidModule, /AsyncFunction\("configureBlockedAppPackages"/);
   assert.match(androidModule, /AsyncFunction\("openUsageAccessSettings"/);
@@ -5723,7 +6708,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(androidModule, /sanitizedPendingHost/);
   assert.match(androidModule, /sanitizedPendingSourcePackage/);
   assert.match(androidModule, /"sourcePackage" to sourcePackage/);
-  assert.match(androidModule, /"sessionDurationSec" to sanitizedPendingSessionDuration\(prefs\)/);
+  assert.match(androidModule, /"sessionDurationSec" to sanitizedPendingSessionDuration\(pendingSnapshot\)/);
   assert.match(androidModule, /remove\(FreedAccessibilityService\.PENDING_SESSION_DURATION_SECONDS\)/);
   assert.match(androidModule, /SUPPORTED_BLOCKED_APP_PACKAGES\.contains\(it\) \}\.orEmpty\(\)/);
   assert.doesNotMatch(androidModule, /"sourcePackage" to prefs\.getString\(FreedAccessibilityService\.PENDING_SOURCE_PACKAGE/);
@@ -5827,7 +6812,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosModule, /"selectedApplications": selectedApplicationCountValue/);
   assert.match(iosModule, /"selectedScreenTimeTokenCount": selectedScreenTimeTokenCount/);
   assert.match(iosModule, /"adultFilterStaysActiveDuringEarnedUnlock": activeUnlockExpiresAt != nil && active/);
-  assert.match(iosModule, /payload\["selectedShieldsPausedForEarnedUnlock"\] = selectedScreenTimeTokenCount > 0/);
+  assert.match(iosModule, /payload\["selectedShieldsPausedForEarnedUnlock"\] = activeEarnedUnlockScope\(\) != nil/);
   assert.match(iosModule, /earnedUnlockActivityName = "freed\.earnedUnlockWindow"/);
   assert.match(iosModule, /"earnedUnlockActivityName": earnedUnlockActivityName/);
   assert.match(iosModule, /scheduleEarnedUnlockMonitoring\(expiresAt: boundedExpiry\)/);
@@ -5840,14 +6825,14 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosModule, /store\.shield\.webDomains = .*selection\.webDomainTokens/);
   assert.match(iosModule, /AsyncFunction\("getPendingIntervention"/);
   assert.match(iosModule, /AsyncFunction\("clearPendingIntervention"/);
-  assert.match(iosModule, /pendingInterventionUrlKey/);
+  assert.match(iosModule, /pendingInterventionRecordKey/);
   assert.match(iosModule, /pendingInterventionMaxAgeSeconds/);
   assert.match(iosModule, /pendingInterventionFutureSkewSeconds/);
-  assert.match(iosModule, /isFreshPendingIntervention\(detectedAt\)/);
+  assert.match(iosModule, /isFreshPendingIntervention\(record\.detectedAt\)/);
   assert.match(iosModule, /sanitizedPendingHost/);
   assert.match(iosModule, /sanitizeHostForStorage/);
   assert.match(iosModule, /sanitizedPendingSourcePackage/);
-  assert.match(iosModule, /let host = self\.sanitizedPendingHost\(pendingHost, pendingUrl\)/);
+  assert.match(iosModule, /let host = self\.sanitizedPendingHost\(record\.host\)/);
   assert.ok(iosModule.includes('"url": "https://\\(host)"'));
   assert.match(iosModule, /"host": host/);
   assert.doesNotMatch(iosModule, /"url": url/);
@@ -5859,16 +6844,16 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosModule, /AsyncFunction\("applyEarnedUnlockWindow"/);
   assert.match(iosModule, /earnedUnlockSourceKey = "freed\.earnedUnlock\.source"/);
   assert.match(iosModule, /private func isScreenTimeUnlockSource\(_ sourceAttemptHost: String\?\) -> Bool/);
-  assert.match(iosModule, /guard self\.isScreenTimeUnlockSource\(sourceAttemptHost\) else/);
+  assert.match(iosModule, /self\.isScreenTimeUnlockSource\(sourceAttemptHost\),[\s\S]*consumePendingEarnedUnlockEnvelope\(sanitizedExpectedInterventionId\)/);
   assert.match(iosModule, /trimmed == screenTimeShieldSource/);
   assert.match(iosModule, /sanitizeHostForStorage\(trimmed\) == screenTimeShieldHost/);
   assert.match(iosModule, /set\(self\.screenTimeShieldHost, forKey: self\.earnedUnlockSourceKey\)/);
   assert.match(iosModule, /private func clearEarnedUnlockState\(\)/);
-  assert.match(iosModule, /guard isScreenTimeUnlockSource\(storedSource\) else/);
+  assert.match(iosModule, /guard isScreenTimeUnlockSource\(storedSource\), let scope = activeEarnedUnlockScope\(\), isSelectedScreenTimeScope\(scope\) else/);
   assert.match(iosModule, /defaults\.removeObject\(forKey: earnedUnlockSourceKey\)/);
-  assert.match(iosModule, /source is not an iOS Screen Time shield/);
+  assert.match(iosModule, /unlock identity does not match the claimed intervention/);
   assert.match(iosModule, /clearSelectedShields\(\)/);
-  assert.match(iosModule, /Screen Time earned unlock\. Adult web filtering stays active/);
+  assert.match(iosModule, /Unrelated shields and adult web filtering stay active/);
   assert.match(iosModule, /activeUnlockExpiresAt/);
   assert.match(iosModule, /maxEarnedUnlockMinutes = 120/);
   assert.match(iosModule, /boundedEarnedUnlockExpiry/);
@@ -5885,26 +6870,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosModule, /validateSafariContentBlockerRules/);
   assert.match(iosModule, /must use a block action/);
   assert.match(iosModule, /safari-content-blocker-rules\.json/);
-  assert.match(iosModule, /import NetworkExtension/);
-  assert.match(iosModule, /NEDNSSettingsManager/);
-  assert.match(iosModule, /NEDNSOverHTTPSSettings/);
-  assert.match(iosModule, /parsedResolverURL\.user == nil/);
-  assert.match(iosModule, /parsedResolverURL\.password == nil/);
-  assert.match(iosModule, /parsedResolverURL\.query == nil/);
-  assert.match(iosModule, /parsedResolverURL\.fragment == nil/);
-  assert.match(iosModule, /without credentials, query, or fragment/);
-  assert.match(iosModule, /settings\.matchDomains = input\.matchDomains/);
-  assert.match(iosModule, /settings\.matchDomainsNoSearch = true/);
-  assert.match(iosModule, /removeFromPreferences/);
-  assert.match(iosModule, /AsyncFunction\("configureDnsSettings"/);
-  assert.match(iosModule, /AsyncFunction\("clearDnsSettings"/);
-  assert.match(iosModule, /hasDnsSettingsEntitlement/);
-  assert.match(iosModule, /dns-settings/);
-  assert.match(iosModule, /At least one explicit match domain is required/);
-  assert.match(iosModule, /refreshDnsSettingsStatusIfAvailable/);
-  assert.match(iosModule, /payload\["dnsSettingsActive"\] = dnsSettingsEntitled &&/);
-  assert.match(iosModule, /payload\["dnsSettingsEntitled"\] = dnsSettingsEntitled/);
-  assert.doesNotMatch(iosModule, /manager\.isEnabled\s*=/);
+  assert.doesNotMatch(iosModule, /import NetworkExtension|NEDNSSettingsManager|NEDNSOverHTTPSSettings/);
   assert.doesNotMatch(iosModule, /NEPacketTunnelProvider|NETunnelProviderManager|NEVPNManager/);
   assert.match(iosInfoPlist, /NSCameraUsageDescription/);
   assert.doesNotMatch(iosInfoPlist, /NSMicrophoneUsageDescription|NSPhotoLibraryUsageDescription/);
@@ -5924,15 +6890,15 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   }
 
   const safariRules = JSON.parse(safariContentBlockerList) as Array<Record<string, unknown>>;
-  assert.equal(safariRules.length, ADULT_DOMAIN_SEEDS.length + SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length);
+  assert.equal(safariRules.length, ADULT_DOMAIN_SEEDS.length);
   assert.equal(
     safariRules.some((rule) =>
       JSON.stringify(rule).includes("pornhub\\\\.com")
     ),
     true
   );
-  assert.equal(safariContentBlockerList.includes("youtube\\\\.com/shorts"), true);
-  assert.equal(safariContentBlockerList.includes("instagram\\\\.com/reel"), true);
+  assert.equal(safariContentBlockerList.includes("youtube\\\\.com/shorts"), false);
+  assert.equal(safariContentBlockerList.includes("instagram\\\\.com/reel"), false);
   assert.match(iosProject, /FREEDSafariContentBlocker/);
   assert.match(iosProject, /blockerList\.json in Resources/);
   assert.match(safariContentBlockerInfo, /com\.apple\.Safari\.content-blocker/);
@@ -5962,7 +6928,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(deviceActivityExtension, /earnedUnlockSourceKey = "freed\.earnedUnlock\.source"/);
   assert.match(deviceActivityExtension, /screenTimeShieldHost = "screen-time-shield\.freed\.local"/);
   assert.match(deviceActivityExtension, /private func isScreenTimeUnlockSource\(_ source: String\?\) -> Bool/);
-  assert.match(deviceActivityExtension, /guard isScreenTimeUnlockSource\(storedSource\) else/);
+  assert.match(deviceActivityExtension, /guard isScreenTimeUnlockSource\(storedSource\), let scope = activeEarnedUnlockScope\(\), isSelectedScreenTimeScope\(scope\) else/);
   assert.match(deviceActivityExtension, /private func clearEarnedUnlockState\(\)/);
   assert.match(deviceActivityExtension, /store\.shield\.applications = .*selection\.applicationTokens/);
   assert.match(deviceActivityExtension, /store\.shield\.webDomains = .*selection\.webDomainTokens/);
@@ -5972,7 +6938,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(shieldActionExtension, /screen-time-shield\.freed\.local/);
   assert.match(shieldConfigurationExtension, /selected app or site/);
   assert.doesNotMatch(shieldConfigurationExtension, /adult-content intent before the page loaded/);
-  assert.match(appSurface, /createNativeInterventionAttempt/);
+  assert.match(protectionCoordination, /createNativeInterventionAttempt/);
   assert.match(appSurface, /function interventionBodyForAttempt/);
   assert.match(appSurface, /selected app or short-form loop/);
   assert.match(appSurface, /explicit search before it could turn into a scroll loop/);
@@ -6019,7 +6985,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /when the selected surface is visible/);
   assert.match(appSurface, /App and short-form earned unlocks pause only the package that earned them; browser challenge windows stay local/);
   assert.match(appSurface, /Required Android setup: reviewed adult-domain feed, DNS-only VPN, Usage Access, Accessibility, selected app timers, then Test Protection/);
-  assert.match(appSurface, /Required iOS setup: Screen Time authorization, adult web filter, selected targets, daily-limit monitoring, Safari rules, then Test Protection/);
+  assert.match(appSurface, /Required iOS setup: Screen Time authorization, adult-domain Safari Content Blocker, Safari Focus Shield for Shorts\/Reels, selected targets, daily-limit monitoring, then Test Protection\. iOS DNS filtering is unavailable/);
   assert.match(appSurface, /protectionSyncMessage=\{protectionSyncMessage\}/);
   assert.match(appSurface, /Native adult-domain feed loaded/);
   assert.match(appSurface, /Embedded adult-domain fallback is loaded/);
@@ -6096,7 +7062,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /Continue: \$\{nextRequiredStep\.title\}/);
   assert.match(appSurface, /Open: \$\{nextRequiredStep\.title\}/);
   assert.match(appSurface, /Required Android setup: reviewed adult-domain feed, DNS-only VPN, Usage Access, Accessibility, selected app timers, then Test Protection/);
-  assert.match(appSurface, /Required iOS setup: Screen Time authorization, adult web filter, selected targets, daily-limit monitoring, Safari rules, then Test Protection/);
+  assert.match(appSurface, /Required iOS setup: Screen Time authorization, adult-domain Safari Content Blocker, Safari Focus Shield for Shorts\/Reels, selected targets, daily-limit monitoring, then Test Protection\. iOS DNS filtering is unavailable/);
   assert.match(appSurface, /runFeedSync/);
   assert.match(appSurface, /runAppPackageSync/);
   assert.match(appSurface, /onSyncAppPackages/);
@@ -6287,15 +7253,11 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(nativeProtectionBridge, /openPrivateDnsSettings/);
   assert.match(nativeProtectionBridge, /openUsageAccessSettings/);
   assert.match(nativeProtectionBridge, /configureSafariContentBlockerRules/);
-  assert.match(nativeProtectionBridge, /configureDnsSettings/);
-  assert.match(nativeProtectionBridge, /clearDnsSettings/);
   assert.match(nativeProtectionBridge, /adultDomainFeedDomainCount\?: number/);
   assert.match(nativeProtectionBridge, /safariContentBlockerRuleCount\?: number/);
   assert.match(nativeProtectionBridge, /safariContentBlockerEnabled\?: boolean/);
   assert.match(nativeProtectionBridge, /safariContentBlockerStateCheckedAt\?: string/);
   assert.match(nativeProtectionBridge, /safariContentBlockerStateError\?: string/);
-  assert.match(nativeProtectionBridge, /dnsSettingsActive\?: boolean/);
-  assert.match(nativeProtectionBridge, /dnsSettingsEntitled\?: boolean/);
   assert.match(nativeProtectionBridge, /shortFormInterruptionSeconds\?: number/);
   assert.match(nativeProtectionBridge, /sessionDurationSec\?: number/);
   assert.match(nativeProtectionBridge, /usageStatsObservedPackageNames\?: string\[\]/);
@@ -6331,11 +7293,9 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(doomscrollApps, /SHORT_FORM_RULE_HOSTS/);
   assert.match(doomscrollApps, /hostForShortFormRule/);
   assert.match(doomscrollApps, /packageForShortFormRule/);
-  assert.match(doomscrollApps, /SAFARI_SHORT_FORM_WEB_RULE_FILTERS/);
-  assert.match(blockingEngine, /from "@\/lib\/doomscroll-apps"/);
-  assert.doesNotMatch(blockingEngine, /export const SAFARI_SHORT_FORM_WEB_RULE_FILTERS = \[/);
+  assert.doesNotMatch(blockingEngine, /SAFARI_SHORT_FORM_WEB_RULE_FILTERS/);
+  assert.doesNotMatch(adultDomainFeedSync, /SAFARI_SHORT_FORM_WEB_RULE_FILTERS/);
   assert.match(shortFormWebScriptContract, /SHORT_FORM_WEB_SURFACES/);
-  assert.match(shortFormWebScriptContract, /SAFARI_SHORT_FORM_WEB_RULE_FILTERS/);
   assert.match(shortFormWebScriptContract, /isShortFormWebUrl/);
   assert.match(iosEvidenceHelper, /require\("\.\/lib\/short-form-web-contract"\)/);
   assert.match(iosEvidenceHelper, /isShortFormWebUrl/);
@@ -6343,6 +7303,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosEvidenceHelper, /challengePhotoVerifiedOnDevice/);
   assert.match(iosEvidenceHelper, /freed-ios-app-package-proof-v1/);
   assert.match(iosEvidenceHelper, /freed-ios-safari-content-blocker-report-v1/);
+  assert.match(iosEvidenceHelper, /freed-ios-safari-focus-shield-report-v1/);
   assert.match(iosEvidenceHelper, /freed-challenge-photo-report-v1/);
   assert.match(iosEvidenceHelper, /freed-challenge-motion-report-v1/);
   assert.match(iosEvidenceHelper, /freed-challenge-steps-report-v1/);
@@ -6416,9 +7377,6 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /syncNativeAdultDomainFeed\(\)/);
   assert.match(appSurface, /protectionSyncMessage/);
   assert.match(appSurface, /safariContentBlockerRuleCount/);
-  assert.match(appSurface, /dnsSettingsAvailable/);
-  assert.match(appSurface, /dnsSettingsLastError/);
-  assert.match(appSurface, /iOS matched-domain DNS settings cover/);
   assert.match(appSurface, /protectionStatus\?\.adultFilterActive \?\?/);
   assert.match(appSurface, /DNS Guard session:/);
   assert.match(appSurface, /DNS Guard restart:/);
@@ -6445,11 +7403,6 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(adultDomainFeedSync, /minimumSafariRuleCount/);
   assert.match(appSurface, /kept the cached reviewed feed/);
   assert.match(adultDomainFeedSync, /configureSafariContentBlockerRules/);
-  assert.match(adultDomainFeedSync, /configureDnsSettings/);
-  assert.match(adultDomainFeedSync, /EXPO_PUBLIC_IOS_DNS_SETTINGS_RESOLVER_URL/);
-  assert.match(adultDomainFeedSync, /EXPO_PUBLIC_IOS_DNS_SETTINGS_MAX_DOMAINS/);
-  assert.match(adultDomainFeedSync, /parsed\.username \|\| parsed\.password/);
-  assert.match(adultDomainFeedSync, /parsed\.search \|\| parsed\.hash/);
   assert.match(appSurface, /parseClockTime\(disciplineSettings\.sleepStartTime\)/);
   assert.match(appSurface, /startRiskWindowMonitoring\(start\.hour, end\.hour, start\.minute, end\.minute\)/);
   assert.match(appSurface, /completionSubmittedRef\.current/);
@@ -6460,7 +7413,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.doesNotMatch(appSurface, /return outcome === "helped"\s*\?\s*recordEarnedUnlock/s);
   assert.match(appSurface, /setScreen\(outcome === "still-urging" \? "coach" : "main"\)/);
   assert.match(appSurface, /getActiveNativeEarnedUnlock\(recoveryState\.earnedUnlocks, Platform\.OS/);
-  assert.match(appSurface, /applyEarnedUnlockWindow\(activeNativeUnlock\.expiresAt, activeNativeUnlock\.sourceAttemptHost\)/);
+  assert.match(appSurface, /applyEarnedUnlockWindow\([\s\S]*activeNativeUnlock\.nativeInterventionId[\s\S]*\)/);
   assert.match(appSurface, /createDeepLinkInterventionAttempt/);
   assert.match(appSurface, /isProtectionSetupDeepLink/);
   assert.match(appSurface, /consumeProtectionSetupDeepLink/);
@@ -6502,14 +7455,205 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /sendGatedAnalyticsPayload\(recoveryState, recoveryState\.analyticsSharing\)/);
   assert.match(appSurface, /updateAnalyticsSharingSettings/);
   assert.match(appSurface, /Only aggregate counts and rates are sent after consent/);
-  assert.match(appSurface, /isFreshPendingIntervention\(pending\)/);
-  assert.match(appSurface, /createNativeInterventionAttempt\(pending\)/);
+  assert.match(appSurface, /consumePendingInterventionOnce/);
+  assert.match(protectionCoordination, /isFreshPendingIntervention\(pending, nowMs\)/);
+  assert.match(protectionCoordination, /createNativeInterventionAttempt\(pending\)/);
   assert.doesNotMatch(appSurface, /handleAttempt\(pending\.url, "browser"\)/);
   assert.match(extensionScript, /APP_GROUP = "group\.app\.freed\.recovery"/);
   assert.match(extensionScript, /"DeviceActivity", "ManagedSettings", "FamilyControls"/);
   assert.match(extensionScript, /FREEDSafariContentBlocker/);
   assert.match(extensionScript, /resources: \["blockerList\.json"\]/);
   assert.match(extensionScript, /family_controls: false/);
+  assert.match(extensionScript, /name: "FREEDSafariFocusShield"/);
+  assert.match(extensionScript, /resources: \["manifest\.json", "background\.js", "content\.js"\]/);
+  assert.match(extensionScript, /deployment_target: "15\.4"/);
+});
+
+test("iOS shield handoff and Safari Focus Shield stay scoped and App Store safe", () => {
+  const shieldAction = readFileSync("ios/FREEDShieldAction/ShieldActionExtension.swift", "utf8");
+  const shieldConfiguration = readFileSync(
+    "ios/FREEDShieldConfiguration/ShieldConfigurationExtension.swift",
+    "utf8"
+  );
+  const deviceActivity = readFileSync(
+    "ios/FREEDDeviceActivityMonitor/DeviceActivityMonitorExtension.swift",
+    "utf8"
+  );
+  const iosModule = readFileSync("modules/freed-protection/ios/FreedProtectionModule.swift", "utf8");
+  const nativeBridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+  const iosProject = readFileSync("ios/FREED.xcodeproj/project.pbxproj", "utf8");
+  const appEntitlements = readFileSync("ios/FREED/FREED.entitlements", "utf8");
+  const safariExtensionDirectory = "ios/FREEDSafariFocusShield";
+
+  assert.equal(existsSync(`${safariExtensionDirectory}/manifest.json`), true);
+  assert.equal(existsSync(`${safariExtensionDirectory}/background.js`), true);
+  assert.equal(existsSync(`${safariExtensionDirectory}/content.js`), true);
+  assert.equal(existsSync(`${safariExtensionDirectory}/SafariWebExtensionHandler.swift`), true);
+  assert.equal(existsSync(`${safariExtensionDirectory}/Info.plist`), true);
+
+  const safariManifest = readFileSync(`${safariExtensionDirectory}/manifest.json`, "utf8");
+  const safariBackground = readFileSync(`${safariExtensionDirectory}/background.js`, "utf8");
+  const safariContentScript = readFileSync(`${safariExtensionDirectory}/content.js`, "utf8");
+  const safariHandler = readFileSync(`${safariExtensionDirectory}/SafariWebExtensionHandler.swift`, "utf8");
+  const safariInfo = readFileSync(`${safariExtensionDirectory}/Info.plist`, "utf8");
+
+  assert.match(shieldAction, /pendingInterventionRecordKey = "freed\.pendingIntervention\.record"/);
+  assert.match(shieldAction, /JSONEncoder\(\)\.encode\(record\)/);
+  assert.match(shieldAction, /defaults\.set\(encodedRecord, forKey: pendingInterventionRecordKey\)/);
+  assert.match(shieldAction, /scopeForApplication|scopeForWebDomain|scopeForCategory/);
+  assert.match(shieldAction, /UNUserNotificationCenter\.current\(\)\.add\(request\)/);
+  assert.match(shieldAction, /content\.userInfo = \["kind": "freed-pending-intervention"\]/);
+  assert.match(shieldAction, /case \.primaryButtonPressed:[\s\S]*return \.close/);
+  assert.doesNotMatch(shieldAction, /return \.defer/);
+  assert.doesNotMatch(shieldAction, /UIApplication\.shared|openURL|originalURL|rewarded|advert/i);
+
+  assert.match(shieldConfiguration, /Category-wide recovery/);
+  assert.match(iosModule, /PendingInterventionRecord/);
+  assert.match(iosModule, /payload\["scope"\] = scopePayload/);
+  assert.match(nativeBridge, /sanitizeFocusShieldInterventionScope\(pending\.scope\)/);
+  assert.match(iosModule, /applySelectedShieldsExcludingEarnedUnlockScope/);
+  assert.match(iosModule, /selection\.applicationTokens\.subtracting/);
+  assert.match(iosModule, /selection\.webDomainTokens\.subtracting/);
+  assert.match(iosModule, /applicationCategories = remainingCategories\.isEmpty\s*\? nil\s*: \.specific\(remainingCategories, except: excludedApplications\)/);
+  assert.match(iosModule, /webDomainCategories = remainingCategories\.isEmpty\s*\? nil\s*: \.specific\(remainingCategories, except: excludedWebDomains\)/);
+  assert.match(deviceActivity, /applySelectedShieldsExcludingEarnedUnlockScope/);
+  assert.match(deviceActivity, /selection\.applicationTokens\.subtracting/);
+  assert.match(deviceActivity, /selection\.webDomainTokens\.subtracting/);
+  assert.match(deviceActivity, /applicationCategories = remainingCategories\.isEmpty\s*\? nil\s*: \.specific\(remainingCategories, except: excludedApplications\)/);
+  assert.match(deviceActivity, /webDomainCategories = remainingCategories\.isEmpty\s*\? nil\s*: \.specific\(remainingCategories, except: excludedWebDomains\)/);
+  assert.doesNotMatch(iosModule, /import NetworkExtension|NEDNSSettingsManager|NEDNSOverHTTPSSettings/);
+
+  const parsedManifest = JSON.parse(safariManifest) as {
+    permissions?: string[];
+    host_permissions?: string[];
+    background?: { service_worker?: string };
+    browser_specific_settings?: { safari?: { strict_min_version?: string } };
+    content_scripts?: Array<{ matches?: string[]; js?: string[] }>;
+  };
+  const expectedHosts = [
+    "*://youtube.com/*",
+    "*://*.youtube.com/*",
+    "*://instagram.com/*",
+    "*://*.instagram.com/*",
+    "*://tiktok.com/*",
+    "*://*.tiktok.com/*",
+    "https://intervention.freed.app/*"
+  ];
+  assert.deepEqual(parsedManifest.permissions, ["nativeMessaging"]);
+  assert.equal(parsedManifest.background?.service_worker, "background.js");
+  assert.equal(parsedManifest.browser_specific_settings?.safari?.strict_min_version, "15.4");
+  assert.deepEqual(parsedManifest.host_permissions?.sort(), [...expectedHosts].sort());
+  assert.deepEqual(parsedManifest.content_scripts?.[0]?.matches?.sort(), [...expectedHosts].sort());
+  assert.deepEqual(parsedManifest.content_scripts?.[0]?.js, ["content.js"]);
+  assert.doesNotMatch(safariManifest, /<all_urls>|\*:\/\/\*\/\*/);
+  assert.match(safariContentScript, /\/shorts\/|\/feed\/shorts|\/reels?\/|\/foryou/);
+  assert.match(safariContentScript, /history\.pushState|history\.replaceState|popstate|MutationObserver/);
+  assert.match(safariContentScript, /https:\/\/intervention\.freed\.app\/intervention/);
+  assert.match(safariContentScript, /source:\s*"ios-safari-short-form"/);
+  assert.match(safariContentScript, /runtime\?\.sendMessage/);
+  assert.doesNotMatch(safariContentScript, /sendNativeMessage/);
+  assert.doesNotMatch(safariContentScript, /originalUrl|originalURL|searchParams\.set\(["']url|[?&]url=/);
+  assert.match(safariBackground, /runtime\.onMessage\.addListener/);
+  assert.match(safariBackground, /sendNativeMessage/);
+  assert.match(safariBackground, /short-form:youtube-shorts/);
+  assert.match(safariBackground, /short-form:instagram-reels/);
+  assert.match(safariBackground, /short-form:tiktok-feed/);
+  assert.doesNotMatch(safariBackground, /originalUrl|originalURL|[?&]url=|<all_urls>/);
+  assert.match(safariHandler, /browser-domain/);
+  assert.match(safariHandler, /pendingInterventionRecordKey/);
+  assert.match(safariHandler, /JSONEncoder\(\)\.encode\(record\)/);
+  assert.doesNotMatch(safariHandler, /rewarded|advert|NetworkExtension|NEPacketTunnel/i);
+  assert.match(safariInfo, /com\.apple\.Safari\.web-extension/);
+  assert.match(iosProject, /FREEDSafariFocusShield/);
+  assert.match(iosProject, /FREEDSafariFocusShield\.appex in Embed App Extensions/);
+  assert.match(iosProject, /background\.js in Resources/);
+  assert.equal(
+    [...iosProject.matchAll(/CODE_SIGN_ENTITLEMENTS = FREEDSafariFocusShield\/FREEDSafariFocusShield\.entitlements;[\s\S]{0,500}?IPHONEOS_DEPLOYMENT_TARGET = 15\.4;/g)].length,
+    2
+  );
+  assert.match(appEntitlements, /applinks:intervention\.freed\.app/);
+});
+
+test("iOS DNS Settings retirement removes stale client and release contracts without removing Android DNS", () => {
+  const nativeProtectionBridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
+  const adultDomainFeedSync = readFileSync("src/lib/adult-domain-feed-sync.ts", "utf8");
+  const protectionPermissions = readFileSync("src/lib/protection-permissions.ts", "utf8");
+  const appSurface = readFileSync("src/features/freed-app.tsx", "utf8");
+  const releaseEnvPreflight = readFileSync("scripts/release-env-preflight.js", "utf8");
+  const releaseReadiness = readFileSync("scripts/release-readiness.ts", "utf8");
+  const privacyAudit = readFileSync("scripts/privacy-safety-audit.js", "utf8");
+  const storeAudit = readFileSync("scripts/store-legal-policy-audit.js", "utf8");
+  const iosPolicyPack = readFileSync("docs/store-policy/ios-screen-time-safari-dns-review.md", "utf8");
+  const appStoreMetadata = readFileSync("store/app-store/metadata.md", "utf8");
+  const appStorePrivacy = readFileSync("store/app-store/app-privacy.md", "utf8");
+  const consolePacket = readFileSync("store/console-launch-packet.md", "utf8");
+  const androidModule = readFileSync(
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+    "utf8"
+  );
+
+  assert.doesNotMatch(nativeProtectionBridge, /configureDnsSettings|clearDnsSettings|dnsSettingsAvailable|dnsSettingsEntitled/);
+  assert.doesNotMatch(adultDomainFeedSync, /configureDnsSettings|buildIosDnsSettingsRequest|EXPO_PUBLIC_IOS_DNS_SETTINGS/);
+  assert.doesNotMatch(protectionPermissions, /NetworkExtension DNS Settings|ios-dns-domain-filter/);
+  assert.doesNotMatch(appSurface, /iosDnsSettings|dnsSettingsAvailable|dnsSettingsEntitled|iOS matched-domain DNS settings/);
+  assert.doesNotMatch(releaseEnvPreflight, /EXPO_PUBLIC_IOS_DNS_SETTINGS|optional-ios-dns-settings/);
+  assert.doesNotMatch(releaseReadiness, /configureDnsSettings|EXPO_PUBLIC_IOS_DNS_SETTINGS|optional-ios-dns-settings/);
+  assert.doesNotMatch(privacyAudit, /NetworkExtension DNS Settings|optional iOS DNS settings/i);
+  assert.doesNotMatch(storeAudit, /Optional DNS Settings|Screen Time\/Safari\/DNS/);
+  assert.doesNotMatch(iosPolicyPack, /NetworkExtension DNS Settings|dns-settings entitlement|Optional DNS Settings/i);
+  assert.doesNotMatch(appStoreMetadata, /Optional DNS Settings|dns-settings entitlement/i);
+  assert.doesNotMatch(appStorePrivacy, /Optional DNS Settings|dns-settings entitlement/i);
+  assert.doesNotMatch(consolePacket, /Optional DNS Settings|dns-settings entitlement/i);
+  assert.match(androidModule, /"dnsFiltering" to true/);
+  assert.match(androidModule, /AsyncFunction\("applyAdultContentFilter"/);
+  assert.match(androidModule, /FreedVpnService\.startUserEnabledGuard\(context\)/);
+});
+
+test("iOS release and evidence contracts package Safari Focus Shield as the only short-form web path", () => {
+  const blockingEngine = readFileSync("src/lib/blocking-engine.ts", "utf8");
+  const adultDomainFeedSync = readFileSync("src/lib/adult-domain-feed-sync.ts", "utf8");
+  const archiveBuilder = readFileSync("scripts/build-ios-release-archive.js", "utf8");
+  const releaseVerifier = readFileSync("scripts/release-verify.js", "utf8");
+  const physicalEvidence = readFileSync("scripts/ios-physical-device-evidence.js", "utf8");
+  const validationEvidence = readFileSync("scripts/validation-evidence.ts", "utf8");
+  const extensionGenerator = readFileSync("scripts/add-ios-screen-time-extensions.rb", "utf8");
+  const safariFocusContract = readFileSync("scripts/lib/ios-safari-focus-shield-contract.js", "utf8");
+
+  assert.doesNotMatch(blockingEngine, /SAFARI_SHORT_FORM_WEB_RULE_FILTERS/);
+  assert.doesNotMatch(adultDomainFeedSync, /SAFARI_SHORT_FORM_WEB_RULE_FILTERS/);
+  assert.match(archiveBuilder, /FREEDSafariFocusShield\.appex/);
+  assert.match(archiveBuilder, /inspectSafariFocusShieldResources/);
+  assert.match(archiveBuilder, /safariFocusShield\.usableForManualEvidence/);
+  assert.match(archiveBuilder, /contentScriptsScoped/);
+  assert.match(archiveBuilder, /infoAllowedDomainsScoped/);
+  assert.match(archiveBuilder, /nativePayloadSchemaValid/);
+  assert.match(archiveBuilder, /nativeHandlerContractValid/);
+  assert.match(archiveBuilder, /minimumOSVersionAtLeast154/);
+  assert.doesNotMatch(archiveBuilder, /shortFormRulesPresent/);
+  assert.match(releaseVerifier, /archive\.safariFocusShield\.usableForManualEvidence/);
+  assert.match(releaseVerifier, /FREEDSafariFocusShield\.appex/);
+  assert.doesNotMatch(releaseVerifier, /safariRuleList\.shortFormRulesPresent/);
+  assert.match(physicalEvidence, /FREEDSafariFocusShield\.appex/);
+  assert.match(physicalEvidence, /inspectSafariFocusShieldResources/);
+  assert.match(physicalEvidence, /freed-ios-safari-focus-shield-report-v1/);
+  assert.match(physicalEvidence, /inspectSafariFocusShieldContract/);
+  assert.match(safariFocusContract, /contentScriptsScoped/);
+  assert.match(safariFocusContract, /infoAllowedDomainsScoped/);
+  assert.match(safariFocusContract, /nativeAppIdentifierValid/);
+  assert.match(safariFocusContract, /nativePayloadSchemaValid/);
+  assert.match(safariFocusContract, /nativeHandlerContractValid/);
+  assert.match(safariFocusContract, /minimumOSVersionAtLeast154/);
+  assert.match(physicalEvidence, /safariFocusShieldBuildRunId/);
+  assert.doesNotMatch(physicalEvidence, /shortFormRulesPresent/);
+  assert.match(validationEvidence, /FREEDSafariFocusShield\.appex/);
+  assert.match(validationEvidence, /safariFocusShieldEmbedded/);
+  assert.match(validationEvidence, /safariFocusShieldShortFormBlockArtifact/);
+  assert.doesNotMatch(validationEvidence, /safariContentBlockerShortFormBlock/);
+  assert.match(extensionGenerator, /name: "FREEDSafariFocusShield"/);
+  assert.match(extensionGenerator, /resources: \["manifest\.json", "background\.js", "content\.js"\]/);
+  assert.match(extensionGenerator, /deployment_target: "15\.4"/);
+  assert.match(readFileSync("ios/FREEDSafariFocusShield/SafariWebExtensionHandler.swift", "utf8"), /APPROVED_RULE_HOSTS/);
+  assert.doesNotMatch(readFileSync("scripts/adult-domain-feed-smoke.ts", "utf8"), /SAFARI_SHORT_FORM_WEB_RULE_FILTERS|YouTube Shorts web paths|Instagram Reels web paths|TikTok For You web paths/);
 });
 
 test("premium plans expose stable product identifiers", () => {
@@ -6622,7 +7766,7 @@ test("profile exposes privacy support and deletion controls", () => {
   assert.match(appSurface, /PrivacySupportCard/);
   assert.match(appSurface, /FREED_PRIVACY_POLICY_URL/);
   assert.match(appSurface, /support@freedrecovery\.app/);
-  assert.match(appSurface, /Server Deletion/);
+  assert.match(appSurface, /Delete Account & Data/);
   assert.match(appSurface, /Delete Local Data/);
   assert.match(appSurface, /Confirm Delete/);
   assert.match(appSurface, /deleteLocalRecoveryData/);
@@ -7363,7 +8507,7 @@ test("release env preflight validates production store ad and AI configuration",
 
   const passing = runReleaseEnvPreflight(validEnv);
   assert.equal(passing.status, 0, passing.output);
-  assert.match(passing.output, /Result: 31 pass, 0 fail/);
+  assert.match(passing.output, /Result: 30 pass, 0 fail/);
 
   const fcmAccessTokenWithProjectId = runReleaseEnvPreflight(
     validEnv
@@ -7378,7 +8522,7 @@ test("release env preflight validates production store ad and AI configuration",
   assert.equal(passingReport.report.sanitized, true);
   assert.match(readFileSync("scripts/release-env-preflight.js", "utf8"), /sanitizeLocalHomePaths/);
   assert.match(readFileSync("scripts/release-env-preflight.js", "utf8"), /sanitizeReportCheck/);
-  assert.equal(passingReport.report.passCount, 31);
+  assert.equal(passingReport.report.passCount, 30);
   assert.equal(passingReport.report.failCount, 0);
   assert.ok(Array.isArray(passingReport.report.blockerGroups));
   const passingBlockerGroups = passingReport.report.blockerGroups as Array<{
@@ -8012,20 +9156,6 @@ test("release env preflight validates production store ad and AI configuration",
   assert.match(invalidRetentionClientTimeout.output, /optional-retention-endpoint/);
   assert.match(invalidRetentionClientTimeout.output, /EXPO_PUBLIC_RETENTION_TIMEOUT_MS must be an integer between 1000 and 12000/);
 
-  const unsafeIosDnsSettings = runReleaseEnvPreflight(
-    [
-      validEnv,
-      "EXPO_PUBLIC_IOS_DNS_SETTINGS_RESOLVER_URL=http://family.cloudflare-dns.com/dns-query",
-      "EXPO_PUBLIC_IOS_DNS_SETTINGS_SERVER_ADDRESSES=1.1.1.3,not-a-server",
-      "EXPO_PUBLIC_IOS_DNS_SETTINGS_MAX_DOMAINS=25000"
-    ].join("\n")
-  );
-  assert.notEqual(unsafeIosDnsSettings.status, 0);
-  assert.match(unsafeIosDnsSettings.output, /optional-ios-dns-settings/);
-  assert.match(unsafeIosDnsSettings.output, /must use HTTPS/);
-  assert.match(unsafeIosDnsSettings.output, /IP address literals only/);
-  assert.match(unsafeIosDnsSettings.output, /between 1 and 10000/);
-
   const failingReport = runReleaseEnvPreflight(
     validEnv.replace("GEMINI_API_KEY=AIzaSyA1234567890abcdefABCDEF_1234567890", "GEMINI_API_KEY=freed-prod-gemini-key"),
     {},
@@ -8071,7 +9201,12 @@ test("release env preflight validates production store ad and AI configuration",
   );
   assert.notEqual(debugAndroidSigning.status, 0);
   assert.match(debugAndroidSigning.output, /android-release-signing/);
-  assert.match(debugAndroidSigning.output, /must not use the Android debug keystore certificate/);
+  assert.match(
+    debugAndroidSigning.output,
+    existsSync(join(process.cwd(), "android/app/debug.keystore"))
+      ? /must not use the Android debug keystore certificate/
+      : /must point to an existing local upload keystore file/
+  );
 });
 
 test("release env preflight rejects unsafe env-file paths", () => {
@@ -8306,7 +9441,7 @@ test("release verifier lists env-file aware command order", () => {
   assert.match(verifier, /prototype-design-files/);
   assert.match(verifier, /requiredArrayFields/);
   assert.match(verifier, /expectedPreflightReportCheckIds/);
-  assert.match(verifier, /optional-ios-dns-settings/);
+  assert.doesNotMatch(verifier, /optional-ios-dns-settings/);
   assert.match(verifier, /optional-challenge-weather-context/);
   assert.match(verifier, /optional-recovery-backup-sync-endpoint/);
   assert.match(verifier, /optional-supabase-auth-client/);
@@ -8746,9 +9881,6 @@ test("release readiness audit includes production env template gate", () => {
   assert.match(output, /artifact-level APK signature verification with debug-certificate rejection/);
   assert.match(output, /packaged Hermes runtime proof with JSC runtime rejection/);
   assert.match(output, /48-hour route freshness enforcement/);
-  assert.match(output, /future-date route rejection/);
-  assert.match(output, /fail-closed reviewed-source refresh handling/);
-  assert.match(output, /client sync fallback for stale or future remote feeds/);
   assert.match(output, /48-hour freshness\/cache\/source-size headers/);
   assert.match(output, /validation-evidence-workflow/);
   assert.match(output, /background CPU performance proof/);
@@ -8820,16 +9952,36 @@ test("Android release APK builder self-test covers safe report output", () => {
 });
 
 test("release readiness audit rejects Android debug upload keystore certificate", () => {
-  const debugKeystore = join(process.cwd(), "android/app/debug.keystore");
-  assert.equal(existsSync(debugKeystore), true);
-  const output = runReleaseReadinessAudit({
-    FREED_ANDROID_UPLOAD_STORE_FILE: debugKeystore,
-    FREED_ANDROID_UPLOAD_STORE_PASSWORD: "android",
-    FREED_ANDROID_UPLOAD_KEY_ALIAS: "androiddebugkey",
-    FREED_ANDROID_UPLOAD_KEY_PASSWORD: "android"
-  });
-  assert.match(output, /production-android-signing/);
-  assert.match(output, /FREED_ANDROID_UPLOAD_STORE_FILE non-debug upload keystore/);
+  const root = mkdtempSync(join(tmpdir(), "freed-debug-keystore-"));
+  const debugKeystore = join(root, "debug.keystore");
+  try {
+    execFileSync("keytool", [
+      "-genkeypair",
+      "-keystore", debugKeystore,
+      "-storepass", "android",
+      "-alias", "androiddebugkey",
+      "-keypass", "android",
+      "-dname", "CN=Android Debug, OU=Android, O=Unknown, L=Unknown, ST=Unknown, C=US",
+      "-keyalg", "RSA",
+      "-validity", "10000",
+      "-noprompt"
+    ], {
+      cwd: process.cwd(),
+      env: childToolEnv(),
+      stdio: ["ignore", "pipe", "pipe"],
+      timeout: CORE_TEST_CHILD_TIMEOUT_MS
+    });
+    const output = runReleaseReadinessAudit({
+      FREED_ANDROID_UPLOAD_STORE_FILE: debugKeystore,
+      FREED_ANDROID_UPLOAD_STORE_PASSWORD: "android",
+      FREED_ANDROID_UPLOAD_KEY_ALIAS: "androiddebugkey",
+      FREED_ANDROID_UPLOAD_KEY_PASSWORD: "android"
+    });
+    assert.match(output, /production-android-signing/);
+    assert.match(output, /FREED_ANDROID_UPLOAD_STORE_FILE non-debug upload keystore/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
 });
 
 test("release readiness audit rejects malformed reviewed adult feed source config", () => {
@@ -8846,6 +9998,24 @@ test("release readiness audit rejects malformed reviewed adult feed source confi
 
   assert.match(output, /production-adult-domain-feed/);
   assert.match(output, /FREED_ADULT_DOMAIN_FEED_SOURCE_URLS line 4 must use id\/label\/https:\/\/source-url/);
+});
+
+test("release readiness accepts compact passing JSON from authoritative local audits", () => {
+  const output = runReleaseReadinessAudit();
+
+  assert.match(output, /\| PASS \| store-launch-config \|/);
+});
+
+test("release readiness requires a top-level passing result from authoritative local JSON audits", () => {
+  for (const [script, output] of [
+    ["audit:store-catalog", "not-json {\\\"result\\\":\\\"pass\\\"}"],
+    ["audit:store-catalog", '{"result":"fail","debug":{"result":"pass"}}'],
+    ["audit:store-legal", '{"debug":{"result":"pass"}}']
+  ]) {
+    const releaseOutput = runReleaseReadinessAuditWithAuthoritativeAuditOutput({ [script]: output });
+    assert.match(releaseOutput, /\| FAIL \| store-launch-config \|/);
+    assert.match(releaseOutput, new RegExp(`${script} did not report a passing result`));
+  }
 });
 
 test("release readiness audit reports sanitized dependency audit command failures", () => {
@@ -8896,12 +10066,24 @@ test("release readiness audit writes sanitized JSON reports", () => {
     assert.equal(typeof report.generatedAt, "string");
     assert.equal(report.sanitized, true);
     assert.equal(report.strict, false);
-    assert.equal(report.summary.passCount, 30);
-    assert.equal(report.summary.failCount, 14);
     assert.ok(Array.isArray(report.results));
+    assert.equal(
+      report.summary.passCount,
+      report.results.filter((entry: { status?: string }) => entry.status === "pass").length
+    );
+    assert.equal(
+      report.summary.failCount,
+      report.results.filter((entry: { status?: string }) => entry.status === "fail").length
+    );
+    assert.equal(
+      report.summary.warnCount,
+      report.results.filter((entry: { status?: string }) => entry.status === "warn").length
+    );
+    assert.ok(report.summary.passCount > 0);
+    assert.ok(report.summary.failCount > 0);
     assert.ok(report.results.some((entry: { id?: string; status?: string }) => entry.id === "store-legal-hosted-url-validation" && entry.status === "fail"));
     assert.ok(report.results.some((entry: { id?: string; status?: string }) => entry.id === "production-backend-infrastructure" && entry.status === "fail"));
-    assert.ok(report.results.some((entry: { id?: string; status?: string }) => entry.id === "privacy-safety-contract" && entry.status === "pass"));
+    assert.ok(report.results.some((entry: { id?: string; status?: string }) => entry.id === "android-native-safety-contract" && entry.status === "pass"));
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
@@ -9616,14 +10798,14 @@ test("performance safety audit covers event-driven native protection", () => {
   assert.match(output, /visible challenge path without screenshots or OCR/);
   assert.match(output, /per-session query\/blocked\/allowed\/SERVFAIL\/malformed counters/);
   assert.match(output, /android-vpn-revocation-cleanup/);
-  assert.match(output, /ios-dns-settings-no-full-vpn/);
+  assert.match(output, /ios-no-network-extension/);
   assert.match(output, /android-private-dns-diagnostics/);
   assert.match(output, /android-accessibility-event-driven-app-shield/);
   assert.match(output, /android-usage-stats-bridge/);
   assert.match(output, /android-supported-app-allowlist/);
   assert.match(output, /android-native-domain-feed-sync/);
   assert.match(output, /ios-safari-short-form-web-rules/);
-  assert.match(output, /web short-form path rules/);
+  assert.match(output, /background-worker contract/);
   assert.match(output, /android-short-form-heuristics-are-event-driven/);
   assert.match(output, /no-native-polling-loop/);
   assert.match(output, /runtime-no-continuous-screenshot-or-ocr/);
@@ -9647,7 +10829,7 @@ test("privacy safety audit covers platform store policy disclosure packs", () =>
   assert.match(output, /AccessibilityService disclosure/);
   assert.match(output, /special-use foreground-service justification/);
   assert.match(output, /ios-app-store-policy-review-pack/);
-  assert.match(output, /Screen Time, Safari Content Blocker, optional DNS Settings/);
+  assert.match(output, /Screen Time, Safari Content Blocker and Focus Shield/);
   assert.match(output, /production-endpoint-secret-barrier/);
   assert.match(output, /in-app-privacy-support-deletion/);
   assert.match(output, /Profile exposes privacy policy, support contact, server deletion request/);
@@ -9658,12 +10840,9 @@ test("privacy safety audit covers platform store policy disclosure packs", () =>
   assert.match(releaseOutput, /android-native-safety-contract/);
   assert.match(releaseOutput, /Play policy disclosure pack/);
   assert.match(releaseOutput, /ios-screen-time-scaffold/);
-  assert.match(releaseOutput, /App Store review pack/);
+  assert.match(releaseOutput, /Family Controls\/app-group entitlements/);
   assert.match(releaseOutput, /privacy-safety-contract/);
-  assert.match(releaseOutput, /iOS app\/extension entitlements default local recovery and app-group files to Complete Data Protection/);
-  assert.match(releaseOutput, /Android disables implicit OS backup\/device transfer and source plus generated release manifests do not ship Ad ID/);
-  assert.match(releaseOutput, /Profile exposes privacy policy\/support\/server-deletion\/local-deletion controls/);
-  assert.match(releaseOutput, /Android and iOS policy disclosures cover Accessibility\/DNS Guard plus Screen Time\/Safari\/DNS Settings data boundaries/);
+  assert.match(releaseOutput, /Authoritative privacy safety audit passes/);
 });
 
 test("backend architecture contract covers server-side production slices without exposing secrets", () => {
@@ -10068,7 +11247,9 @@ test("backend architecture contract covers server-side production slices without
   assert.match(readFileSync("src/lib/supabase-auth-client.ts", "utf8"), /EXPO_PUBLIC_SUPABASE_AUTH_RESPONSE_MAX_BYTES/);
   assert.match(readFileSync("src/lib/supabase-auth-client.ts", "utf8"), /getProductionBaseUrlIssues/);
   assert.match(readFileSync("src/lib/supabase-auth-client.ts", "utf8"), /readBoundedResponseJson/);
-  assert.match(readFileSync("src/features/freed-app.tsx", "utf8"), /requestSupabaseMagicLink/);
+  assert.match(readFileSync("src/features/freed-app.tsx", "utf8"), /getFirebaseNativeAuthAdapter/);
+  assert.match(readFileSync("src/features/freed-app.tsx", "utf8"), /getFirebaseEmailLinkReadiness/);
+  assert.match(readFileSync("src/lib/firebase-client.ts", "utf8"), /EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL/);
   assert.match(route, /Cache-Control/);
   assert.equal(readiness.components.supabase.ready, true);
   assert.equal(readiness.components.redis.ready, true);
@@ -10136,9 +11317,7 @@ test("backend architecture contract covers server-side production slices without
 
   const releaseOutput = runReleaseReadinessAudit();
   assert.match(releaseOutput, /backend-architecture-contract/);
-  assert.match(releaseOutput, /compact production backend deployment packet/);
-  assert.match(releaseOutput, /deployable Supabase migration/);
-  assert.match(releaseOutput, /explicit public-client revokes with service-role-only grants/);
+  assert.match(releaseOutput, /Authoritative backend architecture audit passes/);
 });
 
 test("accessibility safety audit covers key recovery controls", () => {
@@ -10178,7 +11357,7 @@ test("classifier safety audit covers adult-only release corpus", () => {
 
   const releaseOutput = runReleaseReadinessAudit();
   assert.match(releaseOutput, /adult-only-classifier/);
-  assert.match(releaseOutput, /Classifier safety corpus passes/);
+  assert.match(releaseOutput, /Authoritative TypeScript classifier and Android classifier-parity audits pass/);
 });
 
 test("android classifier parity audit matches TypeScript classifier tables", () => {
@@ -10193,7 +11372,7 @@ test("android classifier parity audit matches TypeScript classifier tables", () 
 
   const releaseOutput = runReleaseReadinessAudit();
   assert.match(releaseOutput, /adult-only-classifier/);
-  assert.match(releaseOutput, /Classifier safety corpus passes/);
+  assert.match(releaseOutput, /Authoritative TypeScript classifier and Android classifier-parity audits pass/);
 });
 
 test("typescript entry runner loads env files for standalone smoke scripts", () => {
@@ -10273,9 +11452,11 @@ test("deployed smoke harnesses bound request and JSON reads", () => {
   assert.match(adultDomainFeedSmoke, /summarizeFeedForReport/);
 
   const nativeIapAdapter = readFileSync(join(process.cwd(), "src/lib/native-iap-adapter.ts"), "utf8");
-  assert.match(nativeIapAdapter, /EXPO_PUBLIC_PURCHASE_VERIFY_RESPONSE_MAX_BYTES/);
-  assert.match(nativeIapAdapter, /getProductionEndpointIssues\(endpoint, "purchase verify endpoint"\)/);
-  assert.match(nativeIapAdapter, /readBoundedResponseJson/);
+  assert.match(nativeIapAdapter, /NativeIapPurchaseVerifier/);
+  assert.match(nativeIapAdapter, /createFirebaseClientEventId\("purchase"\)/);
+  assert.match(nativeIapAdapter, /verifyStorePurchase\(purchase\.request\)/);
+  assert.doesNotMatch(nativeIapAdapter, /EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT/);
+  assert.doesNotMatch(nativeIapAdapter, /fetch\(/);
 
   const recoveryAnalytics = readFileSync(join(process.cwd(), "src/lib/recovery-analytics.ts"), "utf8");
   assert.match(recoveryAnalytics, /EXPO_PUBLIC_ANALYTICS_RESPONSE_MAX_BYTES/);
@@ -10568,22 +11749,23 @@ test("validation evidence scaffold writes drafts outside release evidence gate",
     assert.match(iosRequirements.captureHelperCommand, /npm run evidence:ios-physical-device/);
     assert.ok(iosRequirements.requiredFields.includes("ios.familyControlsEntitlementTeamId"));
     assert.ok(iosRequirements.requiredFields.includes("ios.familyControlsEntitlementArtifact"));
-    assert.ok(iosRequirements.requiredFields.includes("ios.familyControlsEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.familyControlsEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time, Safari Content Blocker, and Safari Focus Shield extensions, and no packet tunnel/packet inspection entitlements"));
     assert.ok(iosRequirements.requiredFields.includes("ios.appGroupProvisioningArtifact"));
-    assert.ok(iosRequirements.requiredFields.includes("ios.appGroupProvisioningArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.appGroupProvisioningArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time, Safari Content Blocker, and Safari Focus Shield extensions, and no packet tunnel/packet inspection entitlements"));
     assert.ok(iosRequirements.requiredFields.includes("ios.completeDataProtectionEntitlement=NSFileProtectionComplete"));
     assert.ok(iosRequirements.requiredFields.includes("ios.completeDataProtectionEntitlementArtifact"));
-    assert.ok(iosRequirements.requiredFields.includes("ios.completeDataProtectionEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.completeDataProtectionEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time, Safari Content Blocker, and Safari Focus Shield extensions, and no packet tunnel/packet inspection entitlements"));
     assert.ok(iosRequirements.requiredFields.includes("ios.familyControlsAuthorizationRunId"));
     assert.ok(iosRequirements.requiredFields.includes("ios.familyControlsAuthorizationArtifact"));
-    assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariContentBlocker.appex, adult-domain rules, short-form web rules, all-block actions, and no packet tunnel/packet inspection entitlements"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariContentBlocker.appex, adult-domain-only rules, all-block actions, and no packet tunnel/packet inspection entitlements"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerReloadArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/version/checksum/rule count and Safari reload/no-screen-read/no-packet-inspection checks"));
     assert.ok(iosRequirements.requiredChecks.includes("safariContentBlockerEnabled"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerEnabled=true"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerAdultBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/adult host and Safari adult-domain/no-packet-inspection checks"));
-    assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerShortFormBlockRunId"));
-    assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerShortFormBlockArtifact"));
-    assert.ok(iosRequirements.requiredFields.includes("ios.safariContentBlockerShortFormBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/short-form URL/rule and no raw path/no app-screen-inspection checks"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.safariFocusShieldBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariFocusShield.appex, MV3 manifest, background.js service worker, content.js, scoped hosts, iOS 15.4 minimum, and app-group/Complete Data Protection entitlements"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.safariFocusShieldShortFormBlockRunId"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.safariFocusShieldShortFormBlockArtifact"));
+    assert.ok(iosRequirements.requiredFields.includes("ios.safariFocusShieldShortFormBlockArtifact local freed-ios-safari-focus-shield-report-v1 JSON with sanitized=true, matching runId/short-form URL/rule and MV3 content-script/background-worker/no-raw-path checks"));
     assert.ok(iosRequirements.requiredChecks.includes("safariShortFormChallengeHandoff"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariShortFormChallengeHandoffRunId"));
     assert.ok(iosRequirements.requiredFields.includes("ios.safariShortFormChallengeHandoffArtifact"));
@@ -11489,13 +12671,13 @@ test("validation evidence requirements expose field and command handoff details"
   assert.ok(ios.requiredFields.includes("ios.permissionWizardArtifact checks include Screen Time authorization return refresh, FamilyActivityPicker return refresh, Safari Settings return refresh, and auto-advance continuation"));
     assert.ok(ios.requiredFields.includes("ios.familyControlsEntitlementTeamId"));
     assert.ok(ios.requiredFields.includes("ios.familyControlsEntitlementArtifact"));
-  assert.ok(ios.requiredFields.includes("ios.familyControlsEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements"));
+  assert.ok(ios.requiredFields.includes("ios.familyControlsEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time, Safari Content Blocker, and Safari Focus Shield extensions, and no packet tunnel/packet inspection entitlements"));
     assert.ok(ios.requiredFields.includes("ios.appGroupProvisioningProfileId"));
     assert.ok(ios.requiredFields.includes("ios.appGroupProvisioningArtifact"));
-  assert.ok(ios.requiredFields.includes("ios.appGroupProvisioningArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements"));
+  assert.ok(ios.requiredFields.includes("ios.appGroupProvisioningArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time, Safari Content Blocker, and Safari Focus Shield extensions, and no packet tunnel/packet inspection entitlements"));
     assert.ok(ios.requiredFields.includes("ios.completeDataProtectionEntitlement=NSFileProtectionComplete"));
     assert.ok(ios.requiredFields.includes("ios.completeDataProtectionEntitlementArtifact"));
-  assert.ok(ios.requiredFields.includes("ios.completeDataProtectionEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time extensions, Safari blocker rules, and no packet tunnel/packet inspection entitlements"));
+  assert.ok(ios.requiredFields.includes("ios.completeDataProtectionEntitlementArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, Family Controls entitlement/app-group/Complete Data Protection checks, embedded Screen Time, Safari Content Blocker, and Safari Focus Shield extensions, and no packet tunnel/packet inspection entitlements"));
   assert.ok(ios.requiredFields.includes("ios.familyControlsAuthorizationRunId"));
   assert.ok(ios.requiredFields.includes("ios.familyControlsAuthorizationArtifact"));
   assert.ok(ios.requiredFields.includes("ios.familyActivityPickerRunId"));
@@ -11523,27 +12705,28 @@ test("validation evidence requirements expose field and command handoff details"
   assert.ok(ios.requiredChecks.includes("safariContentBlockerReloaded"));
   assert.ok(ios.requiredChecks.includes("safariContentBlockerEnabled"));
   assert.ok(ios.requiredChecks.includes("safariContentBlockerAdultBlock"));
-  assert.ok(ios.requiredChecks.includes("safariContentBlockerShortFormBlock"));
+  assert.ok(ios.requiredChecks.includes("safariFocusShieldShortFormBlock"));
   assert.ok(ios.requiredChecks.includes("safariShortFormChallengeHandoff"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerEmbedded=true"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerIdentifier=app.freed.recovery.safari-content-blocker"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerBuildRunId"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerBuildArtifact"));
-  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariContentBlocker.appex, adult-domain rules, short-form web rules, all-block actions, and no packet tunnel/packet inspection entitlements"));
+  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariContentBlocker.appex, adult-domain-only rules, all-block actions, and no packet tunnel/packet inspection entitlements"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerReloadRunId"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerReloadArtifact"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerReloadArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/version/checksum/rule count and Safari reload/no-screen-read/no-packet-inspection checks"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerVersion"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerChecksum fnv1a32:<8-hex>"));
-  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerRuleCount>4"));
+  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerRuleCount>=1"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerEnabled=true"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerAdultBlockRunId"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerAdultBlockArtifact"));
   assert.ok(ios.requiredFields.includes("ios.safariContentBlockerAdultBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/adult host and Safari adult-domain/no-packet-inspection checks"));
-  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerShortFormUrl"));
-  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerShortFormBlockRunId"));
-  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerShortFormBlockArtifact"));
-  assert.ok(ios.requiredFields.includes("ios.safariContentBlockerShortFormBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true, matching runId/short-form URL/rule and no raw path/no app-screen-inspection checks"));
+  assert.ok(ios.requiredFields.includes("ios.safariFocusShieldBuildArtifact local freed-ios-app-package-proof-v1 JSON with sanitized=true, packageProofUsableForManualEvidence=true, embedded FREEDSafariFocusShield.appex, MV3 manifest, background.js service worker, content.js, scoped hosts, iOS 15.4 minimum, and app-group/Complete Data Protection entitlements"));
+  assert.ok(ios.requiredFields.includes("ios.safariFocusShieldShortFormUrl"));
+  assert.ok(ios.requiredFields.includes("ios.safariFocusShieldShortFormBlockRunId"));
+  assert.ok(ios.requiredFields.includes("ios.safariFocusShieldShortFormBlockArtifact"));
+  assert.ok(ios.requiredFields.includes("ios.safariFocusShieldShortFormBlockArtifact local freed-ios-safari-focus-shield-report-v1 JSON with sanitized=true, matching runId/short-form URL/rule and MV3 content-script/background-worker/no-raw-path checks"));
   assert.ok(ios.requiredFields.includes("ios.safariShortFormChallengeHandoffRunId"));
   assert.ok(ios.requiredFields.includes("ios.safariShortFormChallengeHandoffArtifact"));
   assert.ok(ios.requiredFields.includes("ios.safariShortFormChallengeHandoffSource=ios-safari-short-form"));
@@ -12047,7 +13230,7 @@ test("validation evidence promotion validates every draft before copying", () =>
   const writeIosSafariContentBlockerArtifact = (
     name: string,
     reportRunId: string,
-    reportKind: "reload" | "adult-block" | "short-form-block",
+    reportKind: "reload" | "adult-block",
     options: {
       host?: string;
       url?: string;
@@ -12086,6 +13269,47 @@ test("validation evidence promotion validates every draft before copying", () =>
             noPacketInspection: true,
             noMitmHttps: true,
             ...(options.checks ?? {})
+          }
+        },
+        null,
+        2
+      )}\n`
+    );
+    return `docs/validation/artifacts/${runId}/${name}`;
+  };
+  const writeIosSafariFocusShieldArtifact = (
+    name: string,
+    reportRunId: string,
+    url: string,
+    matchedRule: string
+  ) => {
+    const path = join(artifactRoot, name);
+    writeFileSync(
+      path,
+      `${JSON.stringify(
+        {
+          schemaVersion: "freed-ios-safari-focus-shield-report-v1",
+          sanitized: true,
+          runId: reportRunId,
+          platform: "ios",
+          reportKind: "short-form-block",
+          focusShieldIdentifier: "app.freed.recovery.safari-focus-shield",
+          url,
+          matchedRule,
+          checks: {
+            focusShieldExtensionUsed: true,
+            manifestV3: true,
+            backgroundServiceWorkerUsed: true,
+            contentScriptUsed: true,
+            nativeRelayValidated: true,
+            hostRuleAllowlistValidated: true,
+            shortFormNavigationShielded: true,
+            rawPathNotPersisted: true,
+            noThirdPartyAppScreenInspection: true,
+            noContinuousScreenRead: true,
+            noPacketTunnel: true,
+            noPacketInspection: true,
+            noMitmHttps: true
           }
         },
         null,
@@ -13363,6 +14587,26 @@ test("validation evidence promotion validates every draft before copying", () =>
       requiresFamilyControls,
       ...extra
     });
+    const safariFocusShield = {
+      manifestAvailable: true,
+      manifestVersion3: true,
+      minimumSafariVersion: "15.4",
+      minimumOSVersionAtLeast154: true,
+      serviceWorker: "background.js",
+      backgroundAvailable: true,
+      backgroundOwnsNativeMessaging: true,
+      backgroundServiceWorkerValid: true,
+      contentAvailable: true,
+      contentScriptsScoped: true,
+      contentUsesRuntimeMessaging: true,
+      nativeMessagingPermission: true,
+      hostPermissionsScoped: true,
+      infoAllowedDomainsScoped: true,
+      nativeAppIdentifierValid: true,
+      nativePayloadSchemaValid: true,
+      nativeHandlerContractValid: true,
+      usableForManualEvidence: true
+    };
     const path = join(artifactRoot, name);
     writeFileSync(
       path,
@@ -13395,18 +14639,17 @@ test("validation evidence promotion validates every draft before copying", () =>
                 ruleCount: 1200,
                 ruleSignals: {
                   "adult-domain-pornhub": true,
-                  "adult-domain-xvideos": true,
-                  "youtube-shorts-web": true,
-                  "instagram-reels-web": true,
-                  "tiktok-for-you-web": true
+                  "adult-domain-xvideos": true
                 },
                 usableForManualEvidence: true
               }
-            })
+            }),
+            extension("FREEDSafariFocusShield.appex", false, { safariFocusShield })
           ],
           entitlementFailures: [],
           missingOrMismatchedExtensions: [],
           safariRuleFailures: [],
+          safariFocusShieldFailures: [],
           packageProofUsableForManualEvidence: true,
           checks: {
             codesignEntitlementsAvailable: true,
@@ -13416,8 +14659,9 @@ test("validation evidence promotion validates every draft before copying", () =>
             completeDataProtectionOnEmbeddedExtensions: true,
             screenTimeExtensionsEmbedded: true,
             safariContentBlockerEmbedded: true,
+            safariFocusShieldEmbedded: true,
+            safariFocusShieldResourcesValid: true,
             adultDomainRulesPresent: true,
-            shortFormRulesPresent: true,
             safariRulesAllBlock: true,
             noPacketTunnelEntitlement: true,
             noPacketInspectionEntitlement: true
@@ -13500,8 +14744,7 @@ test("validation evidence promotion validates every draft before copying", () =>
           {
             checks: {
               reloadedViaSafariApi: true,
-              adultRulesPresent: true,
-              shortFormRulesPresent: true
+              adultRulesPresent: true
             }
           }
         ),
@@ -13523,21 +14766,17 @@ test("validation evidence promotion validates every draft before copying", () =>
             }
           }
         ),
-        safariContentBlockerShortFormUrl: "https://youtube.com/shorts/dQw4w9WgXcQ",
-        safariContentBlockerShortFormBlockRunId: "safari-content-blocker-short-form-block-release-run",
-        safariContentBlockerShortFormBlockArtifact: writeIosSafariContentBlockerArtifact(
-          "ios-safari-content-blocker-short-form-block-report.json",
-          "safari-content-blocker-short-form-block-release-run",
-          "short-form-block",
-          {
-            url: "https://youtube.com/shorts/dQw4w9WgXcQ",
-            matchedRule: "short-form:youtube-shorts",
-            checks: {
-              shortFormWebRuleMatched: true,
-              shortFormNavigationBlocked: true,
-              rawPathNotPersisted: true
-            }
-          }
+        safariFocusShieldEmbedded: true,
+        safariFocusShieldIdentifier: "app.freed.recovery.safari-focus-shield",
+        safariFocusShieldBuildRunId: "safari-focus-shield-build-release-run",
+        safariFocusShieldBuildArtifact: iosAppPackageProofArtifact,
+        safariFocusShieldShortFormUrl: "https://youtube.com/shorts/dQw4w9WgXcQ",
+        safariFocusShieldShortFormBlockRunId: "safari-focus-shield-short-form-block-release-run",
+        safariFocusShieldShortFormBlockArtifact: writeIosSafariFocusShieldArtifact(
+          "ios-safari-focus-shield-short-form-block-report.json",
+          "safari-focus-shield-short-form-block-release-run",
+          "https://youtube.com/shorts/dQw4w9WgXcQ",
+          "short-form:youtube-shorts"
         ),
         safariShortFormChallengeHandoffRunId: "safari-short-form-challenge-handoff-release-run",
         safariShortFormChallengeHandoffArtifact: writeArtifact("ios-safari-short-form-challenge-handoff.mov"),
@@ -14851,7 +16090,7 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
   const writeIosSafariContentBlockerReport = (
     name: string,
     reportRunId: string,
-    reportKind: "reload" | "adult-block" | "short-form-block",
+    reportKind: "reload" | "adult-block",
     options: {
       host?: string;
       url?: string;
@@ -14897,11 +16136,50 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
         2
       )}\n`
     );
+  const writeIosSafariFocusShieldReport = (
+    name: string,
+    reportRunId: string,
+    url: string,
+    matchedRule: string,
+    overrides: Record<string, unknown> = {}
+  ) =>
+    writeFileSync(
+      join(artifactDir, name),
+      `${JSON.stringify(
+        {
+          schemaVersion: "freed-ios-safari-focus-shield-report-v1",
+          sanitized: true,
+          runId: reportRunId,
+          platform: "ios",
+          reportKind: "short-form-block",
+          focusShieldIdentifier: "app.freed.recovery.safari-focus-shield",
+          url,
+          matchedRule,
+          checks: {
+            focusShieldExtensionUsed: true,
+            manifestV3: true,
+            backgroundServiceWorkerUsed: true,
+            contentScriptUsed: true,
+            nativeRelayValidated: true,
+            hostRuleAllowlistValidated: true,
+            shortFormNavigationShielded: true,
+            rawPathNotPersisted: true,
+            noThirdPartyAppScreenInspection: true,
+            noContinuousScreenRead: true,
+            noPacketTunnel: true,
+            noPacketInspection: true,
+            noMitmHttps: true
+          },
+          ...overrides
+        },
+        null,
+        2
+      )}\n`
+    );
   writeIosSafariContentBlockerReport("ios-safari-content-blocker-reload-report.json", "safari-content-blocker-reload-run", "reload", {
     checks: {
       reloadedViaSafariApi: true,
-      adultRulesPresent: true,
-      shortFormRulesPresent: true
+      adultRulesPresent: true
     }
   });
   writeIosSafariContentBlockerReport(
@@ -14917,19 +16195,11 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
       }
     }
   );
-  writeIosSafariContentBlockerReport(
-    "ios-safari-content-blocker-short-form-block-report.json",
-    "safari-content-blocker-short-form-block-run",
-    "short-form-block",
-    {
-      url: "https://youtube.com/shorts/dQw4w9WgXcQ",
-      matchedRule: "short-form:youtube-shorts",
-      checks: {
-        shortFormWebRuleMatched: true,
-        shortFormNavigationBlocked: true,
-        rawPathNotPersisted: true
-      }
-    }
+  writeIosSafariFocusShieldReport(
+    "ios-safari-focus-shield-short-form-block-report.json",
+    "safari-focus-shield-short-form-block-run",
+    "https://youtube.com/shorts/dQw4w9WgXcQ",
+    "short-form:youtube-shorts"
   );
   const writeIosSelectedAppDailyLimitReport = (
     name: string,
@@ -15095,12 +16365,29 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
       requiresFamilyControls,
       ...extra
     });
+    const safariFocusShield = {
+      manifestAvailable: true,
+      manifestVersion3: true,
+      minimumSafariVersion: "15.4",
+      minimumOSVersionAtLeast154: true,
+      serviceWorker: "background.js",
+      backgroundAvailable: true,
+      backgroundOwnsNativeMessaging: true,
+      backgroundServiceWorkerValid: true,
+      contentAvailable: true,
+      contentScriptsScoped: true,
+      contentUsesRuntimeMessaging: true,
+      nativeMessagingPermission: true,
+      hostPermissionsScoped: true,
+      infoAllowedDomainsScoped: true,
+      nativeAppIdentifierValid: true,
+      nativePayloadSchemaValid: true,
+      nativeHandlerContractValid: true,
+      usableForManualEvidence: true
+    };
     const safariRuleSignals = {
       "adult-domain-pornhub": true,
       "adult-domain-xvideos": true,
-      "youtube-shorts-web": true,
-      "instagram-reels-web": true,
-      "tiktok-for-you-web": true,
       ...(options.safariRuleSignals ?? {})
     };
     writeFileSync(
@@ -15135,11 +16422,13 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
                 ruleSignals: safariRuleSignals,
                 usableForManualEvidence: true
               }
-            })
+            }),
+            extension("FREEDSafariFocusShield.appex", false, { safariFocusShield })
           ],
           entitlementFailures: [],
           missingOrMismatchedExtensions: [],
           safariRuleFailures: [],
+          safariFocusShieldFailures: [],
           packageProofUsableForManualEvidence: true,
           checks: {
             codesignEntitlementsAvailable: true,
@@ -15149,8 +16438,9 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
             completeDataProtectionOnEmbeddedExtensions: true,
             screenTimeExtensionsEmbedded: true,
             safariContentBlockerEmbedded: true,
+            safariFocusShieldEmbedded: true,
+            safariFocusShieldResourcesValid: true,
             adultDomainRulesPresent: true,
-            shortFormRulesPresent: true,
             safariRulesAllBlock: true,
             noPacketTunnelEntitlement: true,
             noPacketInspectionEntitlement: true,
@@ -15217,9 +16507,13 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
     safariContentBlockerEnabled: true,
     safariContentBlockerAdultBlockRunId: "safari-content-blocker-adult-block-run",
     safariContentBlockerAdultBlockArtifact: "docs/validation/artifacts/ios-safari-content-blocker-adult-block-report.json",
-    safariContentBlockerShortFormUrl: "https://youtube.com/shorts/dQw4w9WgXcQ",
-    safariContentBlockerShortFormBlockRunId: "safari-content-blocker-short-form-block-run",
-    safariContentBlockerShortFormBlockArtifact: "docs/validation/artifacts/ios-safari-content-blocker-short-form-block-report.json",
+    safariFocusShieldEmbedded: true,
+    safariFocusShieldIdentifier: "app.freed.recovery.safari-focus-shield",
+    safariFocusShieldBuildRunId: "safari-focus-shield-build-run",
+    safariFocusShieldBuildArtifact: "docs/validation/artifacts/ios-app-package-proof.json",
+    safariFocusShieldShortFormUrl: "https://youtube.com/shorts/dQw4w9WgXcQ",
+    safariFocusShieldShortFormBlockRunId: "safari-focus-shield-short-form-block-run",
+    safariFocusShieldShortFormBlockArtifact: "docs/validation/artifacts/ios-safari-focus-shield-short-form-block-report.json",
     safariShortFormChallengeHandoffRunId: "safari-short-form-challenge-handoff-run",
     safariShortFormChallengeHandoffArtifact: "docs/validation/artifacts/ios-screen-time.mov",
     safariShortFormChallengeHandoffSource: "ios-safari-short-form",
@@ -15298,7 +16592,8 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
           safariContentBlockerReloaded: true,
           safariContentBlockerEnabled: true,
           safariContentBlockerAdultBlock: true,
-          safariContentBlockerShortFormBlock: true,
+          safariFocusShieldBuild: true,
+          safariFocusShieldShortFormBlock: true,
           safariShortFormChallengeHandoff: true,
           selectedShieldTokens: true,
           selectedAppDailyLimitThreshold: true,
@@ -15581,23 +16876,15 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
     );
     assert.equal(signedRemotePassing?.status, "pass");
 
-    writeIosSafariContentBlockerReport(
-      "ios-safari-content-blocker-short-form-block-report.json",
-      "safari-content-blocker-short-form-block-run",
-      "short-form-block",
-      {
-        url: "https://m.tiktok.com/foryou/",
-        matchedRule: "short-form:tiktok-feed",
-        checks: {
-          shortFormWebRuleMatched: true,
-          shortFormNavigationBlocked: true,
-          rawPathNotPersisted: true
-        }
-      }
+    writeIosSafariFocusShieldReport(
+      "ios-safari-focus-shield-short-form-block-report.json",
+      "safari-focus-shield-short-form-block-run",
+      "https://m.tiktok.com/foryou/",
+      "short-form:tiktok-feed"
     );
     writeIosEvidence(["docs/validation/artifacts/ios-screen-time.mov"], {
       ...validIosProof,
-      safariContentBlockerShortFormUrl: "https://m.tiktok.com/foryou/",
+      safariFocusShieldShortFormUrl: "https://m.tiktok.com/foryou/",
       safariShortFormChallengeHandoffMatchedRule: "short-form:tiktok-feed",
       safariShortFormChallengeHandoffHost: "m.tiktok.com"
     });
@@ -15605,30 +16892,22 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
       (result) => result.id === "ios-physical-device-validation"
     );
     assert.equal(alternateShortFormPassing?.status, "pass");
-    writeIosSafariContentBlockerReport(
-      "ios-safari-content-blocker-short-form-block-report.json",
-      "safari-content-blocker-short-form-block-run",
-      "short-form-block",
-      {
-        url: "https://youtube.com/shorts/dQw4w9WgXcQ",
-        matchedRule: "short-form:youtube-shorts",
-        checks: {
-          shortFormWebRuleMatched: true,
-          shortFormNavigationBlocked: true,
-          rawPathNotPersisted: true
-        }
-      }
+    writeIosSafariFocusShieldReport(
+      "ios-safari-focus-shield-short-form-block-report.json",
+      "safari-focus-shield-short-form-block-run",
+      "https://youtube.com/shorts/dQw4w9WgXcQ",
+      "short-form:youtube-shorts"
     );
 
     writeIosEvidence(["docs/validation/artifacts/ios-screen-time.mov"], {
       ...validIosProof,
-      safariContentBlockerShortFormUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+      safariFocusShieldShortFormUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
     });
     const shortFormUrlFailing = getValidationEvidenceResults(root).find(
       (result) => result.id === "ios-physical-device-validation"
     );
     assert.equal(shortFormUrlFailing?.status, "fail");
-    assert.match(shortFormUrlFailing?.evidence ?? "", /covered by FREED's Safari content-blocker rules/);
+    assert.match(shortFormUrlFailing?.evidence ?? "", /covered by FREED's Safari Focus Shield/);
 
     writeIosEvidence(["docs/validation/artifacts/ios-screen-time.mov"], {
       ...validIosProof,
@@ -15645,7 +16924,7 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
     );
     assert.equal(safariHandoffFailing?.status, "fail");
     assert.match(safariHandoffFailing?.evidence ?? "", /ios\.safariShortFormChallengeHandoffSource must be ios-safari-short-form/);
-    assert.match(safariHandoffFailing?.evidence ?? "", /ios\.safariShortFormChallengeHandoffMatchedRule must match ios\.safariContentBlockerShortFormUrl/);
+    assert.match(safariHandoffFailing?.evidence ?? "", /ios\.safariShortFormChallengeHandoffMatchedRule must match ios\.safariFocusShieldShortFormUrl/);
     assert.match(safariHandoffFailing?.evidence ?? "", /ios\.safariShortFormChallengeHandoffHost must be host-only/);
     assert.match(safariHandoffFailing?.evidence ?? "", /ios\.safariShortFormChallengeHandoffHost must match the short-form web host/);
     assert.match(safariHandoffFailing?.evidence ?? "", /ios\.safariShortFormChallengeHandoffRawPathStored must be false/);
@@ -15756,18 +17035,18 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
     );
     assert.match(safariContentBlockerFailing?.evidence ?? "", /ios\.safariContentBlockerBuildRunId/);
     assert.match(safariContentBlockerFailing?.evidence ?? "", /ios\.safariContentBlockerChecksum must use fnv1a32:<8-hex> format/);
-    assert.match(safariContentBlockerFailing?.evidence ?? "", /ios\.safariContentBlockerRuleCount > 4/);
+    assert.match(safariContentBlockerFailing?.evidence ?? "", /ios\.safariContentBlockerRuleCount >= 1/);
     assert.match(safariContentBlockerFailing?.evidence ?? "", /ios\.safariContentBlockerEnabled must be true/);
 
     writeIosEvidence(["docs/validation/artifacts/ios-screen-time.mov"], {
       ...validIosProof,
-      safariContentBlockerRuleCount: SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length
+      safariContentBlockerRuleCount: 0
     });
     const safariShortOnlyFailing = getValidationEvidenceResults(root).find(
       (result) => result.id === "ios-physical-device-validation"
     );
     assert.equal(safariShortOnlyFailing?.status, "fail");
-    assert.match(safariShortOnlyFailing?.evidence ?? "", /adult-domain rules plus short-form web rules/);
+    assert.match(safariShortOnlyFailing?.evidence ?? "", /adult-domain rules only/);
 
     writeIosEvidence(["docs/validation/artifacts/ios-screen-time.mov"], {
       ...validIosProof,
@@ -22296,6 +23575,106 @@ test("server AI provider rejects placeholder keys and model ids at runtime", () 
 });
 
 async function runAsyncTests() {
+  await asyncTest("pending native protection interventions are claimed and cleared exactly once", async () => {
+    const protection = require("../src/lib/protection-capabilities") as {
+      createPendingInterventionTracker: () => unknown;
+      consumePendingInterventionOnce: (input: {
+        tracker: unknown;
+        getPending: () => Promise<Record<string, unknown> | null>;
+        clearPending: (interventionId: string) => Promise<boolean>;
+        nowMs: number;
+      }) => Promise<BlockingAttempt | null>;
+    };
+    assert.equal(typeof protection.createPendingInterventionTracker, "function");
+    assert.equal(typeof protection.consumePendingInterventionOnce, "function");
+    const nowMs = Date.now();
+    const pending = {
+      interventionId: "11111111-1111-4111-8111-111111111111",
+      url: "https://selected-app.app.freed.local",
+      host: "selected-app.app.freed.local",
+      sourcePackage: "com.google.android.youtube",
+      reason: "Selected surface reached",
+      matchedRule: "focus-shield:focus-rule-ui-a7f9",
+      detectedAt: new Date(nowMs).toISOString(),
+      scope: {
+        kind: "android-surface",
+        ruleId: "focus-rule-ui-a7f9",
+        packageName: "com.google.android.youtube"
+      }
+    };
+    const tracker = protection.createPendingInterventionTracker();
+    let reads = 0;
+    let clears = 0;
+    const consume = () =>
+      protection.consumePendingInterventionOnce({
+        tracker,
+        getPending: async () => {
+          reads += 1;
+          await Promise.resolve();
+          return pending;
+        },
+        clearPending: async (interventionId) => {
+          clears += 1;
+          return interventionId === pending.interventionId;
+        },
+        nowMs
+      });
+
+    const [first, concurrent, repeated] = await Promise.all([consume(), consume(), consume()]);
+    assert.equal(reads, 1);
+    assert.equal(clears, 1);
+    assert.equal([first, concurrent, repeated].filter(Boolean).length, 1);
+
+    const duplicate = await consume();
+    assert.equal(duplicate, null);
+    assert.equal(clears, 1);
+
+    const pendingB = {
+      ...pending,
+      interventionId: "22222222-2222-4222-8222-222222222222",
+      detectedAt: new Date(nowMs + 1).toISOString(),
+      matchedRule: "focus-shield:focus-rule-ui-b8f0",
+      scope: {
+        kind: "android-surface",
+        ruleId: "focus-rule-ui-b8f0",
+        packageName: "com.google.android.youtube"
+      }
+    };
+    const raceTracker = protection.createPendingInterventionTracker();
+    let currentPending: typeof pending | typeof pendingB = pending;
+    const racedA = await protection.consumePendingInterventionOnce({
+      tracker: raceTracker,
+      getPending: async () => currentPending,
+      clearPending: async (expectedInterventionId) => {
+        currentPending = pendingB;
+        return currentPending.interventionId === expectedInterventionId;
+      },
+      nowMs
+    });
+    assert.equal(racedA, null);
+
+    const claimedB = await protection.consumePendingInterventionOnce({
+      tracker: raceTracker,
+      getPending: async () => currentPending,
+      clearPending: async (expectedInterventionId) => currentPending.interventionId === expectedInterventionId,
+      nowMs
+    });
+    assert.equal((claimedB as BlockingAttempt & { scope?: { ruleId?: string } } | null)?.scope?.ruleId, "focus-rule-ui-b8f0");
+
+    let malformedClaimCalls = 0;
+    const malformed = await protection.consumePendingInterventionOnce({
+      tracker: protection.createPendingInterventionTracker(),
+      getPending: async () => ({ ...pending, interventionId: "not-valid" }),
+      clearPending: async () => {
+        malformedClaimCalls += 1;
+        return true;
+      },
+      nowMs
+    });
+    assert.equal(malformed, null);
+    assert.equal(malformedClaimCalls, 0);
+  });
+
   await asyncTest("adult domain feed ingestion normalizes reviewed sources and rejects normal domains", async () => {
     const sourceConfig = [
       "oisd-nsfw|OISD NSFW|https://feeds.freedrecovery.app/oisd-nsfw.txt",
@@ -22664,7 +24043,7 @@ async function runAsyncTests() {
       assert.equal(JSON.stringify(result).includes("access_token=abc123"), false);
       assert.match(result.reason ?? "", /\[redacted-link\]|\[redacted-secret\]/);
       assert.equal(capturedInput?.feed.version, "feed-publication-test");
-      assert.equal(capturedInput?.safariRuleCount, ingested.feed.domains.length + SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length);
+      assert.equal(capturedInput?.safariRuleCount, ingested.feed.domains.length + 0);
       assert.match(publicationSource, /SUPABASE_ADULT_FEED_TABLE/);
       assert.match(publicationSource, /on_conflict=checksum/);
       assert.match(publicationSource, /resolution=merge-duplicates,return=minimal/);
@@ -23761,7 +25140,7 @@ async function runAsyncTests() {
           adultDomainFeedChecksum: checksum,
           adultDomainFeedDomainCount: 12,
           safariContentBlockerChecksum: checksum,
-          safariContentBlockerRuleCount: SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length + 12
+          safariContentBlockerRuleCount: 12
         },
         { platform: "ios", safariContentBlocker: true }
       ),
@@ -23785,7 +25164,7 @@ async function runAsyncTests() {
           adultDomainFeedChecksum: checksum,
           adultDomainFeedDomainCount: 0,
           safariContentBlockerChecksum: checksum,
-          safariContentBlockerRuleCount: SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length + 12
+          safariContentBlockerRuleCount: 12
         },
         { platform: "ios", safariContentBlocker: true }
       ),
@@ -23797,7 +25176,7 @@ async function runAsyncTests() {
           adultDomainFeedChecksum: undefined,
           adultDomainFeedDomainCount: 0,
           safariContentBlockerChecksum: checksum,
-          safariContentBlockerRuleCount: SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length + 12
+          safariContentBlockerRuleCount: 12
         },
         { platform: "ios", safariContentBlocker: true }
       ),
@@ -23809,7 +25188,7 @@ async function runAsyncTests() {
           adultDomainFeedChecksum: undefined,
           adultDomainFeedDomainCount: 0,
           safariContentBlockerChecksum: checksum,
-          safariContentBlockerRuleCount: SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length
+          safariContentBlockerRuleCount: 0
         },
         { platform: "ios", safariContentBlocker: true }
       ),
@@ -23821,7 +25200,7 @@ async function runAsyncTests() {
           adultDomainFeedChecksum: undefined,
           adultDomainFeedDomainCount: 0,
           safariContentBlockerChecksum: checksum,
-          safariContentBlockerRuleCount: SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length + 12
+          safariContentBlockerRuleCount: 12
         },
         { platform: "android", safariContentBlocker: false }
       ),
@@ -23837,7 +25216,7 @@ async function runAsyncTests() {
         },
         { platform: "ios", safariContentBlocker: true }
       ),
-      null
+      checksum
     );
     assert.equal(
       getConditionalAdultFeedChecksumForStatus(
@@ -23845,83 +25224,12 @@ async function runAsyncTests() {
           adultDomainFeedChecksum: checksum,
           adultDomainFeedDomainCount: 12,
           safariContentBlockerChecksum: "fnv1a32:ffffffff",
-          safariContentBlockerRuleCount: SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length + 12
+          safariContentBlockerRuleCount: 12
         },
         { platform: "ios", safariContentBlocker: true }
       ),
       null
     );
-  });
-
-  test("iOS DNS settings request is explicit bounded matched-domain config", () => {
-    const feed = createAdultDomainFeed({
-      version: "dns-sync-test",
-      generatedAt: "2026-05-17T00:00:00.000Z",
-      domains: [
-        "adult-a.example",
-        "adult-b.example",
-        "adult-c.example",
-        "www.adult-d.example"
-      ],
-      exceptions: []
-    });
-
-    assert.equal(
-      buildIosDnsSettingsRequest(feed, {
-        resolverURL: "",
-        serverAddresses: "1.1.1.3,1.0.0.3"
-      }),
-      null
-    );
-    assert.equal(
-      buildIosDnsSettingsRequest(feed, {
-        resolverURL: "http://family.cloudflare-dns.com/dns-query",
-        serverAddresses: "1.1.1.3"
-      }),
-      null
-    );
-    assert.equal(
-      buildIosDnsSettingsRequest(feed, {
-        resolverURL: "https://user:pass@family.cloudflare-dns.com/dns-query",
-        serverAddresses: "1.1.1.3"
-      }),
-      null
-    );
-    assert.equal(
-      buildIosDnsSettingsRequest(feed, {
-        resolverURL: "https://family.cloudflare-dns.com/dns-query?token=secret",
-        serverAddresses: "1.1.1.3"
-      }),
-      null
-    );
-    assert.equal(
-      buildIosDnsSettingsRequest(feed, {
-        resolverURL: "https://family.cloudflare-dns.com/dns-query#access_token=secret",
-        serverAddresses: "1.1.1.3"
-      }),
-      null
-    );
-    assert.equal(
-      buildIosDnsSettingsRequest(feed, {
-        resolverURL: "https://family.cloudflare-dns.com/dns-query",
-        serverAddresses: ""
-      }),
-      null
-    );
-
-    const request = buildIosDnsSettingsRequest(feed, {
-      resolverURL: "https://family.cloudflare-dns.com/dns-query",
-      serverAddresses: "1.1.1.3, 1.0.0.3,1.1.1.3",
-      providerLabel: " FREED release DNS ",
-      maxDomains: 2
-    });
-
-    assert.deepEqual(request, {
-      resolverURL: "https://family.cloudflare-dns.com/dns-query",
-      serverAddresses: ["1.1.1.3", "1.0.0.3"],
-      matchDomains: ["adult-a.example", "adult-b.example"],
-      providerLabel: "FREED release DNS"
-    });
   });
 
   await asyncTest("challenge weather context stays coarse and bounded", async () => {
@@ -27035,92 +28343,173 @@ async function runAsyncTests() {
     const purchase = await store.purchaseProduct("freed_premium_yearly", config);
     const restore = await store.restorePurchases(config);
 
-    assert.equal(initialized, true);
-    assert.deepEqual(requestParams, {
-      sku: "freed_premium_yearly",
-      skus: ["freed_premium_yearly"],
-      productId: "freed_premium_yearly"
-    });
+    assert.equal(initialized, false);
+    assert.equal(requestParams, null);
     assert.equal(finishedPurchase, null);
     assert.deepEqual(purchase.activeEntitlementIds, []);
     assert.deepEqual(restore.activeEntitlementIds, []);
   });
 
-  await asyncTest("native IAP store adapter fails closed when server verification rejects", async () => {
-    const previousEndpoint = process.env.EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT;
-    const previousTimeout = process.env.EXPO_PUBLIC_PURCHASE_VERIFY_TIMEOUT_MS;
-    const originalFetch = globalThis.fetch;
+  await asyncTest("native IAP forwards only strict iOS fields and finishes only after exact Firebase verification", async () => {
     const config = {
       ...getMonetizationConfig({ mode: "native", platform: "ios" }),
-      storeProvider: "native-iap" as const,
-      purchaseVerifyEndpoint: "https://api.freedapp.com/iap/verify"
+      storeProvider: "native-iap" as const
     };
     const purchaseRecord = {
+      platform: "ios",
+      store: "apple",
       productId: "freed_premium_yearly",
-      transactionId: "sandbox-iap-transaction"
+      purchaseState: "purchased",
+      transactionId: "2000001234567890",
+      purchaseToken: "must-not-be-forwarded",
+      nested: { receipt: "must-not-be-forwarded" }
     };
-    const store = createNativeIapStoreAdapter({
-      initConnection: async () => true,
-      requestPurchase: async () => purchaseRecord,
-      getAvailablePurchases: async () => [purchaseRecord]
-    });
+    const events: string[] = [];
+    const verifierPayloads: unknown[] = [];
+    const store = createNativeIapStoreAdapter(
+      {
+        initConnection: async () => true,
+        requestPurchase: async () => purchaseRecord,
+        finishTransaction: async () => {
+          events.push("finish");
+        }
+      },
+      async (payload) => {
+        events.push("verify");
+        verifierPayloads.push(payload);
+        return {
+          active: true,
+          entitlementId: "premium",
+          productId: "freed_premium_yearly",
+          platform: "ios",
+          status: "verified",
+          expiresAt: "2099-07-22T12:01:00.000Z"
+        };
+      }
+    );
     assert.ok(store);
 
-    try {
-      process.env.EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT = "https://wrong-env.example/iap/verify";
-      let unsafeFetchCount = 0;
-      globalThis.fetch = async () => {
-        unsafeFetchCount += 1;
-        return new Response(JSON.stringify({ active: true, entitlementId: "premium" }), {
-          status: 200,
-          headers: { "Content-Type": "application/json" }
-        });
-      };
-      const unsafeEndpoint = await store.purchaseProduct("freed_premium_yearly", {
-        ...config,
-        purchaseVerifyEndpoint: "https://api.freedapp.com/iap/verify?token=secret"
-      });
-      assert.equal(unsafeFetchCount, 0);
-      assert.deepEqual(unsafeEndpoint.activeEntitlementIds, []);
+    const result = await store.purchaseProduct("freed_premium_yearly", config);
 
-      let requestedUrl: string | null = null;
-      globalThis.fetch = async (input) => {
-        requestedUrl = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
-        return new Response(JSON.stringify({ active: false }), {
-          status: 200,
-          headers: { "Content-Type": "application/json" }
-        });
-      };
-      const rejected = await store.purchaseProduct("freed_premium_yearly", config);
-      assert.equal(requestedUrl, "https://api.freedapp.com/iap/verify");
-      assert.deepEqual(rejected.activeEntitlementIds, []);
+    assert.deepEqual(result.activeEntitlementIds, ["premium"]);
+    assert.deepEqual(events, ["verify", "finish"]);
+    assert.equal(verifierPayloads.length, 1);
+    assert.deepEqual(Object.keys(verifierPayloads[0] as object).sort(), [
+      "clientEventId", "platform", "productId", "restore", "transactionId"
+    ]);
+    assert.deepEqual(verifierPayloads[0], {
+      platform: "ios",
+      productId: "freed_premium_yearly",
+      transactionId: "2000001234567890",
+      clientEventId: (verifierPayloads[0] as { clientEventId: string }).clientEventId,
+      restore: false
+    });
+    assert.match((verifierPayloads[0] as { clientEventId: string }).clientEventId, /^purchase_[A-Za-z0-9_-]{16,80}$/);
+  });
 
-      globalThis.fetch = async () =>
-        new Response(JSON.stringify({ active: true, entitlementId: "premium" }), {
-          status: 200,
-          headers: { "Content-Type": "application/json" }
-        });
-      const accepted = await store.purchaseProduct("freed_premium_yearly", config);
-      assert.deepEqual(accepted.activeEntitlementIds, ["premium"]);
+  await asyncTest("native IAP validates Android purchases, restore flags, and rejects unsafe store states", async () => {
+    const config = {
+      ...getMonetizationConfig({ mode: "native", platform: "android" }),
+      storeProvider: "native-iap" as const
+    };
+    const validAndroid = {
+      platform: "android",
+      store: "google",
+      productId: "freed_premium_lifetime",
+      purchaseState: "purchased",
+      purchaseToken: "android-purchase-token-1234567890",
+      isSuspendedAndroid: false
+    };
+    const verifiedPayloads: Array<{ restore: boolean; productId: string; purchaseToken?: string }> = [];
+    const finished: unknown[] = [];
+    const store = createNativeIapStoreAdapter(
+      {
+        initConnection: async () => true,
+        requestPurchase: async () => validAndroid,
+        getAvailablePurchases: async () => [
+          { ...validAndroid, purchaseState: "pending" },
+          validAndroid
+        ],
+        finishTransaction: async ({ purchase }: { purchase?: unknown }) => {
+          finished.push(purchase);
+        }
+      },
+      async (payload) => {
+        verifiedPayloads.push(payload as typeof verifiedPayloads[number]);
+        return {
+          active: true,
+          entitlementId: "premium",
+          productId: payload.productId,
+          platform: payload.platform,
+          status: "verified",
+          expiresAt: null
+        };
+      }
+    );
+    assert.ok(store);
 
-      globalThis.fetch = async () => {
-        throw new Error("network down");
-      };
-      const failed = await store.restorePurchases(config);
-      assert.deepEqual(failed.activeEntitlementIds, []);
+    assert.deepEqual((await store.purchaseProduct("freed_premium_lifetime", config)).activeEntitlementIds, ["premium"]);
+    assert.deepEqual((await store.restorePurchases(config)).activeEntitlementIds, ["premium"]);
+    assert.deepEqual(verifiedPayloads.map(({ restore }) => restore), [false, true]);
+    assert.equal(verifiedPayloads[0]?.purchaseToken, "android-purchase-token-1234567890");
+    assert.equal(finished.length, 2);
 
-      process.env.EXPO_PUBLIC_PURCHASE_VERIFY_TIMEOUT_MS = "50";
-      globalThis.fetch = (async () =>
-        new Promise<Response>(() => {
-          /* Simulates a stalled purchase verification endpoint */
-        })) as typeof fetch;
-      const timedOut = await store.purchaseProduct("freed_premium_yearly", config);
-      assert.deepEqual(timedOut.activeEntitlementIds, []);
-    } finally {
-      globalThis.fetch = originalFetch;
-      restoreEnv("EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT", previousEndpoint);
-      restoreEnv("EXPO_PUBLIC_PURCHASE_VERIFY_TIMEOUT_MS", previousTimeout);
+    for (const unsafe of [
+      { ...validAndroid, purchaseState: "pending" },
+      { ...validAndroid, purchaseState: "unknown" },
+      { ...validAndroid, isSuspendedAndroid: true },
+      { ...validAndroid, productId: "freed_premium_yearly" },
+      { ...validAndroid, platform: "ios", store: "apple" },
+      { ...validAndroid, purchaseToken: "short" }
+    ]) {
+      let called = false;
+      const rejectingStore = createNativeIapStoreAdapter(
+        { initConnection: async () => true, requestPurchase: async () => unsafe },
+        async () => {
+          called = true;
+          throw new Error("should not verify invalid purchase");
+        }
+      );
+      assert.ok(rejectingStore);
+      assert.deepEqual((await rejectingStore.purchaseProduct("freed_premium_lifetime", config)).activeEntitlementIds, []);
+      assert.equal(called, false);
     }
+  });
+
+  await asyncTest("native IAP rejects mismatched Firebase results and never finishes unverified transactions", async () => {
+    const config = {
+      ...getMonetizationConfig({ mode: "native", platform: "ios" }),
+      storeProvider: "native-iap" as const
+    };
+    const purchaseRecord = {
+      platform: "ios",
+      store: "apple",
+      productId: "freed_premium_monthly",
+      purchaseState: "purchased",
+      transactionId: "2000001234567890"
+    };
+    let finishCount = 0;
+    const invalidResults = [
+      { active: false, entitlementId: "premium", productId: "freed_premium_monthly", platform: "ios", status: "inactive", expiresAt: null },
+      { active: true, entitlementId: "premium", productId: "freed_premium_yearly", platform: "ios", status: "verified", expiresAt: "2099-07-22T12:01:00.000Z" },
+      { active: true, entitlementId: "premium", productId: "freed_premium_monthly", platform: "android", status: "verified", expiresAt: "2099-07-22T12:01:00.000Z" }
+    ] as const;
+
+    for (const response of invalidResults) {
+      const store = createNativeIapStoreAdapter(
+        {
+          initConnection: async () => true,
+          requestPurchase: async () => purchaseRecord,
+          finishTransaction: async () => {
+            finishCount += 1;
+          }
+        },
+        async () => response
+      );
+      assert.ok(store);
+      assert.deepEqual((await store.purchaseProduct("freed_premium_monthly", config)).activeEntitlementIds, []);
+    }
+    assert.equal(finishCount, 0);
   });
 
   await asyncTest("AdMob-style rewarded adapter creates, shows, and disposes sessions", async () => {

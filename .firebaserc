@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "freed-7d5ee",
+    "production": "freed-7d5ee",
+    "staging": "freed-staging-7d5ee"
+  },
+  "targets": {
+    "freed-7d5ee": {
+      "hosting": {
+        "web": ["freed-7d5ee"]
+      }
+    }
+  }
+}

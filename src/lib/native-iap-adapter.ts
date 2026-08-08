@@ -3,27 +3,33 @@
 //   • iOS:    StoreKit 2 (Apple-required for new submissions in 2025+).
 //   • Android: Google Play Billing v6+ (Play-required for new submissions in 2025+).
 //
-// This is the preferred path — no third-party entitlement vendor in the loop,
-// transaction data goes Apple ↔ device and Google ↔ device only. A production
-// server endpoint (`EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT`) must confirm the
-// receipt/purchase token on FREED's backend before activating the entitlement.
+// This is the preferred path — no third-party entitlement vendor in the loop.
+// FREED grants premium only after its authenticated, App Check-protected
+// Firebase callable verifies the exact App Store / Play transaction.
 
 import {
   MonetizationConfig
 } from "@/lib/monetization";
-import { readBoundedResponseJson } from "@/lib/bounded-response-json";
-import { getProductionEndpointIssues } from "@/lib/endpoint-safety";
+import {
+  createFirebaseClientEventId,
+  type FirebaseCoreProductId,
+  type FirebaseVerifyStorePurchaseRequest,
+  type FirebaseVerifyStorePurchaseResult
+} from "@/lib/firebase-client";
 import type {
   NativeEntitlementInfo,
   NativeStoreAdapter
 } from "@/lib/native-monetization-adapter";
 
-const DEFAULT_PURCHASE_VERIFY_TIMEOUT_MS = 8_000;
-const MIN_PURCHASE_VERIFY_TIMEOUT_MS = 500;
-const MAX_PURCHASE_VERIFY_TIMEOUT_MS = 15_000;
-const DEFAULT_PURCHASE_VERIFY_RESPONSE_MAX_BYTES = 256_000;
-const MIN_PURCHASE_VERIFY_RESPONSE_MAX_BYTES = 1_024;
-const MAX_PURCHASE_VERIFY_RESPONSE_MAX_BYTES = 2_000_000;
+const CORE_PRODUCT_IDS = new Set<FirebaseCoreProductId>([
+  "freed_premium_monthly",
+  "freed_premium_yearly",
+  "freed_premium_lifetime"
+]);
+
+export type NativeIapPurchaseVerifier = (
+  request: FirebaseVerifyStorePurchaseRequest
+) => Promise<FirebaseVerifyStorePurchaseResult>;
 
 /**
  * Subset of the `expo-iap` API that we depend on. Defined here so we can ship
@@ -35,8 +41,11 @@ export type ExpoIapModule = {
   endConnection?: () => Promise<void> | void;
   getSubscriptions?: (productIds: string[]) => Promise<unknown[]>;
   getProducts?: (productIds: string[]) => Promise<unknown[]>;
-  requestSubscription?: (params: { sku: string } | { skus: string[] } | string) => Promise<unknown>;
-  requestPurchase?: (params: { sku?: string; skus?: string[]; productId?: string } | string) => Promise<unknown>;
+  requestSubscription?: (params: unknown) => Promise<unknown>;
+  requestPurchase?: (params: {
+    request: { apple: { sku: string }; google: { skus: string[] } };
+    type: "in-app" | "subs";
+  }) => Promise<unknown>;
   getAvailablePurchases?: () => Promise<unknown[]>;
   finishTransaction?: (params: { purchase: unknown; isConsumable?: boolean } | unknown) => Promise<void>;
 };
@@ -45,138 +54,91 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
 
-/**
- * Send the receipt/purchase token to the configured backend for App Store /
- * Play verification. Without this endpoint, native IAP fails closed.
- * The server should return `{ active: true, entitlementId: "premium" }` only
- * after Apple/Google confirm the transaction.
- */
-async function verifyWithServer(
-  purchase: unknown,
-  config: MonetizationConfig
-): Promise<{ active: boolean; entitlementId?: string } | null> {
-  const endpoint = config.purchaseVerifyEndpoint?.trim();
-  if (!endpoint) return null;
+type StrictPurchase = {
+  raw: unknown;
+  request: FirebaseVerifyStorePurchaseRequest;
+};
 
-  try {
-    if (getProductionEndpointIssues(endpoint, "purchase verify endpoint").length > 0) {
-      return { active: false };
-    }
+function isCoreProductId(value: string): value is FirebaseCoreProductId {
+  return CORE_PRODUCT_IDS.has(value as FirebaseCoreProductId);
+}
 
-    const body = isRecord(purchase) ? purchase : { raw: purchase };
-    const { response, payload } = await postPurchaseVerificationWithTimeout(
-      endpoint,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          platform: config.platform,
-          entitlementId: config.revenueCatEntitlementId,
-          purchase: body
-        })
-      },
-      normalizePurchaseVerifyTimeoutMs(readPurchaseVerifyTimeoutMs())
-    );
-    if (!response.ok) return { active: false };
+function extractStrictPurchase(
+  value: unknown,
+  platform: MonetizationConfig["platform"],
+  expectedProductId: string,
+  restore: boolean
+): StrictPurchase | null {
+  if (!isRecord(value) || !isCoreProductId(expectedProductId) || value.productId !== expectedProductId ||
+      value.purchaseState !== "purchased") return null;
+
+  if (platform === "ios") {
+    if (value.platform !== "ios" || value.store !== "apple" || typeof value.transactionId !== "string" ||
+        !/^\d{8,32}$/.test(value.transactionId)) return null;
     return {
-      active: Boolean(payload.active),
-      entitlementId: typeof payload.entitlementId === "string" ? payload.entitlementId : undefined
+      raw: value,
+      request: {
+        platform: "ios",
+        productId: expectedProductId,
+        transactionId: value.transactionId,
+        clientEventId: createFirebaseClientEventId("purchase"),
+        restore
+      }
+    };
+  }
+
+  if (platform === "android") {
+    if (value.platform !== "android" || value.store !== "google" || value.isSuspendedAndroid === true ||
+        typeof value.purchaseToken !== "string" || value.purchaseToken.length < 16 || value.purchaseToken.length > 4_096 ||
+        !/^[\x21-\x7E]+$/.test(value.purchaseToken) || value.purchaseToken.includes("://")) return null;
+    return {
+      raw: value,
+      request: {
+        platform: "android",
+        productId: expectedProductId,
+        purchaseToken: value.purchaseToken,
+        clientEventId: createFirebaseClientEventId("purchase"),
+        restore
+      }
+    };
+  }
+  return null;
+}
+
+function exactVerifiedResult(
+  value: FirebaseVerifyStorePurchaseResult,
+  request: FirebaseVerifyStorePurchaseRequest
+): boolean {
+  if (!isRecord(value) || Object.keys(value).length !== 6 || value.active !== true || value.status !== "verified" ||
+      value.entitlementId !== "premium" || value.productId !== request.productId || value.platform !== request.platform) return false;
+  if (request.productId === "freed_premium_lifetime") return value.expiresAt === null;
+  return typeof value.expiresAt === "string" && Number.isFinite(Date.parse(value.expiresAt)) && Date.parse(value.expiresAt) > Date.now();
+}
+
+async function verifyPurchase(
+  purchase: StrictPurchase,
+  verifyStorePurchase: NativeIapPurchaseVerifier
+): Promise<NativeEntitlementInfo> {
+  try {
+    const verified = await verifyStorePurchase(purchase.request);
+    if (!exactVerifiedResult(verified, purchase.request)) return { activeEntitlementIds: [] };
+    return {
+      activeEntitlementIds: ["premium"],
+      raw: { productId: purchase.request.productId }
     };
   } catch {
-    return { active: false };
+    return { activeEntitlementIds: [] };
   }
-}
-
-async function purchaseToEntitlement(
-  purchase: unknown,
-  config: MonetizationConfig
-): Promise<NativeEntitlementInfo> {
-  // Server-verified path (highest trust).
-  const verified = await verifyWithServer(purchase, config);
-  if (verified) {
-    return {
-      activeEntitlementIds: verified.active ? [verified.entitlementId ?? config.revenueCatEntitlementId] : [],
-      raw: purchase
-    };
-  }
-
-  // Native purchases fail closed unless FREED's server confirms the
-  // App Store / Play transaction. Local prototype flows should use explicit
-  // mock mode instead of minting premium from client-side product IDs.
-  return {
-    activeEntitlementIds: [],
-    raw: purchase
-  };
-}
-
-async function postPurchaseVerificationWithTimeout(endpoint: string, init: RequestInit, timeoutMs: number) {
-  const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
-  let timeout: ReturnType<typeof setTimeout> | null = null;
-  const timeoutPromise = new Promise<never>((_resolve, reject) => {
-    timeout = setTimeout(() => {
-      controller?.abort();
-      reject(new Error(`Purchase verification request timed out after ${timeoutMs}ms.`));
-    }, timeoutMs);
-  });
-
-  try {
-    const response = await Promise.race([
-      fetch(endpoint, {
-        ...init,
-        signal: controller?.signal
-      }),
-      timeoutPromise
-    ]);
-    const payload = (await readBoundedResponseJson(response, {
-      timeoutMs,
-      maxBytes: normalizePurchaseVerifyResponseMaxBytes(readPurchaseVerifyResponseMaxBytes()),
-      label: "Purchase verification response",
-      abort: () => controller?.abort()
-    })) as { active?: unknown; entitlementId?: unknown };
-    return { response, payload };
-  } finally {
-    if (timeout) clearTimeout(timeout);
-  }
-}
-
-function readPurchaseVerifyTimeoutMs() {
-  return process.env.EXPO_PUBLIC_PURCHASE_VERIFY_TIMEOUT_MS?.trim() ?? "";
-}
-
-function readPurchaseVerifyResponseMaxBytes() {
-  return process.env.EXPO_PUBLIC_PURCHASE_VERIFY_RESPONSE_MAX_BYTES?.trim() ?? "";
-}
-
-function normalizePurchaseVerifyTimeoutMs(value: number | string | null | undefined) {
-  const parsed =
-    typeof value === "number"
-      ? value
-      : typeof value === "string" && value.trim()
-        ? Number.parseInt(value.trim(), 10)
-        : DEFAULT_PURCHASE_VERIFY_TIMEOUT_MS;
-  if (!Number.isFinite(parsed)) return DEFAULT_PURCHASE_VERIFY_TIMEOUT_MS;
-  return Math.max(MIN_PURCHASE_VERIFY_TIMEOUT_MS, Math.min(MAX_PURCHASE_VERIFY_TIMEOUT_MS, Math.round(parsed)));
-}
-
-function normalizePurchaseVerifyResponseMaxBytes(value: number | string | null | undefined) {
-  const parsed =
-    typeof value === "number"
-      ? value
-      : typeof value === "string" && value.trim()
-        ? Number.parseInt(value.trim(), 10)
-        : DEFAULT_PURCHASE_VERIFY_RESPONSE_MAX_BYTES;
-  if (!Number.isFinite(parsed)) return DEFAULT_PURCHASE_VERIFY_RESPONSE_MAX_BYTES;
-  return Math.max(
-    MIN_PURCHASE_VERIFY_RESPONSE_MAX_BYTES,
-    Math.min(MAX_PURCHASE_VERIFY_RESPONSE_MAX_BYTES, Math.round(parsed))
-  );
 }
 
 /**
  * Builds a `NativeStoreAdapter` from the loaded expo-iap module.
  * Returns null if the module is missing required methods (degrades to fallback).
  */
-export function createNativeIapStoreAdapter(iap: ExpoIapModule): NativeStoreAdapter | null {
+export function createNativeIapStoreAdapter(
+  iap: ExpoIapModule,
+  verifyStorePurchase?: NativeIapPurchaseVerifier
+): NativeStoreAdapter | null {
   const requestPurchase = iap.requestPurchase ?? iap.requestSubscription;
   if (!requestPurchase || typeof iap.initConnection !== "function") {
     return null;
@@ -184,8 +146,9 @@ export function createNativeIapStoreAdapter(iap: ExpoIapModule): NativeStoreAdap
 
   let initialized = false;
   async function ensureInit() {
-    if (initialized) return;
+    if (initialized) return true;
     initialized = await iap.initConnection().catch(() => false);
+    return initialized;
   }
 
   async function finishIfPossible(purchase: unknown) {
@@ -199,33 +162,41 @@ export function createNativeIapStoreAdapter(iap: ExpoIapModule): NativeStoreAdap
 
   return {
     purchaseProduct: async (productId, config) => {
-      await ensureInit();
-      // expo-iap accepts a string SKU or { sku } / { skus } depending on version.
-      // We pass all common shapes — implementations ignore unknown fields.
-      const raw = await requestPurchase({ sku: productId, skus: [productId], productId });
-      // expo-iap may return an array or a single purchase.
-      const purchase = Array.isArray(raw) ? raw[0] : raw;
-      const entitlement = await purchaseToEntitlement(purchase, config);
+      if (!verifyStorePurchase || !(await ensureInit()) || !isCoreProductId(productId)) return { activeEntitlementIds: [] };
+      const raw = await requestPurchase({
+        request: { apple: { sku: productId }, google: { skus: [productId] } },
+        type: productId === "freed_premium_lifetime" ? "in-app" : "subs"
+      });
+      const candidates = (Array.isArray(raw) ? raw : [raw])
+        .map((purchase) => extractStrictPurchase(purchase, config.platform, productId, false))
+        .filter((purchase): purchase is StrictPurchase => purchase !== null);
+      if (candidates.length !== 1) return { activeEntitlementIds: [] };
+      const purchase = candidates[0];
+      const entitlement = await verifyPurchase(purchase, verifyStorePurchase);
       if (entitlement.activeEntitlementIds.length > 0) {
-        await finishIfPossible(purchase);
+        await finishIfPossible(purchase.raw);
       }
       return entitlement;
     },
     restorePurchases: async (config) => {
-      await ensureInit();
+      if (!verifyStorePurchase || !(await ensureInit())) return { activeEntitlementIds: [] };
       const purchases = typeof iap.getAvailablePurchases === "function"
         ? await iap.getAvailablePurchases().catch(() => [])
         : [];
 
       // Try each restored purchase against the entitlement map until one matches.
-      for (const purchase of purchases) {
-        const entitlement = await purchaseToEntitlement(purchase, config);
+      for (const raw of purchases) {
+        if (!isRecord(raw) || typeof raw.productId !== "string") continue;
+        const purchase = extractStrictPurchase(raw, config.platform, raw.productId, true);
+        if (!purchase) continue;
+        const entitlement = await verifyPurchase(purchase, verifyStorePurchase);
         if (entitlement.activeEntitlementIds.length > 0) {
+          await finishIfPossible(purchase.raw);
           return entitlement;
         }
       }
 
-      return { activeEntitlementIds: [], raw: purchases };
+      return { activeEntitlementIds: [] };
     }
   };
 }

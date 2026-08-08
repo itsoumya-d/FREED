@@ -24,10 +24,11 @@ recovery, blocker, adult blocker, porn blocker, screen time, focus, habits, self
 
 ## Review Notes
 
-- FREED uses Family Controls, DeviceActivity, ManagedSettings, and Safari Content Blocker for recovery and parental-control-style self-protection.
-- The app does not inspect native third-party app screens on iOS. Selected apps/sites are handled through opaque Screen Time tokens and system shielding.
-- Safari content-blocker rules contain reviewed adult-domain and web short-form URL rules only.
-- Optional DNS Settings are used only if the app has Apple's approved DNS Settings entitlement. FREED does not include a packet-tunnel provider, full VPN, packet inspection, or HTTPS interception.
+- FREED uses Family Controls, DeviceActivity, ManagedSettings, and Safari Content Blocker for recovery and parental-control-style self-protection. Family Controls and Managed Settings can shield whole selected apps, categories, and web domains.
+- FREED does not select or inspect a surface inside another native app on iOS, and does not inspect native third-party app screens. Selected apps/sites are handled through opaque Screen Time tokens and system shielding.
+- Safari Content Blocker rules contain reviewed adult-domain rules only. The iOS 15.4+ Safari Focus Shield handles only approved YouTube Shorts, Instagram Reels, and TikTok For You web routes through a background-worker handoff.
+- FREED does not collect screenshots, OCR/image analysis, or Safari browsing history.
+- FREED does not include a packet-tunnel provider, full VPN, packet inspection, or HTTPS interception.
 - Camera, motion, location, and notifications are requested only for user-initiated challenges or reminders.
 - Core 3 launch products: `freed_premium_yearly`, `freed_premium_monthly`, `freed_premium_lifetime`.
 

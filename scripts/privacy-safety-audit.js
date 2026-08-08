@@ -282,8 +282,8 @@ const checks = [
       !envProductionExample.includes("EXPO_PUBLIC_REMOTE_NOTIFICATION") &&
       !envExample.includes("EXPO_PUBLIC_FCM") &&
       !envProductionExample.includes("EXPO_PUBLIC_FCM") &&
-      !envExample.includes("EXPO_PUBLIC_FIREBASE") &&
-      !envProductionExample.includes("EXPO_PUBLIC_FIREBASE") &&
+      !/\bEXPO_PUBLIC_FIREBASE_[A-Z0-9_]*(?:SERVICE_ACCOUNT|ADMIN|PRIVATE_KEY|SERVER_KEY|ACCESS_TOKEN|APPLICATION_CREDENTIALS|CREDENTIAL)[A-Z0-9_]*\b/.test(envExample) &&
+      !/\bEXPO_PUBLIC_FIREBASE_[A-Z0-9_]*(?:SERVICE_ACCOUNT|ADMIN|PRIVATE_KEY|SERVER_KEY|ACCESS_TOKEN|APPLICATION_CREDENTIALS|CREDENTIAL)[A-Z0-9_]*\b/.test(envProductionExample) &&
       !envExample.includes("EXPO_PUBLIC_APNS") &&
       !envProductionExample.includes("EXPO_PUBLIC_APNS") &&
       backendRetentionCleanup.includes("validateBackendMaintenanceAuth") &&
@@ -319,6 +319,8 @@ const checks = [
       recoveryState.includes("[redacted-domain]") &&
       recoveryState.includes("[redacted-secret]") &&
       recoveryState.includes("sanitizeSourceAttemptHost") &&
+      recoveryState.includes("sanitizeNativeInterventionId(value.nativeInterventionId)") &&
+      nativeIntervention.includes("sanitizeNativeInterventionId(pending.interventionId)") &&
       androidClassifier.includes("fun normalizeHostForStorage(input: String): String") &&
       androidAccessibilityService.includes("FreedUrlClassifier.normalizeHostForStorage(result.host)") &&
       androidProtectionModule.includes("sanitizedPendingHost") &&
@@ -571,7 +573,7 @@ const checks = [
       nativeProtectionIndex.includes("sessionDurationSec?: number") &&
       androidAccessibilityService.includes("PENDING_SESSION_DURATION_SECONDS") &&
       androidAccessibilityService.includes("currentForegroundSessionMs") &&
-      androidProtectionModule.includes('"sessionDurationSec" to sanitizedPendingSessionDuration(prefs)') &&
+      androidProtectionModule.includes('"sessionDurationSec" to sanitizedPendingSessionDuration(pendingSnapshot)') &&
       challengeGenerator.includes("sessionDurationBucket") &&
       challengeGenerator.includes("Use session duration only as a coarse bucket") &&
       challengeGenerator.includes("Treat recent failed resets as aggregate count signals") &&
@@ -682,13 +684,12 @@ const checks = [
       protectionPermissions.includes("app-limit threshold") &&
       protectionPermissions.includes("FamilyControls and ManagedSettings") &&
       protectionPermissions.includes("Safari Content Blocker") &&
-      protectionPermissions.includes("NetworkExtension DNS Settings") &&
       protectionPermissions.includes("DNS-only VPN permission") &&
       protectionPermissions.includes("Native feed sync") &&
 	      protectionPermissions.includes("feed version, checksum, and domain count") &&
 	      protectionPermissions.includes("Usage Access") &&
 	      protectionPermissions.includes("Accessibility Service") &&
-	      protectionPermissions.includes("does not full-tunnel traffic") &&
+	      protectionPermissions.includes("without routing all device traffic through FREED") &&
 	      protectionPermissions.includes("does not MITM HTTPS") &&
 	      protectionPermissions.includes("does not inspect page contents") &&
 	      protectionPermissions.includes("Camera and on-device Vision labels") &&
@@ -733,7 +734,7 @@ const checks = [
 		      appSurface.includes("local VpnService routes DNS resolver IPs only") &&
 		      appSurface.includes("configured limits or selected short-form thresholds") &&
 		      appSurface.includes("Required Android setup: reviewed adult-domain feed, DNS-only VPN, Usage Access, Accessibility, selected app timers, then Test Protection") &&
-	      appSurface.includes("Required iOS setup: Screen Time authorization, adult web filter, selected targets, daily-limit monitoring, Safari rules, then Test Protection") &&
+	      appSurface.includes("Required iOS setup: Screen Time authorization, adult-domain Safari Content Blocker, Safari Focus Shield for Shorts/Reels, selected targets, daily-limit monitoring, then Test Protection") &&
       appSurface.includes("Test Protection") &&
       appSurface.includes("adultBlocked") &&
       appSurface.includes("normalAllowed") &&
@@ -764,7 +765,7 @@ const checks = [
       appSurface.includes("Native adult-domain feed loaded") &&
       appSurface.includes("native permission/feed status") &&
       appSurface.includes("without saving a blocked attempt"),
-	    "Protection setup explains platform permissions separately, documents Safari, Screen Time, optional iOS DNS settings, DNS-only VPN, native feed sync, Usage Access, Accessibility, and platform-aware on-demand challenge-verification data boundaries, and tests activation without writing fake recovery history."
+	    "Protection setup explains platform permissions separately, documents Safari, Screen Time, Android DNS-only VPN, native feed sync, Usage Access, Accessibility, and platform-aware on-demand challenge-verification data boundaries, and tests activation without writing fake recovery history."
 	  ),
   check(
     "android-play-policy-disclosure-pack",
@@ -801,15 +802,13 @@ const checks = [
 	  ),
   check(
     "ios-app-store-policy-review-pack",
-    iosPolicyPack.includes("iOS Screen Time, Safari, And DNS Settings Review Pack") &&
+    iosPolicyPack.includes("iOS Screen Time And Safari Review Pack") &&
       iosPolicyPack.includes("Family Controls entitlement") &&
       iosPolicyPack.includes("FamilyActivityPicker") &&
       iosPolicyPack.includes("ManagedSettings adult web filtering") &&
       iosPolicyPack.includes("DeviceActivity schedules") &&
       iosPolicyPack.includes("Safari Content Blocker") &&
-      iosPolicyPack.includes("web short-form path blocking in Safari") &&
-      iosPolicyPack.includes("NetworkExtension DNS Settings") &&
-      iosPolicyPack.includes("dns-settings") &&
+      iosPolicyPack.includes("Safari Focus Shield") &&
       iosPolicyPack.includes("FREED cannot and does not read third-party app screens on iOS") &&
       iosPolicyPack.includes("FREED cannot and does not detect Instagram Reels, TikTok, or YouTube Shorts inside native third-party apps on iOS") &&
       iosPolicyPack.includes("FREED does not take screenshots, run OCR, or perform continuous image classification for protection") &&
@@ -817,7 +816,6 @@ const checks = [
       iosPolicyPack.includes("FREED does not full-tunnel traffic") &&
       iosPolicyPack.includes("FREED does not inspect page contents") &&
       iosPolicyPack.includes("does not receive users' Safari browsing history") &&
-	      iosPolicyPack.includes("No all-domain DNS profile") &&
 	      iosPolicyPack.includes("No packet tunnel") &&
 	      iosPolicyPack.includes("No VPN manager") &&
 	      iosPolicyPack.includes("No TLS interception") &&
@@ -826,12 +824,12 @@ const checks = [
 	      iosPolicyPack.includes("No HealthKit history sync or export") &&
 	      iosPolicyPack.includes("No challenge media upload in the current local-first build") &&
       iosPolicyPack.includes("ios.familyControlsEntitlementArtifact") &&
-      iosPolicyPack.includes("ios.safariContentBlockerShortFormBlockRunId") &&
+      iosPolicyPack.includes("ios.safariFocusShieldShortFormBlockRunId") &&
       iosPolicyPack.includes("ios.safariShortFormChallengeHandoffSource=ios-safari-short-form") &&
       iosPolicyPack.includes("ios.safariShortFormChallengeHandoffRawPathStored=false") &&
       iosPolicyPack.includes("ios.safariShortFormChallengeHandoffNativeUnlockActive=false") &&
       iosPolicyPack.includes("ios.selectedAppDailyLimitArtifact"),
-    "iOS App Store review pack documents Screen Time, Safari Content Blocker, optional DNS Settings, challenge-verification boundaries, and required physical-device artifacts."
+    "iOS App Store review pack documents Screen Time, Safari Content Blocker and Focus Shield, challenge-verification boundaries, and required physical-device artifacts."
   ),
   check(
     "store-console-privacy-answer-sheets",
@@ -876,7 +874,7 @@ const checks = [
       nativeProtectionIndex.includes("labels: []") &&
       iosProtectionModule.includes("VNClassifyImageRequest") &&
       androidProtectionModule.includes("ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)") &&
-      !iosProtectionModule.includes("base64") &&
+      !iosProtectionModule.includes("imageData.base64EncodedString") &&
       !androidProtectionModule.includes("Base64"),
     "Photo challenge verification uses explicit camera copy, fresh camera capture, on-device labels, no microphone/photo-library permission copy, no base64/exif payloads, and best-effort temporary-photo cleanup after classification."
   )

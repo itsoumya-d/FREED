@@ -308,7 +308,7 @@ function productionBlockerGroups(artifactRoot = "docs/validation/artifacts/<run-
       requiredReports: [reports.iosArchiveBuild],
       captureHelperCommand: helpers.iosPhysicalDevice,
       evidenceFile: "docs/validation/evidence/ios-physical-device.json",
-      next: "Produce a sanitized signed iOS Release archive/IPA report, then capture entitlement-approved iOS hardware evidence for Screen Time, Safari, DNS settings boundaries, app shields, and challenge verification."
+      next: "Produce a sanitized signed iOS Release archive/IPA report, then capture entitlement-approved iOS hardware evidence for Screen Time, Safari Content Blocker, Safari Focus Shield, app shields, and challenge verification."
     },
     {
       id: "android-real-browser-validation",

@@ -8,6 +8,11 @@ const path = require("node:path");
 const { spawn, spawnSync } = require("node:child_process");
 const { sanitizeLocalHomePaths } = require("./lib/local-path-privacy");
 const { assertSafeReportPath } = require("./lib/report-path-safety");
+const {
+  SAFARI_FOCUS_HOST_PERMISSIONS,
+  assertSafariFocusShieldContractSelfTest,
+  inspectSafariFocusShieldContract,
+} = require("./lib/ios-safari-focus-shield-contract");
 
 const ROOT = path.resolve(__dirname, "..");
 const DEFAULT_WORKSPACE = "ios/FREED.xcworkspace";
@@ -58,14 +63,19 @@ const EXPECTED_EXTENSIONS = Object.freeze([
     requiresFamilyControls: false,
     requiresSafariRuleList: true,
   },
+  {
+    bundleId: "app.freed.recovery.safari-focus-shield",
+    bundleName: "FREEDSafariFocusShield.appex",
+    extensionPoint: "com.apple.Safari.web-extension",
+    principalClass: "FREEDSafariFocusShield.SafariWebExtensionHandler",
+    requiresFamilyControls: false,
+    requiresSafariFocusResources: true,
+  },
 ]);
 
 const SAFARI_RULE_SIGNALS = Object.freeze([
   { key: "adult-domain-pornhub", pattern: /pornhub\\\.com/i },
   { key: "adult-domain-xvideos", pattern: /xvideos\\\.com/i },
-  { key: "youtube-shorts-web", pattern: /youtube\\\.com\/shorts/i },
-  { key: "instagram-reels-web", pattern: /instagram\\\.com\/reel/i },
-  { key: "tiktok-for-you-web", pattern: /tiktok\\\.com\/foryou/i },
 ]);
 
 function truthy(value) {
@@ -674,7 +684,6 @@ function inspectSafariRuleList(extensionPath) {
       available: false,
       missingSignals: SAFARI_RULE_SIGNALS.map((signal) => signal.key),
       ruleCount: 0,
-      shortFormRulesPresent: false,
       usableForManualEvidence: false,
     };
   }
@@ -689,7 +698,6 @@ function inspectSafariRuleList(extensionPath) {
       error: error instanceof Error ? error.message : String(error),
       missingSignals: SAFARI_RULE_SIGNALS.map((signal) => signal.key),
       ruleCount: 0,
-      shortFormRulesPresent: false,
       usableForManualEvidence: false,
     };
   }
@@ -704,10 +712,6 @@ function inspectSafariRuleList(extensionPath) {
     .map(([key]) => key);
   const allRulesBlock = rows.length > 0 && rows.every((rule) => rule?.action?.type === "block");
   const adultDomainRulesPresent = ruleSignals["adult-domain-pornhub"] === true && ruleSignals["adult-domain-xvideos"] === true;
-  const shortFormRulesPresent =
-    ruleSignals["youtube-shorts-web"] === true &&
-    ruleSignals["instagram-reels-web"] === true &&
-    ruleSignals["tiktok-for-you-web"] === true;
   return {
     adultDomainRulesPresent,
     allRulesBlock,
@@ -715,8 +719,40 @@ function inspectSafariRuleList(extensionPath) {
     missingSignals,
     ruleCount: rows.length,
     ruleSignals,
-    shortFormRulesPresent,
     usableForManualEvidence: rows.length > 0 && missingSignals.length === 0 && allRulesBlock,
+  };
+}
+
+function inspectSafariFocusShieldResources(extensionPath) {
+  const manifestPath = path.join(extensionPath, "manifest.json");
+  const backgroundPath = path.join(extensionPath, "background.js");
+  const contentPath = path.join(extensionPath, "content.js");
+  const info = readPlistJson(path.join(extensionPath, "Info.plist"));
+  let manifest = {};
+  let manifestAvailable = false;
+  let manifestError = "";
+  try {
+    manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+    manifestAvailable = true;
+  } catch (error) {
+    manifestError = error instanceof Error ? error.message : String(error);
+  }
+  const background = fs.existsSync(backgroundPath) ? fs.readFileSync(backgroundPath, "utf8") : "";
+  const content = fs.existsSync(contentPath) ? fs.readFileSync(contentPath, "utf8") : "";
+  const executablePath = info.CFBundleExecutable ? path.join(extensionPath, info.CFBundleExecutable) : "";
+  const nativeHandlerBinary = executablePath && fs.existsSync(executablePath)
+    ? fs.readFileSync(executablePath).toString("latin1")
+    : "";
+  const contract = inspectSafariFocusShieldContract({ manifest, info, background, content, nativeHandlerBinary });
+  return {
+    backgroundAvailable: Boolean(background),
+    contentAvailable: Boolean(content),
+    manifestAvailable,
+    manifestError,
+    nativeHandlerBinaryAvailable: Boolean(nativeHandlerBinary),
+    ...contract,
+    usableForManualEvidence:
+      manifestAvailable && Boolean(background) && Boolean(content) && Boolean(nativeHandlerBinary) && contract.usableForManualEvidence,
   };
 }
 
@@ -732,6 +768,9 @@ function inspectArchive(options) {
     return {
       ...inspected,
       ...(expected.requiresSafariRuleList ? { safariRuleList: inspectSafariRuleList(extensionPath) } : {}),
+      ...(expected.requiresSafariFocusResources
+        ? { safariFocusShield: inspectSafariFocusShieldResources(extensionPath) }
+        : {}),
     };
   });
   const allBundles = [app, ...extensions];
@@ -746,6 +785,7 @@ function inspectArchive(options) {
     .map((entry) => entry.bundleName);
   const screenTimeExtensions = extensions.filter((entry) => entry.requiresFamilyControls);
   const safari = extensions.find((entry) => entry.bundleName === "FREEDSafariContentBlocker.appex");
+  const safariFocusShield = extensions.find((entry) => entry.bundleName === "FREEDSafariFocusShield.appex");
   return {
     appBundleIdentifier: app.bundleId,
     appGroupEntitledBundleIds: allBundles.filter((entry) => entry.appGroupPresent).map((entry) => entry.bundleId).filter(Boolean),
@@ -774,7 +814,21 @@ function inspectArchive(options) {
       available: false,
       missingSignals: SAFARI_RULE_SIGNALS.map((signal) => signal.key),
       ruleCount: 0,
-      shortFormRulesPresent: false,
+      usableForManualEvidence: false,
+    },
+    safariFocusShield: safariFocusShield?.safariFocusShield || {
+      backgroundAvailable: false,
+      backgroundOwnsNativeMessaging: false,
+      contentAvailable: false,
+      contentUsesRuntimeMessaging: false,
+      hostPermissions: [],
+      hostPermissionsScoped: false,
+      manifestAvailable: false,
+      manifestError: "missing FREEDSafariFocusShield.appex",
+      manifestVersion3: false,
+      minimumSafariVersion: "",
+      nativeMessagingPermission: false,
+      serviceWorker: "",
       usableForManualEvidence: false,
     },
     signedBundleTeamIds: [...new Set(allBundles.map((entry) => entry.teamIdentifier).filter(Boolean))].sort(),
@@ -841,6 +895,7 @@ function failureResults(reason) {
     "ios-release-entitlements",
     "ios-release-embedded-extensions",
     "ios-release-safari-content-blocker",
+    "ios-release-safari-focus-shield",
   ].map((id) => ({ id, status: "FAIL", detail }));
 }
 
@@ -921,7 +976,20 @@ function emptyArchiveProof(options) {
       available: false,
       missingSignals: SAFARI_RULE_SIGNALS.map((signal) => signal.key),
       ruleCount: 0,
-      shortFormRulesPresent: false,
+      usableForManualEvidence: false,
+    },
+    safariFocusShield: {
+      backgroundAvailable: false,
+      backgroundOwnsNativeMessaging: false,
+      contentAvailable: false,
+      contentUsesRuntimeMessaging: false,
+      hostPermissions: [],
+      hostPermissionsScoped: false,
+      manifestAvailable: false,
+      manifestVersion3: false,
+      minimumSafariVersion: "",
+      nativeMessagingPermission: false,
+      serviceWorker: "",
       usableForManualEvidence: false,
     },
     signedBundleTeamIds: [],
@@ -1060,12 +1128,17 @@ function buildReport(options, exportOptions, archive, ipa, durations) {
     {
       id: "ios-release-embedded-extensions",
       status: allExtensionsPresent && archive.missingOrMismatchedExtensions.length === 0 ? "PASS" : "FAIL",
-      detail: "Release archive embeds Shield Configuration, Shield Action, Device Activity Monitor, and Safari Content Blocker extensions.",
+      detail: "Release archive embeds Shield Configuration, Shield Action, Device Activity Monitor, Safari Content Blocker, and Safari Focus Shield extensions.",
     },
     {
       id: "ios-release-safari-content-blocker",
       status: archive.safariRuleList.usableForManualEvidence === true ? "PASS" : "FAIL",
-      detail: "Safari Content Blocker includes adult-domain and short-form web block rules with block actions.",
+      detail: "Safari Content Blocker includes adult-domain-only block rules with block actions.",
+    },
+    {
+      id: "ios-release-safari-focus-shield",
+      status: archive.safariFocusShield.usableForManualEvidence === true ? "PASS" : "FAIL",
+      detail: "Safari Focus Shield includes the scoped MV3 manifest, iOS 15.4 minimum, content script, and background-worker native relay.",
     },
   ];
   const summary = summarizeResults(results);
@@ -1164,6 +1237,7 @@ function runDryRun(options, exportOptions) {
 }
 
 function runSelfTest() {
+  assertSafariFocusShieldContractSelfTest();
   const options = parseArgs([
     "--team-id",
     "ABCDE12345",
@@ -1226,8 +1300,33 @@ function runSelfTest() {
       allRulesBlock: true,
       available: true,
       missingSignals: [],
-      ruleCount: 5,
-      shortFormRulesPresent: true,
+      ruleCount: 2,
+      usableForManualEvidence: true,
+    },
+    safariFocusShield: {
+      allowedDomains: ["youtube.com", "*.youtube.com", "instagram.com", "*.instagram.com", "tiktok.com", "*.tiktok.com", "intervention.freed.app"],
+      approvedRuleHostsPresent: true,
+      backgroundAvailable: true,
+      backgroundOwnsNativeMessaging: true,
+      backgroundServiceWorkerValid: true,
+      contentAvailable: true,
+      contentScriptsScoped: true,
+      contentUsesRuntimeMessaging: true,
+      fixedNativeEnvelope: true,
+      hostPermissions: [...SAFARI_FOCUS_HOST_PERMISSIONS],
+      hostPermissionsScoped: true,
+      infoAllowedDomainsScoped: true,
+      manifestAvailable: true,
+      manifestVersion3: true,
+      minimumOSVersion: "15.4",
+      minimumOSVersionAtLeast154: true,
+      minimumSafariVersion: "15.4",
+      nativeAppIdentifierValid: true,
+      nativeHandlerBinaryAvailable: true,
+      nativeHandlerContractValid: true,
+      nativeMessagingPermission: true,
+      nativePayloadSchemaValid: true,
+      serviceWorker: "background.js",
       usableForManualEvidence: true,
     },
     signedBundleTeamIds: ["ABCDE12345"],
@@ -1266,7 +1365,7 @@ function runSelfTest() {
   );
   assert.equal(failure.schemaVersion, "freed-ios-release-archive-report-v1");
   assert.equal(failure.result, "fail");
-  assert.equal(failure.summary.failCount, 7);
+  assert.equal(failure.summary.failCount, 8);
   assert.equal(failure.failure.phase, "archive");
   assert.match(failure.failure.message, /~\/Library\/MobileDevice/);
   assert.doesNotMatch(JSON.stringify(failure), /\/Users\/alice/);

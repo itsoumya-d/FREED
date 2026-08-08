@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "5477978760",
+    "project_id": "freed-7d5ee",
+    "storage_bucket": "freed-7d5ee.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:5477978760:android:00793100673feb4ab3c53d",
+        "android_client_info": {
+          "package_name": "app.freed.recovery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbOmGUgDrMnXfNysmQLn20OvNCdNf16TY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,6 @@
 import * as Haptics from "expo-haptics";
 import { File as ExpoFile } from "expo-file-system";
 import * as ImagePicker from "expo-image-picker";
-import * as ExpoLinking from "expo-linking";
 import { LinearGradient } from "expo-linear-gradient";
 import * as Location from "expo-location";
 import { Accelerometer, Pedometer, type AccelerometerMeasurement } from "expo-sensors";
@@ -27,19 +26,26 @@ import {
   ProtectionStatus,
   applyAdultContentFilter,
   applyEarnedUnlockWindow,
+  applyFocusShieldEarnedUnlock,
+  cancelFocusShieldCalibration,
   classifyChallengePhoto,
   configureBlockedAppPackages,
+  configureFocusShieldRule,
   clearEarnedUnlockWindow,
   clearPendingIntervention,
+  getFocusShieldCalibration,
   getProtectionCapabilities,
   getPendingIntervention,
   getProtectionStatus,
+  listFocusShieldRules,
   openPrivateDnsSettings,
   openUsageAccessSettings,
   openProtectionSettings,
   presentFamilyActivityPicker,
   requestProtectionAuthorization,
+  removeFocusShieldRule,
   runActivationDiagnostics,
+  startFocusShieldCalibration,
   startRiskWindowMonitoring,
   stopAdultContentFilter,
   stopRiskWindowMonitoring
@@ -81,6 +87,8 @@ import {
 import React from "react";
 
 import { colors, gradients, radii, shadow, starField, typography } from "@/constants/design";
+import { ROOT_DESTINATIONS, type RootDestinationId } from "@/design-system/navigation";
+import { getLayoutClass } from "@/design-system/theme";
 import {
   hasReviewedNativeAdultDomainFeed,
   hasReviewedSafariAdultDomainFeed,
@@ -113,6 +121,11 @@ import {
   permissionStatusToChallengeSignal
 } from "@/lib/challenge-context";
 import {
+  FOCUS_SHIELD_PRESETS,
+  createFocusShieldPresetRule,
+  type FocusShieldCalibrationState
+} from "@/lib/focus-shield";
+import {
   createEncryptedRecoveryBackup,
   getRecoveryBackupReadiness,
   restoreEncryptedRecoveryBackup
@@ -124,12 +137,18 @@ import {
   uploadEncryptedRecoveryBackup
 } from "@/lib/recovery-backup-client-sync";
 import {
-  buildSupabaseOAuthUrl,
-  extractSupabaseAccessTokenFromUrl,
-  getSupabaseAuthReadiness,
-  requestSupabaseMagicLink,
-  type SupabaseAuthProvider
-} from "@/lib/supabase-auth-client";
+  createFirebaseClientEventId,
+  getFirebaseClientReadiness,
+  getFirebaseEmailLinkReadiness,
+  isFirebaseEmailLinkDeliveryUrl,
+  type FirebaseAccountDeletionResult
+} from "@/lib/firebase-client";
+import {
+  getFirebaseCallableContracts,
+  getFirebaseNativeAuthAdapter,
+  registerFirebasePushTokenAfterPermission,
+  startFirebaseClient
+} from "@/lib/firebase-native";
 import { safeUserFacingMessage } from "@/lib/user-facing-error";
 import {
   ANALYTICS_CONSENT_VERSION,
@@ -162,11 +181,10 @@ import { configureNativeMonetizationRuntime } from "@/lib/native-monetization-ru
 import {
   appPackageForEarnedUnlockSource,
   createDeepLinkInterventionAttempt,
-  createNativeInterventionAttempt,
   getActiveNativeEarnedUnlock,
-  isFreshPendingIntervention,
   isIosScreenTimeShieldSource,
-  unlockSourceForAttempt
+  unlockSourceForAttempt,
+  type NativeInterventionAttempt
 } from "@/lib/native-intervention";
 import {
   getSelectedScreenTimeTargetCount,
@@ -175,6 +193,15 @@ import {
   type ProtectionPermissionStep,
   type ProtectionPermissionStatus
 } from "@/lib/protection-permissions";
+import {
+  consumePendingInterventionOnce,
+  createPendingInterventionTracker,
+  getFocusShieldCapabilityModel,
+  getProtectionChallengeCompletionDecision,
+  shouldBypassRewardedAdForAttempt,
+  summarizeFocusShieldRules,
+  type FocusShieldRuleSummary
+} from "@/lib/protection-capabilities";
 import { getProtectionSetupReadiness } from "@/lib/protection-readiness";
 import {
   ChallengeHistorySignal,
@@ -282,6 +309,7 @@ type Screen =
   | "appSelection"
   | "paywall"
   | "protectionSetup"
+  | "library"
   | "main"
   | "intercept"
   | "ad"
@@ -291,9 +319,10 @@ type Screen =
   | "coach"
   | "slip"
   | "customChallenge";
-type Tab = "home" | "analytics" | "shield" | "library" | "profile";
+type Tab = RootDestinationId;
 
 const FREED_PRIVACY_POLICY_URL = "https://freedrecovery.app/privacy";
+const FREED_ACCOUNT_DELETION_URL = "https://freedrecovery.app/account-deletion";
 const FREED_SUPPORT_EMAIL = "support@freedrecovery.app";
 const showQaControls = typeof __DEV__ !== "undefined" && __DEV__;
 
@@ -1121,10 +1150,278 @@ function buildProtectionActivationSignature(
     safariContentBlockerVersion: status?.safariContentBlockerVersion ?? "",
     safariContentBlockerChecksum: status?.safariContentBlockerChecksum ?? "",
     safariContentBlockerRuleCount: status?.safariContentBlockerRuleCount ?? 0,
-    safariContentBlockerEnabled: status?.safariContentBlockerEnabled === true,
-    dnsSettingsActive: status?.dnsSettingsActive === true,
-    dnsSettingsMatchDomainCount: status?.dnsSettingsMatchDomainCount ?? 0
+    safariContentBlockerEnabled: status?.safariContentBlockerEnabled === true
   });
+}
+
+function FocusShieldSection({
+  protectionCapability,
+  protectionStatus,
+  onRefresh
+}: {
+  protectionCapability: ProtectionCapability | null;
+  protectionStatus: ProtectionStatus | null;
+  onRefresh: () => Promise<ProtectionRefreshResult>;
+}) {
+  const [rules, setRules] = React.useState<FocusShieldRuleSummary[]>([]);
+  const [busyAction, setBusyAction] = React.useState<string | null>(null);
+  const [calibrationState, setCalibrationState] = React.useState<FocusShieldCalibrationState>("idle");
+  const [message, setMessage] = React.useState<string | null>(null);
+  const capabilityModel = React.useMemo(
+    () => getFocusShieldCapabilityModel(protectionCapability, protectionStatus, rules),
+    [protectionCapability, protectionStatus, rules]
+  );
+  const calibrationActive = calibrationState === "calibrating" || calibrationState === "ready";
+
+  const refreshRules = React.useCallback(async () => {
+    if (protectionCapability?.platform !== "android") {
+      setRules([]);
+      return;
+    }
+    try {
+      const nativeRules = await listFocusShieldRules();
+      setRules(summarizeFocusShieldRules(nativeRules));
+    } catch {
+      setMessage("Focus Shield local rules could not be loaded. Refresh native protection and try again.");
+    }
+  }, [protectionCapability?.platform]);
+
+  React.useEffect(() => {
+    void refreshRules();
+  }, [refreshRules, protectionStatus?.focusShieldRuleCount]);
+
+  React.useEffect(() => {
+    if (protectionCapability?.platform !== "android") return;
+    let cancelled = false;
+    getFocusShieldCalibration()
+      .then((result) => {
+        if (cancelled) return;
+        setCalibrationState(result.state);
+        if (result.message) setMessage(result.message);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [protectionCapability?.platform]);
+
+  React.useEffect(() => {
+    if (!calibrationActive) return;
+    let cancelled = false;
+    const poll = () => {
+      getFocusShieldCalibration()
+        .then((result) => {
+          if (cancelled) return;
+          setCalibrationState(result.state);
+          setMessage(result.message ?? `Calibration ${result.state.replace(/-/g, " ")}.`);
+          if (result.state === "success") {
+            void refreshRules();
+            void onRefresh();
+          }
+        })
+        .catch(() => {
+          if (!cancelled) setMessage("Calibration status could not be refreshed.");
+        });
+    };
+    poll();
+    const timer = setInterval(poll, 1_200);
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+    };
+  }, [calibrationActive, onRefresh, refreshRules]);
+
+  const enablePreset = React.useCallback(
+    async (preset: (typeof FOCUS_SHIELD_PRESETS)[number]) => {
+      const rule = createFocusShieldPresetRule(preset.id, `preset-${preset.id}`);
+      if (!rule) return;
+      setBusyAction(`enable:${preset.id}`);
+      try {
+        const result = await configureFocusShieldRule(rule);
+        setMessage(result.message);
+        await Promise.all([refreshRules(), onRefresh()]);
+      } catch {
+        setMessage(`${preset.displayName} could not be enabled.`);
+      } finally {
+        setBusyAction(null);
+      }
+    },
+    [onRefresh, refreshRules]
+  );
+
+  const beginCalibration = React.useCallback(
+    async (preset: (typeof FOCUS_SHIELD_PRESETS)[number]) => {
+      setBusyAction(`calibrate:${preset.id}`);
+      try {
+        const result = await startFocusShieldCalibration({
+          ruleId: `custom-${preset.id}`,
+          packageName: preset.packageName,
+          displayLabel: `${preset.displayName} calibrated`
+        });
+        setCalibrationState(result.state);
+        setMessage(result.message ?? `Calibration ${result.state.replace(/-/g, " ")}.`);
+      } catch {
+        setCalibrationState("failed");
+        setMessage(`${preset.displayName} calibration could not start.`);
+      } finally {
+        setBusyAction(null);
+      }
+    },
+    []
+  );
+
+  const cancelCalibration = React.useCallback(async () => {
+    setBusyAction("cancel-calibration");
+    try {
+      const result = await cancelFocusShieldCalibration();
+      setCalibrationState(result.state);
+      setMessage(result.message ?? "Focus Shield calibration cancelled.");
+    } catch {
+      setMessage("Focus Shield calibration could not be cancelled.");
+    } finally {
+      setBusyAction(null);
+    }
+  }, []);
+
+  const removeRule = React.useCallback(
+    async (rule: FocusShieldRuleSummary) => {
+      setBusyAction(`remove:${rule.id}`);
+      try {
+        const removed = await removeFocusShieldRule(rule.id);
+        setMessage(removed ? `${rule.displayLabel} removed.` : `${rule.displayLabel} was not found in local protection.`);
+        await Promise.all([refreshRules(), onRefresh()]);
+      } catch {
+        setMessage(`${rule.displayLabel} could not be removed.`);
+      } finally {
+        setBusyAction(null);
+      }
+    },
+    [onRefresh, refreshRules]
+  );
+
+  return (
+    <Card gradient={capabilityModel.available ? gradients.purple : undefined}>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 10 }}>
+        <ShieldCheck color={capabilityModel.available ? colors.mint : colors.text3} size={24} />
+        <View style={{ flex: 1 }}>
+          <Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>
+            Focus Shield
+          </Text>
+          <Text selectable style={{ color: colors.text3, marginTop: 2, textTransform: "capitalize" }}>
+            {capabilityModel.platform} capability
+          </Text>
+        </View>
+      </View>
+      <Text selectable style={{ color: colors.text2, lineHeight: 21, marginBottom: 12 }}>
+        {capabilityModel.description}
+      </Text>
+
+      {capabilityModel.platform === "android" ? (
+        <>
+          <Text selectable style={{ color: colors.text3, fontWeight: typography.heavy, letterSpacing: 0.8, marginBottom: 8 }}>
+            SUPPORTED PRESETS
+          </Text>
+          <View style={{ gap: 10, marginBottom: 12 }}>
+            {FOCUS_SHIELD_PRESETS.map((preset) => {
+              const enabled = rules.some((rule) => rule.presetId === preset.id || rule.id === `preset-${preset.id}`);
+              return (
+                <View key={preset.id} style={{ borderRadius: 16, padding: 12, backgroundColor: "rgba(255,255,255,0.05)", gap: 9 }}>
+                  <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                    <View style={{ flex: 1 }}>
+                      <Text selectable style={{ color: colors.text, fontWeight: typography.heavy }}>
+                        {preset.displayName}
+                      </Text>
+                      <Text selectable style={{ color: colors.text3, fontSize: 12, marginTop: 3 }}>
+                        Local rule · {preset.packageName}
+                      </Text>
+                    </View>
+                    {enabled ? <Check color={colors.mint} size={20} /> : null}
+                  </View>
+                  <View style={{ flexDirection: "row", gap: 8 }}>
+                    <View style={{ flex: 1 }}>
+                      <PillButton
+                        label={enabled ? "Preset On" : "Enable"}
+                        variant="ghost"
+                        disabled={enabled || busyAction !== null}
+                        onPress={() => void enablePreset(preset)}
+                      />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                      <PillButton
+                        label="Calibrate"
+                        variant="ghost"
+                        disabled={!capabilityModel.calibrationAvailable || calibrationActive || busyAction !== null}
+                        onPress={() => void beginCalibration(preset)}
+                      />
+                    </View>
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+
+          <View style={{ flexDirection: "row", alignItems: "center", gap: 10, marginBottom: 12 }}>
+            <Text selectable style={{ color: calibrationActive ? colors.yellow : colors.text3, flex: 1, fontWeight: typography.bold }}>
+              Calibration: {calibrationState.replace(/-/g, " ")}
+            </Text>
+            {calibrationActive ? (
+              <Pressable
+                onPress={() => void cancelCalibration()}
+                disabled={busyAction !== null}
+                accessibilityRole="button"
+                accessibilityLabel="Cancel Focus Shield calibration"
+                style={{ paddingHorizontal: 12, paddingVertical: 8, borderRadius: 999, backgroundColor: "rgba(255,216,106,0.12)" }}
+              >
+                <Text selectable style={{ color: colors.yellow, fontWeight: typography.heavy }}>Cancel</Text>
+              </Pressable>
+            ) : null}
+          </View>
+
+          <Text selectable style={{ color: colors.text3, fontWeight: typography.heavy, letterSpacing: 0.8, marginBottom: 8 }}>
+            LOCAL RULES ({rules.length})
+          </Text>
+          {rules.length === 0 ? (
+            <Text selectable style={{ color: colors.text3, lineHeight: 19, marginBottom: 12 }}>
+              No local Focus Shield rules yet. Enable a supported preset or calibrate a selected surface.
+            </Text>
+          ) : (
+            <View style={{ gap: 8, marginBottom: 12 }}>
+              {rules.map((rule) => (
+                <View key={rule.id} style={{ flexDirection: "row", alignItems: "center", gap: 10, borderRadius: 14, padding: 11, backgroundColor: "rgba(255,255,255,0.05)" }}>
+                  <View style={{ flex: 1 }}>
+                    <Text selectable style={{ color: colors.text, fontWeight: typography.bold }}>{rule.displayLabel}</Text>
+                    <Text selectable style={{ color: colors.text3, fontSize: 12, marginTop: 3 }}>
+                      {rule.kind} · {rule.enabled ? "enabled" : "paused"}
+                    </Text>
+                  </View>
+                  <Pressable
+                    onPress={() => void removeRule(rule)}
+                    disabled={busyAction !== null}
+                    accessibilityRole="button"
+                    accessibilityLabel={`Remove ${rule.displayLabel}`}
+                    style={{ width: 38, height: 38, borderRadius: 14, alignItems: "center", justifyContent: "center", backgroundColor: "rgba(255,81,72,0.12)" }}
+                  >
+                    <Trash2 color={colors.red2} size={17} />
+                  </Pressable>
+                </View>
+              ))}
+            </View>
+          )}
+        </>
+      ) : null}
+
+      {message ? (
+        <Text selectable style={{ color: colors.mint, lineHeight: 19, marginBottom: 10, fontWeight: typography.bold }}>
+          {message}
+        </Text>
+      ) : null}
+      {capabilityModel.diagnostics.map((diagnostic) => (
+        <Text key={diagnostic} selectable style={{ color: colors.yellow, lineHeight: 19, marginTop: 5 }}>
+          {diagnostic}
+        </Text>
+      ))}
+    </Card>
+  );
 }
 
 function ProtectionSetupScreen({
@@ -1440,7 +1737,13 @@ function ProtectionSetupScreen({
           return;
         case "request-android-notification-permission":
           prepareSetupAutoAdvance(targetStep, { waitingForAppReturn: true, continueAfterOptional: true });
-          runAction("settings", requestAndroidRecoveryNotificationVisibility);
+          runAction("settings", async () => {
+            const status = await requestAndroidRecoveryNotificationVisibility();
+            if (status.androidNotificationPermissionGranted === true) {
+              void registerFirebasePushTokenAfterPermission(true);
+            }
+            return status;
+          });
           return;
         case "open-usage-access-settings":
           prepareSetupAutoAdvance(targetStep, { waitingForAppReturn: true });
@@ -1965,6 +2268,12 @@ function ProtectionSetupScreen({
             </Text>
           </LinearGradient>
 
+          <FocusShieldSection
+            protectionCapability={protectionCapability}
+            protectionStatus={protectionStatus}
+            onRefresh={onRefresh}
+          />
+
           <Card>
             <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 12 }}>
               <View style={{ flex: 1 }}>
@@ -2268,7 +2577,7 @@ function ProtectionSetupScreen({
             {protectionCapability?.platform === "android"
               ? "Required Android setup: reviewed adult-domain feed, DNS-only VPN, Usage Access, Accessibility, selected app timers, then Test Protection. Notifications and challenge sensors are on demand."
               : protectionCapability?.platform === "ios"
-              ? "Required iOS setup: Screen Time authorization, adult web filter, selected targets, daily-limit monitoring, Safari rules, then Test Protection. DNS settings and challenge sensors are optional/on demand."
+              ? "Required iOS setup: Screen Time authorization, adult-domain Safari Content Blocker, Safari Focus Shield for Shorts/Reels, selected targets, daily-limit monitoring, then Test Protection. iOS DNS filtering is unavailable; challenge sensors are on demand."
               : "Native blocking requires a signed iOS or Android build."}
           </Text>
         </ScrollView>
@@ -2662,6 +2971,7 @@ function HomeScreen({
   onPanic,
   onAttempt,
   onHabitToggle,
+  onOpenLibrary,
   premium
 }: {
   recoveryState: RecoveryState;
@@ -2674,6 +2984,7 @@ function HomeScreen({
   onPanic: () => void;
   onAttempt: (url: string) => void;
   onHabitToggle: (habit: HabitItem) => void;
+  onOpenLibrary: () => void;
   premium: boolean;
 }) {
   const [nowMs, setNowMs] = React.useState(Date.now());
@@ -2899,6 +3210,10 @@ function HomeScreen({
             </Text>
           </LinearGradient>
         </Pressable>
+      </View>
+
+      <View style={{ paddingHorizontal: 20, paddingBottom: 18 }}>
+        <PillButton label="Open Recovery Tools" variant="ghost" onPress={onOpenLibrary} accessibilityHint="Opens the full-screen Library of recovery tools." />
       </View>
 
       {showQaControls ? (
@@ -3578,15 +3893,34 @@ function ShieldScreen({
   onAttempt,
   disciplineSettings,
   activeUnlock,
-  onDisciplineChange
+  onDisciplineChange,
+  protectionCapability,
+  protectionStatus,
+  onRefreshProtection,
+  onOpenProtectionSetup
 }: {
   onAttempt: (url: string) => void;
   disciplineSettings: DisciplineSettings;
   activeUnlock: EarnedUnlock | null;
   onDisciplineChange: (update: Partial<Omit<DisciplineSettings, "updatedAt">>) => void;
+  protectionCapability: ProtectionCapability | null;
+  protectionStatus: ProtectionStatus | null;
+  onRefreshProtection: () => Promise<ProtectionRefreshResult>;
+  onOpenProtectionSetup: () => void;
 }) {
   const [input, setInput] = React.useState("https://google.com/search?q=productivity");
   const [result, setResult] = React.useState<ClassificationResult | null>(null);
+  const [advancedDiagnosticsOpen, setAdvancedDiagnosticsOpen] = React.useState(false);
+  const temporaryUnlock = Boolean(protectionStatus?.activeUnlockExpiresAt && Date.parse(protectionStatus.activeUnlockExpiresAt) > Date.now());
+  const protectionHealth = !protectionCapability || !protectionStatus
+    ? { title: "Protection needs attention", detail: "Protection status is unavailable. Refresh setup before relying on it." }
+    : temporaryUnlock
+      ? { title: "Protection temporarily unlocked", detail: "A time-limited earned unlock is active; protection will resume when it ends." }
+      : protectionStatus.active
+        ? { title: "Protection is active", detail: protectionStatus.message }
+        : protectionCapability.platform !== "ios" && protectionCapability.platform !== "android"
+          ? { title: "Protection unsupported here", detail: "Native protection is available in an iOS or Android device build." }
+          : { title: "Protection needs attention", detail: protectionStatus.message };
   const blockedPackageSet = React.useMemo(() => new Set(disciplineSettings.blockedAppPackages), [disciplineSettings.blockedAppPackages]);
   const toggleBlockedPackage = React.useCallback(
     (androidPackage: string) => {
@@ -3603,6 +3937,33 @@ function ShieldScreen({
       <Text selectable style={{ color: colors.text, fontSize: 30, fontWeight: typography.heavy }}>
         Shield
       </Text>
+      <Card gradient={protectionStatus?.active && !temporaryUnlock ? gradients.mint : undefined}>
+        <Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Protection health</Text>
+        <Text selectable style={{ color: colors.mint, fontWeight: typography.heavy, marginTop: 6 }}>{protectionHealth.title}</Text>
+        <Text selectable style={{ color: colors.text2, lineHeight: 21, marginTop: 6 }}>{protectionHealth.detail}</Text>
+        <View style={{ marginTop: 12 }}>
+          <PillButton label="Open protection setup" onPress={onOpenProtectionSetup} accessibilityHint="Opens the full-screen native protection setup route." />
+        </View>
+      </Card>
+
+      <Card>
+        <Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy, marginBottom: 10 }}>Apps & schedules</Text>
+        <Text selectable style={{ color: colors.text2, lineHeight: 21 }}>Choose the apps and schedules you want FREED to protect. Native authorization stays in protection setup.</Text>
+      </Card>
+
+      <FocusShieldSection protectionCapability={protectionCapability} protectionStatus={protectionStatus} onRefresh={onRefreshProtection} />
+
+      <Card>
+        <Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Web safety</Text>
+        <Text selectable style={{ color: colors.text2, lineHeight: 21, marginTop: 6 }}>Adult-domain protection preserves normal browsing and keeps intervention challenges ad-free.</Text>
+      </Card>
+
+      <Card>
+        <Pressable accessibilityRole="button" accessibilityLabel={advancedDiagnosticsOpen ? "Hide advanced diagnostics" : "Show advanced diagnostics"} onPress={() => setAdvancedDiagnosticsOpen((value) => !value)} style={{ minHeight: 48, justifyContent: "center" }}>
+          <Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Advanced diagnostics</Text>
+        </Pressable>
+        {advancedDiagnosticsOpen ? <Text selectable style={{ color: colors.text3, lineHeight: 20 }}>{protectionStatus?.message ?? "No native protection status is available yet."}</Text> : null}
+      </Card>
       <Card gradient={gradients.mint}>
         <View style={{ flexDirection: "row", gap: 12 }}>
           <ShieldCheck color={colors.mint} size={30} />
@@ -3807,6 +4168,7 @@ function ShieldScreen({
 }
 
 function LibraryScreen({
+  onBack,
   onBreathing,
   onChallenge,
   onCustomChallenge,
@@ -3814,6 +4176,7 @@ function LibraryScreen({
   customChallengeCount,
   customChallengesEnabled
 }: {
+  onBack: () => void;
   onBreathing: () => void;
   onChallenge: () => void;
   onCustomChallenge: () => void;
@@ -3838,9 +4201,10 @@ function LibraryScreen({
 
   return (
     <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 20, paddingBottom: 112, gap: 18 }}>
-      <Text selectable style={{ color: colors.text, fontSize: 30, fontWeight: typography.heavy }}>
-        Library
-      </Text>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+        <Pressable onPress={onBack} accessibilityRole="button" accessibilityLabel="Back to Today" accessibilityHint="Returns to Today." style={{ width: 48, height: 48, borderRadius: 16, backgroundColor: colors.surface2, alignItems: "center", justifyContent: "center" }}><ChevronLeft color={colors.text2} size={20} /></Pressable>
+        <Text selectable style={{ color: colors.text, fontSize: 30, fontWeight: typography.heavy }}>Library</Text>
+      </View>
       <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
         {items.map((item) => (
           <Pressable key={item.title} onPress={item.action} style={{ width: "48%" }}>
@@ -4239,35 +4603,38 @@ function RetentionPlanCard({ plan }: { plan: RetentionPlan }) {
 
 function RecoveryBackupCard({
   recoveryState,
-  onRestore
+  onRestore,
+  pendingFirebaseEmailLink,
+  onPendingFirebaseEmailLinkHandled
 }: {
   recoveryState: RecoveryState;
   onRestore: (state: RecoveryState) => void;
+  pendingFirebaseEmailLink: string | null;
+  onPendingFirebaseEmailLinkHandled: () => void;
 }) {
   const readiness = getRecoveryBackupReadiness();
-  const syncEndpointConfigured = Boolean(process.env.EXPO_PUBLIC_RECOVERY_BACKUP_SYNC_ENDPOINT?.trim());
-  const authRedirectUrl = React.useMemo(
-    () => process.env.EXPO_PUBLIC_SUPABASE_AUTH_REDIRECT_URL?.trim() || ExpoLinking.createURL("auth/callback"),
-    []
-  );
-  const supabaseAuthReadiness = React.useMemo(() => getSupabaseAuthReadiness(), []);
+  const syncEndpointConfigured = Boolean(process.env.EXPO_PUBLIC_FIREBASE_RECOVERY_BACKUP_SYNC_ENDPOINT?.trim());
+  const firebaseAuthReadiness = React.useMemo(() => getFirebaseClientReadiness(), []);
+  const firebaseEmailLinkReadiness = React.useMemo(() => getFirebaseEmailLinkReadiness(), []);
+  const authContinueUrl = firebaseEmailLinkReadiness.callbackUrl;
+  const emailLinkEnabled = syncEndpointConfigured && firebaseAuthReadiness.ready && firebaseEmailLinkReadiness.ready;
   const [passphrase, setPassphrase] = React.useState("");
   const [backupText, setBackupText] = React.useState("");
   const [authEmail, setAuthEmail] = React.useState("");
-  const [syncToken, setSyncToken] = React.useState("");
+  const [firebaseAuthConnected, setFirebaseAuthConnected] = React.useState(false);
   const [busy, setBusy] = React.useState(false);
   const [authBusy, setAuthBusy] = React.useState(false);
   const [message, setMessage] = React.useState(readiness.status === "ready" ? "Encrypted backup is ready." : readiness.missing[0]);
   const disabled = busy || readiness.status !== "ready";
   const syncConfig = React.useMemo(
     () => ({
-      endpointUrl: process.env.EXPO_PUBLIC_RECOVERY_BACKUP_SYNC_ENDPOINT,
-      getAuthToken: () => syncToken.trim()
+      endpointUrl: process.env.EXPO_PUBLIC_FIREBASE_RECOVERY_BACKUP_SYNC_ENDPOINT,
+      getAuthToken: () => getFirebaseNativeAuthAdapter().getCurrentIdToken()
     }),
-    [syncToken]
+    []
   );
   const syncReadiness = React.useMemo(() => getRecoveryBackupClientSyncReadiness(syncConfig), [syncConfig]);
-  const syncDisabled = disabled || authBusy || !syncReadiness.ready || syncToken.trim().length < 16;
+  const syncDisabled = disabled || authBusy || !syncReadiness.ready || !firebaseAuthConnected;
   const runBackupAction = React.useCallback(
     (action: () => Promise<void>) => {
       setBusy(true);
@@ -4279,49 +4646,59 @@ function RecoveryBackupCard({
   );
   const applyAuthUrl = React.useCallback((url: string | null) => {
     if (!url) return;
-    const token = extractSupabaseAccessTokenFromUrl(url);
-    if (!token) return;
-    setSyncToken(token);
-    setMessage("Account session connected for hosted encrypted sync.");
-  }, []);
-  const requestEmailLink = React.useCallback(() => {
+    if (!emailLinkEnabled) {
+      setMessage("Email-link sign-in is disabled until the signed app-link association is deployed and physically verified.");
+      return;
+    }
     setAuthBusy(true);
-    requestSupabaseMagicLink(authEmail, { redirectTo: authRedirectUrl })
+    getFirebaseNativeAuthAdapter()
+      .completeEmailLink({ email: authEmail, emailLink: url })
+      .then((result) => {
+        if (!result.ok) {
+          setMessage(safeUserFacingMessage(result.reason, "Account link could not be completed."));
+          return;
+        }
+        setFirebaseAuthConnected(true);
+        setMessage("Firebase account session connected for hosted encrypted sync.");
+        onPendingFirebaseEmailLinkHandled();
+      })
+      .catch(() => setMessage("Account link could not be completed."))
+      .finally(() => setAuthBusy(false));
+  }, [authEmail, emailLinkEnabled, onPendingFirebaseEmailLinkHandled]);
+  const requestEmailLink = React.useCallback(() => {
+    if (!emailLinkEnabled) {
+      setMessage("Email-link sign-in is disabled until the signed app-link association is deployed and physically verified.");
+      return;
+    }
+    setAuthBusy(true);
+    getFirebaseNativeAuthAdapter()
+      .requestEmailLink(authEmail, { continueUrl: authContinueUrl })
       .then((result) => {
         setMessage(result.ok ? "Check your email for the FREED account link." : safeUserFacingMessage(result.reason, "Account link could not be sent."));
       })
       .catch(() => setMessage("Account link could not be sent."))
       .finally(() => setAuthBusy(false));
-  }, [authEmail, authRedirectUrl]);
-  const openOAuthProvider = React.useCallback(
-    (provider: SupabaseAuthProvider) => {
-      const result = buildSupabaseOAuthUrl(provider, { redirectTo: authRedirectUrl });
-      if (!result.ok || !result.url) {
-        setMessage(safeUserFacingMessage(result.reason, "Account sign-in could not start."));
-        return;
-      }
-      setAuthBusy(true);
-      Linking.openURL(result.url)
-        .then(() => setMessage("Finish account sign-in, then return to FREED."))
-        .catch(() => setMessage("Account sign-in could not open."))
-        .finally(() => setAuthBusy(false));
-    },
-    [authRedirectUrl]
-  );
+  }, [authEmail, authContinueUrl, emailLinkEnabled]);
 
   React.useEffect(() => {
-    if (!syncEndpointConfigured) return undefined;
+    if (!emailLinkEnabled) return undefined;
     let active = true;
-    const applyIfActive = (url: string | null) => {
-      if (active) applyAuthUrl(url);
-    };
-    Linking.getInitialURL().then(applyIfActive).catch(() => undefined);
-    const subscription = Linking.addEventListener("url", ({ url }) => applyIfActive(url));
+    getFirebaseNativeAuthAdapter()
+      .getCurrentIdToken()
+      .then((token) => {
+        if (active && token) setFirebaseAuthConnected(true);
+      })
+      .catch(() => undefined);
     return () => {
       active = false;
-      subscription.remove();
     };
-  }, [applyAuthUrl, syncEndpointConfigured]);
+  }, [emailLinkEnabled]);
+
+  React.useEffect(() => {
+    if (pendingFirebaseEmailLink && emailLinkEnabled) {
+      setMessage("Account link opened. Enter the email address that requested it, then complete sign-in.");
+    }
+  }, [emailLinkEnabled, pendingFirebaseEmailLink]);
 
   return (
     <Card gradient={[`${colors.sky}1F`, colors.surface]}>
@@ -4426,7 +4803,7 @@ function RecoveryBackupCard({
       </View>
       {syncEndpointConfigured ? (
         <View style={{ marginTop: 12, paddingTop: 12, borderTopWidth: 1, borderTopColor: "rgba(255,255,255,0.09)" }}>
-          {supabaseAuthReadiness.ready ? (
+          {emailLinkEnabled ? (
             <>
               <TextInput
                 value={authEmail}
@@ -4467,70 +4844,38 @@ function RecoveryBackupCard({
                     Email Link
                   </Text>
                 </Pressable>
-                <Pressable
-                  disabled={disabled || authBusy}
-                  onPress={() => openOAuthProvider("apple")}
-                  style={{
-                    flexGrow: 1,
-                    minWidth: 90,
-                    minHeight: 42,
-                    borderRadius: 999,
-                    backgroundColor: "rgba(255,255,255,0.07)",
-                    borderWidth: 1,
-                    borderColor: "rgba(255,255,255,0.12)",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    opacity: disabled || authBusy ? 0.5 : 1
-                  }}
-                >
-                  <Text selectable style={{ color: colors.text, fontWeight: typography.heavy }}>
-                    Apple
-                  </Text>
-                </Pressable>
-                <Pressable
-                  disabled={disabled || authBusy}
-                  onPress={() => openOAuthProvider("google")}
-                  style={{
-                    flexGrow: 1,
-                    minWidth: 90,
-                    minHeight: 42,
-                    borderRadius: 999,
-                    backgroundColor: "rgba(255,255,255,0.07)",
-                    borderWidth: 1,
-                    borderColor: "rgba(255,255,255,0.12)",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    opacity: disabled || authBusy ? 0.5 : 1
-                  }}
-                >
-                  <Text selectable style={{ color: colors.text, fontWeight: typography.heavy }}>
-                    Google
-                  </Text>
-                </Pressable>
+                {pendingFirebaseEmailLink ? (
+                  <Pressable
+                    disabled={disabled || authBusy}
+                    onPress={() => applyAuthUrl(pendingFirebaseEmailLink)}
+                    style={{
+                      flexGrow: 1,
+                      minWidth: 150,
+                      minHeight: 42,
+                      borderRadius: 999,
+                      backgroundColor: "rgba(90,223,158,0.14)",
+                      borderWidth: 1,
+                      borderColor: "rgba(90,223,158,0.22)",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      opacity: disabled || authBusy ? 0.5 : 1
+                    }}
+                  >
+                    <Text selectable style={{ color: colors.mint, fontWeight: typography.heavy }}>
+                      Complete Email Link
+                    </Text>
+                  </Pressable>
+                ) : null}
               </View>
+              <Text selectable style={{ color: colors.text3, lineHeight: 18, marginBottom: 10 }}>
+                Apple and Google credentials are exchanged natively when their sign-in providers are configured; this app does not open browser OAuth flows.
+              </Text>
             </>
           ) : (
             <Text selectable style={{ color: colors.text2, lineHeight: 20, marginBottom: 10 }}>
-              Account sync needs Supabase Auth public URL and anon key before hosted backup can be enabled.
+              Email-link sign-in is disabled until the signed app-link association is deployed and physically verified.
             </Text>
           )}
-          <TextInput
-            value={syncToken}
-            onChangeText={setSyncToken}
-            secureTextEntry
-            placeholder="Account session token"
-            placeholderTextColor={colors.text3}
-            style={{
-              minHeight: 48,
-              borderRadius: 16,
-              borderWidth: 1,
-              borderColor: "rgba(255,255,255,0.10)",
-              color: colors.text,
-              paddingHorizontal: 14,
-              backgroundColor: "rgba(255,255,255,0.05)",
-              marginBottom: 10
-            }}
-          />
           <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
             <Pressable
               disabled={syncDisabled}
@@ -4619,9 +4964,16 @@ function RecoveryBackupCard({
   );
 }
 
-function PrivacySupportCard({ onDeleteLocalData }: { onDeleteLocalData: () => Promise<void> | void }) {
+function PrivacySupportCard({
+  onDeleteLocalData,
+  onDeleteAccountAndData
+}: {
+  onDeleteLocalData: () => Promise<void> | void;
+  onDeleteAccountAndData: () => Promise<FirebaseAccountDeletionResult>;
+}) {
   const [message, setMessage] = React.useState("Privacy controls are ready.");
   const [confirmDelete, setConfirmDelete] = React.useState(false);
+  const [confirmAccountDelete, setConfirmAccountDelete] = React.useState(false);
   const [busy, setBusy] = React.useState(false);
 
   const openUrl = React.useCallback((url: string, fallback: string) => {
@@ -4635,16 +4987,6 @@ function PrivacySupportCard({ onDeleteLocalData }: { onDeleteLocalData: () => Pr
       `mailto:${encodeURIComponent(FREED_SUPPORT_EMAIL)}?subject=${encodeURIComponent("FREED support")}`,
     []
   );
-  const deletionUrl = React.useMemo(
-    () =>
-      `mailto:${encodeURIComponent(FREED_SUPPORT_EMAIL)}?subject=${encodeURIComponent(
-        "FREED data deletion request"
-      )}&body=${encodeURIComponent(
-        "Please help delete any hosted FREED data associated with my account. I understand local device data can be deleted inside FREED Profile > Privacy & Support."
-      )}`,
-    []
-  );
-
   const runLocalDelete = React.useCallback(() => {
     if (!confirmDelete) {
       setConfirmDelete(true);
@@ -4662,6 +5004,28 @@ function PrivacySupportCard({ onDeleteLocalData }: { onDeleteLocalData: () => Pr
       .finally(() => setBusy(false));
   }, [confirmDelete, onDeleteLocalData]);
 
+  const runAccountDelete = React.useCallback(() => {
+    if (busy) return;
+    if (!confirmAccountDelete) {
+      setConfirmAccountDelete(true);
+      setConfirmDelete(false);
+      setMessage("Tap Confirm Account & Data Deletion to start deleting cloud account data, then clear this device.");
+      return;
+    }
+
+    setBusy(true);
+    Promise.resolve(onDeleteAccountAndData())
+      .then((result) => {
+        if (result.ok !== true || result.status !== "deleting") throw new Error("Account deletion was not accepted.");
+        setMessage("Account deletion started. Cloud removal is processing and local data was cleared.");
+      })
+      .catch((error) => {
+        setMessage(safeUserFacingMessage(error, "Account deletion could not start. Local data was kept on this device."));
+        setConfirmAccountDelete(false);
+      })
+      .finally(() => setBusy(false));
+  }, [busy, confirmAccountDelete, onDeleteAccountAndData]);
+
   return (
     <Card gradient={[`${colors.mint}1F`, colors.surface]}>
       <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 12, marginBottom: 12 }}>
@@ -4678,7 +5042,10 @@ function PrivacySupportCard({ onDeleteLocalData }: { onDeleteLocalData: () => Pr
         </View>
       </View>
       <Text selectable style={{ color: colors.text2, lineHeight: 21, marginBottom: 12 }}>
-        Local deletion clears FREED's saved streaks, check-ins, protected moments, selected app choices, membership cache, and activation state on this device. System permissions remain controlled by iOS or Android Settings.
+        Delete Account & Data requests removal of your signed-in Firebase account and hosted data before this device is cleared. Delete Local Data affects only this device. System permissions remain controlled by iOS or Android Settings.
+      </Text>
+      <Text selectable style={{ color: colors.text3, lineHeight: 19, marginBottom: 12 }}>
+        Server Deletion help remains available on the hosted account-deletion page and through support if you cannot sign in.
       </Text>
       <View style={{ gap: 10 }}>
         <View style={{ flexDirection: "row", gap: 10 }}>
@@ -4702,10 +5069,13 @@ function PrivacySupportCard({ onDeleteLocalData }: { onDeleteLocalData: () => Pr
         <View style={{ flexDirection: "row", gap: 10 }}>
           <View style={{ flex: 1 }}>
             <PillButton
-              label="Server Deletion"
-              variant="ghost"
-              icon={<Mail color={colors.text2} size={18} />}
-              onPress={() => openUrl(deletionUrl, "Deletion request message opened.")}
+              label={confirmAccountDelete ? "Confirm Account & Data Deletion" : "Delete Account & Data"}
+              accessibilityLabel="Delete Account & Data"
+              accessibilityHint="Requires Firebase sign-in and a second confirmation. Cloud deletion must start before local data is cleared."
+              variant={confirmAccountDelete ? "danger" : "ghost"}
+              disabled={busy}
+              icon={<Trash2 color={confirmAccountDelete ? colors.white : colors.text2} size={18} />}
+              onPress={runAccountDelete}
             />
           </View>
           <View style={{ flex: 1 }}>
@@ -4713,11 +5083,18 @@ function PrivacySupportCard({ onDeleteLocalData }: { onDeleteLocalData: () => Pr
               label={confirmDelete ? "Confirm Delete" : "Delete Local Data"}
               variant={confirmDelete ? "danger" : "ghost"}
               disabled={busy}
+              accessibilityLabel="Delete Local Data"
               icon={<Trash2 color={confirmDelete ? colors.white : colors.text2} size={18} />}
               onPress={runLocalDelete}
             />
           </View>
         </View>
+        <PillButton
+          label="Account Deletion Help"
+          variant="ghost"
+          icon={<Mail color={colors.text2} size={18} />}
+          onPress={() => openUrl(FREED_ACCOUNT_DELETION_URL, "Account deletion page opened.")}
+        />
       </View>
     </Card>
   );
@@ -5075,7 +5452,7 @@ function getMembershipCapabilityLabels(capabilities: PremiumCapabilitySet) {
   return labels;
 }
 
-function ProfileScreen({
+function LegacyProfileScreen({
   recoveryState,
   premium,
   premiumCapabilities,
@@ -5099,13 +5476,16 @@ function ProfileScreen({
   onSupportCircleRemove,
   onRestoreBackup,
   onDeleteLocalData,
+  onDeleteAccountAndData,
   onManagePlan,
   onLogSlip,
   storageError,
   protectionCapability,
   protectionStatus,
   protectionSyncMessage,
-  refreshProtectionStatus
+  refreshProtectionStatus,
+  pendingFirebaseEmailLink,
+  onPendingFirebaseEmailLinkHandled
 }: {
   recoveryState: RecoveryState;
   premium: boolean;
@@ -5130,6 +5510,7 @@ function ProfileScreen({
   onSupportCircleRemove: (memberId: string) => void;
   onRestoreBackup: (state: RecoveryState) => void;
   onDeleteLocalData: () => Promise<void> | void;
+  onDeleteAccountAndData: () => Promise<FirebaseAccountDeletionResult>;
   onManagePlan: () => void;
   onLogSlip: () => void;
   storageError: string | null;
@@ -5137,6 +5518,8 @@ function ProfileScreen({
   protectionStatus: ProtectionStatus | null;
   protectionSyncMessage: string | null;
   refreshProtectionStatus: () => Promise<ProtectionRefreshResult>;
+  pendingFirebaseEmailLink: string | null;
+  onPendingFirebaseEmailLinkHandled: () => void;
 }) {
   const [protectionBusy, setProtectionBusy] = React.useState(false);
   const [protectionActionMessage, setProtectionActionMessage] = React.useState<string | null>(null);
@@ -5158,30 +5541,6 @@ function ProfileScreen({
   const safariAdultFeedReviewed = hasReviewedSafariAdultDomainFeed(protectionStatus);
   const nativeAdultFeedVersionLabel = nativeAdultFeedReviewed ? "Reviewed adult-domain feed" : "Embedded adult-domain fallback";
   const safariAdultFeedVersionLabel = safariAdultFeedReviewed ? "Reviewed Safari content-blocker rules" : "Embedded Safari content-blocker fallback";
-  const iosDnsSettingsVisible = Boolean(
-    protectionStatus?.dnsSettingsAvailable ||
-      protectionStatus?.dnsSettingsEntitled ||
-      protectionStatus?.dnsSettingsActive ||
-      protectionStatus?.dnsSettingsMatchDomainCount ||
-      protectionStatus?.dnsSettingsLastError
-  );
-  const iosDnsSettingsStatusLabel = protectionStatus?.dnsSettingsActive
-    ? "active"
-    : protectionStatus?.dnsSettingsEntitled
-    ? "saved"
-    : protectionStatus?.dnsSettingsAvailable
-    ? "available"
-    : "unavailable";
-  const iosDnsSettingsStatusColor = protectionStatus?.dnsSettingsActive
-    ? colors.mint
-    : protectionStatus?.dnsSettingsLastError
-    ? colors.yellow
-    : colors.sky;
-  const iosDnsSettingsStatusBackground = protectionStatus?.dnsSettingsActive
-    ? "rgba(90,223,158,0.12)"
-    : protectionStatus?.dnsSettingsLastError
-    ? "rgba(255,216,106,0.12)"
-    : "rgba(130,206,255,0.12)";
   const nativeUnlockMinutes =
     protectionStatus?.activeUnlockExpiresAt
       ? Math.max(1, Math.ceil((Date.parse(protectionStatus.activeUnlockExpiresAt) - Date.now()) / 60_000))
@@ -5373,9 +5732,14 @@ function ProfileScreen({
 
       <RetentionPlanCard plan={retentionPlan} />
 
-      <RecoveryBackupCard recoveryState={recoveryState} onRestore={onRestoreBackup} />
+      <RecoveryBackupCard
+        recoveryState={recoveryState}
+        onRestore={onRestoreBackup}
+        pendingFirebaseEmailLink={pendingFirebaseEmailLink}
+        onPendingFirebaseEmailLinkHandled={onPendingFirebaseEmailLinkHandled}
+      />
 
-      <PrivacySupportCard onDeleteLocalData={onDeleteLocalData} />
+      <PrivacySupportCard onDeleteLocalData={onDeleteLocalData} onDeleteAccountAndData={onDeleteAccountAndData} />
 
       <ReminderSettingsCard reminders={reminders} busy={reminderBusy} smartSuggestion={smartReminderSuggestion} onChange={onReminderChange} />
 
@@ -5391,6 +5755,12 @@ function ProfileScreen({
         onSupportCircleChange={onSupportCircleChange}
         onSupportCircleRemove={onSupportCircleRemove}
         onChange={onAccountabilityChange}
+      />
+
+      <FocusShieldSection
+        protectionCapability={protectionCapability}
+        protectionStatus={protectionStatus}
+        onRefresh={refreshProtectionStatus}
       />
 
       <Card>
@@ -5506,11 +5876,6 @@ function ProfileScreen({
               Safari blocker off
             </Text>
           ) : null}
-          {iosDnsSettingsVisible ? (
-            <Text selectable style={{ color: iosDnsSettingsStatusColor, backgroundColor: iosDnsSettingsStatusBackground, paddingHorizontal: 10, paddingVertical: 6, borderRadius: 999, fontWeight: typography.bold }}>
-              iOS DNS {iosDnsSettingsStatusLabel}
-            </Text>
-          ) : null}
         </View>
         {protectionStatus?.adultDomainFeedVersion ? (
           <Text selectable style={{ color: colors.text3, lineHeight: 19, marginBottom: 12 }}>
@@ -5563,18 +5928,6 @@ function ProfileScreen({
             {protectionStatus?.earnedUnlockActivityName
               ? ` Earned unlock relock monitor ${protectionStatus.earnedUnlockActivityName}.`
               : ""}
-          </Text>
-        ) : null}
-        {iosDnsSettingsVisible ? (
-          <Text selectable style={{ color: colors.text3, lineHeight: 19, marginBottom: 12 }}>
-            {protectionStatus?.dnsSettingsMatchDomainCount
-              ? `iOS matched-domain DNS settings cover ${protectionStatus.dnsSettingsMatchDomainCount} adult-domain suffix${protectionStatus.dnsSettingsMatchDomainCount === 1 ? "" : "es"}${protectionStatus.dnsSettingsProvider ? ` via ${protectionStatus.dnsSettingsProvider}` : ""}. This is optional DNS Settings, not a packet tunnel or full VPN.`
-              : "iOS DNS Settings support is available for signed builds with Apple's dns-settings entitlement. Safari Content Blocker and Screen Time remain the primary protection layers."}
-          </Text>
-        ) : null}
-        {protectionStatus?.dnsSettingsLastError ? (
-          <Text selectable style={{ color: colors.yellow, lineHeight: 19, marginBottom: 12, fontWeight: typography.bold }}>
-            iOS DNS Settings sync needs entitlement, provisioning, or user enablement: {protectionStatus.dnsSettingsLastError}
           </Text>
         ) : null}
         {protectionCapability?.localVpnFallback && privateDnsActive ? (
@@ -6216,7 +6569,11 @@ function InterceptScreen({
             )}
           </View>
 
-          <PillButton label={premium || selfUrge ? "Start Recovery Challenge" : "Continue to Reset"} onPress={onContinue} icon={<Play color={colors.bg} size={18} fill={colors.bg} />} />
+          <PillButton
+            label={premium || selfUrge || shouldBypassRewardedAdForAttempt(attempt) ? "Start Recovery Challenge" : "Continue to Reset"}
+            onPress={onContinue}
+            icon={<Play color={colors.bg} size={18} fill={colors.bg} />}
+          />
         </ScrollView>
       </SafeAreaView>
     </AppBackground>
@@ -7060,26 +7417,39 @@ function BreathingScreen({ onBack }: { onBack: () => void }) {
   );
 }
 
+function ProfileScreen({ recoveryState, premium, premiumCapabilities, streakDays, bestStreakDays, attempts, relapseCount, reminders, smartReminderSuggestion, retentionPlan, accountability, supportCircle, reminderBusy, onReminderChange, onAccountabilityChange, onSendSponsorReport, onSendSupportCircleReport, onSupportCircleChange, onSupportCircleRemove, onRestoreBackup, onDeleteLocalData, onDeleteAccountAndData, onManagePlan, onLogSlip, onOpenShield, pendingFirebaseEmailLink, onPendingFirebaseEmailLinkHandled }: {
+  recoveryState: RecoveryState; premium: boolean; premiumCapabilities: PremiumCapabilitySet; streakDays: number; bestStreakDays: number; attempts: BlockingAttempt[]; relapseCount: number;
+  reminders: ReminderPreferences; smartReminderSuggestion: SmartReminderSuggestion; retentionPlan: RetentionPlan; accountability: AccountabilityPartner; supportCircle: SupportCircleMember[]; reminderBusy: boolean;
+  onReminderChange: (update: Partial<ReminderPreferences>) => void; onAccountabilityChange: (update: Partial<AccountabilityPartner>) => void; onSendSponsorReport: () => void; onSendSupportCircleReport: (memberId: string) => void;
+  onSupportCircleChange: (memberId: string, update: Partial<Omit<SupportCircleMember, "id" | "updatedAt" | "lastContactedAt">>) => void; onSupportCircleRemove: (memberId: string) => void;
+  onRestoreBackup: (state: RecoveryState) => void; onDeleteLocalData: () => Promise<void> | void; onDeleteAccountAndData: () => Promise<FirebaseAccountDeletionResult>; onManagePlan: () => void; onLogSlip: () => void; onOpenShield: () => void; pendingFirebaseEmailLink: string | null; onPendingFirebaseEmailLinkHandled: () => void;
+}) {
+  return <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 20, paddingBottom: 112, gap: 18 }}>
+    <Text selectable style={{ color: colors.text, fontSize: 30, fontWeight: typography.heavy }}>Profile</Text>
+    <Card gradient={gradients.purple}><Text selectable style={{ color: colors.text, fontSize: 22, fontWeight: typography.heavy }}>FREED Member</Text><Text selectable style={{ color: colors.peach, marginTop: 6, fontWeight: typography.heavy }}>{streakDays} DAY STREAK · BEST {bestStreakDays}</Text></Card>
+    <Card><Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Recovery account</Text><Text selectable style={{ color: colors.text2, marginTop: 6 }}>Recovery data, backup, reminders, accountability, privacy, and support stay available here.</Text><View style={{ marginTop: 12 }}><PillButton label={premium ? "Membership active" : "Manage membership"} variant="ghost" onPress={onManagePlan} /></View></Card>
+    <Card><Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Recovery history</Text><Text selectable style={{ color: colors.text2, marginTop: 6 }}>{attempts.length} protected attempts · {relapseCount} slips logged privately.</Text><View style={{ marginTop: 12 }}><PillButton label="Log Slip Safely" variant="ghost" onPress={onLogSlip} /></View></Card>
+    <RetentionPlanCard plan={retentionPlan} />
+    <RecoveryBackupCard recoveryState={recoveryState} onRestore={onRestoreBackup} pendingFirebaseEmailLink={pendingFirebaseEmailLink} onPendingFirebaseEmailLinkHandled={onPendingFirebaseEmailLinkHandled} />
+    <PrivacySupportCard onDeleteLocalData={onDeleteLocalData} onDeleteAccountAndData={onDeleteAccountAndData} />
+    <ReminderSettingsCard reminders={reminders} busy={reminderBusy} smartSuggestion={smartReminderSuggestion} onChange={onReminderChange} />
+    <AccountabilitySettingsCard partner={accountability} supportCircle={supportCircle} recoveryState={recoveryState} canSendSponsorReport={premiumCapabilities.sponsorAccountability} canUseSupportCircle={premiumCapabilities.familySupport || premiumCapabilities.sponsorAccountability} onSendReport={onSendSponsorReport} onSendSupportCircleReport={onSendSupportCircleReport} onManagePlan={onManagePlan} onSupportCircleChange={onSupportCircleChange} onSupportCircleRemove={onSupportCircleRemove} onChange={onAccountabilityChange} />
+    <Card><Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Focus Shield</Text><Text selectable style={{ color: colors.text2, marginTop: 6 }}>Protection configuration is managed in Shield.</Text><View style={{ marginTop: 12 }}><PillButton label="Open Shield" variant="ghost" onPress={onOpenShield} accessibilityHint="Opens Focus Shield configuration." /></View></Card>
+  </ScrollView>;
+}
+
 function BottomNav({ tab, setTab, onPanic }: { tab: Tab; setTab: (tab: Tab) => void; onPanic: () => void }) {
-  const items = [
-    ["home", Home],
-    ["analytics", BarChart3],
-    ["shield", Shield],
-    ["library", BookOpen],
-    ["profile", CircleUserRound]
-  ] as const;
-  const navLabels: Record<Tab, string> = {
-    home: "Home",
-    analytics: "Analytics",
-    shield: "Shield",
-    library: "Library",
-    profile: "Profile"
-  };
+  const icons: Record<RootDestinationId, typeof Home> = { today: Home, shield: Shield, progress: BarChart3, profile: CircleUserRound };
+  const navLabels: Record<Tab, string> = ROOT_DESTINATIONS.reduce(
+    (labels, destination) => ({ ...labels, [destination.id]: destination.accessibilityLabel }),
+    {} as Record<Tab, string>
+  );
 
   return (
     <View style={{ position: "absolute", left: 12, right: 12, bottom: 16, flexDirection: "row", gap: 10, alignItems: "center" }}>
       <View style={{ flex: 1, minHeight: 70, borderRadius: 35, backgroundColor: "#1E1C2E", borderWidth: 1.4, borderColor: "rgba(255,255,255,0.1)", flexDirection: "row", alignItems: "center", padding: 6, ...shadow.soft }}>
-        {items.map(([id, Icon]) => {
+        {ROOT_DESTINATIONS.map(({ id, accessibilityLabel, compactLabel }) => {
+          const Icon = icons[id];
           const active = tab === id;
           return (
             <Pressable
@@ -7094,6 +7464,7 @@ function BottomNav({ tab, setTab, onPanic }: { tab: Tab; setTab: (tab: Tab) => v
               style={{ flex: 1, height: 58, borderRadius: 29, alignItems: "center", justifyContent: "center", backgroundColor: active ? "rgba(184,152,255,0.18)" : "transparent" }}
             >
               <Icon color={active ? colors.purple : "rgba(240,236,248,0.4)"} size={22} strokeWidth={active ? 2.6 : 2.1} />
+              <Text selectable numberOfLines={1} style={{ color: active ? colors.text : colors.text3, fontSize: 10, fontWeight: typography.bold }}>{compactLabel}</Text>
             </Pressable>
           );
         })}
@@ -7117,9 +7488,10 @@ export default function FreedApp() {
   const { width } = useWindowDimensions();
   const { state: recoveryState, setRecoveryState, hydrated, storageError } = usePersistentRecoveryState();
   const [screen, setScreen] = React.useState<Screen>("splash");
-  const [tab, setTab] = React.useState<Tab>("home");
+  const [tab, setTab] = React.useState<Tab>("today");
+  const [pendingFirebaseEmailLink, setPendingFirebaseEmailLink] = React.useState<string | null>(null);
   const [quizIndex, setQuizIndex] = React.useState(0);
-  const [activeAttempt, setActiveAttempt] = React.useState<BlockingAttempt | null>(null);
+  const [activeAttempt, setActiveAttempt] = React.useState<NativeInterventionAttempt | null>(null);
   const [selectedChallenge, setSelectedChallenge] = React.useState<RecoveryChallenge | null>(null);
   const [protectionCapability, setProtectionCapability] = React.useState<ProtectionCapability | null>(null);
   const [protectionStatus, setProtectionStatus] = React.useState<ProtectionStatus | null>(null);
@@ -7132,7 +7504,7 @@ export default function FreedApp() {
   const [analyticsSendBusy, setAnalyticsSendBusy] = React.useState(false);
   const [analyticsSendMessage, setAnalyticsSendMessage] = React.useState<string | null>(null);
   const [unlockClockMs, setUnlockClockMs] = React.useState(Date.now());
-  const consumedNativeIntervention = React.useRef<string | null>(null);
+  const pendingInterventionTracker = React.useRef(createPendingInterventionTracker());
   const consumedDeepLinkIntervention = React.useRef<string | null>(null);
   const consumedProtectionSetupLink = React.useRef<string | null>(null);
   const isWide = width > 760;
@@ -7184,6 +7556,7 @@ export default function FreedApp() {
     () => buildChallengePreferenceSignal(disciplineSettings),
     [disciplineSettings]
   );
+  const firebaseEmailLinkReadiness = React.useMemo(() => getFirebaseEmailLinkReadiness(), []);
   const activeUnlock = getActiveEarnedUnlock(recoveryState, new Date(unlockClockMs).toISOString());
   const activeNativeUnlock = React.useMemo(
     () => getActiveNativeEarnedUnlock(recoveryState.earnedUnlocks, Platform.OS, new Date(unlockClockMs).toISOString()),
@@ -7281,6 +7654,20 @@ export default function FreedApp() {
     setScreen("challenge");
   }, []);
 
+  const startStandaloneChallenge = React.useCallback(
+    (challenge?: RecoveryChallenge) => {
+      setActiveAttempt(null);
+      startChallenge(challenge);
+    },
+    [startChallenge]
+  );
+
+  const abandonActiveProtectionFlow = React.useCallback(() => {
+    setActiveAttempt(null);
+    setSelectedChallenge(null);
+    setScreen("main");
+  }, []);
+
   const startPanicIntervention = React.useCallback(() => {
     const attempt = createPanicInterventionAttempt();
     setRecoveryState((current) => recordBlockingAttempt(current, attempt));
@@ -7308,7 +7695,18 @@ export default function FreedApp() {
   }, [refreshProtectionStatus]);
 
   React.useEffect(() => {
-    configureNativeMonetizationRuntime({ platform: getRuntimeMonetizationPlatform() }).catch(() => undefined);
+    void startFirebaseClient();
+  }, []);
+
+  React.useEffect(() => {
+    configureNativeMonetizationRuntime({
+      platform: getRuntimeMonetizationPlatform(),
+      verifyStorePurchase: async (payload) => {
+        const contracts = await getFirebaseCallableContracts();
+        if (!contracts) throw new Error("Authenticated Firebase purchase verification is unavailable.");
+        return contracts.verifyStorePurchase(payload);
+      }
+    }).catch(() => undefined);
   }, []);
 
   React.useEffect(() => {
@@ -7416,7 +7814,11 @@ export default function FreedApp() {
 
     let cancelled = false;
     const syncUnlock = activeNativeUnlock
-      ? applyEarnedUnlockWindow(activeNativeUnlock.expiresAt, activeNativeUnlock.sourceAttemptHost)
+      ? applyEarnedUnlockWindow(
+          activeNativeUnlock.expiresAt,
+          activeNativeUnlock.sourceAttemptHost,
+          activeNativeUnlock.nativeInterventionId
+        )
       : clearEarnedUnlockWindow();
 
     syncUnlock
@@ -7431,7 +7833,14 @@ export default function FreedApp() {
     return () => {
       cancelled = true;
     };
-  }, [activeNativeUnlock?.expiresAt, activeNativeUnlock?.id, activeNativeUnlock?.sourceAttemptHost, hydrated, refreshProtectionStatus]);
+  }, [
+    activeNativeUnlock?.expiresAt,
+    activeNativeUnlock?.id,
+    activeNativeUnlock?.nativeInterventionId,
+    activeNativeUnlock?.sourceAttemptHost,
+    hydrated,
+    refreshProtectionStatus
+  ]);
 
   React.useEffect(() => {
     if (!hydrated) return undefined;
@@ -7505,6 +7914,9 @@ export default function FreedApp() {
       syncRecoveryReminders(nextPreferences)
         .then((result) => {
           setRecoveryState((current) => recordReminderSync(updateReminderPreferences(current, smartUpdate), result));
+          if (result.permissionStatus === "granted") {
+            void registerFirebasePushTokenAfterPermission(true);
+          }
         })
         .catch((error) => {
           setRecoveryState((current) =>
@@ -7540,18 +7952,14 @@ export default function FreedApp() {
   const consumePendingIntervention = React.useCallback(() => {
     if (!hydrated) return;
 
-    getPendingIntervention()
-      .then(async (pending) => {
-        if (!pending) return;
-        const interventionKey = `${pending.detectedAt}:${pending.url}`;
-        if (consumedNativeIntervention.current === interventionKey) return;
-
-        consumedNativeIntervention.current = interventionKey;
-        await clearPendingIntervention();
-
-        if (!isFreshPendingIntervention(pending)) return;
-
-        const attempt = createNativeInterventionAttempt(pending);
+    // The coordinator claims the exact native ID, then gates UI handoff with isFreshPendingIntervention(pending).
+    consumePendingInterventionOnce({
+      tracker: pendingInterventionTracker.current,
+      getPending: getPendingIntervention,
+      clearPending: clearPendingIntervention
+    })
+      .then((attempt) => {
+        if (!attempt) return;
         setRecoveryState((current) => recordBlockingAttempt(current, attempt));
         setActiveAttempt(attempt);
         setScreen("intercept");
@@ -7591,6 +7999,14 @@ export default function FreedApp() {
     },
     [hydrated, refreshProtectionStatus]
   );
+
+  const consumeFirebaseEmailLink = React.useCallback((url: string | null) => {
+    if (!firebaseEmailLinkReadiness.ready || !isFirebaseEmailLinkDeliveryUrl(url)) return false;
+    setPendingFirebaseEmailLink(url);
+    setTab("profile");
+    setScreen("main");
+    return true;
+  }, [firebaseEmailLinkReadiness.ready]);
 
   const messageAccountabilityPartner = React.useCallback(
     (challenge?: RecoveryChallenge) => {
@@ -7675,16 +8091,29 @@ export default function FreedApp() {
         defaultState.disciplineSettings.shortFormInterruptionSeconds
       )
     ]);
-    consumedNativeIntervention.current = null;
+    pendingInterventionTracker.current = createPendingInterventionTracker();
     consumedDeepLinkIntervention.current = null;
     setActiveAttempt(null);
     setSelectedChallenge(null);
     setProtectionStatus(null);
     setProtectionSyncMessage(null);
     setRecoveryState(defaultState);
-    setTab("home");
+    setTab("today");
     setScreen("welcome");
   }, [setRecoveryState]);
+
+  const deleteFirebaseAccountAndData = React.useCallback(async (): Promise<FirebaseAccountDeletionResult> => {
+    const contracts = await getFirebaseCallableContracts();
+    if (!contracts) throw new Error("Sign in to Firebase before deleting your account and hosted data.");
+    const result = await contracts.requestAccountDeletion({
+      clientEventId: createFirebaseClientEventId("deletion")
+    });
+    if (result.ok !== true || result.status !== "deleting") {
+      throw new Error("Firebase account deletion was not accepted.");
+    }
+    await deleteLocalRecoveryData();
+    return result;
+  }, [deleteLocalRecoveryData]);
 
   React.useEffect(() => {
     if (!hydrated) return undefined;
@@ -7703,6 +8132,7 @@ export default function FreedApp() {
     if (!hydrated) return undefined;
 
     const consumeFreedLink = (url: string | null) => {
+      if (consumeFirebaseEmailLink(url)) return;
       if (consumeProtectionSetupDeepLink(url)) return;
       consumeDeepLinkIntervention(url);
     };
@@ -7722,7 +8152,7 @@ export default function FreedApp() {
       cancelled = true;
       subscription.remove();
     };
-  }, [consumeDeepLinkIntervention, consumeProtectionSetupDeepLink, hydrated]);
+  }, [consumeDeepLinkIntervention, consumeFirebaseEmailLink, consumeProtectionSetupDeepLink, hydrated]);
 
   React.useEffect(() => {
     if (!hydrated || !reminders.enabled) return undefined;
@@ -7732,7 +8162,7 @@ export default function FreedApp() {
 
     listenForReminderResponses((route) => {
       if (route !== "checkin") return;
-      setTab("home");
+      setTab("today");
       setScreen("checkin");
     })
       .then((dispose) => {
@@ -7882,6 +8312,9 @@ export default function FreedApp() {
         />
       );
     }
+    if (screen === "library") {
+      return <AppBackground><SafeAreaView style={{ flex: 1 }}><LibraryScreen onBack={() => { setTab("today"); setScreen("main"); }} onBreathing={() => setScreen("breathing")} onChallenge={() => startStandaloneChallenge()} onCustomChallenge={() => setScreen("customChallenge")} onCoach={() => setScreen("coach")} customChallengeCount={customChallenges.length} customChallengesEnabled={premiumCapabilities.customChallenges} /></SafeAreaView></AppBackground>;
+    }
     if (screen === "intercept" && activeAttempt) {
       return (
         <InterceptScreen
@@ -7891,9 +8324,9 @@ export default function FreedApp() {
           streakDays={streakDays}
           accountability={accountability}
           onMessagePartner={() => messageAccountabilityPartner()}
-          onClose={() => setScreen("main")}
+          onClose={abandonActiveProtectionFlow}
           onContinue={() => {
-            if (premiumCapabilities.noAds || activeAttempt.source === "panic-button") startChallenge();
+            if (premiumCapabilities.noAds || shouldBypassRewardedAdForAttempt(activeAttempt)) startChallenge();
             else setScreen("ad");
           }}
         />
@@ -7922,17 +8355,25 @@ export default function FreedApp() {
           }}
           selected={selectedChallenge ?? undefined}
           onMessagePartner={hasUsableAccountabilityPartner(accountability) ? messageAccountabilityPartner : undefined}
-          onBack={() => {
-            setSelectedChallenge(null);
-            setScreen("main");
-          }}
+          onBack={abandonActiveProtectionFlow}
           onComplete={(challenge, outcome) => {
+            const completionDecision = getProtectionChallengeCompletionDecision(activeAttempt, outcome);
+            if (completionDecision.applyFocusShieldScope && activeAttempt?.scope?.kind === "android-surface") {
+              const focusShieldDurationMinutes = Math.max(1, Math.min(120, disciplineSettings.unlockDurationMinutes));
+              const focusShieldExpiresAt = new Date(Date.now() + focusShieldDurationMinutes * 60_000).toISOString();
+              void applyFocusShieldEarnedUnlock(focusShieldExpiresAt, activeAttempt.scope)
+                .then((status) => setProtectionStatus(status))
+                .catch(() => undefined)
+                .finally(() => void refreshProtectionStatus());
+            }
             setRecoveryState((current) => {
               const sourceAttempt = unlockSourceForAttempt(activeAttempt);
               const completed = recordChallengeCompletion(current, challenge, undefined, sourceAttempt, outcome);
+              if (!completionDecision.grantEarnedUnlock) return completed;
               return recordEarnedUnlock(completed, challenge, {
                 durationMinutes: current.disciplineSettings.unlockDurationMinutes,
-                sourceAttemptHost: sourceAttempt
+                nativeInterventionId: activeAttempt?.nativeInterventionId,
+                sourceAttemptHost: activeAttempt?.scope?.kind === "android-surface" ? undefined : sourceAttempt
               });
             });
             setActiveAttempt(null);
@@ -7952,7 +8393,7 @@ export default function FreedApp() {
           onSave={(input) => {
             const challenge = createCustomRecoveryChallenge(input);
             setRecoveryState((current) => addCustomRecoveryChallenge(current, challenge));
-            startChallenge(challenge);
+            startStandaloneChallenge(challenge);
           }}
         />
       );
@@ -7979,7 +8420,7 @@ export default function FreedApp() {
           onBack={() => setScreen("main")}
           onSave={(input) => {
             setRecoveryState((current) => recordDailyCheckIn(current, input));
-            setTab("home");
+            setTab("today");
             setScreen("main");
           }}
         />
@@ -7994,7 +8435,7 @@ export default function FreedApp() {
           onSave={(input) => {
             setRecoveryState((current) => recordRelapse(current, input));
             setActiveAttempt(null);
-            setTab("home");
+            setTab("today");
             setScreen("main");
           }}
         />
@@ -8003,8 +8444,8 @@ export default function FreedApp() {
 
     return (
       <AppBackground>
-        <SafeAreaView style={{ flex: 1, alignSelf: "center", width: "100%", maxWidth: isWide ? 520 : undefined }}>
-          {tab === "home" && (
+        <SafeAreaView style={{ flex: 1, alignSelf: "center", width: "100%", maxWidth: getLayoutClass(width) === "compact" ? 520 : 760 }}>
+          {tab === "today" && (
             <HomeScreen
               recoveryState={recoveryState}
               streakDays={streakDays}
@@ -8016,6 +8457,7 @@ export default function FreedApp() {
               premium={premium}
               onPanic={startPanicIntervention}
               onAttempt={(url) => handleAttempt(url)}
+              onOpenLibrary={() => setScreen("library")}
               onHabitToggle={(habit) => {
                 setRecoveryState((current) =>
                   recordDailyHabitCompletion(current, {
@@ -8027,7 +8469,7 @@ export default function FreedApp() {
               }}
             />
           )}
-          {tab === "analytics" && (
+          {tab === "progress" && (
             <AnalyticsScreen
               streakDays={streakDays}
               bestStreakDays={bestStreakDays}
@@ -8057,16 +8499,10 @@ export default function FreedApp() {
               disciplineSettings={disciplineSettings}
               activeUnlock={activeUnlock}
               onDisciplineChange={(update) => setRecoveryState((current) => updateDisciplineSettings(current, update))}
-            />
-          )}
-          {tab === "library" && (
-            <LibraryScreen
-              onBreathing={() => setScreen("breathing")}
-              onChallenge={() => startChallenge()}
-              onCustomChallenge={() => setScreen("customChallenge")}
-              onCoach={() => setScreen("coach")}
-              customChallengeCount={customChallenges.length}
-              customChallengesEnabled={premiumCapabilities.customChallenges}
+              protectionCapability={protectionCapability}
+              protectionStatus={protectionStatus}
+              onRefreshProtection={refreshProtectionStatus}
+              onOpenProtectionSetup={() => setScreen("protectionSetup")}
             />
           )}
           {tab === "profile" && (
@@ -8078,31 +8514,26 @@ export default function FreedApp() {
               bestStreakDays={bestStreakDays}
               attempts={attempts}
               relapseCount={relapseRecords.length}
-              lastRelapseAt={lastRelapseAt}
               reminders={reminders}
               smartReminderSuggestion={smartReminderSuggestion}
               retentionPlan={retentionPlan}
               accountability={accountability}
               supportCircle={supportCircle}
-              disciplineSettings={disciplineSettings}
               reminderBusy={reminderBusy}
               onReminderChange={changeReminderPreferences}
               onAccountabilityChange={(update) => setRecoveryState((current) => updateAccountabilityPartner(current, update))}
               onSendSponsorReport={sendSponsorReport}
               onSendSupportCircleReport={sendSupportCircleReport}
-              onSupportCircleChange={(memberId, update) =>
-                setRecoveryState((current) => updateSupportCircleMember(current, memberId, update))
-              }
+              onSupportCircleChange={(memberId, update) => setRecoveryState((current) => updateSupportCircleMember(current, memberId, update))}
               onSupportCircleRemove={(memberId) => setRecoveryState((current) => removeSupportCircleMember(current, memberId))}
               onRestoreBackup={setRecoveryState}
               onDeleteLocalData={deleteLocalRecoveryData}
+              onDeleteAccountAndData={deleteFirebaseAccountAndData}
               onManagePlan={() => setScreen("paywall")}
               onLogSlip={() => setScreen("slip")}
-              storageError={storageError}
-              protectionCapability={protectionCapability}
-              protectionStatus={protectionStatus}
-              protectionSyncMessage={protectionSyncMessage}
-              refreshProtectionStatus={refreshProtectionStatus}
+              onOpenShield={() => setTab("shield")}
+              pendingFirebaseEmailLink={pendingFirebaseEmailLink}
+              onPendingFirebaseEmailLinkHandled={() => setPendingFirebaseEmailLink(null)}
             />
           )}
           <BottomNav tab={tab} setTab={setTab} onPanic={startPanicIntervention} />
@@ -8110,10 +8541,6 @@ export default function FreedApp() {
       </AppBackground>
     );
   })();
-
-  if (screen === "main" && tab === "profile") {
-    return body;
-  }
 
   return body;
 }

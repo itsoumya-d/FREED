@@ -1,19 +1,19 @@
 # Store Legal Web Deploy Packet: store-legal-web-deploy-current
 
-Generated: 2026-06-11T03:03:27.637Z
+Generated: 2026-07-22T02:46:10.365Z
 Result: static-export-ready-deploy-blocked
 Static export ready: true
 Hosted URLs verified: false
 Ready for approved deploy: false
-Deploy blocked by: dns-not-resolving, eas-project-id-not-configured, eas-account-not-logged-in, eas-project-not-linked
+Deploy blocked by: dns-not-resolving, eas-project-id-not-configured, eas-account-not-logged-in, eas-project-not-linked, eas-legal-web-readiness-stale
 
 ## Public URLs
 
 | Route | Public URL | Static HTML | SHA-256 | Hosted Status |
 | --- | --- | --- | --- | --- |
-| /privacy | https://freedrecovery.app/privacy | dist/privacy.html | sha256-23d6a477278fc04fe0269378c83b8fe040224878c5d5e8668d8a95694de81e5b | not reachable |
-| /support | https://freedrecovery.app/support | dist/support.html | sha256-dc41a86b82ca7fca3a8096de5ace864ef22924f08c02519545fdef1fbb66cc69 | not reachable |
-| /account-deletion | https://freedrecovery.app/account-deletion | dist/account-deletion.html | sha256-89316b39748a776f2fac427af59ccc8eced7a2bfe6e9b7ad35de07a6f7ac9c99 | not reachable |
+| /privacy | https://freedrecovery.app/privacy | dist/privacy.html | sha256-009b086671a37b3bee3e9e28bb54677f688d94e49e2cbd4ae27cf67236de430d | not reachable |
+| /support | https://freedrecovery.app/support | dist/support.html | sha256-0e98e4c0bb4cd639ace95dba0a1c4f5ce83f6fa273be1a04aeffd631ed049b9d | not reachable |
+| /account-deletion | https://freedrecovery.app/account-deletion | dist/account-deletion.html | sha256-65562cdd19c3325cd7796865d5f76abb114d4bb627a370d59dc33e60b8091e6b | not reachable |
 
 ## Manual Static Hosting Handoff
 
@@ -23,9 +23,9 @@ Deploy blocked by: dns-not-resolving, eas-project-id-not-configured, eas-account
 
 | Route | Required Mapping | Static HTML | SHA-256 |
 | --- | --- | --- | --- |
-| /privacy | /privacy -> /privacy.html | dist/privacy.html | sha256-23d6a477278fc04fe0269378c83b8fe040224878c5d5e8668d8a95694de81e5b |
-| /support | /support -> /support.html | dist/support.html | sha256-dc41a86b82ca7fca3a8096de5ace864ef22924f08c02519545fdef1fbb66cc69 |
-| /account-deletion | /account-deletion -> /account-deletion.html | dist/account-deletion.html | sha256-89316b39748a776f2fac427af59ccc8eced7a2bfe6e9b7ad35de07a6f7ac9c99 |
+| /privacy | /privacy -> /privacy.html | dist/privacy.html | sha256-009b086671a37b3bee3e9e28bb54677f688d94e49e2cbd4ae27cf67236de430d |
+| /support | /support -> /support.html | dist/support.html | sha256-0e98e4c0bb4cd639ace95dba0a1c4f5ce83f6fa273be1a04aeffd631ed049b9d |
+| /account-deletion | /account-deletion -> /account-deletion.html | dist/account-deletion.html | sha256-65562cdd19c3325cd7796865d5f76abb114d4bb627a370d59dc33e60b8091e6b |
 
 | Config | Source | Exported | Source SHA-256 | Export SHA-256 |
 | --- | --- | --- | --- | --- |
@@ -51,21 +51,21 @@ Post-deploy audit order:
 - Bundle dir: `docs/validation/artifacts/store-legal-web-deploy-current/static-hosting-bundle`
 - Archive created: true
 - Archive: `docs/validation/artifacts/store-legal-web-deploy-current/freed-store-legal-web-static-bundle.zip`
-- Archive SHA-256: `sha256-d0362e54847dd15d0585e58fa7c81e6ee3209eee1410b2987aa22ac94d761633`
+- Archive SHA-256: `sha256-e3429564e5d015cb0d0c37ed0dc5db8bb5c70610675ab6e3394052b4bd6a8330`
 - Manifest: `docs/validation/artifacts/store-legal-web-deploy-current/static-hosting-bundle/static-hosting-manifest.json`
-- Manifest SHA-256: `sha256-00a9ccda77f2f2b10f2f73e029afb5c7ea053c36ef3296c2eaee5f4d734574ae`
+- Manifest SHA-256: `sha256-77323eb122ae54e95cbd13a2b745f90441247d064edf6e49308ac108f223c531`
 - Included files: 8
 - Total bytes: 82282
 
 | Kind | Target | Bytes | SHA-256 |
 | --- | --- | --- | --- |
-| legal-route-html | privacy.html | 26133 | sha256-23d6a477278fc04fe0269378c83b8fe040224878c5d5e8668d8a95694de81e5b |
-| legal-route-html | support.html | 24300 | sha256-dc41a86b82ca7fca3a8096de5ace864ef22924f08c02519545fdef1fbb66cc69 |
-| legal-route-html | account-deletion.html | 24067 | sha256-89316b39748a776f2fac427af59ccc8eced7a2bfe6e9b7ad35de07a6f7ac9c99 |
+| legal-route-html | privacy.html | 26133 | sha256-009b086671a37b3bee3e9e28bb54677f688d94e49e2cbd4ae27cf67236de430d |
+| legal-route-html | support.html | 24300 | sha256-0e98e4c0bb4cd639ace95dba0a1c4f5ce83f6fa273be1a04aeffd631ed049b9d |
+| legal-route-html | account-deletion.html | 24067 | sha256-65562cdd19c3325cd7796865d5f76abb114d4bb627a370d59dc33e60b8091e6b |
 | hosting-route-config | _redirects | 201 | sha256-c74f827165029e1a5d58b362ed5e39ad5784672d8f677ed6251d9ff21f0745ae |
 | hosting-route-config | _headers | 482 | sha256-38a658e0add51b5d95ee41e0625fb8a1b8118bd018a2d32755c576ef70e0e225 |
 | hosting-route-config | vercel.json | 1361 | sha256-d1521eb6aba607080aa7f61edf071b4f47b3d605f71da0cddd8a30153c6a9fce |
-| bundle-manifest | static-hosting-manifest.json | 5280 | sha256-00a9ccda77f2f2b10f2f73e029afb5c7ea053c36ef3296c2eaee5f4d734574ae |
+| bundle-manifest | static-hosting-manifest.json | 5280 | sha256-77323eb122ae54e95cbd13a2b745f90441247d064edf6e49308ac108f223c531 |
 | bundle-readme | STATIC_HOSTING_README.md | 458 | sha256-1e084f5586793196899ae9cd4e2a3c7efe0626f000c21da45b375b7ea7026a0c |
 
 ## Deployment Commands
@@ -103,8 +103,8 @@ npm run status:launch -- --run-id launch-status-current --output-dir docs/valida
 - Artifact: docs/validation/artifacts/store-legal-web-deploy-current/eas-legal-web-deploy-readiness.json
 - Generated: 2026-06-11T03:03:18.666Z
 - Result: blocked-before-deploy
-- Source freshness: current
-- Usable for current source reports: true
+- Source freshness: stale-source-report
+- Usable for current source reports: false
 - Ready for approved deploy: false
 - Ready for current approved deploy: false
 - Deployment attempted: false
@@ -115,7 +115,9 @@ npm run status:launch -- --run-id launch-status-current --output-dir docs/valida
 - EAS project linked: false
 - Approval env: FREED_LEGAL_WEB_DEPLOY_APPROVED=ready-to-deploy-legal-pages
 - Approval set now: false
-- EAS deploy blocked by: eas-project-id-not-configured, eas-account-not-logged-in, eas-project-not-linked
+- Source freshness reason: web-export-report-newer-than-eas-readiness
+- Newer source report: web-export-report (2026-07-22T02:46:09.941Z)
+- EAS deploy blocked by: eas-project-id-not-configured, eas-account-not-logged-in, eas-project-not-linked, eas-legal-web-readiness-stale
 - Boundary: EAS legal web deploy readiness only. This does not prove DNS ownership, custom-domain attachment, TLS issuance, hosted URL availability, legal review, store-console entry, platform approval, sandbox purchases, or physical-device evidence.
 
 ## Current Hosted Failures

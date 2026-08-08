@@ -293,7 +293,6 @@ function buildReport() {
       "ManagedSettings",
       "Safari Content Blocker",
       "does not inspect native third-party app screens",
-      "Optional DNS Settings",
       "does not include a packet-tunnel provider",
     ]) &&
       includesAll(files.iosPolicyPack, [
@@ -305,7 +304,7 @@ function buildReport() {
         "no full traffic proxying",
         "MITM HTTPS",
       ]),
-    "App Store metadata and iOS policy pack include Screen Time/Safari/DNS review boundaries.",
+    "App Store metadata and iOS policy pack include Screen Time and Safari review boundaries.",
   );
   pushCheck(
     checks,

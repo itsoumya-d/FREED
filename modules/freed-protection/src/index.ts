@@ -1,4 +1,17 @@
 import { requireNativeModule } from "expo-modules-core";
+import { sanitizeFocusShieldInterventionScope, sanitizeFocusShieldRule } from "../../../src/lib/focus-shield";
+import type {
+  FocusShieldCalibrationRequest,
+  FocusShieldCalibrationResult,
+  FocusShieldInterventionScope,
+  FocusShieldRule
+} from "../../../src/lib/focus-shield";
+
+export type {
+  FocusShieldCalibrationRequest,
+  FocusShieldCalibrationState,
+  FocusShieldCalibrationResult
+} from "../../../src/lib/focus-shield";
 
 export type ProtectionCapability = {
   platform: "ios" | "android" | "web" | "unknown";
@@ -38,6 +51,12 @@ export type ProtectionStatus = {
   appLimitReachedToday?: boolean;
   appLimitReachedDate?: string;
   shortFormInterruptionSeconds?: number;
+  focusShieldRuleCount?: number;
+  focusShieldEnabledRuleCount?: number;
+  focusShieldRuleStoreHealth?: "empty" | "ready" | "degraded";
+  activeFocusShieldUnlockExpiresAt?: string;
+  activeFocusShieldUnlockRuleId?: string;
+  activeFocusShieldUnlockPackageName?: string;
   activeUnlockExpiresAt?: string;
   activeUnlockSourcePackage?: string;
   vpnConsentRequired?: boolean;
@@ -88,17 +107,12 @@ export type ProtectionStatus = {
   safariContentBlockerStateCheckedAt?: string;
   safariContentBlockerStateError?: string;
   safariContentBlockerLastReloadError?: string;
-  dnsSettingsAvailable?: boolean;
-  dnsSettingsActive?: boolean;
-  dnsSettingsEntitled?: boolean;
-  dnsSettingsProvider?: string;
-  dnsSettingsMatchDomainCount?: number;
-  dnsSettingsLastError?: string;
   mode: "screen-time" | "accessibility" | "dns" | "vpn-fallback" | "prototype";
   message: string;
 };
 
 export type PendingIntervention = {
+  interventionId: string;
   url: string;
   host: string;
   sourcePackage: string;
@@ -106,6 +120,13 @@ export type PendingIntervention = {
   matchedRule: string;
   detectedAt: string;
   sessionDurationSec?: number;
+  scope?: FocusShieldInterventionScope;
+};
+
+export type FocusShieldRuleOperationResult = {
+  available: boolean;
+  rule: FocusShieldRule | null;
+  message: string;
 };
 
 export type ChallengePhotoClassification = {
@@ -191,14 +212,18 @@ type NativeFreedProtection = {
   ): Promise<ProtectionStatus>;
   configureAdultDomainFeed?(domains: string[], version: string, checksum: string, generatedAt: string): Promise<ProtectionStatus>;
   configureSafariContentBlockerRules?(rulesJson: string, version: string, checksum: string, generatedAt: string): Promise<ProtectionStatus>;
-  configureDnsSettings?(
-    resolverURL: string,
-    serverAddresses: string[],
-    matchDomains: string[],
-    providerLabel: string
+  applyEarnedUnlockWindow?(
+    expiresAt: string,
+    sourceAttemptHost?: string,
+    nativeInterventionId?: string
   ): Promise<ProtectionStatus>;
-  clearDnsSettings?(): Promise<ProtectionStatus>;
-  applyEarnedUnlockWindow?(expiresAt: string, sourceAttemptHost?: string): Promise<ProtectionStatus>;
+  startFocusShieldCalibration?(request: FocusShieldCalibrationRequest): Promise<FocusShieldCalibrationResult>;
+  cancelFocusShieldCalibration?(): Promise<FocusShieldCalibrationResult>;
+  getFocusShieldCalibration?(): Promise<FocusShieldCalibrationResult>;
+  configureFocusShieldRule?(rule: FocusShieldRule): Promise<FocusShieldRuleOperationResult>;
+  listFocusShieldRules?(): Promise<FocusShieldRule[]>;
+  removeFocusShieldRule?(ruleId: string): Promise<boolean>;
+  applyFocusShieldEarnedUnlock?(expiresAt: string, scope: FocusShieldInterventionScope): Promise<ProtectionStatus>;
   clearEarnedUnlockWindow?(): Promise<ProtectionStatus>;
   startRiskWindowMonitoring?(startHour: number, endHour: number, startMinute?: number, endMinute?: number): Promise<ProtectionStatus>;
   stopRiskWindowMonitoring?(): Promise<ProtectionStatus>;
@@ -210,7 +235,7 @@ type NativeFreedProtection = {
     requireReviewedAdultFeed?: boolean
   ): Promise<ProtectionActivationDiagnostics>;
   getPendingIntervention?(): Promise<PendingIntervention | null>;
-  clearPendingIntervention?(): Promise<boolean>;
+  clearPendingIntervention?(interventionId: string): Promise<boolean>;
   classifyChallengePhoto?(uri: string, expectedLabels: string[]): Promise<ChallengePhotoClassification>;
 };
 
@@ -255,12 +280,23 @@ const fallbackActivationDiagnostics: ProtectionActivationDiagnostics = {
   message: "Native activation diagnostics are unavailable in Expo Go/web preview."
 };
 
+const fallbackFocusShieldCalibration: FocusShieldCalibrationResult = {
+  state: "unavailable",
+  message: "Focus Shield calibration is unavailable in Expo Go/web preview."
+};
+
+const fallbackFocusShieldRuleOperation: FocusShieldRuleOperationResult = {
+  available: false,
+  rule: null,
+  message: "Focus Shield rule management is unavailable in Expo Go/web preview."
+};
+
 export async function getProtectionCapabilities() {
   return (await getNativeModule()?.getCapabilities()) ?? fallbackCapability;
 }
 
 export async function getProtectionStatus() {
-  return (await getNativeModule()?.getStatus()) ?? fallbackStatus;
+  return sanitizeFocusShieldStatusFields((await getNativeModule()?.getStatus()) ?? fallbackStatus);
 }
 
 export async function requestProtectionAuthorization() {
@@ -325,25 +361,149 @@ export async function configureSafariContentBlockerRules(
   return (await module.configureSafariContentBlockerRules?.(rulesJson, version, checksum, generatedAt)) ?? module.getStatus();
 }
 
-export async function configureDnsSettings(
-  resolverURL: string,
-  serverAddresses: string[],
-  matchDomains: string[],
-  providerLabel = "FREED adult-domain DNS"
+export async function applyEarnedUnlockWindow(
+  expiresAt: string,
+  sourceAttemptHost?: string,
+  nativeInterventionId?: string
 ) {
-  const module = getNativeModule();
-  if (!module) return fallbackStatus;
-  return (await module.configureDnsSettings?.(resolverURL, serverAddresses, matchDomains, providerLabel)) ?? module.getStatus();
+  const sanitizedInterventionId = sanitizePendingInterventionId(nativeInterventionId);
+  return (
+    (await getNativeModule()?.applyEarnedUnlockWindow?.(expiresAt, sourceAttemptHost, sanitizedInterventionId ?? undefined)) ??
+    fallbackStatus
+  );
 }
 
-export async function clearDnsSettings() {
+export async function startFocusShieldCalibration(request: FocusShieldCalibrationRequest): Promise<FocusShieldCalibrationResult> {
   const module = getNativeModule();
-  if (!module) return fallbackStatus;
-  return (await module.clearDnsSettings?.()) ?? module.getStatus();
+  if (!module?.startFocusShieldCalibration) return fallbackFocusShieldCalibration;
+  return sanitizeFocusShieldCalibrationResult(await module.startFocusShieldCalibration(request));
 }
 
-export async function applyEarnedUnlockWindow(expiresAt: string, sourceAttemptHost?: string) {
-  return (await getNativeModule()?.applyEarnedUnlockWindow?.(expiresAt, sourceAttemptHost)) ?? fallbackStatus;
+export async function cancelFocusShieldCalibration(): Promise<FocusShieldCalibrationResult> {
+  const module = getNativeModule();
+  if (!module?.cancelFocusShieldCalibration) return fallbackFocusShieldCalibration;
+  return sanitizeFocusShieldCalibrationResult(await module.cancelFocusShieldCalibration());
+}
+
+export async function getFocusShieldCalibration(): Promise<FocusShieldCalibrationResult> {
+  const module = getNativeModule();
+  if (!module?.getFocusShieldCalibration) return fallbackFocusShieldCalibration;
+  return sanitizeFocusShieldCalibrationResult(await module.getFocusShieldCalibration());
+}
+
+export async function configureFocusShieldRule(rule: FocusShieldRule): Promise<FocusShieldRuleOperationResult> {
+  const sanitizedRule = sanitizeFocusShieldRule(rule);
+  if (!sanitizedRule) {
+    return {
+      available: false,
+      rule: null,
+      message: "Focus Shield rule is invalid and was not sent to native protection."
+    };
+  }
+
+  const module = getNativeModule();
+  if (!module?.configureFocusShieldRule) return fallbackFocusShieldRuleOperation;
+  return sanitizeFocusShieldRuleOperationResult(await module.configureFocusShieldRule(sanitizedRule));
+}
+
+export async function listFocusShieldRules(): Promise<FocusShieldRule[]> {
+  const module = getNativeModule();
+  if (!module?.listFocusShieldRules) return [];
+  return (await module.listFocusShieldRules())
+    .map((rule) => sanitizeFocusShieldRule(rule))
+    .filter((rule): rule is FocusShieldRule => rule !== null);
+}
+
+export async function removeFocusShieldRule(ruleId: string): Promise<boolean> {
+  const module = getNativeModule();
+  if (!module?.removeFocusShieldRule) return false;
+  return module.removeFocusShieldRule(ruleId);
+}
+
+export async function applyFocusShieldEarnedUnlock(expiresAt: string, scope: FocusShieldInterventionScope): Promise<ProtectionStatus> {
+  const sanitizedScope = sanitizeFocusShieldInterventionScope(scope);
+  if (!sanitizedScope) return fallbackStatus;
+
+  const module = getNativeModule();
+  if (!module?.applyFocusShieldEarnedUnlock) return fallbackStatus;
+  return sanitizeFocusShieldStatusFields(await module.applyFocusShieldEarnedUnlock(expiresAt, sanitizedScope));
+}
+
+export function sanitizeFocusShieldStatusFields(value: ProtectionStatus): ProtectionStatus {
+  const source = value as ProtectionStatus & Record<string, unknown>;
+  const sanitized: ProtectionStatus = { ...value };
+  delete sanitized.focusShieldRuleCount;
+  delete sanitized.focusShieldEnabledRuleCount;
+  delete sanitized.focusShieldRuleStoreHealth;
+  delete sanitized.activeFocusShieldUnlockExpiresAt;
+  delete sanitized.activeFocusShieldUnlockRuleId;
+  delete sanitized.activeFocusShieldUnlockPackageName;
+
+  const ruleCount = sanitizeFocusShieldCount(source.focusShieldRuleCount);
+  const enabledRuleCount = sanitizeFocusShieldCount(source.focusShieldEnabledRuleCount);
+  if (ruleCount !== undefined) sanitized.focusShieldRuleCount = ruleCount;
+  if (enabledRuleCount !== undefined && (ruleCount === undefined || enabledRuleCount <= ruleCount)) {
+    sanitized.focusShieldEnabledRuleCount = enabledRuleCount;
+  }
+  if (source.focusShieldRuleStoreHealth === "empty" || source.focusShieldRuleStoreHealth === "ready" || source.focusShieldRuleStoreHealth === "degraded") {
+    sanitized.focusShieldRuleStoreHealth = source.focusShieldRuleStoreHealth;
+  }
+
+  const activeScope = sanitizeFocusShieldInterventionScope({
+    kind: "android-surface",
+    ruleId: source.activeFocusShieldUnlockRuleId,
+    packageName: source.activeFocusShieldUnlockPackageName
+  });
+  const activeExpiresAt = typeof source.activeFocusShieldUnlockExpiresAt === "string"
+    && Number.isFinite(Date.parse(source.activeFocusShieldUnlockExpiresAt))
+    ? source.activeFocusShieldUnlockExpiresAt
+    : null;
+  if (activeScope?.kind === "android-surface" && activeExpiresAt) {
+    sanitized.activeFocusShieldUnlockExpiresAt = activeExpiresAt;
+    sanitized.activeFocusShieldUnlockRuleId = activeScope.ruleId;
+    sanitized.activeFocusShieldUnlockPackageName = activeScope.packageName;
+  }
+
+  return sanitized;
+}
+
+function sanitizeFocusShieldCount(value: unknown): number | undefined {
+  return typeof value === "number" && Number.isInteger(value) && value >= 0 && value <= 64 ? value : undefined;
+}
+
+function sanitizeFocusShieldCalibrationResult(value: unknown): FocusShieldCalibrationResult {
+  if (!isRecord(value) || !isFocusShieldCalibrationState(value.state)) return fallbackFocusShieldCalibration;
+
+  const rule = value.rule === undefined ? undefined : sanitizeFocusShieldRule(value.rule) ?? undefined;
+  const message = typeof value.message === "string" ? value.message.trim().slice(0, 240) || undefined : undefined;
+  return { state: value.state, rule, message };
+}
+
+function sanitizeFocusShieldRuleOperationResult(value: unknown): FocusShieldRuleOperationResult {
+  if (!isRecord(value)) return fallbackFocusShieldRuleOperation;
+
+  const rule = value.rule === null || value.rule === undefined ? null : sanitizeFocusShieldRule(value.rule);
+  const message = typeof value.message === "string" ? value.message.trim().slice(0, 240) : fallbackFocusShieldRuleOperation.message;
+  return { available: value.available === true, rule, message };
+}
+
+function isFocusShieldCalibrationState(value: unknown): value is FocusShieldCalibrationResult["state"] {
+  return value === "idle"
+    || value === "calibrating"
+    || value === "ready"
+    || value === "success"
+    || value === "cancelled"
+    || value === "timeout"
+    || value === "unsupported-tree"
+    || value === "revoked-permission"
+    || value === "app-switched"
+    || value === "service-interrupted"
+    || value === "unavailable"
+    || value === "failed";
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 export async function clearEarnedUnlockWindow() {
@@ -379,13 +539,32 @@ export async function runActivationDiagnostics(
 export async function getPendingIntervention() {
   const module = getNativeModule();
   if (!module?.getPendingIntervention) return null;
-  return module.getPendingIntervention();
+  const pending = await module.getPendingIntervention();
+  if (!pending) return null;
+  const interventionId = sanitizePendingInterventionId(pending.interventionId);
+  if (!interventionId) return null;
+  const scope = sanitizeFocusShieldInterventionScope(pending.scope);
+  return {
+    ...pending,
+    interventionId,
+    ...(scope ? { scope } : { scope: undefined })
+  };
 }
 
-export async function clearPendingIntervention() {
+export async function clearPendingIntervention(interventionId: string) {
+  const sanitizedInterventionId = sanitizePendingInterventionId(interventionId);
+  if (!sanitizedInterventionId) return false;
   const module = getNativeModule();
   if (!module?.clearPendingIntervention) return false;
-  return module.clearPendingIntervention();
+  return module.clearPendingIntervention(sanitizedInterventionId);
+}
+
+function sanitizePendingInterventionId(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const normalized = value.trim().toLowerCase();
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(normalized)
+    ? normalized
+    : null;
 }
 
 export async function classifyChallengePhoto(uri: string, expectedLabels: string[]): Promise<ChallengePhotoClassification> {

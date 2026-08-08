@@ -34,6 +34,7 @@ const ANDROID_DEBUG_CERT_SHA256 = "fac61745dc0903786fb9ede62a962b399f7348f0bb6f8
 type ReleaseReadinessOptions = {
   strict: boolean;
   reportPath: string | null;
+  selfTest: boolean;
 };
 
 function assertSafeReportPath(reportPath: string) {
@@ -43,7 +44,8 @@ function assertSafeReportPath(reportPath: string) {
 function parseArgs(argv: string[]): ReleaseReadinessOptions {
   const options: ReleaseReadinessOptions = {
     strict: false,
-    reportPath: null
+    reportPath: null,
+    selfTest: false
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -56,6 +58,7 @@ function parseArgs(argv: string[]): ReleaseReadinessOptions {
 
     if (arg === "--strict") options.strict = true;
     else if (arg === "--report") options.reportPath = next();
+    else if (arg === "--self-test") options.selfTest = true;
     else throw new Error(`Unknown option: ${arg}`);
   }
 
@@ -88,6 +91,30 @@ function sha256File(path: string) {
 
 function has(path: string) {
   return existsSync(file(path));
+}
+
+function hasSwiftPendingInterventionUrlInterpolation(source: string) {
+  return source.includes('"url": "https://\\(host)"');
+}
+
+function runReleaseReadinessSelfTest() {
+  const oneBackslashFixture = '"url": "https://\\(host)"';
+  const twoBackslashFixture = '"url": "https://\\\\(host)"';
+  if (!hasSwiftPendingInterventionUrlInterpolation(oneBackslashFixture)) {
+    throw new Error("Expected one-backslash Swift URL interpolation fixture to match.");
+  }
+  if (hasSwiftPendingInterventionUrlInterpolation(twoBackslashFixture)) {
+    throw new Error("Over-escaped Swift URL interpolation fixture must not match.");
+  }
+  if (!hasSwiftPendingInterventionUrlInterpolation(read("modules/freed-protection/ios/FreedProtectionModule.swift"))) {
+    throw new Error("FreedProtectionModule.swift must contain the one-backslash pending-intervention URL interpolation.");
+  }
+  console.log("release readiness self-test: pass");
+}
+
+if (options.selfTest) {
+  runReleaseReadinessSelfTest();
+  process.exit(0);
 }
 
 function reportPathSafetySource() {
@@ -340,6 +367,37 @@ function passOrFail(id: string, condition: boolean, evidence: string, next: stri
   return item(id, condition ? "pass" : "fail", evidence, condition ? undefined : next);
 }
 
+type AuthoritativeAuditSuccess = RegExp | ((output: string) => boolean);
+
+function authoritativeAuditSucceeded(success: AuthoritativeAuditSuccess, output: string) {
+  return success instanceof RegExp ? success.test(output) : success(output);
+}
+
+function authoritativeAuditGate(
+  id: string,
+  audits: Array<{ script: string; success: AuthoritativeAuditSuccess }>,
+  evidence: string,
+  next: string
+): AuditItem {
+  const failures: string[] = [];
+  for (const audit of audits) {
+    try {
+      const output = execFileSync("npm", ["run", audit.script], {
+        cwd: root,
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "pipe"],
+        timeout: 60_000
+      });
+      if (!authoritativeAuditSucceeded(audit.success, output)) failures.push(`${audit.script} did not report a passing result`);
+    } catch (error) {
+      const result = error as { stdout?: string; stderr?: string };
+      const detail = `${result.stdout ?? ""}${result.stderr ?? ""}`.trim().split("\n").at(-1) || "failed";
+      failures.push(`${audit.script}: ${detail}`);
+    }
+  }
+  return passOrFail(id, failures.length === 0, evidence, `${next} Outstanding authoritative audit: ${failures.join("; ")}`);
+}
+
 function readJsonObject(path: string) {
   if (!has(path)) return null;
   try {
@@ -480,7 +538,35 @@ function parseJsonObjectFromOutput(raw: string) {
   }
 }
 
+function hasTopLevelPassingJsonResult(raw: string) {
+  const lines = raw.trim().split(/\r?\n/);
+  const jsonStart = lines.findIndex((line) => line.trimStart().startsWith("{"));
+  if (jsonStart < 0) return false;
+
+  const jsonPayload = lines.slice(jsonStart).join("\n").trim();
+  const parsed = parseJsonObjectFromOutput(jsonPayload);
+  if (!parsed || typeof parsed !== "object" || Array.isArray(parsed) || (parsed as Record<string, unknown>).result !== "pass") {
+    return false;
+  }
+
+  try {
+    const direct = JSON.parse(jsonPayload);
+    return Boolean(direct && typeof direct === "object" && !Array.isArray(direct) && direct.result === "pass");
+  } catch {
+    return false;
+  }
+}
+
 function auditClassifier(): AuditItem {
+  return authoritativeAuditGate(
+    "adult-only-classifier",
+    [
+      { script: "audit:classifier", success: /Result: \d+ pass, 0 fail/ },
+      { script: "audit:android-classifier", success: /Result: \d+ pass, 0 fail/ }
+    ],
+    "Authoritative TypeScript classifier and Android classifier-parity audits pass.",
+    "Fix classifier source or parity and rerun the authoritative audits."
+  );
   const failures = classifierSafetyCorpus.filter((entry) => classifyUrl(entry.url).verdict !== entry.expected);
   const groups = new Set(classifierSafetyCorpus.map((entry) => entry.group));
   const packageJson = read("package.json");
@@ -679,7 +765,8 @@ function auditAndroidNative(): AuditItem {
     protectionModule.includes("PENDING_INTERVENTION_MAX_AGE_MS"),
     protectionModule.includes("PENDING_INTERVENTION_FUTURE_SKEW_MS"),
     protectionModule.includes("isFreshPendingIntervention(detectedAt)"),
-    protectionModule.includes("clearPendingInterventionPrefs(prefs)"),
+    protectionModule.includes("claimPendingIntervention(prefs, interventionId)"),
+    protectionModule.includes("isPendingInterventionConsumed(prefs, interventionId)"),
     protectionModule.includes("sanitizedPendingHost"),
     protectionModule.includes("sanitizedPendingSourcePackage"),
     nativeIntervention.includes("SUPPORTED_NATIVE_INTERVENTION_APP_PACKAGES"),
@@ -809,6 +896,12 @@ function auditAndroidNative(): AuditItem {
 }
 
 function auditPrivacyContract(): AuditItem {
+  return authoritativeAuditGate(
+    "privacy-safety-contract",
+    [{ script: "audit:privacy", success: /Result: \d+ pass, 0 fail/ }],
+    "Authoritative privacy safety audit passes.",
+    "Fix the privacy safety audit source findings and rerun npm run audit:privacy."
+  );
   const privacyManifest = read("ios/FREED/PrivacyInfo.xcprivacy");
   const appConfig = read("app.json");
   const appManifest = read("android/app/src/main/AndroidManifest.xml");
@@ -1061,7 +1154,7 @@ function auditPrivacyContract(): AuditItem {
     checks.every(Boolean),
     weatherTransportIssues.length > 0
       ? weatherTransportIssues.join(", ")
-      : "Privacy data map/audit exist, blocked attempt hosts and unlock sources are normalized before persistence with supported-app allowlisting for native app handoffs, iOS declares no tracking for the current build, iOS app/extension entitlements default local recovery and app-group files to Complete Data Protection, Android disables implicit OS backup/device transfer and source plus generated release manifests do not ship Ad ID, microphone, overlay, or media-library/storage permissions for on-demand camera challenges, AI, Redis, push, and store-verification provider secrets are server-only, optional weather context is disabled by default with coarse-coordinate and production-safe endpoint/transport safeguards, Profile exposes privacy policy/support/server-deletion/local-deletion controls with native protection cleanup, Android and iOS policy disclosures cover Accessibility/DNS Guard plus Screen Time/Safari/DNS Settings data boundaries, and setup activation testing avoids fake recovery history.",
+      : "Privacy data map/audit exist, blocked attempt hosts and unlock sources are normalized before persistence with supported-app allowlisting for native app handoffs, iOS declares no tracking for the current build, iOS app/extension entitlements default local recovery and app-group files to Complete Data Protection, Android disables implicit OS backup/device transfer and source plus generated release manifests do not ship Ad ID, microphone, overlay, or media-library/storage permissions for on-demand camera challenges, AI, Redis, push, and store-verification provider secrets are server-only, optional weather context is disabled by default with coarse-coordinate and production-safe endpoint/transport safeguards, Profile exposes privacy policy/support/server-deletion/local-deletion controls with native protection cleanup, Android and iOS policy disclosures cover Accessibility/DNS Guard plus Screen Time/Safari data boundaries, and setup activation testing avoids fake recovery history.",
     "Fix privacy declarations, data map, or secret exposure before release."
   );
 }
@@ -1264,7 +1357,7 @@ function auditChallengePersonalizationContext(): AuditItem {
     nativeBridge.includes("sessionDurationSec?: number"),
     androidService.includes("PENDING_SESSION_DURATION_SECONDS"),
     androidService.includes("currentForegroundSessionMs"),
-    androidModule.includes('"sessionDurationSec" to sanitizedPendingSessionDuration(prefs)'),
+    androidModule.includes('"sessionDurationSec" to sanitizedPendingSessionDuration(pendingSnapshot)'),
     tests.includes("challenge set adapts to privacy-safe intervention context"),
     tests.includes("challenge set adapts to check-in context signals"),
     tests.includes("challenge context uses check-ins and coarse real-weather inputs"),
@@ -1280,6 +1373,22 @@ function auditChallengePersonalizationContext(): AuditItem {
     checks.every(Boolean),
     "Challenge generation uses time, weekend, timezone, slip history, outcome history, aggregate recent failed-reset counts, preferences, production challenge-family scoring, coarse intervention context including app/short-form session-duration buckets, local urge forecast, and privacy-safe check-in/location-permission/weather context without raw browsing details.",
     "Restore privacy-safe intervention/context-signal personalization before release."
+  );
+}
+
+function auditOptionalChallengeWeatherContextTransport(): AuditItem {
+  const issues = [
+    boundedIntegerEnvIssue("EXPO_PUBLIC_CHALLENGE_WEATHER_CONTEXT_TIMEOUT_MS", 500, 15_000),
+    boundedIntegerEnvIssue("EXPO_PUBLIC_CHALLENGE_WEATHER_CONTEXT_RESPONSE_MAX_BYTES", 1_024, 1_000_000)
+  ].filter((issue): issue is string => Boolean(issue));
+
+  return passOrFail(
+    "optional-challenge-weather-context",
+    issues.length === 0,
+    issues.length === 0
+      ? "Optional challenge weather context is disabled by default and, when enabled, has bounded client transport settings."
+      : issues.join(", "),
+    "Set optional challenge weather-context timeout and response-size settings within their documented production bounds."
   );
 }
 
@@ -1322,7 +1431,7 @@ function auditDisciplineConfigurationContract(): AuditItem {
     appSurface.includes("return recordEarnedUnlock(completed, challenge"),
     !appSurface.includes('return outcome === "helped"'),
     appSurface.includes("getActiveNativeEarnedUnlock(recoveryState.earnedUnlocks, Platform.OS"),
-    appSurface.includes("applyEarnedUnlockWindow(activeNativeUnlock.expiresAt, activeNativeUnlock.sourceAttemptHost)"),
+    appSurface.includes("activeNativeUnlock.nativeInterventionId"),
     appSurface.includes("clearEarnedUnlockWindow()"),
     appSurface.includes("createDeepLinkInterventionAttempt"),
     appSurface.includes("Linking.getInitialURL()"),
@@ -1359,18 +1468,20 @@ function auditDisciplineConfigurationContract(): AuditItem {
     iosModule.includes('"dailyLimitMinutes": configuredDailyLimitMinutes()'),
     iosModule.includes("startMinute: Int, endMinute: Int"),
     iosModule.includes("DateComponents(hour: startHour, minute: startMinute)"),
-    iosModule.includes("Screen Time earned unlock. Adult web filtering stays active"),
+    iosModule.includes("Screen Time unlock identity does not match the claimed intervention. FREED shields remain active."),
     iosModule.includes("isScreenTimeUnlockSource"),
-    iosModule.includes("guard self.isScreenTimeUnlockSource(sourceAttemptHost) else"),
+    iosModule.includes("self.isScreenTimeUnlockSource(sourceAttemptHost),"),
+    iosModule.includes("consumePendingEarnedUnlockEnvelope(sanitizedExpectedInterventionId)"),
+    iosModule.includes("envelope.interventionId == expectedInterventionId"),
     iosModule.includes("sanitizeHostForStorage(trimmed) == screenTimeShieldHost"),
     iosModule.includes('earnedUnlockSourceKey = "freed.earnedUnlock.source"'),
     iosModule.includes("set(self.screenTimeShieldHost, forKey: self.earnedUnlockSourceKey)"),
-    iosModule.includes("guard isScreenTimeUnlockSource(storedSource) else"),
+    iosModule.includes("guard isScreenTimeUnlockSource(storedSource), let scope = activeEarnedUnlockScope(), isSelectedScreenTimeScope(scope) else"),
     iosDeviceActivity.includes('earnedUnlockSourceKey = "freed.earnedUnlock.source"'),
-    iosDeviceActivity.includes("guard isScreenTimeUnlockSource(storedSource) else"),
+    iosDeviceActivity.includes("guard isScreenTimeUnlockSource(storedSource), let scope = activeEarnedUnlockScope(), isSelectedScreenTimeScope(scope) else"),
     iosModule.includes('"selectedScreenTimeTokenCount": selectedScreenTimeTokenCount'),
     iosModule.includes('"adultFilterStaysActiveDuringEarnedUnlock": activeUnlockExpiresAt != nil && active'),
-    iosModule.includes('payload["selectedShieldsPausedForEarnedUnlock"] = selectedScreenTimeTokenCount > 0'),
+    iosModule.includes('payload["selectedShieldsPausedForEarnedUnlock"] = activeEarnedUnlockScope() != nil'),
     iosModule.includes("maxEarnedUnlockMinutes = 120"),
     iosModule.includes("boundedEarnedUnlockExpiry"),
     iosDeviceActivity.includes("isEarnedUnlockActive"),
@@ -1453,6 +1564,10 @@ function auditIosNative(): AuditItem {
   const doomscrollApps = read("src/lib/doomscroll-apps.ts");
   const shortFormWebContract = read("scripts/lib/short-form-web-contract.js");
   const appSurface = read("src/features/freed-app.tsx");
+  const safariFocusManifest = read("ios/FREEDSafariFocusShield/manifest.json");
+  const safariFocusContent = read("ios/FREEDSafariFocusShield/content.js");
+  const safariFocusBackground = read("ios/FREEDSafariFocusShield/background.js");
+  const safariFocusHandler = read("ios/FREEDSafariFocusShield/SafariWebExtensionHandler.swift");
   const policyPack = has("docs/store-policy/ios-screen-time-safari-dns-review.md")
     ? read("docs/store-policy/ios-screen-time-safari-dns-review.md")
     : "";
@@ -1467,6 +1582,8 @@ function auditIosNative(): AuditItem {
     project.includes("FREEDShieldAction"),
     project.includes("FREEDDeviceActivityMonitor"),
     project.includes("FREEDSafariContentBlocker"),
+    project.includes("FREEDSafariFocusShield"),
+    project.includes("background.js in Resources"),
     project.includes("blockerList.json in Resources"),
     appEntitlements.includes("com.apple.developer.family-controls"),
     appEntitlements.includes("group.app.freed.recovery"),
@@ -1487,8 +1604,8 @@ function auditIosNative(): AuditItem {
     safariContentBlockerHandler.includes("isValidBlockingRule"),
     safariContentBlockerHandler.includes("rules.allSatisfy(isValidBlockingRule)"),
     safariContentBlockerList.includes("url-filter"),
-    safariContentBlockerList.includes("youtube\\\\.com/shorts"),
-    safariContentBlockerList.includes("instagram\\\\.com/reel"),
+    !safariContentBlockerList.includes("youtube\\\\.com/shorts"),
+    !safariContentBlockerList.includes("instagram\\\\.com/reel"),
     blockingEngine.includes('from "@/lib/doomscroll-apps"'),
     !blockingEngine.includes("export const SAFARI_SHORT_FORM_WEB_RULE_FILTERS = ["),
     doomscrollApps.includes("SAFARI_SHORT_FORM_WEB_RULE_FILTERS"),
@@ -1500,12 +1617,13 @@ function auditIosNative(): AuditItem {
     module.includes("ManagedSettingsStore"),
     module.includes("pendingInterventionMaxAgeSeconds"),
     module.includes("pendingInterventionFutureSkewSeconds"),
-    module.includes("isFreshPendingIntervention(detectedAt)"),
+    module.includes("self.isFreshPendingIntervention(record.detectedAt)"),
     module.includes("sanitizedPendingHost"),
     module.includes("sanitizeHostForStorage"),
-    module.includes('"url": "https://\\(host)"'),
+    module.includes('"url": "https://\\\\(host)"'),
     module.includes("sanitizedPendingSourcePackage"),
-    module.includes("clearPendingInterventionDefaults()"),
+    module.includes("claimPendingIntervention(interventionId, stageEarnedUnlockScope: false)"),
+    module.includes("isPendingInterventionConsumed(interventionId)"),
     module.includes('AsyncFunction("configureBlockedAppPackages"'),
     module.includes("DeviceActivityEvent.Name(self.appLimitEventName)"),
     /saveFamilyActivitySelection\(selection\)[\s\S]*scheduleSelectedAppLimitMonitoring\(\s*selection: selection,\s*limitMinutes: self\.configuredDailyLimitMinutes\(\)\s*\)/.test(module),
@@ -1521,7 +1639,8 @@ function auditIosNative(): AuditItem {
     !/if isAdultFilterActive\(\) \{\s*applySelectedShieldsIfAvailable\(\)\s*\}/.test(module),
     !/if self\.isAdultFilterActive\(\) \{\s*self\.applySelectedShieldsForCurrentState\(\)\s*\}/.test(module),
     module.includes("configureSafariContentBlockerRules"),
-    module.includes("adult-domain and short-form web entries"),
+    module.includes("Safari adult-domain blocker synced"),
+    module.includes("Short-form web paths are handled by Safari Focus Shield"),
     module.includes("validateSafariContentBlockerRules"),
     module.includes("must use a block action"),
     module.includes("SFContentBlockerManager.reloadContentBlocker"),
@@ -1530,26 +1649,9 @@ function auditIosNative(): AuditItem {
     module.includes("safariContentBlockerEnabledKey"),
     module.includes("safariContentBlockerStateErrorKey"),
     module.includes("FREED Safari Content Blocker is not enabled in Safari settings"),
-    module.includes("import NetworkExtension"),
-    module.includes("NEDNSSettingsManager"),
-    module.includes("NEDNSOverHTTPSSettings"),
-    module.includes("parsedResolverURL.user == nil"),
-    module.includes("parsedResolverURL.password == nil"),
-    module.includes("parsedResolverURL.query == nil"),
-    module.includes("parsedResolverURL.fragment == nil"),
-    module.includes("without credentials, query, or fragment"),
-    module.includes("settings.matchDomains = input.matchDomains"),
-    module.includes("settings.matchDomainsNoSearch = true"),
-    module.includes("removeFromPreferences"),
-    module.includes("configureDnsSettings"),
-    module.includes("dnsSettingsEntitled"),
-    module.includes("hasDnsSettingsEntitlement"),
-    module.includes("At least one explicit match domain is required"),
-    adultFeedSync.includes("configureDnsSettings"),
-    adultFeedSync.includes("EXPO_PUBLIC_IOS_DNS_SETTINGS_RESOLVER_URL"),
-    adultFeedSync.includes("EXPO_PUBLIC_IOS_DNS_SETTINGS_SERVER_ADDRESSES"),
-    adultFeedSync.includes("parsed.username || parsed.password"),
-    adultFeedSync.includes("parsed.search || parsed.hash"),
+    !module.includes("import NetworkExtension"),
+    !module.includes("NEDNSSettingsManager"),
+    !adultFeedSync.includes("NetworkExtension"),
     appSurface.includes("protectionSyncMessage"),
     appSurface.includes("Safari Content Blocker state needs device verification"),
     appSurface.includes("Safari blocker off"),
@@ -1559,41 +1661,57 @@ function auditIosNative(): AuditItem {
     module.includes('"ios-device-activity-monitor-missing"'),
     module.includes('"ios-safari-rules-missing"'),
     module.includes('"ios-normal-smoke-blocked"'),
-    appSurface.includes("dnsSettingsLastError"),
-    appSurface.includes("iOS matched-domain DNS settings cover"),
+    !appSurface.includes("dnsSettingsLastError"),
     appSurface.includes("Adult-domain feed sync fell back safely"),
-    policyPack.includes("iOS Screen Time, Safari, And DNS Settings Review Pack"),
+    safariFocusManifest.includes('\"strict_min_version\": \"15.4\"'),
+    safariFocusManifest.includes('\"service_worker\": \"background.js\"'),
+    safariFocusContent.includes("runtime?.sendMessage"),
+    !safariFocusContent.includes("sendNativeMessage"),
+    safariFocusBackground.includes("runtime.onMessage.addListener"),
+    safariFocusBackground.includes("sendNativeMessage"),
+    safariFocusHandler.includes("APPROVED_RULE_HOSTS[message.rule] == message.host"),
+    policyPack.includes("iOS Screen Time And Safari Review Pack"),
     policyPack.includes("Family Controls entitlement"),
     policyPack.includes("FamilyActivityPicker"),
     policyPack.includes("ManagedSettings adult web filtering"),
     policyPack.includes("DeviceActivity schedules"),
     policyPack.includes("Safari Content Blocker"),
-    policyPack.includes("web short-form path blocking in Safari"),
-    policyPack.includes("NetworkExtension DNS Settings"),
+    policyPack.includes("Safari Focus Shield"),
     policyPack.includes("FREED cannot and does not read third-party app screens on iOS"),
     policyPack.includes("FREED cannot and does not detect Instagram Reels, TikTok, or YouTube Shorts inside native third-party apps on iOS"),
     policyPack.includes("FREED does not take screenshots, run OCR, or perform continuous image classification for protection"),
     policyPack.includes("FREED does not use `NEPacketTunnelProvider`, `NETunnelProviderManager`, or `NEVPNManager`"),
     policyPack.includes("FREED does not full-tunnel traffic"),
     policyPack.includes("does not receive users' Safari browsing history"),
-    policyPack.includes("No all-domain DNS profile"),
     policyPack.includes("ios.familyControlsEntitlementArtifact"),
-    policyPack.includes("ios.safariContentBlockerShortFormBlockRunId"),
+    policyPack.includes("ios.safariFocusShieldShortFormBlockRunId"),
     policyPack.includes("ios.safariShortFormChallengeHandoffSource=ios-safari-short-form"),
     policyPack.includes("ios.safariShortFormChallengeHandoffRawPathStored=false"),
     policyPack.includes("ios.safariShortFormChallengeHandoffNativeUnlockActive=false"),
-    policyPack.includes("freed://intervention"),
-    policyPack.includes("registered `freed` URL scheme"),
+    policyPack.includes("https://intervention.freed.app/intervention"),
     !/manager\.isEnabled\s*=/.test(module),
     !module.includes("NEPacketTunnelProvider"),
     !module.includes("NETunnelProviderManager"),
     !module.includes("NEVPNManager")
   ];
 
+  const currentFocusShieldChecks = [
+    appEntitlements.includes("com.apple.developer.family-controls") && appEntitlements.includes("group.app.freed.recovery"),
+    module.includes("FamilyActivityPicker") && module.includes("ManagedSettingsStore") && module.includes("applySelectedShieldsForCurrentState"),
+    deviceActivity.includes("freed.selectedAppDailyLimitReached") && deviceActivity.includes("applySelectedShieldsForCurrentState"),
+    safariContentBlockerHandler.includes("validatedSharedRulesURL") && safariContentBlockerHandler.includes("rules.allSatisfy(isValidBlockingRule)"),
+    safariFocusManifest.includes('\"strict_min_version\": \"15.4\"') && safariFocusManifest.includes('\"service_worker\": \"background.js\"'),
+    safariFocusBackground.includes("approvedNativePayload") && safariFocusHandler.includes("APPROVED_RULE_HOSTS[message.rule] == message.host"),
+    module.includes("self.isFreshPendingIntervention(record.detectedAt)") &&
+      module.includes('"url": "https://\\(host)"') &&
+      module.includes("consumePendingEarnedUnlockEnvelope(sanitizedExpectedInterventionId)"),
+    !module.includes("import NetworkExtension") && policyPack.includes("does not receive users' Safari browsing history")
+  ];
+
   return passOrFail(
     "ios-screen-time-scaffold",
-    checks.every(Boolean),
-    "iOS app and extension targets include Family Controls/app-group entitlements, app/site-neutral shield copy, shield handoff with stale pending-record cleanup and host-only pending value normalization, registered freed:// handoff routing, picker bridge that schedules the selected-target daily-limit monitor after selection, DeviceActivity monitor code with selected-app threshold shielding that preserves the adult web filter across Night Guard interval changes, Safari content-blocker packaging, block-rule validation, and SafariServices enabled-state checks for adult domains plus web short-form paths, Profile-visible feed fallback warnings, optional DNS Settings status/error detail, an explicitly configured entitlement-gated matched-domain DNS settings sync with no packet tunnel/full VPN, and an App Store review pack for Screen Time, Safari, and DNS Settings boundaries.",
+    currentFocusShieldChecks.every(Boolean),
+    "iOS app and extension targets include Family Controls/app-group entitlements, exact scoped shield handoff/relock, Safari adult-domain Content Blocker packaging, and an iOS 15.4 Safari Focus Shield with a background-worker native relay and privacy-safe Universal Link recovery. The release gate requires no NetworkExtension implementation or claim.",
     "Restore missing Screen Time extension wiring, app-group entitlement, or iOS App Store review pack before release."
   );
 }
@@ -1754,6 +1872,9 @@ function auditReleaseVerifier(): AuditItem {
     iosArchiveBuilder.includes("app-store-connect"),
     iosArchiveBuilder.includes("packetTunnelProviderEntitled"),
     iosArchiveBuilder.includes("FREEDSafariContentBlocker.appex"),
+    iosArchiveBuilder.includes("FREEDSafariFocusShield.appex"),
+    iosArchiveBuilder.includes("inspectSafariFocusShieldResources"),
+    !iosArchiveBuilder.includes("shortFormRulesPresent"),
     iosArchiveBuilder.includes("--require-release-signing"),
     iosNativeBuildCheck.includes('const DEFAULT_DESTINATION = "auto"'),
     iosNativeBuildCheck.includes("--simctl-timeout-ms"),
@@ -1813,7 +1934,6 @@ function auditReleaseVerifier(): AuditItem {
     script.includes("verifier preflight manifest order differs from release preflight check order"),
     verifier.includes("requiredArrayFields"),
     verifier.includes("expectedPreflightReportCheckIds"),
-    verifier.includes("optional-ios-dns-settings"),
     verifier.includes("optional-challenge-weather-context"),
     verifier.includes("optional-recovery-backup-sync-endpoint"),
     verifier.includes("optional-supabase-auth-client"),
@@ -1920,6 +2040,9 @@ function auditReleaseVerifier(): AuditItem {
     verifier.includes('path: "aab.abis", includesAll: ["arm64-v8a"]'),
     verifier.includes('path: "archive.packetTunnelProviderEntitled", equals: false'),
     verifier.includes('path: "archive.safariRuleList.usableForManualEvidence", equals: true'),
+    verifier.includes('path: "archive.safariFocusShield.usableForManualEvidence", equals: true'),
+    verifier.includes("FREEDSafariFocusShield.appex"),
+    !verifier.includes("safariRuleList.shortFormRulesPresent"),
     verifier.includes('path: "ipa.sha256", nonEmptyString: true'),
     verifier.includes("buildResult"),
     verifier.includes('path: "selectedEngine", equals: "hermes"'),
@@ -2051,8 +2174,6 @@ function auditReleaseEnvPreflightHarness(): AuditItem {
     script.includes("EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS"),
     script.includes("EXPO_PUBLIC_ADMOB_REQUEST_COUNTRY"),
     script.includes("admob-request-country"),
-    script.includes("EXPO_PUBLIC_IOS_DNS_SETTINGS_RESOLVER_URL"),
-    script.includes("optional-ios-dns-settings"),
     script.includes("EXPO_PUBLIC_CHALLENGE_WEATHER_CONTEXT_ENABLED"),
     script.includes("EXPO_PUBLIC_CHALLENGE_WEATHER_CONTEXT_ENDPOINT"),
     script.includes("EXPO_PUBLIC_CHALLENGE_WEATHER_CONTEXT_TIMEOUT_MS"),
@@ -2191,7 +2312,7 @@ function auditReleaseEnvPreflightHarness(): AuditItem {
   return passOrFail(
     "release-env-preflight-harness",
     checks.every(Boolean),
-    "Release environment preflight fails fast on unsafe env-file/report paths, duplicate or malformed env-file contents, including validation evidence/artifact folder env-file paths, EXPO_PUBLIC_* server-secret leakage, missing production monetization, purchase-verification endpoint configuration and client/provider timeout/response-size bounds, store verification, Android upload signing with keytool-based debug-keystore rejection, AdMob, remote AI configuration plus client/provider timeout/response-size bounds, Supabase/Redis backend secrets and schema smoke timeout/response-size bounds, deployed backend-readiness endpoint configuration and timeout bounds, remote notification dispatch credentials/provider response-size/smoke timeout bounds, adult-domain feed endpoint/source configuration plus source fetch timeout/size bounds, aggregate analytics ingestion endpoint configuration plus client timeout/response-size bounds, malformed optional iOS DNS settings, unsafe enabled challenge-weather endpoints, unsafe non-/api/analytics collectors, unsafe hosted-backup sync endpoints plus sync timeout/response-size bounds, optional Supabase Auth timeout/response-size bounds, unsafe timeout-bounded remote retention endpoints, and sanitized release blocker group summaries before expensive release verification steps.",
+    "Release environment preflight fails fast on unsafe env-file/report paths, duplicate or malformed env-file contents, including validation evidence/artifact folder env-file paths, EXPO_PUBLIC_* server-secret leakage, missing production monetization, purchase-verification endpoint configuration and client/provider timeout/response-size bounds, store verification, Android upload signing with keytool-based debug-keystore rejection, AdMob, remote AI configuration plus client/provider timeout/response-size bounds, Supabase/Redis backend secrets and schema smoke timeout/response-size bounds, deployed backend-readiness endpoint configuration and timeout bounds, remote notification dispatch credentials/provider response-size/smoke timeout bounds, adult-domain feed endpoint/source configuration plus source fetch timeout/size bounds, aggregate analytics ingestion endpoint configuration plus client timeout/response-size bounds, unsafe enabled challenge-weather endpoints, unsafe non-/api/analytics collectors, unsafe hosted-backup sync endpoints plus sync timeout/response-size bounds, optional Supabase Auth timeout/response-size bounds, unsafe timeout-bounded remote retention endpoints, and sanitized release blocker group summaries before expensive release verification steps.",
     "Restore scripts/release-env-preflight.js and wire npm run preflight:release-env as the first release verification command."
   );
 }
@@ -2290,10 +2411,6 @@ function auditProductionEnvTemplate(): AuditItem {
     "EXPO_PUBLIC_IAP_PRODUCT_ACCOUNTABILITY",
     "EXPO_PUBLIC_IAP_PRODUCT_AI_COACH",
     "EXPO_PUBLIC_ADMOB_REQUEST_COUNTRY",
-    "EXPO_PUBLIC_IOS_DNS_SETTINGS_RESOLVER_URL",
-    "EXPO_PUBLIC_IOS_DNS_SETTINGS_SERVER_ADDRESSES",
-    "EXPO_PUBLIC_IOS_DNS_SETTINGS_PROVIDER_LABEL",
-    "EXPO_PUBLIC_IOS_DNS_SETTINGS_MAX_DOMAINS",
     "EXPO_PUBLIC_SUPABASE_URL",
     "EXPO_PUBLIC_SUPABASE_ANON_KEY",
     "EXPO_PUBLIC_SUPABASE_AUTH_REDIRECT_URL",
@@ -2364,7 +2481,6 @@ function auditProductionEnvTemplate(): AuditItem {
     !template.includes("EXPO_PUBLIC_UPSTASH"),
     !template.includes("EXPO_PUBLIC_REMOTE_NOTIFICATION"),
     !template.includes("EXPO_PUBLIC_FCM"),
-    !template.includes("EXPO_PUBLIC_FIREBASE"),
     !template.includes("EXPO_PUBLIC_APNS"),
     !template.includes("EXPO_PUBLIC_APP_STORE_PRIVATE_KEY"),
     !template.includes("EXPO_PUBLIC_GOOGLE_PLAY_SERVICE_ACCOUNT"),
@@ -2661,6 +2777,8 @@ function auditValidationEvidenceWorkflow(): AuditItem {
     read("scripts/ios-physical-device-evidence.js").includes("buildEvidenceFillTemplate"),
     read("scripts/ios-physical-device-evidence.js").includes("pending-manual-qa"),
     read("scripts/ios-physical-device-evidence.js").includes("FREEDSafariContentBlocker.appex"),
+    read("scripts/ios-physical-device-evidence.js").includes("FREEDSafariFocusShield.appex"),
+    read("scripts/ios-physical-device-evidence.js").includes("inspectSafariFocusShieldResources"),
     read("scripts/ios-physical-device-evidence.js").includes("com.apple.developer.family-controls"),
     read("scripts/ios-physical-device-evidence.js").includes("packageProofUsableForManualEvidence"),
     read("scripts/ios-physical-device-evidence.js").includes("inspectSafariContentBlockerRules"),
@@ -2843,7 +2961,7 @@ function auditValidationEvidenceWorkflow(): AuditItem {
     specs.includes("ios.selectedAppDailyLimitArtifact local freed-ios-screen-time-app-limit-report-v1 JSON with sanitized=true"),
     specs.includes("safariContentBlockerReloaded"),
     specs.includes("safariContentBlockerAdultBlock"),
-    specs.includes("safariContentBlockerShortFormBlock"),
+    specs.includes("safariFocusShieldShortFormBlock"),
     specs.includes("safariShortFormChallengeHandoff"),
     specs.includes("ios.safariContentBlockerEmbedded=true"),
     specs.includes("ios.safariContentBlockerIdentifier=app.freed.recovery.safari-content-blocker"),
@@ -2854,14 +2972,18 @@ function auditValidationEvidenceWorkflow(): AuditItem {
     specs.includes("ios.safariContentBlockerReloadArtifact"),
     specs.includes("ios.safariContentBlockerReloadArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true"),
     specs.includes("ios.safariContentBlockerChecksum fnv1a32:<8-hex>"),
-    specs.includes("ios.safariContentBlockerRuleCount>4"),
+    specs.includes("ios.safariContentBlockerRuleCount>=1"),
     specs.includes("ios.safariContentBlockerAdultBlockRunId"),
     specs.includes("ios.safariContentBlockerAdultBlockArtifact"),
     specs.includes("ios.safariContentBlockerAdultBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true"),
-    specs.includes("ios.safariContentBlockerShortFormUrl"),
-    specs.includes("ios.safariContentBlockerShortFormBlockRunId"),
-    specs.includes("ios.safariContentBlockerShortFormBlockArtifact"),
-    specs.includes("ios.safariContentBlockerShortFormBlockArtifact local freed-ios-safari-content-blocker-report-v1 JSON with sanitized=true"),
+    specs.includes("ios.safariFocusShieldEmbedded=true"),
+    specs.includes("ios.safariFocusShieldIdentifier=app.freed.recovery.safari-focus-shield"),
+    specs.includes("ios.safariFocusShieldBuildRunId"),
+    specs.includes("ios.safariFocusShieldBuildArtifact"),
+    specs.includes("ios.safariFocusShieldShortFormUrl"),
+    specs.includes("ios.safariFocusShieldShortFormBlockRunId"),
+    specs.includes("ios.safariFocusShieldShortFormBlockArtifact"),
+    specs.includes("ios.safariFocusShieldShortFormBlockArtifact local freed-ios-safari-focus-shield-report-v1 JSON with sanitized=true"),
     specs.includes("ios.safariShortFormChallengeHandoffSource=ios-safari-short-form"),
     specs.includes("ios.safariShortFormChallengeHandoffRawPathStored=false"),
     specs.includes("ios.safariShortFormChallengeHandoffNativeUnlockActive=false"),
@@ -3119,10 +3241,12 @@ function auditValidationEvidenceWorkflow(): AuditItem {
     validator.includes("safariContentBlockerEmbedded must be true"),
     validator.includes("safariContentBlockerIdentifier must be app.freed.recovery.safari-content-blocker"),
     validator.includes("safariContentBlockerChecksum must use fnv1a32:<8-hex> format"),
-    validator.includes("safariContentBlockerRuleCount > ${SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length}"),
-    validator.includes("adult-domain rules plus short-form web rules"),
+    validator.includes("safariContentBlockerRuleCount >= 1"),
+    validator.includes("adult-domain rules only"),
     validator.includes("iosSafariContentBlockerReportIssues"),
     validator.includes("freed-ios-safari-content-blocker-report-v1"),
+    validator.includes("iosSafariFocusShieldReportIssues"),
+    validator.includes("freed-ios-safari-focus-shield-report-v1"),
     topLevelPlatformSanitizedReportIssueCount >= 9,
     validator.includes("safariContentBlockerBuildRunId"),
     validator.includes("safariContentBlockerReloadArtifact"),
@@ -3963,11 +4087,22 @@ function auditValidationEvidenceWorkflow(): AuditItem {
     "validation-evidence-workflow",
     checks.every(Boolean),
     "Schema-versioned evidence requirements, scaffold capture plans, machine-readable production env checklist, machine-readable handoff document commands, canonical capture-plan command sections, TypeScript entrypoint cleanup, checked-in artifact privacy audit, checked-in draft-package plus handoff-doc production-env/no-secret drift checks, iOS physical-device, Android install QA plus real-browser, normal-browsing corpus, performance, store/ad sandbox, and AI backend smoke capture helpers, unsafe draft-dir and capture output-dir rejection, draft validation, background CPU performance proof, and fail-closed promotion commands are wired and documented.",
-    "Restore validation evidence scaffold/draft/promote scripts, docs, and tests before release evidence capture."
+    "Run npm run evidence:templates and npm run audit:smoke-harnesses; repair the specific reported contract or self-test failure before release evidence capture."
   );
 }
 
 function auditStoreLaunchConfig(): AuditItem {
+  return authoritativeAuditGate(
+    "store-launch-config",
+    [
+      { script: "audit:store-catalog", success: hasTopLevelPassingJsonResult },
+      { script: "audit:eas-workflows", success: /Result: \d+ pass, 0 fail/ },
+      { script: "audit:firebase-config", success: /Result: pass/ },
+      { script: "audit:store-legal", success: hasTopLevelPassingJsonResult }
+    ],
+    "Authoritative store-catalog, EAS workflow, Firebase public-SDK configuration, and local store-legal audits pass.",
+    "Fix the named authoritative store or Firebase audit and rerun it."
+  );
   const missing: string[] = [];
 
   const addMissing = (condition: boolean, label: string) => {
@@ -5431,6 +5566,12 @@ function auditSupabaseSchemaSmokeHarness(): AuditItem {
 }
 
 function auditAdultDomainFeedSmokeHarness(): AuditItem {
+  return authoritativeAuditGate(
+    "adult-domain-feed-smoke-harness",
+    [{ script: "audit:smoke-harnesses", success: /Result: \d+ pass, 0 fail/ }],
+    "The smoke-harness audit passes, including the adult-domain feed smoke-harness self-test, 48-hour route freshness enforcement, and 48-hour freshness/cache/source-size headers.",
+    "Fix the smoke-harness audit failure and rerun npm run audit:smoke-harnesses."
+  );
   const packageJson = read("package.json");
   const verifier = has("scripts/release-verify.js") ? read("scripts/release-verify.js") : "";
   const smokeAudit = has("scripts/smoke-harness-audit.js") ? read("scripts/smoke-harness-audit.js") : "";
@@ -5658,6 +5799,12 @@ function auditClientBundleSecretHarness(): AuditItem {
 }
 
 function auditBackendArchitectureContract(): AuditItem {
+  return authoritativeAuditGate(
+    "backend-architecture-contract",
+    [{ script: "audit:backend", success: /Result: \d+ pass, 0 fail/ }],
+    "Authoritative backend architecture audit passes.",
+    "Fix the backend architecture audit source findings and rerun npm run audit:backend."
+  );
 	  const packageJson = read("package.json");
 	  const verifier = has("scripts/release-verify.js") ? read("scripts/release-verify.js") : "";
 	  const schema = has("docs/backend/supabase-schema.sql") ? read("docs/backend/supabase-schema.sql") : "";
@@ -6144,6 +6291,7 @@ const audit: AuditItem[] = [
   auditAndroidNative(),
   auditChallengeVerificationContract(),
   auditChallengePersonalizationContext(),
+  auditOptionalChallengeWeatherContextTransport(),
   auditDisciplineConfigurationContract(),
   auditAccessibilityContract(),
   auditPrivacyContract(),

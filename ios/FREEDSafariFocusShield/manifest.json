@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "FREED Safari Focus Shield",
+  "version": "1.0.0",
+  "description": "Pauses approved short-form web routes and hands off to a local FREED recovery challenge.",
+  "browser_specific_settings": {
+    "safari": {
+      "strict_min_version": "15.4"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["nativeMessaging"],
+  "host_permissions": [
+    "*://youtube.com/*",
+    "*://*.youtube.com/*",
+    "*://instagram.com/*",
+    "*://*.instagram.com/*",
+    "*://tiktok.com/*",
+    "*://*.tiktok.com/*",
+    "https://intervention.freed.app/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://youtube.com/*",
+        "*://*.youtube.com/*",
+        "*://instagram.com/*",
+        "*://*.instagram.com/*",
+        "*://tiktok.com/*",
+        "*://*.tiktok.com/*",
+        "https://intervention.freed.app/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ]
+}

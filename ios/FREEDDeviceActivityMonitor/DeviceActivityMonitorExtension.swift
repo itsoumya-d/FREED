@@ -4,11 +4,19 @@ import Foundation
 import ManagedSettings
 
 final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
+  private struct InterventionScope: Codable {
+    let kind: String
+    let tokenType: String?
+    let token: String?
+    let domain: String?
+  }
+
   private let store = ManagedSettingsStore()
   private let appGroupIdentifier = "group.app.freed.recovery"
   private let familyActivitySelectionKey = "freed.familyActivitySelection"
   private let earnedUnlockExpiresAtKey = "freed.earnedUnlock.expiresAt"
   private let earnedUnlockSourceKey = "freed.earnedUnlock.source"
+  private let earnedUnlockScopeKey = "freed.earnedUnlock.scope"
   private let screenTimeShieldHost = "screen-time-shield.freed.local"
   private let screenTimeShieldSource = "ios-screen-time"
   private let nightGuardActivityName = DeviceActivityName("freed.nightGuard")
@@ -81,7 +89,9 @@ final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
 
   private func applySelectedShieldsForCurrentState() {
     if isEarnedUnlockActive() {
-      clearSelectedShields()
+      if let scope = activeEarnedUnlockScope() {
+        applySelectedShieldsExcludingEarnedUnlockScope(scope)
+      }
       return
     }
 
@@ -117,6 +127,51 @@ final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     store.shield.webDomainCategories = selection.categoryTokens.isEmpty ? nil : .specific(selection.categoryTokens)
   }
 
+  private func applySelectedShieldsExcludingEarnedUnlockScope(_ scope: InterventionScope) {
+    guard
+      let data = sharedDefaults().data(forKey: familyActivitySelectionKey),
+      let selection = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data),
+      let tokenType = scope.tokenType,
+      let encodedToken = scope.token,
+      encodedToken.count <= 8_192,
+      let tokenData = Data(base64Encoded: encodedToken)
+    else {
+      applySelectedShieldsIfAvailable()
+      return
+    }
+
+    var remainingApplications = selection.applicationTokens
+    var remainingCategories = selection.categoryTokens
+    var remainingWebDomains = selection.webDomainTokens
+    var excludedApplications = Set<ApplicationToken>()
+    var excludedWebDomains = Set<WebDomainToken>()
+
+    switch tokenType {
+    case "application":
+      guard let token = try? JSONDecoder().decode(ApplicationToken.self, from: tokenData) else { return }
+      remainingApplications = selection.applicationTokens.subtracting([token])
+      excludedApplications.insert(token)
+    case "domain":
+      guard let token = try? JSONDecoder().decode(WebDomainToken.self, from: tokenData) else { return }
+      remainingWebDomains = selection.webDomainTokens.subtracting([token])
+      excludedWebDomains.insert(token)
+    case "category":
+      guard let token = try? JSONDecoder().decode(ActivityCategoryToken.self, from: tokenData) else { return }
+      remainingCategories = selection.categoryTokens.subtracting([token])
+    default:
+      return
+    }
+
+    store.shield.applications = remainingApplications.isEmpty ? nil : remainingApplications
+    store.shield.applicationCategories = remainingCategories.isEmpty
+      ? nil
+      : .specific(remainingCategories, except: excludedApplications)
+    store.shield.webDomains = remainingWebDomains.isEmpty ? nil : remainingWebDomains
+    store.shield.webDomainCategories = remainingCategories.isEmpty
+      ? nil
+      : .specific(remainingCategories, except: excludedWebDomains)
+  }
+
   private func isRiskWindowCurrentlyActive() -> Bool {
     sharedDefaults().bool(forKey: riskWindowCurrentlyActiveKey)
   }
@@ -147,7 +202,7 @@ final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
       return false
     }
 
-    guard isScreenTimeUnlockSource(storedSource) else {
+    guard isScreenTimeUnlockSource(storedSource), let scope = activeEarnedUnlockScope(), isSelectedScreenTimeScope(scope) else {
       clearEarnedUnlockState()
       return false
     }
@@ -183,6 +238,37 @@ final class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     let defaults = sharedDefaults()
     defaults.removeObject(forKey: earnedUnlockExpiresAtKey)
     defaults.removeObject(forKey: earnedUnlockSourceKey)
+    defaults.removeObject(forKey: earnedUnlockScopeKey)
+  }
+
+  private func activeEarnedUnlockScope() -> InterventionScope? {
+    guard let data = sharedDefaults().data(forKey: earnedUnlockScopeKey) else { return nil }
+    return try? JSONDecoder().decode(InterventionScope.self, from: data)
+  }
+
+  private func isSelectedScreenTimeScope(_ scope: InterventionScope) -> Bool {
+    guard
+      scope.kind == "ios-token",
+      let selectionData = sharedDefaults().data(forKey: familyActivitySelectionKey),
+      let selection = try? JSONDecoder().decode(FamilyActivitySelection.self, from: selectionData),
+      let tokenType = scope.tokenType,
+      let encodedToken = scope.token,
+      encodedToken.count <= 8_192,
+      let tokenData = Data(base64Encoded: encodedToken)
+    else {
+      return false
+    }
+
+    switch tokenType {
+    case "application":
+      return (try? JSONDecoder().decode(ApplicationToken.self, from: tokenData)).map(selection.applicationTokens.contains) ?? false
+    case "domain":
+      return (try? JSONDecoder().decode(WebDomainToken.self, from: tokenData)).map(selection.webDomainTokens.contains) ?? false
+    case "category":
+      return (try? JSONDecoder().decode(ActivityCategoryToken.self, from: tokenData)).map(selection.categoryTokens.contains) ?? false
+    default:
+      return false
+    }
   }
 
   private func parseIsoDate(_ value: String) -> Date? {

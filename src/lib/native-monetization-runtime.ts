@@ -13,7 +13,8 @@ import {
 import {
   createNativeIapStoreAdapter,
   expoIapModuleFromImport,
-  type ExpoIapModule
+  type ExpoIapModule,
+  type NativeIapPurchaseVerifier
 } from "@/lib/native-iap-adapter";
 
 type ModuleLoader = (specifier: string) => Promise<unknown>;
@@ -160,7 +161,11 @@ function adMobBridgeFromModule(moduleValue: unknown): AdMobRewardedBridge | null
 }
 
 export async function createNativeSdkMonetizationProvider(
-  options: { loader?: ModuleLoader; platform?: MonetizationPlatform } = {}
+  options: {
+    loader?: ModuleLoader;
+    platform?: MonetizationPlatform;
+    verifyStorePurchase?: NativeIapPurchaseVerifier;
+  } = {}
 ) {
   const platform = getPlatform(options.platform);
   if (platform !== "ios" && platform !== "android") return null;
@@ -178,7 +183,7 @@ export async function createNativeSdkMonetizationProvider(
   let store = null as ReturnType<typeof createNativeIapStoreAdapter> | ReturnType<typeof createRevenueCatStoreAdapter> | null;
   const expoIap: ExpoIapModule | null = expoIapModuleFromImport(expoIapModule);
   if (expoIap) {
-    store = createNativeIapStoreAdapter(expoIap);
+    store = createNativeIapStoreAdapter(expoIap, options.verifyStorePurchase);
   }
   if (!store) {
     const revenueCatSdk = revenueCatSdkFromModule(revenueCatModule);
@@ -195,13 +200,21 @@ export async function createNativeSdkMonetizationProvider(
 }
 
 export async function configureNativeMonetizationRuntime(
-  options: { loader?: ModuleLoader; platform?: MonetizationPlatform } = {}
+  options: {
+    loader?: ModuleLoader;
+    platform?: MonetizationPlatform;
+    verifyStorePurchase?: NativeIapPurchaseVerifier;
+  } = {}
 ) {
   const platform = getPlatform(options.platform);
   const config = getMonetizationConfig({ platform });
   if (config.mode !== "native") return false;
 
-  const provider = await createNativeSdkMonetizationProvider({ loader: options.loader, platform });
+  const provider = await createNativeSdkMonetizationProvider({
+    loader: options.loader,
+    platform,
+    verifyStorePurchase: options.verifyStorePurchase
+  });
   configureNativeMonetizationProvider(provider);
   return Boolean(provider);
 }

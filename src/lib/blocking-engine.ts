@@ -1,7 +1,3 @@
-import { SAFARI_SHORT_FORM_WEB_RULE_FILTERS } from "@/lib/doomscroll-apps";
-
-export { SAFARI_SHORT_FORM_WEB_RULE_FILTERS } from "@/lib/doomscroll-apps";
-
 export type BlockVerdict = "allow" | "block" | "review";
 
 export type ClassificationResult = {
@@ -388,7 +384,7 @@ export function getAdultDomainFeedReadiness(feed: AdultDomainFeed = getEmbeddedA
 }
 
 export function compileSafariContentBlockerRules(feed: AdultDomainFeed = getEmbeddedAdultDomainFeed()): SafariContentBlockerRule[] {
-  const adultDomainRules: SafariContentBlockerRule[] = feed.domains.map((domain) => ({
+  return feed.domains.map((domain) => ({
     trigger: {
       "url-filter": `^https?://([^/?#]+\\.)?${escapeRegExp(domain)}([/:?#]|$)`
     },
@@ -396,16 +392,6 @@ export function compileSafariContentBlockerRules(feed: AdultDomainFeed = getEmbe
       type: "block"
     }
   }));
-  const shortFormRules: SafariContentBlockerRule[] = SAFARI_SHORT_FORM_WEB_RULE_FILTERS.map((urlFilter) => ({
-    trigger: {
-      "url-filter": urlFilter
-    },
-    action: {
-      type: "block"
-    }
-  }));
-
-  return [...adultDomainRules, ...shortFormRules];
 }
 
 function normalizeDomainList(values: string[]) {

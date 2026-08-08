@@ -1,4 +1,6 @@
 import type { BlockingAttempt, ClassificationResult } from "./blocking-engine";
+import { sanitizeFocusShieldInterventionScope } from "./focus-shield";
+import type { FocusShieldInterventionScope } from "./focus-shield";
 import type { EarnedUnlock } from "./recovery-state";
 import {
   INSTAGRAM_REELS_RULE,
@@ -11,6 +13,7 @@ import {
 } from "./doomscroll-apps";
 
 export type NativePendingInterventionPayload = {
+  interventionId: string;
   url: string;
   host: string;
   sourcePackage: string;
@@ -18,10 +21,24 @@ export type NativePendingInterventionPayload = {
   matchedRule: string;
   detectedAt: string;
   sessionDurationSec?: number;
+  scope?: FocusShieldInterventionScope;
+};
+
+export type NativeInterventionAttempt = BlockingAttempt & {
+  nativeInterventionId?: string;
+  scope?: FocusShieldInterventionScope;
 };
 
 export const PENDING_INTERVENTION_MAX_AGE_MS = 10 * 60 * 1000;
 export const SUPPORTED_NATIVE_INTERVENTION_APP_PACKAGES = SUPPORTED_DOOMSCROLL_APP_PACKAGES;
+
+export function sanitizeNativeInterventionId(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const normalized = value.trim().toLowerCase();
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/.test(normalized)
+    ? normalized
+    : null;
+}
 
 const supportedNativeAppPackageSet = new Set<string>(SUPPORTED_NATIVE_INTERVENTION_APP_PACKAGES);
 const APP_INTERVENTION_FALLBACK_HOST = "selected-app.app.freed.local";
@@ -37,12 +54,13 @@ export function isFreshPendingIntervention(
   pending: NativePendingInterventionPayload,
   nowMs = Date.now()
 ): boolean {
+  if (!sanitizeNativeInterventionId(pending.interventionId)) return false;
   const detectedMs = Date.parse(pending.detectedAt);
   if (Number.isNaN(detectedMs)) return false;
   return detectedMs <= nowMs + 60_000 && nowMs - detectedMs <= PENDING_INTERVENTION_MAX_AGE_MS;
 }
 
-export function createNativeInterventionAttempt(pending: NativePendingInterventionPayload): BlockingAttempt {
+export function createNativeInterventionAttempt(pending: NativePendingInterventionPayload): NativeInterventionAttempt {
   const detectedAt = Number.isNaN(Date.parse(pending.detectedAt)) ? new Date().toISOString() : pending.detectedAt;
   const matchedRule = normalizeMatchedRule(pending.matchedRule);
   const source = isNativeAppRule(matchedRule) ? "app" : "browser";
@@ -51,6 +69,8 @@ export function createNativeInterventionAttempt(pending: NativePendingInterventi
     source === "app"
       ? normalizeAppPendingHost(pending, matchedRule, sourcePackage)
       : normalizePendingHost(pending) || "screen-time-shield.freed.local";
+  const scope = sanitizeNativePendingScope(pending.scope, matchedRule, sourcePackage);
+  const interventionId = sanitizeNativeInterventionId(pending.interventionId);
 
   return {
     url: `https://${host}`,
@@ -59,6 +79,8 @@ export function createNativeInterventionAttempt(pending: NativePendingInterventi
     source,
     sourcePackage,
     sessionDurationSec: source === "app" ? sanitizeSessionDurationSeconds(pending.sessionDurationSec) : undefined,
+    ...(interventionId ? { nativeInterventionId: interventionId } : {}),
+    ...(scope ? { scope } : {}),
     result: {
       verdict: "block",
       confidence: 0.98,
@@ -68,6 +90,17 @@ export function createNativeInterventionAttempt(pending: NativePendingInterventi
       matchedRule: matchedRule || "native-protection"
     }
   };
+}
+
+function sanitizeNativePendingScope(
+  value: unknown,
+  matchedRule: string,
+  sourcePackage: string | undefined
+): FocusShieldInterventionScope | null {
+  const scope = sanitizeFocusShieldInterventionScope(value);
+  if (!scope || scope.kind !== "android-surface") return scope;
+  if (matchedRule !== `focus-shield:${scope.ruleId}`) return null;
+  return sourcePackage === scope.packageName ? scope : null;
 }
 
 export function createDeepLinkInterventionAttempt(deepLinkUrl: string, detectedAt = new Date().toISOString()): BlockingAttempt | null {
@@ -180,11 +213,21 @@ function inferNativeCategory(matchedRule: string): ClassificationResult["categor
   if (matchedRule.startsWith("safe-site-search:")) return "adult-search-intent";
   if (matchedRule.startsWith("configured-app:")) return "unknown";
   if (matchedRule.startsWith("short-form:")) return "unknown";
+  if (matchedRule.startsWith("focus-shield:")) return "unknown";
   if (matchedRule.startsWith("ios-screen-time-shield")) return "unknown";
   return "adult";
 }
 
 function normalizeMatchedRule(matchedRule: string): string {
+  const focusShieldMatch = matchedRule.trim().match(/^focus-shield:(.+)$/i);
+  if (focusShieldMatch) {
+    const ruleId = focusShieldMatch[1]
+      ?.trim()
+      .replace(/[^a-zA-Z0-9_.-]/g, "")
+      .slice(0, 128);
+    return ruleId && ruleId.length >= 6 ? `focus-shield:${ruleId}` : "focus-shield:unsupported";
+  }
+
   const normalized = matchedRule
     .trim()
     .toLowerCase()
@@ -226,6 +269,7 @@ function isNativeAppRule(matchedRule: string): boolean {
   return (
     matchedRule.startsWith("configured-app:") ||
     matchedRule.startsWith("short-form:") ||
+    matchedRule.startsWith("focus-shield:") ||
     matchedRule.startsWith("ios-screen-time-shield")
   );
 }

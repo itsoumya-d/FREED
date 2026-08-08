@@ -158,7 +158,8 @@ const reportArtifactRequiredResultIds = {
     "ios-release-bundle-id",
     "ios-release-entitlements",
     "ios-release-embedded-extensions",
-    "ios-release-safari-content-blocker"
+    "ios-release-safari-content-blocker",
+    "ios-release-safari-focus-shield"
   ],
   "smoke:backend-readiness": [
     "backend-readiness-endpoint",
@@ -272,7 +273,6 @@ const expectedPreflightReportCheckIds = [
   "redis-backend-infrastructure",
   "backend-readiness-endpoint",
   "remote-notification-provider-credentials",
-  "optional-ios-dns-settings",
   "optional-challenge-weather-context",
   "analytics-ingestion-endpoint",
   "optional-recovery-backup-sync-endpoint",
@@ -383,13 +383,15 @@ const reportArtifactRequiredProofValues = {
       "app.freed.recovery.shield-configuration",
       "app.freed.recovery.shield-action",
       "app.freed.recovery.device-activity-monitor",
-      "app.freed.recovery.safari-content-blocker"
+      "app.freed.recovery.safari-content-blocker",
+      "app.freed.recovery.safari-focus-shield"
     ] },
     { path: "archive.embeddedExtensionNames", includesAll: [
       "FREEDShieldConfiguration.appex",
       "FREEDShieldAction.appex",
       "FREEDDeviceActivityMonitor.appex",
-      "FREEDSafariContentBlocker.appex"
+      "FREEDSafariContentBlocker.appex",
+      "FREEDSafariFocusShield.appex"
     ] },
     { path: "archive.familyControlsEntitledBundleIds", includesAll: [
       "app.freed.recovery",
@@ -402,29 +404,45 @@ const reportArtifactRequiredProofValues = {
       "app.freed.recovery.shield-configuration",
       "app.freed.recovery.shield-action",
       "app.freed.recovery.device-activity-monitor",
-      "app.freed.recovery.safari-content-blocker"
+      "app.freed.recovery.safari-content-blocker",
+      "app.freed.recovery.safari-focus-shield"
     ] },
     { path: "archive.completeDataProtectionEntitledBundleIds", includesAll: [
       "app.freed.recovery",
       "app.freed.recovery.shield-configuration",
       "app.freed.recovery.shield-action",
       "app.freed.recovery.device-activity-monitor",
-      "app.freed.recovery.safari-content-blocker"
+      "app.freed.recovery.safari-content-blocker",
+      "app.freed.recovery.safari-focus-shield"
     ] },
     { path: "archive.packetTunnelProviderEntitled", equals: false },
     { path: "archive.packetInspectionEntitled", equals: false },
     { path: "archive.safariRuleList.usableForManualEvidence", equals: true },
     { path: "archive.safariRuleList.adultDomainRulesPresent", equals: true },
-    { path: "archive.safariRuleList.shortFormRulesPresent", equals: true },
     { path: "archive.safariRuleList.allRulesBlock", equals: true },
-    { path: "archive.safariRuleList.ruleCount", numberBetween: [5, 100_000] },
+    { path: "archive.safariRuleList.ruleCount", numberBetween: [1, 100_000] },
+    { path: "archive.safariFocusShield.usableForManualEvidence", equals: true },
+    { path: "archive.safariFocusShield.manifestVersion3", equals: true },
+    { path: "archive.safariFocusShield.minimumSafariVersion", equals: "15.4" },
+    { path: "archive.safariFocusShield.serviceWorker", equals: "background.js" },
+    { path: "archive.safariFocusShield.backgroundOwnsNativeMessaging", equals: true },
+    { path: "archive.safariFocusShield.backgroundServiceWorkerValid", equals: true },
+    { path: "archive.safariFocusShield.contentScriptsScoped", equals: true },
+    { path: "archive.safariFocusShield.contentUsesRuntimeMessaging", equals: true },
+    { path: "archive.safariFocusShield.hostPermissionsScoped", equals: true },
+    { path: "archive.safariFocusShield.infoAllowedDomainsScoped", equals: true },
+    { path: "archive.safariFocusShield.nativeAppIdentifierValid", equals: true },
+    { path: "archive.safariFocusShield.nativePayloadSchemaValid", equals: true },
+    { path: "archive.safariFocusShield.nativeHandlerContractValid", equals: true },
+    { path: "archive.safariFocusShield.minimumOSVersionAtLeast154", equals: true },
     { path: "ipa.exists", equals: true },
     { path: "ipa.hasPayloadApp", equals: true },
     { path: "ipa.embeddedExtensionNames", includesAll: [
       "FREEDShieldConfiguration.appex",
       "FREEDShieldAction.appex",
       "FREEDDeviceActivityMonitor.appex",
-      "FREEDSafariContentBlocker.appex"
+      "FREEDSafariContentBlocker.appex",
+      "FREEDSafariFocusShield.appex"
     ] },
     { path: "ipa.sha256", nonEmptyString: true },
     { path: "ipa.sizeBytes", numberBetween: [1, 500_000_000] }
@@ -593,6 +611,7 @@ const expectedReleaseReadinessGateIds = [
   "android-native-safety-contract",
   "challenge-verification-contract",
   "challenge-personalization-context",
+  "optional-challenge-weather-context",
   "discipline-configuration-contract",
   "accessibility-safety-contract",
   "privacy-safety-contract",
@@ -1830,9 +1849,9 @@ function runSelfTest() {
     assertThrows(() => assertReportArtifact("build:ios-archive:release", artifactDir), /packetTunnelProviderEntitled/);
 
     const weakIosSafariPayload = sampleReportPayload("build:ios-archive:release");
-    weakIosSafariPayload.archive.safariRuleList.shortFormRulesPresent = false;
+    weakIosSafariPayload.archive.safariFocusShield.serviceWorker = "";
     writeJson(iosArchiveReportPath, weakIosSafariPayload);
-    assertThrows(() => assertReportArtifact("build:ios-archive:release", artifactDir), /shortFormRulesPresent/);
+    assertThrows(() => assertReportArtifact("build:ios-archive:release", artifactDir), /safariFocusShield\.serviceWorker/);
 
     writeJson(aiReportPath, sampleReportPayload("smoke:ai-backend"));
     assertThrows(
@@ -1951,14 +1970,6 @@ function runSelfTest() {
     unsanitizedPreflightPayload.sanitized = false;
     writeJson(preflightReportPath, unsanitizedPreflightPayload);
     assertThrows(() => assertReportArtifact("preflight:release-env", artifactDir), /sanitized/);
-
-    const missingOptionalSafetyPreflightPayload = preflightSamplePayload();
-    missingOptionalSafetyPreflightPayload.checks = missingOptionalSafetyPreflightPayload.checks.filter(
-      (entry) => entry.id !== "optional-ios-dns-settings"
-    );
-    missingOptionalSafetyPreflightPayload.passCount -= 1;
-    writeJson(preflightReportPath, missingOptionalSafetyPreflightPayload);
-    assertThrows(() => assertReportArtifact("preflight:release-env", artifactDir), /optional-ios-dns-settings/);
 
     const unexpectedPreflightCheckPayload = preflightSamplePayload();
     unexpectedPreflightCheckPayload.checks.push({

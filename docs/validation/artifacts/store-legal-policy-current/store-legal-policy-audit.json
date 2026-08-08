@@ -1,6 +1,6 @@
 {
   "schemaVersion": "freed-store-legal-policy-audit-v1",
-  "generatedAt": "2026-06-11T05:45:29.438Z",
+  "generatedAt": "2026-07-22T02:46:09.719Z",
   "sanitized": true,
   "result": "pass",
   "passCount": 14,
@@ -20,11 +20,11 @@
     },
     {
       "path": "store/app-store/app-privacy.md",
-      "sha256": "64b3845f7f9f4b6e8a0a20aad457c9006887966e1e04fa6dfe4ef564c70ec228"
+      "sha256": "150181ce0e953654b3c45977aa050c8e81d58114e928a3f1c812b799602a4531"
     },
     {
       "path": "store/app-store/metadata.md",
-      "sha256": "2fc7ccf2e3c227f385bdcb3005a7d94a29f9f5caf0e901f5772f5db2b1da5954"
+      "sha256": "282ed323e5c9fce45e3a4d3129ea39c45312cfe3a80aa906773e1dcbc2110522"
     },
     {
       "path": "store/release-submission-checklist.md",
@@ -32,11 +32,11 @@
     },
     {
       "path": "store/console-launch-packet.md",
-      "sha256": "57248c9caa29a4c4e1fd8483c74e2c68be0f2cb211ba6e87359375859144b16b"
+      "sha256": "069feddd0a0f0e44d7db825b4c2288d36ee2f57a05d660b28b1feaed95f276d6"
     },
     {
       "path": "docs/privacy-data-map.md",
-      "sha256": "7fcbb0fb8d48de7e0793b6ac16f241c7f4cbec816e9162d16ceeec38aa92f474"
+      "sha256": "d126595e81f5d72667b01d1f4a2542f6560510156815572901166187a94174b8"
     },
     {
       "path": "docs/store-policy/android-accessibility-and-fgs-disclosure.md",
@@ -44,7 +44,7 @@
     },
     {
       "path": "docs/store-policy/ios-screen-time-safari-dns-review.md",
-      "sha256": "33918fc56d99db12105468effc8f30b486172ee9e273d78e3371dddbedae2cca"
+      "sha256": "a0385970762d771676b73bf9039a275713bcf6c71ff75ed7a6d49d5fbc7738c2"
     },
     {
       "path": "app/privacy.tsx",
@@ -129,7 +129,7 @@
     {
       "id": "app-store-review-notes",
       "status": "pass",
-      "detail": "App Store metadata and iOS policy pack include Screen Time/Safari/DNS review boundaries.",
+      "detail": "App Store metadata and iOS policy pack include Screen Time and Safari review boundaries.",
       "next": ""
     },
     {

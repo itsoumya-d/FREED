@@ -42,6 +42,9 @@ const safariContentBlockerHandler = read("ios/FREEDSafariContentBlocker/ContentB
 const appSurface = read("src/features/freed-app.tsx");
 const protectionPermissions = read("src/lib/protection-permissions.ts");
 const safariContentBlockerList = read("ios/FREEDSafariContentBlocker/blockerList.json");
+const safariFocusManifest = read("ios/FREEDSafariFocusShield/manifest.json");
+const safariFocusContent = read("ios/FREEDSafariFocusShield/content.js");
+const safariFocusBackground = read("ios/FREEDSafariFocusShield/background.js");
 const adultFeedSync = read("src/lib/adult-domain-feed-sync.ts");
 const adultFeedIngestion = read("src/lib/adult-domain-feed-ingestion.ts");
 const adultFeedRoute = read("app/api/adult-domain-feed+api.ts");
@@ -185,41 +188,39 @@ const checks = [
     "DNS Guard restart after boot/package update is gated by explicit user enablement and existing VPN consent, clears intent on manual stop/revoke, and exposes restart diagnostics for QA."
   ),
   check(
-    "ios-dns-settings-no-full-vpn",
-    iosModule.includes("NEDNSSettingsManager") &&
-      iosModule.includes("NEDNSOverHTTPSSettings") &&
-      iosModule.includes("settings.matchDomains = input.matchDomains") &&
-      iosModule.includes("settings.matchDomainsNoSearch = true") &&
-      iosModule.includes("removeFromPreferences") &&
-      iosModule.includes("hasDnsSettingsEntitlement") &&
-      iosModule.includes("At least one explicit match domain is required") &&
-      iosModule.includes('payload["dnsSettingsActive"] = dnsSettingsEntitled &&') &&
-      !/manager\.isEnabled\s*=/.test(iosModule) &&
+    "ios-no-network-extension",
+    !iosModule.includes("import NetworkExtension") &&
+      !iosModule.includes("NEDNSSettingsManager") &&
       !iosModule.includes("NEPacketTunnelProvider") &&
       !iosModule.includes("NETunnelProviderManager") &&
       !iosModule.includes("NEVPNManager"),
-    "iOS optional DNS settings are entitlement-gated, matched-domain-only, and avoid packet-tunnel/full-VPN providers."
+    "iOS protection uses Screen Time and Safari extensions without a stale NetworkExtension, packet-tunnel, or VPN-manager path."
   ),
   check(
     "ios-safari-short-form-web-rules",
     doomscrollApps.includes("SAFARI_SHORT_FORM_WEB_RULE_FILTERS") &&
-      blockingEngine.includes('from "@/lib/doomscroll-apps"') &&
       !blockingEngine.includes("export const SAFARI_SHORT_FORM_WEB_RULE_FILTERS = [") &&
       shortFormWebContract.includes("SHORT_FORM_WEB_SURFACES") &&
       shortFormWebContract.includes("isShortFormWebUrl") &&
       doomscrollApps.includes("youtube\\\\.com/shorts") &&
       doomscrollApps.includes("instagram\\\\.com/reel") &&
       doomscrollApps.includes("tiktok\\\\.com/foryou") &&
-      safariContentBlockerList.includes("youtube\\\\.com/shorts") &&
-      safariContentBlockerList.includes("instagram\\\\.com/reel") &&
-      safariContentBlockerList.includes("tiktok\\\\.com/foryou") &&
+      !safariContentBlockerList.includes("youtube\\\\.com/shorts") &&
+      !safariContentBlockerList.includes("instagram\\\\.com/reel") &&
+      !safariContentBlockerList.includes("tiktok\\\\.com/foryou") &&
+      safariFocusManifest.includes('\"strict_min_version\": \"15.4\"') &&
+      safariFocusManifest.includes('\"service_worker\": \"background.js\"') &&
+      safariFocusContent.includes("runtime?.sendMessage") &&
+      !safariFocusContent.includes("sendNativeMessage") &&
+      safariFocusBackground.includes("runtime.onMessage.addListener") &&
+      safariFocusBackground.includes("sendNativeMessage") &&
       iosModule.includes("validateSafariContentBlockerRules") &&
       iosModule.includes("must use a block action") &&
       safariContentBlockerHandler.includes("validatedSharedRulesURL") &&
       safariContentBlockerHandler.includes("isValidBlockingRule") &&
       safariContentBlockerHandler.includes("rules.allSatisfy(isValidBlockingRule)") &&
-      iosModule.includes("adult-domain and short-form web entries"),
-    "Safari Content Blocker includes validated block-only web short-form path rules for YouTube Shorts, Instagram Reels, and TikTok For You without app-screen inspection."
+      iosModule.includes("Short-form web paths are handled by Safari Focus Shield"),
+    "Safari Focus Shield's iOS 15.4 MV3 background-worker contract relays approved short-form routes while the Content Blocker remains adult-domain-only."
   ),
   check(
     "android-accessibility-focused-scan",
@@ -266,15 +267,17 @@ const checks = [
       nativeIntervention.includes('platform === "ios"') &&
       nativeIntervention.includes('IOS_SCREEN_TIME_SHIELD_HOST = "screen-time-shield.freed.local"') &&
       iosModule.includes("isScreenTimeUnlockSource") &&
-      iosModule.includes("guard self.isScreenTimeUnlockSource(sourceAttemptHost) else") &&
+      iosModule.includes("self.isScreenTimeUnlockSource(sourceAttemptHost),") &&
+      iosModule.includes("consumePendingEarnedUnlockEnvelope(sanitizedExpectedInterventionId)") &&
+      iosModule.includes("envelope.interventionId == expectedInterventionId") &&
       iosModule.includes("sanitizeHostForStorage(trimmed) == screenTimeShieldHost") &&
       iosModule.includes('earnedUnlockSourceKey = "freed.earnedUnlock.source"') &&
       iosModule.includes("set(self.screenTimeShieldHost, forKey: self.earnedUnlockSourceKey)") &&
-      iosModule.includes("guard isScreenTimeUnlockSource(storedSource) else") &&
+      iosModule.includes("guard isScreenTimeUnlockSource(storedSource), let scope = activeEarnedUnlockScope(), isSelectedScreenTimeScope(scope) else") &&
       iosDeviceActivity.includes('earnedUnlockSourceKey = "freed.earnedUnlock.source"') &&
-      iosDeviceActivity.includes("guard isScreenTimeUnlockSource(storedSource) else") &&
+      iosDeviceActivity.includes("guard isScreenTimeUnlockSource(storedSource), let scope = activeEarnedUnlockScope(), isSelectedScreenTimeScope(scope) else") &&
       appSurface.includes("getActiveNativeEarnedUnlock(recoveryState.earnedUnlocks, Platform.OS") &&
-      appSurface.includes("applyEarnedUnlockWindow(activeNativeUnlock.expiresAt, activeNativeUnlock.sourceAttemptHost)") &&
+      appSurface.includes("activeNativeUnlock.nativeInterventionId") &&
       nativeIntervention.includes('APP_INTERVENTION_FALLBACK_HOST = "selected-app.app.freed.local"') &&
       nativeIntervention.includes("configured-app:unsupported") &&
       nativeIntervention.includes("normalizePendingReason") &&
@@ -286,10 +289,12 @@ const checks = [
     appSurface.includes("isFreshPendingIntervention(pending)") &&
       androidModule.includes("PENDING_INTERVENTION_MAX_AGE_MS") &&
       androidModule.includes("isFreshPendingIntervention(detectedAt)") &&
-      androidModule.includes("clearPendingInterventionPrefs(prefs)") &&
+      androidModule.includes("claimPendingIntervention(prefs, interventionId)") &&
+      androidModule.includes("isPendingInterventionConsumed(prefs, interventionId)") &&
       iosModule.includes("pendingInterventionMaxAgeSeconds") &&
-      iosModule.includes("isFreshPendingIntervention(detectedAt)") &&
-      iosModule.includes("clearPendingInterventionDefaults()") &&
+      iosModule.includes("self.isFreshPendingIntervention(record.detectedAt)") &&
+      iosModule.includes("claimPendingIntervention(interventionId, stageEarnedUnlockScope: false)") &&
+      iosModule.includes("isPendingInterventionConsumed(interventionId)") &&
       iosModule.includes("sanitizedPendingHost") &&
       iosModule.includes("sanitizeHostForStorage") &&
       iosModule.includes('"url": "https://\\(host)"'),
@@ -445,7 +450,6 @@ const checks = [
       adultFeedSync.includes("safariCanBePrimaryLayer") &&
       adultFeedSync.includes("safariLayerExpected") &&
       adultFeedSync.includes("minimumSafariRuleCount") &&
-      adultFeedSync.includes("SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length") &&
       adultFeedSync.includes("EXPO_PUBLIC_ADULT_DOMAIN_FEED_SYNC_TIMEOUT_MS") &&
       adultFeedSync.includes("EXPO_PUBLIC_ADULT_DOMAIN_FEED_RESPONSE_MAX_BYTES") &&
       adultFeedSync.includes("fetchRemoteFeedPayload") &&

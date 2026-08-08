@@ -344,9 +344,12 @@ function validateIosPhysicalDeviceTemplate(payload, missing) {
       "safariContentBlockerChecksum",
       "safariContentBlockerAdultBlockRunId",
       "safariContentBlockerAdultBlockArtifact",
-      "safariContentBlockerShortFormUrl",
-      "safariContentBlockerShortFormBlockRunId",
-      "safariContentBlockerShortFormBlockArtifact",
+      "safariFocusShieldIdentifier",
+      "safariFocusShieldBuildRunId",
+      "safariFocusShieldBuildArtifact",
+      "safariFocusShieldShortFormUrl",
+      "safariFocusShieldShortFormBlockRunId",
+      "safariFocusShieldShortFormBlockArtifact",
       "safariShortFormChallengeHandoffRunId",
       "safariShortFormChallengeHandoffArtifact",
       "safariShortFormChallengeHandoffSource",
@@ -410,6 +413,7 @@ function validateIosPhysicalDeviceTemplate(payload, missing) {
     missing.push("ios.familyActivityPickerAppLimitScheduledImmediately");
   }
   if (ios.appLimitScheduled !== true) missing.push("ios.appLimitScheduled");
+  if (ios.safariFocusShieldEmbedded !== true) missing.push("ios.safariFocusShieldEmbedded");
   if (ios.permissionWizardFlowOrder !== PERMISSION_WIZARD_FLOW_ORDER) missing.push("ios.permissionWizardFlowOrder");
   if (ios.permissionExplanationShown !== true) missing.push("ios.permissionExplanationShown");
   if (!hasPermissionExplanationSummary(ios.permissionExplanationSummary)) missing.push("ios.permissionExplanationSummary");

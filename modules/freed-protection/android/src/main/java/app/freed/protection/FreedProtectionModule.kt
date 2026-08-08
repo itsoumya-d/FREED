@@ -27,12 +27,15 @@ import java.util.Date
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
+import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 private const val PHOTO_MATCH_MIN_CONFIDENCE = 0.45
 private const val FREED_APP_HOST_SUFFIX = ".app.freed.local"
 private const val PENDING_INTERVENTION_MAX_AGE_MS = 10 * 60 * 1000L
 private const val PENDING_INTERVENTION_FUTURE_SKEW_MS = 60 * 1000L
+private const val PENDING_CONSUMED_INTERVENTION_IDS = "pending_consumed_intervention_ids_v1"
+private const val MAX_PENDING_CONSUMED_INTERVENTION_IDS = 32
 private const val ACTION_ACCESSIBILITY_DETAILS_SETTINGS = "android.settings.ACCESSIBILITY_DETAILS_SETTINGS"
 private const val ACTION_PRIVATE_DNS_SETTINGS = "android.settings.PRIVATE_DNS_SETTINGS"
 private const val INTENT_CATEGORY_USAGE_ACCESS_CONFIG = "android.intent.category.USAGE_ACCESS_CONFIG"
@@ -43,6 +46,8 @@ private const val ANDROID_SETTINGS_ROUTE_ERROR = "freed_android_settings_route_e
 private const val ANDROID_SETTINGS_ROUTE_OPENED_AT = "freed_android_settings_route_opened_at"
 
 class FreedProtectionModule : Module() {
+  private val pendingInterventionClaimLock = Any()
+
   override fun definition() = ModuleDefinition {
     Name("FreedProtection")
 
@@ -84,6 +89,7 @@ class FreedProtectionModule : Module() {
       val dnsGuardAutoRestartEligible = FreedVpnService.isAutoRestartEligible(context)
       val vpnConsentRequired = isVpnConsentRequired(context)
       val lastSettingsRoute = lastAndroidSettingsRoute(context)
+      val focusShieldSnapshot = FreedFocusShieldRules.snapshot(context)
 
       statusPayload(
         authorized = enabled || vpnActive || dnsGuardAutoRestartEligible,
@@ -107,6 +113,12 @@ class FreedProtectionModule : Module() {
         blockedApplications = blockedApplicationCount(context),
         dailyLimitMinutes = configuredDailyLimitMinutes(context),
         shortFormInterruptionSeconds = configuredShortFormThresholdSeconds(context),
+        focusShieldRuleCount = focusShieldSnapshot.rules.size,
+        focusShieldEnabledRuleCount = focusShieldSnapshot.enabledCount,
+        focusShieldRuleStoreHealth = focusShieldSnapshot.health,
+        activeFocusShieldUnlockExpiresAt = FreedFocusShieldRules.activeSurfaceUnlockExpiresAt(context),
+        activeFocusShieldUnlockRuleId = FreedFocusShieldRules.activeSurfaceUnlockRuleId(context),
+        activeFocusShieldUnlockPackageName = FreedFocusShieldRules.activeSurfaceUnlockPackage(context),
         activeUnlockExpiresAt = activeUnlockExpiresAt,
         activeUnlockSourcePackage = activeUnlockSourcePackage,
         vpnConsentRequired = vpnConsentRequired,
@@ -481,7 +493,98 @@ class FreedProtectionModule : Module() {
       ))
     }
 
-    AsyncFunction("applyEarnedUnlockWindow") { expiresAt: String, sourceAttemptHost: String? ->
+    AsyncFunction("startFocusShieldCalibration") { request: Map<String, Any?> ->
+      val context = appContext.reactContext ?: return@AsyncFunction FreedFocusShieldCalibrationBridge.failStart(
+        "React context is unavailable, so calibration cannot start."
+      )
+      if (!isAccessibilityServiceEnabled(context)) {
+        return@AsyncFunction FreedFocusShieldCalibrationBridge.permissionRevoked()
+      }
+      FreedFocusShieldCalibrationBridge.start(request)
+    }
+
+    AsyncFunction("cancelFocusShieldCalibration") {
+      FreedFocusShieldCalibrationBridge.cancel()
+    }
+
+    AsyncFunction("getFocusShieldCalibration") {
+      val context = appContext.reactContext
+      if (context != null && !isAccessibilityServiceEnabled(context)) {
+        FreedFocusShieldCalibrationBridge.permissionRevoked()
+      } else {
+        FreedFocusShieldCalibrationBridge.get()
+      }
+    }
+
+    AsyncFunction("configureFocusShieldRule") { rule: Map<String, Any?> ->
+      val context = appContext.reactContext ?: return@AsyncFunction mapOf(
+        "available" to false,
+        "rule" to null,
+        "message" to "React context is unavailable."
+      )
+      val storedRule = FreedFocusShieldRules.configure(context, rule)
+      if (storedRule == null) {
+        return@AsyncFunction mapOf(
+          "available" to true,
+          "rule" to null,
+          "message" to "Focus Shield rejected an invalid or unsupported local rule."
+        )
+      }
+
+      mapOf(
+        "available" to true,
+        "rule" to storedRule.toPayload(),
+        "message" to "Focus Shield rule saved locally on this device."
+      )
+    }
+
+    AsyncFunction("listFocusShieldRules") {
+      val context = appContext.reactContext ?: return@AsyncFunction emptyList<Map<String, Any>>()
+      FreedFocusShieldRules.list(context).map(FreedFocusShieldRule::toPayload)
+    }
+
+    AsyncFunction("removeFocusShieldRule") { ruleId: String ->
+      val context = appContext.reactContext ?: return@AsyncFunction false
+      FreedFocusShieldRules.remove(context, ruleId)
+    }
+
+    AsyncFunction("applyFocusShieldEarnedUnlock") { expiresAt: String, scope: Map<String, Any?> ->
+      val context = appContext.reactContext ?: return@AsyncFunction statusPayload(
+        authorized = false,
+        active = false,
+        mode = "accessibility",
+        message = "React context is unavailable."
+      )
+      val kind = scope["kind"] as? String
+      val ruleId = scope["ruleId"] as? String
+      val packageName = scope["packageName"] as? String
+      val boundedExpiresAt = if (kind == "android-surface" && ruleId != null && packageName != null) {
+        FreedFocusShieldRules.applySurfaceUnlock(context, expiresAt, ruleId, packageName)
+      } else {
+        null
+      }
+
+      statusPayloadWithAndroidDiagnostics(context, statusPayload(
+        authorized = isAccessibilityServiceEnabled(context) || FreedVpnService.isRunning,
+        active = isAccessibilityServiceEnabled(context) || FreedVpnService.isRunning,
+        mode = if (isAccessibilityServiceEnabled(context)) "accessibility" else "dns",
+        message = if (boundedExpiresAt != null) {
+          "Focus Shield earned unlock is active only for the matching surface rule. Package limits and adult-domain protection stay active."
+        } else {
+          "Focus Shield kept protection active because the surface unlock scope or expiry was invalid."
+        },
+        adultFilterActive = FreedVpnService.isRunning,
+        appInterventionAuthorized = isAccessibilityServiceEnabled(context),
+        usageStatsAuthorized = isUsageStatsAuthorized(context),
+        vpnConsentRequired = isVpnConsentRequired(context),
+        androidSettingsRoutes = androidSettingsRoutes(),
+        activeFocusShieldUnlockExpiresAt = boundedExpiresAt,
+        activeFocusShieldUnlockRuleId = if (boundedExpiresAt != null) ruleId else null,
+        activeFocusShieldUnlockPackageName = if (boundedExpiresAt != null) packageName else null
+      ))
+    }
+
+    AsyncFunction("applyEarnedUnlockWindow") { expiresAt: String, sourceAttemptHost: String?, _nativeInterventionId: String? ->
       val context = appContext.reactContext ?: return@AsyncFunction statusPayload(
         authorized = false,
         active = false,
@@ -605,42 +708,61 @@ class FreedProtectionModule : Module() {
     AsyncFunction("getPendingIntervention") {
       val context = appContext.reactContext ?: return@AsyncFunction null
       val prefs = context.getSharedPreferences(FreedAccessibilityService.PREFS_NAME, Context.MODE_PRIVATE)
-      val storedUrl = prefs.getString(FreedAccessibilityService.PENDING_URL, null) ?: return@AsyncFunction null
-      val detectedAt = prefs.getString(FreedAccessibilityService.PENDING_DETECTED_AT, "").orEmpty()
+      val pendingSnapshot = prefs.all
+      val storedUrl = pendingSnapshot[FreedAccessibilityService.PENDING_URL] as? String ?: return@AsyncFunction null
+      val interventionId = sanitizedPendingInterventionId(
+        pendingSnapshot[FreedAccessibilityService.PENDING_INTERVENTION_ID] as? String
+      ) ?: return@AsyncFunction null
+      if (isPendingInterventionConsumed(prefs, interventionId)) return@AsyncFunction null
+      val detectedAt = pendingSnapshot[FreedAccessibilityService.PENDING_DETECTED_AT] as? String ?: ""
 
       if (!isFreshPendingIntervention(detectedAt)) {
-        clearPendingInterventionPrefs(prefs)
+        claimPendingIntervention(prefs, interventionId)
         return@AsyncFunction null
       }
 
       val host = sanitizedPendingHost(
-        prefs.getString(FreedAccessibilityService.PENDING_HOST, "").orEmpty(),
+        pendingSnapshot[FreedAccessibilityService.PENDING_HOST] as? String ?: "",
         storedUrl
       )
       val url = "https://$host"
-      val matchedRule = prefs.getString(FreedAccessibilityService.PENDING_RULE, "").orEmpty()
+      val matchedRule = pendingSnapshot[FreedAccessibilityService.PENDING_RULE] as? String ?: ""
       val sourcePackage = sanitizedPendingSourcePackage(
-        prefs.getString(FreedAccessibilityService.PENDING_SOURCE_PACKAGE, null),
+        pendingSnapshot[FreedAccessibilityService.PENDING_SOURCE_PACKAGE] as? String,
         matchedRule
       )
 
-      mapOf(
+      mutableMapOf<String, Any>(
+        "interventionId" to interventionId,
         "url" to url,
         "host" to host,
         "sourcePackage" to sourcePackage,
-        "reason" to prefs.getString(FreedAccessibilityService.PENDING_REASON, "").orEmpty(),
+        "reason" to (pendingSnapshot[FreedAccessibilityService.PENDING_REASON] as? String ?: ""),
         "matchedRule" to matchedRule,
         "detectedAt" to detectedAt,
-        "sessionDurationSec" to sanitizedPendingSessionDuration(prefs)
-      )
+        "sessionDurationSec" to sanitizedPendingSessionDuration(pendingSnapshot)
+      ).apply {
+        val focusShieldRuleId = (pendingSnapshot[FreedAccessibilityService.PENDING_FOCUS_SHIELD_RULE_ID] as? String)
+          ?.takeIf { storedRuleId -> FreedFocusShieldRules.list(context).any { rule -> rule.id == storedRuleId && rule.packageName == sourcePackage } }
+        if (focusShieldRuleId != null) {
+          put(
+            "scope",
+            mapOf(
+              "kind" to "android-surface",
+              "ruleId" to focusShieldRuleId,
+              "packageName" to sourcePackage
+            )
+          )
+        }
+      }
     }
 
-    AsyncFunction("clearPendingIntervention") {
+    AsyncFunction("clearPendingIntervention") { expectedInterventionId: String ->
       val context = appContext.reactContext ?: return@AsyncFunction false
       val prefs = context.getSharedPreferences(FreedAccessibilityService.PREFS_NAME, Context.MODE_PRIVATE)
-      clearPendingInterventionPrefs(prefs)
-
-      true
+      val sanitizedExpectedInterventionId = sanitizedPendingInterventionId(expectedInterventionId)
+        ?: return@AsyncFunction false
+      claimPendingIntervention(prefs, sanitizedExpectedInterventionId)
     }
 
     AsyncFunction("classifyChallengePhoto") { uri: String, expectedLabels: List<String> ->
@@ -902,6 +1024,13 @@ class FreedProtectionModule : Module() {
     putIfMissing("blockedApplications", blockedApplicationCount(context))
     putIfMissing("dailyLimitMinutes", configuredDailyLimitMinutes(context))
     putIfMissing("shortFormInterruptionSeconds", configuredShortFormThresholdSeconds(context))
+    val focusShieldSnapshot = FreedFocusShieldRules.snapshot(context)
+    putIfMissing("focusShieldRuleCount", focusShieldSnapshot.rules.size)
+    putIfMissing("focusShieldEnabledRuleCount", focusShieldSnapshot.enabledCount)
+    putIfMissing("focusShieldRuleStoreHealth", focusShieldSnapshot.health)
+    putIfMissing("activeFocusShieldUnlockExpiresAt", FreedFocusShieldRules.activeSurfaceUnlockExpiresAt(context))
+    putIfMissing("activeFocusShieldUnlockRuleId", FreedFocusShieldRules.activeSurfaceUnlockRuleId(context))
+    putIfMissing("activeFocusShieldUnlockPackageName", FreedFocusShieldRules.activeSurfaceUnlockPackage(context))
     putIfMissing("activeUnlockExpiresAt", activeEarnedUnlockExpiresAt(context))
     putIfMissing("activeUnlockSourcePackage", activeUnlockSourcePackage(context))
     putIfMissing("vpnConsentRequired", isVpnConsentRequired(context))
@@ -964,6 +1093,12 @@ class FreedProtectionModule : Module() {
     blockedApplications: Int? = null,
     dailyLimitMinutes: Int? = null,
     shortFormInterruptionSeconds: Int? = null,
+    focusShieldRuleCount: Int? = null,
+    focusShieldEnabledRuleCount: Int? = null,
+    focusShieldRuleStoreHealth: String? = null,
+    activeFocusShieldUnlockExpiresAt: String? = null,
+    activeFocusShieldUnlockRuleId: String? = null,
+    activeFocusShieldUnlockPackageName: String? = null,
     activeUnlockExpiresAt: String? = null,
     activeUnlockSourcePackage: String? = null,
     vpnConsentRequired: Boolean? = null,
@@ -1024,6 +1159,12 @@ class FreedProtectionModule : Module() {
     if (blockedApplications != null) payload["blockedApplications"] = blockedApplications
     if (dailyLimitMinutes != null) payload["dailyLimitMinutes"] = dailyLimitMinutes
     if (shortFormInterruptionSeconds != null) payload["shortFormInterruptionSeconds"] = shortFormInterruptionSeconds
+    if (focusShieldRuleCount != null) payload["focusShieldRuleCount"] = focusShieldRuleCount
+    if (focusShieldEnabledRuleCount != null) payload["focusShieldEnabledRuleCount"] = focusShieldEnabledRuleCount
+    if (focusShieldRuleStoreHealth != null) payload["focusShieldRuleStoreHealth"] = focusShieldRuleStoreHealth
+    if (activeFocusShieldUnlockExpiresAt != null) payload["activeFocusShieldUnlockExpiresAt"] = activeFocusShieldUnlockExpiresAt
+    if (activeFocusShieldUnlockRuleId != null) payload["activeFocusShieldUnlockRuleId"] = activeFocusShieldUnlockRuleId
+    if (activeFocusShieldUnlockPackageName != null) payload["activeFocusShieldUnlockPackageName"] = activeFocusShieldUnlockPackageName
     if (activeUnlockExpiresAt != null) payload["activeUnlockExpiresAt"] = activeUnlockExpiresAt
     if (activeUnlockSourcePackage != null) payload["activeUnlockSourcePackage"] = activeUnlockSourcePackage
     if (vpnConsentRequired != null) payload["vpnConsentRequired"] = vpnConsentRequired
@@ -1426,19 +1567,60 @@ class FreedProtectionModule : Module() {
 
   private fun clearPendingInterventionPrefs(prefs: SharedPreferences) {
     prefs.edit()
+      .remove(FreedAccessibilityService.PENDING_INTERVENTION_ID)
       .remove(FreedAccessibilityService.PENDING_URL)
       .remove(FreedAccessibilityService.PENDING_HOST)
       .remove(FreedAccessibilityService.PENDING_SOURCE_PACKAGE)
       .remove(FreedAccessibilityService.PENDING_REASON)
       .remove(FreedAccessibilityService.PENDING_RULE)
+      .remove(FreedAccessibilityService.PENDING_FOCUS_SHIELD_RULE_ID)
       .remove(FreedAccessibilityService.PENDING_DETECTED_AT)
       .remove(FreedAccessibilityService.PENDING_SESSION_DURATION_SECONDS)
       .apply()
   }
 
-  private fun sanitizedPendingSessionDuration(prefs: SharedPreferences): Long {
-    return prefs
-      .getLong(FreedAccessibilityService.PENDING_SESSION_DURATION_SECONDS, 0L)
+  private fun claimPendingIntervention(prefs: SharedPreferences, expectedInterventionId: String): Boolean =
+    synchronized(pendingInterventionClaimLock) {
+      val currentInterventionId = sanitizedPendingInterventionId(
+        prefs.getString(FreedAccessibilityService.PENDING_INTERVENTION_ID, null)
+      )
+      if (currentInterventionId != expectedInterventionId) {
+        false
+      } else if (isPendingInterventionConsumed(prefs, expectedInterventionId)) {
+        false
+      } else {
+        markPendingInterventionConsumed(prefs, expectedInterventionId)
+        true
+      }
+    }
+
+  private fun markPendingInterventionConsumed(prefs: SharedPreferences, interventionId: String) {
+    val consumedIds = pendingConsumedInterventionIds(prefs)
+      .filterNot { it == interventionId }
+      .plus(interventionId)
+      .takeLast(MAX_PENDING_CONSUMED_INTERVENTION_IDS)
+    prefs.edit().putString(PENDING_CONSUMED_INTERVENTION_IDS, consumedIds.joinToString(",")).commit()
+  }
+
+  private fun isPendingInterventionConsumed(prefs: SharedPreferences, interventionId: String): Boolean =
+    pendingConsumedInterventionIds(prefs).contains(interventionId)
+
+  private fun pendingConsumedInterventionIds(prefs: SharedPreferences): List<String> =
+    prefs.getString(PENDING_CONSUMED_INTERVENTION_IDS, "")
+      .orEmpty()
+      .split(',')
+      .mapNotNull(::sanitizedPendingInterventionId)
+      .takeLast(MAX_PENDING_CONSUMED_INTERVENTION_IDS)
+
+  private fun sanitizedPendingInterventionId(value: String?): String? {
+    val normalized = value?.trim()?.lowercase(Locale.US).orEmpty()
+    if (normalized.isBlank()) return null
+    val parsed = runCatching { UUID.fromString(normalized) }.getOrNull() ?: return null
+    return parsed.toString().takeIf { it == normalized }
+  }
+
+  private fun sanitizedPendingSessionDuration(pendingSnapshot: Map<String, *>): Long {
+    return ((pendingSnapshot[FreedAccessibilityService.PENDING_SESSION_DURATION_SECONDS] as? Number)?.toLong() ?: 0L)
       .coerceIn(0L, 4 * 60 * 60L)
   }
 
@@ -1484,7 +1666,7 @@ class FreedProtectionModule : Module() {
       ?.takeIf { it.matches(Regex("^[a-z0-9_]+(\\.[a-z0-9_]+)+$")) || it == "android-dns" }
       .orEmpty()
 
-    if (matchedRule.startsWith("configured-app:") || matchedRule.startsWith("short-form:")) {
+    if (matchedRule.startsWith("configured-app:") || matchedRule.startsWith("short-form:") || matchedRule.startsWith("focus-shield:")) {
       return normalized.takeIf { SUPPORTED_BLOCKED_APP_PACKAGES.contains(it) }.orEmpty()
     }
 

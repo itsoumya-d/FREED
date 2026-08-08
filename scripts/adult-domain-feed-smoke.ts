@@ -2,7 +2,6 @@ import assert from "node:assert/strict";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
 
-import { SAFARI_SHORT_FORM_WEB_RULE_FILTERS } from "../src/lib/blocking-engine";
 import { formatEndpointIssues, getProductionEndpointIssues } from "../src/lib/endpoint-safety";
 import { fetchRemoteProviderResponse, readRemoteProviderJson } from "../src/lib/remote-provider-timeout";
 
@@ -456,7 +455,7 @@ function buildContractProof(
       conditional304Validated: resultPassed(results, "adult-feed-conditional-304"),
       safariContentBlockerExportValidated: resultPassed(results, "adult-feed-safari-content-blocker"),
       safariFormatQuery: "format=safari-content-blocker",
-      safariShortFormWebRuleCount: SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length
+      safariContentBlockerScope: "adult-domains-only"
     },
     sourceReportBoundary: {
       reviewedSourceReportCount: summary?.reviewedSourceReportCount ?? 0,
@@ -481,7 +480,7 @@ function assertSafariContentBlockerBody(value: unknown, feedChecksum: string, fe
   const ingestion = asRecord(body.ingestion, "Safari content-blocker ingestion");
 
   assert.equal(body.checksum, feedChecksum);
-  assert.ok(rules.length >= feedDomainCount + SAFARI_SHORT_FORM_WEB_RULE_FILTERS.length, "Safari content-blocker export must include adult domains and short-form web rules");
+  assert.ok(rules.length >= feedDomainCount, "Safari content-blocker export must include the adult-domain feed rules");
   assert.equal(typeof ingestion.rejectedNormalDomainCount, "number");
   assertSanitizedSourceReports(asArray(ingestion.sourceReports, "Safari source reports"));
   assertNoSecretEcho(body);
@@ -494,9 +493,7 @@ function assertSafariContentBlockerBody(value: unknown, feedChecksum: string, fe
     assert.equal(typeof trigger["url-filter"], "string");
     return String(trigger["url-filter"]);
   });
-  assert.ok(filters.some((filter) => filter.includes("youtube") && filter.includes("/shorts")), "Safari rules must block YouTube Shorts web paths");
-  assert.ok(filters.some((filter) => filter.includes("instagram") && filter.includes("/reel")), "Safari rules must block Instagram Reels web paths");
-  assert.ok(filters.some((filter) => filter.includes("tiktok") && filter.includes("/foryou")), "Safari rules must block TikTok For You web paths");
+  assert.equal(filters.some((filter) => /youtube|instagram|tiktok/i.test(filter)), false);
 }
 
 async function fetchJson(endpoint: string, timeoutMs: number, label: string) {
@@ -677,11 +674,7 @@ function sampleSafariFeed() {
       {
         trigger: { "url-filter": "^https?://([^/?#]+\\\\.)?media\\\\.adult\\\\.example([/:?#]|$)" },
         action: { type: "block" }
-      },
-      ...SAFARI_SHORT_FORM_WEB_RULE_FILTERS.map((filter) => ({
-        trigger: { "url-filter": filter },
-        action: { type: "block" }
-      }))
+      }
     ],
     ingestion: {
       sourceReports: sampleFeed().ingestion.sourceReports,

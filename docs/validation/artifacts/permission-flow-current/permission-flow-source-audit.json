@@ -1,6 +1,6 @@
 {
   "schemaVersion": "freed-permission-flow-source-audit-v1",
-  "generatedAt": "2026-06-12T23:56:23.135Z",
+  "generatedAt": "2026-07-22T02:46:09.501Z",
   "sanitized": true,
   "result": "pass",
   "passCount": 23,
@@ -8,7 +8,7 @@
   "auditedSources": [
     {
       "path": "src/lib/protection-permissions.ts",
-      "sha256": "48ce250d7d33650cc3de11f6fc5c06f07de3300da41982bb650a0401fa518408"
+      "sha256": "1e30887ca3870bc438d169905d1f38a519dcc341078df1327c05c1e278ed40fa"
     },
     {
       "path": "src/lib/protection-readiness.ts",
@@ -16,7 +16,7 @@
     },
     {
       "path": "src/features/freed-app.tsx",
-      "sha256": "b76931b46d51c11de7a628f57429e2dea981ae9955616510d308072071d79fbf"
+      "sha256": "a723ccc2e9be20533a4b6f6671203b7a223c058fd1c99864d1e33c81804371f4"
     },
     {
       "path": "src/lib/recovery-notification-permission.ts",
@@ -24,11 +24,11 @@
     },
     {
       "path": "modules/freed-protection/src/index.ts",
-      "sha256": "8e8506e4fca134dc7dce67dfc36d40a620fe2722e0249549b010b58786e45b05"
+      "sha256": "2e9934fbac9a9a9a77cdf3ee20a315e4489ffd31d96630eaaba159ce4cd96914"
     },
     {
       "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
-      "sha256": "80f33c2034704cf575a40f56ca7c8fef5ffcbda4f4ad3247643e2e050fb4160f"
+      "sha256": "799ad16df18115fb6f5593db3eec9b41242de26ffc7f877551322367f190b30a"
     },
     {
       "path": "modules/freed-protection/android/src/main/AndroidManifest.xml",
@@ -44,15 +44,15 @@
     },
     {
       "path": "modules/freed-protection/ios/FreedProtectionModule.swift",
-      "sha256": "959f95bdb96ff2655152c3ac99dc48ce8650a527c0a202ecf23aae4f6298999c"
+      "sha256": "68fbc5a440bc8121f5b139b7c85878af8f393156d2170179ffd9fca1ee4603a6"
     },
     {
       "path": "docs/validation/README.md",
-      "sha256": "89bf22e76aa30a7c89e758e368adabe7ed2aa2280c7f8f7a142fc744c61c72a0"
+      "sha256": "dfeed51597849210b54783d3af10dcfd7aa2a8f19f783d256c0ed5c6f642ecdf"
     },
     {
       "path": "docs/release-blockers.md",
-      "sha256": "a30f9084f49af328bb66989903b53a8b1efbca17fb1cc58799f1f12e6ea80e27"
+      "sha256": "6fffe778e6ee35477a2de734b9dc6e4b66c660c02db8ecc9846ab283748b97c1"
     }
   ],
   "requiredFlowOrders": {
