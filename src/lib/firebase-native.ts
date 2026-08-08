@@ -20,6 +20,7 @@ import remoteConfigModule from "@react-native-firebase/remote-config";
 import {
   createFirebaseAuthAdapter,
   createFirebaseCallableContracts,
+  createFirebaseClientEventId,
   getFirebaseAppCheckProviderConfig,
   getFirebaseClientReadiness,
   getFirebaseEmailLinkReadiness,
@@ -43,6 +44,11 @@ export type FirebaseBackendReadinessCallableResult = {
 let startupPromise: Promise<FirebaseStartupResult> | null = null;
 let appCheckPromise: Promise<void> | null = null;
 let functionsEmulatorConnected = false;
+const FIREBASE_CALLABLE_TIMEOUT_MS = 10_000;
+
+export type FirebasePushRegistrationStatus = {
+  status: "registered" | "permission-not-authorized" | "unavailable" | "error";
+};
 
 /**
  * Native-only service initialization. It deliberately does not write Firestore
@@ -80,6 +86,30 @@ export async function getFirebaseMessagingRegistrationAfterPermission(
 }
 
 /**
+ * Registers an FCM token only after another user-initiated flow has confirmed
+ * OS notification authorization. This helper never requests permission.
+ */
+export async function registerFirebasePushTokenAfterPermission(
+  notificationsAuthorized: boolean
+): Promise<FirebasePushRegistrationStatus> {
+  if (!notificationsAuthorized) return { status: "permission-not-authorized" };
+
+  try {
+    const contracts = await getFirebaseCallableContracts();
+    if (!contracts) return { status: "unavailable" };
+    const registration = await getFirebaseMessagingRegistrationAfterPermission(true);
+    if (!registration) return { status: "unavailable" };
+    const result = await contracts.registerPushToken({
+      ...registration,
+      clientEventId: createFirebaseClientEventId("push")
+    });
+    return result.ok ? { status: "registered" } : { status: "error" };
+  } catch {
+    return { status: "error" };
+  }
+}
+
+/**
  * Calls the deployed Auth + App Check protected readiness endpoint only after
  * native App Check initialization. Authentication/App Check errors propagate
  * rather than being converted into a less-protected fallback request.
@@ -89,10 +119,12 @@ export async function callFirebaseBackendReadiness(): Promise<FirebaseBackendRea
   if (!readiness.ready || Platform.OS === "web" || !readiness.functionsRegion) return null;
   const startup = await startFirebaseClient();
   if (startup.status !== "started") return null;
+  if (!getAuth(getApp()).currentUser) return null;
 
   const callable = httpsCallable<undefined, FirebaseBackendReadinessCallableResult>(
     getConfiguredFunctions(),
-    "backendReadiness"
+    "backendReadiness",
+    { timeout: FIREBASE_CALLABLE_TIMEOUT_MS }
   );
   const result = await callable(undefined);
   return result.data;
@@ -102,13 +134,24 @@ export async function callFirebaseBackendReadiness(): Promise<FirebaseBackendRea
  * Callable transport is native-only and region-pinned. Consumers receive the
  * allowlisted contracts from firebase-client rather than raw callable access.
  */
-export function getFirebaseCallableContracts() {
+export async function getFirebaseCallableContracts() {
   const readiness = getFirebaseClientReadiness();
   if (!readiness.ready || Platform.OS === "web") return null;
+  const startup = await startFirebaseClient();
+  if (startup.status !== "started") return null;
+  const nativeAuth = getAuth(getApp());
+  if (!nativeAuth.currentUser) return null;
   const functions = getConfiguredFunctions();
   return createFirebaseCallableContracts({
-    async call(name, data): Promise<unknown> {
-      const callable = httpsCallable<unknown, unknown>(functions, name);
+    async call(name, data, options): Promise<unknown> {
+      const currentStartup = await startFirebaseClient();
+      if (currentStartup.status !== "started" || !nativeAuth.currentUser) {
+        throw new Error("Authenticated Firebase services are unavailable.");
+      }
+      const callable = httpsCallable<unknown, unknown>(functions, name, {
+        timeout: FIREBASE_CALLABLE_TIMEOUT_MS,
+        ...(options?.limitedUseAppCheckToken ? { limitedUseAppCheckTokens: true } : {})
+      });
       return (await callable(data)).data;
     }
   });

@@ -53,10 +53,16 @@ export async function getFirebaseMessagingRegistrationAfterPermission(
   return null;
 }
 
+export async function registerFirebasePushTokenAfterPermission(
+  _notificationsAuthorized: boolean
+): Promise<{ status: "unavailable" }> {
+  return { status: "unavailable" };
+}
+
 export async function callFirebaseBackendReadiness(): Promise<FirebaseBackendReadinessCallableResult | null> {
   return null;
 }
 
-export function getFirebaseCallableContracts(): ReturnType<typeof createFirebaseCallableContracts> | null {
+export async function getFirebaseCallableContracts(): Promise<ReturnType<typeof createFirebaseCallableContracts> | null> {
   return null;
 }

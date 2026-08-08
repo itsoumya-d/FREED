@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 
 import {
   createFirebaseCallableContracts,
+  createFirebaseClientEventId,
   getFirebaseMessagingRegistrationContract,
   parseFirebaseChallengeResult,
   parseFirebaseClaraResult,
@@ -18,10 +19,10 @@ import {
 } from "../src/lib/firebase-client";
 
 async function run() {
-  const calls: Array<{ name: string; data: unknown }> = [];
+  const calls: Array<{ name: string; data: unknown; options?: { limitedUseAppCheckToken?: true } }> = [];
   const transport: FirebaseCallableTransport = {
-    call: async (name, data) => {
-      calls.push({ name, data });
+    call: async (name, data, options) => {
+      calls.push({ name, data, options });
       if (name === "getReviewedAdultDomainFeed") return {
         version: "oisd-nsfw-small-0000000000000000",
         generatedAt: "2026-07-22T06:30:00.000Z",
@@ -39,6 +40,7 @@ async function run() {
         }
       };
       if (name === "requestAccountDeletion") return { ok: true, status: "deleting" };
+      if (name === "registerPushToken") return { ok: true, duplicate: false };
       if (name === "verifyStorePurchase") return {
         active: true,
         entitlementId: "premium",
@@ -69,6 +71,12 @@ async function run() {
   };
   const callables = createFirebaseCallableContracts(transport);
 
+  const secureEventId = createFirebaseClientEventId("purchase", (bytes) => {
+    bytes.fill(0xab);
+    return bytes;
+  });
+  assert.match(secureEventId, /^purchase_[a-f0-9]{32}$/);
+
   const realFcmToken = "fcmRegistrationPrefix123:APA91bG9uZ19yZWFsX3NoYXBlZF90b2tlbi0xMjM0NTY3ODkw";
   assert.deepEqual(getFirebaseMessagingRegistrationContract({
     installationId: "firebase-installation-id",
@@ -89,7 +97,8 @@ async function run() {
   );
   assert.deepEqual(calls[0], {
     name: "ingestAggregateAnalytics",
-    data: { day: "2026-07-22", checkIns: 1, completedChallenges: 0, clientEventId: "evt_12345678" }
+    data: { day: "2026-07-22", checkIns: 1, completedChallenges: 0, clientEventId: "evt_12345678" },
+    options: undefined
   });
   assert.deepEqual(await callables.startBackupUpload({
     backupId: "bkp_12345678",
@@ -111,6 +120,21 @@ async function run() {
   assert.equal(calls[3]?.name, "getEncryptedBackupDownload");
   assert.deepEqual(await callables.deleteBackup({ backupId: "bkp_12345678", clientEventId: "evt_delete123" }), { ok: true });
   assert.equal(calls[4]?.name, "deleteEncryptedBackup");
+  assert.deepEqual(await callables.registerPushToken({
+    installationId: "firebase-installation-id",
+    token: realFcmToken,
+    recoveryContentIncluded: false,
+    clientEventId: "push_event_123"
+  }), { ok: true, duplicate: false });
+  assert.deepEqual(calls[5], {
+    name: "registerPushToken",
+    data: {
+      installationId: "firebase-installation-id",
+      token: realFcmToken,
+      clientEventId: "push_event_123"
+    },
+    options: undefined
+  });
   await assert.rejects(
     () => callables.startBackupUpload({
       backupId: "bkp_12345678",
@@ -122,7 +146,8 @@ async function run() {
     /not permitted/i
   );
   assert.deepEqual(await callables.requestAccountDeletion({ clientEventId: "evt_12345678" }), { ok: true, status: "deleting" });
-  assert.equal(calls[5]?.name, "requestAccountDeletion");
+  assert.equal(calls[6]?.name, "requestAccountDeletion");
+  assert.deepEqual(calls[6]?.options, { limitedUseAppCheckToken: true });
   const purchasePayload: FirebaseVerifyStorePurchaseRequest = {
     platform: "ios",
     productId: "freed_premium_monthly",
@@ -138,7 +163,11 @@ async function run() {
     status: "verified",
     expiresAt: "2099-07-22T12:01:00.000Z"
   });
-  assert.deepEqual(calls[6], { name: "verifyStorePurchase", data: purchasePayload });
+  assert.deepEqual(calls[7], {
+    name: "verifyStorePurchase",
+    data: purchasePayload,
+    options: { limitedUseAppCheckToken: true }
+  });
   await assert.rejects(
     () => callables.verifyStorePurchase({ ...purchasePayload, receipt: "unsigned" } as never),
     /not permitted/i
@@ -155,7 +184,7 @@ async function run() {
     source: { id: "oisd-nsfw-small", label: "OISD NSFW Small", url: "https://nsfw-small.oisd.nl/" },
     domains: ["example.xxx"]
   });
-  assert.deepEqual(calls[7], { name: "getReviewedAdultDomainFeed", data: undefined });
+  assert.deepEqual(calls[8], { name: "getReviewedAdultDomainFeed", data: undefined, options: undefined });
 
   const claraPayload: FirebaseClaraRequest = {
     clientEventId: "evt_clara123",

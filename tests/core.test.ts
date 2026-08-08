@@ -7766,7 +7766,7 @@ test("profile exposes privacy support and deletion controls", () => {
   assert.match(appSurface, /PrivacySupportCard/);
   assert.match(appSurface, /FREED_PRIVACY_POLICY_URL/);
   assert.match(appSurface, /support@freedrecovery\.app/);
-  assert.match(appSurface, /Server Deletion/);
+  assert.match(appSurface, /Delete Account & Data/);
   assert.match(appSurface, /Delete Local Data/);
   assert.match(appSurface, /Confirm Delete/);
   assert.match(appSurface, /deleteLocalRecoveryData/);
@@ -11452,9 +11452,11 @@ test("deployed smoke harnesses bound request and JSON reads", () => {
   assert.match(adultDomainFeedSmoke, /summarizeFeedForReport/);
 
   const nativeIapAdapter = readFileSync(join(process.cwd(), "src/lib/native-iap-adapter.ts"), "utf8");
-  assert.match(nativeIapAdapter, /EXPO_PUBLIC_PURCHASE_VERIFY_RESPONSE_MAX_BYTES/);
-  assert.match(nativeIapAdapter, /getProductionEndpointIssues\(endpoint, "purchase verify endpoint"\)/);
-  assert.match(nativeIapAdapter, /readBoundedResponseJson/);
+  assert.match(nativeIapAdapter, /NativeIapPurchaseVerifier/);
+  assert.match(nativeIapAdapter, /createFirebaseClientEventId\("purchase"\)/);
+  assert.match(nativeIapAdapter, /verifyStorePurchase\(purchase\.request\)/);
+  assert.doesNotMatch(nativeIapAdapter, /EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT/);
+  assert.doesNotMatch(nativeIapAdapter, /fetch\(/);
 
   const recoveryAnalytics = readFileSync(join(process.cwd(), "src/lib/recovery-analytics.ts"), "utf8");
   assert.match(recoveryAnalytics, /EXPO_PUBLIC_ANALYTICS_RESPONSE_MAX_BYTES/);
@@ -28341,92 +28343,173 @@ async function runAsyncTests() {
     const purchase = await store.purchaseProduct("freed_premium_yearly", config);
     const restore = await store.restorePurchases(config);
 
-    assert.equal(initialized, true);
-    assert.deepEqual(requestParams, {
-      sku: "freed_premium_yearly",
-      skus: ["freed_premium_yearly"],
-      productId: "freed_premium_yearly"
-    });
+    assert.equal(initialized, false);
+    assert.equal(requestParams, null);
     assert.equal(finishedPurchase, null);
     assert.deepEqual(purchase.activeEntitlementIds, []);
     assert.deepEqual(restore.activeEntitlementIds, []);
   });
 
-  await asyncTest("native IAP store adapter fails closed when server verification rejects", async () => {
-    const previousEndpoint = process.env.EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT;
-    const previousTimeout = process.env.EXPO_PUBLIC_PURCHASE_VERIFY_TIMEOUT_MS;
-    const originalFetch = globalThis.fetch;
+  await asyncTest("native IAP forwards only strict iOS fields and finishes only after exact Firebase verification", async () => {
     const config = {
       ...getMonetizationConfig({ mode: "native", platform: "ios" }),
-      storeProvider: "native-iap" as const,
-      purchaseVerifyEndpoint: "https://api.freedapp.com/iap/verify"
+      storeProvider: "native-iap" as const
     };
     const purchaseRecord = {
+      platform: "ios",
+      store: "apple",
       productId: "freed_premium_yearly",
-      transactionId: "sandbox-iap-transaction"
+      purchaseState: "purchased",
+      transactionId: "2000001234567890",
+      purchaseToken: "must-not-be-forwarded",
+      nested: { receipt: "must-not-be-forwarded" }
     };
-    const store = createNativeIapStoreAdapter({
-      initConnection: async () => true,
-      requestPurchase: async () => purchaseRecord,
-      getAvailablePurchases: async () => [purchaseRecord]
-    });
+    const events: string[] = [];
+    const verifierPayloads: unknown[] = [];
+    const store = createNativeIapStoreAdapter(
+      {
+        initConnection: async () => true,
+        requestPurchase: async () => purchaseRecord,
+        finishTransaction: async () => {
+          events.push("finish");
+        }
+      },
+      async (payload) => {
+        events.push("verify");
+        verifierPayloads.push(payload);
+        return {
+          active: true,
+          entitlementId: "premium",
+          productId: "freed_premium_yearly",
+          platform: "ios",
+          status: "verified",
+          expiresAt: "2099-07-22T12:01:00.000Z"
+        };
+      }
+    );
     assert.ok(store);
 
-    try {
-      process.env.EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT = "https://wrong-env.example/iap/verify";
-      let unsafeFetchCount = 0;
-      globalThis.fetch = async () => {
-        unsafeFetchCount += 1;
-        return new Response(JSON.stringify({ active: true, entitlementId: "premium" }), {
-          status: 200,
-          headers: { "Content-Type": "application/json" }
-        });
-      };
-      const unsafeEndpoint = await store.purchaseProduct("freed_premium_yearly", {
-        ...config,
-        purchaseVerifyEndpoint: "https://api.freedapp.com/iap/verify?token=secret"
-      });
-      assert.equal(unsafeFetchCount, 0);
-      assert.deepEqual(unsafeEndpoint.activeEntitlementIds, []);
+    const result = await store.purchaseProduct("freed_premium_yearly", config);
 
-      let requestedUrl: string | null = null;
-      globalThis.fetch = async (input) => {
-        requestedUrl = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
-        return new Response(JSON.stringify({ active: false }), {
-          status: 200,
-          headers: { "Content-Type": "application/json" }
-        });
-      };
-      const rejected = await store.purchaseProduct("freed_premium_yearly", config);
-      assert.equal(requestedUrl, "https://api.freedapp.com/iap/verify");
-      assert.deepEqual(rejected.activeEntitlementIds, []);
+    assert.deepEqual(result.activeEntitlementIds, ["premium"]);
+    assert.deepEqual(events, ["verify", "finish"]);
+    assert.equal(verifierPayloads.length, 1);
+    assert.deepEqual(Object.keys(verifierPayloads[0] as object).sort(), [
+      "clientEventId", "platform", "productId", "restore", "transactionId"
+    ]);
+    assert.deepEqual(verifierPayloads[0], {
+      platform: "ios",
+      productId: "freed_premium_yearly",
+      transactionId: "2000001234567890",
+      clientEventId: (verifierPayloads[0] as { clientEventId: string }).clientEventId,
+      restore: false
+    });
+    assert.match((verifierPayloads[0] as { clientEventId: string }).clientEventId, /^purchase_[A-Za-z0-9_-]{16,80}$/);
+  });
 
-      globalThis.fetch = async () =>
-        new Response(JSON.stringify({ active: true, entitlementId: "premium" }), {
-          status: 200,
-          headers: { "Content-Type": "application/json" }
-        });
-      const accepted = await store.purchaseProduct("freed_premium_yearly", config);
-      assert.deepEqual(accepted.activeEntitlementIds, ["premium"]);
+  await asyncTest("native IAP validates Android purchases, restore flags, and rejects unsafe store states", async () => {
+    const config = {
+      ...getMonetizationConfig({ mode: "native", platform: "android" }),
+      storeProvider: "native-iap" as const
+    };
+    const validAndroid = {
+      platform: "android",
+      store: "google",
+      productId: "freed_premium_lifetime",
+      purchaseState: "purchased",
+      purchaseToken: "android-purchase-token-1234567890",
+      isSuspendedAndroid: false
+    };
+    const verifiedPayloads: Array<{ restore: boolean; productId: string; purchaseToken?: string }> = [];
+    const finished: unknown[] = [];
+    const store = createNativeIapStoreAdapter(
+      {
+        initConnection: async () => true,
+        requestPurchase: async () => validAndroid,
+        getAvailablePurchases: async () => [
+          { ...validAndroid, purchaseState: "pending" },
+          validAndroid
+        ],
+        finishTransaction: async ({ purchase }: { purchase?: unknown }) => {
+          finished.push(purchase);
+        }
+      },
+      async (payload) => {
+        verifiedPayloads.push(payload as typeof verifiedPayloads[number]);
+        return {
+          active: true,
+          entitlementId: "premium",
+          productId: payload.productId,
+          platform: payload.platform,
+          status: "verified",
+          expiresAt: null
+        };
+      }
+    );
+    assert.ok(store);
 
-      globalThis.fetch = async () => {
-        throw new Error("network down");
-      };
-      const failed = await store.restorePurchases(config);
-      assert.deepEqual(failed.activeEntitlementIds, []);
+    assert.deepEqual((await store.purchaseProduct("freed_premium_lifetime", config)).activeEntitlementIds, ["premium"]);
+    assert.deepEqual((await store.restorePurchases(config)).activeEntitlementIds, ["premium"]);
+    assert.deepEqual(verifiedPayloads.map(({ restore }) => restore), [false, true]);
+    assert.equal(verifiedPayloads[0]?.purchaseToken, "android-purchase-token-1234567890");
+    assert.equal(finished.length, 2);
 
-      process.env.EXPO_PUBLIC_PURCHASE_VERIFY_TIMEOUT_MS = "50";
-      globalThis.fetch = (async () =>
-        new Promise<Response>(() => {
-          /* Simulates a stalled purchase verification endpoint */
-        })) as typeof fetch;
-      const timedOut = await store.purchaseProduct("freed_premium_yearly", config);
-      assert.deepEqual(timedOut.activeEntitlementIds, []);
-    } finally {
-      globalThis.fetch = originalFetch;
-      restoreEnv("EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT", previousEndpoint);
-      restoreEnv("EXPO_PUBLIC_PURCHASE_VERIFY_TIMEOUT_MS", previousTimeout);
+    for (const unsafe of [
+      { ...validAndroid, purchaseState: "pending" },
+      { ...validAndroid, purchaseState: "unknown" },
+      { ...validAndroid, isSuspendedAndroid: true },
+      { ...validAndroid, productId: "freed_premium_yearly" },
+      { ...validAndroid, platform: "ios", store: "apple" },
+      { ...validAndroid, purchaseToken: "short" }
+    ]) {
+      let called = false;
+      const rejectingStore = createNativeIapStoreAdapter(
+        { initConnection: async () => true, requestPurchase: async () => unsafe },
+        async () => {
+          called = true;
+          throw new Error("should not verify invalid purchase");
+        }
+      );
+      assert.ok(rejectingStore);
+      assert.deepEqual((await rejectingStore.purchaseProduct("freed_premium_lifetime", config)).activeEntitlementIds, []);
+      assert.equal(called, false);
     }
+  });
+
+  await asyncTest("native IAP rejects mismatched Firebase results and never finishes unverified transactions", async () => {
+    const config = {
+      ...getMonetizationConfig({ mode: "native", platform: "ios" }),
+      storeProvider: "native-iap" as const
+    };
+    const purchaseRecord = {
+      platform: "ios",
+      store: "apple",
+      productId: "freed_premium_monthly",
+      purchaseState: "purchased",
+      transactionId: "2000001234567890"
+    };
+    let finishCount = 0;
+    const invalidResults = [
+      { active: false, entitlementId: "premium", productId: "freed_premium_monthly", platform: "ios", status: "inactive", expiresAt: null },
+      { active: true, entitlementId: "premium", productId: "freed_premium_yearly", platform: "ios", status: "verified", expiresAt: "2099-07-22T12:01:00.000Z" },
+      { active: true, entitlementId: "premium", productId: "freed_premium_monthly", platform: "android", status: "verified", expiresAt: "2099-07-22T12:01:00.000Z" }
+    ] as const;
+
+    for (const response of invalidResults) {
+      const store = createNativeIapStoreAdapter(
+        {
+          initConnection: async () => true,
+          requestPurchase: async () => purchaseRecord,
+          finishTransaction: async () => {
+            finishCount += 1;
+          }
+        },
+        async () => response
+      );
+      assert.ok(store);
+      assert.deepEqual((await store.purchaseProduct("freed_premium_monthly", config)).activeEntitlementIds, []);
+    }
+    assert.equal(finishCount, 0);
   });
 
   await asyncTest("AdMob-style rewarded adapter creates, shows, and disposes sessions", async () => {

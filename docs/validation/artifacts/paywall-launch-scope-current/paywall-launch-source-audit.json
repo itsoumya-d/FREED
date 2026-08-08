@@ -1,6 +1,6 @@
 {
   "schemaVersion": "freed-paywall-launch-source-audit-v1",
-  "generatedAt": "2026-06-11T06:46:09.390Z",
+  "generatedAt": "2026-07-22T02:46:09.170Z",
   "sanitized": true,
   "result": "pass",
   "passCount": 15,
@@ -121,7 +121,7 @@
   "sourceArtifacts": {
     "paywall": {
       "path": "src/features/freed-app.tsx",
-      "sha256": "sha256-bba78e4c9902026c689672708f8bc2f52adf445ce8aa242b1da39741da069e26"
+      "sha256": "sha256-a723ccc2e9be20533a4b6f6671203b7a223c058fd1c99864d1e33c81804371f4"
     },
     "monetization": {
       "path": "src/lib/monetization.ts",

@@ -76,6 +76,10 @@ export type FirebaseMessagingRegistration = {
   recoveryContentIncluded: false;
 };
 
+export type FirebaseCallableOptions = Readonly<{
+  limitedUseAppCheckToken?: true;
+}>;
+
 export type FirebaseCallableName =
   | "ingestAggregateAnalytics"
   | "startEncryptedBackupUpload"
@@ -119,6 +123,16 @@ export type FirebaseVerifyStorePurchaseResult = {
   platform: "ios" | "android";
   status: "verified" | "inactive" | "rejected" | "unavailable";
   expiresAt: string | null;
+};
+
+export type FirebasePushRegistrationResult = {
+  ok: true;
+  duplicate: boolean;
+};
+
+export type FirebaseAccountDeletionResult = {
+  ok: true;
+  status: "deleting";
 };
 
 export type FirebaseAiFallbackReason =
@@ -334,7 +348,7 @@ export type FirebaseCallableResult = {
   domains?: string[];
 };
 export type FirebaseCallableTransport = {
-  call: (name: FirebaseCallableName, data: unknown) => Promise<unknown>;
+  call: (name: FirebaseCallableName, data: unknown, options?: FirebaseCallableOptions) => Promise<unknown>;
 };
 export type FirebaseAggregateAnalyticsPayload = {
   day: string;
@@ -685,6 +699,20 @@ export function getFirebaseMessagingRegistrationContract(input: {
   };
 }
 
+export function createFirebaseClientEventId(
+  prefix: string,
+  fillRandom: (bytes: Uint8Array) => Uint8Array = fillSecureRandom
+): string {
+  if (!/^[a-z][a-z0-9]{1,15}$/.test(prefix)) {
+    throw new Error("Firebase client event ID prefix is invalid.");
+  }
+  const random = fillRandom(new Uint8Array(16));
+  if (!(random instanceof Uint8Array) || random.byteLength !== 16) {
+    throw new Error("Secure randomness is unavailable for this Firebase operation.");
+  }
+  return `${prefix}_${Array.from(random, (byte) => byte.toString(16).padStart(2, "0")).join("")}`;
+}
+
 /**
  * Mobile-side boundary for Firebase Functions. It intentionally exposes only
  * bounded aggregates and encrypted-backup metadata, never recovery content.
@@ -711,22 +739,30 @@ export function createFirebaseCallableContracts(transport: FirebaseCallableTrans
       assertCallablePayload(payload, ["backupId", "clientEventId"]);
       return transport.call("deleteEncryptedBackup", payload);
     },
-    registerPushToken: async (payload: FirebaseMessagingRegistration & { clientEventId: string }) => {
+    registerPushToken: async (payload: FirebaseMessagingRegistration & { clientEventId: string }): Promise<FirebasePushRegistrationResult> => {
       assertCallablePayload(payload, ["installationId", "token", "recoveryContentIncluded", "clientEventId"]);
       if (payload.recoveryContentIncluded !== false) throw new Error("Recovery content is not permitted in Firebase callable payloads.");
-      return transport.call("registerPushToken", {
+      return parseFirebasePushRegistrationResult(await transport.call("registerPushToken", {
         installationId: payload.installationId,
         token: payload.token,
         clientEventId: payload.clientEventId
-      });
+      }));
     },
-    requestAccountDeletion: async (payload: FirebaseDeletionRequestPayload) => {
+    requestAccountDeletion: async (payload: FirebaseDeletionRequestPayload): Promise<FirebaseAccountDeletionResult> => {
       assertCallablePayload(payload, ["clientEventId"]);
-      return transport.call("requestAccountDeletion", payload);
+      return parseFirebaseAccountDeletionResult(await transport.call(
+        "requestAccountDeletion",
+        payload,
+        { limitedUseAppCheckToken: true }
+      ));
     },
     verifyStorePurchase: async (payload: FirebaseVerifyStorePurchaseRequest): Promise<FirebaseVerifyStorePurchaseResult> => {
       assertFirebaseVerifyStorePurchaseRequest(payload);
-      return parseFirebaseVerifyStorePurchaseResult(await transport.call("verifyStorePurchase", payload));
+      return parseFirebaseVerifyStorePurchaseResult(await transport.call(
+        "verifyStorePurchase",
+        payload,
+        { limitedUseAppCheckToken: true }
+      ));
     },
     getReviewedAdultDomainFeed: async (): Promise<FirebaseReviewedAdultDomainFeed> =>
       parseFirebaseReviewedAdultDomainFeed(await transport.call("getReviewedAdultDomainFeed", undefined)),
@@ -744,6 +780,20 @@ export function createFirebaseCallableContracts(transport: FirebaseCallableTrans
     },
     backendReadiness: () => transport.call("backendReadiness", undefined)
   };
+}
+
+export function parseFirebasePushRegistrationResult(value: unknown): FirebasePushRegistrationResult {
+  if (!isExactRecord(value, ["ok", "duplicate"] as const) || value.ok !== true || typeof value.duplicate !== "boolean") {
+    throw new Error("Invalid Firebase push registration response.");
+  }
+  return { ok: true, duplicate: value.duplicate };
+}
+
+export function parseFirebaseAccountDeletionResult(value: unknown): FirebaseAccountDeletionResult {
+  if (!isExactRecord(value, ["ok", "status"] as const) || value.ok !== true || value.status !== "deleting") {
+    throw new Error("Invalid Firebase account deletion response.");
+  }
+  return { ok: true, status: "deleting" };
 }
 
 export function parseFirebaseVerifyStorePurchaseResult(value: unknown): FirebaseVerifyStorePurchaseResult {
@@ -1208,4 +1258,12 @@ function isFcmRegistrationToken(value: unknown): value is string {
   return typeof value === "string" && value.trim() === value && /^[A-Za-z0-9:_-]{20,4096}$/.test(value) &&
     !/(?:placeholder|replace(?:[_-]?me)?|example|your[_-]?fcm|test[_-]?token|dummy)/i.test(value) &&
     !/^([A-Za-z0-9])\1{19,}$/.test(value);
+}
+
+function fillSecureRandom(bytes: Uint8Array): Uint8Array {
+  if (typeof globalThis.crypto?.getRandomValues !== "function") {
+    throw new Error("Secure randomness is unavailable for this Firebase operation.");
+  }
+  globalThis.crypto.getRandomValues(bytes);
+  return bytes;
 }

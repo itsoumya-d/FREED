@@ -16,6 +16,7 @@ for (const exportedName of [
   "startFirebaseClient",
   "getFirebaseNativeAuthAdapter",
   "getFirebaseMessagingRegistrationAfterPermission",
+  "registerFirebasePushTokenAfterPermission",
   "callFirebaseBackendReadiness",
   "getFirebaseCallableContracts"
 ]) {
@@ -46,6 +47,13 @@ assert.match(source, /callFirebaseBackendReadiness/);
 assert.match(source, /backendReadiness/);
 assert.doesNotMatch(source, /firebaseFoundation/);
 assert.match(source, /getFirebaseMessagingRegistrationContract/);
+assert.match(source, /await startFirebaseClient\(\)/);
+assert.match(source, /nativeAuth\.currentUser/);
+assert.match(source, /limitedUseAppCheckTokens: true/);
+assert.match(source, /timeout: FIREBASE_CALLABLE_TIMEOUT_MS/);
+assert.match(source, /createFirebaseClientEventId\("push"\)/);
+assert.match(source, /registerPushToken/);
+assert.doesNotMatch(source, /requestPermissionsAsync/);
 assert.match(source, /const emailLinkReadiness = getFirebaseEmailLinkReadiness\(\);[\s\S]*emailLinkReady: emailLinkReadiness\.ready,[\s\S]*emailLinkDomain: emailLinkReadiness\.linkDomain/);
 assert.match(source, /crashlytics\.setCrashlyticsCollectionEnabled\(false\)/);
 assert.match(source, /performance\.setPerformanceCollectionEnabled\(false\)/);
@@ -63,6 +71,15 @@ assert.match(appSurface, /if \(consumeFirebaseEmailLink\(url\)\) return;[\s\S]*L
 assert.match(appSurface, /pendingFirebaseEmailLink=\{pendingFirebaseEmailLink\}/);
 assert.match(appSurface, /Email-link sign-in is disabled until the signed app-link association is deployed and physically verified\./);
 assert.match(appSurface, /void startFirebaseClient\(\)/);
+assert.match(appSurface, /registerFirebasePushTokenAfterPermission/);
+assert.match(appSurface, /result\.permissionStatus === "granted"/);
+assert.match(appSurface, /Delete Account & Data/);
+assert.match(appSurface, /Confirm Account & Data Deletion/);
+assert.match(appSurface, /accessibilityLabel="Delete Account & Data"/);
+assert.match(appSurface, /requestAccountDeletion/);
+assert.match(appSurface, /await deleteLocalRecoveryData\(\)/);
+assert.match(appSurface, /https:\/\/freedrecovery\.app\/account-deletion/);
+assert.doesNotMatch(appSurface, /label="Server Deletion"/);
 assert.match(appSurface, /firebaseEmailLinkReadiness\.callbackUrl/);
 assert.doesNotMatch(appSurface, /isFirebaseEmailLinkCallbackUrl/);
 assert.match(appSurface, /EXPO_PUBLIC_FIREBASE_RECOVERY_BACKUP_SYNC_ENDPOINT/);

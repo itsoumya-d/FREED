@@ -136,8 +136,19 @@ import {
   getRecoveryBackupClientSyncReadiness,
   uploadEncryptedRecoveryBackup
 } from "@/lib/recovery-backup-client-sync";
-import { getFirebaseClientReadiness, getFirebaseEmailLinkReadiness, isFirebaseEmailLinkDeliveryUrl } from "@/lib/firebase-client";
-import { getFirebaseNativeAuthAdapter, startFirebaseClient } from "@/lib/firebase-native";
+import {
+  createFirebaseClientEventId,
+  getFirebaseClientReadiness,
+  getFirebaseEmailLinkReadiness,
+  isFirebaseEmailLinkDeliveryUrl,
+  type FirebaseAccountDeletionResult
+} from "@/lib/firebase-client";
+import {
+  getFirebaseCallableContracts,
+  getFirebaseNativeAuthAdapter,
+  registerFirebasePushTokenAfterPermission,
+  startFirebaseClient
+} from "@/lib/firebase-native";
 import { safeUserFacingMessage } from "@/lib/user-facing-error";
 import {
   ANALYTICS_CONSENT_VERSION,
@@ -311,6 +322,7 @@ type Screen =
 type Tab = RootDestinationId;
 
 const FREED_PRIVACY_POLICY_URL = "https://freedrecovery.app/privacy";
+const FREED_ACCOUNT_DELETION_URL = "https://freedrecovery.app/account-deletion";
 const FREED_SUPPORT_EMAIL = "support@freedrecovery.app";
 const showQaControls = typeof __DEV__ !== "undefined" && __DEV__;
 
@@ -1725,7 +1737,13 @@ function ProtectionSetupScreen({
           return;
         case "request-android-notification-permission":
           prepareSetupAutoAdvance(targetStep, { waitingForAppReturn: true, continueAfterOptional: true });
-          runAction("settings", requestAndroidRecoveryNotificationVisibility);
+          runAction("settings", async () => {
+            const status = await requestAndroidRecoveryNotificationVisibility();
+            if (status.androidNotificationPermissionGranted === true) {
+              void registerFirebasePushTokenAfterPermission(true);
+            }
+            return status;
+          });
           return;
         case "open-usage-access-settings":
           prepareSetupAutoAdvance(targetStep, { waitingForAppReturn: true });
@@ -4946,9 +4964,16 @@ function RecoveryBackupCard({
   );
 }
 
-function PrivacySupportCard({ onDeleteLocalData }: { onDeleteLocalData: () => Promise<void> | void }) {
+function PrivacySupportCard({
+  onDeleteLocalData,
+  onDeleteAccountAndData
+}: {
+  onDeleteLocalData: () => Promise<void> | void;
+  onDeleteAccountAndData: () => Promise<FirebaseAccountDeletionResult>;
+}) {
   const [message, setMessage] = React.useState("Privacy controls are ready.");
   const [confirmDelete, setConfirmDelete] = React.useState(false);
+  const [confirmAccountDelete, setConfirmAccountDelete] = React.useState(false);
   const [busy, setBusy] = React.useState(false);
 
   const openUrl = React.useCallback((url: string, fallback: string) => {
@@ -4962,16 +4987,6 @@ function PrivacySupportCard({ onDeleteLocalData }: { onDeleteLocalData: () => Pr
       `mailto:${encodeURIComponent(FREED_SUPPORT_EMAIL)}?subject=${encodeURIComponent("FREED support")}`,
     []
   );
-  const deletionUrl = React.useMemo(
-    () =>
-      `mailto:${encodeURIComponent(FREED_SUPPORT_EMAIL)}?subject=${encodeURIComponent(
-        "FREED data deletion request"
-      )}&body=${encodeURIComponent(
-        "Please help delete any hosted FREED data associated with my account. I understand local device data can be deleted inside FREED Profile > Privacy & Support."
-      )}`,
-    []
-  );
-
   const runLocalDelete = React.useCallback(() => {
     if (!confirmDelete) {
       setConfirmDelete(true);
@@ -4989,6 +5004,28 @@ function PrivacySupportCard({ onDeleteLocalData }: { onDeleteLocalData: () => Pr
       .finally(() => setBusy(false));
   }, [confirmDelete, onDeleteLocalData]);
 
+  const runAccountDelete = React.useCallback(() => {
+    if (busy) return;
+    if (!confirmAccountDelete) {
+      setConfirmAccountDelete(true);
+      setConfirmDelete(false);
+      setMessage("Tap Confirm Account & Data Deletion to start deleting cloud account data, then clear this device.");
+      return;
+    }
+
+    setBusy(true);
+    Promise.resolve(onDeleteAccountAndData())
+      .then((result) => {
+        if (result.ok !== true || result.status !== "deleting") throw new Error("Account deletion was not accepted.");
+        setMessage("Account deletion started. Cloud removal is processing and local data was cleared.");
+      })
+      .catch((error) => {
+        setMessage(safeUserFacingMessage(error, "Account deletion could not start. Local data was kept on this device."));
+        setConfirmAccountDelete(false);
+      })
+      .finally(() => setBusy(false));
+  }, [busy, confirmAccountDelete, onDeleteAccountAndData]);
+
   return (
     <Card gradient={[`${colors.mint}1F`, colors.surface]}>
       <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 12, marginBottom: 12 }}>
@@ -5005,7 +5042,10 @@ function PrivacySupportCard({ onDeleteLocalData }: { onDeleteLocalData: () => Pr
         </View>
       </View>
       <Text selectable style={{ color: colors.text2, lineHeight: 21, marginBottom: 12 }}>
-        Local deletion clears FREED's saved streaks, check-ins, protected moments, selected app choices, membership cache, and activation state on this device. System permissions remain controlled by iOS or Android Settings.
+        Delete Account & Data requests removal of your signed-in Firebase account and hosted data before this device is cleared. Delete Local Data affects only this device. System permissions remain controlled by iOS or Android Settings.
+      </Text>
+      <Text selectable style={{ color: colors.text3, lineHeight: 19, marginBottom: 12 }}>
+        Server Deletion help remains available on the hosted account-deletion page and through support if you cannot sign in.
       </Text>
       <View style={{ gap: 10 }}>
         <View style={{ flexDirection: "row", gap: 10 }}>
@@ -5029,10 +5069,13 @@ function PrivacySupportCard({ onDeleteLocalData }: { onDeleteLocalData: () => Pr
         <View style={{ flexDirection: "row", gap: 10 }}>
           <View style={{ flex: 1 }}>
             <PillButton
-              label="Server Deletion"
-              variant="ghost"
-              icon={<Mail color={colors.text2} size={18} />}
-              onPress={() => openUrl(deletionUrl, "Deletion request message opened.")}
+              label={confirmAccountDelete ? "Confirm Account & Data Deletion" : "Delete Account & Data"}
+              accessibilityLabel="Delete Account & Data"
+              accessibilityHint="Requires Firebase sign-in and a second confirmation. Cloud deletion must start before local data is cleared."
+              variant={confirmAccountDelete ? "danger" : "ghost"}
+              disabled={busy}
+              icon={<Trash2 color={confirmAccountDelete ? colors.white : colors.text2} size={18} />}
+              onPress={runAccountDelete}
             />
           </View>
           <View style={{ flex: 1 }}>
@@ -5040,11 +5083,18 @@ function PrivacySupportCard({ onDeleteLocalData }: { onDeleteLocalData: () => Pr
               label={confirmDelete ? "Confirm Delete" : "Delete Local Data"}
               variant={confirmDelete ? "danger" : "ghost"}
               disabled={busy}
+              accessibilityLabel="Delete Local Data"
               icon={<Trash2 color={confirmDelete ? colors.white : colors.text2} size={18} />}
               onPress={runLocalDelete}
             />
           </View>
         </View>
+        <PillButton
+          label="Account Deletion Help"
+          variant="ghost"
+          icon={<Mail color={colors.text2} size={18} />}
+          onPress={() => openUrl(FREED_ACCOUNT_DELETION_URL, "Account deletion page opened.")}
+        />
       </View>
     </Card>
   );
@@ -5426,6 +5476,7 @@ function LegacyProfileScreen({
   onSupportCircleRemove,
   onRestoreBackup,
   onDeleteLocalData,
+  onDeleteAccountAndData,
   onManagePlan,
   onLogSlip,
   storageError,
@@ -5459,6 +5510,7 @@ function LegacyProfileScreen({
   onSupportCircleRemove: (memberId: string) => void;
   onRestoreBackup: (state: RecoveryState) => void;
   onDeleteLocalData: () => Promise<void> | void;
+  onDeleteAccountAndData: () => Promise<FirebaseAccountDeletionResult>;
   onManagePlan: () => void;
   onLogSlip: () => void;
   storageError: string | null;
@@ -5687,7 +5739,7 @@ function LegacyProfileScreen({
         onPendingFirebaseEmailLinkHandled={onPendingFirebaseEmailLinkHandled}
       />
 
-      <PrivacySupportCard onDeleteLocalData={onDeleteLocalData} />
+      <PrivacySupportCard onDeleteLocalData={onDeleteLocalData} onDeleteAccountAndData={onDeleteAccountAndData} />
 
       <ReminderSettingsCard reminders={reminders} busy={reminderBusy} smartSuggestion={smartReminderSuggestion} onChange={onReminderChange} />
 
@@ -7365,12 +7417,12 @@ function BreathingScreen({ onBack }: { onBack: () => void }) {
   );
 }
 
-function ProfileScreen({ recoveryState, premium, premiumCapabilities, streakDays, bestStreakDays, attempts, relapseCount, reminders, smartReminderSuggestion, retentionPlan, accountability, supportCircle, reminderBusy, onReminderChange, onAccountabilityChange, onSendSponsorReport, onSendSupportCircleReport, onSupportCircleChange, onSupportCircleRemove, onRestoreBackup, onDeleteLocalData, onManagePlan, onLogSlip, onOpenShield, pendingFirebaseEmailLink, onPendingFirebaseEmailLinkHandled }: {
+function ProfileScreen({ recoveryState, premium, premiumCapabilities, streakDays, bestStreakDays, attempts, relapseCount, reminders, smartReminderSuggestion, retentionPlan, accountability, supportCircle, reminderBusy, onReminderChange, onAccountabilityChange, onSendSponsorReport, onSendSupportCircleReport, onSupportCircleChange, onSupportCircleRemove, onRestoreBackup, onDeleteLocalData, onDeleteAccountAndData, onManagePlan, onLogSlip, onOpenShield, pendingFirebaseEmailLink, onPendingFirebaseEmailLinkHandled }: {
   recoveryState: RecoveryState; premium: boolean; premiumCapabilities: PremiumCapabilitySet; streakDays: number; bestStreakDays: number; attempts: BlockingAttempt[]; relapseCount: number;
   reminders: ReminderPreferences; smartReminderSuggestion: SmartReminderSuggestion; retentionPlan: RetentionPlan; accountability: AccountabilityPartner; supportCircle: SupportCircleMember[]; reminderBusy: boolean;
   onReminderChange: (update: Partial<ReminderPreferences>) => void; onAccountabilityChange: (update: Partial<AccountabilityPartner>) => void; onSendSponsorReport: () => void; onSendSupportCircleReport: (memberId: string) => void;
   onSupportCircleChange: (memberId: string, update: Partial<Omit<SupportCircleMember, "id" | "updatedAt" | "lastContactedAt">>) => void; onSupportCircleRemove: (memberId: string) => void;
-  onRestoreBackup: (state: RecoveryState) => void; onDeleteLocalData: () => Promise<void> | void; onManagePlan: () => void; onLogSlip: () => void; onOpenShield: () => void; pendingFirebaseEmailLink: string | null; onPendingFirebaseEmailLinkHandled: () => void;
+  onRestoreBackup: (state: RecoveryState) => void; onDeleteLocalData: () => Promise<void> | void; onDeleteAccountAndData: () => Promise<FirebaseAccountDeletionResult>; onManagePlan: () => void; onLogSlip: () => void; onOpenShield: () => void; pendingFirebaseEmailLink: string | null; onPendingFirebaseEmailLinkHandled: () => void;
 }) {
   return <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={{ padding: 20, paddingBottom: 112, gap: 18 }}>
     <Text selectable style={{ color: colors.text, fontSize: 30, fontWeight: typography.heavy }}>Profile</Text>
@@ -7379,7 +7431,7 @@ function ProfileScreen({ recoveryState, premium, premiumCapabilities, streakDays
     <Card><Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Recovery history</Text><Text selectable style={{ color: colors.text2, marginTop: 6 }}>{attempts.length} protected attempts · {relapseCount} slips logged privately.</Text><View style={{ marginTop: 12 }}><PillButton label="Log Slip Safely" variant="ghost" onPress={onLogSlip} /></View></Card>
     <RetentionPlanCard plan={retentionPlan} />
     <RecoveryBackupCard recoveryState={recoveryState} onRestore={onRestoreBackup} pendingFirebaseEmailLink={pendingFirebaseEmailLink} onPendingFirebaseEmailLinkHandled={onPendingFirebaseEmailLinkHandled} />
-    <PrivacySupportCard onDeleteLocalData={onDeleteLocalData} />
+    <PrivacySupportCard onDeleteLocalData={onDeleteLocalData} onDeleteAccountAndData={onDeleteAccountAndData} />
     <ReminderSettingsCard reminders={reminders} busy={reminderBusy} smartSuggestion={smartReminderSuggestion} onChange={onReminderChange} />
     <AccountabilitySettingsCard partner={accountability} supportCircle={supportCircle} recoveryState={recoveryState} canSendSponsorReport={premiumCapabilities.sponsorAccountability} canUseSupportCircle={premiumCapabilities.familySupport || premiumCapabilities.sponsorAccountability} onSendReport={onSendSponsorReport} onSendSupportCircleReport={onSendSupportCircleReport} onManagePlan={onManagePlan} onSupportCircleChange={onSupportCircleChange} onSupportCircleRemove={onSupportCircleRemove} onChange={onAccountabilityChange} />
     <Card><Text selectable style={{ color: colors.text, fontSize: 17, fontWeight: typography.heavy }}>Focus Shield</Text><Text selectable style={{ color: colors.text2, marginTop: 6 }}>Protection configuration is managed in Shield.</Text><View style={{ marginTop: 12 }}><PillButton label="Open Shield" variant="ghost" onPress={onOpenShield} accessibilityHint="Opens Focus Shield configuration." /></View></Card>
@@ -7647,7 +7699,14 @@ export default function FreedApp() {
   }, []);
 
   React.useEffect(() => {
-    configureNativeMonetizationRuntime({ platform: getRuntimeMonetizationPlatform() }).catch(() => undefined);
+    configureNativeMonetizationRuntime({
+      platform: getRuntimeMonetizationPlatform(),
+      verifyStorePurchase: async (payload) => {
+        const contracts = await getFirebaseCallableContracts();
+        if (!contracts) throw new Error("Authenticated Firebase purchase verification is unavailable.");
+        return contracts.verifyStorePurchase(payload);
+      }
+    }).catch(() => undefined);
   }, []);
 
   React.useEffect(() => {
@@ -7855,6 +7914,9 @@ export default function FreedApp() {
       syncRecoveryReminders(nextPreferences)
         .then((result) => {
           setRecoveryState((current) => recordReminderSync(updateReminderPreferences(current, smartUpdate), result));
+          if (result.permissionStatus === "granted") {
+            void registerFirebasePushTokenAfterPermission(true);
+          }
         })
         .catch((error) => {
           setRecoveryState((current) =>
@@ -8039,6 +8101,19 @@ export default function FreedApp() {
     setTab("today");
     setScreen("welcome");
   }, [setRecoveryState]);
+
+  const deleteFirebaseAccountAndData = React.useCallback(async (): Promise<FirebaseAccountDeletionResult> => {
+    const contracts = await getFirebaseCallableContracts();
+    if (!contracts) throw new Error("Sign in to Firebase before deleting your account and hosted data.");
+    const result = await contracts.requestAccountDeletion({
+      clientEventId: createFirebaseClientEventId("deletion")
+    });
+    if (result.ok !== true || result.status !== "deleting") {
+      throw new Error("Firebase account deletion was not accepted.");
+    }
+    await deleteLocalRecoveryData();
+    return result;
+  }, [deleteLocalRecoveryData]);
 
   React.useEffect(() => {
     if (!hydrated) return undefined;
@@ -8453,6 +8528,7 @@ export default function FreedApp() {
               onSupportCircleRemove={(memberId) => setRecoveryState((current) => removeSupportCircleMember(current, memberId))}
               onRestoreBackup={setRecoveryState}
               onDeleteLocalData={deleteLocalRecoveryData}
+              onDeleteAccountAndData={deleteFirebaseAccountAndData}
               onManagePlan={() => setScreen("paywall")}
               onLogSlip={() => setScreen("slip")}
               onOpenShield={() => setTab("shield")}
