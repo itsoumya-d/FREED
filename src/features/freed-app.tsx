@@ -217,6 +217,7 @@ import {
 } from "@/lib/recovery-engine";
 import {
   getSmartReminderSuggestion,
+  getReminderSyncFailureResult,
   listenForReminderResponses,
   parseClockTime,
   syncRecoveryReminders,
@@ -7920,12 +7921,10 @@ export default function FreedApp() {
         })
         .catch((error) => {
           setRecoveryState((current) =>
-            recordReminderSync(updateReminderPreferences(current, smartUpdate), {
-              scheduledIds: [],
-              permissionStatus: "unavailable",
-              statusMessage: safeUserFacingMessage(error, "Recovery reminders could not be scheduled."),
-              enabled: false
-            })
+            recordReminderSync(
+              updateReminderPreferences(current, smartUpdate),
+              getReminderSyncFailureResult(error, nextPreferences)
+            )
           );
         })
         .finally(() => setReminderBusy(false));

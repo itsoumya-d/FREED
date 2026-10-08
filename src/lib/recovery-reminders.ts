@@ -24,6 +24,7 @@ export type SmartReminderSuggestion = {
 
 export type ReminderSyncResult = {
   scheduledIds: string[];
+  didSchedule?: boolean;
   permissionStatus: ReminderPermissionStatus;
   statusMessage: string;
   enabled: boolean;
@@ -183,6 +184,46 @@ function getReminderPlatform(options?: ReminderSyncOptions) {
   return options?.platform ?? process.env.EXPO_OS;
 }
 
+// A failed native operation can leave notifications alive. Keep their IDs until
+// cancellation succeeds, so another sync can recover without creating duplicates.
+class ReminderSyncError extends Error {
+  constructor(readonly result: ReminderSyncResult) {
+    super(result.statusMessage);
+    this.name = "ReminderSyncError";
+  }
+}
+
+function reminderSyncFailure(scheduledIds: string[], permissionStatus: ReminderPermissionStatus): ReminderSyncResult {
+  return {
+    scheduledIds: [...scheduledIds],
+    didSchedule: false,
+    permissionStatus,
+    statusMessage: scheduledIds.length > 0
+      ? "Some recovery reminders may still be active. Turn reminders off again to retry cleanup."
+      : "Recovery reminders could not be synced. Try again.",
+    enabled: scheduledIds.length > 0
+  };
+}
+
+export function getReminderSyncFailureResult(error: unknown, preferences: ReminderPreferences): ReminderSyncResult {
+  if (error instanceof ReminderSyncError) return error.result;
+  // If sync failed before it could report progress, keep every previously known
+  // ID rather than claiming the reminders were canceled.
+  return reminderSyncFailure(preferences.scheduledIds, preferences.permissionStatus);
+}
+
+async function cancelReminderIds(notifications: ReminderNotificationsModule, ids: string[]): Promise<string[]> {
+  const remaining = await Promise.all(ids.map(async (id) => {
+    try {
+      await notifications.cancelScheduledNotificationAsync(id);
+      return null;
+    } catch {
+      return id;
+    }
+  }));
+  return remaining.filter((id): id is string => id !== null);
+}
+
 export async function syncRecoveryReminders(
   preferences: ReminderPreferences,
   options?: ReminderSyncOptions
@@ -190,91 +231,114 @@ export async function syncRecoveryReminders(
   const platform = getReminderPlatform(options);
   if (platform !== "ios" && platform !== "android") {
     return {
-      scheduledIds: [],
+      scheduledIds: [...preferences.scheduledIds],
+      didSchedule: false,
       permissionStatus: "unavailable",
-      statusMessage: "Local reminders are available in native iOS and Android builds.",
-      enabled: false
+      statusMessage: preferences.scheduledIds.length > 0
+        ? "Local reminders need a native build. Previously scheduled reminders may still be active."
+        : "Local reminders are available in native iOS and Android builds.",
+      enabled: preferences.scheduledIds.length > 0
     };
   }
 
-  const Notifications = await getNotificationsModule(options);
+  let scheduledIds = [...new Set(preferences.scheduledIds)];
+  let permissionStatus = preferences.permissionStatus;
+  let notifications: ReminderNotificationsModule | null = null;
+  let creatingReminders = false;
 
-  Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldPlaySound: false,
-      shouldSetBadge: false,
-      shouldShowBanner: true,
-      shouldShowList: true
-    })
-  });
+  try {
+    notifications = await getNotificationsModule(options);
+    const Notifications = notifications;
 
-  await Promise.all(preferences.scheduledIds.map((id) => Notifications.cancelScheduledNotificationAsync(id).catch(() => undefined)));
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+        shouldShowBanner: true,
+        shouldShowList: true
+      })
+    });
 
-  if (!preferences.enabled) {
+    scheduledIds = await cancelReminderIds(Notifications, scheduledIds);
+    if (scheduledIds.length > 0) {
+      // Do not schedule replacements until all previous reminders are gone.
+      throw new Error("Reminder cleanup is incomplete.");
+    }
+
+    if (!preferences.enabled) {
+      return {
+        scheduledIds: [],
+        permissionStatus,
+        statusMessage: "Recovery reminders are off.",
+        enabled: false
+      };
+    }
+
+    let permission = await Notifications.getPermissionsAsync();
+    // Keep the latest observed status even if the following request fails.
+    permissionStatus = permission.status === "granted" ? "granted" : permission.status === "denied" ? "denied" : "unknown";
+    if (permission.status !== "granted") {
+      permission = await Notifications.requestPermissionsAsync({
+        ios: {
+          allowAlert: true,
+          allowBadge: false,
+          allowSound: false,
+          allowProvisional: true
+        }
+      });
+    }
+
+    permissionStatus = permission.status === "granted" ? "granted" : "denied";
+    if (permissionStatus !== "granted") {
+      return {
+        scheduledIds: [],
+        permissionStatus,
+        statusMessage: "Notifications are not allowed yet. Enable them to use local recovery reminders.",
+        enabled: false
+      };
+    }
+
+    if (platform === "android") {
+      await Notifications.setNotificationChannelAsync?.(REMINDER_CHANNEL_ID, {
+        name: "FREED recovery reminders",
+        importance: Notifications.AndroidImportance?.DEFAULT ?? "default",
+        sound: null,
+        enableVibrate: false,
+        showBadge: false
+      });
+    }
+
+    creatingReminders = true;
+    for (const item of buildReminderPlan(preferences)) {
+      const clock = parseClockTime(item.time);
+      if (!clock) continue;
+      const id = await Notifications.scheduleNotificationAsync({
+        content: {
+          title: item.title,
+          body: item.body,
+          sound: false,
+          data: { route: "checkin", kind: item.key }
+        },
+        trigger: {
+          type: Notifications.SchedulableTriggerInputTypes?.DAILY ?? "daily",
+          hour: clock.hour,
+          minute: clock.minute,
+          channelId: REMINDER_CHANNEL_ID
+        }
+      });
+      scheduledIds.push(id);
+    }
+
     return {
-      scheduledIds: [],
-      permissionStatus: preferences.permissionStatus,
-      statusMessage: "Recovery reminders are off.",
-      enabled: false
+      scheduledIds,
+      permissionStatus: "granted",
+      statusMessage: `${scheduledIds.length} local recovery reminder${scheduledIds.length === 1 ? "" : "s"} scheduled.`,
+      enabled: scheduledIds.length > 0
     };
+  } catch {
+    if (creatingReminders && notifications) {
+      scheduledIds = await cancelReminderIds(notifications, scheduledIds);
+    }
+    throw new ReminderSyncError(reminderSyncFailure(scheduledIds, permissionStatus));
   }
-
-  let permission = await Notifications.getPermissionsAsync();
-  if (permission.status !== "granted") {
-    permission = await Notifications.requestPermissionsAsync({
-      ios: {
-        allowAlert: true,
-        allowBadge: false,
-        allowSound: false,
-        allowProvisional: true
-      }
-    });
-  }
-
-  if (permission.status !== "granted") {
-    return {
-      scheduledIds: [],
-      permissionStatus: "denied",
-      statusMessage: "Notifications are not allowed yet. Enable them to use local recovery reminders.",
-      enabled: false
-    };
-  }
-
-  if (platform === "android") {
-    await Notifications.setNotificationChannelAsync?.(REMINDER_CHANNEL_ID, {
-      name: "FREED recovery reminders",
-      importance: Notifications.AndroidImportance?.DEFAULT ?? "default",
-      sound: null,
-      enableVibrate: false,
-      showBadge: false
-    });
-  }
-
-  const scheduledIds: string[] = [];
-  for (const item of buildReminderPlan(preferences)) {
-    const clock = parseClockTime(item.time);
-    if (!clock) continue;
-    const id = await Notifications.scheduleNotificationAsync({
-      content: {
-        title: item.title,
-        body: item.body,
-        sound: false,
-        data: { route: "checkin", kind: item.key }
-      },
-      trigger: {
-        type: Notifications.SchedulableTriggerInputTypes?.DAILY ?? "daily",
-        hour: clock.hour,
-        minute: clock.minute,
-        channelId: REMINDER_CHANNEL_ID
-      }
-    });
-    scheduledIds.push(id);
-  }
-
-  return {
-    scheduledIds,
-    permissionStatus: "granted",
-    statusMessage: `${scheduledIds.length} local recovery reminder${scheduledIds.length === 1 ? "" : "s"} scheduled.`,
-    enabled: scheduledIds.length > 0
-  };
 }
