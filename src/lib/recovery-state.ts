@@ -1640,6 +1640,7 @@ export function recordReminderSync(
   state: RecoveryState,
   result: {
     scheduledIds: string[];
+    didSchedule?: boolean;
     permissionStatus: ReminderPermissionStatus;
     statusMessage: string;
     enabled?: boolean;
@@ -1655,7 +1656,7 @@ export function recordReminderSync(
       permissionStatus: result.permissionStatus,
       statusMessage: result.statusMessage,
       updatedAt: syncedAt,
-      lastScheduledAt: result.scheduledIds.length > 0 ? syncedAt : state.reminders.lastScheduledAt
+      lastScheduledAt: result.didSchedule !== false && result.scheduledIds.length > 0 ? syncedAt : state.reminders.lastScheduledAt
     }
   });
 }
