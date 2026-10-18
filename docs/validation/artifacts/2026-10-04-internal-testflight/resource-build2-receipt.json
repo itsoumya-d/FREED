@@ -1,0 +1,121 @@
+{
+  "changeKind": "version and approved Safari extension resources only",
+  "sourceArchive": "FREED-internal.xcarchive",
+  "newArchive": "FREED-resource-build2.xcarchive",
+  "bundles": [
+    {
+      "bundle": "app.freed.recovery",
+      "uuidBefore": "42B4F9A3-9BAA-38A4-8974-E0100F52DA81",
+      "uuidAfter": "42B4F9A3-9BAA-38A4-8974-E0100F52DA81",
+      "entitlementsPreserved": {
+        "application-identifier": "R5RX8WP8ZC.app.freed.recovery",
+        "aps-environment": "production",
+        "beta-reports-active": true,
+        "com.apple.developer.applesignin": [
+          "Default"
+        ],
+        "com.apple.developer.associated-domains": [
+          "applinks:freed-7d5ee.firebaseapp.com"
+        ],
+        "com.apple.developer.default-data-protection": "NSFileProtectionComplete",
+        "com.apple.developer.family-controls": true,
+        "com.apple.developer.networking.networkextension": [
+          "dns-settings"
+        ],
+        "com.apple.developer.team-identifier": "R5RX8WP8ZC",
+        "com.apple.security.application-groups": [
+          "group.app.freed.recovery"
+        ],
+        "get-task-allow": false
+      }
+    },
+    {
+      "bundle": "app.freed.recovery.device-activity-monitor",
+      "uuidBefore": "A76252A3-28DB-38E5-91DA-E553F0997B22",
+      "uuidAfter": "A76252A3-28DB-38E5-91DA-E553F0997B22",
+      "entitlementsPreserved": {
+        "application-identifier": "R5RX8WP8ZC.app.freed.recovery.device-activity-monitor",
+        "beta-reports-active": true,
+        "com.apple.developer.default-data-protection": "NSFileProtectionComplete",
+        "com.apple.developer.family-controls": true,
+        "com.apple.developer.team-identifier": "R5RX8WP8ZC",
+        "com.apple.security.application-groups": [
+          "group.app.freed.recovery"
+        ],
+        "get-task-allow": false
+      }
+    },
+    {
+      "bundle": "app.freed.recovery.safari-content-blocker",
+      "uuidBefore": "981C3C28-9E09-3618-905F-EA92BB466C88",
+      "uuidAfter": "981C3C28-9E09-3618-905F-EA92BB466C88",
+      "entitlementsPreserved": {
+        "application-identifier": "R5RX8WP8ZC.app.freed.recovery.safari-content-blocker",
+        "beta-reports-active": true,
+        "com.apple.developer.default-data-protection": "NSFileProtectionComplete",
+        "com.apple.developer.team-identifier": "R5RX8WP8ZC",
+        "com.apple.security.application-groups": [
+          "group.app.freed.recovery"
+        ],
+        "get-task-allow": false
+      }
+    },
+    {
+      "bundle": "app.freed.recovery.safari-focus-shield",
+      "uuidBefore": "B49D2FEF-1F77-34A0-AA7A-B4AFAF25D482",
+      "uuidAfter": "B49D2FEF-1F77-34A0-AA7A-B4AFAF25D482",
+      "entitlementsPreserved": {
+        "application-identifier": "R5RX8WP8ZC.app.freed.recovery.safari-focus-shield",
+        "beta-reports-active": true,
+        "com.apple.developer.default-data-protection": "NSFileProtectionComplete",
+        "com.apple.developer.team-identifier": "R5RX8WP8ZC",
+        "com.apple.security.application-groups": [
+          "group.app.freed.recovery"
+        ],
+        "get-task-allow": false
+      }
+    },
+    {
+      "bundle": "app.freed.recovery.shield-action",
+      "uuidBefore": "71414C80-2182-39B4-9B7A-41EAD1363499",
+      "uuidAfter": "71414C80-2182-39B4-9B7A-41EAD1363499",
+      "entitlementsPreserved": {
+        "application-identifier": "R5RX8WP8ZC.app.freed.recovery.shield-action",
+        "beta-reports-active": true,
+        "com.apple.developer.default-data-protection": "NSFileProtectionComplete",
+        "com.apple.developer.family-controls": true,
+        "com.apple.developer.team-identifier": "R5RX8WP8ZC",
+        "com.apple.security.application-groups": [
+          "group.app.freed.recovery"
+        ],
+        "get-task-allow": false
+      }
+    },
+    {
+      "bundle": "app.freed.recovery.shield-configuration",
+      "uuidBefore": "83F4C3F9-BAA6-36B2-8EE8-8CE2E1E3482D",
+      "uuidAfter": "83F4C3F9-BAA6-36B2-8EE8-8CE2E1E3482D",
+      "entitlementsPreserved": {
+        "application-identifier": "R5RX8WP8ZC.app.freed.recovery.shield-configuration",
+        "beta-reports-active": true,
+        "com.apple.developer.default-data-protection": "NSFileProtectionComplete",
+        "com.apple.developer.family-controls": true,
+        "com.apple.developer.team-identifier": "R5RX8WP8ZC",
+        "com.apple.security.application-groups": [
+          "group.app.freed.recovery"
+        ],
+        "get-task-allow": false
+      }
+    }
+  ],
+  "mainBundleUnchanged": true,
+  "strictDeepSignatureVerified": true,
+  "allExecutableUuidsPreserved": true,
+  "ipaSha256": "d443affbf43a5553e5754f18cd1192aceaf7d859014eaaaa9603c9bc5bd993c6",
+  "xcodeExportSucceeded": true,
+  "actualPackageContractTests": {
+    "passed": 69,
+    "failed": 0,
+    "skipped": 0
+  }
+}

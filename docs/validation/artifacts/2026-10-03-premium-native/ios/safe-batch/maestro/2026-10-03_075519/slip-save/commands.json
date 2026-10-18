@@ -1,0 +1,113 @@
+[ {
+  "command" : {
+    "defineVariablesCommand" : {
+      "env" : {
+        "MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED" : "true",
+        "MAESTRO_CLI_NO_ANALYTICS" : "true",
+        "MAESTRO_FILENAME" : "slip-save",
+        "MAESTRO_DEVICE_UDID" : "EA53F394-3E1F-44A7-84EF-716A26BE9879",
+        "MAESTRO_SHARD_ID" : "1",
+        "MAESTRO_SHARD_INDEX" : "0"
+      },
+      "optional" : false
+    }
+  },
+  "metadata" : {
+    "status" : "COMPLETED",
+    "timestamp" : 1790995541324,
+    "duration" : 2,
+    "sequenceNumber" : 0,
+    "depth" : 0,
+    "evaluatedCommand" : {
+      "defineVariablesCommand" : {
+        "env" : {
+          "MAESTRO_CLI_ANALYSIS_NOTIFICATION_DISABLED" : "true",
+          "MAESTRO_CLI_NO_ANALYTICS" : "true",
+          "MAESTRO_FILENAME" : "slip-save",
+          "MAESTRO_DEVICE_UDID" : "EA53F394-3E1F-44A7-84EF-716A26BE9879",
+          "MAESTRO_SHARD_ID" : "1",
+          "MAESTRO_SHARD_INDEX" : "0"
+        },
+        "optional" : false
+      }
+    }
+  }
+}, {
+  "command" : {
+    "applyConfigurationCommand" : {
+      "config" : {
+        "appId" : "app.freed.recovery",
+        "name" : "slip-save",
+        "tags" : [ "smoke", "local-write" ]
+      },
+      "optional" : false
+    }
+  },
+  "metadata" : {
+    "status" : "COMPLETED",
+    "timestamp" : 1790995541326,
+    "duration" : 0,
+    "sequenceNumber" : 1,
+    "depth" : 0,
+    "evaluatedCommand" : {
+      "applyConfigurationCommand" : {
+        "config" : {
+          "appId" : "app.freed.recovery",
+          "name" : "slip-save",
+          "tags" : [ "smoke", "local-write" ]
+        },
+        "optional" : false
+      }
+    }
+  }
+}, {
+  "command" : {
+    "stopAppCommand" : {
+      "appId" : "app.freed.recovery",
+      "optional" : false
+    }
+  },
+  "metadata" : {
+    "status" : "COMPLETED",
+    "timestamp" : 1790995541326,
+    "duration" : 1099,
+    "sequenceNumber" : 2,
+    "depth" : 0,
+    "evaluatedCommand" : {
+      "stopAppCommand" : {
+        "appId" : "app.freed.recovery",
+        "optional" : false
+      }
+    }
+  }
+}, {
+  "command" : {
+    "launchAppCommand" : {
+      "appId" : "app.freed.recovery",
+      "optional" : false
+    }
+  },
+  "metadata" : {
+    "status" : "FAILED",
+    "timestamp" : 1790995542426,
+    "duration" : 740,
+    "error" : {
+      "message" : "An error was encountered processing the command (domain=NSPOSIXErrorDomain, code=3):\nSimulator device failed to launch app.freed.recovery.\nNo such process\nUnderlying error (domain=NSPOSIXErrorDomain, code=3):\n\tApplication launch for 'app.freed.recovery' did not return a process handle nor launch error.\n\tNo such process\n"
+    },
+    "sequenceNumber" : 3,
+    "depth" : 0,
+    "evaluatedCommand" : {
+      "launchAppCommand" : {
+        "appId" : "app.freed.recovery",
+        "optional" : false
+      }
+    },
+    "artifacts" : [ {
+      "type" : "SCREEN_HIERARCHY",
+      "path" : "screen-hierarchy/step-004-launchApp-app.freed.recovery.json"
+    }, {
+      "type" : "SCREENSHOT",
+      "path" : "screenshots/step-004-launchApp-app.freed.recovery.png"
+    } ]
+  }
+} ]

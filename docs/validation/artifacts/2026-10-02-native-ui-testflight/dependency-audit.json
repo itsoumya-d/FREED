@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "freed-dependency-audit-snapshot-v1",
+  "generatedAt": "2026-10-02T06:30:05.454502+00:00",
+  "sanitized": true,
+  "command": "npm audit --omit=dev --json",
+  "exitCode": 1,
+  "lockfileSha256": "df3191d55e8ad74679428513aa2a36a9275166a21e2bc0c03f09bb84c280b19b",
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 16,
+      "critical": 0,
+      "total": 16
+    },
+    "dependencies": {
+      "prod": 824,
+      "dev": 29,
+      "optional": 40,
+      "peer": 4,
+      "peerOptional": 0,
+      "total": 866
+    }
+  },
+  "nodeForge": {
+    "name": "node-forge",
+    "severity": "high",
+    "isDirect": false,
+    "range": "*",
+    "effects": [
+      "@expo/cli",
+      "@expo/code-signing-certificates"
+    ],
+    "nodes": [
+      "node_modules/node-forge"
+    ],
+    "fixAvailable": {
+      "name": "@react-native-firebase/app",
+      "version": "17.4.2",
+      "isSemVerMajor": true
+    }
+  },
+  "nodeForgeAdvisories": [
+    {
+      "title": "node-forge RSA PKCS#1 v1.5 signature verification accepts extra nested DigestAlgorithm elements",
+      "url": "https://github.com/advisories/GHSA-86w9-cpqp-85rv",
+      "severity": "high",
+      "range": "<=1.4.0",
+      "cwe": [
+        "CWE-347"
+      ]
+    }
+  ],
+  "affectedPackages": [
+    "@expo/cli",
+    "@expo/code-signing-certificates",
+    "@react-native-firebase/analytics",
+    "@react-native-firebase/app",
+    "@react-native-firebase/app-check",
+    "@react-native-firebase/auth",
+    "@react-native-firebase/crashlytics",
+    "@react-native-firebase/functions",
+    "@react-native-firebase/installations",
+    "@react-native-firebase/messaging",
+    "@react-native-firebase/perf",
+    "@react-native-firebase/remote-config",
+    "@react-native-google-signin/google-signin",
+    "expo",
+    "node-forge",
+    "react-native-google-mobile-ads"
+  ],
+  "scope": "npm production dependency graph; Expo build-tool chain is affected; inclusion/reachability in shipped native binary remains unverified"
+}

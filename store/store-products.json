@@ -5,7 +5,10 @@
   "entitlementId": "premium",
   "subscriptionGroupId": "freed_premium",
   "priceLocale": "US",
-  "launchProductIds": ["freed_premium_yearly", "freed_premium_monthly", "freed_premium_lifetime"],
+  "launchProductIds": [
+    "freed_premium_yearly",
+    "freed_premium_monthly"
+  ],
   "consoleExportFiles": {
     "appStoreConnectCsv": "store/app-store/in-app-purchases.csv",
     "googlePlayCsv": "store/play-store/products.csv"
@@ -41,16 +44,6 @@
         "annualizedGrossUsd": "119.88",
         "discountVsMonthlyPercent": 0,
         "profitabilityRole": "entry-recurring"
-      },
-      {
-        "planId": "lifetime",
-        "productId": "freed_premium_lifetime",
-        "grossUsd": "79.99",
-        "estimatedNetUsdAt30PercentStoreFee": "55.99",
-        "estimatedNetUsdAt15PercentStoreFee": "67.99",
-        "breakevenMonthsVsMonthly": 8,
-        "breakevenYearsVsYearly": 2,
-        "profitabilityRole": "cashflow-anchor"
       }
     ]
   },
@@ -74,7 +67,43 @@
         "localizations": {
           "en-US": {
             "displayName": "FREED Premium Annual",
-            "description": "Annual premium recovery protection with DNS Guard, app timers, and no-ad challenge entry."
+            "description": "All Premium features. Yearly billing."
+          },
+          "hi": {
+            "displayName": "FREED Premium वार्षिक",
+            "description": "सभी प्रीमियम सुविधाएँ. वार्षिक बिलिंग."
+          },
+          "es-ES": {
+            "displayName": "FREED Premium Anual",
+            "description": "Todas las funciones. Cobro anual."
+          },
+          "pt-BR": {
+            "displayName": "FREED Premium Anual",
+            "description": "Todos os recursos. Pagamento anual."
+          },
+          "fr-FR": {
+            "displayName": "FREED Premium Annuel",
+            "description": "Toutes les fonctions. Paiement annuel."
+          },
+          "de-DE": {
+            "displayName": "FREED Premium Jährlich",
+            "description": "Alle Funktionen. Jährliche Zahlung."
+          },
+          "ar-SA": {
+            "displayName": "FREED Premium سنوي",
+            "description": "جميع الميزات المميزة. الفواتير السنوية."
+          },
+          "ja": {
+            "displayName": "FREED Premium 年間",
+            "description": "すべてのプレミアム機能。年額請求。"
+          },
+          "ko": {
+            "displayName": "FREED Premium 연간",
+            "description": "모든 프리미엄 기능. 연간 청구."
+          },
+          "zh-Hans": {
+            "displayName": "FREED Premium年度",
+            "description": "所有高级功能。按年计费。"
           }
         }
       },
@@ -89,7 +118,43 @@
         "localizations": {
           "en-US": {
             "displayName": "FREED Premium Annual",
-            "description": "Annual premium recovery protection with DNS Guard, app timers, and no-ad challenge entry."
+            "description": "All Premium features. Yearly billing."
+          },
+          "hi-IN": {
+            "displayName": "FREED Premium वार्षिक",
+            "description": "सभी प्रीमियम सुविधाएँ. वार्षिक बिलिंग."
+          },
+          "es-ES": {
+            "displayName": "FREED Premium Anual",
+            "description": "Todas las funciones. Cobro anual."
+          },
+          "pt-BR": {
+            "displayName": "FREED Premium Anual",
+            "description": "Todos os recursos. Pagamento anual."
+          },
+          "fr-FR": {
+            "displayName": "FREED Premium Annuel",
+            "description": "Toutes les fonctions. Paiement annuel."
+          },
+          "de-DE": {
+            "displayName": "FREED Premium Jährlich",
+            "description": "Alle Funktionen. Jährliche Zahlung."
+          },
+          "ar": {
+            "displayName": "FREED Premium سنوي",
+            "description": "جميع الميزات المميزة. الفواتير السنوية."
+          },
+          "ja-JP": {
+            "displayName": "FREED Premium 年間",
+            "description": "すべてのプレミアム機能。年額請求。"
+          },
+          "ko-KR": {
+            "displayName": "FREED Premium 연간",
+            "description": "모든 프리미엄 기능. 연간 청구."
+          },
+          "zh-CN": {
+            "displayName": "FREED Premium年度",
+            "description": "所有高级功能。按年计费。"
           }
         }
       }
@@ -113,7 +178,43 @@
         "localizations": {
           "en-US": {
             "displayName": "FREED Premium Monthly",
-            "description": "Monthly premium recovery protection with DNS Guard, app timers, and no-ad challenge entry."
+            "description": "All Premium features. Monthly billing."
+          },
+          "hi": {
+            "displayName": "FREED Premium मासिक",
+            "description": "सभी प्रीमियम सुविधाएँ. मासिक बिलिंग."
+          },
+          "es-ES": {
+            "displayName": "FREED Premium Mensual",
+            "description": "Todas las funciones. Cobro mensual."
+          },
+          "pt-BR": {
+            "displayName": "FREED Premium Mensal",
+            "description": "Todos os recursos. Pagamento mensal."
+          },
+          "fr-FR": {
+            "displayName": "FREED Premium Mensuel",
+            "description": "Toutes les fonctions. Paiement mensuel."
+          },
+          "de-DE": {
+            "displayName": "FREED Premium Monatlich",
+            "description": "Alle Funktionen. Monatliche Zahlung."
+          },
+          "ar-SA": {
+            "displayName": "FREED Premium شهريا",
+            "description": "جميع الميزات المميزة. الفواتير الشهرية."
+          },
+          "ja": {
+            "displayName": "FREED Premium 毎月",
+            "description": "すべてのプレミアム機能。毎月の請求。"
+          },
+          "ko": {
+            "displayName": "FREED Premium 월간",
+            "description": "모든 프리미엄 기능. 월별 청구."
+          },
+          "zh-Hans": {
+            "displayName": "FREED Premium 每月",
+            "description": "所有高级功能。按月计费。"
           }
         }
       },
@@ -128,47 +229,43 @@
         "localizations": {
           "en-US": {
             "displayName": "FREED Premium Monthly",
-            "description": "Monthly premium recovery protection with DNS Guard, app timers, and no-ad challenge entry."
-          }
-        }
-      }
-    },
-    {
-      "planId": "lifetime",
-      "productId": "freed_premium_lifetime",
-      "appleType": "non-consumable",
-      "googleType": "one-time-product",
-      "displayName": "FREED Premium Lifetime",
-      "priceUsd": "79.99",
-      "description": "Lifetime premium recovery protection",
-      "apple": {
-        "productId": "freed_premium_lifetime",
-        "referenceName": "FREED Premium Lifetime",
-        "productType": "non-consumable",
-        "subscriptionGroupId": null,
-        "duration": "lifetime",
-        "priceUsdIntent": "79.99",
-        "reviewScreenshot": "store/screenshots/paywall-lifetime.png",
-        "localizations": {
-          "en-US": {
-            "displayName": "FREED Premium Lifetime",
-            "description": "Lifetime premium recovery protection with DNS Guard, app timers, and no-ad challenge entry."
-          }
-        }
-      },
-      "google": {
-        "productId": "freed_premium_lifetime",
-        "productType": "one-time-product",
-        "purchaseType": "non-consumable",
-        "basePlanId": "",
-        "billingPeriod": "lifetime",
-        "offerId": "",
-        "priceUsdIntent": "79.99",
-        "status": "draft-until-sandbox-verified",
-        "localizations": {
-          "en-US": {
-            "displayName": "FREED Premium Lifetime",
-            "description": "Lifetime premium recovery protection with DNS Guard, app timers, and no-ad challenge entry."
+            "description": "All Premium features. Monthly billing."
+          },
+          "hi-IN": {
+            "displayName": "FREED Premium मासिक",
+            "description": "सभी प्रीमियम सुविधाएँ. मासिक बिलिंग."
+          },
+          "es-ES": {
+            "displayName": "FREED Premium Mensual",
+            "description": "Todas las funciones. Cobro mensual."
+          },
+          "pt-BR": {
+            "displayName": "FREED Premium Mensal",
+            "description": "Todos os recursos. Pagamento mensal."
+          },
+          "fr-FR": {
+            "displayName": "FREED Premium Mensuel",
+            "description": "Toutes les fonctions. Paiement mensuel."
+          },
+          "de-DE": {
+            "displayName": "FREED Premium Monatlich",
+            "description": "Alle Funktionen. Monatliche Zahlung."
+          },
+          "ar": {
+            "displayName": "FREED Premium شهريا",
+            "description": "جميع الميزات المميزة. الفواتير الشهرية."
+          },
+          "ja-JP": {
+            "displayName": "FREED Premium 毎月",
+            "description": "すべてのプレミアム機能。毎月の請求。"
+          },
+          "ko-KR": {
+            "displayName": "FREED Premium 월간",
+            "description": "모든 프리미엄 기능. 월별 청구."
+          },
+          "zh-CN": {
+            "displayName": "FREED Premium 每月",
+            "description": "所有高级功能。按月计费。"
           }
         }
       }
@@ -178,5 +275,17 @@
     "freed_family_yearly",
     "freed_accountability_monthly",
     "freed_ai_coach_monthly"
-  ]
+  ],
+  "localizedMetadataFiles": {
+    "en": "store/localizations/en.json",
+    "hi": "store/localizations/hi.json",
+    "es": "store/localizations/es.json",
+    "pt": "store/localizations/pt.json",
+    "fr": "store/localizations/fr.json",
+    "de": "store/localizations/de.json",
+    "ar": "store/localizations/ar.json",
+    "ja": "store/localizations/ja.json",
+    "ko": "store/localizations/ko.json",
+    "zh-Hans": "store/localizations/zh-Hans.json"
+  }
 }

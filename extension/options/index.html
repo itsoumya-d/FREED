@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FREED Guard — Custom lists</title>
+  <link rel="stylesheet" href="./options.css" />
+</head>
+<body>
+  <main>
+    <h1>FREED Guard</h1>
+    <p class="sub">
+      The reviewed adult-domain list ships with the extension. Add your own always-block
+      or always-allow domains below. Allow rules always win over blocking.
+    </p>
+
+    <section>
+      <label for="allowed-input">Always allow (one domain per line)</label>
+      <textarea id="allowed-input" rows="6" spellcheck="false" placeholder="wikipedia.org"></textarea>
+    </section>
+
+    <section>
+      <label for="blocked-input">Always block (one domain per line)</label>
+      <textarea id="blocked-input" rows="6" spellcheck="false" placeholder="example-gambling.test"></textarea>
+    </section>
+
+    <div class="row">
+      <button type="button" class="primary" id="save-btn">Save lists</button>
+      <span id="status" role="status"></span>
+    </div>
+
+    <footer id="stats-line"></footer>
+  </main>
+  <script src="./options.js"></script>
+</body>
+</html>

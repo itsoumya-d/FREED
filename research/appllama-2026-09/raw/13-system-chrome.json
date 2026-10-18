@@ -1,0 +1,345 @@
+{
+  "element": "system-chrome",
+  "variant": null,
+  "screens": [
+    {
+      "screen_id": "oth_2skgf",
+      "name": "Full-Screen Stock Chart",
+      "flow": "Stock Analysis",
+      "section": "other-tabs",
+      "position": 27,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2FkZmE1ZGRkZTU1NDc5MjI4NTJhNzE0NGFhMmU0OWQzYWQ1NDUxMDAud2VicCIsImV4cCI6MTc5MDM4NTQ5MX1ChfklLsQRMqlGpMntn0U4yaKVRLfb2KM.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#443484",
+      "colors": [
+        "#443484",
+        "#3C3585",
+        "#34E36C",
+        "#FA0244",
+        "#FFFFFF"
+      ],
+      "ui_elements": [
+        "Mobile Status Bar",
+        "Rotated Market Chart",
+        "Candlestick Plot",
+        "Indicator Overlays",
+        "Floating Close Icon"
+      ],
+      "app": {
+        "app_id": "1456114004",
+        "name": "Stocks Alerter"
+      }
+    },
+    {
+      "screen_id": "onb_9i7cb",
+      "name": "Hypergamy Comparison Graph",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 9,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2FjOGY0MWM0OTA1ZjljODA2ZWQyMTI5YzY3NzhiZjM5YzQyMjg4ZTQud2VicCIsImV4cCI6MTc5MDM4NTQ5MX1LDRGpF_En888lSRDFr7ugLDRdiXgWxeQ.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#050505",
+      "colors": [
+        "#050505",
+        "#151515",
+        "#383838",
+        "#67F8EA",
+        "#C83A73"
+      ],
+      "ui_elements": [
+        "iOS Status Icons",
+        "Back Chevron",
+        "Dual Dotted Axis Graph",
+        "Pink And Cyan Markers",
+        "Rounded Bottom Info Card",
+        "Muted Rounded CTA"
+      ],
+      "app": {
+        "app_id": "6753061455",
+        "name": "PSL - Looksmax & Ascend"
+      }
+    },
+    {
+      "screen_id": "oth_071xb",
+      "name": "Review Answer",
+      "flow": "Flashcard Review",
+      "section": "other-tabs",
+      "position": 28,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2Q2ZWE1YTU1MWFiZTMyZmY0ZTY2ZWI2Njc2NGEwYmUyOGUwN2Y2MzQud2VicCIsImV4cCI6MTc5MDM4NTQ5MX0m3yjYqaavQJ2ZHAgZsOp2qtXiRfZ4jXc.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FFFFFF",
+      "colors": [
+        "#FFFFFF",
+        "#E74E38",
+        "#F18E08",
+        "#25A3FC",
+        "#68B12D"
+      ],
+      "ui_elements": [
+        "Dynamic Island Activity",
+        "Review Progress Header",
+        "Prompt Answer Stack",
+        "Inline Audio Player",
+        "Four Rating Buttons",
+        "Overflow Ellipsis"
+      ],
+      "app": {
+        "app_id": "689185915",
+        "name": "AlgoApp - Flashcards"
+      }
+    },
+    {
+      "screen_id": "onb_2rz3z",
+      "name": "Stress Report Preview",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 17,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzNhNmFiNDJmZWEyYjk3NjZmODk4OGI1OGFiYmNlODg3ZGUzNTY0MTUud2VicCIsImV4cCI6MTc5MDM4NTQ5MX2mp_TB7f0ZOfUCTJ5BF-wrOrUGNUf0bJM.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#F6F6F6",
+      "colors": [
+        "#F6F6F6",
+        "#FFFFFF",
+        "#56BE8E",
+        "#F7946B",
+        "#8CAEEB"
+      ],
+      "ui_elements": [
+        "iOS Status Icons",
+        "Alert Text Banner",
+        "Stress Status Row",
+        "Bar Trend Chart",
+        "Metric Summary Row",
+        "Pill Primary CTA"
+      ],
+      "app": {
+        "app_id": "6444737095",
+        "name": "StressWatch: AI Stress Monitor"
+      }
+    },
+    {
+      "screen_id": "onb_dmweb",
+      "name": null,
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 1,
+      "kind": "video",
+      "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxL2VmN2MxOTJiN2IyY2MxOTY1NmFjNjc1OTRkNTY0MmJjMGUzYjg2YTUubXA0IiwiZXhwIjoxNzkwMzg1NDkxfbWuyVafJzeRpT2PHr3NvAps4rdvR-Fx2g.mp4",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FFFFFF",
+      "colors": [
+        "#FFFFFF",
+        "#000000",
+        "#0F7EFA",
+        "#F3F4F6",
+        "#FFCC00"
+      ],
+      "ui_elements": [
+        "Pill-shaped Button",
+        "Mockup Illustration",
+        "Star Rating Component",
+        "Auth Code Card",
+        "Subscription Option",
+        "System Alert Modal",
+        "Bottom Navigation",
+        "Empty State View"
+      ],
+      "app": {
+        "app_id": "1602061522",
+        "name": "Authenticator \u00b7"
+      }
+    },
+    {
+      "screen_id": "onb_0fljc",
+      "name": "Offline Listening Tutorial",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 12,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2ZiZGIxOWMxMmNjNTM2MzAwYTA0ZWNmZWQ2NWZiNWNjNGJiZmExYTgud2VicCIsImV4cCI6MTc5MDM4NTQ5MX1xCyaSNToftCDfa54H-dr90bNPHcfJTMs.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#000000",
+      "colors": [
+        "#000000",
+        "#3E3D3E",
+        "#64A1F2",
+        "#23A1DF",
+        "#3BD641"
+      ],
+      "ui_elements": [
+        "Centered Tutorial Card",
+        "Download Status Icons",
+        "Three Status Rows",
+        "Blue Circular Next CTA",
+        "Dimmed Home Backdrop"
+      ],
+      "app": {
+        "app_id": "918425515",
+        "name": "Calm Radio - Music to Relax"
+      }
+    },
+    {
+      "screen_id": "onb_mehy6",
+      "name": null,
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 1,
+      "kind": "video",
+      "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxLzU5MTVmOTcyNzRiNTZkZTQwNTE1OTM1NGQ4ZmNmNmRhNGJjZDM3NmQubXA0IiwiZXhwIjoxNzkwMzg1NDkxfaZMij23ITJtmIZwDMWLx66UGMSKx-6uTA.mp4",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#495493",
+      "colors": [
+        "#495493",
+        "#FFFFFF",
+        "#1B1C20",
+        "#F3F4F6",
+        "#E67E22"
+      ],
+      "ui_elements": [
+        "Primary Solid Pill Button",
+        "Segmented Progress Indicator",
+        "Selectable Outline List Item",
+        "Circular Image Avatar",
+        "Checkmark Selection Icon",
+        "System Permission Modal",
+        "Vertical Book Cover Card",
+        "Loading Spinner Animation",
+        "Line Chart Visualization",
+        "Bottom Navigation Bar",
+        "Text Input Field",
+        "Countdown Timer Display",
+        "Horizontal Day Selector",
+        "Image Banner Card",
+        "Back Navigation Arrow"
+      ],
+      "app": {
+        "app_id": "1177343870",
+        "name": "12min: Book Summaries Daily"
+      }
+    },
+    {
+      "screen_id": "onb_gw9hl",
+      "name": "Notification Permission",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 9,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2UxZTM3OGQzZDE1NjRkZDJkY2YzMzAxNWNhOGQ0YmJjODFiMTFmNjAud2VicCIsImV4cCI6MTc5MDM4NTQ5MX1HK9yZruv3st3PI6LdGmHpHqNjQ3a336k.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#151531",
+      "colors": [
+        "#151531",
+        "#B1B3CB",
+        "#7E83A1",
+        "#4D3D5F",
+        "#D5C8DD"
+      ],
+      "ui_elements": [
+        "Dimmed App Backdrop",
+        "iOS Permission Alert",
+        "Alert Title And Copy",
+        "Dual Rounded Actions",
+        "Underlying Opt In CTA"
+      ],
+      "app": {
+        "app_id": "6463766369",
+        "name": "Cozy Couples: Relationship App"
+      }
+    },
+    {
+      "screen_id": "oth_prd7a",
+      "name": "Media Access Prompt",
+      "flow": "Cartoon Creation",
+      "section": "other-tabs",
+      "position": 8,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzNmN2FhNTYzMDgzYTU5MzRmZTY0MzcyMzlkOGY5MjNlMjRmOGM2M2Iud2VicCIsImV4cCI6MTc5MDM4NTQ5MX1oyZJuQ2GidciXz6CoJfUkT3KoK4_1XQ4.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#000000",
+      "colors": [
+        "#000000",
+        "#FFFFFF",
+        "#8600FF",
+        "#5D5D5D"
+      ],
+      "ui_elements": [
+        "Top Back Arrow",
+        "PRO Badge",
+        "Centered Permission Card",
+        "Outlined Modal Panel",
+        "Rounded Continue CTA",
+        "Floating Add Button"
+      ],
+      "app": {
+        "app_id": "1540719743",
+        "name": "Toonapp: AI Photo & Video Art"
+      }
+    },
+    {
+      "screen_id": "onb_fqnxl",
+      "name": "Set Location",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 4,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzdhYjk4ZDMxMjg5ZDAwZTk1OTdhZjFhMDllZjQyZGE5YzVjZmZhMzgud2VicCIsImV4cCI6MTc5MDM4NTQ5MX1jUJ-gRHUXbPoKu4h9sH8rTH5-z9GOQbg.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#000000",
+      "colors": [
+        "#000000",
+        "#202226",
+        "#1DEF88",
+        "#FFFFFF",
+        "#3D4EE1"
+      ],
+      "ui_elements": [
+        "City Photo Backdrop",
+        "Skip Text Action",
+        "Bold Two-Line Heading",
+        "Body Instruction Copy",
+        "Selected Location Field",
+        "Pin Icon Badge",
+        "Clear Input Icon",
+        "Rounded Confirm CTA",
+        "Location Helper Copy",
+        "Privacy Policy Link",
+        "Home Indicator"
+      ],
+      "app": {
+        "app_id": "6746114452",
+        "name": "CrimeRadar Dispatch Audio"
+      }
+    }
+  ],
+  "total": 3017,
+  "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJnZXRfZWxlbWVudF9zY3JlZW5zIiwicSI6ImQ2YTI3MjUzZWYyOTI3MDZmYzVkNTg3ZSIsIm8iOjEwLCJodyI6MjAsImV4cCI6MTc5MDM4NTQ5MX0.EGDeeiGbeHhzllwS8BET4nWQ3tI",
+  "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+  "credits": {
+    "spent": 1,
+    "remaining_this_month": 995
+  }
+}

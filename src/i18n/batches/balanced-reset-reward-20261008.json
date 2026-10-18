@@ -1,0 +1,130 @@
+{
+  "entries": [
+    {
+      "source": "{{minutes}} min app break on request after this reset",
+      "translations": {
+        "hi": "इस रीसेट के बाद {{minutes}} मिनट ऐप इस्तेमाल करने की अनुमति माँग सकते हैं",
+        "es": "Después de esta pausa puedes solicitar {{minutes}} min de acceso a la app",
+        "pt": "Após esta pausa, você pode solicitar {{minutes}} min de acesso ao app",
+        "fr": "Après cette pause, vous pouvez demander {{minutes}} min d’accès à l’app",
+        "de": "Nach dieser Pause kannst du {{minutes}} Min. App-Zugriff anfordern",
+        "ar": "بعد هذا التمرين يمكنك طلب استخدام التطبيق لمدة {{minutes}} دقيقة",
+        "ja": "このリセットの後にアプリの{{minutes}}分間の利用をリクエストできます",
+        "ko": "이 리셋 후 앱을 {{minutes}}분 동안 사용할 수 있도록 요청할 수 있습니다",
+        "zh-Hans": "完成本次调整练习后，可申请使用应用 {{minutes}} 分钟"
+      }
+    },
+    {
+      "source": "App break unavailable for this activity; the reset is still available.",
+      "translations": {
+        "hi": "इस गतिविधि के लिए ऐप इस्तेमाल की अस्थायी अनुमति उपलब्ध नहीं है; रीसेट फिर भी उपलब्ध है।",
+        "es": "El acceso temporal a la app no está disponible para esta actividad; la pausa sigue disponible.",
+        "pt": "O acesso temporário ao app não está disponível para esta atividade; a pausa continua disponível.",
+        "fr": "L’accès temporaire à l’app n’est pas disponible pour cette activité ; la pause reste disponible.",
+        "de": "Vorübergehender App-Zugriff ist für diese Aktivität nicht verfügbar; die Pause bleibt verfügbar.",
+        "ar": "الاستخدام المؤقت للتطبيق غير متاح لهذا النشاط؛ وما زال التمرين متاحًا.",
+        "ja": "このアクティビティではアプリの一時利用はできませんが、リセットは利用できます。",
+        "ko": "이 활동에서는 앱을 일시적으로 사용할 수 없지만 리셋은 여전히 이용할 수 있습니다.",
+        "zh-Hans": "此活动无法提供应用临时使用时间，但调整练习仍可进行。"
+      }
+    },
+    {
+      "source": "Requesting an app break for the original app…",
+      "translations": {
+        "hi": "मूल ऐप के लिए विराम का अनुरोध हो रहा है…",
+        "es": "Solicitando una pausa para la aplicación original…",
+        "pt": "Solicitando uma pausa para o aplicativo original…",
+        "fr": "Demande de pause pour l’application d’origine…",
+        "de": "Pause für die ursprüngliche App wird angefordert…",
+        "ar": "جارٍ طلب استراحة للتطبيق الأصلي…",
+        "ja": "元のアプリの休憩をリクエストしています…",
+        "ko": "원래 앱의 휴식을 요청하고 있어요…",
+        "zh-Hans": "正在请求原应用的休息…"
+      }
+    },
+    {
+      "source": "App break not confirmed. Retry checks the same request without extending it.",
+      "translations": {
+        "hi": "ऐप इस्तेमाल की अस्थायी अनुमति की पुष्टि नहीं हुई है। फिर कोशिश करने पर वही अनुरोध जाँचा जाएगा और समय नहीं बढ़ेगा।",
+        "es": "El acceso temporal a la app no está confirmado. Reintentar comprueba la misma solicitud sin ampliar su duración.",
+        "pt": "O acesso temporário ao app não foi confirmado. Tentar novamente verifica a mesma solicitação sem ampliar a duração.",
+        "fr": "L’accès temporaire à l’app n’est pas confirmé. Réessayer vérifie la même demande sans prolonger sa durée.",
+        "de": "Der vorübergehende App-Zugriff ist nicht bestätigt. Ein erneuter Versuch prüft dieselbe Anfrage, ohne ihre Dauer zu verlängern.",
+        "ar": "لم يتم تأكيد الاستخدام المؤقت للتطبيق. تعيد المحاولة فحص الطلب نفسه دون تمديد مدته.",
+        "ja": "アプリの一時利用は確認されていません。再試行では同じリクエストを確認し、時間は延長しません。",
+        "ko": "앱의 일시적인 사용이 확인되지 않았습니다. 다시 시도하면 같은 요청을 확인하며 시간은 늘어나지 않습니다.",
+        "zh-Hans": "应用临时使用时间尚未确认。重试会检查同一请求，不会延长时间。"
+      }
+    },
+    {
+      "source": "This app break has ended. Your completed activity is saved.",
+      "translations": {
+        "hi": "ऐप इस्तेमाल की अस्थायी अनुमति का समय समाप्त हो गया है। आपकी पूरी की गई गतिविधि सहेजी गई है।",
+        "es": "El acceso temporal a la app ha terminado. Tu actividad completada está guardada.",
+        "pt": "O acesso temporário ao app terminou. Sua atividade concluída está salva.",
+        "fr": "L’accès temporaire à l’app est terminé. Votre activité accomplie est enregistrée.",
+        "de": "Der vorübergehende App-Zugriff ist beendet. Deine abgeschlossene Aktivität ist gespeichert.",
+        "ar": "انتهى وقت الاستخدام المؤقت للتطبيق. تم حفظ النشاط الذي أكملته.",
+        "ja": "アプリの一時利用時間が終了しました。完了したアクティビティは保存されています。",
+        "ko": "앱의 일시적인 사용 시간이 끝났습니다. 완료한 활동은 저장되었습니다.",
+        "zh-Hans": "应用临时使用时间已结束。已完成的活动已保存。"
+      }
+    },
+    {
+      "source": "This app break was accepted. Another rule still restricts the app. Your completed activity is saved.",
+      "translations": {
+        "hi": "ऐप इस्तेमाल की अस्थायी अनुमति स्वीकार हुई है। एक अन्य नियम अभी भी ऐप पर रोक लगाता है। आपकी पूरी की गई गतिविधि सहेजी गई है।",
+        "es": "Se aceptó el acceso temporal a la app. Otra regla sigue restringiendo la app. Tu actividad completada está guardada.",
+        "pt": "O acesso temporário ao app foi aceito. Outra regra ainda restringe o app. Sua atividade concluída está salva.",
+        "fr": "L’accès temporaire à l’app a été accepté. Une autre règle restreint toujours l’app. Votre activité accomplie est enregistrée.",
+        "de": "Der vorübergehende App-Zugriff wurde angenommen. Eine andere Regel schränkt die App weiterhin ein. Deine abgeschlossene Aktivität ist gespeichert.",
+        "ar": "تم قبول الاستخدام المؤقت للتطبيق. ما زالت قاعدة أخرى تقيّد التطبيق. تم حفظ النشاط الذي أكملته.",
+        "ja": "アプリの一時利用は受け付けられましたが、別のルールが引き続きアプリを制限しています。完了したアクティビティは保存されています。",
+        "ko": "앱의 일시적인 사용이 승인되었습니다. 다른 규칙이 아직 앱을 제한하고 있습니다. 완료한 활동은 저장되었습니다.",
+        "zh-Hans": "应用临时使用请求已获接受，但另一条规则仍限制该应用。已完成的活动已保存。"
+      }
+    },
+    {
+      "source": "Your {{minutes}} minute app break was confirmed. Protection returns when it ends.",
+      "translations": {
+        "hi": "{{minutes}} मिनट ऐप इस्तेमाल करने की अनुमति की पुष्टि हुई है। समय समाप्त होने पर सुरक्षा फिर लागू होगी।",
+        "es": "Se confirmaron tus {{minutes}} minutos de acceso a la app. La protección vuelve al terminar.",
+        "pt": "Seus {{minutes}} minutos de acesso ao app foram confirmados. A proteção retorna ao terminar.",
+        "fr": "Vos {{minutes}} minutes d’accès à l’app sont confirmées. La protection revient à la fin.",
+        "de": "Dein App-Zugriff für {{minutes}} Minuten wurde bestätigt. Danach gilt der Schutz wieder.",
+        "ar": "تم تأكيد استخدام التطبيق لمدة {{minutes}} دقيقة. تعود الحماية عند انتهاء الوقت.",
+        "ja": "アプリの{{minutes}}分間の利用が確認されました。終了すると保護が再適用されます。",
+        "ko": "앱을 {{minutes}}분 동안 사용할 수 있도록 확인되었습니다. 시간이 끝나면 보호가 다시 적용됩니다.",
+        "zh-Hans": "使用应用 {{minutes}} 分钟已获确认。时间结束后防护会恢复。"
+      }
+    },
+    {
+      "source": "{{minutes}} min app break available on request",
+      "translations": {
+        "hi": "अनुरोध पर {{minutes}} मिनट ऐप इस्तेमाल करने की अनुमति उपलब्ध है",
+        "es": "{{minutes}} min de acceso a la app disponibles al solicitarlos",
+        "pt": "{{minutes}} min de acesso ao app disponíveis mediante solicitação",
+        "fr": "{{minutes}} min d’accès à l’app disponibles sur demande",
+        "de": "{{minutes}} Min. App-Zugriff auf Anfrage verfügbar",
+        "ar": "استخدام التطبيق لمدة {{minutes}} دقيقة متاح عند الطلب",
+        "ja": "アプリの{{minutes}}分間の利用をリクエストできます",
+        "ko": "앱을 {{minutes}}분 동안 사용하도록 요청할 수 있습니다",
+        "zh-Hans": "可申请使用应用 {{minutes}} 分钟"
+      }
+    },
+    {
+      "source": "Use app for {{minutes}} minutes",
+      "translations": {
+        "hi": "ऐप {{minutes}} मिनट इस्तेमाल करें",
+        "es": "Usar la app durante {{minutes}} minutos",
+        "pt": "Usar o app por {{minutes}} minutos",
+        "fr": "Utiliser l’app pendant {{minutes}} minutes",
+        "de": "App für {{minutes}} Minuten nutzen",
+        "ar": "استخدم التطبيق لمدة {{minutes}} دقيقة",
+        "ja": "アプリを{{minutes}}分間使う",
+        "ko": "앱 {{minutes}}분 동안 사용",
+        "zh-Hans": "使用应用 {{minutes}} 分钟"
+      }
+    }
+  ]
+}

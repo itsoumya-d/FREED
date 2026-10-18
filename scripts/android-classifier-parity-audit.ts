@@ -111,6 +111,28 @@ const logicResults = [
       kotlinClassifier.includes("explicitFocusedSearchSignal(searchText)") &&
       kotlinClassifier.includes('matchedRule = "focused-search:$explicitSearch"'),
     "Android focused browser text still falls through to adult-intent search classification when the text is not a valid host."
+  ),
+  check(
+    "logic-token-registrable-domain-scoping",
+    kotlinClassifier.includes("multiPartDevHostingSuffixes") &&
+      kotlinClassifier.includes("tokenParts.size - 2") &&
+      kotlinClassifier.includes("tokenParts.size - 3") &&
+      kotlinClassifier.includes("explicit-domain-token-subdomain-benign") &&
+      tsClassifier.includes("MULTI_PART_DEV_HOSTING_SUFFIXES") &&
+      tsClassifier.includes("tokenParts.length - 2") &&
+      tsClassifier.includes("tokenParts.length - 3") &&
+      tsClassifier.includes("explicit-domain-token-subdomain-benign"),
+    "Both classifiers scope explicit hostname tokens to the registrable domain (plus developer-hosting platforms), allow benign subdomain tokens without consumption signals, and block them when consumption signals appear."
+  ),
+  check(
+    "logic-user-allowlist-outranks",
+    kotlinClassifier.includes("userAllowedDomains: Set<String> = emptySet()") &&
+      kotlinClassifier.indexOf("user-allowlist") >= 0 &&
+      kotlinClassifier.indexOf("user-allowlist") < kotlinClassifier.indexOf("normal-web-allowlist") &&
+      tsClassifier.includes("userAllowedDomains?: string[]") &&
+      tsClassifier.indexOf('"user-allowlist"') >= 0 &&
+      tsClassifier.indexOf('"user-allowlist"') < tsClassifier.indexOf('"normal-web-allowlist"'),
+    "User always-allow domains outrank feed, token, and search-intent blocking on both platforms."
   )
 ];
 

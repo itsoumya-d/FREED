@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "freed-core-timezone-validation-v1",
+  "generatedAt": "2026-10-02T06:35:02.321787+00:00",
+  "sanitized": true,
+  "allRunsPassed": false,
+  "scope": "local source/contracts; no device or final native build verification",
+  "runs": [
+    {
+      "zone": "UTC",
+      "suite": "tests/core.test.ts",
+      "exitCode": 1,
+      "passLines": 116,
+      "failureLines": [
+        "FAIL analytics snapshot is aggregate-only and excludes private recovery details"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-core-repaired-UTC.log"
+    },
+    {
+      "zone": "Asia/Kolkata",
+      "suite": "tests/core.test.ts",
+      "exitCode": 1,
+      "passLines": 170,
+      "failureLines": [
+        "FAIL accessibility safety audit covers key recovery controls"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-core-repaired-Asia-Kolkata.log"
+    },
+    {
+      "zone": "America/New_York",
+      "suite": "tests/core.test.ts",
+      "exitCode": 1,
+      "passLines": 84,
+      "failureLines": [
+        "FAIL discipline settings feed challenge preference signals without raw browsing data"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-core-repaired-America-New_York.log"
+    },
+    {
+      "zone": "Europe/London",
+      "suite": "tests/core.test.ts",
+      "exitCode": 1,
+      "passLines": 116,
+      "failureLines": [
+        "FAIL analytics snapshot is aggregate-only and excludes private recovery details"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-core-repaired-Europe-London.log"
+    },
+    {
+      "zone": "Australia/Sydney",
+      "suite": "tests/core.test.ts",
+      "exitCode": 1,
+      "passLines": 84,
+      "failureLines": [
+        "FAIL discipline settings feed challenge preference signals without raw browsing data"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-core-repaired-Australia-Sydney.log"
+    }
+  ]
+}

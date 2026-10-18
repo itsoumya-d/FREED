@@ -1,0 +1,101 @@
+[
+  {
+    "name": "classifier-safety",
+    "command": [
+      "node",
+      "scripts/run-ts-entry.js",
+      "scripts/classifier-safety-audit.ts"
+    ],
+    "startedAt": "2026-10-02T09:48:43.230178+00:00",
+    "exitCode": 0,
+    "logSha256": "c2d13131a6de885cf7747d16f7ad2e3014e1d91720b8e3a934851298487c8613"
+  },
+  {
+    "name": "android-classifier-parity",
+    "command": [
+      "node",
+      "scripts/run-ts-entry.js",
+      "scripts/android-classifier-parity-audit.ts"
+    ],
+    "startedAt": "2026-10-02T09:48:44.516287+00:00",
+    "exitCode": 0,
+    "logSha256": "3a61149fd7cbcb73a5dade00ac3a6f2bc616e8943b391b2312524b654e0e1a45"
+  },
+  {
+    "name": "protection-permission-native",
+    "command": [
+      "node",
+      "scripts/run-ts-entry.js",
+      "tests/protection-permission-native.test.ts"
+    ],
+    "startedAt": "2026-10-02T09:48:45.051491+00:00",
+    "exitCode": 0,
+    "logSha256": "1d56cd1e54b1e7362f3cd307dc746d2d1acb8d30c628c5a2a3258d3e0e0f20bc"
+  },
+  {
+    "name": "protection-setup-flow",
+    "command": [
+      "node",
+      "scripts/run-ts-entry.js",
+      "tests/protection-setup-flow.test.ts"
+    ],
+    "startedAt": "2026-10-02T09:48:45.874598+00:00",
+    "exitCode": 0,
+    "logSha256": "1147b34c82c023d762aa6e7626a62c8b69b55f336e565364350fac3e12a8aa42"
+  },
+  {
+    "name": "native-intervention-links",
+    "command": [
+      "node",
+      "scripts/run-ts-entry.js",
+      "tests/native-intervention-links.test.ts"
+    ],
+    "startedAt": "2026-10-02T09:48:46.119134+00:00",
+    "exitCode": 0,
+    "logSha256": "909ad0c71d331ed8d8fec5f59961135c3485f31724ad00267daea47801518756"
+  },
+  {
+    "name": "protection-android-routing",
+    "command": [
+      "node",
+      "--test",
+      "tests/protection-android-routing.test.js"
+    ],
+    "startedAt": "2026-10-02T09:48:46.682615+00:00",
+    "exitCode": 0,
+    "logSha256": "3fe5d29e692536a81e0148defee638ea568601d269c9de68cedaf22b424e764f"
+  },
+  {
+    "name": "protection-safari-routing",
+    "command": [
+      "node",
+      "--test",
+      "tests/protection-safari-routing.test.js"
+    ],
+    "startedAt": "2026-10-02T09:48:47.063989+00:00",
+    "exitCode": 0,
+    "logSha256": "f2676571fe71dc21b97869749366bf4bb270b82922c21934e0f62bd395ce3417"
+  },
+  {
+    "name": "reproduce-safari-stale-route",
+    "command": [
+      "node",
+      "docs/validation/artifacts/2026-10-02-protection-coverage/reproduce-safari-stale-route.cjs"
+    ],
+    "startedAt": "2026-10-02T09:51:43.548396+00:00",
+    "exitCode": 1,
+    "logSha256": "d7f0876da1f52d72fafe61c8a6574d3efb6259c277ea5977a413a92a25179283",
+    "kind": "characterization-expected-safety-failure"
+  },
+  {
+    "name": "reproduce-captive-readiness",
+    "command": [
+      "node",
+      "docs/validation/artifacts/2026-10-02-protection-coverage/reproduce-captive-readiness.cjs"
+    ],
+    "startedAt": "2026-10-02T09:51:44.009900+00:00",
+    "exitCode": 1,
+    "logSha256": "7c118c3d1f42d617a9ace1bc1a6ddac7397f76a7fbf62228708f5ff3f4e4712b",
+    "kind": "characterization-expected-safety-failure"
+  }
+]

@@ -1,0 +1,35 @@
+{
+  "kind": "SIMULATOR_DEBUG",
+  "appBuildSha256": "0587fabe588bdc54b4fdf63976130c88cde435a1aca4777809e8a000c16956d3",
+  "conditions": "English / System light; existing recorded baseline mint theme; disposable local history with quiz + check-in. Never final new-theme evidence.",
+  "screenshots": [
+    {
+      "screen": "today-light.png",
+      "source": "safe-batch/maestro/2026-10-03_075519/root-navigation/takeScreenshot/root-navigation.png",
+      "path": "baseline-visual/today-light.png",
+      "sha256": "666e6ea0ed30ecdea40512a743007de717c5bbea29e3244c055ebf4c3ed11b69",
+      "pixelsInspected": true
+    },
+    {
+      "screen": "profile-light.png",
+      "source": "safe-batch/maestro/2026-10-03_075519/paywall-free-exit/takeScreenshot/paywall-free-exit.png",
+      "path": "baseline-visual/profile-light.png",
+      "sha256": "b915512c94454421da87a04dd82b1233dbd59a5f0524cab0d2b3fdfdd96291d0",
+      "pixelsInspected": true
+    },
+    {
+      "screen": "shield-light.png",
+      "source": "safe-batch/maestro/2026-10-03_075519/library-articles/screenshots/step-027-assertCondition-screen-main-today.png",
+      "path": "baseline-visual/shield-light.png",
+      "sha256": "f3d9896f36d410cf064eed400b080f9bcad0d2087294911eb908a35305baea82",
+      "pixelsInspected": true
+    },
+    {
+      "screen": "progress-light.png",
+      "source": "safe-batch/maestro/2026-10-03_075519/progress-zero/screenshots/step-008-assertCondition-No_signals_yet.png",
+      "path": "baseline-visual/progress-light.png",
+      "sha256": "3b98b3cfb83c0ffff2d925c2ddb55337368e35851bce89180eca2ad5c82bed0f",
+      "pixelsInspected": true
+    }
+  ]
+}

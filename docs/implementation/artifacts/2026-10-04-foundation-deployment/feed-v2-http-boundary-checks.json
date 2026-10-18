@@ -1,0 +1,27 @@
+[
+  {
+    "function": "getReviewedAdultDomainFeed",
+    "afterFeedV2Deployment": true,
+    "httpStatus": 401,
+    "expectedStatus": 401,
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedClientAppCheckScenario": false
+  },
+  {
+    "function": "refreshReviewedAdultDomainFeed",
+    "afterFeedV2Deployment": true,
+    "httpStatus": 403,
+    "expectedStatus": 403,
+    "body": {
+      "transportOnly": true
+    },
+    "passed": true,
+    "authenticatedClientAppCheckScenario": false
+  }
+]

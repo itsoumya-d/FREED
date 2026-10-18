@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from the audited authored-source catalogs. -->
+<resources>
+  <string name="freed_accessibility_description" formatted="false">Detecta la apertura de aplicaciones seleccionadas para aplicar protección a toda la aplicación. Tú eliges si abrir la ayuda de FREED. La inspección de Shorts y Reels dentro de aplicaciones es experimental y está fuera de la versión pública.</string>
+  <string name="freed_usage_access_config_label" formatted="false">Acceso al uso de FREED</string>
+  <string name="freed_usage_access_reason" formatted="false">FREED utiliza el acceso de uso solo para leer el tiempo agregado de primer plano para paquetes de aplicaciones seleccionados, de modo que los temporizadores de sus aplicaciones puedan desencadenar desafíos de recuperación. No lee el contenido de la pantalla, los mensajes, las pulsaciones de teclas, el historial de navegación ni los eventos de uso sin procesar.</string>
+  <string name="freed_protection_label" formatted="false">FREED Protection</string>
+  <string name="freed_dns_notification_title" formatted="false">FREED DNS Guard</string>
+  <string name="freed_dns_channel_description" formatted="false">Muestra cuando el filtro de dominio para adultos exclusivo de DNS de FREED está activo.</string>
+  <string name="freed_dns_paused_notification" formatted="false">Filtrado en pausa para la página de inicio de sesión de esta red. La navegación normal sigue siendo directa.</string>
+  <string name="freed_dns_active_notification" formatted="false">El filtrado DNS de dominio para adultos está activo. La navegación normal sigue siendo directa.</string>
+  <string name="freed_recovery_channel" formatted="false">Intervenciones de recuperación FREED</string>
+  <string name="freed_browser_notification_title" formatted="false">Aviso de protección de FREED</string>
+  <string name="freed_app_notification_title" formatted="false">FREED pausó una aplicación seleccionada</string>
+  <string name="freed_browser_channel_description" formatted="false">Muestra avisos de protección para bloqueos compatibles. La ayuda de FREED se abre solo cuando tú eliges.</string>
+  <string name="freed_accessibility_notification" formatted="false">Abra FREED para completar un desafío de recuperación. No se utilizan superposiciones, capturas de pantalla ni OCR.</string>
+  <string name="freed_source_label" formatted="false">Fuente: {{host}}</string>
+  <string name="freed_dns_intervention_channel_description" formatted="false">Muestra un aviso cuando FREED bloquea una solicitud DNS de un dominio para adultos. La ayuda se abre solo cuando tú eliges.</string>
+  <string name="freed_dns_intervention_notification" formatted="false">Abra FREED para completar un desafío de recuperación. La navegación normal sigue siendo directa.</string>
+  <string name="freed_dns_intervention_title" formatted="false">Espera, vale la pena proteger tu racha</string>
+  <string name="freed_blocked_host_label" formatted="false">Host bloqueado: {{host}}</string>
+  <string name="freed_intervention_eyebrow" formatted="false">PROTECCIÓN FREED</string>
+  <string name="freed_intervention_title" formatted="false">Esperar. Todavía tienes el control.</string>
+  <string name="freed_intervention_subtitle" formatted="false">El límite de tu aplicación está activo. Elige «Iniciar recuperación» para recibir apoyo.</string>
+  <string name="freed_intervention_breathe" formatted="false">Inhale. Exhale.</string>
+  <string name="freed_start_recovery" formatted="false">Iniciar recuperación</string>
+  <string name="freed_usage_eyebrow" formatted="false">ACCESO USO FREED</string>
+  <string name="freed_usage_title" formatted="false">El acceso al uso permanece limitado a los temporizadores de las aplicaciones.</string>
+  <string name="freed_usage_note" formatted="false">El acceso al uso está controlado por la configuración de Android. Después de habilitar FREED, regrese a la configuración para que la prueba de activación pueda verificar la protección.</string>
+  <string name="freed_usage_return" formatted="false">Volver a la configuración de FREED</string>
+  <string name="freed_usage_back" formatted="false">Volver a la configuración de Android</string>
+  <string name="freed_calibration_instruction" formatted="false">Toque la superficie para calibrar. Sólo su huella digital de vista estable permanece en este dispositivo.</string>
+  <string name="freed_calibration_ready" formatted="false">Se encontró un selector local estable. Confirma para guardarlo o cancela para descartarlo.</string>
+  <string name="freed_cancel" formatted="false">Cancelar</string>
+  <string name="freed_confirm" formatted="false">Confirmar</string>
+  <string name="freed_companion_label" formatted="false">Compañero FREED</string>
+  <string name="freed_companion_hint" formatted="false">Toca para saludar a tu acompañante.</string>
+  <string name="freed_companion_hello" formatted="false">Un paso a la vez. Estás haciendo espacio para un día mejor.</string>
+</resources>

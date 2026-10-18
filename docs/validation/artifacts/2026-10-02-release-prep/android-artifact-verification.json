@@ -1,0 +1,25 @@
+{
+  "schema": "freed-signed-aab-verification-v1",
+  "sanitized": true,
+  "artifact": "android/app/build/outputs/bundle/release/app-release.aab",
+  "sha256": "169e79cb101e5529d040c1cdfbc9e4375ca480a997776434d77ffff5d97ca520",
+  "sizeBytes": 46979303,
+  "jarSignatureVerified": true,
+  "unsignedEntries": false,
+  "certificateSha256": "b75a9c887e138db8c4d5568149d5009d078fee481ec37537349abb36c9cd6a11",
+  "matchesConfiguredUploadCertificate": true,
+  "bundleEntry": "base/assets/index.android.bundle",
+  "bundleMagic": "c61fbc03c103191f",
+  "hermesExecutableBytecode": true,
+  "buildReportBytecodeCorrection": "The builder searched only .hbc filenames; this actual RN bundle contains the Hermes execution header in index.android.bundle.",
+  "publicReleaseReady": false,
+  "packaging": {
+    "abis": [
+      "arm64-v8a"
+    ],
+    "hasHermesBytecode": true,
+    "hasHermesRuntime": true,
+    "hasJsBundle": true,
+    "hasJscRuntime": false
+  }
+}

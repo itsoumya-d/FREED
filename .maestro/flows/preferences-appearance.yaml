@@ -1,0 +1,37 @@
+appId: app.freed.recovery
+name: preferences-appearance
+tags:
+  - smoke
+  - local-write
+---
+# Unexecuted smoke scenario. Requires an isolated disposable English/LTR fixture.
+# Full scenario and physical-device receipts remain separate obligations.
+- openLink: "freed:///preferences"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-preferences"
+    timeout: 15000
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - tapOn: { id: "appearance-dark" }
+      - assertVisible: { id: "appearance-dark", checked: true }
+      - tapOn: { id: "appearance-light" }
+      - assertVisible: { id: "appearance-light", checked: true }
+      - tapOn: { id: "appearance-system" }
+      - assertVisible: { id: "appearance-system", checked: true }
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - assertVisible: { id: "appearance" }
+      - tapOn: "Dark"
+      - tapOn: "Light"
+      - tapOn: { text: "System", index: 0 }
+- takeScreenshot: "preferences-appearance"

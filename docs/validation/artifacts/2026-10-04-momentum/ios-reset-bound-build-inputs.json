@@ -1,0 +1,16 @@
+{
+  "capturedAt": "2026-10-04T00:55:52.257289+00:00",
+  "scope": "final frozen native reset integrated compile inputs; not signed release or installed runtime evidence",
+  "files": {
+    "modules/freed-protection/ios/FreedProtectionModule.swift": "b047bbefca1d302382a524f6249788f79d5212ffbc34a9f7b13821ce08531305",
+    "modules/freed-protection/ios/FreedProtectionConfigurationLock.swift": "2a65cb5ac6c7935401b6a6512bff21594c1079b469f9da2e151f0722040a4f1c",
+    "ios/FREEDDeviceActivityMonitor/DeviceActivityMonitorExtension.swift": "c1a0313f31d0685b5245582defb1259599c3219e6d6029ae870bac52e501422f",
+    "ios/FREEDShieldAction/ShieldActionExtension.swift": "63a5aec325eda0518c2f0795fca15fedfd3354d88328412afdf5259dd84909ca",
+    "ios/FREEDSafariContentBlocker/ContentBlockerRequestHandler.swift": "12f50c096c27099a65c298774fcc5dbeef2cbce0d4d09544f4573f52898beee2",
+    "ios/FREEDSafariFocusShield/SafariWebExtensionHandler.swift": "94a47fca329f8b1db0ec7a9738358b9d1b02fb6185a955a12bb5ccb8eee1dcbf",
+    "ios/FREEDSafariFocusShield/background.js": "22e49d15614c4cf01f9fa9b1395e8480752ec3a52bd8a403f3db4ecea33fd6c3",
+    "ios/FREEDSafariFocusShield/content.js": "06a4112265600d8c903086b6cbd9146bc870ad34a71d8b8ca127b3aed3e9be3e",
+    "ios/FREED.xcodeproj/project.pbxproj": "7de54c2495f5b9f194f63f626739af5f79e8fe5c433f7f449c491ea9026a10f5",
+    "ios/Podfile.lock": "4170cc43d0a045c1fdb11868b123f94cdaf1eaef3f2812977ab5144769c3af53"
+  }
+}

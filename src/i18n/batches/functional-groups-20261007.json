@@ -1,0 +1,186 @@
+{
+  "entries": [
+    {
+      "source": "Settings",
+      "translations": {
+        "hi": "सेटिंग्स",
+        "es": "Ajustes",
+        "pt": "Ajustes",
+        "fr": "Réglages",
+        "de": "Einstellungen",
+        "ar": "الإعدادات",
+        "ja": "設定",
+        "ko": "설정",
+        "zh-Hans": "设置"
+      }
+    },
+    {
+      "source": "General",
+      "translations": {
+        "hi": "सामान्य",
+        "es": "General",
+        "pt": "Geral",
+        "fr": "Général",
+        "de": "Allgemein",
+        "ar": "عام",
+        "ja": "一般",
+        "ko": "일반",
+        "zh-Hans": "通用"
+      }
+    },
+    {
+      "source": "VPN & Device Management",
+      "translations": {
+        "hi": "VPN और डिवाइस प्रबंधन",
+        "es": "VPN y gestión de dispositivos",
+        "pt": "VPN e gestão de dispositivos",
+        "fr": "VPN et gestion de l’appareil",
+        "de": "VPN und Geräteverwaltung",
+        "ar": "VPN وإدارة الجهاز",
+        "ja": "VPNとデバイス管理",
+        "ko": "VPN 및 기기 관리",
+        "zh-Hans": "VPN 与设备管理"
+      }
+    },
+    {
+      "source": "Step 1 of 3",
+      "translations": {
+        "hi": "चरण 1 / 3",
+        "es": "Paso 1 de 3",
+        "pt": "Etapa 1 de 3",
+        "fr": "Étape 1 sur 3",
+        "de": "Schritt 1 von 3",
+        "ar": "الخطوة 1 من 3",
+        "ja": "ステップ1/3",
+        "ko": "3단계 중 1단계",
+        "zh-Hans": "第 1 步，共 3 步"
+      }
+    },
+    {
+      "source": "Step 2 of 3",
+      "translations": {
+        "hi": "चरण 2 / 3",
+        "es": "Paso 2 de 3",
+        "pt": "Etapa 2 de 3",
+        "fr": "Étape 2 sur 3",
+        "de": "Schritt 2 von 3",
+        "ar": "الخطوة 2 من 3",
+        "ja": "ステップ2/3",
+        "ko": "3단계 중 2단계",
+        "zh-Hans": "第 2 步，共 3 步"
+      }
+    },
+    {
+      "source": "Step 3 of 3",
+      "translations": {
+        "hi": "चरण 3 / 3",
+        "es": "Paso 3 de 3",
+        "pt": "Etapa 3 de 3",
+        "fr": "Étape 3 sur 3",
+        "de": "Schritt 3 von 3",
+        "ar": "الخطوة 3 من 3",
+        "ja": "ステップ3/3",
+        "ko": "3단계 중 3단계",
+        "zh-Hans": "第 3 步，共 3 步"
+      }
+    },
+    {
+      "source": "Back",
+      "translations": {
+        "hi": "वापस",
+        "es": "Atrás",
+        "pt": "Voltar",
+        "fr": "Retour",
+        "de": "Zurück",
+        "ar": "رجوع",
+        "ja": "戻る",
+        "ko": "뒤로",
+        "zh-Hans": "返回"
+      }
+    },
+    {
+      "source": "Next",
+      "translations": {
+        "hi": "आगे",
+        "es": "Siguiente",
+        "pt": "Seguinte",
+        "fr": "Suivant",
+        "de": "Weiter",
+        "ar": "التالي",
+        "ja": "次へ",
+        "ko": "다음",
+        "zh-Hans": "下一步"
+      }
+    },
+    {
+      "source": "Open app settings",
+      "translations": {
+        "hi": "ऐप सेटिंग्स खोलें",
+        "es": "Abrir ajustes de la app",
+        "pt": "Abrir ajustes da app",
+        "fr": "Ouvrir les réglages de l’app",
+        "de": "App-Einstellungen öffnen",
+        "ar": "فتح إعدادات التطبيق",
+        "ja": "アプリの設定を開く",
+        "ko": "앱 설정 열기",
+        "zh-Hans": "打开 App 设置"
+      }
+    },
+    {
+      "source": "Your FREED DNS configuration is saved. Follow these steps in Settings, then return to FREED.",
+      "translations": {
+        "hi": "आपका FREED DNS कॉन्फ़िगरेशन सहेजा गया है। सेटिंग्स में ये चरण पूरा करें, फिर FREED पर लौटें।",
+        "es": "Tu configuración DNS de FREED está guardada. Sigue estos pasos en Ajustes y vuelve a FREED.",
+        "pt": "A configuração DNS do FREED foi salva. Siga estas etapas nos Ajustes e volte ao FREED.",
+        "fr": "Votre configuration DNS FREED est enregistrée. Suivez ces étapes dans Réglages, puis revenez à FREED.",
+        "de": "Deine FREED-DNS-Konfiguration ist gespeichert. Folge diesen Schritten in den Einstellungen und kehre zu FREED zurück.",
+        "ar": "تم حفظ إعداد DNS الخاص بـ FREED. اتبع هذه الخطوات في الإعدادات، ثم عد إلى FREED.",
+        "ja": "FREEDのDNS設定が保存されました。「設定」でこの手順を進め、FREEDに戻ってください。",
+        "ko": "FREED DNS 구성이 저장되었습니다. 설정에서 이 단계를 진행한 후 FREED로 돌아오세요.",
+        "zh-Hans": "FREED DNS 配置已保存。在“设置”中完成这些步骤后返回 FREED。"
+      }
+    },
+    {
+      "source": "This opens FREED’s app settings. Tap Back to reach Settings, through Apps on iOS 18 or later. Then open General.",
+      "translations": {
+        "hi": "इससे FREED की ऐप सेटिंग्स खुलती हैं। वापस जाकर सेटिंग्स तक पहुँचें; iOS 18 या बाद में ऐप्स से होकर जाएँ। फिर सामान्य खोलें।",
+        "es": "Se abren los ajustes de FREED. Toca Atrás hasta Ajustes, pasando por Apps en iOS 18 o posterior. Luego abre General.",
+        "pt": "Isso abre os ajustes do FREED. Toque em Voltar até Ajustes, passando por Apps no iOS 18 ou posterior. Depois abra Geral.",
+        "fr": "Les réglages de FREED s’ouvrent. Touchez Retour jusqu’à Réglages, via Apps sur iOS 18 ou ultérieur. Ouvrez ensuite Général.",
+        "de": "Dies öffnet die Einstellungen von FREED. Tippe zurück bis Einstellungen, unter iOS 18 oder neuer über Apps. Öffne dann Allgemein.",
+        "ar": "يفتح هذا إعدادات FREED. اضغط رجوع للوصول إلى الإعدادات، مرورًا بالتطبيقات في iOS 18 أو أحدث. ثم افتح عام.",
+        "ja": "FREEDのアプリ設定が開きます。「戻る」で「設定」に戻ってください。iOS 18以降は「アプリ」を経由します。次に「一般」を開きます。",
+        "ko": "FREED 앱 설정이 열립니다. 뒤로를 눌러 설정으로 이동하세요. iOS 18 이상에서는 앱을 거칩니다. 그런 다음 일반을 여세요.",
+        "zh-Hans": "这会打开 FREED 的 App 设置。点击返回进入“设置”；iOS 18 或更高版本会经过“App”。然后打开“通用”。"
+      }
+    },
+    {
+      "source": "Select the FREED configuration shown above. Return here to check whether iOS enabled it.",
+      "translations": {
+        "hi": "ऊपर दिखाया गया FREED कॉन्फ़िगरेशन चुनें। iOS ने इसे चालू किया है या नहीं, जाँचने के लिए यहाँ लौटें।",
+        "es": "Selecciona la configuración de FREED mostrada arriba. Vuelve aquí para comprobar si iOS la activó.",
+        "pt": "Selecione a configuração do FREED acima. Volte aqui para verificar se o iOS a ativou.",
+        "fr": "Sélectionnez la configuration FREED ci-dessus. Revenez ici pour vérifier si iOS l’a activée.",
+        "de": "Wähle die oben gezeigte FREED-Konfiguration. Kehre zurück, um zu prüfen, ob iOS sie aktiviert hat.",
+        "ar": "اختر إعداد FREED الموضح أعلاه. عد هنا للتحقق مما إذا كان iOS قد فعّله.",
+        "ja": "上に表示されたFREEDの設定を選んでください。ここに戻り、iOSで有効になったか確認します。",
+        "ko": "위에 표시된 FREED 구성을 선택하세요. 여기로 돌아와 iOS에서 활성화했는지 확인하세요.",
+        "zh-Hans": "选择上方显示的 FREED 配置。返回此处检查 iOS 是否已启用它。"
+      }
+    },
+    {
+      "source": "Open DNS in VPN & Device Management.",
+      "translations": {
+        "hi": "VPN और डिवाइस प्रबंधन में DNS खोलें।",
+        "es": "Abre DNS en VPN y gestión de dispositivos.",
+        "pt": "Abra DNS em VPN e gestão de dispositivos.",
+        "fr": "Ouvrez DNS dans VPN et gestion de l’appareil.",
+        "de": "Öffne DNS unter VPN und Geräteverwaltung.",
+        "ar": "افتح DNS في VPN وإدارة الجهاز.",
+        "ja": "「VPNとデバイス管理」で「DNS」を開きます。",
+        "ko": "VPN 및 기기 관리에서 DNS를 여세요.",
+        "zh-Hans": "在“VPN 与设备管理”中打开“DNS”。"
+      }
+    }
+  ]
+}

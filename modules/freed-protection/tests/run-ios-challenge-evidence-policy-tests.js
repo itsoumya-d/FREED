@@ -1,0 +1,5 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),os=require('node:os'),path=require('node:path');const {spawnSync}=require('node:child_process');
+const native='modules/freed-protection/ios/FreedChallengeEvidencePolicy.swift';
+assert.ok(fs.existsSync(native),'Missing native session-bound challenge evidence policy');
+const directory=fs.mkdtempSync(path.join(os.tmpdir(),'freed-challenge-evidence-'));
+try{const binary=path.join(directory,'cases');for(const [command,args] of [['xcrun',['swiftc','-parse-as-library','-swift-version','5','modules/freed-protection/ios/FreedAppGroupsPolicy.swift','modules/freed-protection/ios/FreedEarnedAppTimePolicy.swift',native,'modules/freed-protection/ios/FreedChallengeStepObserver.swift','modules/freed-protection/ios/FreedEarnedAppTimeTrustedClock.swift','modules/freed-protection/tests/ChallengeEvidencePolicyCases.swift','-o',binary]],[binary,[]]]){const r=spawnSync(command,args,{encoding:'utf8',timeout:60000});process.stdout.write(r.stdout+r.stderr);assert.equal(r.status,0,command+' failed');}}finally{fs.rmSync(directory,{recursive:true,force:true});}

@@ -1,0 +1,171 @@
+{
+  "generatedAt": "2026-10-03T04:29:33.833Z",
+  "source": {
+    "icon": "assets/brand/freed-app-icon-source.png",
+    "symbol": "assets/brand/freed-symbol.png"
+  },
+  "outputs": [
+    {
+      "path": "assets/icon.png",
+      "width": 1024,
+      "height": 1024,
+      "sha256": "be5a219a7c2a39daa5427fbd6e6c2ab6c160ef5643d8477077f8188e8a1a3b00"
+    },
+    {
+      "path": "assets/adaptive-icon.png",
+      "width": 1024,
+      "height": 1024,
+      "sha256": "68f483548b9bcd80bb688a912ddd6c9ab646397d42de4b90182aeccbed7c162a"
+    },
+    {
+      "path": "assets/splash-icon.png",
+      "width": 1024,
+      "height": 1024,
+      "sha256": "68f483548b9bcd80bb688a912ddd6c9ab646397d42de4b90182aeccbed7c162a"
+    },
+    {
+      "path": "ios/FREED/Images.xcassets/AppIcon.appiconset/App-Icon-1024x1024@1x.png",
+      "width": 1024,
+      "height": 1024,
+      "sha256": "be5a219a7c2a39daa5427fbd6e6c2ab6c160ef5643d8477077f8188e8a1a3b00"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+      "width": 48,
+      "height": 48,
+      "sha256": "b9f9ccc9ee25ba4fb75a0aee98c4a35a3f3ac08ffd479e92ceed72335e386d88"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png",
+      "width": 48,
+      "height": 48,
+      "sha256": "b9f9ccc9ee25ba4fb75a0aee98c4a35a3f3ac08ffd479e92ceed72335e386d88"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-mdpi/splashscreen_logo.png",
+      "width": 288,
+      "height": 288,
+      "sha256": "3f123d5c00021a0d6f9ed80f09d10ee42fc7eac15fd461a998261995ef266ae2"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-mdpi/ic_launcher_foreground.png",
+      "width": 108,
+      "height": 108,
+      "sha256": "813962ca3a3f375b4f4765f1f9bd5b08355ed365b8c5738f63bcc7c29eb56200"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+      "width": 72,
+      "height": 72,
+      "sha256": "b9f9ccc9ee25ba4fb75a0aee98c4a35a3f3ac08ffd479e92ceed72335e386d88"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png",
+      "width": 72,
+      "height": 72,
+      "sha256": "b9f9ccc9ee25ba4fb75a0aee98c4a35a3f3ac08ffd479e92ceed72335e386d88"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-hdpi/splashscreen_logo.png",
+      "width": 432,
+      "height": 432,
+      "sha256": "3f123d5c00021a0d6f9ed80f09d10ee42fc7eac15fd461a998261995ef266ae2"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-hdpi/ic_launcher_foreground.png",
+      "width": 162,
+      "height": 162,
+      "sha256": "813962ca3a3f375b4f4765f1f9bd5b08355ed365b8c5738f63bcc7c29eb56200"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+      "width": 96,
+      "height": 96,
+      "sha256": "b9f9ccc9ee25ba4fb75a0aee98c4a35a3f3ac08ffd479e92ceed72335e386d88"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png",
+      "width": 96,
+      "height": 96,
+      "sha256": "b9f9ccc9ee25ba4fb75a0aee98c4a35a3f3ac08ffd479e92ceed72335e386d88"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-xhdpi/splashscreen_logo.png",
+      "width": 576,
+      "height": 576,
+      "sha256": "3f123d5c00021a0d6f9ed80f09d10ee42fc7eac15fd461a998261995ef266ae2"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-xhdpi/ic_launcher_foreground.png",
+      "width": 216,
+      "height": 216,
+      "sha256": "813962ca3a3f375b4f4765f1f9bd5b08355ed365b8c5738f63bcc7c29eb56200"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+      "width": 144,
+      "height": 144,
+      "sha256": "b9f9ccc9ee25ba4fb75a0aee98c4a35a3f3ac08ffd479e92ceed72335e386d88"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png",
+      "width": 144,
+      "height": 144,
+      "sha256": "b9f9ccc9ee25ba4fb75a0aee98c4a35a3f3ac08ffd479e92ceed72335e386d88"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-xxhdpi/splashscreen_logo.png",
+      "width": 864,
+      "height": 864,
+      "sha256": "3f123d5c00021a0d6f9ed80f09d10ee42fc7eac15fd461a998261995ef266ae2"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-xxhdpi/ic_launcher_foreground.png",
+      "width": 324,
+      "height": 324,
+      "sha256": "813962ca3a3f375b4f4765f1f9bd5b08355ed365b8c5738f63bcc7c29eb56200"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "width": 192,
+      "height": 192,
+      "sha256": "b9f9ccc9ee25ba4fb75a0aee98c4a35a3f3ac08ffd479e92ceed72335e386d88"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
+      "width": 192,
+      "height": 192,
+      "sha256": "b9f9ccc9ee25ba4fb75a0aee98c4a35a3f3ac08ffd479e92ceed72335e386d88"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-xxxhdpi/splashscreen_logo.png",
+      "width": 1152,
+      "height": 1152,
+      "sha256": "3f123d5c00021a0d6f9ed80f09d10ee42fc7eac15fd461a998261995ef266ae2"
+    },
+    {
+      "path": "android/app/src/main/res/drawable-xxxhdpi/ic_launcher_foreground.png",
+      "width": 432,
+      "height": 432,
+      "sha256": "813962ca3a3f375b4f4765f1f9bd5b08355ed365b8c5738f63bcc7c29eb56200"
+    },
+    {
+      "path": "ios/FREED/Images.xcassets/SplashScreenLogo.imageset/logo@1x.png",
+      "width": 112,
+      "height": 112,
+      "sha256": "9bba09cbe18b6548f68e4486b189c15cfa9b9f0201fbba3938f30c0eb2007fe6"
+    },
+    {
+      "path": "ios/FREED/Images.xcassets/SplashScreenLogo.imageset/logo@2x.png",
+      "width": 224,
+      "height": 224,
+      "sha256": "0e45bc36d9c92a9553d0ca73a714635d7a70e0b1f10db4f01cbb1abc7fb6be6b"
+    },
+    {
+      "path": "ios/FREED/Images.xcassets/SplashScreenLogo.imageset/logo@3x.png",
+      "width": 336,
+      "height": 336,
+      "sha256": "c0c4aaef77a480895f7acd5b94b4fd57f9cddaf14f4ef5ad2faf53e57a02a585"
+    }
+  ]
+}

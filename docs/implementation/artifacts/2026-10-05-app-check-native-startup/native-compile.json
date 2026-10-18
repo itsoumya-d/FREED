@@ -1,0 +1,32 @@
+{
+  "recordedAt": "2026-10-05T02:25:14.398482+00:00",
+  "result": "unsigned-native-build-succeeded",
+  "exitCode": 0,
+  "sdk": "iphoneos26.5",
+  "configuration": "Release",
+  "architecture": "arm64",
+  "deploymentTarget": "iOS15.1",
+  "codeSigningAllowed": false,
+  "skipBundling": true,
+  "nativeInputs": [
+    {
+      "path": "ios/FREED/AppDelegate.swift",
+      "sha256": "7242dd3b3bf24602562531972beeae319d9b93f6483c624e0ce9cd380f59a803"
+    },
+    {
+      "path": "ios/FREED/FREED-Bridging-Header.h",
+      "sha256": "1fc9b485cefa4dd6720f03f273faea901ab055b8ba48fdab9102c9497d52e2a2"
+    },
+    {
+      "path": "ios/FREED/FREED.entitlements",
+      "sha256": "074ffbf4182fab092d2eccfc1054d650a8d73094f24ebaaf8ab9ea95b8d1386f"
+    }
+  ],
+  "binarySha256": "a96138cf1364990402e38e9d5e8cace6fcc099a73cf3c099c96ba52cbc9977d5",
+  "logSha256": "96859f444ba7a751888eaeb40bd6c1cc6e2a507d419892fc25ab38ab227704ca",
+  "includesMainStartupCompile": true,
+  "sourceFrozenCurrentUi": false,
+  "runtimeVerified": false,
+  "signedServiceRequestVerified": false,
+  "installableTestFlight": false
+}

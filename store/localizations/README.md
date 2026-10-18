@@ -1,0 +1,9 @@
+# Localized store metadata drafts
+
+Ten local JSON packets cover en, hi, es, pt, fr, de, ar, ja, ko and zh-Hans. They contain platform locale mappings, the FREED title, short listing copy, complete listing descriptions, both equal-feature subscription titles/descriptions, and renewal/privacy/platform-limit disclosures. They are local drafts; no store console was changed or published.
+
+Listing paragraphs adapt the existing `store/app-store/metadata.md` and `store/play-store/metadata.md`. Public authored text was translated with Google Translate on 2026-10-03 with protected technical names. Short titles and four Latin-language product descriptions received authored adjustments to fit store limits without truncation. Non-English language-quality review remains pending. Every packet says `draft-not-published` and `human-review-pending`; completion of source data does not prove store submission, billing verification or platform protection.
+
+The app-language code is distinct from each platform's metadata locale code; Apple mappings follow its [localizations reference](https://developer.apple.com/help/app-store-connect/reference/app-information/app-store-localizations). Local product descriptions respect the [45-character App Store limit](https://developer.apple.com/help/app-store-connect/reference/in-app-purchases-and-subscriptions/in-app-purchase-information) and display names remain within 30 characters. Listing subtitles remain within 30 characters, Google Play short descriptions within 80, and full descriptions within 4,000. Numeric prices and currency formatting still come from the live store; product IDs and billing periods remain unchanged.
+
+Run `node --test tests/store-localizations.test.js` to check the packets. The root store catalog carries the same per-platform localized product labels for all ten app languages. Review these drafts against the final verified native binary and store products before console submission.

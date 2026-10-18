@@ -33,3 +33,23 @@
 - `npm run verify:release -- --env-file <prod-env> --artifact-dir docs/validation/artifacts/<run-id>`
 
 Production submission must wait for physical-device Android/iOS evidence, normal browsing corpus, performance profile, store/ad sandbox, AI backend smoke, and strict release audit pass.
+
+## Chrome Web Store (FREED Guard extension)
+
+Build:
+
+- `npm run build:extension-rules` — compile reviewed adult-domain feed to DNR rules
+  (use `--feed <file>` with the live reviewed feed once deployed)
+- `npm run package:extension` — produce `dist/freed-guard-extension.zip`
+
+Pre-submission:
+
+- [ ] Load unpacked from `extension/`; smoke-test: block page renders, popup pause/resume,
+      options custom lists apply, normal browsing unaffected
+- [ ] Swap seed ruleset for production reviewed-feed build if the feed endpoint is live
+- [ ] Store listing copy mirrors app disclosures: domain-list blocking only, no history
+      collection, no remote code, all state on-device
+- [ ] Privacy tab: single purpose (adult-domain blocking), permissions justified
+      (declarativeNetRequest, storage, alarms)
+- [ ] Screenshots: interstitial + popup + options at 1280x800 (or 640x400)
+- [ ] Zip contents of `extension/` only (not the parent folder) via `npm run package:extension`

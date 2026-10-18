@@ -1,0 +1,22 @@
+{
+  "buildId": "a71298b5-b36a-43c8-8224-30ce1e3a4132",
+  "version": "1.0",
+  "build": "4",
+  "processingState": "VALID",
+  "internalBuildState": "IN_BETA_TESTING",
+  "expired": false,
+  "expirationDate": "2027-01-03T17:28:30-08:00",
+  "group": {
+    "id": "c00c2d1a-29fc-4b4d-8fa5-b1b11ead06db",
+    "name": "Internal",
+    "internal": true,
+    "allBuildAccess": true
+  },
+  "autoNotifyEnabled": true,
+  "manualTesterNotification": false,
+  "publicSubmission": false,
+  "ipaSha256": "74dc5817308b0ef6c6dfcd87fd7ec6bca6c9f3b66283f6ef2970846870eb0e22",
+  "sourceSnapshotSha256": "21b27cad69029ef374b8165e3914671467909c69e60aab7e3b2ef88fd3853601",
+  "physicalInstallationVerified": false,
+  "whatToTestReadbackMatchesAfterStoreTrailingNewlineTrim": true
+}

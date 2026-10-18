@@ -1,0 +1,35 @@
+appId: app.freed.recovery
+name: profile-accountability
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///profile"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-profile"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Accountability"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Accountability"
+- scrollUntilVisible:
+    element:
+      text: ".*Accountability.*|.*accountability.*"
+    direction: DOWN
+    timeout: 10000
+- assertVisible:
+    id: "screen-main-profile"
+- swipe:
+    direction: UP
+- assertVisible:
+    id: "screen-main-profile"
+- takeScreenshot: "profile-accountability"

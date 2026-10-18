@@ -1,0 +1,29 @@
+{
+  "kind": "SIMULATOR_DEBUG",
+  "builtAt": "2026-10-03T01:36:34.237Z",
+  "appPath": "ios/build/Build/Products/Debug-iphonesimulator/FREED.app",
+  "buildSucceeded": true,
+  "resources": [
+    {
+      "file": "FREED",
+      "size": 40344,
+      "sha256": "42f3ff93a505c28c1a87c697ab68260828cf241e068ff195b54a173b5f16d97e"
+    },
+    {
+      "file": "FREED.debug.dylib",
+      "size": 126474016,
+      "sha256": "837b638f9a64cb8dcb3d36d4d8302271f04ec549914427293b3fcbce83b19056"
+    },
+    {
+      "file": "main.jsbundle",
+      "size": 18714665,
+      "sha256": "4203f69a7428fb2de02d9b1fbf7f588637dfb498868b5d91ed85bfa7ba671291"
+    },
+    {
+      "file": "freed-qa-embedded-marker",
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "failure": "Cannot create devtools websocket connections in embedded environments. Embedded Debug bundle dev=true."
+}

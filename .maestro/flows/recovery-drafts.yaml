@@ -1,0 +1,45 @@
+appId: app.freed.recovery
+name: recovery-drafts
+tags: [smoke, local-write]
+---
+# Requires an English disposable same-local-day fixture with empty reflection and no retained check-in draft.
+# Leave through the real no-save Back action on both platforms, then reopen the same-day draft.
+# No hardware-back assumption, history save, app-data reset or Keychain reset is used.
+- openLink: "freed:///today"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "screen-main-today" }
+    timeout: 15000
+- openLink: "freed:///flow/checkin"
+- extendedWaitUntil:
+    visible: { id: "screen-checkin" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "checkin-reflection" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "checkin-reflection" }
+- inputText: "Disposable recovery draft"
+- hideKeyboard
+- scrollUntilVisible:
+    element: { text: "Back" }
+    direction: UP
+    timeout: 10000
+- tapOn: "Back"
+- extendedWaitUntil:
+    visible: { id: "screen-main-today" }
+    timeout: 15000
+- openLink: "freed:///flow/checkin"
+- extendedWaitUntil:
+    visible: { id: "screen-checkin" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "checkin-reflection" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Disposable recovery draft"
+- takeScreenshot: "recovery-draft-restored"

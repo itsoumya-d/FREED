@@ -1,0 +1,20 @@
+appId: app.freed.recovery
+name: progress-zero
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///progress"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-progress"
+    timeout: 15000
+- assertVisible: "No signals yet"
+- assertVisible: "Not enough data yet"
+- takeScreenshot: "progress-zero"

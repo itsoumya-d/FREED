@@ -1,0 +1,4 @@
+[
+  {"id":81001,"priority":1,"action":{"type":"redirect","redirect":{"extensionPath":"/recovery-probe/page.html"}},"condition":{"regexFilter":"^https://example[.]com/freed-recovery-probe$","isUrlFilterCaseSensitive":true,"resourceTypes":["main_frame"]}},
+  {"id":81002,"priority":1,"action":{"type":"redirect","redirect":{"extensionPath":"/recovery-probe/page.html"}},"condition":{"regexFilter":"^https://nudity[.]testcategory[.]com/$","isUrlFilterCaseSensitive":true,"resourceTypes":["main_frame"]}}
+]

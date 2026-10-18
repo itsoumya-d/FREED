@@ -20,6 +20,7 @@ import type {
   RecoveryChallenge,
   UrgeRiskForecastSignal
 } from "@/lib/recovery-engine";
+import { authoredVerificationRule } from '@/lib/challenge-rules';
 
 export type TemplateContext = "calm" | "high-urge" | "late-night" | "bored" | "stressed" | "lonely" | "any";
 export const CHALLENGE_ENGINE_FAMILIES = [
@@ -44,6 +45,10 @@ export type ChallengeTemplate = RecoveryChallenge & {
 
 type SeedDef = {
   prefix: string;
+  /** Display copy may change without changing stable history IDs. */
+  displayTitle?: string;
+  /** Explicit selection metadata preserves families across copy revisions. */
+  families: ChallengeEngineFamily[];
   category: RecoveryChallenge["category"];
   intensity: RecoveryChallenge["intensity"];
   icon: string;
@@ -69,30 +74,32 @@ const SEEDS: SeedDef[] = [
   // ──────── PHYSICAL (200+) ─────────────────────────────────────────────────
   {
     prefix: "Pushups",
+    families: ["physical", "mindfulness", "emergency", "anti-relapse", "quick-reset"],
     category: "physical",
     intensity: "strong",
     icon: "Dumbbell",
     durationSec: 90,
     contexts: ["high-urge", "stressed", "bored"],
     tags: ["physical", "discharge", "energy", "morning"],
-    why: "Pushups dump adrenaline fast and reroute attention from craving into a clear body signal.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Drop to the floor in pushup position.",
       "Brace your core and squeeze glutes.",
       "Lower with control until chest is two fists from the ground.",
-      "Push up explosively, breathe out."
+      "Push up slowly if comfortable; wall pushups are an option."
     ],
     numbers: [10, 15, 20, 25, 30, 40, 50]
   },
   {
     prefix: "Squats",
+    families: ["physical", "mindfulness", "emergency", "anti-relapse", "quick-reset"],
     category: "physical",
     intensity: "medium",
     icon: "Dumbbell",
     durationSec: 90,
     contexts: ["high-urge", "stressed", "bored"],
     tags: ["physical", "legs", "discharge"],
-    why: "Squats engage the largest muscles in your body, which floods the system with calming endorphins.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Stand tall, feet shoulder-width apart.",
       "Sit back like there is a chair behind you.",
@@ -103,30 +110,32 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Burpees",
+    families: ["physical", "productivity", "emergency", "anti-relapse", "quick-reset"],
     category: "physical",
     intensity: "strong",
     icon: "Dumbbell",
     durationSec: 120,
     contexts: ["high-urge", "stressed"],
     tags: ["physical", "discharge", "intense"],
-    why: "Burpees rapidly raise your heart rate, which collapses craving signals within minutes.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Stand, then squat down and place hands on floor.",
-      "Jump your feet back into a plank.",
+      "Step your feet back into a plank if comfortable.",
       "Drop chest, push back up, jump feet to hands.",
-      "Stand and jump straight up. Repeat."
+      "Skip jumps; rise slowly, or use seated arm movement."
     ],
     numbers: [5, 8, 10, 12, 15, 20]
   },
   {
     prefix: "Plank hold",
+    families: ["physical", "mindfulness", "productivity", "quick-reset"],
     category: "physical",
     intensity: "medium",
     icon: "Dumbbell",
     durationSec: 60,
     contexts: ["any"],
     tags: ["physical", "core", "focus"],
-    why: "Holding a plank forces full-body presence and quiets racing thoughts.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Place forearms on the floor, elbows under shoulders.",
       "Straighten your body in one line.",
@@ -137,13 +146,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Jumping jacks",
+    families: ["physical", "mindfulness", "quick-reset"],
     category: "physical",
     intensity: "medium",
     icon: "Dumbbell",
     durationSec: 60,
     contexts: ["bored", "calm"],
     tags: ["physical", "wake-up", "low-skill"],
-    why: "Repetitive full-body movement quickly resets your state without needing equipment or skill.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Stand tall, feet together, arms at sides.",
       "Jump feet wide while raising arms overhead.",
@@ -154,30 +164,32 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Mountain climbers",
+    families: ["physical", "mindfulness", "productivity", "emergency", "anti-relapse", "quick-reset"],
     category: "physical",
     intensity: "strong",
     icon: "Dumbbell",
     durationSec: 60,
     contexts: ["high-urge", "stressed"],
     tags: ["physical", "cardio", "discharge"],
-    why: "Fast climbers spike your pulse, which is the body language of action, not craving.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Start in a high plank, hands under shoulders.",
       "Drive one knee toward your chest.",
-      "Switch legs quickly without lifting hips.",
+      "Alternate knees slowly if comfortable; seated knee lifts are an option.",
       "Stay tight and breathe steadily."
     ],
     numbers: [30, 50, 60, 80, 100]
   },
   {
     prefix: "Wall sit",
+    families: ["physical", "mindfulness", "productivity", "anti-relapse", "quick-reset"],
     category: "physical",
     intensity: "medium",
     icon: "Dumbbell",
     durationSec: 60,
     contexts: ["bored", "calm"],
     tags: ["physical", "isometric", "focus"],
-    why: "An isometric burn keeps attention on the body, not the urge, while building quiet discipline.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Press your back flat against a wall.",
       "Slide down until your thighs are parallel to the floor.",
@@ -188,13 +200,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Walk outside",
+    families: ["physical", "outdoors", "productivity"],
     category: "physical",
     intensity: "calm",
     icon: "Footprints",
     durationSec: 300,
     contexts: ["bored", "lonely", "stressed"],
     tags: ["physical", "outside", "reset"],
-    why: "Stepping outside changes the cue environment, which is often more powerful than willpower.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Put your phone on Do Not Disturb.",
       "Grab keys and step outside.",
@@ -205,13 +218,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Stretch routine",
+    families: ["physical", "mindfulness", "anti-relapse", "late-night", "quick-reset"],
     category: "physical",
     intensity: "calm",
     icon: "Activity",
     durationSec: 180,
     contexts: ["calm", "late-night", "stressed"],
     tags: ["physical", "mobility", "relax"],
-    why: "Gentle stretching releases tension your nervous system stores during craving.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Stand tall and reach both arms overhead.",
       "Fold forward and let your head hang.",
@@ -242,13 +256,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Run in place",
+    families: ["physical", "emergency", "anti-relapse", "quick-reset"],
     category: "physical",
     intensity: "medium",
     icon: "Footprints",
     durationSec: 60,
     contexts: ["high-urge", "bored"],
     tags: ["physical", "cardio", "discharge"],
-    why: "Running in place gives your nervous system real movement evidence and helps discharge the craving.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Stand tall, feet hip-width apart.",
       "Lift knees high one at a time.",
@@ -259,23 +274,25 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Stair climb",
+    families: ["physical", "mindfulness", "emergency", "anti-relapse", "quick-reset"],
     category: "physical",
     intensity: "medium",
     icon: "Footprints",
     durationSec: 180,
     contexts: ["high-urge", "stressed"],
     tags: ["physical", "cardio", "leg"],
-    why: "Stairs force unilateral effort, which is harder to do on autopilot than scrolling.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Find the nearest staircase.",
       "Walk up and down at a steady pace.",
-      "Skip every second step on the way up.",
+      "Use each step and a handrail if available.",
       "Stop before you are out of breath."
     ],
     numbers: [3, 5, 7, 10]
   },
   {
     prefix: "Yoga sun salutations",
+    families: ["physical", "outdoors", "mindfulness", "productivity", "anti-relapse", "late-night"],
     category: "physical",
     intensity: "calm",
     icon: "Activity",
@@ -283,7 +300,7 @@ const SEEDS: SeedDef[] = [
     premium: false,
     contexts: ["calm", "late-night"],
     tags: ["physical", "breath", "mind-body"],
-    why: "Linking breath to movement gives the nervous system a coherent script other than craving.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Stand at the top of your mat.",
       "Inhale arms up, exhale fold forward.",
@@ -294,13 +311,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Shadow box",
+    families: ["physical", "mindfulness", "productivity", "emergency", "anti-relapse", "quick-reset"],
     category: "physical",
     intensity: "strong",
     icon: "Dumbbell",
     durationSec: 120,
     contexts: ["stressed", "high-urge"],
     tags: ["physical", "discharge", "anger"],
-    why: "Shadow boxing externalizes restless energy without hitting anything that matters.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Stand with feet shoulder-width, hands up.",
       "Throw jab-cross, then a hook.",
@@ -311,13 +329,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Light jog",
+    families: ["physical", "outdoors"],
     category: "physical",
     intensity: "medium",
     icon: "Footprints",
     durationSec: 600,
     contexts: ["bored", "stressed"],
     tags: ["physical", "outside", "cardio"],
-    why: "Aerobic effort produces BDNF, which is the long-term antidote to compulsive cycles.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Lace up your shoes.",
       "Walk for two minutes to warm up.",
@@ -328,13 +347,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Bodyweight rows",
+    families: ["physical", "quick-reset"],
     category: "physical",
     intensity: "medium",
     icon: "Dumbbell",
     durationSec: 90,
     contexts: ["any"],
     tags: ["physical", "strength"],
-    why: "Pulling motions are rare in daily life, which makes them effective at breaking automatic loops.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Find a sturdy table edge or low bar.",
       "Lie underneath and grip with both hands.",
@@ -345,13 +365,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Lunges",
+    families: ["physical", "quick-reset"],
     category: "physical",
     intensity: "medium",
     icon: "Dumbbell",
     durationSec: 90,
     contexts: ["any"],
     tags: ["physical", "legs"],
-    why: "Lunges demand balance, which forces the prefrontal cortex back online.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Step one leg back, lower the back knee.",
       "Front knee tracks over the ankle.",
@@ -362,13 +383,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Calf raises",
+    families: ["physical", "quick-reset"],
     category: "physical",
     intensity: "calm",
     icon: "Dumbbell",
     durationSec: 60,
     contexts: ["calm", "bored"],
     tags: ["physical", "low-impact"],
-    why: "Even small physical effort tilts the chemistry toward action and away from numb scrolling.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Stand near a wall for balance.",
       "Press up onto the balls of your feet.",
@@ -379,6 +401,8 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Cold shower",
+    displayTitle: "Seated device movement pause",
+    families: ["physical", "mindfulness", "productivity", "emergency", "anti-relapse", "late-night", "quick-reset"],
     category: "physical",
     intensity: "strong",
     icon: "Snowflake",
@@ -386,184 +410,190 @@ const SEEDS: SeedDef[] = [
     premium: false,
     contexts: ["high-urge", "late-night"],
     tags: ["physical", "cold", "reset"],
-    why: "A short cold blast collapses the dopamine spiral and gives you a clean restart.",
-    steps: [
-      "Turn the shower to the coldest setting.",
-      "Step in feet-first and breathe out long.",
-      "Stay under the stream for the full time.",
-      "Step out, dry off, stand tall."
-    ],
+    why: "Optional seated device movement gives you a quiet pause. Move your device only if comfortable, or choose another reset. Motion evidence records device movement, not water exposure, shoulder exercise, form or repetitions.",
+    steps: ["Sit comfortably with your device, away from water.", "Gently move the device if comfortable.", "Pause or choose another reset if device movement is uncomfortable.", "Water at a comfortable temperature is optional; keep your device dry."],
     numbers: [30, 45, 60, 90, 120]
   },
 
   // ──────── BREATHING (180+) ────────────────────────────────────────────────
   {
     prefix: "4-7-8 breathing",
+    families: ["mindfulness", "emergency", "anti-relapse", "late-night", "quick-reset"],
     category: "breathing",
     intensity: "calm",
     icon: "Waves",
     durationSec: 180,
     contexts: ["high-urge", "late-night", "stressed"],
     tags: ["breath", "calm", "sleep"],
-    why: "The long exhale signals safety to the nervous system, which softens the urge spike.",
+    why: "Optional breathing gives you a quiet activity to focus on. Keep a comfortable pace, skip any holds or counting, and switch resets if needed. No particular feeling or urge change is guaranteed.",
     steps: [
       "Sit upright, soft jaw.",
       "Inhale through the nose for 4 counts.",
-      "Hold the breath for 7 counts.",
-      "Exhale through the mouth for 8 counts."
+      "The 7-count hold is optional; skip it whenever needed.",
+      "Keep breathing gently; skip holds or counting, or choose another reset."
     ],
     numbers: [3, 5, 7, 10]
   },
   {
     prefix: "Box breathing",
+    families: ["mindfulness", "productivity", "emergency", "anti-relapse", "quick-reset"],
     category: "breathing",
     intensity: "calm",
     icon: "Waves",
     durationSec: 180,
     contexts: ["high-urge", "stressed", "any"],
     tags: ["breath", "focus", "reset"],
-    why: "Box breathing is what Navy SEALs use to stay calm in chaos — equal sides keep you in control.",
+    why: "Optional breathing gives you a quiet activity to focus on. Keep a comfortable pace, skip any holds or counting, and switch resets if needed. No particular feeling or urge change is guaranteed.",
     steps: [
       "Inhale for 4 counts.",
-      "Hold for 4 counts.",
+      "The 4-count hold is optional; skip it whenever needed.",
       "Exhale for 4 counts.",
-      "Hold empty for 4 counts."
+      "Keep breathing gently; skip holds or counting, or choose another reset."
     ],
     numbers: [4, 5, 6, 8, 10]
   },
   {
     prefix: "Coherent breathing",
+    families: ["mindfulness", "quick-reset"],
     category: "breathing",
     intensity: "calm",
     icon: "Waves",
     durationSec: 300,
     contexts: ["any"],
     tags: ["breath", "balance", "heart"],
-    why: "5-second inhale, 5-second exhale rebalances the autonomic system and steadies emotion.",
+    why: "Optional breathing gives you a quiet activity to focus on. Keep a comfortable pace, skip any holds or counting, and switch resets if needed. No particular feeling or urge change is guaranteed.",
     steps: [
       "Lie back or sit upright.",
       "Inhale through nose for 5 counts.",
       "Exhale through nose for 5 counts.",
-      "Continue at this exact rhythm."
+      "Keep breathing gently; skip holds or counting, or choose another reset."
     ],
     numbers: [3, 5, 8, 10]
   },
   {
-    prefix: "Double-exhale breath",
+    prefix: "Double-inhale breath",
+    families: ["mindfulness", "emergency", "anti-relapse", "quick-reset"],
     category: "breathing",
     intensity: "calm",
     icon: "Waves",
     durationSec: 90,
     contexts: ["stressed", "high-urge"],
     tags: ["breath", "physiological-sigh", "fast"],
-    why: "The physiological sigh is the fastest known way to lower stress in under a minute.",
+    why: "Optional breathing gives you a quiet activity to focus on. Keep a comfortable pace, skip any holds or counting, and switch resets if needed. No particular feeling or urge change is guaranteed.",
     steps: [
       "Inhale through the nose.",
-      "Take a second sharp inhale on top.",
+      "A second gentle inhale is optional; never force it.",
       "Exhale slowly and fully through the mouth.",
-      "Repeat the double-inhale, long-exhale."
+      "Keep breathing gently; skip holds or counting, or choose another reset."
     ],
     numbers: [3, 5, 7, 10]
   },
   {
     prefix: "Alternate nostril breath",
+    families: ["mindfulness", "quick-reset"],
     category: "breathing",
     intensity: "calm",
     icon: "Waves",
     durationSec: 240,
     contexts: ["calm", "stressed"],
     tags: ["breath", "balance", "ancient"],
-    why: "Alternating sides quiets the noise in your head by giving the brain a balanced rhythm.",
+    why: "Optional breathing gives you a quiet activity to focus on. Keep a comfortable pace, skip any holds or counting, and switch resets if needed. No particular feeling or urge change is guaranteed.",
     steps: [
       "Use right thumb to close right nostril.",
       "Inhale slowly through the left.",
       "Switch — close left, exhale right.",
-      "Inhale right, switch, exhale left. Continue."
+      "Keep breathing gently; skip holds or counting, or choose another reset."
     ],
     numbers: [3, 5, 7, 10]
   },
   {
     prefix: "Belly breathing",
+    families: ["mindfulness", "social", "quick-reset"],
     category: "breathing",
     intensity: "calm",
     icon: "Waves",
     durationSec: 180,
     contexts: ["any"],
     tags: ["breath", "grounding"],
-    why: "Diaphragmatic breathing physically signals safety and stops the shallow chest cycle.",
+    why: "Optional breathing gives you a quiet activity to focus on. Keep a comfortable pace, skip any holds or counting, and switch resets if needed. No particular feeling or urge change is guaranteed.",
     steps: [
       "Place one hand on chest, one on belly.",
       "Inhale so only the belly hand rises.",
       "Exhale gently and feel the belly fall.",
-      "Keep chest hand still throughout."
+      "Keep breathing gently; skip holds or counting, or choose another reset."
     ],
     numbers: [3, 5, 8, 10]
   },
   {
     prefix: "Lion's breath",
+    families: ["mindfulness", "emergency", "anti-relapse", "quick-reset"],
     category: "breathing",
     intensity: "medium",
     icon: "Waves",
     durationSec: 60,
     contexts: ["bored", "high-urge"],
     tags: ["breath", "release", "playful"],
-    why: "Forceful exhalation breaks the trance state and feels strangely energizing.",
+    why: "Optional breathing gives you a quiet activity to focus on. Keep a comfortable pace, skip any holds or counting, and switch resets if needed. No particular feeling or urge change is guaranteed.",
     steps: [
       "Inhale deeply through the nose.",
       "Open mouth wide, stick out tongue.",
-      "Exhale forcefully with a 'haaa' sound.",
-      "Repeat without judgment."
+      "Exhale gently with an optional quiet sound.",
+      "Keep breathing gently; skip holds or counting, or choose another reset."
     ],
     numbers: [3, 5, 7]
   },
   {
     prefix: "Counted exhale",
+    families: ["mindfulness", "late-night", "quick-reset"],
     category: "breathing",
     intensity: "calm",
     icon: "Waves",
     durationSec: 180,
     contexts: ["late-night", "calm"],
     tags: ["breath", "sleep"],
-    why: "Longer exhales than inhales tip your nervous system into rest mode.",
+    why: "Optional breathing gives you a quiet activity to focus on. Keep a comfortable pace, skip any holds or counting, and switch resets if needed. No particular feeling or urge change is guaranteed.",
     steps: [
       "Inhale for 4 counts.",
       "Exhale slowly for 6 counts.",
-      "Add 1 count to exhale every minute.",
-      "Stop when exhale reaches 10 counts."
+      "Let your breath set a comfortable rhythm.",
+      "Keep breathing gently; skip holds or counting, or choose another reset."
     ],
     numbers: [3, 5, 7]
   },
   {
     prefix: "Wim Hof rounds",
+    displayTitle: "Comfortable breathing pause",
+    families: ["mindfulness", "productivity", "emergency", "anti-relapse", "quick-reset"],
     category: "breathing",
     intensity: "strong",
     icon: "Waves",
     durationSec: 600,
     contexts: ["bored", "calm"],
     tags: ["breath", "energy", "advanced"],
-    why: "Cycling deep breaths floods the body with oxygen and creates a clean, focused state.",
+    why: "Optional breathing gives you a quiet activity to focus on. Keep a comfortable pace, skip any holds or counting, and switch resets if needed. No particular feeling or urge change is guaranteed.",
     steps: [
-      "Take 30 full breaths in and out.",
-      "On the last exhale, hold without straining.",
-      "When the urge to breathe arrives, inhale fully.",
-      "Hold for 15 seconds. Repeat the round."
+      "Sit comfortably and breathe at your natural pace.",
+      "Keep breathing gently without a hold.",
+      "Let your breath set a comfortable rhythm.",
+      "Keep breathing gently; skip holds or counting, or choose another reset."
     ],
     numbers: [2, 3, 4, 5]
   },
   {
     prefix: "Resonant 6-breath",
+    families: ["mindfulness", "quick-reset"],
     category: "breathing",
     intensity: "calm",
     icon: "Waves",
     durationSec: 360,
     contexts: ["any"],
     tags: ["breath", "balance"],
-    why: "Six breaths a minute is the natural resonance of your heart and brain — a free reset.",
+    why: "Optional breathing gives you a quiet activity to focus on. Keep a comfortable pace, skip any holds or counting, and switch resets if needed. No particular feeling or urge change is guaranteed.",
     steps: [
       "Inhale through the nose for 5 seconds.",
       "Exhale through the nose for 5 seconds.",
       "Aim for six full cycles per minute.",
-      "Continue at this exact tempo."
+      "Keep breathing gently; skip holds or counting, or choose another reset."
     ],
     numbers: [3, 5, 8, 10]
   },
@@ -571,13 +601,14 @@ const SEEDS: SeedDef[] = [
   // ──────── REFLECTION (220+) ───────────────────────────────────────────────
   {
     prefix: "Write three reasons you quit",
+    families: ["mindfulness", "anti-relapse", "quick-reset"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 180,
     contexts: ["any"],
     tags: ["reflection", "identity", "writing"],
-    why: "Reconnecting to your reasons makes the urge feel small compared to what you are protecting.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Open a notes app or paper.",
       "Write the date and the time.",
@@ -588,13 +619,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Letter to future you",
+    families: ["mindfulness", "anti-relapse", "late-night"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 300,
     contexts: ["calm", "late-night"],
     tags: ["reflection", "identity", "writing"],
-    why: "Speaking to your future self shifts you out of immediate-urge mode into a longer view.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Write 'Dear future me…'",
       "Describe the life you are building.",
@@ -604,13 +636,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Urge journal entry",
+    families: ["mindfulness", "emergency", "anti-relapse"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 240,
     contexts: ["high-urge"],
     tags: ["reflection", "data", "self-aware"],
-    why: "Naming the trigger gives the urge a shape, and shaped things lose mystery and power.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "What did I do just before this urge?",
       "Where do I feel it in my body?",
@@ -620,13 +653,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Gratitude list",
+    families: ["mindfulness", "anti-relapse", "quick-reset"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 180,
     contexts: ["calm", "lonely"],
     tags: ["reflection", "gratitude", "mood"],
-    why: "Gratitude rewires the reward system to notice what is already good, which the urge ignores.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "List 3 specific things, not generic ones.",
       "Add why each one matters to you.",
@@ -637,13 +671,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Values check",
+    families: ["mindfulness", "anti-relapse", "quick-reset"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 180,
     contexts: ["any"],
     tags: ["reflection", "identity"],
-    why: "When values and behavior align, urges naturally lose their grip.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Pick the value most under attack right now.",
       "Write one action that honors it today.",
@@ -653,13 +688,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Costs vs. cravings list",
+    families: ["mindfulness", "emergency", "anti-relapse"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 240,
     contexts: ["high-urge", "calm"],
     tags: ["reflection", "decision"],
-    why: "Cost-benefit on paper makes the dopamine math obvious in seconds.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Draw two columns: Cost / Reward.",
       "Be brutally honest in both.",
@@ -669,13 +705,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "5-year review",
+    families: ["mindfulness", "anti-relapse"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 300,
     contexts: ["calm", "stressed"],
     tags: ["reflection", "future"],
-    why: "Zooming out collapses present urgency and reconnects you to direction.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Picture yourself five years free of this.",
       "Describe the morning routine.",
@@ -685,13 +722,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Trigger pattern map",
+    families: ["mindfulness", "productivity", "anti-relapse"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 240,
     contexts: ["calm"],
     tags: ["reflection", "data"],
-    why: "Mapping triggers exposes the loop so the next attempt is easier to interrupt.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "List your last three slips by time of day.",
       "Note the feeling right before each.",
@@ -701,13 +739,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Win review",
+    families: ["mindfulness", "quick-reset"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 120,
     contexts: ["lonely", "calm"],
     tags: ["reflection", "self-esteem"],
-    why: "Counting wins restores agency, which is what addiction quietly steals.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "List 3 wins from this week.",
       "Big or small, no judging.",
@@ -717,13 +756,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Compassion letter",
+    families: ["mindfulness", "social", "anti-relapse"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 240,
     contexts: ["lonely", "stressed"],
     tags: ["reflection", "self-compassion"],
-    why: "Writing kindly to yourself short-circuits shame, which is the strongest relapse fuel.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Imagine a friend in your shoes.",
       "Write what you would tell them.",
@@ -733,13 +773,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Read your why",
+    families: ["mindfulness", "emergency", "anti-relapse", "quick-reset"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 90,
     contexts: ["high-urge"],
     tags: ["reflection", "identity", "fast"],
-    why: "A quick read of your own words pulls you back into your own story.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Open your saved reasons note.",
       "Read each line out loud.",
@@ -749,13 +790,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Future self interview",
+    families: ["mindfulness", "productivity"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 300,
     contexts: ["calm"],
     tags: ["reflection", "imagery"],
-    why: "Interviewing your future self builds the identity the present is still catching up to.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Imagine a future you 90 days clean.",
       "Ask: what advice would you give now?",
@@ -765,13 +807,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Body scan write-up",
+    families: ["mindfulness", "anti-relapse"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 240,
     contexts: ["any"],
     tags: ["reflection", "somatic"],
-    why: "Translating sensations into words takes craving out of autopilot.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Close your eyes and scan toes to head.",
       "Write where you feel tight or loose.",
@@ -783,6 +826,7 @@ const SEEDS: SeedDef[] = [
   // ──────── CONNECTION (160+) ───────────────────────────────────────────────
   {
     prefix: "Text accountability partner",
+    families: ["social", "emergency", "anti-relapse", "quick-reset"],
     category: "connection",
     intensity: "medium",
     icon: "MessageCircleHeart",
@@ -790,7 +834,7 @@ const SEEDS: SeedDef[] = [
     premium: false,
     contexts: ["high-urge", "lonely"],
     tags: ["connection", "accountability", "honesty"],
-    why: "Saying it out loud to a real person breaks secrecy, which is where relapse hides.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Open your accountability contact.",
       "Send: 'I need a reset moment.'",
@@ -800,13 +844,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Call a friend",
+    families: ["social"],
     category: "connection",
     intensity: "medium",
     icon: "MessageCircleHeart",
     durationSec: 300,
     contexts: ["lonely", "stressed"],
     tags: ["connection", "voice"],
-    why: "Human voice in real time is the fastest known dopamine substitute for healthy connection.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Pick the warmest person on your list.",
       "Call and say you just need a minute.",
@@ -816,13 +861,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Voice note to mentor",
+    families: ["social", "quick-reset"],
     category: "connection",
     intensity: "medium",
     icon: "MessageCircleHeart",
     durationSec: 180,
     contexts: ["calm", "stressed"],
     tags: ["connection", "honesty"],
-    why: "Speaking your truth into a voice note is honesty without the friction of typing.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Pick someone whose opinion you respect.",
       "Record a 60-second voice message.",
@@ -832,29 +878,31 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Hug someone in your house",
+    families: ["social", "anti-relapse", "quick-reset"],
     category: "connection",
     intensity: "calm",
     icon: "MessageCircleHeart",
     durationSec: 60,
     contexts: ["lonely", "calm"],
     tags: ["connection", "touch", "warmth"],
-    why: "20 seconds of safe touch releases oxytocin, which directly competes with the urge cycle.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Find a person, pet, or trusted friend nearby.",
       "Offer a real, full hug.",
-      "Hold for at least 20 seconds.",
+      "Only hug if both people want to; stop whenever either wishes.",
       "Let the body register the warmth."
     ]
   },
   {
     prefix: "Compliment three people",
+    families: ["mindfulness", "productivity", "social"],
     category: "connection",
     intensity: "calm",
     icon: "MessageCircleHeart",
     durationSec: 240,
     contexts: ["lonely", "bored"],
     tags: ["connection", "outward"],
-    why: "Outward focus collapses self-obsession, which is the fuel of compulsive cycles.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Pick three people you appreciate.",
       "Send each a specific, real compliment.",
@@ -864,13 +912,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Recovery community check-in",
+    families: ["social", "emergency", "anti-relapse"],
     category: "connection",
     intensity: "calm",
     icon: "MessageCircleHeart",
     durationSec: 240,
     contexts: ["lonely", "high-urge"],
     tags: ["connection", "community"],
-    why: "Being seen by people on the same path is medicine that doesn't come in a pill.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Open your recovery group or forum.",
       "Post or share where you are right now.",
@@ -880,13 +929,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Ask for prayer or wishes",
+    families: ["social", "quick-reset"],
     category: "connection",
     intensity: "calm",
     icon: "MessageCircleHeart",
     durationSec: 120,
     contexts: ["stressed", "lonely"],
     tags: ["connection", "faith"],
-    why: "Asking for support trains you out of going it alone, which is what willpower hates.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Pick one trusted person.",
       "Tell them today is hard.",
@@ -896,13 +946,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Send appreciation",
+    families: ["mindfulness", "social", "quick-reset"],
     category: "connection",
     intensity: "calm",
     icon: "MessageCircleHeart",
     durationSec: 180,
     contexts: ["calm", "lonely"],
     tags: ["connection", "gratitude"],
-    why: "Telling someone they matter is one of the highest-leverage mood shifts you can do for free.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Pick a friend, parent, or mentor.",
       "Write what they have done for you.",
@@ -914,13 +965,14 @@ const SEEDS: SeedDef[] = [
   // ── More reflection seeds ─────────────────────────────────────────────────
   {
     prefix: "List things you've already overcome",
+    families: ["mindfulness"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 240,
     contexts: ["lonely", "stressed", "calm"],
     tags: ["reflection", "evidence", "self-esteem"],
-    why: "Evidence of past survival reminds your brain that this moment is also survivable.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "List 5 hard things you've already gotten through.",
       "Add what they say about your resilience.",
@@ -931,13 +983,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Identify the lie",
+    families: ["mindfulness", "emergency", "anti-relapse", "quick-reset"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 180,
     contexts: ["high-urge"],
     tags: ["reflection", "cognitive"],
-    why: "Every relapse rides on a lie — naming it strips its power in real time.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Write the thought driving the urge.",
       "Underneath, write the actual truth.",
@@ -947,13 +1000,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Worst-case rehearsal",
+    families: ["mindfulness", "emergency", "anti-relapse"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 240,
     contexts: ["high-urge", "calm"],
     tags: ["reflection", "consequences"],
-    why: "Playing the relapse all the way to the morning after collapses its appeal.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Picture giving in right now in detail.",
       "Picture how you'll feel in 10 minutes.",
@@ -963,13 +1017,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Goal alignment check",
+    families: ["mindfulness", "quick-reset"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 180,
     contexts: ["calm"],
     tags: ["reflection", "goal"],
-    why: "Re-reading goals reminds the present moment what it is actually working toward.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Open your goals list or note.",
       "Read each goal slowly.",
@@ -979,13 +1034,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Letter to your inner child",
+    families: ["mindfulness", "anti-relapse"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 300,
     contexts: ["lonely", "stressed"],
     tags: ["reflection", "self-compassion"],
-    why: "Speaking kindly to your younger self reroutes the shame loop that fuels relapse.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Picture yourself at age 7.",
       "Write what you wish someone had told you.",
@@ -995,13 +1051,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Dream journal entry",
+    families: ["mindfulness", "anti-relapse", "late-night"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 240,
     contexts: ["late-night", "calm"],
     tags: ["reflection", "vision"],
-    why: "Writing your dreams in detail makes them more real than the urge that wants to bury them.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Describe one specific future scene.",
       "Add what you see, hear, and feel.",
@@ -1011,13 +1068,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Mood timeline",
+    families: ["mindfulness", "productivity", "anti-relapse", "late-night", "quick-reset"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 180,
     contexts: ["calm"],
     tags: ["reflection", "self-aware"],
-    why: "Mapping your mood across the day reveals the cracks where urges sneak in.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Draw 3 columns: morning, afternoon, night.",
       "Rate your mood in each from 1-10.",
@@ -1027,13 +1085,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Re-frame this urge as a signal",
+    families: ["mindfulness", "social", "emergency", "anti-relapse", "quick-reset"],
     category: "reflection",
     intensity: "calm",
     icon: "Brain",
     durationSec: 120,
     contexts: ["high-urge"],
     tags: ["reflection", "cognitive"],
-    why: "Urges are messages, not commands — interpreting them removes the obligation.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "What unmet need is hiding behind this urge?",
       "Write it in one sentence.",
@@ -1043,13 +1102,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Three small wins log",
+    families: ["mindfulness", "quick-reset"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 120,
     contexts: ["lonely", "stressed"],
     tags: ["reflection", "evidence"],
-    why: "Counting small wins beats the loud lie that you are not doing anything.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Write three wins from this morning.",
       "Make them concrete and small.",
@@ -1059,13 +1119,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Write a permission slip",
+    families: ["mindfulness", "anti-relapse", "quick-reset"],
     category: "reflection",
     intensity: "calm",
     icon: "NotebookPen",
     durationSec: 120,
     contexts: ["stressed", "lonely"],
     tags: ["reflection", "release"],
-    why: "Giving yourself explicit permission to rest cuts the inner pressure that triggers escape.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Write: 'I give myself permission to ___.'",
       "Fill in the blank honestly.",
@@ -1077,13 +1138,14 @@ const SEEDS: SeedDef[] = [
   // ── More connection seeds ─────────────────────────────────────────────────
   {
     prefix: "Send a meme that means something",
+    families: ["mindfulness", "social", "quick-reset"],
     category: "connection",
     intensity: "calm",
     icon: "MessageCircleHeart",
     durationSec: 120,
     contexts: ["lonely", "bored"],
     tags: ["connection", "light"],
-    why: "Low-pressure outreach keeps the social muscle warm without requiring vulnerability.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Pick a friend you haven't talked to in weeks.",
       "Send one meme or photo that fits them.",
@@ -1093,13 +1155,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Schedule a coffee or walk with a friend",
+    families: ["social"],
     category: "connection",
     intensity: "medium",
     icon: "MessageCircleHeart",
     durationSec: 240,
     contexts: ["lonely"],
     tags: ["connection", "future-self"],
-    why: "Future-you needs proof that connection is on the calendar — make it real today.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Pick one safe person.",
       "Suggest a specific day and time.",
@@ -1109,13 +1172,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Voice memo of where you are",
+    families: ["social", "emergency", "anti-relapse", "quick-reset"],
     category: "connection",
     intensity: "calm",
     icon: "MessageCircleHeart",
     durationSec: 180,
     contexts: ["high-urge", "lonely"],
     tags: ["connection", "honesty"],
-    why: "Sharing the present moment with someone real shrinks the secrecy that feeds the urge.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Pick a trusted contact.",
       "Record a 60-second honest update.",
@@ -1125,13 +1189,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Ask a question, not a favor",
+    families: ["social", "anti-relapse", "quick-reset"],
     category: "connection",
     intensity: "calm",
     icon: "MessageCircleHeart",
     durationSec: 120,
     contexts: ["lonely", "calm"],
     tags: ["connection", "outward"],
-    why: "Asking a real question makes you curious, which is the opposite chemical of craving.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Pick someone whose life interests you.",
       "Ask one thoughtful question.",
@@ -1141,13 +1206,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Recovery accountability check-in",
+    families: ["social", "emergency", "anti-relapse", "quick-reset"],
     category: "connection",
     intensity: "medium",
     icon: "MessageCircleHeart",
     durationSec: 180,
     contexts: ["high-urge", "calm"],
     tags: ["connection", "accountability"],
-    why: "Regular check-ins build a structure stronger than willpower in any single moment.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Open your accountability chat.",
       "Send your current streak day.",
@@ -1157,13 +1223,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Make plans with family this week",
+    families: ["productivity", "social", "anti-relapse", "quick-reset"],
     category: "connection",
     intensity: "calm",
     icon: "MessageCircleHeart",
     durationSec: 180,
     contexts: ["lonely", "calm"],
     tags: ["connection", "family"],
-    why: "Family connection is a slow-acting medicine that quietly outlasts most urges.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Text a parent, sibling, or cousin.",
       "Suggest a meal or a call.",
@@ -1173,13 +1240,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Compliment a stranger genuinely",
+    families: ["social", "quick-reset"],
     category: "connection",
     intensity: "calm",
     icon: "MessageCircleHeart",
     durationSec: 60,
     contexts: ["bored", "lonely"],
     tags: ["connection", "outward"],
-    why: "Giving a moment of warmth to a stranger floods the same system addiction tries to hijack.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Notice one specific thing about someone.",
       "Tell them in a low-stakes way.",
@@ -1189,29 +1257,31 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Pet or animal time",
+    families: ["social", "anti-relapse"],
     category: "connection",
     intensity: "calm",
     icon: "MessageCircleHeart",
     durationSec: 300,
     contexts: ["lonely", "stressed"],
     tags: ["connection", "touch"],
-    why: "Bonding with an animal triggers the same oxytocin release as a deep human hug.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Find your pet or a friend's.",
       "Sit with them for 5 full minutes.",
       "No phone, just attention.",
-      "Notice your nervous system settle."
+      "Notice how you feel without expecting a change."
     ]
   },
   {
     prefix: "Forgive yourself out loud",
+    families: ["social", "anti-relapse", "quick-reset"],
     category: "connection",
     intensity: "calm",
     icon: "MessageCircleHeart",
     durationSec: 120,
     contexts: ["any"],
     tags: ["connection", "self-compassion"],
-    why: "Speaking forgiveness to yourself dissolves the shame that powers the next relapse.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Stand in front of a mirror.",
       "Say: 'I forgive you for ___.'",
@@ -1221,6 +1291,7 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Group sponsor message",
+    families: ["social", "emergency", "anti-relapse", "quick-reset"],
     category: "connection",
     intensity: "medium",
     icon: "MessageCircleHeart",
@@ -1228,7 +1299,7 @@ const SEEDS: SeedDef[] = [
     contexts: ["high-urge"],
     tags: ["connection", "community", "premium"],
     premium: true,
-    why: "Sponsors exist for exactly this moment — using them strengthens the whole network.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Open your sponsor or group thread.",
       "Send: 'Need a check-in. Hard moment.'",
@@ -1238,13 +1309,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Send love to someone hurting",
+    families: ["social", "anti-relapse", "quick-reset"],
     category: "connection",
     intensity: "calm",
     icon: "MessageCircleHeart",
     durationSec: 180,
     contexts: ["lonely", "stressed"],
     tags: ["connection", "outward"],
-    why: "Caring outward is the fastest way to forget the inward storm of an urge.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Think of someone going through something hard.",
       "Send a message that fits them.",
@@ -1256,13 +1328,14 @@ const SEEDS: SeedDef[] = [
   // ──────── RESET / ENVIRONMENT (240+) ──────────────────────────────────────
   {
     prefix: "Drink full glass of water",
+    families: ["mindfulness", "productivity", "emergency", "anti-relapse", "quick-reset"],
     category: "reset",
     intensity: "calm",
     icon: "Activity",
     durationSec: 60,
     contexts: ["any"],
     tags: ["reset", "hydration", "fast"],
-    why: "Mild dehydration mimics craving signals — water alone often dissolves the urge.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Pour a full glass of cold water.",
       "Drink it slowly, fully present.",
@@ -1272,29 +1345,27 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Splash cold water on face",
+    displayTitle: "Comfortable water pause",
+    families: ["productivity", "emergency", "anti-relapse", "late-night", "quick-reset"],
     category: "reset",
     intensity: "calm",
     icon: "Snowflake",
     durationSec: 60,
     contexts: ["high-urge", "late-night"],
     tags: ["reset", "cold", "fast"],
-    why: "Cold on the face triggers the dive reflex, which instantly drops heart rate and craving.",
-    steps: [
-      "Go to the sink.",
-      "Cup cold water in both hands.",
-      "Splash your face 5 times.",
-      "Pat dry and look up."
-    ]
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
+    steps: ["Choose water at a comfortable temperature, if you want.", "Gently rinse your hands or face; no immersion or breath hold.", "Pat dry and sit comfortably.", "Stop or choose another reset whenever needed."]
   },
   {
     prefix: "Switch rooms",
+    families: ["productivity", "emergency", "anti-relapse", "quick-reset"],
     category: "reset",
     intensity: "calm",
     icon: "Activity",
     durationSec: 60,
     contexts: ["high-urge", "bored"],
     tags: ["reset", "environment"],
-    why: "Your brain attaches habits to places — moving rooms breaks the cue chain.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Stand up immediately.",
       "Walk to a different room.",
@@ -1304,13 +1375,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Phone in another room",
+    families: ["productivity", "emergency", "anti-relapse", "late-night", "quick-reset"],
     category: "reset",
     intensity: "medium",
     icon: "Activity",
     durationSec: 60,
     contexts: ["high-urge", "late-night"],
     tags: ["reset", "friction"],
-    why: "Distance from the device is the single highest-yield intervention available to you.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Take your phone in hand.",
       "Walk it to another room or drawer.",
@@ -1320,13 +1392,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Make the bed",
+    families: ["productivity", "anti-relapse", "late-night", "quick-reset"],
     category: "reset",
     intensity: "calm",
     icon: "Activity",
     durationSec: 180,
     contexts: ["bored", "calm"],
     tags: ["reset", "small-win"],
-    why: "One clean micro-win builds enough momentum to outlast the urge.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Strip the sheets straight.",
       "Tuck the corners properly.",
@@ -1336,13 +1409,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Tidy your space",
+    families: ["outdoors", "mindfulness", "productivity", "quick-reset"],
     category: "reset",
     intensity: "calm",
     icon: "Activity",
     durationSec: 300,
     contexts: ["bored", "calm"],
     tags: ["reset", "small-win", "environment"],
-    why: "A clean space is a calm mind — restoring order outside resets order inside.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Pick one surface or corner.",
       "Remove everything that doesn't belong.",
@@ -1353,13 +1427,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Take out the trash",
+    families: ["mindfulness", "productivity", "quick-reset"],
     category: "reset",
     intensity: "calm",
     icon: "Activity",
     durationSec: 180,
     contexts: ["bored"],
     tags: ["reset", "task"],
-    why: "Small completed tasks build the identity of a person who follows through.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Grab the bin liner.",
       "Walk to the dumpster or curb.",
@@ -1369,29 +1444,31 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Eat a real snack",
+    families: ["productivity", "anti-relapse", "late-night", "quick-reset"],
     category: "reset",
     intensity: "calm",
     icon: "Activity",
     durationSec: 240,
     contexts: ["late-night", "bored"],
     tags: ["reset", "food", "stable"],
-    why: "Blood sugar crashes are silent triggers — food is sometimes the entire answer.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Pick protein + something crunchy.",
-      "No sugar bombs.",
+      "Choose something you enjoy and can comfortably eat.",
       "Eat slowly, no screen.",
       "Drink water alongside."
     ]
   },
   {
     prefix: "Brush teeth",
+    families: ["productivity", "late-night", "quick-reset"],
     category: "reset",
     intensity: "calm",
     icon: "Activity",
     durationSec: 120,
     contexts: ["late-night", "any"],
     tags: ["reset", "anchor"],
-    why: "A small grooming act flips the brain from indulgence mode into care mode.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Walk to the sink.",
       "Brush slowly for two full minutes.",
@@ -1401,29 +1478,31 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Open a window",
+    families: ["outdoors", "mindfulness", "productivity", "late-night", "quick-reset"],
     category: "reset",
     intensity: "calm",
     icon: "Activity",
     durationSec: 60,
     contexts: ["bored", "late-night"],
     tags: ["reset", "environment"],
-    why: "Fresh air rapidly resets state — the body responds to oxygen before thoughts catch up.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Walk to the nearest window.",
       "Open it fully.",
-      "Take 5 deep breaths of outside air.",
+      "Breathe gently at a comfortable pace.",
       "Notice the sound, smell, and temperature."
     ]
   },
   {
     prefix: "Stand outside for two minutes",
+    families: ["outdoors", "productivity", "anti-relapse", "quick-reset"],
     category: "reset",
     intensity: "calm",
     icon: "Footprints",
     durationSec: 120,
     contexts: ["bored", "stressed"],
     tags: ["reset", "outside", "fast"],
-    why: "Even brief outside time changes the neurochemistry of an urge attempt.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Step outside, no phone.",
       "Stand still and look up at the sky.",
@@ -1433,13 +1512,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Listen to a strong song",
+    families: ["productivity", "anti-relapse", "quick-reset"],
     category: "reset",
     intensity: "medium",
     icon: "Activity",
     durationSec: 240,
     contexts: ["bored", "lonely"],
     tags: ["reset", "music"],
-    why: "Music hijacks emotion before the urge can fully form a script.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Open your 'strong me' playlist.",
       "Pick the most charged track.",
@@ -1449,30 +1529,32 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Read for 10 minutes",
+    families: ["mindfulness", "productivity", "late-night", "quick-reset"],
     category: "reset",
     intensity: "calm",
     icon: "BookOpen",
     durationSec: 600,
     contexts: ["calm", "late-night"],
     tags: ["reset", "focus"],
-    why: "Reading repairs the attention span that compulsive scrolling slowly destroys.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Pick a book you already love.",
       "Open to any page.",
       "Read without checking the time.",
-      "Stop only when the timer rings."
+      "Stop when comfortable; the timer is a guide."
     ],
     numbers: [5, 10, 15, 20, 30]
   },
   {
     prefix: "Cook something simple",
+    families: ["productivity", "anti-relapse", "quick-reset"],
     category: "reset",
     intensity: "medium",
     icon: "Activity",
     durationSec: 600,
     contexts: ["bored", "calm"],
     tags: ["reset", "skill"],
-    why: "Cooking is an immersive task — the urge cannot survive a recipe.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Pick the easiest thing in the fridge.",
       "Wash hands.",
@@ -1482,13 +1564,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Plant or watering moment",
+    families: ["outdoors", "productivity", "social", "quick-reset"],
     category: "reset",
     intensity: "calm",
     icon: "Activity",
     durationSec: 120,
     contexts: ["calm", "lonely"],
     tags: ["reset", "care"],
-    why: "Caring for a living thing borrows you out of self-orbit for free.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Find a houseplant or tree outside.",
       "Water it slowly.",
@@ -1498,13 +1581,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Tidy your digital space",
+    families: ["productivity", "quick-reset"],
     category: "reset",
     intensity: "calm",
     icon: "Activity",
     durationSec: 300,
     contexts: ["bored"],
     tags: ["reset", "digital"],
-    why: "Cleaning the digital surface lowers the daily friction that pushes you toward escape.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Open your home screen.",
       "Delete or hide one app you don't love.",
@@ -1514,29 +1598,27 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Cold face dunk",
+    displayTitle: "Comfortable water pause",
+    families: ["mindfulness", "productivity", "emergency", "anti-relapse", "quick-reset"],
     category: "reset",
     intensity: "strong",
     icon: "Snowflake",
     durationSec: 60,
     contexts: ["high-urge"],
     tags: ["reset", "cold"],
-    why: "Cold water on the face is the fastest physiological reset known.",
-    steps: [
-      "Fill a bowl with cold water.",
-      "Submerge your face up to your temples.",
-      "Hold for 15-30 seconds.",
-      "Lift, breathe, repeat once."
-    ]
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
+    steps: ["Choose water at a comfortable temperature, if you want.", "Gently rinse your hands or face; no immersion or breath hold.", "Pat dry and sit comfortably.", "Stop or choose another reset whenever needed."]
   },
   {
     prefix: "Stand and stretch tall",
+    families: ["mindfulness", "productivity", "quick-reset"],
     category: "reset",
     intensity: "calm",
     icon: "Activity",
     durationSec: 60,
     contexts: ["any"],
     tags: ["reset", "posture"],
-    why: "Posture changes mood in seconds — open up, breath opens with it.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Stand up immediately.",
       "Reach both arms overhead.",
@@ -1546,13 +1628,14 @@ const SEEDS: SeedDef[] = [
   },
   {
     prefix: "Set a phone bedtime",
+    families: ["outdoors", "productivity", "anti-relapse", "late-night", "quick-reset"],
     category: "reset",
     intensity: "calm",
     icon: "Moon",
     durationSec: 120,
     contexts: ["late-night"],
     tags: ["reset", "boundary"],
-    why: "A guarded bedtime is a quiet revolution — most relapses live after lights-out.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Open Settings → Screen Time.",
       "Set Downtime to start tonight.",
@@ -1634,16 +1717,7 @@ function buildTemplatesFromSeed(seed: SeedDef): ChallengeTemplate[] {
   const base: Omit<ChallengeTemplate, "id" | "title" | "steps"> = {
     category: seed.category,
     durationSec: seed.durationSec,
-    families: inferChallengeEngineFamilies({
-      category: seed.category,
-      contexts: seed.contexts,
-      durationSec: seed.durationSec,
-      intensity: seed.intensity,
-      tags: seed.tags,
-      why: seed.why,
-      title: seed.prefix,
-      steps: seed.steps
-    }),
+    families: seed.families,
     intensity: seed.intensity,
     premium: seed.premium ?? false,
     icon: seed.icon,
@@ -1656,7 +1730,7 @@ function buildTemplatesFromSeed(seed: SeedDef): ChallengeTemplate[] {
   out.push({
     ...base,
     id: makeId(seed, "base"),
-    title: seed.prefix,
+    title: seed.displayTitle ?? seed.prefix,
     steps: clampSteps(seed.steps)
   });
 
@@ -1673,20 +1747,24 @@ function buildTemplatesFromSeed(seed: SeedDef): ChallengeTemplate[] {
 
       if (isCycles) {
         // n = number of cycles/rounds, each ~10 seconds typical.
-        title = `${seed.prefix} · ${n} rounds`;
+        title = `${seed.displayTitle ?? seed.prefix} · ${n} rounds`;
         durationSec = Math.min(900, Math.max(60, n * 30));
       } else if (isWalkOrRun) {
         // n = minutes outside / running.
-        title = `${seed.prefix} · ${n} min`;
+        title = `${seed.displayTitle ?? seed.prefix} · ${n} min`;
         durationSec = Math.min(900, Math.max(60, n * 60));
       } else if (isHold) {
         // n = seconds to hold.
-        title = `${seed.prefix} · ${n}s`;
+        title = `${seed.displayTitle ?? seed.prefix} · ${n}s`;
         durationSec = Math.min(900, Math.max(30, n));
       } else {
         // n = reps for strength/conditioning.
-        title = `${n} ${seed.prefix.toLowerCase()}`;
+        title = `${n} ${(seed.displayTitle ?? seed.prefix).toLowerCase()}`;
         durationSec = Math.min(900, Math.max(seed.durationSec, Math.round(seed.durationSec * Math.max(1, n / 10))));
+        if (seed.displayTitle) {
+          const activity = seed.displayTitle;
+          title = `${activity} · ${durationSec} seconds`;
+        }
       }
 
       out.push({
@@ -1717,10 +1795,11 @@ function buildTemplatesFromSeed(seed: SeedDef): ChallengeTemplate[] {
 // ── Curated extras (handcrafted, not seed-derived) ───────────────────────────
 // These cover edge moods and specific times that the seeds don't naturally fit.
 
-const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
+const CURATED_EXTRAS: Array<ChallengeTemplate> = [
   {
     id: "extra-shower-cold-warm",
-    title: "Shower contrast (warm to cold)",
+    families: ["physical", "mindfulness", "emergency", "anti-relapse", "late-night"],
+    title: "Seated device movement pause",
     category: "physical",
     durationSec: 300,
     intensity: "strong",
@@ -1728,16 +1807,12 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "Snowflake",
     contexts: ["high-urge", "late-night"],
     tags: ["physical", "cold", "reset"],
-    why: "Switching hot to cold scrambles autopilot and resets the autonomic nervous system.",
-    steps: [
-      "Shower warm for two minutes.",
-      "Switch the water to cold.",
-      "Stay under for 30 to 60 seconds.",
-      "End cold and breathe out long."
-    ]
+    why: "Optional seated device movement gives you a quiet pause. Move your device only if comfortable, or choose another reset. Motion evidence records device movement, not water exposure, shoulder exercise, form or repetitions.",
+    steps: ["Sit comfortably with your device, away from water.", "Gently move the device if comfortable.", "Pause or choose another reset if device movement is uncomfortable.", "Water at a comfortable temperature is optional; keep your device dry."]
   },
   {
     id: "extra-no-screen-walk",
+    families: ["physical", "productivity", "late-night"],
     title: "Phoneless walk in the building",
     category: "physical",
     durationSec: 600,
@@ -1746,16 +1821,17 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "Footprints",
     contexts: ["bored", "late-night"],
     tags: ["physical", "no-phone", "reset"],
-    why: "Walking without the phone in hand teaches the body that boredom is survivable.",
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
     steps: [
       "Leave the phone in the room.",
       "Walk corridors, stairs, or the block.",
       "Pay attention to your feet hitting the floor.",
-      "Return only when the timer ends."
+      "Return when comfortable; stop or switch resets whenever needed."
     ]
   },
   {
     id: "extra-night-shutdown",
+    families: ["outdoors", "mindfulness", "productivity", "anti-relapse", "late-night", "quick-reset"],
     title: "Night shutdown ritual",
     category: "reset",
     durationSec: 480,
@@ -1764,16 +1840,17 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "Moon",
     contexts: ["late-night"],
     tags: ["reset", "sleep", "anchor"],
-    why: "A defined nighttime routine forecloses the late-night decision tree where most slips happen.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Dim the lights in your room.",
       "Charge the phone outside the bedroom.",
       "Brush teeth and stretch for 2 minutes.",
-      "Get into bed and start 4-7-8 breath."
+      "Rest comfortably; gentle breathing or a quiet pause is optional."
     ]
   },
   {
     id: "extra-craving-surf",
+    families: ["mindfulness", "emergency", "anti-relapse", "quick-reset"],
     title: "Surf the craving like a wave",
     category: "breathing",
     durationSec: 300,
@@ -1782,16 +1859,17 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "Waves",
     contexts: ["high-urge"],
     tags: ["breath", "mindful"],
-    why: "Cravings rise and fall — observing without acting weakens the loop permanently.",
+    why: "Optional breathing gives you a quiet activity to focus on. Keep a comfortable pace, skip any holds or counting, and switch resets if needed. No particular feeling or urge change is guaranteed.",
     steps: [
       "Sit comfortably and close your eyes.",
       "Say silently: 'this is an urge'.",
       "Notice where it sits in the body.",
-      "Watch it rise, peak, and fade."
+      "Notice the urge without expecting it to fade on a schedule."
     ]
   },
   {
     id: "extra-gratitude-3-2-1",
+    families: ["mindfulness", "productivity", "quick-reset"],
     title: "3-2-1 gratitude ladder",
     category: "reflection",
     durationSec: 180,
@@ -1800,7 +1878,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "NotebookPen",
     contexts: ["lonely", "calm"],
     tags: ["reflection", "gratitude"],
-    why: "Specific gratitude rewires noticing — what you focus on is what your brain reinforces.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Write 3 things you have right now.",
       "Write 2 people you appreciate today.",
@@ -1810,6 +1888,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
   },
   {
     id: "extra-call-grandparent",
+    families: ["social"],
     title: "Call someone older than 60",
     category: "connection",
     durationSec: 600,
@@ -1818,7 +1897,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "MessageCircleHeart",
     contexts: ["lonely"],
     tags: ["connection", "warmth"],
-    why: "Calling an elder breaks isolation in a way that no screen can replicate.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
       "Pick a grandparent, aunt, or family friend.",
       "Call without an agenda.",
@@ -1828,6 +1907,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
   },
   {
     id: "extra-anti-shame-mantra",
+    families: ["mindfulness", "anti-relapse", "quick-reset"],
     title: "Anti-shame mantra round",
     category: "reflection",
     durationSec: 120,
@@ -1836,7 +1916,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "Brain",
     contexts: ["any"],
     tags: ["reflection", "self-talk"],
-    why: "Replacing the inner critic with a kind, accurate voice prevents the shame spiral.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Say: 'I am building, not failing.'",
       "Say: 'This urge is not who I am.'",
@@ -1846,6 +1926,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
   },
   {
     id: "extra-bookend-day",
+    families: ["mindfulness", "late-night", "quick-reset"],
     title: "Bookend your day with one promise",
     category: "reflection",
     durationSec: 180,
@@ -1854,7 +1935,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "NotebookPen",
     contexts: ["calm", "late-night"],
     tags: ["reflection", "structure"],
-    why: "Tiny promises kept create the identity that addiction is constantly trying to erase.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Write one specific promise for tomorrow.",
       "Keep it tiny — small wins compound.",
@@ -1864,6 +1945,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
   },
   {
     id: "extra-prayer-or-pause",
+    families: ["mindfulness", "anti-relapse", "quick-reset"],
     title: "Two-minute prayer or pause",
     category: "reflection",
     durationSec: 120,
@@ -1872,7 +1954,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "Brain",
     contexts: ["any"],
     tags: ["reflection", "faith", "silence"],
-    why: "A short reverent pause connects you to a frame larger than the urge.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Close your eyes wherever you are.",
       "Pray, meditate, or simply be silent.",
@@ -1882,6 +1964,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
   },
   {
     id: "extra-laughter-clip",
+    families: ["productivity", "quick-reset"],
     title: "Watch a 5-minute laugh clip",
     category: "reset",
     durationSec: 300,
@@ -1890,7 +1973,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "Activity",
     contexts: ["lonely", "stressed"],
     tags: ["reset", "humor"],
-    why: "Genuine laughter floods the system with the chemicals you were chasing — for free.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Open your saved comedy playlist.",
       "Watch exactly five minutes.",
@@ -1900,6 +1983,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
   },
   {
     id: "extra-bird-watch",
+    families: ["outdoors", "mindfulness", "productivity", "quick-reset"],
     title: "Watch the sky for 5 minutes",
     category: "reset",
     durationSec: 300,
@@ -1908,16 +1992,17 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "Activity",
     contexts: ["calm", "stressed"],
     tags: ["reset", "outside"],
-    why: "Looking at vastness re-anchors you to the world outside your screen.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Find a window or doorway.",
       "Look up and don't multitask.",
       "Track clouds or birds with your eyes.",
-      "Notice your breath slow naturally."
+      "Notice how you feel without expecting a change."
     ]
   },
   {
     id: "extra-meal-prep",
+    families: ["productivity", "late-night", "quick-reset"],
     title: "Plan tomorrow's meals",
     category: "reset",
     durationSec: 300,
@@ -1926,7 +2011,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "NotebookPen",
     contexts: ["bored", "late-night"],
     tags: ["reset", "control"],
-    why: "Planning food borrows agency back from autopilot mode.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "List breakfast, lunch, and dinner.",
       "Check the fridge for what you have.",
@@ -1936,6 +2021,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
   },
   {
     id: "extra-2-minute-rule",
+    families: ["productivity", "emergency", "anti-relapse", "quick-reset"],
     title: "2-minute productive sprint",
     category: "reset",
     durationSec: 120,
@@ -1944,16 +2030,17 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "Activity",
     contexts: ["bored", "high-urge"],
     tags: ["reset", "discipline"],
-    why: "Two minutes of meaningful work shows your brain you are bigger than this moment.",
+    why: "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
     steps: [
       "Pick one task you have avoided.",
       "Set a 2-minute timer.",
-      "Work without pause.",
+      "Work at a comfortable pace; pauses are welcome.",
       "Stop when it rings — or keep going if rolling."
     ]
   },
   {
     id: "extra-progress-photo",
+    families: ["mindfulness", "anti-relapse", "quick-reset"],
     title: "Look at your progress photo",
     category: "reflection",
     durationSec: 120,
@@ -1962,7 +2049,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "Activity",
     contexts: ["any"],
     tags: ["reflection", "evidence"],
-    why: "Visual proof of progress overrides the lie that nothing is changing.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Open your streak screen.",
       "Look at how far you have come.",
@@ -1972,6 +2059,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
   },
   {
     id: "premium-binaural-reset",
+    families: ["mindfulness", "productivity", "emergency", "anti-relapse", "quick-reset"],
     title: "Binaural beats focus reset",
     category: "breathing",
     durationSec: 600,
@@ -1980,16 +2068,17 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "Waves",
     contexts: ["high-urge", "stressed", "calm"],
     tags: ["breath", "premium", "audio"],
-    why: "Binaural audio puts the brain into a focused alpha state, which is craving-incompatible.",
+    why: "Optional breathing gives you a quiet activity to focus on. Keep a comfortable pace, skip any holds or counting, and switch resets if needed. No particular feeling or urge change is guaranteed.",
     steps: [
-      "Open the FREED premium audio library.",
-      "Start the 10-minute binaural session.",
-      "Use headphones and close your eyes.",
-      "Stay until the session ends."
+      "Choose a calming audio track you already have.",
+      "Listen at a comfortable volume.",
+      "Use headphones if comfortable; keep eyes open if preferred.",
+      "Stop when comfortable; the timer is a guide."
     ]
   },
   {
     id: "premium-clara-deep-coach",
+    families: ["mindfulness", "productivity", "anti-relapse"],
     title: "Deep CLARA coach session",
     category: "reflection",
     durationSec: 600,
@@ -1998,16 +2087,17 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "Brain",
     contexts: ["any"],
     tags: ["reflection", "premium", "ai-coach"],
-    why: "A guided coach session unpacks the trigger pattern that one-off resets cannot reach.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Open CLARA in the FREED app.",
-      "Tap 'Premium deep dive'.",
-      "Answer the three pattern questions.",
-      "Read the personalized plan that follows."
+      "Choose built-in guidance or consented cloud chat if available.",
+      "Reflect on what happened before this moment.",
+      "Choose one next step that feels manageable."
     ]
   },
   {
     id: "premium-personalized-plan",
+    families: ["mindfulness", "productivity", "social", "anti-relapse"],
     title: "Build your personalized 24h plan",
     category: "reflection",
     durationSec: 480,
@@ -2016,17 +2106,18 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "NotebookPen",
     contexts: ["calm", "stressed"],
     tags: ["reflection", "premium", "planning"],
-    why: "A 24-hour structured plan removes future decisions, which is when urges win.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
-      "Open the premium planner.",
-      "Block the next 4 high-risk hours.",
+      "Open a note to plan the next day.",
+      "Write down the next few activities you choose.",
       "Add one anchor habit per block.",
       "Save and share it with your accountability partner."
     ]
   },
   {
     id: "premium-cold-plunge",
-    title: "Full cold plunge ritual",
+    families: ["physical", "emergency", "anti-relapse"],
+    title: "Seated device movement pause",
     category: "physical",
     durationSec: 300,
     intensity: "strong",
@@ -2034,16 +2125,12 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "Snowflake",
     contexts: ["high-urge", "stressed"],
     tags: ["physical", "premium", "cold"],
-    why: "A deliberate cold plunge is a research-backed dopamine reset that lasts hours.",
-    steps: [
-      "Fill a tub with cold water.",
-      "Step in slowly up to chest.",
-      "Stay submerged for 1-3 minutes.",
-      "Exit, dry off, sit silently for 2 minutes."
-    ]
+    why: "Optional seated device movement gives you a quiet pause. Move your device only if comfortable, or choose another reset. Motion evidence records device movement, not water exposure, shoulder exercise, form or repetitions.",
+    steps: ["Sit comfortably with your device, away from water.", "Gently move the device if comfortable.", "Pause or choose another reset if device movement is uncomfortable.", "Water at a comfortable temperature is optional; keep your device dry."]
   },
   {
     id: "premium-sponsor-call",
+    families: ["social", "emergency", "anti-relapse"],
     title: "Premium sponsor session",
     category: "connection",
     durationSec: 600,
@@ -2052,16 +2139,17 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "MessageCircleHeart",
     contexts: ["high-urge", "lonely"],
     tags: ["connection", "premium", "sponsor"],
-    why: "Premium sponsor access pairs you with someone trained to walk you through the wave.",
+    why: "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
     steps: [
-      "Open premium → sponsor connection.",
-      "Tap 'Call a sponsor now'.",
+      "Choose an existing trusted contact; FREED does not assign a sponsor.",
+      "Ask whether they are available to talk.",
       "Speak honestly about where you are.",
       "Follow their next-step recommendation."
     ]
   },
   {
     id: "extra-purpose-sentence",
+    families: ["mindfulness"],
     title: "Write your one purpose sentence",
     category: "reflection",
     durationSec: 240,
@@ -2070,7 +2158,7 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
     icon: "NotebookPen",
     contexts: ["calm", "lonely"],
     tags: ["reflection", "identity"],
-    why: "A single anchor sentence becomes the lighthouse in tomorrow's storm.",
+    why: "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
     steps: [
       "Open a fresh note.",
       "Finish: 'I exist to ___.'",
@@ -2083,19 +2171,11 @@ const CURATED_EXTRAS: Array<Omit<ChallengeTemplate, "families">> = [
 // ── Final assembly ───────────────────────────────────────────────────────────
 
 function buildAll(): ChallengeTemplate[] {
-  const seeded = SEEDS.flatMap(buildTemplatesFromSeed);
+  const seeded = SEEDS.flatMap(buildTemplatesFromSeed).map(template => ({ ...template, verification: authoredVerificationRule(template.category) }));
   const curated = CURATED_EXTRAS.map((template) => ({
     ...template,
-    families: inferChallengeEngineFamilies({
-      category: template.category,
-      contexts: template.contexts,
-      durationSec: template.durationSec,
-      intensity: template.intensity,
-      tags: template.tags,
-      why: template.why,
-      title: template.title,
-      steps: template.steps
-    })
+    verification: template.verification ?? authoredVerificationRule(template.category),
+    families: template.families
   }));
   const all = [...seeded, ...curated];
 
@@ -2323,6 +2403,7 @@ export function pickChallengeTemplates(profile: {
       premium: tpl.premium,
       icon: tpl.icon,
       steps: tpl.steps,
-      why: tpl.why
+      why: tpl.why,
+      verification: tpl.verification ? { ...tpl.verification } : undefined
     }));
 }

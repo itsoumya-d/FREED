@@ -1,0 +1,396 @@
+{
+  "entries": [
+    {
+      "source": "Focus Shield earned unlock is active only for the matching surface rule. Package limits and adult-domain protection stay active.",
+      "translations": {
+        "hi": "Focus Shield का अर्जित अनलॉक केवल मेल खाते सतह नियम के लिए सक्रिय है। पैकेज सीमाएँ और वयस्क डोमेन सुरक्षा जारी हैं।",
+        "es": "El desbloqueo ganado de Focus Shield solo está activo para la regla de superficie coincidente. Los límites de paquetes y la protección de dominios para adultos siguen activos.",
+        "pt": "O desbloqueio conquistado do Focus Shield só está ativo para a regra de superfície correspondente. Os limites de pacotes e a proteção de domínios adultos continuam ativos.",
+        "fr": "Le déverrouillage gagné de Focus Shield s’applique uniquement à la règle de surface correspondante. Les limites des paquets et la protection des domaines pour adultes restent actives.",
+        "de": "Die verdiente Focus-Shield-Freigabe gilt nur für die passende Oberflächenregel. Paketlimits und der Schutz vor Erwachsenendomains bleiben aktiv.",
+        "ar": "الفتح المكتسب في Focus Shield نشط لقاعدة السطح المطابقة فقط. تبقى حدود الحزم وحماية نطاقات محتوى البالغين نشطة.",
+        "ja": "Focus Shield の獲得したロック解除は、一致する画面ルールのみに適用されます。パッケージの制限と成人向けドメイン保護は維持されます。",
+        "zh-Hans": "Focus Shield 获得的解锁仅对匹配的界面规则生效。软件包限制和成人内容域名保护仍保持启用。",
+        "ko": "Focus Shield 획득된 잠금 해제는 일치하는 표면 규칙에 대해서만 활성화됩니다. 패키지 제한 및 성인 도메인 보호는 계속 활성화됩니다."
+      }
+    },
+    {
+      "source": "Focus Shield kept protection active because the surface unlock scope or expiry was invalid.",
+      "translations": {
+        "hi": "सतह अनलॉक का दायरा या समाप्ति समय अमान्य होने के कारण Focus Shield ने सुरक्षा चालू रखी।",
+        "es": "Focus Shield mantuvo activa la protección porque el alcance o vencimiento del desbloqueo de superficie era inválido.",
+        "pt": "Focus Shield manteve a proteção ativa porque o escopo ou a validade do desbloqueio de superfície era inválido.",
+        "fr": "Focus Shield a maintenu la protection active car la portée ou l’expiration du déverrouillage de surface était invalide.",
+        "de": "Focus Shield ließ den Schutz aktiv, weil Umfang oder Ablauf der Oberflächenfreigabe ungültig war.",
+        "ar": "أبقى Focus Shield الحماية نشطة لأن نطاق فتح السطح أو انتهاء صلاحيته غير صالح.",
+        "ja": "画面のロック解除範囲または期限が無効なため、Focus Shield は保護を維持しました。",
+        "zh-Hans": "由于界面解锁范围或到期时间无效，Focus Shield 保持保护启用。",
+        "ko": "표면 잠금 해제 범위 또는 만료가 잘못되었기 때문에 Focus Shield가 보호를 활성 상태로 유지했습니다."
+      }
+    },
+    {
+      "source": "Focus Shield rejected an invalid or unsupported local rule.",
+      "translations": {
+        "hi": "Focus Shield ने अमान्य या असमर्थित स्थानीय नियम अस्वीकार किया।",
+        "es": "Focus Shield rechazó una regla local inválida o no compatible.",
+        "pt": "Focus Shield rejeitou uma regra local inválida ou não compatível.",
+        "fr": "Focus Shield a rejeté une règle locale invalide ou non prise en charge.",
+        "de": "Focus Shield hat eine ungültige oder nicht unterstützte lokale Regel abgelehnt.",
+        "ar": "رفض Focus Shield قاعدة محلية غير صالحة أو غير مدعومة.",
+        "ja": "Focus Shield は無効または非対応のローカルルールを拒否しました。",
+        "zh-Hans": "Focus Shield 拒绝了无效或不受支持的本地规则。",
+        "ko": "Focus Shield는 유효하지 않거나 지원되지 않는 로컬 규칙을 거부했습니다."
+      }
+    },
+    {
+      "source": "Focus Shield rule saved locally on this device.",
+      "translations": {
+        "hi": "Focus Shield नियम इस डिवाइस पर स्थानीय रूप से सहेजा गया।",
+        "es": "La regla de Focus Shield se guardó localmente en este dispositivo.",
+        "pt": "A regra do Focus Shield foi salva localmente neste dispositivo.",
+        "fr": "La règle Focus Shield a été enregistrée localement sur cet appareil.",
+        "de": "Die Focus-Shield-Regel wurde lokal auf diesem Gerät gespeichert.",
+        "ar": "حُفظت قاعدة Focus Shield محليًا على هذا الجهاز.",
+        "ja": "Focus Shield のルールをこのデバイスに保存しました。",
+        "zh-Hans": "Focus Shield 规则已保存在此设备本地。",
+        "ko": "Focus Shield 규칙이 이 장치에 로컬로 저장되었습니다."
+      }
+    },
+    {
+      "source": "FREED app settings could not open.",
+      "translations": {
+        "hi": "FREED ऐप सेटिंग्स नहीं खुल सकीं।",
+        "es": "No se pudieron abrir los ajustes de la app FREED.",
+        "pt": "Não foi possível abrir os ajustes do app FREED.",
+        "fr": "Impossible d’ouvrir les réglages de l’app FREED.",
+        "de": "Die FREED-App-Einstellungen konnten nicht geöffnet werden.",
+        "ar": "تعذّر فتح إعدادات تطبيق FREED.",
+        "ja": "FREED のアプリ設定を開けませんでした。",
+        "zh-Hans": "无法打开 FREED 应用设置。",
+        "ko": "FREED 앱 설정을 열 수 없습니다."
+      }
+    },
+    {
+      "source": "FREED could not classify that image: {{error}}",
+      "translations": {
+        "hi": "FREED उस छवि को वर्गीकृत नहीं कर सका: {{error}}",
+        "es": "FREED no pudo clasificar esa imagen: {{error}}",
+        "pt": "FREED não conseguiu classificar essa imagem: {{error}}",
+        "fr": "FREED n’a pas pu classer cette image : {{error}}",
+        "de": "FREED konnte dieses Bild nicht klassifizieren: {{error}}",
+        "ar": "تعذّر على FREED تصنيف هذه الصورة: {{error}}",
+        "ja": "FREED は画像を分類できませんでした: {{error}}",
+        "zh-Hans": "FREED 无法对该图片进行分类：{{error}}",
+        "ko": "FREED가 해당 이미지를 분류할 수 없습니다: {{error}}"
+      }
+    },
+    {
+      "source": "FREED could not read that camera image.",
+      "translations": {
+        "hi": "FREED कैमरे की वह छवि पढ़ नहीं सका।",
+        "es": "FREED no pudo leer esa imagen de la cámara.",
+        "pt": "FREED não conseguiu ler essa imagem da câmera.",
+        "fr": "FREED n’a pas pu lire cette image de l’appareil photo.",
+        "de": "FREED konnte dieses Kamerabild nicht lesen.",
+        "ar": "تعذّر على FREED قراءة صورة الكاميرا هذه.",
+        "ja": "FREED はカメラ画像を読み込めませんでした。",
+        "zh-Hans": "FREED 无法读取该相机图片。",
+        "ko": "FREED가 해당 카메라 이미지를 읽을 수 없습니다."
+      }
+    },
+    {
+      "source": "FREED DNS Guard is filtering DNS-level adult domains with resolver failover.",
+      "translations": {
+        "hi": "FREED DNS Guard वैकल्पिक रिज़ॉल्वर के साथ DNS स्तर पर वयस्क डोमेन फ़िल्टर कर रहा है।",
+        "es": "FREED DNS Guard filtra dominios para adultos a nivel de DNS con conmutación entre resolutores.",
+        "pt": "FREED DNS Guard está filtrando domínios adultos no nível DNS com alternância de resolvedores em caso de falha.",
+        "fr": "FREED DNS Guard filtre les domaines pour adultes au niveau DNS avec basculement entre résolveurs.",
+        "de": "FREED DNS Guard filtert Erwachsenendomains auf DNS-Ebene mit Resolver-Ausfallsicherung.",
+        "ar": "يصفي FREED DNS Guard نطاقات محتوى البالغين على مستوى DNS مع التحويل إلى محلّل بديل عند الفشل.",
+        "ja": "FREED DNS Guard は、障害時にリゾルバーを切り替えながら DNS レベルで成人向けドメインをフィルタリングしています。",
+        "zh-Hans": "FREED DNS Guard 正在 DNS 层过滤成人内容域名，并支持解析器故障切换。",
+        "ko": "FREED DNS Guard는 확인자 장애 조치를 사용하여 DNS 수준 성인 도메인을 필터링하고 있습니다."
+      }
+    },
+    {
+      "source": "FREED DNS Guard is running with DNS-only adult-domain filtering.",
+      "translations": {
+        "hi": "FREED DNS Guard केवल DNS आधारित वयस्क डोमेन फ़िल्टरिंग के साथ चल रहा है।",
+        "es": "FREED DNS Guard funciona con filtrado de dominios para adultos solo mediante DNS.",
+        "pt": "FREED DNS Guard está em execução com filtragem de domínios adultos somente por DNS.",
+        "fr": "FREED DNS Guard fonctionne avec un filtrage des domaines pour adultes limité au DNS.",
+        "de": "FREED DNS Guard läuft mit reiner DNS-Filterung von Erwachsenendomains.",
+        "ar": "يعمل FREED DNS Guard بتصفية نطاقات محتوى البالغين عبر DNS فقط.",
+        "ja": "FREED DNS Guard は DNS のみで成人向けドメインをフィルタリングしています。",
+        "zh-Hans": "FREED DNS Guard 正在运行，仅通过 DNS 过滤成人内容域名。",
+        "ko": "FREED DNS Guard는 DNS 전용 성인 도메인 필터링을 사용하여 실행 중입니다."
+      }
+    },
+    {
+      "source": "FREED DNS Guard is user-enabled and eligible to restore after reboot or app update, but it is not currently running.",
+      "translations": {
+        "hi": "FREED DNS Guard उपयोगकर्ता ने चालू किया है और रीबूट या ऐप अपडेट के बाद फिर चल सकता है, पर अभी नहीं चल रहा।",
+        "es": "El usuario activó FREED DNS Guard y puede restaurarse tras reiniciar o actualizar la app, pero ahora no está funcionando.",
+        "pt": "FREED DNS Guard foi ativado pelo usuário e pode ser restaurado após reiniciar ou atualizar o app, mas não está em execução agora.",
+        "fr": "FREED DNS Guard est activé par l’utilisateur et peut être rétabli après un redémarrage ou une mise à jour, mais il ne fonctionne pas actuellement.",
+        "de": "FREED DNS Guard wurde vom Nutzer aktiviert und kann nach einem Neustart oder App-Update wiederhergestellt werden, läuft aber derzeit nicht.",
+        "ar": "فعّل المستخدم FREED DNS Guard ويمكن استعادته بعد إعادة التشغيل أو تحديث التطبيق، لكنه لا يعمل حاليًا.",
+        "ja": "FREED DNS Guard はユーザーが有効にしており、再起動やアプリ更新後に復元できますが、現在は動作していません。",
+        "zh-Hans": "FREED DNS Guard 已由用户启用，可在重启或应用更新后恢复，但当前未运行。",
+        "ko": "FREED DNS Guard는 사용자가 활성화하고 재부팅 또는 앱 업데이트 후 복원할 수 있지만 현재 실행되고 있지 않습니다."
+      }
+    },
+    {
+      "source": "FREED DNS Guard stopped.",
+      "translations": {
+        "hi": "FREED DNS Guard बंद हुआ।",
+        "es": "FREED DNS Guard se detuvo.",
+        "pt": "FREED DNS Guard foi interrompido.",
+        "fr": "FREED DNS Guard est arrêté.",
+        "de": "FREED DNS Guard wurde angehalten.",
+        "ar": "توقف FREED DNS Guard.",
+        "ja": "FREED DNS Guard を停止しました。",
+        "zh-Hans": "FREED DNS Guard 已停止。",
+        "ko": "FREED DNS Guard가 중지되었습니다."
+      }
+    },
+    {
+      "source": "FREED DNS Guard was user-enabled, but Android VPN permission must be reviewed before it can restart.",
+      "translations": {
+        "hi": "FREED DNS Guard उपयोगकर्ता ने चालू किया था, पर फिर चलाने से पहले Android VPN अनुमति की समीक्षा ज़रूरी है।",
+        "es": "El usuario había activado FREED DNS Guard, pero hay que revisar el permiso de VPN de Android antes de reiniciarlo.",
+        "pt": "FREED DNS Guard foi ativado pelo usuário, mas a permissão de VPN do Android precisa ser revisada antes de reiniciar.",
+        "fr": "FREED DNS Guard a été activé par l’utilisateur, mais l’autorisation VPN Android doit être vérifiée avant son redémarrage.",
+        "de": "FREED DNS Guard wurde vom Nutzer aktiviert, aber vor dem Neustart muss die Android-VPN-Berechtigung geprüft werden.",
+        "ar": "فعّل المستخدم FREED DNS Guard، لكن يجب مراجعة إذن VPN في Android قبل إعادة تشغيله.",
+        "ja": "FREED DNS Guard はユーザーが有効にしていましたが、再開する前に Android の VPN 許可を確認する必要があります。",
+        "zh-Hans": "FREED DNS Guard 曾由用户启用，但重新启动前需要检查 Android VPN 权限。",
+        "ko": "FREED DNS Guard는 사용자가 활성화했지만 다시 시작하기 전에 Android VPN 권한을 검토해야 합니다."
+      }
+    },
+    {
+      "source": "iOS native activation diagnostics need attention.",
+      "translations": {
+        "hi": "iOS नेटिव सक्रियण जाँचों पर ध्यान देना होगा।",
+        "es": "Los diagnósticos de activación nativa de iOS necesitan atención.",
+        "pt": "Os diagnósticos de ativação nativa do iOS precisam de atenção.",
+        "fr": "Les diagnostics d’activation native iOS nécessitent votre attention.",
+        "de": "Die nativen iOS-Aktivierungsprüfungen benötigen Aufmerksamkeit.",
+        "ar": "تحتاج فحوص التفعيل الأصلية في iOS إلى مراجعة.",
+        "ja": "iOS のネイティブ有効化診断に対応が必要です。",
+        "zh-Hans": "iOS 原生激活诊断需要处理。",
+        "ko": "iOS 기본 활성화 진단에 주의가 필요합니다."
+      }
+    },
+    {
+      "source": "iOS native activation diagnostics passed for Screen Time, ManagedSettings, DeviceActivity, selected targets, and Safari domain rules.",
+      "translations": {
+        "hi": "iOS नेटिव सक्रियण जाँचें स्क्रीन टाइम, ManagedSettings, DeviceActivity, चुने लक्ष्यों और Safari डोमेन नियमों के लिए सफल रहीं।",
+        "es": "Se superaron los diagnósticos de activación nativa de iOS para Tiempo de uso, ManagedSettings, DeviceActivity, objetivos seleccionados y reglas de dominios de Safari.",
+        "pt": "Os diagnósticos de ativação nativa do iOS passaram para Tempo de Uso, ManagedSettings, DeviceActivity, alvos selecionados e regras de domínios do Safari.",
+        "fr": "Les diagnostics d’activation native iOS ont réussi pour Temps d’écran, ManagedSettings, DeviceActivity, les cibles sélectionnées et les règles de domaines Safari.",
+        "de": "Die nativen iOS-Aktivierungsprüfungen für Bildschirmzeit, ManagedSettings, DeviceActivity, gewählte Ziele und Safari-Domainregeln waren erfolgreich.",
+        "ar": "نجحت فحوص التفعيل الأصلية في iOS لمدة استخدام الجهاز وManagedSettings وDeviceActivity والأهداف المحددة وقواعد نطاقات Safari.",
+        "ja": "スクリーンタイム、ManagedSettings、DeviceActivity、選択した対象、Safari のドメインルールの iOS ネイティブ有効化診断に合格しました。",
+        "zh-Hans": "屏幕使用时间、ManagedSettings、DeviceActivity、所选目标和 Safari 域名规则的 iOS 原生激活诊断已通过。",
+        "ko": "Screen Time, ManagedSettings, DeviceActivity, 선택한 대상 및 Safari 도메인 규칙에 대해 iOS 기본 활성화 진단이 전달되었습니다."
+      }
+    },
+    {
+      "source": "iOS settings are unavailable in this build.",
+      "translations": {
+        "hi": "इस बिल्ड में iOS सेटिंग्स उपलब्ध नहीं हैं।",
+        "es": "Los ajustes de iOS no están disponibles en esta versión.",
+        "pt": "Os ajustes do iOS não estão disponíveis nesta versão.",
+        "fr": "Les réglages iOS ne sont pas disponibles dans cette version.",
+        "de": "iOS-Einstellungen sind in dieser Version nicht verfügbar.",
+        "ar": "إعدادات iOS غير متاحة في هذا الإصدار.",
+        "ja": "このビルドでは iOS の設定を利用できません。",
+        "zh-Hans": "此构建无法使用 iOS 设置。",
+        "ko": "이 빌드에서는 iOS 설정을 사용할 수 없습니다."
+      }
+    },
+    {
+      "source": "ManagedSettings adult-content web filter paused.",
+      "translations": {
+        "hi": "ManagedSettings वयस्क सामग्री वेब फ़िल्टर रुका है।",
+        "es": "Se pausó el filtro web de contenido para adultos de ManagedSettings.",
+        "pt": "O filtro de conteúdo adulto da web do ManagedSettings foi pausado.",
+        "fr": "Le filtre web de contenu pour adultes ManagedSettings est suspendu.",
+        "de": "Der ManagedSettings-Webfilter für Erwachseneninhalte wurde pausiert.",
+        "ar": "أُوقفت تصفية محتوى البالغين على الويب في ManagedSettings مؤقتًا.",
+        "ja": "ManagedSettings の成人向け Web フィルターを一時停止しました。",
+        "zh-Hans": "ManagedSettings 成人网页内容过滤已暂停。",
+        "ko": "ManagedSettings 성인용 콘텐츠 웹 필터가 일시중지되었습니다."
+      }
+    },
+    {
+      "source": "ManagedSettings automatic adult-content web filter requested.",
+      "translations": {
+        "hi": "ManagedSettings के स्वचालित वयस्क सामग्री वेब फ़िल्टर का अनुरोध हुआ।",
+        "es": "Se solicitó el filtro web automático de contenido para adultos de ManagedSettings.",
+        "pt": "O filtro automático de conteúdo adulto da web do ManagedSettings foi solicitado.",
+        "fr": "Le filtre web automatique de contenu pour adultes ManagedSettings a été demandé.",
+        "de": "Der automatische ManagedSettings-Webfilter für Erwachseneninhalte wurde angefordert.",
+        "ar": "طُلبت التصفية التلقائية لمحتوى البالغين على الويب في ManagedSettings.",
+        "ja": "ManagedSettings の自動成人向け Web フィルターを要求しました。",
+        "zh-Hans": "已请求启用 ManagedSettings 自动成人网页内容过滤。",
+        "ko": "ManagedSettings 자동 성인 콘텐츠 웹 필터가 요청되었습니다."
+      }
+    },
+    {
+      "source": "ManagedSettings web filtering is unavailable in this build.",
+      "translations": {
+        "hi": "इस बिल्ड में ManagedSettings वेब फ़िल्टरिंग उपलब्ध नहीं है।",
+        "es": "El filtrado web de ManagedSettings no está disponible en esta versión.",
+        "pt": "A filtragem da web do ManagedSettings não está disponível nesta versão.",
+        "fr": "Le filtrage web ManagedSettings n’est pas disponible dans cette version.",
+        "de": "ManagedSettings-Webfilterung ist in dieser Version nicht verfügbar.",
+        "ar": "تصفية الويب في ManagedSettings غير متاحة في هذا الإصدار.",
+        "ja": "このビルドでは ManagedSettings の Web フィルタリングを利用できません。",
+        "zh-Hans": "此构建无法使用 ManagedSettings 网页过滤。",
+        "ko": "이 빌드에서는 ManagedSettings 웹 필터링을 사용할 수 없습니다."
+      }
+    },
+    {
+      "source": "Native Android activation diagnostics could not run.",
+      "translations": {
+        "hi": "Android नेटिव सक्रियण जाँचें नहीं चल सकीं।",
+        "es": "No se pudieron ejecutar los diagnósticos de activación nativa de Android.",
+        "pt": "Não foi possível executar os diagnósticos de ativação nativa do Android.",
+        "fr": "Impossible d’exécuter les diagnostics d’activation native Android.",
+        "de": "Die nativen Android-Aktivierungsprüfungen konnten nicht ausgeführt werden.",
+        "ar": "تعذّر تشغيل فحوص التفعيل الأصلية في Android.",
+        "ja": "Android のネイティブ有効化診断を実行できませんでした。",
+        "zh-Hans": "无法运行 Android 原生激活诊断。",
+        "ko": "기본 Android 활성화 진단을 실행할 수 없습니다."
+      }
+    },
+    {
+      "source": "Night Guard could not be scheduled: {{error}}",
+      "translations": {
+        "hi": "Night Guard शेड्यूल नहीं हो सका: {{error}}",
+        "es": "No se pudo programar Night Guard: {{error}}",
+        "pt": "Não foi possível agendar Night Guard: {{error}}",
+        "fr": "Impossible de programmer Night Guard : {{error}}",
+        "de": "Night Guard konnte nicht geplant werden: {{error}}",
+        "ar": "تعذّرت جدولة Night Guard: {{error}}",
+        "ja": "Night Guard を設定できませんでした: {{error}}",
+        "zh-Hans": "无法设置 Night Guard 计划：{{error}}",
+        "ko": "Night Guard를 예약할 수 없습니다: {{error}}"
+      }
+    },
+    {
+      "source": "Night Guard is scheduled. FREED will apply Screen Time filtering during the risk window.",
+      "translations": {
+        "hi": "Night Guard शेड्यूल है। जोखिम अवधि में FREED स्क्रीन टाइम फ़िल्टर लागू करेगा।",
+        "es": "Night Guard está programado. FREED aplicará el filtrado de Tiempo de uso durante el periodo de riesgo.",
+        "pt": "Night Guard está agendado. FREED aplicará a filtragem do Tempo de Uso durante o período de risco.",
+        "fr": "Night Guard est programmé. FREED appliquera le filtrage Temps d’écran pendant la période à risque.",
+        "de": "Night Guard ist geplant. FREED aktiviert den Bildschirmzeit-Filter während des Risikofensters.",
+        "ar": "تمت جدولة Night Guard. سيطبق FREED تصفية مدة استخدام الجهاز خلال فترة الخطر.",
+        "ja": "Night Guard を設定しました。リスク時間帯に FREED がスクリーンタイムのフィルターを適用します。",
+        "zh-Hans": "Night Guard 已设置计划。FREED 将在风险时段应用屏幕使用时间过滤。",
+        "ko": "나이트 가드가 예정되어 있습니다. FREED는 위험 기간 동안 Screen Time 필터링을 적용합니다."
+      }
+    },
+    {
+      "source": "Night Guard schedule stopped.",
+      "translations": {
+        "hi": "Night Guard शेड्यूल बंद हुआ।",
+        "es": "Se detuvo la programación de Night Guard.",
+        "pt": "O agendamento de Night Guard foi interrompido.",
+        "fr": "La programmation Night Guard est arrêtée.",
+        "de": "Der Night-Guard-Zeitplan wurde angehalten.",
+        "ar": "توقفت جدولة Night Guard.",
+        "ja": "Night Guard のスケジュールを停止しました。",
+        "zh-Hans": "Night Guard 计划已停止。",
+        "ko": "나이트 가드 일정이 중단되었습니다."
+      }
+    },
+    {
+      "source": "Night Guard scheduled from {{value1}} to {{value2}}.",
+      "translations": {
+        "hi": "Night Guard {{value1}} से {{value2}} तक शेड्यूल है।",
+        "es": "Night Guard programado de {{value1}} a {{value2}}.",
+        "pt": "Night Guard agendado de {{value1}} a {{value2}}.",
+        "fr": "Night Guard programmé de {{value1}} à {{value2}}.",
+        "de": "Night Guard von {{value1}} bis {{value2}} geplant.",
+        "ar": "تمت جدولة Night Guard من {{value1}} إلى {{value2}}.",
+        "ja": "Night Guard を {{value1}} から {{value2}} まで設定しました。",
+        "zh-Hans": "Night Guard 已安排为 {{value1}} 至 {{value2}}。",
+        "ko": "{{value1}}부터 {{value2}}까지 예정된 Night Guard입니다."
+      }
+    },
+    {
+      "source": "No Android settings screen accepted the request.",
+      "translations": {
+        "hi": "किसी Android सेटिंग्स स्क्रीन ने अनुरोध स्वीकार नहीं किया।",
+        "es": "Ninguna pantalla de ajustes de Android aceptó la solicitud.",
+        "pt": "Nenhuma tela de ajustes do Android aceitou a solicitação.",
+        "fr": "Aucun écran de paramètres Android n’a accepté la demande.",
+        "de": "Kein Android-Einstellungsbildschirm hat die Anfrage angenommen.",
+        "ar": "لم تقبل أي شاشة إعدادات في Android الطلب.",
+        "ja": "Android の設定画面でリクエストを受け付けられませんでした。",
+        "zh-Hans": "没有 Android 设置页面接受该请求。",
+        "ko": "Android 설정 화면이 요청을 수락하지 않았습니다."
+      }
+    },
+    {
+      "source": "No matching on-device image labels were found. Take a clearer photo of the target.",
+      "translations": {
+        "hi": "डिवाइस पर कोई मेल खाते छवि लेबल नहीं मिले। लक्ष्य की और स्पष्ट फ़ोटो लें।",
+        "es": "No se encontraron etiquetas de imagen coincidentes en el dispositivo. Toma una foto más clara del objetivo.",
+        "pt": "Nenhum rótulo de imagem correspondente foi encontrado no dispositivo. Tire uma foto mais nítida do alvo.",
+        "fr": "Aucune étiquette d’image correspondante n’a été trouvée sur l’appareil. Prenez une photo plus nette de la cible.",
+        "de": "Auf dem Gerät wurden keine passenden Bildlabels gefunden. Nimm ein deutlicheres Foto des Ziels auf.",
+        "ar": "لم تُعثر على تسميات صور مطابقة على الجهاز. التقط صورة أوضح للهدف.",
+        "ja": "デバイス上で一致する画像ラベルが見つかりませんでした。対象がはっきり写る写真を撮ってください。",
+        "zh-Hans": "设备上未找到匹配的图片标签。请拍摄更清晰的目标照片。",
+        "ko": "일치하는 기기 내 이미지 라벨을 찾을 수 없습니다. 대상을 더욱 선명하게 촬영하세요."
+      }
+    },
+    {
+      "source": "No Screen Time targets were selected. Choose at least one app, category, or web domain before activation can finish.",
+      "translations": {
+        "hi": "कोई स्क्रीन टाइम लक्ष्य नहीं चुना गया। सक्रियण पूरा करने से पहले कम से कम एक ऐप, श्रेणी या वेब डोमेन चुनें।",
+        "es": "No se seleccionaron objetivos de Tiempo de uso. Elige al menos una app, categoría o dominio web antes de completar la activación.",
+        "pt": "Nenhum alvo do Tempo de Uso foi selecionado. Escolha pelo menos um app, categoria ou domínio da web antes de concluir a ativação.",
+        "fr": "Aucune cible Temps d’écran n’a été sélectionnée. Choisissez au moins une app, catégorie ou domaine web pour terminer l’activation.",
+        "de": "Es wurden keine Bildschirmzeit-Ziele gewählt. Wähle mindestens eine App, Kategorie oder Webdomain, um die Aktivierung abzuschließen.",
+        "ar": "لم تُحدد أهداف لمدة استخدام الجهاز. اختر تطبيقًا أو فئة أو نطاق ويب واحدًا على الأقل لإكمال التفعيل.",
+        "ja": "スクリーンタイムの対象が選択されていません。有効化を完了するには、アプリ、カテゴリ、Web ドメインを少なくとも一つ選んでください。",
+        "zh-Hans": "尚未选择屏幕使用时间目标。完成激活前，请至少选择一个应用、类别或网页域名。",
+        "ko": "Screen Time 대상이 선택되지 않았습니다. 활성화가 완료되기 전에 하나 이상의 앱, 카테고리 또는 웹 도메인을 선택하세요."
+      }
+    },
+    {
+      "source": "Only the challenged Screen Time app is unlocked. Unrelated shields and adult web filtering stay active.",
+      "translations": {
+        "hi": "केवल चुनौती वाला स्क्रीन टाइम ऐप अनलॉक है। अन्य शील्ड और वयस्क वेब फ़िल्टर सक्रिय हैं।",
+        "es": "Solo está desbloqueada la app de Tiempo de uso del reto. Los demás escudos y el filtrado web para adultos siguen activos.",
+        "pt": "Somente o app do Tempo de Uso do desafio está desbloqueado. Os outros escudos e a filtragem de conteúdo adulto continuam ativos.",
+        "fr": "Seule l’app Temps d’écran du défi est déverrouillée. Les autres boucliers et le filtrage web pour adultes restent actifs.",
+        "de": "Nur die Bildschirmzeit-App der Herausforderung ist freigegeben. Andere Sperren und der Erwachsenen-Webfilter bleiben aktiv.",
+        "ar": "فُتح تطبيق مدة استخدام الجهاز الخاص بالتحدي فقط. تبقى الدروع الأخرى وتصفية محتوى البالغين على الويب نشطة.",
+        "ja": "チャレンジ対象のスクリーンタイムアプリのみを解除しました。他のシールドと成人向け Web フィルターは維持されます。",
+        "zh-Hans": "仅解锁了挑战对应的屏幕使用时间应用。其他屏蔽和成人网页过滤仍保持启用。",
+        "ko": "챌린지된 Screen Time 앱만 잠금 해제됩니다. 관련 없는 보호막과 성인용 웹 필터링은 계속 활성화됩니다."
+      }
+    },
+    {
+      "source": "Only the challenged Screen Time web domain is unlocked. Unrelated shields and adult web filtering stay active.",
+      "translations": {
+        "hi": "केवल चुनौती वाला स्क्रीन टाइम वेब डोमेन अनलॉक है। अन्य शील्ड और वयस्क वेब फ़िल्टर सक्रिय हैं।",
+        "es": "Solo está desbloqueado el dominio web de Tiempo de uso del reto. Los demás escudos y el filtrado web para adultos siguen activos.",
+        "pt": "Somente o domínio da web do Tempo de Uso do desafio está desbloqueado. Os outros escudos e a filtragem de conteúdo adulto continuam ativos.",
+        "fr": "Seul le domaine web Temps d’écran du défi est déverrouillé. Les autres boucliers et le filtrage web pour adultes restent actifs.",
+        "de": "Nur die Bildschirmzeit-Webdomain der Herausforderung ist freigegeben. Andere Sperren und der Erwachsenen-Webfilter bleiben aktiv.",
+        "ar": "فُتح نطاق الويب الخاص بتحدي مدة استخدام الجهاز فقط. تبقى الدروع الأخرى وتصفية محتوى البالغين على الويب نشطة.",
+        "ja": "チャレンジ対象のスクリーンタイムの Web ドメインのみを解除しました。他のシールドと成人向け Web フィルターは維持されます。",
+        "zh-Hans": "仅解锁了挑战对应的屏幕使用时间网页域名。其他屏蔽和成人网页过滤仍保持启用。",
+        "ko": "챌린지된 Screen Time 웹 도메인만 잠금 해제됩니다. 관련 없는 보호막과 성인용 웹 필터링은 계속 활성화됩니다."
+      }
+    }
+  ]
+}

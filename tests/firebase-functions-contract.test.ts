@@ -41,7 +41,7 @@ async function run() {
       };
       if (name === "requestAccountDeletion") return { ok: true, status: "deleting" };
       if (name === "registerPushToken") return { ok: true, duplicate: false };
-      if (name === "verifyStorePurchase") return {
+      if (name === "verifyAppleStorePurchase") return {
         active: true,
         entitlementId: "premium",
         productId: "freed_premium_monthly",
@@ -145,7 +145,7 @@ async function run() {
     } as never),
     /not permitted/i
   );
-  assert.deepEqual(await callables.requestAccountDeletion({ clientEventId: "evt_12345678" }), { ok: true, status: "deleting" });
+  assert.deepEqual(await callables.requestAccountDeletion({ clientEventId: "evt_12345678", expectedAccountUid: "uid-deletion-owner" }), { ok: true, status: "deleting" });
   assert.equal(calls[6]?.name, "requestAccountDeletion");
   assert.deepEqual(calls[6]?.options, { limitedUseAppCheckToken: true });
   const purchasePayload: FirebaseVerifyStorePurchaseRequest = {
@@ -164,7 +164,7 @@ async function run() {
     expiresAt: "2099-07-22T12:01:00.000Z"
   });
   assert.deepEqual(calls[7], {
-    name: "verifyStorePurchase",
+    name: "verifyAppleStorePurchase",
     data: purchasePayload,
     options: { limitedUseAppCheckToken: true }
   });
@@ -279,10 +279,10 @@ async function run() {
     assert.throws(() => parseFirebaseVerifyStorePurchaseResult(invalid), /invalid firebase purchase/i);
   }
 
-  const indexSource = readFileSync("functions/src/index.ts", "utf8");
+  const indexSource = readFileSync("functions/src/index.ts", "utf8") + readFileSync("functions/src/foundation.ts", "utf8") + readFileSync("functions/src/purchase-foundation.ts", "utf8");
   const aiFunctionSource = readFileSync("functions/src/ai-firebase.ts", "utf8");
   const feedFunctionSource = readFileSync("functions/src/adult-feed-firebase.ts", "utf8");
-  assert.match(indexSource, /getReviewedAdultDomainFeed/);
+  assert.match(indexSource + readFileSync("functions/src/foundation.ts", "utf8"), /getReviewedAdultDomainFeed/);
   assert.match(indexSource, /refreshReviewedAdultDomainFeed/);
   assert.match(feedFunctionSource, /onCall\(\{[^}]*enforceAppCheck:\s*true[^}]*\}/);
   assert.match(feedFunctionSource, /requireAuthenticatedUid\(request\.auth\?\.uid\)/);

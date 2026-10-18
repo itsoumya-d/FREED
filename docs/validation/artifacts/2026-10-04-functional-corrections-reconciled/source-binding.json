@@ -1,0 +1,37 @@
+{
+  "comparedFiles": 3533,
+  "differences": [
+    "docs/validation/artifacts/store-legal-policy-current/store-legal-policy-audit.json",
+    "docs/validation/artifacts/store-launch-catalog-current/store-launch-catalog-audit.json"
+  ],
+  "sourceBehaviorMatches": true,
+  "localReportSha256": "5131c17824a51a4d6508c3d07e9c06add8f635e4091a9c6a790db1a5e1596b9b",
+  "reviewLimits": [
+    "No physical protection/network/reboot/unlock-expiry proof",
+    "No store sandbox lifecycle proof",
+    "No release physical performance proof",
+    "64x10x2 per-platform visual matrix incomplete"
+  ],
+  "subsequentBackendCorrection": {
+    "files": [
+      "functions/src/foundation.ts",
+      "functions/src/foundation-expiry.test.ts",
+      "functions/src/adult-feed.ts",
+      "functions/src/adult-feed.test.ts"
+    ],
+    "foundationSha256": "66eebce863551f7f2a47f3d684fe29eb636374cd3a10f319dd3bb8aa2a12115f",
+    "backendTests": 216,
+    "backendFailed": 0,
+    "scope": "Firestore Timestamp retention and duplicate reads; app/native source unchanged"
+  },
+  "subsequentInspectorCorrection": {
+    "files": [
+      "scripts/lib/ios-safari-focus-shield-contract.js",
+      "tests/ios-safari-focus-shield-contract.test.js"
+    ],
+    "inspectorSha256": "479f189db063ec48dca8e3c2c489bd921331a7d1c0dd1593ae83d2faf416eb07",
+    "archiveSourceTests": 46,
+    "adjacentTests": 19,
+    "runtimeAndIpaUnchanged": true
+  }
+}

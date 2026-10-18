@@ -1,0 +1,15 @@
+{
+  "httpStatus": 200,
+  "body": {
+    "version": 1,
+    "etag": "BwZdADy/EXw=",
+    "bindings": [
+      {
+        "role": "projects/freed-7d5ee/roles/freedBackupSignBlob",
+        "members": [
+          "serviceAccount:5477978760-compute@developer.gserviceaccount.com"
+        ]
+      }
+    ]
+  }
+}

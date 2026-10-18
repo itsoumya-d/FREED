@@ -1,0 +1,25 @@
+{
+  "httpStatus": 200,
+  "body": {
+    "name": "projects/freed-7d5ee/locations/asia-south1/jobs/firebase-schedule-refreshReviewedAdultDomainFeed-asia-south1",
+    "httpTarget": {
+      "uri": "https://asia-south1-freed-7d5ee.cloudfunctions.net/refreshReviewedAdultDomainFeed",
+      "httpMethod": "POST",
+      "headers": {
+        "User-Agent": "Google-Cloud-Scheduler"
+      },
+      "oidcToken": {
+        "serviceAccountEmail": "5477978760-compute@developer.gserviceaccount.com",
+        "audience": "https://asia-south1-freed-7d5ee.cloudfunctions.net/refreshReviewedAdultDomainFeed"
+      }
+    },
+    "userUpdateTime": "2026-10-04T09:47:18.425277Z",
+    "state": "ENABLED",
+    "status": {},
+    "scheduleTime": "2026-10-05T10:14:03.614327Z",
+    "lastAttemptTime": "2026-10-04T10:14:21.973672Z",
+    "schedule": "every 24 hours",
+    "timeZone": "Asia/Kolkata",
+    "attemptDeadline": "180s"
+  }
+}

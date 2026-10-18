@@ -1,0 +1,252 @@
+{
+  "recordedAt": "2026-10-04T10:19:34.826411+00:00",
+  "project": "freed-7d5ee",
+  "region": "asia-south1",
+  "codebase": "freed",
+  "runtime": "nodejs22",
+  "deployedFunctions": 18,
+  "activeSourceMatchedFunctions": 18,
+  "sourceRevisions": {
+    "v1-foundation": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+    "v2-feed-boundary": "bbdcd3d3c32cf159c7e94c8a05961dcec88c94e1815cacef06428d39e479126f"
+  },
+  "v1Functions": 16,
+  "v2FeedFunctions": 2,
+  "verification": {
+    "fullNode22EmulatorSuite": {
+      "tests": 216,
+      "passed": 216,
+      "failed": 0,
+      "skipped": 0
+    },
+    "initialLiveNegativeHttpChecks": {
+      "tests": 37,
+      "passed": 37
+    },
+    "afterFeedV2NegativeHttpChecks": {
+      "tests": 2,
+      "passed": 2
+    },
+    "liveFeedDomains": 20376,
+    "unsupportedSuffixWideRulesOmitted": 8,
+    "liveFeedCoreRetrievalVerified": true,
+    "sandboxSignedAppleTestDelivered": true,
+    "productionAppleTestHttpStatus": 401,
+    "authenticatedDeviceAppCheckProof": false,
+    "purchaseRenewalRefundRevocationLifecycleProof": false,
+    "actualTTLOr400DayObjectDeletionProof": false
+  },
+  "missingExternalInputs": [
+    "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON: provider access/key approval pending",
+    "OPENAI_API_KEY: not present",
+    "DeviceCheck fallback key/configuration: not present"
+  ],
+  "productionAppleAuthorizationBlocker": "Production App Store Server API TEST requests returned HTTP401 twice using the existing approved key. Sandbox accepted and delivered. Cause not inferred.",
+  "ownedChangedSourceFiles": [
+    "functions/src/foundation.ts",
+    "functions/src/foundation-expiry.test.ts",
+    "functions/src/adult-feed.ts",
+    "functions/src/adult-feed.test.ts"
+  ],
+  "sharedUiNativeBuildsModified": false,
+  "functionDeletions": 0,
+  "placeholderCredentialsCreated": 0,
+  "manualUserPushOrNotificationJobDispatches": 0,
+  "credentialValuesTokensJwtsSignedPayloadsOmitted": true,
+  "artifacts": [
+    {
+      "file": "adult-feed-green.log",
+      "sha256": "c0902a3ff4c2169b95a2e88a1937ca62aac807288d967e403382616b1ba4e5f2"
+    },
+    {
+      "file": "adult-feed-red.log",
+      "sha256": "5edebbdae59003a0d117425b1cdf75a54661d052372f9ff1be4d2072fdb939f8"
+    },
+    {
+      "file": "all-cloud-run-invoker-policies.json",
+      "sha256": "8b0f672fc57366789899cc5f55b3143287399de29f0b119cc60e7bb4aeb9f1e0"
+    },
+    {
+      "file": "all-live-source-bindings-final.json",
+      "sha256": "c6c0c18052f48f83d961467ce581ec3e14ca1c27a2b8784c5d990230e0c1f216"
+    },
+    {
+      "file": "all-live-source-bindings.json",
+      "sha256": "e0d12ad6822b880903f48e167c40aeeaa85aebd5274266dca9565ba2b08c9b63"
+    },
+    {
+      "file": "app-attest-configured.json",
+      "sha256": "dc8b34505ffea697f4b03b5e17ea91a8b721e862ab82ec56fa2cb8b2ca0b7b94"
+    },
+    {
+      "file": "apple-test-delivery.json",
+      "sha256": "031ff40419eddbdcf20251bd161b983ac2f2f321dc01e6ce61db55756dc8a8fe"
+    },
+    {
+      "file": "apple-test-http-delivery-logs.json",
+      "sha256": "0067721ab90941d80905ea18c56d6b7a276a3899fb7b78d4cd65e3a1787d5591"
+    },
+    {
+      "file": "artifact-cleanup-policy.log",
+      "sha256": "de3c37ff3954be4fd070fa12d687582aab662bd363248a35b211aedb21a68dcb"
+    },
+    {
+      "file": "artifact-repository-iam-configured.json",
+      "sha256": "17c7b9175e9cf218f974875b8a43668a1b5f22eac4322dc7fcb86d535617726b"
+    },
+    {
+      "file": "artifact-repository-policy.json",
+      "sha256": "ece8aa6998690402acb8a1a05e234d86aad394b5ed080e092acfdcc67803cc2a"
+    },
+    {
+      "file": "backend-emulator-tests.log",
+      "sha256": "63f56330d65686b49fe342ce78ba3ec3a5953a1b1be75ff33764c44a1a2232f9"
+    },
+    {
+      "file": "backend-node22-emulator-tests.log",
+      "sha256": "5c8a0a9c51a97438a347fda5f4102c6b850e8a6c104696f9772e079278a947da"
+    },
+    {
+      "file": "backend-node22-feed-final-emulator-tests.log",
+      "sha256": "08152b1a8377f81ae6e6c2913e0761a6a3ae12cc6b8550d92b4e08f629baa5cc"
+    },
+    {
+      "file": "backend-tests-green.log",
+      "sha256": "57519ef0056306420fe7bdd8877a8bc17c460356145d523994629df22d02d219"
+    },
+    {
+      "file": "build-source-bucket-iam-configured.json",
+      "sha256": "eb1225749c81bbcfee1e9ac278d7a5027e34513bf28f589a973b07f4116ed665"
+    },
+    {
+      "file": "device-check-quota.json",
+      "sha256": "f180797a6080874910104afb94466a610dd8dbee3252e5008a2819f2f28b11bc"
+    },
+    {
+      "file": "expiry-red.json",
+      "sha256": "d055c56ba432f19221a46cf417355a3fa79f66d2b364c12528f979ae8c90ca3b"
+    },
+    {
+      "file": "feed-v2-http-boundary-checks.json",
+      "sha256": "e886a15161a1fddfff76cb5c1d469a469fc1e809bfd8827860a7d88ffb90646f"
+    },
+    {
+      "file": "firestore-indexes-deployed.json",
+      "sha256": "5ab78d9d99d4d04810cfb2060f6cde6f94feda847a272796009acda9fcf2d8a1"
+    },
+    {
+      "file": "firestore-ttl-deployed.json",
+      "sha256": "ac0353323204f4e1697d330223462ec1c52fe08d062c643f6f3008971640a5b7"
+    },
+    {
+      "file": "firestore.rules-live-readback.json",
+      "sha256": "6193f7d8dd802621cb3e6c12cfaf5996dc71c63d46af0704d923cbffda0f564c"
+    },
+    {
+      "file": "freedBackupSignBlob-created.json",
+      "sha256": "cc16faf5b9931867b5d090355619872ee1e3ffb35ae24c6c80055212e8ea0980"
+    },
+    {
+      "file": "freedFoundationRuntime-created.json",
+      "sha256": "905fcd9bd95e482119af7d5f01dc7232f113fe44988172a56ba158f53b39dc06"
+    },
+    {
+      "file": "functions-feed-v2-deploy.log",
+      "sha256": "210bb6d5b66a93363b5ec6a969b78a4f2883138a9a064a17d693462a4541a484"
+    },
+    {
+      "file": "functions-foundation-apple-deploy.log",
+      "sha256": "6cd609077381d30f6ea04acd8982c09ac678d78bd45bdd936b703bce32d25def"
+    },
+    {
+      "file": "functions-readiness-deploy.log",
+      "sha256": "5067551497d2a0e603502cca0b5db643940d91e4eef74037ea73cc92d69884e9"
+    },
+    {
+      "file": "ios-app-quota.json",
+      "sha256": "0ed9db597dd7c4d34f8fda4cba663784369b72ddf186ba10be24a5597e9b9dbd"
+    },
+    {
+      "file": "live-negative-http-checks.json",
+      "sha256": "afeb6e925394b5effae372ac12b2e5fe1ed115c6725ef542e2bd3459d9c1d805"
+    },
+    {
+      "file": "project-iam-build-logs-configured.json",
+      "sha256": "d3309bf2ae176267049f176bdcd8a77bc5bfc37dc7d9530a51e2a68f7ba3ed3e"
+    },
+    {
+      "file": "project-iam-runtime-configured.json",
+      "sha256": "8280b145038bea417cd8abb296908fd657227036cdba74cc562af927caf58a08"
+    },
+    {
+      "file": "public-feed-core-retrieval-proof.json",
+      "sha256": "39a3baf5845bc76b8179213f283b631a5e87cf56a10f6c032cea762e3943c4da"
+    },
+    {
+      "file": "public-feed-corrected-parser-upstream-proof.json",
+      "sha256": "923d56773f0a9a999f50d88a5e2b5d3c19bfbc072035a4a134df09aa2f72e54c"
+    },
+    {
+      "file": "public-feed-live-data-integrity.json",
+      "sha256": "d7669821129171701e4ed1585fba8b177b2bc10eaedc192e63dc168869c7309a"
+    },
+    {
+      "file": "public-feed-rejection-categories.json",
+      "sha256": "d1577784676dc49086029899a5adfb0d24437af6b049a5f64d2e9f7f19cf5497"
+    },
+    {
+      "file": "public-feed-runtime-bucket-config.json",
+      "sha256": "d7442a74e6068b1b192a173b8883c1b4c23b48ae689d16609283a9a7b63bae5e"
+    },
+    {
+      "file": "public-feed-v2-latest.json",
+      "sha256": "29a037ad01397b87dd1c9dd086eb152c95b0fdff6ba0bf211636b064676c1c65"
+    },
+    {
+      "file": "public-feed-v2-scheduler.json",
+      "sha256": "9d72d1bac7f070c84ccda00c1c2c719d7fe4821fada0723bb40aa350df47a5dc"
+    },
+    {
+      "file": "readiness-callable-invoker-configured.json",
+      "sha256": "0cd10c16dc6e671d95cae60f550a251cea749be5735e2a80811645fe1724e627"
+    },
+    {
+      "file": "secret-metadata-final.json",
+      "sha256": "c7f45c504e0ce065becac9df73cd69d306b8a45bf8db28b455c2172e164663b7"
+    },
+    {
+      "file": "signer-iam-configured.json",
+      "sha256": "78fecd5b578a0d2c581bb05f05012b47f3eb1cf6ad999050ae0e325eb5673d19"
+    },
+    {
+      "file": "source-manifest-v1-foundation.json",
+      "sha256": "803d165b289c091f499b4f4d777f4efba73de913fd1fc8235fb1db333ced91b8"
+    },
+    {
+      "file": "source-manifest.json",
+      "sha256": "8492d87277df6512731ca14a6bd983fab9210aa8561dae858a250790d2d184d4"
+    },
+    {
+      "file": "storage-iam-runtime-configured.json",
+      "sha256": "fe29b5d3d5f6cbcaa51af6f86c01c344e45d30c944dd93c04da66527064703bd"
+    },
+    {
+      "file": "storage-object-emptiness-before-policy.json",
+      "sha256": "a4540cc209241268f889e5f7634bd28b34e63193235975a753b02e279b71605b"
+    },
+    {
+      "file": "storage-retention-configured.json",
+      "sha256": "582d695d8c69d0118bd18d132004ce8a71b376bfffb2b6316043bcfec69d2d3f"
+    },
+    {
+      "file": "storage-retention-final.json",
+      "sha256": "4e6175f0d1fac07136ba1a7efe944df7efb31339422e647fbfb20004c15b3a47"
+    },
+    {
+      "file": "storage.rules-live-readback.json",
+      "sha256": "bbda53dbe32c6d3cbe8a94937c27df196e1ef358e4c975009ed2f7afdc62e26d"
+    }
+  ],
+  "newProviderCredentialKeysCreated": 0,
+  "finalVerifiedAt": "2026-10-04T10:21:31.169147+00:00"
+}

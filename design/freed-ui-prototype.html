@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-contrast="normal" data-motion="full" data-viewport="phone" data-page-node-id="OrWP1EtLI2jQxh1WXZEhFS">
+<head data-page-node-id="wcK2p1iJtFEtrCYDrtMTcm">
+<meta charset="utf-8" data-page-node-id="xwSTHiezjJcwi7gA2wTKES" />
+<meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="CvUlvTjwyfA87UDv2DVujd" />
+<title>FREED — Core Screens UI Prototype</title>
+<style>
+/* ============================================================
+   1. DESIGN TOKENS  (bridge: src/constants/design.ts + design/freed.mobile.tokens.json)
+   ============================================================ */
+:root{
+  /* --- primitive (dark / cosmic base) --- */
+  --bg:#1B1929; --bg-deep:#0B0820;
+  --surface:#242236; --surface-2:#2D2A44; --surface-3:#393455;
+  --text:#F6F1FF; --text-2:#BEB7D9; --text-3:#A79FC9;
+  --mint:#5ADF9E; --purple:#B898FF; --peach:#FF9B72; --pink:#FF6D9E;
+  --sky:#82CEFF; --yellow:#FFD666; --red:#FF5148; --purple-deep:#7B4DFF;
+
+  /* --- semantic --- */
+  --canvas:var(--bg);
+  --card:var(--surface);
+  --card-raised:var(--surface-2);
+  --content:var(--text);
+  --content-2:var(--text-2);
+  --content-3:var(--text-3);
+  --border:rgba(255,255,255,.09);
+  --border-strong:rgba(255,255,255,.18);
+  --focus:#82CEFF;
+  --accent:var(--mint);
+  --on-accent:#08281A;
+  --protected:var(--mint);
+  --attention:var(--yellow);
+  --unprotected:var(--red);
+
+  /* --- tint washes --- */
+  --mint-soft:rgba(90,223,158,.14);
+  --purple-soft:rgba(184,152,255,.14);
+  --peach-soft:rgba(255,155,114,.15);
+  --pink-soft:rgba(255,109,158,.14);
+  --sky-soft:rgba(130,206,255,.14);
+  --red-soft:rgba(255,81,72,.14);
+
+  /* --- gradients --- */
+  --grad-cta:linear-gradient(135deg,#B438F0,#1667FF);
+  --grad-mint:linear-gradient(135deg,#143028,#10221C);
+  --grad-purple:linear-gradient(135deg,#271540,#1E1130);
+  --grad-peach:linear-gradient(135deg,#3E2214,#2C1A10);
+  --grad-pink:linear-gradient(135deg,#3E1624,#2C1018);
+  --grad-sky:linear-gradient(135deg,#152840,#111E2C);
+  --grad-calm:linear-gradient(135deg,#13465A,#17345B,#2A215B);
+  --grad-canvas:radial-gradient(1200px 700px at 12% -8%, #251551 0%, transparent 60%),
+                radial-gradient(900px 600px at 100% 0%, #2A1640 0%, transparent 55%),
+                linear-gradient(180deg,#171138,#0B0820);
+
+  /* --- shape --- */
+  --r-sm:12px; --r-md:18px; --r-lg:24px; --r-xl:32px; --r-pill:999px;
+
+  /* --- spacing (4pt grid) --- */
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:20px; --s-6:24px; --s-8:32px; --s-10:40px;
+
+  /* --- elevation --- */
+  --shadow-1:0 2px 10px rgba(0,0,0,.24);
+  --shadow-2:0 16px 44px rgba(0,0,0,.34);
+  --shadow-glow:0 12px 40px rgba(184,152,255,.24);
+
+  /* --- type --- */
+  --font:"Nunito",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,system-ui,sans-serif;
+  --t-hero:34px/1.2 900 -0.4px;
+  --t-title:28px/1.2 900 -0.2px;
+  --t-h2:20px/1.3 800 0;
+  --t-h3:17px/1.35 800 0;
+  --t-body:15px/1.55 500 0;
+  --t-label:15px/1.33 700 .1px;
+  --t-caption:13px/1.4 700 .2px;
+  --t-micro:11px/1.3 800 1.1px;
+
+  /* --- motion --- */
+  --d-fast:160ms; --d-base:240ms; --d-slow:420ms;
+  --ease:cubic-bezier(.2,0,0,1);
+  --ease-out:cubic-bezier(0,0,.2,1);
+
+  --touch:44px;
+  --device-w:390px; --device-h:844px;
+  --scrim:rgba(5,3,14,.62);
+}
+
+/* --- light theme --- */
+[data-theme="light"]{
+  --bg:#F4F1FB; --bg-deep:#FFFFFF;
+  --surface:#FFFFFF; --surface-2:#F2EEFB; --surface-3:#E7E1F6;
+  --text:#171430; --text-2:#544C73; --text-3:#6E6690;
+  --mint:#0E7A4E; --purple:#6733D4; --peach:#BF5527; --pink:#BE2761;
+  --sky:#1668A0; --yellow:#8A6100; --red:#C4231B; --purple-deep:#5B27C9;
+  --border:rgba(23,20,48,.10); --border-strong:rgba(23,20,48,.22);
+  --focus:#1F6FEB; --on-accent:#FFFFFF;
+  --mint-soft:rgba(14,122,78,.10); --purple-soft:rgba(103,51,212,.10);
+  --peach-soft:rgba(191,85,39,.10); --pink-soft:rgba(190,39,97,.10);
+  --sky-soft:rgba(22,104,160,.10); --red-soft:rgba(196,35,27,.10);
+  --grad-mint:linear-gradient(135deg,#E2F6EB,#CFEEDD);
+  --grad-purple:linear-gradient(135deg#EFE8FF,#E1D6FF);
+  --grad-purple:linear-gradient(135deg,#EFE8FF,#E1D6FF);
+  --grad-peach:linear-gradient(135deg,#FDE8DC,#FBDBCA);
+  --grad-pink:linear-gradient(135deg,#FCE3EC,#F8D2E0);
+  --grad-sky:linear-gradient(135deg,#E2F1FB,#D2E8F8);
+  --grad-calm:linear-gradient(135deg,#E0F1F8,#DCE6FB,#E8E2FB);
+  --grad-canvas:radial-gradient(1100px 620px at 10% -10%, #E9E2FF 0%, transparent 58%),
+                radial-gradient(900px 560px at 100% 0%, #FFF0E6 0%, transparent 55%),
+                linear-gradient(180deg,#F9F7FF,#F1EDFA);
+  --shadow-1:0 1px 2px rgba(23,20,48,.06), 0 2px 10px rgba(23,20,48,.06);
+  --shadow-2:0 12px 36px rgba(23,20,48,.12);
+  --shadow-glow:0 12px 36px rgba(103,51,212,.18);
+}
+
+/* --- high contrast --- */
+[data-contrast="high"]{
+  --content:#FFFFFF; --content-2:#EDEAF7; --content-3:#D8D3EA;
+  --border:rgba(255,255,255,.55); --border-strong:#FFFFFF;
+  --surface:#000000; --bg:#000000;
+  --mint:#7BFFC0; --purple:#D9C6FF; --peach:#FFB99A; --yellow:#FFE08A; --red:#FF8A82; --sky:#A9DEFF;
+  --mint-soft:rgba(123,255,192,.20); --purple-soft:rgba(217,198,255,.20);
+  --grad-cta:linear-gradient(135deg,#D9C6FF,#A9DEFF);
+  --grad-canvas:#000000;
+}
+[data-contrast="high"][data-theme="light"]{
+  --content:#000000; --content-2:#1A1729; --content-3:#2E2A42;
+  --border:#000000; --border-strong:#000000;
+  --surface:#FFFFFF; --bg:#FFFFFF;
+  --mint:#00532F; --purple:#3D1B94; --peach:#8A3608; --yellow:#5F4200; --red:#8E1109; --sky:#0B4C7A;
+  --grad-cta:linear-gradient(135deg,#3D1B94,#0B4C7A);
+  --grad-canvas:#FFFFFF;
+}
+
+[data-motion="reduced"] *{ animation-duration:.001ms !important; transition-duration:.001ms !important; }
+
+/* ============================================================
+   2. PROTOTYPE CHROME (not part of the product UI)
+   ============================================================ */
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--font); background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+}
+.chrome-bg{position:fixed;inset:0;z-index:-1;background:var(--grad-canvas)}
+
+.chrome{
+  max-width:1560px;margin:0 auto;padding:var(--s-6) var(--s-6) var(--s-10);
+}
+.chrome-top{
+  display:flex;flex-wrap:wrap;gap:var(--s-4);align-items:flex-end;justify-content:space-between;
+  padding-bottom:var(--s-5);border-bottom:1px solid var(--border);margin-bottom:var(--s-6);
+}
+.chrome h1{font:var(--t-title);margin:0 0 6px;letter-spacing:-.2px}
+.chrome .sub{font:var(--t-body);color:var(--content-2);margin:0;max-width:62ch}
+.controls{display:flex;flex-wrap:wrap;gap:var(--s-2);align-items:center}
+.ctl-group{
+  display:flex;gap:2px;padding:3px;border-radius:var(--r-pill);
+  background:var(--surface-2);border:1px solid var(--border);
+}
+.ctl{
+  appearance:none;border:0;background:transparent;color:var(--content-2);
+  font:var(--t-caption);padding:8px 14px;border-radius:var(--r-pill);cursor:pointer;
+  min-height:36px;transition:background var(--d-fast) var(--ease), color var(--d-fast) var(--ease);
+}
+.ctl:hover{color:var(--content)}
+.ctl[aria-pressed="true"]{background:var(--surface);color:var(--content);box-shadow:var(--shadow-1)}
+.ctl:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+.layout{display:grid;gap:var(--s-6);grid-template-columns:minmax(0,1fr);align-items:start}
+@media (min-width:1180px){ .layout{grid-template-columns:minmax(0,1fr) 400px} }
+
+/* --- device --- */
+.device-stage{display:flex;flex-direction:column;align-items:center;gap:var(--s-4)}
+.device{
+  width:var(--device-w);height:var(--device-h);
+  background:var(--bg-deep);border:1px solid var(--border-strong);
+  border-radius:44px;overflow:hidden;position:relative;
+  box-shadow:var(--shadow-2);display:flex;flex-direction:column;
+  transition:width var(--d-slow) var(--ease), height var(--d-slow) var(--ease), border-radius var(--d-slow) var(--ease);
+  max-width:100%;
+}
+[data-viewport="tablet"]{ --device-w:820px; --device-h:1024px; }
+[data-viewport="desktop"]{ --device-w:min(1180px,100%); --device-h:860px; }
+[data-viewport="tablet"] .device,[data-viewport="desktop"] .device{border-radius:28px}
+.device-notch{
+  position:absolute;top:10px;left:50%;transform:translateX(-50%);
+  width:112px;height:26px;border-radius:var(--r-pill);background:#05030E;z-index:5;
+}
+[data-viewport="tablet"] .device-notch,[data-viewport="desktop"] .device-notch{display:none}
+
+/* status bar */
+.statusbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 24px 4px;font:var(--t-caption);color:var(--content-2);flex:0 0 auto;
+}
+[data-viewport="tablet"] .statusbar,[data-viewport="desktop"] .statusbar{padding:10px 20px}
+
+/* ============================================================
+   3. APP SHELL
+   ============================================================ */
+.app{flex:1;display:flex;flex-direction:column;min-height:0}
+.app-body{flex:1;display:flex;min-height:0;overflow:hidden}
+
+/* --- top app bar --- */
+.appbar{
+  flex:0 0 auto;display:flex;align-items:center;gap:var(--s-3);
+  padding:var(--s-2) var(--s-5) var(--s-3);
+}
+.appbar .brand{display:flex;align-items:center;gap:var(--s-2);font:var(--t-h3);letter-spacing:.4px}
+.appbar .spacer{flex:1}
+.appbar h2{font:var(--t-h2);margin:0}
+.appbar .sub{font:var(--t-caption);color:var(--content-2);margin:2px 0 0}
+
+.logo{
+  width:30px;height:30px;border-radius:9px;display:grid;place-items:center;
+  background:var(--grad-cta);box-shadow:var(--shadow-glow);flex:0 0 auto;
+}
+.logo svg{width:17px;height:17px}
+
+/* --- bottom tab bar (compact + medium) --- */
+.tabbar{
+  flex:0 0 auto;display:flex;gap:2px;padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));
+  background:color-mix(in srgb, var(--surface) 88%, transparent);
+  border-top:1px solid var(--border);
+  backdrop-filter:blur(18px);
+}
+.tab{
+  flex:1;appearance:none;border:0;background:transparent;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  min-height:56px;border-radius:var(--r-md);color:var(--content-3);
+  font:var(--t-micro);transition:color var(--d-fast) var(--ease), background var(--d-fast) var(--ease);
+}
+.tab svg{width:22px;height:22px;stroke-width:2}
+.tab:hover{color:var(--content-2)}
+.tab[aria-selected="true"]{color:var(--mint);background:var(--mint-soft)}
+.tab[aria-selected="true"] svg{stroke-width:2.4}
+.tab:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+.tab .dot{width:4px;height:4px;border-radius:50%;background:currentColor;opacity:0}
+.tab[aria-selected="true"] .dot{opacity:1}
+
+/* --- nav rail (expanded) --- */
+.rail{
+  flex:0 0 96px;display:none;flex-direction:column;gap:var(--s-2);
+  padding:var(--s-3) var(--s-2);border-right:1px solid var(--border);
+  background:color-mix(in srgb, var(--surface) 60%, transparent);
+}
+.rail .logo{margin:0 auto  var(--s-4);width:34px;height:34px;border-radius:11px}
+.rail-item{
+  appearance:none;border:0;background:transparent;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  min-height:64px;border-radius:var(--r-md);color:var(--content-3);
+  font:var(--t-micro);transition:color var(--d-fast) var(--ease), background var(--d-fast) var(--ease);
+}
+.rail-item svg{width:22px;height:22px}
+.rail-item:hover{color:var(--content-2);background:var(--surface-2)}
+.rail-item[aria-selected="true"]{color:var(--mint);background:var(--mint-soft)}
+.rail-item:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+.rail-spacer{flex:1}
+
+/* --- panels --- */
+.panels{flex:1;min-width:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
+.panels::-webkit-scrollbar{width:8px}
+.panels::-webkit-scrollbar-thumb{background:var(--border-strong);border-radius:99px}
+.panel{display:none;padding:0 var(--s-5) 120px;animation:enter var(--d-base) var(--ease-out)}
+.panel.active{display:block}
+@keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* expanded: two-pane Today */
+.split{display:grid;gap:var(--s-5);grid-template-columns:minmax(0,1fr)}
+@media (min-width:1000px){
+  [data-viewport="desktop"] .split--today{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+}
+[data-viewport="desktop"] .panels{padding:0 var(--s-6)}
+[data-viewport="desktop"] .panel{padding-bottom:var(--s-8)}
+[data-viewport="desktop"] .rail{display:flex}
+[data-viewport="desktop"] .tabbar{display:none}
+
+/* ============================================================
+   4. COMPONENTS
+   ============================================================ */
+.section{margin-top:var(--s-6)}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s-3);margin-bottom:var(--s-3)}
+.section-title{font:var(--t-h2);margin:0;letter-spacing:-.1px}
+.link-btn{
+  appearance:none;border:0;background:transparent;cursor:pointer;
+  font:var(--t-caption);color:var(--purple);padding:6px 8px;border-radius:8px;min-height:36px;
+}
+.link-btn:hover{text-decoration:underline}
+.link-btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+.card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);
+  padding:var(--s-5);box-shadow:var(--shadow-1);
+}
+.card--grad{background:var(--grad-mint);border-color:transparent}
+.card--flat{background:transparent;box-shadow:none}
+.card + .card{margin-top:var(--s-3)}
+.card-title{font:var(--t-h3);margin:0}
+.card-text{font:var(--t-body);color:var(--content-2);margin:6px 0 0}
+
+.eyebrow{font:var(--t-micro);letter-spacing:1.1px;color:var(--mint);text-transform:uppercase;margin:0 0 6px}
+
+/* chips */
+.chip{
+  display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--r-pill);
+  background:var(--surface-2);color:var(--content-2);font:var(--t-caption);white-space:nowrap;
+}
+.chip--mint{background:var(--mint-soft);color:var(--mint)}
+.chip--peach{background:var(--peach-soft);color:var(--peach)}
+.chip--purple{background:var(--purple-soft);color:var(--purple)}
+.chip--red{background:var(--red-soft);color:var(--red)}
+.chip--sky{background:var(--sky-soft);color:var(--sky)}
+
+/* icon button */
+.icon-btn{
+  appearance:none;cursor:pointer;min-width:var(--touch);min-height:var(--touch);
+  border-radius:var(--r-sm);border:1px solid var(--border);background:var(--surface);
+  color:var(--content-2);display:grid;place-items:center;
+  transition:background var(--d-fast) var(--ease), color var(--d-fast) var(--ease), transform var(--d-fast) var(--ease);
+}
+.icon-btn svg{width:18px;height:18px}
+.icon-btn:hover{background:var(--surface-2);color:var(--content)}
+.icon-btn:active{transform:scale(.94)}
+.icon-btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.icon-btn--on{color:var(--mint);border-color:transparent;background:var(--mint-soft)}
+
+/* buttons */
+.btn{
+  appearance:none;border:0;cursor:pointer;font:var(--t-label);
+  min-height:52px;padding:0 var(--s-5);border-radius:var(--r-pill);
+  display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2);width:100%;
+  background:var(--surface-2);color:var(--content);
+  transition:transform var(--d-fast) var(--ease), filter var(--d-fast) var(--ease), background var(--d-fast) var(--ease);
+}
+.btn svg{width:18px;height:18px}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:scale(.985)}
+.btn:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+.btn--primary{background:var(--grad-cta);color:#fff;box-shadow:var(--shadow-glow);font-weight:800}
+.btn--mint{background:var(--mint);color:var(--on-accent)}
+.btn--ghost{background:transparent;border:1px solid var(--border-strong);color:var(--content)}
+.btn--danger{background:var(--red-soft);color:var(--red)}
+.btn[disabled]{opacity:.38;cursor:not-allowed}
+.btn-row{display:flex;gap:var(--s-3);margin-top:var(--s-4)}
+.btn-row .btn{flex:1}
+
+/* stat tiles */
+.stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-3)}
+@media (min-width:720px){ .stat-grid--4{grid-template-columns:repeat(4,minmax(0,1fr))} }
+.stat{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);
+  padding:var(--s-4);display:flex;flex-direction:column;gap:2px;min-height:88px;justify-content:center;
+}
+.stat b{font:700 26px/1.15 var(--font);letter-spacing:-.4px}
+.stat span{font:var(--t-caption);color:var(--content-2)}
+.stat--mint b{color:var(--mint)} .stat--purple b{color:var(--purple)}
+.stat--peach b{color:var(--peach)} .stat--sky b{color:var(--sky)}
+.stat--mint{background:var(--grad-mint);border-color:transparent}
+
+/* streak orb */
+.orb-wrap{display:flex;gap:var(--s-4);align-items:stretch}
+.orb{flex:0 0 128px;display:grid;place-items:center;position:relative}
+.orb svg{width:128px;height:128px;transform:rotate(-90deg)}
+.orb .label{position:absolute;text-align:center}
+.orb .label b{display:block;font:900 30px/1 var(--font);letter-spacing:-1px}
+.orb .label span{font:var(--t-micro);color:var(--content-2);letter-spacing:.8px}
+.orb-track{fill:none;stroke:var(--surface-3);stroke-width:10}
+.orb-fill{fill:none;stroke:url(#orbGrad);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset var(--d-slow) var(--ease)}
+.side-stats{flex:1;display:flex;flex-direction:column;gap:var(--s-2);min-width:0}
+.side-stat{
+  flex:1;display:flex;align-items:center;gap:var(--s-3);padding:var(--s-3) var(--s-4);
+  border-radius:var(--r-md);background:var(--surface);border:1px solid var(--border);min-height:56px;
+}
+.side-stat .emo{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:16px;flex:0 0 auto}
+.side-stat .txt{min-width:0;flex:1}
+.side-stat .txt b{display:block;font:800 17px/1.2 var(--font)}
+.side-stat .txt span{font:var(--t-caption);color:var(--content-2)}
+.side-stat--mint{background:var(--grad-mint);border-color:transparent}
+.side-stat--purple{background:var(--grad-purple);border-color:transparent}
+.side-stat--peach{background:var(--grad-peach);border-color:transparent}
+
+/* week strip */
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:var(--s-2)}
+.day{
+  display:flex;flex-direction:column;align-items:center;gap:6px;padding:var(--s-2) 2px;
+  border-radius:var(--r-sm);background:var(--surface);border:1px solid var(--border);min-height:64px;
+  justify-content:center;
+}
+.day span{font:var(--t-micro);color:var(--content-3);letter-spacing:.6px}
+.day i{
+  width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;
+  font:800 12px/1 var(--font);background:var(--surface-3);color:var(--content-3);
+}
+.day--done i{background:var(--mint);color:var(--on-accent)}
+.day--today{border-color:var(--purple);box-shadow:0 0 0 1px var(--purple) inset}
+
+/* list rows */
+.list{display:flex;flex-direction:column;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.row{
+  display:flex;align-items:center;gap:var(--s-3);padding:var(--s-4);min-height:60px;
+  background:transparent;border:0;width:100%;text-align:left;cursor:pointer;font:inherit;color:inherit;
+  transition:background var(--d-fast) var(--ease);
+}
+.row + .row{border-top:1px solid var(--border)}
+.row:hover{background:var(--surface-2)}
+.row:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+.row .ico{
+  width:36px;height:36px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto;
+  background:var(--surface-2);color:var(--mint);
+}
+.row .ico svg{width:18px;height:18px}
+.row .txt{flex:1;min-width:0}
+.row .txt b{display:block;font:var(--t-label);font-weight:700}
+.row .txt span{display:block;font:var(--t-caption);color:var(--content-2);margin-top:2px}
+.row .chev{color:var(--content-3);flex:0 0 auto}
+.row .chev svg{width:18px;height:18px;display:block}
+.row--static{cursor:default}
+.row--static:hover{background:transparent}
+
+/* switch */
+.switch{
+  appearance:none;border:0;cursor:pointer;flex:0 0 auto;position:relative;
+  width:52px;height:32px;border-radius:var(--r-pill);background:var(--surface-3);
+  transition:background var(--d-fast) var(--ease);
+}
+.switch::after{
+  content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;
+  background:#fff;box-shadow:var(--shadow-1);transition:transform var(--d-fast) var(--ease);
+}
+.switch[aria-checked="true"]{background:var(--mint)}
+.switch[aria-checked="true"]::after{transform:translateX(20px)}
+.switch:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+
+/* stepper */
+.stepper{display:flex;flex-direction:column;gap:6px;flex:1;min-width:0}
+.stepper label{font:var(--t-caption);color:var(--content-2)}
+.stepper .ctl-row{display:flex;align-items:center;gap:var(--s-2);background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-pill);padding:4px}
+.stepper button{
+  appearance:none;border:0;background:var(--surface);cursor:pointer;color:var(--content);
+  width:36px;height:36px;border-radius:50%;font:800 18px/1 var(--font);display:grid;place-items:center;
+}
+.stepper button:hover{background:var(--surface-3)}
+.stepper button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.stepper .val{flex:1;text-align:center;font:800 15px/1 var(--font)}
+.stepper .val small{font-weight:700;color:var(--content-2);font-size:11px;margin-left:3px}
+
+/* input */
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font:var(--t-caption);color:var(--content-2)}
+input[type="text"],input[type="email"]{
+  min-height:52px;border-radius:var(--r-md);border:1px solid var(--border-strong);
+  background:var(--surface-2);color:var(--content);padding:0 var(--s-4);font:var(--t-body);width:100%;
+}
+input::placeholder{color:var(--content-3)}
+input:focus-visible{outline:2px solid var(--focus);outline-offset:1px;border-color:transparent}
+
+/* verdict */
+.verdict{display:flex;gap:var(--s-3);align-items:flex-start;padding:var(--s-4);border-radius:var(--r-md);margin-top:var(--s-3)}
+.verdict--block{background:var(--red-soft);border:1px solid color-mix(in srgb,var(--red) 40%,transparent)}
+.verdict--allow{background:var(--mint-soft);border:1px solid color-mix(in srgb,var(--mint) 40%,transparent)}
+.verdict .ico{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;flex:0 0 auto;background:color-mix(in srgb,var(--surface) 70%,transparent)}
+.verdict b{font:var(--t-label)}
+.verdict p{margin:4px 0 0;font:var(--t-caption);color:var(--content-2);line-height:1.5}
+
+/* bar chart */
+.chart{display:flex;align-items:flex-end;gap:var(--s-3);height:150px;padding-top:var(--s-3)}
+.chart .col{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end}
+.chart .bar{
+  width:100%;max-width:38px;border-radius:var(--r-sm) var(--r-sm) 4px 4px;background:var(--surface-3);
+  position:relative;min-height:6px;transition:height var(--d-slow) var(--ease), background var(--d-fast) var(--ease);
+}
+.chart .col--now .bar{background:var(--grad-cta)}
+.chart .bar b{position:absolute;top:-20px;left:0;right:0;text-align:center;font:800 11px/1 var(--font);color:var(--content-2)}
+.chart .col span{font:var(--t-micro);color:var(--content-3);letter-spacing:.5px}
+
+/* heatmap */
+.heat{display:grid;grid-template-columns:repeat(14,1fr);gap:5px}
+.heat i{aspect-ratio:1;border-radius:5px;background:var(--surface-2);display:block}
+.heat i[data-l="1"]{background:color-mix(in srgb,var(--mint) 26%,var(--surface-2))}
+.heat i[data-l="2"]{background:color-mix(in srgb,var(--mint) 52%,var(--surface-2))}
+.heat i[data-l="3"]{background:var(--mint)}
+.heat i[data-future]{background:transparent;border:1px dashed var(--border)}
+
+/* banner / pledge */
+.banner{
+  display:flex;align-items:center;gap:var(--s-4);padding:var(--s-4) var(--s-5);
+  border-radius:var(--r-lg);background:var(--grad-purple);border:1px solid var(--border);
+}
+.banner .ico{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--purple-soft);color:var(--purple);flex:0 0 auto}
+.banner .txt{flex:1;min-width:0}
+.banner .txt b{display:block;font:var(--t-h3)}
+.banner .txt span{font:var(--t-caption);color:var(--content-2)}
+.banner .btn{width:auto;flex:0 0 auto;min-height:44px;padding:0 var(--s-4)}
+.banner--done{background:var(--grad-mint)}
+.banner--done .ico{background:var(--mint-soft);color:var(--mint)}
+
+/* challenge cards */
+.challenges{display:grid;gap:var(--s-3);grid-template-columns:minmax(0,1fr)}
+@media (min-width:700px){ .challenges{grid-template-columns:repeat(3,minmax(0,1fr))} }
+.chal{
+  text-align:left;cursor:pointer;border:1px solid var(--border);border-radius:var(--r-lg);
+  background:var(--surface);padding:var(--s-4);display:flex;flex-direction:column;gap:var(--s-2);min-height:132px;
+  transition:transform var(--d-fast) var(--ease), border-color var(--d-fast) var(--ease), background var(--d-fast) var(--ease);
+}
+.chal:hover{transform:translateY(-2px);border-color:var(--border-strong);background:var(--surface-2)}
+.chal:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.chal .ico{width:40px;height:40px;border-radius:12px;display:grid;place-items:center}
+.chal b{font:var(--t-label)}
+.chal span{font:var(--t-caption);color:var(--content-2);line-height:1.45}
+.chal .meta{margin-top:auto;font:var(--t-micro);color:var(--content-3);letter-spacing:.6px}
+
+/* profile header */
+.profile-head{display:flex;align-items:center;gap:var(--s-4);padding:var(--s-2) 0 var(--s-4)}
+.avatar{
+  width:64px;height:64px;border-radius:22px;display:grid;place-items:center;flex:0 0 auto;
+  background:var(--grad-cta);font:900 24px/1 var(--font);color:#fff;box-shadow:var(--shadow-glow);
+}
+.profile-head .txt{min-width:0;flex:1}
+.profile-head .txt b{display:block;font:var(--t-h2)}
+.profile-head .txt span{font:var(--t-caption);color:var(--content-2)}
+
+/* toast */
+.toast{
+  position:absolute;left:50%;bottom:96px;transform:translate(-50%,16px);
+  background:var(--surface-3);color:var(--content);border:1px solid var(--border-strong);
+  padding:12px 18px;border-radius:var(--r-pill);font:var(--t-caption);box-shadow:var(--shadow-2);
+  opacity:0;pointer-events:none;transition:opacity var(--d-base) var(--ease), transform var(--d-base) var(--ease);
+  z-index:40;display:flex;align-items:center;gap:8px;max-width:80%;
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ============================================================
+   5. SPEC RAIL
+   ============================================================ */
+.spec{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s-5);box-shadow:var(--shadow-1)}
+.spec + .spec{margin-top:var(--s-4)}
+.spec h3{font:var(--t-h3);margin:0 0 var(--s-3)}
+.spec h4{font:var(--t-caption);margin:var(--s-4) 0 var(--s-2);color:var(--content-3);letter-spacing:.8px;text-transform:uppercase}
+.spec p,.spec li{font:var(--t-body);color:var(--content-2);margin:0 0 var(--s-2)}
+.spec ul{margin:0;padding-left:18px}
+.spec li{margin-bottom:6px}
+.spec li b{color:var(--content)}
+.swatch-row{display:flex;flex-wrap:wrap;gap:6px}
+.sw{
+  display:flex;flex-direction:column;align-items:center;gap:4px;font:var(--t-micro);color:var(--content-3);
+}
+.sw i{width:46px;height:32px;border-radius:8px;border:1px solid var(--border);display:block}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px var(--s-3);font:var(--t-caption);align-items:center}
+.kv dt{color:var(--content-3)}
+.kv dd{margin:0;color:var(--content-2);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px}
+.badge-aa{display:inline-block;padding:2px 8px;border-radius:6px;background:var(--mint-soft);color:var(--mint);font:var(--t-micro);margin-left:6px}
+.note{font:var(--t-caption);color:var(--content-3);margin-top:var(--s-3);line-height:1.5}
+</style>
+</head>
+<body data-page-node-id="iFQQLiK3WyPr2w70QxSJVA">
+<div class="chrome-bg" data-page-node-id="3W4kXJzfPVrNiWa3hgYDt5"></div>
+
+<div class="chrome" data-page-node-id="6u4ilGQCzdU8Ls7WrW5oin">
+  <header class="chrome-top" data-page-node-id="tqyfgzj0yelDtw0kMuuuVH">
+    <div data-page-node-id="0ALg3GQq69cdNTOqA4k5Ey">
+      <h1 data-page-node-id="YOKZnwYGcPyxIyKjf5ybKZ">FREED — Core Screens UI Prototype</h1>
+      <p class="sub" data-page-node-id="J0ojo0jfFPQKyIHb3aHZrF">Today · Shield · Progress · Profile. Built on the existing token set in <code data-page-node-id="KzzqdEI0jm4D8rCrTAKmZR">src/constants/design.ts</code> and <code data-page-node-id="vwX4C0fb50xqu4VxchHKF5">design/freed.mobile.tokens.json</code>. Switch viewport to see the compact / medium / expanded layouts, or toggle theme and contrast to check the accessible colour schemes.</p>
+    </div>
+    <div class="controls" data-page-node-id="ECbbWZ1H9JOySBBUXCNLg6">
+      <div class="ctl-group" role="group" aria-label="Viewport size" data-page-node-id="NYxCQZxvwpsFBxAnX0h2BC">
+        <button class="ctl" data-vp="phone" aria-pressed="true" data-page-node-id="J60Epin1rPwRVC9AB8aSBS">Phone</button>
+        <button class="ctl" data-vp="tablet" aria-pressed="false" data-page-node-id="Cc7KGvwlMIEX3Gz5yTgAV2">Tablet</button>
+        <button class="ctl" data-vp="desktop" aria-pressed="false" data-page-node-id="JsadQVPNezT9R6HIND1vbD">Desktop</button>
+      </div>
+      <div class="ctl-group" role="group" aria-label="Colour scheme" data-page-node-id="gwCUampZfoXOEKeblKCBXT">
+        <button class="ctl" data-theme-btn="dark" aria-pressed="true" data-page-node-id="ofEx8ClMdQvluLJJ6N1umX">Dark</button>
+        <button class="ctl" data-theme-btn="light" aria-pressed="false" data-page-node-id="Xixa11mdIY666jjNfFFzX3">Light</button>
+      </div>
+      <div class="ctl-group" role="group" aria-label="Accessibility" data-page-node-id="G3pTC899JThC5gJ4pbGM5e">
+        <button class="ctl" id="contrastBtn" aria-pressed="false" data-page-node-id="UxDB43qbUc3TN4TCuAUfoM">High contrast</button>
+        <button class="ctl" id="motionBtn" aria-pressed="false" data-page-node-id="zOP2nTSNjSb72DhblVa0cs">Reduce motion</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout" data-page-node-id="aFBY7TUjDMEOCiyNXXFYwy">
+    <!-- ========================= DEVICE ========================= -->
+    <div class="device-stage" data-page-node-id="Ma5gQOdNVwku1oa0CJKpSB">
+      <div class="device" id="device" data-page-node-id="33tWccsla2AjsYyA8vezjX">
+        <div class="device-notch" data-page-node-id="YAUCygSGUCqHnBLhPJDnXQ"></div>
+        <div class="statusbar" data-page-node-id="BvVjeNMkoy2ZE4P8h09LCE"><span id="clock" data-page-node-id="KO0eYZuPZ00aJIuQ1L8kEH">9:41</span><span aria-hidden="true" data-page-node-id="6y5ci084Ubud8EGtATkHsL">▮▮▮ ⌾</span></div>
+
+        <div class="app" data-page-node-id="JwwKaeQArMGmyHtCZrIcEu">
+          <div class="app-body" data-page-node-id="C5HFlJgsOcIanHmNIWQK9V">
+            <!-- nav rail (expanded) -->
+            <nav class="rail" role="tablist" aria-label="Primary" data-page-node-id="JGQj4pWyJZkqvTmxSnHvmJ">
+              <div class="logo" aria-hidden="true" data-page-node-id="TvLlz7e8e7Jgj1VIVbqlPt"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="fMnVcEKEJ1e6OJ1LCpUCXJ"><path d="M12 3l7 3v6c0 4.4-3 8-7 9-4-1-7-4.6-7-9V6l7-3z" data-page-node-id="ZrxpsENAuh3YAIzqSMKd18"/><path d="M9 12l2 2 4-4" data-page-node-id="CiVRNHP1Gl2yyuQaX5epj0"/></svg></div>
+              <button class="rail-item" role="tab" data-tab="today" aria-controls="panel-today" aria-selected="true" data-page-node-id="irXSvWK6gB2IrKaFKAxvM4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="zlBS3hLymE1qLBB4GLUXdU"><path d="M3 10l9-7 9 7v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" data-page-node-id="29tQZyy7SmOyzgQfijJl64"/><path d="M9 21V12h6v9" data-page-node-id="saHwrMb6ZFjkEvqE9KT8bJ"/></svg>Today</button>
+              <button class="rail-item" role="tab" data-tab="shield" aria-controls="panel-shield" aria-selected="false" data-page-node-id="1xbWpGzD6WaEmz8R7H6cg8"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="VKnBWWBPjGhQa6wr7Y9cYp"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" data-page-node-id="wrh5wBm0yGAwxKHEnUYBgD"/><path d="M9 12l2 2 4-4" data-page-node-id="J9OW7GX8qF3rxRADXisE8S"/></svg>Shield</button>
+              <button class="rail-item" role="tab" data-tab="progress" aria-controls="panel-progress" aria-selected="false" data-page-node-id="4Iokoc2SIUE1Wl7NtWVq48"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="qlF1cl3YRTPl9ORlkkMn8d"><path d="M3 3v18h18" data-page-node-id="viOKDZd08vBicA2aSNUNzz"/><path d="M7 15l4-5 3 3 5-7" data-page-node-id="cCOPA3fGqFU4w7AwRHfODW"/></svg>Progress</button>
+              <button class="rail-item" role="tab" data-tab="profile" aria-controls="panel-profile" aria-selected="false" data-page-node-id="ARfyfWwKnQ3wSco6YTGVt5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="C6eB3LDsB5K6wRWPdXj9AI"><circle cx="12" cy="8" r="4" data-page-node-id="UikfY8zPVZVsCEA3YY0435"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" data-page-node-id="jHQ8v67CWOjvbRdtg7q4SA"/></svg>Profile</button>
+              <div class="rail-spacer" data-page-node-id="nmgVbNWu3foMGYrWu4mDsE"></div>
+            </nav>
+
+            <div class="panels" id="panels" data-page-node-id="EEwEQP3wcGCmVgOD0z3fZk">
+              <!-- ===================== TODAY ===================== -->
+              <section class="panel active" id="panel-today" role="tabpanel" aria-labelledby="tab-today" tabindex="0" data-page-node-id="GsHJOE7ELfDfMriUO0E1vm">
+                <div class="appbar" data-page-node-id="xaZDtLaxUFnbWpKEADATJZ">
+                  <div class="brand" data-page-node-id="lrGKLI8H0rz8ozL02dUR51">
+                    <div class="logo" aria-hidden="true" data-page-node-id="5DaFJkBGMHjHltSoaXoh8J"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="HvJ7ZrTDqTRhANSjXQSIPi"><path d="M12 3l7 3v6c0 4.4-3 8-7 9-4-1-7-4.6-7-9V6l7-3z" data-page-node-id="SafMUUJ0JVBa7LZkN5CkRV"/><path d="M9 12l2 2 4-4" data-page-node-id="4ScONUTGyGU4sSFgbxky8w"/></svg></div>
+                    <span data-page-node-id="mWOEtbvj8hoGmMf43fWklB">FREED</span>
+                  </div>
+                  <div class="spacer" data-page-node-id="AYUYqt7h3KV9016xWp4XKB"></div>
+                  <span class="chip chip--peach" title="Current streak" data-page-node-id="GBl7UFKomrLY5KKyDAgUEN">🔥 <b data-page-node-id="RReoLUaXNRpx2EaL0cyu6q">12</b></span>
+                  <button class="icon-btn icon-btn--on" data-toast="Protection is active" aria-label="Protection status: active. Open Shield." data-page-node-id="T5UHhJ6U9M93rzhkbvwHkc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="cojIY1UHEJjEIOaz3RLBzP"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" data-page-node-id="Zg6ABK3GQbt7xfPsG8HRWO"/><path d="M9 12l2 2 4-4" data-page-node-id="2AIheORthaHj5AIz43ALbL"/></svg></button>
+                  <button class="icon-btn" data-tab-jump="progress" aria-label="Open progress" data-page-node-id="8puik3SRNKu45h8J3jhVqQ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="W3v4Xf3bmiD2KVIerEbLQz"><circle cx="12" cy="12" r="9" data-page-node-id="1QfCB0e7L0WQBFmlcu3C4C"/><circle cx="12" cy="12" r="4" data-page-node-id="hrYtdVQT7OWqWUFoxgkB6q"/><circle cx="12" cy="12" r="1" data-page-node-id="lOaAM2CJEhVGpHPBrpkkxp"/></svg></button>
+                </div>
+
+                <div class="week" role="list" aria-label="This week" data-page-node-id="Tu0RLpdi7CBbqOOBuH9HSU">
+                  <div class="day day--done" role="listitem" data-page-node-id="JP2zKYZaKMq4iHQTkVUy2p"><span data-page-node-id="ICWkor2d9JPjKJBxX8pUaf">M</span><i aria-hidden="true" data-page-node-id="SClu7DdWDUx7Krl7B5roks">✓</i><span class="sr-only" data-page-node-id="tvvYxzKEW7iCvSDPFLMF2c">Monday, clean</span></div>
+                  <div class="day day--done" role="listitem" data-page-node-id="wyHjeIeGtB7oy57GN8NGfd"><span data-page-node-id="RIRAubYhWMJZZzFc2iWT2O">T</span><i aria-hidden="true" data-page-node-id="WVAYYMZ4fSJvIRMUgXcSjD">✓</i><span class="sr-only" data-page-node-id="DWxap5Toe8bZU1PY25XF4p">Tuesday, clean</span></div>
+                  <div class="day day--done" role="listitem" data-page-node-id="46PhmD1BFvUmeDC4QiVEhJ"><span data-page-node-id="rttBrzzd7HGKCEyQC0ZJgy">W</span><i aria-hidden="true" data-page-node-id="MXQFjOSL0H67Am5tgzb53Y">✓</i><span class="sr-only" data-page-node-id="WG7qUnAj9X9ImIznAkHPKC">Wednesday, clean</span></div>
+                  <div class="day day--done" role="listitem" data-page-node-id="2CACA1FXg7E0146sSChLmM"><span data-page-node-id="wB6EDkEVWivm1AkZIEEo3D">T</span><i aria-hidden="true" data-page-node-id="QKck0shntsOgg2NKBU04rU">✓</i><span class="sr-only" data-page-node-id="235WD2Qqz7ac6fFpTTxgBs">Thursday, clean</span></div>
+                  <div class="day" role="listitem" data-page-node-id="CtrgJyDNDLfuSXN4OCPr44"><span data-page-node-id="l52dcIXsNqYzpyF4DMEKsn">F</span><i aria-hidden="true" data-page-node-id="TFAIFw0p5LZqehpDW4ywi4">2</i><span class="sr-only" data-page-node-id="AjojiyMbaBbj7tAIVEnA1r">Friday, 2 urges resisted</span></div>
+                  <div class="day day--today" role="listitem" data-page-node-id="WmvaaUTt5CLnsYy1rVUkTQ"><span data-page-node-id="d1rI2w1WawyGLFO0V4lFtr">S</span><i aria-hidden="true" data-page-node-id="PWlqMhqvOcgylEiURWv8zn">•</i><span class="sr-only" data-page-node-id="piCSTQpS1nX5xq3kV9QukW">Saturday, today</span></div>
+                  <div class="day" role="listitem" data-page-node-id="vPkrSq4kGkifWxfvtoIVgD"><span data-page-node-id="0SsOGmYCWnuzfNVAxVq0WN">S</span><i aria-hidden="true" data-page-node-id="hsXM4tVOHjC4h1ocRkGSYN">·</i><span class="sr-only" data-page-node-id="0StgNEERlctAK846i266Qk">Sunday, upcoming</span></div>
+                </div>
+
+                <div class="split split--today section" data-page-node-id="9ea2tGmlwDGU3BiiE1QJrF">
+                  <div data-page-node-id="uUaFdZiEXbDkK4EBBCDruU">
+                    <div class="section-head" data-page-node-id="aiTZBxAQkBAmPPNdtZwA8d">
+                      <h2 class="section-title" data-page-node-id="fOGuQXUYNclVGmw58JoR2n">Today's Progress</h2>
+                      <button class="link-btn" data-tab-jump="progress" data-page-node-id="RseA3AQvXqqiVmACdBPQzB">View All</button>
+                    </div>
+                    <div class="orb-wrap" data-page-node-id="L8cd2sEFq2Hpcb1El5yfko">
+                      <div class="orb" data-page-node-id="UPOCIa9Li74EArEqQ89gCU">
+                        <svg viewBox="0 0 128 128" aria-hidden="true" data-page-node-id="8zzJo0sYoOVJQ6TdTydtyY">
+                          <defs data-page-node-id="lPfdMWTSdyI3oJs1dyfC9H"><linearGradient id="orbGrad" x1="0" y1="0" x2="1" y2="1" data-page-node-id="ClHJdTcoapccn5yiU9RS9n">
+                            <stop offset="0%" stop-color="#5ADF9E" data-page-node-id="AbKJgZtOp9tVWL2Sdb5FZ9"/><stop offset="100%" stop-color="#82CEFF" data-page-node-id="aBhjIqiGQveBYI118iUKqq"/>
+                          </linearGradient></defs>
+                          <circle class="orb-track" cx="64" cy="64" r="56" data-page-node-id="RenezF8zbraFNjPaxGCFlG"/>
+                          <circle class="orb-fill" cx="64" cy="64" r="56" stroke-dasharray="351.86" stroke-dashoffset="304.9" data-page-node-id="fkuQjnmPqVRuzJUnsGuLyg"/>
+                        </svg>
+                        <div class="label" data-page-node-id="vCWTo3Xn5i1t7cdMiPnWiE"><b data-page-node-id="KnQsLZ91fy8oaE8loBTV9D">12</b><span data-page-node-id="0QDdgGF6GGT5YYSmTeTv5L">DAYS</span></div>
+                      </div>
+                      <div class="side-stats" data-page-node-id="3i1zRtsXNs35hggd8miS8F">
+                        <div class="side-stat side-stat--peach" data-page-node-id="ZbdtOpGoLeUC4EIUNMeCPu"><div class="emo" aria-hidden="true" data-page-node-id="HCEDwVZUNgxLP4gB2Z780L">🔥</div><div class="txt" data-page-node-id="GPIcg2cSu1EoyZYSbOD77c"><b data-page-node-id="r3QtdJYypEEbPZhdicb1B9">12</b><span data-page-node-id="FAghr8lHofVsvCo4V0ydui">Day streak</span></div></div>
+                        <div class="side-stat side-stat--purple" data-page-node-id="t5Y6JjZwYzjTF1g9pSDGRh"><div class="emo" aria-hidden="true" data-page-node-id="KHyz72v8K0UCczbB3cgLOg">✓</div><div class="txt" data-page-node-id="rV8g2q6EhYfWT5Flf7KGsr"><b data-page-node-id="hgVdgPcDcS5ZLBzz2J1kAx">3/5</b><span data-page-node-id="YYBMKGIPhTowpa1FuGhgsv">Habits done</span></div></div>
+                        <div class="side-stat side-stat--mint" data-page-node-id="SDBr1UEc73OdljIWwdDrRw"><div class="emo" aria-hidden="true" data-page-node-id="jHZUTAFfE4hIIeNWSe7I9A">🎯</div><div class="txt" data-page-node-id="BMYWCCkwxfCO2FgPUxZx6Z"><b data-page-node-id="EaJ5pPwpG10LvjlkLKzyOk">78</b><span data-page-node-id="20wRCNAoTcygFSAHOWDzEq">Days to 90</span></div></div>
+                      </div>
+                    </div>
+
+                    <div class="section" data-page-node-id="R6gK2XMByhrHCY2NtkZb8L">
+                      <div class="banner" id="pledgeBanner" data-page-node-id="aijqXOmp75UZZolSYvJzGZ">
+                        <div class="ico" aria-hidden="true" data-page-node-id="Gfkujlvhzsh0B8yTSuH4EL"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="C1BrAeL0od3QKgQ9W0grcE"><path d="M12 2l2.4 6.6L21 10l-5 4.6L17.4 22 12 18.4 6.6 22 8 14.6 3 10l6.6-1.4z" data-page-node-id="hCFgYDNc9hwhmvWv0AUG8b"/></svg></div>
+                        <div class="txt" data-page-node-id="NCS47s5pUWOm2GDUMyf0mS"><b data-page-node-id="mU5If0uB0cB6tQdbgHlUXK">Take today's pledge</b><span data-page-node-id="90SbLgCYyVS9i38beW7hxE">5 seconds. Sets your intention for the day.</span></div>
+                        <button class="btn btn--primary" id="pledgeBtn" data-page-node-id="x8bHtR5f3yeWgZ2lTECL9F">Pledge</button>
+                      </div>
+                    </div>
+
+                    <div class="section" data-page-node-id="Mh6fnkWEOZ8fKQbDVHe375">
+                      <div class="section-head" data-page-node-id="AWmyqHYdVw2NyIQ7zPZu1v"><h2 class="section-title" data-page-node-id="my96j9bVycFuc2ChkpMHSx">Recovery challenges</h2><button class="link-btn" data-page-node-id="tXxE3nxyUB7i0tqjBXluwo">Library</button></div>
+                      <div class="challenges" data-page-node-id="e0AEqy95UmagR71loKGMQE">
+                        <button class="chal" data-toast="Breathing reset starting — 60 seconds" data-page-node-id="GTaeVte4GkQVlQJM6VwPh9">
+                          <div class="ico" style="background:var(--sky-soft);color:var(--sky)" data-page-node-id="nPRF4FcPq3TWfsAYSoGhAv"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="5Yr3xWiwR7ZCZxgf7DtlXB"><path d="M4 12c2-4 4-4 6 0s4 4 6 0 4-4 4 0" data-page-node-id="KzLUxw7zuADosfuzGEQdDl"/></svg></div>
+                          <b data-page-node-id="Fw57edqfcfsqd1tl4FPzNJ">Calm a craving</b><span data-page-node-id="Qm236RylPfLvs8ej1mjtSG">Guided breathing to ride out the urge.</span>
+                          <div class="meta" data-page-node-id="xaUZWWQkG381WZ99uHlGrE">1 MIN · NO ADS</div>
+                        </button>
+                        <button class="chal" data-toast="Step challenge armed — 500 steps" data-page-node-id="Zs4ReicxCUFBFP9LflTkM3">
+                          <div class="ico" style="background:var(--mint-soft);color:var(--mint)" data-page-node-id="XoXbpQ8148zcEI3eknrfgn"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="GMlCylBn7remiKiDMlFih3"><path d="M4 20l5-9 3 4 3-2 5 7" data-page-node-id="IutrEPzj87MjbCAXuMNGXt"/></svg></div>
+                          <b data-page-node-id="RQLosq4C5fHWZGG2qwkCtl">Move your body</b><span data-page-node-id="nP0KzLwfhvZhnwAwNXWP2O">A short step goal breaks the loop fast.</span>
+                          <div class="meta" data-page-node-id="htezpfH4PkxXxNKqrMBjAn">500 STEPS</div>
+                        </button>
+                        <button class="chal" data-toast="Opening support circle" data-page-node-id="31H7RcWJ12LFB85dSCoyIg">
+                          <div class="ico" style="background:var(--pink-soft);color:var(--pink)" data-page-node-id="NZdC8e0uhdblRXSSWZxCm3"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="0MzckCXaZpAvxEa0yjFfAM"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 0 0-7.1 7.1L12 21l8.8-8.3a5 5 0 0 0 0-7.1z" data-page-node-id="BT0qCerrtsElG0RWzUkiOz"/></svg></div>
+                          <b data-page-node-id="V2mmxV3du7DYLjBJTnguna">Reach out</b><span data-page-node-id="da8wniopdvFMcbm7u8iRuG">Message someone in your support circle.</span>
+                          <div class="meta" data-page-node-id="rwoQtuF2D4FNnsB7D8SiJt">2 CONTACTS</div>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div data-page-node-id="5ezgpAEbsyDqGHOAXvzIib">
+                    <div class="section" style="margin-top:0" data-page-node-id="tfYG9kjX60OeRRs2rG5fOh">
+                      <div class="section-head" data-page-node-id="ZhI0fJVVKELl4x6yaXcvV8"><h2 class="section-title" data-page-node-id="0uxmfs8qwrTUEzDwyB7Gt1">This week</h2></div>
+                      <div class="stat-grid" data-page-node-id="oNAeOwNhYYzVLN7jKfUDdc">
+                        <div class="stat stat--mint" data-page-node-id="tEtZFiYQUHsUAdjMtC5eZf"><b data-page-node-id="dcN2Bpg5xNCgg7Cd7RzFqj">18</b><span data-page-node-id="aTirPJFYjDkKepGcQA2CEl">Urges resisted</span></div>
+                        <div class="stat stat--sky" data-page-node-id="mYF5uyCQpbmQpA4u8w7Spb"><b data-page-node-id="9r5yT7fJnSBfQdGqJ5tL6i">6</b><span data-page-node-id="jUMD0GBljNNm0wghMjrGSF">Check-ins</span></div>
+                        <div class="stat stat--purple" data-page-node-id="h7a6Nk4eIzQbHOoCeuDWLh"><b data-page-node-id="ku5KXmAfr1Ao0vLIiZOGAs">42m</b><span data-page-node-id="fUtdRYc3j7aqVQO7AUGC48">Challenge time</span></div>
+                        <div class="stat stat--peach" data-page-node-id="31Bc9clOfZ94grOZAeIGYa"><b data-page-node-id="xJ6mEjplPYr8OqfGGUoD4Z">3</b><span data-page-node-id="rcomoFBdxha5mN07ErOeAc">Reflections</span></div>
+                      </div>
+                    </div>
+                    <div class="section" data-page-node-id="SY2dmj2DMH3zVNkl5xp1XF">
+                      <div class="card card--grad" data-page-node-id="eZHBJpU8itoMEVchCqV6QA">
+                        <p class="eyebrow" data-page-node-id="xDtUxPBFWxlABc1uiQb1TH">Next milestone</p>
+                        <p class="card-title" data-page-node-id="mUYVb5nsNgusIdXX2kdTSn">14 days — Urge wave shortens</p>
+                        <p class="card-text" data-page-node-id="g2taQB0N4PPYa5Y53Q2un5">Two more days. Most people notice the spike gets shorter and easier to ride out around here.</p>
+                        <div class="btn-row" data-page-node-id="qC3O2NZA6Zql3N4q2EaTTa"><button class="btn btn--mint" data-toast="Reminder set for day 14" data-page-node-id="6deVvh6b0Ha7FpH8q5mR9y">Remind me</button></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- ===================== SHIELD ===================== -->
+              <section class="panel" id="panel-shield" role="tabpanel" aria-labelledby="tab-shield" tabindex="0" hidden data-page-node-id="TIc1fPi2gOIcBTPRAq1VCa">
+                <div class="appbar" data-page-node-id="7CiQTeNjW05DKqL9ddIwOn">
+                  <div data-page-node-id="rbwJugMnhCGkh1abHI6pHp"><h2 data-page-node-id="SYucEKLunBBrKOHJQvJuyH">Shield</h2><p class="sub" data-page-node-id="CpCb6wgRUnPuEAisDNIaDo">Protection and limits</p></div>
+                </div>
+
+                <div class="card card--grad" data-page-node-id="SSm5qwdPg1njojS2E3hzlP">
+                  <div style="display:flex;align-items:flex-start;gap:12px" data-page-node-id="6khteFQaxwKmpZd2dQ4MuG">
+                    <div class="ico" style="width:44px;height:44px;border-radius:14px;background:var(--mint-soft);color:var(--mint);display:grid;place-items:center;flex:0 0 auto" data-page-node-id="jqn6Nbgidcxtvd7l1rW77o">
+                      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="eCYZQEDOdlBUu3w7NHiDjV"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" data-page-node-id="vYGAnVNrVWjmISrIFodAAC"/><path d="M9 12l2 2 4-4" data-page-node-id="Ol0CXsOkBX3NtyxBQjk9NM"/></svg>
+                    </div>
+                    <div style="flex:1;min-width:0" data-page-node-id="JIJGYqoEugXpv7xkYvIkJS">
+                      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap" data-page-node-id="Z2JunF8bqTx5TQ2VAOvbLy">
+                        <p class="card-title" style="margin:0" data-page-node-id="2UUWl4Wcxj2GEePN7gsP5B">Protection active</p>
+                        <span class="chip chip--mint" data-page-node-id="WTMAKstv9Xrw8CcLTpl5Hl">Adult block on</span>
+                      </div>
+                      <p class="card-text" data-page-node-id="NQfEYypBcGRhGltxabFAim">Adult domains and adult search intent are blocked. Normal browsing stays open.</p>
+                      <div class="btn-row" style="margin-top:14px" data-page-node-id="p3URxjaF1yEfl58POOAzW4">
+                        <button class="btn btn--ghost" data-toast="Running activation test…" data-page-node-id="9flkTPOkJytYik8UkxE9PB">Run test</button>
+                        <button class="btn btn--mint" data-toast="Opening protection setup" data-page-node-id="PoxksQPFSItuCGEdcpTurl">Setup</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="section" data-page-node-id="vHuJ1hhe8sa5iv3zcRTrpH">
+                  <div class="section-head" data-page-node-id="tzabJpAH1hinfgvkRDuvKv"><h2 class="section-title" data-page-node-id="bzoO9h4Xa4m8YetptLkqBh">Protection</h2></div>
+                  <div class="list" data-page-node-id="HByS4gjxlo9xpuIc5rxBIz">
+                    <div class="row row--static" data-page-node-id="MXELlHyGJQHBhgEr2FDFpw">
+                      <div class="ico" data-page-node-id="HdoLVoeGuZX0HIKyYtJMRQ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="pFMK4Acrueod5GFZHqfs99"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" data-page-node-id="QQzGSEwpr2zSXsao8R20tp"/></svg></div>
+                      <div class="txt" data-page-node-id="cL1oIKFNrBb4qGTK1Iul6c"><b data-page-node-id="KbCW5uld1O2iN2PJC3bzyl">Focus Shield</b><span data-page-node-id="OGpMvZjSRElttUDy4Zmhiq">Shield selected apps after a limit</span></div>
+                      <button class="switch" role="switch" aria-checked="true" aria-label="Focus Shield" data-toggle data-page-node-id="GiJSpZtz2v9otI3C8OwrHN"></button>
+                    </div>
+                    <div class="row row--static" data-page-node-id="GYGHbiflElsl8SuFlxsVFC">
+                      <div class="ico" style="color:var(--sky)" data-page-node-id="XW10ovR5fht7LzDqp7YFm4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="MN18bRq9KQCq08rMIXKOM8"><circle cx="12" cy="12" r="9" data-page-node-id="eA9VSluPxE2zmsA0mlp4WW"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18" data-page-node-id="C0fpAWm7R5UEoqMqj2HKSG"/></svg></div>
+                      <div class="txt" data-page-node-id="Z9G58KzDGx73LeD8zge3Bm"><b data-page-node-id="6FEp8zQEzV9vsLtHm22pfM">DNS Guard</b><span data-page-node-id="gIGnUbBh0w1p5mwk98UYsL">Network-level adult-domain filter</span></div>
+                      <button class="switch" role="switch" aria-checked="true" aria-label="DNS Guard" data-toggle data-page-node-id="Pn35IyqB0lOrd4TqrY31O4"></button>
+                    </div>
+                    <div class="row row--static" data-page-node-id="58vDH3U8cOMKfDYwqNFqHz">
+                      <div class="ico" style="color:var(--yellow)" data-page-node-id="CMW4i03GhjrLoYesNDKv0P"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="hm9lnqGNfdNanx7oagvFzH"><circle cx="12" cy="12" r="9" data-page-node-id="549DXZT89wUjlM3rzBK75h"/><path d="M12 7v5l3 2" data-page-node-id="UHYP6OiAEVZY0fNC7wEZRt"/></svg></div>
+                      <div class="txt" data-page-node-id="ZxE7EewAd1Iy6B26fRR2hR"><b data-page-node-id="UgVgG28jhWuBgYaDCHCHIU">App timers</b><span data-page-node-id="CTGdOMlDw1HAP2YtBMHy9A">4 apps · 45 min daily limit</span></div>
+                      <button class="switch" role="switch" aria-checked="false" aria-label="App timers" data-toggle data-page-node-id="sViAqCObQEohciMbNOZvmy"></button>
+                    </div>
+                    <button class="row" data-toast="Choose apps to protect" data-page-node-id="JhLNLTxWzRtH3ucdZ2NFMC">
+                      <div class="ico" style="color:var(--purple)" data-page-node-id="JuXXAxSbtctuTsUMO5VYND"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="b2mGRkwCGg6sjBUsEeG8KM"><rect x="6" y="3" width="12" height="18" rx="3" data-page-node-id="IDTPbYhicmmBqXhpcbWH4I"/><path d="M11 18h2" data-page-node-id="vQl9PEhknfCueQAu9Q7gSr"/></svg></div>
+                      <div class="txt" data-page-node-id="rjkfTadrLdKGTyhNTuT6K6"><b data-page-node-id="MzSoDmGZtDvjiSN0BiVPGG">Choose apps to protect</b><span data-page-node-id="vJvyKAMvFq3tEDnsyHuzTw">Instagram, TikTok, Reddit, X</span></div>
+                      <span class="chev" data-page-node-id="WW05BbU6ATHEMwrdFmVmOc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="VdUvdZEhBXS1bZqFeR1tiL"><path d="M9 6l6 6-6 6" data-page-node-id="6wigog86L81OjiVwsRPSmA"/></svg></span>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="section" data-page-node-id="lwvsjRoXUerjlHWnkQuXul">
+                  <div class="section-head" data-page-node-id="Sj7bgaQcjFDUZPJJSnZ9J1"><h2 class="section-title" data-page-node-id="dBVpsuhZnqDs4cV6uHHsWu">Discipline rules</h2><span class="chip" data-page-node-id="Oglm69OosqAjgIyErwJGX1">On device</span></div>
+                  <div class="card" data-page-node-id="D6exuRMOBOE1IQTksVuKF5">
+                    <div style="display:flex;gap:12px;flex-wrap:wrap" data-page-node-id="MuF4CWXiqkDdkZfzQgsF33">
+                      <div class="stepper" data-page-node-id="PDxxiWPBAAWQ8IJIRiizNb">
+                        <label for="limitVal" data-page-node-id="wQTfluIa32AAdUKrAwpodv">Daily limit</label>
+                        <div class="ctl-row" data-page-node-id="l2nycDGNC4p2VnaydREAV2">
+                          <button data-step="-5" data-target="limit" aria-label="Decrease daily limit" data-page-node-id="WRd8GDLA0UxQSAeh8ANJPb">−</button>
+                          <span class="val" id="limitVal" data-page-node-id="DTmkhfOHCZH8mKvRwpcbny">45<small data-page-node-id="s6C4BjqzMGQHZyFwCicU51">min/day</small></span>
+                          <button data-step="5" data-target="limit" aria-label="Increase daily limit" data-page-node-id="7IHOvU7Eu6qKDAqUzPo4a5">+</button>
+                        </div>
+                      </div>
+                      <div class="stepper" data-page-node-id="zKlUbSd0JXqMvrRU8R60bt">
+                        <label for="unlockVal" data-page-node-id="5MKGWVyyMHWU4YXTyolPKB">Earned unlock</label>
+                        <div class="ctl-row" data-page-node-id="ox7sbbmUAIzC4pAphBIJL9">
+                          <button data-step="-5" data-target="unlock" aria-label="Decrease earned unlock" data-page-node-id="CE0mLqDQF6itaN2m8IrNc0">−</button>
+                          <span class="val" id="unlockVal" data-page-node-id="rZQWqNLJdmIKmA7rIEmWBD">20<small data-page-node-id="V02uCmwzlNmlKylQzs3WoS">min earned</small></span>
+                          <button data-step="5" data-target="unlock" aria-label="Increase earned unlock" data-page-node-id="viMCEqP1wkNUIWPomlqqKH">+</button>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="card-text" style="margin-top:14px" data-page-node-id="SZpjhOEbRqWmNb8ARHZDwo">Earned unlocks and challenge intensity are saved on this device. Nothing leaves your phone.</p>
+                  </div>
+                </div>
+
+                <div class="section" data-page-node-id="8wGYe8QpFSzzkXgFSvpI8q">
+                  <div class="section-head" data-page-node-id="G9l7FUCh75MmF8OHmzors4"><h2 class="section-title" data-page-node-id="UNlnEXdJ0wtD7g4NPQ7H2i">URL check</h2></div>
+                  <div class="card" data-page-node-id="vo8QdDEfDxLEsS0EradIHs">
+                    <div class="field" data-page-node-id="0kIVEg8prU7KApKheQ8IS7">
+                      <label for="urlInput" data-page-node-id="1XQKIIZg1F01AkBfv3fqKR">Test how FREED classifies a link</label>
+                      <input id="urlInput" type="text" inputmode="url" placeholder="Enter a URL or search URL" value="example.com" data-page-node-id="PgJGsW6a2FsdxQgOMxW5Dd" />
+                    </div>
+                    <div class="btn-row" data-page-node-id="C5HvQuFunz8PG9uuw4eKq2">
+                      <button class="btn btn--ghost" id="checkBtn" data-page-node-id="8m0DyIQDVQfn44bSGMmgxF">Check</button>
+                      <button class="btn btn--primary" id="visitBtn" data-page-node-id="ki4A4IJzP9c137G6Lz3w5X">Visit</button>
+                    </div>
+                    <div id="verdict" class="verdict verdict--allow" data-page-node-id="ftiWDQt5SM9M9Jke13lLUE">
+                      <span class="ico" aria-hidden="true" data-page-node-id="ctOxC9gRaEV5gjdueUeGFN"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--mint)" stroke-width="2.2" stroke-linecap="round" data-page-node-id="ynKCp7qqTQ7FCewNXp7FaL"><path d="M20 6L9 17l-5-5" data-page-node-id="kxwazk4LdKFlEQVAQzCux7"/></svg></span>
+                      <div data-page-node-id="P3WAcRurNi42oSOj0tePk3"><b data-page-node-id="BHFRuHdeuM4oEHnCU84cgH">Allowed: normal browsing</b><p data-page-node-id="s6eHE4HdYP3eps5so6nspY">example.com is not on the adult-domain list. FREED stays out of the way.</p></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="section" data-page-node-id="Dt7NjoCJzBvDXmLNRHo3gC">
+                  <div class="card card--flat" style="background:var(--grad-sky);border:1px solid var(--border)" data-page-node-id="dTQFV2CubYbTiVUaVjcNwS">
+                    <p class="eyebrow" style="color:var(--sky)" data-page-node-id="FMRx5BVaWy6s7zwuyRGRPG">How it works</p>
+                    <p class="card-title" data-page-node-id="182R8FNwppm5pSMSCXtZN6">Default allow, precise block</p>
+                    <p class="card-text" data-page-node-id="M5Zl5uO08k6cAI9tPFVfdX">FREED blocks adult domains and adult search intent. Normal web stays open; Android app shields are opt-in.</p>
+                  </div>
+                </div>
+              </section>
+
+              <!-- ===================== PROGRESS ===================== -->
+              <section class="panel" id="panel-progress" role="tabpanel" aria-labelledby="tab-progress" tabindex="0" hidden data-page-node-id="2OdYgxgrFrPEpzqhFVwEiJ">
+                <div class="appbar" data-page-node-id="bOdGpF9zlI91DOTeuY9bHR">
+                  <div data-page-node-id="IsLmo749DHbPItVPReNzPK"><h2 data-page-node-id="H1OxfywD9Hcd7yPEN0wxsB">Progress</h2><p class="sub" data-page-node-id="4iOWxKNZxDToBcwyAfrs4m">Recovery analytics</p></div>
+                </div>
+
+                <div class="stat-grid stat-grid--4" data-page-node-id="IqdlWAabZOUSKwCvt9wv1M">
+                  <div class="stat stat--peach" data-page-node-id="qce97diPx8xBXKwXkrFOJi"><b data-page-node-id="7pty7BApkBELQm0H9zLmr0">12</b><span data-page-node-id="zIpDbgD14qZ3FuibRAYBQN">Current streak</span></div>
+                  <div class="stat stat--mint" data-page-node-id="z6EkCk0tDQ5EkcKr9XyxER"><b data-page-node-id="SogDoLhWvdRPsuDcXKKLxO">27</b><span data-page-node-id="LhmIfTLAApx3BTBR72bk4J">Best streak</span></div>
+                  <div class="stat stat--sky" data-page-node-id="qwTcVft6ncgHDutWyjZ4Hk"><b data-page-node-id="IhS55TM0OpwkmeTnhjTMf0">18</b><span data-page-node-id="YzQycNPuRLij1Bsvk3wCAK">Urges resisted</span></div>
+                  <div class="stat stat--purple" data-page-node-id="eZXEIS4CIpAhWW90EClBlA"><b data-page-node-id="PGDxJmffKbGcFUaGM8DPUc">9</b><span data-page-node-id="HnEzknqURlPcAi3VHnlcBx">Challenges done</span></div>
+                </div>
+
+                <div class="section" data-page-node-id="xfK1JETSnEJMoFENhdWhbk">
+                  <div class="section-head" data-page-node-id="S1S3fBAhjFuQ6giMj63I7q"><h2 class="section-title" data-page-node-id="MTN2UkZEDFKvz9gPTXoFgC">90-day journey</h2><span class="chip chip--mint" data-page-node-id="cZ7vFBYdUhB5ySNk15XlvX">13% complete</span></div>
+                  <div class="card" data-page-node-id="WQpZq0MNWfuZx4dqCoTuAV">
+                    <div style="height:14px;border-radius:99px;background:var(--surface-3);overflow:hidden" data-page-node-id="wHgxYdaseaN127Ez47kMMC">
+                      <div style="width:13%;height:100%;border-radius:99px;background:var(--grad-cta)" data-page-node-id="O967hCYYaYaxDJmWdFLVsb"></div>
+                    </div>
+                    <p class="card-text" data-page-node-id="cLnRgVzKOApYjzNzGaGyZ3">78 days to go. You're past the hardest part of week one.</p>
+                  </div>
+                </div>
+
+                <div class="section" data-page-node-id="3vIqaIJ2JslOEdToSH6TBz">
+                  <div class="section-head" data-page-node-id="xPzTMlr96He7Bjuike5X13"><h2 class="section-title" data-page-node-id="0eWM1liFMwZpx0mlAbjoGx">Urges per day</h2><span class="chip" data-page-node-id="CDegZ6m3kGduorh4foiGOW">Last 7 days</span></div>
+                  <div class="card" data-page-node-id="zb62BDp6sC3gL6f6jLtskS">
+                    <div class="chart" role="img" aria-label="Bar chart: urges per day dropped from 6 on Monday to 2 today" data-page-node-id="sBzlCvzkB8NBNVoVp2WKJe">
+                      <div class="col" data-page-node-id="ASCd33Hr2iINMUQ0K5Pmzj"><div class="bar" style="height:78%" data-page-node-id="QGar0wMnaMi2hxQ7LO2Pec"><b data-page-node-id="iiEZJVZQuNpHbMKFNv861H">6</b></div><span data-page-node-id="rFhWd3y9bHi18FTfyaMOXt">M</span></div>
+                      <div class="col" data-page-node-id="kfKxCSkQ5doE0EEFTwB64y"><div class="bar" style="height:62%" data-page-node-id="GVYvYLP00Aaxvnyk1uPuou"><b data-page-node-id="zmpmfsSFDDbNPBIFtTIZ0K">5</b></div><span data-page-node-id="PBdk426CkvKcgclBH0Ch2F">T</span></div>
+                      <div class="col" data-page-node-id="B1ArOUuc1yc4iBMHrn6dC6"><div class="bar" style="height:62%" data-page-node-id="qirVIUO0kMIIkSHPC10EKi"><b data-page-node-id="u53lCrLU4K0SbqFZGnjraH">5</b></div><span data-page-node-id="MjDwUFI3AEZZzELBmOKINX">W</span></div>
+                      <div class="col" data-page-node-id="uH98drRj8bDEzKbRhDGKeh"><div class="bar" style="height:48%" data-page-node-id="BHc3hWMs4Vo2OXBbOdFVGc"><b data-page-node-id="3lawE7OnzRL5okPEeKUzx7">4</b></div><span data-page-node-id="ODRm2wAea2W8ZjTMPOIk8Q">T</span></div>
+                      <div class="col" data-page-node-id="TiuFOiepY6EHRjewVUW9dH"><div class="bar" style="height:36%" data-page-node-id="XeFnOTALw8SMkbYzVRWISW"><b data-page-node-id="keiCE927L8QHmtoHM9jLpK">3</b></div><span data-page-node-id="YXbdJErlP2odRWU4p8qlSE">F</span></div>
+                      <div class="col col--now" data-page-node-id="7aPlDIfCft5UZuZp6OpuNW"><div class="bar" style="height:26%" data-page-node-id="BvDFWvNWITWbxGEDB7oU6E"><b data-page-node-id="iduBjPv6f45WgvcK2DAcQF">2</b></div><span data-page-node-id="7HWWjWxljVsuMUrZCl0Mqs">S</span></div>
+                      <div class="col" data-page-node-id="qKsVOIOO34fwfPx63983Gp"><div class="bar" style="height:6%;opacity:.4" data-page-node-id="cL4NuIOlc5AagS4RHMQOmS"><b data-page-node-id="tU8ipBAUmrAxoHtyXeS88Y">·</b></div><span data-page-node-id="tdtoG7fHEZ2HAxrSVoDVzh">S</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="section" data-page-node-id="xGlT6F6T3hXtNAAl8HDJz2">
+                  <div class="section-head" data-page-node-id="P2dkrEeNtBTqVIGo23JjBE"><h2 class="section-title" data-page-node-id="AGkRllOHmvy0w61MhYJME2">Last 10 weeks</h2></div>
+                  <div class="card" data-page-node-id="vnpgtZbUNqCDPVuiZg187Y">
+                    <div class="heat" id="heat" role="img" aria-label="Heatmap of clean days over the last ten weeks" data-page-node-id="4AEkmz0Hj9Qx0CYRvJtaBU"></div>
+                    <p class="card-text" style="margin-top:12px" data-page-node-id="mFzbaLndZLQcaVrHgSGLOa">Clean days are filled in green. Gaps are part of the process, not a reset of your worth.</p>
+                  </div>
+                </div>
+
+                <div class="section" data-page-node-id="vZwh2HjOCPAX7Dov71MymH">
+                  <div class="section-head" data-page-node-id="Ij6unGBiumo49MrzvhN4Yh"><h2 class="section-title" data-page-node-id="Owkke5hbxevzWpqJCLuiaa">Milestones</h2></div>
+                  <div class="list" data-page-node-id="GaZnG5aatyxgciIRFtD5nW">
+                    <div class="row row--static" data-page-node-id="8cFPzvd9OSN3ObszOfjGWu"><div class="ico" data-page-node-id="TpkWocHqsZgCYnYWmvIqDg">🔥</div><div class="txt" data-page-node-id="GRnvJgydbWiUFo2k4Ix6Rc"><b data-page-node-id="WaTa4JPKnJq4V9zXNfyBvm">7 days — First week</b><span data-page-node-id="EPJMFcGg9A1mSrC3IN0wzA">Earned 3 days ago</span></div><span class="chip chip--mint" data-page-node-id="5ZYbYZyDJzkGAb4NnfRkvL">Done</span></div>
+                    <div class="row row--static" data-page-node-id="Dq08bjmlQztLX3gfSK7ScH"><div class="ico" data-page-node-id="ENIFchG1v24VNyhgh2Hq3i">🌊</div><div class="txt" data-page-node-id="aPJUtJHGyTITXYvkyOQDRR"><b data-page-node-id="T5D7uqg8f7ypGYa6XAWZm3">14 days — Urge wave shortens</b><span data-page-node-id="akCzM4mO4uiH2pCA2vF8Os">2 days to go</span></div><span class="chip" data-page-node-id="NTns3JTE5edEZPF428jQFM">In progress</span></div>
+                    <div class="row row--static" data-page-node-id="yCbny1EXKoSj9HM5ES1GhB"><div class="ico" data-page-node-id="n5pkLlPN0RLS4OijDa03Qm">🎯</div><div class="txt" data-page-node-id="Fdnrj1VpEx89iIij8mpaId"><b data-page-node-id="IHzWqMGVtvC449EX9lRVKi">30 days — New baseline</b><span data-page-node-id="mVEi4nhPsxGo5Tgvjdvyju">Locked</span></div><span class="chip" data-page-node-id="8HWNjMdGRFM6Xep45dPinF">Locked</span></div>
+                  </div>
+                </div>
+
+                <div class="section" data-page-node-id="yGznKRxTFzr5kmlwCTZlsM">
+                  <div class="card" style="background:var(--grad-purple);border-color:transparent" data-page-node-id="6wvAfDDfFZi1DOXPpHPBpR">
+                    <p class="eyebrow" data-page-node-id="CFcqvji8BsnowUXlbAZjXY">Premium</p>
+                    <p class="card-title" data-page-node-id="Dk0GSZyWWVsTcVYbHBlg79">Deeper recovery analytics</p>
+                    <p class="card-text" data-page-node-id="WX1aOZmO4jRKT9rNkS42dw">Risk-window forecasts, CLARA patterns, and long-range trend lines.</p>
+                    <div class="btn-row" data-page-node-id="waDlOjp4OEEvnJyJfmULBq"><button class="btn btn--primary" data-toast="Showing Core 3 plans" data-page-node-id="s8TwNAAbgrG3qPB6nuh4iM">See plans</button></div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- ===================== PROFILE ===================== -->
+              <section class="panel" id="panel-profile" role="tabpanel" aria-labelledby="tab-profile" tabindex="0" hidden data-page-node-id="6FF4BCDN1H6rffrmXrYxpd">
+                <div class="appbar" data-page-node-id="c5FKYj9DG3F9BdG7yeDzbb">
+                  <div data-page-node-id="UwNQEbU7zHMisuCG610X4K"><h2 data-page-node-id="Yb6AHJXx76or5P0vdbQrS1">Profile</h2><p class="sub" data-page-node-id="oMqdlNAWCZ5Ue8fG3N6YcM">Settings and recovery plan</p></div>
+                </div>
+
+                <div class="profile-head" data-page-node-id="KJuIugOl9G3faKAMITqNkv">
+                  <div class="avatar" aria-hidden="true" data-page-node-id="EXBQEWndr6na1CSetmX5DG">A</div>
+                  <div class="txt" data-page-node-id="JvOwgDbF3TuVeRgdbE3EBP"><b data-page-node-id="VpnitmWHIjzygpzqV245fb">Alex</b><span data-page-node-id="D3jS9jKfGSboDtqdPqS8wE">Day 12 · Premium · Annual</span></div>
+                  <button class="btn btn--ghost" style="width:auto;min-height:44px;padding:0 18px" data-toast="Opening plan management" data-page-node-id="yWfcWQt3v6LQ6iqLd8sqKu">Manage</button>
+                </div>
+
+                <div class="section" style="margin-top:8px" data-page-node-id="PDPp0vBP90PY57cmo7HLNO">
+                  <div class="section-head" data-page-node-id="Fa0zII3bfU3wwMCttedDSk"><h2 class="section-title" data-page-node-id="sMQegaXdgiBK5DwUEz7R9p">Reminders</h2></div>
+                  <div class="list" data-page-node-id="o4j02Q1eG8dXeiBDRRcVwl">
+                    <div class="row row--static" data-page-node-id="8tzfye6XKAE3onaw68IHvh"><div class="ico" data-page-node-id="PeUBuHkqRs6sFRJaIJoEgl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="UvOGOjyG8ZjVzQOZGPjkvX"><circle cx="12" cy="12" r="4" data-page-node-id="drAD44PhaJHF9kMm1JAHOE"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" data-page-node-id="RVkIKIVDrKHNYgciDZOCHm"/></svg></div><div class="txt" data-page-node-id="GRNMuRH17wSKsjpZXYWDCQ"><b data-page-node-id="9rYYNk2TOJwnRDl4wx1mRg">Morning check-in</b><span data-page-node-id="Fgrpayqcu1UD4RvMHLKC5A">08:00 daily</span></div><button class="switch" role="switch" aria-checked="true" aria-label="Morning check-in" data-toggle data-page-node-id="9YjhjxH3HKWbTojoklTeac"></button></div>
+                    <div class="row row--static" data-page-node-id="k4vGDWEJw5QiYbPJzaMiEJ"><div class="ico" style="color:var(--purple)" data-page-node-id="FzqN0Mz4IBkw8K7noLYRbe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="tL0QgAherBtD8c0MJnwUZo"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" data-page-node-id="eJWqMbmO82G5YCVBYgzPrH"/></svg></div><div class="txt" data-page-node-id="yXR7RzJnaPn2fSFTcx10YW"><b data-page-node-id="F5TAqN2ibzsPtOt8p1wky4">Evening reflection</b><span data-page-node-id="BVy7gTnewiTeKKcy3e5G9M">21:30 daily</span></div><button class="switch" role="switch" aria-checked="true" aria-label="Evening reflection" data-toggle data-page-node-id="zQleaWw2nNVknz0jzRdDGE"></button></div>
+                    <div class="row row--static" data-page-node-id="Ko5yri1eb49mlwdwd19X6r"><div class="ico" style="color:var(--yellow)" data-page-node-id="Ylgd1HHhcsYKZrgyUpTF7g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="1G9yxwS1J5FG9BaGIPBc1k"><path d="M12 9v4M12 17h.01" data-page-node-id="6I77HIElsDmqvF2w8MOo1A"/><path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" data-page-node-id="GzIKUFEDGKgARupnlW1KWH"/></svg></div><div class="txt" data-page-node-id="oVClu9QLw0jwPnyfC5cSWJ"><b data-page-node-id="DpHjKYyYhlHu1rdU5LTkKT">Risk-window alert</b><span data-page-node-id="FLEp9aHmZDlTPALhc21RHP">Warns before your usual spike</span></div><button class="switch" role="switch" aria-checked="false" aria-label="Risk-window alert" data-toggle data-page-node-id="YejlIRVVEBHt9XJ65PqW34"></button></div>
+                  </div>
+                </div>
+
+                <div class="section" data-page-node-id="bBAgsWKOMZnzpvMNAlnG9H">
+                  <div class="section-head" data-page-node-id="STz3nZdnRAPA7JreKjVgAJ"><h2 class="section-title" data-page-node-id="vjiBGQFZMy0gzqXPHPCMzS">Accountability</h2></div>
+                  <div class="list" data-page-node-id="gF4DyBNukG0AX2hAtRdLoX">
+                    <button class="row" data-toast="Editing accountability plan" data-page-node-id="madsLhQxPB0IAym2WqFoON"><div class="ico" style="color:var(--pink)" data-page-node-id="QZgOc6hpgRZ7lt4v6Z1azk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="zWTBfB59Zs2dSXkGN5BAgP"><path d="M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 0 0-7.1 7.1L12 21l8.8-8.3a5 5 0 0 0 0-7.1z" data-page-node-id="SJocsostwhiY372cM95uZR"/></svg></div><div class="txt" data-page-node-id="KSPs3BqgGS4H7wTD7EcKh8"><b data-page-node-id="VbkyBIAW0KCNhz5RP5cIV6">Accountability plan</b><span data-page-node-id="87GLggMqJOYrsswLz9f2CZ">Share streak reports with a sponsor</span></div><span class="chev" data-page-node-id="TzXNGFKUTwqnYToDMQ2Gd2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="uNcDN8Pt7xmijoEF95mpeL"><path d="M9 6l6 6-6 6" data-page-node-id="TKL1M6dqSB7Fq2CzniCDby"/></svg></span></button>
+                    <button class="row" data-toast="Managing support circle" data-page-node-id="D5cvqZfkWvSx8vA69IMu9V"><div class="ico" style="color:var(--sky)" data-page-node-id="j2pGDpvgCdIFculiJNuxQE"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="18zI8SmxshnvIGWHWeen8C"><circle cx="9" cy="8" r="3.2" data-page-node-id="4SmF23AePMiY9fpUs1KBrA"/><path d="M2.5 20c0-3.4 2.9-5.5 6.5-5.5s6.5 2.1 6.5 5.5" data-page-node-id="iP05dRCYEKjKb1X1FHH7mB"/><path d="M17 8.5a3 3 0 0 1 0 5.5M19.5 20c0-2.4-.8-4-2-5" data-page-node-id="5p1jfBEjJuiOtKGj2b0CT5"/></svg></div><div class="txt" data-page-node-id="ZhKVrT4nVDtPeFOVOi4f5G"><b data-page-node-id="XRhOCbREOHvEuyEACzGJkj">Support circle</b><span data-page-node-id="uFw0D5xtuDholrHIRvBLTA">2 people</span></div><span class="chev" data-page-node-id="PO40HtPwKh1dnjiv9mOAxg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="NnDqPAAB4JQmXx49WIUdVG"><path d="M9 6l6 6-6 6" data-page-node-id="BbVHVDTezpSxlpNCvicVT0"/></svg></span></button>
+                  </div>
+                </div>
+
+                <div class="section" data-page-node-id="weOvXqLloNPIqldAwTxMxb">
+                  <div class="section-head" data-page-node-id="xaPKTis2R6a8owmLakdKR0"><h2 class="section-title" data-page-node-id="8NDCNoKhX5wXdqHMFqd8ZQ">Your data</h2></div>
+                  <div class="list" data-page-node-id="E0sgJnzfqcJDhMkY2RggmA">
+                    <button class="row" data-toast="Encrypted backup created on this device" data-page-node-id="1ZPf2Xl8HM6B7iJaC2osfr"><div class="ico" data-page-node-id="UavDzHwvNphbl4k68BhoFL"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="VbTrJyFCXe8P2hC2yhKw0H"><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7" data-page-node-id="dhBdlfWoGtH2ERmi3Hne18"/><path d="M8 8l4-4 4 4M12 4v12" data-page-node-id="7XvYHcPNfcAc5xZ1uFuCQJ"/></svg></div><div class="txt" data-page-node-id="axv3ONhG9UJfDt4PVxSJe1"><b data-page-node-id="xMjYagzPl1x2UptRyBDAPX">Create encrypted backup</b><span data-page-node-id="9jF4JDpePza6z3IAG1rLGb">Stays local until you sync it</span></div><span class="chev" data-page-node-id="pfOQ0y2zQMr4G1qkIlgunT"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="AIweDsJGHwdLA4R4FwWViD"><path d="M9 6l6 6-6 6" data-page-node-id="9779vXq6ywMEsyLMl2himb"/></svg></span></button>
+                    <button class="row" data-toast="Restore flow needs a backup file" data-page-node-id="GLHUJ6Tptgt2gCS46C5483"><div class="ico" style="color:var(--sky)" data-page-node-id="j3Q8Z2DhxhYcDIbCEkOgZD"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="0CZ5KK72o0BVMUUPPuHYGa"><path d="M3 12a9 9 0 1 0 3-6.7" data-page-node-id="PwRRFyHVBzZ3BKXetB33kK"/><path d="M3 4v5h5" data-page-node-id="sXH1T101uBDW9w3dMISbWJ"/></svg></div><div class="txt" data-page-node-id="sHhewhBjIDVQKgyjdJQ8ui"><b data-page-node-id="vigniqMbaDZkmGsIomq2i5">Restore from backup</b><span data-page-node-id="zm5uK4IdVzgH9xmWJeqOkk">Last backup 4 days ago</span></div><span class="chev" data-page-node-id="sNo8ZWDDSVeRabLKGVK3y0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="3AoScP9wqtoPnwEGGa90QL"><path d="M9 6l6 6-6 6" data-page-node-id="Ql1A3FB709xoEkNxLMrh8e"/></svg></span></button>
+                    <button class="row" data-toast="Logging a slip — no judgement, just data" data-page-node-id="O2XMBBbmbD8sqwaec61SRr"><div class="ico" style="color:var(--peach)" data-page-node-id="fKhCrA5wHE0LV26WsEeauf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="AFqekOOXt8pmg8VS4iigwe"><path d="M12 20h9" data-page-node-id="r70kxJIyD69e6ta57aTpge"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z" data-page-node-id="Ods8BGkp9mdEtglBDTysO0"/></svg></div><div class="txt" data-page-node-id="ObJalJmckwlRgMITPEQ3ib"><b data-page-node-id="0iV8XvBz9zYEG07ZvHFXvm">Log a slip</b><span data-page-node-id="q1J6PRmRCMGE7Sza5vVzjh">Resets the counter, keeps the history</span></div><span class="chev" data-page-node-id="TSgxsx441H0vYrIc89w5hZ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="EL5dJa6IfYbb8miUQj6VYp"><path d="M9 6l6 6-6 6" data-page-node-id="Q46KRCIOIIVcGtdTdYC3HD"/></svg></span></button>
+                  </div>
+                </div>
+
+                <div class="section" data-page-node-id="i9qsgxY6zGs7VGwfjk4RK0">
+                  <div class="section-head" data-page-node-id="gMj6YUHzgqOAD5sObYHjV2"><h2 class="section-title" data-page-node-id="rQKKZAdVPlederhjQuFwih">Support &amp; legal</h2></div>
+                  <div class="list" data-page-node-id="uPx9e4K7D6wZnD91PWKQPZ">
+                    <button class="row" data-toast="Opening privacy policy" data-page-node-id="ipwtIIYhSgow61WzzBJwAi"><div class="ico" style="color:var(--content-2)" data-page-node-id="OTn2GFHZicLu2jEjWuFOnT"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="kNtED4LpXEbA1jyIBkFFfJ"><path d="M6 3h9l5 5v13H6z" data-page-node-id="xU4vIBGjuereqyQ61BvV5U"/><path d="M15 3v5h5" data-page-node-id="g9yrbZTSB2A76I1BJXjHvB"/></svg></div><div class="txt" data-page-node-id="BoJ6Az557w161DrHBFvNDb"><b data-page-node-id="zIbA6Bl6PDibxfaILYQHMp">Privacy policy</b><span data-page-node-id="DHnVQCuT5ApXIhoIHqlRxu">Local-first. No browsing history collected.</span></div><span class="chev" data-page-node-id="b5TsNGMPc3bBW3lxUu9IcG"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="iI3TfHCkib0BHUg30ptkQi"><path d="M9 6l6 6-6 6" data-page-node-id="QJZVEywZHBXXijeSfUzsCl"/></svg></span></button>
+                    <button class="row" data-toast="Opening support" data-page-node-id="DYMbDH7Gz5IjIz1zSCBQ8n"><div class="ico" style="color:var(--content-2)" data-page-node-id="rGIBJHnKNYMjwbuwdnC1LT"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="tzPAh6qxkhHiZ0FYTUCOgw"><circle cx="12" cy="12" r="9" data-page-node-id="TD4llbFUvPmcGobTAJWSSg"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.8.4-1 .9-1 1.7M12 17h.01" data-page-node-id="HAp7y1UDVi6E2E3Jx3TYTz"/></svg></div><div class="txt" data-page-node-id="2wd6edBEzNFOYbD4OXNAP5"><b data-page-node-id="5uVIuhuEqCEaF4fVx0lsGI">Support</b><span data-page-node-id="uuk44CVEjx3ZGPircoDfRL">freedrecovery.app/support</span></div><span class="chev" data-page-node-id="9Ahnt2GqLzbGbVKac0sibL"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="CcVJF9GvHPLDKbMrIOZW31"><path d="M9 6l6 6-6 6" data-page-node-id="qIkL48hTZLiZDG7peodMra"/></svg></span></button>
+                  </div>
+                </div>
+
+                <div class="section" data-page-node-id="bkvGPbc1Mrc63RFfTEHbFV">
+                  <div class="card" style="border-color:color-mix(in srgb,var(--red) 40%,transparent);background:var(--red-soft)" data-page-node-id="esPc1z7DrIvPzJ5UdqvQIF">
+                    <p class="card-title" style="color:var(--red)" data-page-node-id="5HWG3sjvpNGDSiOxfSkyek">Danger zone</p>
+                    <p class="card-text" data-page-node-id="TzI1AnbqGclBEd9DNbEICi">Deleting is permanent and cannot be undone from this screen.</p>
+                    <div class="btn-row" data-page-node-id="aF6UXQJ19Z1uWQWA9bEqXQ">
+                      <button class="btn btn--danger" data-toast="Confirm on the next screen to delete local data" data-page-node-id="gdJAVWnCJEcjDhaspCKHhR">Delete local data</button>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <!-- bottom tab bar (compact + medium) -->
+          <nav class="tabbar" role="tablist" aria-label="Primary" data-page-node-id="QezjWN6uyevevsfiyCeAFT">
+            <button class="tab" id="tab-today" role="tab" aria-selected="true" aria-controls="panel-today" data-tab="today" data-page-node-id="GIJUfP9Rl2dzoCbheJpDGd">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="BqoUHPHmNALwdBkZkeiJoC"><path d="M3 10l9-7 9 7v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" data-page-node-id="DPHi1ZLmmPol6GRzJa9f1I"/><path d="M9 21V12h6v9" data-page-node-id="3uxz4sOvFBMxC55S22Xead"/></svg>
+              Today<span class="dot" data-page-node-id="AcAeu5CDdNgMqg2cWuq9WB"></span>
+            </button>
+            <button class="tab" id="tab-shield" role="tab" aria-selected="false" aria-controls="panel-shield" data-tab="shield" tabindex="-1" data-page-node-id="WyNcvXpQqjgf6nhf2V3qor">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="RAagoth7Wx7iA32RqkzZ3n"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" data-page-node-id="kXNhsfV1ockmLtLXdKHhWm"/><path d="M9 12l2 2 4-4" data-page-node-id="IS7Dk1J8RCVSODz8wD0Dp8"/></svg>
+              Shield<span class="dot" data-page-node-id="HOP2I0AXXLjy4CIoicfPz0"></span>
+            </button>
+            <button class="tab" id="tab-progress" role="tab" aria-selected="false" aria-controls="panel-progress" data-tab="progress" tabindex="-1" data-page-node-id="25IPI0q6wC96rltO4qcjLL">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="Eqfszrwtgnao7Fs3SDLaPA"><path d="M3 3v18h18" data-page-node-id="sd1sGWIXs6EsBlyNqjXveh"/><path d="M7 15l4-5 3 3 5-7" data-page-node-id="5MkYxGVdULmShcJg8IOcor"/></svg>
+              Progress<span class="dot" data-page-node-id="FuDNzuBblooAe5tyFrdC3X"></span>
+            </button>
+            <button class="tab" id="tab-profile" role="tab" aria-selected="false" aria-controls="panel-profile" data-tab="profile" tabindex="-1" data-page-node-id="wOHZHQLpHC9XDE9HwE47OY">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="1TlB1NxJXm7Lk73Ma4Ly4u"><circle cx="12" cy="8" r="4" data-page-node-id="9Ip9dDlvUHZyYSAVkYozhf"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" data-page-node-id="HxxVVGNQI8OzDjOPmBZyB3"/></svg>
+              Profile<span class="dot" data-page-node-id="PQJsXs9G1x3Dzc7RkX7yGZ"></span>
+            </button>
+          </nav>
+        </div>
+
+        <div class="toast" id="toast" role="status" aria-live="polite" data-page-node-id="vWDcWvUPvD3mFwvjPTGXiv"></div>
+      </div>
+      <p class="note" id="vpNote" style="text-align:center;max-width:640px" data-page-node-id="u3PlEyAD2bLrlZpfAVKCYW">Compact (390pt) — bottom tab bar, single column. Switch to Tablet or Desktop to see the medium and expanded layouts.</p>
+    </div>
+
+    <!-- ========================= SPEC RAIL ========================= -->
+    <aside data-page-node-id="s90fAaYV1RWV5nqnRIjQAg">
+      <div class="spec" data-page-node-id="UE9HDLYAIcKOFuPRCHjpzq">
+        <h3 data-page-node-id="XLaJLdQtSliOP7MCOe8oHv">Navigation model</h3>
+        <p data-page-node-id="2DZTBiDVt1J7bl1R5Xm7EK">Four destinations, always reachable. Nothing is more than one tap away, and the current destination is never ambiguous.</p>
+        <ul data-page-node-id="05dCQfDNbnH1H6iwkU2AFh">
+          <li data-page-node-id="2Bs54Cl5DUqSzlmTUVGK1x"><b data-page-node-id="t0jgp0ip7HabXaboOUIy6O">Today</b> — the daily action surface. State, pledge, challenges.</li>
+          <li data-page-node-id="jNf7xd3pJBSUDMS8j8Z3KD"><b data-page-node-id="VD5ih8pfFX7Db76nXI6EfL">Shield</b> — protection status and controls. Configuration, not browsing.</li>
+          <li data-page-node-id="TKWhE5E7iTagQw4mFvwohO"><b data-page-node-id="5gdeVNIszgYhnNRLPzuvEL">Progress</b> — longitudinal data. Read-only, no setup tasks.</li>
+          <li data-page-node-id="4jbRpqgBVqAG48tcyt5gOW"><b data-page-node-id="3Q2coDArcFWU4giYE5nVVR">Profile</b> — account, reminders, accountability, data.</li>
+        </ul>
+        <h4 data-page-node-id="aGlkg7APKa79H5a2owWa3I">Adaptive behaviour</h4>
+        <ul data-page-node-id="PTqLid0ACp1IsBeoBD5fVV">
+          <li data-page-node-id="b97wjiXUHy1JorsxlqG0j7"><b data-page-node-id="jNyf9sKQqYYYzVVai8B5T3">Compact (&lt;600)</b> — bottom tab bar, single column, 56px targets.</li>
+          <li data-page-node-id="ubRT5nCAWt45yCygKFNI1y"><b data-page-node-id="QsVVaHHGWG3kwOciMqdDyh">Medium (600–839)</b> — same shell, wider cards, 4-up stat grid.</li>
+          <li data-page-node-id="mNmKvsb9PLTa59EpHJF4ng"><b data-page-node-id="KbLmGK5qUCEn28yUEAsEVL">Expanded (≥840)</b> — left nav rail, two-pane Today, no bottom bar.</li>
+        </ul>
+        <p class="note" data-page-node-id="3HTF7uiUurYhN8ln5qmQHA">Navigation is never hidden behind a menu in any size class. The rail replaces the bar rather than supplementing it.</p>
+      </div>
+
+      <div class="spec" data-page-node-id="aR1HuTELMKifUWyawIjFja">
+        <h3 data-page-node-id="jO5LpaDO5H4FMUY2eDcACD">Visual hierarchy</h3>
+        <p data-page-node-id="oxjiZBOPBKLpw4ZAgerEI0">Every screen resolves in the same reading order: <b data-page-node-id="ekN15ZfWBoH55t3v8Atodm">status → primary action → supporting data → configuration</b>.</p>
+        <ul data-page-node-id="mdLqrU7ZqTfLFfkPIfLLaf">
+          <li data-page-node-id="RwcBqlO8goWVVyRHHUnVRj"><b data-page-node-id="bB3EjOb9EN4lMnWFADx79I">One</b> primary CTA per screen, always tinted and always thumb-reachable.</li>
+          <li data-page-node-id="cppVUcCAgX0UfvhGoNzEPw">Section titles at 20px/800 with a "View all" affordance at the same baseline.</li>
+          <li data-page-node-id="X60tCs3fsvBygKizuUp8gW">Numbers carry the colour; labels stay neutral so they never compete.</li>
+          <li data-page-node-id="FWQfG5WH4r9FhgCBj6xiHv">Destructive actions are separated into their own card at the very bottom.</li>
+        </ul>
+        <h4 data-page-node-id="a9MLgLeklWqqBW02h11o53">Call-to-action placement</h4>
+        <ul data-page-node-id="u5hBS5b7w1TX8DVtc1FAf1">
+          <li data-page-node-id="Xyd32j8am9GoqldGbdS6fK">Today → pledge banner sits above the fold, before the challenge list.</li>
+          <li data-page-node-id="M105zCyBD7HWBGf7mcwHQ9">Shield → setup CTA lives <em data-page-node-id="hDRn6kwBtr9C3i05REKWfH">inside</em> the status card, so fixing a problem is adjacent to seeing it.</li>
+          <li data-page-node-id="ZWuqA9lXjFdQfPuxR7kyAA">Profile → "Manage" is inline in the header; destructive actions are last.</li>
+        </ul>
+      </div>
+
+      <div class="spec" data-page-node-id="2OF6a46KeBsE7BZtQnHs1l">
+        <h3 data-page-node-id="qI7v6fFECPLG4tUv24GMv2">Colour &amp; accessibility</h3>
+        <div class="swatch-row" data-page-node-id="g2iWCDbBvgN7xodGXlAfnm">
+          <span class="sw" data-page-node-id="M9QM0H2t3ChPj5ZmGtMHIC"><i style="background:#5ADF9E" data-page-node-id="n5Bn2keHodjwVMlq3yfJ0F"></i>Mint</span>
+          <span class="sw" data-page-node-id="Jauf0kePU4GxjaKf5JxGTt"><i style="background:#B898FF" data-page-node-id="PIr9LbkRn74NkPkuZcxYYg"></i>Purple</span>
+          <span class="sw" data-page-node-id="lVWhi6PRNzFsedYy9qYXi3"><i style="background:#FF9B72" data-page-node-id="VDADZK1XoFoxkKBtEWz7J4"></i>Peach</span>
+          <span class="sw" data-page-node-id="qZcZZHtfoqGbWUUftBc2rt"><i style="background:#82CEFF" data-page-node-id="0AtUBv0Icx9MIDqMS3167B"></i>Sky</span>
+          <span class="sw" data-page-node-id="Q4RSRuysNA4te1siDjvwU0"><i style="background:#FF5148" data-page-node-id="WdxLpgQ4Eu0Im7NhdLCuF2"></i>Red</span>
+        </div>
+        <ul style="margin-top:16px" data-page-node-id="dDZDz1wkNNFeqqyvtwR1eu">
+          <li data-page-node-id="dqzvJxFhoHQ3S5IeZHe4ln">Body text on canvas <b data-page-node-id="40oQaXbu9RNwW97ZHWdFRF">8.1:1</b><span class="badge-aa" data-page-node-id="DN9GpqEvV5MMl5lOrVvw4b">AAA</span></li>
+          <li data-page-node-id="zaO1b2rTIK2YSVJ9m3E4jz">Secondary text on canvas <b data-page-node-id="9p1sDp8IgKEaZ3RYjsPFMR">5.4:1</b><span class="badge-aa" data-page-node-id="wPY8acQiKM0vJOE7zuWEuf">AA</span></li>
+          <li data-page-node-id="KlU4VgoHpoXDavcGK4UpE9">Accent on surface <b data-page-node-id="iZjbOE9ei2JJndQR0eLZrp">4.9:1</b><span class="badge-aa" data-page-node-id="mPNEVE5DDqDgkT5V0pmjD0">AA</span></li>
+          <li data-page-node-id="NSZorhfkpXb8yhv32MdJEb">Every status is colour <b data-page-node-id="QTGlEuBrKIzPSzjsHG1XSf">plus</b> icon plus label — never colour alone.</li>
+        </ul>
+        <h4 data-page-node-id="9sYUguBlFLAVg0myyJY8wH">Token mapping</h4>
+        <dl class="kv" data-page-node-id="YXtkUBUxUh4YX1ZF6pfJay">
+          <dt data-page-node-id="F1U9PhRgOUDFEV3EHkvUTo">canvas</dt><dd data-page-node-id="VOD0wvzIvGNJsgBhVF4voE">#1B1929 → #F4F1FB</dd>
+          <dt data-page-node-id="lKrkyado6U7wGUgEswhuoH">surface</dt><dd data-page-node-id="ltp6tBZwZj3ISXPLNBCZz9">#242236 → #FFFFFF</dd>
+          <dt data-page-node-id="TjHM9G9H5UvAF2kNNudKC5">content</dt><dd data-page-node-id="QnFPTENAIs8LmTbJPHF01m">#F6F1FF → #171430</dd>
+          <dt data-page-node-id="hEoQoE0mx4boAlxxruxFtC">accent</dt><dd data-page-node-id="Ga3DR8bLYPhbzhFF4jMSe6">#5ADF9E → #0E7A4E</dd>
+          <dt data-page-node-id="fy6dZ3TldBMqfI96VV1MDn">focus</dt><dd data-page-node-id="sUwhftjs0SswQ3b3IOYoJE">#82CEFF → #1F6FEB</dd>
+        </dl>
+        <p class="note" data-page-node-id="nStmjVgEqdF8oAvdIreBgk">Light mode is not an inversion. Accents are re-derived to keep AA on light surfaces, and the high-contrast profile swaps in pure black/white with 3px borders.</p>
+      </div>
+
+      <div class="spec" data-page-node-id="ij08wIjDBUV2yzZfCAMHFs">
+        <h3 data-page-node-id="uMqwuwrxEHURp5yNzJG7R0">Component set</h3>
+        <p data-page-node-id="gscRhqWxZ0cE8DXpJyLOwt">18 components, one definition each. Screens compose them; they never restyle them.</p>
+        <ul data-page-node-id="XRNqjdGP40VLpNIg2KLdq9">
+          <li data-page-node-id="EFEel4iSYfbY36txoA9XTT"><b data-page-node-id="FQa2XW8QRmCJEERtYsoV5Q">Status:</b> chip, banner, verdict, progress ring</li>
+          <li data-page-node-id="AlljML1rFbBCs0cpEEdBJP"><b data-page-node-id="rBjjD84JAxwxGVb1pQmVIB">Input:</b> button (4 variants), icon button, switch, stepper, text field</li>
+          <li data-page-node-id="tpI84vJx2tQh1ggMqSaolR"><b data-page-node-id="gPMWEOhWY25K8qWnF8buF2">Structure:</b> card, list row, section header, app bar, tab bar / rail</li>
+          <li data-page-node-id="DcEvlXKi80RpjD5RcycGRD"><b data-page-node-id="xkuAmZqpFPiAglQyJUGyDX">Data:</b> stat tile, bar chart, heatmap, week strip</li>
+        </ul>
+        <h4 data-page-node-id="SAe1lgjecCKjjxgmzk87Mx">Consistency rules</h4>
+        <ul data-page-node-id="fQukEFpXu5Bw4crxKFZqC9">
+          <li data-page-node-id="EQmD5frmYwOT1KQPzLT8jD">Radius ladder 12 / 18 / 24 / 32 — cards 24, controls pill, chips pill.</li>
+          <li data-page-node-id="1UyA8GUDRnE1BWGNeh1q7E">Spacing on a 4pt grid; page margin 20, section gap 24.</li>
+          <li data-page-node-id="AVBeesecTQEsOraem0lZtm">Minimum 44px touch target (48 on Android profile).</li>
+          <li data-page-node-id="zwGkQGLsaWkKPnUcreLWfL">Focus ring 2px, offset 2px, always visible on keyboard nav.</li>
+        </ul>
+      </div>
+
+      <div class="spec" data-page-node-id="V1PN7YeKlZ7MBZVHSS9mC9">
+        <h3 data-page-node-id="eW5SdCquQnrj9mSps6zWUX">Motion</h3>
+        <p data-page-node-id="KSiirStXGS5ON2tCe55Bk4">Motion confirms cause and effect. It never decorates.</p>
+        <ul data-page-node-id="ceOGXkyj532xeiZfuUnuee">
+          <li data-page-node-id="QBkmmtQZ40vdxRu3juM5iH">Fast 160ms — press, toggle, hover.</li>
+          <li data-page-node-id="MHllLil93VNmETBPEL8iPG">Base 240ms — panel entry, toast.</li>
+          <li data-page-node-id="fAYbsJjSH2NSTjiX7e4Fgj">Slow 420ms — layout changes, viewport resize.</li>
+          <li data-page-node-id="HEwPyyHdcGLFynDeC2KVVk">Easing <code data-page-node-id="U0tabzMmkF9CT6MYIG3jZA">cubic-bezier(.2,0,0,1)</code>; entrance from 8px below.</li>
+        </ul>
+        <p class="note" data-page-node-id="O1mD4MR6GFhlOW38Ca6stZ">The Reduce motion toggle zeroes every duration to honour <code data-page-node-id="txHUeW6MT3xFKT5y0VFdPy">prefers-reduced-motion</code>.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var root = document.documentElement;
+  var panels = document.querySelectorAll(".panel");
+  var tabs = Array.prototype.slice.call(document.querySelectorAll("[data-tab]"));
+  var toastEl = document.getElementById("toast");
+  var toastTimer;
+
+  function toast(msg){
+    if(!msg) return;
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); }, 2200);
+  }
+
+  /* ---- tab switching (works for both the bar and the rail) ---- */
+  function selectTab(id, focus){
+    panels.forEach(function(p){
+      var on = p.id === "panel-" + id;
+      p.classList.toggle("active", on);
+      if(on){ p.removeAttribute("hidden"); } else { p.setAttribute("hidden",""); }
+    });
+    tabs.forEach(function(t){
+      var on = t.getAttribute("data-tab") === id;
+      t.setAttribute("aria-selected", on ? "true" : "false");
+      if(t.getAttribute("role") === "tab"){ t.tabIndex = on ? 0 : -1; }
+    });
+    var scroller = document.getElementById("panels");
+    if(scroller) scroller.scrollTop = 0;
+    if(focus){
+      var el = document.querySelector('.tabbar [data-tab="' + id + '"]');
+      if(el) el.focus();
+    }
+  }
+
+  tabs.forEach(function(t){
+    t.addEventListener("click", function(){ selectTab(t.getAttribute("data-tab"), false); });
+  });
+
+  /* arrow-key navigation across the tablist */
+  var tabbar = document.querySelector(".tabbar");
+  var barTabs = Array.prototype.slice.call(tabbar.querySelectorAll('[role="tab"]'));
+  tabbar.addEventListener("keydown", function(e){
+    var i = barTabs.indexOf(document.activeElement);
+    if(i < 0) return;
+    var next = null;
+    if(e.key === "ArrowRight") next = barTabs[(i + 1) % barTabs.length];
+    if(e.key === "ArrowLeft") next = barTabs[(i - 1 + barTabs.length) % barTabs.length];
+    if(e.key === "Home") next = barTabs[0];
+    if(e.key === "End") next = barTabs[barTabs.length - 1];
+    if(next){ e.preventDefault(); next.focus(); selectTab(next.getAttribute("data-tab"), true); }
+  });
+
+  document.querySelectorAll("[data-tab-jump]").forEach(function(b){
+    b.addEventListener("click", function(){ selectTab(b.getAttribute("data-tab-jump"), false); });
+  });
+
+  /* ---- viewport switcher ---- */
+  var vpNote = document.getElementById("vpNote");
+  var notes = {
+    phone: "Compact (390pt) — bottom tab bar, single column. Switch to Tablet or Desktop to see the medium and expanded layouts.",
+    tablet: "Medium (820pt) — same shell and bottom bar, wider cards, 4-up stat grid, 3-up challenges. Content still centres instead of stretching.",
+    desktop: "Expanded (≥840pt) — left nav rail replaces the bottom bar, Today splits into two panes, and content stops at a 1180px max width."
+  };
+  document.querySelectorAll("[data-vp]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var vp = b.getAttribute("data-vp");
+      root.setAttribute("data-viewport", vp);
+      document.querySelectorAll("[data-vp]").forEach(function(o){
+        o.setAttribute("aria-pressed", o === b ? "true" : "false");
+      });
+      vpNote.textContent = notes[vp];
+    });
+  });
+
+  /* ---- theme ---- */
+  document.querySelectorAll("[data-theme-btn]").forEach(function(b){
+    b.addEventListener("click", function(){
+      root.setAttribute("data-theme", b.getAttribute("data-theme-btn"));
+      document.querySelectorAll("[data-theme-btn]").forEach(function(o){
+        o.setAttribute("aria-pressed", o === b ? "true" : "false");
+      });
+    });
+  });
+
+  /* ---- contrast / motion ---- */
+  function toggleBtn(btn, attr, on, off){
+    btn.addEventListener("click", function(){
+      var cur = root.getAttribute(attr) === on;
+      root.setAttribute(attr, cur ? off : on);
+      btn.setAttribute("aria-pressed", cur ? "false" : "true");
+    });
+  }
+  toggleBtn(document.getElementById("contrastBtn"), "data-contrast", "high", "normal");
+  toggleBtn(document.getElementById("motionBtn"), "data-motion", "reduced", "full");
+
+  /* ---- pledge ---- */
+  var pledgeBtn = document.getElementById("pledgeBtn");
+  var banner = document.getElementById("pledgeBanner");
+  pledgeBtn.addEventListener("click", function(){
+    banner.classList.add("banner--done");
+    banner.querySelector(".txt b").textContent = "Pledged today";
+    banner.querySelector(".txt span").textContent = "6-day pledge streak. Come back tomorrow.";
+    pledgeBtn.textContent = "Check in";
+    pledgeBtn.classList.remove("btn--primary");
+    pledgeBtn.classList.add("btn--mint");
+    toast("Pledge taken. Day 12 is locked in.");
+  });
+
+  /* ---- switches ---- */
+  document.querySelectorAll("[data-toggle]").forEach(function(sw){
+    sw.addEventListener("click", function(){
+      var on = sw.getAttribute("aria-checked") === "true";
+      sw.setAttribute("aria-checked", on ? "false" : "true");
+      toast((sw.getAttribute("aria-label") || "Setting") + (on ? " off" : " on"));
+    });
+  });
+
+  /* ---- steppers ---- */
+  var limits = { limit: { v: 45, min: 5, max: 240, suffix: "min/day", el: "limitVal" },
+                 unlock:{ v: 20, min: 5, max: 60,  suffix: "min earned", el: "unlockVal" } };
+  document.querySelectorAll("[data-step]").forEach(function(b){
+    b.addEventListener("click", function(){
+      var key = b.getAttribute("data-target");
+      var cfg = limits[key];
+      cfg.v = Math.min(cfg.max, Math.max(cfg.min, cfg.v + parseInt(b.getAttribute("data-step"), 10)));
+      document.getElementById(cfg.el).innerHTML = cfg.v + "<small>" + cfg.suffix + "</small>";
+    });
+  });
+
+  /* ---- URL check ---- */
+  var BLOCKED = /(porn|xxx|adult|nsfw|xvideo|xnxx|onlyfans|hentai|cam|escort)/i;
+  var input = document.getElementById("urlInput");
+  var verdict = document.getElementById("verdict");
+  function classify(){
+    var v = input.value.trim();
+    var blocked = v.length === 0 || BLOCKED.test(v);
+    verdict.className = "verdict " + (blocked ? "verdict--block" : "verdict--allow");
+    verdict.innerHTML = blocked
+      ? '<span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--red)" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg></span><div><b>Blocked: adult intent</b><p>Matched the adult-domain rule set. FREED offers a recovery challenge instead of the page.</p></div>'
+      : '<span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--mint)" stroke-width="2.2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></span><div><b>Allowed: normal browsing</b><p>' + (v || "example.com") + ' is not on the adult-domain list. FREED stays out of the way.</p></div>';
+  }
+  document.getElementById("checkBtn").addEventListener("click", function(){ classify(); toast("Classification updated"); });
+  document.getElementById("visitBtn").addEventListener("click", function(){ classify(); });
+  input.addEventListener("input", classify);
+
+  /* ---- generic toasts ---- */
+  document.querySelectorAll("[data-toast]").forEach(function(el){
+    el.addEventListener("click", function(){ toast(el.getAttribute("data-toast")); });
+  });
+
+  /* ---- heatmap: 10 weeks x 7 days ---- */
+  var heat = document.getElementById("heat");
+  var cells = [];
+  for(var w = 0; w < 10; w++){
+    for(var d = 0; d < 7; d++){
+      var i = document.createElement("i");
+      var idx = w * 7 + d;
+      if(idx > 68){ i.setAttribute("data-future",""); }
+      else {
+        var r = (idx * 37) % 100;
+        i.setAttribute("data-l", r > 62 ? 3 : r > 34 ? 2 : r > 12 ? 1 : 0);
+      }
+      heat.appendChild(i);
+      cells.push(i);
+    }
+  }
+
+  /* ---- clock ---- */
+  function tick(){
+    var d = new Date();
+    var h = d.getHours() % 12 || 12;
+    document.getElementById("clock").textContent = h + ":" + String(d.getMinutes()).padStart(2, "0");
+  }
+  tick(); setInterval(tick, 30000);
+})();
+</script>
+</body>
+</html>

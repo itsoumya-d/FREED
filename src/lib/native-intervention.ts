@@ -2,6 +2,7 @@ import type { BlockingAttempt, ClassificationResult } from "./blocking-engine";
 import { sanitizeFocusShieldInterventionScope } from "./focus-shield";
 import type { FocusShieldInterventionScope } from "./focus-shield";
 import type { EarnedUnlock } from "./recovery-state";
+import { canonicalInstalledAppPackage, sanitizeAppGroupInterventionScope, type AppGroupInterventionScope } from './app-group-intervention';
 import {
   INSTAGRAM_REELS_RULE,
   SHORT_FORM_RULE_HOSTS,
@@ -9,6 +10,7 @@ import {
   TIKTOK_FEED_RULE,
   YOUTUBE_SHORTS_RULE,
   hostForShortFormRule,
+  normalizeDoomscrollAppPackage,
   packageForShortFormRule
 } from "./doomscroll-apps";
 
@@ -21,12 +23,12 @@ export type NativePendingInterventionPayload = {
   matchedRule: string;
   detectedAt: string;
   sessionDurationSec?: number;
-  scope?: FocusShieldInterventionScope;
+  scope?: FocusShieldInterventionScope | AppGroupInterventionScope;
 };
 
 export type NativeInterventionAttempt = BlockingAttempt & {
   nativeInterventionId?: string;
-  scope?: FocusShieldInterventionScope;
+  scope?: FocusShieldInterventionScope | AppGroupInterventionScope;
 };
 
 export const PENDING_INTERVENTION_MAX_AGE_MS = 10 * 60 * 1000;
@@ -44,6 +46,7 @@ const supportedNativeAppPackageSet = new Set<string>(SUPPORTED_NATIVE_INTERVENTI
 const APP_INTERVENTION_FALLBACK_HOST = "selected-app.app.freed.local";
 const IOS_SCREEN_TIME_SHIELD_HOST = "screen-time-shield.freed.local";
 const IOS_SAFARI_SHORT_FORM_SOURCE = "ios-safari-short-form";
+const IOS_SAFARI_INTERVENTION_HTTPS_ROUTE = "https://freed-7d5ee.firebaseapp.com/intervention";
 const SAFARI_SHORT_FORM_WEB_HOSTS: Record<string, string> = {
   [YOUTUBE_SHORTS_RULE]: "youtube.com",
   [INSTAGRAM_REELS_RULE]: "instagram.com",
@@ -69,8 +72,9 @@ export function createNativeInterventionAttempt(pending: NativePendingInterventi
     source === "app"
       ? normalizeAppPendingHost(pending, matchedRule, sourcePackage)
       : normalizePendingHost(pending) || "screen-time-shield.freed.local";
-  const scope = sanitizeNativePendingScope(pending.scope, matchedRule, sourcePackage);
-  const interventionId = sanitizeNativeInterventionId(pending.interventionId);
+  const scope = sanitizeNativePendingScope(pending.scope, matchedRule, sourcePackage, host);
+  const interventionId = source === "app" && !matchedRule.startsWith("ios-screen-time-shield") && !sourcePackage
+    ? null : sanitizeNativeInterventionId(pending.interventionId);
 
   return {
     url: `https://${host}`,
@@ -95,19 +99,35 @@ export function createNativeInterventionAttempt(pending: NativePendingInterventi
 function sanitizeNativePendingScope(
   value: unknown,
   matchedRule: string,
-  sourcePackage: string | undefined
-): FocusShieldInterventionScope | null {
+  sourcePackage: string | undefined,
+  host: string
+): FocusShieldInterventionScope | AppGroupInterventionScope | null {
+  const group = sanitizeAppGroupInterventionScope(value);
+  if (group) return matchedRule === `app-group:${group.groupId}:${group.groupRevision}` &&
+    (group.kind === 'android-app-group' ? group.packageName === sourcePackage : sourcePackage === 'ios-screen-time' && host === IOS_SCREEN_TIME_SHIELD_HOST) ? group : null;
   const scope = sanitizeFocusShieldInterventionScope(value);
-  if (!scope || scope.kind !== "android-surface") return scope;
-  if (matchedRule !== `focus-shield:${scope.ruleId}`) return null;
-  return sourcePackage === scope.packageName ? scope : null;
+  if (!scope) return null;
+  switch (scope.kind) {
+    case "android-surface":
+      return matchedRule === `focus-shield:${scope.ruleId}` && sourcePackage === scope.packageName ? scope : null;
+    case "android-package":
+      return (matchedRule.startsWith("configured-app:") || matchedRule.startsWith("short-form:")) &&
+        sourcePackage === scope.packageName ? scope : null;
+    case "ios-token":
+      return null; // Historical token-bearing data is readable elsewhere, never a new public native envelope.
+    case 'ios-screen-time':
+      return matchedRule.startsWith('ios-screen-time-shield') && sourcePackage === 'ios-screen-time' && host === IOS_SCREEN_TIME_SHIELD_HOST ? scope : null;
+    case "browser-domain":
+      return !isNativeAppRule(matchedRule) && host === scope.domain ? scope : null;
+    case 'ios-app-group':
+    case 'android-app-group':
+      return null;
+  }
 }
 
 export function createDeepLinkInterventionAttempt(deepLinkUrl: string, detectedAt = new Date().toISOString()): BlockingAttempt | null {
-  const parsed = parseFreedInterventionUrl(deepLinkUrl);
-  if (!parsed) return null;
-
-  const params = parsed.searchParams;
+  const params = parseInterventionParams(deepLinkUrl);
+  if (!params) return null;
   const source = params.get("source")?.trim().toLowerCase() ?? "";
   if (source !== IOS_SAFARI_SHORT_FORM_SOURCE) return null;
 
@@ -138,6 +158,8 @@ export function createDeepLinkInterventionAttempt(deepLinkUrl: string, detectedA
 }
 
 export function unlockSourceForAttempt(attempt: BlockingAttempt | null | undefined): string | undefined {
+  if (attempt?.scope?.kind === 'ios-screen-time' || attempt?.scope?.kind === 'ios-app-group') return IOS_SCREEN_TIME_SHIELD_HOST;
+  if (attempt?.source === "app" && !attempt.result.matchedRule.startsWith("ios-screen-time-shield") && !attempt.sourcePackage) return undefined;
   return attempt?.sourcePackage ?? attempt?.host;
 }
 
@@ -210,6 +232,7 @@ export function isIosScreenTimeShieldSource(sourceAttemptHost: string | null | u
 }
 
 function inferNativeCategory(matchedRule: string): ClassificationResult["category"] {
+  if (matchedRule.startsWith('app-group:')) return 'unknown';
   if (matchedRule.startsWith("safe-site-search:")) return "adult-search-intent";
   if (matchedRule.startsWith("configured-app:")) return "unknown";
   if (matchedRule.startsWith("short-form:")) return "unknown";
@@ -219,13 +242,19 @@ function inferNativeCategory(matchedRule: string): ClassificationResult["categor
 }
 
 function normalizeMatchedRule(matchedRule: string): string {
+  if (matchedRule.trim().toLowerCase().startsWith('app-group:')) {
+    const raw = matchedRule.trim().toLowerCase(); return /^app-group:(?:[0-9a-f-]{36}|legacy-default):[1-9][0-9]{0,15}$/.test(raw) ? raw : 'app-group:unsupported';
+  }
+  const raw = matchedRule.trim().toLowerCase();
+  if (raw.startsWith("configured-app:")) {
+    const packageName = normalizeSourcePackageCandidate(raw.slice("configured-app:".length));
+    return packageName ? `configured-app:${packageName}` : "configured-app:unsupported";
+  }
+  if (raw.startsWith("short-form:")) return packageForShortFormRule(raw) ? raw : "short-form:unknown";
   const focusShieldMatch = matchedRule.trim().match(/^focus-shield:(.+)$/i);
   if (focusShieldMatch) {
-    const ruleId = focusShieldMatch[1]
-      ?.trim()
-      .replace(/[^a-zA-Z0-9_.-]/g, "")
-      .slice(0, 128);
-    return ruleId && ruleId.length >= 6 ? `focus-shield:${ruleId}` : "focus-shield:unsupported";
+    const ruleId = focusShieldMatch[1]?.trim();
+    return ruleId && /^[a-zA-Z0-9_.-]{6,128}$/.test(ruleId) ? `focus-shield:${ruleId}` : "focus-shield:unsupported";
   }
 
   const normalized = matchedRule
@@ -236,12 +265,11 @@ function normalizeMatchedRule(matchedRule: string): string {
     .slice(0, 140);
 
   if (normalized.startsWith("configured-app:")) {
-    const packageName = normalizeSourcePackageCandidate(normalized.replace(/^configured-app:/, ""));
-    return packageName ? `configured-app:${packageName}` : "configured-app:unsupported";
+    return "configured-app:unsupported";
   }
 
   if (normalized.startsWith("short-form:")) {
-    return packageForShortFormRule(normalized) ? normalized : "short-form:unknown";
+    return "short-form:unknown";
   }
 
   return normalized;
@@ -267,6 +295,7 @@ function sanitizeSessionDurationSeconds(value: unknown): number | undefined {
 
 function isNativeAppRule(matchedRule: string): boolean {
   return (
+    matchedRule.startsWith('app-group:') ||
     matchedRule.startsWith("configured-app:") ||
     matchedRule.startsWith("short-form:") ||
     matchedRule.startsWith("focus-shield:") ||
@@ -307,12 +336,31 @@ function normalizeHostValue(host: string): string {
   return normalized;
 }
 
-function parseFreedInterventionUrl(value: string): URL | null {
+function parseInterventionParams(value: string): URLSearchParams | null {
   try {
     const parsed = new URL(value);
-    if (parsed.protocol !== "freed:") return null;
-    const route = parsed.hostname || parsed.pathname.replace(/^\/+/, "").split("/")[0] || "";
-    return route === "intervention" ? parsed : null;
+    if (parsed.protocol === "freed:") {
+      const route = parsed.hostname || parsed.pathname.replace(/^\/+/, "").split("/")[0] || "";
+      return route === "intervention" ? parsed.searchParams : null;
+    }
+
+    // The fragment never enters the hosting request. Keep this HTTPS route exact
+    // rather than accepting URL-normalized credentials, paths, or query hints.
+    const route = value.split("#")[0];
+    if (route !== IOS_SAFARI_INTERVENTION_HTTPS_ROUTE &&
+        route !== IOS_SAFARI_INTERVENTION_HTTPS_ROUTE.replace(".com/", ".com:443/")) return null;
+    if (parsed.protocol !== "https:" || parsed.username || parsed.password || parsed.port || parsed.search) return null;
+
+    const params = new URLSearchParams(parsed.hash.slice(1));
+    const allowedKeys = ["source", "rule", "host"];
+    if ([...params.keys()].some(key => !allowedKeys.includes(key))) return null;
+    if (allowedKeys.some(key => params.getAll(key).length !== 1)) return null;
+
+    const host = params.get("host") ?? "";
+    if (host.length > 120 || !/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/i.test(host) ||
+        host.split(".").some(part => !part || part.startsWith("-") || part.endsWith("-")) ||
+        !normalizeHostValue(host)) return null;
+    return params;
   } catch {
     return null;
   }
@@ -336,6 +384,7 @@ function normalizeAppPendingHost(
   matchedRule: string,
   sourcePackage: string | undefined
 ): string {
+  if (matchedRule.startsWith('app-group:') && sourcePackage === 'ios-screen-time') return IOS_SCREEN_TIME_SHIELD_HOST;
   if (matchedRule.startsWith("ios-screen-time-shield")) return IOS_SCREEN_TIME_SHIELD_HOST;
 
   const shortFormHost = hostForShortFormRule(matchedRule);
@@ -355,25 +404,23 @@ function isSupportedAppHandoffHost(host: string): boolean {
 }
 
 function normalizeSourcePackage(packageName: string, matchedRule: string): string | undefined {
-  const candidates = [
-    packageName,
-    matchedRule.startsWith("configured-app:") ? matchedRule.replace(/^configured-app:/, "") : "",
-    packageForShortFormRule(matchedRule) ?? ""
-  ];
-
-  for (const candidate of candidates) {
-    const normalized = normalizeSourcePackageCandidate(candidate);
-    if (normalized) return normalized;
+  if (matchedRule.startsWith('ios-screen-time-shield')) return packageName === 'ios-screen-time' ? packageName : undefined;
+  if (matchedRule.startsWith('app-group:') && matchedRule !== 'app-group:unsupported') return packageName === 'ios-screen-time' ? packageName : canonicalInstalledAppPackage(packageName) ?? undefined;
+  const actual = normalizeSourcePackageCandidate(packageName);
+  if (!actual) return undefined;
+  if (matchedRule.startsWith("configured-app:")) {
+    return matchedRule.slice("configured-app:".length) === actual ? actual : undefined;
   }
-
-  return undefined;
+  if (matchedRule.startsWith("short-form:")) {
+    return normalizeDoomscrollAppPackage(actual) === packageForShortFormRule(matchedRule) ? actual : undefined;
+  }
+  return matchedRule.startsWith("focus-shield:") && matchedRule !== "focus-shield:unsupported" ? actual : undefined;
 }
 
 function normalizeSourcePackageCandidate(packageName: string): string | undefined {
   const normalized = packageName
     .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9._]/g, "");
+    .toLowerCase();
 
   return supportedNativeAppPackageSet.has(normalized) ? normalized : undefined;
 }

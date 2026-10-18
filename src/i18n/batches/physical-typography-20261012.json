@@ -1,0 +1,66 @@
+{
+  "entries": [],
+  "semantic": {
+    "en": {
+      "progressCompact.checkins": "Check-ins",
+      "progressCompact.resets": "Resets",
+      "progressCompact.journal": "Journal",
+      "progressCompact.savedJournal": "Saved journal entries"
+    },
+    "hi": {
+      "progressCompact.checkins": "चेक-इन",
+      "progressCompact.resets": "अभ्यास",
+      "progressCompact.journal": "जर्नल",
+      "progressCompact.savedJournal": "सहेजी गई जर्नल प्रविष्टियाँ"
+    },
+    "es": {
+      "progressCompact.checkins": "Registros",
+      "progressCompact.resets": "Pausas",
+      "progressCompact.journal": "Diario",
+      "progressCompact.savedJournal": "Entradas de diario guardadas"
+    },
+    "pt": {
+      "progressCompact.checkins": "Check-ins",
+      "progressCompact.resets": "Pausas",
+      "progressCompact.journal": "Diário",
+      "progressCompact.savedJournal": "Entradas de diário salvas"
+    },
+    "fr": {
+      "progressCompact.checkins": "Bilans",
+      "progressCompact.resets": "Pauses",
+      "progressCompact.journal": "Journal",
+      "progressCompact.savedJournal": "Entrées de journal enregistrées"
+    },
+    "de": {
+      "progressCompact.checkins": "Check-ins",
+      "progressCompact.resets": "Pausen",
+      "progressCompact.journal": "Journal",
+      "progressCompact.savedJournal": "Gespeicherte Journaleinträge"
+    },
+    "ar": {
+      "progressCompact.checkins": "تسجيلات",
+      "progressCompact.resets": "تمارين",
+      "progressCompact.journal": "يوميات",
+      "progressCompact.savedJournal": "تدوينات يومية محفوظة"
+    },
+    "ja": {
+      "progressCompact.checkins": "チェックイン",
+      "progressCompact.resets": "リセット",
+      "progressCompact.journal": "日記",
+      "progressCompact.savedJournal": "保存した日記の記録"
+    },
+    "ko": {
+      "progressCompact.checkins": "체크인",
+      "progressCompact.resets": "리셋",
+      "progressCompact.journal": "일기",
+      "progressCompact.savedJournal": "저장된 일기 항목"
+    },
+    "zh-Hans": {
+      "progressCompact.checkins": "签到",
+      "progressCompact.resets": "重置",
+      "progressCompact.journal": "日记",
+      "progressCompact.savedJournal": "已保存的日记条目"
+    }
+  },
+  "revision": "2026-10-12-physical-typography"
+}

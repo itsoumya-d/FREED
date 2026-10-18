@@ -1,0 +1,379 @@
+{
+  "schemaVersion": "freed-feature-verification-report-v1",
+  "generatedAt": "2026-10-02T10:36:45.303Z",
+  "sanitized": true,
+  "mode": "ios",
+  "planOnly": false,
+  "ledgerPath": "docs/validation/artifacts/2026-10-02-native-ui-testflight/feature-ledger.json",
+  "ledgerSha256": "44c2654bc4c8740eee2426cab0bc05de195015e71908270b6bfa6ed0b771a532",
+  "installedBuildSha256": null,
+  "meaning": "Passing local contracts or Maestro smoke does not prove all native, live, physical, visual or motion behavior. All required checks stay in the denominator.",
+  "requestedSummary": {
+    "total": 2,
+    "passed": 0,
+    "failed": 2,
+    "blocked": 0,
+    "notRun": 0,
+    "passedPercent": 0,
+    "complete": false
+  },
+  "allRequiredChecks": {
+    "total": 12,
+    "passed": 0,
+    "failed": 2,
+    "blocked": 0,
+    "notRun": 10,
+    "passedPercent": 0,
+    "complete": false
+  },
+  "fullFeatureSummary": {
+    "total": 2,
+    "passed": 0,
+    "failed": 2,
+    "blocked": 0,
+    "notRun": 0,
+    "passedPercent": 0,
+    "complete": false
+  },
+  "testSuiteSummary": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "blocked": 0,
+    "notRun": 0,
+    "passedPercent": 0,
+    "complete": false
+  },
+  "localTestCounts": {
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0
+  },
+  "suites": {},
+  "uiSmoke": {
+    "root-navigation": {
+      "status": "failed",
+      "exitCode": 1,
+      "timedOut": false,
+      "startedAt": "2026-10-02T10:33:29.942Z",
+      "durationMs": 195349,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/offline-ios/logs/root-navigation.log",
+      "logSha256": "84c4f9c3050a30f0dfdc815e7d5b128531c29f3c623d596672906cda13caab7b",
+      "command": [
+        "maestro",
+        "--device",
+        "CB401DE2-5B73-4017-95B3-E2D609FB88DA",
+        "test",
+        "--format",
+        "junit",
+        "--output",
+        "~/Developer/live/FREED/docs/validation/artifacts/2026-10-02-feature-coverage/offline-ios/root-navigation.xml",
+        "--test-output-dir",
+        "~/Developer/live/FREED/docs/validation/artifacts/2026-10-02-feature-coverage/offline-ios/maestro/root-navigation",
+        "-e",
+        "APP_ID=app.freed.recovery",
+        ".maestro/flows/root-navigation.yaml"
+      ]
+    }
+  },
+  "features": [
+    {
+      "id": "feature-029",
+      "category": "Today",
+      "feature": "native roots",
+      "controls": "Today/Shield/Progress/Profile tabs; per-tab push/back/restore",
+      "nextVerification": "Final Android/iOS UI navigation/cold-start/back evidence",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "flow": "root-navigation",
+      "suites": [
+        "tests/native-navigation.test.ts",
+        "tests/paywall-navigation.test.ts",
+        "tests/native-intervention-links.test.ts"
+      ],
+      "scenarios": [
+        {
+          "id": "feature-029:scenario-1",
+          "expected": "each tab has a single correct root"
+        },
+        {
+          "id": "feature-029:scenario-2",
+          "expected": "push and Back restore the originating tab"
+        },
+        {
+          "id": "feature-029:scenario-3",
+          "expected": "cold launch terminal reset removes old onboarding or recovery history"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "feature-029:local",
+          "mode": "local",
+          "suites": [
+            "tests/native-navigation.test.ts",
+            "tests/paywall-navigation.test.ts",
+            "tests/native-intervention-links.test.ts"
+          ],
+          "assertions": [
+            "behavioral-suite:tests/native-navigation.test.ts",
+            "behavioral-suite:tests/paywall-navigation.test.ts",
+            "behavioral-suite:tests/native-intervention-links.test.ts"
+          ],
+          "nextAction": "node scripts/run-feature-verification.js --mode local --feature feature-029",
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by ios mode."
+        },
+        {
+          "id": "feature-029:ios",
+          "mode": "ios",
+          "platform": "ios",
+          "flow": "root-navigation",
+          "assertions": [
+            "feature-029:scenario-1",
+            "feature-029:scenario-2",
+            "feature-029:scenario-3"
+          ],
+          "nextAction": "Run --mode ios --feature feature-029 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": true,
+          "status": "failed",
+          "uiSmoke": "failed",
+          "reason": "Maestro assertions failed. Inspect the flow log and screenshots."
+        },
+        {
+          "id": "feature-029:device:ios",
+          "mode": "device",
+          "platform": "ios",
+          "motion": true,
+          "assertions": [
+            "feature-029:scenario-1",
+            "feature-029:scenario-2",
+            "feature-029:scenario-3",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical ios device and capture Final Android/iOS UI navigation/cold-start/back evidence, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by ios mode."
+        },
+        {
+          "id": "feature-029:android",
+          "mode": "android",
+          "platform": "android",
+          "flow": "root-navigation",
+          "assertions": [
+            "feature-029:scenario-1",
+            "feature-029:scenario-2",
+            "feature-029:scenario-3"
+          ],
+          "nextAction": "Run --mode android --feature feature-029 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by ios mode."
+        },
+        {
+          "id": "feature-029:device:android",
+          "mode": "device",
+          "platform": "android",
+          "motion": true,
+          "assertions": [
+            "feature-029:scenario-1",
+            "feature-029:scenario-2",
+            "feature-029:scenario-3",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical android device and capture Final Android/iOS UI navigation/cold-start/back evidence, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by ios mode."
+        }
+      ],
+      "requestedSummary": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1,
+        "blocked": 0,
+        "notRun": 0,
+        "passedPercent": 0,
+        "complete": false
+      },
+      "status": "failed"
+    },
+    {
+      "id": "feature-093",
+      "category": "Platform",
+      "feature": "final release binary",
+      "controls": "Android upload-signed AAB/APK/Hermes; iOS five embedded extensions",
+      "nextVerification": "Fresh checksum/signature/entitlements/source binding and installed final UI",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "flow": "root-navigation",
+      "suites": [
+        "tests/android-bytecode-inspection.test.js",
+        "tests/ios-admob-build-config.test.js",
+        "tests/launch-foundation.test.ts"
+      ],
+      "scenarios": [
+        {
+          "id": "feature-093:scenario-1",
+          "expected": "final binary hash matches installed tested source revision"
+        },
+        {
+          "id": "feature-093:scenario-2",
+          "expected": "Android upload signature Hermes and AAB APK integrity pass"
+        },
+        {
+          "id": "feature-093:scenario-3",
+          "expected": "iOS required five extensions and entitlement signatures are embedded"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "feature-093:local",
+          "mode": "local",
+          "suites": [
+            "tests/android-bytecode-inspection.test.js",
+            "tests/ios-admob-build-config.test.js",
+            "tests/launch-foundation.test.ts"
+          ],
+          "assertions": [
+            "behavioral-suite:tests/android-bytecode-inspection.test.js",
+            "behavioral-suite:tests/ios-admob-build-config.test.js",
+            "behavioral-suite:tests/launch-foundation.test.ts"
+          ],
+          "nextAction": "node scripts/run-feature-verification.js --mode local --feature feature-093",
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by ios mode."
+        },
+        {
+          "id": "feature-093:emulator",
+          "mode": "emulator",
+          "suites": [
+            "functions:emulator"
+          ],
+          "assertions": [
+            "feature-093:scenario-1",
+            "feature-093:scenario-2",
+            "feature-093:scenario-3"
+          ],
+          "nextAction": "node scripts/run-feature-verification.js --mode emulator --feature feature-093 --evidence receipts.json",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by ios mode."
+        },
+        {
+          "id": "feature-093:live",
+          "mode": "live",
+          "assertions": [
+            "feature-093:scenario-1",
+            "feature-093:scenario-2",
+            "feature-093:scenario-3"
+          ],
+          "nextAction": "Use isolated staging/sandbox credentials and collect Fresh checksum/signature/entitlements/source binding and installed final UI; then --mode live --evidence <artifact-backed-receipts.json>.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by ios mode."
+        },
+        {
+          "id": "feature-093:ios",
+          "mode": "ios",
+          "platform": "ios",
+          "flow": "root-navigation",
+          "assertions": [
+            "feature-093:scenario-1",
+            "feature-093:scenario-2",
+            "feature-093:scenario-3"
+          ],
+          "nextAction": "Run --mode ios --feature feature-093 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": true,
+          "status": "failed",
+          "uiSmoke": "failed",
+          "reason": "Maestro assertions failed. Inspect the flow log and screenshots."
+        },
+        {
+          "id": "feature-093:device:ios",
+          "mode": "device",
+          "platform": "ios",
+          "motion": false,
+          "assertions": [
+            "feature-093:scenario-1",
+            "feature-093:scenario-2",
+            "feature-093:scenario-3"
+          ],
+          "nextAction": "Use a disposable signed physical ios device and capture Fresh checksum/signature/entitlements/source binding and installed final UI.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by ios mode."
+        },
+        {
+          "id": "feature-093:android",
+          "mode": "android",
+          "platform": "android",
+          "flow": "root-navigation",
+          "assertions": [
+            "feature-093:scenario-1",
+            "feature-093:scenario-2",
+            "feature-093:scenario-3"
+          ],
+          "nextAction": "Run --mode android --feature feature-093 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by ios mode."
+        },
+        {
+          "id": "feature-093:device:android",
+          "mode": "device",
+          "platform": "android",
+          "motion": false,
+          "assertions": [
+            "feature-093:scenario-1",
+            "feature-093:scenario-2",
+            "feature-093:scenario-3"
+          ],
+          "nextAction": "Use a disposable signed physical android device and capture Fresh checksum/signature/entitlements/source binding and installed final UI.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by ios mode."
+        }
+      ],
+      "requestedSummary": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1,
+        "blocked": 0,
+        "notRun": 0,
+        "passedPercent": 0,
+        "complete": false
+      },
+      "status": "failed"
+    }
+  ]
+}

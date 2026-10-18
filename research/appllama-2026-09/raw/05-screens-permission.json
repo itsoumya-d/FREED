@@ -1,0 +1,181 @@
+{
+  "screens": [
+    {
+      "screen_id": "oth_0kvop",
+      "name": "Privacy Settings",
+      "flow": "Settings",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzM1OTJiYWUzYmIyNzk5YTRiNTJhMDRmMTRkMTc5ZGZjMTU5NzZjYTQud2VicCIsImV4cCI6MTc5MDM4NTQwMH1bQ_slm6UEw7NkXHHWi5mJCec1pAb6AD4.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FFFFFF",
+      "similarity": 0.3331,
+      "app": {
+        "app_id": "1438803205",
+        "name": "KIC Wellness"
+      }
+    },
+    {
+      "screen_id": "spl_nnp26",
+      "name": "Permissions Setup",
+      "flow": "Welcome Screen",
+      "section": "welcome-screen",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzVjNTE1MTcxZWY3ZDZhYWUyNjRiN2FhZjU5ODI5MTZjMjE2Y2ExMjUud2VicCIsImV4cCI6MTc5MDM4NTQwMH2hTNO2m33j7mLjQeBo3HGD29K1BDLCJi0.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FFFFFF",
+      "similarity": 0.331,
+      "app": {
+        "app_id": "1573261774",
+        "name": "Navi - Subtitles & Translation"
+      }
+    },
+    {
+      "screen_id": "oth_6v3wb",
+      "name": "Add Accountability Partner",
+      "flow": "Social",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzAwZDAwNmRkMjhhMjJkNjE4OTNhOWUxOTY2NDA0MDE0N2Q3OTRmOWEud2VicCIsImV4cCI6MTc5MDM4NTQwMH2F8YLmbHH1kTm-yCjmdFAUCttr__t6jmg.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FFFFFF",
+      "similarity": 0.3299,
+      "app": {
+        "app_id": "1644737181",
+        "name": "BePresent: Screen Time Control"
+      }
+    },
+    {
+      "screen_id": "oth_g735c",
+      "name": "Settings",
+      "flow": "Account & Projects",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2U4ZmYwZjJjMzkxMDcwNjY0MmM2OWZiYTRiMGVhZWRmMmYwYWExMjQud2VicCIsImV4cCI6MTc5MDM4NTQwMH3ZVPsShQ17ksTOPHnwhF0tYpoRXolE4sw.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#F9F9F9",
+      "similarity": 0.323,
+      "app": {
+        "app_id": "6751626758",
+        "name": "AI Product Video & Ad - Pixury"
+      }
+    },
+    {
+      "screen_id": "oth_mkwcd",
+      "name": "Permissions Settings",
+      "flow": "Settings",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2I1MWRhYzM1NDgwNmQ0MjBiODJiZWM0NzNhMmNhYTRlMjViMzU4ZjQud2VicCIsImV4cCI6MTc5MDM4NTQwMH3_zJkmBp-TDVOn8VkO10Wzc-My091oXBs.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#020407",
+      "similarity": 0.319,
+      "app": {
+        "app_id": "6746756746",
+        "name": "Artie: Learn Piano with AI"
+      }
+    },
+    {
+      "screen_id": "onb_60th0",
+      "name": "Camera Permission",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzM5OTk3ODRiZjBlNTFjNjNiODA2N2MxODA3YWE1YjZiYTExMDk2MzQud2VicCIsImV4cCI6MTc5MDM4NTQwMH3_FuJKk_YgxfFdm6_9fgHTLb4TI88bWu0.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#18181C",
+      "similarity": 0.3156,
+      "app": {
+        "app_id": "1313580627",
+        "name": "Camera+ I Pro Camera & Editor"
+      }
+    },
+    {
+      "screen_id": "oth_3b5n1",
+      "name": "Period Tracker Settings",
+      "flow": "Settings",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzgxNTVlNzdjMGVmMDIyOWY2MzE1YTAzZTU1MGY2OWQzOTQ5YTJmNWQud2VicCIsImV4cCI6MTc5MDM4NTQwMH2ngXRpTWs3vknp918VDKZOOULTNrK_0tc.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#171817",
+      "similarity": 0.3121,
+      "app": {
+        "app_id": "1454249438",
+        "name": "Moon Calendar by MoonX"
+      }
+    },
+    {
+      "screen_id": "onb_igpob",
+      "name": "Location Permission Alert",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzJjNDg1MWE3YTcyYjIzOGZiMDY3ZWE1OGE1YTIwYjc3YTQ3Y2UxNjIud2VicCIsImV4cCI6MTc5MDM4NTQwMH204OIhUmDQKsmBfH5RpAZa0EvwFj8EPBk.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#1B2650",
+      "similarity": 0.311,
+      "app": {
+        "app_id": "1413108902",
+        "name": "Nautide: Tides, Wind, Waves +"
+      }
+    },
+    {
+      "screen_id": "oth_t8bff",
+      "name": "Settings",
+      "flow": "Settings",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2JlMDc1NWM0MTQwMmQ5OWZkOWIxYjY2YWU1NjdiZWE1OTMxZTM5Mjcud2VicCIsImV4cCI6MTc5MDM4NTQwMH06Ion_IhV0NErpVexukqjGG_kAWUilVdA.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#F5F5F8",
+      "similarity": 0.3003,
+      "app": {
+        "app_id": "1673518618",
+        "name": "Detail: AI Video Editor"
+      }
+    },
+    {
+      "screen_id": "oth_ikwx2",
+      "name": "Preferences Settings",
+      "flow": "Settings",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2I3MGRjMTNjYWEwNjg5NzQ3YTE1ZjUwZDc3YjMxNTUzYzRjMTU1ZGMud2VicCIsImV4cCI6MTc5MDM4NTQwMH3mJPMGtgoJ0v9d36JBEiajFaUBAoISS9c.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#F9F8F7",
+      "similarity": 0.2998,
+      "app": {
+        "app_id": "1232780281",
+        "name": "Notion: Notes, Tasks, AI"
+      }
+    }
+  ],
+  "total": null,
+  "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJzZWFyY2hfc2NyZWVucyIsInEiOiJlOGQ2MjA2Y2Q5MTA2ZjU3MmZiMjMzOWQiLCJvIjoxMCwiaHciOjIwLCJleHAiOjE3OTAzODU0MDB9.NEnnX4PbgSQnqlIHcWaIiNch7nI",
+  "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+  "credits": {
+    "spent": 1,
+    "remaining_this_month": 1001
+  }
+}

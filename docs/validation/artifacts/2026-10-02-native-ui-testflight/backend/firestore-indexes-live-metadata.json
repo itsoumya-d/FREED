@@ -1,0 +1,60 @@
+[
+  {
+    "fields": [
+      {
+        "fieldPath": "uid",
+        "order": "ASCENDING"
+      },
+      {
+        "fieldPath": "status",
+        "order": "ASCENDING"
+      },
+      {
+        "fieldPath": "createdAt",
+        "order": "DESCENDING"
+      },
+      {
+        "fieldPath": "__name__",
+        "order": "DESCENDING"
+      }
+    ],
+    "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/backup_metadata/indexes/CICAgJim14AK",
+    "state": "READY"
+  },
+  {
+    "fields": [
+      {
+        "fieldPath": "status",
+        "order": "ASCENDING"
+      },
+      {
+        "fieldPath": "scheduledAt",
+        "order": "ASCENDING"
+      },
+      {
+        "fieldPath": "__name__",
+        "order": "ASCENDING"
+      }
+    ],
+    "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/notification_jobs/indexes/CICAgOjXh4EK",
+    "state": "READY"
+  },
+  {
+    "fields": [
+      {
+        "fieldPath": "status",
+        "order": "ASCENDING"
+      },
+      {
+        "fieldPath": "claimedAt",
+        "order": "ASCENDING"
+      },
+      {
+        "fieldPath": "__name__",
+        "order": "ASCENDING"
+      }
+    ],
+    "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/notification_jobs/indexes/CICAgJiUpoMK",
+    "state": "READY"
+  }
+]

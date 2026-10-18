@@ -65,8 +65,14 @@ assert.deepEqual(assetLinks, [
 assert.deepEqual(appleAppSiteAssociation, {
   applinks: {
     apps: [],
-    details: [{ appID: "AB12CD34EF.app.freed.recovery", components: [{ "/": "/__/auth/links" }] }]
+    details: [{ appID: "AB12CD34EF.app.freed.recovery", components: [{ "/": "/__/auth/links" }, { "/": "/intervention" }] }]
   }
 });
+
+assert.deepEqual(
+  JSON.parse(readFileSync(join(outputDir, ".well-known", "apple-app-site-association"), "utf8")),
+  appleAppSiteAssociation,
+  "both association endpoints must describe the same narrow app routes"
+);
 
 console.log("firebase hosting association tests passed");

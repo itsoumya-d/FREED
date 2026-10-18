@@ -1,0 +1,200 @@
+{
+  "entries": [
+    {
+      "source": "FREED interception is disabled. Device permission settings are unchanged.",
+      "translations": {
+        "hi": "FREED का हस्तक्षेप बंद है। डिवाइस की अनुमति सेटिंग में कोई बदलाव नहीं हुआ है।",
+        "es": "La intervención de FREED está desactivada. Los ajustes de permisos del dispositivo no han cambiado.",
+        "pt": "A intervenção do FREED está desativada. As configurações de permissão do dispositivo não foram alteradas.",
+        "fr": "L’intervention de FREED est désactivée. Les réglages d’autorisation de l’appareil restent inchangés.",
+        "de": "Das Eingreifen von FREED ist deaktiviert. Die Berechtigungseinstellungen des Geräts sind unverändert.",
+        "ar": "تم تعطيل تدخل FREED. لم تتغير إعدادات أذونات الجهاز.",
+        "ja": "FREEDによる利用の中断は無効です。デバイスの権限設定は変更されていません。",
+        "ko": "FREED의 사용 중단 기능이 비활성화되었습니다. 기기의 권한 설정은 변경되지 않았습니다.",
+        "zh-Hans": "FREED 的使用中断功能已停用。设备权限设置未更改。"
+      }
+    },
+    {
+      "source": "Protection activation could not be saved. Retry after the current reset finishes.",
+      "translations": {
+        "hi": "सुरक्षा सक्रिय करने का बदलाव सहेजा नहीं जा सका। मौजूदा रीसेट पूरा होने के बाद फिर कोशिश करें।",
+        "es": "No se pudo guardar la activación de la protección. Vuelve a intentarlo cuando termine el restablecimiento actual.",
+        "pt": "Não foi possível salvar a ativação da proteção. Tente novamente quando a redefinição atual terminar.",
+        "fr": "L’activation de la protection n’a pas pu être enregistrée. Réessayez une fois la réinitialisation en cours terminée.",
+        "de": "Die Aktivierung des Schutzes konnte nicht gespeichert werden. Versuche es nach Abschluss des laufenden Zurücksetzens erneut.",
+        "ar": "تعذر حفظ تفعيل الحماية. أعد المحاولة بعد انتهاء إعادة الضبط الحالية.",
+        "ja": "保護の有効化を保存できませんでした。現在のリセットが完了してから再試行してください。",
+        "ko": "보호 활성화를 저장하지 못했습니다. 현재 초기화가 완료된 후 다시 시도해 주세요.",
+        "zh-Hans": "无法保存保护启用状态。请在当前重置完成后重试。"
+      }
+    },
+    {
+      "source": "FREED protection configuration and temporary access were cleared. Device permission settings are unchanged.",
+      "translations": {
+        "hi": "FREED की सुरक्षा सेटिंग और अस्थायी पहुँच हटा दी गई हैं। डिवाइस की अनुमति सेटिंग में कोई बदलाव नहीं हुआ है।",
+        "es": "Se borraron la configuración de protección y el acceso temporal de FREED. Los ajustes de permisos del dispositivo no han cambiado.",
+        "pt": "A configuração de proteção e o acesso temporário do FREED foram apagados. As configurações de permissão do dispositivo não foram alteradas.",
+        "fr": "La configuration de protection et l’accès temporaire de FREED ont été effacés. Les réglages d’autorisation de l’appareil restent inchangés.",
+        "de": "Die Schutzkonfiguration und der vorübergehende Zugriff von FREED wurden gelöscht. Die Berechtigungseinstellungen des Geräts sind unverändert.",
+        "ar": "تم مسح إعدادات حماية FREED والوصول المؤقت. لم تتغير إعدادات أذونات الجهاز.",
+        "ja": "FREEDの保護設定と一時的なアクセスを消去しました。デバイスの権限設定は変更されていません。",
+        "ko": "FREED의 보호 설정과 임시 접근 권한이 삭제되었습니다. 기기의 권한 설정은 변경되지 않았습니다.",
+        "zh-Hans": "已清除 FREED 保护配置和临时访问权限。设备权限设置未更改。"
+      }
+    },
+    {
+      "source": "FREED could not confirm complete protection cleanup. Local deletion must wait; retry the reset.",
+      "translations": {
+        "hi": "FREED यह पुष्टि नहीं कर सका कि सुरक्षा पूरी तरह हट गई है। स्थानीय डेटा हटाना अभी रोकना होगा; रीसेट फिर से करें।",
+        "es": "FREED no pudo confirmar que la protección se haya eliminado por completo. La eliminación local debe esperar; vuelve a intentar el restablecimiento.",
+        "pt": "O FREED não pôde confirmar a remoção completa da proteção. A exclusão local precisa aguardar; tente redefinir novamente.",
+        "fr": "FREED n’a pas pu confirmer la suppression complète de la protection. La suppression locale doit attendre ; réessayez la réinitialisation.",
+        "de": "FREED konnte die vollständige Entfernung des Schutzes nicht bestätigen. Das lokale Löschen muss warten; versuche das Zurücksetzen erneut.",
+        "ar": "لم يتمكن FREED من تأكيد إزالة الحماية بالكامل. يجب تأجيل الحذف المحلي؛ أعد محاولة إعادة الضبط.",
+        "ja": "FREEDの保護が完全に解除されたことを確認できませんでした。ローカルデータの削除はまだできません。リセットを再試行してください。",
+        "ko": "FREED가 보호 기능의 완전한 해제를 확인하지 못했습니다. 로컬 데이터 삭제는 기다려야 합니다. 초기화를 다시 시도해 주세요.",
+        "zh-Hans": "FREED 无法确认保护已完全清除。本地删除操作需要等待；请重试重置。"
+      }
+    },
+    {
+      "source": "App configuration could not be saved while protection is resetting.",
+      "translations": {
+        "hi": "सुरक्षा रीसेट होने के दौरान ऐप की सेटिंग सहेजी नहीं जा सकीं।",
+        "es": "No se pudo guardar la configuración de las aplicaciones mientras se restablece la protección.",
+        "pt": "Não foi possível salvar a configuração dos aplicativos enquanto a proteção está sendo redefinida.",
+        "fr": "La configuration des applications n’a pas pu être enregistrée pendant la réinitialisation de la protection.",
+        "de": "Die App-Konfiguration konnte während des Zurücksetzens des Schutzes nicht gespeichert werden.",
+        "ar": "تعذر حفظ إعدادات التطبيقات أثناء إعادة ضبط الحماية.",
+        "ja": "保護のリセット中にアプリの設定を保存できませんでした。",
+        "ko": "보호 기능을 초기화하는 동안 앱 설정을 저장하지 못했습니다.",
+        "zh-Hans": "保护重置期间无法保存应用配置。"
+      }
+    },
+    {
+      "source": "FREED protection was reset. Activate protection before syncing blocking rules.",
+      "translations": {
+        "hi": "FREED की सुरक्षा रीसेट कर दी गई है। ब्लॉक करने के नियम सिंक करने से पहले सुरक्षा सक्रिय करें।",
+        "es": "Se restableció la protección de FREED. Activa la protección antes de sincronizar las reglas de bloqueo.",
+        "pt": "A proteção do FREED foi redefinida. Ative a proteção antes de sincronizar as regras de bloqueio.",
+        "fr": "La protection de FREED a été réinitialisée. Activez la protection avant de synchroniser les règles de blocage.",
+        "de": "Der Schutz von FREED wurde zurückgesetzt. Aktiviere den Schutz, bevor du die Blockierungsregeln synchronisierst.",
+        "ar": "تمت إعادة ضبط حماية FREED. فعّل الحماية قبل مزامنة قواعد الحظر.",
+        "ja": "FREEDの保護がリセットされました。ブロックルールを同期する前に保護を有効にしてください。",
+        "ko": "FREED의 보호 기능이 초기화되었습니다. 차단 규칙을 동기화하기 전에 보호 기능을 활성화해 주세요.",
+        "zh-Hans": "FREED 保护已重置。请先启用保护，再同步拦截规则。"
+      }
+    },
+    {
+      "source": "FREED protection was reset while blocking rules were being prepared.",
+      "translations": {
+        "hi": "ब्लॉक करने के नियम तैयार होते समय FREED की सुरक्षा रीसेट कर दी गई।",
+        "es": "Se restableció la protección de FREED mientras se preparaban las reglas de bloqueo.",
+        "pt": "A proteção do FREED foi redefinida enquanto as regras de bloqueio estavam sendo preparadas.",
+        "fr": "La protection de FREED a été réinitialisée pendant la préparation des règles de blocage.",
+        "de": "Der Schutz von FREED wurde während der Vorbereitung der Blockierungsregeln zurückgesetzt.",
+        "ar": "تمت إعادة ضبط حماية FREED أثناء إعداد قواعد الحظر.",
+        "ja": "ブロックルールの準備中にFREEDの保護がリセットされました。",
+        "ko": "차단 규칙을 준비하는 동안 FREED의 보호 기능이 초기화되었습니다.",
+        "zh-Hans": "准备拦截规则时，FREED 保护被重置。"
+      }
+    },
+    {
+      "source": "FREED protection was reset while blocking rules were being saved.",
+      "translations": {
+        "hi": "ब्लॉक करने के नियम सहेजे जाते समय FREED की सुरक्षा रीसेट कर दी गई।",
+        "es": "Se restableció la protección de FREED mientras se guardaban las reglas de bloqueo.",
+        "pt": "A proteção do FREED foi redefinida enquanto as regras de bloqueio estavam sendo salvas.",
+        "fr": "La protection de FREED a été réinitialisée pendant l’enregistrement des règles de blocage.",
+        "de": "Der Schutz von FREED wurde während des Speicherns der Blockierungsregeln zurückgesetzt.",
+        "ar": "تمت إعادة ضبط حماية FREED أثناء حفظ قواعد الحظر.",
+        "ja": "ブロックルールの保存中にFREEDの保護がリセットされました。",
+        "ko": "차단 규칙을 저장하는 동안 FREED의 보호 기능이 초기화되었습니다.",
+        "zh-Hans": "保存拦截规则时，FREED 保护被重置。"
+      }
+    },
+    {
+      "source": "Invalid app schedule configuration.",
+      "translations": {
+        "hi": "ऐप का शेड्यूल सही तरीके से सेट नहीं किया गया है।",
+        "es": "La configuración del horario de las aplicaciones no es válida.",
+        "pt": "A configuração da programação dos aplicativos é inválida.",
+        "fr": "La configuration des horaires des applications n’est pas valide.",
+        "de": "Die Konfiguration des App-Zeitplans ist ungültig.",
+        "ar": "إعدادات جدول التطبيقات غير صالحة.",
+        "ja": "アプリのスケジュール設定が無効です。",
+        "ko": "앱 일정 설정이 올바르지 않습니다.",
+        "zh-Hans": "应用时间表配置无效。"
+      }
+    },
+    {
+      "source": "Adult-domain feed sync is paused while FREED protection is disabled.",
+      "translations": {
+        "hi": "FREED की सुरक्षा बंद रहने के दौरान वयस्क वेबसाइटों की डोमेन सूची का सिंक रुका हुआ है।",
+        "es": "La sincronización de la lista de dominios para adultos está en pausa mientras la protección de FREED está desactivada.",
+        "pt": "A sincronização da lista de domínios adultos está pausada enquanto a proteção do FREED está desativada.",
+        "fr": "La synchronisation de la liste de domaines pour adultes est suspendue tant que la protection de FREED est désactivée.",
+        "de": "Die Synchronisierung der Liste von Domains mit Inhalten für Erwachsene ist pausiert, solange der Schutz von FREED deaktiviert ist.",
+        "ar": "تم إيقاف مزامنة قائمة نطاقات المحتوى المخصص للبالغين مؤقتًا ما دامت حماية FREED معطلة.",
+        "ja": "FREEDの保護が無効な間は、アダルトサイトのドメインリストの同期を一時停止します。",
+        "ko": "FREED의 보호 기능이 비활성화된 동안 성인 사이트 도메인 목록 동기화가 일시 중지됩니다.",
+        "zh-Hans": "FREED 保护停用期间，成人网站域名列表同步已暂停。"
+      }
+    },
+    {
+      "source": "Always-allow list sync is paused while FREED protection is disabled.",
+      "translations": {
+        "hi": "FREED की सुरक्षा बंद रहने के दौरान हमेशा अनुमति वाली सूची का सिंक रुका हुआ है।",
+        "es": "La sincronización de la lista de sitios siempre permitidos está en pausa mientras la protección de FREED está desactivada.",
+        "pt": "A sincronização da lista de sites sempre permitidos está pausada enquanto a proteção do FREED está desativada.",
+        "fr": "La synchronisation de la liste des sites toujours autorisés est suspendue tant que la protection de FREED est désactivée.",
+        "de": "Die Synchronisierung der Liste immer erlaubter Websites ist pausiert, solange der Schutz von FREED deaktiviert ist.",
+        "ar": "تم إيقاف مزامنة قائمة المواقع المسموح بها دائمًا مؤقتًا ما دامت حماية FREED معطلة.",
+        "ja": "FREEDの保護が無効な間は、常に許可するサイトのリストの同期を一時停止します。",
+        "ko": "FREED의 보호 기능이 비활성화된 동안 항상 허용하는 사이트 목록 동기화가 일시 중지됩니다.",
+        "zh-Hans": "FREED 保护停用期间，始终允许的网站列表同步已暂停。"
+      }
+    },
+    {
+      "source": "App configuration sync is paused while FREED protection is disabled.",
+      "translations": {
+        "hi": "FREED की सुरक्षा बंद रहने के दौरान ऐप की सेटिंग का सिंक रुका हुआ है।",
+        "es": "La sincronización de la configuración de las aplicaciones está en pausa mientras la protección de FREED está desactivada.",
+        "pt": "A sincronização da configuração dos aplicativos está pausada enquanto a proteção do FREED está desativada.",
+        "fr": "La synchronisation de la configuration des applications est suspendue tant que la protection de FREED est désactivée.",
+        "de": "Die Synchronisierung der App-Konfiguration ist pausiert, solange der Schutz von FREED deaktiviert ist.",
+        "ar": "تم إيقاف مزامنة إعدادات التطبيقات مؤقتًا ما دامت حماية FREED معطلة.",
+        "ja": "FREEDの保護が無効な間は、アプリ設定の同期を一時停止します。",
+        "ko": "FREED의 보호 기능이 비활성화된 동안 앱 설정 동기화가 일시 중지됩니다.",
+        "zh-Hans": "FREED 保护停用期间，应用配置同步已暂停。"
+      }
+    },
+    {
+      "source": "FREED protection configuration could not be enabled. Retry activation.",
+      "translations": {
+        "hi": "FREED की सुरक्षा सेटिंग सक्रिय नहीं की जा सकीं। सक्रिय करने की फिर कोशिश करें।",
+        "es": "No se pudo habilitar la configuración de protección de FREED. Vuelve a intentar la activación.",
+        "pt": "Não foi possível habilitar a configuração de proteção do FREED. Tente ativar novamente.",
+        "fr": "La configuration de protection de FREED n’a pas pu être activée. Réessayez l’activation.",
+        "de": "Die Schutzkonfiguration von FREED konnte nicht aktiviert werden. Versuche die Aktivierung erneut.",
+        "ar": "تعذر تفعيل إعدادات حماية FREED. أعد محاولة التفعيل.",
+        "ja": "FREEDの保護設定を有効にできませんでした。有効化を再試行してください。",
+        "ko": "FREED의 보호 설정을 활성화하지 못했습니다. 활성화를 다시 시도해 주세요.",
+        "zh-Hans": "无法启用 FREED 保护配置。请重试启用操作。"
+      }
+    },
+    {
+      "source": "FREED protection configuration is enabled. Device permission settings are unchanged.",
+      "translations": {
+        "hi": "FREED की सुरक्षा सेटिंग सक्रिय हैं। डिवाइस की अनुमति सेटिंग में कोई बदलाव नहीं हुआ है।",
+        "es": "La configuración de protección de FREED está habilitada. Los ajustes de permisos del dispositivo no han cambiado.",
+        "pt": "A configuração de proteção do FREED está habilitada. As configurações de permissão do dispositivo não foram alteradas.",
+        "fr": "La configuration de protection de FREED est activée. Les réglages d’autorisation de l’appareil restent inchangés.",
+        "de": "Die Schutzkonfiguration von FREED ist aktiviert. Die Berechtigungseinstellungen des Geräts sind unverändert.",
+        "ar": "تم تفعيل إعدادات حماية FREED. لم تتغير إعدادات أذونات الجهاز.",
+        "ja": "FREEDの保護設定が有効です。デバイスの権限設定は変更されていません。",
+        "ko": "FREED의 보호 설정이 활성화되었습니다. 기기의 권한 설정은 변경되지 않았습니다.",
+        "zh-Hans": "FREED 保护配置已启用。设备权限设置未更改。"
+      }
+    }
+  ]
+}

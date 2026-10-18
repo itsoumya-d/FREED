@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "freed-native-ui-walkthrough-v1",
+  "kind": "SIMULATOR_DEBUG",
+  "deviceId": "EA53F394-3E1F-44A7-84EF-716A26BE9879",
+  "state": "waiting-for-safe-embedded-js",
+  "observations": [
+    {
+      "screen": "startup",
+      "status": "failed",
+      "evidence": "startup-embedded-dev-error.jpg",
+      "message": "Expo development websocket code rejects dev=true embedded bundle."
+    }
+  ],
+  "limitations": [
+    "No physical-device frame-time proof.",
+    "Screen Time and real Safari/app blocking cannot be established on this simulator.",
+    "No real email, messages, production account, purchases or production writes authorized.",
+    "The 109-feature catalog is not marked verified by a UI walkthrough."
+  ]
+}

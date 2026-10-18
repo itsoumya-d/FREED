@@ -1,0 +1,52 @@
+import React from 'react';
+import {act, fireEvent, render} from '@testing-library/react-native';
+import {AppState, AccessibilityInfo} from 'react-native';
+import {NavigationContext} from '@react-navigation/native';
+import * as Reanimated from 'react-native-reanimated';
+import {BasicHelp} from '@/components/BasicHelp';
+import {I18nextProvider} from 'react-i18next';
+import {appI18n} from '@/i18n/runtime';
+jest.mock('@/components/MomentumCompanion',()=>({MomentumCompanion:()=>null}));
+jest.mock('@/components/BreathingCadenceArtwork',()=>({BreathingCadenceArtwork:()=>null}));
+jest.mock('@/hooks/use-app-preferences',()=>({useAppPreferences:()=>({mode:'light'}),useOptionalAppPreferences:()=>null}));
+// useMotionSettings is deliberately real. Only OS signal delivery and Reanimated's native boundary are fixtures.
+let now=1000; let priorAppState: any;
+let lifecycle=new Set<(state:any)=>void>();let reduced=new Set<(value:boolean)=>void>();
+beforeEach(async()=>{
+  jest.useFakeTimers();now=1000;lifecycle=new Set();reduced=new Set();
+  priorAppState=AppState.currentState;(AppState as any).currentState='active';
+  jest.spyOn(performance,'now').mockImplementation(()=>now);
+  jest.spyOn(AppState,'addEventListener').mockImplementation((_event,callback)=>{lifecycle.add(callback);return{remove:()=>{lifecycle.delete(callback);}};});
+  jest.spyOn(AccessibilityInfo,'isReduceMotionEnabled').mockResolvedValue(false);
+  jest.spyOn(AccessibilityInfo,'addEventListener').mockImplementation((_event,callback:any)=>{reduced.add(callback);return{remove:()=>{reduced.delete(callback);}};});
+  await appI18n.changeLanguage('en');
+});
+afterEach(()=>{(AppState as any).currentState=priorAppState;jest.restoreAllMocks();jest.useRealTimers();});
+const wrap=(children:React.ReactNode)=><I18nextProvider i18n={appI18n}>{children}</I18nextProvider>;
+test('real motion policy takes normal artwork branch, reacts to OS lifecycle and live Reduce Motion, and removes every owned listener',async()=>{
+  const timing=jest.spyOn(Reanimated,'withTiming');const cancel=jest.spyOn(Reanimated,'cancelAnimation');
+  const view=render(wrap(<BasicHelp onClose={jest.fn()}/>));await act(async()=>{});
+  fireEvent.press(view.getByRole('button',{name:'Begin breathing'}));
+  expect(timing).toHaveBeenCalledWith(200/950,expect.objectContaining({duration:4000}));
+  now=2500;act(()=>{jest.advanceTimersByTime(1500);});
+  expect(view.getByTestId('public-help-count')).toHaveTextContent('3 seconds');
+  (AppState as any).currentState='background';act(()=>{[...lifecycle].forEach(callback=>callback('background'));});
+  expect(view.getByText('Paused')).toBeOnTheScreen();expect(cancel).toHaveBeenCalled();
+  now=22500;(AppState as any).currentState='active';act(()=>{[...lifecycle].forEach(callback=>callback('active'));jest.advanceTimersByTime(20000);});
+  expect(view.getByText('Paused')).toBeOnTheScreen();expect(view.getByTestId('public-help-count')).toHaveTextContent('3 seconds');
+  act(()=>{[...reduced].forEach(callback=>callback(true));});timing.mockClear();
+  fireEvent.press(view.getByRole('button',{name:'Begin breathing'}));
+  now=23000;act(()=>{jest.advanceTimersByTime(500);});
+  expect(view.getByTestId('public-help-count')).toHaveTextContent('2 seconds');expect(timing).not.toHaveBeenCalled();
+  view.unmount();expect(lifecycle.size).toBe(0);expect(reduced.size).toBe(0);
+});
+test('real focus subscription pauses cadence and focus return cannot count the hidden interval or restart it',async()=>{
+  let focused=true;const listeners:Record<string,(()=>void)[]>={focus:[],blur:[]};
+  const navigation={isFocused:()=>focused,addListener:(event:string,listener:()=>void)=>{listeners[event].push(listener);return()=>{listeners[event]=listeners[event].filter(item=>item!==listener);};}};
+  const view=render(wrap(<NavigationContext.Provider value={navigation as any}><BasicHelp onClose={jest.fn()}/></NavigationContext.Provider>));await act(async()=>{});
+  fireEvent.press(view.getByRole('button',{name:'Begin breathing'}));now=2000;act(()=>{jest.advanceTimersByTime(1000);});
+  focused=false;act(()=>{listeners.blur.forEach(listener=>listener());});
+  now=20000;focused=true;act(()=>{listeners.focus.forEach(listener=>listener());jest.advanceTimersByTime(18000);});
+  expect(view.getByText('Paused')).toBeOnTheScreen();expect(view.getByTestId('public-help-count')).toHaveTextContent('3 seconds');
+  view.unmount();expect(listeners.focus).toHaveLength(0);expect(listeners.blur).toHaveLength(0);
+});

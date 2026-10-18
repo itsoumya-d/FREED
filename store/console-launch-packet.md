@@ -8,30 +8,29 @@ Use this packet when creating or updating the Google Play Console and App Store 
 - Bundle ID: `app.freed.recovery`
 - Android package: `app.freed.recovery`
 - Category: Health & Fitness
-- Privacy Policy URL: `https://freedrecovery.app/privacy`
-- Support URL: `https://freedrecovery.app/support`
-- Account deletion URL: `https://freedrecovery.app/account-deletion`
-- Support email: `support@freedrecovery.app`
+- Privacy Policy URL: `https://freed-landing.web.app/privacy`
+- Support URL: `https://freed-landing.web.app/support`
+- Account deletion URL: `https://freed-landing.web.app/account-deletion`
+- Support email: `soumyadebnath1661@gmail.com`
 - Web hosting: Expo web output is set to `static` so the exported site should include direct `/privacy`, `/support`, and `/account-deletion` HTML routes for store crawlers.
 - Store release status before evidence: Play internal track and draft release, App Store Connect/TestFlight beta only.
 - Do not submit production until strict release audit, production-env preflight, physical-device evidence, store sandbox evidence, and privacy declarations all pass.
 - EAS submit guard: `npm run eas:submit:internal` and `npm run eas:submit:production` both run `scripts/eas-submit-guard.js` before invoking EAS. The guard allows the current draft/internal handoff, but blocks live Play production/review-submit drift unless the owner explicitly sets `FREED_STORE_PRODUCTION_SUBMIT_APPROVED=strict-release-evidence-pass` after every blocker is closed.
 
-## Core 3 Products
+## Two launch subscriptions
 
-Create only these v1 products in both stores:
+Complete the existing monthly and annual records in both stores. Give both Apple subscriptions the same service level and activate matching Play base plans without introductory offers:
 
 | Plan | Product ID | Store type | Price intent |
 | --- | --- | --- | --- |
 | Yearly | `freed_premium_yearly` | App Store auto-renewable subscription; Play subscription | USD 39.99 |
 | Monthly | `freed_premium_monthly` | App Store auto-renewable subscription; Play subscription | USD 9.99 |
-| Lifetime | `freed_premium_lifetime` | App Store non-consumable; Play one-time product | USD 79.99 |
 
-Use entitlement `premium`. Server verification through `EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT` is required before granting premium. Configure App Store Server API credentials and Google Play service-account credentials in the production environment, not in the app bundle or repository.
+Use entitlement `premium`. Both plans unlock the same Premium capabilities, including forecasts, deep reports, and accountability/support-circle reports; neither has a trial. Native `expo-iap` checkout uses Firebase Auth, App Check, `getPurchaseCheckoutContext`, and `verifyStorePurchase` in `freed-7d5ee`/`asia-south1`. Keep the App Store Server API and Google Play verification credentials in Firebase Secret Manager. Refresh `getPremiumEntitlement` on startup/foreground/purchase/restore. Cancellation retains access through paid expiry; expiry, refund, revocation, or payment hold returns the app to eligible free-user ads. SOS remains ad-free.
 
 Future SKUs are disabled for v1 and must not appear in the paywall, purchase calls, store metadata, release preflight, or screenshots: `freed_family_yearly`, `freed_accountability_monthly`, and `freed_ai_coach_monthly`.
 
-Pricing economics source: `store/pricing-economics.md`. The v1 launch uses a conservative 30% store-fee model and an optimized 15% model for eligible small-business/subscription fee tiers. The yearly plan is the primary value anchor at USD 3.33/month equivalent and a 67% discount against monthly. Lifetime is the cashflow anchor with an 8-month breakeven against monthly and a 2-year breakeven against yearly. Validate actual proceeds, local price tiers, taxes, and account-specific fee eligibility in App Store Connect and Play Console before production submission.
+Pricing economics source: `store/pricing-economics.md`. The v1 launch uses a conservative 30% store-fee model and an optimized 15% model for eligible small-business/subscription fee tiers. The yearly plan is the primary value anchor at USD 3.33/month equivalent and a 67% discount against monthly. Validate actual proceeds, local price tiers, taxes, and account-specific fee eligibility in App Store Connect and Play Console before production submission.
 
 Console handoff files:
 
@@ -43,17 +42,17 @@ Console handoff files:
 - Store listing screenshot manifest template: `store/screenshots/listing/manifest.template.json`
 - Draft app-record action packet: `docs/validation/artifacts/<run-id>/store-ad-sandbox-capture/STORE_APP_RECORD_ACTION_PACKET.md` and `.json`
 
-Before opening the store consoles, run `npm run audit:store-catalog`. The current sanitized local precheck is `docs/validation/artifacts/store-launch-catalog-current/store-launch-catalog-audit.json`; it verifies that the catalog, App Store CSV, Play CSV, and screenshot manifest are Core 3 only, that future family/accountability/AI-coach SKUs are inactive for v1, and that screenshot hashes/dimensions match. This is a local catalog precheck only; it does not prove console products exist or sandbox purchases pass.
+Before updating the store consoles, run `npm run audit:store-catalog`. The current sanitized local precheck is `docs/validation/artifacts/store-launch-catalog-current/store-launch-catalog-audit.json`; it verifies that the catalog, App Store CSV, Play CSV, and screenshot manifest are monthly and yearly only, that additional family/accountability/AI-coach SKUs are inactive for v1; current accountability benefits are included in both launch plans, and that screenshot hashes/dimensions match. This is a local catalog precheck only; it does not prove console products exist or sandbox purchases pass.
 
-Before uploading public App Store or Play listing screenshots, use `store/screenshots/listing-screenshot-plan.md`. Keep listing screenshots separate from the Core 3 IAP review screenshot manifest and do not use them as Android/iOS physical-device protection evidence.
+Before uploading public App Store or Play listing screenshots, use `store/screenshots/listing-screenshot-plan.md`. Keep listing screenshots separate from the two-plan IAP review screenshot manifest and do not use them as Android/iOS physical-device protection evidence.
 
 Before recording reviewer/demo permission setup, run `npm run audit:permission-flow`. The current sanitized local precheck is `docs/validation/artifacts/permission-flow-current/permission-flow-source-audit.json`; it verifies that the source still routes users through the strict native permission order and activation-test gate. This is a source-level precheck only; it does not replace Android/iOS physical-device evidence.
 
 Before entering privacy, data safety, app metadata, or review-note answers, run `npm run audit:store-legal`. The current sanitized local precheck is `docs/validation/artifacts/store-legal-policy-current/store-legal-policy-audit.json`; it verifies that the checked-in privacy policy, public legal routes, App Store privacy answers, Play Data Safety sheet, metadata drafts, and platform policy packs remain aligned. This is a local legal/metadata precheck only; it does not prove hosted page availability, legal review, console entry, or platform approval.
 
-Before creating or identifying app records in the logged-in browser, generate the sandbox packet and use `STORE_APP_RECORD_ACTION_PACKET.md`. It contains the exact Play Console and App Store Connect app-record fields, the Browser action-time confirmation token `confirm-draft-store-app-record-creation-only`, the Apple Account Holder license-agreement prerequisite, and hard stops against product setup, review submission, publishing, or rollout. After the app records exist, rerun the read-only Browser readiness command from that packet and do not create Core 3 products until the readiness report proves both app records exist and the Apple agreement is accepted.
+Before creating or identifying app records in the logged-in browser, generate the sandbox packet and use `STORE_APP_RECORD_ACTION_PACKET.md`. It contains the exact Play Console and App Store Connect app-record fields, the Browser action-time confirmation token `confirm-draft-store-app-record-creation-only`, the Apple Account Holder license-agreement prerequisite, and hard stops against product setup, review submission, publishing, or rollout. After the app records exist, rerun the read-only Browser readiness command from that packet and complete the two existing subscription records only until the readiness report proves both app records exist and the Apple agreement is accepted.
 
-Use App Store subscription group `freed_premium` for the yearly and monthly products. In Google Play, use subscription base plans `yearly` with billing period `P1Y` and `monthly` with billing period `P1M`; keep lifetime as a one-time non-consumable product. Keep all three products in draft or inactive/sandbox-only state until server receipt verification, restore, and store/ad sandbox evidence pass.
+Use App Store subscription group `freed_premium` for the yearly and monthly products, at the same service level. In Google Play, use subscription base plans `yearly` with billing period `P1Y` and `monthly` with billing period `P1M`. US base prices are $39.99/year and $9.99/month, with store-localized prices and no trial. Both plans unlock the same current Premium capabilities. Keep both products in draft or testing until server verification, restore, and store/ad sandbox evidence pass. Lifetime, multiseat, and standalone feature products are outside this launch.
 
 ## Google Play Console Setup
 
@@ -61,7 +60,7 @@ Use App Store subscription group `freed_premium` for the yearly and monthly prod
 - Ads: declare ads because free users may see rewarded AdMob reset ads. Production must use real AdMob app IDs and rewarded unit IDs, with `EXPO_PUBLIC_ADMOB_USE_TEST_ADS=false`.
 - Content rating and target audience: position FREED for adults/recovery and do not submit it as a child-directed or Families app.
 - Data Safety: complete from `store/play-store/data-safety.md`, `docs/privacy-data-map.md`, and the production env that is actually enabled. The v1 local-first baseline does not collect raw browsing history, full URLs, search text, screenshots, microphone audio, camera roll media, exact background location, Android Ad ID, private notes, payment card details, or store/ad/provider secrets.
-- Data deletion: point users to Profile privacy controls, the public account deletion route `https://freedrecovery.app/account-deletion`, and `support@freedrecovery.app`; local data deletion is in-app and hosted/server deletion requests go through support until authenticated account deletion is live.
+- Data deletion: point users to Profile privacy controls, the public account deletion route `https://freed-landing.web.app/account-deletion`, and `soumyadebnath1661@gmail.com`; local data deletion is in-app and hosted/server deletion requests go through support until authenticated account deletion is live.
 - AccessibilityService declaration: use `docs/store-policy/android-accessibility-and-fgs-disclosure.md`. FREED uses AccessibilityService only after explicit opt-in for selected browser/search/WebView/app/short-form recovery handoff. It does not take screenshots, run OCR, log keystrokes, inspect private messages, read page contents broadly, or sell AccessibilityService data.
 - VpnService declaration: FREED DNS Guard is DNS-only adult-domain filtering. It does not route full traffic, proxy normal traffic, inspect packet payloads beyond DNS questions, decrypt HTTPS, or MITM connections.
 - Foreground service special use: DNS Guard stays visible while running and is user-enabled. Evidence must prove lifecycle behavior, visible notification, restart limits, and no full-traffic proxying.
@@ -70,7 +69,7 @@ Use App Store subscription group `freed_premium` for the yearly and monthly prod
 ## App Store Connect Setup
 
 - App Privacy: complete from `store/app-store/app-privacy.md`, `docs/privacy-data-map.md`, `store/privacy-policy.md`, the public `/privacy`, `/support`, and `/account-deletion` routes, and the production env actually enabled. Declare no tracking for the v1 build unless a future ads/analytics change introduces tracking. Purchases, optional aggregate analytics, optional remote AI context, optional encrypted backup sync, optional notification dispatch, and optional challenge weather context must match the enabled production env.
-- In-App Purchases: create `freed_premium_yearly`, `freed_premium_monthly`, and `freed_premium_lifetime` only. Put yearly/monthly in a subscription group and configure lifetime as a non-consumable.
+- In-App Purchases: use the existing `freed_premium_yearly` and `freed_premium_monthly` records only. Put both at the same service level in `freed_premium`, with individual App Store purchases, no Family Sharing, no multiseat purchasing, and no introductory offers.
 - Review notes: use `docs/store-policy/ios-screen-time-safari-dns-review.md`. FREED uses Family Controls, ManagedSettings, DeviceActivity, FamilyActivityPicker, and Safari Content Blocker for recovery protection.
 - Screen Time boundary: FREED receives opaque Screen Time tokens and threshold events. It cannot and does not read third-party app screens, native Reels/Shorts/TikTok content, private messages, or in-app content on iOS.
 - Safari boundary: FREED's Safari Content Blocker supplies rule lists. It does not receive Safari browsing history or page contents.
@@ -80,7 +79,7 @@ Use App Store subscription group `freed_premium` for the yearly and monthly prod
 
 ## Required Console Evidence Before Production
 
-- `docs/validation/evidence/store-ad-sandbox.json`: App Store/Play console product setup proof for Core 3 only with future SKUs inactive, App Store/Play sandbox purchase and restore for yearly/monthly/lifetime, Core 3-only paywall proof with future SKUs hidden and yearly value anchor visible, server receipt verification, AdMob rewarded request/completion/failure fallback, premium no-ad flow, and store privacy-disclosure review against `store/play-store/data-safety.md` and `store/app-store/app-privacy.md`.
+- `docs/validation/evidence/store-ad-sandbox.json`: App Store/Play console product setup proof for monthly and yearly only with future SKUs inactive, App Store/Play sandbox purchase and restore for yearly/monthly, two-plan paywall proof with future SKUs hidden and yearly value anchor visible, server receipt verification, AdMob rewarded request/completion/failure fallback, premium no-ad flow, and store privacy-disclosure review against `store/play-store/data-safety.md` and `store/app-store/app-privacy.md`.
 - `docs/validation/evidence/android-real-browser.json`: physical Android Chrome, Firefox, Edge, Samsung Internet, WebView fixture, DNS Guard, Usage Access, Accessibility, selected app timers, earned unlock/relock, reboot/restart, normal browsing, and Play policy declaration artifacts.
 - `docs/validation/evidence/ios-physical-device.json`: physical iPhone Family Controls authorization, FamilyActivityPicker target selection, ManagedSettings adult web filter, DeviceActivity limits, adult-only Safari Content Blocker reload/block proof, Safari Focus Shield Shorts/Reels proof, shield actions, earned unlock/relock, and entitlement/provisioning artifacts. iOS DNS filtering is unavailable and is not a release requirement.
 - `docs/validation/evidence/normal-browsing-corpus.json`: iOS Safari plus Android major-browser false-positive/false-negative corpus.
@@ -102,6 +101,10 @@ npm run eas:submit:production -- --dry-run
 npm run verify:release -- --env-file <production-env-file> --artifact-dir docs/validation/artifacts/<run-id>
 ```
 
-Current Android build note: the latest local Android rebuilds on this Mac can reach `:app:configureCMakeRelWithDebInfo[arm64-v8a]` and then fail with CMake exit 137. Until a local current-source rebuild succeeds on a higher-memory machine, use EAS internal/production Android builds as the current-source artifact path. Record the EAS build URL, source revision, artifact hash, signing mode, and production env preflight report under `docs/validation/artifacts/<run-id>` before using that build for physical QA, Play internal testing, or store sandbox evidence. Do not use the older side-load APK as proof of latest native code or as Play upload evidence.
+Current Android build note: local current-source upload-signed AAB and APK builds succeeded on 2026-10-02 after native job limits and bounded progress/cleanup fixes. Their reports and independent signature/bytecode proof are under `docs/validation/artifacts/2026-10-02-release-prep`. The AAB is a store upload artifact; the APK supports local phone testing. Physical-device and store/ad sandbox evidence remain required. An older side-load APK cannot stand in for the current build.
 
 `npm run eas:submit:production` must remain a draft/internal handoff until the owner explicitly approves production submission after every blocker is closed.
+
+## Pending console requirements
+
+Verify Apple provider enablement and OAuth revocation configuration, Google Play signing SHA fingerprints, production App Check registration, Firebase Storage bucket, store verification credentials, APNs/FCM and AdMob units. Confirm a working public support mailbox and reviewer contact. Capture subscription review images from the tested release build. Existing Apple/Play draft records are not approval or runtime evidence. Upload TestFlight/Play internal builds first; public review and manual coordinated publication require passing launch evidence.

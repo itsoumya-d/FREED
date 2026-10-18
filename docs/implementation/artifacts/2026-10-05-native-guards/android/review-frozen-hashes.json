@@ -1,0 +1,66 @@
+[
+  {
+    "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+    "sha256": "b22d6b3b85125160dfd6b268b912f01c82ee85ea69ffafdfa52026d714ed6bee"
+  },
+  {
+    "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+    "sha256": "96065e0cd242cd6fc4c0ff3a7ae9d239d17c5d2117aec5deff5719f03326c689"
+  },
+  {
+    "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAppSchedulePolicy.kt",
+    "sha256": "118b83faf07159065868922e8663b87a010d85163a1c29dd2bae7cdd255a70a8"
+  },
+  {
+    "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAppScheduleStore.kt",
+    "sha256": "47919f2c2d59fa256e831390bd2b54827f95c8fa909e08367f5a77303d77a193"
+  },
+  {
+    "path": "modules/freed-protection/android/src/test/java/app/freed/protection/FreedAppSchedulePolicyCases.kt",
+    "sha256": "173671d1dd3525a8617964ce1e806cebac721fe7f75d241e18ac095b0b0afef5"
+  },
+  {
+    "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedInterventionActivity.kt",
+    "sha256": "69ba0c07ef484d2f94c20ca87c8ca8248705ad7816c789af7dc783868624147d"
+  },
+  {
+    "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedVpnService.kt",
+    "sha256": "d4a0ff8ef998e34158e2b1b7f12f42c2f9fc1b81e6959b9e74e0e436d26d5cd8"
+  },
+  {
+    "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAppGuardModePolicy.kt",
+    "sha256": "0d02c42aa3888899564461bc9162246234d77e509e268efd34cbcfa77ef9b014"
+  },
+  {
+    "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAppGuardModeStore.kt",
+    "sha256": "59a2685c7c385141e9575184db49aab0eb88b5f7aa18d20bc2f956a173cf5bb2"
+  },
+  {
+    "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedInterventionHandoffPolicy.kt",
+    "sha256": "edc6086c726de48206405d013a61a4b6f99e5685eff6ae6b88b54f940d2705a7"
+  },
+  {
+    "path": "modules/freed-protection/android/src/test/java/app/freed/protection/FreedAppGuardModePolicyCases.kt",
+    "sha256": "db22f468cd91be6534d39b5c35d9239d243142b73f2e0ac47d2e406f6cbe2197"
+  },
+  {
+    "path": "modules/freed-protection/tests/run-android-handoff-tests.js",
+    "sha256": "04725d7fa2f2fc37946ce69f0a42abe6c0c3b1d84d7e2990e3895523e693436e"
+  },
+  {
+    "path": "modules/freed-protection/tests/run-dns-requested-handoff-tests.js",
+    "sha256": "8a463f3434c230f63b8be02c68565a13f511ac6b94e4515a65a649fcf7aa7957"
+  },
+  {
+    "path": "modules/freed-protection/tests/run-app-guard-runtime-tests.js",
+    "sha256": "3836ae4b3132cad99136e1a3c4c70f279aa00fa35805c3b252d42f948ca241a3"
+  },
+  {
+    "path": "modules/freed-protection/tests/run-app-guard-mode-policy-tests.js",
+    "sha256": "00b6f77519866b52e83978af5bcd8227520cd77afa944081ee6efd7415975d34"
+  },
+  {
+    "path": "modules/freed-protection/tests/run-app-guard-authority-tests.js",
+    "sha256": "a78d287f9e59c71ee48c90662cf17ada01d6d368d98a8d8ead3ae0c4800643ee"
+  }
+]

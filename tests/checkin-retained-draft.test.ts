@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import { createDefaultRecoveryState, recordDailyCheckIn, hydrateRecoveryState } from '../src/lib/recovery-state';
+import { saveRecoveryDraft, getRetainedCheckInDraftDate } from '../src/lib/recovery-drafts';
+const text = 'A'.repeat(4000);
+const input = { mood: 'steady' as const, urgeLevel: 2, sleepQuality: 3, reflection: text };
+const saved = recordDailyCheckIn(createDefaultRecoveryState(), input);
+assert.equal(saved.dailyCheckIns[0].reflection, text, 'saved reflection retains the form-supported length');
+assert.equal(hydrateRecoveryState(JSON.parse(JSON.stringify(saved))).dailyCheckIns[0].reflection, text);
+const values = new Map<string, string>();
+const storage = { getItem: (key:string) => values.get(key) ?? null, setItem: (key:string,value:string) => { values.set(key,value); }, removeItem: (key:string) => { values.delete(key); } };
+saveRecoveryDraft(storage, 'checkin', input, '2026-10-03');
+assert.equal(getRetainedCheckInDraftDate(storage, '2026-10-04'), '2026-10-03', 'restart keeps the original draft date visible for explicit transfer');
+assert.equal(getRetainedCheckInDraftDate(storage, '2026-10-02'), '2026-10-02', 'future scratch is never opened for writing');
+console.log('Full-length check-in persistence and cross-midnight draft recovery passed.');

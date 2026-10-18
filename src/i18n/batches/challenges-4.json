@@ -1,0 +1,2104 @@
+{
+  "entries": [
+    {
+      "source": "Save the note for next time.",
+      "translations": {
+        "hi": "अगली बार के लिए नोट सहेजें।",
+        "es": "Guarda la nota para la próxima vez.",
+        "pt": "Salve a nota para a próxima vez.",
+        "fr": "Gardez la note pour la prochaine fois.",
+        "de": "Speichere die Notiz fürs nächste Mal.",
+        "ar": "احفظ الملاحظة للمرة المقبلة.",
+        "ja": "次回のためにメモを保存します。",
+        "zh-Hans": "保存笔记，留给下次。",
+        "ko": "다음 시간을 위해 메모를 저장하세요."
+      }
+    },
+    {
+      "source": "Say silently: 'this is an urge'.",
+      "translations": {
+        "hi": "मन में कहें: 'यह एक आवेग है।'",
+        "es": "Di en silencio: «Esto es un impulso».",
+        "pt": "Diga em silêncio: 'Isto é um impulso.'",
+        "fr": "Dites intérieurement : « C'est une envie. »",
+        "de": "Sage innerlich: „Das ist ein Impuls.“",
+        "ar": "قل في نفسك: «هذه رغبة».",
+        "ja": "心の中で「これは衝動だ」と言います。",
+        "zh-Hans": "默念：“这是一股冲动。”",
+        "ko": "조용히 말하라: '이것은 충동이다'."
+      }
+    },
+    {
+      "source": "Say what is hard right now.",
+      "translations": {
+        "hi": "बताएँ अभी क्या मुश्किल है।",
+        "es": "Di qué es difícil ahora.",
+        "pt": "Diga o que está difícil agora.",
+        "fr": "Dites ce qui est difficile maintenant.",
+        "de": "Sage, was gerade schwer ist.",
+        "ar": "قل ما هو صعب الآن.",
+        "ja": "今、何がつらいか伝えます。",
+        "zh-Hans": "说说现在什么让你难受。",
+        "ko": "지금 힘든 점을 말해보세요."
+      }
+    },
+    {
+      "source": "Say: 'I am building, not failing.'",
+      "translations": {
+        "hi": "कहें: 'मैं आगे बढ़ रहा हूँ, असफल नहीं हो रहा।'",
+        "es": "Di: «Estoy construyendo, no fracasando».",
+        "pt": "Diga: 'Estou construindo, não falhando.'",
+        "fr": "Dites : « Je construis, je n'échoue pas. »",
+        "de": "Sage: „Ich baue auf, ich scheitere nicht.“",
+        "ar": "قل: «أنا أبني، لا أفشل».",
+        "ja": "「私は積み上げている。失敗しているのではない」と言います。",
+        "zh-Hans": "说：“我在建设，而不是失败。”",
+        "ko": "'나는 실패하는 것이 아니라 만들고 있는 중입니다.'라고 말하세요."
+      }
+    },
+    {
+      "source": "Say: 'I can choose the next minute.'",
+      "translations": {
+        "hi": "कहें: 'अगले मिनट की दिशा मैं चुन सकता हूँ।'",
+        "es": "Di: «Puedo elegir el próximo minuto».",
+        "pt": "Diga: 'Posso escolher o próximo minuto.'",
+        "fr": "Dites : « Je peux choisir la minute suivante. »",
+        "de": "Sage: „Ich kann die nächste Minute wählen.“",
+        "ar": "قل: «أستطيع اختيار الدقيقة التالية».",
+        "ja": "「次の1分は自分で選べる」と言います。",
+        "zh-Hans": "说：“下一分钟，我可以自己选择。”",
+        "ko": "다음과 같이 말하세요. '다음 분을 선택할 수 있습니다.'"
+      }
+    },
+    {
+      "source": "Say: 'I forgive you for ___.'",
+      "translations": {
+        "hi": "कहें: 'मैं तुम्हें ___ के लिए माफ़ करता हूँ।'",
+        "es": "Di: «Te perdono por ___».",
+        "pt": "Diga: 'Eu perdoo você por ___.'",
+        "fr": "Dites : « Je te pardonne pour ___. »",
+        "de": "Sage: „Ich vergebe dir für ___.“",
+        "ar": "قل: «أسامحك على ___.»",
+        "ja": "「___について、あなたを許します」と言います。",
+        "zh-Hans": "说：“我原谅你___。”",
+        "ko": "다음과 같이 말하세요. '___에 대해 용서합니다.'"
+      }
+    },
+    {
+      "source": "Say: 'This urge is not who I am.'",
+      "translations": {
+        "hi": "कहें: 'यह आवेग मेरी पहचान नहीं है।'",
+        "es": "Di: «Este impulso no define quién soy».",
+        "pt": "Diga: 'Este impulso não define quem eu sou.'",
+        "fr": "Dites : « Cette envie ne définit pas qui je suis. »",
+        "de": "Sage: „Dieser Impuls ist nicht meine Identität.“",
+        "ar": "قل: «هذه الرغبة لا تعرّف من أنا».",
+        "ja": "「この衝動は私そのものではない」と言います。",
+        "zh-Hans": "说：“这股冲动不代表我是谁。”",
+        "ko": "'이 충동은 내가 아니다.'라고 말하세요."
+      }
+    },
+    {
+      "source": "Saying it out loud to a real person breaks secrecy, which is where relapse hides.",
+      "translations": {
+        "hi": "किसी व्यक्ति को ज़ोर से बताना वह छिपाव तोड़ता है जहाँ चूक पनपती है।",
+        "es": "Decírselo en voz alta a una persona rompe el secreto donde se esconden las recaídas.",
+        "pt": "Dizer em voz alta a uma pessoa rompe o segredo onde as recaídas se escondem.",
+        "fr": "Le dire à voix haute à une personne brise le secret où se cache la rechute.",
+        "de": "Es einem Menschen laut zu sagen durchbricht die Geheimhaltung, in der Rückfälle sich verstecken.",
+        "ar": "قولها بصوت عالٍ لشخص حقيقي يكسر السرية التي تختبئ فيها الانتكاسة.",
+        "ja": "誰かに声に出して話すと、再発が潜む秘密を打ち破れます。",
+        "zh-Hans": "向一个真实的人大声说出来，能打破复发藏身的秘密。",
+        "ko": "실제 사람에게 큰 소리로 말하면 재발이 숨어 있는 비밀이 깨집니다."
+      }
+    },
+    {
+      "source": "Schedule a coffee or walk with a friend",
+      "translations": {
+        "hi": "दोस्त के साथ कॉफ़ी या सैर का समय तय करें",
+        "es": "Programa un café o paseo con un amigo",
+        "pt": "Marque um café ou caminhada com um amigo",
+        "fr": "Prévoir un café ou une marche avec un ami",
+        "de": "Plane einen Kaffee oder Spaziergang mit einem Freund",
+        "ar": "حدّد قهوة أو نزهة مع صديق",
+        "ja": "友人とのコーヒーや散歩を予定する",
+        "zh-Hans": "和朋友约一次咖啡或散步",
+        "ko": "커피를 마시거나 친구와 산책을 해보세요"
+      }
+    },
+    {
+      "source": "Schedule it on your phone now.",
+      "translations": {
+        "hi": "अभी इसे फ़ोन में तय करें।",
+        "es": "Prográmalo ahora en el teléfono.",
+        "pt": "Agende agora no telefone.",
+        "fr": "Planifiez-le maintenant sur votre téléphone.",
+        "de": "Trage es jetzt im Handy ein.",
+        "ar": "جدوله على هاتفك الآن.",
+        "ja": "今、スマートフォンに予定を入れます。",
+        "zh-Hans": "现在就把它排进手机日程。",
+        "ko": "지금 휴대폰으로 예약하세요."
+      }
+    },
+    {
+      "source": "Send a meme that means something",
+      "translations": {
+        "hi": "कुछ मायने रखने वाला मज़ेदार चित्र भेजें",
+        "es": "Envía un meme con significado",
+        "pt": "Envie um meme que tenha significado",
+        "fr": "Envoyer une image drôle qui compte",
+        "de": "Schicke ein bedeutungsvolles Meme",
+        "ar": "أرسل صورة طريفة ذات معنى",
+        "ja": "意味のあるユーモア画像を送る",
+        "zh-Hans": "发一张有意义的趣图",
+        "ko": "의미가 있는 밈을 보내보세요"
+      }
+    },
+    {
+      "source": "Send a message that fits them.",
+      "translations": {
+        "hi": "उनके लिए उपयुक्त संदेश भेजें।",
+        "es": "Envía un mensaje que le encaje.",
+        "pt": "Envie uma mensagem que combine com a pessoa.",
+        "fr": "Envoyez un message qui lui correspond.",
+        "de": "Schicke eine Nachricht, die zu der Person passt.",
+        "ar": "أرسل رسالة تناسبه.",
+        "ja": "相手に合ったメッセージを送ります。",
+        "zh-Hans": "发送一条适合对方的消息。",
+        "ko": "그들에게 맞는 메시지를 보내보세요."
+      }
+    },
+    {
+      "source": "Send appreciation",
+      "translations": {
+        "hi": "कद्र जताएँ",
+        "es": "Envía agradecimiento",
+        "pt": "Envie gratidão",
+        "fr": "Envoyer de la reconnaissance",
+        "de": "Zeige Wertschätzung",
+        "ar": "أرسل تقديرك",
+        "ja": "感謝を伝える",
+        "zh-Hans": "表达感谢",
+        "ko": "감사의 마음을 전하세요"
+      }
+    },
+    {
+      "source": "Send each a specific, real compliment.",
+      "translations": {
+        "hi": "हर एक को खास, सच्ची तारीफ़ भेजें।",
+        "es": "Envía a cada uno un cumplido concreto y sincero.",
+        "pt": "Envie a cada um um elogio específico e sincero.",
+        "fr": "Envoyez à chacun un compliment précis et sincère.",
+        "de": "Schicke jedem ein konkretes, ehrliches Kompliment.",
+        "ar": "أرسل لكل منهم مديحًا محددًا وصادقًا.",
+        "ja": "それぞれに具体的で心からの褒め言葉を送ります。",
+        "zh-Hans": "分别送上一句具体而真诚的赞美。",
+        "ko": "각각에게 구체적이고 실제적인 칭찬을 보내십시오."
+      }
+    },
+    {
+      "source": "Send it before the inner editor speaks.",
+      "translations": {
+        "hi": "भीतर की आलोचना शुरू हो, उससे पहले भेज दें।",
+        "es": "Envíalo antes de que intervenga tu crítico interior.",
+        "pt": "Envie antes que o editor interno fale.",
+        "fr": "Envoyez avant que le critique intérieur intervienne.",
+        "de": "Schicke es, bevor der innere Korrektor spricht.",
+        "ar": "أرسله قبل أن يتكلم المحرر الداخلي.",
+        "ja": "内なる添削者が口を挟む前に送ります。",
+        "zh-Hans": "在内心的编辑开始挑剔前发送。",
+        "ko": "내부 편집자가 말하기 전에 보내십시오."
+      }
+    },
+    {
+      "source": "Send it before you can over-think.",
+      "translations": {
+        "hi": "ज़्यादा सोचने से पहले भेज दें।",
+        "es": "Envíalo antes de darle demasiadas vueltas.",
+        "pt": "Envie antes de pensar demais.",
+        "fr": "Envoyez avant de trop réfléchir.",
+        "de": "Schicke es, bevor du zu viel nachdenkst.",
+        "ar": "أرسله قبل أن تفرط في التفكير.",
+        "ja": "考えすぎる前に送ります。",
+        "zh-Hans": "在想太多之前发送。",
+        "ko": "너무 많이 생각하기 전에 보내세요."
+      }
+    },
+    {
+      "source": "Send it. Don't wait for a reply.",
+      "translations": {
+        "hi": "भेज दें। जवाब का इंतज़ार न करें।",
+        "es": "Envíalo. No esperes respuesta.",
+        "pt": "Envie. Não espere resposta.",
+        "fr": "Envoyez. N'attendez pas de réponse.",
+        "de": "Schicke es. Warte nicht auf eine Antwort.",
+        "ar": "أرسله. لا تنتظر ردًا.",
+        "ja": "送ったら、返事を待たないようにします。",
+        "zh-Hans": "发出去，不要等待回复。",
+        "ko": "보내세요. 답장을 기다리지 마십시오."
+      }
+    },
+    {
+      "source": "Send love to someone hurting",
+      "translations": {
+        "hi": "कष्ट में किसी को स्नेह भेजें",
+        "es": "Envía cariño a alguien que sufre",
+        "pt": "Envie carinho a alguém que sofre",
+        "fr": "Envoyer de l'affection à quelqu'un qui souffre",
+        "de": "Schicke jemandem in Not Zuneigung",
+        "ar": "أرسل المحبة لشخص يتألم",
+        "ja": "つらい思いをしている人に愛情を送る",
+        "zh-Hans": "向正在受苦的人传递关爱",
+        "ko": "상처받은 사람에게 사랑을 보내세요"
+      }
+    },
+    {
+      "source": "Send one meme or photo that fits them.",
+      "translations": {
+        "hi": "उनके लिए उपयुक्त एक मज़ेदार चित्र या फोटो भेजें।",
+        "es": "Envía un meme o una foto que le encaje.",
+        "pt": "Envie um meme ou foto que combine com a pessoa.",
+        "fr": "Envoyez une image drôle ou une photo qui lui correspond.",
+        "de": "Schicke ein Meme oder Foto, das zur Person passt.",
+        "ar": "أرسل صورة طريفة أو صورة تناسبه.",
+        "ja": "相手に合ったユーモア画像か写真を1つ送ります。",
+        "zh-Hans": "发一张适合对方的趣图或照片。",
+        "ko": "자신에게 맞는 밈이나 사진을 하나 보내주세요."
+      }
+    },
+    {
+      "source": "Send your current streak day.",
+      "translations": {
+        "hi": "अपनी लगातार प्रगति के आज के दिन की संख्या भेजें।",
+        "es": "Envía tu día actual de racha.",
+        "pt": "Envie o dia atual da sua sequência.",
+        "fr": "Envoyez le jour actuel de votre série.",
+        "de": "Schicke deinen aktuellen Tag der Serie.",
+        "ar": "أرسل يوم استمرارك الحالي.",
+        "ja": "現在の継続日数を伝えます。",
+        "zh-Hans": "发送当前的连续天数。",
+        "ko": "현재 연속일을 보내세요."
+      }
+    },
+    {
+      "source": "Send: 'I need a reset moment.'",
+      "translations": {
+        "hi": "भेजें: 'मुझे थोड़ा रुककर संभलना है।'",
+        "es": "Envía: «Necesito un momento para recomponerme».",
+        "pt": "Envie: 'Preciso de um momento para me recompor.'",
+        "fr": "Envoyez : « J'ai besoin d'une pause pour me recentrer. »",
+        "de": "Schicke: „Ich brauche einen Moment, um mich zu sammeln.“",
+        "ar": "أرسل: «أحتاج لحظة لأستعيد توازني».",
+        "ja": "「少し気持ちを立て直す時間が必要です」と送ります。",
+        "zh-Hans": "发送：“我需要一点时间调整自己。”",
+        "ko": "보내기: '리셋 순간이 필요합니다.'"
+      }
+    },
+    {
+      "source": "Send: 'Need a check-in. Hard moment.'",
+      "translations": {
+        "hi": "भेजें: 'बात करनी है। अभी मुश्किल पल है।'",
+        "es": "Envía: «Necesito hablar. Es un momento difícil».",
+        "pt": "Envie: 'Preciso conversar. Momento difícil.'",
+        "fr": "Envoyez : « Besoin de parler. Moment difficile. »",
+        "de": "Schicke: „Ich brauche Austausch. Schwerer Moment.“",
+        "ar": "أرسل: «أحتاج متابعة. أمر بلحظة صعبة».",
+        "ja": "「少し話したい。つらい時間です」と送ります。",
+        "zh-Hans": "发送：“需要聊一聊。现在有点难熬。”",
+        "ko": "보내기: '체크인이 필요합니다. 힘든 순간.'"
+      }
+    },
+    {
+      "source": "Set a 10-minute timer to start.",
+      "translations": {
+        "hi": "शुरू करने के लिए 10 मिनट का टाइमर लगाएँ।",
+        "es": "Pon diez minutos para empezar.",
+        "pt": "Marque dez minutos para começar.",
+        "fr": "Réglez dix minutes pour commencer.",
+        "de": "Stelle zum Start zehn Minuten ein.",
+        "ar": "اضبط عشر دقائق للبدء.",
+        "ja": "まず10分のタイマーを設定します。",
+        "zh-Hans": "先设定十分钟计时。",
+        "ko": "시작하려면 10분 타이머를 설정하세요."
+      }
+    },
+    {
+      "source": "Set a 2-minute timer.",
+      "translations": {
+        "hi": "2 मिनट का टाइमर लगाएँ।",
+        "es": "Pon un temporizador de dos minutos.",
+        "pt": "Marque dois minutos no cronômetro.",
+        "fr": "Réglez un minuteur de deux minutes.",
+        "de": "Stelle einen Timer für zwei Minuten.",
+        "ar": "اضبط مؤقّتًا لدقيقتين.",
+        "ja": "2分のタイマーを設定します。",
+        "zh-Hans": "设定两分钟计时。",
+        "ko": "2분 타이머를 설정하세요."
+      }
+    },
+    {
+      "source": "Set a 5-minute prep timer for tonight.",
+      "translations": {
+        "hi": "आज रात के लिए 5 मिनट की तैयारी का टाइमर लगाएँ।",
+        "es": "Programa cinco minutos de preparación para esta noche.",
+        "pt": "Programe cinco minutos de preparo para esta noite.",
+        "fr": "Prévoyez cinq minutes de préparation ce soir.",
+        "de": "Plane heute Abend fünf Minuten Vorbereitung ein.",
+        "ar": "اضبط خمس دقائق للتحضير لهذه الليلة.",
+        "ja": "今夜、準備のための5分タイマーを設定します。",
+        "zh-Hans": "为今晚准备设定五分钟计时。",
+        "ko": "오늘 밤 준비 타이머를 5분으로 설정하세요."
+      }
+    },
+    {
+      "source": "Set a phone bedtime",
+      "translations": {
+        "hi": "फ़ोन के सोने का समय तय करें",
+        "es": "Fija la hora de dormir del teléfono",
+        "pt": "Defina a hora de descanso do telefone",
+        "fr": "Fixer une heure de repos pour le téléphone",
+        "de": "Lege eine Schlafenszeit fürs Handy fest",
+        "ar": "حدّد وقت نوم للهاتف",
+        "ja": "スマートフォンの就寝時間を決める",
+        "zh-Hans": "为手机设定就寝时间",
+        "ko": "전화 취침 시간 설정"
+      }
+    },
+    {
+      "source": "Set Downtime to start tonight.",
+      "translations": {
+        "hi": "डाउनटाइम आज रात शुरू होने के लिए सेट करें।",
+        "es": "Programa Tiempo de inactividad para esta noche.",
+        "pt": "Configure Repouso para começar esta noite.",
+        "fr": "Réglez Temps d'arrêt pour ce soir.",
+        "de": "Stelle Auszeit für heute Abend ein.",
+        "ar": "اضبط وقت التوقف ليبدأ الليلة.",
+        "ja": "今夜から休止時間を開始するよう設定します。",
+        "zh-Hans": "设置“停用时间”从今晚开始。",
+        "ko": "다운타임을 오늘 밤부터 시작하도록 설정하세요."
+      }
+    },
+    {
+      "source": "Set the glass down and breathe.",
+      "translations": {
+        "hi": "गिलास रख दें और साँस लें।",
+        "es": "Deja el vaso y respira.",
+        "pt": "Pouse o copo e respire.",
+        "fr": "Posez le verre et respirez.",
+        "de": "Stelle das Glas ab und atme.",
+        "ar": "ضع الكوب وتنفس.",
+        "ja": "コップを置いて呼吸します。",
+        "zh-Hans": "放下杯子，呼吸。",
+        "ko": "잔을 내려 놓고 숨을 쉬십시오."
+      }
+    },
+    {
+      "source": "Set the note aside and breathe.",
+      "translations": {
+        "hi": "नोट एक तरफ़ रखें और साँस लें।",
+        "es": "Deja la nota a un lado y respira.",
+        "pt": "Deixe a nota de lado e respire.",
+        "fr": "Mettez la note de côté et respirez.",
+        "de": "Lege die Notiz beiseite und atme.",
+        "ar": "ضع الملاحظة جانبًا وتنفس.",
+        "ja": "メモを置いて呼吸します。",
+        "zh-Hans": "把笔记放到一旁，呼吸。",
+        "ko": "메모를 옆으로 치워두고 숨을 쉬십시오."
+      }
+    },
+    {
+      "source": "Set the phone down for 30 seconds.",
+      "translations": {
+        "hi": "फ़ोन 30 सेकंड नीचे रखें।",
+        "es": "Deja el teléfono treinta segundos.",
+        "pt": "Deixe o telefone de lado por trinta segundos.",
+        "fr": "Posez le téléphone trente secondes.",
+        "de": "Lege das Handy dreißig Sekunden ab.",
+        "ar": "ضع الهاتف لثلاثين ثانية.",
+        "ja": "30秒間スマートフォンを置きます。",
+        "zh-Hans": "放下手机三十秒。",
+        "ko": "전화기를 30초 동안 내려놓으세요."
+      }
+    },
+    {
+      "source": "Shadow box",
+      "translations": {
+        "hi": "हवा में मुक्केबाज़ी",
+        "es": "Boxeo de sombra",
+        "pt": "Boxe de sombra",
+        "fr": "Boxe dans le vide",
+        "de": "Schattenboxen",
+        "ar": "ملاكمة الظل",
+        "ja": "シャドーボクシング",
+        "zh-Hans": "影子拳击",
+        "ko": "섀도우 박스"
+      }
+    },
+    {
+      "source": "Shadow boxing externalizes restless energy without hitting anything that matters.",
+      "translations": {
+        "hi": "हवा में मुक्केबाज़ी बेचैन ऊर्जा निकालती है, बिना किसी अहम चीज़ को चोट पहुँचाए।",
+        "es": "El boxeo de sombra libera energía inquieta sin golpear nada importante.",
+        "pt": "O boxe de sombra libera energia inquieta sem atingir nada importante.",
+        "fr": "La boxe dans le vide extériorise l'agitation sans frapper quoi que ce soit d'important.",
+        "de": "Schattenboxen setzt unruhige Energie frei, ohne etwas Wichtiges zu treffen.",
+        "ar": "ملاكمة الظل تخرج الطاقة المضطربة دون ضرب شيء مهم.",
+        "ja": "シャドーボクシングは、大切なものを傷つけずに落ち着かないエネルギーを発散します。",
+        "zh-Hans": "影子拳击能把躁动的能量释放出来，而不会击打重要的东西。",
+        "ko": "섀도우 복싱은 중요한 것을 건드리지 않고 불안한 에너지를 외부화합니다."
+      }
+    },
+    {
+      "source": "Sharing the present moment with someone real shrinks the secrecy that feeds the urge.",
+      "translations": {
+        "hi": "किसी व्यक्ति से वर्तमान पल साझा करना आवेग को बढ़ाने वाला छिपाव कम करता है।",
+        "es": "Compartir el presente con alguien real reduce el secreto que alimenta el impulso.",
+        "pt": "Compartilhar o presente com alguém real reduz o segredo que alimenta o impulso.",
+        "fr": "Partager le moment avec une vraie personne réduit le secret qui nourrit l'envie.",
+        "de": "Den Moment mit einem echten Menschen zu teilen verringert die Geheimhaltung, die den Impuls nährt.",
+        "ar": "مشاركة اللحظة مع شخص حقيقي تقلل السرية التي تغذّي الرغبة.",
+        "ja": "今の瞬間を誰かと共有すると、衝動を育てる秘密が小さくなります。",
+        "zh-Hans": "与真实的人分享当下，能减轻滋养冲动的秘密。",
+        "ko": "현재 순간을 실제 누군가와 공유하면 충동을 불러일으키는 비밀이 줄어들게 됩니다."
+      }
+    },
+    {
+      "source": "Shower contrast (warm to cold)",
+      "translations": {
+        "hi": "गर्म से ठंडे पानी का स्नान",
+        "es": "Ducha de contraste, de caliente a fría",
+        "pt": "Banho de contraste, quente para frio",
+        "fr": "Douche contrastée, du chaud au froid",
+        "de": "Wechseldusche von warm zu kalt",
+        "ar": "دش متباين من الدافئ إلى البارد",
+        "ja": "温水から冷水へのシャワー",
+        "zh-Hans": "冷热交替淋浴：温水到冷水",
+        "ko": "샤워 대비(따뜻한 것에서 차가운 것)"
+      }
+    },
+    {
+      "source": "Shower warm for two minutes.",
+      "translations": {
+        "hi": "दो मिनट गर्म पानी से नहाएँ।",
+        "es": "Dúchate con agua caliente dos minutos.",
+        "pt": "Tome banho morno por dois minutos.",
+        "fr": "Douchez-vous à l'eau chaude deux minutes.",
+        "de": "Dusche zwei Minuten warm.",
+        "ar": "استحم بماء دافئ لدقيقتين.",
+        "ja": "2分間、温かいシャワーを浴びます。",
+        "zh-Hans": "用温水淋浴两分钟。",
+        "ko": "2분간 따뜻한 물로 샤워하세요."
+      }
+    },
+    {
+      "source": "Sign and date the page.",
+      "translations": {
+        "hi": "पन्ने पर हस्ताक्षर और तारीख लिखें।",
+        "es": "Firma y fecha la página.",
+        "pt": "Assine e date a página.",
+        "fr": "Signez et datez la page.",
+        "de": "Unterschreibe und datiere die Seite.",
+        "ar": "وقّع الصفحة وأضف التاريخ.",
+        "ja": "ページに署名と日付を書きます。",
+        "zh-Hans": "在页面上签名并注明日期。",
+        "ko": "페이지에 서명하고 날짜를 기재하세요."
+      }
+    },
+    {
+      "source": "Sign it with today's date.",
+      "translations": {
+        "hi": "आज की तारीख के साथ हस्ताक्षर करें।",
+        "es": "Fírmalo con la fecha de hoy.",
+        "pt": "Assine com a data de hoje.",
+        "fr": "Signez avec la date d'aujourd'hui.",
+        "de": "Unterschreibe mit dem heutigen Datum.",
+        "ar": "وقّعه بتاريخ اليوم.",
+        "ja": "今日の日付で署名します。",
+        "zh-Hans": "签名并写上今天的日期。",
+        "ko": "오늘 날짜로 서명하세요."
+      }
+    },
+    {
+      "source": "Sit back like there is a chair behind you.",
+      "translations": {
+        "hi": "ऐसे पीछे बैठें जैसे पीछे कुर्सी हो।",
+        "es": "Siéntate hacia atrás como si hubiera una silla.",
+        "pt": "Sente para trás como se houvesse uma cadeira.",
+        "fr": "Reculez les fesses comme pour vous asseoir.",
+        "de": "Setze dich nach hinten, als wäre dort ein Stuhl.",
+        "ar": "اجلس للخلف كأن هناك كرسيًا.",
+        "ja": "後ろに椅子があるようにお尻を引きます。",
+        "zh-Hans": "像身后有椅子一样向后坐。",
+        "ko": "뒤에 의자가 있는 것처럼 편안하게 앉으세요."
+      }
+    },
+    {
+      "source": "Sit comfortably and close your eyes.",
+      "translations": {
+        "hi": "आराम से बैठें और आँखें बंद करें।",
+        "es": "Siéntate cómodo y cierra los ojos.",
+        "pt": "Sente-se confortavelmente e feche os olhos.",
+        "fr": "Asseyez-vous confortablement, fermez les yeux.",
+        "de": "Setze dich bequem und schließe die Augen.",
+        "ar": "اجلس براحة وأغمض عينيك.",
+        "ja": "楽に座り、目を閉じます。",
+        "zh-Hans": "舒适地坐好，闭上眼睛。",
+        "ko": "편안하게 앉아 눈을 감으세요."
+      }
+    },
+    {
+      "source": "Sit cross-legged on the floor.",
+      "translations": {
+        "hi": "फ़र्श पर पालथी मारकर बैठें।",
+        "es": "Siéntate en el suelo con las piernas cruzadas.",
+        "pt": "Sente-se no chão com as pernas cruzadas.",
+        "fr": "Asseyez-vous en tailleur au sol.",
+        "de": "Setze dich im Schneidersitz auf den Boden.",
+        "ar": "اجلس متربعًا على الأرض.",
+        "ja": "床にあぐらをかいて座ります。",
+        "zh-Hans": "盘腿坐在地上。",
+        "ko": "바닥에 다리를 꼬고 앉으세요."
+      }
+    },
+    {
+      "source": "Sit down and eat it slowly.",
+      "translations": {
+        "hi": "बैठें और धीरे-धीरे खाएँ।",
+        "es": "Siéntate y cómelo despacio.",
+        "pt": "Sente-se e coma devagar.",
+        "fr": "Asseyez-vous et mangez lentement.",
+        "de": "Setze dich und iss langsam.",
+        "ar": "اجلس وكله ببطء.",
+        "ja": "座ってゆっくり食べます。",
+        "zh-Hans": "坐下来慢慢吃。",
+        "ko": "앉아서 천천히 먹어보세요."
+      }
+    },
+    {
+      "source": "Sit upright, soft jaw.",
+      "translations": {
+        "hi": "सीधे बैठें और जबड़ा ढीला रखें।",
+        "es": "Siéntate erguido, con la mandíbula relajada.",
+        "pt": "Sente-se ereto, com a mandíbula relaxada.",
+        "fr": "Asseyez-vous droit, mâchoire détendue.",
+        "de": "Sitze aufrecht mit entspanntem Kiefer.",
+        "ar": "اجلس مستقيمًا وأرخِ الفك.",
+        "ja": "背筋を伸ばし、顎の力を抜きます。",
+        "zh-Hans": "坐直，放松下颌。",
+        "ko": "똑바로 앉으세요, 부드러운 턱."
+      }
+    },
+    {
+      "source": "Sit with them for 5 full minutes.",
+      "translations": {
+        "hi": "उनके साथ पूरे 5 मिनट बैठें।",
+        "es": "Siéntate con ellos cinco minutos completos.",
+        "pt": "Sente com eles por cinco minutos completos.",
+        "fr": "Restez avec eux cinq minutes entières.",
+        "de": "Sitze fünf volle Minuten mit ihnen.",
+        "ar": "اجلس معهم خمس دقائق كاملة.",
+        "ja": "丸5分間、一緒に座ります。",
+        "zh-Hans": "和对方坐足五分钟。",
+        "ko": "5분 동안 그들과 함께 앉아 계십시오."
+      }
+    },
+    {
+      "source": "Six breaths a minute is the natural resonance of your heart and brain — a free reset.",
+      "translations": {
+        "hi": "प्रति मिनट छह साँसें दिल और दिमाग़ की प्राकृतिक संगति हैं—बिना खर्च के नया संतुलन।",
+        "es": "Seis respiraciones por minuto son la resonancia natural del corazón y cerebro: un reajuste gratuito.",
+        "pt": "Seis respirações por minuto são a ressonância natural do coração e cérebro: um reajuste gratuito.",
+        "fr": "Six respirations par minute sont la résonance naturelle du cœur et du cerveau : un recentrage gratuit.",
+        "de": "Sechs Atemzüge pro Minute sind die natürliche Resonanz von Herz und Gehirn: ein kostenloser Neustart.",
+        "ar": "ستة أنفاس في الدقيقة رنين طبيعي للقلب والدماغ، وإعادة ضبط مجانية.",
+        "ja": "毎分6回の呼吸は心臓と脳の自然な共鳴で、無料のリセットになります。",
+        "zh-Hans": "每分钟六次呼吸是心脏与大脑的自然共振，能带来免费的调整。",
+        "ko": "1분에 6번의 호흡은 심장과 뇌의 자연스러운 공명입니다. 이는 무료 재설정입니다."
+      }
+    },
+    {
+      "source": "Skip every second step on the way up.",
+      "translations": {
+        "hi": "ऊपर जाते समय एक-एक सीढ़ी छोड़ें।",
+        "es": "Sube de dos en dos escalones.",
+        "pt": "Suba os degraus de dois em dois.",
+        "fr": "Montez les marches deux par deux.",
+        "de": "Nimm beim Hochgehen jede zweite Stufe.",
+        "ar": "تجاوز درجة واحدة عند الصعود.",
+        "ja": "上るときは1段飛ばしにします。",
+        "zh-Hans": "上楼时隔一级台阶迈一步。",
+        "ko": "올라가는 동안 매 두 번째 단계를 건너뛰세요."
+      }
+    },
+    {
+      "source": "Sleep on it. Honor it tomorrow.",
+      "translations": {
+        "hi": "सोकर विचार करें। कल निभाएँ।",
+        "es": "Consúltalo con la almohada y cúmplelo mañana.",
+        "pt": "Durma com essa ideia e cumpra amanhã.",
+        "fr": "Dormez dessus et tenez parole demain.",
+        "de": "Schlaf darüber und halte es morgen ein.",
+        "ar": "نم عليه والتزم به غدًا.",
+        "ja": "一晩寝かせ、明日実行します。",
+        "zh-Hans": "睡一觉再想，明天履行。",
+        "ko": "자세요. 내일 그것을 존중하십시오."
+      }
+    },
+    {
+      "source": "Slide down until your thighs are parallel to the floor.",
+      "translations": {
+        "hi": "जाँघें फ़र्श के समानांतर होने तक नीचे सरकें।",
+        "es": "Deslízate hasta dejar los muslos paralelos al suelo.",
+        "pt": "Deslize até as coxas ficarem paralelas ao chão.",
+        "fr": "Descendez jusqu'aux cuisses parallèles au sol.",
+        "de": "Rutsche hinunter, bis die Oberschenkel parallel zum Boden sind.",
+        "ar": "انزل حتى تصبح الفخذان موازيتين للأرض.",
+        "ja": "太ももが床と平行になるまで下がります。",
+        "zh-Hans": "向下滑，直到大腿与地面平行。",
+        "ko": "허벅지가 바닥과 평행이 될 때까지 아래로 밀어내세요."
+      }
+    },
+    {
+      "source": "Slowly roll up vertebra by vertebra.",
+      "translations": {
+        "hi": "रीढ़ के एक-एक हिस्से को धीरे सीधा करें।",
+        "es": "Incorpórate lentamente, vértebra a vértebra.",
+        "pt": "Suba devagar, vértebra por vértebra.",
+        "fr": "Redressez-vous lentement, vertèbre après vertèbre.",
+        "de": "Rolle dich langsam Wirbel für Wirbel auf.",
+        "ar": "انهض ببطء فقرة بعد فقرة.",
+        "ja": "背骨を1つずつ起こすように、ゆっくり戻ります。",
+        "zh-Hans": "一节一节地慢慢卷起脊柱。",
+        "ko": "척추뼈를 천천히 말아 올리십시오."
+      }
+    },
+    {
+      "source": "Small completed tasks build the identity of a person who follows through.",
+      "translations": {
+        "hi": "पूरे किए छोटे काम वादा निभाने वाले व्यक्ति की पहचान बनाते हैं।",
+        "es": "Completar pequeñas tareas construye la identidad de alguien que cumple.",
+        "pt": "Pequenas tarefas concluídas constroem a identidade de quem cumpre o que começa.",
+        "fr": "Les petites tâches terminées construisent l'identité d'une personne qui va au bout.",
+        "de": "Erledigte kleine Aufgaben bauen die Identität eines Menschen auf, der Dinge durchzieht.",
+        "ar": "المهام الصغيرة المكتملة تبني هوية من يفي بما يبدأه.",
+        "ja": "小さな作業を終えると、やり遂げる人としての自分が育ちます。",
+        "zh-Hans": "完成小任务，会建立一个言行一致、能坚持到底的人的身份认同。",
+        "ko": "작은 완성된 작업은 끝까지 따르는 사람의 정체성을 구축합니다."
+      }
+    },
+    {
+      "source": "Smile and move on.",
+      "translations": {
+        "hi": "मुस्कुराएँ और आगे बढ़ें।",
+        "es": "Sonríe y sigue.",
+        "pt": "Sorria e siga em frente.",
+        "fr": "Souriez et continuez.",
+        "de": "Lächle und geh weiter.",
+        "ar": "ابتسم وواصل.",
+        "ja": "笑顔で次へ進みます。",
+        "zh-Hans": "微笑，然后继续。",
+        "ko": "미소 짓고 계속 나아가십시오."
+      }
+    },
+    {
+      "source": "Smooth the pillow flat.",
+      "translations": {
+        "hi": "तकिया समतल करें।",
+        "es": "Alisa la almohada.",
+        "pt": "Alise o travesseiro.",
+        "fr": "Lissez l'oreiller.",
+        "de": "Glätte das Kissen.",
+        "ar": "سوِّ الوسادة.",
+        "ja": "枕を整えます。",
+        "zh-Hans": "把枕头抚平。",
+        "ko": "베개를 평평하게 펴십시오."
+      }
+    },
+    {
+      "source": "Speak honestly about where you are.",
+      "translations": {
+        "hi": "अपनी स्थिति के बारे में ईमानदारी से बोलें।",
+        "es": "Habla con sinceridad de cómo estás.",
+        "pt": "Fale com sinceridade sobre como está.",
+        "fr": "Parlez honnêtement de votre situation.",
+        "de": "Sprich ehrlich darüber, wo du stehst.",
+        "ar": "تحدث بصدق عن حالك.",
+        "ja": "今の状態を率直に話します。",
+        "zh-Hans": "诚实地说说自己的状态。",
+        "ko": "당신이 어디에 있는지 솔직하게 말하십시오."
+      }
+    },
+    {
+      "source": "Speak one kind thought to it.",
+      "translations": {
+        "hi": "उसके लिए एक दयालु बात कहें।",
+        "es": "Dile algo amable.",
+        "pt": "Diga algo gentil a ele.",
+        "fr": "Dites-lui une pensée bienveillante.",
+        "de": "Sprich ihm einen freundlichen Gedanken aus.",
+        "ar": "قل له فكرة لطيفة.",
+        "ja": "優しい言葉を1つかけます。",
+        "zh-Hans": "对它说一句温柔的话。",
+        "ko": "그것에 대해 한 가지 생각을 말하십시오."
+      }
+    },
+    {
+      "source": "Speaking forgiveness to yourself dissolves the shame that powers the next relapse.",
+      "translations": {
+        "hi": "खुद को माफ़ करने की बात कहना अगली चूक को बढ़ाने वाली शर्म मिटाता है।",
+        "es": "Decirte palabras de perdón disuelve la vergüenza que impulsa la siguiente recaída.",
+        "pt": "Falar de perdão a si mesmo dissolve a vergonha que alimenta a próxima recaída.",
+        "fr": "Vous pardonner à voix haute dissout la honte qui nourrit la rechute suivante.",
+        "de": "Dir selbst Vergebung auszusprechen löst Scham, die den nächsten Rückfall antreibt.",
+        "ar": "قول المسامحة لنفسك يذيب الخجل الذي يغذّي الانتكاسة التالية.",
+        "ja": "自分に許しを伝えると、次の再発を後押しする恥が溶けます。",
+        "zh-Hans": "对自己说出原谅，能化解推动下一次复发的羞耻。",
+        "ko": "자신에게 용서를 말하면 다음 재발을 일으키는 수치심이 해소됩니다."
+      }
+    },
+    {
+      "source": "Speaking kindly to your younger self reroutes the shame loop that fuels relapse.",
+      "translations": {
+        "hi": "छोटे उम्र वाले खुद से प्यार से बात करना चूक को बढ़ाने वाले शर्म के चक्र को मोड़ता है।",
+        "es": "Hablar con cariño a tu yo más joven redirige el ciclo de vergüenza que alimenta la recaída.",
+        "pt": "Falar com carinho ao seu eu mais jovem redireciona a vergonha que alimenta recaídas.",
+        "fr": "Parler avec douceur à votre moi plus jeune réoriente la boucle de honte qui nourrit la rechute.",
+        "de": "Mit deinem jüngeren Ich freundlich zu sprechen lenkt die Schamschleife um, die Rückfälle nährt.",
+        "ar": "التحدث بلطف لذاتك الأصغر يغيّر حلقة الخجل التي تغذّي الانتكاسة.",
+        "ja": "幼い自分に優しく話すと、再発を育てる恥の循環が変わります。",
+        "zh-Hans": "温柔地对年幼的自己说话，能改变滋养复发的羞耻循环。",
+        "ko": "어린 자신에게 친절하게 말하면 재발을 촉진하는 수치심의 고리가 다시 연결됩니다."
+      }
+    },
+    {
+      "source": "Speaking to your future self shifts you out of immediate-urge mode into a longer view.",
+      "translations": {
+        "hi": "भविष्य के खुद से बात करना तत्काल आवेग से हटाकर दूर का नज़रिया देता है।",
+        "es": "Hablar con tu yo futuro te saca del impulso inmediato y te da una perspectiva más larga.",
+        "pt": "Falar com seu eu futuro tira você do impulso imediato e amplia a perspectiva.",
+        "fr": "Parler à votre moi futur vous sort de l'envie immédiate vers une vision plus longue.",
+        "de": "Mit deinem zukünftigen Ich zu sprechen führt vom unmittelbaren Impuls zu einem längeren Blick.",
+        "ar": "التحدث إلى ذاتك المستقبلية ينقلك من الرغبة الفورية لمنظور أوسع.",
+        "ja": "未来の自分に話すと、目先の衝動から長い視点へ切り替わります。",
+        "zh-Hans": "与未来的自己交谈，会让你脱离即时冲动，转向长远视角。",
+        "ko": "미래의 자신과 대화하면 즉각적인 충동 모드에서 더 긴 관점으로 전환됩니다."
+      }
+    },
+    {
+      "source": "Speaking your truth into a voice note is honesty without the friction of typing.",
+      "translations": {
+        "hi": "आवाज़ संदेश में सच्चाई कहना टाइप करने की रुकावट के बिना ईमानदारी है।",
+        "es": "Decir tu verdad en una nota de voz permite ser honesto sin la dificultad de escribir.",
+        "pt": "Dizer sua verdade em áudio é honestidade sem a dificuldade de digitar.",
+        "fr": "Dire votre vérité en message vocal est honnête sans l'effort de taper.",
+        "de": "Deine Wahrheit in einer Sprachnotiz auszusprechen ist Ehrlichkeit ohne Tippaufwand.",
+        "ar": "قول حقيقتك برسالة صوتية صدق دون عوائق الكتابة.",
+        "ja": "音声メモで本音を話すことは、入力の手間のない誠実さです。",
+        "zh-Hans": "用语音笔记说出真心，是无需打字阻力的诚实。",
+        "ko": "음성 메모로 진실을 말하는 것은 타이핑의 마찰 없이 솔직하게 말하는 것입니다."
+      }
+    },
+    {
+      "source": "Specific gratitude rewires noticing — what you focus on is what your brain reinforces.",
+      "translations": {
+        "hi": "खास बातों के लिए कृतज्ञता ध्यान बदलती है—जिस पर ध्यान देते हैं, दिमाग़ उसे मज़बूत करता है।",
+        "es": "La gratitud concreta cambia lo que notas: el cerebro refuerza aquello en lo que te enfocas.",
+        "pt": "A gratidão específica muda o que você percebe: o cérebro reforça o que recebe atenção.",
+        "fr": "La gratitude précise change ce que vous remarquez : le cerveau renforce ce que vous regardez.",
+        "de": "Konkrete Dankbarkeit verändert das Wahrnehmen: Dein Gehirn stärkt, worauf du dich konzentrierst.",
+        "ar": "الامتنان المحدد يغيّر ملاحظتك؛ ما تركز عليه يعززه الدماغ.",
+        "ja": "具体的な感謝は気づきを変えます。意識を向けたものを、脳は強化します。",
+        "zh-Hans": "具体的感恩会改变你的注意方式——你关注什么，大脑就强化什么。",
+        "ko": "특별한 감사는 알아차림을 재조정합니다. 당신이 집중하는 것은 당신의 두뇌가 강화하는 것입니다."
+      }
+    },
+    {
+      "source": "Splash cold water on face",
+      "translations": {
+        "hi": "चेहरे पर ठंडा पानी छिड़कें",
+        "es": "Salpica agua fría en la cara",
+        "pt": "Jogue água fria no rosto",
+        "fr": "S'asperger le visage d'eau froide",
+        "de": "Spritze kaltes Wasser ins Gesicht",
+        "ar": "رش ماءً باردًا على الوجه",
+        "ja": "顔に冷たい水をかける",
+        "zh-Hans": "向脸上泼冷水",
+        "ko": "찬물을 얼굴에 튀기세요"
+      }
+    },
+    {
+      "source": "Splash your face 5 times.",
+      "translations": {
+        "hi": "चेहरे पर 5 बार पानी डालें।",
+        "es": "Salpícate la cara cinco veces.",
+        "pt": "Jogue água no rosto cinco vezes.",
+        "fr": "Aspergez le visage cinq fois.",
+        "de": "Spritze fünfmal Wasser ins Gesicht.",
+        "ar": "رش وجهك خمس مرات.",
+        "ja": "顔に5回水をかけます。",
+        "zh-Hans": "向脸上泼水五次。",
+        "ko": "얼굴을 5번 튀기세요."
+      }
+    },
+    {
+      "source": "Sponsors exist for exactly this moment — using them strengthens the whole network.",
+      "translations": {
+        "hi": "मार्गदर्शक इसी पल के लिए होते हैं—उनकी मदद लेना पूरे सहायक नेटवर्क को मज़बूत करता है।",
+        "es": "Los padrinos están para este momento: recurrir a ellos fortalece toda la red.",
+        "pt": "Os padrinhos existem para este momento: recorrer a eles fortalece toda a rede.",
+        "fr": "Les référents sont là pour cet instant : les solliciter renforce tout le réseau.",
+        "de": "Begleitpersonen sind genau für diesen Moment da: Ihre Hilfe zu nutzen stärkt das ganze Netzwerk.",
+        "ar": "المرشدون موجودون لهذه اللحظة تحديدًا؛ الاستعانة بهم تقوي الشبكة كلها.",
+        "ja": "支援担当者はまさにこの瞬間のためにいます。頼ることがネットワーク全体を強めます。",
+        "zh-Hans": "指导者正是为这一刻而存在——向他们求助会强化整个支持网络。",
+        "ko": "후원자는 바로 이 순간을 위해 존재합니다. 후원자를 사용하면 전체 네트워크가 강화됩니다."
+      }
+    },
+    {
+      "source": "Squats engage the largest muscles in your body, which floods the system with calming endorphins.",
+      "translations": {
+        "hi": "स्क्वाट शरीर की सबसे बड़ी मांसपेशियाँ चलाते हैं, जिससे शांत करने वाले एंडॉर्फिन भरते हैं।",
+        "es": "Las sentadillas activan los músculos más grandes y liberan endorfinas calmantes.",
+        "pt": "Agachamentos ativam os maiores músculos e liberam endorfinas calmantes.",
+        "fr": "Les squats sollicitent les plus grands muscles et libèrent des endorphines apaisantes.",
+        "de": "Kniebeugen aktivieren die größten Muskeln und setzen beruhigende Endorphine frei.",
+        "ar": "القرفصاء تشغّل أكبر عضلات الجسم وتطلق إندورفينات مهدئة.",
+        "ja": "スクワットは大きな筋肉を使い、落ち着きをもたらすエンドルフィンを満たします。",
+        "zh-Hans": "深蹲调动身体最大的肌肉，使平静的内啡肽充满身体。",
+        "ko": "스쿼트는 신체의 가장 큰 근육을 사용하여 시스템을 진정시키는 엔돌핀으로 가득 차게 합니다."
+      }
+    },
+    {
+      "source": "Squeeze glutes and brace abs.",
+      "translations": {
+        "hi": "नितंबों और पेट की मांसपेशियाँ कसें।",
+        "es": "Aprieta glúteos y abdomen.",
+        "pt": "Contraia glúteos e abdômen.",
+        "fr": "Contractez fessiers et abdominaux.",
+        "de": "Spanne Gesäß und Bauch an.",
+        "ar": "شد الأرداف وعضلات البطن.",
+        "ja": "お尻とお腹に力を入れます。",
+        "zh-Hans": "收紧臀部和腹部。",
+        "ko": "둔근과 버팀대 복근을 조입니다."
+      }
+    },
+    {
+      "source": "Stair climb",
+      "translations": {
+        "hi": "सीढ़ियाँ चढ़ें",
+        "es": "Sube escaleras",
+        "pt": "Suba escadas",
+        "fr": "Montée d'escaliers",
+        "de": "Treppensteigen",
+        "ar": "صعود الدرج",
+        "ja": "階段を上る",
+        "zh-Hans": "爬楼梯",
+        "ko": "계단 오르기"
+      }
+    },
+    {
+      "source": "Stairs force unilateral effort, which is harder to do on autopilot than scrolling.",
+      "translations": {
+        "hi": "सीढ़ियाँ एक-एक पैर का प्रयास माँगती हैं, जो स्क्रॉलिंग से ज़्यादा ध्यान माँगता है।",
+        "es": "Las escaleras exigen esfuerzo de cada lado, más difícil en piloto automático que desplazarse por la pantalla.",
+        "pt": "Escadas exigem esforço de um lado por vez, mais difícil no automático que rolar a tela.",
+        "fr": "Les escaliers demandent un effort unilatéral, moins automatique que le défilement.",
+        "de": "Treppen verlangen einseitige Anstrengung, die schwerer im Autopilot geht als Scrollen.",
+        "ar": "الدرج يفرض جهدًا أحادي الجانب يصعب أداؤه آليًا مقارنة بالتمرير.",
+        "ja": "階段は片側ずつの力を必要とし、スクロールより惰性で行いにくい動作です。",
+        "zh-Hans": "楼梯需要单侧发力，比刷屏更难在自动驾驶状态下完成。",
+        "ko": "계단은 일방적인 노력을 강요하는데, 이는 스크롤하는 것보다 자동 조종 장치에서 수행하기가 더 어렵습니다."
+      }
+    },
+    {
+      "source": "Stand and fold forward, soft knees.",
+      "translations": {
+        "hi": "खड़े होकर आगे झुकें, घुटने हल्के मुड़े रखें।",
+        "es": "De pie, inclínate con las rodillas relajadas.",
+        "pt": "Em pé, incline-se com os joelhos relaxados.",
+        "fr": "Debout, penchez-vous, genoux souples.",
+        "de": "Beuge dich im Stehen mit weichen Knien vor.",
+        "ar": "قف وانحنِ مع ثني خفيف للركبتين.",
+        "ja": "立って前屈し、膝を軽く曲げます。",
+        "zh-Hans": "站立前屈，膝盖微弯。",
+        "ko": "무릎이 부드러워지면 서서 앞으로 접으십시오."
+      }
+    },
+    {
+      "source": "Stand and jump straight up. Repeat.",
+      "translations": {
+        "hi": "खड़े हों, सीधा ऊपर उछलें और दोहराएँ।",
+        "es": "Ponte de pie y salta hacia arriba. Repite.",
+        "pt": "Levante e salte para cima. Repita.",
+        "fr": "Debout, sautez verticalement. Répétez.",
+        "de": "Stehe auf, springe gerade hoch und wiederhole.",
+        "ar": "قف واقفز للأعلى ثم كرّر.",
+        "ja": "立ち上がって真上に跳び、繰り返します。",
+        "zh-Hans": "站起并向上跳，再重复。",
+        "ko": "서서 똑바로 점프하세요. 반복하다."
+      }
+    },
+    {
+      "source": "Stand and stretch tall",
+      "translations": {
+        "hi": "खड़े होकर ऊपर की ओर स्ट्रेच करें",
+        "es": "Ponte de pie y estírate",
+        "pt": "Levante e alongue para cima",
+        "fr": "Se lever et s'étirer vers le haut",
+        "de": "Steh auf und strecke dich lang",
+        "ar": "قف وتمدد للأعلى",
+        "ja": "立って大きく伸びる",
+        "zh-Hans": "站起来向上伸展",
+        "ko": "서서 크게 뻗기"
+      }
+    },
+    {
+      "source": "Stand at the top of your mat.",
+      "translations": {
+        "hi": "मैट के सामने वाले सिरे पर खड़े हों।",
+        "es": "Ponte en el extremo delantero de la esterilla.",
+        "pt": "Fique na ponta da frente do tapete.",
+        "fr": "Placez-vous à l'avant du tapis.",
+        "de": "Stelle dich an den vorderen Rand der Matte.",
+        "ar": "قف عند مقدمة البساط.",
+        "ja": "マットの前側に立ちます。",
+        "zh-Hans": "站在垫子的前端。",
+        "ko": "매트 꼭대기에 서십시오."
+      }
+    },
+    {
+      "source": "Stand back and admire it.",
+      "translations": {
+        "hi": "पीछे हटकर उसे सराहें।",
+        "es": "Retrocede y admíralo.",
+        "pt": "Afaste-se e admire.",
+        "fr": "Reculez et admirez.",
+        "de": "Tritt zurück und bewundere es.",
+        "ar": "تراجع وتأمله بإعجاب.",
+        "ja": "少し離れて眺め、良さを感じます。",
+        "zh-Hans": "退后一步，欣赏成果。",
+        "ko": "뒤로 물러서서 감탄해보세요."
+      }
+    },
+    {
+      "source": "Stand in front of a mirror.",
+      "translations": {
+        "hi": "आईने के सामने खड़े हों।",
+        "es": "Ponte frente a un espejo.",
+        "pt": "Fique na frente do espelho.",
+        "fr": "Placez-vous devant un miroir.",
+        "de": "Stelle dich vor einen Spiegel.",
+        "ar": "قف أمام المرآة.",
+        "ja": "鏡の前に立ちます。",
+        "zh-Hans": "站在镜子前。",
+        "ko": "거울 앞에 서십시오."
+      }
+    },
+    {
+      "source": "Stand near a wall for balance.",
+      "translations": {
+        "hi": "संतुलन के लिए दीवार के पास खड़े हों।",
+        "es": "Ponte cerca de una pared para equilibrarte.",
+        "pt": "Fique perto de uma parede para se equilibrar.",
+        "fr": "Placez-vous près d'un mur pour l'équilibre.",
+        "de": "Stehe zur Balance nahe einer Wand.",
+        "ar": "قف قرب جدار للتوازن.",
+        "ja": "バランスをとるため壁の近くに立ちます。",
+        "zh-Hans": "靠近墙壁站好，以保持平衡。",
+        "ko": "균형을 잡기 위해 벽 근처에 서세요."
+      }
+    },
+    {
+      "source": "Stand outside for two minutes",
+      "translations": {
+        "hi": "दो मिनट बाहर खड़े रहें",
+        "es": "Ponte afuera dos minutos",
+        "pt": "Fique fora por dois minutos",
+        "fr": "Rester dehors deux minutes",
+        "de": "Stehe zwei Minuten draußen",
+        "ar": "قف بالخارج لدقيقتين",
+        "ja": "2分間外に立つ",
+        "zh-Hans": "在户外站两分钟",
+        "ko": "2분 동안 밖에 서 계세요"
+      }
+    },
+    {
+      "source": "Stand still and look up at the sky.",
+      "translations": {
+        "hi": "स्थिर खड़े होकर आसमान देखें।",
+        "es": "Quédate quieto y mira el cielo.",
+        "pt": "Fique parado e olhe o céu.",
+        "fr": "Restez immobile et regardez le ciel.",
+        "de": "Stehe still und schaue zum Himmel.",
+        "ar": "قف ساكنًا وانظر للسماء.",
+        "ja": "じっと立って空を見上げます。",
+        "zh-Hans": "站稳，抬头看天空。",
+        "ko": "가만히 서서 하늘을 올려다보세요."
+      }
+    },
+    {
+      "source": "Stand tall and reach both arms overhead.",
+      "translations": {
+        "hi": "सीधे खड़े होकर दोनों बाँहें ऊपर फैलाएँ।",
+        "es": "Ponte erguido y estira ambos brazos arriba.",
+        "pt": "Fique ereto e estenda os braços acima da cabeça.",
+        "fr": "Tenez-vous droit, bras au-dessus de la tête.",
+        "de": "Stehe aufrecht und strecke beide Arme hoch.",
+        "ar": "قف مستقيمًا ومدّ ذراعيك فوق رأسك.",
+        "ja": "背筋を伸ばして立ち、両腕を上へ伸ばします。",
+        "zh-Hans": "站直，双臂向头顶上方伸展。",
+        "ko": "똑바로 서서 두 팔을 머리 위로 뻗으세요."
+      }
+    },
+    {
+      "source": "Stand tall, feet hip-width apart.",
+      "translations": {
+        "hi": "सीधे खड़े हों, पैर कूल्हों जितने खोलें।",
+        "es": "Ponte erguido, pies al ancho de las caderas.",
+        "pt": "Fique ereto, pés na largura dos quadris.",
+        "fr": "Debout, pieds à la largeur des hanches.",
+        "de": "Stehe aufrecht, Füße hüftbreit.",
+        "ar": "قف مستقيمًا والقدمان بعرض الوركين.",
+        "ja": "足を腰幅に開いてまっすぐ立ちます。",
+        "zh-Hans": "站直，双脚与髋同宽。",
+        "ko": "키가 크고 발을 엉덩이 너비로 벌립니다."
+      }
+    },
+    {
+      "source": "Stand tall, feet shoulder-width apart.",
+      "translations": {
+        "hi": "सीधे खड़े हों, पैर कंधों जितने खोलें।",
+        "es": "Ponte erguido, pies al ancho de los hombros.",
+        "pt": "Fique ereto, pés na largura dos ombros.",
+        "fr": "Debout, pieds à la largeur des épaules.",
+        "de": "Stehe aufrecht, Füße schulterbreit.",
+        "ar": "قف مستقيمًا والقدمان بعرض الكتفين.",
+        "ja": "足を肩幅に開いてまっすぐ立ちます。",
+        "zh-Hans": "站直，双脚与肩同宽。",
+        "ko": "키가 크고 발을 어깨 너비로 벌립니다."
+      }
+    },
+    {
+      "source": "Stand tall, feet together, arms at sides.",
+      "translations": {
+        "hi": "सीधे खड़े हों, पैर साथ और बाँहें बगल में रखें।",
+        "es": "Ponte erguido, pies juntos y brazos a los lados.",
+        "pt": "Fique ereto, pés juntos e braços ao lado.",
+        "fr": "Debout, pieds joints et bras le long du corps.",
+        "de": "Stehe aufrecht, Füße zusammen, Arme seitlich.",
+        "ar": "قف مستقيمًا والقدمان معًا والذراعان بجانبك.",
+        "ja": "足を揃え、腕を横にしてまっすぐ立ちます。",
+        "zh-Hans": "站直，双脚并拢，双臂放在身体两侧。",
+        "ko": "키가 크고, 발은 모으고, 팔은 옆에 둡니다."
+      }
+    },
+    {
+      "source": "Stand up and listen.",
+      "translations": {
+        "hi": "खड़े होकर सुनें।",
+        "es": "Ponte de pie y escucha.",
+        "pt": "Levante e ouça.",
+        "fr": "Levez-vous et écoutez.",
+        "de": "Steh auf und höre zu.",
+        "ar": "قف واستمع.",
+        "ja": "立ち上がって聴きます。",
+        "zh-Hans": "站起来聆听。",
+        "ko": "일어나서 들어보세요."
+      }
+    },
+    {
+      "source": "Stand up immediately.",
+      "translations": {
+        "hi": "तुरंत खड़े हों।",
+        "es": "Ponte de pie ahora.",
+        "pt": "Levante imediatamente.",
+        "fr": "Levez-vous immédiatement.",
+        "de": "Steh sofort auf.",
+        "ar": "قف فورًا.",
+        "ja": "すぐ立ち上がります。",
+        "zh-Hans": "立即站起来。",
+        "ko": "즉시 일어나세요."
+      }
+    },
+    {
+      "source": "Stand with feet shoulder-width, hands up.",
+      "translations": {
+        "hi": "पैर कंधों जितने खोलें और हाथ ऊपर रखें।",
+        "es": "Pies al ancho de hombros y manos arriba.",
+        "pt": "Pés na largura dos ombros e mãos levantadas.",
+        "fr": "Pieds à la largeur des épaules, mains levées.",
+        "de": "Stehe schulterbreit mit gehobenen Händen.",
+        "ar": "قف بعرض الكتفين واليدان مرفوعتان.",
+        "ja": "足を肩幅に開き、手を上げます。",
+        "zh-Hans": "双脚与肩同宽站立，双手举起。",
+        "ko": "발을 어깨 너비로 벌리고 손을 위로 들고 서세요."
+      }
+    },
+    {
+      "source": "Stand, then squat down and place hands on floor.",
+      "translations": {
+        "hi": "खड़े हों, फिर बैठकर हाथ फ़र्श पर रखें।",
+        "es": "De pie, baja en cuclillas y pon las manos en el suelo.",
+        "pt": "Em pé, agache e ponha as mãos no chão.",
+        "fr": "Debout, accroupissez-vous et posez les mains au sol.",
+        "de": "Stehe, hocke dich dann hin und lege die Hände auf den Boden.",
+        "ar": "قف ثم اقرفص وضع يديك على الأرض.",
+        "ja": "立った姿勢からしゃがみ、手を床につけます。",
+        "zh-Hans": "先站立，再蹲下，把双手放到地上。",
+        "ko": "일어섰다가 쪼그리고 앉아 바닥에 손을 얹습니다."
+      }
+    },
+    {
+      "source": "Start in a high plank, hands under shoulders.",
+      "translations": {
+        "hi": "ऊँची प्लैंक में शुरू करें, हाथ कंधों के नीचे रखें।",
+        "es": "Empieza en plancha alta, manos bajo los hombros.",
+        "pt": "Comece em prancha alta, mãos sob os ombros.",
+        "fr": "Commencez en planche haute, mains sous les épaules.",
+        "de": "Beginne in hoher Plank, Hände unter den Schultern.",
+        "ar": "ابدأ ببلانك مرتفع واليدان تحت الكتفين.",
+        "ja": "手を肩の下に置き、ハイプランクから始めます。",
+        "zh-Hans": "以高位平板支撑开始，双手位于肩下。",
+        "ko": "높은 판자에서 시작하고 손을 어깨 아래에 두십시오."
+      }
+    },
+    {
+      "source": "Start the 10-minute binaural session.",
+      "translations": {
+        "hi": "10 मिनट का बाइनॉरल सत्र शुरू करें।",
+        "es": "Inicia la sesión binaural de diez minutos.",
+        "pt": "Inicie a sessão binaural de dez minutos.",
+        "fr": "Lancez la séance binaurale de dix minutes.",
+        "de": "Starte die zehnminütige binaurale Sitzung.",
+        "ar": "ابدأ جلسة الصوت الثنائي لعشر دقائق.",
+        "ja": "10分のバイノーラル音声を開始します。",
+        "zh-Hans": "开始十分钟的双耳节拍练习。",
+        "ko": "10분 바이노럴 세션을 시작합니다."
+      }
+    },
+    {
+      "source": "Stay light on the balls of your feet.",
+      "translations": {
+        "hi": "पंजों पर हल्का भार रखें।",
+        "es": "Apóyate ligero en la parte delantera de los pies.",
+        "pt": "Fique leve na ponta dos pés.",
+        "fr": "Restez léger sur l'avant des pieds.",
+        "de": "Bleib leicht auf den Fußballen.",
+        "ar": "ابق خفيفًا على مقدمة القدمين.",
+        "ja": "足の前側で軽やかに動きます。",
+        "zh-Hans": "轻盈地用前脚掌着地。",
+        "ko": "발의 불알에 빛을 유지하십시오."
+      }
+    },
+    {
+      "source": "Stay light on the toes, breathe.",
+      "translations": {
+        "hi": "पंजों पर हल्के रहें और साँस लें।",
+        "es": "Mantente ligero de puntillas y respira.",
+        "pt": "Fique leve nas pontas e respire.",
+        "fr": "Restez léger sur les pointes et respirez.",
+        "de": "Bleib leicht auf den Zehen und atme.",
+        "ar": "ابق خفيفًا على الأصابع وتنفس.",
+        "ja": "つま先で軽やかに動き、呼吸します。",
+        "zh-Hans": "脚尖轻盈着地，保持呼吸。",
+        "ko": "발가락을 가볍게 유지하고 숨을 쉬십시오."
+      }
+    },
+    {
+      "source": "Stay loose and breathe with the rhythm.",
+      "translations": {
+        "hi": "ढीले रहें और लय के साथ साँस लें।",
+        "es": "Relájate y respira con el ritmo.",
+        "pt": "Relaxe e respire no ritmo.",
+        "fr": "Restez détendu et respirez au rythme.",
+        "de": "Bleib locker und atme im Rhythmus.",
+        "ar": "ابق مرتخيًا وتنفس مع الإيقاع.",
+        "ja": "力を抜き、リズムに合わせて呼吸します。",
+        "zh-Hans": "放松身体，跟着节奏呼吸。",
+        "ko": "긴장을 풀고 리듬에 맞춰 호흡하세요."
+      }
+    },
+    {
+      "source": "Stay on the line until you feel steady.",
+      "translations": {
+        "hi": "स्थिर महसूस होने तक कॉल पर रहें।",
+        "es": "Sigue en la llamada hasta sentirte estable.",
+        "pt": "Fique na ligação até sentir estabilidade.",
+        "fr": "Restez en ligne jusqu'à vous sentir stable.",
+        "de": "Bleib am Telefon, bis du dich stabil fühlst.",
+        "ar": "ابق على الخط حتى تشعر بالثبات.",
+        "ja": "落ち着くまで電話を続けます。",
+        "zh-Hans": "继续通话，直到感觉稳定。",
+        "ko": "안정감을 느낄 때까지 전화를 끊지 마십시오."
+      }
+    },
+    {
+      "source": "Stay submerged for 1-3 minutes.",
+      "translations": {
+        "hi": "1–3 मिनट पानी में रहें।",
+        "es": "Quédate sumergido de uno a tres minutos.",
+        "pt": "Fique imerso por um a três minutos.",
+        "fr": "Restez immergé une à trois minutes.",
+        "de": "Bleib eine bis drei Minuten im Wasser.",
+        "ar": "ابق مغمورًا من دقيقة إلى ثلاث دقائق.",
+        "ja": "1〜3分間、水に浸かります。",
+        "zh-Hans": "浸泡一到三分钟。",
+        "ko": "1~3분 동안 물에 잠겨 있습니다."
+      }
+    },
+    {
+      "source": "Stay there for at least 5 minutes.",
+      "translations": {
+        "hi": "कम से कम 5 मिनट वहाँ रहें।",
+        "es": "Quédate al menos cinco minutos.",
+        "pt": "Fique ali pelo menos cinco minutos.",
+        "fr": "Restez au moins cinq minutes.",
+        "de": "Bleib mindestens fünf Minuten dort.",
+        "ar": "ابق هناك خمس دقائق على الأقل.",
+        "ja": "少なくとも5分間そこにいます。",
+        "zh-Hans": "在那里至少待五分钟。",
+        "ko": "적어도 5분 동안 거기에 머무르십시오."
+      }
+    },
+    {
+      "source": "Stay tight and breathe steadily.",
+      "translations": {
+        "hi": "मांसपेशियाँ कसी रखें और स्थिर साँस लें।",
+        "es": "Mantén la tensión y respira de forma constante.",
+        "pt": "Mantenha a tensão e respire de forma constante.",
+        "fr": "Gardez le corps gainé et respirez régulièrement.",
+        "de": "Bleib angespannt und atme gleichmäßig.",
+        "ar": "ابق مشدودًا وتنفس بثبات.",
+        "ja": "身体を締め、一定に呼吸します。",
+        "zh-Hans": "保持肌肉收紧，平稳呼吸。",
+        "ko": "긴장을 풀고 꾸준히 호흡하세요."
+      }
+    },
+    {
+      "source": "Stay under for 30 to 60 seconds.",
+      "translations": {
+        "hi": "30 से 60 सेकंड पानी के नीचे रहें।",
+        "es": "Mantente debajo de treinta a sesenta segundos.",
+        "pt": "Fique embaixo por trinta a sessenta segundos.",
+        "fr": "Restez dessous trente à soixante secondes.",
+        "de": "Bleib dreißig bis sechzig Sekunden darunter.",
+        "ar": "ابق تحته لثلاثين إلى ستين ثانية.",
+        "ja": "30〜60秒、その下にいます。",
+        "zh-Hans": "在下面停留三十到六十秒。",
+        "ko": "30~60초 동안 자세를 유지하세요."
+      }
+    },
+    {
+      "source": "Stay under the stream for the full time.",
+      "translations": {
+        "hi": "पूरे समय पानी की धारा के नीचे रहें।",
+        "es": "Permanece bajo el chorro todo el tiempo.",
+        "pt": "Fique sob o jato durante todo o tempo.",
+        "fr": "Restez sous le jet tout le temps prévu.",
+        "de": "Bleib die ganze Zeit unter dem Wasserstrahl.",
+        "ar": "ابق تحت التيار طوال الوقت.",
+        "ja": "決めた時間、流水の下にいます。",
+        "zh-Hans": "全程待在水流下。",
+        "ko": "풀타임 동안 시냇물 아래에 머물러 보세요."
+      }
+    },
+    {
+      "source": "Stay until the session ends.",
+      "translations": {
+        "hi": "सत्र खत्म होने तक रहें।",
+        "es": "Quédate hasta terminar la sesión.",
+        "pt": "Fique até o fim da sessão.",
+        "fr": "Restez jusqu'à la fin de la séance.",
+        "de": "Bleib bis zum Ende der Sitzung.",
+        "ar": "ابق حتى تنتهي الجلسة.",
+        "ja": "セッションが終わるまで続けます。",
+        "zh-Hans": "坚持到练习结束。",
+        "ko": "세션이 끝날 때까지 머무르십시오."
+      }
+    },
+    {
+      "source": "Step back to plank, lower, upward dog.",
+      "translations": {
+        "hi": "पीछे कदम रखकर प्लैंक में आएँ, नीचे जाएँ, फिर ऊर्ध्वमुख श्वानासन करें।",
+        "es": "Retrocede a plancha, baja y pasa al perro boca arriba.",
+        "pt": "Volte à prancha, desça e faça cachorro olhando para cima.",
+        "fr": "Reculez en planche, descendez, puis chien tête en haut.",
+        "de": "Gehe zurück in die Plank, senke ab und komme in den heraufschauenden Hund.",
+        "ar": "ارجع إلى البلانك، انزل، ثم وضعية الكلب للأعلى.",
+        "ja": "足を後ろへ引いてプランク、身体を下げてアップドッグに移ります。",
+        "zh-Hans": "后退至平板支撑，下降，再做上犬式。",
+        "ko": "판자로 뒤로 물러서서 낮추고 위쪽으로 개를 올리십시오."
+      }
+    },
+    {
+      "source": "Step in feet-first and breathe out long.",
+      "translations": {
+        "hi": "पहले पैर अंदर रखें और लंबी साँस छोड़ें।",
+        "es": "Entra primero con los pies y exhala largo.",
+        "pt": "Entre com os pés primeiro e expire longamente.",
+        "fr": "Entrez pieds d'abord et expirez longuement.",
+        "de": "Gehe mit den Füßen zuerst hinein und atme lange aus.",
+        "ar": "ادخل بالقدمين أولًا وأطل الزفير.",
+        "ja": "足から入り、長く息を吐きます。",
+        "zh-Hans": "先迈脚进去，长长呼气。",
+        "ko": "발부터 먼저 밟고 숨을 길게 내쉰다."
+      }
+    },
+    {
+      "source": "Step in slowly up to chest.",
+      "translations": {
+        "hi": "धीरे-धीरे छाती तक पानी में उतरें।",
+        "es": "Entra despacio hasta el pecho.",
+        "pt": "Entre devagar até o peito.",
+        "fr": "Entrez lentement jusqu'à la poitrine.",
+        "de": "Steige langsam bis zur Brust hinein.",
+        "ar": "ادخل ببطء حتى الصدر.",
+        "ja": "胸までゆっくり入ります。",
+        "zh-Hans": "慢慢进入，直到胸部。",
+        "ko": "가슴까지 천천히 들어갑니다."
+      }
+    },
+    {
+      "source": "Step one leg back, lower the back knee.",
+      "translations": {
+        "hi": "एक पैर पीछे रखें और पिछला घुटना नीचे लाएँ।",
+        "es": "Lleva una pierna atrás y baja la rodilla trasera.",
+        "pt": "Leve uma perna para trás e abaixe o joelho de trás.",
+        "fr": "Reculez une jambe et baissez le genou arrière.",
+        "de": "Setze ein Bein zurück und senke das hintere Knie.",
+        "ar": "أرجع ساقًا للخلف واخفض الركبة الخلفية.",
+        "ja": "片脚を後ろへ引き、後ろの膝を下ろします。",
+        "zh-Hans": "一条腿后撤，后侧膝盖下降。",
+        "ko": "한쪽 다리를 뒤로 젖히고 뒤쪽 무릎을 내립니다."
+      }
+    },
+    {
+      "source": "Step out, dry off, stand tall.",
+      "translations": {
+        "hi": "बाहर आएँ, शरीर पोंछें और सीधे खड़े हों।",
+        "es": "Sal, sécate y ponte erguido.",
+        "pt": "Saia, seque-se e fique ereto.",
+        "fr": "Sortez, séchez-vous et redressez-vous.",
+        "de": "Steige aus, trockne dich und stehe aufrecht.",
+        "ar": "اخرج وجفف نفسك وقف مستقيمًا.",
+        "ja": "出たら身体を拭き、まっすぐ立ちます。",
+        "zh-Hans": "出来、擦干、站直。",
+        "ko": "밖으로 나가서 몸을 말리고 우뚝 서십시오."
+      }
+    },
+    {
+      "source": "Step outside, no phone.",
+      "translations": {
+        "hi": "बिना फ़ोन बाहर निकलें।",
+        "es": "Sal sin teléfono.",
+        "pt": "Saia sem telefone.",
+        "fr": "Sortez sans téléphone.",
+        "de": "Geh ohne Handy hinaus.",
+        "ar": "اخرج دون هاتف.",
+        "ja": "スマートフォンを持たず外へ出ます。",
+        "zh-Hans": "不带手机，走到户外。",
+        "ko": "밖으로 나가세요. 전화도 없습니다."
+      }
+    },
+    {
+      "source": "Stepping outside changes the cue environment, which is often more powerful than willpower.",
+      "translations": {
+        "hi": "बाहर जाने से संकेतों वाला माहौल बदलता है, जो अक्सर इच्छाशक्ति से ज़्यादा असरदार होता है।",
+        "es": "Salir cambia el entorno de señales, a menudo más poderoso que la fuerza de voluntad.",
+        "pt": "Sair muda o ambiente de sinais, muitas vezes mais poderoso que a força de vontade.",
+        "fr": "Sortir change l'environnement des signaux, souvent plus puissant que la volonté.",
+        "de": "Hinauszugehen verändert die Reizumgebung, oft wirksamer als Willenskraft.",
+        "ar": "الخروج يغيّر بيئة الإشارات، وغالبًا يكون أقوى من الإرادة.",
+        "ja": "外に出るときっかけの環境が変わり、意志の力より強く働くことがあります。",
+        "zh-Hans": "走出去会改变提示环境，而这往往比意志力更有力量。",
+        "ko": "밖으로 나가면 신호 환경이 바뀌는데, 이는 종종 의지력보다 더 강력합니다."
+      }
+    },
+    {
+      "source": "Stop before you are out of breath.",
+      "translations": {
+        "hi": "दम फूलने से पहले रुकें।",
+        "es": "Para antes de quedarte sin aliento.",
+        "pt": "Pare antes de ficar sem fôlego.",
+        "fr": "Arrêtez avant d'être essoufflé.",
+        "de": "Höre auf, bevor du außer Atem bist.",
+        "ar": "توقف قبل انقطاع النفس.",
+        "ja": "息が切れる前に止めます。",
+        "zh-Hans": "喘不过气之前停下来。",
+        "ko": "숨이 차기 전에 멈추십시오."
+      }
+    },
+    {
+      "source": "Stop only when the timer rings.",
+      "translations": {
+        "hi": "टाइमर बजने पर ही रुकें।",
+        "es": "Para solo cuando suene el temporizador.",
+        "pt": "Pare só quando o cronômetro tocar.",
+        "fr": "Arrêtez seulement à la sonnerie.",
+        "de": "Höre erst auf, wenn der Timer klingelt.",
+        "ar": "توقف فقط عند رنين المؤقّت.",
+        "ja": "タイマーが鳴ったら止めます。",
+        "zh-Hans": "只有计时器响起才停止。",
+        "ko": "타이머가 울릴 때만 중지하십시오."
+      }
+    },
+    {
+      "source": "Stop when exhale reaches 10 counts.",
+      "translations": {
+        "hi": "साँस छोड़ने की गिनती 10 होने पर रुकें।",
+        "es": "Para al llegar a diez al exhalar.",
+        "pt": "Pare quando a expiração chegar a dez contagens.",
+        "fr": "Arrêtez quand l'expiration atteint dix temps.",
+        "de": "Höre auf, wenn das Ausatmen zehn Zählschritte erreicht.",
+        "ar": "توقف عندما يبلغ الزفير عشر عدّات.",
+        "ja": "吐くカウントが10になったら止めます。",
+        "zh-Hans": "呼气计数达到十拍时停止。",
+        "ko": "숨을 내쉬는 횟수가 10회에 도달하면 중지합니다."
+      }
+    },
+    {
+      "source": "Stop when it rings — or keep going if rolling.",
+      "translations": {
+        "hi": "टाइमर बजे तो रुकें—या अच्छी गति बनी हो तो जारी रखें।",
+        "es": "Para al sonar, o sigue si llevas buen ritmo.",
+        "pt": "Pare quando tocar, ou continue se estiver no ritmo.",
+        "fr": "Arrêtez à la sonnerie, ou continuez si vous êtes lancé.",
+        "de": "Höre beim Klingeln auf oder mach weiter, wenn es gut läuft.",
+        "ar": "توقف عند الرنين أو واصل إن كنت منطلقًا.",
+        "ja": "鳴ったら止めるか、調子がよければ続けます。",
+        "zh-Hans": "响起时停下；若正做得顺，也可以继续。",
+        "ko": "신호가 울리면 멈추거나 구르면 계속 진행하세요."
+      }
+    },
+    {
+      "source": "Straighten your body in one line.",
+      "translations": {
+        "hi": "शरीर को एक सीधी रेखा में रखें।",
+        "es": "Alinea el cuerpo en una línea recta.",
+        "pt": "Alinhe o corpo em uma linha reta.",
+        "fr": "Alignez le corps en une ligne droite.",
+        "de": "Richte den Körper in einer Linie aus.",
+        "ar": "اجعل جسمك في خط مستقيم.",
+        "ja": "身体を一直線に揃えます。",
+        "zh-Hans": "身体保持一条直线。",
+        "ko": "몸을 한 줄로 곧게 펴십시오."
+      }
+    },
+    {
+      "source": "Stretch routine",
+      "translations": {
+        "hi": "स्ट्रेचिंग अभ्यास",
+        "es": "Rutina de estiramientos",
+        "pt": "Rotina de alongamento",
+        "fr": "Routine d'étirements",
+        "de": "Dehnroutine",
+        "ar": "روتين التمدد",
+        "ja": "ストレッチ習慣",
+        "zh-Hans": "拉伸日常练习",
+        "ko": "스트레칭 루틴"
+      }
+    },
+    {
+      "source": "Strip the sheets straight.",
+      "translations": {
+        "hi": "चादरें खींचकर सीधी करें।",
+        "es": "Estira las sábanas.",
+        "pt": "Estique os lençóis.",
+        "fr": "Tendez les draps.",
+        "de": "Ziehe die Laken gerade.",
+        "ar": "سوِّ الملاءات.",
+        "ja": "シーツをまっすぐ整えます。",
+        "zh-Hans": "把床单拉平。",
+        "ko": "시트를 똑바로 벗겨냅니다."
+      }
+    },
+    {
+      "source": "Submerge your face up to your temples.",
+      "translations": {
+        "hi": "चेहरा कनपटियों तक पानी में डुबोएँ।",
+        "es": "Sumerge la cara hasta las sienes.",
+        "pt": "Mergulhe o rosto até as têmporas.",
+        "fr": "Immergez le visage jusqu'aux tempes.",
+        "de": "Tauche das Gesicht bis zu den Schläfen ein.",
+        "ar": "اغمر وجهك حتى الصدغين.",
+        "ja": "こめかみまで顔を水につけます。",
+        "zh-Hans": "把脸浸入水中，直到太阳穴。",
+        "ko": "관자놀이까지 얼굴을 담그십시오."
+      }
+    },
+    {
+      "source": "Suggest a meal or a call.",
+      "translations": {
+        "hi": "साथ खाने या कॉल करने का सुझाव दें।",
+        "es": "Propón una comida o llamada.",
+        "pt": "Sugira uma refeição ou ligação.",
+        "fr": "Proposez un repas ou un appel.",
+        "de": "Schlage ein Essen oder einen Anruf vor.",
+        "ar": "اقترح وجبة أو مكالمة.",
+        "ja": "食事や電話を提案します。",
+        "zh-Hans": "提议一起吃饭或通话。",
+        "ko": "식사나 전화를 제안해보세요."
+      }
+    },
+    {
+      "source": "Suggest a specific day and time.",
+      "translations": {
+        "hi": "एक निश्चित दिन और समय सुझाएँ।",
+        "es": "Propón un día y hora concretos.",
+        "pt": "Sugira dia e horário específicos.",
+        "fr": "Proposez un jour et une heure précis.",
+        "de": "Schlage einen konkreten Tag und eine Uhrzeit vor.",
+        "ar": "اقترح يومًا ووقتًا محددين.",
+        "ja": "具体的な日と時間を提案します。",
+        "zh-Hans": "提出具体日期和时间。",
+        "ko": "특정 날짜와 시간을 제안합니다."
+      }
+    },
+    {
+      "source": "Surf the craving like a wave",
+      "translations": {
+        "hi": "तलब की लहर को देखें और पार करें",
+        "es": "Surfea el deseo como una ola",
+        "pt": "Atravesse o desejo como uma onda",
+        "fr": "Surfer sur l'envie comme une vague",
+        "de": "Surfe das Verlangen wie eine Welle",
+        "ar": "اركب موجة الاشتهاء",
+        "ja": "渇望を波のように乗りこなす",
+        "zh-Hans": "像冲浪一样度过渴求",
+        "ko": "갈망을 파도처럼 서핑하세요"
+      }
+    },
+    {
+      "source": "Switch — close left, exhale right.",
+      "translations": {
+        "hi": "बदलें—बायाँ नथुना बंद करें, दाएँ से छोड़ें।",
+        "es": "Cambia: cierra la izquierda y exhala por la derecha.",
+        "pt": "Troque: feche a esquerda e expire pela direita.",
+        "fr": "Changez : fermez à gauche, expirez à droite.",
+        "de": "Wechsle: links schließen, rechts ausatmen.",
+        "ar": "بدّل؛ أغلق اليسرى وازفر من اليمنى.",
+        "ja": "切り替え、左を閉じて右から吐きます。",
+        "zh-Hans": "换边：闭住左侧，用右侧呼气。",
+        "ko": "스위치 - 왼쪽으로 닫고 오른쪽으로 숨을 내쉬십시오."
+      }
+    },
+    {
+      "source": "Switch legs quickly without lifting hips.",
+      "translations": {
+        "hi": "कूल्हे उठाए बिना जल्दी पैर बदलें।",
+        "es": "Cambia de piernas rápido sin elevar las caderas.",
+        "pt": "Troque as pernas rápido sem levantar os quadris.",
+        "fr": "Changez vite de jambe sans lever les hanches.",
+        "de": "Wechsle schnell die Beine, ohne die Hüfte anzuheben.",
+        "ar": "بدّل الساقين بسرعة دون رفع الوركين.",
+        "ja": "腰を上げずに素早く脚を交代します。",
+        "zh-Hans": "快速换腿，不要抬高髋部。",
+        "ko": "엉덩이를 들지 않고 빠르게 다리를 바꾸세요."
+      }
+    },
+    {
+      "source": "Switch rooms",
+      "translations": {
+        "hi": "कमरा बदलें",
+        "es": "Cambia de habitación",
+        "pt": "Mude de cômodo",
+        "fr": "Changer de pièce",
+        "de": "Wechsle das Zimmer",
+        "ar": "غيّر الغرفة",
+        "ja": "部屋を変える",
+        "zh-Hans": "换一个房间",
+        "ko": "방 전환"
+      }
+    },
+    {
+      "source": "Switch sides, hold each for 30 seconds.",
+      "translations": {
+        "hi": "तरफ़ बदलें, हर तरफ़ 30 सेकंड रोकें।",
+        "es": "Cambia de lado y mantén treinta segundos en cada uno.",
+        "pt": "Troque de lado e mantenha trinta segundos em cada um.",
+        "fr": "Changez de côté, tenez trente secondes par côté.",
+        "de": "Wechsle die Seite und halte jeweils dreißig Sekunden.",
+        "ar": "بدّل الجانب واثبت ثلاثين ثانية لكل جانب.",
+        "ja": "左右を変え、各30秒保ちます。",
+        "zh-Hans": "换边，每侧保持三十秒。",
+        "ko": "양쪽을 바꿔 각각 30초 동안 유지합니다."
+      }
+    },
+    {
+      "source": "Switch the water to cold.",
+      "translations": {
+        "hi": "पानी ठंडा करें।",
+        "es": "Cambia el agua a fría.",
+        "pt": "Mude a água para fria.",
+        "fr": "Passez à l'eau froide.",
+        "de": "Stelle das Wasser kalt.",
+        "ar": "حوّل الماء إلى البارد.",
+        "ja": "水を冷たく切り替えます。",
+        "zh-Hans": "把水温调冷。",
+        "ko": "물을 찬물로 바꾸십시오."
+      }
+    },
+    {
+      "source": "Switching hot to cold scrambles autopilot and resets the autonomic nervous system.",
+      "translations": {
+        "hi": "गर्म से ठंडे पानी में बदलना आदतन चलने की अवस्था तोड़ता है और स्वायत्त तंत्रिका तंत्र संतुलित करता है।",
+        "es": "Pasar de caliente a frío rompe el piloto automático y reajusta el sistema nervioso autónomo.",
+        "pt": "Trocar quente por frio rompe o piloto automático e reajusta o sistema nervoso autônomo.",
+        "fr": "Passer du chaud au froid perturbe les automatismes et rééquilibre le système nerveux autonome.",
+        "de": "Von warm zu kalt zu wechseln unterbricht den Autopilot und setzt das autonome Nervensystem neu ausbalanciert zurück.",
+        "ar": "الانتقال من الساخن للبارد يربك الوضع الآلي ويعيد ضبط الجهاز العصبي اللاإرادي.",
+        "ja": "温水から冷水への切り替えは惰性を断ち、自律神経を整え直します。",
+        "zh-Hans": "从热水切换到冷水会打断自动驾驶状态，重新调整自主神经系统。",
+        "ko": "더운 곳에서 차가운 곳으로 전환하면 자동 조종 장치가 작동되고 자율신경계가 재설정됩니다."
+      }
+    },
+    {
+      "source": "Take 30 full breaths in and out.",
+      "translations": {
+        "hi": "30 बार पूरी साँस लें और छोड़ें।",
+        "es": "Haz treinta respiraciones completas.",
+        "pt": "Faça trinta respirações completas.",
+        "fr": "Prenez trente respirations complètes.",
+        "de": "Atme dreißigmal vollständig ein und aus.",
+        "ar": "خذ ثلاثين نفسًا كاملًا شهيقًا وزفيرًا.",
+        "ja": "30回、十分に吸って吐きます。",
+        "zh-Hans": "完整吸气、呼气三十次。",
+        "ko": "30회 완전히 숨을 들이쉬고 내쉬세요."
+      }
+    },
+    {
+      "source": "Take 5 deep breaths of outside air.",
+      "translations": {
+        "hi": "बाहर की हवा में 5 गहरी साँसें लें।",
+        "es": "Respira hondo cinco veces al aire libre.",
+        "pt": "Respire fundo cinco vezes ao ar livre.",
+        "fr": "Prenez cinq grandes respirations dehors.",
+        "de": "Nimm draußen fünf tiefe Atemzüge.",
+        "ar": "خذ خمسة أنفاس عميقة من الهواء الخارجي.",
+        "ja": "外の空気を5回深く吸います。",
+        "zh-Hans": "深吸五口户外空气。",
+        "ko": "외부 공기를 5회 깊게 호흡하세요."
+      }
+    },
+    {
+      "source": "Take a second sharp inhale on top.",
+      "translations": {
+        "hi": "उसके ऊपर एक और तेज़ साँस लें।",
+        "es": "Añade una segunda inhalación corta y fuerte.",
+        "pt": "Faça uma segunda inspiração rápida por cima.",
+        "fr": "Ajoutez une seconde inspiration brève.",
+        "de": "Nimm darüber einen zweiten kurzen Atemzug.",
+        "ar": "أضف شهيقًا ثانيًا سريعًا.",
+        "ja": "さらにもう1回、短く鋭く吸います。",
+        "zh-Hans": "再补一次短而有力的吸气。",
+        "ko": "위에서 두 번째로 날카로운 흡입을하십시오."
+      }
+    },
+    {
+      "source": "Take one new full-face photo.",
+      "translations": {
+        "hi": "पूरे चेहरे की एक नई फोटो लें।",
+        "es": "Toma una foto nueva de toda la cara.",
+        "pt": "Tire uma nova foto do rosto inteiro.",
+        "fr": "Prenez une nouvelle photo du visage entier.",
+        "de": "Mache ein neues Foto deines ganzen Gesichts.",
+        "ar": "التقط صورة جديدة للوجه كاملًا.",
+        "ja": "顔全体の新しい写真を1枚撮ります。",
+        "zh-Hans": "拍一张完整正脸的新照片。",
+        "ko": "새로운 전체 얼굴 사진을 한 장 찍으세요."
+      }
+    },
+    {
+      "source": "Take out the trash",
+      "translations": {
+        "hi": "कूड़ा बाहर निकालें",
+        "es": "Saca la basura",
+        "pt": "Leve o lixo para fora",
+        "fr": "Sortir les poubelles",
+        "de": "Bring den Müll raus",
+        "ar": "أخرج القمامة",
+        "ja": "ごみを出す",
+        "zh-Hans": "倒垃圾",
+        "ko": "쓰레기를 버리세요"
+      }
+    },
+    {
+      "source": "Take your phone in hand.",
+      "translations": {
+        "hi": "फ़ोन हाथ में लें।",
+        "es": "Toma el teléfono.",
+        "pt": "Pegue o telefone na mão.",
+        "fr": "Prenez votre téléphone en main.",
+        "de": "Nimm dein Handy in die Hand.",
+        "ar": "خذ هاتفك بيدك.",
+        "ja": "スマートフォンを手に取ります。",
+        "zh-Hans": "拿起手机。",
+        "ko": "휴대전화를 손에 쥐세요."
+      }
+    },
+    {
+      "source": "Tap 'Call a sponsor now'.",
+      "translations": {
+        "hi": "'अभी मार्गदर्शक को कॉल करें' पर टैप करें।",
+        "es": "Toca «Llamar a un padrino ahora».",
+        "pt": "Toque em 'Ligar para um padrinho agora'.",
+        "fr": "Touchez « Appeler un référent maintenant ».",
+        "de": "Tippe auf „Jetzt Begleitperson anrufen“.",
+        "ar": "اضغط «اتصل بالمرشد الآن».",
+        "ja": "「今すぐ支援担当者に電話」をタップします。",
+        "zh-Hans": "点按“立即联系指导者”。",
+        "ko": "'지금 스폰서에게 전화하기'를 탭하세요."
+      }
+    },
+    {
+      "source": "Tap 'Premium deep dive'.",
+      "translations": {
+        "hi": "'प्रीमियम गहन सत्र' पर टैप करें।",
+        "es": "Toca «Sesión profunda Prémium».",
+        "pt": "Toque em 'Sessão aprofundada Premium'.",
+        "fr": "Touchez « Séance approfondie Premium ».",
+        "de": "Tippe auf „Premium-Vertiefung“.",
+        "ar": "اضغط «جلسة معمّقة مدفوعة».",
+        "ja": "「プレミアムの深掘り」をタップします。",
+        "zh-Hans": "点按“高级版深入交流”。",
+        "ko": "'프리미엄 심층 분석'을 탭하세요."
+      }
+    },
+    {
+      "source": "Tell that younger self they are safe.",
+      "translations": {
+        "hi": "छोटे उम्र वाले खुद से कहें कि वे सुरक्षित हैं।",
+        "es": "Dile a tu yo más joven que está a salvo.",
+        "pt": "Diga ao seu eu mais jovem que está seguro.",
+        "fr": "Dites à votre moi plus jeune qu'il est en sécurité.",
+        "de": "Sage deinem jüngeren Ich, dass es sicher ist.",
+        "ar": "أخبر ذاتك الأصغر أنها بأمان.",
+        "ja": "幼い自分に、安全だと伝えます。",
+        "zh-Hans": "告诉年幼的自己：你很安全。",
+        "ko": "어린 자신에게 안전하다고 말해주세요."
+      }
+    },
+    {
+      "source": "Tell them in a low-stakes way.",
+      "translations": {
+        "hi": "हल्के, बिना दबाव के ढंग से बताएँ।",
+        "es": "Díselo sin presión.",
+        "pt": "Diga sem pressão.",
+        "fr": "Dites-le sans pression.",
+        "de": "Sag es ganz ohne Druck.",
+        "ar": "أخبرهم دون ضغط.",
+        "ja": "気負わず伝えます。",
+        "zh-Hans": "用轻松、不带压力的方式告诉对方。",
+        "ko": "부담이 적은 방법으로 말하세요."
+      }
+    },
+    {
+      "source": "Tell them today is hard.",
+      "translations": {
+        "hi": "बताएँ आज का दिन कठिन है।",
+        "es": "Diles que hoy es difícil.",
+        "pt": "Diga que hoje está difícil.",
+        "fr": "Dites que cette journée est difficile.",
+        "de": "Sag, dass heute ein schwerer Tag ist.",
+        "ar": "أخبرهم أن اليوم صعب.",
+        "ja": "今日はつらい日だと伝えます。",
+        "zh-Hans": "告诉对方今天有些难熬。",
+        "ko": "오늘은 힘들다고 말해주세요."
+      }
+    },
+    {
+      "source": "Telling someone they matter is one of the highest-leverage mood shifts you can do for free.",
+      "translations": {
+        "hi": "किसी को उनकी अहमियत बताना बिना खर्च मूड बदलने के सबसे असरदार तरीकों में से है।",
+        "es": "Decirle a alguien que importa es uno de los cambios de ánimo más eficaces y gratuitos.",
+        "pt": "Dizer a alguém que importa é uma das mudanças de humor mais eficazes e gratuitas.",
+        "fr": "Dire à quelqu'un qu'il compte est un des moyens gratuits les plus efficaces pour changer l'humeur.",
+        "de": "Jemandem seine Bedeutung zu sagen ist eine der wirksamsten kostenlosen Möglichkeiten, die Stimmung zu ändern.",
+        "ar": "إخبار شخص بأهميته من أكثر طرق تغيير المزاج فاعلية دون تكلفة.",
+        "ja": "大切だと誰かに伝えることは、無料でできる最も効果的な気分転換の1つです。",
+        "zh-Hans": "告诉一个人他很重要，是无需花钱就能改变情绪的最有效方法之一。",
+        "ko": "누군가에게 자신이 중요하다고 말하는 것은 무료로 할 수 있는 가장 영향력 있는 기분 전환 중 하나입니다."
+      }
+    },
+    {
+      "source": "Text a parent, sibling, or cousin.",
+      "translations": {
+        "hi": "माता-पिता, भाई-बहन या चचेरे/ममेरे भाई-बहन को संदेश भेजें।",
+        "es": "Escribe a un progenitor, hermano o primo.",
+        "pt": "Envie mensagem a pai, mãe, irmão ou primo.",
+        "fr": "Écrivez à un parent, frère, sœur ou cousin.",
+        "de": "Schreibe einem Elternteil, Geschwister oder Cousin.",
+        "ar": "أرسل لأحد الوالدين أو الأشقاء أو الأقارب.",
+        "ja": "親、きょうだい、いとこにメッセージします。",
+        "zh-Hans": "给父母、兄弟姐妹或堂表亲发消息。",
+        "ko": "부모, 형제자매, 사촌에게 문자를 보내세요."
+      }
+    },
+    {
+      "source": "text accountability partner",
+      "translations": {
+        "hi": "जवाबदेही साथी को संदेश भेजना",
+        "es": "mensaje a tu compañero de apoyo",
+        "pt": "mensagem ao parceiro de compromisso",
+        "fr": "message au partenaire de suivi",
+        "de": "Nachricht an die Unterstützungsperson",
+        "ar": "رسالة لشريك المتابعة",
+        "ja": "見守り合う相手にメッセージ",
+        "zh-Hans": "给监督伙伴发消息",
+        "ko": "텍스트 책임 파트너"
+      }
+    },
+    {
+      "source": "Text accountability partner",
+      "translations": {
+        "hi": "जवाबदेही साथी को संदेश भेजें",
+        "es": "Mensaje a tu compañero de apoyo",
+        "pt": "Mensagem ao parceiro de compromisso",
+        "fr": "Message au partenaire de suivi",
+        "de": "Schreibe deiner Unterstützungsperson",
+        "ar": "أرسل لشريك المتابعة",
+        "ja": "見守り合う相手にメッセージする",
+        "zh-Hans": "给监督伙伴发消息",
+        "ko": "텍스트 책임 파트너"
+      }
+    },
+    {
+      "source": "Thank them honestly after.",
+      "translations": {
+        "hi": "बाद में दिल से धन्यवाद दें।",
+        "es": "Agradécele con sinceridad después.",
+        "pt": "Agradeça com sinceridade depois.",
+        "fr": "Remerciez sincèrement après.",
+        "de": "Bedanke dich danach ehrlich.",
+        "ar": "اشكرهم بصدق بعد ذلك.",
+        "ja": "終わった後、心から感謝します。",
+        "zh-Hans": "之后真诚地感谢对方。",
+        "ko": "그 후에는 솔직하게 감사드립니다."
+      }
+    },
+    {
+      "source": "Thank them honestly before hanging up.",
+      "translations": {
+        "hi": "कॉल बंद करने से पहले दिल से धन्यवाद दें।",
+        "es": "Agradece de verdad antes de colgar.",
+        "pt": "Agradeça de verdade antes de desligar.",
+        "fr": "Remerciez sincèrement avant de raccrocher.",
+        "de": "Bedanke dich ehrlich vor dem Auflegen.",
+        "ar": "اشكرهم بصدق قبل إنهاء الاتصال.",
+        "ja": "電話を切る前に、心から感謝します。",
+        "zh-Hans": "挂断前真诚地感谢对方。",
+        "ko": "전화를 끊기 전에 솔직하게 감사 인사를 전하세요."
+      }
+    },
+    {
+      "source": "The long exhale signals safety to the nervous system, which softens the urge spike.",
+      "translations": {
+        "hi": "लंबी साँस छोड़ना तंत्रिका तंत्र को सुरक्षा का संकेत देता है और आवेग की तेज़ी घटाता है।",
+        "es": "Una exhalación larga señala seguridad al sistema nervioso y suaviza el pico del impulso.",
+        "pt": "A expiração longa sinaliza segurança ao sistema nervoso e suaviza o pico do impulso.",
+        "fr": "La longue expiration signale la sécurité au système nerveux et atténue le pic d'envie.",
+        "de": "Langes Ausatmen signalisiert dem Nervensystem Sicherheit und mildert die Impulsspitze.",
+        "ar": "الزفير الطويل يرسل إشارة أمان ويخفف ذروة الرغبة.",
+        "ja": "長く吐く呼吸が神経系に安全を伝え、衝動の高まりを和らげます。",
+        "zh-Hans": "长呼气会向神经系统传递安全信号，缓和冲动高峰。",
+        "ko": "길게 내쉬는 것은 신경계에 안전 신호를 보내 충동 스파이크를 완화시킵니다."
+      }
+    },
+    {
+      "source": "The physiological sigh is the fastest known way to lower stress in under a minute.",
+      "translations": {
+        "hi": "शारीरिक आह एक मिनट से कम समय में तनाव घटाने का सबसे तेज़ ज्ञात तरीका है।",
+        "es": "El suspiro fisiológico es la forma más rápida conocida de reducir el estrés en menos de un minuto.",
+        "pt": "O suspiro fisiológico é a forma mais rápida conhecida de reduzir estresse em menos de um minuto.",
+        "fr": "Le soupir physiologique est le moyen connu le plus rapide de réduire le stress en moins d'une minute.",
+        "de": "Der physiologische Seufzer ist die schnellste bekannte Art, Stress in unter einer Minute zu senken.",
+        "ar": "التنهّد الفسيولوجي أسرع طريقة معروفة لتقليل التوتر في أقل من دقيقة.",
+        "ja": "生理的ため息は、1分以内にストレスを下げる最も速い方法として知られています。",
+        "zh-Hans": "生理性叹息是已知在一分钟内降低压力的最快方式。",
+        "ko": "생리학적 한숨은 1분 안에 스트레스를 낮추는 가장 빠른 방법으로 알려져 있습니다."
+      }
+    },
+    {
+      "source": "Think of someone going through something hard.",
+      "translations": {
+        "hi": "मुश्किल से गुज़र रहे किसी व्यक्ति के बारे में सोचें।",
+        "es": "Piensa en alguien pasando por algo difícil.",
+        "pt": "Pense em alguém passando por dificuldade.",
+        "fr": "Pensez à quelqu'un qui traverse une épreuve.",
+        "de": "Denke an jemanden, der etwas Schweres erlebt.",
+        "ar": "فكّر في شخص يمر بصعوبة.",
+        "ja": "つらい状況にいる人を思い浮かべます。",
+        "zh-Hans": "想想正在经历困难的人。",
+        "ko": "어떤 사람이 힘든 일을 겪고 있다고 생각해 보십시오."
+      }
+    },
+    {
+      "source": "Three small wins log",
+      "translations": {
+        "hi": "तीन छोटी जीतों का रिकॉर्ड",
+        "es": "Registro de tres pequeños logros",
+        "pt": "Registro de três pequenas conquistas",
+        "fr": "Journal de trois petites victoires",
+        "de": "Drei kleine Erfolge protokollieren",
+        "ar": "سجل ثلاثة انتصارات صغيرة",
+        "ja": "3つの小さな成功の記録",
+        "zh-Hans": "三个小成就记录",
+        "ko": "세 번의 작은 승리 기록"
+      }
+    },
+    {
+      "source": "Throw jab-cross, then a hook.",
+      "translations": {
+        "hi": "सीधा अगला मुक्का, फिर दूसरा, फिर हुक लगाएँ।",
+        "es": "Lanza jab, directo y después un gancho.",
+        "pt": "Dê jab, direto e depois um gancho.",
+        "fr": "Faites jab, direct puis crochet.",
+        "de": "Schlage Jab, Gerade und dann einen Haken.",
+        "ar": "وجّه لكمة أمامية ثم مستقيمة ثم خطافية.",
+        "ja": "ジャブ、ストレート、フックの順で打ちます。",
+        "zh-Hans": "打刺拳、直拳，再打勾拳。",
+        "ko": "잽 크로스를 던진 다음 훅을 던집니다."
+      }
+    },
+    {
+      "source": "Tidy your digital space",
+      "translations": {
+        "hi": "डिजिटल जगह व्यवस्थित करें",
+        "es": "Ordena tu espacio digital",
+        "pt": "Organize seu espaço digital",
+        "fr": "Ranger votre espace numérique",
+        "de": "Ordne deine digitale Umgebung",
+        "ar": "رتّب مساحتك الرقمية",
+        "ja": "デジタル空間を整える",
+        "zh-Hans": "整理数字空间",
+        "ko": "디지털 공간을 깔끔하게 정리하세요"
+      }
+    },
+    {
+      "source": "Tidy your space",
+      "translations": {
+        "hi": "अपनी जगह व्यवस्थित करें",
+        "es": "Ordena tu espacio",
+        "pt": "Organize seu espaço",
+        "fr": "Ranger votre espace",
+        "de": "Räume deine Umgebung auf",
+        "ar": "رتّب مساحتك",
+        "ja": "身の回りを整える",
+        "zh-Hans": "整理你的空间",
+        "ko": "공간을 깔끔하게 정리하세요"
+      }
+    },
+    {
+      "source": "Tiny promises kept create the identity that addiction is constantly trying to erase.",
+      "translations": {
+        "hi": "निभाए छोटे वादे वह पहचान बनाते हैं जिसे लत लगातार मिटाना चाहती है।",
+        "es": "Cumplir pequeñas promesas crea la identidad que la adicción intenta borrar.",
+        "pt": "Pequenas promessas cumpridas criam a identidade que a dependência tenta apagar.",
+        "fr": "Les petites promesses tenues créent l'identité que l'addiction cherche à effacer.",
+        "de": "Gehaltene kleine Versprechen schaffen die Identität, die Sucht ständig zu löschen versucht.",
+        "ar": "الوعود الصغيرة المنفذة تبني الهوية التي يحاول الإدمان محوها.",
+        "ja": "小さな約束を守ると、依存が消そうとする自分らしさが育ちます。",
+        "zh-Hans": "兑现小承诺，会建立成瘾一直试图抹去的身份认同。",
+        "ko": "지켜진 작은 약속은 중독이 끊임없이 지우려고 하는 정체성을 만들어낸다."
+      }
+    },
+    {
+      "source": "Toss it. Notice the lighter weight.",
+      "translations": {
+        "hi": "फेंक दें और हल्कापन महसूस करें।",
+        "es": "Tíralo y nota la ligereza.",
+        "pt": "Jogue fora e note o peso menor.",
+        "fr": "Jetez-le et sentez l'allègement.",
+        "de": "Wirf es weg und spüre das leichtere Gewicht.",
+        "ar": "تخلّص منه ولاحظ خفة الحمل.",
+        "ja": "捨てて、軽くなった感覚を感じます。",
+        "zh-Hans": "扔掉它，感受重量减轻。",
+        "ko": "던져라. 무게가 가벼워진 것에 주목하세요."
+      }
+    },
+    {
+      "source": "Track clouds or birds with your eyes.",
+      "translations": {
+        "hi": "बादलों या पक्षियों को आँखों से देखें।",
+        "es": "Sigue nubes o pájaros con los ojos.",
+        "pt": "Siga nuvens ou pássaros com os olhos.",
+        "fr": "Suivez les nuages ou oiseaux des yeux.",
+        "de": "Verfolge Wolken oder Vögel mit den Augen.",
+        "ar": "تابع الغيوم أو الطيور بعينيك.",
+        "ja": "雲や鳥を目で追います。",
+        "zh-Hans": "用目光追随云朵或鸟儿。",
+        "ko": "눈으로 구름이나 새를 추적하세요."
+      }
+    },
+    {
+      "source": "Translating sensations into words takes craving out of autopilot.",
+      "translations": {
+        "hi": "अनुभूतियाँ शब्दों में बदलने से तलब आदतन प्रतिक्रिया से बाहर आती है।",
+        "es": "Poner sensaciones en palabras saca el deseo del piloto automático.",
+        "pt": "Transformar sensações em palavras tira o desejo do piloto automático.",
+        "fr": "Mettre les sensations en mots sort l'envie du pilote automatique.",
+        "de": "Empfindungen in Worte zu fassen holt das Verlangen aus dem Autopilot.",
+        "ar": "تحويل الأحاسيس لكلمات يخرج الاشتهاء من الوضع الآلي.",
+        "ja": "感覚を言葉にすると、渇望が自動的な反応から離れます。",
+        "zh-Hans": "把感觉转化为语言，能让渴求脱离自动驾驶。",
+        "ko": "감각을 단어로 번역하면 자동 조종 장치에서 갈망이 사라집니다."
+      }
+    },
+    {
+      "source": "Trigger pattern map",
+      "translations": {
+        "hi": "उकसाने वाले पैटर्न का नक्शा",
+        "es": "Mapa de patrones desencadenantes",
+        "pt": "Mapa de padrões de gatilhos",
+        "fr": "Carte des schémas déclencheurs",
+        "de": "Karte deiner Auslösermuster",
+        "ar": "خريطة أنماط المحفّزات",
+        "ja": "きっかけのパターンマップ",
+        "zh-Hans": "触发模式地图",
+        "ko": "트리거 패턴 맵"
+      }
+    },
+    {
+      "source": "Tuck the corners properly.",
+      "translations": {
+        "hi": "कोनों को ठीक से अंदर करें।",
+        "es": "Mete bien las esquinas.",
+        "pt": "Prenda bem os cantos.",
+        "fr": "Bordez soigneusement les coins.",
+        "de": "Stecke die Ecken ordentlich ein.",
+        "ar": "ثبّت الزوايا جيدًا.",
+        "ja": "角をきちんと折り込みます。",
+        "zh-Hans": "把边角塞好。",
+        "ko": "모서리를 올바르게 집어 넣으십시오."
+      }
+    },
+    {
+      "source": "Turn the shower to the coldest setting.",
+      "translations": {
+        "hi": "शॉवर सबसे ठंडे स्तर पर करें।",
+        "es": "Pon la ducha en el ajuste más frío.",
+        "pt": "Coloque o chuveiro no mais frio.",
+        "fr": "Réglez la douche au plus froid.",
+        "de": "Stelle die Dusche so kalt wie möglich.",
+        "ar": "اضبط الدش على أبرد إعداد.",
+        "ja": "シャワーを最も冷たい設定にします。",
+        "zh-Hans": "把淋浴调到最冷。",
+        "ko": "샤워기를 가장 차가운 온도로 설정하십시오."
+      }
+    },
+    {
+      "source": "Two minutes of meaningful work shows your brain you are bigger than this moment.",
+      "translations": {
+        "hi": "दो मिनट का उपयोगी काम दिमाग़ को दिखाता है कि आप इस पल से बड़े हैं।",
+        "es": "Dos minutos de trabajo significativo muestran al cerebro que eres más que este momento.",
+        "pt": "Dois minutos de trabalho significativo mostram ao cérebro que você é maior que este momento.",
+        "fr": "Deux minutes de travail utile montrent au cerveau que vous êtes plus grand que cet instant.",
+        "de": "Zwei Minuten sinnvoller Arbeit zeigen deinem Gehirn, dass du größer bist als dieser Moment.",
+        "ar": "دقيقتان من عمل هادف تُظهران لدماغك أنك أكبر من هذه اللحظة.",
+        "ja": "意味のある作業を2分すると、この瞬間より自分の方が大きいと脳に伝わります。",
+        "zh-Hans": "两分钟有意义的工作，会让大脑看到你比此刻的冲动更强大。",
+        "ko": "2분간의 의미 있는 작업은 당신의 두뇌가 지금 순간보다 더 크다는 것을 보여줍니다."
+      }
+    }
+  ]
+}

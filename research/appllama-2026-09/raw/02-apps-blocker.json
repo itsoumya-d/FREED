@@ -1,0 +1,1117 @@
+{
+  "apps": [
+    {
+      "app_id": "1644737181",
+      "name": "BePresent: Screen Time Control",
+      "subtitle": "Block apps, focus & rewards",
+      "publisher": "Screen Detox Inc",
+      "categories": [
+        "Productivity",
+        "Health & Fitness"
+      ],
+      "rating": {
+        "average": 4.84,
+        "count": 61948
+      },
+      "revenue": {
+        "display": "$400K",
+        "monthly_usd": 400000.0,
+        "as_of": "2026-08-01"
+      },
+      "downloads": {
+        "display": "200K",
+        "value": 200000
+      },
+      "in_app_purchases": [
+        {
+          "title": "Annual (1-Week Free Trial)",
+          "duration": "Annual",
+          "price": "$59.99"
+        },
+        {
+          "title": "Annual (2-week Free Trial)",
+          "duration": "Annual",
+          "price": "$59.99"
+        },
+        {
+          "title": "Monthly",
+          "duration": "Monthly",
+          "price": "$3.99"
+        },
+        {
+          "title": "BePresent Pro (Annual)",
+          "duration": "Annual",
+          "price": "$24.99"
+        },
+        {
+          "title": "Annual (30-day Trial)",
+          "duration": "Annual",
+          "price": "$59.99"
+        },
+        {
+          "title": "BePresent Pro (Annual)",
+          "duration": "Annual",
+          "price": "$29.99"
+        },
+        {
+          "title": "BePresent Pro Family (iCloud) (Annual)",
+          "duration": "Annual",
+          "price": "$99.99"
+        },
+        {
+          "title": "Annual (1-Week Free Trial)",
+          "duration": "Annual",
+          "price": "$24.99"
+        },
+        {
+          "title": "Annual (3-Day Free Trial)",
+          "duration": "Annual",
+          "price": "$59.99"
+        },
+        {
+          "title": "Monthly (1-Week Free Trial)",
+          "duration": "Monthly",
+          "price": "$14.99"
+        }
+      ],
+      "launched": "2022-09-29",
+      "last_updated": "2026-08-28",
+      "screens_count": 74,
+      "videos_count": 2,
+      "flows": [
+        {
+          "name": "Welcome Screen",
+          "screens": 3
+        },
+        {
+          "name": "Onboarding",
+          "screens": 42
+        },
+        {
+          "name": "Paywall",
+          "screens": 2
+        },
+        {
+          "name": "Focus Session",
+          "screens": 5
+        },
+        {
+          "name": "Scheduled Sessions",
+          "screens": 4
+        },
+        {
+          "name": "App Lists",
+          "screens": 3
+        },
+        {
+          "name": "Home",
+          "screens": 3
+        },
+        {
+          "name": "Social",
+          "screens": 3
+        },
+        {
+          "name": "App Intention",
+          "screens": 2
+        },
+        {
+          "name": "Profile Settings",
+          "screens": 2
+        },
+        {
+          "name": "Rewards",
+          "screens": 2
+        },
+        {
+          "name": "Screen Time",
+          "screens": 2
+        },
+        {
+          "name": "Others",
+          "screens": 1
+        }
+      ]
+    },
+    {
+      "app_id": "866450515",
+      "name": "Forest: Focus for Productivity",
+      "subtitle": "Pomodoro Timer, ADHD & Study",
+      "publisher": "SEEKRTECH CO., LTD.",
+      "categories": [
+        "Productivity",
+        "Lifestyle"
+      ],
+      "rating": {
+        "average": 4.81,
+        "count": 49164
+      },
+      "revenue": {
+        "display": "$100K",
+        "monthly_usd": 100000.0,
+        "as_of": "2026-08-01"
+      },
+      "downloads": {
+        "display": "200K",
+        "value": 200000
+      },
+      "in_app_purchases": [
+        {
+          "title": "Box of Sunshine Elixir",
+          "duration": "Unknown",
+          "price": "$1.99"
+        },
+        {
+          "title": "Bottle of Sunshine Elixir",
+          "duration": "Unknown",
+          "price": "$0.99"
+        },
+        {
+          "title": "Annual (Early Bird)",
+          "duration": "Annual",
+          "price": "$35.99"
+        },
+        {
+          "title": "Small pot of Crystal",
+          "duration": "Unknown",
+          "price": "$4.99"
+        },
+        {
+          "title": "Large bag of Crystal",
+          "duration": "Unknown",
+          "price": "$10.99"
+        },
+        {
+          "title": "Monthly (Early Bird)",
+          "duration": "Monthly",
+          "price": "$5.99"
+        },
+        {
+          "title": "Shovelful of Crystal",
+          "duration": "Unknown",
+          "price": "$0.99"
+        },
+        {
+          "title": "Cartful of Crystal",
+          "duration": "Unknown",
+          "price": "$21.99"
+        },
+        {
+          "title": "Monthly (Early Bird)",
+          "duration": "Monthly",
+          "price": "$5.99"
+        },
+        {
+          "title": "Annual (Early Bird)",
+          "duration": "Annual",
+          "price": "$32.49"
+        }
+      ],
+      "launched": "2014-05-10",
+      "last_updated": "2026-08-26",
+      "screens_count": 41,
+      "videos_count": 3,
+      "flows": [
+        {
+          "name": "Welcome Screen",
+          "screens": 3
+        },
+        {
+          "name": "Onboarding",
+          "screens": 12
+        },
+        {
+          "name": "Paywall",
+          "screens": 1
+        },
+        {
+          "name": "Focus Timer",
+          "screens": 5
+        },
+        {
+          "name": "Statistics",
+          "screens": 5
+        },
+        {
+          "name": "Others",
+          "screens": 3
+        },
+        {
+          "name": "Settings",
+          "screens": 3
+        },
+        {
+          "name": "Store",
+          "screens": 3
+        },
+        {
+          "name": "Social",
+          "screens": 2
+        },
+        {
+          "name": "Achievements",
+          "screens": 1
+        },
+        {
+          "name": "Mindfulness Breathing Exercise",
+          "screens": 1
+        },
+        {
+          "name": "Navigation",
+          "screens": 1
+        },
+        {
+          "name": "Premium",
+          "screens": 1
+        }
+      ]
+    },
+    {
+      "app_id": "1497465230",
+      "name": "Opal: Screen Time Control",
+      "subtitle": "Focus, App Blocker & Timer",
+      "publisher": "Opal OS",
+      "categories": [
+        "Productivity",
+        "Health & Fitness"
+      ],
+      "rating": {
+        "average": 4.72,
+        "count": 87062
+      },
+      "revenue": {
+        "display": "$500K",
+        "monthly_usd": 500000.0,
+        "as_of": "2026-08-01"
+      },
+      "downloads": {
+        "display": "200K",
+        "value": 200000
+      },
+      "in_app_purchases": [
+        {
+          "title": "Yearly Plan",
+          "duration": "Annual",
+          "price": "$99.99"
+        },
+        {
+          "title": "Weekly Plan",
+          "duration": "Weekly",
+          "price": "$4.99"
+        },
+        {
+          "title": "Monthly Plan",
+          "duration": "Monthly",
+          "price": "$19.99"
+        },
+        {
+          "title": "Monthly Plan",
+          "duration": "Monthly",
+          "price": "$19.99"
+        },
+        {
+          "title": "Monthly Plan",
+          "duration": "Monthly",
+          "price": "$19.99"
+        },
+        {
+          "title": "Opal Student Weekly",
+          "duration": "Weekly",
+          "price": "$9.99"
+        },
+        {
+          "title": "Yearly Plan",
+          "duration": "Annual",
+          "price": "$99.99"
+        },
+        {
+          "title": "Opal Pro Subscription (Annual)",
+          "duration": "Annual",
+          "price": "$49.99"
+        },
+        {
+          "title": "Yearly Plan",
+          "duration": "Annual",
+          "price": "$99.99"
+        },
+        {
+          "title": "Weekly Plan",
+          "duration": "Weekly",
+          "price": "$9.99"
+        }
+      ],
+      "launched": "2020-12-15",
+      "last_updated": "2026-08-31",
+      "screens_count": 60,
+      "videos_count": 2,
+      "flows": [
+        {
+          "name": "Welcome Screen",
+          "screens": 3
+        },
+        {
+          "name": "Onboarding",
+          "screens": 29
+        },
+        {
+          "name": "Paywall",
+          "screens": 2
+        },
+        {
+          "name": "Focus Timer",
+          "screens": 12
+        },
+        {
+          "name": "App Management",
+          "screens": 5
+        },
+        {
+          "name": "Dashboard",
+          "screens": 4
+        },
+        {
+          "name": "Settings",
+          "screens": 3
+        },
+        {
+          "name": "Others",
+          "screens": 2
+        }
+      ]
+    },
+    {
+      "app_id": "6744338972",
+      "name": "Brainrot: Screen Time Control",
+      "subtitle": "App Blocker & Focus Timer",
+      "publisher": "Smolworks Inc",
+      "categories": [
+        "Productivity",
+        "Utilities"
+      ],
+      "rating": {
+        "average": 4.53,
+        "count": 21240
+      },
+      "revenue": {
+        "display": "$60K",
+        "monthly_usd": 60000.0,
+        "as_of": "2026-08-01"
+      },
+      "downloads": {
+        "display": "100K",
+        "value": 100000
+      },
+      "in_app_purchases": [
+        {
+          "title": "Unlimited (1 Week)",
+          "duration": "Weekly",
+          "price": "$4.99"
+        },
+        {
+          "title": "Brainrot (Full Access) (Annual)",
+          "duration": "Annual",
+          "price": "$24.99"
+        },
+        {
+          "title": "Brainrot (Full Access) (Annual)",
+          "duration": "Annual",
+          "price": "$29.99"
+        },
+        {
+          "title": "Unlimited (Annual)",
+          "duration": "Annual",
+          "price": "$49.99"
+        },
+        {
+          "title": "Unlimited (1 Year)",
+          "duration": "Annual",
+          "price": "$19.99"
+        },
+        {
+          "title": "Unlimited (1 Year)",
+          "duration": "Annual",
+          "price": "$19.99"
+        },
+        {
+          "title": "Unlimited (1 Month)",
+          "duration": "Monthly",
+          "price": "$3.99"
+        },
+        {
+          "title": "Unlimited (1 Year)",
+          "duration": "Annual",
+          "price": "$29.99"
+        },
+        {
+          "title": "Unlimited (1 Year)",
+          "duration": "Annual",
+          "price": "$29.99"
+        },
+        {
+          "title": "Unlimited (1 Year)",
+          "duration": "Annual",
+          "price": "$19.99"
+        }
+      ],
+      "launched": "2025-05-20",
+      "last_updated": "2026-07-16",
+      "screens_count": 50,
+      "videos_count": 2,
+      "flows": [
+        {
+          "name": "Welcome Screen",
+          "screens": 8
+        },
+        {
+          "name": "Onboarding",
+          "screens": 40
+        },
+        {
+          "name": "Paywall",
+          "screens": 2
+        }
+      ]
+    },
+    {
+      "app_id": "6648771147",
+      "name": "FocusFlight - Deepfocus Timer",
+      "subtitle": "Take off into deep focus",
+      "publisher": "Cement Planet LTD",
+      "categories": [
+        "Productivity"
+      ],
+      "rating": {
+        "average": 4.85,
+        "count": 9194
+      },
+      "revenue": {
+        "display": "$50K",
+        "monthly_usd": 50000.0,
+        "as_of": "2026-08-01"
+      },
+      "downloads": {
+        "display": "100K",
+        "value": 100000
+      },
+      "in_app_purchases": [
+        {
+          "title": "Annually",
+          "duration": "Annual",
+          "price": "$18.99"
+        },
+        {
+          "title": "Monthly",
+          "duration": "Monthly",
+          "price": "$3.99"
+        },
+        {
+          "title": "Lifetime",
+          "duration": "Unknown",
+          "price": "$19.99"
+        },
+        {
+          "title": "Lifetime",
+          "duration": "Unknown",
+          "price": "$33.99"
+        },
+        {
+          "title": "Lifetime",
+          "duration": "Unknown",
+          "price": "$18.99"
+        }
+      ],
+      "launched": "2025-01-21",
+      "last_updated": "2026-06-07",
+      "screens_count": 40,
+      "videos_count": 2,
+      "flows": [
+        {
+          "name": "Welcome Screen",
+          "screens": 2
+        },
+        {
+          "name": "Onboarding",
+          "screens": 26
+        },
+        {
+          "name": "Paywall",
+          "screens": 2
+        },
+        {
+          "name": "Flight Booking",
+          "screens": 4
+        },
+        {
+          "name": "Flight Dashboard",
+          "screens": 4
+        },
+        {
+          "name": "Settings",
+          "screens": 2
+        }
+      ]
+    },
+    {
+      "app_id": "1541027222",
+      "name": "ScreenZen- Screen Time Control",
+      "subtitle": "App blocker, limit screen time",
+      "publisher": "ScreenZen LLC",
+      "categories": [
+        "Productivity",
+        "Health & Fitness"
+      ],
+      "rating": {
+        "average": 4.86,
+        "count": 48714
+      },
+      "revenue": {
+        "display": "$20K",
+        "monthly_usd": 20000.0,
+        "as_of": "2026-08-01"
+      },
+      "downloads": {
+        "display": "90K",
+        "value": 90000
+      },
+      "in_app_purchases": [
+        {
+          "title": "Kind Tip",
+          "duration": "Unknown",
+          "price": "$5.00"
+        },
+        {
+          "title": "Generous Tip",
+          "duration": "Unknown",
+          "price": "$10.00"
+        },
+        {
+          "title": "Amazing Tip",
+          "duration": "Unknown",
+          "price": "$20.00"
+        },
+        {
+          "title": "Fantastic Tip",
+          "duration": "Unknown",
+          "price": "$40.00"
+        }
+      ],
+      "launched": "2021-07-16",
+      "last_updated": "2026-06-02",
+      "screens_count": 51,
+      "videos_count": 2,
+      "flows": [
+        {
+          "name": "Welcome Screen",
+          "screens": 2
+        },
+        {
+          "name": "Onboarding",
+          "screens": 28
+        },
+        {
+          "name": "Paywall",
+          "screens": 2
+        },
+        {
+          "name": "App Group Setup",
+          "screens": 7
+        },
+        {
+          "name": "Options Settings",
+          "screens": 5
+        },
+        {
+          "name": "Zen Screen",
+          "screens": 3
+        },
+        {
+          "name": "Help & Support",
+          "screens": 2
+        },
+        {
+          "name": "Others",
+          "screens": 2
+        }
+      ]
+    },
+    {
+      "app_id": "1532875441",
+      "name": "one sec | screen time + focus",
+      "subtitle": "App & Website Limit, Blocker",
+      "publisher": "riedel.wtf apps S.L.",
+      "categories": [
+        "Productivity",
+        "Health & Fitness"
+      ],
+      "rating": {
+        "average": 4.83,
+        "count": 23450
+      },
+      "revenue": {
+        "display": "$80K",
+        "monthly_usd": 80000.0,
+        "as_of": "2026-08-01"
+      },
+      "downloads": {
+        "display": "50K",
+        "value": 50000
+      },
+      "in_app_purchases": [
+        {
+          "title": "one sec pro (1 Year)",
+          "duration": "Annual",
+          "price": "$19.99"
+        },
+        {
+          "title": "one sec pro | Family Plan (1 Month)",
+          "duration": "Monthly",
+          "price": "$4.99"
+        },
+        {
+          "title": "one sec pro | Family Plan (1 Year)",
+          "duration": "Annual",
+          "price": "$29.99"
+        },
+        {
+          "title": "one sec pro | Family Lifetime",
+          "duration": "Unknown",
+          "price": "$149.00"
+        },
+        {
+          "title": "one sec pro (1 Month)",
+          "duration": "Monthly",
+          "price": "$2.99"
+        },
+        {
+          "title": "one sec pro | Lifetime",
+          "duration": "Unknown",
+          "price": "$99.99"
+        }
+      ],
+      "launched": "2020-09-29",
+      "last_updated": "2026-08-30",
+      "screens_count": 36,
+      "videos_count": 2,
+      "flows": [
+        {
+          "name": "Welcome Screen",
+          "screens": 3
+        },
+        {
+          "name": "Onboarding",
+          "screens": 3
+        },
+        {
+          "name": "Paywall",
+          "screens": 3
+        },
+        {
+          "name": "Safari Setup Tutorial",
+          "screens": 6
+        },
+        {
+          "name": "Settings",
+          "screens": 5
+        },
+        {
+          "name": "Tips",
+          "screens": 5
+        },
+        {
+          "name": "Blocking",
+          "screens": 4
+        },
+        {
+          "name": "Intervention Setup",
+          "screens": 4
+        },
+        {
+          "name": "Dashboard",
+          "screens": 3
+        }
+      ]
+    },
+    {
+      "app_id": "1515753232",
+      "name": "AppBlock: Block Apps & Website",
+      "subtitle": "App Blocker. Limit Screen Time",
+      "publisher": "MobileSoft s.r.o.",
+      "categories": [
+        "Productivity",
+        "Health & Fitness"
+      ],
+      "rating": {
+        "average": 4.59,
+        "count": 6576
+      },
+      "revenue": {
+        "display": "$100K",
+        "monthly_usd": 100000.0,
+        "as_of": "2026-08-01"
+      },
+      "downloads": {
+        "display": "40K",
+        "value": 40000
+      },
+      "in_app_purchases": [
+        {
+          "title": "Premium Yearly",
+          "duration": "Annual",
+          "price": "$29.99"
+        },
+        {
+          "title": "Premium Monthly",
+          "duration": "Monthly",
+          "price": "$4.99"
+        },
+        {
+          "title": "Premium Yearly",
+          "duration": "Annual",
+          "price": "$29.99"
+        },
+        {
+          "title": "Premium Yearly",
+          "duration": "Annual",
+          "price": "$29.99"
+        },
+        {
+          "title": "Premium Yearly",
+          "duration": "Annual",
+          "price": "$44.99"
+        },
+        {
+          "title": "Premium Yearly",
+          "duration": "Annual",
+          "price": "$29.99"
+        },
+        {
+          "title": "Premium Yearly",
+          "duration": "Annual",
+          "price": "$59.99"
+        },
+        {
+          "title": "Premium Monthly",
+          "duration": "Monthly",
+          "price": "$14.99"
+        },
+        {
+          "title": "AppBlock Premium (Annual)",
+          "duration": "Annual",
+          "price": "$29.99"
+        },
+        {
+          "title": "Premium Lifetime",
+          "duration": "Unknown",
+          "price": "$89.99"
+        }
+      ],
+      "launched": "2021-08-17",
+      "last_updated": "2026-09-02",
+      "screens_count": 105,
+      "videos_count": 2,
+      "flows": [
+        {
+          "name": "Welcome Screen",
+          "screens": 3
+        },
+        {
+          "name": "Onboarding",
+          "screens": 38
+        },
+        {
+          "name": "Paywall",
+          "screens": 3
+        },
+        {
+          "name": "Strict Mode",
+          "screens": 16
+        },
+        {
+          "name": "Quick Block Setup",
+          "screens": 10
+        },
+        {
+          "name": "Schedule Templates",
+          "screens": 8
+        },
+        {
+          "name": "Profile & Settings",
+          "screens": 7
+        },
+        {
+          "name": "Insights",
+          "screens": 5
+        },
+        {
+          "name": "Schedule Creation",
+          "screens": 5
+        },
+        {
+          "name": "Vacation Mode",
+          "screens": 3
+        },
+        {
+          "name": "Active Time Setup",
+          "screens": 2
+        },
+        {
+          "name": "Focus Session",
+          "screens": 2
+        },
+        {
+          "name": "Location Blocking",
+          "screens": 2
+        },
+        {
+          "name": "Others",
+          "screens": 1
+        }
+      ]
+    },
+    {
+      "app_id": "1570856853",
+      "name": "Blank Spaces Launcher",
+      "subtitle": "Build a Minimalist Dumb Phone",
+      "publisher": "Ecstasis LLC",
+      "categories": [
+        "Productivity",
+        "Utilities"
+      ],
+      "rating": {
+        "average": 4.63,
+        "count": 8241
+      },
+      "revenue": {
+        "display": "$200K",
+        "monthly_usd": 200000.0,
+        "as_of": "2026-08-01"
+      },
+      "downloads": {
+        "display": "40K",
+        "value": 40000
+      },
+      "in_app_purchases": [
+        {
+          "title": "1 Month",
+          "duration": "Monthly",
+          "price": "$3.99"
+        },
+        {
+          "title": "1 Week",
+          "duration": "Weekly",
+          "price": "$1.99"
+        },
+        {
+          "title": "Blank Lifetime Subscription",
+          "duration": "Unknown",
+          "price": "$23.99"
+        },
+        {
+          "title": "Yearly Plan",
+          "duration": "Annual",
+          "price": "$19.99"
+        },
+        {
+          "title": "Lifetime Plan",
+          "duration": "Unknown",
+          "price": "$29.99"
+        },
+        {
+          "title": "12 Months",
+          "duration": "Annual",
+          "price": "$17.99"
+        },
+        {
+          "title": "Special Offer (1 Year)",
+          "duration": "Annual",
+          "price": "$18.99"
+        },
+        {
+          "title": "Monthly Plan",
+          "duration": "Monthly",
+          "price": "$7.99"
+        },
+        {
+          "title": "1 Month",
+          "duration": "Monthly",
+          "price": "$3.99"
+        },
+        {
+          "title": "Blank Lifetime Subscription",
+          "duration": "Unknown",
+          "price": "$24.99"
+        }
+      ],
+      "launched": "2021-06-30",
+      "last_updated": "2026-08-26",
+      "screens_count": 31,
+      "videos_count": 2,
+      "flows": [
+        {
+          "name": "Welcome Screen",
+          "screens": 3
+        },
+        {
+          "name": "Onboarding",
+          "screens": 10
+        },
+        {
+          "name": "Paywall",
+          "screens": 1
+        },
+        {
+          "name": "Time Insights",
+          "screens": 6
+        },
+        {
+          "name": "App Setup",
+          "screens": 5
+        },
+        {
+          "name": "Distractions",
+          "screens": 3
+        },
+        {
+          "name": "Blank Spaces",
+          "screens": 2
+        },
+        {
+          "name": "Others",
+          "screens": 1
+        }
+      ]
+    },
+    {
+      "app_id": "6742278016",
+      "name": "Focus Friend, by Hank Green",
+      "subtitle": "ADHD-friendly Focus Timer",
+      "publisher": "B-Tech Consulting Group LLC",
+      "categories": [
+        "Productivity",
+        "Education"
+      ],
+      "rating": {
+        "average": 4.77,
+        "count": 5675
+      },
+      "revenue": {
+        "display": "$100K",
+        "monthly_usd": 100000.0,
+        "as_of": "2026-08-01"
+      },
+      "downloads": {
+        "display": "30K",
+        "value": 30000
+      },
+      "in_app_purchases": [
+        {
+          "title": "Focus Friend Pro Monthly",
+          "duration": "Monthly",
+          "price": "$3.99"
+        },
+        {
+          "title": "Focus Friend Pro Yearly",
+          "duration": "Annual",
+          "price": "$19.99"
+        },
+        {
+          "title": "Lifetime Focus Friend Pro",
+          "duration": "Unknown",
+          "price": "$39.99"
+        },
+        {
+          "title": "Kitt-ney Bean",
+          "duration": "Unknown",
+          "price": "$4.99"
+        },
+        {
+          "title": "Blue Jello Bean",
+          "duration": "Unknown",
+          "price": "$2.99"
+        },
+        {
+          "title": "Base Bean Pack",
+          "duration": "Unknown",
+          "price": "$3.99"
+        },
+        {
+          "title": "Jelly Bean Pack",
+          "duration": "Unknown",
+          "price": "$5.99"
+        },
+        {
+          "title": "Focus Friend Pro Welcome Offer",
+          "duration": "Unknown",
+          "price": "$29.99"
+        },
+        {
+          "title": "Pointed Kittney Bean",
+          "duration": "Unknown",
+          "price": "$4.99"
+        },
+        {
+          "title": "Tabby Kittney Bean",
+          "duration": "Unknown",
+          "price": "$4.99"
+        }
+      ],
+      "launched": "2025-07-23",
+      "last_updated": "2026-08-24",
+      "screens_count": 40,
+      "videos_count": 2,
+      "flows": [
+        {
+          "name": "Welcome Screen",
+          "screens": 2
+        },
+        {
+          "name": "Onboarding",
+          "screens": 19
+        },
+        {
+          "name": "Paywall",
+          "screens": 1
+        },
+        {
+          "name": "Focus Session",
+          "screens": 5
+        },
+        {
+          "name": "Decorating",
+          "screens": 3
+        },
+        {
+          "name": "Settings",
+          "screens": 3
+        },
+        {
+          "name": "Bean Editing",
+          "screens": 2
+        },
+        {
+          "name": "Shop",
+          "screens": 2
+        },
+        {
+          "name": "Room",
+          "screens": 1
+        },
+        {
+          "name": "Stats",
+          "screens": 1
+        },
+        {
+          "name": "Subscription",
+          "screens": 1
+        }
+      ]
+    }
+  ],
+  "total": 19,
+  "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJzZWFyY2hfYXBwcyIsInEiOiJlZjI4ZGZkZjIxZTQ1ZjE2ZGE5M2MwMjciLCJvIjoxMCwiaHciOjIwLCJleHAiOjE3OTAzODUzOTh9.idbQKA5t-5rQthW2gL245dWpKKc",
+  "hint": "Pass next_cursor to get the next page. Use get_app for full detail, list_app_screens for a specific app's screens in journey order.",
+  "credits": {
+    "spent": 1,
+    "remaining_this_month": 1004
+  }
+}

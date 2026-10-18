@@ -1,0 +1,64 @@
+appId: app.freed.recovery
+name: backup-local
+tags:
+  - smoke
+  - local-write
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///profile"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-profile"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Encrypted Backup"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Encrypted Backup"
+- scrollUntilVisible:
+    element:
+      text: "Encrypted Backup"
+    direction: DOWN
+    timeout: 10000
+- scrollUntilVisible:
+    element:
+      id: "backup-passphrase"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "backup-passphrase"
+- inputText: "disposable-fixture-passphrase-2026"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      text: "Create"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Create"
+- extendedWaitUntil:
+    visible: "Encrypted backup created\\."
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      id: "backup-ciphertext"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "backup-ciphertext"
+- eraseText
+- inputText: "invalid-fixture-ciphertext"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      text: "Restore"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Restore"
+- assertVisible: ".*backup.*|.*Backup.*|.*package.*|.*invalid.*"
+- takeScreenshot: "backup-local"

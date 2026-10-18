@@ -1,0 +1,46 @@
+{
+  "entries": [],
+  "semantic": {
+    "en": {
+      "appEditor.earnedWindow": "Earned window",
+      "appEditor.dailyFlow": "Use {{dailyMinutes}} minutes without a challenge. After the allowance runs out, an activity can earn a {{breakMinutes}}-minute app break within your daily extra-time cap."
+    },
+    "hi": {
+      "appEditor.earnedWindow": "कमाया गया समय",
+      "appEditor.dailyFlow": "बिना चुनौती के {{dailyMinutes}} मिनट इस्तेमाल करें। यह समय खत्म होने के बाद, कोई गतिविधि आपके दैनिक अतिरिक्त समय की सीमा में {{breakMinutes}} मिनट का ऐप ब्रेक दिला सकती है।"
+    },
+    "es": {
+      "appEditor.earnedWindow": "Tiempo ganado",
+      "appEditor.dailyFlow": "Usa {{dailyMinutes}} minutos sin un reto. Cuando se agoten, una actividad puede darte una pausa de {{breakMinutes}} minutos en la app, dentro de tu límite diario de tiempo extra."
+    },
+    "pt": {
+      "appEditor.earnedWindow": "Tempo conquistado",
+      "appEditor.dailyFlow": "Use {{dailyMinutes}} minutos sem um desafio. Quando terminarem, uma atividade pode liberar uma pausa de {{breakMinutes}} minutos no app, dentro do seu limite diário de tempo extra."
+    },
+    "fr": {
+      "appEditor.earnedWindow": "Temps gagné",
+      "appEditor.dailyFlow": "Profitez de {{dailyMinutes}} minutes sans défi. Une fois ce temps écoulé, une activité peut vous donner une pause de {{breakMinutes}} minutes dans l’app, dans la limite de votre temps supplémentaire quotidien."
+    },
+    "de": {
+      "appEditor.earnedWindow": "Verdiente Zeit",
+      "appEditor.dailyFlow": "Nutze {{dailyMinutes}} Minuten ohne Aufgabe. Danach kann dir eine Aktivität eine {{breakMinutes}}-minütige App-Pause innerhalb deines täglichen Zusatzzeitlimits ermöglichen."
+    },
+    "ar": {
+      "appEditor.earnedWindow": "الوقت المكتسب",
+      "appEditor.dailyFlow": "استخدم {{dailyMinutes}} دقيقة دون تحدٍ. بعد نفاد المدة، يمكن لنشاط أن يمنحك استراحة في التطبيق لمدة {{breakMinutes}} دقيقة ضمن حد الوقت الإضافي اليومي."
+    },
+    "ja": {
+      "appEditor.earnedWindow": "獲得できる時間",
+      "appEditor.dailyFlow": "最初の{{dailyMinutes}}分はチャレンジなしで使えます。上限に達した後は、アクティビティを完了すると、1日の追加時間の上限内で{{breakMinutes}}分間アプリを使えます。"
+    },
+    "ko": {
+      "appEditor.earnedWindow": "획득할 이용 시간",
+      "appEditor.dailyFlow": "챌린지 없이 {{dailyMinutes}}분을 사용하세요. 허용 시간이 끝나면 활동을 완료해 하루 추가 시간 한도 내에서 앱을 {{breakMinutes}}분 더 사용할 수 있어요."
+    },
+    "zh-Hans": {
+      "appEditor.earnedWindow": "可赚取的时长",
+      "appEditor.dailyFlow": "先使用{{dailyMinutes}}分钟，无需挑战。额度用完后，完成活动可在每日额外时长上限内获得{{breakMinutes}}分钟的应用休息时间。"
+    }
+  },
+  "revision": "2026-10-11-compact-editor"
+}

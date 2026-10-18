@@ -281,9 +281,10 @@ function captureHelperNotes(spec) {
       "Explicit store/ad CLI flags override release env-file values, `releaseEnvFileLoaded=true` records the preload, and helper artifacts must still omit raw receipts, Play tokens, customer IDs, store credentials, and ad-network secrets."
     ],
     "ai-backend-smoke-validation": [
-      "`--release-env-file` preloads non-secret coach endpoint, challenge endpoint, optional retention endpoint, and model context into the sanitized capture manifest.",
-      "`ai-backend-smoke-evidence-fill-template.json` mirrors the final evidence shape with configured non-secret context, but keeps artifacts/counts blank and checks false until real deployed-endpoint QA fills them.",
-      "Explicit AI helper CLI flags override release env-file values, `releaseEnvFileLoaded=true` records the preload, and helper artifacts must still omit raw prompts, transcripts, private notes, sensitive URLs/domains, unredacted model output, and provider API keys."
+      "`--release-env-file` loads safe capture context; legacy coach/challenge/retention endpoint options are inactive and never send recovery data.",
+      "`ai-backend-smoke-evidence-fill-template.json` uses the current Google CLARA v2 schema with checks false until checksummed signed native and attached deployment/provider captures prove every required claim.",
+      "Capture bindings must match the reviewed current signed binary, frozen source inventory and compiled deployment revision. Keep prompts, responses, journal, photos, browsing/native signals and all tokens or AI credentials out of artifacts."
+
     ]
   };
   return notes[spec.id] ?? [];

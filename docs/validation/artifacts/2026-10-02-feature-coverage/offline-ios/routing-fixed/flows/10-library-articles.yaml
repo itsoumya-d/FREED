@@ -1,0 +1,60 @@
+appId: app.freed.recovery
+name: library-articles
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///today/library"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-library"
+    timeout: 15000
+- assertVisible: "Library"
+- scrollUntilVisible:
+    element:
+      text: "How urges peak and fade"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "How urges peak and fade"
+- assertVisible:
+    id: "screen-article"
+- tapOn: "Back to Library"
+- assertVisible:
+    id: "screen-library"
+- scrollUntilVisible:
+    element:
+      text: "Build identity, not just willpower"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Build identity, not just willpower"
+- assertVisible:
+    id: "screen-article"
+- tapOn: "Back to Library"
+- scrollUntilVisible:
+    element:
+      text: "Why movement helps cravings"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Why movement helps cravings"
+- assertVisible:
+    id: "screen-article"
+- tapOn: "Back to Library"
+- scrollUntilVisible:
+    element:
+      text: "Make relapse data useful"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Make relapse data useful"
+- assertVisible:
+    id: "screen-article"
+- tapOn: "Back to Library"
+- tapOn: "Back to Today"
+- assertVisible:
+    id: "screen-main-today"
+- takeScreenshot: "library-articles"

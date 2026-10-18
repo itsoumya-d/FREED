@@ -1,0 +1,16 @@
+Executable=/Users/soumyadebnath16/Library/Android/sdk/emulator/qemu/darwin-aarch64/qemu-system-aarch64-headless
+Identifier=qemu-system-aarch64-headless-555549444c4c441555553144a1d356bd0670f55d
+Format=Mach-O thin (arm64)
+CodeDirectory v=20400 size=88190 flags=0x2(adhoc) hashes=2749+2 location=embedded
+Hash type=sha256 size=32
+CandidateCDHash sha256=439efddb7781ef67f2c4b727d47cc6f1e7ee41c6
+CandidateCDHashFull sha256=439efddb7781ef67f2c4b727d47cc6f1e7ee41c635532cf6306134fcf76c44ff
+Hash choices=sha256
+CMSDigest=439efddb7781ef67f2c4b727d47cc6f1e7ee41c635532cf6306134fcf76c44ff
+CMSDigestType=2
+CDHash=439efddb7781ef67f2c4b727d47cc6f1e7ee41c6
+Signature=adhoc
+Info.plist=not bound
+TeamIdentifier=not set
+Sealed Resources=none
+Internal requirements count=0 size=12

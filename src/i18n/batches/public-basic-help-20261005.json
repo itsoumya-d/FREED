@@ -1,0 +1,172 @@
+{
+  "entries": [
+    {
+      "source": "Help / SOS",
+      "translations": {
+        "hi": "मदद / SOS",
+        "es": "Ayuda / SOS",
+        "pt": "Ajuda / SOS",
+        "fr": "Aide / SOS",
+        "de": "Hilfe / SOS",
+        "ar": "مساعدة / SOS",
+        "ja": "ヘルプ / SOS",
+        "ko": "도움 / SOS",
+        "zh-Hans": "帮助 / SOS"
+      }
+    },
+    {
+      "source": "Basic help",
+      "translations": {
+        "hi": "बुनियादी मदद",
+        "es": "Ayuda básica",
+        "pt": "Ajuda básica",
+        "fr": "Aide de base",
+        "de": "Einfache Hilfe",
+        "ar": "مساعدة أساسية",
+        "ja": "基本のサポート",
+        "ko": "기본 도움",
+        "zh-Hans": "基础帮助"
+      }
+    },
+    {
+      "source": "Close basic help",
+      "translations": {
+        "hi": "बुनियादी मदद बंद करें",
+        "es": "Cerrar ayuda básica",
+        "pt": "Fechar ajuda básica",
+        "fr": "Fermer l’aide de base",
+        "de": "Einfache Hilfe schließen",
+        "ar": "إغلاق المساعدة الأساسية",
+        "ja": "基本のサポートを閉じる",
+        "ko": "기본 도움 닫기",
+        "zh-Hans": "关闭基础帮助"
+      }
+    },
+    {
+      "source": "Free, ad-free support. Nothing from this exercise is saved.",
+      "translations": {
+        "hi": "मुफ़्त, विज्ञापन-मुक्त सहायता। इस अभ्यास का कुछ भी सहेजा नहीं जाता।",
+        "es": "Apoyo gratuito y sin anuncios. No se guarda nada de este ejercicio.",
+        "pt": "Apoio gratuito e sem anúncios. Nada deste exercício é salvo.",
+        "fr": "Soutien gratuit et sans publicité. Rien de cet exercice n’est enregistré.",
+        "de": "Kostenlose Hilfe ohne Werbung. Nichts aus dieser Übung wird gespeichert.",
+        "ar": "دعم مجاني بلا إعلانات. لا يُحفظ أي شيء من هذا التمرين.",
+        "ja": "無料で広告のないサポートです。この練習の内容は保存されません。",
+        "ko": "무료이며 광고가 없는 도움입니다. 이 연습의 내용은 저장되지 않습니다.",
+        "zh-Hans": "免费且无广告的支持。此练习的任何内容都不会保存。"
+      }
+    },
+    {
+      "source": "Breathe gently at a comfortable pace, without holding your breath.",
+      "translations": {
+        "hi": "साँस रोके बिना, आरामदायक गति से धीरे-धीरे साँस लें।",
+        "es": "Respira suavemente a un ritmo cómodo, sin contener la respiración.",
+        "pt": "Respire suavemente em um ritmo confortável, sem prender a respiração.",
+        "fr": "Respirez doucement à un rythme confortable, sans retenir votre souffle.",
+        "de": "Atme sanft in einem angenehmen Tempo, ohne die Luft anzuhalten.",
+        "ar": "تنفّس بلطف بوتيرة مريحة، دون حبس أنفاسك.",
+        "ja": "息を止めず、心地よいペースでゆっくり呼吸しましょう。",
+        "ko": "숨을 참지 말고 편안한 속도로 부드럽게 호흡하세요.",
+        "zh-Hans": "以舒适的节奏轻轻呼吸，不用屏住呼吸。"
+      }
+    },
+    {
+      "source": "Breathe in",
+      "translations": {
+        "hi": "साँस अंदर लें",
+        "es": "Inhala",
+        "pt": "Inspire",
+        "fr": "Inspirez",
+        "de": "Einatmen",
+        "ar": "شهيق",
+        "ja": "息を吸う",
+        "ko": "들이쉬기",
+        "zh-Hans": "吸气"
+      }
+    },
+    {
+      "source": "Breathe out",
+      "translations": {
+        "hi": "साँस बाहर छोड़ें",
+        "es": "Exhala",
+        "pt": "Expire",
+        "fr": "Expirez",
+        "de": "Ausatmen",
+        "ar": "زفير",
+        "ja": "息を吐く",
+        "ko": "내쉬기",
+        "zh-Hans": "呼气"
+      }
+    },
+    {
+      "source": "Paused",
+      "translations": {
+        "hi": "रुका हुआ",
+        "es": "En pausa",
+        "pt": "Em pausa",
+        "fr": "En pause",
+        "de": "Pausiert",
+        "ar": "متوقف مؤقتًا",
+        "ja": "一時停止中",
+        "ko": "일시 정지됨",
+        "zh-Hans": "已暂停"
+      }
+    },
+    {
+      "source": "Pause breathing",
+      "translations": {
+        "hi": "साँस का अभ्यास रोकें",
+        "es": "Pausar respiración",
+        "pt": "Pausar respiração",
+        "fr": "Mettre la respiration en pause",
+        "de": "Atmung pausieren",
+        "ar": "إيقاف التنفس مؤقتًا",
+        "ja": "呼吸を一時停止",
+        "ko": "호흡 일시 정지",
+        "zh-Hans": "暂停呼吸"
+      }
+    },
+    {
+      "source": "Begin breathing",
+      "translations": {
+        "hi": "साँस का अभ्यास शुरू करें",
+        "es": "Comenzar respiración",
+        "pt": "Começar respiração",
+        "fr": "Commencer la respiration",
+        "de": "Atmung beginnen",
+        "ar": "بدء التنفس",
+        "ja": "呼吸を始める",
+        "ko": "호흡 시작",
+        "zh-Hans": "开始呼吸"
+      }
+    },
+    {
+      "source": "If breathing feels uncomfortable, stop. Notice three things you can see and feel your feet on the floor.",
+      "translations": {
+        "hi": "साँस लेने में असुविधा हो तो रुक जाएँ। तीन चीज़ों को देखें और अपने पैरों को फ़र्श पर महसूस करें।",
+        "es": "Si respirar así te resulta incómodo, detente. Observa tres cosas que puedas ver y siente los pies en el suelo.",
+        "pt": "Se respirar assim causar desconforto, pare. Observe três coisas que você consegue ver e sinta os pés no chão.",
+        "fr": "Si cette respiration est inconfortable, arrêtez. Observez trois choses que vous voyez et sentez vos pieds sur le sol.",
+        "de": "Wenn diese Atmung unangenehm ist, höre auf. Sieh dir drei Dinge an und spüre deine Füße auf dem Boden.",
+        "ar": "إذا كان هذا التنفس غير مريح، توقف. لاحظ ثلاثة أشياء تراها واشعر بقدميك على الأرض.",
+        "ja": "呼吸がつらいと感じたら、やめてください。見えるものを3つ見つけ、足が床に触れている感覚を確かめましょう。",
+        "ko": "호흡이 불편하면 멈추세요. 눈에 보이는 세 가지를 살펴보고 발이 바닥에 닿는 감각을 느껴 보세요.",
+        "zh-Hans": "如果呼吸让你感到不舒服，请停下来。留意眼前的三样东西，感受双脚与地面的接触。"
+      }
+    },
+    {
+      "source": "You can leave at any time.",
+      "translations": {
+        "hi": "आप कभी भी बाहर जा सकते हैं।",
+        "es": "Puedes salir cuando quieras.",
+        "pt": "Você pode sair a qualquer momento.",
+        "fr": "Vous pouvez partir à tout moment.",
+        "de": "Du kannst jederzeit gehen.",
+        "ar": "يمكنك المغادرة في أي وقت.",
+        "ja": "いつでも閉じられます。",
+        "ko": "언제든 나갈 수 있습니다.",
+        "zh-Hans": "你可以随时离开。"
+      }
+    }
+  ]
+}

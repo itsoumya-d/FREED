@@ -1,0 +1,45 @@
+{
+  "capturedAt": "2026-10-03T02:07:07.467073+00:00",
+  "apkPath": "/private/tmp/freed-premium-android-qa-20261003/FREED-premium-debug-arm64-2026-10-03.apk",
+  "apkSha256": "9357940f087324a66093be1ca2f88886cfc47e232dfce50dfbb73d905a08e1d6",
+  "apkSizeBytes": 133450336,
+  "dexFiles": [
+    "classes.dex",
+    "classes10.dex",
+    "classes2.dex",
+    "classes4.dex",
+    "classes5.dex",
+    "classes6.dex",
+    "classes7.dex",
+    "classes8.dex",
+    "classes9.dex",
+    "classes3.dex"
+  ],
+  "definedClassCount": 61394,
+  "definedClasses": {
+    "Lapp/freed/recovery/MainApplication;": true,
+    "Lapp/freed/protection/FreedVpnService;": true,
+    "Lapp/freed/protection/FreedProtectionModule;": true,
+    "Lapp/freed/protection/FreedEncryptedDnsConfig;": true,
+    "Lapp/freed/protection/FreedEncryptedDnsPolicy;": true,
+    "Lapp/freed/protection/FreedEncryptedDnsUpstream;": true,
+    "Lapp/freed/protection/FreedDohPolicy;": true,
+    "Lapp/freed/protection/FreedProtectedSocketFactory;": true,
+    "Lexpo/modules/ui/ExpoUIModule;": true,
+    "Lexpo/modules/localization/LocalizationModule;": true,
+    "Lexpo/modules/kotlin/AppContext;": true,
+    "Lokhttp3/OkHttpClient;": true
+  },
+  "nativeAbis": [
+    "arm64-v8a"
+  ],
+  "okHttpVersionLiterals": [
+    "4.12.0"
+  ],
+  "hasLocaleConfigResource": true,
+  "embeddedBundleSha256": "58738be36d2f6446b690741e3759bed9e074f9b63fe347b2ba137e7af8ef6a3e",
+  "expectedQaBundleSha256": "58738be36d2f6446b690741e3759bed9e074f9b63fe347b2ba137e7af8ef6a3e",
+  "embeddedBundleMatchesQaBundle": true,
+  "boundary": "APK bytes and defined DEX classes only; no runtime, UI, VPN, DNS, or backend execution.",
+  "result": "pass"
+}

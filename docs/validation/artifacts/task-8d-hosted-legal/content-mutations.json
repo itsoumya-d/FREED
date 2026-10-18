@@ -1,0 +1,12 @@
+{
+  "result": "pass",
+  "pages": [
+    "privacy",
+    "support",
+    "account-deletion",
+    "terms"
+  ],
+  "tokenMutations": 93,
+  "independentDisclosureCases": 36,
+  "scope": "Scoped generated-output disclosure/token rejection; independently authored omissions/contradictions; no runtime proof."
+}

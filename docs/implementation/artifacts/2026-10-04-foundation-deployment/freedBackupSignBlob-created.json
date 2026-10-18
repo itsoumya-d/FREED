@@ -1,0 +1,13 @@
+{
+  "httpStatus": 200,
+  "body": {
+    "name": "projects/freed-7d5ee/roles/freedBackupSignBlob",
+    "title": "FREED backup URL signer",
+    "description": "Signs encrypted backup Storage URLs; no token minting permissions.",
+    "includedPermissions": [
+      "iam.serviceAccounts.signBlob"
+    ],
+    "stage": "GA",
+    "etag": "BwZdADvqJ0M="
+  }
+}

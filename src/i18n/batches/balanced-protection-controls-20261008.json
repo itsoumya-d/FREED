@@ -1,0 +1,480 @@
+{
+  "entries": [
+    {
+      "source": "Adult website protection",
+      "translations": {
+        "hi": "वयस्क वेबसाइटों से सुरक्षा",
+        "es": "Protección frente a sitios para adultos",
+        "pt": "Proteção contra sites adultos",
+        "fr": "Protection contre les sites pour adultes",
+        "de": "Schutz vor Erwachsenenwebsites",
+        "ar": "الحماية من مواقع البالغين",
+        "ja": "成人向けサイトからの保護",
+        "ko": "성인 웹사이트 보호",
+        "zh-Hans": "成人网站保护"
+      }
+    },
+    {
+      "source": "Allow Screen Time",
+      "translations": {
+        "hi": "Screen Time की अनुमति दें",
+        "es": "Permitir Tiempo de uso",
+        "pt": "Permitir Tempo de Uso",
+        "fr": "Autoriser Temps d’écran",
+        "de": "Bildschirmzeit erlauben",
+        "ar": "السماح بمدة استخدام الجهاز",
+        "ja": "スクリーンタイムを許可",
+        "ko": "Screen Time 허용",
+        "zh-Hans": "允许屏幕使用时间"
+      }
+    },
+    {
+      "source": "Apply adult website policy",
+      "translations": {
+        "hi": "वयस्क वेबसाइटों के लिए फ़िल्टर लागू करें",
+        "es": "Aplicar el filtro para sitios de adultos",
+        "pt": "Aplicar o filtro para sites adultos",
+        "fr": "Appliquer le filtre pour les sites pour adultes",
+        "de": "Filter für Erwachsenenwebsites anwenden",
+        "ar": "تطبيق فلتر مواقع البالغين",
+        "ja": "成人向けサイトのフィルターを適用",
+        "ko": "성인 웹사이트 필터 적용",
+        "zh-Hans": "应用成人网站过滤规则"
+      }
+    },
+    {
+      "source": "Check configuration",
+      "translations": {
+        "hi": "कॉन्फ़िगरेशन जाँचें",
+        "es": "Comprobar configuración",
+        "pt": "Verificar configuração",
+        "fr": "Vérifier la configuration",
+        "de": "Konfiguration prüfen",
+        "ar": "فحص الإعدادات",
+        "ja": "設定をチェック",
+        "ko": "설정 점검",
+        "zh-Hans": "检查配置"
+      }
+    },
+    {
+      "source": "Check that adult sites are blocked and ordinary sites open.",
+      "translations": {
+        "hi": "जाँचें कि वयस्क वेबसाइटें ब्लॉक हैं और सामान्य वेबसाइटें खुल रही हैं।",
+        "es": "Comprueba que los sitios de adultos estén bloqueados y que los sitios normales se abran.",
+        "pt": "Verifique se os sites adultos estão bloqueados e se os sites comuns abrem.",
+        "fr": "Vérifiez que les sites pour adultes sont bloqués et que les sites ordinaires s’ouvrent.",
+        "de": "Prüfe, ob Erwachsenenwebsites blockiert sind und normale Websites sich öffnen lassen.",
+        "ar": "تحقّق من حظر مواقع البالغين ومن فتح المواقع العادية.",
+        "ja": "成人向けサイトがブロックされ、通常のサイトが開くことを確認してください。",
+        "ko": "성인 사이트가 차단되고 일반 사이트가 열리는지 확인하세요.",
+        "zh-Hans": "确认成人网站已被拦截，普通网站可以打开。"
+      }
+    },
+    {
+      "source": "Choose setup to begin adult website protection.",
+      "translations": {
+        "hi": "वयस्क वेबसाइटों से सुरक्षा शुरू करने के लिए सेटअप चुनें।",
+        "es": "Elige la configuración para empezar a protegerte de los sitios de adultos.",
+        "pt": "Escolha a configuração para começar a proteção contra sites adultos.",
+        "fr": "Choisissez la configuration pour commencer la protection contre les sites pour adultes.",
+        "de": "Wähle die Einrichtung, um den Schutz vor Erwachsenenwebsites zu beginnen.",
+        "ar": "اختر الإعداد لبدء الحماية من مواقع البالغين.",
+        "ja": "成人向けサイトからの保護を始めるには、設定を選んでください。",
+        "ko": "성인 웹사이트 보호를 시작하려면 설정을 선택하세요.",
+        "zh-Hans": "选择设置以开始启用成人网站防护。"
+      }
+    },
+    {
+      "source": "No group apps selected. Add apps to begin.",
+      "translations": {
+        "hi": "किसी समूह के लिए ऐप नहीं चुने गए हैं। शुरू करने के लिए ऐप जोड़ें।",
+        "es": "No hay apps seleccionadas en los grupos. Añade apps para empezar.",
+        "pt": "Nenhum app selecionado nos grupos. Adicione apps para começar.",
+        "fr": "Aucune app sélectionnée dans les groupes. Ajoutez des apps pour commencer.",
+        "de": "Keine Apps in den Gruppen ausgewählt. Füge Apps hinzu, um zu beginnen.",
+        "ar": "لم تُحدَّد تطبيقات في المجموعات. أضف تطبيقات للبدء.",
+        "ja": "グループにアプリが選択されていません。アプリを追加して始めましょう。",
+        "ko": "그룹에 선택된 앱이 없습니다. 앱을 추가해 시작하세요.",
+        "zh-Hans": "群组中尚未选择应用。添加应用即可开始。"
+      }
+    },
+    {
+      "source": "Opens setup or review before changing protection.",
+      "translations": {
+        "hi": "सुरक्षा बदलने से पहले सेटअप या समीक्षा खोलता है।",
+        "es": "Abre la configuración o la revisión antes de cambiar la protección.",
+        "pt": "Abre a configuração ou a revisão antes de alterar a proteção.",
+        "fr": "Ouvre la configuration ou la vérification avant de modifier la protection.",
+        "de": "Öffnet vor einer Schutzänderung die Einrichtung oder Überprüfung.",
+        "ar": "يفتح الإعداد أو المراجعة قبل تغيير الحماية.",
+        "ja": "保護を変更する前に、設定または確認画面を開きます。",
+        "ko": "보호를 변경하기 전에 설정 또는 검토 화면을 엽니다.",
+        "zh-Hans": "更改防护前会打开设置或检查页面。"
+      }
+    },
+    {
+      "source": "Review protection",
+      "translations": {
+        "hi": "सुरक्षा की समीक्षा करें",
+        "es": "Revisar protección",
+        "pt": "Revisar proteção",
+        "fr": "Vérifier la protection",
+        "de": "Schutz prüfen",
+        "ar": "مراجعة الحماية",
+        "ja": "保護を確認",
+        "ko": "보호 확인",
+        "zh-Hans": "检查防护"
+      }
+    },
+    {
+      "source": "Review which protection layers this device supports.",
+      "translations": {
+        "hi": "देखें कि यह डिवाइस सुरक्षा की कौन-सी परतों का समर्थन करता है।",
+        "es": "Revisa qué capas de protección admite este dispositivo.",
+        "pt": "Revise quais camadas de proteção este dispositivo oferece.",
+        "fr": "Vérifiez les couches de protection prises en charge par cet appareil.",
+        "de": "Prüfe, welche Schutzebenen dieses Gerät unterstützt.",
+        "ar": "راجع طبقات الحماية التي يدعمها هذا الجهاز.",
+        "ja": "このデバイスが対応する保護機能を確認してください。",
+        "ko": "이 기기에서 지원하는 보호 기능을 확인하세요.",
+        "zh-Hans": "查看此设备支持哪些防护功能。"
+      }
+    },
+    {
+      "source": "Safari, permissions and repair details",
+      "translations": {
+        "hi": "Safari, अनुमतियों और सुधार का विवरण",
+        "es": "Safari, permisos y detalles de reparación",
+        "pt": "Safari, permissões e detalhes de reparo",
+        "fr": "Safari, autorisations et détails de réparation",
+        "de": "Safari, Berechtigungen und Reparaturdetails",
+        "ar": "Safari والأذونات وتفاصيل الإصلاح",
+        "ja": "Safari、アクセス許可、修復の詳細",
+        "ko": "Safari, 권한 및 복구 세부 정보",
+        "zh-Hans": "Safari、权限和修复详情"
+      }
+    },
+    {
+      "source": "Save Cloudflare Families DNS",
+      "translations": {
+        "hi": "Cloudflare Families DNS सहेजें",
+        "es": "Guardar DNS de Cloudflare Families",
+        "pt": "Salvar DNS do Cloudflare Families",
+        "fr": "Enregistrer le DNS Cloudflare Families",
+        "de": "DNS von Cloudflare Families speichern",
+        "ar": "حفظ DNS الخاص بـ Cloudflare Families",
+        "ja": "Cloudflare Families DNSを保存",
+        "ko": "Cloudflare Families DNS 저장",
+        "zh-Hans": "保存 Cloudflare Families DNS"
+      }
+    },
+    {
+      "source": "Select FREED DNS in Settings",
+      "translations": {
+        "hi": "सेटिंग्स में FREED DNS चुनें",
+        "es": "Seleccionar DNS de FREED en Ajustes",
+        "pt": "Selecionar DNS do FREED nas Configurações",
+        "fr": "Sélectionner le DNS FREED dans Réglages",
+        "de": "FREED-DNS in den Einstellungen auswählen",
+        "ar": "اختيار FREED DNS في الإعدادات",
+        "ja": "設定でFREED DNSを選択",
+        "ko": "설정에서 FREED DNS 선택",
+        "zh-Hans": "在设置中选择 FREED DNS"
+      }
+    },
+    {
+      "source": "Setup is saved. Finish the current step before relying on protection.",
+      "translations": {
+        "hi": "सेटअप सहेजा गया है। सुरक्षा पर भरोसा करने से पहले मौजूदा चरण पूरा करें।",
+        "es": "La configuración está guardada. Completa el paso actual antes de confiar en la protección.",
+        "pt": "A configuração está salva. Conclua a etapa atual antes de confiar na proteção.",
+        "fr": "La configuration est enregistrée. Terminez l’étape actuelle avant de compter sur la protection.",
+        "de": "Die Einrichtung ist gespeichert. Schließe den aktuellen Schritt ab, bevor du dich auf den Schutz verlässt.",
+        "ar": "تم حفظ الإعداد. أكمل الخطوة الحالية قبل الاعتماد على الحماية.",
+        "ja": "設定は保存されています。保護を利用する前に、現在の手順を完了してください。",
+        "ko": "설정이 저장되었습니다. 보호를 신뢰하기 전에 현재 단계를 완료하세요.",
+        "zh-Hans": "设置已保存。完成当前步骤后再依赖此防护。"
+      }
+    },
+    {
+      "source": "Test websites",
+      "translations": {
+        "hi": "वेबसाइटें जाँचें",
+        "es": "Probar sitios web",
+        "pt": "Testar sites",
+        "fr": "Tester des sites web",
+        "de": "Websites testen",
+        "ar": "اختبار المواقع",
+        "ja": "ウェブサイトをテスト",
+        "ko": "웹사이트 테스트",
+        "zh-Hans": "测试网站"
+      }
+    },
+    {
+      "source": "The profile is saved. Enable it in system Settings.",
+      "translations": {
+        "hi": "प्रोफ़ाइल सहेज दी गई है। इसे सिस्टम सेटिंग्स में चालू करें।",
+        "es": "El perfil está guardado. Actívalo en los Ajustes del sistema.",
+        "pt": "O perfil está salvo. Ative-o nas Configurações do sistema.",
+        "fr": "Le profil est enregistré. Activez-le dans les Réglages du système.",
+        "de": "Das Profil ist gespeichert. Aktiviere es in den Systemeinstellungen.",
+        "ar": "تم حفظ ملف التعريف. فعّله في إعدادات النظام.",
+        "ja": "プロファイルは保存されています。システムの設定で有効にしてください。",
+        "ko": "프로파일이 저장되었습니다. 시스템 설정에서 활성화하세요.",
+        "zh-Hans": "配置文件已保存。请在系统设置中启用。"
+      }
+    },
+    {
+      "source": "The saved setup is not confirmed. Finish the current step and check again.",
+      "translations": {
+        "hi": "सहेजे गए सेटअप की पुष्टि नहीं हुई है। मौजूदा चरण पूरा करें और फिर जाँचें।",
+        "es": "La configuración guardada no está confirmada. Completa el paso actual y vuelve a comprobarla.",
+        "pt": "A configuração salva não foi confirmada. Conclua a etapa atual e verifique novamente.",
+        "fr": "La configuration enregistrée n’est pas confirmée. Terminez l’étape actuelle et vérifiez à nouveau.",
+        "de": "Die gespeicherte Einrichtung ist nicht bestätigt. Schließe den aktuellen Schritt ab und prüfe erneut.",
+        "ar": "لم يتم تأكيد الإعداد المحفوظ. أكمل الخطوة الحالية وتحقّق مجددًا.",
+        "ja": "保存された設定は確認されていません。現在の手順を完了してから、もう一度確認してください。",
+        "ko": "저장된 설정이 확인되지 않았습니다. 현재 단계를 완료한 뒤 다시 확인하세요.",
+        "zh-Hans": "保存的设置尚未确认。完成当前步骤后再检查一次。"
+      }
+    },
+    {
+      "source": "Verified on this network.",
+      "translations": {
+        "hi": "इस नेटवर्क पर सत्यापित।",
+        "es": "Verificado en esta red.",
+        "pt": "Verificado nesta rede.",
+        "fr": "Vérifié sur ce réseau.",
+        "de": "In diesem Netzwerk überprüft.",
+        "ar": "تم التحقّق على هذه الشبكة.",
+        "ja": "このネットワークで確認済み。",
+        "ko": "이 네트워크에서 확인되었습니다.",
+        "zh-Hans": "已在此网络上验证。"
+      }
+    },
+    {
+      "source": "Discard pending changes?",
+      "translations": {
+        "hi": "लंबित बदलाव छोड़ दें?",
+        "es": "¿Descartar los cambios pendientes?",
+        "pt": "Descartar as alterações pendentes?",
+        "fr": "Abandonner les modifications en attente ?",
+        "de": "Ausstehende Änderungen verwerfen?",
+        "ar": "تجاهل التغييرات المعلّقة؟",
+        "ja": "保留中の変更を破棄しますか？",
+        "ko": "보류 중인 변경 사항을 삭제할까요?",
+        "zh-Hans": "放弃待处理的更改？"
+      }
+    },
+    {
+      "source": "Your active app protection will stay unchanged.",
+      "translations": {
+        "hi": "आपकी सक्रिय ऐप सुरक्षा जस की तस रहेगी।",
+        "es": "Tu protección activa de apps no cambiará.",
+        "pt": "Sua proteção ativa de apps não será alterada.",
+        "fr": "Votre protection active des apps restera inchangée.",
+        "de": "Dein aktiver App-Schutz bleibt unverändert.",
+        "ar": "ستبقى حماية تطبيقاتك النشطة دون تغيير.",
+        "ja": "現在有効なアプリ保護は変更されません。",
+        "ko": "현재 활성화된 앱 보호는 변경되지 않습니다.",
+        "zh-Hans": "当前已启用的应用防护将保持不变。"
+      }
+    },
+    {
+      "source": "Discard changes",
+      "translations": {
+        "hi": "बदलाव छोड़ें",
+        "es": "Descartar cambios",
+        "pt": "Descartar alterações",
+        "fr": "Abandonner les modifications",
+        "de": "Änderungen verwerfen",
+        "ar": "تجاهل التغييرات",
+        "ja": "変更を破棄",
+        "ko": "변경 사항 삭제",
+        "zh-Hans": "放弃更改"
+      }
+    },
+    {
+      "source": "Pending changes could not be discarded. Review the current selection and try again.",
+      "translations": {
+        "hi": "लंबित बदलाव छोड़े नहीं जा सके। मौजूदा चयन की समीक्षा करें और फिर कोशिश करें।",
+        "es": "No se pudieron descartar los cambios pendientes. Revisa la selección actual e inténtalo de nuevo.",
+        "pt": "Não foi possível descartar as alterações pendentes. Revise a seleção atual e tente novamente.",
+        "fr": "Les modifications en attente n’ont pas pu être abandonnées. Vérifiez la sélection actuelle et réessayez.",
+        "de": "Ausstehende Änderungen konnten nicht verworfen werden. Prüfe die aktuelle Auswahl und versuche es erneut.",
+        "ar": "تعذّر تجاهل التغييرات المعلّقة. راجع التحديد الحالي وحاول مجددًا.",
+        "ja": "保留中の変更を破棄できませんでした。現在の選択内容を確認し、もう一度試してください。",
+        "ko": "보류 중인 변경 사항을 삭제하지 못했습니다. 현재 선택을 확인하고 다시 시도하세요.",
+        "zh-Hans": "无法放弃待处理的更改。请检查当前选择，然后重试。"
+      }
+    },
+    {
+      "source": "The device discarded these changes, but the local draft could not be cleared. Retry clearing the draft.",
+      "translations": {
+        "hi": "डिवाइस ने ये बदलाव छोड़ दिए हैं, लेकिन स्थानीय मसौदा हटाया नहीं जा सका। मसौदा हटाने की फिर कोशिश करें।",
+        "es": "El dispositivo descartó estos cambios, pero no se pudo borrar el borrador local. Vuelve a intentar borrarlo.",
+        "pt": "O dispositivo descartou estas alterações, mas não foi possível limpar o rascunho local. Tente limpá-lo novamente.",
+        "fr": "L’appareil a abandonné ces modifications, mais le brouillon local n’a pas pu être effacé. Réessayez de l’effacer.",
+        "de": "Das Gerät hat diese Änderungen verworfen, aber der lokale Entwurf konnte nicht gelöscht werden. Versuche erneut, den Entwurf zu löschen.",
+        "ar": "تجاهل الجهاز هذه التغييرات، لكن تعذّر مسح المسودة المحلية. حاول مسح المسودة مجددًا.",
+        "ja": "デバイス上の変更は破棄されましたが、ローカルの下書きを消去できませんでした。下書きの消去をもう一度試してください。",
+        "ko": "기기에서 이 변경 사항을 삭제했지만 로컬 초안을 지우지 못했습니다. 초안 지우기를 다시 시도하세요.",
+        "zh-Hans": "设备已放弃这些更改，但无法清除本地草稿。请重试清除草稿。"
+      }
+    },
+    {
+      "source": "The device discarded the pending selection. Your newer edits are still here. Review them before saving.",
+      "translations": {
+        "hi": "डिवाइस ने लंबित चयन छोड़ दिया है। आपके बाद के बदलाव अभी भी मौजूद हैं। सहेजने से पहले उनकी समीक्षा करें।",
+        "es": "El dispositivo descartó la selección pendiente. Tus cambios más recientes siguen aquí. Revísalos antes de guardar.",
+        "pt": "O dispositivo descartou a seleção pendente. Suas alterações mais recentes continuam aqui. Revise-as antes de salvar.",
+        "fr": "L’appareil a abandonné la sélection en attente. Vos modifications plus récentes sont toujours présentes. Vérifiez-les avant d’enregistrer.",
+        "de": "Das Gerät hat die ausstehende Auswahl verworfen. Deine neueren Änderungen sind noch vorhanden. Prüfe sie vor dem Speichern.",
+        "ar": "تجاهل الجهاز التحديد المعلّق. تعديلاتك الأحدث ما زالت هنا. راجعها قبل الحفظ.",
+        "ja": "デバイス上の保留中の選択は破棄されました。新しい編集内容はまだ残っています。保存する前に確認してください。",
+        "ko": "기기에서 보류 중인 선택을 삭제했습니다. 이후의 편집 내용은 아직 남아 있습니다. 저장하기 전에 확인하세요.",
+        "zh-Hans": "设备已放弃待处理的选择。较新的编辑仍然保留。请在保存前检查。"
+      }
+    },
+    {
+      "source": "Retry clearing the draft",
+      "translations": {
+        "hi": "मसौदा हटाने की फिर कोशिश करें",
+        "es": "Reintentar borrar el borrador",
+        "pt": "Tentar limpar o rascunho novamente",
+        "fr": "Réessayer d’effacer le brouillon",
+        "de": "Entwurf erneut löschen",
+        "ar": "إعادة محاولة مسح المسودة",
+        "ja": "下書きの消去を再試行",
+        "ko": "초안 지우기 다시 시도",
+        "zh-Hans": "重试清除草稿"
+      }
+    },
+    {
+      "source": "Discard pending changes",
+      "translations": {
+        "hi": "लंबित बदलाव छोड़ें",
+        "es": "Descartar cambios pendientes",
+        "pt": "Descartar alterações pendentes",
+        "fr": "Abandonner les modifications en attente",
+        "de": "Ausstehende Änderungen verwerfen",
+        "ar": "تجاهل التغييرات المعلّقة",
+        "ja": "保留中の変更を破棄",
+        "ko": "보류 중인 변경 사항 삭제",
+        "zh-Hans": "放弃待处理的更改"
+      }
+    },
+    {
+      "source": "Sign in before changing device protection.",
+      "translations": {
+        "hi": "डिवाइस की सुरक्षा बदलने से पहले साइन इन करें।",
+        "es": "Inicia sesión antes de cambiar la protección del dispositivo.",
+        "pt": "Entre na sua conta antes de alterar a proteção do dispositivo.",
+        "fr": "Connectez-vous avant de modifier la protection de l’appareil.",
+        "de": "Melde dich an, bevor du den Geräteschutz änderst.",
+        "ar": "سجّل الدخول قبل تغيير حماية الجهاز.",
+        "ja": "デバイスの保護を変更する前にログインしてください。",
+        "ko": "기기 보호를 변경하기 전에 로그인하세요.",
+        "zh-Hans": "更改设备防护前请先登录。"
+      }
+    },
+    {
+      "source": "Turn off adult website protection?",
+      "translations": {
+        "hi": "वयस्क वेबसाइटों से सुरक्षा बंद करें?",
+        "es": "¿Desactivar la protección frente a sitios de adultos?",
+        "pt": "Desativar a proteção contra sites adultos?",
+        "fr": "Désactiver la protection contre les sites pour adultes ?",
+        "de": "Schutz vor Erwachsenenwebsites ausschalten?",
+        "ar": "إيقاف الحماية من مواقع البالغين؟",
+        "ja": "成人向けサイトからの保護をオフにしますか？",
+        "ko": "성인 웹사이트 보호를 끌까요?",
+        "zh-Hans": "关闭成人网站防护？"
+      }
+    },
+    {
+      "source": "Your selected apps and saved activities will stay unchanged.",
+      "translations": {
+        "hi": "आपके चुने हुए ऐप और सहेजी गई गतिविधियाँ जस की तस रहेंगी।",
+        "es": "Tus apps seleccionadas y actividades guardadas no cambiarán.",
+        "pt": "Seus apps selecionados e atividades salvas não serão alterados.",
+        "fr": "Vos apps sélectionnées et vos activités enregistrées resteront inchangées.",
+        "de": "Deine ausgewählten Apps und gespeicherten Aktivitäten bleiben unverändert.",
+        "ar": "ستبقى تطبيقاتك المحدّدة وأنشطتك المحفوظة دون تغيير.",
+        "ja": "選択したアプリと保存済みのアクティビティは変更されません。",
+        "ko": "선택한 앱과 저장된 활동은 변경되지 않습니다.",
+        "zh-Hans": "所选应用和已保存的活动将保持不变。"
+      }
+    },
+    {
+      "source": "Turn off",
+      "translations": {
+        "hi": "बंद करें",
+        "es": "Desactivar",
+        "pt": "Desativar",
+        "fr": "Désactiver",
+        "de": "Ausschalten",
+        "ar": "إيقاف",
+        "ja": "オフにする",
+        "ko": "끄기",
+        "zh-Hans": "关闭"
+      }
+    },
+    {
+      "source": "Website protection could not be fully turned off. Review the remaining layers.",
+      "translations": {
+        "hi": "वेबसाइट सुरक्षा पूरी तरह बंद नहीं की जा सकी। बची हुई सुरक्षा परतों की समीक्षा करें।",
+        "es": "No se pudo desactivar por completo la protección de sitios web. Revisa las capas restantes.",
+        "pt": "Não foi possível desativar completamente a proteção de sites. Revise as camadas restantes.",
+        "fr": "La protection des sites web n’a pas pu être entièrement désactivée. Vérifiez les couches de protection restantes.",
+        "de": "Der Websiteschutz konnte nicht vollständig ausgeschaltet werden. Prüfe die verbleibenden Schutzebenen.",
+        "ar": "تعذّر إيقاف حماية المواقع بالكامل. راجع طبقات الحماية المتبقية.",
+        "ja": "ウェブサイトの保護を完全にオフにできませんでした。残っている保護機能を確認してください。",
+        "ko": "웹사이트 보호를 완전히 끄지 못했습니다. 남아 있는 보호 기능을 확인하세요.",
+        "zh-Hans": "网站防护未能完全关闭。请检查剩余的防护功能。"
+      }
+    },
+    {
+      "source": "Connect the owning account and read saved app settings before syncing protection.",
+      "translations": {
+        "hi": "सुरक्षा सिंक करने से पहले स्वामी खाते को जोड़ें और सहेजी गई ऐप सेटिंग्स पढ़ें।",
+        "es": "Vincula la cuenta propietaria y lee los ajustes guardados de las apps antes de sincronizar la protección.",
+        "pt": "Conecte a conta proprietária e leia as configurações salvas dos apps antes de sincronizar a proteção.",
+        "fr": "Associez le compte propriétaire et lisez les réglages enregistrés des apps avant de synchroniser la protection.",
+        "de": "Verbinde das Besitzerkonto und lies die gespeicherten App-Einstellungen, bevor du den Schutz synchronisierst.",
+        "ar": "اربط حساب المالك واقرأ إعدادات التطبيقات المحفوظة قبل مزامنة الحماية.",
+        "ja": "保護を同期する前に、所有者のアカウントを連携し、保存されたアプリ設定を読み込んでください。",
+        "ko": "보호를 동기화하기 전에 소유자 계정을 연결하고 저장된 앱 설정을 읽어 오세요.",
+        "zh-Hans": "同步防护前，请连接所属账户并读取已保存的应用设置。"
+      }
+    },
+    {
+      "source": "iOS did not open FREED app settings.",
+      "translations": {
+        "hi": "iOS ने FREED की ऐप सेटिंग्स नहीं खोलीं।",
+        "es": "iOS no abrió los ajustes de la app FREED.",
+        "pt": "O iOS não abriu as configurações do app FREED.",
+        "fr": "iOS n’a pas ouvert les réglages de l’app FREED.",
+        "de": "iOS hat die FREED-App-Einstellungen nicht geöffnet.",
+        "ar": "لم يفتح iOS إعدادات تطبيق FREED.",
+        "ja": "iOSでFREEDのアプリ設定が開かれませんでした。",
+        "ko": "iOS가 FREED 앱 설정을 열지 못했습니다.",
+        "zh-Hans": "iOS 未打开 FREED 的应用设置。"
+      }
+    },
+    {
+      "source": "iOS opened FREED app settings. Return to check configuration.",
+      "translations": {
+        "hi": "iOS ने FREED की ऐप सेटिंग्स खोल दी हैं। कॉन्फ़िगरेशन जाँचने के लिए वापस आएँ।",
+        "es": "iOS abrió los ajustes de la app FREED. Vuelve para comprobar la configuración.",
+        "pt": "O iOS abriu as configurações do app FREED. Volte para verificar a configuração.",
+        "fr": "iOS a ouvert les réglages de l’app FREED. Revenez pour vérifier la configuration.",
+        "de": "iOS hat die FREED-App-Einstellungen geöffnet. Kehre zurück, um die Konfiguration zu prüfen.",
+        "ar": "فتح iOS إعدادات تطبيق FREED. عُد للتحقّق من الإعدادات.",
+        "ja": "iOSでFREEDのアプリ設定が開かれました。戻って設定を確認してください。",
+        "ko": "iOS가 FREED 앱 설정을 열었습니다. 돌아와서 설정을 확인하세요.",
+        "zh-Hans": "iOS 已打开 FREED 的应用设置。请返回检查配置。"
+      }
+    }
+  ]
+}

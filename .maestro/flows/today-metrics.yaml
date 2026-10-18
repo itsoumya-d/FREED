@@ -1,0 +1,33 @@
+appId: app.freed.recovery
+name: today-metrics
+tags:
+  - smoke
+  - read-only
+---
+# Requires an English disposable fixture; no state or Keychain reset.
+# Current Today renders its recorded streak and history action; the retired elapsed hero is not present.
+- openLink: "freed:///today"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "screen-main-today" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "today-recorded-streak" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: { id: "today-recorded-streak" }
+- assertVisible: "Your recorded streak.*"
+- scrollUntilVisible:
+    element: { id: "today-history" }
+    direction: UP
+    timeout: 10000
+- assertVisible: "View history"
+- tapOn: { id: "today-history" }
+- extendedWaitUntil:
+    visible: { id: "screen-main-progress" }
+    timeout: 15000
+- takeScreenshot: "today-metrics"

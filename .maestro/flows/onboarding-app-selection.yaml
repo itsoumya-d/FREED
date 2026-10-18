@@ -1,0 +1,41 @@
+appId: app.freed.recovery
+name: onboarding-app-selection
+tags:
+  - smoke
+  - local-write
+---
+# Requires an English disposable native fixture with empty stored blockedAppPackages.
+# Android empty settings render the real Instagram/TikTok/YouTube recommendations (three selected).
+# Toggle YouTube off then on to verify selection and undo without saving the chooser.
+# iOS displays the Apple target handoff; it does not expose Android package checkboxes.
+- openLink: "freed:///onboarding/appSelection"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "screen-appSelection" }
+    timeout: 15000
+- runFlow:
+    when:
+      platform: Android
+    commands:
+      - assertVisible: "Choose the apps FREED can interrupt."
+      - assertVisible: { text: "Protect YouTube", checked: true }
+      - assertVisible: "Continue · 3 selected"
+      - tapOn: "Protect YouTube"
+      - assertVisible: { text: "Protect YouTube", checked: false }
+      - assertVisible: "Continue · 2 selected"
+      - tapOn: "Protect YouTube"
+      - assertVisible: { text: "Protect YouTube", checked: true }
+      - assertVisible: "Continue · 3 selected"
+- runFlow:
+    when:
+      platform: iOS
+    commands:
+      - assertVisible: "Choose your protection targets."
+      - assertVisible: "Your selection stays with Apple."
+      - assertNotVisible: "Protect YouTube"
+      - assertVisible: { text: "Continue to setup", enabled: true }
+- takeScreenshot: "onboarding-app-selection"

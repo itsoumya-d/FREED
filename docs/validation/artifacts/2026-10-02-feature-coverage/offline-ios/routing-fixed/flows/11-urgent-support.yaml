@@ -1,0 +1,25 @@
+appId: app.freed.recovery
+name: urgent-support
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///today"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-today"
+    timeout: 15000
+- tapOn: "SOS: open urge support"
+- assertVisible:
+    id: "screen-intercept"
+- assertVisible: "Back to Safety"
+- tapOn: "Back to Safety"
+- assertVisible:
+    id: "screen-main-today"
+- takeScreenshot: "urgent-support"

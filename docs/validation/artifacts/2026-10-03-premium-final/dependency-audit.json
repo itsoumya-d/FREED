@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "freed-dependency-audit-v1",
+  "generatedAt": "2026-10-03T01:46:08.834Z",
+  "sanitized": true,
+  "result": "fail",
+  "passCount": 0,
+  "failCount": 1,
+  "vulnerabilitySummary": {
+    "critical": 0,
+    "high": 52,
+    "moderate": 0,
+    "low": 0,
+    "info": 0,
+    "total": 52
+  },
+  "audit": {
+    "command": "npm audit --omit=dev --json",
+    "timeoutMs": 180000,
+    "exitCode": 1,
+    "failureKind": null
+  },
+  "issues": [
+    "npm audit reported 52 production vulnerabilities."
+  ]
+}

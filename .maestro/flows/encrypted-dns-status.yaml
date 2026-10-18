@@ -1,0 +1,31 @@
+appId: app.freed.recovery
+name: encrypted-dns-status
+tags:
+  - smoke
+  - read-only
+---
+# Unexecuted smoke scenario. Requires an isolated disposable English/LTR fixture.
+# Full scenario and physical-device receipts remain separate obligations.
+- openLink: "freed:///shield/dns"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-shield-dns"
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "dns-status" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: { id: "dns-status" }
+- scrollUntilVisible:
+    element: { id: "dns-refresh" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "dns-refresh" }
+- assertVisible: { id: "dns-status" }
+- takeScreenshot: "encrypted-dns-status-after-refresh"
+# A visible status never establishes resolver reachability or filtering success.

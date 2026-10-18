@@ -1,5 +1,5 @@
-import FreedApp from "@/features/freed-app";
+import { FreedRoute } from "@/features/freed-app";
 
 export default function Index() {
-  return <FreedApp />;
+  return <FreedRoute screen="splash" />;
 }

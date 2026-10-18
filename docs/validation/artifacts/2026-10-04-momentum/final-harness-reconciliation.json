@@ -1,0 +1,68 @@
+{
+  "files": [
+    {
+      "path": "tests/app-shell.test.ts",
+      "baselineSha256": "be07d05b2035f32853d1db3690245a289085f8ced3b4a4d52bc648ebbd4d5bad",
+      "reviewSha256": "6cc2adb3ac2409d8e194bf345cd456113905b1190d6b9afe0513ef793e8f5d36",
+      "sharedUnchanged": true
+    },
+    {
+      "path": "tests/native-intervention-links.test.ts",
+      "baselineSha256": "850601c9e9bdf7620639e12b000fbc9a6f8f145539e6242ab6324b87d5a50daf",
+      "reviewSha256": "c73d9b82e0ab82c086fc3ca0fe91d4eb9e582be885acb553cc2908627410e0ba",
+      "sharedUnchanged": true
+    },
+    {
+      "path": "tests/protection-dns-safety.test.js",
+      "baselineSha256": "e137e559d186754a4425f0de7de42bb6911db59db27d3b1980b859b5c3b67c47",
+      "reviewSha256": "e059dc353ffa1e368bce1bcba35b732d32df2aa3744ed1e7c9db98debdee7c08",
+      "sharedUnchanged": true
+    },
+    {
+      "path": "tests/recovery-drafts.test.ts",
+      "baselineSha256": "4f24ece29bbed1365529b9b2491977116d20f116c29cfc61a610e183317c60f3",
+      "reviewSha256": "55637e462a06622479364292de05c53e4b96f0db3b8b5ce234ede624337a7463",
+      "sharedUnchanged": true
+    },
+    {
+      "path": "tests/fixtures/safari-content-harness.cjs",
+      "baselineSha256": null,
+      "reviewSha256": "f6f65eaa6b9d96c5ca134f055ba26845472989548ac6d319ebd593d04ad0b02d",
+      "sharedUnchanged": true
+    },
+    {
+      "path": "tests/fixtures/reproduce-safari-stale-route.cjs",
+      "baselineSha256": null,
+      "reviewSha256": "2b199d86d1ba701a37c9ef4305b0642ecabc1a57fddfe7430576d1ca714087b9",
+      "sharedUnchanged": true
+    }
+  ],
+  "patchLines": 485,
+  "historicalArtifactUnchanged": true,
+  "verification": {
+    "app-shell": {
+      "exitCode": 0,
+      "output": "app shell native root and profile integration contracts passed",
+      "healthAndSetupMutationNegatives": 20
+    },
+    "native-intervention-links": {
+      "exitCode": 0,
+      "tests": 7,
+      "pass": 7,
+      "fail": 0
+    },
+    "protection-dns-safety": {
+      "exitCode": 0,
+      "tests": 4,
+      "pass": 4,
+      "fail": 0,
+      "controlledSafariReproductionScenarios": 3
+    },
+    "recovery-drafts": {
+      "exitCode": 0,
+      "output": "Recovery drafts: restart, exact input, schema bounds, day rollover, storage failures and explicit purge passed."
+    }
+  },
+  "appliedAt": "2026-10-04T02:26:14.584065+00:00",
+  "scope": "Test fixtures and stronger source/mutation expectations only; no implementation, historical evidence or native/device proof changes."
+}

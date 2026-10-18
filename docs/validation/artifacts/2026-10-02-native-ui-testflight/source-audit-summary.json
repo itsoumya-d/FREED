@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "freed-source-audit-summary-v1",
+  "generatedAt": "2026-10-02T06:37:05.253330+00:00",
+  "sanitized": true,
+  "scope": "source audits only; not actual runtime feature proof; captured during root UI rebuild",
+  "runs": [
+    {
+      "name": "permission",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/permission-source-audit.log"
+    },
+    {
+      "name": "paywall",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/paywall-source-audit.log"
+    },
+    {
+      "name": "accessibility",
+      "exitCode": 1,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/accessibility-source-audit.log"
+    },
+    {
+      "name": "privacy",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/privacy-source-audit.log"
+    }
+  ]
+}

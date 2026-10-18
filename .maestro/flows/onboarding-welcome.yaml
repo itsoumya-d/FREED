@@ -1,0 +1,33 @@
+appId: app.freed.recovery
+name: onboarding-welcome
+tags:
+  - smoke
+  - local-write
+---
+# Requires an English signed-out disposable fixture; no state or Keychain reset.
+- openLink: "freed:///onboarding/welcome"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-welcome"
+    timeout: 15000
+- assertVisible: { id: "onboarding-start" }
+- assertVisible: { id: "onboarding-personalize" }
+- assertNotVisible: { id: "screen-main-today" }
+- tapOn: { id: "onboarding-start" }
+- extendedWaitUntil:
+    visible: { id: "screen-quiz" }
+    timeout: 15000
+- assertVisible: "What is your main reason for changing\\?"
+- assertVisible: { id: "quiz-option-0" }
+- assertVisible: { id: "quiz-continue" }
+- assertNotVisible: { id: "screen-main-today" }
+- takeScreenshot: "onboarding-welcome"
+- tapOn: "Go back"
+- assertVisible: { id: "screen-welcome" }
+- assertVisible: { id: "onboarding-start" }
+- assertNotVisible: { id: "screen-main-today" }

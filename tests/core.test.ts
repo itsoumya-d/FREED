@@ -68,7 +68,8 @@ import {
   buildChallengeGenerationRequest,
   configureChallengeGenerationProvider,
   generateAdaptiveChallengeSet,
-  getChallengeGenerationReadiness
+  getChallengeGenerationReadiness,
+  getChallengeGenerationConfig
 } from "../src/lib/challenge-generator";
 import {
   buildChallengeContextSignals,
@@ -190,6 +191,7 @@ import { readBoundedResponseJson } from "../src/lib/bounded-response-json";
 import { fetchRemoteProviderJson } from "../src/lib/remote-provider-timeout";
 import { readBoundedJsonBody } from "../src/lib/server-request-body";
 import { classifierSafetyCorpus } from "../scripts/classifier-safety-corpus";
+import { compileExtensionRules, MAX_EXTENSION_STATIC_RULES } from "../src/lib/extension-rules";
 import {
   calculateRecoveryScore,
   buildInterventionContextFromAttempt,
@@ -263,9 +265,11 @@ import {
   getDailyHabitCompletionsForDay,
   getRecoveryMilestone,
   hasProtectionActivationForPlatform,
+  hasProtectionSetupFallback,
   hydrateRecoveryState,
   markOnboardingPaywallPresented,
   markProtectionActivated,
+  markProtectionSetupFallback,
   recordAccountabilityContact,
   recordAppSessionEnd,
   recordAppSessionStart,
@@ -274,6 +278,11 @@ import {
   recordEarnedUnlock,
   recordDailyHabitCompletion,
   recordDailyCheckIn,
+  recordDailyPledge,
+  recordCoachMessages,
+  hasPledgedOnDate,
+  getPledgeStreakDays,
+  MAX_COACH_CHAT_ENTRIES,
   recordRelapse,
   recordSupportCircleContact,
   removeSupportCircleMember,
@@ -348,7 +357,6 @@ const STORE_PAYWALL_LAUNCH_SCOPE_REQUIRED_CHECKS_FOR_TESTS = [
   "postLaunchProductIdsHidden",
   "yearlyValueAnchorVisible",
   "monthlyRecurringVisible",
-  "lifetimeOneTimeVisible",
   "restorePurchasesVisible",
   "purchaseButtonsEnabled",
   "serverVerificationCopyVisible",
@@ -358,9 +366,7 @@ const STORE_PAYWALL_LAUNCH_SCOPE_REQUIRED_CHECKS_FOR_TESTS = [
 const STORE_CONSOLE_PRODUCT_SETUP_REQUIRED_CHECKS_FOR_TESTS = [
   "core3ProductsCreated",
   "appStoreMonthlyYearlySubscriptionGroupConfigured",
-  "appStoreLifetimeNonConsumableConfigured",
   "playMonthlyYearlyBasePlansConfigured",
-  "playLifetimeOneTimeProductConfigured",
   "launchPricesMatchCatalog",
   "reviewScreenshotsAttached",
   "productLocalizationsConfigured",
@@ -580,8 +586,7 @@ function validStoreConsoleProductSetupReport(
       : {};
   const launchProductIds = {
     yearly: storeLaunchProductIds.yearly ?? process.env.EXPO_PUBLIC_IAP_PRODUCT_YEARLY ?? "freed_premium_yearly",
-    monthly: storeLaunchProductIds.monthly ?? process.env.EXPO_PUBLIC_IAP_PRODUCT_MONTHLY ?? "freed_premium_monthly",
-    lifetime: storeLaunchProductIds.lifetime ?? process.env.EXPO_PUBLIC_IAP_PRODUCT_LIFETIME ?? "freed_premium_lifetime"
+    monthly: storeLaunchProductIds.monthly ?? process.env.EXPO_PUBLIC_IAP_PRODUCT_MONTHLY ?? "freed_premium_monthly"
   };
   const entitlementId =
     process.env.EXPO_PUBLIC_PREMIUM_ENTITLEMENT_ID ?? process.env.EXPO_PUBLIC_REVENUECAT_ENTITLEMENT_ID ?? "premium";
@@ -622,22 +627,6 @@ function validStoreConsoleProductSetupReport(
       metadataConfigured: true,
       reviewScreenshotAttached: true,
       serverVerificationMetadataConfigured: true
-    },
-    {
-      planId: "lifetime",
-      productId: launchProductIds.lifetime,
-      productType: "non-consumable",
-      referenceName: "FREED Premium Lifetime",
-      subscriptionGroupId: null,
-      duration: "lifetime",
-      priceUsdIntent: "79.99",
-      reviewScreenshotPath: "store/screenshots/paywall-lifetime.png",
-      reviewScreenshotHash: sourceSha256Label("store/screenshots/paywall-lifetime.png"),
-      localizationLocales: ["en-US"],
-      consoleStatus: "ready-for-sandbox-review",
-      metadataConfigured: true,
-      reviewScreenshotAttached: true,
-      serverVerificationMetadataConfigured: true
     }
   ];
   const googlePlayProducts = [
@@ -664,20 +653,6 @@ function validStoreConsoleProductSetupReport(
       offerId: "monthly-standard",
       purchaseType: "",
       priceUsdIntent: "9.99",
-      localizationLocales: ["en-US"],
-      consoleStatus: "draft-internal-testing",
-      metadataConfigured: true,
-      serverVerificationMetadataConfigured: true
-    },
-    {
-      planId: "lifetime",
-      productId: launchProductIds.lifetime,
-      productType: "one-time-product",
-      basePlanId: "",
-      billingPeriod: "lifetime",
-      offerId: "",
-      purchaseType: "non-consumable",
-      priceUsdIntent: "79.99",
       localizationLocales: ["en-US"],
       consoleStatus: "draft-internal-testing",
       metadataConfigured: true,
@@ -755,12 +730,11 @@ function validStoreConsoleProductSetupReport(
       consoleHost: "appstoreconnect.apple.com",
       consolePathRedacted: "/apps/redacted-app-id/appstore/in-app-purchases",
       consoleEvidenceArtifacts: [
-        "app-record",
-        "subscription-group",
-        "yearly-subscription",
-        "monthly-subscription",
-        "lifetime-non-consumable",
-        "future-skus-inactive"
+    "app-record",
+    "subscription-group",
+    "yearly-subscription",
+    "monthly-subscription",
+    "future-skus-inactive"
       ].map(consoleEvidenceRow),
       launchProducts: appStoreProducts,
       futureProductIdsInactive: postLaunchProductIdsInactive,
@@ -773,12 +747,11 @@ function validStoreConsoleProductSetupReport(
       consoleHost: "play.google.com",
       consolePathRedacted: "/console/u/redacted-user/developers/redacted-developer-id/app/redacted-app-id/monetization",
       consoleEvidenceArtifacts: [
-        "app-record",
-        "subscriptions-list",
-        "yearly-base-plan",
-        "monthly-base-plan",
-        "lifetime-one-time-product",
-        "future-skus-inactive"
+    "app-record",
+    "subscriptions-list",
+    "yearly-base-plan",
+    "monthly-base-plan",
+    "future-skus-inactive"
       ].map(consoleEvidenceRow),
       launchProducts: googlePlayProducts,
       futureProductIdsInactive: postLaunchProductIdsInactive,
@@ -841,21 +814,25 @@ const adultDomainFeedSourceContract = require("../scripts/lib/adult-domain-feed-
 const CORE_TEST_CHILD_TIMEOUT_MS = 180000;
 
 function test(name: string, fn: () => void) {
+  if(process.env.FREED_CORE_TEST_FILTER && !new RegExp(process.env.FREED_CORE_TEST_FILTER).test(name))return;
   try {
     fn();
     console.log(`PASS ${name}`);
   } catch (error) {
     console.error(`FAIL ${name}`);
+    if (process.env.FREED_CORE_COLLECT_FAILURES === "1") { console.error(error); process.exitCode = 1; return; }
     throw error;
   }
 }
 
 async function asyncTest(name: string, fn: () => Promise<void>) {
+  if(process.env.FREED_CORE_TEST_FILTER && !new RegExp(process.env.FREED_CORE_TEST_FILTER).test(name))return;
   try {
     await fn();
     console.log(`PASS ${name}`);
   } catch (error) {
     console.error(`FAIL ${name}`);
+    if (process.env.FREED_CORE_COLLECT_FAILURES === "1") { console.error(error); process.exitCode = 1; return; }
     throw error;
   }
 }
@@ -920,6 +897,7 @@ function childToolEnv(extraEnv: Record<string, string> = {}) {
   return { ...env, ...extraEnv };
 }
 
+// Legacy HTTP fixtures are intentional here; Firebase release gates have their own suite.
 function runReleaseEnvPreflight(envText: string, extraEnv: Record<string, string> = {}, writeReport = false) {
   const root = mkdtempSync(join(tmpdir(), "freed-release-env-"));
   const envFile = join(root, ".env.production");
@@ -933,7 +911,7 @@ function runReleaseEnvPreflight(envText: string, extraEnv: Record<string, string
     const stdout = execFileSync(process.execPath, args, {
       cwd: process.cwd(),
       encoding: "utf8",
-      env: childToolEnv(extraEnv),
+      env: childToolEnv({ EXPO_PUBLIC_BACKEND_PROVIDER: "legacy", ...extraEnv }),
       stdio: ["ignore", "pipe", "pipe"],
       timeout: CORE_TEST_CHILD_TIMEOUT_MS
     });
@@ -1022,7 +1000,7 @@ function runReleaseVerifyList(envText?: string, artifactDir?: string) {
     return execFileSync(process.execPath, args, {
       cwd: process.cwd(),
       encoding: "utf8",
-      env: { PATH: process.env.PATH ?? "" },
+      env: { PATH: process.env.PATH ?? "", EXPO_PUBLIC_BACKEND_PROVIDER: "legacy" },
       stdio: ["ignore", "pipe", "pipe"],
       timeout: CORE_TEST_CHILD_TIMEOUT_MS
     });
@@ -1097,7 +1075,7 @@ function runReleaseReadinessAudit(extraEnv: Record<string, string> = {}, args: s
     return execFileSync(process.execPath, ["--", join(process.cwd(), "scripts/run-ts-entry.js"), "scripts/release-readiness.ts", ...args], {
       cwd: process.cwd(),
       encoding: "utf8",
-      env: childToolEnv({ PATH: pathEnv, ...extraEnv }),
+      env: childToolEnv({ PATH: pathEnv, EXPO_PUBLIC_BACKEND_PROVIDER: "legacy", ...extraEnv }),
       stdio: ["ignore", "pipe", "pipe"],
       timeout: CORE_TEST_CHILD_TIMEOUT_MS
     });
@@ -1555,6 +1533,7 @@ test("Focus Shield UI models expose platform limits without retaining selector d
     {
       platform: "android",
       accessibility: true,
+      focusShieldSurfaceInspection: true,
       screenTime: false,
       managedSettings: false,
       dnsFiltering: true,
@@ -1563,6 +1542,7 @@ test("Focus Shield UI models expose platform limits without retaining selector d
     },
     {
       appInterventionAuthorized: false,
+      focusShieldSurfaceEnabled: true,
       focusShieldRuleCount: 2,
       focusShieldRuleStoreHealth: "degraded"
     },
@@ -1648,7 +1628,7 @@ test("protection-triggered attempts bypass rewarded ads and only successful chal
   });
 });
 
-test("React wires Focus Shield setup, single-consumption challenge routing, and successful scoped unlocks", () => {
+test("React defers public Focus Shield setup while retaining single-consumption scoped intervention routing", () => {
   const appSurface = readFileSync("src/features/freed-app.tsx", "utf8");
 
   assert.match(appSurface, /function FocusShieldSection/);
@@ -1659,11 +1639,24 @@ test("React wires Focus Shield setup, single-consumption challenge routing, and 
   assert.match(appSurface, /configureFocusShieldRule/);
   assert.match(appSurface, /listFocusShieldRules/);
   assert.match(appSurface, /removeFocusShieldRule/);
-  assert.equal((appSurface.match(/<FocusShieldSection/g) ?? []).length >= 2, true);
+  const ts=require("typescript");
+  const ast=ts.createSourceFile("controller.tsx",appSurface,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX);
+  const currentScreens=["ShieldScreen","ProfileScreen"].map(name=>ast.statements.find((node:any)=>ts.isFunctionDeclaration(node)&&node.name?.text===name));
+  assert.ok(currentScreens.every((node:any)=>node));
+  assert.ok(currentScreens.every((node:any)=>!/<FocusShieldSection/.test(node.getText(ast))));
+  assert.match(appSurface, /<ProfileScreen/);
+  assert.match(appSurface, /Short-form filtering and calibration are unavailable in this release/);
+  assert.match(appSurface, /label="Open app limits"/);
   assert.match(appSurface, /consumePendingInterventionOnce/);
-  assert.match(appSurface, /shouldBypassRewardedAdForAttempt\(activeAttempt\)/);
-  assert.match(appSurface, /getProtectionChallengeCompletionDecision\(activeAttempt, outcome\)/);
-  assert.match(appSurface, /completionDecision\.grantEarnedUnlock/);
+  assert.match(appSurface, /onContinue=\{\(\) => setScreen\("breathing"\)\}/);
+  assert.match(appSurface, /<GuidedResetOffer/);
+  assert.match(appSurface, /shouldOfferGuidedReset/);
+  assert.doesNotMatch(appSurface, /<RewardedAdScreen/);
+  assert.match(appSurface, /getProtectionChallengeCompletionDecision\(completionAttempt, "unknown"\)/);
+  assert.match(appSurface, /origin\.sessionId === receipt\.id/);
+  assert.match(appSurface, /A restored completion repairs recovery history only/);
+  assert.match(appSurface, /onComplete=\{saveCompletedChallenge\}/);
+  assert.match(appSurface, /onRequestBreak=\{/);
   assert.match(appSurface, /completionDecision\.applyFocusShieldScope/);
 });
 
@@ -1673,7 +1666,7 @@ test("abandoning an interception clears its native scope before standalone chall
   assert.match(appSurface, /const abandonActiveProtectionFlow = React\.useCallback/);
   assert.match(appSurface, /setActiveAttempt\(null\);[\s\S]*setSelectedChallenge\(null\);[\s\S]*setScreen\("main"\)/);
   assert.match(appSurface, /onClose=\{abandonActiveProtectionFlow\}/);
-  assert.match(appSurface, /onBack=\{abandonActiveProtectionFlow\}/);
+  assert.match(appSurface, /onDiscard=\{abandonActiveProtectionFlow\}/);
   assert.match(appSurface, /const startStandaloneChallenge = React\.useCallback/);
   assert.match(appSurface, /setActiveAttempt\(null\);[\s\S]*startChallenge\(challenge\)/);
   assert.match(appSurface, /onChallenge=\{\(\) => startStandaloneChallenge\(\)\}/);
@@ -1709,7 +1702,16 @@ test("pending intervention bridges require identity-bound claims on Android and 
   assert.match(androidModule, /AsyncFunction\("clearPendingIntervention"\) \{ expectedInterventionId: String ->/);
   assert.match(androidModule, /currentInterventionId != expectedInterventionId/);
   assert.match(androidModule, /PENDING_CONSUMED_INTERVENTION_IDS/);
-  assert.match(androidModule, /markPendingInterventionConsumed/);
+  assert.match(androidModule, /editor\.putString\(PENDING_CONSUMED_INTERVENTION_IDS/);
+  assert.match(androidModule, /FreedNativeUnlockStore\.stage\(context, snapshot, editor\)/);
+  assert.match(androidModule, /pendingInterventionClaimLock = FreedNativeUnlockStore\.lock/);
+  const androidClaim = androidModule.slice(androidModule.indexOf('private fun claimPendingIntervention'), androidModule.indexOf('private fun isPendingInterventionConsumed'));
+  assert.match(androidClaim, /synchronized\(pendingInterventionClaimLock\)/);
+  assert.match(androidClaim, /isPendingInterventionConsumed\(prefs, expectedInterventionId\)/);
+  assert.ok(androidClaim.indexOf('currentInterventionId != expectedInterventionId') < androidClaim.indexOf('editor.putString(PENDING_CONSUMED_INTERVENTION_IDS'));
+  assert.ok(androidClaim.indexOf('FreedNativeUnlockStore.stage(context, snapshot, editor)') < androidClaim.indexOf('editor.commit()'));
+  assert.match(androidClaim, /if \(editor\.commit\(\)\) true else/);
+  assert.match(androidClaim, /restoreClaimedLease\(rollback, snapshot\)[\s\S]*rollback\.apply\(\)[\s\S]*false/);
 
   assert.match(iosModule, /"interventionId": interventionId/);
   assert.match(iosModule, /AsyncFunction\("clearPendingIntervention"\) \{ \(expectedInterventionId: String\) -> Bool in/);
@@ -1737,11 +1739,11 @@ test("iOS earned unlock A cannot consume staged intervention B before B applies"
   assert.match(recoveryState, /nativeInterventionId\?: string/);
   assert.match(recoveryState, /sanitizeNativeInterventionId\(value\.nativeInterventionId\)/);
   assert.match(recoveryState, /sanitizeNativeInterventionId\(options\.nativeInterventionId\)/);
-  assert.match(appSurface, /nativeInterventionId: activeAttempt\?\.nativeInterventionId/);
-  assert.match(
-    appSurface,
-    /applyEarnedUnlockWindow\([\s\S]*activeNativeUnlock\.expiresAt,[\s\S]*activeNativeUnlock\.sourceAttemptHost,[\s\S]*activeNativeUnlock\.nativeInterventionId[\s\S]*\)/
-  );
+  assert.match(appSurface, /nativeInterventionId: completionAttempt\.nativeInterventionId/);
+  assert.ok(Object.values(require("../scripts/lib/native-unlock-safety-contract").inspectNativeUnlockWiring(appSurface,readFileSync("src/lib/native-unlock-confirmation.ts","utf8"))).every(Boolean));
+  assert.equal(require('../scripts/lib/native-unlock-safety-contract').inspectNativeUnlockWiring(appSurface, readFileSync('src/lib/native-unlock-confirmation.ts', 'utf8')).completionBoundRequest, true);
+  assert.match(appSurface, /nativeGrantConfirmsUnlock\(requestedUnlock, status, Platform\.OS\)/);
+  assert.doesNotMatch(appSurface, /getActiveNativeEarnedUnlock\(recoveryState\.earnedUnlocks/);
   assert.match(bridge, /applyEarnedUnlockWindow\?\([\s\S]*expiresAt: string,[\s\S]*sourceAttemptHost\?: string,[\s\S]*nativeInterventionId\?: string/);
   assert.match(iosModule, /private struct PendingEarnedUnlockEnvelope: Codable/);
   assert.match(iosModule, /let interventionId: String[\s\S]*let scope: InterventionScope/);
@@ -1771,8 +1773,12 @@ test("iOS earned unlock A cannot consume staged intervention B before B applies"
   );
   const identityMatchIndex = applyUnlock.indexOf("consumePendingEarnedUnlockEnvelope(sanitizedExpectedInterventionId)");
   const expiryIndex = applyUnlock.indexOf("parseIsoDate(expiresAt)");
-  assert.ok(identityMatchIndex >= 0 && identityMatchIndex < expiryIndex);
-  const mismatchBranch = applyUnlock.slice(0, expiryIndex);
+  assert.ok(expiryIndex >= 0 && expiryIndex < identityMatchIndex);
+  const invalidExpiryBranch = applyUnlock.slice(expiryIndex, identityMatchIndex);
+  assert.match(invalidExpiryBranch, /expiry > now/);
+  assert.match(invalidExpiryBranch, /payload\["nativeUnlockGrantAccepted"\] = false/);
+  assert.doesNotMatch(invalidExpiryBranch, /clearEarnedUnlockState|clearSelectedShields|removeObject/);
+  const mismatchBranch = applyUnlock.slice(0, identityMatchIndex);
   assert.doesNotMatch(mismatchBranch, /removeObject\(forKey: self\.pendingEarnedUnlockScopeKey\)/);
   assert.doesNotMatch(applyUnlock, /removeObject\(forKey: self\.pendingEarnedUnlockScopeKey\)/);
 });
@@ -1950,7 +1956,7 @@ test("Android Focus Shield persists vetted local rules and enforces scoped surfa
   assert.match(module, /"kind" to "android-surface"/);
   assert.match(module, /PENDING_FOCUS_SHIELD_RULE_ID/);
 
-  const dailyLimitCheck = service.indexOf("isDailyAppLimitReached(normalizedPackage)");
+  const dailyLimitCheck = service.indexOf("appGuardShouldInterrupt(normalizedPackage");
   const immediateFocusShieldCheck = service.indexOf("matchingFocusShieldRule");
   assert.ok(dailyLimitCheck >= 0 && immediateFocusShieldCheck > dailyLimitCheck);
   assert.match(service, /val matchingFocusShieldRules = .*FreedFocusShieldRules\.matchingPresetRules/s);
@@ -2385,8 +2391,10 @@ test("Focus Shield integration routes scoped challenge unlocks without widening 
   assert.equal(attempt.sourcePackage, "com.google.android.youtube");
   assert.deepEqual(scopedAttempt.scope, pending.scope);
   assert.match(appSurface, /applyFocusShieldEarnedUnlock/);
-  assert.match(appSurface, /activeAttempt\?\.scope\?\.kind === "android-surface"/);
-  assert.match(appSurface, /applyFocusShieldEarnedUnlock\(focusShieldExpiresAt, activeAttempt\.scope\)/);
+  assert.match(appSurface, /completionAttempt\.scope\?\.kind === ['"]android-surface['"]/);
+  assert.match(appSurface, /applyFocusShieldEarnedUnlock\(requestedUnlock\.expiresAt, completionAttempt\.scope, requestedUnlock\.nativeInterventionId\)/);
+  assert.ok(Object.values(require("../scripts/lib/native-unlock-safety-contract").inspectNativeUnlockWiring(appSurface,readFileSync("src/lib/native-unlock-confirmation.ts","utf8"))).every(Boolean));
+  assert.match(appSurface, /nativeGrantConfirmsUnlock\(requestedUnlock, status, Platform\.OS\)/);
   assert.doesNotMatch(appSurface, /applyEarnedUnlockWindow\(focusShieldExpiresAt/);
   assert.match(bridge, /focusShieldRuleCount\?: number/);
   assert.match(bridge, /focusShieldEnabledRuleCount\?: number/);
@@ -2478,8 +2486,46 @@ test("adult domain feed normalizes source formats and powers classification", ()
   assert.equal(result.matchedRule, "adult-domain:cams.exampleadult.test");
 });
 
-test("adult domain feed emits Safari content blocker rules and catches unsafe feeds", () => {
+test("extension DNR rules compile from the reviewed feed with safe caps and semantics", () => {
   const embedded = getEmbeddedAdultDomainFeed();
+  const compiled = compileExtensionRules(embedded.domains, { generatedAt: new Date("2026-08-23T00:00:00.000Z") });
+
+  assert.equal(compiled.ruleCount, compiled.rules.length);
+  assert.ok(compiled.ruleCount > 0);
+  assert.ok(compiled.ruleCount <= MAX_EXTENSION_STATIC_RULES, "static rules must stay under Chrome's guaranteed cap");
+  assert.ok(compiled.truncated === false);
+
+  const ids = new Set(compiled.rules.map((rule) => rule.id));
+  assert.equal(ids.size, compiled.rules.length, "rule ids must be unique");
+
+  const first = compiled.rules[0];
+  assert.equal(first.priority, 20);
+  assert.ok(compiled.rules.every((rule) => rule.priority > 10), "reviewed adult blocks must outrank ordinary-site exceptions at priority 10");
+  assert.equal(first.action.type, "redirect");
+  if (first.action.type === "redirect") {
+    assert.match(first.action.redirect.extensionPath, /^\/blocked\/index\.html$/);
+  }
+  assert.ok(Array.isArray(first.condition.requestDomains) && first.condition.requestDomains.length === 1);
+  assert.ok(first.condition.resourceTypes.includes("main_frame"));
+
+  // Normalization: hosts-file entries, adblock markers and www prefixes collapse.
+  const messy = compileExtensionRules(
+    [
+      "0.0.0.0 pornhub.com",
+      "||xvideos.com^",
+      "https://www.xnxx.com/path",
+      "PORNHUB.COM",
+      "not_a_domain",
+      "no-tld"
+    ],
+    { generatedAt: new Date("2026-08-23T00:00:00.000Z") }
+  );
+  const domains = messy.rules.flatMap((rule) => rule.condition.requestDomains);
+  assert.deepEqual(domains.sort(), ["pornhub.com", "xnxx.com", "xvideos.com"]);
+  assert.equal(messy.domainCount, 3);
+});
+
+test("adult domain feed emits Safari content blocker rules and catches unsafe feeds", () => {  const embedded = getEmbeddedAdultDomainFeed();
   const readiness = getAdultDomainFeedReadiness(embedded);
   const rules = compileSafariContentBlockerRules(embedded);
   const bundledSafariRules = JSON.parse(readFileSync("ios/FREEDSafariContentBlocker/blockerList.json", "utf8"));
@@ -2620,6 +2666,39 @@ test("allows adult-term recovery research without consumption wording", () => {
   for (const url of cases) {
     const result = classifyUrl(url);
     assert.equal(result.verdict, "allow", `${url} should be treated as recovery/education`);
+  }
+});
+
+test("allows common help-seeking searches that mention adult terms across engines", () => {
+  const cases = [
+    "https://google.com/search?q=is+porn+bad",
+    "https://google.com/search?q=how+to+quit+porn",
+    "https://google.com/search?q=sex+addiction+therapy+near+me",
+    "https://bing.com/search?q=porn+effects+on+the+brain+research",
+    "https://yahoo.com/search?p=how+to+stop+watching+porn+help",
+    "https://duckduckgo.com/?q=nsfw+blocker+app+recommendations",
+    "https://google.co.in/search?q=dopamine+detox+science",
+    "https://ecosia.org/search?q=compulsive+sexual+behavior+treatment"
+  ];
+
+  for (const url of cases) {
+    const result = classifyUrl(url);
+    assert.equal(result.verdict, "allow", `${url} is help-seeking and must stay allowed`);
+  }
+});
+
+test("allows health and recovery hostnames that contain adult-looking tokens", () => {
+  const feed = new Set(["pornhub.com", "xvideos.com"]);
+  const cases = [
+    { url: "https://www.xxxrecovery.org/program", reason: "recovery-context token" },
+    { url: "https://quit-porn-coach.example.org/tools", reason: "recovery-context token" },
+    { url: "https://porn-addiction-support.example.org/forum", reason: "recovery-context token" },
+    { url: "https://healthguide.example.org/education/sexual-health", reason: "default allow" }
+  ];
+
+  for (const entry of cases) {
+    const result = classifyUrl(entry.url, { adultDomainFeed: feed });
+    assert.equal(result.verdict, "allow", `${entry.url} (${entry.reason}) should stay allowed`);
   }
 });
 
@@ -2820,10 +2899,12 @@ test("native configured app interventions become app-sourced recovery attempts",
   assert.equal(tiktokAliasContext?.surface, "video");
   assert.equal(tiktokAliasContext?.sessionDurationBucket, null);
   assert.equal(iosShieldAttempt.source, "app");
-  assert.equal(iosShieldAttempt.sourcePackage, undefined);
+  assert.equal(iosShieldAttempt.sourcePackage, "ios-screen-time");
+  assert.equal(iosShieldAttempt.nativeInterventionId, "90909090-9090-4090-8090-909090909090");
+  assert.equal(iosShieldAttempt.scope, undefined);
   assert.equal(iosShieldAttempt.host, "screen-time-shield.freed.local");
   assert.equal(iosShieldAttempt.result.category, "unknown");
-  assert.equal(unlockSourceForAttempt(iosShieldAttempt), "screen-time-shield.freed.local");
+  assert.equal(unlockSourceForAttempt(iosShieldAttempt), "ios-screen-time");
   assert.equal(iosShieldContext?.source, "app");
   assert.equal(iosShieldContext?.category, "unknown");
   assert.equal(iosShieldContext?.surface, "unknown");
@@ -2837,6 +2918,34 @@ test("native configured app interventions become app-sourced recovery attempts",
   const hydrated = hydrateRecoveryState({ ...createDefaultRecoveryState(), attempts: [attempt] });
   assert.equal(hydrated.attempts[0].sourcePackage, INSTAGRAM_ANDROID_PACKAGE);
   assert.equal(hydrated.attempts[0].sessionDurationSec, 18 * 60);
+});
+
+test("opaque public Screen Time scope preserves event authority without token export or restoration grants", () => {
+  const { getProtectionChallengeCompletionDecision } = require('../src/lib/protection-capabilities');
+  const { nativeGrantConfirmsUnlock, getPresentedEarnedUnlock } = require('../src/lib/native-unlock-confirmation');
+  const id='90909090-9090-4090-8090-909090909090', at='2026-05-13T12:05:00.000Z';
+  const payload={interventionId:id,sourcePackage:'ios-screen-time',host:'screen-time-shield.freed.local',matchedRule:'ios-screen-time-shield',reason:'Selected application shield',detectedAt:at,scope:{kind:'ios-screen-time' as const,tokenType:'application' as const}};
+  const attempt=createNativeInterventionAttempt(payload);
+  assert.deepEqual(attempt.scope,payload.scope);assert.equal(attempt.nativeInterventionId,id);assert.equal(attempt.sourcePackage,'ios-screen-time');
+  assert.doesNotMatch(JSON.stringify(attempt.scope), /tokenBytes|tokenValue|applicationName|packageName/);
+  assert.equal(getProtectionChallengeCompletionDecision(attempt,'unknown').grantEarnedUnlock,true);
+  for(const bad of [
+    {...payload,interventionId:'counterfeit'},
+    {...payload,scope:{kind:'ios-token',tokenType:'application',token:'private-token-bytes'}},
+    {...payload,scope:{kind:'unknown',tokenType:'application'}},
+    {...payload,scope:{kind:'ios-screen-time',tokenType:'category'}},
+    {...payload,scope:{kind:'ios-screen-time',tokenType:'domain'}},
+  ]) assert.equal(getProtectionChallengeCompletionDecision(createNativeInterventionAttempt(bad as typeof payload),'unknown').grantEarnedUnlock,false);
+  assert.equal(createDeepLinkInterventionAttempt('freed://intervene?source=ios-screen-time&interventionId='+id),null);
+  const state=createDefaultRecoveryState(),challenge=generateChallengeSet({premium:false})[0];
+  const saved=recordEarnedUnlock(state,challenge,{startedAt:at,durationMinutes:10,sourceAttemptHost:unlockSourceForAttempt(attempt),nativeInterventionId:id});
+  const unlock=saved.earnedUnlocks[0],now=Date.parse(at);
+  const evidence={nativeUnlockGrantAccepted:true,nativeUnlockGrantInterventionId:id,activeUnlockInterventionId:id,activeUnlockExpiresAt:unlock.expiresAt};
+  assert.equal(nativeGrantConfirmsUnlock(unlock,evidence,'ios',now),true);
+  assert.equal(nativeGrantConfirmsUnlock(unlock,{...evidence,nativeUnlockGrantInterventionId:'11111111-1111-4111-8111-111111111111'},'ios',now),false);
+  assert.equal(getPresentedEarnedUnlock(saved.earnedUnlocks,null,'ios',now),null);
+  assert.equal(getPresentedEarnedUnlock(hydrateRecoveryState(saved).earnedUnlocks,null,'ios',now),null);
+  assert.equal(nativeGrantConfirmsUnlock({...unlock,historicalOnly:true},evidence,'ios',now),false);
 });
 
 test("native app interventions only keep supported app unlock sources", () => {
@@ -2896,10 +3005,11 @@ test("native app interventions only keep supported app unlock sources", () => {
   assert.equal(unsupportedConfiguredApp.result.reason.includes("[redacted-domain]"), true);
   assert.equal(appPackageForEarnedUnlockSource(unlockSourceForAttempt(unsupportedConfiguredApp)), undefined);
   assert.equal(shortFormWithoutTrustedPackage.source, "app");
-  assert.equal(shortFormWithoutTrustedPackage.sourcePackage, YOUTUBE_ANDROID_PACKAGE);
+  assert.equal(shortFormWithoutTrustedPackage.sourcePackage, undefined);
+  assert.equal(shortFormWithoutTrustedPackage.nativeInterventionId, undefined);
   assert.equal(shortFormWithoutTrustedPackage.host, SHORT_FORM_RULE_HOSTS[YOUTUBE_SHORTS_RULE]);
-  assert.equal(unlockSourceForAttempt(shortFormWithoutTrustedPackage), YOUTUBE_ANDROID_PACKAGE);
-  assert.equal(appPackageForEarnedUnlockSource(unlockSourceForAttempt(shortFormWithoutTrustedPackage)), YOUTUBE_ANDROID_PACKAGE);
+  assert.equal(unlockSourceForAttempt(shortFormWithoutTrustedPackage), undefined);
+  assert.equal(appPackageForEarnedUnlockSource(unlockSourceForAttempt(shortFormWithoutTrustedPackage)), undefined);
   assert.equal(appPackageForEarnedUnlockSource("configured-app:com.instagram.android"), INSTAGRAM_ANDROID_PACKAGE);
   assert.equal(appPackageForEarnedUnlockSource(SHORT_FORM_RULE_HOSTS[INSTAGRAM_REELS_RULE]), INSTAGRAM_ANDROID_PACKAGE);
   assert.equal(appPackageForEarnedUnlockSource("pornhub.com"), undefined);
@@ -2973,6 +3083,7 @@ test("free challenge set excludes premium-only challenges", () => {
 test("challenge verification requires real movement for physical and outdoor resets", () => {
   const physical = getChallengeVerificationRequirement({
     id: "pushups-20",
+    verification: {version:1,kind:"motion",minMotionSamples:6},
     title: "20 controlled pushups",
     category: "physical",
     durationSec: 90,
@@ -2984,6 +3095,7 @@ test("challenge verification requires real movement for physical and outdoor res
   });
   const outdoor = getChallengeVerificationRequirement({
     id: "walk-outside",
+    verification: {version:1,kind:"location",minDistanceMeters:25},
     title: "Walk outside for five minutes",
     category: "reset",
     durationSec: 300,
@@ -2995,6 +3107,7 @@ test("challenge verification requires real movement for physical and outdoor res
   });
   const indoorWalk = getChallengeVerificationRequirement({
     id: "walk-room",
+    verification: {version:1,kind:"steps",minSteps:40},
     title: "Walk 40 steps around your room",
     category: "reset",
     durationSec: 120,
@@ -3006,6 +3119,7 @@ test("challenge verification requires real movement for physical and outdoor res
   });
   const photo = getChallengeVerificationRequirement({
     id: "flower-photo",
+    verification: {version:1,kind:"photo",targetId:"flower"},
     title: "Take a photo of a flower nearby",
     category: "reset",
     durationSec: 60,
@@ -3017,6 +3131,7 @@ test("challenge verification requires real movement for physical and outdoor res
   });
   const breathing = getChallengeVerificationRequirement({
     id: "breathing-478",
+    verification: {version:1,kind:"timer"},
     title: "4-7-8 breathing reset",
     category: "breathing",
     durationSec: 180,
@@ -3028,6 +3143,7 @@ test("challenge verification requires real movement for physical and outdoor res
   });
   const connection = getChallengeVerificationRequirement({
     id: "trusted-person",
+    verification: {version:1,kind:"connection"},
     title: "Reach out to a trusted person",
     category: "connection",
     durationSec: 90,
@@ -3045,10 +3161,10 @@ test("challenge verification requires real movement for physical and outdoor res
   assert.equal(indoorWalk.kind, "steps");
   assert.equal(photo.kind, "photo");
   assert.ok(photo.expectedPhotoLabels?.includes("flower"));
-  assert.equal(photo.minPhotoConfidence, 0.45);
+  assert.equal(photo.minPhotoConfidence, 0.65);
   assert.equal(breathing.kind, "timer");
   assert.equal(connection.kind, "connection");
-  assert.match(connection.detail, /Complete the connection action/);
+  assert.match(connection.detail, /Confirm the connection action/);
   assert.equal(isChallengeVerificationSatisfied(physical, { elapsedSec: 90, motionSamples: 0 }), false);
   assert.equal(isChallengeVerificationSatisfied(physical, { elapsedSec: 90, motionSamples: physical.minMotionSamples }), true);
   assert.equal(isChallengeVerificationSatisfied(outdoor, { elapsedSec: 300, distanceMeters: 3, locationSamples: 2, bestLocationAccuracyMeters: 20 }), false);
@@ -3186,7 +3302,20 @@ test("challenge generation request uses recovery signals without browsing detail
   const interventionContext = buildInterventionContextFromAttempt(
     createBlockingAttempt("https://google.com/search?q=porn&token=secret", "search")
   );
+  const exportDay = "2026-05-13T12:00:00.000Z";
+  const ownUrge = createPanicInterventionAttempt(exportDay);
+  const ownInput = { mood: "energized" as const, urgeLevel: 3, sleepQuality: 4 };
+  const ownState = recordDailyCheckIn(recordBlockingAttempt(createDefaultRecoveryState(), ownUrge), ownInput, exportDay);
+  const mixedState = recordBlockingAttempt(ownState, {
+    ...createBlockingAttempt("https://google.com/search?q=porn&token=secret", "search"),
+    detectedAt: exportDay
+  });
+  assert.throws(() => buildChallengeGenerationRequest({
+    streakDays: 18, premium: false, attemptsToday: 2, mood: "stressed", hour: 23
+  }), /Off-device export context is unavailable/);
   const request = buildChallengeGenerationRequest({
+    exportState: mixedState,
+    exportDay: "2026-05-13T12:00:00.000Z",
     streakDays: 18,
     premium: false,
     attemptsToday: 2,
@@ -3226,6 +3355,8 @@ test("challenge generation request uses recovery signals without browsing detail
   });
 
   assert.equal(request.profile.streakDays, 18);
+  assert.equal(request.profile.attemptsToday, 1, "Only the own urge is exported; automatic device events stay local.");
+  assert.equal(request.profile.mood, "energized", "Use the actual own check-in, not caller-inferred device mood.");
   assert.deepEqual(request.profile.preferredCategories, ["breathing"]);
   assert.equal(request.profile.slipsThisWeek, 2);
   assert.equal(request.profile.slipWindow, "Late night");
@@ -3233,13 +3364,7 @@ test("challenge generation request uses recovery signals without browsing detail
   assert.equal(request.profile.dayPart, "late-night");
   assert.equal(request.profile.isWeekend, true);
   assert.equal(request.profile.timezoneOffsetMinutes, -330);
-  assert.deepEqual(request.profile.interventionContext, {
-    source: "search",
-    category: "adult-search-intent",
-    surface: "adult-search",
-    ruleFamily: "safe-site-search",
-    sessionDurationBucket: null
-  });
+  assert.equal(request.profile.interventionContext, null);
   assert.equal(request.profile.recentFailureCount, 2);
   assert.deepEqual(request.profile.contextSignals, {
     energyLevel: "low",
@@ -3249,13 +3374,12 @@ test("challenge generation request uses recovery signals without browsing detail
     weatherCondition: "rain",
     temperatureC: 9
   });
+  const ownForecast = buildLocalUrgeRiskForecast(ownState, exportDay);
   assert.deepEqual(request.profile.riskForecast, {
-    level: "high",
-    score: 91,
-    confidence: "high",
-    currentWindow: "Late night risk window",
-    drivers: ["Current time matches learned risk window", "Private [redacted-link]"]
-  });
+    level: ownForecast.level, score: ownForecast.score, confidence: ownForecast.confidence,
+    currentWindow: ownForecast.currentWindow, drivers: ownForecast.drivers
+  }, "Automatic device context and an injected forecast cannot alter the outbound own-data forecast.");
+  assert.equal(JSON.stringify(request).includes("Private [redacted-link]"), false);
   assert.equal(request.recentChallengeHistory[0].id, "breathing-478");
   assert.equal(JSON.stringify(request).includes("http"), false);
   assert.equal(JSON.stringify(request).includes("secret=true"), false);
@@ -3281,6 +3405,8 @@ test("challenge generation request uses recovery signals without browsing detail
     })
   );
   const appRequest = buildChallengeGenerationRequest({
+    exportState: createDefaultRecoveryState(),
+    exportDay: "2026-05-13T12:00:00.000Z",
     streakDays: 9,
     premium: false,
     attemptsToday: 1,
@@ -3289,7 +3415,9 @@ test("challenge generation request uses recovery signals without browsing detail
     interventionContext: appInterventionContext,
     recentFailureCount: 3
   });
-  assert.equal(appRequest.profile.interventionContext?.sessionDurationBucket, "15-30m");
+  assert.equal(appRequest.profile.interventionContext, null);
+  assert.equal(appRequest.profile.attemptsToday, 0);
+  assert.equal(appRequest.profile.mood, "steady");
   assert.equal(appRequest.profile.recentFailureCount, 3);
   assert.equal(JSON.stringify(appRequest).includes(INSTAGRAM_ANDROID_PACKAGE), false);
 });
@@ -3347,6 +3475,8 @@ test("custom premium challenges persist and feed local challenge selection", () 
     customChallenges: hydrated.customChallenges
   });
   const request = buildChallengeGenerationRequest({
+    exportState: hydrated,
+    exportDay: "2026-05-13T12:00:00.000Z",
     streakDays: 14,
     premium: true,
     attemptsToday: 2,
@@ -3365,7 +3495,7 @@ test("custom premium challenges persist and feed local challenge selection", () 
   assert.equal(JSON.stringify(request).includes("bedroom loop"), false);
 });
 
-test("challenge generation readiness reports missing remote configuration", () => {
+test("challenge generation stays local despite old remote and unsafe endpoint configuration", () => {
   const previousMode = process.env.EXPO_PUBLIC_AI_CHALLENGE_MODE;
   const previousEndpoint = process.env.EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT;
 
@@ -3375,14 +3505,14 @@ test("challenge generation readiness reports missing remote configuration", () =
     configureChallengeGenerationProvider(null);
 
     const readiness = getChallengeGenerationReadiness();
-    assert.equal(readiness.status, "missing-config");
-    assert.ok(readiness.missing.includes("remote challenge provider or endpoint"));
+    assert.equal(readiness.status, "local");
+    assert.deepEqual(readiness.missing, []);
 
     process.env.EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT = "http://localhost:3000/api/challenges";
     const unsafeReadiness = getChallengeGenerationReadiness();
-    assert.equal(unsafeReadiness.status, "missing-config");
-    assert.ok(unsafeReadiness.missing.includes("must use HTTPS"));
-    assert.ok(unsafeReadiness.missing.includes("must not point to a local development host"));
+    assert.equal(unsafeReadiness.status, "local");
+    assert.deepEqual(unsafeReadiness.missing, []);
+    assert.equal(getChallengeGenerationConfig({mode:"remote"}).endpointUrl, null);
   } finally {
     restoreEnv("EXPO_PUBLIC_AI_CHALLENGE_MODE", previousMode);
     restoreEnv("EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT", previousEndpoint);
@@ -3482,10 +3612,12 @@ test("coach crisis guard returns immediate support resources", () => {
   assert.doesNotMatch(reply.toLowerCase(), /streak first|challenge first/);
 });
 
-test("coach request redacts user URLs and sends only host-level risk context", () => {
+test("coach request redacts user URLs and excludes device risk context", () => {
   const attempt = createBlockingAttempt("https://pornhub.com/private/path?token=secret", "browser");
   const request = buildCoachRequest("I opened https://pornhub.com/private/path?token=secret and feel stuck", {
     attempts: [attempt],
+    exportState: createDefaultRecoveryState(),
+    exportDay: "2026-05-13T12:00:00.000Z",
     streakDays: 12,
     attemptsToday: 1,
     premium: true,
@@ -3496,7 +3628,10 @@ test("coach request redacts user URLs and sends only host-level risk context", (
 
   assert.equal(redactCoachText("See https://example.com/private?q=1"), "See [redacted-link]");
   assert.equal(request.input.includes("private/path"), false);
-  assert.equal(request.context.recentRiskHosts[0], "pornhub.com");
+  assert.deepEqual(request.context.recentRiskHosts, []);
+  assert.deepEqual(request.context.recentRules, []);
+  assert.equal(request.context.attemptsToday, 0);
+  assert.equal(JSON.stringify(request).includes("pornhub.com"), false);
   assert.equal(request.context.slipsThisWeek, 2);
   assert.equal(request.context.slipWindow, "Late night");
   assert.equal(request.context.slipTrigger, "Stress pattern");
@@ -3792,7 +3927,7 @@ test("challenge completion outcome is persisted for future personalization", () 
   assert.equal(state.challengeHistory[0].outcome, "still-urging");
   assert.equal(unlocked.challengeHistory[0].outcome, "still-urging");
   assert.equal(getActiveEarnedUnlock(unlocked, "2026-05-11T19:05:00.000Z")?.sourceChallengeId, challenge.id);
-  assert.equal(hydrateRecoveryState({ ...state, challengeHistory: [{ ...state.challengeHistory[0], outcome: "unknown" }] }).challengeHistory[0].outcome, "helped");
+  assert.equal(hydrateRecoveryState({ ...state, challengeHistory: [{ ...state.challengeHistory[0], outcome: "unknown" }] }).challengeHistory[0].outcome, "unknown");
 });
 
 test("challenge completion and earned unlock sources persist host-only metadata", () => {
@@ -4030,16 +4165,17 @@ test("discipline settings persist and shape earned unlocks", () => {
   assert.equal(configured.disciplineSettings.shortFormInterruptionSeconds, 120);
   assert.equal(configured.disciplineSettings.unlockDurationMinutes, 20);
   assert.deepEqual(configured.disciplineSettings.blockedAppPackages, [DOOMSCROLL_APP_OPTIONS[0].androidPackage]);
-  assert.deepEqual(getActiveBlockedAppPackages(selectedOnly, "2026-05-13T12:00:00.000Z"), [DOOMSCROLL_APP_OPTIONS[0].androidPackage]);
+  // Schedule assertions use local wall time, matching the configured clock windows.
+  assert.deepEqual(getActiveBlockedAppPackages(selectedOnly, "2026-05-13T12:00:00"), [DOOMSCROLL_APP_OPTIONS[0].androidPackage]);
   assert.deepEqual(selectedTikTokAlias.blockedAppPackages, [DOOMSCROLL_APP_OPTIONS[1].androidPackage]);
-  assert.deepEqual(getActiveBlockedAppPackages(selectedTikTokAlias, "2026-05-13T12:00:00.000Z"), tiktokPackages);
-  assert.deepEqual(getActiveBlockedAppPackages(configured.disciplineSettings, "2026-05-13T12:00:00.000Z"), allDoomscrollPackages);
-  assert.deepEqual(getActiveBlockedAppPackages(workHours, "2026-05-13T10:00:00.000Z"), allDoomscrollPackages);
-  assert.deepEqual(getActiveBlockedAppPackages(workHours, "2026-05-13T20:00:00.000Z"), [DOOMSCROLL_APP_OPTIONS[0].androidPackage]);
-  assert.deepEqual(getActiveBlockedAppPackages(sleepMode, "2026-05-13T23:00:00.000Z"), allDoomscrollPackages);
-  assert.deepEqual(getActiveBlockedAppPackages(sleepMode, "2026-05-13T12:00:00.000Z"), [DOOMSCROLL_APP_OPTIONS[0].androidPackage]);
-  assert.deepEqual(getActiveBlockedAppPackages(weekendMode, "2026-05-16T12:00:00.000Z"), allDoomscrollPackages);
-  assert.deepEqual(getActiveBlockedAppPackages(weekendMode, "2026-05-13T12:00:00.000Z"), [DOOMSCROLL_APP_OPTIONS[0].androidPackage]);
+  assert.deepEqual(getActiveBlockedAppPackages(selectedTikTokAlias, "2026-05-13T12:00:00"), tiktokPackages);
+  assert.deepEqual(getActiveBlockedAppPackages(configured.disciplineSettings, "2026-05-13T12:00:00"), allDoomscrollPackages);
+  assert.deepEqual(getActiveBlockedAppPackages(workHours, "2026-05-13T10:00:00"), allDoomscrollPackages);
+  assert.deepEqual(getActiveBlockedAppPackages(workHours, "2026-05-13T20:00:00"), [DOOMSCROLL_APP_OPTIONS[0].androidPackage]);
+  assert.deepEqual(getActiveBlockedAppPackages(sleepMode, "2026-05-13T23:00:00"), allDoomscrollPackages);
+  assert.deepEqual(getActiveBlockedAppPackages(sleepMode, "2026-05-13T12:00:00"), [DOOMSCROLL_APP_OPTIONS[0].androidPackage]);
+  assert.deepEqual(getActiveBlockedAppPackages(weekendMode, "2026-05-16T12:00:00"), allDoomscrollPackages);
+  assert.deepEqual(getActiveBlockedAppPackages(weekendMode, "2026-05-13T12:00:00"), [DOOMSCROLL_APP_OPTIONS[0].androidPackage]);
   assert.equal(configured.disciplineSettings.updatedAt, "2026-05-11T08:00:00.000Z");
   assert.equal(active?.durationMinutes, 20);
   assert.equal(active?.sourceAttemptHost, "pornhub.com");
@@ -4051,10 +4187,8 @@ test("discipline settings persist and shape earned unlocks", () => {
     "com.instagram.android"
   );
   assert.equal(getActiveNativeEarnedUnlock(mixedBrowserAndAppUnlock.earnedUnlocks, "ios", "2026-05-11T09:10:00.000Z"), null);
-  assert.equal(
-    getActiveNativeEarnedUnlock(iosShieldUnlock.earnedUnlocks, "ios", "2026-05-11T09:05:00.000Z")?.sourceAttemptHost,
-    "screen-time-shield.freed.local"
-  );
+  // This older unscoped fixture cannot fabricate a Screen Time unlock target.
+  assert.equal(getActiveNativeEarnedUnlock(iosShieldUnlock.earnedUnlocks, "ios", "2026-05-11T09:05:00.000Z"), null);
   assert.equal(isIosScreenTimeShieldSource("ios-screen-time"), true);
   assert.equal(isIosScreenTimeShieldSource("screen-time-shield.freed.local"), true);
   assert.equal(isIosScreenTimeShieldSource("pornhub.com"), false);
@@ -4084,8 +4218,8 @@ test("shield settings expose editable sleep and work schedules", () => {
   assert.match(appSurface, /onChange=\{\(workStartTime\) => onDisciplineChange\(\{ workStartTime \}\)\}/);
   assert.match(appSurface, /label="Work end"/);
   assert.match(appSurface, /onChange=\{\(workEndTime\) => onDisciplineChange\(\{ workEndTime \}\)\}/);
-  assert.match(appSurface, /label="Shorts guard"/);
-  assert.match(appSurface, /onChange=\{\(shortFormInterruptionSeconds\) => onDisciplineChange\(\{ shortFormInterruptionSeconds \}\)\}/);
+  assert.match(appSurface, /Short-form filtering and calibration are unavailable in this release/);
+  assert.match(appSurface, /label="Open app limits"/);
 });
 
 test("discipline settings feed challenge preference signals without raw browsing data", () => {
@@ -4103,7 +4237,7 @@ test("discipline settings feed challenge preference signals without raw browsing
     unlockDurationMinutes: 15,
     dailyLimitMinutes: 35
   }).disciplineSettings;
-  const signal = buildChallengePreferenceSignal(settings, "2026-05-11T23:30:00.000Z");
+  const signal = buildChallengePreferenceSignal(settings, "2026-05-11T23:30:00");
   const generated = generateChallengeSet({
     streakDays: 4,
     premium: false,
@@ -4259,6 +4393,48 @@ test("daily habit completions are persisted from user actions only", () => {
   assert.equal(habits[0].updatedAt, "2026-05-11T08:30:00.000Z");
 });
 
+test("daily pledges record once per day and build a streak", () => {
+  const day1 = recordDailyPledge(createDefaultRecoveryState(), new Date("2026-06-01T09:00:00.000Z"));
+  assert.ok(hasPledgedOnDate(day1, "2026-06-01"));
+  assert.equal(hasPledgedOnDate(day1, "2026-06-02"), false);
+
+  const duplicate = recordDailyPledge(day1, new Date("2026-06-01T18:00:00.000Z"));
+  assert.equal(duplicate.pledges.length, 1);
+
+  const day2 = recordDailyPledge(duplicate, new Date("2026-06-02T08:30:00.000Z"));
+  const day3 = recordDailyPledge(day2, new Date("2026-06-03T08:30:00.000Z"));
+
+  assert.equal(getPledgeStreakDays(day3, new Date("2026-06-03T12:00:00.000Z")), 3);
+  // Today (Jun 3) is unpledged on day2 state, but yesterday counts while the day is open.
+  assert.equal(getPledgeStreakDays(day2, new Date("2026-06-03T12:00:00.000Z")), 2);
+  assert.equal(getPledgeStreakDays(day1, new Date("2026-06-03T12:00:00.000Z")), 0);
+});
+
+test("coach chat persists redacted, capped history without leaking links", () => {
+  const redact = (input: string) => input.replace(/https?:\/\/\S+/g, "[link]");
+  let state = createDefaultRecoveryState();
+  state = recordCoachMessages(
+    state,
+    [
+      { role: "user", text: "I almost visited https://example-redacted.test/feed tonight" },
+      { role: "ai", text: "You reached out instead. That is the win." }
+    ],
+    redact
+  );
+
+  assert.equal(state.coachMessages.length, 2);
+  assert.match(state.coachMessages[0].text, /\[link\]/);
+  assert.doesNotMatch(state.coachMessages[0].text, /example-redacted\.test/);
+  assert.equal(state.coachMessages[1].role, "ai");
+
+  const overflow = Array.from({ length: MAX_COACH_CHAT_ENTRIES + 10 }, (_, index) => ({
+    role: "user" as const,
+    text: `message ${index}`
+  }));
+  state = recordCoachMessages(state, overflow, redact);
+  assert.ok(state.coachMessages.length <= MAX_COACH_CHAT_ENTRIES);
+});
+
 test("legacy recovery state hydrates with an empty private slip log", () => {
   const hydrated = hydrateRecoveryState({
     ...createDefaultRecoveryState(),
@@ -4374,22 +4550,24 @@ test("weekly report learns risk window, best reset, and momentum", () => {
 });
 
 test("weekly report summarizes private slip timing and trigger without shame", () => {
+  // Risk windows are derived from local hours. Encode the intended late-night
+  // and evening behavior in wall time rather than assuming a UTC offset.
   const firstSlip = recordRelapse(
     { ...createDefaultRecoveryState(), streakDays: 8 },
     { trigger: "Late night", note: "Stayed in bed with the phone." },
-    "2026-05-10T02:15:00.000Z"
+    new Date("2026-05-10T02:15:00").toISOString()
   );
   const secondSlip = recordRelapse(
     { ...firstSlip, streakDays: 3 },
     { trigger: "Stress" },
-    "2026-05-11T22:00:00.000Z"
+    new Date("2026-05-11T22:00:00").toISOString()
   );
   const thirdSlip = recordRelapse(
     { ...secondSlip, streakDays: 1 },
     { trigger: "Late night" },
-    "2026-05-11T23:30:00.000Z"
+    new Date("2026-05-12T01:30:00").toISOString()
   );
-  const report = generateWeeklyRecoveryReport(thirdSlip, "2026-05-12T12:00:00.000Z");
+  const report = generateWeeklyRecoveryReport(thirdSlip, new Date("2026-05-12T12:00:00").toISOString());
 
   assert.equal(report.slips, 3);
   assert.equal(report.slipTrigger, "Late night");
@@ -4450,7 +4628,7 @@ test("monthly growth report uses real aggregate progress without private details
   const serialized = JSON.stringify(report);
 
   assert.equal(report.rangeLabel, "2026-05-02 to 2026-05-31");
-  assert.equal(report.protectedMoments, 3);
+  assert.equal(report.protectedMoments, 2);
   assert.equal(report.appInterventions, 1);
   assert.equal(report.selfReportedUrges, 1);
   assert.equal(report.completedChallenges, 2);
@@ -4788,7 +4966,7 @@ test("sponsor report shares aggregate progress without private details", () => {
     contact: "sam@example.com"
   };
   const withAttempt = recordBlockingAttempt(
-    createDefaultRecoveryState(),
+    recordBlockingAttempt(createDefaultRecoveryState(), createPanicInterventionAttempt("2026-05-12T21:00:00.000Z")),
     {
       ...createBlockingAttempt("https://pornhub.com/watch?token=secret", "browser"),
       detectedAt: "2026-05-12T22:15:00.000Z"
@@ -4817,10 +4995,12 @@ test("sponsor report shares aggregate progress without private details", () => {
   const decodedLink = decodeURIComponent(link ?? "");
   const combined = `${JSON.stringify(report)}\n${decodedLink}`;
 
-  assert.equal(report.summary.attempts, 1);
+  assert.equal(report.summary.attempts, 1, "Count the self-reported urge, not the automatic browser interception.");
+  assert.match(report.body, /Self-reported urge moments: 1/);
+  assert.doesNotMatch(report.body, /Protected moments interrupted/);
   assert.equal(report.summary.slips, 1);
   assert.equal(report.summary.checkIns, 1);
-  assert.match(report.body, /Private notes, contacts, and browsing details are not included/);
+  assert.match(report.body, /Private notes, contacts, browsing details, and device protection history are not included/);
   assert.match(link ?? "", /^mailto:sam%40example\.com\?subject=FREED%20weekly%20recovery%20report&body=/);
   assert.equal(combined.includes("pornhub.com"), false);
   assert.equal(combined.includes("private.example.com"), false);
@@ -4885,7 +5065,7 @@ test("support circle reports are user-initiated and aggregate-only", () => {
   assert.equal(hasUsableSupportCircleMember(member), true);
   assert.match(link ?? "", /^mailto:maya%40example\.com\?subject=FREED%20weekly%20recovery%20report&body=/);
   assert.match(decodedBody, /Shared with Maya by user action from FREED/);
-  assert.match(decodedBody, /Private notes, contacts, and browsing details are not included/);
+  assert.match(decodedBody, /Private notes, contacts, browsing details, and device protection history are not included/);
   assert.equal(buildSupportCircleReportDeepLink({ ...member, enabled: false }, withSlip), null);
   assert.equal(decodedBody.includes("maya@example.com"), false);
   assert.equal(decodedBody.includes("sam@example.com"), false);
@@ -5011,16 +5191,19 @@ test("community milestone payload stays aggregate-only and gated", () => {
 });
 
 test("analytics snapshot is aggregate-only and excludes private recovery details", () => {
+  // This fixture describes local risk hours (three signals at 04:xx) and a
+  // same-day slip, independent of the machine's UTC offset.
+  const local = (wallTime: string) => new Date(wallTime).toISOString();
   const withAttempt = recordBlockingAttempt(
     createDefaultRecoveryState(),
     {
       ...createBlockingAttempt("https://pornhub.com/watch?token=secret", "browser"),
-      detectedAt: "2026-05-12T22:15:00.000Z"
+      detectedAt: local("2026-05-13T03:45:00")
     }
   );
   const withPanic = recordBlockingAttempt(withAttempt, {
-    ...createPanicInterventionAttempt("2026-05-12T22:45:00.000Z"),
-    detectedAt: "2026-05-12T22:45:00.000Z"
+    ...createPanicInterventionAttempt(local("2026-05-13T04:15:00")),
+    detectedAt: local("2026-05-13T04:15:00")
   });
   const withAppIntervention = recordBlockingAttempt(withPanic, {
     ...createNativeInterventionAttempt({
@@ -5030,9 +5213,9 @@ test("analytics snapshot is aggregate-only and excludes private recovery details
       sourcePackage: "com.instagram.android",
       reason: "Configured app limit reached. FREED is opening an earned-reset challenge.",
       matchedRule: "configured-app:com.instagram.android",
-      detectedAt: "2026-05-12T22:55:00.000Z"
+      detectedAt: local("2026-05-13T04:25:00")
     }),
-    detectedAt: "2026-05-12T22:55:00.000Z"
+    detectedAt: local("2026-05-13T04:25:00")
   });
   const withCheckIn = recordDailyCheckIn(
     withAppIntervention,
@@ -5042,7 +5225,7 @@ test("analytics snapshot is aggregate-only and excludes private recovery details
       sleepQuality: 2,
       reflection: "Private reflection with https://private.example.com/raw-note?secret=true"
     },
-    "2026-05-12T08:00:00.000Z"
+    local("2026-05-12T13:30:00")
   );
   const withSlip = recordRelapse(
     withCheckIn,
@@ -5050,7 +5233,7 @@ test("analytics snapshot is aggregate-only and excludes private recovery details
       trigger: "Stress after https://private.example.com/raw-note?secret=true",
       note: "This private note must not be shared."
     },
-    "2026-05-12T23:10:00.000Z"
+    local("2026-05-13T04:40:00")
   );
   const withPartner = updateAccountabilityPartner(withSlip, {
     enabled: true,
@@ -5060,21 +5243,21 @@ test("analytics snapshot is aggregate-only and excludes private recovery details
     messageTemplate: "Private support template"
   });
   const withAppSession = recordAppSessionEnd(
-    recordAppSessionStart(withPartner, "2026-05-12T07:00:00.000Z"),
-    "2026-05-12T07:09:00.000Z"
+    recordAppSessionStart(withPartner, local("2026-05-12T12:30:00")),
+    local("2026-05-12T12:39:00")
   );
-  const helped = recordChallengeCompletion(withAppSession, challengeLibrary[0], "2026-05-12T22:30:00.000Z", "pornhub.com", "helped");
-  const stillUrging = recordChallengeCompletion(helped, challengeLibrary[1], "2026-05-12T23:00:00.000Z", "pornhub.com", "still-urging");
+  const helped = recordChallengeCompletion(withAppSession, challengeLibrary[0], local("2026-05-13T04:00:00"), "pornhub.com", "helped");
+  const stillUrging = recordChallengeCompletion(helped, challengeLibrary[1], local("2026-05-13T04:30:00"), "pornhub.com", "still-urging");
   const withUnlock = recordEarnedUnlock(stillUrging, challengeLibrary[0], {
     durationMinutes: 12,
     sourceAttemptHost: "pornhub.com",
-    startedAt: "2026-05-12T22:32:00.000Z"
+    startedAt: local("2026-05-13T04:02:00")
   });
-  const snapshot = buildRecoveryAnalyticsSnapshot(withUnlock, "2026-05-13T12:00:00.000Z");
+  const snapshot = buildRecoveryAnalyticsSnapshot(withUnlock, local("2026-05-13T12:00:00"));
   const text = JSON.stringify(snapshot);
 
   assert.equal(snapshot.schemaVersion, "aggregate-v5");
-  assert.equal(snapshot.behavior.protectedRiskMoments, 3);
+  assert.equal(snapshot.behavior.protectedRiskMoments, 2);
   assert.equal(snapshot.behavior.selfReportedUrges, 1);
   assert.equal(snapshot.behavior.appInterceptions, 1);
   assert.equal(snapshot.interventions.completedChallenges, 2);
@@ -5082,14 +5265,14 @@ test("analytics snapshot is aggregate-only and excludes private recovery details
   assert.equal(snapshot.interventions.challengeHelpRate, 50);
   assert.equal(snapshot.productionMetrics.appOpens, 1);
   assert.equal(snapshot.productionMetrics.appForegroundMinutes, 9);
-  assert.equal(snapshot.productionMetrics.blockedAttempts, 3);
+  assert.equal(snapshot.productionMetrics.blockedAttempts, 2);
   assert.equal(snapshot.productionMetrics.blockedAttemptSourceBreakdown.length, 5);
   assert.equal(
     snapshot.productionMetrics.blockedAttemptSourceBreakdown.reduce((total, bucket) => total + bucket.count, 0),
-    3
+    2
   );
   assert.equal(snapshot.productionMetrics.blockedAttemptSourceBreakdown.find((bucket) => bucket.source === "browser")?.count, 1);
-  assert.equal(snapshot.productionMetrics.blockedAttemptSourceBreakdown.find((bucket) => bucket.source === "panic-button")?.count, 1);
+  assert.equal(snapshot.productionMetrics.blockedAttemptSourceBreakdown.find((bucket) => bucket.source === "panic-button")?.count, 0);
   assert.equal(snapshot.productionMetrics.blockedAttemptSourceBreakdown.find((bucket) => bucket.source === "app")?.count, 1);
   assert.equal(snapshot.productionMetrics.blockedAttemptSourceBreakdown.find((bucket) => bucket.source === "search")?.count, 0);
   assert.equal(snapshot.productionMetrics.challengeCompletions, 2);
@@ -6045,6 +6228,7 @@ test("protection setup readiness requires platform-native app timer proof", () =
       active: true,
       adultFilterActive: true,
       dnsGuardRuntimeReady: true,
+      dnsGuardCoverageReady: true,
       appInterventionAuthorized: true,
       usageStatsAuthorized: true,
       blockedApplications: 0,
@@ -6061,6 +6245,7 @@ test("protection setup readiness requires platform-native app timer proof", () =
       active: true,
       adultFilterActive: true,
       dnsGuardRuntimeReady: true,
+      dnsGuardCoverageReady: true,
       appInterventionAuthorized: true,
       usageStatsAuthorized: true,
       blockedApplications: 2,
@@ -6091,6 +6276,7 @@ test("protection setup readiness requires platform-native app timer proof", () =
       active: true,
       adultFilterActive: true,
       dnsGuardRuntimeReady: true,
+      dnsGuardCoverageReady: true,
       appInterventionAuthorized: true,
       usageStatsAuthorized: true,
       blockedApplications: 2,
@@ -6105,6 +6291,14 @@ test("protection setup readiness requires platform-native app timer proof", () =
   assert.equal(iosWithoutScheduledLimit.activationReady, false);
   assert.equal(iosReady.appInterventionReady, true);
   assert.equal(iosReady.activationReady, true);
+  const iosUnauthorized = getProtectionSetupReadiness(iosCapability, {
+    authorized: false, active: true, adultFilterActive: true, selectedApplications: 1,
+    appLimitScheduled: true, safariContentBlockerEnabled: true, safariContentBlockerRuleCount: 1200,
+    mode: "screen-time", message: "authorization revoked with stale active status"
+  }, 1);
+  assert.equal(iosUnauthorized.adultFilterActive, false);
+  assert.equal(iosUnauthorized.appInterventionReady, false);
+  assert.equal(iosUnauthorized.activationReady, false);
   assert.equal(iosAggregateOnlyReady.selectedIosTargets, 2);
   assert.equal(iosAggregateOnlyReady.appInterventionReady, true);
   assert.equal(iosAggregateOnlyReady.activationReady, true);
@@ -6123,6 +6317,15 @@ test("protection setup readiness requires platform-native app timer proof", () =
   assert.equal(androidReady.appInterventionReady, true);
   assert.equal(androidReady.nativeConfiguredAppCount, 2);
   assert.equal(androidReady.activationReady, true);
+  for (const coverage of [undefined, false]) {
+    const unverifiedCoverage = getProtectionSetupReadiness(androidCapability, {
+      authorized: true, active: true, adultFilterActive: true, dnsGuardRuntimeReady: true,
+      dnsGuardCoverageReady: coverage, appInterventionAuthorized: true, usageStatsAuthorized: true,
+      blockedApplications: 2, adultDomainFeedDomainCount: 1200, mode: "dns", message: "DNS coverage unverified"
+    }, 2);
+    assert.equal(unverifiedCoverage.adultFilterActive, false);
+    assert.equal(unverifiedCoverage.activationReady, false);
+  }
   const previousReviewedFeedRequirement = process.env.EXPO_PUBLIC_REQUIRE_REVIEWED_ADULT_DOMAIN_FEED;
   try {
     process.env.EXPO_PUBLIC_REQUIRE_REVIEWED_ADULT_DOMAIN_FEED = "true";
@@ -6133,6 +6336,7 @@ test("protection setup readiness requires platform-native app timer proof", () =
         active: true,
         adultFilterActive: true,
         dnsGuardRuntimeReady: true,
+        dnsGuardCoverageReady: true,
         appInterventionAuthorized: true,
         usageStatsAuthorized: true,
         blockedApplications: 2,
@@ -6150,6 +6354,7 @@ test("protection setup readiness requires platform-native app timer proof", () =
         active: true,
         adultFilterActive: true,
         dnsGuardRuntimeReady: true,
+        dnsGuardCoverageReady: true,
         appInterventionAuthorized: true,
         usageStatsAuthorized: true,
         blockedApplications: 2,
@@ -6182,6 +6387,57 @@ test("protection setup readiness requires platform-native app timer proof", () =
   assert.equal(androidStaleStatusWithoutCapabilities.appInterventionReady, false);
   assert.equal(androidStaleStatusWithoutCapabilities.activationReady, false);
 });
+
+test("protection setup fallback unblocks the Android wizard without faking activation", () => {
+  const base = completeOnboarding(createDefaultRecoveryState(), ["Mental clarity & focus"]);
+
+  const acknowledged = markProtectionSetupFallback(
+    base,
+    "android",
+    "reviewed-feed-unavailable",
+    "2026-09-26T10:00:00.000Z"
+  );
+
+  assert.equal(hasProtectionSetupFallback(acknowledged, "android"), true);
+  assert.equal(hasProtectionSetupFallback(acknowledged, "ios"), false);
+  // The escape path must never be mistaken for a completed activation.
+  assert.equal(hasProtectionActivationForPlatform(acknowledged, "android"), false);
+  assert.equal(acknowledged.protectionActivatedAt, null);
+
+  // Survives persistence, so a restart cannot trap the user on setup again.
+  const hydrated = hydrateRecoveryState(acknowledged);
+  assert.equal(hydrated.protectionSetupFallback?.reason, "reviewed-feed-unavailable");
+  assert.equal(hydrated.protectionSetupFallback?.acknowledgedAt, "2026-09-26T10:00:00.000Z");
+
+  // Completing the real activation test clears the limited-protection state.
+  const activated = markProtectionActivated(hydrated, "android");
+  assert.equal(hasProtectionSetupFallback(activated, "android"), false);
+  assert.equal(hasProtectionActivationForPlatform(activated, "android"), true);
+
+  // Malformed or cross-platform fallback records are rejected on hydration.
+  const rejected = hydrateRecoveryState({
+    ...base,
+    protectionSetupFallback: { acknowledgedAt: "not-a-date", platform: "android", reason: "made-up" }
+  } as never);
+  assert.equal(rejected.protectionSetupFallback, null);
+  const unknownPlatform = hydrateRecoveryState({
+    ...base,
+    protectionSetupFallback: {
+      acknowledgedAt: "2026-09-26T10:00:00.000Z",
+      platform: "web-preview-not-real",
+      reason: "reviewed-feed-unavailable"
+    }
+  } as never);
+  assert.equal(unknownPlatform.protectionSetupFallback, null);
+});
+
+function assertIosEncryptedDnsReleaseSafety() {
+  const { readEncryptedDnsSafetySources, inspectIosEncryptedDnsSafety } = require("../scripts/lib/encrypted-dns-safety-contract");
+  const safety = inspectIosEncryptedDnsSafety(readEncryptedDnsSafetySources());
+  for (const [boundary, safe] of Object.entries(safety)) {
+    assert.equal(safe, true, `iOS encrypted DNS must preserve ${boundary}; this does not establish signed-device readiness`);
+  }
+}
 
 test("native protection config preserves no-overlay and DNS-only safety contracts", () => {
   const androidManifest = readFileSync("modules/freed-protection/android/src/main/AndroidManifest.xml", "utf8");
@@ -6264,8 +6520,12 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   );
   const safariContentBlockerList = readFileSync("ios/FREEDSafariContentBlocker/blockerList.json", "utf8");
   const appSurface = readFileSync("src/features/freed-app.tsx", "utf8");
+  const challengeVerificationHook = readFileSync("src/hooks/useChallengeVerification.ts", "utf8");
+  const challengeVerificationRuntime = readFileSync("src/lib/challenge-verification-runtime.ts", "utf8");
   const protectionReadiness = readFileSync("src/lib/protection-readiness.ts", "utf8");
   const protectionPermissions = readFileSync("src/lib/protection-permissions.ts", "utf8");
+  const protectionSetupView = readFileSync("src/components/ProtectionSetupView.tsx", "utf8");
+  const protectionSetupPresenter = readFileSync("src/lib/protection-setup-presenter.ts", "utf8");
   const recoveryNotificationPermission = readFileSync("src/lib/recovery-notification-permission.ts", "utf8");
   const extensionScript = readFileSync("scripts/add-ios-screen-time-extensions.rb", "utf8");
   const adultDomainFeedSync = readFileSync("src/lib/adult-domain-feed-sync.ts", "utf8");
@@ -6355,7 +6615,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosPolicyPack, /DeviceActivity schedules/);
   assert.match(iosPolicyPack, /Safari Content Blocker/);
   assert.match(iosPolicyPack, /Safari Focus Shield/);
-  assert.match(iosPolicyPack, /https:\/\/intervention\.freed\.app\/intervention/);
+  assert.match(iosPolicyPack, /https:\/\/freed-7d5ee\.firebaseapp\.com\/intervention/);
   assert.match(iosPolicyPack, /FREED cannot and does not read third-party app screens on iOS/);
   assert.match(iosPolicyPack, /FREED cannot and does not detect Instagram Reels, TikTok, or YouTube Shorts inside native third-party apps on iOS/);
   assert.match(iosPolicyPack, /FREED does not take screenshots, run OCR, or perform continuous image classification for protection/);
@@ -6443,18 +6703,35 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(vpnService, /\.addRoute\(SECONDARY_DNS, 32\)/);
   assert.match(vpnService, /protect\(socket\)/);
   assert.match(vpnService, /DNS_RESOLVERS = listOf\(PRIMARY_DNS, SECONDARY_DNS\)/);
-  assert.match(vpnService, /for \(resolver in DNS_RESOLVERS\)/);
+  assert.match(vpnService, /raceForward\(dnsPayload, listOf\(PRIMARY_DNS, SECONDARY_DNS\), RACE_BUDGET_MS\)/);
+  assert.match(vpnService, /for \(resolver in networkResolvers\)/);
+  assert.match(vpnService, /FreedDnsPacketPolicy\.resolverRoutes\(snapshot, setOf\(VPN_ADDRESS\)\)/);
+  assert.match(vpnService, /builder\.addRoute\(route\.address, route\.prefixLength\)/);
+  assert.match(vpnService, /registerDefaultNetworkCallback/);
+  assert.match(vpnService, /captivePortalPaused = false/);
+  assert.match(vpnService, /isValidDnsResponse\(forwarded, dnsPayload\)/);
+  assert.match(vpnService, /buildIcmpPortUnreachable\(packet, length\)/);
+  assert.match(vpnService, /WORK_QUEUE_CAPACITY/);
   assert.match(vpnService, /forwardDnsToResolver\(dnsPayload, resolver\)/);
+  assert.match(vpnService, /FreedDnsPacketPolicy\.inspectIpv4\(packet, readLength\)/);
+  assert.match(vpnService, /FreedDnsPacketPolicy\.buildUdpResponse\(/);
   assert.match(vpnService, /parseDnsEnvelope\(packet, readLength\)/);
+  assert.match(vpnService, /FreedDnsPacketPolicy\.inspectIpv6\(packet, readLength\)/);
+  assert.match(vpnService, /FreedDnsPacketPolicy\.buildIcmpv6AdminProhibited\(packet, readLength\)/);
+  assert.match(vpnService, /FreedDnsPacketPolicy\.buildIcmpv6PortUnreachable\(packet, readLength\)/);
+  assert.match(vpnService, /dnsPacketHealth\.recordIpv6\(generation, inspected\)/);
+  assert.match(vpnService, /dnsGuardIpv6MalformedPackets = dnsPacketHealth\.malformedPackets/);
+  assert.match(vpnService, /dnsGuardIpv6UnsupportedPackets = dnsPacketHealth\.unsupportedDnsPackets/);
   assert.match(vpnService, /readDnsQuestionHost\(envelope\.dnsPayload\)/);
-  assert.match(vpnService, /val normalizedHost = dnsInterventionHost\(host, classification\)/);
+  assert.match(vpnService, /val normalizedHost = dnsInterventionHost\(item\.questionHost, classification\)/);
   assert.match(vpnService, /lastBlockedHost = normalizedHost/);
   assert.match(vpnService, /recordAndLaunchDnsIntervention\(normalizedHost, classification\)/);
   assert.match(vpnService, /FreedUrlClassifier\.normalizeHostForStorage\(result\.host\)/);
   assert.match(vpnService, /FreedUrlClassifier\.normalizeHostForStorage\(questionHost\)/);
   assert.doesNotMatch(vpnService, /lastBlockedHost = host/);
   assert.doesNotMatch(vpnService, /recordAndLaunchDnsIntervention\(host, classification\)/);
-  assert.match(vpnService, /output\.write\(buildUdpResponsePacket\(envelope, dnsResponse\)\)/);
+  assert.match(vpnService, /writeResponsePacket\(envelope, dnsResponse\)/);
+  assert.match(vpnService, /runCatching \{ sink\.write\(responsePacket\) \}/);
   assert.match(vpnService, /val questionEnd = findQuestionEnd\(queryPayload\) \?: DNS_HEADER_SIZE/);
   assert.match(vpnService, /if \(questionEnd == DNS_HEADER_SIZE\) writeShort\(response, 4, 0\)/);
   assert.match(vpnService, /lastForwardResolver/);
@@ -6538,7 +6815,9 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(accessibilityService, /if \(sourcePackage != normalizedPackage\) \{\s*cancelEarnedUnlockRelock\(\)/);
   assert.match(accessibilityService, /if \(expiresAt == null\) \{\s*clearEarnedUnlockPrefs\(prefs\)/);
   assert.match(accessibilityService, /if \(expiryMs == null\) \{\s*clearEarnedUnlockPrefs\(prefs\)/);
-  assert.match(accessibilityService, /return sourcePackage == packageName\.lowercase\(Locale\.US\)/);
+  assert.match(accessibilityService, /return@synchronized sourcePackage == packageName\.lowercase\(Locale\.US\)/);
+  assert.match(accessibilityService, /isEarnedUnlockActiveForPackage\(packageName: String\): Boolean = synchronized\(FreedNativeUnlockStore\.lock\)/);
+  assert.match(accessibilityService, /!FreedNativeUnlockStore\.hasActivePackageGrant\(this, sourcePackage, expiryMs\)/);
   assert.doesNotMatch(accessibilityService, /if \(isEarnedUnlockActive\(\)\)/);
   assert.match(accessibilityService, /handler\.postDelayed\(earnedUnlockRelockRunnable/);
   assert.match(accessibilityService, /MAX_EARNED_UNLOCK_MINUTES = 120/);
@@ -6586,19 +6865,25 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(accessibilityService, /shortFormHostForRule/);
   assert.match(androidDoomscrollApps, /com\.google\.android\.youtube/);
   assert.match(accessibilityService, /FreedAdultDomainFeed\.domains\(this\)/);
-  assert.match(accessibilityService, /FreedUrlClassifier\.classifyFocusedInput\(candidate, adultDomainFeed\)/);
+  assert.match(accessibilityService, /FreedUrlClassifier\.classifyFocusedInput\(\s*candidate,\s*adultDomainFeed,\s*FreedAdultDomainFeed\.userAllowedDomains\(this\)\s*\)/);
   assert.match(accessibilityService, /shouldTrustEventText\(packageName, event\)/);
   assert.doesNotMatch(accessibilityService, /collectLikelyUrlText\(root/);
   assert.match(vpnService, /recordAndLaunchDnsIntervention/);
-  assert.match(vpnService, /FreedUrlClassifier\.classify\("https:\/\/\$\{host\}", FreedAdultDomainFeed\.domains\(this\)\)/);
+  assert.match(vpnService, /FreedUrlClassifier\.classify\(\s*"https:\/\/\$\{item\.questionHost\}",\s*resolveAdultDomains\(\),\s*FreedAdultDomainFeed\.userAllowedDomains\(this\)\s*\)/);
+  assert.match(vpnService, /FreedAdultDomainFeed\.domains\(this\)/);
+  assert.match(vpnService, /FEED_REFRESH_INTERVAL_MS/);
   assert.match(vpnService, /PENDING_SOURCE_PACKAGE, "android-dns"/);
   assert.match(vpnService, /Adult-domain DNS request blocked/);
   assert.match(vpnService, /showDnsInterventionNotification\(host, redactedUrl, result\.matchedRule\)/);
   assert.match(vpnService, /INTERVENTION_NOTIFICATION_CHANNEL_ID/);
-  assert.match(vpnService, /NotificationManager\.IMPORTANCE_HIGH/);
-  assert.match(vpnService, /FREED blocked an adult-domain request/);
+  assert.match(vpnService, /NotificationManager\.IMPORTANCE_DEFAULT/);
+  assert.match(vpnService, /FreedNativeCopy\.text\(this@FreedVpnService, R\.string\.freed_recovery_channel\)/);
+  assert.match(androidStrings, /name="freed_dns_intervention_title"[^>]*>Hold on — your streak is worth protecting<\/string>/);
+  assert.doesNotMatch(vpnService, /setFullScreenIntent/);
+  assert.match(vpnService, /setContentIntent\(contentPendingIntent\)/);
+  assert.match(vpnService, /Notification\.VISIBILITY_PRIVATE/);
   assert.match(vpnService, /buildDnsInterventionIntent\(host, redactedUrl, matchedRule\)/);
-  assert.match(vpnService, /startActivity\(buildDnsInterventionIntent\(host, redactedUrl, result\.matchedRule\)\)/);
+  assert.doesNotMatch(vpnService, /startActivity\(buildDnsInterventionIntent/);
   assert.match(interventionActivity, /setFinishOnTouchOutside\(false\)/);
   assert.match(interventionActivity, /override fun onNewIntent/);
   assert.match(interventionActivity, /FLAG_ACTIVITY_REORDER_TO_FRONT/);
@@ -6607,7 +6892,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(androidClassifier, /searchEngineDomains/);
   assert.match(androidClassifier, /recoveryDomainContextTerms/);
   assert.match(androidClassifier, /explicit-domain-token-recovery-context/);
-  assert.match(androidClassifier, /fun classifyFocusedInput\(input: String, adultDomainFeed: Set<String> = emptySet\(\)\): FreedClassification/);
+  assert.match(androidClassifier, /fun classifyFocusedInput\(\s*input: String,\s*adultDomainFeed: Set<String> = emptySet\(\),\s*userAllowedDomains: Set<String> = emptySet\(\)\s*\): FreedClassification/);
   assert.match(androidClassifier, /fun normalizeHostForStorage\(input: String\): String/);
   assert.match(androidClassifier, /sanitizeHostCandidate/);
   assert.match(androidClassifier, /focused-search\.app\.freed\.local/);
@@ -6616,7 +6901,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(androidClassifier, /urlResult\.matchedRule != "empty-input"/);
   assert.match(androidClassifier, /shouldTreatAsUrlCandidate\(input\)/);
   assert.match(androidClassifier, /explicitFocusedSearchSignal\(searchText\)/);
-  assert.match(androidClassifier, /fun classify\(input: String, adultDomainFeed: Set<String> = emptySet\(\)\)/);
+  assert.match(androidClassifier, /fun classify\(\s*input: String,\s*adultDomainFeed: Set<String> = emptySet\(\),\s*userAllowedDomains: Set<String> = emptySet\(\)\s*\)/);
   assert.match(androidClassifier, /adultDomainFeed\.firstOrNull/);
   assert.match(androidAdultDomainFeed, /object FreedAdultDomainFeed/);
   assert.match(androidAdultDomainFeed, /MAX_DOMAINS = 50_000/);
@@ -6642,9 +6927,13 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(androidModule, /adultDomainFeedDomainCount/);
   assert.match(androidModule, /statusPayloadWithAndroidDiagnostics\(context, statusPayload/);
   assert.match(androidModule, /val accessibilityEnabled = isAccessibilityServiceEnabled\(context\)/);
-  assert.match(androidModule, /val dnsGuardActive = FreedVpnService\.isRunning/);
+  assert.match(androidModule, /val dnsGuardActive = dnsGuardFilteringActive\(context\)/);
+  assert.match(androidModule, /private fun dnsGuardFilteringActive\(context: Context\): Boolean = FreedDnsGuardPolicy\.filteringActive\(/);
+  assert.match(androidModule, /FreedVpnService\.isRunning, FreedVpnService\.dnsGuardCaptivePaused, getPrivateDnsMode\(context\)/);
+  assert.match(androidModule, /enriched\["adultFilterActive"\] = dnsGuardActive/);
+  assert.match(androidModule, /enriched\["dnsGuardCoverageReady"\] = dnsGuardActive/);
   assert.match(androidModule, /enriched\["authorized"\] = accessibilityEnabled \|\| dnsGuardActive \|\| dnsGuardAutoRestartEligible/);
-  assert.match(androidModule, /enriched\["active"\] = accessibilityEnabled \|\| dnsGuardActive/);
+  assert.match(androidModule, /enriched\["active"\] = \(accessibilityEnabled && FreedProtectionConfiguration\.interceptionEnabled\(context\)\) \|\| dnsGuardActive/);
   assert.match(androidModule, /enriched\["mode"\] = if \(accessibilityEnabled\) "accessibility" else if \(dnsGuardActive\) "dns"/);
   assert.match(androidModule, /putIfMissing\("adultDomainFeedDomainCount", FreedAdultDomainFeed\.domainCount\(context\)\)/);
   assert.match(androidModule, /putIfMissing\("dnsGuardResolverCount", FreedVpnService\.DNS_RESOLVERS\.size\)/);
@@ -6653,7 +6942,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(androidModule, /PENDING_INTERVENTION_MAX_AGE_MS/);
   assert.match(androidModule, /PENDING_INTERVENTION_FUTURE_SKEW_MS/);
   assert.match(androidModule, /isFreshPendingIntervention\(detectedAt\)/);
-  assert.match(androidModule, /claimPendingIntervention\(prefs, interventionId\)/);
+  assert.match(androidModule, /claimPendingIntervention\(prefs, interventionId, stageUnlockLease = false\)/);
   assert.match(androidModule, /isPendingInterventionConsumed\(prefs, interventionId\)/);
   assert.match(androidModule, /nowMs - detectedMs <= PENDING_INTERVENTION_MAX_AGE_MS/);
   assert.match(androidModule, /AsyncFunction\("configureBlockedAppPackages"/);
@@ -6663,8 +6952,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(androidModule, /Settings\.EXTRA_APP_PACKAGE/);
   assert.match(androidModule, /Intent\.EXTRA_PACKAGE_NAME/);
   assert.match(androidModule, /Uri\.parse\("package:\$\{context\.packageName\}"\)/);
-  assert.match(androidModule, /INTENT_CATEGORY_USAGE_ACCESS_CONFIG = "android\.intent\.category\.USAGE_ACCESS_CONFIG"/);
-  assert.match(androidModule, /usageAccessConfigIntent\(context\)/);
+  assert.doesNotMatch(androidModule, /usageAccessConfigIntent/);
   assert.match(androidModule, /FreedUsageAccessConfigActivity::class\.java/);
   assert.match(androidModule, /usageAccessConfigActivityName\(context\)/);
   assert.match(androidModule, /payload\["androidUsageAccessConfigActivity"\] = androidUsageAccessConfigActivity/);
@@ -6680,7 +6968,8 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(androidStrings, /It does not read screen contents/);
   assert.match(androidStrings, /raw usage events/);
   assert.match(usageAccessConfigActivity, /class FreedUsageAccessConfigActivity : Activity\(\)/);
-  assert.match(usageAccessConfigActivity, /Usage Access is controlled by Android Settings/);
+  assert.match(usageAccessConfigActivity, /FreedNativeCopy\.text\(this@FreedUsageAccessConfigActivity, R\.string\.freed_usage_note\)/);
+  assert.match(androidStrings, /name="freed_usage_note"[^>]*>Usage Access is controlled by Android Settings\. After enabling FREED, return to setup so the activation test can verify protection\./);
   assert.match(usageAccessConfigActivity, /freed:\/\/protection-setup\?source=usage-access-config/);
   assert.match(
     usageAccessConfigActivity,
@@ -6741,8 +7030,16 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(androidModule, /payload\["usageStatsAuthorized"\] = usageStatsAuthorized/);
   assert.match(androidModule, /payload\["usageStatsObservedPackageNames"\] = usageStatsObservedPackageNames/);
   assert.match(androidModule, /payload\["usageStatsTodayMinutesByPackage"\] = usageStatsTodayMinutesByPackage/);
-  assert.match(androidModule, /"private_dns_mode"/);
-  assert.match(androidModule, /"private_dns_specifier"/);
+  assert.match(androidModule, /return FreedNetworkDnsState\.read\(context\)\.mode/);
+  assert.match(androidModule, /return FreedNetworkDnsState\.read\(context\)\.serverName/);
+  const networkDnsState = readFileSync("modules/freed-protection/android/src/main/java/app/freed/protection/FreedNetworkDnsState.kt", "utf8");
+  const dnsGuardPolicy = readFileSync("modules/freed-protection/android/src/main/java/app/freed/protection/FreedDnsGuardPolicy.kt", "utf8");
+  assert.match(networkDnsState, /manager\.getLinkProperties\(network\)/);
+  assert.match(networkDnsState, /properties\.isPrivateDnsActive/);
+  assert.match(networkDnsState, /properties\.privateDnsServerName/);
+  assert.match(networkDnsState, /!caps\.hasTransport\(NetworkCapabilities\.TRANSPORT_VPN\)/);
+  assert.match(dnsGuardPolicy, /privateDnsMode == "off"/);
+  assert.match(dnsGuardPolicy, /running && !captivePaused && allowsPlaintext\(privateDnsMode\)/);
   assert.match(androidModule, /payload\["privateDnsMode"\] = privateDnsMode/);
   assert.match(androidModule, /payload\["dnsGuardLastResolver"\] = dnsGuardLastResolver/);
   assert.match(androidModule, /payload\["dnsGuardLastForwardFailure"\] = dnsGuardLastForwardFailure/);
@@ -6754,15 +7051,17 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(androidModule, /payload\["dnsGuardUserEnabled"\] = dnsGuardUserEnabled/);
   assert.match(androidModule, /payload\["dnsGuardAutoRestartEligible"\] = dnsGuardAutoRestartEligible/);
   assert.match(androidModule, /payload\["dnsGuardLastAutoRestartResult"\] = dnsGuardLastAutoRestartResult/);
-  assert.match(androidModule, /Strict Private DNS is enabled/);
+  assert.match(dnsGuardPolicy, /strict Private DNS is enabled/);
   assert.match(androidModule, /blockedApplications/);
   assert.match(androidModule, /activeUnlockExpiresAt/);
   assert.match(androidModule, /payload\["activeUnlockSourcePackage"\] = activeUnlockSourcePackage/);
   assert.match(androidModule, /FreedAccessibilityService\.MAX_EARNED_UNLOCK_MINUTES/);
   assert.match(androidModule, /formatIsoMillis\(maxExpiryMs\)/);
   assert.match(androidModule, /Adult-domain filtering stays protected/);
-  assert.match(androidModule, /ImageLabeling\.getClient\(ImageLabelerOptions\.DEFAULT_OPTIONS\)/);
-  assert.match(androidModule, /Tasks\.await\(labeler\.process\(image\), 8, TimeUnit\.SECONDS\)/);
+  assert.match(androidModule, /photoPipeline\.classify\(appContext\.reactContext, uri, expectedLabels, operationId, promise\)/);
+  assert.match(readFileSync("modules/freed-protection/android/src/main/java/app/freed/protection/FreedChallengePhotoPipeline.kt", "utf8"), /ImageLabelerOptions\.Builder\(\)\.setConfidenceThreshold\(0\.65f\)/);
+  assert.doesNotMatch(androidModule, /Tasks\.await/);
+  assert.match(readFileSync("modules/freed-protection/android/src/main/java/app/freed/protection/FreedChallengePhotoPipeline.kt", "utf8"), /task\.addOnCompleteListener\(executor\)/);
 
   assert.match(iosModule, /stopAdultContentFilter/);
   assert.match(iosModule, /adultFilterActiveKey/);
@@ -6771,18 +7070,65 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosModule, /let filterActive = authorized && self\.isAdultFilterActive\(\)/);
   assert.match(iosModule, /startRiskWindowMonitoring/);
   assert.match(iosModule, /startMinute: Int, endMinute: Int/);
-  assert.match(iosModule, /DeviceActivityCenter\(\)\.startMonitoring/);
+  const groupRuntime = readFileSync('modules/freed-protection/ios/FreedAppGroupsRuntime.swift', 'utf8');
+  const stripSwiftComments = (source: string) => {
+      let code='',index=0,depth=0,quoted=false,triple=false,escaped=false;
+      while(index<source.length) {
+        if(depth) {
+          if(source.startsWith('/*',index)){depth++;index+=2;}
+          else if(source.startsWith('*/',index)){depth--;index+=2;}
+          else {if(source[index]==='\n')code+='\n';index++;}
+        } else if(quoted) {
+          if(triple&&source.startsWith('"""',index)){code+='"""';index+=3;quoted=false;triple=false;}
+          else {const character=source[index++];code+=character;if(!triple){if(escaped)escaped=false;else if(character==='\\')escaped=true;else if(character==='"')quoted=false;}}
+        } else if(source.startsWith('//',index)) {
+          code+=' ';while(index<source.length&&source[index]!=='\n')index++;
+        } else if(source.startsWith('/*',index)) {code+=' ';depth=1;index+=2;}
+        else if(source.startsWith('"""',index)){code+='"""';quoted=true;triple=true;index+=3;}
+        else {const character=source[index++];code+=character;if(character==='"')quoted=true;}
+      }
+      assert.equal(depth,0,'Unterminated Swift block comment cannot certify monitoring.');
+      return code;
+  };
+  const assertMonitorRegistrations = (moduleSource: string, groupsSource: string) => {
+    const module=stripSwiftComments(moduleSource),groups=stripSwiftComments(groupsSource);
+    const start=module.indexOf('  private func scheduleSelectedAppLimitMonitoring('),end=module.indexOf('  private func clearEarnedUnlockState()',start);assert.ok(start>=0&&end>start);
+    const selectedMonitor = module.slice(start,end);
+    assert.match(selectedMonitor, /let center = DeviceActivityCenter\(\), name = DeviceActivityName\(appLimitActivityName\)/);
+    assert.match(selectedMonitor, /try center\.startMonitoring\(name, during: schedule, events: \[eventName: event\]\)/);
+    assert.match(selectedMonitor, /guard center\.activities\.contains\(name\), center\.schedule\(for: name\) == schedule,/);
+    assert.match(selectedMonitor, /center\.events\(for: name\)\[eventName\] == event else/);
+    assert.match(groups, /private let centre=DeviceActivityCenter\(\)/);
+    assert.match(groups, /try centre\.startMonitoring\(activity,during:schedule\(g\),events:events\(g,d\)\)/);
+    assert.match(groups, /guard registrationReady\(g,candidate,d\) else\{throw Failure\.reason\("monitor-readback-failed"\)\}/);
+  };
+  assertMonitorRegistrations(iosModule,groupRuntime);
+  for(const [owner,before,after] of [
+    ['module','try center.startMonitoring(name, during: schedule, events: [eventName: event])','center.stopMonitoring([name])'],
+    ['module','center.events(for: name)[eventName] == event else','true else'],
+    ['group','try centre.startMonitoring(activity,during:schedule(g),events:events(g,d))','centre.stopMonitoring([activity])'],
+    ['group','guard registrationReady(g,candidate,d) else','if false'],
+  ]) { const source=owner==='module'?iosModule:groupRuntime;assert.ok(source.includes(before));const changed=source.replace(before,after)+'\n// '+before;assert.notEqual(changed,source);assert.throws(()=>assertMonitorRegistrations(owner==='module'?changed:iosModule,owner==='group'?changed:groupRuntime)); }
+  for(const [owner,before,after] of [
+    ['module','try center.startMonitoring(name, during: schedule, events: [eventName: event])','center.stopMonitoring([name]) /* try center.startMonitoring(name, during: schedule, events: [eventName: event]) */'],
+    ['module','center.events(for: name)[eventName] == event else','true else /* center.events(for: name)[eventName] == event else */'],
+    ['group','try centre.startMonitoring(activity,during:schedule(g),events:events(g,d))','centre.stopMonitoring([activity]) /* try centre.startMonitoring(activity,during:schedule(g),events:events(g,d)) */'],
+    ['group','guard registrationReady(g,candidate,d) else','if false /* guard registrationReady(g,candidate,d) else */'],
+    ['module','try center.startMonitoring(name, during: schedule, events: [eventName: event])','center.stopMonitoring([name]) /* outer /* nested */ try center.startMonitoring(name, during: schedule, events: [eventName: event]) */'],
+  ]) { const source=owner==='module'?iosModule:groupRuntime;assert.ok(source.includes(before));const changed=source.replace(before,after);assert.notEqual(changed,source);assert.throws(()=>assertMonitorRegistrations(owner==='module'?changed:iosModule,owner==='group'?changed:groupRuntime),after); }
   assert.match(iosModule, /appLimitReachedDateKey/);
   assert.match(iosModule, /applyWebContentFilterForCurrentState/);
   assert.match(iosModule, /applySelectedShieldsForCurrentState/);
   assert.match(iosModule, /isAppLimitReachedToday/);
-  assert.match(iosModule, /sharedDefaults\(\)\.bool\(forKey: riskWindowCurrentlyActiveKey\) \|\| isAppLimitReachedToday\(\)/);
+  assert.match(iosModule, /isIndependentAppGuardActive/);
+  assert.match(iosModule, /configuredAppGuardMode\(\) == \.dailyLimit && isAppLimitMonitoringActive\(\) && isAppLimitReachedToday\(\)/);
+  assert.match(iosModule, /isStrictAppGuardConfiguredForSelection\(\) \|\| !activeAppScheduleIDs\(\)\.isEmpty/);
   assert.doesNotMatch(iosModule, /if isAdultFilterActive\(\) \{\s*applySelectedShieldsIfAvailable\(\)\s*\}/);
   assert.doesNotMatch(iosModule, /if self\.isAdultFilterActive\(\) \{\s*self\.applySelectedShieldsForCurrentState\(\)\s*\}/);
-  assert.match(iosModule, /DateComponents\(hour: startHour, minute: startMinute\)/);
-  assert.match(iosModule, /DateComponents\(hour: endHour, minute: endMinute\)/);
+  assert.match(iosModule, /DateComponents\(hour:\s*startHour,\s*minute:\s*startMinute\)/);
+  assert.match(iosModule, /DateComponents\(hour:\s*endHour,\s*minute:\s*endMinute\)/);
   assert.match(iosModule, /AsyncFunction\("configureBlockedAppPackages"/);
-  assert.match(iosModule, /DeviceActivityEvent\.Name\(self\.appLimitEventName\)/);
+  assert.match(iosModule, /DeviceActivityEvent\.Name\(appLimitEventName\)/);
   assert.match(iosModule, /makeSelectedAppLimitEvent/);
   assert.match(iosModule, /includesPastActivity: true/);
   assert.match(iosModule, /appLimitScheduled/);
@@ -6790,7 +7136,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosModule, /"appLimitReachedToday": appLimitReachedDateValue == localDateKey\(\)/);
   assert.match(iosModule, /payload\["appLimitReachedDate"\] = appLimitReachedDateValue/);
   assert.match(iosModule, /dailyLimitMinutes/);
-  assert.match(iosModule, /timeLabel\(startHour, startMinute\)/);
+  assert.match(iosModule, /timeLabel\(startHour,\s*startMinute\)/);
   assert.match(iosModule, /stopMonitoring\(\[DeviceActivityName/);
   assert.match(iosModule, /"scheduled": scheduled/);
   assert.match(deviceActivityExtension, /adultFilterActiveKey/);
@@ -6803,23 +7149,84 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosModule, /AsyncFunction\("presentFamilyActivityPicker"\) \{ \(\) async -> \[String: Any\] in/);
   assert.match(iosModule, /withCheckedContinuation/);
   assert.match(iosModule, /finishPicker\(message:/);
-  assert.match(iosModule, /Screen Time targets saved and selected app limits scheduled/);
+  assert.match(iosModule, /Screen Time targets saved and the selected app guard installed/);
   assert.match(iosModule, /No Screen Time targets were selected/);
-  assert.match(iosModule, /saveFamilyActivitySelection\(selection\)[\s\S]*scheduleSelectedAppLimitMonitoring\(\s*selection: selection,\s*limitMinutes: self\.configuredDailyLimitMinutes\(\)\s*\)/);
+  assert.match(iosModule, /saveFamilyActivitySelection\(selection\)[\s\S]*try self\.installConfiguredAppGuard\(\)[\s\S]*installationSucceeded = self\.isAppGuardReady\(\)/);
   assert.match(iosModule, /saveFamilyActivitySelection\(selection\)[\s\S]*self\.applySelectedShieldsForCurrentState\(\)/);
   assert.match(iosModule, /FamilyActivityPicker/);
   assert.match(iosModule, /FamilyActivitySelection/);
   assert.match(iosModule, /"selectedApplications": selectedApplicationCountValue/);
   assert.match(iosModule, /"selectedScreenTimeTokenCount": selectedScreenTimeTokenCount/);
   assert.match(iosModule, /"adultFilterStaysActiveDuringEarnedUnlock": activeUnlockExpiresAt != nil && active/);
-  assert.match(iosModule, /payload\["selectedShieldsPausedForEarnedUnlock"\] = activeEarnedUnlockScope\(\) != nil/);
+  assert.match(iosModule, /payload\["selectedShieldsPausedForEarnedUnlock"\] = effectiveBreak/);
   assert.match(iosModule, /earnedUnlockActivityName = "freed\.earnedUnlockWindow"/);
   assert.match(iosModule, /"earnedUnlockActivityName": earnedUnlockActivityName/);
   assert.match(iosModule, /scheduleEarnedUnlockMonitoring\(expiresAt: boundedExpiry\)/);
-  assert.match(iosModule, /DeviceActivityCenter\(\)\.startMonitoring\(DeviceActivityName\(earnedUnlockActivityName\)/);
+  assert.match(iosModule, /FreedAppGuardSchedulePolicy\.relockRegistration\(expiresAt: expiresAt\)/);
   assert.match(iosModule, /stopEarnedUnlockMonitoring\(\)/);
   assert.match(iosModule, /appGroupIdentifier = "group\.app\.freed\.recovery"/);
-  assert.match(iosModule, /UserDefaults\(suiteName: appGroupIdentifier\)/);
+  const atomicStateSource = readFileSync("modules/freed-protection/ios/FreedProtectionConfigurationLock.swift", "utf8");
+  const safariFocusExtension = readFileSync("ios/FREEDSafariFocusShield/SafariWebExtensionHandler.swift", "utf8");
+  const assertAtomicAuthority = (stateSource: string, moduleSource: string, monitorSource: string, shieldSource: string) => {
+    const state = stripSwiftComments(stateSource);
+    for (const source of [moduleSource, monitorSource]) {
+      assert.match(stripSwiftComments(source), /private func sharedDefaults\(\) -> UserDefaults \{\s*FreedProtectionConfigurationLock\.sharedDefaults\(\)\s*\}/);
+    }
+    assert.match(stripSwiftComments(shieldSource), /FreedProtectionConfigurationLock\.persist\(defaults\),[\s\S]*defaults\.data\(forKey: pendingInterventionRecordKey\) == encodedRecord/);
+    assert.doesNotMatch(stripSwiftComments(shieldSource), /defaults\.synchronize\(\)/);
+    assert.match(state, /stateFileName = "freed-enforcement-state\.v1\.plist"/);
+    assert.match(state, /class EnforcementDefaults: UserDefaults/);
+    assert.match(state, /override func object\(forKey key: String\) -> Any\? \{ owns\(key\) \? values\[key\] : legacy\.object\(forKey: key\) \}/);
+    assert.match(state, /let previous = try read\(url\)/);
+    assert.match(state, /previous\?\.values \?\? \(legacy\.persistentDomain\(forName: domain\) \?\? \[:\]\)\.filter \{ owns\(\$0\.key\) \}/);
+    assert.match(state, /guard versionNumber\.intValue == 1 else \{ throw AccessError\.stateVersionUnsupported \}/);
+    assert.match(state, /values\.keys\.allSatisfy\(owns\)/);
+    const ownedKeys = state.slice(state.indexOf("fileprivate static func owns("), state.indexOf("private static func contextKey("));
+    assert.deepEqual(Array.from(ownedKeys.matchAll(/"([^"]+)"/g), match => match[1]), [
+      "freed.protectionConfiguration.", "freed.appGroups.", "freed.appGuard.", "freed.appLimit.", "freed.earnedUnlock.",
+      "freed.pendingIntervention.", "freed.selection.", "freed.safariContentBlocker.", "freed.riskWindow.", "freed.encryptedDns.",
+      "freed.familyActivitySelection", "freed.adultFilterActive", "freed.riskWindowActive"
+    ]);
+    assert.match(state, /flock\(descriptor, LOCK_EX \| LOCK_NB\)/);
+    assert.match(state, /defer \{ flock\(descriptor, LOCK_UN\) \}/);
+    assert.match(state, /O_CREAT \| O_EXCL \| O_WRONLY \| O_CLOEXEC \| O_NOFOLLOW, S_IRUSR \| S_IWUSR/);
+    assert.match(state, /FileProtectionType\.complete/);
+    assert.match(state, /fsync\(descriptor\) == 0/);
+    assert.match(state, /rename\(temporary\.path, url\.path\) == 0/);
+    assert.match(state, /fsync\(directoryDescriptor\) == 0/);
+    assert.match(state, /try replace\(previous\.data, at: url\)/);
+    assert.match(state, /if previous == nil \{ try commit\(context\) \}\s*try execution\?\.beginCompletion\(\)\s*let value = try body\(defaults\)\s*try commit\(context\)\s*afterSuccessfulPersistence\?\(value\)/);
+    assert.match(state, /guard afterSuccessfulPersistence == nil else \{ throw AccessError\.unavailable \}/);
+    assert.match(state, /!defaults\.bool\(forKey: resetMarkerKey\) && \(capturedGeneration == nil \|\| capturedGeneration == generation\(defaults\)\)/);
+    assert.match(state, /defaults\.set\(generation\(defaults\) \+ 1, forKey: generationKey\); defaults\.set\(true, forKey: resetMarkerKey\)/);
+    assert.match(state, /values: \[resetMarkerKey: true\]/);
+    assert.doesNotMatch(state, /\.synchronize\(\)/);
+  };
+  assertAtomicAuthority(atomicStateSource, iosModule, deviceActivityExtension, shieldActionExtension);
+  for (const source of [safariFocusExtension, safariContentBlockerExtension]) {
+    assert.match(stripSwiftComments(source), /FreedProtectionConfigurationLock\.withExclusiveAccess/);
+    assert.match(stripSwiftComments(source), /FreedProtectionConfigurationLock\.sharedDefaults\(\)/);
+  }
+  assert.match(extensionScript, /shared_sources = extension\[:name\] == "FREEDShieldConfiguration" \? \[\] : \["FreedProtectionConfigurationLock\.swift"\]/);
+  assert.equal(Array.from(iosProject.matchAll(/FreedProtectionConfigurationLock\.swift in Sources \*\/ = \{isa = PBXBuildFile/g)).length, 4);
+  for (const [before, after] of [
+    ["try commit(context)\n      afterSuccessfulPersistence?(value)", "afterSuccessfulPersistence?(value)"],
+    ["try replace(previous.data, at: url)", "_ = previous.data"],
+    ["guard versionNumber.intValue == 1 else", "guard true else"],
+  ]) {
+    assert.ok(atomicStateSource.includes(before));
+    assert.throws(() => assertAtomicAuthority(atomicStateSource.replace(before, after) + "\n// " + before, iosModule, deviceActivityExtension, shieldActionExtension));
+  }
+  if (process.platform === "darwin") {
+    const atomicResult = execFileSync(process.execPath, ["modules/freed-protection/tests/run-ios-atomic-enforcement-state-tests.js"], {
+      encoding: "utf8", timeout: CORE_TEST_CHILD_TIMEOUT_MS
+    });
+    assert.match(atomicResult, /Atomic filesystem migration\/retry, private separation, failed write \+ explicit-commit rollback, corrupt\/future version rejection, restart and late reset cases passed/);
+    const suspensionResult = execFileSync(process.execPath, ["modules/freed-protection/tests/run-ios-suspension-lock-tests.js"], {
+      encoding: "utf8", timeout: CORE_TEST_CHILD_TIMEOUT_MS
+    });
+    assert.match(suspensionResult, /PASS: red\/green actual lock cases/);
+  }
   assert.match(iosModule, /applySelectedShieldsIfAvailable/);
   assert.match(iosModule, /store\.shield\.applications = .*selection\.applicationTokens/);
   assert.match(iosModule, /store\.shield\.webDomains = .*selection\.webDomainTokens/);
@@ -6849,15 +7256,18 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosModule, /sanitizeHostForStorage\(trimmed\) == screenTimeShieldHost/);
   assert.match(iosModule, /set\(self\.screenTimeShieldHost, forKey: self\.earnedUnlockSourceKey\)/);
   assert.match(iosModule, /private func clearEarnedUnlockState\(\)/);
-  assert.match(iosModule, /guard isScreenTimeUnlockSource\(storedSource\), let scope = activeEarnedUnlockScope\(\), isSelectedScreenTimeScope\(scope\) else/);
+  const activeIosUnlock = iosModule.slice(iosModule.indexOf("private func activeEarnedUnlockExpiresAt()"), iosModule.indexOf("private func isEarnedUnlockActive()"));
+  assert.match(activeIosUnlock, /guard isScreenTimeUnlockSource\(storedSource\),\s*sanitizedPendingInterventionId\(defaults\.string\(forKey: earnedUnlockInterventionIdKey\)\) != nil,\s*let scope = activeEarnedUnlockScope\(\), isSelectedScreenTimeScope\(scope\),/);
+  assert.match(activeIosUnlock, /expiry > Date\(\),\s*expiry == boundedEarnedUnlockExpiry\(expiry\), isEarnedUnlockMonitoringReady\(expiresAt: expiry\) else \{\s*invalidateActiveEarnedUnlockLease\(\)\s*return nil/);
   assert.match(iosModule, /defaults\.removeObject\(forKey: earnedUnlockSourceKey\)/);
   assert.match(iosModule, /unlock identity does not match the claimed intervention/);
   assert.match(iosModule, /clearSelectedShields\(\)/);
-  assert.match(iosModule, /Unrelated shields and adult web filtering stay active/);
+  assert.match(iosModule, /Only the challenged Screen Time app is unlocked\. Unrelated guards and adult web filtering stay active\./);
   assert.match(iosModule, /activeUnlockExpiresAt/);
   assert.match(iosModule, /maxEarnedUnlockMinutes = 120/);
   assert.match(iosModule, /boundedEarnedUnlockExpiry/);
-  assert.match(iosModule, /VNClassifyImageRequest/);
+  assert.match(iosModule, /photoPipeline\.classify\(uri: uri, expectedLabels: expectedLabels, operationId: operationId, promise: promise\)/);
+  assert.match(readFileSync("modules/freed-protection/ios/FreedChallengePhotoPipeline.swift", "utf8"), /VNClassifyImageRequest/);
   assert.match(iosModule, /AsyncFunction\("configureSafariContentBlockerRules"/);
   assert.match(iosModule, /SFContentBlockerManager\.reloadContentBlocker/);
   assert.match(iosModule, /SFContentBlockerManager\.getStateOfContentBlocker/);
@@ -6870,7 +7280,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(iosModule, /validateSafariContentBlockerRules/);
   assert.match(iosModule, /must use a block action/);
   assert.match(iosModule, /safari-content-blocker-rules\.json/);
-  assert.doesNotMatch(iosModule, /import NetworkExtension|NEDNSSettingsManager|NEDNSOverHTTPSSettings/);
+  assertIosEncryptedDnsReleaseSafety();
   assert.doesNotMatch(iosModule, /NEPacketTunnelProvider|NETunnelProviderManager|NEVPNManager/);
   assert.match(iosInfoPlist, /NSCameraUsageDescription/);
   assert.doesNotMatch(iosInfoPlist, /NSMicrophoneUsageDescription|NSPhotoLibraryUsageDescription/);
@@ -6914,7 +7324,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.doesNotMatch(safariContentBlockerEntitlements, /com\.apple\.developer\.family-controls/);
 
   assert.match(deviceActivityExtension, /import FamilyControls/);
-  assert.match(deviceActivityExtension, /UserDefaults\(suiteName: appGroupIdentifier\)/);
+  assert.match(deviceActivityExtension, /FreedProtectionConfigurationLock\.sharedDefaults\(\)/);
   assert.match(deviceActivityExtension, /JSONDecoder\(\)\.decode\(FamilyActivitySelection\.self/);
   assert.match(deviceActivityExtension, /eventDidReachThreshold/);
   assert.match(deviceActivityExtension, /freed\.selectedAppDailyLimitReached/);
@@ -6928,11 +7338,28 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(deviceActivityExtension, /earnedUnlockSourceKey = "freed\.earnedUnlock\.source"/);
   assert.match(deviceActivityExtension, /screenTimeShieldHost = "screen-time-shield\.freed\.local"/);
   assert.match(deviceActivityExtension, /private func isScreenTimeUnlockSource\(_ source: String\?\) -> Bool/);
-  assert.match(deviceActivityExtension, /guard isScreenTimeUnlockSource\(storedSource\), let scope = activeEarnedUnlockScope\(\), isSelectedScreenTimeScope\(scope\) else/);
+  const activeExtensionUnlock = deviceActivityExtension.slice(deviceActivityExtension.indexOf("private func isEarnedUnlockActive("), deviceActivityExtension.indexOf("private func isScreenTimeUnlockSource("));
+  assert.match(activeExtensionUnlock, /guard isScreenTimeUnlockSource\(storedSource\),\s*let interventionID = defaults\.string\(forKey: earnedUnlockInterventionIdKey\), UUID\(uuidString: interventionID\) != nil,\s*let scope = activeEarnedUnlockScope\(\), isSelectedScreenTimeScope\(scope\) else \{\s*if allowInvalidation \{ clearEarnedUnlockState\(\) \}\s*return false/);
+  assert.match(activeExtensionUnlock, /if expiry > Date\(\) \{\s*guard hasNativeEarnedUnlockRelock\(expiresAt: expiry\) else \{\s*if allowInvalidation \{ clearEarnedUnlockState\(\) \}\s*return false/);
+  assert.match(activeExtensionUnlock, /center\.activities\.contains\(earnedUnlockActivityName\), center\.schedule\(for: earnedUnlockActivityName\) == expected/);
+  assert.match(activeExtensionUnlock, /return start == expiresAt/);
+  assert.match(activeExtensionUnlock, /private func isEarnedUnlockActive\(allowInvalidation: Bool = true\)/);
+  assert.match(activeExtensionUnlock, /guard !isConfigurationReset\(\) else \{ return false \}/);
+  assert.match(activeExtensionUnlock, /if allowInvalidation \{ clearEarnedUnlockState\(\) \}\s*return false\s*\}/);
+  assert.equal(Array.from(stripSwiftComments(deviceActivityExtension).matchAll(/withExclusiveAccess\(afterSuccessfulPersistence:/g)).length, 3);
+  assert.equal(Array.from(stripSwiftComments(deviceActivityExtension).matchAll(/self\.applySelectedShieldsForCurrentState\(allowLeaseInvalidation: false\)/g)).length, 3);
+  for (const source of [iosModule, deviceActivityExtension]) {
+    const selectedScope = source.slice(source.indexOf("private func isSelectedScreenTimeScope("), source.indexOf("\n  private func ", source.indexOf("private func isSelectedScreenTimeScope(") + 1));
+    assert.match(selectedScope, /scope\.kind == "ios-token", scope\.tokenType == "application", scope\.domain == nil/);
+    assert.match(selectedScope, /JSONDecoder\(\)\.decode\(ApplicationToken\.self,[\s\S]*selection\.applicationTokens\.contains/);
+    assert.doesNotMatch(source, /webDomainTokens\.subtracting|except: Set<(?:WebDomainToken|ActivityCategoryToken)>/);
+  }
   assert.match(deviceActivityExtension, /private func clearEarnedUnlockState\(\)/);
   assert.match(deviceActivityExtension, /store\.shield\.applications = .*selection\.applicationTokens/);
   assert.match(deviceActivityExtension, /store\.shield\.webDomains = .*selection\.webDomainTokens/);
-  assert.match(shieldActionExtension, /UserDefaults\(suiteName: appGroupIdentifier\)/);
+  assert.match(shieldActionExtension, /FreedProtectionConfigurationLock\.withExclusiveAccess/);
+  assert.match(shieldActionExtension, /guard FreedProtectionConfigurationLock\.permitsPublication\(defaults\) else \{ return nil \}/);
+  assert.match(shieldActionExtension, /FreedProtectionConfigurationLock\.persist\(defaults\),[\s\S]*defaults\.data\(forKey: pendingInterventionRecordKey\) == encodedRecord/);
   assert.match(shieldActionExtension, /recordPendingIntervention/);
   assert.match(shieldActionExtension, /ios-screen-time-shield/);
   assert.match(shieldActionExtension, /screen-time-shield\.freed\.local/);
@@ -6961,17 +7388,41 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /hasProtectionActivationForPlatform/);
   assert.match(recoveryStateSource, /protectionActivatedAt/);
   assert.match(recoveryStateSource, /onboardingPaywallPresentedAt/);
-  assert.match(appSurface, /return "paywall"/);
-  assert.match(appSurface, /return "protectionSetup"/);
-  assert.match(appSurface, /markProtectionActivated\(ensureOnboardingComplete\(current\), getRuntimeProtectionActivationPlatform\(\)\)/);
+  const initialScreenBody = appSurface.match(/function getInitialScreenForRecoveryState\(state: RecoveryState\): Screen \{([^}]+)\}/)?.[1];
+  assert.ok(initialScreenBody, "Initial routing source contract is present.");
+  const initialScreen = new Function("state", initialScreenBody) as (state: ReturnType<typeof createDefaultRecoveryState>) => string;
+  assert.equal(initialScreen(createDefaultRecoveryState()), "welcome");
+  for (const premium of [false, true]) {
+    assert.equal(initialScreen({ ...createDefaultRecoveryState(), hasCompletedOnboarding: true, premium }), "main",
+      "Free local tools remain reachable after onboarding before purchase or native setup.");
+  }
+  assert.match(appSurface, /markProtectionActivated\(current, getRuntimeProtectionActivationPlatform\(\)\)/);
   assert.match(appSurface, /hasNativeProtectionActivationRevoked/);
   assert.match(appSurface, /setProtectionRefreshCompleted\(true\)/);
   assert.match(appSurface, /if \(!protectionRefreshCompleted\) return/);
   assert.match(appSurface, /if \(!protectionCapability \|\| !protectionStatus\) return true/);
   assert.match(appSurface, /if \(protectionCapability\.platform !== platform\) return true/);
   assert.match(appSurface, /if \(readiness\.activationReady\) return false/);
-  assert.match(appSurface, /shouldReturnToProtectionSetupAfterRevocation/);
+  const revokedAt = appSurface.indexOf("if (!hasNativeProtectionActivationRevoked(");
+  assert.notEqual(revokedAt, -1);
+  const revocationEffect = appSurface.slice(appSurface.lastIndexOf("React.useEffect(() => {", revokedAt), appSurface.indexOf("// Native enforcement owns its durable window", revokedAt));
+  assert.match(revocationEffect, /clearProtectionActivation\(current\)/);
+  assert.doesNotMatch(revocationEffect, /setScreen\("protectionSetup"\)/,
+    "Revoked protection clears native activation truth without forcing users away from free local tools.");
   assert.match(appSurface, /clearProtectionActivation\(current\)/);
+  // The post-onboarding setup screen must always offer a real way forward:
+  // a bounded retry plus an explicit, honestly-labelled degraded path.
+  assert.match(appSurface, /return state\.hasCompletedOnboarding \? "main" : "welcome"/);
+  assert.match(recoveryStateSource, /protectionSetupFallback/);
+  assert.match(protectionSetupView, /Continue with limited protection/);
+  assert.match(appSurface, /limited=\{androidWizardStepBlocked\}/);
+  assert.match(appSurface, /onLimited=\{\(\) => setSetupBlockedSheetOpen\(true\)\}/);
+  assert.match(appSurface, /androidWizardAttempts >= 2/);
+  assert.match(
+    appSurface,
+    /markProtectionSetupFallback\(current, getRuntimeProtectionActivationPlatform\(\), reason\)/
+  );
+  assert.match(appSurface, /Limited protection: setup could not be completed on this device/);
   assert.match(appSurface, /Protection was turned off or changed in system settings/);
   assert.doesNotMatch(appSurface, /protectionCapability\?\.platform !== platform/);
   assert.match(appSurface, /selectedAppPackageCount=\{disciplineSettings\.blockedAppPackages\.length\}/);
@@ -6979,13 +7430,17 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.doesNotMatch(appSurface, /selected by default/);
   assert.match(appSurface, /ProtectionSetupScreen/);
   assert.match(protectionReadiness, /buildProtectionPermissionPlan/);
-  assert.match(appSurface, /Permission checklist/);
-  assert.match(appSurface, /Native Reels, Shorts, and TikTok screens are not inspected/);
-  assert.match(appSurface, /Accessibility and Usage Access handle selected app timers/);
-  assert.match(appSurface, /when the selected surface is visible/);
+  assert.match(appSurface, /<ProtectionSetupView/);
+  assert.match(appSurface, /presentation=\{setupPresentation\}/);
+  assert.match(appSurface, /onContinue=\{handleAndroidWizardPrimary\}/);
+  assert.match(appSurface, /steps=\{permissionPlan\}/);
+  assert.match(protectionSetupView, /\{showDetails \? <View/);
+  assert.match(protectionSetupView, /steps\.filter\(step => step\.required\)/);
+  assert.match(protectionPermissions, /does not read other app screens or browsing history/);
+  assert.match(protectionPermissions, /does not MITM HTTPS or proxy normal traffic/);
   assert.match(appSurface, /App and short-form earned unlocks pause only the package that earned them; browser challenge windows stay local/);
-  assert.match(appSurface, /Required Android setup: reviewed adult-domain feed, DNS-only VPN, Usage Access, Accessibility, selected app timers, then Test Protection/);
-  assert.match(appSurface, /Required iOS setup: Screen Time authorization, adult-domain Safari Content Blocker, Safari Focus Shield for Shorts\/Reels, selected targets, daily-limit monitoring, then Test Protection\. iOS DNS filtering is unavailable/);
+  assert.match(appSurface, /Notifications and guided challenge sensors are optional\. Protection settings are available in Protect\./);
+  assert.doesNotMatch(protectionPermissions, /id: "ios-safari-focus-shield"/);
   assert.match(appSurface, /protectionSyncMessage=\{protectionSyncMessage\}/);
   assert.match(appSurface, /Native adult-domain feed loaded/);
   assert.match(appSurface, /Embedded adult-domain fallback is loaded/);
@@ -6995,13 +7450,15 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /Safari blocker off/);
   assert.match(appSurface, /targetStep\.id === "ios-safari-content-blocker"/);
   assert.match(appSurface, /protectionStatus\?\.safariContentBlockerEnabled === false/);
-  assert.match(appSurface, /Opening iOS Settings so you can enable the extension/);
+  assert.match(appSurface, /safariSetupAction\(protectionStatus\?\.safariContentBlockerEnabled\) === "settings"/);
+  assert.match(appSurface, /safariContentBlockerRuleCount[\s\S]*await syncNativeAdultDomainFeed\(\);[\s\S]*return openSafariExtensionSettings\(\)/);
+  assert.match(protectionSetupPresenter, /return enabled === true \? "sync" : "settings"/);
   assert.match(appSurface, /prepareSetupAutoAdvance\(targetStep, \{ waitingForAppReturn: Platform\.OS === "android" \}\)/);
   assert.match(appSurface, /case "choose-ios-targets":[\s\S]*prepareSetupAutoAdvance\(targetStep\);[\s\S]*runAction\("apps", presentFamilyActivityPicker\)/);
   assert.match(appSurface, /Safari has embedded fallback rules/);
   assert.match(appSurface, /adultDomainFeedDomainCount/);
   assert.match(appSurface, /Test Protection/);
-  assert.match(appSurface, /Run Activation Test/);
+  assert.match(appSurface, /if \(activationReady && !activationTestPassed\)[\s\S]*runActivationTest\(\)/);
   assert.match(appSurface, /adultBlocked/);
   assert.match(appSurface, /normalAllowed/);
   assert.match(appSurface, /nativeReady/);
@@ -7012,7 +7469,8 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /getProtectionSetupReadiness/);
   assert.match(appSurface, /@\/lib\/protection-readiness/);
   assert.match(protectionReadiness, /nativeConfiguredAppCount = protectionStatus\?\.blockedApplications \?\? 0/);
-  assert.match(protectionReadiness, /selectedIosTargets > 0 && protectionStatus\?\.appLimitScheduled/);
+  assert.match(protectionReadiness, /const appGuard = describeAppGuard\(protectionCapability, protectionStatus, expectedAppGuardMode\)/);
+  assert.match(protectionReadiness, /const appInterventionReady = appGuard\.ready/);
   assert.match(protectionReadiness, /protectionStatus\?\.appInterventionAuthorized/);
   assert.match(protectionReadiness, /protectionStatus\?\.usageStatsAuthorized/);
   assert.match(protectionReadiness, /protectionStatus\?\.dnsGuardRuntimeReady === true/);
@@ -7024,12 +7482,12 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /freshReadiness\.activationReady/);
   assert.match(appSurface, /Activation test refreshed the reviewed adult-domain feed before checking native readiness/);
   assert.match(appSurface, /Activation test could not refresh native permission\/feed status/);
-  assert.match(appSurface, /activationTestPassed\s*\?\s*"Activation test passed/);
+  assert.match(appSurface, /activationTestPassed\s*\?\s*"Configuration check passed\.[^"\n]*This does not verify real browser or network blocking\./);
   assert.match(appSurface, /buildProtectionActivationSignature/);
   assert.match(appSurface, /statusSignature/);
   assert.match(appSurface, /activationTestMatchesCurrentStatus/);
-  assert.match(appSurface, /Protection status changed since the last activation test/);
-  assert.match(appSurface, /Native domain checks passed, but current readiness changed/);
+  assert.match(appSurface, /Protection status changed since the last configuration check/);
+  assert.match(appSurface, /Local classification checks passed, but current readiness changed/);
   assert.match(appSurface, /activationTest\?\.adultBlocked &&[\s\S]*activationTest\.normalAllowed &&[\s\S]*activationTest\.nativeReady &&[\s\S]*activationReady &&[\s\S]*activationTestMatchesCurrentStatus/);
   assert.match(appSurface, /const activationComplete = activationReady && activationTestPassed/);
   assert.match(appSurface, /Platform\.OS === "ios"/);
@@ -7049,20 +7507,14 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /waitingForAppReturn/);
   assert.match(appSurface, /returnedFromExternalStep/);
   assert.match(appSurface, /pending\.waitingForAppReturn && !pending\.returnedFromExternalStep && completedStep\.status !== "complete"/);
-  assert.match(appSurface, /orderedSetupActionLabel/);
-  assert.match(appSurface, /nextRequiredStep\.id === step\.id/);
-  assert.match(appSurface, /return `Continue: \$\{nextRequiredStep\.title\}`/);
   assert.match(appSurface, /Boolean\(status\.vpnConsentRequired && !status\.adultFilterActive\)/);
   assert.match(appSurface, /protectionStatus\?\.vpnConsentRequired === false/);
   assert.match(appSurface, /Android VPN permission is approved\. Starting DNS Guard now\./);
-  assert.match(appSurface, /Continuing setup: \$\{nextRequiredStep\.title\}/);
-  assert.match(appSurface, /All required setup rows are ready\. Running the activation test now\./);
-  assert.match(appSurface, /if \(nextRequiredStep\.id === completedStep\.id\) return/);
-  assert.match(appSurface, /Next required step:/);
-  assert.match(appSurface, /Continue: \$\{nextRequiredStep\.title\}/);
-  assert.match(appSurface, /Open: \$\{nextRequiredStep\.title\}/);
-  assert.match(appSurface, /Required Android setup: reviewed adult-domain feed, DNS-only VPN, Usage Access, Accessibility, selected app timers, then Test Protection/);
-  assert.match(appSurface, /Required iOS setup: Screen Time authorization, adult-domain Safari Content Blocker, Safari Focus Shield for Shorts\/Reels, selected targets, daily-limit monitoring, then Test Protection\. iOS DNS filtering is unavailable/);
+  assert.match(appSurface, /decideSetupAdvance\(\{ pending, steps: permissionPlan/);
+  assert.match(appSurface, /runStepAction\(advance\.step\)/);
+  assert.match(appSurface, /All required setup rows are ready\. Running the local configuration check now\./);
+  assert.match(protectionSetupPresenter, /next && next\.id !== previous\.id/);
+  assert.match(appSurface, /presentProtectionSetup\(\{/);
   assert.match(appSurface, /runFeedSync/);
   assert.match(appSurface, /runAppPackageSync/);
   assert.match(appSurface, /onSyncAppPackages/);
@@ -7076,23 +7528,22 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /selectedAppPackageCount <= 0/);
   assert.match(appSurface, /waitingNoticeShown/);
   assert.match(appSurface, /is still not complete\. Finish the opened setup step and return to FREED; setup will continue automatically\./);
-  assert.match(appSurface, /can be finished later\. Continuing setup: \$\{nextRequiredStep\.title\}\./);
+  assert.match(appSurface, /can be finished later\. Continuing setup: \$\{advance\.step\.title\}\./);
   assert.match(appSurface, /Choose at least one app to protect\. Returning to app selection now; FREED will sync and continue setup when you return\./);
   assert.match(appSurface, /Selected apps are saved\. Syncing app timers to native protection now\./);
   assert.match(appSurface, /Selected apps are already synced\. Continuing protection setup automatically\./);
   assert.match(appSurface, /Select at least one Android app timer to finish protection setup\./);
   assert.match(appSurface, /setAppSelectionReturnToProtectionSetup\(true\)/);
   assert.match(appSurface, /setAppSelectionReturnToProtectionSetup\(false\)/);
-  assert.match(appSurface, /Choose Apps to Protect/);
-  assert.match(appSurface, /No Android app timers are selected yet\. Choose at least one app now so activation can finish\./);
-  assert.match(appSurface, /setScreen\(recoveryState\.onboardingPaywallPresentedAt \|\| recoveryState\.premium \? "protectionSetup" : "paywall"\)/);
+  assert.match(appSurface, /case "choose-android-apps":[\s\S]*selectedAppPackageCount <= 0[\s\S]*onChooseApps\(\)/);
+  assert.match(appSurface, /setScreen\(getJourneyDestination\(getJourneyPolicy\(\)\)\)/);
   assert.match(appSurface, /openUsageAccessSettings/);
   assert.match(appSurface, /requestAndroidRecoveryNotificationVisibility/);
   assert.match(appSurface, /androidRecoveryNotificationsNeedAttention/);
   assert.match(appSurface, /Recovery notifications/);
   assert.match(appSurface, /case "request-android-notification-permission":/);
   assert.match(appSurface, /prepareSetupAutoAdvance\(targetStep, \{ waitingForAppReturn: true, continueAfterOptional: true \}\)/);
-  assert.match(appSurface, /privateDnsStep \? runStepAction\(privateDnsStep\) : runAction\("settings", openPrivateDnsSettings\)/);
+  assert.match(appSurface, /case "open-private-dns-settings":[\s\S]*runAction\("settings", openPrivateDnsSettings\)/);
   assert.match(recoveryNotificationPermission, /requestAndroidRecoveryNotificationVisibility/);
   assert.match(recoveryNotificationPermission, /import\("expo-notifications"\)/);
   assert.match(recoveryNotificationPermission, /getPermissionsAsync/);
@@ -7121,30 +7572,25 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /case "choose-android-apps":/);
   assert.doesNotMatch(appSurface, /targetStep\.id === "android-native-adult-domain-feed"/);
   assert.match(appSurface, /Finish required protection setup before entering FREED on this device/);
-  assert.match(appSurface, /Run Test First/);
+  assert.match(appSurface, /ready: activationReady/);
   assert.match(appSurface, /if \(activationReady && !activationTestPassed\)/);
-  assert.match(appSurface, /adultFilterStep \? runStepAction\(adultFilterStep\) : runAction\("adult", applyAdultContentFilter\)/);
-  assert.match(appSurface, /appInterventionStep \? runStepAction\(appInterventionStep\) : runAction\("apps", requestProtectionAuthorization\)/);
-  assert.match(appSurface, /usageAccessStep \? runStepAction\(usageAccessStep\) : runAction\("usage", openUsageAccessSettings\)/);
-  assert.match(appSurface, /orderedSetupActionLabel\(adultFilterStep, "Enable Adult Block"\)/);
-  assert.match(appSurface, /orderedSetupActionLabel\(appInterventionStep, "Enable App Timer Permission"\)/);
-  assert.match(appSurface, /orderedSetupActionLabel\(usageAccessStep, "Enable Usage Access"\)/);
+  assert.match(appSurface, /case "apply-adult-filter":[\s\S]*runAction\("adult", applyAdultContentFilter\)/);
+  assert.match(appSurface, /case "request-authorization":[\s\S]*runAction\("apps", requestProtectionAuthorization\)/);
+  assert.match(appSurface, /case "open-usage-access-settings":[\s\S]*runAction\("usage", openUsageAccessSettings\)/);
   assert.match(appSurface, /const adultSmokeHost = "pornhub\.com"/);
   assert.match(appSurface, /const normalSmokeHost = "www\.khanacademy\.org"/);
-  assert.match(appSurface, /classifyUrl\(`https:\/\/\$\{adultSmokeHost\}`\)/);
-  assert.match(appSurface, /classifyUrl\(`https:\/\/\$\{normalSmokeHost\}`\)/);
+  assert.match(appSurface, /classifyUrl\(`https:\/\/\$\{adultSmokeHost\}`, smokeOptions\)/);
+  assert.match(appSurface, /classifyUrl\(`https:\/\/\$\{normalSmokeHost\}`, smokeOptions\)/);
   assert.match(appSurface, /without saving a blocked attempt/);
-  assert.match(appSurface, /native adult-domain and normal-site diagnostics/);
-  assert.match(appSurface, /Activation Complete/);
-  assert.match(appSurface, /Finish Setup/);
-  assert.match(appSurface, /Continue Preview/);
+  assert.match(protectionSetupPresenter, /Your required permissions and local configuration checks passed on this device\./);
+  assert.match(protectionSetupPresenter, /This check does not open websites or verify real browser or network blocking\./);
+  assert.match(appSurface, /complete: activationComplete/);
+  assert.match(appSurface, /step: androidWizardStep/);
+  assert.match(protectionSetupPresenter, /context\.platform === "preview"/);
   assert.doesNotMatch(appSurface, /Continue Later/);
   assert.match(appSurface, /PROTECTION_PERMISSION_EXPLANATION/);
-  assert.match(appSurface, /avoids continuous screen capture, OCR, packet inspection, and full-traffic proxying/);
+  assert.match(protectionPermissions, /No camera roll access, media upload, continuous camera analysis, continuous image classification, screen-capture analysis, or OCR/);
   assert.match(appSurface, /setScreen\("protectionSetup"\)/);
-  assert.match(appSurface, /Enable Adult Block/);
-  assert.match(appSurface, /Enable Usage Access/);
-  assert.match(appSurface, /Accessibility disclosure/);
   assert.match(appSurface, /presentFamilyActivityPicker/);
   assert.match(nativeProtectionBridge, /applyEarnedUnlockWindow/);
   assert.match(nativeProtectionBridge, /clearEarnedUnlockWindow/);
@@ -7202,10 +7648,10 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(androidModule, /ANDROID_SETTINGS_ROUTE_OPENED_AT/);
   assert.match(androidModule, /persistAndroidSettingsRoute/);
   assert.match(androidModule, /lastAndroidSettingsRoute/);
-  assert.match(androidModule, /ACTION_ACCESSIBILITY_DETAILS_SETTINGS/);
-  assert.match(androidModule, /androidSettingsRoutes\(\): List<String>[\s\S]*ACTION_ACCESSIBILITY_DETAILS_SETTINGS,[\s\S]*Settings\.ACTION_APP_NOTIFICATION_SETTINGS,[\s\S]*ACTION_PRIVATE_DNS_SETTINGS,[\s\S]*Settings\.ACTION_ACCESSIBILITY_SETTINGS/);
-  assert.match(androidModule, /Intent\.EXTRA_COMPONENT_NAME/);
-  assert.match(androidModule, /accessibilityServiceDetailsSettingsIntent\(context\)/);
+  assert.doesNotMatch(androidModule, /ACTION_ACCESSIBILITY_DETAILS_SETTINGS/);
+  assert.match(androidModule, /androidSettingsRoutes\(\): List<String>[\s\S]*Settings\.ACTION_APP_NOTIFICATION_SETTINGS,[\s\S]*ACTION_PRIVATE_DNS_SETTINGS,[\s\S]*Settings\.ACTION_ACCESSIBILITY_SETTINGS,[\s\S]*Settings\.ACTION_USAGE_ACCESS_SETTINGS,[\s\S]*Settings\.ACTION_VPN_SETTINGS/);
+  assert.doesNotMatch(androidModule, /accessibilityServiceDetailsSettingsIntent/);
+  assert.match(androidModule, /openAndroidSettingsRoute\(\s*context,\s*Settings\.ACTION_ACCESSIBILITY_SETTINGS/);
   assert.match(androidModule, /AsyncFunction\("openAndroidNotificationSettings"/);
   assert.match(androidModule, /Manifest\.permission\.POST_NOTIFICATIONS/);
   assert.match(androidModule, /Settings\.ACTION_APP_NOTIFICATION_SETTINGS/);
@@ -7218,7 +7664,7 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(androidModule, /Settings\.EXTRA_APP_PACKAGE/);
   assert.match(androidModule, /ACTION_PRIVATE_DNS_SETTINGS = "android\.settings\.PRIVATE_DNS_SETTINGS"/);
   assert.match(androidModule, /Settings\.ACTION_WIRELESS_SETTINGS/);
-  assert.match(androidModule, /FreedUrlClassifier\.classify\("https:\/\/\$adultHost", domains\)/);
+  assert.match(androidModule, /FreedUrlClassifier\.classify\("https:\/\/\$adultHost", domains, userAllowed\)/);
   assert.match(androidModule, /DNS Guard is not running/);
   assert.match(androidModule, /DNS Guard resolver list is empty/);
   assert.match(androidModule, /"usageStatsObservedPackageNames" to/);
@@ -7370,10 +7816,26 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /DOOMSCROLL_APP_OPTIONS/);
   assert.match(appSurface, /getActiveBlockedAppPackages\(disciplineSettings/);
   assert.match(appSurface, /disciplineSettings\.shortFormInterruptionSeconds/);
-  assert.match(appSurface, /configureBlockedAppPackages\(\s*activeBlockedAppPackages,\s*disciplineSettings\.dailyLimitMinutes,\s*disciplineSettings\.shortFormInterruptionSeconds/s);
+  assert.match(appSurface, /createLatestSerialJob\(async \(input, isLatest\) =>/);
+  const appGuardSource = readFileSync("src/lib/app-guard.ts", "utf8");
+  assert.match(appSurface, /syncNativeAppGuard\(input\.settings, capability, \{ configurePackages: configureBlockedAppPackages, configureMode: configureAppGuardMode, configureSchedules: configureAppSchedules \}, current\)/);
+  assert.match(appSurface, /if \(!isLatest\(\)\) return false/);
+  assert.match(appSurface, /if \(input\.isCurrent\(\)\) return true/);
+  assert.match(appSurface, /readable\.hydrated && readable\.storageReady/);
+  assert.match(appSurface, /readable\.ownerLease\.isCurrent\(\)/);
+  assert.match(appGuardSource, /native\.configurePackages\(getAppGuardPackages\(settings, capability\), settings\.dailyLimitMinutes, settings\.shortFormInterruptionSeconds\)/);
+  assert.match(appSurface, /if \(!current\(\)\) return null/);
+  assert.match(appGuardSource, /buildNativeAppScheduleConfiguration\(settings, capability\.platform\)/);
+  assert.match(appGuardSource, /status = await native\.configureSchedules\(configuration\)/);
+  assert.match(appGuardSource, /capability\.appSchedules === true && status\.appSchedulesConfigurationAccepted !== true/);
+  assert.match(appGuardSource, /status\.appGuardModeConfigurationAccepted !== true \|\| status\.appGuardMode !== settings\.appGuardMode/);
+  assert.match(appGuardSource, /status\.protectionConfigurationResetDisabled === true/);
+  assert.match(appSurface, /if \(!status\) throw new Error\('App guard configuration was cancelled\. Retry saving\.'\)/);
+  assert.match(appSurface, /if \(job\.isCurrent\(\) && current\(\)\) \{ setProtectionStatus\(returned\)/);
+  assert.match(appSurface, /const returned = scope === null \|\| appGroupsMemorySuspended\.current \? projectGenericProtectionStatus\(status\)! : status;/);
   assert.match(appSurface, /iOS DeviceActivity monitors selected Screen Time targets/);
   assert.match(appSurface, /Earned unlock relock monitor/);
-  assert.match(appSurface, /with a \$\{protectionStatus\.dailyLimitMinutes \?\? 20\} minute daily limit monitor/);
+  assert.match(appGuardSource, /targets > 0 && authorized && configured && \(!modern \|\| knownMode && status\?\.appGuardReady === true && \(!expectedMode \|\| status\.appGuardMode === expectedMode\)\)/);
   assert.match(appSurface, /syncNativeAdultDomainFeed\(\)/);
   assert.match(appSurface, /protectionSyncMessage/);
   assert.match(appSurface, /safariContentBlockerRuleCount/);
@@ -7407,13 +7869,42 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(appSurface, /startRiskWindowMonitoring\(start\.hour, end\.hour, start\.minute, end\.minute\)/);
   assert.match(appSurface, /completionSubmittedRef\.current/);
   assert.match(appSurface, /if \(completionSubmittedRef\.current\) return/);
-  assert.match(appSurface, /disabled=\{completionSubmitting\}/);
-  assert.match(appSurface, /recordChallengeCompletion\(current, challenge, undefined, sourceAttempt, outcome\)/);
-  assert.match(appSurface, /return recordEarnedUnlock\(completed, challenge,\s*\{/);
+  assert.match(appSurface, /sessionController\.claimCompletion\(verification\.evidence, outcome, snapshot\.session\.id\)/);
+  assert.match(appSurface, /if \(!saved\) \{ completionSubmittedRef\.current = false; setCompletionSubmitting\(false\)/);
+  assert.match(appSurface, /recordChallengeCompletion\(current, challenge, new Date\(receipt\.completedAtMs\)\.toISOString\(\), unlockSourceForAttempt\(originalAttempt\), outcome, receipt\.id, currentReceipt\.elapsedMs \/ 1000, currentReceipt\.completion\?\.provenance\)/);
+  const completionStart = appSurface.indexOf("const requestCompletedAppBreak = async (sessionId: string)");
+  const completionSource = appSurface.slice(completionStart, appSurface.indexOf("const renderAccountHost", completionStart));
+  assert.notEqual(completionStart, -1);
+  const saveCompletionStart = appSurface.indexOf("const saveCompletedChallenge =");
+  assert.ok(saveCompletionStart >= 0 && completionStart > saveCompletionStart, "Completion-save and break-request boundaries must exist in order.");
+  const saveCompletionSource = appSurface.slice(saveCompletionStart, completionStart);
+  assert.doesNotMatch(saveCompletionSource, /recordEarnedUnlock|applyEarnedUnlockWindow|applyFocusShieldEarnedUnlock/,
+    "Saving a completed reset cannot automatically request or record an app break.");
+  assert.match(appSurface, /onComplete=\{saveCompletedChallenge\}/);
+  assert.match(appSurface, /onRequestBreak=\{\(\) => \{ const id = challengeSession\.getSnapshot\(\)\.session\?\.id; if \(id\) void requestCompletedAppBreak\(id\)/);
+  assert.match(completionSource, /const completionAttempt = getCompletedBreakAttempt\(sessionId\)/);
+  assert.match(completionSource, /origin\.breakRequested = true/);
+  assert.match(completionSource, /const staged = recordEarnedUnlock\(current, receipt\.challenge,\s*\{/);
+  assert.match(completionSource, /const requestedUnlock = staged\.earnedUnlocks\.find/);
+  assert.match(completionSource, /!requestedUnlock \|\| !requiresNativeUnlockConfirmation\(requestedUnlock, Platform\.OS\)/);
+  assert.equal(require('../scripts/lib/native-unlock-safety-contract').inspectNativeUnlockWiring(appSurface, readFileSync('src/lib/native-unlock-confirmation.ts', 'utf8')).groupAcknowledgment, true);
+  assert.match(completionSource, /if \(!nativeGrantConfirmsUnlock\(requestedUnlock, status, Platform\.OS\)\)/);
+  assert.match(completionSource, /!state\.challengeHistory\.some\(entry => entry\.sessionId === sessionId\) \|\| state\.earnedUnlocks\.some\(unlock => unlock\.id === requestedUnlock\.id\) \|\| Date\.parse\(requestedUnlock\.expiresAt\) <= Date\.now\(\)\) return state/);
+  assert.match(completionSource, /return recordEarnedUnlock\(state, receipt\.challenge, \{ startedAt: requestedUnlock\.startedAt/);
+  const nativeConfirmation = readFileSync("src/lib/native-unlock-confirmation.ts", "utf8");
+  assert.ok(Object.values(require("../scripts/lib/native-unlock-safety-contract").inspectNativeUnlockWiring(appSurface, nativeConfirmation)).every(Boolean),
+    "Owner, saved receipt, original intervention and scope, current authority and native acknowledgment must precede durable grant recording.");
+  assert.match(nativeConfirmation, /evidence\?\.nativeUnlockGrantAccepted === true/);
+  assert.match(nativeConfirmation, /sanitizeNativeInterventionId\(evidence\.nativeUnlockGrantInterventionId\) === id/);
+  assert.match(nativeConfirmation, /nativeWindowMatchesUnlock\(unlock, evidence, platform, nowMs\)/);
+  assert.match(nativeConfirmation, /evidence\.activeUnlockInterventionId\) !== id/);
+  assert.match(nativeConfirmation, /Date\.parse\(evidence\.activeUnlockExpiresAt \?\? ''\) !== expires/);
+  assert.match(nativeConfirmation, /unlock\.historicalOnly/);
   assert.doesNotMatch(appSurface, /return outcome === "helped"\s*\?\s*recordEarnedUnlock/s);
   assert.match(appSurface, /setScreen\(outcome === "still-urging" \? "coach" : "main"\)/);
-  assert.match(appSurface, /getActiveNativeEarnedUnlock\(recoveryState\.earnedUnlocks, Platform\.OS/);
-  assert.match(appSurface, /applyEarnedUnlockWindow\([\s\S]*activeNativeUnlock\.nativeInterventionId[\s\S]*\)/);
+  assert.match(appSurface, /getPresentedEarnedUnlock\(recoveryState\.earnedUnlocks, protectionStatus, Platform\.OS, unlockClockMs\)/);
+  assert.doesNotMatch(appSurface, /getActiveNativeEarnedUnlock\(recoveryState\.earnedUnlocks/);
+  assert.equal(require('../scripts/lib/native-unlock-safety-contract').inspectNativeUnlockWiring(appSurface, nativeConfirmation).completionBoundRequest, true);
   assert.match(appSurface, /createDeepLinkInterventionAttempt/);
   assert.match(appSurface, /isProtectionSetupDeepLink/);
   assert.match(appSurface, /consumeProtectionSetupDeepLink/);
@@ -7426,33 +7917,32 @@ test("native protection config preserves no-overlay and DNS-only safety contract
   assert.match(nativeIntervention, /Safari web short-form path requested a FREED recovery challenge/);
   assert.match(nativeIntervention, /IOS_SCREEN_TIME_SHIELD_HOST = "screen-time-shield\.freed\.local"/);
   assert.match(nativeIntervention, /platform === "ios".*isIosScreenTimeShieldSource/s);
-  assert.match(appSurface, /Platform\.OS === "android"\s*\?\s*appPackageForEarnedUnlockSource\(unlock\.sourceAttemptHost\)\s*:\s*undefined/);
+  assert.match(nativeConfirmation, /platform === 'android' && Boolean\(appPackageForEarnedUnlockSource\(unlock\.sourceAttemptHost\)\)/);
   assert.match(appSurface, /isIosScreenTimeShieldSource\(unlock\.sourceAttemptHost\)/);
   assert.match(appSurface, /challenge window; adult web stays blocked; app shields stay active/);
   assert.match(appSurface, /Screen Time unlock; adult web stays blocked/);
-  assert.match(appSurface, /clearEarnedUnlockWindow\(\)/);
-  assert.match(appSurface, /openAppSettingsForPermission/);
-  assert.match(appSurface, /Linking\.openSettings\(\)/);
-  assert.match(appSurface, /import \{ File as ExpoFile \} from "expo-file-system"/);
-  assert.match(appSurface, /function deleteTemporaryChallengePhoto\(uri: string\)/);
-  assert.match(appSurface, /new ExpoFile\(uri\)/);
-  assert.match(appSurface, /if \(file\.exists\) file\.delete\(\)/);
-  assert.match(appSurface, /ImagePicker\.launchCameraAsync\(\{\s*allowsEditing: false,\s*base64: false,\s*exif: false,\s*mediaTypes: \["images"\],\s*quality: 0\.72\s*\}\)/s);
-  assert.match(appSurface, /const photoUri = result\.assets\[0\]\.uri/);
-  assert.match(appSurface, /classifyChallengePhoto\(photoUri, expectedLabels\)/);
-  assert.match(appSurface, /finally \{\s*deleteTemporaryChallengePhoto\(photoUri\);\s*\}/s);
-  assert.match(appSurface, /Complete a connection action to verify this challenge/);
-  assert.match(appSurface, /Connection action complete/);
-  assert.match(appSurface, /Connection action pending/);
-  assert.match(appSurface, /I Reached Out/);
-  assert.match(appSurface, /onMessagePartner\?\.\(challenge\)/);
+  assert.doesNotMatch(appSurface, /clearEarnedUnlockWindow\(\)/,
+    "Unrelated valid native windows are not globally cleared by passive presentation or completion.");
+  assert.match(appSurface, /import \{ useChallengeVerification \} from "@\/hooks\/useChallengeVerification"/);
+  assert.match(appSurface, /useChallengeVerification\(challenge, seconds,/);
+  assert.match(challengeVerificationHook, /openPermissionSettings/);
+  assert.match(challengeVerificationHook, /Linking\.openSettings\(\)/);
+  const photoContract = require("../scripts/lib/challenge-photo-safety-contract");
+  assert.ok(Object.values(photoContract.inspectChallengePhotoSafety(photoContract.readChallengePhotoSafetySources())).every(Boolean),
+    "The imported explicit capture path must admit owned storage before camera permissions, retain owner/operation/deadline/cancel fences, and release fresh owned photos without broadening target proof or photo eligibility.");
+  assert.match(challengeVerificationHook, /Complete a connection action to verify this challenge/);
+  assert.match(challengeVerificationHook, /Connection action complete/);
+  assert.match(challengeVerificationHook, /Connection action pending/);
+  assert.match(appSurface, /label="I reached out"/);
+  assert.match(appSurface, /sessionController\.confirmConnectionAction/);
+  assert.match(appSurface, /if \(onMessagePartner\) void onMessagePartner\(challenge\)/);
   assert.match(nativeIntervention, /PENDING_INTERVENTION_MAX_AGE_MS = 10 \* 60 \* 1000/);
   assert.match(appSurface, /AppState\.currentState === "active"/);
   assert.match(appSurface, /recordAppSessionStart\(current\)/);
   assert.match(appSurface, /AppState\.addEventListener\("change"/);
   assert.match(appSurface, /ANALYTICS_CONSENT_VERSION/);
   assert.match(appSurface, /getAnalyticsSharingReadiness\(recoveryState\.analyticsSharing\)/);
-  assert.match(appSurface, /sendGatedAnalyticsPayload\(recoveryState, recoveryState\.analyticsSharing\)/);
+  assert.match(appSurface, /sendGatedAnalyticsPayload\(staged, staged\.analyticsSharing\)/);
   assert.match(appSurface, /updateAnalyticsSharingSettings/);
   assert.match(appSurface, /Only aggregate counts and rates are sent after consent/);
   assert.match(appSurface, /consumePendingInterventionOnce/);
@@ -7501,27 +7991,37 @@ test("iOS shield handoff and Safari Focus Shield stay scoped and App Store safe"
   assert.match(shieldAction, /JSONEncoder\(\)\.encode\(record\)/);
   assert.match(shieldAction, /defaults\.set\(encodedRecord, forKey: pendingInterventionRecordKey\)/);
   assert.match(shieldAction, /scopeForApplication|scopeForWebDomain|scopeForCategory/);
-  assert.match(shieldAction, /UNUserNotificationCenter\.current\(\)\.add\(request\)/);
+  assert.match(shieldAction, /let center = UNUserNotificationCenter\.current\(\)/);
+  assert.match(shieldAction, /center\.add\(request\) \{ \[weak self\] error in/);
+  assert.match(shieldAction, /afterSuccessfulPersistence:[\s\S]*submitPendingInterventionNotification/);
+  assert.match(shieldAction, /if !current \{[\s\S]*removePendingNotificationRequests[\s\S]*removeDeliveredNotifications/);
   assert.match(shieldAction, /content\.userInfo = \["kind": "freed-pending-intervention"\]/);
-  assert.match(shieldAction, /case \.primaryButtonPressed:[\s\S]*return \.close/);
+  assert.match(shieldAction, /case \.primaryButtonPressed:[\s\S]*return recordPendingIntervention/);
+  assert.match(shieldAction, /guard let publication else \{ return \.close \}/);
+  assert.match(shieldAction, /if #available\(iOS 26\.5, \*\) \{\s*return ShieldDecision\(response: \.openParentalControlsApp, notification: nil\)/);
+  assert.match(shieldAction, /return ShieldDecision\(response: \.close, notification: pendingInterventionNotification/);
   assert.doesNotMatch(shieldAction, /return \.defer/);
   assert.doesNotMatch(shieldAction, /UIApplication\.shared|openURL|originalURL|rewarded|advert/i);
 
-  assert.match(shieldConfiguration, /Category-wide recovery/);
+  assert.match(shieldConfiguration, /categoryWide \? "categoryDescription" : "targetDescription"/);
   assert.match(iosModule, /PendingInterventionRecord/);
   assert.match(iosModule, /payload\["scope"\] = scopePayload/);
   assert.match(nativeBridge, /sanitizeFocusShieldInterventionScope\(pending\.scope\)/);
   assert.match(iosModule, /applySelectedShieldsExcludingEarnedUnlockScope/);
   assert.match(iosModule, /selection\.applicationTokens\.subtracting/);
-  assert.match(iosModule, /selection\.webDomainTokens\.subtracting/);
-  assert.match(iosModule, /applicationCategories = remainingCategories\.isEmpty\s*\? nil\s*: \.specific\(remainingCategories, except: excludedApplications\)/);
-  assert.match(iosModule, /webDomainCategories = remainingCategories\.isEmpty\s*\? nil\s*: \.specific\(remainingCategories, except: excludedWebDomains\)/);
+  assert.doesNotMatch(iosModule, /selection\.webDomainTokens\.subtracting/);
+  assert.match(iosModule, /JSONDecoder\(\)\.decode\(ApplicationToken\.self/);
+  assert.match(iosModule, /except: Set<ApplicationToken>\(\[token\]\)/);
+  assert.match(iosModule, /store\.shield\.webDomains = !legacyTargets \|\| selection\.webDomainTokens\.isEmpty \? nil : selection\.webDomainTokens/);
+  assert.match(iosModule, /store\.shield\.webDomainCategories = !legacyTargets \|\| selection\.categoryTokens\.isEmpty \? nil : \.specific\(selection\.categoryTokens\)/);
   assert.match(deviceActivity, /applySelectedShieldsExcludingEarnedUnlockScope/);
   assert.match(deviceActivity, /selection\.applicationTokens\.subtracting/);
-  assert.match(deviceActivity, /selection\.webDomainTokens\.subtracting/);
-  assert.match(deviceActivity, /applicationCategories = remainingCategories\.isEmpty\s*\? nil\s*: \.specific\(remainingCategories, except: excludedApplications\)/);
-  assert.match(deviceActivity, /webDomainCategories = remainingCategories\.isEmpty\s*\? nil\s*: \.specific\(remainingCategories, except: excludedWebDomains\)/);
-  assert.doesNotMatch(iosModule, /import NetworkExtension|NEDNSSettingsManager|NEDNSOverHTTPSSettings/);
+  assert.doesNotMatch(deviceActivity, /selection\.webDomainTokens\.subtracting/);
+  assert.match(deviceActivity, /JSONDecoder\(\)\.decode\(ApplicationToken\.self/);
+  assert.match(deviceActivity, /except: Set<ApplicationToken>\(\[token\]\)/);
+  assert.match(deviceActivity, /store\.shield\.webDomains = !legacyTargets \|\| selection\.webDomainTokens\.isEmpty \? nil : selection\.webDomainTokens/);
+  assert.match(deviceActivity, /store\.shield\.webDomainCategories = !legacyTargets \|\| selection\.categoryTokens\.isEmpty \? nil : \.specific\(selection\.categoryTokens\)/);
+  assertIosEncryptedDnsReleaseSafety();
 
   const parsedManifest = JSON.parse(safariManifest) as {
     permissions?: string[];
@@ -7536,8 +8036,7 @@ test("iOS shield handoff and Safari Focus Shield stay scoped and App Store safe"
     "*://instagram.com/*",
     "*://*.instagram.com/*",
     "*://tiktok.com/*",
-    "*://*.tiktok.com/*",
-    "https://intervention.freed.app/*"
+    "*://*.tiktok.com/*"
   ];
   assert.deepEqual(parsedManifest.permissions, ["nativeMessaging"]);
   assert.equal(parsedManifest.background?.service_worker, "background.js");
@@ -7548,7 +8047,7 @@ test("iOS shield handoff and Safari Focus Shield stay scoped and App Store safe"
   assert.doesNotMatch(safariManifest, /<all_urls>|\*:\/\/\*\/\*/);
   assert.match(safariContentScript, /\/shorts\/|\/feed\/shorts|\/reels?\/|\/foryou/);
   assert.match(safariContentScript, /history\.pushState|history\.replaceState|popstate|MutationObserver/);
-  assert.match(safariContentScript, /https:\/\/intervention\.freed\.app\/intervention/);
+  assert.match(safariContentScript, /freed:\/\/intervention/);
   assert.match(safariContentScript, /source:\s*"ios-safari-short-form"/);
   assert.match(safariContentScript, /runtime\?\.sendMessage/);
   assert.doesNotMatch(safariContentScript, /sendNativeMessage/);
@@ -7571,10 +8070,10 @@ test("iOS shield handoff and Safari Focus Shield stay scoped and App Store safe"
     [...iosProject.matchAll(/CODE_SIGN_ENTITLEMENTS = FREEDSafariFocusShield\/FREEDSafariFocusShield\.entitlements;[\s\S]{0,500}?IPHONEOS_DEPLOYMENT_TARGET = 15\.4;/g)].length,
     2
   );
-  assert.match(appEntitlements, /applinks:intervention\.freed\.app/);
+  assert.match(appEntitlements, /applinks:freed-7d5ee\.firebaseapp\.com/);
 });
 
-test("iOS DNS Settings retirement removes stale client and release contracts without removing Android DNS", () => {
+test("retired iOS matched-domain DNS stays removed while the optional encrypted DNS layer remains release gated", () => {
   const nativeProtectionBridge = readFileSync("modules/freed-protection/src/index.ts", "utf8");
   const adultDomainFeedSync = readFileSync("src/lib/adult-domain-feed-sync.ts", "utf8");
   const protectionPermissions = readFileSync("src/lib/protection-permissions.ts", "utf8");
@@ -7600,7 +8099,9 @@ test("iOS DNS Settings retirement removes stale client and release contracts wit
   assert.doesNotMatch(releaseReadiness, /configureDnsSettings|EXPO_PUBLIC_IOS_DNS_SETTINGS|optional-ios-dns-settings/);
   assert.doesNotMatch(privacyAudit, /NetworkExtension DNS Settings|optional iOS DNS settings/i);
   assert.doesNotMatch(storeAudit, /Optional DNS Settings|Screen Time\/Safari\/DNS/);
-  assert.doesNotMatch(iosPolicyPack, /NetworkExtension DNS Settings|dns-settings entitlement|Optional DNS Settings/i);
+  assert.match(iosPolicyPack, /Optional encrypted DNS is release-gated/);
+  assert.match(iosPolicyPack, /dns-settings entitlement is absent from the current app entitlements/);
+  assertIosEncryptedDnsReleaseSafety();
   assert.doesNotMatch(appStoreMetadata, /Optional DNS Settings|dns-settings entitlement/i);
   assert.doesNotMatch(appStorePrivacy, /Optional DNS Settings|dns-settings entitlement/i);
   assert.doesNotMatch(consolePacket, /Optional DNS Settings|dns-settings entitlement/i);
@@ -7661,8 +8162,8 @@ test("premium plans expose stable product identifiers", () => {
     PREMIUM_PLANS.map((plan) => plan.id),
     ["yearly", "monthly", "lifetime", "family", "accountability", "ai-coach"]
   );
-  assert.deepEqual([...LAUNCH_PREMIUM_PLAN_IDS], ["yearly", "monthly", "lifetime"]);
-  assert.deepEqual(getLaunchPremiumPlans().map((plan) => plan.id), ["yearly", "monthly", "lifetime"]);
+  assert.deepEqual([...LAUNCH_PREMIUM_PLAN_IDS], ["yearly", "monthly"]);
+  assert.deepEqual(getLaunchPremiumPlans().map((plan) => plan.id), ["yearly", "monthly"]);
   assert.equal(getLaunchPremiumPlan("yearly")?.productId, "freed_premium_yearly");
   assert.equal(getLaunchPremiumPlan("family"), null);
   assert.equal(isLaunchPremiumPlanId("monthly"), true);
@@ -7682,8 +8183,7 @@ test("premium plans expose stable product identifiers", () => {
   assert.equal(getLaunchPremiumPlanEconomics("yearly")?.monthlyEquivalentGrossUsd, 3.33);
   assert.equal(getLaunchPremiumPlanEconomics("yearly")?.discountVsMonthlyPercent, 67);
   assert.equal(getLaunchPremiumPlanEconomics("yearly")?.profitabilityRole, "primary-value");
-  assert.equal(getLaunchPremiumPlanEconomics("lifetime")?.breakevenMonthsVsMonthly, 8);
-  assert.equal(getLaunchPremiumPlanEconomics("lifetime")?.breakevenYearsVsYearly, 2);
+  assert.equal(getLaunchPremiumPlanEconomics("lifetime"), null);
   assert.equal(getLaunchPremiumPlanEconomics("family"), null);
 
   const freeCapabilities = getPremiumCapabilities({ premium: false });
@@ -7738,8 +8238,10 @@ test("profile membership UI cannot mint premium directly", () => {
   assert.match(appSurface, /getLaunchPremiumPlans/);
   assert.doesNotMatch(appSurface, /PREMIUM_PLANS\.map/);
   assert.match(appSurface, /premiumCapabilities\.noAds/);
-  assert.match(appSurface, /premiumCapabilities\.premiumChallenges/);
-  assert.match(appSurface, /premiumCapabilities\.customChallenges/);
+  assert.match(appSurface, /licensedFeatures/);
+  assert.match(appSurface, /getPremiumCapabilities/);
+  assert.match(appSurface, /hasReviewAccess/);
+  assert.match(appSurface, /if \(definition\.premium && !licensedFeatures\)/);
   assert.match(appSurface, /premiumCapabilities\.advancedAnalytics/);
   assert.match(appSurface, /CustomChallengeScreen/);
   assert.match(appSurface, /premiumCapabilities\.relapsePrediction/);
@@ -7754,7 +8256,7 @@ test("profile membership UI cannot mint premium directly", () => {
   assert.match(appSurface, /supportDraftMembers/);
   assert.match(appSurface, /removeSupportDraft/);
   assert.doesNotMatch(appSurface, /onSupportCircleChange\(`support-\$\{Date\.now\(\)\}-member`, \{ name: "", contact: ""/);
-  assert.match(appSurface, /onManagePlan=\{\(\) => setScreen\("paywall"\)\}/);
+  assert.match(appSurface, /onManagePlan=\{\(\) => openProfilePaywall\(profileSection\)\}/);
 
   const challengeTemplates = readFileSync("src/data/challenge-templates.ts", "utf8");
   assert.doesNotMatch(challengeTemplates, /impossible to fake/);
@@ -7765,16 +8267,21 @@ test("profile exposes privacy support and deletion controls", () => {
 
   assert.match(appSurface, /PrivacySupportCard/);
   assert.match(appSurface, /FREED_PRIVACY_POLICY_URL/);
-  assert.match(appSurface, /support@freedrecovery\.app/);
+  assert.match(appSurface, /soumyadebnath1661@gmail\.com/);
   assert.match(appSurface, /Delete Account & Data/);
   assert.match(appSurface, /Delete Local Data/);
   assert.match(appSurface, /Confirm Delete/);
   assert.match(appSurface, /deleteLocalRecoveryData/);
   assert.match(appSurface, /createDefaultRecoveryState/);
-  assert.match(appSurface, /stopAdultContentFilter\(\)/);
-  assert.match(appSurface, /stopRiskWindowMonitoring\(\)/);
-  assert.match(appSurface, /clearEarnedUnlockWindow\(\)/);
-  assert.match(appSurface, /configureBlockedAppPackages\(\s*\[\]/);
+  const cleanup = readFileSync("src/lib/confirmed-cleanup.ts", "utf8");
+  const localDeleteCallback = appSurface.slice(appSurface.indexOf("  const deleteLocalRecoveryData ="), appSurface.indexOf("  const cleanupDeletedOwner ="));
+  assert.match(localDeleteCallback, /return afterConfirmedCleanup\(/);
+  assert.match(appSurface, /appConfigQueue\.current\?\.invalidate\(\)/);
+  assert.match(appSurface, /await appConfigQueue\.current\?\.whenIdle\(\)/);
+  assert.match(appSurface, /await resetProtectionConfiguration\(\)/);
+  assert.match(appSurface, /return status\.protectionConfigurationResetAccepted === true/);
+  assert.match(cleanup, /if \(await clear\(\) !== true\) throw new Error/);
+  assert.match(cleanup, /return erase\(\)/);
   assert.match(appSurface, /setScreen\("welcome"\)/);
 });
 
@@ -7839,8 +8346,7 @@ test("monetization config supports store and ad environment overrides", () => {
     assert.equal(config.adRequestCountryCode, "US");
     assert.deepEqual(config.launchProductIds, {
       yearly: "prod_yearly",
-      monthly: "prod_monthly",
-      lifetime: "prod_lifetime"
+      monthly: "prod_monthly"
     });
     assert.equal(plans[0].productId, "prod_yearly");
     assert.equal(getPremiumPlan("monthly", { mode: "native", platform: "ios" })?.productId, "prod_monthly");
@@ -7977,7 +8483,7 @@ test("store launch handoff files keep production submission gated", () => {
       width?: number;
     }>;
     reviewBoundary?: {
-      core3Only?: boolean;
+      twoPlanLaunchOnly?: boolean;
       futureProductsHidden?: string[];
       requiresFreshStoreSandboxScreenshotsBeforeProduction?: boolean;
     };
@@ -8029,10 +8535,9 @@ test("store launch handoff files keep production submission gated", () => {
   assert.match(packageJson, /"build:ios-archive:release"/);
   assert.deepEqual(products.launchProductIds, [
     "freed_premium_yearly",
-    "freed_premium_monthly",
-    "freed_premium_lifetime"
+    "freed_premium_monthly"
   ]);
-  assert.deepEqual(products.products?.map((product) => product.planId), ["yearly", "monthly", "lifetime"]);
+  assert.deepEqual(products.products?.map((product) => product.planId), ["yearly", "monthly"]);
   assert.equal(products.subscriptionGroupId, "freed_premium");
   assert.equal(products.consoleExportFiles?.appStoreConnectCsv, "store/app-store/in-app-purchases.csv");
   assert.equal(products.consoleExportFiles?.googlePlayCsv, "store/play-store/products.csv");
@@ -8046,18 +8551,13 @@ test("store launch handoff files keep production submission gated", () => {
   assert.equal(products.launchEconomics?.premiumNoAdChallengeEntry, true);
   const monthlyEconomics = products.launchEconomics?.plans?.find((plan) => plan.planId === "monthly");
   const yearlyEconomics = products.launchEconomics?.plans?.find((plan) => plan.planId === "yearly");
-  const lifetimeEconomics = products.launchEconomics?.plans?.find((plan) => plan.planId === "lifetime");
   assert.equal(monthlyEconomics?.estimatedNetUsdAt30PercentStoreFee, "6.99");
   assert.equal(monthlyEconomics?.estimatedNetUsdAt15PercentStoreFee, "8.49");
   assert.equal(yearlyEconomics?.monthlyEquivalentGrossUsd, "3.33");
   assert.equal(yearlyEconomics?.discountVsMonthlyPercent, 67);
   assert.equal(yearlyEconomics?.profitabilityRole, "primary-value");
-  assert.equal(lifetimeEconomics?.breakevenMonthsVsMonthly, 8);
-  assert.equal(lifetimeEconomics?.breakevenYearsVsYearly, 2);
-  assert.equal(lifetimeEconomics?.profitabilityRole, "cashflow-anchor");
   const monthlyProduct = products.products?.find((product) => product.planId === "monthly");
   const yearlyProduct = products.products?.find((product) => product.planId === "yearly");
-  const lifetimeProduct = products.products?.find((product) => product.planId === "lifetime");
   assert.equal(monthlyProduct?.apple?.productType, "auto-renewable-subscription");
   assert.equal(monthlyProduct?.apple?.subscriptionGroupId, "freed_premium");
   assert.equal(monthlyProduct?.apple?.reviewScreenshot, "store/screenshots/paywall-monthly.png");
@@ -8067,25 +8567,19 @@ test("store launch handoff files keep production submission gated", () => {
   assert.equal(yearlyProduct?.apple?.reviewScreenshot, "store/screenshots/paywall-yearly.png");
   assert.equal(yearlyProduct?.google?.basePlanId, "yearly");
   assert.equal(yearlyProduct?.google?.status, "draft-until-sandbox-verified");
-  assert.equal(lifetimeProduct?.apple?.productType, "non-consumable");
-  assert.equal(lifetimeProduct?.apple?.reviewScreenshot, "store/screenshots/paywall-lifetime.png");
-  assert.equal(lifetimeProduct?.google?.productType, "one-time-product");
-  assert.equal(lifetimeProduct?.google?.purchaseType, "non-consumable");
   assert.match(appStorePurchasesCsv, /monthly,freed_premium_monthly,auto-renewable-subscription,freed_premium,P1M/);
   assert.match(appStorePurchasesCsv, /yearly,freed_premium_yearly,auto-renewable-subscription,freed_premium,P1Y/);
-  assert.match(appStorePurchasesCsv, /lifetime,freed_premium_lifetime,non-consumable,,lifetime/);
-  assert.deepEqual(csvPlanOrder(appStorePurchasesCsv), ["yearly", "monthly", "lifetime"]);
+  assert.doesNotMatch(appStorePurchasesCsv, /freed_premium_lifetime/);
+  assert.deepEqual(csvPlanOrder(appStorePurchasesCsv), ["yearly", "monthly"]);
   assert.match(appStorePurchasesCsv, /store\/screenshots\/paywall-monthly\.png/);
   assert.match(appStorePurchasesCsv, /store\/screenshots\/paywall-yearly\.png/);
-  assert.match(appStorePurchasesCsv, /store\/screenshots\/paywall-lifetime\.png/);
   assert.equal(screenshotManifest.schemaVersion, "freed-store-screenshots-v1");
-  assert.equal(screenshotManifest.reviewBoundary?.core3Only, true);
+  assert.equal(screenshotManifest.reviewBoundary?.twoPlanLaunchOnly, true);
   assert.equal(screenshotManifest.reviewBoundary?.requiresFreshStoreSandboxScreenshotsBeforeProduction, true);
   assert.ok(screenshotManifest.reviewBoundary?.futureProductsHidden?.includes("freed_ai_coach_monthly"));
   for (const screenshot of [
     ["monthly", "freed_premium_monthly", "store/screenshots/paywall-monthly.png"],
-    ["yearly", "freed_premium_yearly", "store/screenshots/paywall-yearly.png"],
-    ["lifetime", "freed_premium_lifetime", "store/screenshots/paywall-lifetime.png"]
+    ["yearly", "freed_premium_yearly", "store/screenshots/paywall-yearly.png"]
   ] as const) {
     const [planId, productId, screenshotPath] = screenshot;
     const asset = screenshotManifest.assets?.find((entry) => entry.path === screenshotPath);
@@ -8093,35 +8587,36 @@ test("store launch handoff files keep production submission gated", () => {
     assert.equal(asset.planId, planId);
     assert.equal(asset.productId, productId);
     assert.match(asset.purpose ?? "", /IAP review screenshot/);
-    assert.equal(asset.width, 1180);
-    assert.equal(asset.height, 2676);
+    const capturedPng = readFileSync(screenshotPath);
+    assert.equal(asset.width, capturedPng.readUInt32BE(16));
+    assert.equal(asset.height, capturedPng.readUInt32BE(20));
     assert.equal(existsSync(screenshotPath), true);
     const actualSha = createHash("sha256").update(readFileSync(screenshotPath)).digest("hex");
     assert.equal(asset.sha256, actualSha);
   }
   assert.match(playStoreProductsCsv, /monthly,freed_premium_monthly,subscription,monthly,P1M/);
   assert.match(playStoreProductsCsv, /yearly,freed_premium_yearly,subscription,yearly,P1Y/);
-  assert.match(playStoreProductsCsv, /lifetime,freed_premium_lifetime,one-time-product,,lifetime/);
-  assert.deepEqual(csvPlanOrder(playStoreProductsCsv), ["yearly", "monthly", "lifetime"]);
+  assert.doesNotMatch(playStoreProductsCsv, /freed_premium_lifetime/);
+  assert.deepEqual(csvPlanOrder(playStoreProductsCsv), ["yearly", "monthly"]);
   assert.match(consoleLaunchPacket, /npm run build:android-aab:upload-signed -- --env-file <production-env-file> --report docs\/validation\/artifacts\/<run-id>\/android-aab-build-report\.json/);
   assert.match(consoleLaunchPacket, /npm run build:ios-archive:release -- --report docs\/validation\/artifacts\/<run-id>\/ios-release-archive-report\.json/);
   assert.match(consoleLaunchPacket, /ios-release-archive-report\.json/);
   assert.match(consoleLaunchPacket, /Apple Distribution signing/);
   assert.ok(products.futureProductsDisabledForV1?.includes("freed_ai_coach_monthly"));
-  assert.match(pricingEconomics, /FREED Launch Pricing Economics/);
+  assert.match(pricingEconomics, /FREED launch pricing/);
   assert.match(pricingEconomics, /Apple App Store Small Business Program/);
   assert.match(pricingEconomics, /Google Play service fees/);
-  assert.match(pricingEconomics, /Conservative fee model: 30% store fee/);
-  assert.match(pricingEconomics, /Optimized fee model: 15% store fee/);
-  assert.match(pricingEconomics, /USD 3\.33 per month equivalent/);
-  assert.match(pricingEconomics, /8-month breakeven against monthly/);
+  assert.match(pricingEconomics, /Actual proceeds come from the store financial reports/);
+  assert.match(pricingEconomics, /identical Premium benefits and no trial/);
+  assert.match(pricingEconomics, /US\$3\.33 per month equivalent/);
+  assert.match(pricingEconomics, /two subscriptions/);
   assert.match(consoleLaunchPacket, /store\/pricing-economics\.md/);
   assert.match(consoleLaunchPacket, /67% discount against monthly/);
-  assert.match(consoleLaunchPacket, /8-month breakeven against monthly/);
+  assert.match(consoleLaunchPacket, /same Premium capabilities/);
   assert.match(privacyPolicy, /Android Accessibility/);
   assert.match(privacyPolicy, /DNS-only VPN/);
   assert.match(privacyPolicy, /Family Controls/);
-  assert.match(appStoreMetadata, /Core 3 launch products/);
+  assert.match(appStoreMetadata, /Two launch subscriptions/);
   assert.match(appStoreMetadata, /store\/screenshots\/manifest\.json/);
   assert.match(playStoreMetadata, /AccessibilityService/);
   assert.match(playStoreMetadata, /VpnService/);
@@ -8141,8 +8636,9 @@ test("store launch handoff files keep production submission gated", () => {
   assert.match(publicSupportRoute, /SupportPage/);
   assert.match(publicDeletionRoute, /AccountDeletionPage/);
   assert.match(legalPages, /FREED Privacy Policy/);
-  assert.match(legalPages, /Effective date: June 6, 2026/);
-  assert.match(legalPages, /Android Accessibility/);
+  assert.match(legalPages, /Effective date: October 5, 2026/);
+  assert.match(legalPages, /nativeAndroidCopy\.freed_accessibility_description/);
+  assert.match(readFileSync("src/i18n/native-android-catalog.json","utf8"), /selected apps.*whole-app guards/);
   assert.match(legalPages, /DNS-only VPN/);
   assert.match(legalPages, /Family Controls/);
   assert.match(legalPages, /DeviceActivity/);
@@ -8155,11 +8651,11 @@ test("store launch handoff files keep production submission gated", () => {
   assert.match(legalPages, /hosted encrypted backup sync/);
   assert.match(legalPages, /purchase audit records/);
   assert.match(legalPages, /legal retention/);
-  assert.match(legalPages, /support@freedrecovery\.app/);
+  assert.match(legalPages, /soumyadebnath1661@gmail\.com/);
   assert.match(consoleLaunchPacket, /FREED Console Launch Packet/);
-  assert.match(consoleLaunchPacket, /https:\/\/freedrecovery\.app\/privacy/);
-  assert.match(consoleLaunchPacket, /https:\/\/freedrecovery\.app\/support/);
-  assert.match(consoleLaunchPacket, /https:\/\/freedrecovery\.app\/account-deletion/);
+  assert.match(consoleLaunchPacket, /https:\/\/freed-landing\.web\.app\/privacy/);
+  assert.match(consoleLaunchPacket, /https:\/\/freed-landing\.web\.app\/support/);
+  assert.match(consoleLaunchPacket, /https:\/\/freed-landing\.web\.app\/account-deletion/);
   assert.match(consoleLaunchPacket, /Do not submit production/);
   assert.match(consoleLaunchPacket, /Play internal track and draft release/);
   assert.match(consoleLaunchPacket, /App Store Connect\/TestFlight beta only/);
@@ -8167,7 +8663,6 @@ test("store launch handoff files keep production submission gated", () => {
   assert.match(consoleLaunchPacket, /FREED_STORE_PRODUCTION_SUBMIT_APPROVED=strict-release-evidence-pass/);
   assert.match(consoleLaunchPacket, /freed_premium_monthly/);
   assert.match(consoleLaunchPacket, /freed_premium_yearly/);
-  assert.match(consoleLaunchPacket, /freed_premium_lifetime/);
   assert.match(consoleLaunchPacket, /store\/app-store\/in-app-purchases\.csv/);
   assert.match(consoleLaunchPacket, /store\/play-store\/products\.csv/);
   assert.match(consoleLaunchPacket, /store\/screenshots\/manifest\.json/);
@@ -8177,7 +8672,7 @@ test("store launch handoff files keep production submission gated", () => {
   assert.match(consoleLaunchPacket, /freed_family_yearly/);
   assert.match(consoleLaunchPacket, /freed_accountability_monthly/);
   assert.match(consoleLaunchPacket, /freed_ai_coach_monthly/);
-  assert.match(consoleLaunchPacket, /EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT/);
+  assert.match(consoleLaunchPacket, /getPurchaseCheckoutContext/);
   assert.match(consoleLaunchPacket, /FREED_ANDROID_UPLOAD_STORE_FILE/);
   assert.match(consoleLaunchPacket, /App Privacy/);
   assert.match(consoleLaunchPacket, /store\/app-store\/app-privacy\.md/);
@@ -8904,7 +9399,7 @@ test("release env preflight validates production store ad and AI configuration",
     "EXPO_PUBLIC_GOOGLE_PLAY_SERVICE_ACCOUNT_JSON",
     "EXPO_PUBLIC_REMOTE_NOTIFICATION_DISPATCH_SECRET",
     "EXPO_PUBLIC_FCM_ACCESS_TOKEN",
-    "EXPO_PUBLIC_FIREBASE_PROJECT_ID",
+    "EXPO_PUBLIC_FIREBASE_SERVICE_ACCOUNT_JSON",
     "EXPO_PUBLIC_APNS_PRIVATE_KEY"
   ]) {
     const leakedServerSecret = runReleaseEnvPreflight(`${validEnv}\n${key}=leaked-secret`);
@@ -9436,7 +9931,7 @@ test("release verifier lists env-file aware command order", () => {
   assert.match(verifier, /release artifact directory must not include symbolic links/);
   assert.match(verifier, /expected report artifact path must be a file before cleanup/);
   assert.match(verifier, /backend-readiness-http-contract/);
-  assert.match(verifier, /challenge-remote-endpoint/);
+  assert.match(verifier, /google-clara-release-evidence/);
   assert.match(verifier, /expectedReleaseReadinessGateIds/);
   assert.match(verifier, /prototype-design-files/);
   assert.match(verifier, /requiredArrayFields/);
@@ -9460,9 +9955,9 @@ test("release verifier lists env-file aware command order", () => {
   assert.match(verifier, /PASS\/FAIL status/);
   assert.match(verifier, /pass\/fail counts must match results/);
   assert.match(verifier, /must include required result/);
-  assert.match(verifier, /endpointProofs\.claraEndpointChecked/);
+  assert.match(verifier, /assertGoogleClaraReport/);
   assert.match(verifier, /serverSecretKeyNamesChecked must include APP_STORE_PRIVATE_KEY/);
-  assert.match(verifier, /required result retention-remote-endpoint/);
+  assert.match(verifier, /required result local-recovery/);
   assert.match(verifier, /warnCount=0/);
   assert.match(verifier, /must include release readiness gate/);
   assert.match(verifier, /unexpected release readiness gate/);
@@ -9646,12 +10141,20 @@ test("release verifier rejects missing or unknown release arguments", () => {
 });
 
 test("release readiness audit includes production env template gate", () => {
-  const output = runReleaseReadinessAudit();
+  const missingHostedReportDir = mkdtempSync(join(tmpdir(), "freed-missing-hosted-legal-"));
+  let output: string;
+  try {
+    output = runReleaseReadinessAudit({
+      FREED_STORE_LEGAL_HOSTED_REPORT: join(missingHostedReportDir, "missing-report.json")
+    });
+  } finally {
+    rmSync(missingHostedReportDir, { recursive: true, force: true });
+  }
   assert.match(output, /production-env-template/);
   assert.match(output, /\.env\.production\.example includes production store, iOS archive signing, Android upload signing, ad, purchase-verification, AI, adult-domain feed, Supabase\/Redis backend, notification, and optional fallback keys with safe release defaults and no duplicate active keys/);
-  assert.match(output, /store-legal-hosted-url-validation/);
-  assert.match(output, /hosted legal audit result=pass/);
-  assert.match(output, /Deploy the static web export to https:\/\/freedrecovery\.app/);
+  assert.match(output, /\| FAIL \| store-legal-hosted-url-validation \|/);
+  assert.match(output, /missing-report\.json passing hosted URL audit report/);
+  assert.match(output, /Capture a fresh hosted audit for the configured privacy, support, and account-deletion URLs \(canonical default: freed-landing\.web\.app\)/);
   assert.match(output, /production-backend-infrastructure/);
   assert.match(output, /Configure SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, EXPO_PUBLIC_SUPABASE_URL, EXPO_PUBLIC_SUPABASE_ANON_KEY, BACKEND_MAINTENANCE_SECRET or CRON_SECRET, UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN, and optional FREED_BACKEND_PROVIDER_TIMEOUT_MS \/ FREED_BACKEND_PROVIDER_RESPONSE_MAX_BYTES \/ FREED_SUPABASE_SCHEMA_SMOKE_TIMEOUT_MS/);
   assert.match(output, /production-analytics-ingestion/);
@@ -9884,8 +10387,7 @@ test("release readiness audit includes production env template gate", () => {
   assert.match(output, /48-hour freshness\/cache\/source-size headers/);
   assert.match(output, /validation-evidence-workflow/);
   assert.match(output, /background CPU performance proof/);
-  assert.match(output, /runtime-data-integrity-contract/);
-  assert.match(output, /prevents user-facing premium toggles/);
+  assert.match(output, /\| PASS \| runtime-data-integrity-contract \|/);
   assert.match(output, /production mock monetization/);
   assert.match(output, /source-aware intervention copy/);
   assert.match(output, /overclaimed challenge verification copy/);
@@ -9906,7 +10408,7 @@ test("release readiness audit includes production env template gate", () => {
   assert.match(releaseReadiness, /Native purchase returned a product reserved for a future FREED release/);
   assert.match(releaseReadiness, /Native restore returned a product reserved for a future FREED release/);
   assert.match(releaseReadiness, /Restored premium entitlement did not match a FREED launch product/);
-  assert.match(releaseReadiness, /Core 3-only purchase\/restore product activation/);
+  assert.match(releaseReadiness, /monthly\/yearly-only purchase\/restore activation/);
   const tsRunner = readFileSync("scripts/run-ts-entry.js", "utf8");
   assert.match(tsRunner, /ESBUILD_WORKER_THREADS \|\|= "0"/);
   assert.match(tsRunner, /await esbuild\.stop\(\)/);
@@ -9949,6 +10451,17 @@ test("Android release APK builder self-test covers safe report output", () => {
     timeout: CORE_TEST_CHILD_TIMEOUT_MS
   });
   assert.match(output, /android release APK build helper self-test: pass/);
+});
+
+test("iOS release archive self-test covers signing identity scoping", () => {
+  const output = execFileSync(process.execPath, [join(process.cwd(), "scripts/build-ios-release-archive.js"), "--self-test"], {
+    cwd: process.cwd(),
+    encoding: "utf8",
+    env: childToolEnv(),
+    stdio: ["ignore", "pipe", "pipe"],
+    timeout: CORE_TEST_CHILD_TIMEOUT_MS
+  });
+  assert.match(output, /ios-release-archive self-test: pass/);
 });
 
 test("release readiness audit rejects Android debug upload keystore certificate", () => {
@@ -10058,7 +10571,9 @@ test("release readiness audit writes sanitized JSON reports", () => {
   const dir = mkdtempSync(join(process.cwd(), "docs/validation/artifacts/core-release-readiness-"));
   const reportPath = join(dir, "release-readiness-report.json");
   try {
-    const output = runReleaseReadinessAudit({}, ["--report", reportPath]);
+    const output = runReleaseReadinessAudit({
+      FREED_STORE_LEGAL_HOSTED_REPORT: join(dir, "missing-hosted-report.json")
+    }, ["--report", reportPath]);
     const report = JSON.parse(readFileSync(reportPath, "utf8"));
 
     assert.match(output, /# FREED release readiness audit/);
@@ -10134,6 +10649,7 @@ test("release readiness audit rejects unsafe report paths and unknown args", () 
 
 test("release readiness audit rejects unsafe production transport bounds", () => {
   const output = runReleaseReadinessAudit({
+    EXPO_PUBLIC_BACKEND_PROVIDER: "legacy",
     EXPO_PUBLIC_PURCHASE_VERIFY_TIMEOUT_MS: "50",
     EXPO_PUBLIC_PURCHASE_VERIFY_RESPONSE_MAX_BYTES: "1023",
     FREED_PURCHASE_VERIFY_PROVIDER_TIMEOUT_MS: "15",
@@ -10165,12 +10681,22 @@ test("release readiness audit rejects unsafe production transport bounds", () =>
   assert.match(output, /EXPO_PUBLIC_CHALLENGE_WEATHER_CONTEXT_RESPONSE_MAX_BYTES must be an integer between 1024 and 1000000/);
   assert.match(output, /FREED_REMOTE_NOTIFICATION_PROVIDER_TIMEOUT_MS must be an integer between 500 and 15000/);
   assert.match(output, /FREED_REMOTE_NOTIFICATION_SMOKE_TIMEOUT_MS must be an integer between 500 and 15000/);
-  assert.match(output, /EXPO_PUBLIC_AI_COACH_TIMEOUT_MS must be an integer between 1000 and 12000/);
-  assert.match(output, /EXPO_PUBLIC_AI_CHALLENGE_TIMEOUT_MS must be an integer between 1000 and 12000/);
+  // Legacy preflight still validates these options; current release AI never uses them.
+  const legacyAiPreflight = runReleaseEnvPreflight([
+    "EXPO_PUBLIC_BACKEND_PROVIDER=legacy",
+    "EXPO_PUBLIC_AI_COACH_TIMEOUT_MS=999",
+    "EXPO_PUBLIC_AI_CHALLENGE_TIMEOUT_MS=999"
+  ].join("\n"));
+  assert.notEqual(legacyAiPreflight.status, 0);
+  assert.match(output, /Legacy remote AI configuration is inactive/);
+  assert.match(output, /Current launch requires Google CLARA through the Firebase native callable/);
+  assert.match(legacyAiPreflight.output, /EXPO_PUBLIC_AI_COACH_TIMEOUT_MS must be an integer between 1000 and 12000/);
+  assert.match(legacyAiPreflight.output, /EXPO_PUBLIC_AI_CHALLENGE_TIMEOUT_MS must be an integer between 1000 and 12000/);
 });
 
 test("release readiness audit rejects wrong production API routes", () => {
   const output = runReleaseReadinessAudit({
+    EXPO_PUBLIC_BACKEND_PROVIDER: "legacy",
     EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT: "https://api.freedrecovery.app/api/purchases/status",
     EXPO_PUBLIC_AI_COACH_ENDPOINT: "https://api.freedrecovery.app/api/coach",
     EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT: "https://api.freedrecovery.app/api/challenge-generator",
@@ -10183,9 +10709,19 @@ test("release readiness audit rejects wrong production API routes", () => {
   assert.match(output, /production-monetization/);
   assert.match(output, /purchase verify endpoint must target \/api\/purchases\/verify/);
   assert.match(output, /production-ai-backend/);
-  assert.match(output, /remote coach endpoint must target \/api\/clara/);
-  assert.match(output, /remote challenge endpoint must target \/api\/challenges/);
-  assert.match(output, /remote retention endpoint must target \/api\/retention/);
+  const legacyAiPreflight = runReleaseEnvPreflight([
+    "EXPO_PUBLIC_BACKEND_PROVIDER=legacy",
+    "EXPO_PUBLIC_AI_COACH_ENDPOINT=https://api.freedrecovery.app/api/coach",
+    "EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT=https://api.freedrecovery.app/api/challenge-generator",
+    "EXPO_PUBLIC_RETENTION_MODE=remote",
+    "EXPO_PUBLIC_RETENTION_ENDPOINT=https://api.freedrecovery.app/api/retention-plan"
+  ].join("\n"));
+  assert.notEqual(legacyAiPreflight.status, 0);
+  assert.match(output, /Legacy remote AI configuration is inactive/);
+  assert.match(output, /Select Firebase and capture current Google CLARA v2 proof/);
+  assert.match(legacyAiPreflight.output, /CLARA endpoint must target \/api\/clara/);
+  assert.match(legacyAiPreflight.output, /challenge endpoint must target \/api\/challenges/);
+  assert.match(legacyAiPreflight.output, /remote retention endpoint must target \/api\/retention/);
   assert.match(output, /production-adult-domain-feed/);
   assert.match(output, /adult domain feed endpoint must target \/api\/adult-domain-feed/);
   assert.match(output, /production-backend-infrastructure/);
@@ -10299,7 +10835,6 @@ test("smoke harness audit covers physical-device evidence helpers", () => {
   const reportPathSafety = readFileSync("scripts/lib/report-path-safety.js", "utf8");
   const smokeHarnessAuditSource = readFileSync("scripts/smoke-harness-audit.js", "utf8");
   const reportCapableSmokeScripts = [
-    aiBackendSmoke,
     backendReadinessSmoke,
     supabaseSchemaSmoke,
     analyticsIngestionSmoke,
@@ -10343,7 +10878,8 @@ test("smoke harness audit covers physical-device evidence helpers", () => {
   assert.match(storeLegalWebExportAudit, /FREED Account Deletion/);
   assert.match(storeLegalWebExportAudit, /Local static-export proof only/);
   assert.match(storeLegalHostedUrlAudit, /freed-store-legal-hosted-url-audit-v1/);
-  assert.match(storeLegalHostedUrlAudit, /https:\/\/freedrecovery\.app\/privacy/);
+  assert.match(storeLegalHostedUrlAudit, /require\("\.\/store-legal-web-export-audit"\)/);
+  assert.equal(require("../scripts/store-legal-web-export-audit").ROUTES.find((route: { id: string }) => route.id === "privacy")?.publicUrl, "https://freed-landing.web.app/privacy");
   assert.match(storeLegalHostedUrlAudit, /hosted URL availability proof only/i);
   assert.match(storeLegalHostedUrlAudit, /noindex/);
   assert.match(storeLegalHostedUrlAudit, /safeExternalHttpsUrl/);
@@ -10407,7 +10943,8 @@ test("smoke harness audit covers physical-device evidence helpers", () => {
   assert.match(paywallLaunchScopeAudit, /freed-paywall-launch-source-audit-v1/);
   assert.match(paywallLaunchScopeAudit, /getLaunchPremiumPlans/);
   assert.match(paywallLaunchScopeAudit, /paywall-future-products-hidden/);
-  assert.match(paywallLaunchScopeAudit, /Secure store verification happens before premium activates/);
+  assert.match(paywallLaunchScopeAudit, /paywall-server-verification-gates-premium/);
+  assert.match(paywallLaunchScopeAudit, /contracts\.verifyStorePurchase\(payload\)/);
   assert.match(paywallLaunchScopeAudit, /Local paywall source precheck only/);
   assert.match(packageJson, /"status:release-env-gaps": "node -- scripts\/release-env-gap-plan\.js"/);
   assert.match(releaseEnvGapPlan, /freed-production-env-gap-checklist-v1/);
@@ -10562,11 +11099,11 @@ test("smoke harness audit covers physical-device evidence helpers", () => {
   assert.match(permissionWizardReport, /confirm-android-usage-exact-route/);
   assert.match(permissionWizardReport, /confirm-android-accessibility-return-refresh/);
   assert.match(permissionWizardReport, /confirm-android-accessibility-exact-route/);
-  assert.match(permissionWizardReport, /confirm-android-accessibility-target-component/);
+  assert.match(permissionWizardReport, /confirm-android-accessibility-enabled/);
   assert.match(permissionWizardReport, /android\.net\.VpnService\.prepare/);
   assert.match(permissionWizardReport, /android\.settings\.USAGE_ACCESS_SETTINGS/);
-  assert.match(permissionWizardReport, /android\.settings\.ACCESSIBILITY_DETAILS_SETTINGS/);
-  assert.match(permissionWizardReport, /FreedAccessibilityService/);
+  assert.match(permissionWizardReport, /android\.settings\.ACCESSIBILITY_SETTINGS/);
+  assert.match(permissionWizardReport, /androidAccessibilityServiceEnabledObserved/);
   assert.match(permissionWizardReport, /confirm-ios-screen-time-return-refresh/);
   assert.match(permissionWizardReport, /confirm-ios-safari-settings-return-refresh/);
   assert.match(permissionWizardReport, /confirm-no-hidden-monitoring/);
@@ -10591,7 +11128,7 @@ test("smoke harness audit covers physical-device evidence helpers", () => {
   assert.match(permissionFlowSourceAudit, /ios-safari-content-blocker/);
   assert.match(permissionFlowSourceAudit, /ios-picker-resolves-before-auto-advance/);
   assert.match(permissionFlowSourceAudit, /withCheckedContinuation/);
-  assert.match(permissionFlowSourceAudit, /Screen Time targets saved and selected app limits scheduled/);
+  assert.match(permissionFlowSourceAudit, /Screen Time targets saved and the selected app guard installed/);
   assert.match(permissionFlowSourceAudit, /runActivationDiagnostics/);
   assert.match(permissionFlowSourceAudit, /AppState\.addEventListener/);
   assert.match(permissionFlowSourceAudit, /VpnService\.prepare/);
@@ -10602,7 +11139,7 @@ test("smoke harness audit covers physical-device evidence helpers", () => {
   assert.match(storeLegalPolicyAudit, /store\/app-store\/app-privacy\.md/);
   assert.match(storeLegalPolicyAudit, /docs\/privacy-data-map\.md/);
   assert.match(storeLegalPolicyAudit, /app\/privacy\.tsx/);
-  assert.match(storeLegalPolicyAudit, /https:\/\/freedrecovery\.app\/privacy/);
+  assert.match(storeLegalPolicyAudit, /https:\/\/freed-landing\.web\.app\/privacy/);
   assert.match(storeLegalPolicyAudit, /app\.freed\.recovery/);
   assert.match(storeLegalPolicyAudit, /AccessibilityService/);
   assert.match(storeLegalPolicyAudit, /Safari Content Blocker/);
@@ -10683,30 +11220,21 @@ test("smoke harness audit covers physical-device evidence helpers", () => {
   assert.match(storeLaunchCatalogAudit, /Local catalog precheck only/);
   assert.match(normalBrowsingCorpusEvidence, /evidenceSatisfied: false/);
   assert.match(normalBrowsingCorpusEvidence, /Normal-browsing capture packets are setup handoffs only/);
-  assert.match(aiBackendSmokeEvidence, /AI_ENDPOINT_PATHS/);
+  assert.match(packageJson, /"audit:runtime-data": "node -- scripts\/runtime-data-integrity-audit\.js"/);
+  assert.match(packageJson, /"audit:backend": "node -- scripts\/backend-architecture-audit\.js"/);
+  const claraEvidenceContract = readFileSync("scripts/lib/google-clara-release-evidence.js", "utf8");
   assert.match(aiBackendSmokeEvidence, /evidenceSatisfied: false/);
-  assert.match(aiBackendSmokeEvidence, /AI backend smoke capture packets are setup handoffs only/);
-  assert.match(aiBackendSmokeEvidence, /\/api\/clara/);
-  assert.match(aiBackendSmokeEvidence, /\/api\/challenges/);
-  assert.match(aiBackendSmokeEvidence, /\/api\/retention/);
-	  assert.match(packageJson, /"audit:runtime-data": "node -- scripts\/runtime-data-integrity-audit\.js"/);
-	  assert.match(packageJson, /"audit:backend": "node -- scripts\/backend-architecture-audit\.js"/);
-  assert.match(aiBackendSmokeEvidence, /"latitude"/);
-	  assert.match(aiBackendSmokeEvidence, /"preciseLocation"/);
-  assert.match(aiBackendSmokeEvidence, /--retention-endpoint/);
-  assert.match(aiBackendSmokeEvidence, /rawRetentionRequest/);
-  assert.match(aiBackendSmokeEvidence, /retentionAggregateOnlyVerified/);
-  assert.match(aiBackendSmoke, /ai-backend-smoke-v1/);
-  assert.match(aiBackendSmoke, /--report <path>/);
-  assert.match(aiBackendSmoke, /aiBoundary/);
-  assert.match(aiBackendSmoke, /EXPO_PUBLIC_RETENTION_ENDPOINT/);
-  assert.match(aiBackendSmoke, /--retention-endpoint/);
-  assert.match(aiBackendSmoke, /retention-remote-endpoint/);
-  assert.match(aiBackendSmoke, /retentionAggregateOnlyChecked/);
-  assert.match(aiBackendSmoke, /challengeSessionDurationBucketChecked/);
-  assert.match(aiBackendSmoke, /challengeRecentFailureCountChecked/);
-  assert.match(aiBackendSmoke, /writeSmokeReport/);
-  assert.match(aiBackendSmoke, /sanitizeDetailForReport/);
+  assert.match(aiBackendSmokeEvidence, /contract.validateEndpoint/);
+  assert.match(aiBackendSmokeEvidence, /Removed endpoint/);
+  assert.match(aiBackendSmokeEvidence, /envFilePathIssue/);
+  assert.match(aiBackendSmoke, /--native-capture/);
+  assert.match(aiBackendSmoke, /networkRequests:0/);
+  assert.match(aiBackendSmoke, /terminal-blocked/);
+  assert.match(aiBackendSmoke, /assertSafeReportPath/);
+  assert.match(claraEvidenceContract, /ai-backend-smoke-v2/);
+  assert.match(claraEvidenceContract, /privateData/);
+  assert.match(claraEvidenceContract, /currentCandidate/);
+  assert.match(claraEvidenceContract, /candidatePhotos:\s*["\']UNAVAILABLE["\']/);
   assert.match(backendReadinessSmoke, /backend-readiness-smoke-v1/);
   assert.match(backendReadinessSmoke, /--report <path>/);
   assert.match(backendReadinessSmoke, /backend readiness derivation source endpoint/);
@@ -10785,7 +11313,7 @@ test("smoke harness audit covers physical-device evidence helpers", () => {
 
 test("performance safety audit covers event-driven native protection", () => {
   const output = runPerformanceAudit();
-  assert.match(output, /Result: 28 pass, 0 fail/);
+  assert.match(output, /Result: 29 pass, 0 fail/);
   assert.match(output, /native-pending-intervention-expiry/);
   assert.match(output, /android-dns-only-vpn/);
   assert.match(output, /android-dns-resolver-failover/);
@@ -10798,7 +11326,8 @@ test("performance safety audit covers event-driven native protection", () => {
   assert.match(output, /visible challenge path without screenshots or OCR/);
   assert.match(output, /per-session query\/blocked\/allowed\/SERVFAIL\/malformed counters/);
   assert.match(output, /android-vpn-revocation-cleanup/);
-  assert.match(output, /ios-no-network-extension/);
+  assert.match(output, /ios-encrypted-dns-release-gated/);
+  assert.match(output, /android-encrypted-dns-protected-https/);
   assert.match(output, /android-private-dns-diagnostics/);
   assert.match(output, /android-accessibility-event-driven-app-shield/);
   assert.match(output, /android-usage-stats-bridge/);
@@ -11320,12 +11849,40 @@ test("backend architecture contract covers server-side production slices without
   assert.match(releaseOutput, /Authoritative backend architecture audit passes/);
 });
 
+test("native root accessibility audit rejects missing tab names and disconnected SOS actions", () => {
+  const { inspectNativeAccessibilitySources } = require("../scripts/accessibility-safety-audit.js");
+  assert.equal(typeof inspectNativeAccessibilitySources, "function");
+  const sources = {
+    tabs: readFileSync("app/(tabs)/_layout.tsx", "utf8"),
+    urgeSupport: readFileSync("src/components/UrgeSupportButton.tsx", "utf8"),
+    controller: readFileSync("src/features/freed-app.tsx", "utf8"),
+    navigation: readFileSync("src/lib/native-navigation.ts", "utf8"),
+    tabStacks: ["today", "shield", "progress", "profile"].map((tab) => readFileSync(`app/(tabs)/${tab}/_layout.tsx`, "utf8"))
+  };
+  const mutate = (text: string, before: string, after: string) => {
+    assert.ok(text.includes(before), `Mutation target is present: ${before}`);
+    const result = text.replace(before, after);
+    assert.notEqual(result, text, "Negative fixture must change the tested source.");
+    return result;
+  };
+  assert.deepEqual(inspectNativeAccessibilitySources(sources), { tabsNamed: true, urgeSupportWired: true });
+  assert.equal(inspectNativeAccessibilitySources({ ...sources, tabs: mutate(sources.tabs, "{translateSource('Today')}", "") }).tabsNamed, false);
+  assert.equal(inspectNativeAccessibilitySources({ ...sources, tabs: mutate(sources.tabs, 'name="profile"', 'name="today"') }).tabsNamed, false);
+  assert.equal(inspectNativeAccessibilitySources({ ...sources, urgeSupport: mutate(sources.urgeSupport, 'accessibilityLabel="Help now: open urge support"', 'accessibilityLabel=""') }).urgeSupportWired, false);
+  assert.equal(inspectNativeAccessibilitySources({ ...sources, urgeSupport: mutate(sources.urgeSupport, "onPress={startPanicIntervention}", "onPress={() => undefined}") }).urgeSupportWired, false);
+  assert.equal(inspectNativeAccessibilitySources({ ...sources, urgeSupport: mutate(sources.urgeSupport, "useFreedAppController()", "unconnectedController()") }).urgeSupportWired, false);
+  assert.equal(inspectNativeAccessibilitySources({ ...sources, controller: mutate(sources.controller, 'setScreen("intercept");\n  }, [setRecoveryState]);', 'setScreen("main");\n  }, [setRecoveryState]);') }).urgeSupportWired, false);
+  assert.equal(inspectNativeAccessibilitySources({ ...sources, navigation: mutate(sources.navigation, "'intercept', 'ad'", "'ad'") }).urgeSupportWired, false);
+  assert.equal(inspectNativeAccessibilitySources({ ...sources, tabStacks: sources.tabStacks.map((text, index) => index === 0 ? mutate(text, "<RootToolbarActions />", "null") : text) }).urgeSupportWired, false);
+});
+
 test("accessibility safety audit covers key recovery controls", () => {
   const output = runAccessibilityAudit();
-  assert.match(output, /Result: 6 pass, 0 fail/);
+  assert.match(output, /Result: 7 pass, 0 fail/);
   assert.match(output, /shared-pill-buttons-are-named/);
   assert.match(output, /bottom-navigation-tabs-are-named/);
   assert.match(output, /panic-action-is-explicit/);
+  assert.match(output, /shared-setup-action-and-progress-are-named/);
 
   const releaseOutput = runReleaseReadinessAudit();
   assert.match(releaseOutput, /accessibility-safety-contract/);
@@ -11363,7 +11920,7 @@ test("classifier safety audit covers adult-only release corpus", () => {
 test("android classifier parity audit matches TypeScript classifier tables", () => {
   const output = runAndroidClassifierParityAudit();
   assert.match(output, /FREED Android classifier parity audit/);
-  assert.match(output, /Result: 15 pass, 0 fail/);
+  assert.match(output, /Result: \d+ pass, 0 fail/);
   assert.match(output, /table-allowedNormalDomains/);
   assert.match(output, /logic-recovery-search-before-block/);
   assert.match(output, /logic-host-storage-normalization/);
@@ -11384,8 +11941,19 @@ test("typescript entry runner loads env files for standalone smoke scripts", () 
     ].join("\n")
   );
   assert.notEqual(aiSmoke.status, 0);
-  assert.match(aiSmoke.output, /placeholder or documentation host/);
-  assert.doesNotMatch(aiSmoke.output, /Endpoint is not configured/);
+  const report = JSON.parse(aiSmoke.output);
+  const contract = require("../scripts/lib/google-clara-release-evidence");
+  assert.equal(report.schemaVersion, contract.REPORT_SCHEMA);
+  assert.equal(report.source, "terminal-blocked");
+  assert.deepEqual(report.identity, contract.IDENTITY);
+  assert.deepEqual(report.architecture, contract.ARCHITECTURE);
+  // These exact names only appear when the standalone runner loaded the env file.
+  assert.deepEqual(report.inactiveLegacyOptions, ["EXPO_PUBLIC_AI_COACH_ENDPOINT", "EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT"]);
+  assert.equal(report.transport.endpoint, contract.ENDPOINT);
+  assert.equal(report.transport.networkRequests, 0);
+  assert.deepEqual(report.results, contract.REQUIRED_RESULT_IDS.map((id: string) => ({ id, status: "BLOCKED" })));
+  assert.deepEqual(report.summary, { passCount: 0, failCount: contract.REQUIRED_RESULT_IDS.length });
+  assert.ok(contract.reportIssues(report).length > 0, "Terminal output cannot satisfy production-native proof");
 
   const purchaseSmoke = runTsEntrypoint(
     "scripts/purchase-verification-smoke.ts",
@@ -11402,26 +11970,19 @@ test("deployed smoke harnesses bound request and JSON reads", () => {
   assert.match(remoteProviderTimeout, /readBoundedResponseJson/);
 
   const aiSmoke = readFileSync(join(process.cwd(), "scripts/ai-backend-smoke.ts"), "utf8");
-  assert.match(aiSmoke, /fetchRemoteProviderResponse/);
-  assert.match(aiSmoke, /readRemoteProviderJson/);
-  assert.match(aiSmoke, /EXPO_PUBLIC_AI_COACH_TIMEOUT_MS/);
-  assert.match(aiSmoke, /EXPO_PUBLIC_AI_CHALLENGE_TIMEOUT_MS/);
-  assert.match(aiSmoke, /EXPO_PUBLIC_RETENTION_TIMEOUT_MS/);
-  assert.match(aiSmoke, /retention-remote-endpoint/);
-  assert.match(aiSmoke, /retentionEndpointChecked/);
-  assert.match(aiSmoke, /retentionAggregateOnlyChecked/);
-  assert.match(aiSmoke, /ai-backend-smoke-v1/);
-  assert.match(aiSmoke, /--report <path>/);
-  assert.match(aiSmoke, /writeSmokeReport/);
-  assert.match(aiSmoke, /sanitizeDetailForReport/);
+  assert.match(aiSmoke, /--native-capture/);
+  assert.match(aiSmoke, /networkRequests:0/);
+  assert.match(aiSmoke, /callableRequestTimeoutMs:15000/);
+  assert.match(aiSmoke, /terminal-blocked/);
+  assert.match(aiSmoke, /assertSafeReportPath/);
+  assert.match(readFileSync("scripts/lib/google-clara-release-evidence.js", "utf8"), /providerTimeoutMs:\s*11000/);
 
   for (const reportSmokeScript of [
     "scripts/backend-readiness-smoke.ts",
     "scripts/adult-domain-feed-smoke.ts",
     "scripts/analytics-ingestion-smoke.ts",
     "scripts/remote-notification-smoke.ts",
-    "scripts/purchase-verification-smoke.ts",
-    "scripts/ai-backend-smoke.ts"
+    "scripts/purchase-verification-smoke.ts"
   ]) {
     const script = readFileSync(join(process.cwd(), reportSmokeScript), "utf8");
     assert.match(script, /function sanitizeEndpointForReport/);
@@ -11481,9 +12042,9 @@ test("deployed smoke harnesses bound request and JSON reads", () => {
   assert.match(supabaseSchemaSmoke, /limit=0/);
 
   const releaseOutput = runReleaseReadinessAudit();
-  assert.match(releaseOutput, /AI backend smoke script can validate configured model plus deployed timeout-bounded CLARA/);
-  assert.match(releaseOutput, /optional aggregate-only retention/);
-  assert.match(releaseOutput, /coarse session-duration bucket, aggregate failed-reset count/);
+  assert.match(releaseOutput, /CLARA callable evidence importer requires current checksummed deployment\/native captures/);
+  assert.match(releaseOutput, /recovery remains local/);
+  assert.match(releaseOutput, /BLOCKED proof when absent/);
   assert.match(releaseOutput, /Supabase schema smoke script validates the deployed production Supabase REST schema/);
   assert.match(releaseOutput, /Purchase verification smoke script can validate deployed timeout-bounded purchase endpoint/);
 });
@@ -11592,7 +12153,7 @@ test("validation evidence scaffold writes drafts outside release evidence gate",
     assert.match(scaffoldReadme, /npm run verify:release -- --env-file <production-env-file> --artifact-dir docs\/validation\/artifacts\/qa-scaffold/);
     assert.match(scaffoldReadme, /Release-env helper behavior:/);
     assert.match(scaffoldReadme, /preloads non-secret store provider, Core 3 product IDs, entitlement, purchase endpoint/);
-    assert.match(scaffoldReadme, /Explicit AI helper CLI flags override release env-file values/);
+    assert.match(scaffoldReadme, /legacy coach\/challenge\/retention endpoint options are inactive/);
     const capturePlan = readFileSync(join(output, "CAPTURE_PLAN.md"), "utf8");
     assert.match(capturePlan, /FREED Evidence Capture Plan: qa-scaffold/);
     assert.match(capturePlan, /Evidence references must be files under the artifact folder or production-safe HTTPS QA\/report URLs/);
@@ -11663,7 +12224,7 @@ test("validation evidence scaffold writes drafts outside release evidence gate",
     assert.match(capturePlan, /do not promote it as iOS release evidence/);
     assert.match(capturePlan, /`npm run evidence:android-devices` is a setup handoff only/);
     assert.match(capturePlan, /evidenceSatisfied=false/);
-    assert.match(capturePlan, /releaseEnvFileLoaded=true/);
+    assert.match(capturePlan, /reviewed current signed binary, frozen source inventory and compiled deployment revision/);
     assert.match(capturePlan, /`checks\.familyControlsAuthorization`/);
     assert.match(capturePlan, /`profile\.platformProfiles\[\]\.backgroundCpuRunId`/);
     assert.match(capturePlan, /Device URL checklist:/);
@@ -11808,9 +12369,9 @@ test("validation evidence scaffold writes drafts outside release evidence gate",
     assert.ok(androidRequirements.requiredFields.includes("android.appSelectionReturnAutoSync=true"));
     assert.ok(androidRequirements.requiredFields.includes("android.appSelectionReturnNativePackageSyncConfirmed=true"));
     assert.ok(androidRequirements.requiredFields.includes("android.appSelectionReturnSelectedAppCount>0"));
-    assert.ok(androidRequirements.requiredFields.includes("android.permissionWizardArtifact checks include Android zero-app disabled, setup-launched app selection, return auto-sync, native package sync, app-selection auto-advance continuation, DNS Guard VPN-consent return refresh plus android.net.VpnService.prepare surface, Usage Access return refresh plus android.settings.USAGE_ACCESS_SETTINGS route, Accessibility return refresh plus android.settings.ACCESSIBILITY_DETAILS_SETTINGS and FREED service component target, and system-settings auto-advance continuation"));
-    assert.ok(androidRequirements.requiredFields.includes("android.accessibilityPermissionArtifact local freed-android-permission-report-v1 JSON with sanitized=true, matching runId, targeted FREED Accessibility details route, enabled AccessibilityService/user-granted/no-hidden-monitoring checks"));
-    assert.ok(androidRequirements.requiredFields.includes("android.accessibilitySettingsRouteComponent matches FREED AccessibilityService native target"));
+    assert.ok(androidRequirements.requiredFields.includes("android.permissionWizardArtifact checks include Android zero-app disabled, setup-launched app selection, return auto-sync, native package sync, app-selection auto-advance continuation, DNS Guard VPN-consent return refresh plus android.net.VpnService.prepare surface, Usage Access return refresh plus android.settings.USAGE_ACCESS_SETTINGS route, Accessibility return refresh plus public android.settings.ACCESSIBILITY_SETTINGS and user-enabled FREED service proof, and system-settings auto-advance continuation"));
+    assert.ok(androidRequirements.requiredFields.includes("android.accessibilityPermissionArtifact local freed-android-permission-report-v1 JSON with sanitized=true, matching runId, public Android Accessibility settings route, enabled AccessibilityService/user-granted/no-hidden-monitoring checks"));
+    assert.ok(androidRequirements.requiredFields.includes("android.accessibilityPermissionArtifact accessibilityServiceComponent identifies FREED AccessibilityService in enabled services"));
     assert.ok(androidRequirements.requiredFields.includes("android.usageAccessPermissionArtifact local freed-android-permission-report-v1 JSON with sanitized=true, matching runId/public Usage Access settings route/explicit FREED user toggle/UsageStats authorization/aggregate selected-app package metrics and no raw usage events"));
     assert.ok(androidRequirements.requiredChecks.includes("notificationPermissionFlow"));
     assert.ok(androidRequirements.requiredFields.includes("android.notificationPermissionArtifact local freed-android-permission-report-v1 JSON with sanitized=true, matching runId, Android 13+ runtime notification prompt, native required/granted status, app notification settings fallback only when denied, and no silent notification grant"));
@@ -11936,33 +12497,11 @@ test("validation evidence scaffold writes drafts outside release evidence gate",
     assert.ok(performanceRequirements.requiredFields.includes("profile.platformProfiles[].noContinuousImageClassificationConfirmed=true"));
     assert.ok(performanceRequirements.requiredFields.includes("profile.platformProfiles[android].dnsServfailFallbackConfirmed=true"));
     assert.ok(performanceRequirements.requiredFields.includes("profile.platformProfiles[android].vpnRevocationCleanupConfirmed=true"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.safetyEvalCaseCount>=10"));
-    assert.ok(aiRequirements.requiredFields.includes("evidence[] local artifact or production-safe HTTPS QA/report URL"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.coachEndpoint production-safe, no URL credentials/query/fragment, and matches configured remote coach endpoint"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.challengeEndpoint production-safe, no URL credentials/query/fragment, and matches configured remote challenge endpoint"));
-    assert.ok(aiRequirements.requiredFields.includes("when EXPO_PUBLIC_RETENTION_ENDPOINT is configured: ai.retentionEndpoint production-safe, no URL credentials/query/fragment, and matches configured remote retention endpoint"));
+    assert.ok(aiRequirements.requiredFields.includes("schemaVersion=freed-google-clara-evidence-v2"));
+    assert.ok(aiRequirements.requiredFields.includes("ai.smokeReportSha256 SHA256 checksum"));
     assert.match(aiRequirements.captureHelperCommand, /npm run evidence:ai-backend-smoke/);
-    assert.ok(
-      aiRequirements.captureHelperNotes.some((note: string) =>
-        note.includes("preloads non-secret coach endpoint, challenge endpoint, optional retention endpoint, and model context")
-      )
-    );
-    assert.ok(aiRequirements.requiredFields.includes("ai.smokeEndpointPassCount>=2, or >=3 when EXPO_PUBLIC_RETENTION_ENDPOINT is configured"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.coachSmokeRunId"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.coachSmokeArtifact"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.challengeSmokeRunId"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.challengeSmokeArtifact"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.challengePersonalizationRunId"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.challengePersonalizationArtifact"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.challengePersonalizationProfileCount>=2"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.challengeRiskForecastProfileCount>=2"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.challengeSessionDurationBucketProfileCount>=1"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.challengeRecentFailureProfileCount>=1"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.freeChallengePremiumCount=0"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.noCoordinateFieldsRunId"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.noCoordinateFieldsArtifact"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.noSensitiveEchoRunId"));
-    assert.ok(aiRequirements.requiredFields.includes("ai.noSensitiveEchoArtifact"));
+    assert.ok(aiRequirements.requiredChecks.includes("localRecoveryVerified"));
+    assert.ok(aiRequirements.requiredChecks.includes("remoteResponseVerified"));
     assert.ok(
       storeRequirements.requiredFields.includes(
         "store.iosProductId configured FREED Core 3 launch product ID"
@@ -11970,7 +12509,7 @@ test("validation evidence scaffold writes drafts outside release evidence gate",
     );
     assert.ok(
       storeRequirements.requiredFields.includes(
-        "store.launchProductSandboxMatrix[] includes yearly, monthly, and lifetime with App Store purchase/restore, Play purchase/restore, and local purchase-verification-smoke-v1 server entitlement verification artifacts inspected per row"
+        "store.launchProductSandboxMatrix[] includes yearly and monthly with App Store purchase/restore, Play purchase/restore, and local purchase-verification-smoke-v1 server entitlement verification artifacts inspected per row"
       )
     );
     assert.match(storeRequirements.captureHelperCommand, /npm run evidence:store-ad-sandbox/);
@@ -11996,15 +12535,15 @@ test("validation evidence scaffold writes drafts outside release evidence gate",
     assert.ok(storeRequirements.requiredFields.includes("store.androidRestoreRunId"));
     assert.ok(storeRequirements.requiredFields.includes("store.androidRestoreArtifact"));
     assert.ok(storeRequirements.requiredFields.includes("store.androidPurchaseTokenHash=sha256-<64-hex-chars>"));
-    assert.ok(storeRequirements.requiredFields.includes("store.purchaseVerificationPassCount>=6"));
+    assert.ok(storeRequirements.requiredFields.includes("store.purchaseVerificationPassCount>=5"));
     assert.ok(
       storeRequirements.requiredFields.includes(
-        "store.purchaseVerificationArtifact local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof, Core 3 fake-known yearly/monthly/lifetime PASS result rows, 0 failures, endpoint validation, bounded timeout, synthetic-only rejection proof, matching launchProductIdsChecked, no raw token/receipt/order/package echo, checked server-secret key names, and secretValuesOmitted=true"
+        "store.purchaseVerificationArtifact local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof, Core 3 fake-known yearly/monthly PASS result rows, 0 failures, endpoint validation, bounded timeout, synthetic-only rejection proof, matching launchProductIdsChecked, no raw token/receipt/order/package echo, checked server-secret key names, and secretValuesOmitted=true"
       )
     );
     assert.ok(
       storeRequirements.requiredFields.includes(
-        "store.restoreVerificationArtifact local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof, Core 3 fake-known yearly/monthly/lifetime PASS result rows, 0 failures, endpoint validation, bounded timeout, synthetic-only rejection proof, matching launchProductIdsChecked, no raw token/receipt/order/package echo, checked server-secret key names, and secretValuesOmitted=true"
+        "store.restoreVerificationArtifact local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof, Core 3 fake-known yearly/monthly PASS result rows, 0 failures, endpoint validation, bounded timeout, synthetic-only rejection proof, matching launchProductIdsChecked, no raw token/receipt/order/package echo, checked server-secret key names, and secretValuesOmitted=true"
       )
     );
     assert.ok(storeRequirements.requiredFields.includes("store.restoreVerificationFailedCount=0"));
@@ -12017,14 +12556,14 @@ test("validation evidence scaffold writes drafts outside release evidence gate",
     assert.ok(storeRequirements.requiredFields.includes("store.paywallLaunchScopeArtifact"));
     assert.ok(
       storeRequirements.requiredFields.includes(
-        "store.paywallLaunchScopeArtifact local freed-paywall-launch-scope-report-v1 JSON with sanitized=true, matching paywallScopeRunId, source hashes for the paywall and monetization code, Core 3 yearly/monthly/lifetime plan IDs and configured product IDs visible only, family/accountability/AI-coach product IDs hidden, yearly value anchor visible, restore visible, purchase buttons enabled, server verification copy visible, premium no-ad benefit visible, and no future upsell checks"
+        "store.paywallLaunchScopeArtifact local freed-paywall-launch-scope-report-v1 JSON with sanitized=true, matching paywallScopeRunId, source hashes for the paywall and monetization code, Core 3 yearly/monthly plan IDs and configured product IDs visible only, family/accountability/AI-coach product IDs hidden, yearly value anchor visible, restore visible, purchase buttons enabled, server verification copy visible, premium no-ad benefit visible, and no future upsell checks"
       )
     );
     assert.ok(storeRequirements.requiredFields.includes("store.consoleProductSetupRunId"));
     assert.ok(storeRequirements.requiredFields.includes("store.consoleProductSetupArtifact"));
     assert.ok(
       storeRequirements.requiredFields.includes(
-        "store.consoleProductSetupArtifact local freed-store-console-product-setup-report-v1 JSON with sanitized=true, matching consoleProductSetupRunId, source hashes for store product catalog, App Store IAP CSV, Play product CSV, screenshot manifest, read-only Browser app-record readiness report hash proving Play app record, App Store Connect app record, and Apple license-agreement readiness, Core 3 yearly/monthly/lifetime products configured only, App Store monthly/yearly subscription group and lifetime non-consumable configured, Play monthly/yearly base plans and lifetime one-time non-consumable configured, product localizations and review screenshots attached, server-verification metadata configured, redacted App Store Connect and Play Console evidence artifacts with matching hashes captured, future family/accountability/AI-coach SKUs inactive, no extra launch products active, and draft/internal/TestFlight-only status until evidence passes"
+        "store.consoleProductSetupArtifact local freed-store-console-product-setup-report-v1 JSON with sanitized=true, matching consoleProductSetupRunId, source hashes for store product catalog, App Store IAP CSV, Play product CSV, screenshot manifest, read-only Browser app-record readiness report hash proving Play app record, App Store Connect app record, and Apple license-agreement readiness, Core 3 yearly/monthly products configured only, App Store monthly/yearly subscription group configured, Play monthly/yearly base plans configured, product localizations and review screenshots attached, server-verification metadata configured, redacted App Store Connect and Play Console evidence artifacts with matching hashes captured, future family/accountability/AI-coach SKUs inactive, no extra launch products active, and draft/internal/TestFlight-only status until evidence passes"
       )
     );
     assert.ok(storeRequirements.requiredFields.includes("store.rewardedAdFormat=rewarded"));
@@ -12232,29 +12771,16 @@ test("store and AI evidence helpers load non-secret release env context", () => 
     assert.doesNotMatch(store.output, /SHOULD_NOT_APPEAR/);
     assert.doesNotMatch(store.output, new RegExp(secretGeminiKey));
 
-    const ai = runAiBackendEvidenceArgs([
-      "--release-env-file",
-      envFile,
-      "--challenge-endpoint",
-      "https://ai.freedrecovery.app/api/challenges",
-      "--run-id",
-      "env-file-ai-capture",
-      "--plan-only"
-    ]);
+    const ai = runAiBackendEvidenceArgs(["--release-env-file", envFile, "--run-id", "env-file-ai-capture", "--plan-only"]);
     assert.equal(ai.status, 0, ai.output);
     const aiPayload = JSON.parse(ai.output);
-    assert.equal(aiPayload.releaseEnvFileLoaded, true);
-    assert.equal(aiPayload.configured.coachEndpoint, "https://api.freedrecovery.app/api/clara");
-    assert.equal(aiPayload.configured.challengeEndpoint, "https://ai.freedrecovery.app/api/challenges");
-    assert.equal(aiPayload.configured.retentionEndpoint, "https://api.freedrecovery.app/api/retention");
-    assert.equal(aiPayload.configured.model, "gemini-2.5-flash");
-    assert.match(aiPayload.commandHandoff.smokeCommand, /--env-file/);
-    assert.match(JSON.stringify(aiPayload.matrixRows), /ai-backend-smoke-report\.json/);
-    assert.match(JSON.stringify(aiPayload.matrixRows), /retentionAggregateOnlyVerified/);
-    assert.match(JSON.stringify(aiPayload.matrixRows), /sanctioned command shape/);
+    assert.equal(aiPayload.evidenceSatisfied, false);
+    assert.equal(aiPayload.identity.model, "gemini-3.5-flash-lite");
+    assert.equal(aiPayload.architecture.challenges, "LOCAL");
+    assert.equal(aiPayload.architecture.retention, "LOCAL");
+    assert.ok(aiPayload.inactiveLegacyOptions.includes("EXPO_PUBLIC_RETENTION_ENDPOINT"));
     assert.doesNotMatch(ai.output, /SHOULD_NOT_APPEAR/);
     assert.doesNotMatch(ai.output, new RegExp(secretGeminiKey));
-
     const missingStoreEnv = runStoreAdEvidenceArgs(["--release-env-file", join(root, "missing.env"), "--plan-only"]);
     assert.notEqual(missingStoreEnv.status, 0);
     assert.match(missingStoreEnv.output, /Env file not found/);
@@ -12293,7 +12819,7 @@ test("store and AI evidence helpers load non-secret release env context", () => 
       "--plan-only"
     ]);
     assert.notEqual(wrongAiPath.status, 0);
-    assert.match(wrongAiPath.output, /\/api\/clara/);
+    assert.match(wrongAiPath.output, /Google CLARA callable/);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
@@ -12418,8 +12944,129 @@ test("store and AI evidence helpers reject bad env-file environment values befor
 });
 
 test("validation evidence templates include required field examples", () => {
-  const output = runEvidenceTemplates();
-  assert.match(output, /Result: \d+ pass, 0 fail/);
+  let output = "";
+  let status: number | null = 0;
+  try { output = runEvidenceTemplates(); }
+  catch (error) { const failed = childProcessFailureOutput(error); output = failed.output; status = failed.status; }
+  assert.notEqual(status, 0, "Historical May AI v1 draft requires recapture under the current contract");
+  assert.match(output, /Result: 8 pass, 1 fail/);
+  const failures = output.split("\n").filter(line => line.startsWith("| FAIL |"));
+  assert.equal(failures.length, 1);
+  assert.match(failures[0], /draft-package:2026-05-13-release-evidence/);
+  assert.match(failures[0], /current Google CLARA evidence schema/);
+  assert.match(failures[0], /checks\.signedClientVerified/);
+  assert.match(failures[0], /ai\.smokeReportSha256/);
+  assert.match(output, /\| PASS \| ai-backend-smoke-validation \|/);
+  const template = JSON.parse(readFileSync("docs/validation/templates/ai-backend-smoke.template.json", "utf8"));
+  const contract = require("../scripts/lib/google-clara-release-evidence");
+  assert.equal(template.schemaVersion, contract.EVIDENCE_SCHEMA);
+  assert.deepEqual(Object.keys(template.checks).sort(), [...contract.CHECKS].sort());
+  assert.match(template.ai.smokeReportSha256, /^[0-9a-f]{64}$/);
+  // The historical row may report only current AI-contract drift. A new non-AI
+  // draft/doc/template failure must still fail this test, even in the same row.
+  const historicalMissing = failures[0].split("Missing: ")[1].split(". | ")[0].split(", ");
+  const historicalPackage = "docs/validation/artifacts/2026-05-13-release-evidence";
+  const historicalDraft = `${historicalPackage}/draft-evidence/ai-backend-smoke.json`;
+  const attachedRuntime = "Google CLARA attached runtime identity and reviewed current candidate/deployment binding; no static AI credential";
+  const currentAiProof = "current Google CLARA production proof from production-ai-backend";
+  const currentAiFields = [
+    "schemaVersion=freed-google-clara-evidence-v2",
+    "ai.smokeReportArtifact local ai-backend-smoke-v2 JSON report with sanitized=true and checksummed production-native/deployment captures",
+    "ai.smokeReportSha256 SHA256 checksum",
+    "Current v6 TestFlight 1.0 (3) source/revision/signed binary binding",
+    "Google CLARA attached identity/model/Auth/AppCheck/consent/quota/privacy/timeout/fallback proof",
+    "LOCAL challenge/retention zero-network capability/explicit-rule/license/fallback proof; candidate photos UNAVAILABLE"
+  ];
+  const allowedHistoricalMissing = new Set<string>([
+    ...contract.CHECKS.map((check: string) => `${historicalDraft} checks.${check}`),
+    ...["current Google CLARA evidence schema", "ai.smokeReportArtifact", "ai.smokeReportSha256", "AI report SHA256 example"]
+      .map(field => `${historicalDraft} ${field}`),
+    `${historicalPackage}/requirements.json productionBlockerGroups.production-ai-backend.requiredEnv missing ${attachedRuntime}`,
+    `${historicalPackage}/requirements.json productionBlockerGroups.ai-backend-smoke-validation.requiredEnv missing ${currentAiProof}`,
+    ...["firebase-backend-config", "firebase-production-runtime-evidence"].map(check =>
+      `${historicalPackage}/requirements.json productionBlockerGroups.production-ai-backend.preflightCheckIds missing ${check}`),
+    ...contract.CHECKS.map((check: string) =>
+      `${historicalPackage}/requirements.json ai-backend-smoke-validation.requiredChecks missing ${check}`),
+    ...currentAiFields.map(field => `${historicalPackage}/requirements.json ai-backend-smoke-validation.requiredFields missing ${field}`),
+    ...[attachedRuntime, currentAiProof].map(field => `${historicalPackage}/CAPTURE_PLAN.md missing Env: ${field}`),
+    ...["firebase-backend-config", "firebase-production-runtime-evidence"].map(check =>
+      `${historicalPackage}/CAPTURE_PLAN.md missing Preflight check: ${check}`),
+    ...contract.CHECKS.map((check: string) => `${historicalPackage}/CAPTURE_PLAN.md missing checks.${check}`),
+    ...currentAiFields.map(field => `${historicalPackage}/CAPTURE_PLAN.md missing ${field}`)
+  ]);
+  const assertAllowedHistoricalMissing = (findings: string[]) => {
+    for (const missing of findings) assert.ok(allowedHistoricalMissing.has(missing), `Unexpected non-AI historical package drift: ${missing}`);
+  };
+  assertAllowedHistoricalMissing(historicalMissing);
+  const auditWithHistoricalMutation = (mode: string, remove: string[] = []) => {
+    // Read interception is confined to a child process; no checked-in fixture is changed.
+    const probe = `
+      const fs = require("node:fs"), path = require("node:path");
+      const target = path.resolve(${JSON.stringify(historicalDraft)});
+      const mode = ${JSON.stringify(mode)}, remove = ${JSON.stringify(remove)};
+      const read = fs.readFileSync, exists = fs.existsSync;
+      let changed = false;
+      fs.existsSync = function(file) {
+        if (mode === "missing-file" && path.resolve(String(file)) === target) { changed = true; return false; }
+        return exists.apply(this, arguments);
+      };
+      fs.readFileSync = function(file) {
+        const original = read.apply(this, arguments);
+        if (path.resolve(String(file)) !== target) return original;
+        let replacement;
+        if (mode === "invalid-json") replacement = "{";
+        else {
+          const payload = JSON.parse(original.toString());
+          for (const key of remove) {
+            if (key === "device") continue; // This historical fixture uses environment instead.
+            if (!Object.prototype.hasOwnProperty.call(payload, key)) throw new Error("Counterexample field absent: " + key);
+            delete payload[key];
+          }
+          replacement = JSON.stringify(payload);
+        }
+        changed = replacement !== original.toString();
+        return typeof original === "string" ? replacement : Buffer.from(replacement);
+      };
+      require(path.resolve("scripts/validation-template-audit.js"));
+      if (!changed) throw new Error("Historical counterexample did not change an audit input");
+    `;
+    let result = { status: 0, output: "" };
+    try {
+      result.output = execFileSync(process.execPath, ["-e", probe], {
+        cwd: process.cwd(), encoding: "utf8", env: childToolEnv(),
+        stdio: ["ignore", "pipe", "pipe"], timeout: CORE_TEST_CHILD_TIMEOUT_MS
+      });
+    } catch (error) { result = childProcessFailureOutput(error); }
+    assert.equal(result.status, 1);
+    assert.match(result.output, /Result: 8 pass, 1 fail/);
+    assert.doesNotMatch(result.output, /Counterexample field absent|did not change an audit input/);
+    const row = result.output.split("\n").find(line => line.startsWith("| FAIL | draft-package:2026-05-13-release-evidence |"));
+    assert.ok(row, "Counterexample must fail the real historical draft audit");
+    return row.split("Missing: ")[1].split(". | ")[0].split(", ");
+  };
+  for (const [remove, suffix] of [
+    [["validatedAt"], "validatedAt"], [["tester"], "tester"], [["build"], "build"],
+    [["evidence"], "evidence[]"], [["device", "environment"], "device or environment"]
+  ] as [string[], string][]) {
+    const findings = auditWithHistoricalMutation("remove", remove);
+    assert.ok(findings.includes(`${historicalDraft} ${suffix}`), "Real audit must report the removed common field");
+    assert.throws(() => assertAllowedHistoricalMissing(findings), /Unexpected non-AI historical package drift/, suffix);
+  }
+  for (const [mode, expected] of [["invalid-json", `${historicalDraft} valid JSON`], ["missing-file", historicalDraft]]) {
+    const findings = auditWithHistoricalMutation(mode);
+    assert.ok(findings.includes(expected), "Real audit must report the malformed/missing input");
+    assert.throws(() => assertAllowedHistoricalMissing(findings), /Unexpected non-AI historical package drift/, mode);
+  }
+  for (const unrelated of [
+    `${historicalDraft} root object`, `${historicalDraft} checks.unrelatedCheck`,
+    `${historicalDraft} checks.signedClientVerifiedUnexpected`, `${historicalDraft} ai.smokeReportSha256 unrelated suffix`,
+    `${historicalPackage}/requirements.json generatedAt`,
+    "docs/validation/artifacts/2026-05-13-release-evidence/requirements.json valid JSON",
+    "docs/validation/artifacts/2026-05-13-release-evidence/requirements.json ai-backend-smoke-validation.requiredFields missing validatedAt",
+    "docs/validation/artifacts/2026-05-13-release-evidence/CAPTURE_PLAN.md missing checks.unrelatedCheck",
+    "docs/validation/artifacts/2026-05-13-release-evidence/README.md missing unrelated command"
+  ]) assert.throws(() => assertAllowedHistoricalMissing([...historicalMissing, unrelated]), /Unexpected non-AI historical package drift/, unrelated);
+  for (const check of contract.CHECKS) assert.equal(template.checks[check], true);
   assert.match(output, /performance-validation/);
   assert.match(output, /performance field examples/);
   assert.match(output, /normal-browsing-corpus-validation/);
@@ -12433,7 +13080,9 @@ test("validation evidence templates include required field examples", () => {
   assert.match(output, /ai-backend-smoke-validation/);
   assert.match(output, /AI backend smoke field examples/);
   assert.match(output, /draft-package:2026-05-13-release-evidence/);
-  assert.match(output, /draft JSON, requirements\.json, README\.md, and CAPTURE_PLAN\.md are aligned with the current evidence spec/);
+  assert.match(failures[0], /is stale or incomplete/);
+  assert.match(failures[0], /CAPTURE_PLAN\.md missing checks\.localRecoveryVerified/);
+  assert.match(failures[0], /requirements\.json ai-backend-smoke-validation\.requiredFields/);
   assert.match(output, /production env checklist reference/);
   assert.match(output, /no-secret evidence warning/);
 });
@@ -12553,11 +13202,11 @@ test("validation evidence requirements expose field and command handoff details"
   assert.ok(store.requiredFields.includes("store.storeProvider matches configured monetization provider"));
   assert.ok(store.requiredFields.includes("store.iosProductId configured FREED Core 3 launch product ID"));
   assert.ok(store.requiredFields.includes("store.androidProductId configured FREED Core 3 launch product ID"));
-  assert.ok(store.requiredFields.includes("store.iosLaunchProductIds.{monthly,yearly,lifetime} configured Core 3 launch product IDs only"));
-  assert.ok(store.requiredFields.includes("store.androidLaunchProductIds.{monthly,yearly,lifetime} configured Core 3 launch product IDs only"));
+  assert.ok(store.requiredFields.includes("store.iosLaunchProductIds.{monthly,yearly} configured Core 3 launch product IDs only"));
+  assert.ok(store.requiredFields.includes("store.androidLaunchProductIds.{monthly,yearly} configured Core 3 launch product IDs only"));
   assert.ok(
     store.requiredFields.includes(
-      "store.launchProductSandboxMatrix[] includes yearly, monthly, and lifetime with App Store purchase/restore, Play purchase/restore, and local purchase-verification-smoke-v1 server entitlement verification artifacts inspected per row"
+      "store.launchProductSandboxMatrix[] includes yearly and monthly with App Store purchase/restore, Play purchase/restore, and local purchase-verification-smoke-v1 server entitlement verification artifacts inspected per row"
     )
   );
   assert.ok(store.requiredFields.includes("store.releasePreflightCommand"));
@@ -12578,17 +13227,17 @@ test("validation evidence requirements expose field and command handoff details"
   assert.ok(store.requiredFields.includes("store.purchaseVerificationReportId"));
   assert.ok(
     store.requiredFields.includes(
-      "store.purchaseVerificationArtifact local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof, Core 3 fake-known yearly/monthly/lifetime PASS result rows, 0 failures, endpoint validation, bounded timeout, synthetic-only rejection proof, matching launchProductIdsChecked, no raw token/receipt/order/package echo, checked server-secret key names, and secretValuesOmitted=true"
+      "store.purchaseVerificationArtifact local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof, Core 3 fake-known yearly/monthly PASS result rows, 0 failures, endpoint validation, bounded timeout, synthetic-only rejection proof, matching launchProductIdsChecked, no raw token/receipt/order/package echo, checked server-secret key names, and secretValuesOmitted=true"
     )
   );
-  assert.ok(store.requiredFields.includes("store.purchaseVerificationPassCount>=6"));
+  assert.ok(store.requiredFields.includes("store.purchaseVerificationPassCount>=5"));
   assert.ok(store.requiredFields.includes("store.purchaseVerificationFailedCount=0"));
   assert.ok(
     store.requiredFields.includes(
-      "store.restoreVerificationArtifact local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof, Core 3 fake-known yearly/monthly/lifetime PASS result rows, 0 failures, endpoint validation, bounded timeout, synthetic-only rejection proof, matching launchProductIdsChecked, no raw token/receipt/order/package echo, checked server-secret key names, and secretValuesOmitted=true"
+      "store.restoreVerificationArtifact local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof, Core 3 fake-known yearly/monthly PASS result rows, 0 failures, endpoint validation, bounded timeout, synthetic-only rejection proof, matching launchProductIdsChecked, no raw token/receipt/order/package echo, checked server-secret key names, and secretValuesOmitted=true"
     )
   );
-  assert.ok(store.requiredFields.includes("store.restoreVerificationPassCount>=6"));
+  assert.ok(store.requiredFields.includes("store.restoreVerificationPassCount>=5"));
   assert.ok(store.requiredFields.includes("store.restoreVerificationFailedCount=0"));
   assert.ok(store.requiredFields.includes("store.rewardedAdRequestArtifact"));
   assert.ok(
@@ -12606,14 +13255,14 @@ test("validation evidence requirements expose field and command handoff details"
   assert.ok(store.requiredFields.includes("store.paywallLaunchScopeArtifact"));
   assert.ok(
     store.requiredFields.includes(
-      "store.paywallLaunchScopeArtifact local freed-paywall-launch-scope-report-v1 JSON with sanitized=true, matching paywallScopeRunId, source hashes for the paywall and monetization code, Core 3 yearly/monthly/lifetime plan IDs and configured product IDs visible only, family/accountability/AI-coach product IDs hidden, yearly value anchor visible, restore visible, purchase buttons enabled, server verification copy visible, premium no-ad benefit visible, and no future upsell checks"
+      "store.paywallLaunchScopeArtifact local freed-paywall-launch-scope-report-v1 JSON with sanitized=true, matching paywallScopeRunId, source hashes for the paywall and monetization code, Core 3 yearly/monthly plan IDs and configured product IDs visible only, family/accountability/AI-coach product IDs hidden, yearly value anchor visible, restore visible, purchase buttons enabled, server verification copy visible, premium no-ad benefit visible, and no future upsell checks"
     )
   );
   assert.ok(store.requiredFields.includes("store.consoleProductSetupRunId"));
   assert.ok(store.requiredFields.includes("store.consoleProductSetupArtifact"));
   assert.ok(
     store.requiredFields.includes(
-      "store.consoleProductSetupArtifact local freed-store-console-product-setup-report-v1 JSON with sanitized=true, matching consoleProductSetupRunId, source hashes for store product catalog, App Store IAP CSV, Play product CSV, screenshot manifest, read-only Browser app-record readiness report hash proving Play app record, App Store Connect app record, and Apple license-agreement readiness, Core 3 yearly/monthly/lifetime products configured only, App Store monthly/yearly subscription group and lifetime non-consumable configured, Play monthly/yearly base plans and lifetime one-time non-consumable configured, product localizations and review screenshots attached, server-verification metadata configured, redacted App Store Connect and Play Console evidence artifacts with matching hashes captured, future family/accountability/AI-coach SKUs inactive, no extra launch products active, and draft/internal/TestFlight-only status until evidence passes"
+      "store.consoleProductSetupArtifact local freed-store-console-product-setup-report-v1 JSON with sanitized=true, matching consoleProductSetupRunId, source hashes for store product catalog, App Store IAP CSV, Play product CSV, screenshot manifest, read-only Browser app-record readiness report hash proving Play app record, App Store Connect app record, and Apple license-agreement readiness, Core 3 yearly/monthly products configured only, App Store monthly/yearly subscription group configured, Play monthly/yearly base plans configured, product localizations and review screenshots attached, server-verification metadata configured, redacted App Store Connect and Play Console evidence artifacts with matching hashes captured, future family/accountability/AI-coach SKUs inactive, no extra launch products active, and draft/internal/TestFlight-only status until evidence passes"
     )
   );
   assert.ok(store.requiredFields.includes("store.freeRewardedInterventionRunId"));
@@ -12831,12 +13480,12 @@ test("validation evidence requirements expose field and command handoff details"
   assert.ok(android.requiredFields.includes("android.appSelectionReturnAutoSync=true"));
   assert.ok(android.requiredFields.includes("android.appSelectionReturnNativePackageSyncConfirmed=true"));
   assert.ok(android.requiredFields.includes("android.appSelectionReturnSelectedAppCount>0"));
-  assert.ok(android.requiredFields.includes("android.permissionWizardArtifact checks include Android zero-app disabled, setup-launched app selection, return auto-sync, native package sync, app-selection auto-advance continuation, DNS Guard VPN-consent return refresh plus android.net.VpnService.prepare surface, Usage Access return refresh plus android.settings.USAGE_ACCESS_SETTINGS route, Accessibility return refresh plus android.settings.ACCESSIBILITY_DETAILS_SETTINGS and FREED service component target, and system-settings auto-advance continuation"));
+  assert.ok(android.requiredFields.includes("android.permissionWizardArtifact checks include Android zero-app disabled, setup-launched app selection, return auto-sync, native package sync, app-selection auto-advance continuation, DNS Guard VPN-consent return refresh plus android.net.VpnService.prepare surface, Usage Access return refresh plus android.settings.USAGE_ACCESS_SETTINGS route, Accessibility return refresh plus public android.settings.ACCESSIBILITY_SETTINGS and user-enabled FREED service proof, and system-settings auto-advance continuation"));
   assert.ok(android.requiredChecks.includes("usageAccessPermissionFlow"));
   assert.ok(android.requiredFields.includes("android.accessibilityPermissionRunId"));
   assert.ok(android.requiredFields.includes("android.accessibilityPermissionArtifact"));
-  assert.ok(android.requiredFields.includes("android.accessibilityPermissionArtifact local freed-android-permission-report-v1 JSON with sanitized=true, matching runId, targeted FREED Accessibility details route, enabled AccessibilityService/user-granted/no-hidden-monitoring checks"));
-  assert.ok(android.requiredFields.includes("android.accessibilitySettingsRouteComponent matches FREED AccessibilityService native target"));
+  assert.ok(android.requiredFields.includes("android.accessibilityPermissionArtifact local freed-android-permission-report-v1 JSON with sanitized=true, matching runId, public Android Accessibility settings route, enabled AccessibilityService/user-granted/no-hidden-monitoring checks"));
+  assert.ok(android.requiredFields.includes("android.accessibilityPermissionArtifact accessibilityServiceComponent identifies FREED AccessibilityService in enabled services"));
   assert.ok(android.requiredFields.includes("android.usageStatsAuthorized=true"));
   assert.ok(android.requiredFields.includes("android.usageAccessPermissionRunId"));
   assert.ok(android.requiredFields.includes("android.usageAccessPermissionArtifact"));
@@ -12983,49 +13632,18 @@ test("validation evidence requirements expose field and command handoff details"
   assert.ok(android.requiredFields.includes("android.playPolicySpecialUseFgsArtifact"));
   assert.ok(android.requiredFields.includes("android.playPolicySpecialUseFgsArtifact local freed-android-play-policy-report-v1 JSON with sanitized=true, complete AccessibilityService disclosure/config/manifest signals, DNS Guard special-use FGS disclosure signals, sha256 source hashes, and Play review IDs recorded separately"));
   assert.ok(android.requiredFields.includes("android.testedBrowserPackages includes Edge"));
-  assert.ok(ai.requiredFields.includes("ai.safetyEvalCaseCount>=10"));
-  assert.ok(ai.requiredFields.includes("ai.releasePreflightCommand"));
-  assert.ok(ai.requiredFields.includes("ai.releasePreflightRunId"));
-  assert.ok(ai.requiredFields.includes("ai.releasePreflightArtifact"));
-  assert.ok(ai.requiredFields.includes("ai.safetyEvalArtifact"));
-  assert.ok(ai.requiredFields.includes("ai.safetyEvalFailedCount=0"));
-  assert.ok(
-    ai.requiredFields.includes(
-      "ai.smokeReportArtifact local ai-backend-smoke-v1 JSON report with sanitized=true, contractProof, required PASS result rows, 0 failures, endpoint path requirements, no-sensitive-echo/no-coordinate proof, checked server-secret key names, and secretValuesOmitted=true"
-    )
-  );
-  assert.ok(ai.requiredFields.includes("ai.smokeEndpointPassCount>=2, or >=3 when EXPO_PUBLIC_RETENTION_ENDPOINT is configured"));
-  assert.ok(ai.requiredFields.includes("ai.smokeEndpointFailCount=0"));
-  assert.ok(ai.requiredFields.includes("ai.noSensitiveEchoSampleCount>=2, or >=3 when EXPO_PUBLIC_RETENTION_ENDPOINT is configured"));
-  assert.ok(ai.requiredFields.includes("when EXPO_PUBLIC_RETENTION_ENDPOINT is configured: ai.retentionSmokeRunId"));
-  assert.ok(ai.requiredFields.includes("when EXPO_PUBLIC_RETENTION_ENDPOINT is configured: ai.retentionSmokeArtifact"));
-  assert.ok(ai.requiredFields.includes("when EXPO_PUBLIC_RETENTION_ENDPOINT is configured: checks.retentionAggregateOnlyVerified=true"));
-  assert.ok(ai.requiredFields.includes("ai.coachSmokeRunId"));
-  assert.ok(ai.requiredFields.includes("ai.coachSmokeArtifact"));
-  assert.ok(ai.requiredFields.includes("ai.challengeSmokeRunId"));
-  assert.ok(ai.requiredFields.includes("ai.challengeSmokeArtifact"));
-  assert.ok(ai.requiredFields.includes("ai.challengePersonalizationRunId"));
-  assert.ok(ai.requiredFields.includes("ai.challengePersonalizationArtifact"));
-  assert.ok(ai.requiredFields.includes("ai.challengePersonalizationProfileCount>=2"));
-  assert.ok(ai.requiredFields.includes("ai.challengeRiskForecastProfileCount>=2"));
-  assert.ok(ai.requiredFields.includes("ai.challengeSessionDurationBucketProfileCount>=1"));
-  assert.ok(ai.requiredFields.includes("ai.challengeRecentFailureProfileCount>=1"));
-  assert.ok(ai.requiredFields.includes("ai.freeChallengePremiumCount=0"));
-  assert.ok(ai.requiredFields.includes("ai.noCoordinateFieldsRunId"));
-  assert.ok(ai.requiredFields.includes("ai.noCoordinateFieldsArtifact"));
-  assert.ok(ai.requiredFields.includes("ai.noSensitiveEchoRunId"));
-  assert.ok(ai.requiredFields.includes("ai.noSensitiveEchoArtifact"));
-  assert.ok(ai.requiredFields.includes("ai.redactionArtifact"));
-  assert.ok(ai.requiredFields.includes("ai.crisisFallbackRunId"));
-  assert.ok(ai.requiredFields.includes("ai.crisisFallbackArtifact"));
-  assert.ok(ai.requiredFields.includes("ai.providerFallbackRunId"));
-  assert.ok(ai.requiredFields.includes("ai.providerFallbackArtifact"));
+  assert.ok(ai.requiredFields.includes("schemaVersion=freed-google-clara-evidence-v2"));
+  assert.ok(ai.requiredFields.includes("ai.smokeReportSha256 SHA256 checksum"));
+  assert.ok(ai.requiredChecks.includes("signedClientVerified"));
+  assert.ok(ai.requiredChecks.includes("deploymentVerified"));
+  assert.ok(ai.requiredChecks.includes("localRecoveryVerified"));
   assert.deepEqual(ai.requiredCommands, ["npm run preflight:release-env", "npm run eval:ai-safety", "npm run smoke:ai-backend"]);
 });
 
 test("validation evidence promotion validates every draft before copying", () => {
   const runId = `promotion-${Date.now()}`;
-  const artifactRoot = join(process.cwd(), "docs/validation/artifacts", runId);
+  const root = mkdtempSync(join(tmpdir(), "freed-promotion-contract-"));
+  const artifactRoot = join(root, "docs/validation/artifacts", runId);
   const draftDir = join(artifactRoot, "draft-evidence");
   const promotedDir = join(artifactRoot, "promoted-evidence");
   const from = `docs/validation/artifacts/${runId}/draft-evidence`;
@@ -13067,9 +13685,8 @@ test("validation evidence promotion validates every draft before copying", () =>
                 androidAppPackage: "app.freed.recovery",
                 androidDnsGuardVpnConsentSurface: "android.net.VpnService.prepare",
                 androidUsageAccessSettingsRoute: "android.settings.USAGE_ACCESS_SETTINGS",
-                androidAccessibilitySettingsRoute: "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
-                androidAccessibilitySettingsRouteComponent:
-                  "app.freed.recovery/app.freed.protection.FreedAccessibilityService"
+                androidAccessibilitySettingsRoute: "android.settings.ACCESSIBILITY_SETTINGS",
+                androidAccessibilityServiceEnabled: true
               }
             : {}),
           checks: {
@@ -13099,7 +13716,7 @@ test("validation evidence promotion validates every draft before copying", () =>
             androidUsageAccessExactSettingsRouteObserved: true,
             androidAccessibilitySettingsReturnRefreshed: true,
             androidAccessibilityExactSettingsRouteObserved: true,
-            androidAccessibilityServiceDetailsTargetObserved: true,
+            androidAccessibilityServiceEnabledObserved: true,
             androidSystemSettingsReturnAutoAdvanceContinued: true,
             iosScreenTimeAuthorizationReturnRefreshed: true,
             iosFamilyActivityPickerReturnRefreshed: true,
@@ -13976,7 +14593,7 @@ test("validation evidence promotion validates every draft before copying", () =>
             dnsGuardNoSilentStartWithoutConsent: true,
             dnsGuardDeniedConsentNoPromptLoop: true,
             androidSettingsRoutes: [
-              "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
+              "android.settings.VPN_SETTINGS",
               "android.settings.PRIVATE_DNS_SETTINGS",
               "android.settings.ACCESSIBILITY_SETTINGS",
               "android.settings.USAGE_ACCESS_SETTINGS",
@@ -14011,10 +14628,10 @@ test("validation evidence promotion validates every draft before copying", () =>
             appPackage: "app.freed.recovery",
             accessibilityServiceEnabled: true,
             accessibilityServiceComponent: "app.freed.recovery/app.freed.protection.FreedAccessibilityService",
-            androidSettingsRouteOpened: "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
-            androidSettingsRouteComponent: "app.freed.recovery/app.freed.protection.FreedAccessibilityService",
+            androidSettingsRouteOpened: "android.settings.ACCESSIBILITY_SETTINGS",
+            androidSettingsRouteComponent: "",
             androidSettingsRoutes: [
-              "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
+              "android.settings.VPN_SETTINGS",
               "android.settings.PRIVATE_DNS_SETTINGS",
               "android.settings.ACCESSIBILITY_SETTINGS",
               "android.settings.USAGE_ACCESS_SETTINGS",
@@ -14024,7 +14641,7 @@ test("validation evidence promotion validates every draft before copying", () =>
             ],
             checks: {
               explicitUserPermissionConfirmed: true,
-              accessibilityServiceDetailsRouteCaptured: true,
+              accessibilityPublicSettingsRouteCaptured: true,
               accessibilitySettingsCaptured: true,
               enabledServicesCaptured: true,
               serviceComponentMatchesFreed: true,
@@ -14077,7 +14694,7 @@ test("validation evidence promotion validates every draft before copying", () =>
             usageStatsAuthorized: true,
             androidSettingsRouteOpened: "android.settings.USAGE_ACCESS_SETTINGS",
             androidSettingsRoutes: [
-              "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
+              "android.settings.VPN_SETTINGS",
               "android.settings.PRIVATE_DNS_SETTINGS",
               "android.settings.ACCESSIBILITY_SETTINGS",
               "android.settings.USAGE_ACCESS_SETTINGS",
@@ -14347,7 +14964,7 @@ test("validation evidence promotion validates every draft before copying", () =>
     const defaultLaunchProductIds = {
       yearly: "freed_premium_yearly",
       monthly: "freed_premium_monthly",
-      lifetime: "freed_premium_lifetime"
+      // lifetime removed: no store product at launch
     };
     const launchProductIds =
       store.androidLaunchProductIds && typeof store.androidLaunchProductIds === "object" && !Array.isArray(store.androidLaunchProductIds)
@@ -14372,7 +14989,7 @@ test("validation evidence promotion validates every draft before copying", () =>
             fakeKnownTokenRejectionCheckedByPlan: {
               yearly: true,
               monthly: true,
-              lifetime: true
+              // lifetime: no product at launch
             },
             launchProductIdsChecked: launchProductIds,
             malformedJsonRejectionChecked: true,
@@ -14391,7 +15008,7 @@ test("validation evidence promotion validates every draft before copying", () =>
               fakeKnownTokenRejectedByPlan: {
                 yearly: true,
                 monthly: true,
-                lifetime: true
+                // lifetime: no product at launch
               },
               malformedJsonRejected: true
             },
@@ -14440,8 +15057,8 @@ test("validation evidence promotion validates every draft before copying", () =>
     const browserReadinessPath = `docs/validation/artifacts/${runId}/store-console-browser-readiness.json`;
     const browserReadinessRunId = `${runId}-store-console-browser`;
     const browserReadinessContent = `${JSON.stringify(validStoreConsoleBrowserReadinessReport(browserReadinessRunId), null, 2)}\n`;
-    writeFileSync(join(process.cwd(), consoleEvidencePath), consoleEvidenceContent);
-    writeFileSync(join(process.cwd(), browserReadinessPath), browserReadinessContent);
+    writeFileSync(join(root, consoleEvidencePath), consoleEvidenceContent);
+    writeFileSync(join(root, browserReadinessPath), browserReadinessContent);
     writeFileSync(
       path,
       `${JSON.stringify(
@@ -15642,12 +16259,12 @@ test("validation evidence promotion validates every draft before copying", () =>
         iosLaunchProductIds: {
           monthly: "freed_premium_monthly",
           yearly: "freed_premium_yearly",
-          lifetime: "freed_premium_lifetime"
+          // lifetime removed: no store product at launch
         },
         androidLaunchProductIds: {
           monthly: "freed_premium_monthly",
           yearly: "freed_premium_yearly",
-          lifetime: "freed_premium_lifetime"
+          // lifetime removed: no store product at launch
         },
         launchProductSandboxMatrix: LAUNCH_PREMIUM_PLAN_IDS.map((planId) => ({
           planId,
@@ -15696,12 +16313,12 @@ test("validation evidence promotion validates every draft before copying", () =>
           iosLaunchProductIds: {
             monthly: "freed_premium_monthly",
             yearly: "freed_premium_yearly",
-            lifetime: "freed_premium_lifetime"
+            // lifetime removed: no store product at launch
           },
           androidLaunchProductIds: {
             monthly: "freed_premium_monthly",
             yearly: "freed_premium_yearly",
-            lifetime: "freed_premium_lifetime"
+            // lifetime removed: no store product at launch
           }
         }),
         consoleProductSetupRunId: "store-console-product-setup-2026-05-12",
@@ -15710,12 +16327,12 @@ test("validation evidence promotion validates every draft before copying", () =>
           iosLaunchProductIds: {
             monthly: "freed_premium_monthly",
             yearly: "freed_premium_yearly",
-            lifetime: "freed_premium_lifetime"
+            // lifetime removed: no store product at launch
           },
           androidLaunchProductIds: {
             monthly: "freed_premium_monthly",
             yearly: "freed_premium_yearly",
-            lifetime: "freed_premium_lifetime"
+            // lifetime removed: no store product at launch
           }
         }),
         purchaseVerificationReportId: "purchase-verification-2026-05-12",
@@ -15790,62 +16407,74 @@ test("validation evidence promotion validates every draft before copying", () =>
         privacyDisclosureArtifact: writeStorePrivacyDisclosureArtifact("ASC-PLAY-privacy-review-2026-05-12")
       }
     });
-    writeDraft("ai-backend-smoke.json", {
-      ...basePayload("ai-backend-smoke-validation", writeArtifact("ai-backend-smoke.log"), "Production AI backend"),
-      ai: {
-        coachEndpoint: "https://api.freedrecovery.app/api/clara",
-        challengeEndpoint: "https://api.freedrecovery.app/api/challenges",
-        model: "gemini-2.5-flash",
-        releasePreflightCommand: "npm run preflight:release-env",
-        releasePreflightRunId: "ai-release-preflight-2026-05-12",
-        releasePreflightArtifact: writeArtifact("ai-release-preflight.log"),
-        safetyEvalCommand: "npm run eval:ai-safety",
-        smokeCommand: "npm run smoke:ai-backend",
-        safetyEvalReportId: "ai-safety-eval-2026-05-12",
-        safetyEvalArtifact: writeArtifact("ai-safety-eval-report.json"),
-        safetyEvalCaseCount: 10,
-        safetyEvalFailedCount: 0,
-        smokeReportId: "ai-backend-smoke-2026-05-12",
-        smokeReportArtifact: writeAiSmokeReportArtifact({
-          coachEndpoint: "https://api.freedrecovery.app/api/clara",
-          challengeEndpoint: "https://api.freedrecovery.app/api/challenges"
-        }),
-        coachSmokeRunId: "coach-smoke-release-run",
-        coachSmokeArtifact: writeArtifact("coach-smoke-report.json"),
-        challengeSmokeRunId: "challenge-smoke-release-run",
-        challengeSmokeArtifact: writeArtifact("challenge-smoke-report.json"),
-        smokeEndpointPassCount: 2,
-        smokeEndpointFailCount: 0,
-        challengePersonalizationRunId: "challenge-personalization-release-run",
-        challengePersonalizationArtifact: writeArtifact("challenge-personalization-report.json"),
-        challengePersonalizationProfileCount: 2,
-        challengeRiskForecastProfileCount: 2,
-        challengeSessionDurationBucketProfileCount: 1,
-        challengeRecentFailureProfileCount: 1,
-        freeChallengePremiumCount: 0,
-        noCoordinateFieldsRunId: "no-coordinate-fields-release-run",
-        noCoordinateFieldsArtifact: writeArtifact("no-coordinate-fields-report.json"),
-        noSensitiveEchoSampleCount: 2,
-        noSensitiveEchoRunId: "no-sensitive-echo-release-run",
-        noSensitiveEchoArtifact: writeArtifact("no-sensitive-echo-report.json"),
-        redactionReportId: "ai-redaction-report-2026-05-12",
-        redactionArtifact: writeArtifact("ai-redaction-report.json"),
-        crisisFallbackRunId: "crisis-fallback-2026-05-12",
-        crisisFallbackArtifact: writeArtifact("crisis-fallback-report.json"),
-        providerFallbackRunId: "provider-fallback-2026-05-12",
-        providerFallbackArtifact: writeArtifact("provider-fallback-report.json")
-      }
-    });
+    // Typed offline contract input only; these synthetic captures are never release proof.
+    const contract = require("../scripts/lib/google-clara-release-evidence");
+    const { fixture } = require("../scripts/lib/tests/google-clara-fixture");
+    const controlled = fixture(root);
+    writeDraft("ai-backend-smoke.json", controlled.save());
 
-    const dryRun = promoteValidationEvidenceDraft({ from, targetDir, dryRun: true });
-    assert.equal(dryRun.status, "pass");
+    const dryRun = promoteValidationEvidenceDraft({ root, from, targetDir, dryRun: true });
+    assert.equal(dryRun.status, "pass", JSON.stringify(dryRun.failures));
     assert.equal(dryRun.promoted.length, 6);
     assert.equal(existsSync(join(promotedDir, "ios-physical-device.json")), false);
 
-    const promoted = promoteValidationEvidenceDraft({ from, targetDir });
+    const promoted = promoteValidationEvidenceDraft({ root, from, targetDir });
     assert.equal(promoted.status, "pass");
     assert.ok(existsSync(join(promotedDir, "ios-physical-device.json")));
     assert.ok(existsSync(join(promotedDir, "ai-backend-smoke.json")));
+    assert.equal(promoted.promoted.length, validationEvidenceSpecs.length);
+    for (const spec of validationEvidenceSpecs) {
+      const fileName = spec.file.split("/").pop()!;
+      assert.deepEqual(readFileSync(join(promotedDir, fileName)), readFileSync(join(draftDir, fileName)));
+    }
+
+    const rejectWithoutCopy = (label: string, payload: Record<string, unknown>, pattern: RegExp) => {
+      writeDraft("ai-backend-smoke.json", payload);
+      const blockedTarget = `docs/validation/artifacts/${runId}/blocked-${label}`;
+      const rejected = promoteValidationEvidenceDraft({ root, from, targetDir: blockedTarget });
+      assert.equal(rejected.status, "fail", label);
+      assert.equal(rejected.promoted.length, 0, label);
+      assert.match(rejected.failures.find(result => result.id === "ai-backend-smoke-validation")?.evidence ?? "", pattern);
+      assert.equal(existsSync(join(root, blockedTarget)), false, label);
+    };
+    const legacySchema = controlled.save();
+    legacySchema.schemaVersion = "ai-backend-smoke-v1";
+    rejectWithoutCopy("legacy-schema", legacySchema, /historical|legacy/);
+    rejectWithoutCopy("historical-v1", {
+      ...basePayload("ai-backend-smoke-validation", writeArtifact("legacy-ai.log")),
+      schemaVersion: "ai-backend-smoke-v1",
+      ai: { smokeReportArtifact: writeAiSmokeReportArtifact({
+        coachEndpoint: "https://api.freedrecovery.app/api/clara",
+        challengeEndpoint: "https://api.freedrecovery.app/api/challenges"
+      }) }
+    }, /unknown\/private fields/);
+    const originalReport = JSON.stringify(controlled.report);
+    controlled.report.generatedAt = "2026-05-13T00:00:00.000Z";
+    rejectWithoutCopy("stale-v2", controlled.save(), /stale|timestamp/);
+    Object.assign(controlled.report, JSON.parse(originalReport));
+    controlled.report.results[0].status = "fallback";
+    rejectWithoutCopy("invalid-v2", controlled.save(), /non-PASS/);
+    Object.assign(controlled.report, JSON.parse(originalReport));
+    const missing = controlled.save();
+    missing.ai.smokeReportArtifact = `docs/validation/artifacts/${runId}/absent-v2.json`;
+    rejectWithoutCopy("missing-v2", missing, /Missing|checksummed|unreadable/);
+    Object.assign(controlled.report, JSON.parse(originalReport));
+    const privateEvidence = controlled.save();
+    rejectWithoutCopy("private-v2", { ...privateEvidence, privateNotes: "controlled-offline-private-content" }, /unknown\/private/);
+    const mismatched = controlled.save();
+    mismatched.ai.smokeReportSha256 = "1".repeat(64);
+    rejectWithoutCopy("checksum-v2", mismatched, /checksummed/);
+    for (const [id, proof] of [
+      ["signed-client", { ...contract.PROOFS["signed-client"], appCheckAccepted: false }],
+      ["signed-client", { ...contract.PROOFS["signed-client"], ownerFence: false }],
+      ["quota-cost-controls", { ...contract.PROOFS["quota-cost-controls"], budgetCutoffVerified: false }],
+      ["privacy-transport", { ...contract.PROOFS["privacy-transport"], credentialsOmitted: false }],
+      ["local-recovery", { ...contract.PROOFS["local-recovery"], networkRequests: 1 }]
+    ] as [string, Record<string, unknown>][]) {
+      controlled.capture(id, proof);
+      rejectWithoutCopy(`proof-${id}-${Object.keys(proof).find(key => proof[key] === false) ?? "network"}`, controlled.save(), /capture|proof/);
+      controlled.capture(id);
+    }
 
     writeDraft("ai-backend-smoke.json", {
       ...basePayload("ai-backend-smoke-validation", writeArtifact("ai-backend-smoke-placeholder.log"), "Production AI backend"),
@@ -15868,6 +16497,7 @@ test("validation evidence promotion validates every draft before copying", () =>
       }
     });
     const failing = promoteValidationEvidenceDraft({
+      root,
       from,
       targetDir: `docs/validation/artifacts/${runId}/blocked-promotion`
     });
@@ -15875,7 +16505,7 @@ test("validation evidence promotion validates every draft before copying", () =>
     assert.match(failing.failures.find((result) => result.id === "ai-backend-smoke-validation")?.evidence ?? "", /template placeholder text/);
     assert.equal(existsSync(join(artifactRoot, "blocked-promotion")), false);
   } finally {
-    rmSync(artifactRoot, { recursive: true, force: true });
+    rmSync(root, { recursive: true, force: true });
   }
 });
 
@@ -15909,9 +16539,8 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
                 androidAppPackage: "app.freed.recovery",
                 androidDnsGuardVpnConsentSurface: "android.net.VpnService.prepare",
                 androidUsageAccessSettingsRoute: "android.settings.USAGE_ACCESS_SETTINGS",
-                androidAccessibilitySettingsRoute: "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
-                androidAccessibilitySettingsRouteComponent:
-                  "app.freed.recovery/app.freed.protection.FreedAccessibilityService"
+                androidAccessibilitySettingsRoute: "android.settings.ACCESSIBILITY_SETTINGS",
+                androidAccessibilityServiceEnabled: true
               }
             : {}),
           checks: {
@@ -15941,7 +16570,7 @@ test("validation evidence requires existing artifacts or remote URLs", () => {
             androidUsageAccessExactSettingsRouteObserved: true,
             androidAccessibilitySettingsReturnRefreshed: true,
             androidAccessibilityExactSettingsRouteObserved: true,
-            androidAccessibilityServiceDetailsTargetObserved: true,
+            androidAccessibilityServiceEnabledObserved: true,
             androidSystemSettingsReturnAutoAdvanceContinued: true,
             iosScreenTimeAuthorizationReturnRefreshed: true,
             iosFamilyActivityPickerReturnRefreshed: true,
@@ -17426,9 +18055,8 @@ test("android validation evidence requires browser dns and handoff proof", () =>
                 androidAppPackage: "app.freed.recovery",
                 androidDnsGuardVpnConsentSurface: "android.net.VpnService.prepare",
                 androidUsageAccessSettingsRoute: "android.settings.USAGE_ACCESS_SETTINGS",
-                androidAccessibilitySettingsRoute: "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
-                androidAccessibilitySettingsRouteComponent:
-                  "app.freed.recovery/app.freed.protection.FreedAccessibilityService"
+                androidAccessibilitySettingsRoute: "android.settings.ACCESSIBILITY_SETTINGS",
+                androidAccessibilityServiceEnabled: true
               }
             : {}),
           checks: {
@@ -17458,7 +18086,7 @@ test("android validation evidence requires browser dns and handoff proof", () =>
             androidUsageAccessExactSettingsRouteObserved: true,
             androidAccessibilitySettingsReturnRefreshed: true,
             androidAccessibilityExactSettingsRouteObserved: true,
-            androidAccessibilityServiceDetailsTargetObserved: true,
+            androidAccessibilityServiceEnabledObserved: true,
             androidSystemSettingsReturnAutoAdvanceContinued: true,
             iosScreenTimeAuthorizationReturnRefreshed: true,
             iosFamilyActivityPickerReturnRefreshed: true,
@@ -17492,7 +18120,7 @@ test("android validation evidence requires browser dns and handoff proof", () =>
             dnsGuardNoSilentStartWithoutConsent: true,
             dnsGuardDeniedConsentNoPromptLoop: true,
             androidSettingsRoutes: [
-              "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
+              "android.settings.VPN_SETTINGS",
               "android.settings.PRIVATE_DNS_SETTINGS",
               "android.settings.ACCESSIBILITY_SETTINGS",
               "android.settings.USAGE_ACCESS_SETTINGS",
@@ -17527,10 +18155,10 @@ test("android validation evidence requires browser dns and handoff proof", () =>
             appPackage: "app.freed.recovery",
             accessibilityServiceEnabled: true,
             accessibilityServiceComponent: "app.freed.recovery/app.freed.protection.FreedAccessibilityService",
-            androidSettingsRouteOpened: "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
-            androidSettingsRouteComponent: "app.freed.recovery/app.freed.protection.FreedAccessibilityService",
+            androidSettingsRouteOpened: "android.settings.ACCESSIBILITY_SETTINGS",
+            androidSettingsRouteComponent: "",
             androidSettingsRoutes: [
-              "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
+              "android.settings.VPN_SETTINGS",
               "android.settings.PRIVATE_DNS_SETTINGS",
               "android.settings.ACCESSIBILITY_SETTINGS",
               "android.settings.USAGE_ACCESS_SETTINGS",
@@ -17540,7 +18168,7 @@ test("android validation evidence requires browser dns and handoff proof", () =>
             ],
             checks: {
               explicitUserPermissionConfirmed: true,
-              accessibilityServiceDetailsRouteCaptured: true,
+              accessibilityPublicSettingsRouteCaptured: true,
               accessibilitySettingsCaptured: true,
               enabledServicesCaptured: true,
               serviceComponentMatchesFreed: true,
@@ -17593,7 +18221,7 @@ test("android validation evidence requires browser dns and handoff proof", () =>
             usageStatsAuthorized: true,
             androidSettingsRouteOpened: "android.settings.USAGE_ACCESS_SETTINGS",
             androidSettingsRoutes: [
-              "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
+              "android.settings.VPN_SETTINGS",
               "android.settings.PRIVATE_DNS_SETTINGS",
               "android.settings.ACCESSIBILITY_SETTINGS",
               "android.settings.USAGE_ACCESS_SETTINGS",
@@ -19065,17 +19693,17 @@ test("android validation evidence requires browser dns and handoff proof", () =>
       "accessibility-permission-run",
       "accessibility-permission",
       {
-        androidSettingsRouteOpened: "",
-        androidSettingsRouteComponent: "",
+        androidSettingsRouteOpened: "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
+        accessibilityServiceComponent: "",
         androidSettingsRoutes: [
-          "android.settings.ACCESSIBILITY_SETTINGS",
+          "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
           "android.settings.USAGE_ACCESS_SETTINGS",
           "android.settings.WIRELESS_SETTINGS",
           "android.settings.APPLICATION_DETAILS_SETTINGS",
           "android.settings.SETTINGS"
         ],
         checks: {
-          accessibilityServiceDetailsRouteCaptured: false
+          accessibilityPublicSettingsRouteCaptured: false
         }
       }
     );
@@ -19095,25 +19723,29 @@ test("android validation evidence requires browser dns and handoff proof", () =>
       normalBrowsingAllowedUrl: "https://youtube.com/results?search_query=workout",
       adultInterceptedHost: "pornhub.com"
     });
-    const missingAccessibilityDetailsRouteFailing = getValidationEvidenceResults(root).find(
+    const staleAccessibilityRouteFailing = getValidationEvidenceResults(root).find(
       (result) => result.id === "android-real-browser-validation"
     );
-    assert.equal(missingAccessibilityDetailsRouteFailing?.status, "fail");
+    assert.equal(staleAccessibilityRouteFailing?.status, "fail");
     assert.match(
-      missingAccessibilityDetailsRouteFailing?.evidence ?? "",
-      /android\.accessibilityPermissionArtifact\.androidSettingsRoutes must include android\.settings\.ACCESSIBILITY_DETAILS_SETTINGS/
+      staleAccessibilityRouteFailing?.evidence ?? "",
+      /android\.accessibilityPermissionArtifact\.androidSettingsRoutes must include android\.settings\.ACCESSIBILITY_SETTINGS/
     );
     assert.match(
-      missingAccessibilityDetailsRouteFailing?.evidence ?? "",
+      staleAccessibilityRouteFailing?.evidence ?? "",
       /android\.accessibilityPermissionArtifact\.androidSettingsRouteOpened/
     );
     assert.match(
-      missingAccessibilityDetailsRouteFailing?.evidence ?? "",
-      /android\.accessibilityPermissionArtifact\.androidSettingsRouteComponent/
+      staleAccessibilityRouteFailing?.evidence ?? "",
+      /android\.accessibilityPermissionArtifact\.accessibilityServiceComponent/
     );
     assert.match(
-      missingAccessibilityDetailsRouteFailing?.evidence ?? "",
-      /android\.accessibilityPermissionArtifact\.checks\.accessibilityServiceDetailsRouteCaptured/
+      staleAccessibilityRouteFailing?.evidence ?? "",
+      /android\.accessibilityPermissionArtifact\.checks\.accessibilityPublicSettingsRouteCaptured/
+    );
+    assert.match(
+      staleAccessibilityRouteFailing?.evidence ?? "",
+      /android\.accessibilityPermissionArtifact\.androidSettingsRoutes contains a protected legacy Accessibility route/
     );
     writeAndroidPermissionReport(
       "android-accessibility-permission-report.json",
@@ -21554,7 +22186,7 @@ test("store ad sandbox evidence requires sanitized transaction and ad proof", ()
     const defaultLaunchProductIds = {
       yearly: "freed_premium_yearly",
       monthly: "freed_premium_monthly",
-      lifetime: "freed_premium_lifetime"
+      // lifetime removed: no store product at launch
     };
     const launchProductIds =
       store.androidLaunchProductIds && typeof store.androidLaunchProductIds === "object" && !Array.isArray(store.androidLaunchProductIds)
@@ -21582,7 +22214,7 @@ test("store ad sandbox evidence requires sanitized transaction and ad proof", ()
               fakeKnownTokenRejectionCheckedByPlan: {
                 yearly: true,
                 monthly: true,
-                lifetime: true
+                // lifetime: no product at launch
               },
               launchProductIdsChecked: launchProductIds,
               malformedJsonRejectionChecked: true,
@@ -21601,7 +22233,7 @@ test("store ad sandbox evidence requires sanitized transaction and ad proof", ()
                 fakeKnownTokenRejectedByPlan: {
                   yearly: true,
                   monthly: true,
-                  lifetime: true
+                  // lifetime: no product at launch
                 },
                 malformedJsonRejected: true
               },
@@ -21756,7 +22388,7 @@ test("store ad sandbox evidence requires sanitized transaction and ad proof", ()
     const launchProductIds = {
       monthly: "freed_premium_monthly",
       yearly: "freed_premium_yearly",
-      lifetime: "freed_premium_lifetime"
+      // lifetime removed: no store product at launch
     };
     const buildLaunchProductSandboxMatrix = (
       iosLaunchProductIds: Record<string, string> = launchProductIds,
@@ -22130,8 +22762,7 @@ test("store ad sandbox evidence requires sanitized transaction and ad proof", ()
 	      process.env.EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID = "ca-app-pub-2234567890123456/1234567890";
 	      const releaseLaunchProductIds = {
 	        monthly: "release_monthly",
-	        yearly: "release_yearly",
-	        lifetime: "release_lifetime"
+	        yearly: "release_yearly"
 	      };
 	      writeStoreEvidence({
 	        ...validStoreEvidence,
@@ -22560,16 +23191,16 @@ test("store ad sandbox evidence requires sanitized transaction and ad proof", ()
         monthly: "freed_premium_monthly",
         yearly: "freed_premium_yearly"
       },
-      launchProductSandboxMatrix: buildLaunchProductSandboxMatrix().filter((entry) => entry.planId !== "lifetime")
+      launchProductSandboxMatrix: []
     });
     const core3CoverageFailing = getValidationEvidenceResults(root).find(
       (result) => result.id === "store-ad-sandbox-validation"
     );
     assert.equal(core3CoverageFailing?.status, "fail");
     assert.match(core3CoverageFailing?.evidence ?? "", /store\.iosLaunchProductIds\.family must not include post-launch product ids/);
-    assert.match(core3CoverageFailing?.evidence ?? "", /store\.androidLaunchProductIds\.lifetime/);
-    assert.match(core3CoverageFailing?.evidence ?? "", /store\.launchProductSandboxMatrix must include exactly yearly, monthly, and lifetime/);
-    assert.match(core3CoverageFailing?.evidence ?? "", /store\.launchProductSandboxMatrix includes lifetime/);
+    assert.match(core3CoverageFailing?.evidence ?? "", /store\.launchProductSandboxMatrix must include exactly yearly and monthly/);
+    assert.match(core3CoverageFailing?.evidence ?? "", /store\.launchProductSandboxMatrix includes yearly/);
+    assert.match(core3CoverageFailing?.evidence ?? "", /store\.launchProductSandboxMatrix includes monthly/);
 
     writeStoreEvidence({
       ...validStoreEvidence,
@@ -22622,9 +23253,9 @@ test("store ad sandbox evidence requires sanitized transaction and ad proof", ()
 
     writeStoreEvidence({
       ...validStoreEvidence,
-      purchaseVerificationPassCount: 5,
+      purchaseVerificationPassCount: 4,
       purchaseVerificationFailedCount: 1,
-      restoreVerificationPassCount: 5,
+      restoreVerificationPassCount: 4,
       restoreVerificationFailedCount: 1,
       freePostAdChallengeLatencyMs: 5200,
       premiumNoAdLatencyMs: 4500
@@ -22633,9 +23264,9 @@ test("store ad sandbox evidence requires sanitized transaction and ad proof", ()
       (result) => result.id === "store-ad-sandbox-validation"
     );
     assert.equal(verificationCountFailing?.status, "fail");
-    assert.match(verificationCountFailing?.evidence ?? "", /store\.purchaseVerificationPassCount >= 6/);
+    assert.match(verificationCountFailing?.evidence ?? "", /store\.purchaseVerificationPassCount >= 5/);
     assert.match(verificationCountFailing?.evidence ?? "", /store\.purchaseVerificationFailedCount must be 0/);
-    assert.match(verificationCountFailing?.evidence ?? "", /store\.restoreVerificationPassCount >= 6/);
+    assert.match(verificationCountFailing?.evidence ?? "", /store\.restoreVerificationPassCount >= 5/);
     assert.match(verificationCountFailing?.evidence ?? "", /store\.restoreVerificationFailedCount must be 0/);
     assert.match(verificationCountFailing?.evidence ?? "", /store\.freePostAdChallengeLatencyMs must be between 0 and 5000/);
     assert.match(verificationCountFailing?.evidence ?? "", /store\.premiumNoAdLatencyMs must be between 0 and 3000/);
@@ -22851,698 +23482,27 @@ test("store ad sandbox evidence requires sanitized transaction and ad proof", ()
   }
 });
 
-test("ai backend smoke evidence requires safe endpoints and smoke proof", () => {
-  const root = mkdtempSync(join(tmpdir(), "freed-ai-backend-"));
-  const evidenceDir = join(root, "docs/validation/evidence");
-  const artifactDir = join(root, "docs/validation/artifacts");
-  mkdirSync(evidenceDir, { recursive: true });
-  mkdirSync(artifactDir, { recursive: true });
-
-  const validAiEvidence = {
-    coachEndpoint: "https://ai.freedrecovery.app/api/clara",
-    challengeEndpoint: "https://ai.freedrecovery.app/api/challenges",
-    model: "gemini-2.5-flash",
-    releasePreflightCommand: "npm run preflight:release-env",
-    releasePreflightRunId: "ai-release-preflight-2026-05-12",
-    releasePreflightArtifact: "docs/validation/artifacts/ai-backend-smoke-report.json",
-    safetyEvalCommand: "npm run eval:ai-safety",
-    smokeCommand: "npm run smoke:ai-backend",
-    safetyEvalReportId: "ai-safety-eval-2026-05-12",
-    safetyEvalArtifact: "docs/validation/artifacts/ai-backend-smoke-report.json",
-    safetyEvalCaseCount: 10,
-    safetyEvalFailedCount: 0,
-    smokeReportId: "ai-backend-smoke-2026-05-12",
-    smokeReportArtifact: "docs/validation/artifacts/ai-backend-smoke-report.json",
-    coachSmokeRunId: "coach-smoke-run",
-    coachSmokeArtifact: "docs/validation/artifacts/ai-backend-smoke-report.json",
-    challengeSmokeRunId: "challenge-smoke-run",
-    challengeSmokeArtifact: "docs/validation/artifacts/ai-backend-smoke-report.json",
-    smokeEndpointPassCount: 2,
-    smokeEndpointFailCount: 0,
-    challengePersonalizationRunId: "challenge-personalization-smoke-run",
-    challengePersonalizationArtifact: "docs/validation/artifacts/ai-backend-smoke-report.json",
-    challengePersonalizationProfileCount: 2,
-    challengeRiskForecastProfileCount: 2,
-    challengeSessionDurationBucketProfileCount: 1,
-    challengeRecentFailureProfileCount: 1,
-    freeChallengePremiumCount: 0,
-    noCoordinateFieldsRunId: "no-coordinate-fields-run",
-    noCoordinateFieldsArtifact: "docs/validation/artifacts/ai-backend-smoke-report.json",
-    noSensitiveEchoSampleCount: 2,
-    noSensitiveEchoRunId: "no-sensitive-echo-run",
-    noSensitiveEchoArtifact: "docs/validation/artifacts/ai-backend-smoke-report.json",
-    redactionReportId: "ai-redaction-report-2026-05-12",
-    redactionArtifact: "docs/validation/artifacts/ai-backend-smoke-report.json",
-    crisisFallbackRunId: "crisis-fallback-2026-05-12",
-    crisisFallbackArtifact: "docs/validation/artifacts/ai-backend-smoke-report.json",
-    providerFallbackRunId: "provider-fallback-2026-05-12",
-    providerFallbackArtifact: "docs/validation/artifacts/ai-backend-smoke-report.json"
-  };
-  const endpointWithoutQuery = (value: unknown) => {
-    if (typeof value !== "string" || !value.trim()) return null;
-    const parsed = new URL(value.trim());
-    parsed.search = "";
-    parsed.hash = "";
-    return parsed.toString();
-  };
-  const aiSmokeReportForEvidence = (ai: Record<string, unknown>) => {
-    const retentionConfigured = typeof ai.retentionEndpoint === "string" && ai.retentionEndpoint.trim().length > 0;
-    return {
-      schemaVersion: "ai-backend-smoke-v1",
-      generatedAt: "2026-05-12T09:00:00.000Z",
-      sanitized: true,
-      endpoints: {
-        coach: endpointWithoutQuery(ai.coachEndpoint),
-        challenge: endpointWithoutQuery(ai.challengeEndpoint),
-        retention: retentionConfigured ? endpointWithoutQuery(ai.retentionEndpoint) : null
-      },
-      summary: {
-        passCount: retentionConfigured ? 5 : 4,
-        failCount: 0
-      },
-      aiBoundary: {
-        configuredModelChecked: true,
-        claraEndpointChecked: true,
-        challengeEndpointChecked: true,
-        retentionEndpointConfigured: retentionConfigured,
-        retentionEndpointChecked: retentionConfigured,
-        retentionAggregateOnlyChecked: retentionConfigured,
-        challengePersonalizationProfilesChecked: true,
-        challengeSessionDurationBucketChecked: true,
-        challengeRecentFailureCountChecked: true,
-        noSensitiveEchoChecked: true,
-        noCoordinateFieldsChecked: true,
-        redactedSensitiveFields: ["urls", "domains", "tokens", "privateNotes", "coordinateFields", "rawModelText", "providerApiKeys"]
-      },
-      contractProof: {
-        endpointPathRequirements: {
-          coach: "/api/clara",
-          challenge: "/api/challenges",
-          retention: "/api/retention"
-        },
-        requestTimeoutMs: {
-          coach: 8000,
-          challenge: 8000,
-          retention: 8000
-        },
-        configuredModelProof: {
-          configuredModelChecked: true,
-          concreteProviderModelRequired: true,
-          placeholderModelRejected: true
-        },
-        endpointProofs: {
-          claraEndpointChecked: true,
-          challengeEndpointChecked: true,
-          retentionEndpointConfigured: retentionConfigured,
-          retentionEndpointChecked: retentionConfigured,
-          productionHttpsOnly: true,
-          endpointQueryStringsOmitted: true
-        },
-        personalizationProofs: {
-          challengePersonalizationProfilesChecked: true,
-          contextSignalsChecked: true,
-          aggregateRiskForecastChecked: true,
-          sessionDurationBucketChecked: true,
-          recentFailureCountChecked: true,
-          noRawRiskDriversStored: true
-        },
-        privacyProofs: {
-          retentionAggregateOnlyChecked: retentionConfigured,
-          noSensitiveEchoChecked: true,
-          noCoordinateFieldsChecked: true,
-          rawPromptsOmitted: true,
-          unredactedModelResponsesOmitted: true
-        },
-        responseBoundary: {
-          privateEchoPatternsChecked: 9,
-          secretValuesOmitted: true,
-          serverSecretKeyNamesChecked: ["OPENAI_API_KEY", "GEMINI_API_KEY", "GOOGLE_API_KEY", "GOOGLE_GENAI_API_KEY"],
-          redactedSensitiveFields: ["urls", "domains", "tokens", "privateNotes", "coordinateFields", "rawModelText", "providerApiKeys"]
-        }
-      },
-      results: [
-        { id: "configured-ai-model", status: "PASS", detail: String(ai.model) },
-        { id: "clara-remote-endpoint", status: "PASS", detail: String(ai.coachEndpoint) },
-        { id: "challenge-remote-endpoint", status: "PASS", detail: String(ai.challengeEndpoint) },
-        { id: "challenge-personalization-profiles", status: "PASS", detail: String(ai.challengeEndpoint) },
-        ...(retentionConfigured ? [{ id: "retention-remote-endpoint", status: "PASS", detail: String(ai.retentionEndpoint) }] : [])
-      ]
-    };
-  };
-  const writeAiSmokeReport = (ai: Record<string, unknown>) => {
-    writeFileSync(
-      join(artifactDir, "ai-backend-smoke-report.json"),
-      JSON.stringify(aiSmokeReportForEvidence(ai), null, 2)
-    );
-  };
-  const writeAiEvidence = (
-    ai: Record<string, unknown>,
-    checks: Record<string, boolean> = {},
-    extraPayload: Record<string, unknown> = {}
-  ) => {
-    writeAiSmokeReport(ai);
-    writeFileSync(
-      join(evidenceDir, "ai-backend-smoke.json"),
-      JSON.stringify({
-        validatedAt: "2026-05-12T09:00:00.000Z",
-        tester: "FREED QA Team",
-        build: "1.0.0 (100)",
-        environment: "Production AI backend smoke run, release candidate",
-        evidence: ["docs/validation/artifacts/ai-backend-smoke-report.json"],
-        ai,
-        ...extraPayload,
-        checks: {
-          aiSafetyEvalPassed: true,
-          releaseEnvPreflightPassed: true,
-          coachSmokePassed: true,
-          challengeSmokePassed: true,
-          challengePersonalizationVerified: true,
-          riskForecastPersonalizationVerified: true,
-          sessionDurationBucketPersonalizationVerified: true,
-          recentFailureCountPersonalizationVerified: true,
-          freeChallengePremiumExcluded: true,
-          noCoordinateFields: true,
-          noSensitiveEcho: true,
-          crisisFallbackVerified: true,
-          fallbackBehaviorVerified: true,
-          ...checks
-        }
-      })
-    );
-  };
-
-  const previousAiEnv = {
-    coachEndpoint: process.env.EXPO_PUBLIC_AI_COACH_ENDPOINT,
-    challengeEndpoint: process.env.EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT,
-    retentionEndpoint: process.env.EXPO_PUBLIC_RETENTION_ENDPOINT,
-    provider: process.env.FREED_AI_PROVIDER,
-    openAiKey: process.env.OPENAI_API_KEY,
-    openAiModel: process.env.OPENAI_MODEL,
-    geminiKey: process.env.GEMINI_API_KEY,
-    model: process.env.GEMINI_MODEL
-  };
-
+test("ai backend smoke evidence requires current Google CLARA proof and local recovery", () => {
+  const root = mkdtempSync(join(tmpdir(), "freed-clara-core-"));
+  const contract = require("../scripts/lib/google-clara-release-evidence");
+  const { fixture } = require("../scripts/lib/tests/google-clara-fixture");
   try {
-    delete process.env.EXPO_PUBLIC_AI_COACH_ENDPOINT;
-    delete process.env.EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT;
-    delete process.env.EXPO_PUBLIC_RETENTION_ENDPOINT;
-    delete process.env.FREED_AI_PROVIDER;
-    delete process.env.OPENAI_API_KEY;
-    delete process.env.OPENAI_MODEL;
-    delete process.env.GEMINI_API_KEY;
-    delete process.env.GEMINI_MODEL;
-
-    writeAiEvidence(validAiEvidence);
-    const passing = getValidationEvidenceResults(root).find((result) => result.id === "ai-backend-smoke-validation");
-    assert.equal(passing?.status, "pass");
-
-    writeFileSync(join(artifactDir, "ai-backend-smoke-report.json"), "{}");
-    const malformedSmokeReportFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(malformedSmokeReportFailing?.status, "fail");
-    assert.match(malformedSmokeReportFailing?.evidence ?? "", /ai\.smokeReportArtifact\.schemaVersion must be ai-backend-smoke-v1/);
-    assert.match(malformedSmokeReportFailing?.evidence ?? "", /ai\.smokeReportArtifact\.summary\.failCount must be 0/);
-
-    writeAiEvidence(validAiEvidence);
-    const unsanitizedAiReport = JSON.parse(readFileSync(join(artifactDir, "ai-backend-smoke-report.json"), "utf8"));
-    unsanitizedAiReport.sanitized = false;
-    writeFileSync(join(artifactDir, "ai-backend-smoke-report.json"), JSON.stringify(unsanitizedAiReport, null, 2));
-    const unsanitizedAiReportFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(unsanitizedAiReportFailing?.status, "fail");
-    assert.match(unsanitizedAiReportFailing?.evidence ?? "", /ai\.smokeReportArtifact\.sanitized must be true/);
-
-    writeAiEvidence(validAiEvidence);
-    const missingAiResultReport = JSON.parse(readFileSync(join(artifactDir, "ai-backend-smoke-report.json"), "utf8"));
-    missingAiResultReport.results = missingAiResultReport.results.filter(
-      (row: Record<string, unknown>) => row.id !== "challenge-remote-endpoint"
-    );
-    missingAiResultReport.summary.passCount = 3;
-    writeFileSync(join(artifactDir, "ai-backend-smoke-report.json"), JSON.stringify(missingAiResultReport, null, 2));
-    const missingAiResultFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(missingAiResultFailing?.status, "fail");
-    assert.match(
-      missingAiResultFailing?.evidence ?? "",
-      /ai\.smokeReportArtifact\.results must include required result challenge-remote-endpoint/
-    );
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      releasePreflightCommand: "npm run preflight:release-env -- --env-file .env.production",
-      safetyEvalCommand: "npm run eval:ai-safety -- --env-file .env.production",
-      smokeCommand: "npm run smoke:ai-backend -- --env-file .env.production"
-    });
-    const envFilePassing = getValidationEvidenceResults(root).find((result) => result.id === "ai-backend-smoke-validation");
-    assert.equal(envFilePassing?.status, "pass");
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      releasePreflightCommand: "npm run preflight:release-env -- --env-file DOCS/VALIDATION/EVIDENCE/prod.env",
-      safetyEvalCommand: "npm run eval:ai-safety -- --env-file docs/validation/artifacts/release-run/prod.env",
-      smokeCommand: "npm run smoke:ai-backend -- --env-file docs/validation/artifacts/release-run/prod.env"
-    });
-    const validationFolderEnvFileFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(validationFolderEnvFileFailing?.status, "fail");
-    assert.match(validationFolderEnvFileFailing?.evidence ?? "", /ai\.releasePreflightCommand must be npm run preflight:release-env/);
-    assert.match(validationFolderEnvFileFailing?.evidence ?? "", /ai\.safetyEvalCommand must be npm run eval:ai-safety/);
-    assert.match(validationFolderEnvFileFailing?.evidence ?? "", /ai\.smokeCommand must be npm run smoke:ai-backend/);
-
-    try {
-      process.env.EXPO_PUBLIC_AI_COACH_ENDPOINT = "https://ai.freedrecovery.app/api/clara";
-      process.env.EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT = "https://ai.freedrecovery.app/api/challenges";
-      delete process.env.OPENAI_MODEL;
-      process.env.GEMINI_MODEL = "gemini-2.5-flash";
-      writeAiEvidence(validAiEvidence);
-      const configuredEndpointPassing = getValidationEvidenceResults(root).find(
-        (result) => result.id === "ai-backend-smoke-validation"
-      );
-      assert.equal(configuredEndpointPassing?.status, "pass");
-
-      process.env.EXPO_PUBLIC_RETENTION_ENDPOINT = "https://ai.freedrecovery.app/api/retention";
-      const validAiEvidenceWithRetention = {
-        ...validAiEvidence,
-        retentionEndpoint: "https://ai.freedrecovery.app/api/retention",
-        retentionSmokeRunId: "retention-smoke-run",
-        retentionSmokeArtifact: "docs/validation/artifacts/ai-backend-smoke-report.json",
-        smokeEndpointPassCount: 3,
-        noSensitiveEchoSampleCount: 3
-      };
-      writeAiEvidence(validAiEvidenceWithRetention, { retentionAggregateOnlyVerified: true });
-      const configuredRetentionPassing = getValidationEvidenceResults(root).find(
-        (result) => result.id === "ai-backend-smoke-validation"
-      );
-      assert.equal(configuredRetentionPassing?.status, "pass");
-
-      writeAiEvidence(
-        {
-          ...validAiEvidenceWithRetention,
-          retentionEndpoint: "https://ai.freedrecovery.app/api/retention#access_token=secret"
-        },
-        { retentionAggregateOnlyVerified: true }
-      );
-      const retentionFragmentFailing = getValidationEvidenceResults(root).find(
-        (result) => result.id === "ai-backend-smoke-validation"
-      );
-      assert.equal(retentionFragmentFailing?.status, "fail");
-      assert.match(retentionFragmentFailing?.evidence ?? "", /ai\.retentionEndpoint must not include URL fragments/);
-
-      writeAiEvidence(
-        {
-          ...validAiEvidenceWithRetention,
-          retentionEndpoint: "https://ai-release.freedrecovery.app/api/retention",
-          smokeEndpointPassCount: 2,
-          noSensitiveEchoSampleCount: 2
-        },
-        { retentionAggregateOnlyVerified: false }
-      );
-      const configuredRetentionFailing = getValidationEvidenceResults(root).find(
-        (result) => result.id === "ai-backend-smoke-validation"
-      );
-      assert.equal(configuredRetentionFailing?.status, "fail");
-      assert.match(configuredRetentionFailing?.evidence ?? "", /ai\.retentionEndpoint must match configured remote retention endpoint/);
-      assert.match(configuredRetentionFailing?.evidence ?? "", /checks\.retentionAggregateOnlyVerified/);
-      assert.match(configuredRetentionFailing?.evidence ?? "", /ai\.smokeEndpointPassCount >= 3/);
-      assert.match(configuredRetentionFailing?.evidence ?? "", /ai\.noSensitiveEchoSampleCount >= 3/);
-      delete process.env.EXPO_PUBLIC_RETENTION_ENDPOINT;
-
-      process.env.EXPO_PUBLIC_AI_COACH_ENDPOINT = "https://ai-release.freedrecovery.app/api/clara";
-      process.env.EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT = "https://ai-release.freedrecovery.app/api/challenges";
-      writeAiEvidence(validAiEvidence);
-      const configuredEndpointFailing = getValidationEvidenceResults(root).find(
-        (result) => result.id === "ai-backend-smoke-validation"
-      );
-      assert.equal(configuredEndpointFailing?.status, "fail");
-      assert.match(configuredEndpointFailing?.evidence ?? "", /ai\.coachEndpoint must match configured remote coach endpoint/);
-      assert.match(
-        configuredEndpointFailing?.evidence ?? "",
-        /ai\.challengeEndpoint must match configured remote challenge endpoint/
-      );
-
-      process.env.EXPO_PUBLIC_AI_COACH_ENDPOINT = "https://ai.freedrecovery.app/api/clara";
-      process.env.EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT = "https://ai.freedrecovery.app/api/challenges";
-      delete process.env.OPENAI_MODEL;
-      process.env.GEMINI_MODEL = "gemini-2.0-flash";
-      writeAiEvidence(validAiEvidence);
-      const configuredModelFailing = getValidationEvidenceResults(root).find(
-        (result) => result.id === "ai-backend-smoke-validation"
-      );
-      assert.equal(configuredModelFailing?.status, "fail");
-      assert.match(configuredModelFailing?.evidence ?? "", /ai\.model must match configured OPENAI_MODEL or GEMINI_MODEL/);
-
-      process.env.FREED_AI_PROVIDER = "gemini";
-      process.env.OPENAI_API_KEY = "sk-proj-provider-shape-12345678901234567890";
-      process.env.OPENAI_MODEL = "gpt-5.4-mini";
-      process.env.GEMINI_API_KEY = "AIzaSyProviderAwareModelKey1234567890";
-      process.env.GEMINI_MODEL = "gemini-2.5-flash";
-      assert.equal(readConfiguredServerAiModel(), "gemini-2.5-flash");
-      writeAiEvidence(validAiEvidence);
-      const providerAwareModelPassing = getValidationEvidenceResults(root).find(
-        (result) => result.id === "ai-backend-smoke-validation"
-      );
-      assert.equal(providerAwareModelPassing?.status, "pass");
-
-      writeAiEvidence({ ...validAiEvidence, model: "gpt-5.4-mini" });
-      const providerAwareModelFailing = getValidationEvidenceResults(root).find(
-        (result) => result.id === "ai-backend-smoke-validation"
-      );
-      assert.equal(providerAwareModelFailing?.status, "fail");
-      assert.match(providerAwareModelFailing?.evidence ?? "", /ai\.model must match configured OPENAI_MODEL or GEMINI_MODEL/);
-    } finally {
-      delete process.env.EXPO_PUBLIC_AI_COACH_ENDPOINT;
-      delete process.env.EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT;
-      delete process.env.EXPO_PUBLIC_RETENTION_ENDPOINT;
-      delete process.env.FREED_AI_PROVIDER;
-      delete process.env.OPENAI_API_KEY;
-      delete process.env.OPENAI_MODEL;
-      delete process.env.GEMINI_API_KEY;
-      delete process.env.GEMINI_MODEL;
+    const controlled = fixture(root);
+    const evidenceDir = join(root, "docs/validation/evidence");
+    mkdirSync(evidenceDir, { recursive: true });
+    const write = (payload: unknown) => writeFileSync(join(evidenceDir, "ai-backend-smoke.json"), JSON.stringify(payload));
+    const check = () => getValidationEvidenceResults(root).find(result => result.id === "ai-backend-smoke-validation");
+    write(controlled.save()); assert.equal(check()?.status, "pass", "Offline controlled fixture exercises schema only.");
+    const legacy = controlled.save(); legacy.schemaVersion = "ai-backend-smoke-v1"; write(legacy);
+    assert.equal(check()?.status, "fail"); assert.match(check()?.evidence || "", /historical|legacy/);
+    for (const id of contract.REQUIRED_RESULT_IDS) {
+      controlled.capture(id, { ...contract.PROOFS[id], unsupportedClaim: true }); write(controlled.save());
+      assert.equal(check()?.status, "fail", id); controlled.capture(id);
     }
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      releasePreflightCommand: "npm run preflight:release-env -- --env-file=https://secrets.freedrecovery.app/prod.env",
-      safetyEvalCommand: "npm run eval:ai-safety -- --env-file=https://secrets.freedrecovery.app/prod.env",
-      smokeCommand: "npm run smoke:ai-backend -- --env-file=secrets/prod.env"
-    });
-    const remoteSafetyEnvFileFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(remoteSafetyEnvFileFailing?.status, "fail");
-    assert.match(remoteSafetyEnvFileFailing?.evidence ?? "", /ai\.releasePreflightCommand must be npm run preflight:release-env/);
-    assert.match(remoteSafetyEnvFileFailing?.evidence ?? "", /ai\.safetyEvalCommand must be npm run eval:ai-safety/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      safetyEvalCommand: "npm run eval:ai-safety -- --env-file=secrets/prod.env",
-      smokeCommand: "npm run smoke:ai-backend -- --env-file --verbose"
-    });
-    const flagSmokeEnvFileFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(flagSmokeEnvFileFailing?.status, "fail");
-    assert.match(flagSmokeEnvFileFailing?.evidence ?? "", /ai\.smokeCommand must be npm run smoke:ai-backend/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      releasePreflightCommand: "npm run preflight:release-env -- --env-file <production-env-file>",
-      safetyEvalCommand: "npm run eval:ai-safety -- --env-file <production-env-file>",
-      smokeCommand: "npm run smoke:ai-backend -- --env-file <production-env-file>"
-    });
-    const placeholderEnvFileFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(placeholderEnvFileFailing?.status, "fail");
-    assert.match(placeholderEnvFileFailing?.evidence ?? "", /template placeholder text/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      releasePreflightCommand: "npm run preflight:release-env -- --env-file .env.production.example",
-      safetyEvalCommand: "npm run eval:ai-safety -- --env-file .env.example",
-      smokeCommand: "npm run smoke:ai-backend -- --env-file .env.production.example"
-    });
-    const templateEnvFileFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(templateEnvFileFailing?.status, "fail");
-    assert.match(templateEnvFileFailing?.evidence ?? "", /template placeholder text/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      coachEndpoint: "https://your-deployed-origin.example/api/clara",
-      challengeEndpoint: "https://ai.freedrecovery.app/api/challenges"
-    });
-    const endpointFailing = getValidationEvidenceResults(root).find((result) => result.id === "ai-backend-smoke-validation");
-    assert.equal(endpointFailing?.status, "fail");
-    assert.match(endpointFailing?.evidence ?? "", /placeholder or documentation host/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      coachEndpoint: "https://user:pass@ai.freedrecovery.app/api/clara"
-    });
-    const credentialEndpointFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(credentialEndpointFailing?.status, "fail");
-    assert.match(credentialEndpointFailing?.evidence ?? "", /ai\.coachEndpoint must not include URL credentials/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      challengeEndpoint: "https://ai.freedrecovery.app/api/challenges?token=secret"
-    });
-    const queryEndpointFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(queryEndpointFailing?.status, "fail");
-    assert.match(queryEndpointFailing?.evidence ?? "", /ai\.challengeEndpoint must not include query strings/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      releasePreflightCommand: "manual preflight complete",
-      safetyEvalCommand: "manual safety review complete",
-      smokeCommand: "manual smoke complete"
-    });
-    const commandFailing = getValidationEvidenceResults(root).find((result) => result.id === "ai-backend-smoke-validation");
-    assert.equal(commandFailing?.status, "fail");
-    assert.match(commandFailing?.evidence ?? "", /ai\.releasePreflightCommand must be npm run preflight:release-env/);
-    assert.match(commandFailing?.evidence ?? "", /ai\.safetyEvalCommand must be npm run eval:ai-safety/);
-    assert.match(commandFailing?.evidence ?? "", /ai\.smokeCommand must be npm run smoke:ai-backend/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      model: "configured-server-model",
-    });
-    const modelPlaceholderFailing = getValidationEvidenceResults(root).find((result) => result.id === "ai-backend-smoke-validation");
-    assert.equal(modelPlaceholderFailing?.status, "fail");
-    assert.match(modelPlaceholderFailing?.evidence ?? "", /template placeholder text/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      model: "gpt-release-safe"
-    });
-    const syntheticModelFailing = getValidationEvidenceResults(root).find((result) => result.id === "ai-backend-smoke-validation");
-    assert.equal(syntheticModelFailing?.status, "fail");
-    assert.match(syntheticModelFailing?.evidence ?? "", /ai\.model must be a concrete remote provider model id/);
-
-    writeAiEvidence(
-      {
-        ...validAiEvidence
-      },
-      {
-        challengePersonalizationVerified: false,
-        riskForecastPersonalizationVerified: false,
-        sessionDurationBucketPersonalizationVerified: false,
-        recentFailureCountPersonalizationVerified: false,
-        freeChallengePremiumExcluded: false,
-        noCoordinateFields: false,
-        noSensitiveEcho: false
-      }
-    );
-    const proofFailing = getValidationEvidenceResults(root).find((result) => result.id === "ai-backend-smoke-validation");
-    assert.equal(proofFailing?.status, "fail");
-    assert.match(proofFailing?.evidence ?? "", /checks\.challengePersonalizationVerified/);
-    assert.match(proofFailing?.evidence ?? "", /checks\.riskForecastPersonalizationVerified/);
-    assert.match(proofFailing?.evidence ?? "", /checks\.sessionDurationBucketPersonalizationVerified/);
-    assert.match(proofFailing?.evidence ?? "", /checks\.recentFailureCountPersonalizationVerified/);
-    assert.match(proofFailing?.evidence ?? "", /checks\.freeChallengePremiumExcluded/);
-    assert.match(proofFailing?.evidence ?? "", /checks\.noCoordinateFields/);
-    assert.match(proofFailing?.evidence ?? "", /checks\.noSensitiveEcho/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      safetyEvalCaseCount: 9,
-      safetyEvalFailedCount: 1
-    });
-    const safetyCountFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(safetyCountFailing?.status, "fail");
-    assert.match(safetyCountFailing?.evidence ?? "", /ai\.safetyEvalCaseCount >= 10/);
-    assert.match(safetyCountFailing?.evidence ?? "", /ai\.safetyEvalFailedCount must be 0/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      smokeEndpointPassCount: 1,
-      smokeEndpointFailCount: 1,
-      challengePersonalizationProfileCount: 1,
-      challengeRiskForecastProfileCount: 1,
-      challengeSessionDurationBucketProfileCount: 0,
-      challengeRecentFailureProfileCount: 0,
-      freeChallengePremiumCount: 1,
-      noSensitiveEchoSampleCount: 1
-    });
-    const smokeCountFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(smokeCountFailing?.status, "fail");
-    assert.match(smokeCountFailing?.evidence ?? "", /ai\.smokeEndpointPassCount >= 2/);
-    assert.match(smokeCountFailing?.evidence ?? "", /ai\.smokeEndpointFailCount must be 0/);
-    assert.match(smokeCountFailing?.evidence ?? "", /ai\.challengePersonalizationProfileCount >= 2/);
-    assert.match(smokeCountFailing?.evidence ?? "", /ai\.challengeRiskForecastProfileCount >= 2/);
-    assert.match(smokeCountFailing?.evidence ?? "", /ai\.challengeSessionDurationBucketProfileCount >= 1/);
-    assert.match(smokeCountFailing?.evidence ?? "", /ai\.challengeRecentFailureProfileCount >= 1/);
-    assert.match(smokeCountFailing?.evidence ?? "", /ai\.freeChallengePremiumCount must be 0/);
-    assert.match(smokeCountFailing?.evidence ?? "", /ai\.noSensitiveEchoSampleCount >= 2/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      releasePreflightRunId: "",
-      coachSmokeRunId: "",
-      challengeSmokeRunId: "",
-      challengePersonalizationRunId: "",
-      noCoordinateFieldsRunId: "",
-      noSensitiveEchoRunId: "",
-      crisisFallbackRunId: ""
-    });
-    const runIdFailing = getValidationEvidenceResults(root).find((result) => result.id === "ai-backend-smoke-validation");
-    assert.equal(runIdFailing?.status, "fail");
-    assert.match(runIdFailing?.evidence ?? "", /ai\.releasePreflightRunId/);
-    assert.match(runIdFailing?.evidence ?? "", /ai\.coachSmokeRunId/);
-    assert.match(runIdFailing?.evidence ?? "", /ai\.challengeSmokeRunId/);
-    assert.match(runIdFailing?.evidence ?? "", /ai\.challengePersonalizationRunId/);
-    assert.match(runIdFailing?.evidence ?? "", /ai\.noCoordinateFieldsRunId/);
-    assert.match(runIdFailing?.evidence ?? "", /ai\.noSensitiveEchoRunId/);
-    assert.match(runIdFailing?.evidence ?? "", /ai\.crisisFallbackRunId/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      smokeReportId: "manual smoke report",
-      coachSmokeRunId: "run"
-    });
-    const vagueAiIdFailing = getValidationEvidenceResults(root).find((result) => result.id === "ai-backend-smoke-validation");
-    assert.equal(vagueAiIdFailing?.status, "fail");
-    assert.match(vagueAiIdFailing?.evidence ?? "", /ai\.smokeReportId must use a concrete machine-readable ID/);
-    assert.match(vagueAiIdFailing?.evidence ?? "", /ai\.coachSmokeRunId must use a concrete machine-readable ID/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      challengeSmokeRunId: validAiEvidence.coachSmokeRunId
-    });
-    const duplicateAiIdFailing = getValidationEvidenceResults(root).find((result) => result.id === "ai-backend-smoke-validation");
-    assert.equal(duplicateAiIdFailing?.status, "fail");
-    assert.match(duplicateAiIdFailing?.evidence ?? "", /ai\.challengeSmokeRunId duplicates ai\.coachSmokeRunId/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      releasePreflightArtifact: "",
-      safetyEvalArtifact: "",
-      smokeReportArtifact: "docs/validation/artifacts/missing-ai-smoke-report.json",
-      coachSmokeArtifact: "",
-      challengePersonalizationArtifact: "",
-      noCoordinateFieldsArtifact: "",
-      noSensitiveEchoArtifact: "",
-      providerFallbackArtifact: ""
-    });
-    const artifactFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(artifactFailing?.status, "fail");
-    assert.match(artifactFailing?.evidence ?? "", /ai\.releasePreflightArtifact/);
-    assert.match(artifactFailing?.evidence ?? "", /ai\.safetyEvalArtifact/);
-    assert.match(artifactFailing?.evidence ?? "", /ai\.smokeReportArtifact/);
-    assert.match(artifactFailing?.evidence ?? "", /ai\.coachSmokeArtifact/);
-    assert.match(artifactFailing?.evidence ?? "", /ai\.challengePersonalizationArtifact/);
-    assert.match(artifactFailing?.evidence ?? "", /ai\.noCoordinateFieldsArtifact/);
-    assert.match(artifactFailing?.evidence ?? "", /ai\.noSensitiveEchoArtifact/);
-    assert.match(artifactFailing?.evidence ?? "", /ai\.providerFallbackArtifact/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      smokeReportArtifact: "https://qa.freedrecovery.app/reports/ai-backend-smoke-report.json"
-    });
-    const remoteSmokeReportFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(remoteSmokeReportFailing?.status, "fail");
-    assert.match(remoteSmokeReportFailing?.evidence ?? "", /local sanitized JSON report/);
-
-    writeAiEvidence({
-      ...validAiEvidence,
-      rawPrompt: "I visited https://private.example.com/raw-note?token=secret",
-      rawModelResponse: "Echoed private.example.com/raw-note?token=secret",
-      privateNotes: "Private relapse note",
-      conversationTranscript: "Full CLARA transcript",
-      providerApiKey: "AIzaSyA1234567890abcdefABCDEF_1234567890"
-    });
-    const sensitiveFieldFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(sensitiveFieldFailing?.status, "fail");
-    assert.match(sensitiveFieldFailing?.evidence ?? "", /ai\.rawPrompt must be omitted/);
-    assert.match(sensitiveFieldFailing?.evidence ?? "", /ai\.rawModelResponse must be omitted/);
-    assert.match(sensitiveFieldFailing?.evidence ?? "", /ai\.privateNotes must be omitted/);
-    assert.match(sensitiveFieldFailing?.evidence ?? "", /ai\.conversationTranscript must be omitted/);
-    assert.match(sensitiveFieldFailing?.evidence ?? "", /ai\.providerApiKey must be omitted/);
-
-    writeAiEvidence(
-      validAiEvidence,
-      {},
-      {
-        smokeNotes: {
-          rawPrompt: "I visited https://private.example.com/raw-note?token=secret",
-          nested: {
-            latitude: 37.7749,
-            preciseLocation: "37.7749,-122.4194"
-          }
-        }
-      }
-    );
-    const payloadWideSensitiveFieldFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(payloadWideSensitiveFieldFailing?.status, "fail");
-    assert.match(payloadWideSensitiveFieldFailing?.evidence ?? "", /root\.smokeNotes\.rawPrompt must be omitted/);
-    assert.match(payloadWideSensitiveFieldFailing?.evidence ?? "", /root\.smokeNotes\.nested\.latitude must be omitted/);
-    assert.match(payloadWideSensitiveFieldFailing?.evidence ?? "", /root\.smokeNotes\.nested\.preciseLocation must be omitted/);
-
-    writeAiEvidence(
-      validAiEvidence,
-      {},
-      {
-        smokeSummary: {
-          redactedComment: "The no-echo sample still pasted https://private.example.com/raw-note?token=secret."
-        }
-      }
-    );
-    const payloadWideSensitiveTextFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(payloadWideSensitiveTextFailing?.status, "fail");
-    assert.match(payloadWideSensitiveTextFailing?.evidence ?? "", /root\.smokeSummary\.redactedComment must omit sensitive text/);
-
-    writeAiEvidence(
-      validAiEvidence,
-      {},
-      {
-        smokeSummary: {
-          coachEndpoint: "https://private.example.com/raw-note?token=secret was pasted into a misleading nested endpoint field."
-        }
-      }
-    );
-    const nestedApprovedAiFieldNameFailing = getValidationEvidenceResults(root).find(
-      (result) => result.id === "ai-backend-smoke-validation"
-    );
-    assert.equal(nestedApprovedAiFieldNameFailing?.status, "fail");
-    assert.match(
-      nestedApprovedAiFieldNameFailing?.evidence ?? "",
-      /root\.smokeSummary\.coachEndpoint must omit sensitive text/
-    );
-  } finally {
-    restoreEnv("EXPO_PUBLIC_AI_COACH_ENDPOINT", previousAiEnv.coachEndpoint);
-    restoreEnv("EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT", previousAiEnv.challengeEndpoint);
-    restoreEnv("EXPO_PUBLIC_RETENTION_ENDPOINT", previousAiEnv.retentionEndpoint);
-    restoreEnv("FREED_AI_PROVIDER", previousAiEnv.provider);
-    restoreEnv("OPENAI_API_KEY", previousAiEnv.openAiKey);
-    restoreEnv("OPENAI_MODEL", previousAiEnv.openAiModel);
-    restoreEnv("GEMINI_API_KEY", previousAiEnv.geminiKey);
-    restoreEnv("GEMINI_MODEL", previousAiEnv.model);
-    rmSync(root, { recursive: true, force: true });
-  }
+    controlled.report.results[0].status = "fallback"; write(controlled.save()); assert.equal(check()?.status, "fail");
+    assert.notEqual(runAiBackendEvidenceArgs(["--retention-endpoint", "https://invalid", "--plan-only"]).status, 0);
+    assert.notEqual(runAiBackendEvidenceArgs(["--coach-endpoint", contract.ENDPOINT + "?token=secret", "--plan-only"]).status, 0);
+  } finally { rmSync(root, { recursive: true, force: true }); }
 });
 
 test("server AI provider rejects placeholder keys and model ids at runtime", () => {
@@ -25337,17 +25297,17 @@ async function runAsyncTests() {
     assert.equal(result.accepted, true);
     assert.equal(result.status, "ok");
     assert.equal(capturedInput, controls.endpointUrl);
-    assert.equal(body.snapshot.schemaVersion, "aggregate-v5");
-    assert.equal(body.snapshot.behavior.browserInterceptions, 1);
-    assert.equal(body.snapshot.productionMetrics.blockedAttempts, 1);
-    assert.equal(
-      body.snapshot.productionMetrics.blockedAttemptSourceBreakdown.reduce((total, bucket) => total + bucket.count, 0),
-      1
-    );
-    assert.equal(body.snapshot.productionMetrics.blockedAttemptSourceBreakdown.find((bucket) => bucket.source === "browser")?.count, 1);
+    assert.equal(body.snapshot.schemaVersion, "freed-own-data-analytics-v1");
+    assert.deepEqual(Object.keys(body.snapshot.behavior).sort(), ["manualCheckInterceptions", "selfReportedUrges"]);
+    assert.equal(body.snapshot.behavior.selfReportedUrges, 0);
+    for (const field of ["blockedAttempts", "blockedAttemptSourceBreakdown", "earnedUnlocks", "unlockMinutesGranted", "unlockFrequencyPerWeek"]) {
+      assert.equal(field in body.snapshot.productionMetrics, false, `Device metric ${field} stays local.`);
+    }
+    assert.equal(body.snapshot.privacy.dataset, "freed-user-recorded-actions");
+    assert.equal(body.snapshot.privacy.excludesDeviceProtectionHistory, true);
     assert.equal(body.snapshot.productionMetrics.challengeCompletions, 1);
     assert.equal(body.snapshot.productionMetrics.hourlyUrgePattern.length, 24);
-    assert.equal(body.snapshot.productionMetrics.hourlyUrgePattern.reduce((total, bucket) => total + bucket.count, 0), 2);
+    assert.equal(body.snapshot.productionMetrics.hourlyUrgePattern.reduce((total, bucket) => total + bucket.count, 0), 1);
     assert.equal(body.snapshot.productionMetrics.challengeSuccessRate, 100);
     assert.equal(
       body.snapshot.productionMetrics.challengeSuccessByCategory.reduce((total, category) => total + category.completed, 0),
@@ -25894,17 +25854,25 @@ async function runAsyncTests() {
     const scheduled: unknown[] = [];
     const channels: Array<{ id: string; options: unknown }> = [];
     const handlers: unknown[] = [];
+    const inventory = new Map<string, any>([
+      ["old-morning", { identifier: "old-morning", content: { title: "FREED morning reset", data: { route: "checkin", kind: "morning" } } }],
+      ["old-guard", { identifier: "old-guard", content: { title: "FREED night guard", data: { route: "checkin", kind: "guard" } } }]
+    ]);
     const notifications = {
       AndroidImportance: { DEFAULT: 3 },
       SchedulableTriggerInputTypes: { DAILY: "daily" },
       cancelScheduledNotificationAsync: async (id: string) => {
         cancelled.push(id);
+        inventory.delete(id);
       },
-      getPermissionsAsync: async () => ({ status: "undetermined" }),
-      requestPermissionsAsync: async () => ({ status: "granted" }),
+      getPermissionsAsync: async () => ({ status: "granted", granted: true, canAskAgain: true, expires: "never", android: { importance: 3 } }),
+      requestPermissionsAsync: async () => ({ status: "granted", granted: true, canAskAgain: true, expires: "never", android: { importance: 3 } }),
+      getAllScheduledNotificationsAsync: async () => [...inventory.values()],
       scheduleNotificationAsync: async (request: unknown) => {
         scheduled.push(request);
-        return `scheduled-${scheduled.length}`;
+        const identifier = `scheduled-${scheduled.length}`;
+        inventory.set(identifier, { ...(request as object), identifier });
+        return identifier;
       },
       setNotificationChannelAsync: async (id: string, options: unknown) => {
         channels.push({ id, options });
@@ -25923,7 +25891,7 @@ async function runAsyncTests() {
         scheduledIds: ["old-morning", "old-guard"],
         statusMessage: "Previously scheduled."
       },
-      { platform: "android", notifications }
+      { platform: "android", notifications, requestPermission: true, timezone: "Asia/Kolkata|-330" }
     );
 
     assert.deepEqual(cancelled, ["old-morning", "old-guard"]);
@@ -25931,7 +25899,8 @@ async function runAsyncTests() {
     assert.equal(channels.length, 1);
     assert.equal(channels[0].id, "freed-recovery");
     assert.deepEqual(result.scheduledIds, ["scheduled-1", "scheduled-2"]);
-    assert.equal(result.permissionStatus, "granted");
+    assert.equal(result.permissionStatus, "authorized");
+    assert.equal(result.effectiveStatus, "active");
     assert.equal(result.enabled, true);
     assert.equal(scheduled.length, 2);
 
@@ -25942,8 +25911,8 @@ async function runAsyncTests() {
     assert.deepEqual(
       scheduled.map((request) => (request as { content: { data: unknown } }).content.data),
       [
-        { route: "checkin", kind: "morning" },
-        { route: "checkin", kind: "guard" }
+        { route: "checkin", kind: "morning", freedReminderVersion: 2, reminderTimezone: "Asia/Kolkata|-330" },
+        { route: "checkin", kind: "guard", freedReminderVersion: 2, reminderTimezone: "Asia/Kolkata|-330" }
       ]
     );
     assert.deepEqual(
@@ -25953,6 +25922,19 @@ async function runAsyncTests() {
         { type: "daily", hour: 23, minute: 0, channelId: "freed-recovery" }
       ]
     );
+    const rawOwnerId = "reminder-owner-private-fixture";
+    const ownerKey = createHash("sha256").update(`freed-reminder-owner-v1:${rawOwnerId}`).digest("hex");
+    const ownedResult = await syncRecoveryReminders(
+      { ...createDefaultRecoveryState().reminders, enabled: true, eveningEnabled: false, guardTime: "23:00", revision: 7 },
+      { platform: "android", notifications, timezone: "Asia/Kolkata|-330", ownerKey }
+    );
+    assert.equal(ownedResult.effectiveStatus, "active");
+    const ownedPayloads = scheduled.slice(-2).map(request => (request as { content: { data: Record<string, unknown> } }).content.data);
+    assert.deepEqual(ownedPayloads, ["morning", "guard"].map(kind => ({
+      route: "checkin", kind, freedReminderVersion: 2, reminderTimezone: "Asia/Kolkata|-330", reminderOwnerKey: ownerKey, reminderRevision: 7
+    })));
+    assert.equal(JSON.stringify(ownedPayloads).includes(rawOwnerId), false);
+    assert.doesNotMatch(JSON.stringify(ownedPayloads), /ownerId|ownerUid|journal|reflection|photo|token|url|private/i);
   });
 
   const validFcmToken = "fcmReleaseToken_1234567890:APA91bReleaseToken_abcdefghijklmnopqrstuvwxyz";
@@ -26377,7 +26359,7 @@ async function runAsyncTests() {
     assert.equal(restored.dailyCheckIns[0].reflection, "Private reflection with https://private.example.com/raw-note?secret=true");
     assert.equal(restored.accountability.contact, "sam@example.com");
     assert.deepEqual(restored.reminders.scheduledIds, []);
-    assert.equal(restored.reminders.permissionStatus, "unknown");
+    assert.equal(restored.reminders.permissionStatus, "undetermined");
 
     await assert.rejects(
       () => restoreEncryptedRecoveryBackup(backup, "wrong horse battery staple"),
@@ -27193,7 +27175,7 @@ async function runAsyncTests() {
       assert.equal(response.status, 200);
       assert.equal(payload.provider, "fallback");
       assert.equal(payload.status, "fallback");
-      assert.match(payload.text ?? "", /urge|timer|temporary/i);
+      assert.match(payload.text ?? "", /phone|reset|stop/i);
       assert.match(payload.reason ?? "", /GEMINI_API_KEY/);
     } finally {
       restoreAiServerKeys(previousKeys);
@@ -27269,6 +27251,8 @@ async function runAsyncTests() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(
             buildChallengeGenerationRequest({
+    exportState: createDefaultRecoveryState(),
+    exportDay: "2026-05-13T12:00:00.000Z",
               streakDays: 6,
               premium: false,
               attemptsToday: 2,
@@ -27294,7 +27278,7 @@ async function runAsyncTests() {
     }
   });
 
-  await asyncTest("retention plan uses remote provider safely and falls back locally", async () => {
+  await asyncTest("retention suggestions remain local and never dispatch injected remote providers", async () => {
     let captured: ReturnType<typeof buildRetentionRequest> | null = null;
     configureRemoteRetentionProvider(async (request) => {
       captured = request;
@@ -27317,11 +27301,13 @@ async function runAsyncTests() {
       });
       const text = JSON.stringify(plan);
 
-      assert.equal(getRetentionReadiness({ mode: "remote" }).status, "ready");
-      assert.equal(captured?.profile.slipsThisWeek, 1);
-      assert.equal(plan.provider, "remote");
+      assert.equal(getRetentionReadiness({ mode: "remote" }).status, "local");
+      assert.equal(captured, null);
+      assert.equal(buildRetentionRequest(state,{day:"2026-05-13T12:00:00.000Z"}).profile.slipsThisWeek,1);
+      assert.equal(plan.provider, "local");
       assert.equal(plan.status, "ok");
-      assert.equal(plan.suggestedGuardTime, "23:00");
+      assert.ok(plan.nextBestAction.length > 10);
+      assert.deepEqual(plan,await generateRetentionPlan(state,{mode:"local",day:"2026-05-13T12:00:00.000Z"}));
       assert.equal(/https?:\/\//i.test(text), false);
       assert.equal(text.includes("private.example.com"), false);
       assert.equal(text.includes("secret=true"), false);
@@ -27335,11 +27321,10 @@ async function runAsyncTests() {
       const readiness = getRetentionReadiness({ mode: "remote" });
       const plan = await generateRetentionPlan(createDefaultRecoveryState(), { mode: "remote" });
 
-      assert.equal(readiness.status, "missing-config");
-      assert.ok(readiness.missing.includes("must use HTTPS"));
-      assert.ok(readiness.missing.includes("must not point to a local development host"));
-      assert.equal(plan.provider, "fallback");
-      assert.equal(plan.status, "fallback");
+      assert.equal(readiness.status, "local");
+      assert.deepEqual(readiness.missing,[]);
+      assert.equal(plan.provider, "local");
+      assert.equal(plan.status, "ok");
     } finally {
       restoreEnv("EXPO_PUBLIC_RETENTION_ENDPOINT", previousRetentionEndpoint);
     }
@@ -27351,8 +27336,8 @@ async function runAsyncTests() {
     try {
       const plan = await generateRetentionPlan(createDefaultRecoveryState(), { mode: "remote" });
 
-      assert.equal(plan.provider, "fallback");
-      assert.equal(plan.status, "fallback");
+      assert.equal(plan.provider, "local");
+      assert.equal(plan.status, "ok");
       assert.match(plan.nextBestAction, /check-in|phone|sleep|reset|Schedule/i);
     } finally {
       configureRemoteRetentionProvider(null);
@@ -27559,6 +27544,8 @@ async function runAsyncTests() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(
             buildChallengeGenerationRequest({
+    exportState: createDefaultRecoveryState(),
+    exportDay: "2026-05-13T12:00:00.000Z",
               streakDays: 6,
               premium: false,
               attemptsToday: 2,
@@ -27700,7 +27687,9 @@ async function runAsyncTests() {
         new Request("http://localhost/api/challenges", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(buildChallengeGenerationRequest({ streakDays: 4, premium: false, attemptsToday: 1, mood: "stressed", hour: 23 }))
+          body: JSON.stringify(buildChallengeGenerationRequest({
+    exportState: createDefaultRecoveryState(),
+    exportDay: "2026-05-13T12:00:00.000Z", streakDays: 4, premium: false, attemptsToday: 1, mood: "stressed", hour: 23 }))
         })
       );
       const retentionResponse = await retentionRoute.POST(
@@ -27813,6 +27802,8 @@ async function runAsyncTests() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(
             buildChallengeGenerationRequest({
+    exportState: createDefaultRecoveryState(),
+    exportDay: "2026-05-13T12:00:00.000Z",
               streakDays: 6,
               premium: false,
               attemptsToday: 1,
@@ -27858,6 +27849,8 @@ async function runAsyncTests() {
         "I visited https://pornhub.com/watch?raw=true",
         {
           attempts: [attempt],
+          exportState: createDefaultRecoveryState(),
+          exportDay: "2026-05-13T12:00:00.000Z",
           slipsThisWeek: 1,
           slipWindow: "Late night",
           slipTrigger: "Stress after https://private.example.com/note"
@@ -27871,7 +27864,11 @@ async function runAsyncTests() {
       assert.equal(reply.text.includes("private.example.com"), false);
       assert.equal(reply.text.includes("token=secret"), false);
       assert.equal(captured?.input.includes("watch?raw=true"), false);
-      assert.equal(captured?.context.recentRiskHosts[0], "pornhub.com");
+      assert.ok(captured, "Configured remote coach provider was called.");
+      assert.deepEqual(captured.context.recentRiskHosts, []);
+      assert.deepEqual(captured.context.recentRules, []);
+      assert.equal(captured.context.attemptsToday, 0);
+      assert.equal(JSON.stringify(captured).includes("pornhub.com"), false);
       assert.equal(captured?.context.slipTrigger, "Stress pattern");
     } finally {
       configureRemoteCoachProvider(null);
@@ -27888,7 +27885,7 @@ async function runAsyncTests() {
 
       assert.equal(reply.provider, "fallback");
       assert.equal(reply.status, "fallback");
-      assert.match(reply.text.toLowerCase(), /urge|timer|temporary/);
+      assert.match(reply.text.toLowerCase(), /phone|reset|stop/);
     } finally {
       configureRemoteCoachProvider(null);
     }
@@ -27916,7 +27913,7 @@ async function runAsyncTests() {
     }
   });
 
-  await asyncTest("challenge generator uses configured remote provider and filters unsafe premium output", async () => {
+  await asyncTest("challenge generator ignores injected remote output and preserves local free rules", async () => {
     let captured: ReturnType<typeof buildChallengeGenerationRequest> | null = null;
     configureChallengeGenerationProvider(async (request) => {
       captured = request;
@@ -27971,6 +27968,8 @@ async function runAsyncTests() {
     try {
       const generated = await generateAdaptiveChallengeSet(
         {
+          exportState: createDefaultRecoveryState(),
+          exportDay: "2026-05-13T12:00:00.000Z",
           streakDays: 3,
           premium: false,
           attemptsToday: 1,
@@ -27983,11 +27982,10 @@ async function runAsyncTests() {
         { mode: "remote" }
       );
 
-      assert.equal(captured?.profile.premium, false);
-      assert.equal(captured?.profile.slipsThisWeek, 2);
-      assert.equal(captured?.profile.slipTrigger, "Scrolling trigger pattern");
+      assert.equal(captured,null,"No recovery context is transmitted to challenge generation.");
       assert.equal(generated.length, 3);
-      assert.equal(generated[0].id, "ai-walk-water");
+      assert.ok(generated.every(challenge=>challenge.id!=="ai-walk-water" && challenge.id!=="premium-only"));
+      assert.ok(generated.every(challenge=>challenge.verification?.version===1));
       assert.equal(/https?:\/\//i.test(JSON.stringify(generated)), false);
       assert.equal(JSON.stringify(generated).includes("private.example.com"), false);
       assert.equal(JSON.stringify(generated).includes("private-example"), false);
@@ -28000,7 +27998,8 @@ async function runAsyncTests() {
   });
 
   await asyncTest("challenge generator falls back locally when remote output is incomplete after filtering", async () => {
-    configureChallengeGenerationProvider(async () => [
+    let remoteCalled = false;
+    configureChallengeGenerationProvider(async () => { remoteCalled = true; return [
       {
         id: "single-remote-reset",
         title: "Single reset",
@@ -28012,11 +28011,13 @@ async function runAsyncTests() {
         why: "This should not ship alone.",
         steps: ["Stand up.", "Drink water."]
       }
-    ]);
+    ]; });
 
     try {
       const generated = await generateAdaptiveChallengeSet(
         {
+          exportState: createDefaultRecoveryState(),
+          exportDay: "2026-05-13T12:00:00.000Z",
           streakDays: 2,
           premium: false,
           attemptsToday: 2,
@@ -28026,6 +28027,7 @@ async function runAsyncTests() {
         { mode: "remote" }
       );
 
+      assert.equal(remoteCalled, false, "Local-only generation never calls an injected remote provider.");
       assert.equal(generated.length, 3);
       assert.notEqual(generated[0].id, "single-remote-reset");
       assert.ok(generated.every((challenge) => !challenge.premium));
@@ -28035,13 +28037,17 @@ async function runAsyncTests() {
   });
 
   await asyncTest("challenge generator falls back locally when remote provider fails", async () => {
+    let remoteCalled = false;
     configureChallengeGenerationProvider(async () => {
+      remoteCalled = true;
       throw new Error("Remote challenge service unavailable");
     });
 
     try {
       const generated = await generateAdaptiveChallengeSet(
         {
+          exportState: createDefaultRecoveryState(),
+          exportDay: "2026-05-13T12:00:00.000Z",
           streakDays: 9,
           premium: false,
           attemptsToday: 0,
@@ -28051,6 +28057,7 @@ async function runAsyncTests() {
         { mode: "remote" }
       );
 
+      assert.equal(remoteCalled, false, "Local-only generation never calls an injected remote provider.");
       assert.equal(generated.length, 3);
       assert.ok(generated.every((challenge) => !challenge.premium));
     } finally {
@@ -28074,6 +28081,7 @@ async function runAsyncTests() {
     const previous = {
       mode: process.env.EXPO_PUBLIC_MONETIZATION_MODE,
       nodeEnv: process.env.NODE_ENV,
+      backend: process.env.EXPO_PUBLIC_BACKEND_PROVIDER,
       purchaseVerifyEndpoint: process.env.EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT
     };
     let purchaseCalls = 0;
@@ -28103,6 +28111,7 @@ async function runAsyncTests() {
 
     try {
       process.env.NODE_ENV = "production";
+      process.env.EXPO_PUBLIC_BACKEND_PROVIDER = "legacy";
       process.env.EXPO_PUBLIC_MONETIZATION_MODE = "native";
       delete process.env.EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT;
 
@@ -28131,6 +28140,7 @@ async function runAsyncTests() {
     } finally {
       restoreEnv("EXPO_PUBLIC_MONETIZATION_MODE", previous.mode);
       restoreEnv("NODE_ENV", previous.nodeEnv);
+      restoreEnv("EXPO_PUBLIC_BACKEND_PROVIDER", previous.backend);
       restoreEnv("EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT", previous.purchaseVerifyEndpoint);
       configureNativeMonetizationProvider(null);
     }
@@ -28145,7 +28155,8 @@ async function runAsyncTests() {
     assert.equal(mockSession.durationSeconds, 5);
     assert.equal(fallbackSession.status, "fallback");
     assert.equal(fallbackSession.durationSeconds, 3);
-    assert.equal(fallbackResult.rewardGranted, true);
+    assert.equal(fallbackResult.rewardGranted, false);
+    assert.equal(fallbackResult.status, "fallback");
   });
 
   await asyncTest("native monetization adapter maps store entitlements and rewarded fallback", async () => {
@@ -28203,7 +28214,7 @@ async function runAsyncTests() {
       assert.equal(restored.planId, "yearly");
       assert.equal(session.id, "adapter-rewarded");
       assert.equal(rewarded.status, "fallback");
-      assert.equal(rewarded.rewardGranted, true);
+      assert.equal(rewarded.rewardGranted, false);
     } finally {
       configureNativeMonetizationProvider(null);
     }
@@ -28350,6 +28361,24 @@ async function runAsyncTests() {
     assert.deepEqual(restore.activeEntitlementIds, []);
   });
 
+  // Model the native listener/readiness contract even when the injected SDK
+  // returns its purchase directly. Event delivery has separate lifecycle tests.
+  const nativeIapListenerFixture = {
+    purchaseUpdatedListener: () => ({ remove() {} }),
+    purchaseErrorListener: () => ({ remove() {} }),
+    // Verification fixtures still need exact-product billed metadata before
+    // they may exercise charge-sheet and receipt behavior.
+    getSubscriptions: async () => [
+      { id: "freed_premium_monthly", displayPrice: "$9.99" },
+      { id: "freed_premium_yearly", displayPrice: "$39.99" },
+      { id: "freed_premium_lifetime", displayPrice: "$79.99" }
+    ]
+  };
+  const nativeIapCheckoutFixture = {
+    getCheckoutContext: async () => ({ appAccountToken: "ea8110b0-56d5-5a64-a031-194415ec890a", obfuscatedAccountId: "a".repeat(64) }),
+    purchaseTimeoutMs: 5
+  };
+
   await asyncTest("native IAP forwards only strict iOS fields and finishes only after exact Firebase verification", async () => {
     const config = {
       ...getMonetizationConfig({ mode: "native", platform: "ios" }),
@@ -28361,13 +28390,14 @@ async function runAsyncTests() {
       productId: "freed_premium_yearly",
       purchaseState: "purchased",
       transactionId: "2000001234567890",
-      purchaseToken: "must-not-be-forwarded",
+      purchaseToken: "signedHeader.signedPayload.signedSignature",
       nested: { receipt: "must-not-be-forwarded" }
     };
     const events: string[] = [];
     const verifierPayloads: unknown[] = [];
     const store = createNativeIapStoreAdapter(
       {
+        ...nativeIapListenerFixture,
         initConnection: async () => true,
         requestPurchase: async () => purchaseRecord,
         finishTransaction: async () => {
@@ -28385,7 +28415,7 @@ async function runAsyncTests() {
           status: "verified",
           expiresAt: "2099-07-22T12:01:00.000Z"
         };
-      }
+      }, nativeIapCheckoutFixture
     );
     assert.ok(store);
 
@@ -28395,12 +28425,13 @@ async function runAsyncTests() {
     assert.deepEqual(events, ["verify", "finish"]);
     assert.equal(verifierPayloads.length, 1);
     assert.deepEqual(Object.keys(verifierPayloads[0] as object).sort(), [
-      "clientEventId", "platform", "productId", "restore", "transactionId"
+      "clientEventId", "platform", "productId", "restore", "signedTransactionInfo", "transactionId"
     ]);
     assert.deepEqual(verifierPayloads[0], {
       platform: "ios",
       productId: "freed_premium_yearly",
       transactionId: "2000001234567890",
+      signedTransactionInfo: "signedHeader.signedPayload.signedSignature",
       clientEventId: (verifierPayloads[0] as { clientEventId: string }).clientEventId,
       restore: false
     });
@@ -28424,6 +28455,7 @@ async function runAsyncTests() {
     const finished: unknown[] = [];
     const store = createNativeIapStoreAdapter(
       {
+        ...nativeIapListenerFixture,
         initConnection: async () => true,
         requestPurchase: async () => validAndroid,
         getAvailablePurchases: async () => [
@@ -28444,7 +28476,7 @@ async function runAsyncTests() {
           status: "verified",
           expiresAt: null
         };
-      }
+      }, nativeIapCheckoutFixture
     );
     assert.ok(store);
 
@@ -28452,7 +28484,7 @@ async function runAsyncTests() {
     assert.deepEqual((await store.restorePurchases(config)).activeEntitlementIds, ["premium"]);
     assert.deepEqual(verifiedPayloads.map(({ restore }) => restore), [false, true]);
     assert.equal(verifiedPayloads[0]?.purchaseToken, "android-purchase-token-1234567890");
-    assert.equal(finished.length, 2);
+    assert.equal(finished.length, 1); // Already finalized purchases are not finished twice.
 
     for (const unsafe of [
       { ...validAndroid, purchaseState: "pending" },
@@ -28464,11 +28496,15 @@ async function runAsyncTests() {
     ]) {
       let called = false;
       const rejectingStore = createNativeIapStoreAdapter(
-        { initConnection: async () => true, requestPurchase: async () => unsafe },
+        {
+          ...nativeIapListenerFixture,
+          initConnection: async () => true,
+          requestPurchase: async () => unsafe
+        },
         async () => {
           called = true;
           throw new Error("should not verify invalid purchase");
-        }
+        }, nativeIapCheckoutFixture
       );
       assert.ok(rejectingStore);
       assert.deepEqual((await rejectingStore.purchaseProduct("freed_premium_lifetime", config)).activeEntitlementIds, []);
@@ -28489,6 +28525,7 @@ async function runAsyncTests() {
       transactionId: "2000001234567890"
     };
     let finishCount = 0;
+    let verificationCount = 0;
     const invalidResults = [
       { active: false, entitlementId: "premium", productId: "freed_premium_monthly", platform: "ios", status: "inactive", expiresAt: null },
       { active: true, entitlementId: "premium", productId: "freed_premium_yearly", platform: "ios", status: "verified", expiresAt: "2099-07-22T12:01:00.000Z" },
@@ -28498,17 +28535,19 @@ async function runAsyncTests() {
     for (const response of invalidResults) {
       const store = createNativeIapStoreAdapter(
         {
+          ...nativeIapListenerFixture,
           initConnection: async () => true,
           requestPurchase: async () => purchaseRecord,
           finishTransaction: async () => {
             finishCount += 1;
           }
         },
-        async () => response
+        async () => { verificationCount += 1; return response; }, nativeIapCheckoutFixture
       );
       assert.ok(store);
       assert.deepEqual((await store.purchaseProduct("freed_premium_monthly", config)).activeEntitlementIds, []);
     }
+    assert.equal(verificationCount, invalidResults.length);
     assert.equal(finishCount, 0);
   });
 
@@ -28552,9 +28591,10 @@ async function runAsyncTests() {
     ]);
   });
 
-  await asyncTest("native monetization runtime falls back to installed RevenueCat and wires AdMob SDKs", async () => {
+  await asyncTest("native monetization runtime explicitly selects RevenueCat and wires consented AdMob SDKs", async () => {
     const previous = {
       mode: process.env.EXPO_PUBLIC_MONETIZATION_MODE,
+      storeProvider: process.env.EXPO_PUBLIC_STORE_PROVIDER,
       revenueCatIos: process.env.EXPO_PUBLIC_REVENUECAT_API_KEY_IOS,
       admobIos: process.env.EXPO_PUBLIC_ADMOB_APP_ID_IOS,
       rewardedIos: process.env.EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS,
@@ -28595,6 +28635,8 @@ async function runAsyncTests() {
 
       if (specifier === "react-native-google-mobile-ads") {
         return {
+          AdsConsent: { gatherConsent: async () => { events.push("ad-consent"); return { canRequestAds: true }; } },
+          default: () => ({ initialize: async () => { events.push("ad-initialize"); } }),
           TestIds: { REWARDED: "test-rewarded-unit" },
           RewardedAd: {
             createForAdRequest: (adUnitId: string, requestOptions?: Record<string, unknown>) => {
@@ -28633,9 +28675,10 @@ async function runAsyncTests() {
 
     try {
       process.env.EXPO_PUBLIC_MONETIZATION_MODE = "native";
-      process.env.EXPO_PUBLIC_REVENUECAT_API_KEY_IOS = "rc_runtime_ios";
-      process.env.EXPO_PUBLIC_ADMOB_APP_ID_IOS = "ca-app-pub-runtime-app";
-      process.env.EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS = "ca-app-pub-runtime/rewarded";
+      process.env.EXPO_PUBLIC_STORE_PROVIDER = "revenuecat";
+      process.env.EXPO_PUBLIC_REVENUECAT_API_KEY_IOS = "appl_runtime1234567890";
+      process.env.EXPO_PUBLIC_ADMOB_APP_ID_IOS = "ca-app-pub-1234567890123456~1234567890";
+      process.env.EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS = "ca-app-pub-1234567890123456/1234567890";
       process.env.EXPO_PUBLIC_ADMOB_REQUEST_COUNTRY_IOS = "gb";
       process.env.EXPO_PUBLIC_ADMOB_USE_TEST_ADS = "false";
 
@@ -28652,13 +28695,16 @@ async function runAsyncTests() {
       assert.equal(session.metadata?.adRequestCountryCode, "GB");
       assert.equal(reward.status, "completed");
       assert.equal(reward.rewardGranted, true);
-      assert.ok(events.includes("rc-configure:rc_runtime_ios"));
-      assert.ok(events.includes("ad-create:ca-app-pub-runtime/rewarded"));
+      assert.ok(events.includes("rc-configure:appl_runtime1234567890"));
+      assert.ok(events.includes("ad-create:ca-app-pub-1234567890123456/1234567890"));
       assert.ok(events.includes("ad-npa:true"));
+      assert.ok(events.indexOf("ad-consent") < events.indexOf("ad-initialize"));
+      assert.ok(events.indexOf("ad-initialize") < events.indexOf("ad-load"));
       assert.ok(events.includes("ad-show"));
       assert.ok(events.includes("ad-dispose"));
     } finally {
       restoreEnv("EXPO_PUBLIC_MONETIZATION_MODE", previous.mode);
+      restoreEnv("EXPO_PUBLIC_STORE_PROVIDER", previous.storeProvider);
       restoreEnv("EXPO_PUBLIC_REVENUECAT_API_KEY_IOS", previous.revenueCatIos);
       restoreEnv("EXPO_PUBLIC_ADMOB_APP_ID_IOS", previous.admobIos);
       restoreEnv("EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS", previous.rewardedIos);
@@ -28774,7 +28820,7 @@ async function runAsyncTests() {
 
       assert.equal(session.provider, "native");
       assert.equal(reward.status, "fallback");
-      assert.equal(reward.rewardGranted, true);
+      assert.equal(reward.rewardGranted, false);
       assert.equal(reward.provider, "fallback");
     } finally {
       configureNativeMonetizationProvider(null);

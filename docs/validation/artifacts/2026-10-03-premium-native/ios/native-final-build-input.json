@@ -1,0 +1,42 @@
+{
+  "kind": "SIMULATOR_DEBUG",
+  "jobs": 1,
+  "publicEnv": {
+    "EXPO_PUBLIC_FIREBASE_USE_EMULATORS": "true",
+    "EXPO_PUBLIC_MONETIZATION_MODE": "mock",
+    "EXPO_PUBLIC_AI_COACH_MODE": "local",
+    "EXPO_PUBLIC_AI_CHALLENGE_MODE": "local",
+    "EXPO_PUBLIC_ADULT_DOMAIN_FEED_ENDPOINT": "",
+    "EXPO_PUBLIC_BACKEND_PROVIDER": "firebase"
+  },
+  "dotenvDisabled": true,
+  "maxMetroWorkers": 1,
+  "sourceHashes": {
+    "src/features/freed-app.tsx": "49f5d17d06d7fd84e2480a4dc41399dbd9bff32eb7736d99cb26d553791f53f9",
+    "src/hooks/use-initial-route.ts": "dacbd5aab2d4e7314f2dd6c72802a2a37dad2f5b01f3fa9e1dd0cdb63b712f68",
+    "src/lib/public-client-env.ts": "a4f3bb5611047dd8d16ab35fc3d5622f9e2d24b462932e0275a125c5ba297b5f",
+    "src/lib/monetization.ts": "57cf1496ff0eaa5206fdba2498e861f989f00fe01f182f9603879d11baa016e8",
+    "modules/freed-protection/ios/FreedProtectionModule.swift": "e23cccef89eaf64e2f746256f113098e042a6678530b60836cbcfeb98464adcb",
+    "ios/FREEDShieldConfiguration/ShieldConfigurationExtension.swift": "098c69b6931000181aa9eb22b413100bfd85d6a301d768ca5a18a95c1e1fb07b",
+    "ios/FREED.xcodeproj/project.pbxproj": "f09ed4a50315e396ad6292cfd032713fe3781849736232394856370ae2cee1b4"
+  },
+  "command": [
+    "~/.hermes/node/bin/node",
+    "scripts/ios-native-build-check.js",
+    "--jobs",
+    "1",
+    "--derived-data-path",
+    "ios/build",
+    "--destination",
+    "platform=iOS Simulator,id=EA53F394-3E1F-44A7-84EF-716A26BE9879",
+    "--build-setting",
+    "FORCE_BUNDLING=1",
+    "--build-setting",
+    "RCT_NO_LAUNCH_PACKAGER=1",
+    "--build-setting",
+    "EXTRA_PACKAGER_ARGS=--max-workers 1",
+    "--log",
+    "docs/validation/artifacts/2026-10-03-premium-native/ios-build-final-ui.log"
+  ],
+  "reason": "Incremental final native Shield/localized preferences + truthful unavailable simulator capabilities; focused Splash and public pricing environment reader JS."
+}

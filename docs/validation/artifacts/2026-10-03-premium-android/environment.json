@@ -1,0 +1,56 @@
+{
+  "capturedAt": "2026-10-03T01:27:09.145429+00:00",
+  "versions": {
+    "node": [
+      "v22.23.1"
+    ],
+    "java": [
+      "openjdk version \"17.0.19\" 2026-04-21",
+      "OpenJDK Runtime Environment Homebrew (build 17.0.19+0)",
+      "OpenJDK 64-Bit Server VM Homebrew (build 17.0.19+0, mixed mode, sharing)"
+    ],
+    "kotlinc": [
+      "info: kotlinc-jvm 2.4.20 (JRE 17.0.19+0)"
+    ],
+    "adb": [
+      "Android Debug Bridge version 1.0.41",
+      "Version 35.0.2-12147458",
+      "Installed as ~/Library/Android/sdk/platform-tools/adb",
+      "Running on Darwin 25.5.0 (arm64)"
+    ],
+    "cmake": [
+      "cmake version 3.31.0-g356e6de",
+      "",
+      "CMake suite maintained and supported by Kitware (kitware.com/cmake)."
+    ],
+    "emulator": [
+      "Android emulator version 36.6.11.0 (build_id 15507667) (CL:N/A)",
+      "Copyright (C) 2006-2024 The Android Open Source Project and many others.",
+      "This program is a derivative of the QEMU CPU emulator (www.qemu.org).",
+      ""
+    ],
+    "gradle": "9.0.0",
+    "agp": "8.12.0",
+    "androidKotlin": "2.1.20",
+    "compileSdk": 36,
+    "targetSdk": 36,
+    "minSdk": 24,
+    "buildTools": "36.0.0",
+    "nativeAbi": "arm64-v8a",
+    "gradleWorkers": 1,
+    "nativeBuildJobs": 1,
+    "jvm": "-Xmx2048m -XX:MaxMetaspaceSize=768m",
+    "kotlinCompilerExecution": "in-process",
+    "jsEngine": "Hermes",
+    "newArchitecture": true,
+    "expoUi": "55.0.17",
+    "expoLocalization": "55.0.19",
+    "okHttpDeclared": "4.12.0",
+    "rootNdk": "27.1.12297006",
+    "appNdkOverride": "28.2.13676358",
+    "appCmakeOverride": "3.31.0",
+    "dependencyCmake": "3.22.1"
+  },
+  "qaMode": "compile-only, no app installation or remote service operations",
+  "nativePoolObserved": "freed_native"
+}

@@ -1,0 +1,359 @@
+{
+  "project": "freed-7d5ee",
+  "region": "asia-south1",
+  "all18ActiveAndSourceMatched": true,
+  "sourceRevisions": {
+    "v1-foundation": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+    "v2-feed-boundary": "bbdcd3d3c32cf159c7e94c8a05961dcec88c94e1815cacef06428d39e479126f"
+  },
+  "functions": [
+    {
+      "function": "startEncryptedBackupUpload",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "startEncryptedBackupUpload/function-source.zip",
+        "generation": "1791107215274429"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    },
+    {
+      "function": "appleSubscriptionNotifications",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "appleSubscriptionNotifications/function-source.zip",
+        "generation": "1791107215777672"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": [
+        {
+          "key": "APPLE_STORE_ISSUER_ID",
+          "version": "1"
+        },
+        {
+          "key": "APPLE_STORE_KEY_ID",
+          "version": "1"
+        },
+        {
+          "key": "APPLE_STORE_PRIVATE_KEY",
+          "version": "1"
+        },
+        {
+          "key": "APPLE_STORE_APP_ID",
+          "version": "1"
+        },
+        {
+          "key": "APPLE_STORE_ROOT_CAS_BASE64",
+          "version": "1"
+        }
+      ]
+    },
+    {
+      "function": "refreshReviewedAdultDomainFeed",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v2-feed-boundary",
+      "sourceSha256": "bbdcd3d3c32cf159c7e94c8a05961dcec88c94e1815cacef06428d39e479126f",
+      "archiveSha256": "8ea51171b232b343529f512ecf7fe6897b67c489315d0097335517f42eda8627",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "refreshReviewedAdultDomainFeed/function-source.zip",
+        "generation": "1791108745187083"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    },
+    {
+      "function": "cleanupExpiredServerRecords",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "cleanupExpiredServerRecords/function-source.zip",
+        "generation": "1791107215782036"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    },
+    {
+      "function": "appleSubscriptionNotificationsSandbox",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "appleSubscriptionNotificationsSandbox/function-source.zip",
+        "generation": "1791107215280947"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": [
+        {
+          "key": "APPLE_STORE_ISSUER_ID",
+          "version": "1"
+        },
+        {
+          "key": "APPLE_STORE_KEY_ID",
+          "version": "1"
+        },
+        {
+          "key": "APPLE_STORE_PRIVATE_KEY",
+          "version": "1"
+        },
+        {
+          "key": "APPLE_STORE_APP_ID",
+          "version": "1"
+        },
+        {
+          "key": "APPLE_STORE_ROOT_CAS_BASE64",
+          "version": "1"
+        }
+      ]
+    },
+    {
+      "function": "getLatestEncryptedBackupDownload",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "getLatestEncryptedBackupDownload/function-source.zip",
+        "generation": "1791107215279121"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    },
+    {
+      "function": "backendReadiness",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "backendReadiness/function-source.zip",
+        "generation": "1791106964206369"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    },
+    {
+      "function": "deleteEncryptedBackup",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "deleteEncryptedBackup/function-source.zip",
+        "generation": "1791107215291638"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    },
+    {
+      "function": "dispatchReviewedNotifications",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "dispatchReviewedNotifications/function-source.zip",
+        "generation": "1791107215517997"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    },
+    {
+      "function": "fencePurchaseAccountLink",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "fencePurchaseAccountLink/function-source.zip",
+        "generation": "1791107215279890"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    },
+    {
+      "function": "getReviewedAdultDomainFeed",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v2-feed-boundary",
+      "sourceSha256": "bbdcd3d3c32cf159c7e94c8a05961dcec88c94e1815cacef06428d39e479126f",
+      "archiveSha256": "8ea51171b232b343529f512ecf7fe6897b67c489315d0097335517f42eda8627",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "getReviewedAdultDomainFeed/function-source.zip",
+        "generation": "1791108701775482"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    },
+    {
+      "function": "requestAccountDeletion",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "requestAccountDeletion/function-source.zip",
+        "generation": "1791107215017595"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    },
+    {
+      "function": "finalizeEncryptedBackupUpload",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "finalizeEncryptedBackupUpload/function-source.zip",
+        "generation": "1791107215363041"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    },
+    {
+      "function": "registerPushToken",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "registerPushToken/function-source.zip",
+        "generation": "1791107215288811"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    },
+    {
+      "function": "ingestAggregateAnalytics",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "ingestAggregateAnalytics/function-source.zip",
+        "generation": "1791107215771372"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    },
+    {
+      "function": "getEncryptedBackupDownload",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "getEncryptedBackupDownload/function-source.zip",
+        "generation": "1791107215300763"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    },
+    {
+      "function": "retryPendingAccountDeletions",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "retryPendingAccountDeletions/function-source.zip",
+        "generation": "1791107215786706"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    },
+    {
+      "function": "getPremiumEntitlement",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "sourceRevision": "v1-foundation",
+      "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f",
+      "archiveSha256": "3f1da82bd83a552d3c8ceb6cbf0848f7e8b3fec529f9a18352a36eb6172e33da",
+      "storageSource": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "getPremiumEntitlement/function-source.zip",
+        "generation": "1791107215276663"
+      },
+      "allCompiledPackageLockManifestMatched": true,
+      "credentialEnvironmentFilesPresent": false,
+      "runtimeServiceAccount": "5477978760-compute@developer.gserviceaccount.com",
+      "secretNamesAndVersions": []
+    }
+  ]
+}

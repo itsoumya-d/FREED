@@ -1,0 +1,676 @@
+{
+  "entries": [
+    {
+      "source": "· {{value1}} min/day",
+      "translations": {
+        "hi": "· {{value1}} मिनट/दिन",
+        "es": "· {{value1}} min/día",
+        "pt": "· {{value1}} min/dia",
+        "fr": "· {{value1}} min/jour",
+        "de": "· {{value1}} Min./Tag",
+        "ar": "· {{value1}} دقيقة/يوم",
+        "ja": "· 1日{{value1}}分",
+        "ko": "· 하루 {{value1}}분",
+        "zh-Hans": "· 每天{{value1}}分钟"
+      }
+    },
+    {
+      "source": "{{explanation}} App protection does not inspect in-app content. Test device blocking separately.",
+      "translations": {
+        "hi": "{{explanation}} ऐप सुरक्षा ऐप के अंदर की सामग्री नहीं जाँचती। डिवाइस पर रोक अलग से जाँचें।",
+        "es": "{{explanation}} La protección no analiza contenido dentro de las apps. Prueba el bloqueo en el dispositivo por separado.",
+        "pt": "{{explanation}} A proteção não analisa conteúdo dentro dos apps. Teste o bloqueio no dispositivo separadamente.",
+        "fr": "{{explanation}} La protection ne lit pas le contenu des apps. Testez séparément le blocage sur l’appareil.",
+        "de": "{{explanation}} Der App-Schutz prüft keine Inhalte in Apps. Teste die Sperre auf dem Gerät separat.",
+        "ar": "{{explanation}} حماية التطبيقات لا تفحص محتواها. اختبر الحظر على الجهاز بشكل منفصل.",
+        "ja": "{{explanation}} アプリ内の内容は検査しません。端末でのブロックは別途確認してください。",
+        "ko": "{{explanation}} 앱 내부 콘텐츠는 검사하지 않습니다. 기기 차단은 별도로 확인하세요.",
+        "zh-Hans": "{{explanation}} 应用保护不会检查应用内内容。请单独测试设备上的拦截。"
+      }
+    },
+    {
+      "source": "{{selectedIosTargets}} selected {{value2}}",
+      "translations": {
+        "hi": "{{selectedIosTargets}} चुने गए {{value2}}",
+        "es": "{{selectedIosTargets}} {{value2}} seleccionados",
+        "pt": "{{selectedIosTargets}} {{value2}} selecionados",
+        "fr": "{{selectedIosTargets}} {{value2}} sélectionnés",
+        "de": "{{selectedIosTargets}} ausgewählte {{value2}}",
+        "ar": "{{selectedIosTargets}} من {{value2}} محددة",
+        "ja": "選択した{{value2}}：{{selectedIosTargets}}",
+        "ko": "선택한 {{value2}}: {{selectedIosTargets}}",
+        "zh-Hans": "已选{{value2}}：{{selectedIosTargets}}"
+      }
+    },
+    {
+      "source": "{{value1}} min app break available on request",
+      "translations": {
+        "hi": "अनुरोध पर {{value1}} मिनट का ऐप विराम उपलब्ध",
+        "es": "Pausa de apps de {{value1}} min disponible a petición",
+        "pt": "Pausa de apps de {{value1}} min disponível mediante pedido",
+        "fr": "Pause des apps de {{value1}} min sur demande",
+        "de": "{{value1}} Min. App-Pause auf Anfrage verfügbar",
+        "ar": "استراحة تطبيقات لمدة {{value1}} دقيقة متاحة عند الطلب",
+        "ja": "申請で{{value1}}分のアプリ休憩が利用できます",
+        "ko": "요청하면 {{value1}}분 앱 휴식 가능",
+        "zh-Hans": "可申请{{value1}}分钟应用休息"
+      }
+    },
+    {
+      "source": "A free pause at your own pace.",
+      "translations": {
+        "hi": "अपनी गति से एक मुफ़्त विराम।",
+        "es": "Una pausa gratis a tu ritmo.",
+        "pt": "Uma pausa gratuita no seu ritmo.",
+        "fr": "Une pause gratuite à votre rythme.",
+        "de": "Eine kostenlose Pause in deinem Tempo.",
+        "ar": "استراحة مجانية بالوتيرة التي تناسبك.",
+        "ja": "自分のペースで無料のひと休み。",
+        "ko": "내 속도에 맞춘 무료 휴식.",
+        "zh-Hans": "按自己的节奏免费休息。"
+      }
+    },
+    {
+      "source": "A native expiry relock could not be installed. Existing protection remains in effect.",
+      "translations": {
+        "hi": "समय पूरा होने पर मूल रोक दोबारा लगाने की व्यवस्था नहीं बन सकी। मौजूदा सुरक्षा लागू है।",
+        "es": "No se pudo programar el bloqueo nativo al vencer. La protección actual sigue activa.",
+        "pt": "Não foi possível programar o bloqueio nativo ao expirar. A proteção atual continua ativa.",
+        "fr": "Le reverrouillage natif à l’expiration n’a pas pu être installé. La protection existante reste active.",
+        "de": "Die native Sperre zum Ablauf konnte nicht eingerichtet werden. Der bisherige Schutz bleibt aktiv.",
+        "ar": "تعذر إعداد إعادة الحظر الأصلية عند انتهاء المدة. تبقى الحماية الحالية سارية.",
+        "ja": "期限切れ時のネイティブ再ロックを設定できませんでした。既存の保護は有効です。",
+        "ko": "만료 시 기본 재차단을 설정하지 못했습니다. 기존 보호는 유지됩니다.",
+        "zh-Hans": "无法设置到期后的原生重新锁定。现有保护仍然有效。"
+      }
+    },
+    {
+      "source": "A signed-in account is required. Choose an account method to continue.",
+      "translations": {
+        "hi": "साइन इन किया हुआ खाता ज़रूरी है। जारी रखने के लिए खाता तरीका चुनें।",
+        "es": "Necesitas iniciar sesión. Elige un método para continuar.",
+        "pt": "É preciso entrar em uma conta. Escolha um método para continuar.",
+        "fr": "Un compte connecté est requis. Choisissez une méthode pour continuer.",
+        "de": "Ein angemeldetes Konto ist erforderlich. Wähle eine Anmeldemethode.",
+        "ar": "يلزم تسجيل الدخول إلى حساب. اختر طريقة للمتابعة.",
+        "ja": "ログイン済みのアカウントが必要です。方法を選んで続けてください。",
+        "ko": "로그인한 계정이 필요합니다. 계속할 방법을 선택하세요.",
+        "zh-Hans": "需要已登录的账户。请选择账户方式以继续。"
+      }
+    },
+    {
+      "source": "Access check timed out.",
+      "translations": {
+        "hi": "पहुँच जाँच का समय समाप्त हुआ।",
+        "es": "La comprobación de acceso agotó el tiempo.",
+        "pt": "A verificação de acesso excedeu o tempo.",
+        "fr": "La vérification de l’accès a expiré.",
+        "de": "Die Zugriffsprüfung hat zu lange gedauert.",
+        "ar": "انتهت مهلة التحقق من الوصول.",
+        "ja": "利用権限の確認がタイムアウトしました。",
+        "ko": "이용 권한 확인 시간이 초과되었습니다.",
+        "zh-Hans": "访问权限检查超时。"
+      }
+    },
+    {
+      "source": "account",
+      "translations": {
+        "hi": "खाता",
+        "es": "cuenta",
+        "pt": "conta",
+        "fr": "compte",
+        "de": "Konto",
+        "ar": "حساب",
+        "ja": "アカウント",
+        "ko": "계정",
+        "zh-Hans": "账户"
+      }
+    },
+    {
+      "source": "Account access is unavailable in this build. Check your connection and retry in the iOS or Android app.",
+      "translations": {
+        "hi": "इस बिल्ड में खाता उपलब्ध नहीं है। कनेक्शन जाँचें और iOS या Android ऐप में फिर कोशिश करें।",
+        "es": "El acceso a la cuenta no está disponible en esta versión. Revisa la conexión y reintenta en la app de iOS o Android.",
+        "pt": "O acesso à conta não está disponível nesta versão. Verifique a conexão e tente no app iOS ou Android.",
+        "fr": "L’accès au compte est indisponible dans cette version. Vérifiez la connexion et réessayez dans l’app iOS ou Android.",
+        "de": "Der Kontozugriff ist in dieser Version nicht verfügbar. Prüfe die Verbindung und versuche es in der iOS- oder Android-App erneut.",
+        "ar": "الوصول إلى الحساب غير متاح في هذا الإصدار. تحقق من الاتصال وأعد المحاولة في تطبيق iOS أو Android.",
+        "ja": "このビルドではアカウントを利用できません。接続を確認し、iOSまたはAndroidアプリで再試行してください。",
+        "ko": "이 빌드에서는 계정에 접근할 수 없습니다. 연결을 확인하고 iOS 또는 Android 앱에서 다시 시도하세요.",
+        "zh-Hans": "此版本无法访问账户。请检查连接，并在iOS或Android应用中重试。"
+      }
+    },
+    {
+      "source": "Account unavailable",
+      "translations": {
+        "hi": "खाता उपलब्ध नहीं",
+        "es": "Cuenta no disponible",
+        "pt": "Conta indisponível",
+        "fr": "Compte indisponible",
+        "de": "Konto nicht verfügbar",
+        "ar": "الحساب غير متاح",
+        "ja": "アカウントを利用できません",
+        "ko": "계정 이용 불가",
+        "zh-Hans": "账户不可用"
+      }
+    },
+    {
+      "source": "Activate protection before installing selected-app schedules.",
+      "translations": {
+        "hi": "चुने हुए ऐप शेड्यूल लगाने से पहले सुरक्षा सक्रिय करें।",
+        "es": "Activa la protección antes de instalar horarios para las apps seleccionadas.",
+        "pt": "Ative a proteção antes de instalar horários para os apps selecionados.",
+        "fr": "Activez la protection avant d’installer les horaires des apps sélectionnées.",
+        "de": "Aktiviere den Schutz, bevor du Zeitpläne für ausgewählte Apps einrichtest.",
+        "ar": "فعّل الحماية قبل تثبيت جداول التطبيقات المحددة.",
+        "ja": "選択したアプリのスケジュールを設定する前に保護を有効にしてください。",
+        "ko": "선택 앱 일정을 설치하기 전에 보호를 활성화하세요.",
+        "zh-Hans": "请先启用保护，再设置所选应用的计划。"
+      }
+    },
+    {
+      "source": "Active timed and strict guards affect supported distracting apps, including apps outside your manual selection. Ending one guard keeps overlapping guards in effect.",
+      "translations": {
+        "hi": "सक्रिय समयबद्ध और सख्त सुरक्षा समर्थित ध्यान भटकाने वाले ऐप पर लागू होती है, चाहे वे आपकी सूची में न हों। एक सुरक्षा बंद करने पर बाकी लागू रहती हैं।",
+        "es": "Las protecciones activas por tiempo y estrictas cubren apps de distracción compatibles, incluso fuera de tu selección. Al terminar una, las demás siguen activas.",
+        "pt": "As proteções ativas temporárias e rígidas cobrem apps distrativos compatíveis, mesmo fora da sua seleção. Encerrar uma mantém as outras ativas.",
+        "fr": "Les protections temporisées et strictes actives couvrent les apps distrayantes compatibles, même hors de votre sélection. Arrêter une protection laisse les autres actives.",
+        "de": "Aktive zeitliche und strenge Sperren gelten für unterstützte ablenkende Apps, auch außerhalb deiner Auswahl. Andere überlappende Sperren bleiben beim Beenden einer Sperre aktiv.",
+        "ar": "تشمل الحماية المؤقتة والصارمة النشطة التطبيقات المشتتة المدعومة، حتى خارج اختيارك. إنهاء حماية واحدة لا يوقف الحماية المتداخلة.",
+        "ja": "有効な時間指定・厳格ガードは、手動選択外を含む対応する気が散るアプリに適用されます。1つ終了しても重複するガードは有効です。",
+        "ko": "활성 시간 및 엄격 보호는 직접 선택하지 않은 앱을 포함해 지원되는 방해 앱에 적용됩니다. 하나를 종료해도 겹치는 보호는 유지됩니다.",
+        "zh-Hans": "启用的定时和严格保护会覆盖支持的干扰应用，包括手动选择之外的应用。结束一项不会关闭其他重叠保护。"
+      }
+    },
+    {
+      "source": "activity",
+      "translations": {
+        "hi": "गतिविधि",
+        "es": "actividad",
+        "pt": "atividade",
+        "fr": "activité",
+        "de": "Aktivität",
+        "ar": "نشاط",
+        "ja": "活動",
+        "ko": "활동",
+        "zh-Hans": "活动"
+      }
+    },
+    {
+      "source": "adult content",
+      "translations": {
+        "hi": "वयस्क सामग्री",
+        "es": "contenido para adultos",
+        "pt": "conteúdo adulto",
+        "fr": "contenu pour adultes",
+        "de": "Erwachseneninhalte",
+        "ar": "محتوى للبالغين",
+        "ja": "成人向けコンテンツ",
+        "ko": "성인 콘텐츠",
+        "zh-Hans": "成人内容"
+      }
+    },
+    {
+      "source": "All features",
+      "translations": {
+        "hi": "सभी सुविधाएँ",
+        "es": "Todas las funciones",
+        "pt": "Todos os recursos",
+        "fr": "Toutes les fonctions",
+        "de": "Alle Funktionen",
+        "ar": "كل الميزات",
+        "ja": "すべての機能",
+        "ko": "모든 기능",
+        "zh-Hans": "所有功能"
+      }
+    },
+    {
+      "source": "Allowed sites",
+      "translations": {
+        "hi": "अनुमत साइटें",
+        "es": "Sitios permitidos",
+        "pt": "Sites permitidos",
+        "fr": "Sites autorisés",
+        "de": "Erlaubte Websites",
+        "ar": "المواقع المسموح بها",
+        "ja": "許可したサイト",
+        "ko": "허용 사이트",
+        "zh-Hans": "允许的网站"
+      }
+    },
+    {
+      "source": "Allowed sites ·",
+      "translations": {
+        "hi": "अनुमत साइटें ·",
+        "es": "Sitios permitidos ·",
+        "pt": "Sites permitidos ·",
+        "fr": "Sites autorisés ·",
+        "de": "Erlaubte Websites ·",
+        "ar": "المواقع المسموح بها ·",
+        "ja": "許可したサイト ·",
+        "ko": "허용 사이트 ·",
+        "zh-Hans": "允许的网站 ·"
+      }
+    },
+    {
+      "source": "Allowed sites unavailable",
+      "translations": {
+        "hi": "अनुमत साइटें उपलब्ध नहीं",
+        "es": "Sitios permitidos no disponibles",
+        "pt": "Sites permitidos indisponíveis",
+        "fr": "Sites autorisés indisponibles",
+        "de": "Erlaubte Websites nicht verfügbar",
+        "ar": "المواقع المسموح بها غير متاحة",
+        "ja": "許可サイト機能は利用できません",
+        "ko": "허용 사이트 이용 불가",
+        "zh-Hans": "允许的网站功能不可用"
+      }
+    },
+    {
+      "source": "allowlist",
+      "translations": {
+        "hi": "अनुमति सूची",
+        "es": "lista de permitidos",
+        "pt": "lista de permissões",
+        "fr": "liste d’autorisation",
+        "de": "Erlaubnisliste",
+        "ar": "قائمة السماح",
+        "ja": "許可リスト",
+        "ko": "허용 목록",
+        "zh-Hans": "允许列表"
+      }
+    },
+    {
+      "source": "analytics",
+      "translations": {
+        "hi": "विश्लेषण",
+        "es": "análisis",
+        "pt": "análises",
+        "fr": "statistiques",
+        "de": "Auswertung",
+        "ar": "تحليلات",
+        "ja": "分析",
+        "ko": "분석",
+        "zh-Hans": "分析"
+      }
+    },
+    {
+      "source": "Analytics sharing",
+      "translations": {
+        "hi": "विश्लेषण साझा करना",
+        "es": "Compartir análisis",
+        "pt": "Compartilhar análises",
+        "fr": "Partage des statistiques",
+        "de": "Auswertungen teilen",
+        "ar": "مشاركة التحليلات",
+        "ja": "分析の共有",
+        "ko": "분석 공유",
+        "zh-Hans": "分享分析"
+      }
+    },
+    {
+      "source": "Android exceptions apply only to FREED’s local ordinary-site rules. Known adult domains cannot be excepted. DNS queries still use Cloudflare Families, which may continue blocking the site. For a wrong block, open Privacy & support.",
+      "translations": {
+        "hi": "Android अपवाद केवल FREED के स्थानीय सामान्य-साइट नियमों पर लागू होते हैं। ज्ञात वयस्क डोमेन अपवाद नहीं बन सकते। DNS अनुरोध अब भी Cloudflare Families से गुजरते हैं, जो साइट रोक सकता है। गलत रोक के लिए निजता और सहायता खोलें।",
+        "es": "Las excepciones de Android solo afectan las reglas locales de FREED para sitios normales. No exceptúan dominios adultos conocidos. Las consultas DNS siguen en Cloudflare Families, que puede mantener el bloqueo. Para un bloqueo erróneo, abre Privacidad y ayuda.",
+        "pt": "As exceções no Android só afetam regras locais do FREED para sites comuns. Domínios adultos conhecidos não aceitam exceções. As consultas DNS continuam no Cloudflare Families, que pode manter o bloqueio. Para bloqueio indevido, abra Privacidade e suporte.",
+        "fr": "Sur Android, les exceptions concernent uniquement les règles locales de FREED pour les sites ordinaires. Les domaines adultes connus sont exclus. Les requêtes DNS passent toujours par Cloudflare Families, qui peut bloquer le site. Pour un blocage erroné, ouvrez Confidentialité et assistance.",
+        "de": "Android-Ausnahmen gelten nur für FREEDs lokale Regeln für gewöhnliche Websites. Bekannte Domains mit Erwachseneninhalten bleiben gesperrt. DNS-Anfragen nutzen weiterhin Cloudflare Families, das die Website weiterhin blockieren kann. Bei einer falschen Sperre öffne Datenschutz und Hilfe.",
+        "ar": "استثناءات Android تخص قواعد FREED المحلية للمواقع العادية فقط. لا يمكن استثناء نطاقات البالغين المعروفة. تظل طلبات DNS عبر Cloudflare Families الذي قد يستمر في حظر الموقع. للحظر الخاطئ، افتح الخصوصية والدعم.",
+        "ja": "Androidの例外はFREEDの通常サイト用ローカルルールのみが対象です。既知の成人向けドメインは例外にできません。DNSは引き続きCloudflare Familiesを使用し、サイトがブロックされる場合があります。誤ったブロックはプライバシーとサポートから相談してください。",
+        "ko": "Android 예외는 일반 사이트에 대한 FREED의 로컬 규칙에만 적용됩니다. 알려진 성인 도메인은 예외로 만들 수 없습니다. DNS는 계속 Cloudflare Families를 사용하며 사이트가 차단될 수 있습니다. 잘못된 차단은 개인정보 및 지원에서 도움을 받으세요.",
+        "zh-Hans": "Android例外仅适用于FREED本地的普通网站规则。已知成人域名不能设为例外。DNS仍使用Cloudflare Families，网站可能继续被拦截。误拦截请打开隐私与支持。"
+      }
+    },
+    {
+      "source": "Android local exceptions only · Families filtering still applies",
+      "translations": {
+        "hi": "केवल Android स्थानीय अपवाद · Families फ़िल्टर लागू है",
+        "es": "Solo excepciones locales de Android · se aplica Families",
+        "pt": "Só exceções locais do Android · Families continua filtrando",
+        "fr": "Exceptions locales Android uniquement · filtrage Families maintenu",
+        "de": "Nur lokale Android-Ausnahmen · Families filtert weiterhin",
+        "ar": "استثناءات Android المحلية فقط · يبقى ترشيح Families",
+        "ja": "Androidのローカル例外のみ · Familiesのフィルタは継続",
+        "ko": "Android 로컬 예외만 적용 · Families 필터 유지",
+        "zh-Hans": "仅Android本地例外 · Families过滤仍适用"
+      }
+    },
+    {
+      "source": "App break unavailable. Your completed activity is saved.",
+      "translations": {
+        "hi": "ऐप विराम उपलब्ध नहीं। आपकी पूरी की गई गतिविधि सहेजी गई है।",
+        "es": "Pausa de apps no disponible. Tu actividad completada está guardada.",
+        "pt": "Pausa de apps indisponível. Sua atividade concluída foi salva.",
+        "fr": "Pause des apps indisponible. Votre activité terminée est enregistrée.",
+        "de": "App-Pause nicht verfügbar. Deine abgeschlossene Aktivität ist gespeichert.",
+        "ar": "استراحة التطبيقات غير متاحة. تم حفظ نشاطك المكتمل.",
+        "ja": "アプリ休憩は利用できません。完了した活動は保存済みです。",
+        "ko": "앱 휴식을 이용할 수 없습니다. 완료한 활동은 저장되었습니다.",
+        "zh-Hans": "应用休息不可用。已完成的活动已保存。"
+      }
+    },
+    {
+      "source": "App guard configuration saved. Native readiness is reported separately.",
+      "translations": {
+        "hi": "ऐप सुरक्षा सेटिंग सहेजी गई। मूल सिस्टम की तैयारी अलग दिखाई जाती है।",
+        "es": "Configuración de protección guardada. La disponibilidad nativa se informa por separado.",
+        "pt": "Configuração de proteção salva. A prontidão nativa é informada separadamente.",
+        "fr": "Configuration de protection enregistrée. L’état natif est indiqué séparément.",
+        "de": "App-Schutz gespeichert. Die native Bereitschaft wird separat angezeigt.",
+        "ar": "تم حفظ إعداد حماية التطبيقات. تُعرض الجاهزية الأصلية بشكل منفصل.",
+        "ja": "アプリガード設定を保存しました。ネイティブの準備状態は別途表示します。",
+        "ko": "앱 보호 설정이 저장되었습니다. 기본 기능의 준비 상태는 별도로 표시됩니다.",
+        "zh-Hans": "应用保护设置已保存。原生就绪状态单独显示。"
+      }
+    },
+    {
+      "source": "App guard configuration was cancelled. Retry saving.",
+      "translations": {
+        "hi": "ऐप सुरक्षा सेटिंग रद्द हुई। फिर सहेजें।",
+        "es": "Configuración cancelada. Reintenta guardar la protección.",
+        "pt": "Configuração cancelada. Tente salvar a proteção novamente.",
+        "fr": "Configuration annulée. Réessayez d’enregistrer la protection.",
+        "de": "App-Schutzkonfiguration abgebrochen. Versuche erneut zu speichern.",
+        "ar": "أُلغي إعداد حماية التطبيقات. أعد محاولة الحفظ.",
+        "ja": "アプリガード設定をキャンセルしました。もう一度保存してください。",
+        "ko": "앱 보호 설정이 취소되었습니다. 다시 저장하세요.",
+        "zh-Hans": "应用保护设置已取消。请重新保存。"
+      }
+    },
+    {
+      "source": "App guard mode",
+      "translations": {
+        "hi": "ऐप सुरक्षा मोड",
+        "es": "Modo de protección de apps",
+        "pt": "Modo de proteção de apps",
+        "fr": "Mode de protection des apps",
+        "de": "App-Schutzmodus",
+        "ar": "وضع حماية التطبيقات",
+        "ja": "アプリガードモード",
+        "ko": "앱 보호 모드",
+        "zh-Hans": "应用保护模式"
+      }
+    },
+    {
+      "source": "App guard mode persistence could not be confirmed.",
+      "translations": {
+        "hi": "ऐप सुरक्षा मोड सहेजे जाने की पुष्टि नहीं हो सकी।",
+        "es": "No se pudo confirmar que el modo se guardara.",
+        "pt": "Não foi possível confirmar o salvamento do modo.",
+        "fr": "L’enregistrement du mode de protection n’a pas pu être confirmé.",
+        "de": "Das Speichern des App-Schutzmodus konnte nicht bestätigt werden.",
+        "ar": "تعذر تأكيد حفظ وضع حماية التطبيقات.",
+        "ja": "アプリガードモードの保存を確認できませんでした。",
+        "ko": "앱 보호 모드가 저장되었는지 확인하지 못했습니다.",
+        "zh-Hans": "无法确认应用保护模式已持久保存。"
+      }
+    },
+    {
+      "source": "App guard update failed. The previous configuration has been retained.",
+      "translations": {
+        "hi": "ऐप सुरक्षा अपडेट विफल हुआ। पिछली सेटिंग रखी गई है।",
+        "es": "La actualización de protección falló. Se conserva la configuración anterior.",
+        "pt": "A atualização da proteção falhou. A configuração anterior foi mantida.",
+        "fr": "La mise à jour de la protection a échoué. L’ancienne configuration est conservée.",
+        "de": "Die Aktualisierung des App-Schutzes ist fehlgeschlagen. Die bisherige Konfiguration bleibt erhalten.",
+        "ar": "فشل تحديث حماية التطبيقات. تم الاحتفاظ بالإعداد السابق.",
+        "ja": "アプリガードを更新できませんでした。以前の設定を保持しています。",
+        "ko": "앱 보호 업데이트에 실패했습니다. 이전 설정이 유지됩니다.",
+        "zh-Hans": "应用保护更新失败。已保留之前的设置。"
+      }
+    },
+    {
+      "source": "App guard update was not accepted. Existing native protection remains installed.",
+      "translations": {
+        "hi": "ऐप सुरक्षा अपडेट स्वीकार नहीं हुआ। मौजूदा मूल सुरक्षा लगी हुई है।",
+        "es": "La actualización no se aceptó. La protección nativa existente sigue instalada.",
+        "pt": "A atualização não foi aceita. A proteção nativa existente continua instalada.",
+        "fr": "La mise à jour n’a pas été acceptée. La protection native existante reste installée.",
+        "de": "Die Aktualisierung wurde nicht akzeptiert. Der vorhandene native Schutz bleibt eingerichtet.",
+        "ar": "لم يُقبل تحديث الحماية. تبقى الحماية الأصلية الحالية مثبتة.",
+        "ja": "更新は受け入れられませんでした。既存のネイティブ保護は設定されたままです。",
+        "ko": "보호 업데이트가 수락되지 않았습니다. 기존 기본 보호는 설치된 상태로 유지됩니다.",
+        "zh-Hans": "应用保护更新未被接受。现有原生保护仍已安装。"
+      }
+    },
+    {
+      "source": "App protection",
+      "translations": {
+        "hi": "ऐप सुरक्षा",
+        "es": "Protección de apps",
+        "pt": "Proteção de apps",
+        "fr": "Protection des apps",
+        "de": "App-Schutz",
+        "ar": "حماية التطبيقات",
+        "ja": "アプリ保護",
+        "ko": "앱 보호",
+        "zh-Hans": "应用保护"
+      }
+    },
+    {
+      "source": "App protection: {{appStatus}} · review schedules",
+      "translations": {
+        "hi": "ऐप सुरक्षा: {{appStatus}} · शेड्यूल देखें",
+        "es": "Protección de apps: {{appStatus}} · revisar horarios",
+        "pt": "Proteção de apps: {{appStatus}} · revisar horários",
+        "fr": "Protection des apps : {{appStatus}} · voir les horaires",
+        "de": "App-Schutz: {{appStatus}} · Zeitpläne prüfen",
+        "ar": "حماية التطبيقات: {{appStatus}} · مراجعة الجداول",
+        "ja": "アプリ保護：{{appStatus}} · スケジュールを確認",
+        "ko": "앱 보호: {{appStatus}} · 일정 확인",
+        "zh-Hans": "应用保护：{{appStatus}} · 查看计划"
+      }
+    },
+    {
+      "source": "apps",
+      "translations": {
+        "hi": "ऐप",
+        "es": "aplicaciones",
+        "pt": "aplicativos",
+        "fr": "applications",
+        "de": "Apps",
+        "ar": "تطبيقات",
+        "ja": "アプリ",
+        "ko": "앱",
+        "zh-Hans": "应用"
+      }
+    },
+    {
+      "source": "articles",
+      "translations": {
+        "hi": "लेख",
+        "es": "artículos",
+        "pt": "artigos",
+        "fr": "articles disponibles",
+        "de": "Artikel",
+        "ar": "مقالات",
+        "ja": "記事",
+        "ko": "기사",
+        "zh-Hans": "文章"
+      }
+    },
+    {
+      "source": "Available locally",
+      "translations": {
+        "hi": "डिवाइस पर उपलब्ध",
+        "es": "Disponible en el dispositivo",
+        "pt": "Disponível no dispositivo",
+        "fr": "Disponible sur l’appareil",
+        "de": "Lokal verfügbar",
+        "ar": "متاح محليًا",
+        "ja": "端末内で利用可能",
+        "ko": "기기에서 이용 가능",
+        "zh-Hans": "本地可用"
+      }
+    },
+    {
+      "source": "Back to Welcome",
+      "translations": {
+        "hi": "वापस स्वागत स्क्रीन पर",
+        "es": "Volver a bienvenida",
+        "pt": "Voltar às boas-vindas",
+        "fr": "Retour à l’accueil initial",
+        "de": "Zur Begrüßung",
+        "ar": "العودة إلى الترحيب",
+        "ja": "ようこそ画面に戻る",
+        "ko": "환영 화면으로 돌아가기",
+        "zh-Hans": "返回欢迎页面"
+      }
+    },
+    {
+      "source": "Basic movement",
+      "translations": {
+        "hi": "साधारण गतिविधि",
+        "es": "Movimiento básico",
+        "pt": "Movimento básico",
+        "fr": "Mouvements simples",
+        "de": "Einfache Bewegung",
+        "ar": "حركة بسيطة",
+        "ja": "基本の運動",
+        "ko": "기본 움직임",
+        "zh-Hans": "基础运动"
+      }
+    },
+    {
+      "source": "Before use",
+      "translations": {
+        "hi": "इस्तेमाल से पहले",
+        "es": "Antes de usar",
+        "pt": "Antes de usar",
+        "fr": "Avant utilisation",
+        "de": "Vor der Nutzung",
+        "ar": "قبل الاستخدام",
+        "ja": "使用前",
+        "ko": "사용 전",
+        "zh-Hans": "使用前"
+      }
+    },
+    {
+      "source": "Before use pauses selected individual applications immediately after you save the mode and native authorization is ready. The default alone does not activate it.",
+      "translations": {
+        "hi": "मोड सहेजने और मूल अनुमति तैयार होने के बाद चुने हुए अलग-अलग ऐप तुरंत रुकते हैं। डिफ़ॉल्ट विकल्प अकेले इसे सक्रिय नहीं करता।",
+        "es": "Antes de usar pausa de inmediato las apps individuales elegidas cuando guardas el modo y la autorización nativa está lista. El valor predeterminado no lo activa.",
+        "pt": "Antes de usar pausa imediatamente os apps individuais escolhidos após salvar o modo e concluir a autorização nativa. O padrão sozinho não ativa a proteção.",
+        "fr": "Avant utilisation interrompt immédiatement les apps individuelles choisies après enregistrement du mode et autorisation native. Le réglage par défaut ne l’active pas.",
+        "de": "Vor der Nutzung pausiert ausgewählte einzelne Apps sofort, sobald der Modus gespeichert und die native Autorisierung bereit ist. Die Voreinstellung allein aktiviert ihn nicht.",
+        "ar": "يوقف وضع قبل الاستخدام التطبيقات الفردية المحددة فور حفظ الوضع واكتمال التفويض الأصلي. الإعداد الافتراضي وحده لا يفعّله.",
+        "ja": "「使用前」はモードを保存しネイティブ認証が整うと、選んだ個別アプリをすぐに停止します。初期設定だけでは有効になりません。",
+        "ko": "사용 전 모드는 저장하고 기본 권한이 준비되면 선택한 개별 앱을 즉시 멈춥니다. 기본값만으로 활성화되지 않습니다.",
+        "zh-Hans": "使用前模式在保存模式且原生授权就绪后立即暂停所选的单个应用。仅默认设置不会启用它。"
+      }
+    },
+    {
+      "source": "Before-use interruption for selected Android packages.",
+      "translations": {
+        "hi": "चुने हुए Android पैकेज के इस्तेमाल से पहले हस्तक्षेप।",
+        "es": "Interrupción antes de usar los paquetes Android seleccionados.",
+        "pt": "Interrupção antes do uso dos pacotes Android selecionados.",
+        "fr": "Interruption avant utilisation des paquets Android sélectionnés.",
+        "de": "Unterbrechung vor der Nutzung ausgewählter Android-Pakete.",
+        "ar": "تدخل قبل استخدام حزم Android المحددة.",
+        "ja": "選んだAndroidパッケージの使用前に介入します。",
+        "ko": "선택 Android 패키지 사용 전 중단.",
+        "zh-Hans": "在使用所选Android包之前进行干预。"
+      }
+    },
+    {
+      "source": "Before-use pause for selected individual iOS applications.",
+      "translations": {
+        "hi": "चुने हुए अलग-अलग iOS ऐप के इस्तेमाल से पहले विराम।",
+        "es": "Pausa antes de usar las apps individuales de iOS seleccionadas.",
+        "pt": "Pausa antes do uso dos apps individuais iOS selecionados.",
+        "fr": "Pause avant utilisation des apps iOS individuelles choisies.",
+        "de": "Pause vor der Nutzung ausgewählter einzelner iOS-Apps.",
+        "ar": "توقف قبل استخدام تطبيقات iOS الفردية المحددة.",
+        "ja": "選んだ個別のiOSアプリを使用前に一時停止します。",
+        "ko": "선택한 개별 iOS 앱 사용 전 일시정지.",
+        "zh-Hans": "在使用所选的单个iOS应用之前暂停。"
+      }
+    },
+    {
+      "source": "block",
+      "translations": {
+        "hi": "रोक",
+        "es": "bloqueo",
+        "pt": "bloqueio",
+        "fr": "blocage",
+        "de": "Sperre",
+        "ar": "حظر",
+        "ja": "ブロック",
+        "ko": "차단",
+        "zh-Hans": "拦截"
+      }
+    },
+    {
+      "source": "boundary",
+      "translations": {
+        "hi": "सीमा",
+        "es": "límite",
+        "pt": "limite",
+        "fr": "limite personnel",
+        "de": "Grenze",
+        "ar": "حدود",
+        "ja": "境界",
+        "ko": "경계",
+        "zh-Hans": "界限"
+      }
+    },
+    {
+      "source": "breath",
+      "translations": {
+        "hi": "श्वास",
+        "es": "respiración",
+        "pt": "respiração",
+        "fr": "souffle",
+        "de": "Atmung",
+        "ar": "تنفس",
+        "ja": "呼吸",
+        "ko": "호흡",
+        "zh-Hans": "呼吸"
+      }
+    },
+    {
+      "source": "Browse dated records and past practices.",
+      "translations": {
+        "hi": "तारीख के अनुसार रिकॉर्ड और पिछली अभ्यास गतिविधियाँ देखें।",
+        "es": "Explora registros por fecha y prácticas anteriores.",
+        "pt": "Veja registros por data e práticas anteriores.",
+        "fr": "Parcourez les enregistrements datés et les pratiques passées.",
+        "de": "Durchsuche datierte Einträge und vergangene Übungen.",
+        "ar": "تصفح السجلات المؤرخة والممارسات السابقة.",
+        "ja": "日付別の記録と過去の実践を見られます。",
+        "ko": "날짜별 기록과 지난 실천을 살펴보세요.",
+        "zh-Hans": "浏览按日期记录的数据和过去的练习。"
+      }
+    },
+    {
+      "source": "Build and save a personal guided activity.",
+      "translations": {
+        "hi": "अपनी निर्देशित गतिविधि बनाएँ और सहेजें।",
+        "es": "Crea y guarda una actividad guiada personal.",
+        "pt": "Crie e salve uma atividade guiada pessoal.",
+        "fr": "Créez et enregistrez une activité guidée personnelle.",
+        "de": "Erstelle und speichere eine eigene angeleitete Aktivität.",
+        "ar": "أنشئ نشاطًا موجّهًا شخصيًا واحفظه.",
+        "ja": "自分用のガイド付き活動を作成して保存します。",
+        "ko": "나만의 안내 활동을 만들고 저장하세요.",
+        "zh-Hans": "创建并保存个人引导活动。"
+      }
+    },
+    {
+      "source": "builder",
+      "translations": {
+        "hi": "निर्माता",
+        "es": "creador",
+        "pt": "criador",
+        "fr": "créateur",
+        "de": "Ersteller",
+        "ar": "منشئ",
+        "ja": "作成ツール",
+        "ko": "만들기",
+        "zh-Hans": "创建器"
+      }
+    }
+  ]
+}

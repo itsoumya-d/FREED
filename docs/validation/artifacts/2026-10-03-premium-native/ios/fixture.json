@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "freed-disposable-ui-fixture-v1",
+  "deviceId": "EA53F394-3E1F-44A7-84EF-716A26BE9879",
+  "platform": "ios",
+  "disposable": true,
+  "dataOwner": "test-only",
+  "services": "disabled",
+  "allowRealEmail": false,
+  "allowRealPurchases": false,
+  "allowRealMessages": false,
+  "kind": "SIMULATOR_DEBUG",
+  "configuration": "Native Debug simulator, embedded JS dev=false after Expo websocket failure. Local Auth/Functions endpoints only, mock monetization, local AI. No emulator backend assumed live; unavailable states remain unavailable.",
+  "appBuildSha256": "0587fabe588bdc54b4fdf63976130c88cde435a1aca4777809e8a000c16956d3"
+}

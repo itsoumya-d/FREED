@@ -1,0 +1,72 @@
+{
+  "en": {
+    "title": "Hold on. You are still in control.",
+    "primary": "Start recovery",
+    "secondary": "Close",
+    "targetDescription": "FREED paused this selected app or site. Completing a practice unlocks only this target.",
+    "categoryDescription": "Category-wide protection is active. Completing a practice unlocks only this selected category."
+  },
+  "hi": {
+    "title": "एक पल रुकें। निर्णय अभी भी आपके हाथ में है।",
+    "primary": "अपना अभ्यास शुरू करें",
+    "secondary": "बंद करें",
+    "targetDescription": "FREED ने इस चुने हुए ऐप या साइट को कुछ देर के लिए रोका है। एक अभ्यास पूरा करने पर केवल यही ऐप या साइट खुलेगी।",
+    "categoryDescription": "इस पूरी श्रेणी पर सुरक्षा सक्रिय है। एक अभ्यास पूरा करने पर केवल यही चुनी हुई श्रेणी खुलेगी।"
+  },
+  "es": {
+    "title": "Espera un momento. Tú sigues teniendo el control.",
+    "primary": "Empezar una práctica",
+    "secondary": "Cerrar",
+    "targetDescription": "FREED ha pausado esta app o sitio seleccionado. Completar una práctica desbloquea solo este objetivo.",
+    "categoryDescription": "La protección de toda la categoría está activa. Completar una práctica desbloquea solo esta categoría seleccionada."
+  },
+  "pt": {
+    "title": "Espere um momento. Você continua no controle.",
+    "primary": "Iniciar uma prática",
+    "secondary": "Fechar",
+    "targetDescription": "O FREED pausou este app ou site selecionado. Concluir uma prática desbloqueia apenas este alvo.",
+    "categoryDescription": "A proteção de toda a categoria está ativa. Concluir uma prática desbloqueia apenas esta categoria selecionada."
+  },
+  "fr": {
+    "title": "Un instant. Vous gardez le contrôle.",
+    "primary": "Commencer une pratique",
+    "secondary": "Fermer",
+    "targetDescription": "FREED a mis en pause cette app ou ce site sélectionné. Terminer une pratique débloque uniquement cette cible.",
+    "categoryDescription": "La protection de toute la catégorie est active. Terminer une pratique débloque uniquement cette catégorie sélectionnée."
+  },
+  "de": {
+    "title": "Einen Moment. Du behältst die Kontrolle.",
+    "primary": "Eine Übung beginnen",
+    "secondary": "Schließen",
+    "targetDescription": "FREED hat diese ausgewählte App oder Website pausiert. Eine abgeschlossene Übung gibt nur dieses Ziel frei.",
+    "categoryDescription": "Der Schutz der gesamten Kategorie ist aktiv. Eine abgeschlossene Übung gibt nur diese ausgewählte Kategorie frei."
+  },
+  "ar": {
+    "title": "تمهل. ما زال القرار بيدك.",
+    "primary": "ابدأ تمرينًا",
+    "secondary": "إغلاق",
+    "targetDescription": "أوقف FREED هذا التطبيق أو الموقع المحدد مؤقتًا. إكمال تمرين يفتح هذا الهدف فقط.",
+    "categoryDescription": "الحماية تشمل الفئة بأكملها. إكمال تمرين يفتح هذه الفئة المحددة فقط."
+  },
+  "ja": {
+    "title": "少し待ちましょう。選ぶ力は、まだあなたにあります。",
+    "primary": "練習を始める",
+    "secondary": "閉じる",
+    "targetDescription": "FREEDがこの選択したアプリまたはサイトを一時停止しました。練習を完了すると、この対象だけが解除されます。",
+    "categoryDescription": "カテゴリ全体の保護が有効です。練習を完了すると、この選択したカテゴリだけが解除されます。"
+  },
+  "zh-Hans": {
+    "title": "先停一下。选择权仍在你手中。",
+    "primary": "开始练习",
+    "secondary": "关闭",
+    "targetDescription": "FREED已暂停此选定的应用或网站。完成一次练习后，只会解除此目标的限制。",
+    "categoryDescription": "整个类别的保护已启用。完成一次练习后，只会解除此选定类别的限制。"
+  },
+  "ko": {
+    "title": "잠시 멈추세요. 선택은 여전히 당신의 몫입니다.",
+    "primary": "회복 시작",
+    "secondary": "닫기",
+    "targetDescription": "FREED가 선택한 앱 또는 사이트를 일시 정지했습니다. 연습을 완료하면 이 대상만 잠금 해제됩니다.",
+    "categoryDescription": "카테고리 전체에 보호가 적용되었습니다. 연습을 완료하면 선택한 카테고리만 잠금 해제됩니다."
+  }
+}

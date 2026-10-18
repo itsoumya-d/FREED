@@ -1,0 +1,18 @@
+{
+  "kind": "actual native library Release iphoneos build",
+  "passed": true,
+  "signed": false,
+  "appBinary": false,
+  "uiFreeze": false,
+  "physicalEvidence": false,
+  "logSha256": "0f1c70fe50ab7f4405bd795679e08ae1c29c553d2cb17c32cf81fb173883a159",
+  "sourceHashes": {
+    "modules/freed-protection/ios/FreedProtectionModule.swift": "5ec4454116d725abe7adc0ca353c38a54424b8ba900865796141734d58bb2c15",
+    "modules/freed-protection/ios/FreedAppGuardPolicy.swift": "0b1235eacdadbf3aa2010a4ac0b66b090299050766cbf596bedcb418bbe4936f",
+    "ios/Pods/Pods.xcodeproj/project.pbxproj": "1df56ac0912ebb8c5b8f90aa068caa200141dd01c56c55349a20f9a9c8d20986",
+    "ios/Podfile.lock": "966efb4285d1cef67c3a18e63fae9cacae27229bc5128f74bc2a860eca0b3458"
+  },
+  "dependencyVersionsEqualSharedBaseline": true,
+  "Expo": "55.0.28",
+  "ReactNative": "0.83.6"
+}

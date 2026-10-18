@@ -1,0 +1,11 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');const {spawnSync}=require('node:child_process');const {inspectExtensionPrincipalClass,inspectObjectiveCMetadata}=require('../../../scripts/lib/ios-extension-principal-class');
+const receiptDir=process.argv[2];assert.ok(receiptDir,'Supply runtime probe packet directory');
+const targets=[['FREEDShieldConfiguration','ShieldConfigurationExtension'],['FREEDShieldAction','ShieldActionExtension'],['FREEDDeviceActivityMonitor','DeviceActivityMonitorExtension'],['FREEDSafariContentBlocker','ContentBlockerRequestHandler'],['FREEDSafariFocusShield','FREEDSafariFocusShield.SafariWebExtensionHandler']];
+for(const [module,principal] of targets){const binary=path.join(receiptDir,module+'.host-principal'),result=inspectExtensionPrincipalClass(binary,principal);assert.equal(result.compatible,true,JSON.stringify(result));
+ const bytes=fs.readFileSync(binary),fixups=spawnSync('xcrun',['dyld_info','-fixups',binary],{encoding:'utf8'});assert.equal(fixups.status,0);
+ const fake=Buffer.from(bytes);let cursor=32;for(let i=0;i<fake.readUInt32LE(16);i++){const size=fake.readUInt32LE(cursor+4);if(fake.readUInt32LE(cursor)===0x19){const n=fake.readUInt32LE(cursor+64);for(let j=0;j<n;j++){const p=cursor+72+j*80,name=fake.subarray(p,p+16).toString('utf8').replace(/\0.*$/s,'');if(['__objc_classlist','__objc_nlclslist','__objc_stublist'].includes(name)){fake.fill(0,p,p+16);fake.write('__not_registered',p,'ascii');}}}cursor+=size;}
+ assert.equal(inspectObjectiveCMetadata(fake,fixups.stdout,principal).compatible,false,'Class-name bytes and RO patterns without real registration sections cannot pass');
+ console.log('Actual Mach-O typed metadata accepted exact runtime class and rejected unregistered name bytes: '+module);
+}
+const old='.superpowers/internal-candidate-20261008-build8/exported-payload/Payload/FREED.app/PlugIns/FREEDShieldConfiguration.appex/FREEDShieldConfiguration';assert.ok(fs.readFileSync(old).includes(Buffer.from('ShieldConfigurationExtension')));assert.equal(inspectExtensionPrincipalClass(old,'ShieldConfigurationExtension').compatible,false,'Actual build8 reflected bare class string cannot stand in for registered runtime class');
+console.log('Actual build8 bare reflection string correctly remains incompatible');

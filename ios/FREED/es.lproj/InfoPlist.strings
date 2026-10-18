@@ -1,0 +1,5 @@
+"NSFaceIDUsageDescription" = "FREED usa la autenticación del dispositivo para proteger los ajustes de recuperación.";
+"NSCameraUsageDescription" = "FREED usa la cámara solo cuando eliges un reto fotográfico que requiere verificar una imagen real.";
+"NSLocationWhenInUseUsageDescription" = "FREED usa la ubicación temporal en primer plano solo para verificar retos de recuperación al aire libre.";
+"NSMotionUsageDescription" = "FREED usa datos de movimiento solo durante retos activos para verificar movimiento real.";
+"NSUserNotificationsUsageDescription" = "FREED envía mensajes de apoyo a la recuperación y recordatorios urgentes para proteger tu racha.";

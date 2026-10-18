@@ -1,0 +1,26 @@
+{
+  "source": "https://www.apple.com/certificateauthority/",
+  "certificates": [
+    {
+      "name": "AppleIncRootCertificate.cer",
+      "url": "https://www.apple.com/appleca/AppleIncRootCertificate.cer",
+      "sha256": "b0b1730ecbc7ff4505142c49f1295e6eda6bcaed7e2c68c5be91b5a11001f024",
+      "subject": "C=US\nO=Apple Inc.\nOU=Apple Certification Authority\nCN=Apple Root CA",
+      "validTo": "Feb  9 21:40:36 2035 GMT"
+    },
+    {
+      "name": "AppleRootCA-G2.cer",
+      "url": "https://www.apple.com/certificateauthority/AppleRootCA-G2.cer",
+      "sha256": "c2b9b042dd57830e7d117dac55ac8ae19407d38e41d88f3215bc3a890444a050",
+      "subject": "CN=Apple Root CA - G2\nOU=Apple Certification Authority\nO=Apple Inc.\nC=US",
+      "validTo": "Apr 30 18:10:09 2039 GMT"
+    },
+    {
+      "name": "AppleRootCA-G3.cer",
+      "url": "https://www.apple.com/certificateauthority/AppleRootCA-G3.cer",
+      "sha256": "63343abfb89a6a03ebb57e9b3f5fa7be7c4f5c756f3017b3a8c488c3653e9179",
+      "subject": "CN=Apple Root CA - G3\nOU=Apple Certification Authority\nO=Apple Inc.\nC=US",
+      "validTo": "Apr 30 18:19:06 2039 GMT"
+    }
+  ]
+}

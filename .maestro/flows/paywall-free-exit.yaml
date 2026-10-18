@@ -1,0 +1,29 @@
+appId: app.freed.recovery
+name: paywall-free-exit
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///profile"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-profile"
+    timeout: 15000
+- tapOn: "Manage membership|Membership active"
+- assertVisible:
+    id: "screen-paywall"
+- scrollUntilVisible:
+    element:
+      text: "Continue with Free"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Continue with Free"
+- assertVisible:
+    id: "screen-main-profile"
+- takeScreenshot: "paywall-free-exit"

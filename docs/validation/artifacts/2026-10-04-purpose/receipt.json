@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-10-04T02:19:02.423753+00:00",
+  "task": "FREED purpose-led functional plan",
+  "releaseReady": false,
+  "localEvidence": {
+    "uiSuites": 28,
+    "uiTestsPassed": 221,
+    "modelContracts": "purpose-checkin-journal7, personal-plan5, tool4; dated-write/snapshot/time regressions passed",
+    "protectionContracts": "intent/readiness15 including reset latch plus existing suites; activation/default contracts3",
+    "breathingSession": 6,
+    "svgMatrix": 2,
+    "nativeTimeControls": "two tests; protection/purchase suite8; ten combined passed",
+    "nativeWriteQueue": 2,
+    "setupIntentRestart": 2,
+    "localization": "strict audit passed: ten languages,2592 source keys,0uncovered/0errors; catalog tests16 passed",
+    "webExport": "passed after local selection repair",
+    "cloudflareProvider": "adult test, malware test and ordinary-domain control passed",
+    "typecheck": "passed after local selection repair",
+    "resetActivation": "fresh explicit action only; strict ack before serialized sync/fresh status; no default guard activation; caller review passed",
+    "localSelection": 12,
+    "privacyBoundary": "five off-device tests plus top-level guard/export assertions passed"
+  },
+  "nativeEvidence": {
+    "device": "FREED-Companion-iOS18",
+    "deviceId": "8C8D6CB1-3DC0-4528-B035-2EB9E25EFD28",
+    "os": "iOS18.5",
+    "binaryLineage": "existing Debug simulator native container staged with production JS; UI QA only, not a fresh full native-source release build",
+    "observed": [
+      "new user enters Today before account/purchase/permissions",
+      "Today light and dark composition inspected",
+      "avatar pivot animation crash reproduced and fixed; app then rendered",
+      "first-use CTA below fold reproduced and fixed",
+      "writing-first journal opened",
+      "October3 retained draft explicitly transferred to October4",
+      "journal Save returned to Today"
+    ],
+    "incomplete": [
+      "full first-use/check-in/history/protection/breathing moving flow",
+      "all65 surfaces by language/theme/platform",
+      "iOS26 material runtime",
+      "Android emulator/device walkthrough",
+      "physical website/app/schedule enforcement",
+      "live purchase/restore lifecycle",
+      "slowest-device release frame traces",
+      "new explicit resume action with final native reset-latch implementation on actual device"
+    ],
+    "harnessFailures": [
+      "XCTest driver startup timeout (including180s retry)",
+      "Maestro multiline keyboard hide had no Done action; test changed to natural scrolling",
+      "CUA transient frame/AX errors; observed journal actions succeeded after app loaded"
+    ],
+    "videos": "partial observations only; no complete-flow pass or60Hz attestation"
+  },
+  "externalStatus": {
+    "billing": "platform chat confirms approved open account linked; Apple verification secrets uploaded; deployment/live proof separately pending",
+    "firebase": "approved billing link enabled and Apple verification secrets uploaded/verified by platform chat; deployment and live service proof still pending",
+    "apple": "FamilyControls distribution/legal approval and store/device proof still separate",
+    "cloudflare": "public Families resolver requires no custom zone; provider test does not prove mobile routing",
+    "nativeImplementation": "Platform owner reports iOS module/helper and four extensions passed actual SDK typechecks; corrected full native build and Android reset/socket-closure checks continue separately. Physical enforcement remains unverified."
+  },
+  "source": {
+    "controllerSha256": "ee5eabdce5397cbcd2178404a816116cd0b082267a08fe5f1b2438514c93ccb4",
+    "challengeCompletionHandler": "Exact comparison to task baseline passed after reset-latch repair",
+    "freeze": "docs/implementation/purpose-ui-freeze.json",
+    "challengeCompletionRegionSha256": "f4fc9e8d465b617215f4dac206ce7c11f598718d06c4c2124d2f8d9709cf1c10",
+    "uiFingerprint": "281daff847cb6006b58f4d701bc804ee9c976bc8d8dcd4417e87a1bb634e38c3",
+    "localSelectionSha256": "36208027dae9b6b83bd92f66ef3f03d866692521a5c8b11c36abd263d9283b20"
+  }
+}

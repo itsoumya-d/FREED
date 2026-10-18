@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "freed-final-review-source-v1",
+  "sanitized": true,
+  "reviewedAt": "2026-10-02 08:46:26 UTC",
+  "scope": [
+    "src/features/freed-app.tsx",
+    "src/features/use-freed-navigation.ts",
+    "app/flow/[screen].tsx",
+    "app/onboarding/[screen].tsx",
+    "src/lib/recovery-state.ts",
+    "src/hooks/useChallengeVerification.ts",
+    "src/lib/challenge-verification-runtime.ts",
+    "src/lib/challenge-selection-key.ts"
+  ],
+  "changesOwned": [
+    "tests/core.test.ts",
+    "scripts/performance-safety-audit.js",
+    "scripts/privacy-safety-audit.js"
+  ],
+  "verification": {
+    "core": {
+      "status": "passed",
+      "assertions": 279
+    },
+    "firebaseFunctionsContract": {
+      "status": "passed",
+      "changed": false
+    },
+    "challengeSession": {
+      "status": "passed",
+      "tests": 14
+    },
+    "completionReceipt": {
+      "status": "passed",
+      "tests": 2
+    },
+    "verificationRuntime": {
+      "status": "passed",
+      "tests": 17
+    },
+    "selectionKey": {
+      "status": "passed",
+      "tests": 10
+    },
+    "navigation": {
+      "status": "passed",
+      "tests": 8
+    },
+    "performanceAudit": {
+      "status": "passed",
+      "gates": 28
+    },
+    "privacyAudit": {
+      "status": "passed",
+      "gates": 31
+    },
+    "auditRegressionChecks": {
+      "status": "passed",
+      "inMemoryOnly": true,
+      "cases": [
+        "missing manual capture trigger",
+        "missing classifier adapter binding",
+        "missing temporary-file cleanup",
+        "base64 capture enabled"
+      ],
+      "audits": 2
+    }
+  },
+  "sourceReview": [
+    {
+      "id": "completion-receipt-idempotence",
+      "status": "verified",
+      "evidence": "Recovery history rejects an already-recorded session receipt; synchronous persistence precedes unlock side effects."
+    },
+    {
+      "id": "foreground-and-proof-boundaries",
+      "status": "verified",
+      "evidence": "Session callbacks require current session identity; camera proof survives camera-induced pause but rejects completion/unmount/session replacement; connection proof requires return and confirmation."
+    },
+    {
+      "id": "selection-request-stability",
+      "status": "verified",
+      "evidence": "The selection effect depends on the semantic selectionKey. Clock and generated metadata churn do not change this key."
+    },
+    {
+      "id": "back-preserves-unsaved-completion",
+      "status": "fixed-in-root-source",
+      "evidence": "Back reconciles a completed receipt before abandonment and returns early on recovery-history save failure; completion UI displays the failure notice."
+    },
+    {
+      "id": "saved-reset-resume-entry",
+      "status": "fixed-in-root-source",
+      "evidence": "Home exposes Continue saved reset; resume entry preserves the existing session and clears intervention authority; hydration synchronizes ChallengeScreen."
+    },
+    {
+      "id": "explicit-deletion-clears-session",
+      "status": "partially-fixed-in-root-source",
+      "evidence": "Deletion now calls challengeSession.abandon before resetting recovery data.",
+      "remaining": "Abandon swallows a removal failure. Deletion must verify getSnapshot().session is null and stop if the erase failed."
+    }
+  ],
+  "limitations": [
+    "This receipt records source review and automated behavioral checks, not physical-device sensor or camera testing.",
+    "The remaining deletion failure-path guard was reported to the root agent, which owns the application controller."
+  ]
+}

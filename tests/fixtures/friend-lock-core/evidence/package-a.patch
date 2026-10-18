@@ -1,0 +1,1812 @@
+diff --git a/modules/freed-protection/ios/FreedFriendLockCore.swift b/modules/freed-protection/ios/FreedFriendLockCore.swift
+new file mode 100644
+index 0000000..c556570
+--- /dev/null
++++ b/modules/freed-protection/ios/FreedFriendLockCore.swift
+@@ -0,0 +1,283 @@
++import Foundation
++
++// Package A only. None of these methods mutates DNS, adult filtering, account data or app leases.
++enum FriendLockFailure: String, Error { case invalidPIN, pinMismatch, invalidScope, baselineUnavailable, alreadyEnrolled, notEnrolled, missingEnrolled, corrupt, storageUnavailable, commitOutcomeUnknown, storageConflict, incorrectSecret, throttled, scopeMismatch, unknownOperation, cancelled, authorizationCapacity, invalidTransition, cryptoUnavailable }
++enum FriendLockStatus: String { case notEnrolled, enrolled, missingEnrolled, corrupt, unavailable }
++enum FriendLockAction: String, Codable { case disableAdultFilter, disableEncryptedDNS, removeAdultDomains, addAdultExceptions, resetAdultProtection, reduceAdultSchedule }
++enum FriendLockOperationState: String, Codable { case awaitingSecret, authorized, inFlight, completed, cancelled }
++
++struct FriendLockConfiguration: Codable, Equatable {
++    let revision: String
++    let mutationGeneration: String
++    init(revision: String, mutationGeneration: String) throws {
++        guard Self.valid(revision), Self.valid(mutationGeneration) else { throw FriendLockFailure.invalidScope }
++        self.revision = revision; self.mutationGeneration = mutationGeneration
++    }
++    static func valid(_ value: String) -> Bool {
++        !value.isEmpty && value.utf8.count <= 128 && value.utf8.allSatisfy { $0 >= 33 && $0 <= 126 }
++    }
++    var isValid: Bool { Self.valid(revision) && Self.valid(mutationGeneration) }
++}
++
++// Integrations build this from the actual native before/desired state, never a JS digest.
++struct FriendLockAdultChange {
++    let action: FriendLockAction
++    private let canonical: Data
++    init(action: FriendLockAction, fields: [String: String]) throws {
++        guard !fields.isEmpty, fields.count <= 128 else { throw FriendLockFailure.invalidScope }
++        var data = Data()
++        func append(_ value: String) throws {
++            let bytes = Data(value.utf8)
++            guard bytes.count <= 4096 else { throw FriendLockFailure.invalidScope }
++            var length = UInt32(bytes.count).bigEndian
++            withUnsafeBytes(of: &length) { data.append(contentsOf: $0) }; data.append(bytes)
++        }
++        try append("freed-device-adult-change-v1"); try append(action.rawValue)
++        for key in fields.keys.sorted() {
++            guard FriendLockConfiguration.valid(key) else { throw FriendLockFailure.invalidScope }
++            try append(key); try append(fields[key]!)
++        }
++        guard data.count <= 32_768 else { throw FriendLockFailure.invalidScope }
++        self.action = action; canonical = data
++    }
++    func digest(using crypto: any FriendLockCrypto) throws -> String { try crypto.digest(canonical).friendHex }
++}
++struct FriendLockBaseline { let configuration: FriendLockConfiguration; let adultProtectionInstalled: Bool; let nativeReadback: Data }
++struct FriendLockEnrollment: CustomStringConvertible, CustomDebugStringConvertible {
++    let lockRevision: UInt64
++    // One-time presentation to the trusted person. Never log, persist in JS, export or back up.
++    let recoveryKey: String
++    var description: String { "FriendLockEnrollment(revision: \(lockRevision), recoveryKey: <redacted>)" }
++    var debugDescription: String { description }
++}
++enum FriendLockSecret { case pin(String), recovery(String) }
++struct FriendLockInstant { let session: String; let milliseconds: Int64 }
++protocol FriendLockClock { func now() -> FriendLockInstant }
++final class FriendLockElapsedClock: FriendLockClock {
++    private let session = UUID().uuidString
++    func now() -> FriendLockInstant { FriendLockInstant(session: session, milliseconds: Int64(ProcessInfo.processInfo.systemUptime * 1_000)) }
++}
++protocol FriendLockCrypto {
++    func random(_ count: Int) throws -> Data
++    func digest(_ data: Data) throws -> Data
++    func derive(_ secret: String, salt: Data) throws -> Data
++}
++extension Data {
++    fileprivate var friendHex: String { map { String(format: "%02x", $0) }.joined() }
++    func friendConstantEquals(_ other: Data) -> Bool {
++        guard count == other.count else { return false }
++        var difference: UInt8 = 0
++        for (left, right) in zip(self, other) { difference |= left ^ right }
++        return difference == 0
++    }
++}
++struct FriendLockVerifier: Codable {
++    let salt: Data
++    let derived: Data
++    var isValid: Bool { salt.count == 16 && derived.count == 32 }
++}
++struct FriendLockThrottle: Codable {
++    var failures = 0
++    var remainingMilliseconds: Int64 = 0
++    var session = ""
++    var lastMilliseconds: Int64 = 0
++    var isValid: Bool { (0...1_000_000).contains(failures) && (0...3_600_000).contains(remainingMilliseconds) && session.utf8.count <= 128 && lastMilliseconds >= 0 }
++    mutating func advance(_ instant: FriendLockInstant) {
++        if session == instant.session, instant.milliseconds >= lastMilliseconds {
++            remainingMilliseconds = max(0, remainingMilliseconds - min(remainingMilliseconds, instant.milliseconds - lastMilliseconds))
++        }
++        // A new process/reboot or elapsed-clock rollback retains the entire persisted remainder.
++        session = instant.session; lastMilliseconds = max(0, instant.milliseconds)
++    }
++    mutating func reserve(_ instant: FriendLockInstant) {
++        failures = min(1_000_000, failures + 1)
++        remainingMilliseconds = failures < 5 ? 0 : failures == 5 ? 60_000 : failures == 6 ? 300_000 : failures == 7 ? 900_000 : 3_600_000
++        session = instant.session; lastMilliseconds = max(0, instant.milliseconds)
++    }
++}
++struct FriendLockReceipt: Codable, Equatable {
++    let operationID: String
++    let deltaDigest: String
++    let configuration: FriendLockConfiguration
++    let lockRevision: UInt64
++    let authorizationGeneration: UInt64
++    var state: FriendLockOperationState
++    var resultingConfiguration: FriendLockConfiguration?
++    var readbackDigest: String?
++    var isValid: Bool {
++        Self.hex(operationID, 32) && Self.hex(deltaDigest, 64) && configuration.isValid && lockRevision > 0 &&
++        (resultingConfiguration?.isValid ?? true) && (readbackDigest.map { Self.hex($0, 64) } ?? true) &&
++        (state != .completed || (resultingConfiguration != nil && readbackDigest != nil)) &&
++        (state == .completed || (resultingConfiguration == nil && readbackDigest == nil))
++    }
++    static func hex(_ value: String, _ length: Int) -> Bool { value.utf8.count == length && value.utf8.allSatisfy { (48...57).contains($0) || (97...102).contains($0) } }
++}
++struct FriendLockRecord: Codable {
++    var schema = 1
++    var lockRevision: UInt64 = 1
++    var authorizationGeneration: UInt64 = 0
++    let enrollmentBaselineDigest: String
++    var pin: FriendLockVerifier
++    var recovery: FriendLockVerifier
++    var pinThrottle = FriendLockThrottle()
++    var recoveryThrottle = FriendLockThrottle()
++    var operations: [FriendLockReceipt] = []
++    var isValid: Bool {
++        schema == 1 && lockRevision > 0 && lockRevision <= 9_007_199_254_740_991 && authorizationGeneration <= 9_007_199_254_740_991 && FriendLockReceipt.hex(enrollmentBaselineDigest, 64) && pin.isValid && recovery.isValid &&
++        pinThrottle.isValid && recoveryThrottle.isValid && operations.count <= 32 &&
++        Set(operations.map(\.operationID)).count == operations.count && operations.allSatisfy { $0.isValid && $0.lockRevision == lockRevision && $0.authorizationGeneration == authorizationGeneration }
++    }
++}
++
++// Serial worker queue owns verification. KDF never executes on the UI thread or under an enforcement lock.
++final class FriendLockCore {
++    private static let queue = DispatchQueue(label: "app.freed.device-adult.friend-lock", qos: .userInitiated)
++    private let store: FriendLockRecordStore
++    private let crypto: any FriendLockCrypto
++    private let clock: any FriendLockClock
++    init(store: FriendLockRecordStore, crypto: any FriendLockCrypto, clock: any FriendLockClock = FriendLockElapsedClock()) { self.store = store; self.crypto = crypto; self.clock = clock }
++    private func serial<T>(_ body: @escaping () throws -> T) async throws -> T {
++        try await withCheckedThrowingContinuation { continuation in Self.queue.async { do { continuation.resume(returning: try body()) } catch { continuation.resume(throwing: error) } } }
++    }
++    func status() async throws -> FriendLockStatus {
++        try await serial {
++            do { return try self.store.load() == nil ? .notEnrolled : .enrolled }
++            catch FriendLockFailure.missingEnrolled { return .missingEnrolled }
++            catch FriendLockFailure.corrupt { return .corrupt }
++            catch { return .unavailable }
++        }
++    }
++    func enroll(pin: String, confirmation: String, baseline: FriendLockBaseline) async throws -> FriendLockEnrollment {
++        try await serial {
++            try Self.validatePIN(pin, confirmation)
++            guard baseline.adultProtectionInstalled, !baseline.nativeReadback.isEmpty, baseline.nativeReadback.count <= 32_768 else { throw FriendLockFailure.baselineUnavailable }
++            guard try self.store.load() == nil else { throw FriendLockFailure.alreadyEnrolled }
++            let key = try self.crypto.random(32).friendHex
++            let record = FriendLockRecord(enrollmentBaselineDigest: try self.crypto.digest(baseline.nativeReadback).friendHex, pin: try self.verifier(pin), recovery: try self.verifier(key))
++            try self.store.publish(record, expected: nil)
++            return FriendLockEnrollment(lockRevision: record.lockRevision, recoveryKey: key)
++        }
++    }
++    func prepare(change: FriendLockAdultChange, configuration: FriendLockConfiguration) async throws -> FriendLockReceipt {
++        try await serial {
++            var record = try self.requiredRecord(); let old = record
++            guard record.operations.count < 32 else { throw FriendLockFailure.authorizationCapacity }
++            let receipt = FriendLockReceipt(operationID: try self.crypto.random(16).friendHex, deltaDigest: try change.digest(using: self.crypto), configuration: configuration, lockRevision: record.lockRevision, authorizationGeneration: record.authorizationGeneration, state: .awaitingSecret)
++            guard !record.operations.contains(where: { $0.operationID == receipt.operationID }) else { throw FriendLockFailure.cryptoUnavailable }
++            record.operations.append(receipt); try self.store.publish(record, expected: old); return receipt
++        }
++    }
++    func authorize(pin: String, change: FriendLockAdultChange, configuration: FriendLockConfiguration, operationID: String? = nil) async throws -> FriendLockReceipt {
++        try await serial {
++            var record = try self.requiredRecord()
++            let prepared = try operationID.map { try self.scoped(record, $0, change, configuration) }
++            if let prepared, prepared.state != .awaitingSecret { return prepared }
++            guard prepared != nil || record.operations.count < 32 else { throw FriendLockFailure.authorizationCapacity }
++            record = try self.verify(.pin(pin), record: record)
++            let old = record
++            var receipt: FriendLockReceipt
++            if var pending = prepared {
++                pending.state = .authorized; receipt = pending
++                record.operations[record.operations.firstIndex(where: { $0.operationID == pending.operationID })!] = pending
++            } else {
++                receipt = FriendLockReceipt(operationID: try self.crypto.random(16).friendHex, deltaDigest: try change.digest(using: self.crypto), configuration: configuration, lockRevision: record.lockRevision, authorizationGeneration: record.authorizationGeneration, state: .authorized)
++                guard !record.operations.contains(where: { $0.operationID == receipt.operationID }) else { throw FriendLockFailure.cryptoUnavailable }
++                record.operations.append(receipt)
++            }
++            record.pinThrottle = FriendLockThrottle()
++            try self.store.publish(record, expected: old)
++            return receipt
++        }
++    }
++    func retry(operationID: String, change: FriendLockAdultChange, configuration: FriendLockConfiguration) async throws -> FriendLockReceipt {
++        try await serial { let record = try self.requiredRecord(); return try self.scoped(record, operationID, change, configuration) }
++    }
++    func claim(operationID: String, change: FriendLockAdultChange, configuration: FriendLockConfiguration) async throws -> FriendLockReceipt {
++        try await serial {
++            var record = try self.requiredRecord(); let old = record
++            var receipt = try self.scoped(record, operationID, change, configuration)
++            guard receipt.state != .awaitingSecret else { throw FriendLockFailure.invalidTransition }
++            if receipt.state == .authorized {
++                receipt.state = .inFlight; record.operations[record.operations.firstIndex(where: { $0.operationID == operationID })!] = receipt
++                try self.store.publish(record, expected: old)
++            }
++            return receipt // Completed is returned for exact retry, never permission to repeat mutation.
++        }
++    }
++    func complete(operationID: String, change: FriendLockAdultChange, originalConfiguration: FriendLockConfiguration, resultingConfiguration: FriendLockConfiguration, nativeReadback: Data) async throws -> FriendLockReceipt {
++        try await serial {
++            guard !nativeReadback.isEmpty, nativeReadback.count <= 32_768 else { throw FriendLockFailure.baselineUnavailable }
++            var record = try self.requiredRecord(); let old = record
++            guard let index = record.operations.firstIndex(where: { $0.operationID == operationID }) else { throw FriendLockFailure.unknownOperation }
++            var receipt = record.operations[index]
++            guard receipt.deltaDigest == (try change.digest(using: self.crypto)), receipt.configuration == originalConfiguration else { throw FriendLockFailure.scopeMismatch }
++            let digest = try self.crypto.digest(nativeReadback).friendHex
++            if receipt.state == .completed {
++                guard receipt.resultingConfiguration == resultingConfiguration, receipt.readbackDigest == digest else { throw FriendLockFailure.scopeMismatch }; return receipt
++            }
++            guard receipt.state == .inFlight else { throw receipt.state == .cancelled ? FriendLockFailure.cancelled : FriendLockFailure.invalidTransition }
++            receipt.state = .completed; receipt.resultingConfiguration = resultingConfiguration; receipt.readbackDigest = digest
++            record.operations[index] = receipt; try self.store.publish(record, expected: old); return receipt
++        }
++    }
++    func cancel(operationID: String) async throws -> FriendLockReceipt {
++        try await serial {
++            var record = try self.requiredRecord(); let old = record
++            guard let index = record.operations.firstIndex(where: { $0.operationID == operationID }) else { throw FriendLockFailure.unknownOperation }
++            guard record.operations[index].state != .completed else { throw FriendLockFailure.invalidTransition }
++            record.operations[index].state = .cancelled; try self.store.publish(record, expected: old); return record.operations[index]
++        }
++    }
++    func invalidateAuthorizations() async throws {
++        try await serial {
++            var record = try self.requiredRecord(); let old = record
++            guard record.authorizationGeneration < 9_007_199_254_740_991 else { throw FriendLockFailure.corrupt }
++            record.authorizationGeneration += 1; record.operations = []; try self.store.publish(record, expected: old)
++        }
++    }
++    func rotate(secret: FriendLockSecret, newPIN: String, confirmation: String) async throws -> FriendLockEnrollment {
++        try await serial {
++            try Self.validatePIN(newPIN, confirmation)
++            var record = try self.verify(secret, record: self.requiredRecord()); let old = record
++            guard record.lockRevision < 9_007_199_254_740_991, record.authorizationGeneration < 9_007_199_254_740_991 else { throw FriendLockFailure.corrupt }
++            guard !(try self.crypto.derive(newPIN, salt: record.pin.salt).friendConstantEquals(record.pin.derived)) else { throw FriendLockFailure.invalidPIN }
++            let key = try self.crypto.random(32).friendHex
++            record.pin = try self.verifier(newPIN); record.recovery = try self.verifier(key)
++            record.lockRevision += 1; record.authorizationGeneration += 1; record.operations = []
++            switch secret { case .pin: record.pinThrottle = FriendLockThrottle(); case .recovery: record.recoveryThrottle = FriendLockThrottle() }
++            try self.store.publish(record, expected: old)
++            return FriendLockEnrollment(lockRevision: record.lockRevision, recoveryKey: key)
++        }
++    }
++    private static func validatePIN(_ pin: String, _ confirmation: String) throws {
++        guard pin.utf8.count == 6, pin.utf8.allSatisfy({ (48...57).contains($0) }) else { throw FriendLockFailure.invalidPIN }
++        guard pin == confirmation else { throw FriendLockFailure.pinMismatch }
++    }
++    private func verifier(_ value: String) throws -> FriendLockVerifier { let salt = try crypto.random(16); return FriendLockVerifier(salt: salt, derived: try crypto.derive(value, salt: salt)) }
++    private func requiredRecord() throws -> FriendLockRecord { guard let record = try store.load() else { throw FriendLockFailure.notEnrolled }; return record }
++    private func verify(_ secret: FriendLockSecret, record: FriendLockRecord) throws -> FriendLockRecord {
++        var reserved = record
++        let isPIN: Bool; let input: String; let verifier: FriendLockVerifier
++        switch secret { case .pin(let value): isPIN = true; input = value; verifier = record.pin; case .recovery(let value): isPIN = false; input = value; verifier = record.recovery }
++        var throttle = isPIN ? record.pinThrottle : record.recoveryThrottle
++        let now = clock.now(); throttle.advance(now)
++        if throttle.remainingMilliseconds > 0 {
++            if isPIN { reserved.pinThrottle = throttle } else { reserved.recoveryThrottle = throttle }
++            try store.publish(reserved, expected: record); throw FriendLockFailure.throttled
++        }
++        throttle.reserve(now)
++        if isPIN { reserved.pinThrottle = throttle } else { reserved.recoveryThrottle = throttle }
++        // Persist before KDF. Process death, crypto failure and interruption consume the attempt conservatively.
++        try store.publish(reserved, expected: record)
++        let validFormat = isPIN ? input.utf8.count == 6 && input.utf8.allSatisfy({ (48...57).contains($0) }) : FriendLockReceipt.hex(input, 64)
++        guard validFormat, try crypto.derive(input, salt: verifier.salt).friendConstantEquals(verifier.derived) else { throw FriendLockFailure.incorrectSecret }
++        return reserved // Caller clears only after the authorized/rotated record commits durably.
++    }
++    private func scoped(_ record: FriendLockRecord, _ operationID: String, _ change: FriendLockAdultChange, _ configuration: FriendLockConfiguration) throws -> FriendLockReceipt {
++        guard let receipt = record.operations.first(where: { $0.operationID == operationID }) else { throw FriendLockFailure.unknownOperation }
++        guard receipt.state != .cancelled else { throw FriendLockFailure.cancelled }
++        let expected = receipt.state == .completed ? receipt.resultingConfiguration : receipt.configuration
++        guard receipt.deltaDigest == (try change.digest(using: crypto)), expected == configuration, receipt.lockRevision == record.lockRevision, receipt.authorizationGeneration == record.authorizationGeneration else { throw FriendLockFailure.scopeMismatch }
++        return receipt
++    }
++}
+diff --git a/modules/freed-protection/ios/FreedFriendLockRecordStore.swift b/modules/freed-protection/ios/FreedFriendLockRecordStore.swift
+new file mode 100644
+index 0000000..333d9e0
+--- /dev/null
++++ b/modules/freed-protection/ios/FreedFriendLockRecordStore.swift
+@@ -0,0 +1,109 @@
++import Foundation
++
++protocol FriendLockProtectedBytes {
++    func beginAccess() throws
++    func endAccess()
++    func read(_ key: String) throws -> Data?
++    func write(_ key: String, _ data: Data) throws
++    func remove(_ key: String) throws
++}
++extension FriendLockProtectedBytes { func beginAccess() throws {} ; func endAccess() {} }
++
++// Retained protected journal is the transaction decision; record is required native readback.
++// No successful publication deletes the only old/new recoverable verifier generation.
++final class FriendLockRecordStore {
++    static let maximumRecordBytes = 65_536
++    static let maximumJournalBytes = maximumRecordBytes * 3
++    private static let processLock = NSRecursiveLock()
++    private let bytes: any FriendLockProtectedBytes
++    private enum Phase: String, Codable { case prepared, committed }
++    private struct Journal: Codable { let schema: Int; let phase: Phase; let previous: Data?; let candidate: Data }
++    init(bytes: any FriendLockProtectedBytes) { self.bytes = bytes }
++    private func exclusive<T>(_ operation: () throws -> T) throws -> T {
++        Self.processLock.lock(); defer { Self.processLock.unlock() }
++        try bytes.beginAccess(); defer { bytes.endAccess() }
++        do { return try operation() } catch let failure as FriendLockFailure { throw failure } catch { throw FriendLockFailure.storageUnavailable }
++    }
++    private func decode(_ data: Data) throws -> FriendLockRecord {
++        guard data.count <= Self.maximumRecordBytes,
++              let record = try? JSONDecoder().decode(FriendLockRecord.self, from: data), record.isValid else { throw FriendLockFailure.corrupt }
++        return record
++    }
++    private func encode(_ record: FriendLockRecord) throws -> Data {
++        guard record.isValid else { throw FriendLockFailure.corrupt }
++        let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys]
++        let data = try encoder.encode(record)
++        guard data.count <= Self.maximumRecordBytes else { throw FriendLockFailure.corrupt }; return data
++    }
++    private func encodeJournal(_ journal: Journal) throws -> Data {
++        let encoder = JSONEncoder(); encoder.outputFormatting = [.sortedKeys]
++        let result = try encoder.encode(journal)
++        guard result.count <= Self.maximumJournalBytes else { throw FriendLockFailure.corrupt }; return result
++    }
++    private func decodeJournal(_ data: Data) throws -> Journal {
++        guard data.count <= Self.maximumJournalBytes,
++              let journal = try? JSONDecoder().decode(Journal.self, from: data), journal.schema == 2 else { throw FriendLockFailure.corrupt }
++        _ = try decode(journal.candidate); if let previous = journal.previous { _ = try decode(previous) }
++        return journal
++    }
++    private func rollback(_ journal: Journal) throws -> Data {
++        guard journal.phase == .prepared, let previous = journal.previous else { throw FriendLockFailure.missingEnrolled }
++        try bytes.write("record", previous)
++        guard try bytes.read("record") == previous else { throw FriendLockFailure.storageUnavailable }
++        // Verified rollback retains its authoritative prior record in a committed envelope.
++        let rolledBack = try encodeJournal(Journal(schema: 2, phase: .committed, previous: nil, candidate: previous))
++        try bytes.write("journal", rolledBack)
++        guard try bytes.read("journal") == rolledBack else { throw FriendLockFailure.storageUnavailable }
++        return previous
++    }
++    private func raw() throws -> Data? {
++        let witness = try bytes.read("witness"), record = try bytes.read("record"), data = try bytes.read("journal")
++        if witness == nil { guard record == nil, data == nil else { throw FriendLockFailure.corrupt }; return nil }
++        guard witness == Data([1]) else { throw FriendLockFailure.corrupt }
++        guard let data else { throw FriendLockFailure.missingEnrolled }
++        let journal = try decodeJournal(data)
++        if journal.phase == .prepared { return try rollback(journal) }
++        guard let record else { throw FriendLockFailure.missingEnrolled }
++        guard record == journal.candidate else { throw FriendLockFailure.corrupt }
++        return journal.candidate
++    }
++    func load() throws -> FriendLockRecord? { try exclusive { try raw().map(decode) } }
++    func publish(_ candidate: FriendLockRecord, expected: FriendLockRecord?) throws {
++        try exclusive {
++            let old = try raw(), expectedData = try expected.map(encode), new = try encode(candidate)
++            guard old == expectedData else { throw FriendLockFailure.storageConflict }
++            if old == nil { try bytes.write("witness", Data([1])); guard try bytes.read("witness") == Data([1]) else { throw FriendLockFailure.storageUnavailable } }
++            let prepared = Journal(schema: 2, phase: .prepared, previous: old, candidate: new)
++            let pending = try encodeJournal(prepared)
++            // Atomic replacement retains the current generation; older completed generations are bounded away.
++            do {
++                try bytes.write("journal", pending)
++                guard try bytes.read("journal") == pending else { throw FriendLockFailure.storageUnavailable }
++                try bytes.write("record", new)
++                guard try bytes.read("record") == new else { throw FriendLockFailure.storageUnavailable }
++            } catch {
++                if old != nil, (try? bytes.read("journal")) == pending { _ = try? rollback(prepared) }
++                throw FriendLockFailure.storageUnavailable
++            }
++            let committed = try encodeJournal(Journal(schema: 2, phase: .committed, previous: old, candidate: new))
++            var commitWriteReturned = false
++            do {
++                try bytes.write("journal", committed); commitWriteReturned = true
++                guard try bytes.read("journal") == committed else { throw FriendLockFailure.storageUnavailable }
++                // Completion is here. No optional cleanup/read can turn this verified commit into failure.
++            } catch {
++                let observed: Data?
++                do { observed = try bytes.read("journal") } catch { throw FriendLockFailure.commitOutcomeUnknown }
++                if observed == committed {
++                    guard commitWriteReturned else { throw FriendLockFailure.commitOutcomeUnknown }
++                    return // The retry read just verified a successful durable write's committed phase.
++                }
++                if observed == pending {
++                    if old != nil { _ = try? rollback(prepared) }
++                    throw FriendLockFailure.storageUnavailable
++                }
++                throw FriendLockFailure.corrupt
++            }
++        }
++    }
++}
+diff --git a/modules/freed-protection/ios/FreedFriendLockKeychain.swift b/modules/freed-protection/ios/FreedFriendLockKeychain.swift
+new file mode 100644
+index 0000000..93e9832
+--- /dev/null
++++ b/modules/freed-protection/ios/FreedFriendLockKeychain.swift
+@@ -0,0 +1,123 @@
++import Foundation
++import Security
++import CommonCrypto
++import CryptoKit
++import Darwin
++import LocalAuthentication
++
++struct FriendLockNativeCrypto: FriendLockCrypto {
++    func random(_ count: Int) throws -> Data {
++        guard (1...64).contains(count) else { throw FriendLockFailure.cryptoUnavailable }
++        var bytes = Data(count: count)
++        let status = bytes.withUnsafeMutableBytes { SecRandomCopyBytes(kSecRandomDefault, count, $0.baseAddress!) }
++        guard status == errSecSuccess else { throw FriendLockFailure.cryptoUnavailable }; return bytes
++    }
++    func digest(_ data: Data) throws -> Data { Data(SHA256.hash(data: data)) }
++    func derive(_ secret: String, salt: Data) throws -> Data {
++        guard salt.count == 16, !secret.isEmpty, secret.utf8.count <= 64 else { throw FriendLockFailure.cryptoUnavailable }
++        var input = Data(secret.utf8), output = Data(count: 32)
++        defer { input.resetBytes(in: 0..<input.count) }
++        let status = input.withUnsafeBytes { password in
++            salt.withUnsafeBytes { saltBytes in
++                output.withUnsafeMutableBytes { result in
++                    CCKeyDerivationPBKDF(CCPBKDFAlgorithm(kCCPBKDF2), password.baseAddress!.assumingMemoryBound(to: Int8.self), input.count,
++                        saltBytes.baseAddress!.assumingMemoryBound(to: UInt8.self), salt.count,
++                        CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA256), 600_000,
++                        result.baseAddress!.assumingMemoryBound(to: UInt8.self), result.count)
++                }
++            }
++        }
++        guard status == kCCSuccess else { throw FriendLockFailure.cryptoUnavailable }; return output
++    }
++}
++
++// Inject only public platform I/O. Fixtures never instantiate SystemKeychainAPI.
++struct FriendLockKeychainItem { let data: Data; let thisDeviceOnly: Bool; let synchronizable: Bool }
++protocol FriendLockKeychainAPI {
++    func read(service: String, account: String) throws -> FriendLockKeychainItem?
++    func write(service: String, account: String, data: Data) throws
++    func remove(service: String, account: String) throws
++}
++protocol FriendLockStorageAccess { func begin() throws; func end() }
++final class FriendLockNativeStorageAccess: FriendLockStorageAccess {
++    private let directory: URL
++    private var descriptor: Int32 = -1
++    init() throws {
++        guard let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { throw FriendLockFailure.storageUnavailable }
++        directory = base.appendingPathComponent("FreedDeviceAdultSecurity", isDirectory: true)
++    }
++    func begin() throws {
++        do {
++            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
++            var location = directory; var resource = URLResourceValues(); resource.isExcludedFromBackup = true; try location.setResourceValues(resource)
++            #if os(iOS)
++            try FileManager.default.setAttributes([.protectionKey: FileProtectionType.completeUntilFirstUserAuthentication], ofItemAtPath: directory.path)
++            #endif
++            descriptor = open(directory.appendingPathComponent("transaction.lock").path, O_CREAT | O_RDWR | O_NOFOLLOW, S_IRUSR | S_IWUSR)
++            guard descriptor >= 0, flock(descriptor, LOCK_EX | LOCK_NB) == 0 else { if descriptor >= 0 { close(descriptor) }; descriptor = -1; throw FriendLockFailure.storageUnavailable }
++        } catch { throw FriendLockFailure.storageUnavailable }
++    }
++    func end() { if descriptor >= 0 { flock(descriptor, LOCK_UN); close(descriptor); descriptor = -1 } }
++}
++struct FriendLockSystemKeychainAPI: FriendLockKeychainAPI {
++    private func query(service: String, account: String) -> [String: Any] {
++        let context = LAContext(); context.interactionNotAllowed = true
++        return [kSecClass as String: kSecClassGenericPassword, kSecAttrService as String: service,
++         kSecAttrAccount as String: account, kSecAttrSynchronizable as String: false,
++         kSecUseAuthenticationContext as String: context]
++    }
++    func read(service: String, account: String) throws -> FriendLockKeychainItem? {
++        var request = query(service: service, account: account)
++        request[kSecReturnAttributes as String] = true; request[kSecReturnData as String] = true; request[kSecMatchLimit as String] = kSecMatchLimitOne
++        var result: CFTypeRef?
++        let status = SecItemCopyMatching(request as CFDictionary, &result)
++        if status == errSecItemNotFound { return nil }
++        guard status == errSecSuccess else { throw FriendLockFailure.storageUnavailable }
++        guard let attributes = result as? [String: Any], let data = attributes[kSecValueData as String] as? Data else { throw FriendLockFailure.corrupt }
++        return FriendLockKeychainItem(data: data,
++            thisDeviceOnly: attributes[kSecAttrAccessible as String] as? String == kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly as String,
++            synchronizable: attributes[kSecAttrSynchronizable as String] as? Bool ?? false)
++    }
++    func write(service: String, account: String, data: Data) throws {
++        let request = query(service: service, account: account)
++        let attributes: [String: Any] = [kSecValueData as String: data, kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly]
++        var status = SecItemUpdate(request as CFDictionary, attributes as CFDictionary)
++        if status == errSecItemNotFound {
++            var item = request; item.merge(attributes) { _, new in new }; status = SecItemAdd(item as CFDictionary, nil)
++        }
++        guard status == errSecSuccess else { throw FriendLockFailure.storageUnavailable }
++    }
++    func remove(service: String, account: String) throws {
++        let status = SecItemDelete(query(service: service, account: account) as CFDictionary)
++        guard status == errSecSuccess || status == errSecItemNotFound else { throw FriendLockFailure.storageUnavailable }
++    }
++}
++
++// Host-only, non-synchronizable, ThisDeviceOnly. No account/access-group/biometric/cloud coupling.
++final class FriendLockKeychainBytes: FriendLockProtectedBytes {
++    private let service = "app.freed.device-adult.friend-lock.v1"
++    private let api: any FriendLockKeychainAPI
++    private let access: any FriendLockStorageAccess
++    convenience init() throws { self.init(api: FriendLockSystemKeychainAPI(), access: try FriendLockNativeStorageAccess()) }
++    init(api: any FriendLockKeychainAPI, access: any FriendLockStorageAccess) { self.api = api; self.access = access }
++    private func validate(_ key: String) throws {
++        guard ["witness", "record", "journal"].contains(key) else { throw FriendLockFailure.invalidScope }
++    }
++    func beginAccess() throws { try access.begin() }
++    func endAccess() { access.end() }
++    func read(_ key: String) throws -> Data? {
++        try validate(key)
++        guard let item = try api.read(service: service, account: key) else { return nil }
++        guard item.thisDeviceOnly, !item.synchronizable, item.data.count <= FriendLockRecordStore.maximumJournalBytes else { throw FriendLockFailure.corrupt }
++        return item.data
++    }
++    func write(_ key: String, _ data: Data) throws {
++        try validate(key)
++        guard data.count <= FriendLockRecordStore.maximumJournalBytes else { throw FriendLockFailure.corrupt }
++        try api.write(service: service, account: key, data: data)
++    }
++    func remove(_ key: String) throws {
++        try validate(key); guard key != "witness" else { throw FriendLockFailure.invalidScope }
++        try api.remove(service: service, account: key)
++    }
++}
+diff --git a/modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockCore.kt b/modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockCore.kt
+new file mode 100644
+index 0000000..42f069f
+--- /dev/null
++++ b/modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockCore.kt
+@@ -0,0 +1,248 @@
++package app.freed.protection
++
++import java.io.ByteArrayOutputStream
++import java.io.DataOutputStream
++import java.security.MessageDigest
++import java.security.SecureRandom
++import java.util.UUID
++import java.util.concurrent.Callable
++import java.util.concurrent.ExecutorService
++import java.util.concurrent.Executors
++import java.util.concurrent.Future
++import javax.crypto.SecretKeyFactory
++import javax.crypto.spec.PBEKeySpec
++
++// Standalone Package A. No DNS/VPN, app lease, account, private-history or bridge mutation.
++internal enum class FriendLockError { INVALID_PIN, PIN_MISMATCH, INVALID_SCOPE, BASELINE_UNAVAILABLE, ALREADY_ENROLLED, NOT_ENROLLED, MISSING_ENROLLED, CORRUPT, STORAGE_UNAVAILABLE, COMMIT_OUTCOME_UNKNOWN, STORAGE_CONFLICT, INCORRECT_SECRET, THROTTLED, SCOPE_MISMATCH, UNKNOWN_OPERATION, CANCELLED, AUTHORIZATION_CAPACITY, INVALID_TRANSITION, CRYPTO_UNAVAILABLE }
++internal class FriendLockException(val reason: FriendLockError) : Exception(reason.name)
++internal enum class FriendLockStatus { NOT_ENROLLED, ENROLLED, MISSING_ENROLLED, CORRUPT, UNAVAILABLE }
++internal enum class FriendLockAction(val wire: String) {
++    DISABLE_ADULT_FILTER("disableAdultFilter"), DISABLE_ENCRYPTED_DNS("disableEncryptedDNS"), REMOVE_ADULT_DOMAINS("removeAdultDomains"), ADD_ADULT_EXCEPTIONS("addAdultExceptions"), RESET_ADULT_PROTECTION("resetAdultProtection"), REDUCE_ADULT_SCHEDULE("reduceAdultSchedule")
++}
++internal enum class FriendLockOperationState { AWAITING_SECRET, AUTHORIZED, IN_FLIGHT, COMPLETED, CANCELLED }
++internal data class FriendLockConfiguration(val revision: String, val mutationGeneration: String) {
++    init { if (!validScopePart(revision) || !validScopePart(mutationGeneration)) fail(FriendLockError.INVALID_SCOPE) }
++}
++private fun validScopePart(value: String) = value.isNotEmpty() && value.length <= 128 && value.all { it.code in 33..126 }
++internal fun fail(reason: FriendLockError): Nothing = throw FriendLockException(reason)
++internal fun ByteArray.friendHex(): String = joinToString("") { "%02x".format(it.toInt() and 0xff) }
++internal fun validHex(value: String, length: Int) = value.length == length && value.all { it in '0'..'9' || it in 'a'..'f' }
++
++// Native integrations construct exact before/desired fields; incoming JS hashes never authorize.
++internal class FriendLockAdultChange(val action: FriendLockAction, fields: Map<String, String>) {
++    private val canonical: ByteArray
++    init {
++        if (fields.isEmpty() || fields.size > 128) fail(FriendLockError.INVALID_SCOPE)
++        val buffer = ByteArrayOutputStream()
++        DataOutputStream(buffer).use { out ->
++            fun append(value: String) {
++                val bytes = value.toByteArray(Charsets.UTF_8)
++                if (bytes.size > 4096) fail(FriendLockError.INVALID_SCOPE)
++                out.writeInt(bytes.size); out.write(bytes)
++            }
++            append("freed-device-adult-change-v1"); append(action.wire)
++            fields.toSortedMap().forEach { (key, value) ->
++                if (!validScopePart(key)) fail(FriendLockError.INVALID_SCOPE)
++                append(key); append(value)
++            }
++        }
++        canonical = buffer.toByteArray()
++        if (canonical.size > 32_768) fail(FriendLockError.INVALID_SCOPE)
++    }
++    fun digest(crypto: FriendLockCrypto) = crypto.digest(canonical).friendHex()
++}
++internal class FriendLockBaseline(val configuration: FriendLockConfiguration, val adultProtectionInstalled: Boolean, nativeReadback: ByteArray) {
++    val nativeReadback = nativeReadback.clone()
++}
++internal class FriendLockEnrollment(val lockRevision: Long, val recoveryKey: String) {
++    override fun toString() = "FriendLockEnrollment(revision=$lockRevision, recoveryKey=<redacted>)"
++}
++internal sealed interface FriendLockSecret {
++    class Pin(val value: String) : FriendLockSecret { override fun toString() = "FriendLockSecret.Pin(<redacted>)" }
++    class Recovery(val value: String) : FriendLockSecret { override fun toString() = "FriendLockSecret.Recovery(<redacted>)" }
++}
++internal data class FriendLockInstant(val session: String, val milliseconds: Long)
++internal fun interface FriendLockClock { fun now(): FriendLockInstant }
++internal class FriendLockElapsedClock : FriendLockClock {
++    private val session = UUID.randomUUID().toString()
++    private val origin = System.nanoTime()
++    override fun now() = FriendLockInstant(session, (System.nanoTime() - origin) / 1_000_000L)
++}
++internal interface FriendLockCrypto {
++    fun random(count: Int): ByteArray
++    fun digest(data: ByteArray): ByteArray
++    fun derive(secret: String, salt: ByteArray): ByteArray
++}
++internal class FriendLockNativeCrypto(private val keyFactory: () -> SecretKeyFactory = { SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256") }) : FriendLockCrypto {
++    companion object {
++        fun available(): Boolean = try { SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256"); true } catch (_: Exception) { false }
++    }
++    private val random = SecureRandom()
++    override fun random(count: Int) = ByteArray(count).also { random.nextBytes(it) }
++    override fun digest(data: ByteArray): ByteArray = MessageDigest.getInstance("SHA-256").digest(data)
++    override fun derive(secret: String, salt: ByteArray): ByteArray {
++        val characters = secret.toCharArray()
++        val spec = PBEKeySpec(characters, salt, 600_000, 256)
++        return try {
++            // Android provider support is required. No lower-cost or plaintext fallback on API 24/25.
++            keyFactory().generateSecret(spec).encoded
++        } catch (_: Exception) { fail(FriendLockError.CRYPTO_UNAVAILABLE) }
++        finally { spec.clearPassword(); characters.fill('\u0000') }
++    }
++}
++internal class FriendLockVerifier(val salt: ByteArray, val derived: ByteArray) {
++    fun valid() = salt.size == 16 && derived.size == 32
++    override fun toString() = "FriendLockVerifier(<protected>)"
++}
++internal data class FriendLockThrottle(val failures: Int = 0, val remainingMilliseconds: Long = 0, val session: String = "", val lastMilliseconds: Long = 0) {
++    fun valid() = failures in 0..1_000_000 && remainingMilliseconds in 0..3_600_000 && session.length <= 128 && lastMilliseconds >= 0
++    fun advance(instant: FriendLockInstant): FriendLockThrottle {
++        val elapsed = if (session == instant.session && instant.milliseconds >= lastMilliseconds) minOf(remainingMilliseconds, instant.milliseconds - lastMilliseconds) else 0L
++        // Process recreation/reboot/elapsed rollback conservatively retains the stored remainder.
++        return copy(remainingMilliseconds = remainingMilliseconds - elapsed, session = instant.session, lastMilliseconds = maxOf(0, instant.milliseconds))
++    }
++    fun reserve(instant: FriendLockInstant): FriendLockThrottle {
++        val next = minOf(1_000_000, failures + 1)
++        val delay = when { next < 5 -> 0L; next == 5 -> 60_000L; next == 6 -> 300_000L; next == 7 -> 900_000L; else -> 3_600_000L }
++        return FriendLockThrottle(next, delay, instant.session, maxOf(0, instant.milliseconds))
++    }
++}
++internal data class FriendLockReceipt(
++    val operationID: String, val deltaDigest: String, val configuration: FriendLockConfiguration,
++    val lockRevision: Long, val authorizationGeneration: Long, val state: FriendLockOperationState,
++    val resultingConfiguration: FriendLockConfiguration? = null, val readbackDigest: String? = null
++) {
++    fun valid() = validHex(operationID, 32) && validHex(deltaDigest, 64) && lockRevision > 0 && authorizationGeneration >= 0 &&
++        (readbackDigest == null || validHex(readbackDigest, 64)) &&
++        if (state == FriendLockOperationState.COMPLETED) resultingConfiguration != null && readbackDigest != null else resultingConfiguration == null && readbackDigest == null
++}
++internal data class FriendLockRecord(
++    val enrollmentBaselineDigest: String, val pin: FriendLockVerifier, val recovery: FriendLockVerifier,
++    val schema: Int = 1, val lockRevision: Long = 1, val authorizationGeneration: Long = 0,
++    val pinThrottle: FriendLockThrottle = FriendLockThrottle(), val recoveryThrottle: FriendLockThrottle = FriendLockThrottle(),
++    val operations: List<FriendLockReceipt> = emptyList()
++) {
++    fun valid() = schema == 1 && lockRevision in 1..9_007_199_254_740_991L && authorizationGeneration in 0..9_007_199_254_740_991L && validHex(enrollmentBaselineDigest, 64) && pin.valid() && recovery.valid() &&
++        pinThrottle.valid() && recoveryThrottle.valid() && operations.size <= 32 && operations.map { it.operationID }.toSet().size == operations.size &&
++        operations.all { it.valid() && it.lockRevision == lockRevision && it.authorizationGeneration == authorizationGeneration }
++    override fun toString() = "FriendLockRecord(<protected>)"
++}
++
++// Integrations call this worker, never the core on UI/service-enforcement locks. Only one KDF at a time.
++internal class FriendLockWorker(private val core: FriendLockCore) : AutoCloseable {
++    companion object { private val executor: ExecutorService = Executors.newSingleThreadExecutor { job -> Thread(job, "freed-device-adult-friend-lock").apply { isDaemon = true } } }
++    @Volatile private var closed = false
++    fun <T> submit(operation: (FriendLockCore) -> T): Future<T> {
++        check(!closed) { "Friend lock worker is closed" }; return executor.submit(Callable { operation(core) })
++    }
++    override fun close() { closed = true }
++}
++internal class FriendLockCore(private val store: FriendLockRecordStore, private val crypto: FriendLockCrypto, private val clock: FriendLockClock = FriendLockElapsedClock()) {
++    companion object { private val verificationGate = Any() }
++    @Synchronized fun status(): FriendLockStatus = try { if (store.load() == null) FriendLockStatus.NOT_ENROLLED else FriendLockStatus.ENROLLED }
++    catch (failure: FriendLockException) { when (failure.reason) { FriendLockError.MISSING_ENROLLED -> FriendLockStatus.MISSING_ENROLLED; FriendLockError.CORRUPT -> FriendLockStatus.CORRUPT; else -> FriendLockStatus.UNAVAILABLE } }
++    @Synchronized fun enroll(pin: String, confirmation: String, baseline: FriendLockBaseline): FriendLockEnrollment {
++        validatePIN(pin, confirmation)
++        if (!baseline.adultProtectionInstalled || baseline.nativeReadback.isEmpty() || baseline.nativeReadback.size > 32_768) fail(FriendLockError.BASELINE_UNAVAILABLE)
++        if (store.load() != null) fail(FriendLockError.ALREADY_ENROLLED)
++        val key = crypto.random(32).friendHex()
++        val record = FriendLockRecord(crypto.digest(baseline.nativeReadback).friendHex(), verifier(pin), verifier(key))
++        store.publish(record, null); return FriendLockEnrollment(record.lockRevision, key)
++    }
++    @Synchronized fun prepare(change: FriendLockAdultChange, configuration: FriendLockConfiguration): FriendLockReceipt {
++        val record = requiredRecord()
++        if (record.operations.size >= 32) fail(FriendLockError.AUTHORIZATION_CAPACITY)
++        val receipt = FriendLockReceipt(crypto.random(16).friendHex(), change.digest(crypto), configuration, record.lockRevision, record.authorizationGeneration, FriendLockOperationState.AWAITING_SECRET)
++        if (record.operations.any { it.operationID == receipt.operationID }) fail(FriendLockError.CRYPTO_UNAVAILABLE)
++        store.publish(record.copy(operations = record.operations + receipt), record); return receipt
++    }
++    @Synchronized fun authorize(pin: String, change: FriendLockAdultChange, configuration: FriendLockConfiguration, operationID: String? = null): FriendLockReceipt {
++        val current = requiredRecord()
++        val prepared = operationID?.let { scoped(current, it, change, configuration) }
++        if (prepared != null && prepared.state != FriendLockOperationState.AWAITING_SECRET) return prepared
++        if (prepared == null && current.operations.size >= 32) fail(FriendLockError.AUTHORIZATION_CAPACITY)
++        val reserved = verify(FriendLockSecret.Pin(pin), current)
++        val receipt = prepared?.copy(state = FriendLockOperationState.AUTHORIZED) ?: FriendLockReceipt(crypto.random(16).friendHex(), change.digest(crypto), configuration, reserved.lockRevision, reserved.authorizationGeneration, FriendLockOperationState.AUTHORIZED)
++        if (prepared == null && reserved.operations.any { it.operationID == receipt.operationID }) fail(FriendLockError.CRYPTO_UNAVAILABLE)
++        val operations = if (prepared == null) reserved.operations + receipt else reserved.operations.map { if (it.operationID == operationID) receipt else it }
++        store.publish(reserved.copy(operations = operations, pinThrottle = FriendLockThrottle()), reserved)
++        return receipt
++    }
++    @Synchronized fun retry(operationID: String, change: FriendLockAdultChange, configuration: FriendLockConfiguration) = scoped(requiredRecord(), operationID, change, configuration)
++    @Synchronized fun claim(operationID: String, change: FriendLockAdultChange, configuration: FriendLockConfiguration): FriendLockReceipt {
++        val record = requiredRecord(); val receipt = scoped(record, operationID, change, configuration)
++        if (receipt.state == FriendLockOperationState.AWAITING_SECRET) fail(FriendLockError.INVALID_TRANSITION)
++        if (receipt.state != FriendLockOperationState.AUTHORIZED) return receipt // COMPLETED is an exact receipt, never permission to repeat.
++        val claimed = receipt.copy(state = FriendLockOperationState.IN_FLIGHT)
++        store.publish(record.copy(operations = record.operations.map { if (it.operationID == operationID) claimed else it }), record)
++        return claimed
++    }
++    @Synchronized fun complete(operationID: String, change: FriendLockAdultChange, originalConfiguration: FriendLockConfiguration, resultingConfiguration: FriendLockConfiguration, nativeReadback: ByteArray): FriendLockReceipt {
++        if (nativeReadback.isEmpty() || nativeReadback.size > 32_768) fail(FriendLockError.BASELINE_UNAVAILABLE)
++        val record = requiredRecord(); val receipt = record.operations.firstOrNull { it.operationID == operationID } ?: fail(FriendLockError.UNKNOWN_OPERATION)
++        if (receipt.deltaDigest != change.digest(crypto) || receipt.configuration != originalConfiguration) fail(FriendLockError.SCOPE_MISMATCH)
++        val digest = crypto.digest(nativeReadback).friendHex()
++        if (receipt.state == FriendLockOperationState.COMPLETED) {
++            if (receipt.resultingConfiguration != resultingConfiguration || receipt.readbackDigest != digest) fail(FriendLockError.SCOPE_MISMATCH)
++            return receipt
++        }
++        if (receipt.state != FriendLockOperationState.IN_FLIGHT) fail(if (receipt.state == FriendLockOperationState.CANCELLED) FriendLockError.CANCELLED else FriendLockError.INVALID_TRANSITION)
++        val completed = receipt.copy(state = FriendLockOperationState.COMPLETED, resultingConfiguration = resultingConfiguration, readbackDigest = digest)
++        store.publish(record.copy(operations = record.operations.map { if (it.operationID == operationID) completed else it }), record)
++        return completed
++    }
++    @Synchronized fun cancel(operationID: String): FriendLockReceipt {
++        val record = requiredRecord(); val receipt = record.operations.firstOrNull { it.operationID == operationID } ?: fail(FriendLockError.UNKNOWN_OPERATION)
++        if (receipt.state == FriendLockOperationState.COMPLETED) fail(FriendLockError.INVALID_TRANSITION)
++        val cancelled = receipt.copy(state = FriendLockOperationState.CANCELLED)
++        store.publish(record.copy(operations = record.operations.map { if (it.operationID == operationID) cancelled else it }), record)
++        return cancelled
++    }
++    @Synchronized fun invalidateAuthorizations() {
++        val record = requiredRecord()
++        if (record.authorizationGeneration == 9_007_199_254_740_991L) fail(FriendLockError.CORRUPT)
++        store.publish(record.copy(authorizationGeneration = record.authorizationGeneration + 1, operations = emptyList()), record)
++    }
++    @Synchronized fun rotate(secret: FriendLockSecret, newPIN: String, confirmation: String): FriendLockEnrollment {
++        validatePIN(newPIN, confirmation)
++        val reserved = verify(secret, requiredRecord())
++        if (reserved.lockRevision == 9_007_199_254_740_991L || reserved.authorizationGeneration == 9_007_199_254_740_991L) fail(FriendLockError.CORRUPT)
++        if (MessageDigest.isEqual(crypto.derive(newPIN, reserved.pin.salt), reserved.pin.derived)) fail(FriendLockError.INVALID_PIN)
++        val key = crypto.random(32).friendHex()
++        val candidate = reserved.copy(pin = verifier(newPIN), recovery = verifier(key), lockRevision = reserved.lockRevision + 1,
++            authorizationGeneration = reserved.authorizationGeneration + 1, operations = emptyList(),
++            pinThrottle = if (secret is FriendLockSecret.Pin) FriendLockThrottle() else reserved.pinThrottle,
++            recoveryThrottle = if (secret is FriendLockSecret.Recovery) FriendLockThrottle() else reserved.recoveryThrottle)
++        store.publish(candidate, reserved); return FriendLockEnrollment(candidate.lockRevision, key)
++    }
++    private fun validatePIN(pin: String, confirmation: String) {
++        if (pin.length != 6 || !pin.all { it in '0'..'9' }) fail(FriendLockError.INVALID_PIN)
++        if (pin != confirmation) fail(FriendLockError.PIN_MISMATCH)
++    }
++    private fun verifier(value: String): FriendLockVerifier { val salt = crypto.random(16); return FriendLockVerifier(salt, crypto.derive(value, salt)) }
++    private fun requiredRecord() = store.load() ?: fail(FriendLockError.NOT_ENROLLED)
++    private fun verify(secret: FriendLockSecret, record: FriendLockRecord): FriendLockRecord = synchronized(verificationGate) {
++        val isPIN = secret is FriendLockSecret.Pin
++        val input = when (secret) { is FriendLockSecret.Pin -> secret.value; is FriendLockSecret.Recovery -> secret.value }
++        val verifier = if (isPIN) record.pin else record.recovery
++        val now = clock.now()
++        val advanced = (if (isPIN) record.pinThrottle else record.recoveryThrottle).advance(now)
++        if (advanced.remainingMilliseconds > 0) {
++            store.publish(if (isPIN) record.copy(pinThrottle = advanced) else record.copy(recoveryThrottle = advanced), record)
++            fail(FriendLockError.THROTTLED)
++        }
++        val throttle = advanced.reserve(now)
++        val reserved = if (isPIN) record.copy(pinThrottle = throttle) else record.copy(recoveryThrottle = throttle)
++        store.publish(reserved, record) // Reservation is durable before KDF; interruptions consume the attempt.
++        val valid = if (isPIN) input.length == 6 && input.all { it in '0'..'9' } else validHex(input, 64)
++        if (!valid || !MessageDigest.isEqual(crypto.derive(input, verifier.salt), verifier.derived)) fail(FriendLockError.INCORRECT_SECRET)
++        reserved // Clear only with the durable authorization/rotation transaction.
++    }
++    private fun scoped(record: FriendLockRecord, operationID: String, change: FriendLockAdultChange, configuration: FriendLockConfiguration): FriendLockReceipt {
++        val receipt = record.operations.firstOrNull { it.operationID == operationID } ?: fail(FriendLockError.UNKNOWN_OPERATION)
++        if (receipt.state == FriendLockOperationState.CANCELLED) fail(FriendLockError.CANCELLED)
++        val expected = if (receipt.state == FriendLockOperationState.COMPLETED) receipt.resultingConfiguration else receipt.configuration
++        if (receipt.deltaDigest != change.digest(crypto) || expected != configuration || receipt.lockRevision != record.lockRevision || receipt.authorizationGeneration != record.authorizationGeneration) fail(FriendLockError.SCOPE_MISMATCH)
++        return receipt
++    }
++}
+diff --git a/modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockRecordStore.kt b/modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockRecordStore.kt
+new file mode 100644
+index 0000000..05928fa
+--- /dev/null
++++ b/modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockRecordStore.kt
+@@ -0,0 +1,153 @@
++package app.freed.protection
++
++import java.io.ByteArrayInputStream
++import java.io.ByteArrayOutputStream
++import java.io.DataInputStream
++import java.io.DataOutputStream
++import java.security.MessageDigest
++
++internal interface FriendLockProtectedBytes {
++    fun beginAccess() {}
++    fun endAccess() {}
++    fun read(key: String): ByteArray?
++    fun write(key: String, value: ByteArray)
++    fun remove(key: String)
++}
++internal object FriendLockRecordCodec {
++    const val MAX_BYTES = 65_536
++    private fun DataOutputStream.text(value: String) { val data = value.toByteArray(Charsets.UTF_8); writeInt(data.size); write(data) }
++    private fun DataInputStream.text(maximum: Int): String = bytes(maximum).toString(Charsets.UTF_8)
++    private fun DataOutputStream.bytes(value: ByteArray) { writeInt(value.size); write(value) }
++    private fun DataInputStream.bytes(maximum: Int): ByteArray {
++        val count = readInt(); if (count < 0 || count > maximum || count > available()) fail(FriendLockError.CORRUPT)
++        return ByteArray(count).also { readFully(it) }
++    }
++    private fun DataOutputStream.configuration(value: FriendLockConfiguration) { text(value.revision); text(value.mutationGeneration) }
++    private fun DataInputStream.configuration() = FriendLockConfiguration(text(128), text(128))
++    private fun DataOutputStream.throttle(value: FriendLockThrottle) { writeInt(value.failures); writeLong(value.remainingMilliseconds); text(value.session); writeLong(value.lastMilliseconds) }
++    private fun DataInputStream.throttle() = FriendLockThrottle(readInt(), readLong(), text(128), readLong())
++    fun encode(record: FriendLockRecord): ByteArray {
++        if (!record.valid()) fail(FriendLockError.CORRUPT)
++        val buffer = ByteArrayOutputStream()
++        DataOutputStream(buffer).use { out ->
++            out.writeInt(record.schema); out.writeLong(record.lockRevision); out.writeLong(record.authorizationGeneration); out.text(record.enrollmentBaselineDigest)
++            out.bytes(record.pin.salt); out.bytes(record.pin.derived); out.bytes(record.recovery.salt); out.bytes(record.recovery.derived)
++            out.throttle(record.pinThrottle); out.throttle(record.recoveryThrottle); out.writeInt(record.operations.size)
++            record.operations.forEach { receipt ->
++                out.text(receipt.operationID); out.text(receipt.deltaDigest); out.configuration(receipt.configuration)
++                out.writeLong(receipt.lockRevision); out.writeLong(receipt.authorizationGeneration); out.writeInt(receipt.state.ordinal)
++                out.writeBoolean(receipt.resultingConfiguration != null)
++                receipt.resultingConfiguration?.let { out.configuration(it) }
++                out.writeBoolean(receipt.readbackDigest != null); receipt.readbackDigest?.let { out.text(it) }
++            }
++        }
++        return buffer.toByteArray().also { if (it.size > MAX_BYTES) fail(FriendLockError.CORRUPT) }
++    }
++    fun decode(bytes: ByteArray): FriendLockRecord = try {
++        if (bytes.size > MAX_BYTES) fail(FriendLockError.CORRUPT)
++        DataInputStream(ByteArrayInputStream(bytes)).use { input ->
++            val schema = input.readInt(); val revision = input.readLong(); val generation = input.readLong(); val baseline = input.text(64)
++            val pin = FriendLockVerifier(input.bytes(16), input.bytes(32)); val recovery = FriendLockVerifier(input.bytes(16), input.bytes(32))
++            val pinThrottle = input.throttle(); val recoveryThrottle = input.throttle(); val count = input.readInt()
++            if (count !in 0..32) fail(FriendLockError.CORRUPT)
++            val receipts = List(count) {
++                val id = input.text(32); val digest = input.text(64); val config = input.configuration()
++                val lockRevision = input.readLong(); val authorizationGeneration = input.readLong(); val state = input.readInt()
++                if (state !in FriendLockOperationState.entries.indices) fail(FriendLockError.CORRUPT)
++                val result = if (input.readBoolean()) input.configuration() else null
++                val readback = if (input.readBoolean()) input.text(64) else null
++                FriendLockReceipt(id, digest, config, lockRevision, authorizationGeneration, FriendLockOperationState.entries[state], result, readback)
++            }
++            val record = FriendLockRecord(baseline, pin, recovery, schema, revision, generation, pinThrottle, recoveryThrottle, receipts)
++            if (input.available() != 0 || !record.valid()) fail(FriendLockError.CORRUPT)
++            record
++        }
++    } catch (_: Exception) { fail(FriendLockError.CORRUPT) }
++    const val MAX_JOURNAL_BYTES = MAX_BYTES * 2 + 32
++    fun journal(value: FriendLockJournal): ByteArray {
++        val buffer = ByteArrayOutputStream()
++        DataOutputStream(buffer).use {
++            it.writeInt(2); it.writeInt(if (value.committed) 1 else 0); it.writeBoolean(value.previous != null)
++            value.previous?.let { previous -> it.bytes(previous) }; it.bytes(value.candidate)
++        }
++        return buffer.toByteArray().also { if (it.size > MAX_JOURNAL_BYTES) fail(FriendLockError.CORRUPT) }
++    }
++    fun decodeJournal(journal: ByteArray): FriendLockJournal = try {
++        if (journal.size > MAX_JOURNAL_BYTES) fail(FriendLockError.CORRUPT)
++        DataInputStream(ByteArrayInputStream(journal)).use {
++            if (it.readInt() != 2) fail(FriendLockError.CORRUPT)
++            val phase = it.readInt(); if (phase !in 0..1) fail(FriendLockError.CORRUPT)
++            val previous = if (it.readBoolean()) it.bytes(MAX_BYTES) else null
++            val candidate = it.bytes(MAX_BYTES)
++            if (it.available() != 0) fail(FriendLockError.CORRUPT)
++            previous?.let { bytes -> decode(bytes) }; decode(candidate)
++            FriendLockJournal(phase == 1, previous, candidate)
++        }
++    } catch (_: Exception) { fail(FriendLockError.CORRUPT) }
++}
++internal class FriendLockJournal(val committed: Boolean, val previous: ByteArray?, val candidate: ByteArray)
++
++// A successful transaction retains previous/current protected generations. No journal deletion.
++internal class FriendLockRecordStore(private val bytes: FriendLockProtectedBytes) {
++    companion object { private val processLock = Any() }
++    private fun <T> exclusive(operation: () -> T): T = synchronized(processLock) {
++        try { bytes.beginAccess() } catch (_: Exception) { fail(FriendLockError.STORAGE_UNAVAILABLE) }
++        try { operation() } catch (failure: FriendLockException) { throw failure } catch (_: Exception) { fail(FriendLockError.STORAGE_UNAVAILABLE) }
++        finally { try { bytes.endAccess() } catch (_: Exception) { /* Closing a lock must not retroactively fail a verified commit. */ } }
++    }
++    private fun same(left: ByteArray?, right: ByteArray?) = if (left == null || right == null) left == null && right == null else MessageDigest.isEqual(left, right)
++    private fun rollback(journal: FriendLockJournal): ByteArray {
++        val previous = journal.previous ?: fail(FriendLockError.MISSING_ENROLLED)
++        if (journal.committed) fail(FriendLockError.CORRUPT)
++        bytes.write("record", previous)
++        if (!same(bytes.read("record"), previous)) fail(FriendLockError.STORAGE_UNAVAILABLE)
++        val rolledBack = FriendLockRecordCodec.journal(FriendLockJournal(true, null, previous))
++        bytes.write("journal", rolledBack)
++        if (!same(bytes.read("journal"), rolledBack)) fail(FriendLockError.STORAGE_UNAVAILABLE)
++        return previous
++    }
++    private fun raw(): ByteArray? {
++        val witness = bytes.read("witness"); val record = bytes.read("record"); val encoded = bytes.read("journal")
++        if (witness == null) { if (record != null || encoded != null) fail(FriendLockError.CORRUPT); return null }
++        if (!witness.contentEquals(byteArrayOf(1))) fail(FriendLockError.CORRUPT)
++        if (encoded == null) fail(FriendLockError.MISSING_ENROLLED)
++        val journal = FriendLockRecordCodec.decodeJournal(encoded)
++        if (!journal.committed) return rollback(journal)
++        if (record == null) fail(FriendLockError.MISSING_ENROLLED)
++        if (!same(record, journal.candidate)) fail(FriendLockError.CORRUPT)
++        return journal.candidate
++    }
++    fun load(): FriendLockRecord? = exclusive { raw()?.let { FriendLockRecordCodec.decode(it) } }
++    fun publish(candidate: FriendLockRecord, expected: FriendLockRecord?) = exclusive {
++        val previous = raw(); val expectedBytes = expected?.let { FriendLockRecordCodec.encode(it) }; val next = FriendLockRecordCodec.encode(candidate)
++        if (!same(previous, expectedBytes)) fail(FriendLockError.STORAGE_CONFLICT)
++        if (previous == null) { bytes.write("witness", byteArrayOf(1)); if (!same(bytes.read("witness"), byteArrayOf(1))) fail(FriendLockError.STORAGE_UNAVAILABLE) }
++        val prepared = FriendLockJournal(false, previous, next)
++        val pending = FriendLockRecordCodec.journal(prepared)
++        try {
++            bytes.write("journal", pending); if (!same(bytes.read("journal"), pending)) fail(FriendLockError.STORAGE_UNAVAILABLE)
++            bytes.write("record", next); if (!same(bytes.read("record"), next)) fail(FriendLockError.STORAGE_UNAVAILABLE)
++        } catch (_: Exception) {
++            if (previous != null) try { if (same(bytes.read("journal"), pending)) rollback(prepared) } catch (_: Exception) { }
++            fail(FriendLockError.STORAGE_UNAVAILABLE)
++        }
++        val committed = FriendLockRecordCodec.journal(FriendLockJournal(true, previous, next))
++        var commitWriteReturned = false
++        try {
++            bytes.write("journal", committed); commitWriteReturned = true
++            if (!same(bytes.read("journal"), committed)) fail(FriendLockError.STORAGE_UNAVAILABLE)
++            // Completion ends here; optional cleanup cannot retroactively fail a verified commit.
++        } catch (_: Exception) {
++            val observed = try { bytes.read("journal") } catch (_: Exception) { fail(FriendLockError.COMMIT_OUTCOME_UNKNOWN) }
++            if (same(observed, committed) && !commitWriteReturned) fail(FriendLockError.COMMIT_OUTCOME_UNKNOWN)
++            if (!same(observed, committed)) {
++                if (same(observed, pending)) {
++                    if (previous != null) try { rollback(prepared) } catch (_: Exception) { }
++                    fail(FriendLockError.STORAGE_UNAVAILABLE)
++                }
++                fail(FriendLockError.CORRUPT)
++            }
++            // A second read has now confirmed the committed phase, so this is native success.
++        }
++    }
++}
+diff --git a/modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockEncryptedRecord.kt b/modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockEncryptedRecord.kt
+new file mode 100644
+index 0000000..af0796b
+--- /dev/null
++++ b/modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockEncryptedRecord.kt
+@@ -0,0 +1,63 @@
++package app.freed.protection
++
++import java.io.ByteArrayInputStream
++import java.io.ByteArrayOutputStream
++import java.io.DataInputStream
++import java.io.DataOutputStream
++
++internal interface FriendLockAtomicBytes {
++    fun begin()
++    fun end()
++    fun read(key: String): ByteArray?
++    fun write(key: String, value: ByteArray)
++    fun remove(key: String)
++}
++internal class FriendLockSealedBytes(val iv: ByteArray, val ciphertext: ByteArray)
++internal interface FriendLockCipherBoundary {
++    fun keyExists(): Boolean
++    fun encrypt(value: ByteArray, aad: ByteArray, create: Boolean): FriendLockSealedBytes
++    fun decrypt(value: FriendLockSealedBytes, aad: ByteArray): ByteArray
++}
++// Production envelope and AAD validation are exercised with JVM AES-GCM plus injected file/key I/O.
++internal class FriendLockEncryptedBytes(private val atomic: FriendLockAtomicBytes, private val cipher: FriendLockCipherBoundary) : FriendLockProtectedBytes {
++    companion object { const val MAX_ENCRYPTED_BYTES = FriendLockRecordCodec.MAX_JOURNAL_BYTES + 128 }
++    private fun validate(key: String) { if (key !in setOf("witness", "record", "journal")) fail(FriendLockError.INVALID_SCOPE) }
++    private fun aad(key: String) = "app.freed.device-adult.friend-lock.aes-gcm.v1:$key:1".toByteArray(Charsets.UTF_8)
++    override fun beginAccess() = atomic.begin()
++    override fun endAccess() = atomic.end()
++    override fun read(key: String): ByteArray? {
++        validate(key)
++        val encoded = atomic.read(key)
++        if (encoded == null) {
++            if (key == "witness" && cipher.keyExists()) fail(FriendLockError.MISSING_ENROLLED)
++            return null
++        }
++        if (encoded.size > MAX_ENCRYPTED_BYTES) fail(FriendLockError.CORRUPT)
++        return try {
++            DataInputStream(ByteArrayInputStream(encoded)).use { input ->
++                if (input.readInt() != 1 || input.readInt() != 12) fail(FriendLockError.CORRUPT)
++                val iv = ByteArray(12).also { input.readFully(it) }; val count = input.readInt()
++                if (count < 16 || count > MAX_ENCRYPTED_BYTES || count != input.available()) fail(FriendLockError.CORRUPT)
++                val ciphertext = ByteArray(count).also { input.readFully(it) }
++                cipher.decrypt(FriendLockSealedBytes(iv, ciphertext), aad(key)).also {
++                    if (it.size > FriendLockRecordCodec.MAX_JOURNAL_BYTES) fail(FriendLockError.CORRUPT)
++                }
++            }
++        } catch (failure: FriendLockException) { throw failure }
++        catch (_: java.io.IOException) { fail(FriendLockError.CORRUPT) }
++        catch (_: Exception) { fail(FriendLockError.STORAGE_UNAVAILABLE) }
++    }
++    override fun write(key: String, value: ByteArray) {
++        validate(key)
++        if (value.size > FriendLockRecordCodec.MAX_JOURNAL_BYTES) fail(FriendLockError.CORRUPT)
++        val sealed = cipher.encrypt(value, aad(key), create = key == "witness")
++        if (sealed.iv.size != 12 || sealed.ciphertext.size != value.size + 16) fail(FriendLockError.CRYPTO_UNAVAILABLE)
++        val buffer = ByteArrayOutputStream()
++        DataOutputStream(buffer).use { out -> out.writeInt(1); out.writeInt(sealed.iv.size); out.write(sealed.iv); out.writeInt(sealed.ciphertext.size); out.write(sealed.ciphertext) }
++        atomic.write(key, buffer.toByteArray())
++    }
++    override fun remove(key: String) {
++        validate(key); if (key == "witness") fail(FriendLockError.INVALID_SCOPE)
++        atomic.remove(key)
++    }
++}
+diff --git a/modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockKeystore.kt b/modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockKeystore.kt
+new file mode 100644
+index 0000000..0d56da6
+--- /dev/null
++++ b/modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockKeystore.kt
+@@ -0,0 +1,91 @@
++package app.freed.protection
++
++import android.content.Context
++import android.security.keystore.KeyGenParameterSpec
++import android.security.keystore.KeyProperties
++import android.util.AtomicFile
++import android.system.Os
++import android.system.OsConstants
++import java.io.File
++import java.io.FileNotFoundException
++import java.io.RandomAccessFile
++import java.nio.channels.FileLock
++import java.security.KeyStore
++import javax.crypto.Cipher
++import javax.crypto.KeyGenerator
++import javax.crypto.SecretKey
++import javax.crypto.spec.GCMParameterSpec
++
++// Dedicated, device-level no-backup namespace. No account/private/reset/export coupling.
++internal class FriendLockKeystoreBytes(context: Context) : FriendLockProtectedBytes by FriendLockEncryptedBytes(
++    FriendLockAndroidAtomicBytes(context), FriendLockAndroidCipher()
++)
++internal class FriendLockAndroidAtomicBytes(context: Context) : FriendLockAtomicBytes {
++    private val directory = File(context.applicationContext.noBackupFilesDir, "freed-device-adult-security-v1")
++    private var accessFile: RandomAccessFile? = null
++    private var accessLock: FileLock? = null
++    private fun file(key: String): AtomicFile {
++        if (key !in setOf("witness", "record", "journal")) fail(FriendLockError.INVALID_SCOPE)
++        return AtomicFile(File(directory, "$key.gcm"))
++    }
++    override fun begin() {
++        try {
++            if (!directory.exists() && !directory.mkdirs()) fail(FriendLockError.STORAGE_UNAVAILABLE)
++            val opened = RandomAccessFile(File(directory, "transaction.lock"), "rw")
++            accessFile = opened; accessLock = opened.channel.tryLock() ?: fail(FriendLockError.STORAGE_UNAVAILABLE)
++        } catch (_: Exception) { end(); fail(FriendLockError.STORAGE_UNAVAILABLE) }
++    }
++    override fun end() {
++        try { accessLock?.release() } finally { accessLock = null; accessFile?.close(); accessFile = null }
++    }
++    override fun read(key: String): ByteArray? = try {
++        file(key).openRead().use { input ->
++            if (input.channel.size() > FriendLockEncryptedBytes.MAX_ENCRYPTED_BYTES) fail(FriendLockError.CORRUPT)
++            val bytes = input.readBytes(); if (bytes.size > FriendLockEncryptedBytes.MAX_ENCRYPTED_BYTES) fail(FriendLockError.CORRUPT); bytes
++        }
++    } catch (_: FileNotFoundException) { null }
++    override fun write(key: String, value: ByteArray) {
++        val atomic = file(key); val output = atomic.startWrite()
++        try {
++            output.write(value); output.fd.sync(); atomic.finishWrite(output)
++            val descriptor = Os.open(directory.absolutePath, OsConstants.O_RDONLY, 0)
++            try {
++                if (!OsConstants.S_ISDIR(Os.fstat(descriptor).st_mode)) fail(FriendLockError.STORAGE_UNAVAILABLE)
++                Os.fsync(descriptor)
++            } finally { Os.close(descriptor) }
++        }
++        catch (_: Exception) { atomic.failWrite(output); fail(FriendLockError.STORAGE_UNAVAILABLE) }
++    }
++    override fun remove(key: String) {
++        if (key == "witness") fail(FriendLockError.INVALID_SCOPE)
++        val atomic = file(key); atomic.delete()
++        if (atomic.baseFile.exists() || File(atomic.baseFile.path + ".bak").exists()) fail(FriendLockError.STORAGE_UNAVAILABLE)
++    }
++}
++internal class FriendLockAndroidCipher : FriendLockCipherBoundary {
++    private val alias = "app.freed.device-adult.friend-lock.aes-gcm.v1"
++    private fun keyStore() = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
++    override fun keyExists() = keyStore().containsAlias(alias)
++    private fun encryptionKey(create: Boolean): SecretKey {
++        val store = keyStore()
++        if (store.containsAlias(alias)) return store.getKey(alias, null) as? SecretKey ?: fail(FriendLockError.STORAGE_UNAVAILABLE)
++        if (!create) fail(FriendLockError.MISSING_ENROLLED)
++        val generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
++        generator.init(KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
++            .setKeySize(256).setBlockModes(KeyProperties.BLOCK_MODE_GCM).setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
++            .setRandomizedEncryptionRequired(true).setUserAuthenticationRequired(false).build())
++        return generator.generateKey()
++    }
++    override fun encrypt(value: ByteArray, aad: ByteArray, create: Boolean): FriendLockSealedBytes {
++        val cipher = Cipher.getInstance("AES/GCM/NoPadding")
++        // Creation is limited to first witness write. Never generate a replacement for unreadable enrollment.
++        cipher.init(Cipher.ENCRYPT_MODE, encryptionKey(create)); cipher.updateAAD(aad)
++        return FriendLockSealedBytes(cipher.iv, cipher.doFinal(value))
++    }
++    override fun decrypt(value: FriendLockSealedBytes, aad: ByteArray): ByteArray {
++        val cipher = Cipher.getInstance("AES/GCM/NoPadding")
++        cipher.init(Cipher.DECRYPT_MODE, encryptionKey(false), GCMParameterSpec(128, value.iv)); cipher.updateAAD(aad)
++        return try { cipher.doFinal(value.ciphertext) }
++        catch (_: javax.crypto.AEADBadTagException) { fail(FriendLockError.CORRUPT) }
++    }
++}
+diff --git a/src/lib/friend-lock-contract.ts b/src/lib/friend-lock-contract.ts
+new file mode 100644
+index 0000000..fad4a8a
+--- /dev/null
++++ b/src/lib/friend-lock-contract.ts
+@@ -0,0 +1,42 @@
++/** Package A schema only. Native integrations must advertise support before these requests exist.
++ * A receipt is diagnostic data, never a JavaScript permission, app lease, or reusable unlocked flag.
++ * Friend secrets must remain ephemeral, never enter history, backup, analytics or logs. */
++export type FriendLockStatus = 'notEnrolled' | 'enrolled' | 'missingEnrolled' | 'corrupt' | 'unavailable';
++export type FriendLockAction =
++  | 'disableAdultFilter'
++  | 'disableEncryptedDNS'
++  | 'removeAdultDomains'
++  | 'addAdultExceptions'
++  | 'resetAdultProtection'
++  | 'reduceAdultSchedule';
++export type FriendLockFailure =
++  | 'invalidPIN' | 'pinMismatch' | 'invalidScope' | 'baselineUnavailable'
++  | 'alreadyEnrolled' | 'notEnrolled' | 'missingEnrolled' | 'corrupt'
++  | 'storageUnavailable' | 'commitOutcomeUnknown' | 'storageConflict' | 'incorrectSecret' | 'throttled'
++  | 'scopeMismatch' | 'unknownOperation' | 'cancelled' | 'authorizationCapacity'
++  | 'invalidTransition' | 'cryptoUnavailable';
++export type FriendLockConfiguration = Readonly<{
++  revision: string;
++  mutationGeneration: string;
++}>;
++export type FriendLockReceipt = Readonly<{
++  operationID: string;
++  deltaDigest: string;
++  configuration: FriendLockConfiguration;
++  lockRevision: number;
++  authorizationGeneration: number;
++  state: 'awaitingSecret' | 'authorized' | 'inFlight' | 'completed' | 'cancelled';
++  resultingConfiguration?: FriendLockConfiguration;
++  readbackDigest?: string;
++}>;
++export type FriendLockEnrollment = Readonly<{
++  lockRevision: number;
++  /** One-time trusted-person presentation; never persist this value in JS. */
++  recoveryKey: string;
++}>;
++export type FriendLockNativeCapability = Readonly<{
++  schema: 1;
++  coreAvailable: boolean;
++  /** This remains false until B/C native mutation boundaries and device evidence are delivered. */
++  mutationEnforcementAvailable: boolean;
++}>;
+diff --git a/tests/fixtures/friend-lock-core/FriendLockCoreCases.swift b/tests/fixtures/friend-lock-core/FriendLockCoreCases.swift
+new file mode 100644
+index 0000000..a540b1e
+--- /dev/null
++++ b/tests/fixtures/friend-lock-core/FriendLockCoreCases.swift
+@@ -0,0 +1,210 @@
++import Foundation
++
++// Boundary injection exercises the production transactional adapter; never uses Mac Keychain.
++final class FriendLockMemoryBytes: FriendLockProtectedBytes {
++    var values: [String: Data] = [:]
++    var failWriteKey: String?
++    var failReadAfterRecordWrite = false
++    var readFailureArmed = false
++    var recordWrites = 0
++    var failReadOnRecordWrite: Int?
++    var failRecordWrites: Set<Int> = []
++    var journalWrites = 0
++    var failAfterJournalWrite: Int?
++    var unavailable = false
++    func read(_ key: String) throws -> Data? {
++        if unavailable { throw FriendLockFailure.storageUnavailable }
++        if key == "record", readFailureArmed {
++            readFailureArmed = false
++            throw FriendLockFailure.storageUnavailable
++        }
++        return values[key]
++    }
++    func write(_ key: String, _ data: Data) throws {
++        if unavailable { throw FriendLockFailure.storageUnavailable }
++        if key == failWriteKey { failWriteKey = nil; throw FriendLockFailure.storageUnavailable }
++        if key == "record" { recordWrites += 1; if failRecordWrites.contains(recordWrites) { throw FriendLockFailure.storageUnavailable } }
++        values[key] = data
++        if key == "journal" { journalWrites += 1; if failAfterJournalWrite == journalWrites { unavailable = true } }
++        if key == "record", failReadAfterRecordWrite || failReadOnRecordWrite == recordWrites {
++            failReadAfterRecordWrite = false; readFailureArmed = true
++        }
++    }
++    func remove(_ key: String) throws {
++        if unavailable { throw FriendLockFailure.storageUnavailable }
++        values.removeValue(forKey: key)
++    }
++}
++
++final class FriendLockTestClock: FriendLockClock {
++    var milliseconds: Int64 = 1_000
++    var session = "fixture-process-1"
++    func now() -> FriendLockInstant { FriendLockInstant(session: session, milliseconds: milliseconds) }
++}
++
++func friendExpect(_ value: Bool, _ name: String) throws {
++    if !value { throw NSError(domain: "friend-lock-fixture", code: 1, userInfo: [NSLocalizedDescriptionKey: name]) }
++}
++
++@main struct FriendLockCoreCases {
++    static func rejects(_ expected: FriendLockFailure, _ operation: () async throws -> Void) async throws {
++        do { try await operation(); throw NSError(domain: "expected-failure", code: 1) }
++        catch let failure as FriendLockFailure { try friendExpect(failure == expected, "expected \(expected), got \(failure)") }
++    }
++    static func main() async throws {
++        try friendLockAdapterCases()
++        let vector = try FriendLockNativeCrypto().derive("123456", salt: Data(repeating: 7, count: 16)).map { String(format: "%02x", $0) }.joined()
++        try friendExpect(vector == "0be74e7558e56becceb023ea559588f19bcffe4e9e5ef85d75e02917f383522d", "PBKDF2 SHA256 600000 known vector")
++        let bytes = FriendLockMemoryBytes()
++        let store = FriendLockRecordStore(bytes: bytes)
++        let clock = FriendLockTestClock()
++        let core = FriendLockCore(store: store, crypto: FriendLockNativeCrypto(), clock: clock)
++        let context = try FriendLockConfiguration(revision: "adult-7", mutationGeneration: "generation-12")
++        let change = try FriendLockAdultChange(action: .disableEncryptedDNS, fields: ["provider": "cloudflare-families", "enabled": "false"])
++        let baseline = FriendLockBaseline(configuration: context, adultProtectionInstalled: true, nativeReadback: Data("native-filter-installed".utf8))
++
++        try friendExpect(try await core.status() == .notEnrolled, "fresh native state")
++        try await rejects(.invalidPIN) { _ = try await core.enroll(pin: "１２３４５６", confirmation: "１２３４５６", baseline: baseline) }
++        try await rejects(.pinMismatch) { _ = try await core.enroll(pin: "123456", confirmation: "123457", baseline: baseline) }
++        try friendExpect(bytes.values.isEmpty, "invalid enrollment must not mutate")
++        let enrolled = try await core.enroll(pin: "123456", confirmation: "123456", baseline: baseline)
++        try friendExpect(enrolled.recoveryKey.count == 64 && enrolled.lockRevision == 1, "native enrollment receipt")
++        try friendExpect(!(bytes.values["record"]?.range(of: Data("123456".utf8)) != nil), "PIN absent from record")
++        try friendExpect(!(bytes.values["record"]?.range(of: Data(enrolled.recoveryKey.utf8)) != nil), "recovery key absent from record")
++
++        let request = try await core.prepare(change: change, configuration: context)
++        try await rejects(.invalidTransition) { _ = try await core.claim(operationID: request.operationID, change: change, configuration: context) }
++        for _ in 0..<5 { try await rejects(.incorrectSecret) { _ = try await core.authorize(pin: "000000", change: change, configuration: context, operationID: request.operationID) } }
++        try await rejects(.throttled) { _ = try await core.authorize(pin: "123456", change: change, configuration: context) }
++        clock.session = "fixture-process-2"; clock.milliseconds = 0
++        let reopened = FriendLockCore(store: FriendLockRecordStore(bytes: bytes), crypto: FriendLockNativeCrypto(), clock: clock)
++        try await rejects(.throttled) { _ = try await reopened.authorize(pin: "123456", change: change, configuration: context) }
++        clock.milliseconds = 59_999
++        try await rejects(.throttled) { _ = try await reopened.authorize(pin: "123456", change: change, configuration: context) }
++        clock.milliseconds = 60_000
++        let receipt = try await reopened.authorize(pin: "123456", change: change, configuration: context, operationID: request.operationID)
++        let authRetry = try await reopened.authorize(pin: "000000", change: change, configuration: context, operationID: request.operationID)
++        try friendExpect(authRetry == receipt, "lost authorization response retries exact operation without a second grant")
++        let claimed = try await reopened.claim(operationID: receipt.operationID, change: change, configuration: context)
++        try friendExpect(claimed.state == .inFlight, "claim is durable")
++        let retry = try await reopened.retry(operationID: receipt.operationID, change: change, configuration: context)
++        try friendExpect(retry == claimed, "same operation exact retry")
++        let other = try FriendLockAdultChange(action: .disableEncryptedDNS, fields: ["enabled": "true", "provider": "cloudflare-families"])
++        try await rejects(.scopeMismatch) { _ = try await reopened.retry(operationID: receipt.operationID, change: other, configuration: context) }
++        let resultContext = try FriendLockConfiguration(revision: "adult-8", mutationGeneration: "generation-13")
++        let completed = try await reopened.complete(operationID: receipt.operationID, change: change, originalConfiguration: context, resultingConfiguration: resultContext, nativeReadback: Data("native-exact-off-readback".utf8))
++        let completedRetry = try await reopened.retry(operationID: receipt.operationID, change: change, configuration: resultContext)
++        try friendExpect(completedRetry == completed, "completed exact retry preserves receipt")
++        try await rejects(.scopeMismatch) { _ = try await reopened.retry(operationID: receipt.operationID, change: change, configuration: context) }
++
++        bytes.failReadOnRecordWrite = bytes.recordWrites + 2 // reservation succeeds, credential rotation readback fails
++        try await rejects(.storageUnavailable) { _ = try await reopened.rotate(secret: .recovery(enrolled.recoveryKey), newPIN: "654321", confirmation: "654321") }
++        // Failed reservation/rotation must retain old verifier, with no authorization on failure.
++        let afterFailedRotation = try await reopened.authorize(pin: "123456", change: change, configuration: resultContext)
++        _ = try await reopened.cancel(operationID: afterFailedRotation.operationID)
++        let rotated = try await reopened.rotate(secret: .recovery(enrolled.recoveryKey), newPIN: "654321", confirmation: "654321")
++        try friendExpect(rotated.lockRevision == 2 && rotated.recoveryKey != enrolled.recoveryKey, "rotation changes code/key/revision")
++        try await rejects(.incorrectSecret) { _ = try await reopened.authorize(pin: "123456", change: change, configuration: resultContext) }
++        try await rejects(.incorrectSecret) { _ = try await reopened.rotate(secret: .recovery(enrolled.recoveryKey), newPIN: "888888", confirmation: "888888") }
++        try await rejects(.unknownOperation) { _ = try await reopened.retry(operationID: receipt.operationID, change: change, configuration: resultContext) }
++        let newReceipt = try await reopened.authorize(pin: "654321", change: change, configuration: resultContext)
++        try await reopened.invalidateAuthorizations()
++        try await rejects(.unknownOperation) { _ = try await reopened.claim(operationID: newReceipt.operationID, change: change, configuration: resultContext) }
++
++        let saved = bytes.values["record"]!
++        bytes.values["record"] = nil
++        try friendExpect(try await reopened.status() == .missingEnrolled, "missing enrolled record fails closed")
++        try await rejects(.missingEnrolled) { _ = try await reopened.authorize(pin: "654321", change: change, configuration: resultContext) }
++        bytes.values["record"] = Data([0, 1, 2])
++        try friendExpect(try await reopened.status() == .corrupt, "corruption distinct from no enrollment")
++        bytes.values["record"] = saved
++        bytes.failWriteKey = "record"
++        try await rejects(.storageUnavailable) { _ = try await reopened.authorize(pin: "654321", change: change, configuration: resultContext) }
++        let retryAfterStoreFailure = try await reopened.authorize(pin: "654321", change: change, configuration: resultContext)
++        _ = try await reopened.cancel(operationID: retryAfterStoreFailure.operationID)
++        try await rejects(.cancelled) { _ = try await reopened.claim(operationID: retryAfterStoreFailure.operationID, change: change, configuration: resultContext) }
++        // Persistent journal rolls back after an interrupted write and a failed immediate rollback.
++        let beforeInterrupted = try FriendLockRecordStore(bytes: bytes).load()!
++        bytes.failReadOnRecordWrite = bytes.recordWrites + 1
++        bytes.failRecordWrites = [bytes.recordWrites + 2]
++        try await rejects(.storageUnavailable) { _ = try await reopened.authorize(pin: "654321", change: change, configuration: resultContext) }
++        let recovered = try FriendLockRecordStore(bytes: bytes).load()!
++        try friendExpect(recovered.lockRevision == beforeInterrupted.lockRevision && recovered.pinThrottle.failures == beforeInterrupted.pinThrottle.failures, "journal rollback retains previous credentials and counters")
++        let setupBytes = FriendLockMemoryBytes(); setupBytes.failWriteKey = "record"
++        let interruptedSetup = FriendLockCore(store: FriendLockRecordStore(bytes: setupBytes), crypto: FriendLockNativeCrypto(), clock: clock)
++        try await rejects(.storageUnavailable) { _ = try await interruptedSetup.enroll(pin: "123456", confirmation: "123456", baseline: baseline) }
++        try friendExpect(try await interruptedSetup.status() == .missingEnrolled, "interrupted enrollment remains fail closed")
++        try await supplementalCases(baseline: baseline, change: change, context: context)
++        try await commitOutageCases(baseline: baseline, change: change, context: context)
++        print("PASS friend-lock Swift policy/store failure fixtures (source only; no device or native mutation enforcement)")
++    }
++    static func supplementalCases(baseline: FriendLockBaseline, change: FriendLockAdultChange, context: FriendLockConfiguration) async throws {
++        let bytes = FriendLockMemoryBytes(), clock = FriendLockTestClock()
++        let store = FriendLockRecordStore(bytes: bytes)
++        let core = FriendLockCore(store: store, crypto: FriendLockNativeCrypto(), clock: clock)
++        let disabled = FriendLockBaseline(configuration: context, adultProtectionInstalled: false, nativeReadback: Data([1]))
++        try await rejects(.baselineUnavailable) { _ = try await core.enroll(pin: "123456", confirmation: "123456", baseline: disabled) }
++        let enrollment = try await core.enroll(pin: "123456", confirmation: "123456", baseline: baseline)
++        try await rejects(.invalidPIN) { _ = try await core.rotate(secret: .recovery(enrollment.recoveryKey), newPIN: "123456", confirmation: "123456") }
++        let request = try await core.prepare(change: change, configuration: context)
++        let newer = try FriendLockConfiguration(revision: "adult-repair-8", mutationGeneration: "repair-generation-13")
++        try await rejects(.scopeMismatch) { _ = try await core.authorize(pin: "123456", change: change, configuration: newer, operationID: request.operationID) }
++        let delays: [Int64] = [0, 0, 0, 0, 60_000, 300_000, 900_000, 3_600_000, 3_600_000]
++        for delay in delays {
++            try await rejects(.incorrectSecret) { _ = try await core.authorize(pin: "bad", change: change, configuration: context, operationID: request.operationID) }
++            try friendExpect(try store.load()!.pinThrottle.remainingMilliseconds == delay, "persistent PIN escalation")
++            if delay > 0 { try await rejects(.throttled) { _ = try await core.authorize(pin: "123456", change: change, configuration: context, operationID: request.operationID) } }
++            clock.milliseconds += delay
++        }
++        async let first = core.authorize(pin: "123456", change: change, configuration: context, operationID: request.operationID)
++        async let second = core.authorize(pin: "123456", change: change, configuration: context, operationID: request.operationID)
++        let firstResult = try await first
++        let secondResult = try await second
++        try friendExpect(secondResult == firstResult, "concurrent exact authorization receipt")
++        let exact = try await core.authorize(pin: "000000", change: change, configuration: context, operationID: request.operationID)
++        try friendExpect(exact == firstResult, "authorization exact retry")
++        for _ in 0..<4 { try await rejects(.incorrectSecret) { _ = try await core.rotate(secret: .recovery(String(repeating: "0", count: 64)), newPIN: "654321", confirmation: "654321") } }
++        // A prior same-code rotation attempt also consumed the recovery throttle.
++        try await rejects(.throttled) { _ = try await core.rotate(secret: .recovery(enrollment.recoveryKey), newPIN: "654321", confirmation: "654321") }
++        clock.milliseconds += 60_000
++        try await rejects(.incorrectSecret) { _ = try await core.rotate(secret: .recovery(String(repeating: "0", count: 64)), newPIN: "654321", confirmation: "654321") }
++        try await rejects(.throttled) { _ = try await core.rotate(secret: .recovery(enrollment.recoveryKey), newPIN: "654321", confirmation: "654321") }
++        clock.milliseconds += 300_000
++        _ = try await core.rotate(secret: .recovery(enrollment.recoveryKey), newPIN: "654321", confirmation: "654321")
++        for _ in 0..<32 { _ = try await core.prepare(change: change, configuration: context) }
++        try await rejects(.authorizationCapacity) { _ = try await core.prepare(change: change, configuration: context) }
++        try await core.invalidateAuthorizations()
++        try friendExpect(try store.load()!.operations.isEmpty, "native generation invalidation reclaims bounded receipts")
++        bytes.unavailable = true
++        try friendExpect(try await core.status() == .unavailable, "unavailable store status")
++        try await rejects(.storageUnavailable) { _ = try await core.authorize(pin: "654321", change: change, configuration: context) }
++        bytes.unavailable = false
++        let saved = bytes.values["record"]!
++        bytes.values["record"] = Data(repeating: 0, count: 65_537)
++        try friendExpect(try await core.status() == .corrupt, "bounded record overflow")
++        bytes.values["record"] = saved
++    }
++    static func commitOutageCases(baseline: FriendLockBaseline, change: FriendLockAdultChange, context: FriendLockConfiguration) async throws {
++        let bytes = FriendLockMemoryBytes(), clock = FriendLockTestClock()
++        let core = FriendLockCore(store: FriendLockRecordStore(bytes: bytes), crypto: FriendLockNativeCrypto(), clock: clock)
++        let first = try await core.enroll(pin: "123456", confirmation: "123456", baseline: baseline)
++        let previous = bytes.values["record"]!
++        bytes.failAfterJournalWrite = bytes.journalWrites + 4 // reservation commit, then rotation committed-phase write
++        try await rejects(.commitOutcomeUnknown) { _ = try await core.rotate(secret: .recovery(first.recoveryKey), newPIN: "654321", confirmation: "654321") }
++        try friendExpect(try await core.status() == .unavailable, "unreadable final outcome fails closed")
++        bytes.unavailable = false
++        let retained = bytes.values["journal"]!
++        let json = try JSONSerialization.jsonObject(with: retained) as! [String: Any]
++        let old = Data(base64Encoded: json["previous"] as! String)!
++        let oldRecord = try JSONDecoder().decode(FriendLockRecord.self, from: old)
++        let original = try JSONDecoder().decode(FriendLockRecord.self, from: previous)
++        try friendExpect(oldRecord.pin.derived == original.pin.derived && json["phase"] as? String == "committed", "committed journal retains prior credential")
++        let reopened = FriendLockCore(store: FriendLockRecordStore(bytes: bytes), crypto: FriendLockNativeCrypto(), clock: clock)
++        try friendExpect(try await reopened.status() == .enrolled, "restart resolves committed outcome by native readback")
++        try await rejects(.incorrectSecret) { _ = try await reopened.authorize(pin: "123456", change: change, configuration: context) }
++        _ = try await reopened.authorize(pin: "654321", change: change, configuration: context)
++        // Lost one-time recovery response is replaced using the submitted new PIN, without filtering changes.
++        let recovered = try await reopened.rotate(secret: .pin("654321"), newPIN: "777777", confirmation: "777777")
++        try friendExpect(recovered.lockRevision == 3 && recovered.recoveryKey.count == 64, "PIN rotation repairs lost key presentation")
++    }
++}
+diff --git a/tests/fixtures/friend-lock-core/FriendLockAdapterCases.swift b/tests/fixtures/friend-lock-core/FriendLockAdapterCases.swift
+new file mode 100644
+index 0000000..afe0c1b
+--- /dev/null
++++ b/tests/fixtures/friend-lock-core/FriendLockAdapterCases.swift
+@@ -0,0 +1,34 @@
++import Foundation
++
++final class FriendLockFixtureKeychainAPI: FriendLockKeychainAPI {
++    var values: [String: FriendLockKeychainItem] = [:]
++    var unavailable = false
++    var wrongAccessibility = false
++    func read(service: String, account: String) throws -> FriendLockKeychainItem? {
++        if unavailable { throw FriendLockFailure.storageUnavailable }
++        guard let item = values[account] else { return nil }
++        return wrongAccessibility ? FriendLockKeychainItem(data: item.data, thisDeviceOnly: false, synchronizable: false) : item
++    }
++    func write(service: String, account: String, data: Data) throws {
++        if unavailable { throw FriendLockFailure.storageUnavailable }
++        values[account] = FriendLockKeychainItem(data: data, thisDeviceOnly: true, synchronizable: false)
++    }
++    func remove(service: String, account: String) throws { values.removeValue(forKey: account) }
++}
++struct FriendLockFixtureAccess: FriendLockStorageAccess { func begin() throws {} ; func end() {} }
++
++func friendLockAdapterCases() throws {
++    let api = FriendLockFixtureKeychainAPI()
++    let adapter = FriendLockKeychainBytes(api: api, access: FriendLockFixtureAccess())
++    try adapter.write("witness", Data([1]))
++    try friendExpect(try adapter.read("witness") == Data([1]), "real Keychain adapter native readback")
++    api.unavailable = true
++    do { _ = try adapter.read("witness"); throw NSError(domain: "expected-failure", code: 1) }
++    catch FriendLockFailure.storageUnavailable { }
++    api.unavailable = false; api.wrongAccessibility = true
++    do { _ = try adapter.read("witness"); throw NSError(domain: "expected-failure", code: 1) }
++    catch FriendLockFailure.corrupt { }
++    api.wrongAccessibility = false
++    do { try adapter.remove("witness"); throw NSError(domain: "expected-failure", code: 1) }
++    catch FriendLockFailure.invalidScope { }
++}
+diff --git a/tests/fixtures/friend-lock-core/FriendLockCoreCases.kt b/tests/fixtures/friend-lock-core/FriendLockCoreCases.kt
+new file mode 100644
+index 0000000..2106f7d
+--- /dev/null
++++ b/tests/fixtures/friend-lock-core/FriendLockCoreCases.kt
+@@ -0,0 +1,180 @@
++package app.freed.protection
++
++// Only platform bytes are injected. Policy, KDF, codec and transaction adapter are real.
++private class MemoryBytes : FriendLockProtectedBytes {
++    val values = mutableMapOf<String, ByteArray>()
++    var failWriteKey: String? = null
++    var failReadAfterRecordWrite = false
++    var recordWrites = 0
++    var failReadOnRecordWrite: Int? = null
++    var failRecordWrites = emptySet<Int>()
++    var journalWrites = 0
++    var failAfterJournalWrite: Int? = null
++    var unavailable = false
++    var failEndAccess = false
++    override fun endAccess() { if (failEndAccess) fail(FriendLockError.STORAGE_UNAVAILABLE) }
++    private var readFailureArmed = false
++    override fun read(key: String): ByteArray? {
++        if (unavailable) fail(FriendLockError.STORAGE_UNAVAILABLE)
++        if (key == "record" && readFailureArmed) { readFailureArmed = false; throw FriendLockException(FriendLockError.STORAGE_UNAVAILABLE) }
++        return values[key]?.clone()
++    }
++    override fun write(key: String, value: ByteArray) {
++        if (unavailable) fail(FriendLockError.STORAGE_UNAVAILABLE)
++        if (key == failWriteKey) { failWriteKey = null; throw FriendLockException(FriendLockError.STORAGE_UNAVAILABLE) }
++        if (key == "record") { recordWrites++; if (recordWrites in failRecordWrites) fail(FriendLockError.STORAGE_UNAVAILABLE) }
++        values[key] = value.clone()
++        if (key == "journal") { journalWrites++; if (failAfterJournalWrite == journalWrites) unavailable = true }
++        if (key == "record" && (failReadAfterRecordWrite || failReadOnRecordWrite == recordWrites)) { failReadAfterRecordWrite = false; readFailureArmed = true }
++    }
++    override fun remove(key: String) {
++        if (unavailable) fail(FriendLockError.STORAGE_UNAVAILABLE)
++        values.remove(key)
++    }
++}
++private class TestClock : FriendLockClock {
++    var milliseconds = 1_000L
++    var session = "fixture-process-1"
++    override fun now() = FriendLockInstant(session, milliseconds)
++}
++private fun rejects(expected: FriendLockError, operation: () -> Unit) {
++    try { operation(); error("Expected $expected") }
++    catch (failure: FriendLockException) { check(failure.reason == expected) { "Expected $expected; got ${failure.reason}" } }
++}
++fun main() {
++    friendLockAdapterCases()
++    check(FriendLockNativeCrypto().derive("123456", ByteArray(16) { 7 }).friendHex() == "0be74e7558e56becceb023ea559588f19bcffe4e9e5ef85d75e02917f383522d")
++    val bytes = MemoryBytes()
++    val clock = TestClock()
++    val core = FriendLockCore(FriendLockRecordStore(bytes), FriendLockNativeCrypto(), clock)
++    val context = FriendLockConfiguration("adult-7", "generation-12")
++    val change = FriendLockAdultChange(FriendLockAction.DISABLE_ENCRYPTED_DNS, mapOf("provider" to "cloudflare-families", "enabled" to "false"))
++    val baseline = FriendLockBaseline(context, true, "native-filter-installed".toByteArray())
++    check(core.status() == FriendLockStatus.NOT_ENROLLED)
++    rejects(FriendLockError.INVALID_PIN) { core.enroll("１２３４５６", "１２３４５６", baseline) }
++    rejects(FriendLockError.PIN_MISMATCH) { core.enroll("123456", "123457", baseline) }
++    check(bytes.values.isEmpty())
++    val enrolled = core.enroll("123456", "123456", baseline)
++    check(enrolled.recoveryKey.length == 64 && enrolled.lockRevision == 1L)
++    check(!bytes.values.getValue("record").toString(Charsets.ISO_8859_1).contains("123456"))
++    check(!bytes.values.getValue("record").toString(Charsets.ISO_8859_1).contains(enrolled.recoveryKey))
++    val request = core.prepare(change, context)
++    rejects(FriendLockError.INVALID_TRANSITION) { core.claim(request.operationID, change, context) }
++    repeat(5) { rejects(FriendLockError.INCORRECT_SECRET) { core.authorize("000000", change, context, request.operationID) } }
++    rejects(FriendLockError.THROTTLED) { core.authorize("123456", change, context) }
++    clock.session = "fixture-process-2"; clock.milliseconds = 0L
++    val reopened = FriendLockCore(FriendLockRecordStore(bytes), FriendLockNativeCrypto(), clock)
++    rejects(FriendLockError.THROTTLED) { reopened.authorize("123456", change, context) }
++    clock.milliseconds = 59_999L
++    rejects(FriendLockError.THROTTLED) { reopened.authorize("123456", change, context) }
++    clock.milliseconds = 60_000L
++    val receipt = reopened.authorize("123456", change, context, request.operationID)
++    check(reopened.authorize("000000", change, context, request.operationID) == receipt)
++    val claimed = reopened.claim(receipt.operationID, change, context)
++    check(claimed.state == FriendLockOperationState.IN_FLIGHT)
++    check(reopened.retry(receipt.operationID, change, context) == claimed)
++    val other = FriendLockAdultChange(FriendLockAction.DISABLE_ENCRYPTED_DNS, mapOf("enabled" to "true", "provider" to "cloudflare-families"))
++    rejects(FriendLockError.SCOPE_MISMATCH) { reopened.retry(receipt.operationID, other, context) }
++    val result = FriendLockConfiguration("adult-8", "generation-13")
++    val completed = reopened.complete(receipt.operationID, change, context, result, "native-exact-off-readback".toByteArray())
++    check(reopened.retry(receipt.operationID, change, result) == completed)
++    rejects(FriendLockError.SCOPE_MISMATCH) { reopened.retry(receipt.operationID, change, context) }
++    bytes.failReadOnRecordWrite = bytes.recordWrites + 2 // fail rotated credential readback after durable reservation
++    rejects(FriendLockError.STORAGE_UNAVAILABLE) { reopened.rotate(FriendLockSecret.Recovery(enrolled.recoveryKey), "654321", "654321") }
++    val afterFailure = reopened.authorize("123456", change, result)
++    reopened.cancel(afterFailure.operationID)
++    val rotated = reopened.rotate(FriendLockSecret.Recovery(enrolled.recoveryKey), "654321", "654321")
++    check(rotated.lockRevision == 2L && rotated.recoveryKey != enrolled.recoveryKey)
++    rejects(FriendLockError.INCORRECT_SECRET) { reopened.authorize("123456", change, result) }
++    rejects(FriendLockError.INCORRECT_SECRET) { reopened.rotate(FriendLockSecret.Recovery(enrolled.recoveryKey), "888888", "888888") }
++    rejects(FriendLockError.UNKNOWN_OPERATION) { reopened.retry(receipt.operationID, change, result) }
++    val fresh = reopened.authorize("654321", change, result)
++    reopened.invalidateAuthorizations()
++    rejects(FriendLockError.UNKNOWN_OPERATION) { reopened.claim(fresh.operationID, change, result) }
++    val saved = bytes.values.getValue("record")
++    bytes.values.remove("record")
++    check(reopened.status() == FriendLockStatus.MISSING_ENROLLED)
++    rejects(FriendLockError.MISSING_ENROLLED) { reopened.authorize("654321", change, result) }
++    bytes.values["record"] = byteArrayOf(0, 1, 2)
++    check(reopened.status() == FriendLockStatus.CORRUPT)
++    bytes.values["record"] = saved
++    bytes.failWriteKey = "record"
++    rejects(FriendLockError.STORAGE_UNAVAILABLE) { reopened.authorize("654321", change, result) }
++    val afterStoreFailure = reopened.authorize("654321", change, result)
++    reopened.cancel(afterStoreFailure.operationID)
++    rejects(FriendLockError.CANCELLED) { reopened.claim(afterStoreFailure.operationID, change, result) }
++    val beforeInterrupted = FriendLockRecordStore(bytes).load()!!
++    bytes.failReadOnRecordWrite = bytes.recordWrites + 1
++    bytes.failRecordWrites = setOf(bytes.recordWrites + 2)
++    rejects(FriendLockError.STORAGE_UNAVAILABLE) { reopened.authorize("654321", change, result) }
++    val recovered = FriendLockRecordStore(bytes).load()!!
++    check(recovered.lockRevision == beforeInterrupted.lockRevision && recovered.pinThrottle.failures == beforeInterrupted.pinThrottle.failures)
++    val setupBytes = MemoryBytes().apply { failWriteKey = "record" }
++    val interruptedSetup = FriendLockCore(FriendLockRecordStore(setupBytes), FriendLockNativeCrypto(), clock)
++    rejects(FriendLockError.STORAGE_UNAVAILABLE) { interruptedSetup.enroll("123456", "123456", baseline) }
++    check(interruptedSetup.status() == FriendLockStatus.MISSING_ENROLLED)
++    supplementalCases(baseline, change, context)
++    commitOutageCases(baseline, change, context)
++    println("PASS friend-lock Kotlin policy/store failure fixtures (source only; no device or native mutation enforcement)")
++}
++private fun supplementalCases(baseline: FriendLockBaseline, change: FriendLockAdultChange, context: FriendLockConfiguration) {
++    val bytes = MemoryBytes(); val clock = TestClock(); val store = FriendLockRecordStore(bytes)
++    val core = FriendLockCore(store, FriendLockNativeCrypto(), clock)
++    rejects(FriendLockError.BASELINE_UNAVAILABLE) { core.enroll("123456", "123456", FriendLockBaseline(context, false, byteArrayOf(1))) }
++    val enrollment = core.enroll("123456", "123456", baseline)
++    rejects(FriendLockError.INVALID_PIN) { core.rotate(FriendLockSecret.Recovery(enrollment.recoveryKey), "123456", "123456") }
++    val request = core.prepare(change, context)
++    rejects(FriendLockError.SCOPE_MISMATCH) { core.authorize("123456", change, FriendLockConfiguration("adult-repair-8", "repair-generation-13"), request.operationID) }
++    val delays = listOf(0L, 0L, 0L, 0L, 60_000L, 300_000L, 900_000L, 3_600_000L, 3_600_000L)
++    delays.forEach { delay ->
++        rejects(FriendLockError.INCORRECT_SECRET) { core.authorize("bad", change, context, request.operationID) }
++        check(store.load()!!.pinThrottle.remainingMilliseconds == delay)
++        if (delay > 0) rejects(FriendLockError.THROTTLED) { core.authorize("123456", change, context, request.operationID) }
++        clock.milliseconds += delay
++    }
++    FriendLockWorker(core).use { worker ->
++        val first = worker.submit { it.authorize("123456", change, context, request.operationID) }
++        val second = worker.submit { it.authorize("000000", change, context, request.operationID) }
++        check(first.get() == second.get())
++    }
++    repeat(4) { rejects(FriendLockError.INCORRECT_SECRET) { core.rotate(FriendLockSecret.Recovery("0".repeat(64)), "654321", "654321") } }
++    rejects(FriendLockError.THROTTLED) { core.rotate(FriendLockSecret.Recovery(enrollment.recoveryKey), "654321", "654321") }
++    clock.milliseconds += 60_000
++    core.rotate(FriendLockSecret.Recovery(enrollment.recoveryKey), "654321", "654321")
++    repeat(32) { core.prepare(change, context) }
++    rejects(FriendLockError.AUTHORIZATION_CAPACITY) { core.prepare(change, context) }
++    core.invalidateAuthorizations(); check(store.load()!!.operations.isEmpty())
++    bytes.unavailable = true; check(core.status() == FriendLockStatus.UNAVAILABLE)
++    rejects(FriendLockError.STORAGE_UNAVAILABLE) { core.authorize("654321", change, context) }
++    bytes.unavailable = false
++    val saved = bytes.values.getValue("record"); bytes.values["record"] = ByteArray(65_537)
++    check(core.status() == FriendLockStatus.CORRUPT); bytes.values["record"] = saved
++    bytes.failEndAccess = true
++    val verified = core.prepare(change, context)
++    check(verified.state == FriendLockOperationState.AWAITING_SECRET)
++    check(core.retry(verified.operationID, change, context) == verified)
++    bytes.failEndAccess = false
++    val missingProvider = FriendLockNativeCrypto { throw java.security.NoSuchAlgorithmException("fixture-unavailable-provider") }
++    val unsupported = FriendLockCore(FriendLockRecordStore(bytes), missingProvider, clock)
++    val pending = unsupported.prepare(change, context)
++    rejects(FriendLockError.CRYPTO_UNAVAILABLE) { unsupported.authorize("654321", change, context, pending.operationID) }
++    check(store.load()!!.pinThrottle.failures == 1)
++    rejects(FriendLockError.INVALID_TRANSITION) { unsupported.claim(pending.operationID, change, context) }
++}
++private fun commitOutageCases(baseline: FriendLockBaseline, change: FriendLockAdultChange, context: FriendLockConfiguration) {
++    val bytes = MemoryBytes(); val clock = TestClock(); val core = FriendLockCore(FriendLockRecordStore(bytes), FriendLockNativeCrypto(), clock)
++    val first = core.enroll("123456", "123456", baseline)
++    val previous = FriendLockRecordCodec.decode(bytes.values.getValue("record"))
++    bytes.failAfterJournalWrite = bytes.journalWrites + 4
++    rejects(FriendLockError.COMMIT_OUTCOME_UNKNOWN) { core.rotate(FriendLockSecret.Recovery(first.recoveryKey), "654321", "654321") }
++    check(core.status() == FriendLockStatus.UNAVAILABLE)
++    bytes.unavailable = false
++    val retained = FriendLockRecordCodec.decodeJournal(bytes.values.getValue("journal"))
++    check(retained.committed && FriendLockRecordCodec.decode(retained.previous!!).pin.derived.contentEquals(previous.pin.derived))
++    val reopened = FriendLockCore(FriendLockRecordStore(bytes), FriendLockNativeCrypto(), clock)
++    check(reopened.status() == FriendLockStatus.ENROLLED)
++    rejects(FriendLockError.INCORRECT_SECRET) { reopened.authorize("123456", change, context) }
++    reopened.authorize("654321", change, context)
++    val recovered = reopened.rotate(FriendLockSecret.Pin("654321"), "777777", "777777")
++    check(recovered.lockRevision == 3L && recovered.recoveryKey.length == 64)
++}
+diff --git a/tests/fixtures/friend-lock-core/FriendLockAdapterCases.kt b/tests/fixtures/friend-lock-core/FriendLockAdapterCases.kt
+new file mode 100644
+index 0000000..adda64f
+--- /dev/null
++++ b/tests/fixtures/friend-lock-core/FriendLockAdapterCases.kt
+@@ -0,0 +1,61 @@
++package app.freed.protection
++
++import javax.crypto.Cipher
++import javax.crypto.spec.GCMParameterSpec
++import javax.crypto.spec.SecretKeySpec
++
++private class FixtureAtomicBytes : FriendLockAtomicBytes {
++    val values = mutableMapOf<String, ByteArray>()
++    var failWrite = false
++    override fun begin() {}
++    override fun end() {}
++    override fun read(key: String) = values[key]?.clone()
++    override fun write(key: String, value: ByteArray) {
++        if (failWrite) fail(FriendLockError.STORAGE_UNAVAILABLE)
++        values[key] = value.clone()
++    }
++    override fun remove(key: String) { values.remove(key) }
++}
++private class FixtureCipher : FriendLockCipherBoundary {
++    private val key = SecretKeySpec(ByteArray(32) { (it + 1).toByte() }, "AES")
++    var exists = false
++    var unavailable = false
++    override fun keyExists(): Boolean { if (unavailable) fail(FriendLockError.STORAGE_UNAVAILABLE); return exists }
++    override fun encrypt(value: ByteArray, aad: ByteArray, create: Boolean): FriendLockSealedBytes {
++        if (unavailable) fail(FriendLockError.STORAGE_UNAVAILABLE)
++        if (!exists && !create) fail(FriendLockError.MISSING_ENROLLED)
++        exists = true
++        val cipher = Cipher.getInstance("AES/GCM/NoPadding"); cipher.init(Cipher.ENCRYPT_MODE, key); cipher.updateAAD(aad)
++        return FriendLockSealedBytes(cipher.iv, cipher.doFinal(value))
++    }
++    override fun decrypt(value: FriendLockSealedBytes, aad: ByteArray): ByteArray {
++        if (unavailable) fail(FriendLockError.STORAGE_UNAVAILABLE)
++        if (!exists) fail(FriendLockError.MISSING_ENROLLED)
++        val cipher = Cipher.getInstance("AES/GCM/NoPadding"); cipher.init(Cipher.DECRYPT_MODE, key, GCMParameterSpec(128, value.iv)); cipher.updateAAD(aad)
++        return try { cipher.doFinal(value.ciphertext) } catch (_: javax.crypto.AEADBadTagException) { fail(FriendLockError.CORRUPT) }
++    }
++}
++internal fun friendLockAdapterCases() {
++    val atomic = FixtureAtomicBytes(); val cipher = FixtureCipher(); val adapter = FriendLockEncryptedBytes(atomic, cipher)
++    adapter.write("witness", byteArrayOf(1)); adapter.write("record", "protected-verifier".toByteArray())
++    check(adapter.read("record")!!.contentEquals("protected-verifier".toByteArray()))
++    check(!atomic.values.getValue("record").toString(Charsets.ISO_8859_1).contains("protected-verifier"))
++    // AAD binding prevents swapping encrypted items between names.
++    atomic.values["journal"] = atomic.values.getValue("record")
++    rejectsAdapter(FriendLockError.CORRUPT) { adapter.read("journal") }
++    val original = atomic.values.getValue("record").clone()
++    atomic.values["record"] = original.clone().also { it[it.lastIndex] = (it.last().toInt() xor 1).toByte() }
++    rejectsAdapter(FriendLockError.CORRUPT) { adapter.read("record") }
++    atomic.values["record"] = original
++    cipher.unavailable = true
++    rejectsAdapter(FriendLockError.STORAGE_UNAVAILABLE) { adapter.read("record") }
++    cipher.unavailable = false; atomic.failWrite = true
++    rejectsAdapter(FriendLockError.STORAGE_UNAVAILABLE) { adapter.write("record", "new-record".toByteArray()) }
++    check(adapter.read("record")!!.contentEquals("protected-verifier".toByteArray()))
++    atomic.values.remove("witness")
++    rejectsAdapter(FriendLockError.MISSING_ENROLLED) { adapter.read("witness") }
++    rejectsAdapter(FriendLockError.INVALID_SCOPE) { adapter.remove("witness") }
++}
++private fun rejectsAdapter(reason: FriendLockError, operation: () -> Unit) {
++    try { operation(); error("Expected $reason") } catch (failure: FriendLockException) { check(failure.reason == reason) }
++}
+diff --git a/tests/fixtures/friend-lock-core/run-native.mjs b/tests/fixtures/friend-lock-core/run-native.mjs
+new file mode 100644
+index 0000000..ba318a4
+--- /dev/null
++++ b/tests/fixtures/friend-lock-core/run-native.mjs
+@@ -0,0 +1,83 @@
++import assert from 'node:assert/strict';
++import { mkdtempSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
++import { tmpdir, homedir } from 'node:os';
++import { dirname, resolve, join, basename } from 'node:path';
++import { fileURLToPath } from 'node:url';
++import { spawnSync } from 'node:child_process';
++import { createHash } from 'node:crypto';
++
++const fixture = dirname(fileURLToPath(import.meta.url));
++const root = resolve(fixture, '../../..');
++if (!process.argv.includes('--compiler-reserved')) {
++  process.stderr.write('Native compilation refused: Root must explicitly reserve the sole compiler first.\n');
++  process.exit(2);
++}
++const platform = process.argv.find(value => value.startsWith('--platform='))?.split('=')[1];
++assert.ok(platform === 'swift' || platform === 'kotlin', 'Choose exactly one platform per compiler reservation.');
++const red = process.argv.includes('--red');
++const typesOnly = process.argv.includes('--typecheck-only');
++assert.ok(!typesOnly || (platform === 'kotlin' && !red), 'Public type-only mode is Kotlin GREEN only.');
++const scratch = mkdtempSync(join(tmpdir(), 'freed-friend-lock-core-'));
++const android = 'modules/freed-protection/android/src/main/java/app/freed/protection/';
++const ios = 'modules/freed-protection/ios/';
++const inputs = platform === 'swift' ? [
++  `${ios}FreedFriendLockCore.swift`, `${ios}FreedFriendLockRecordStore.swift`, `${ios}FreedFriendLockKeychain.swift`,
++  'tests/fixtures/friend-lock-core/FriendLockCoreCases.swift', 'tests/fixtures/friend-lock-core/FriendLockAdapterCases.swift',
++] : [
++  `${android}FreedFriendLockCore.kt`, `${android}FreedFriendLockRecordStore.kt`, `${android}FreedFriendLockEncryptedRecord.kt`,
++  'tests/fixtures/friend-lock-core/FriendLockCoreCases.kt', 'tests/fixtures/friend-lock-core/FriendLockAdapterCases.kt',
++];
++const copied = inputs.map(path => {
++  let text = readFileSync(join(root, path), 'utf8');
++  const sourceHash = createHash('sha256').update(text).digest('hex');
++  if (red && basename(path) === 'FreedFriendLockCore.swift') {
++    const gate = 'guard validFormat, try crypto.derive(input, salt: verifier.salt).friendConstantEquals(verifier.derived) else';
++    assert.ok(text.includes(gate)); text = text.replace(gate, 'let _ = verifier; let _ = validFormat\n        guard true else');
++  }
++  if (red && basename(path) === 'FreedFriendLockCore.kt') {
++    const gate = 'if (!valid || !MessageDigest.isEqual(crypto.derive(input, verifier.salt), verifier.derived))';
++    assert.ok(text.includes(gate)); text = text.replace(gate, 'if (false)');
++  }
++  const output = join(scratch, basename(path)); writeFileSync(output, text);
++  process.stdout.write(`snapshotFile=${JSON.stringify({ path, sourceHash, compiledHash: createHash('sha256').update(text).digest('hex') })}\n`);
++  return output;
++});
++function run(command, args, expectedFailure = false) {
++  process.stdout.write(`command=${JSON.stringify({ command, args })}\n`);
++  const started = Date.now();
++  const result = spawnSync(command, args, { cwd: scratch, encoding: 'utf8', timeout: 180_000, maxBuffer: 1_048_576 });
++  const output = (result.stdout ?? '') + (result.stderr ?? '');
++  process.stdout.write(output);
++  process.stdout.write(`${basename(command)} elapsedMilliseconds=${Date.now() - started} exit=${result.status} signal=${result.signal ?? 'none'}\n`);
++  if (expectedFailure) {
++    assert.notEqual(result.status, 0, 'Wrong-secret semantic baseline must fail.');
++    assert.match(output, platform === 'swift' ? /expected-failure/ : /Expected INCORRECT_SECRET/, 'RED must fail at wrong-secret behavior, after successful compilation.');
++  } else assert.equal(result.status, 0, result.error?.message ?? output);
++}
++// Retain temp copies/loggable path for review. Never revert or rewrite the shared live checkout.
++process.stdout.write(`fixtureSnapshot=${scratch} mode=${red ? 'semantic-red-mutant' : 'green'} platform=${platform}\n`);
++if (platform === 'swift') {
++  const binary = join(scratch, 'cases');
++  run('xcrun', ['swiftc', '-parse-as-library', '-swift-version', '5', ...copied, '-o', binary]);
++  run(binary, [], red);
++  if (!red) {
++    const sdk = spawnSync('xcrun', ['--sdk', 'iphoneos', '--show-sdk-path'], { encoding: 'utf8' });
++    assert.equal(sdk.status, 0, sdk.stderr);
++    run('xcrun', ['swiftc', '-typecheck', '-swift-version', '5', '-target', 'arm64-apple-ios15.1', '-sdk', sdk.stdout.trim(), ...copied.slice(0, 3)]);
++  }
++} else {
++  if (!typesOnly) {
++    const jar = join(scratch, 'cases.jar');
++    run('kotlinc', [...copied, '-include-runtime', '-d', jar]); run('java', ['-jar', jar], red);
++  }
++  if (!red) {
++    const sdk = process.env.ANDROID_HOME ?? join(homedir(), 'Library/Android/sdk');
++    const publicJar = join(sdk, 'platforms/android-36/android.jar');
++    assert.ok(existsSync(publicJar), 'Existing Android 36 public SDK is required; this runner installs nothing.');
++    const nativeAdapter = join(scratch, 'FreedFriendLockKeystore.kt');
++    writeFileSync(nativeAdapter, readFileSync(join(root, `${android}FreedFriendLockKeystore.kt`), 'utf8'));
++    process.stdout.write(`snapshotFile=${JSON.stringify({ path: `${android}FreedFriendLockKeystore.kt`, compiledHash: createHash('sha256').update(readFileSync(nativeAdapter)).digest('hex') })}\n`);
++    const types = join(scratch, 'public-framework-types'); mkdirSync(types);
++    run('kotlinc', [...copied.slice(0, 3), nativeAdapter, '-classpath', publicJar, '-d', types]);
++  }
++}
+diff --git a/tests/fixtures/friend-lock-core/README.md b/tests/fixtures/friend-lock-core/README.md
+new file mode 100644
+index 0000000..84169fb
+--- /dev/null
++++ b/tests/fixtures/friend-lock-core/README.md
+@@ -0,0 +1,48 @@
++# Task40 Package A — native friend-lock core
++
++12 October 2026. Standalone native core and public-platform adapters only. The root native mutation modules, reset stores, VPN/service/extension consumers, UI, bridge, backups, subscriptions, app-group policy, sealed candidates and prior evidence are outside this package. No functioning friend lock, adult-mutation enforcement, native phone result or release claim follows from these files.
++
++## Native contract
++
++`enroll(PIN, confirmation, baseline)` requires six ASCII digits twice and an actual native installed-adult baseline/readback supplied later by B/C. It returns success only after protected storage/readback and a native CSPRNG 32-byte recovery key (64 lowercase hex digits) for one-time presentation to the trusted person. PIN and recovery verifiers use distinct 16-byte salts, PBKDF2-HMAC-SHA256 at 600,000 iterations, 32-byte output, and constant-time equal-length comparison. No plaintext secret is persisted. Swift queues work off the UI thread; Android integrations must use `FriendLockWorker`, whose single process-wide worker never holds an enforcement lock during KDF.
++
++`prepare(nativeExactChange, nativeCurrentConfiguration)` reserves a random 128-bit operation ID and a durable `awaitingSecret` receipt. Keep that operation ID for a response lost during authorization. `authorize(PIN, sameChange, sameConfiguration, operationID)` returns its original authorized/in-flight/completed receipt on exact retries. The convenience form without a prepared ID is for a new request only; it does not establish retry identity after response loss. `claim` durably marks `inFlight`; callers must distinguish completed receipts from permission to execute and revalidate at their actual native mutation boundary. `complete` requires the original request, resulting native configuration revision/generation and actual native readback. A completion retry returns the original receipt only when its result/readback matches. Different deltas/configurations, cancelled IDs, rotation and native invalidation reject replay. Website operations have no app-break type or authority.
++
++An exact change is a known adult-only action plus a bounded native-derived field map: UTF-8, sorted ASCII field names, four-byte big-endian byte lengths, domain `freed-device-adult-change-v1`, action, then sorted key/value pairs. SHA-256 digest is native-generated. Configuration revision and mutation generation are nonempty bounded ASCII tokens. Up to 32 durable operation records are retained; capacity exhaustion rejects additional requests rather than evicting live retry authority. Cancelled IDs remain tombstones until `invalidateAuthorizations` advances the generation and clears them. B/C must invalidate on account transition, repair/newer configuration and cancellation of broader transactions, and keep callback/readback/rollback inside the same native operation. The core cannot observe an OS mutation, decide whether a caller's field map describes the actual delta, or atomically combine a secure-store write with asynchronous OS changes.
++
++Recovery and PIN-authorized credential rotation require a different six-digit PIN, change both verifiers/salts, replace the recovery key, increment lock revision/generation and clear operation records. They do not touch filtering. The successful authenticating credential's throttle clears only in the committed rotation; the other throttle stays intact. Both PIN and recovery attempts reserve a failure count durably before KDF, so interruption or crypto failure consumes an attempt. Delay after failure 5/6/7/8+ is 1/5/15/60 minutes. A successful PIN authorization clears its PIN throttle only with the durable receipt. Native elapsed time advances delay; no wall time is consulted. A new clock session/process/reboot or elapsed rollback retains the entire last persisted remainder, potentially extending delay. This is conservative and must be disclosed in the eventual UI.
++
++## Secure storage and failure semantics
++
++iOS: dedicated `app.freed.device-adult.friend-lock.v1` generic-password Keychain items, non-synchronizable `AfterFirstUnlockThisDeviceOnly`, with a dedicated host-process file transaction lock in excluded-from-backup Application Support. No shared access group or App Group changes. Existing extensions later consume the retained adult-policy baseline rather than secret material.
++
++Android: dedicated AES-256-GCM Android Keystore alias `app.freed.device-adult.friend-lock.aes-gcm.v1`, non-exportable key, randomized 12-byte IV, 128-bit tag and item/domain-bound AAD. Only the first witness write may create the key. Atomic encrypted records live in `noBackupFilesDir/freed-device-adult-security-v1`; explicit file and directory fsync accompany AtomicFile publication. Closing a native lock after verified commit cannot retroactively fail that committed result. An existing key with a missing enrollment witness is a missing-enrolled failure, never fresh state. No account owner, SharedPreferences/private reset, cloud, backup or biometric override is involved. Android's declared minimum API is 24; public PBKDF2WithHmacSHA256 provider availability is documented from API 26. A missing provider returns `cryptoUnavailable`; no lower-cost/custom-crypto/plaintext fallback is used. B/C/D must expose this limitation before enrollment and verify actual supported devices.
++
++Protected `witness`, `record` and `journal` items are distinct. Witness persists once enrollment starts and cannot be removed through this adapter. A fresh all-missing store is `notEnrolled`; missing witnessed record/journal is `missingEnrolled`; unsupported/malformed/bounded-overflow data is `corrupt`; unavailable I/O is `unavailable`. All latter states reject authorization. The retained journal's schema2 envelope has a `prepared`/`committed` phase and at most previous+candidate protected records. Each record is bounded at 65,536 bytes; iOS JSON journal is bounded at 196,608 bytes and Android binary journal at 131,104 bytes. PIN/recovery strings are absent from both generations.
++
++**12 October transaction correction following Root review:** the successful path never deletes the protected journal. Prepared-phase readback precedes candidate record replacement/readback. Publication completes only after committed-phase journal write and native readback. The committed envelope retains both previous and current verifier/throttle/receipt bytes. The next atomic prepared envelope retains the then-current generation and new candidate; older completed generations are bounded away. There is no optional cleanup whose failure can retroactively convert a verified commit into failure. This supersedes the initial delete-journal proposal; no native fixture had been run against that earlier proposal.
++
++A failed pre-commit write/readback returns no success and attempts verified prior-record rollback. A persisted prepared envelope is rolled back before subsequent reads return authority; a failed immediate rollback leaves both records protected for restart recovery. Interrupted first enrollment remains fail closed, with no unauthenticated reset/repair API. A final committed-phase write/readback failure is re-read: a successful write plus observed committed bytes establishes native success, observed prepared bytes recover the prior credential, and unreadable storage or a failed durability write with changed committed bytes yields explicit `commitOutcomeUnknown`. Unreadable storage is status-unavailable. Once storage is readable, native phase/readback resolves the outcome. The old verifier bytes remain recoverable in the retained committed envelope even when the final response is unavailable, but only the authoritative current verifier authenticates normal actions; revoked old secrets do not bypass rotation.
++
++Power loss or callback loss after durable commit can leave the new credential current before its method response arrives. The trusted person knows the submitted new PIN. A lost one-time recovery-key response requires a PIN-authorized rotation to a different PIN/new key. Prepared operation IDs permit exact authorization-response retries without another grant or reusable unlocked flag. While storage cannot be read, no authorization is returned. No OS uninstall/data-removal/tamper-proof guarantee is made.
++
++## Verification reservation and evidence
++
++Failure fixtures were authored before production behavior. Root explicitly deferred native RED/GREEN execution while archive14 attempt2 process group 16407 owned the sole compiler. Root later explicitly released archive14 and reserved the sole compiler for Task40. Final semantic RED guard-removal checks compiled and failed the intended wrong-secret assertion on both platforms. Swift GREEN/macOS frameworks, arm64 iOS15.1 deployment typechecking with existing iPhoneOS26.5 SDK, Kotlin JVM policy/adapter GREEN and Android36 public-framework typecompilation passed. Task40 explicitly released the compiler reservation after all child processes exited. Device secure storage, slow-device KDF timing, signed binary/source binding and native mutation enforcement remain unexecuted. Final check logs and snapshot hashes are retained under this fixture directory. The first strengthened Android filesystem typecheck failed because O_DIRECTORY is absent from the public SDK; the corrected public O_RDONLY + fstat/S_ISDIR + fsync adapter typecheck passed, and the failed attempt remains preserved.
++
++Node-only TypeScript contract typecheck passed on 12 October. Node's independent PBKDF2 known vector for ASCII fixture PIN `123456`, sixteen `0x07` salt bytes, 600,000 rounds and 32-byte output is `0be74e7558e56becceb023ea559588f19bcffe4e9e5ef85d75e02917f383522d`. This is fixture data, not a real enrollment credential. Native fixtures must match that vector before their KDF claims pass.
++
++Run only after Root explicitly reserves one platform:
++
++```sh
++node tests/fixtures/friend-lock-core/run-native.mjs --compiler-reserved --platform=swift --red
++node tests/fixtures/friend-lock-core/run-native.mjs --compiler-reserved --platform=swift
++node tests/fixtures/friend-lock-core/run-native.mjs --compiler-reserved --platform=kotlin --red
++node tests/fixtures/friend-lock-core/run-native.mjs --compiler-reserved --platform=kotlin
++# Recheck only a changed public Android adapter after unchanged JVM cases have passed:
++node tests/fixtures/friend-lock-core/run-native.mjs --compiler-reserved --platform=kotlin --typecheck-only
++```
++
++Each invocation is sequential, uses retained fresh temporary copies and never restores/reverts live shared work. RED is a semantic wrong-secret mutation of the temporary core, must compile successfully and fail at the wrong-secret fixture. This proves a negative assertion catches the removed guard; it is not a claim that pre-implementation native RED ran. Fixtures exercise real core/KDF/record-store/Keychain policy/encrypted-envelope code with injected platform I/O; Swift fixtures never instantiate the real system Keychain API, and Kotlin fixtures use JVM AES-GCM rather than the user's Android Keystore. No fixture creates a real Mac/device credential.
++
++Primary API references checked 12 October: [Apple Keychain accessibility](https://developer.apple.com/documentation/security/ksecattraccessibleafterfirstunlockthisdeviceonly), [Android Keystore](https://developer.android.com/privacy-and-security/keystore), [Android SecretKeyFactory](https://developer.android.com/reference/javax/crypto/SecretKeyFactory), [Android AtomicFile](https://developer.android.com/reference/android/util/AtomicFile). Device/runtime proof remains separately required.

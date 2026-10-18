@@ -1,0 +1,760 @@
+{
+  "entries": [
+    {
+      "source": "Device status could not refresh. Check settings again before relying on protection.",
+      "translations": {
+        "hi": "डिवाइस की स्थिति रीफ़्रेश नहीं हो सकी। सुरक्षा पर भरोसा करने से पहले सेटिंग्स दोबारा जाँचें।",
+        "es": "No se pudo actualizar el estado del dispositivo. Revisa los ajustes antes de confiar en la protección.",
+        "pt": "Não foi possível atualizar o status do dispositivo. Verifique os ajustes novamente antes de confiar na proteção.",
+        "fr": "L’état de l’appareil n’a pas pu être actualisé. Vérifiez à nouveau les réglages avant de vous fier à la protection.",
+        "de": "Der Gerätestatus konnte nicht aktualisiert werden. Prüfe die Einstellungen erneut, bevor du dich auf den Schutz verlässt.",
+        "ar": "تعذّر تحديث حالة الجهاز. تحقق من الإعدادات مجددًا قبل الاعتماد على الحماية.",
+        "ja": "デバイスの状態を更新できませんでした。保護を頼りにする前に、設定をもう一度確認してください。",
+        "ko": "기기 상태를 새로 고치지 못했습니다. 보호 기능에 의존하기 전에 설정을 다시 확인하세요.",
+        "zh-Hans": "无法刷新设备状态。在依赖保护功能之前，请再次检查设置。"
+      }
+    },
+    {
+      "source": "Only the offline fallback is available. Website protection is waiting for the reviewed adult-domain feed. Check your connection and retry this step.",
+      "translations": {
+        "hi": "अभी केवल ऑफ़लाइन वैकल्पिक व्यवस्था उपलब्ध है। वेबसाइट सुरक्षा, समीक्षा की गई वयस्क डोमेन सूची का इंतज़ार कर रही है। अपना कनेक्शन जाँचें और यह चरण दोबारा आज़माएँ।",
+        "es": "Solo está disponible la alternativa sin conexión. La protección web está esperando la lista revisada de dominios para adultos. Revisa tu conexión y vuelve a intentar este paso.",
+        "pt": "Apenas a alternativa offline está disponível. A proteção de sites está aguardando a lista revisada de domínios adultos. Verifique sua conexão e tente esta etapa novamente.",
+        "fr": "Seule la solution de secours hors ligne est disponible. La protection des sites attend la liste vérifiée de domaines pour adultes. Vérifiez votre connexion et réessayez cette étape.",
+        "de": "Nur die Offline-Ersatzlösung ist verfügbar. Der Website-Schutz wartet auf die geprüfte Liste von Domains mit Erwachseneninhalten. Prüfe deine Verbindung und versuche diesen Schritt erneut.",
+        "ar": "لا يتوفر سوى البديل دون اتصال. تنتظر حماية المواقع قائمة نطاقات البالغين التي تمت مراجعتها. تحقق من اتصالك وأعد محاولة هذه الخطوة.",
+        "ja": "オフラインの代替機能のみ利用可能です。ウェブサイト保護は、審査済みの成人向けドメインリストを待っています。接続を確認し、この手順を再試行してください。",
+        "ko": "오프라인 대체 기능만 사용할 수 있습니다. 웹사이트 보호는 검토된 성인 도메인 목록을 기다리고 있습니다. 연결을 확인하고 이 단계를 다시 시도하세요.",
+        "zh-Hans": "目前仅可使用离线备用方案。网站保护正在等待经过审核的成人域名列表。请检查连接，然后重试此步骤。"
+      }
+    },
+    {
+      "source": "The browser could not open. Open the test address in your browser and check the result.",
+      "translations": {
+        "hi": "ब्राउज़र नहीं खुल सका। अपने ब्राउज़र में परीक्षण का पता खोलें और नतीजा जाँचें।",
+        "es": "No se pudo abrir el navegador. Abre la dirección de prueba en tu navegador y comprueba el resultado.",
+        "pt": "Não foi possível abrir o navegador. Abra o endereço de teste no seu navegador e confira o resultado.",
+        "fr": "Le navigateur n’a pas pu s’ouvrir. Ouvrez l’adresse de test dans votre navigateur et vérifiez le résultat.",
+        "de": "Der Browser konnte nicht geöffnet werden. Öffne die Testadresse in deinem Browser und prüfe das Ergebnis.",
+        "ar": "تعذّر فتح المتصفح. افتح عنوان الاختبار في متصفحك وتحقق من النتيجة.",
+        "ja": "ブラウザを開けませんでした。ブラウザでテスト用アドレスを開き、結果を確認してください。",
+        "ko": "브라우저를 열지 못했습니다. 브라우저에서 테스트 주소를 열고 결과를 확인하세요.",
+        "zh-Hans": "无法打开浏览器。请在浏览器中打开测试地址并检查结果。"
+      }
+    },
+    {
+      "source": "Choose a website protection layer below. Encrypted DNS, Screen Time and Safari rules have separate device permissions and status.",
+      "translations": {
+        "hi": "नीचे वेबसाइट सुरक्षा की एक परत चुनें। एन्क्रिप्टेड DNS, स्क्रीन टाइम और Safari नियमों की डिवाइस अनुमतियाँ और स्थिति अलग-अलग हैं।",
+        "es": "Elige una capa de protección web abajo. DNS cifrado, Tiempo de uso y las reglas de Safari tienen permisos y estados independientes en el dispositivo.",
+        "pt": "Escolha uma camada de proteção de sites abaixo. DNS criptografado, Tempo de Uso e regras do Safari têm permissões e status separados no dispositivo.",
+        "fr": "Choisissez une couche de protection des sites ci-dessous. Le DNS chiffré, Temps d’écran et les règles Safari ont des autorisations et des états distincts sur l’appareil.",
+        "de": "Wähle unten eine Schutzebene für Websites. Verschlüsseltes DNS, Bildschirmzeit und Safari-Regeln haben jeweils eigene Geräteberechtigungen und Statusanzeigen.",
+        "ar": "اختر طبقة لحماية المواقع أدناه. لكل من DNS المشفّر ومدة استخدام الجهاز وقواعد Safari أذونات وحالة مستقلة على الجهاز.",
+        "ja": "以下からウェブサイト保護のレイヤーを選んでください。暗号化DNS、スクリーンタイム、Safariルールは、それぞれデバイスの権限と状態が独立しています。",
+        "ko": "아래에서 웹사이트 보호 계층을 선택하세요. 암호화 DNS, 스크린 타임, Safari 규칙은 각각 기기 권한과 상태가 별도로 관리됩니다.",
+        "zh-Hans": "请在下方选择网站保护层。加密 DNS、屏幕使用时间和 Safari 规则各自拥有独立的设备权限和状态。"
+      }
+    },
+    {
+      "source": "DNS filters whole domains. It cannot separate YouTube Shorts from other YouTube pages or filter mixed content inside apps.",
+      "translations": {
+        "hi": "DNS पूरे डोमेन फ़िल्टर करता है। यह YouTube Shorts को YouTube के दूसरे पेजों से अलग नहीं कर सकता, न ही ऐप्स के भीतर मिले-जुले कॉन्टेंट को फ़िल्टर कर सकता है।",
+        "es": "DNS filtra dominios completos. No puede separar YouTube Shorts de otras páginas de YouTube ni filtrar contenido mixto dentro de las apps.",
+        "pt": "O DNS filtra domínios inteiros. Ele não consegue separar YouTube Shorts de outras páginas do YouTube nem filtrar conteúdo misto dentro de apps.",
+        "fr": "Le DNS filtre des domaines entiers. Il ne peut pas distinguer YouTube Shorts des autres pages YouTube ni filtrer les contenus mixtes dans les apps.",
+        "de": "DNS filtert ganze Domains. Es kann YouTube Shorts nicht von anderen YouTube-Seiten trennen oder gemischte Inhalte in Apps filtern.",
+        "ar": "يرشّح DNS النطاقات بالكامل. لا يمكنه فصل YouTube Shorts عن صفحات YouTube الأخرى أو ترشيح المحتوى المختلط داخل التطبيقات.",
+        "ja": "DNSはドメイン全体をフィルタリングします。YouTube Shortsを他のYouTubeページと区別したり、アプリ内の混在したコンテンツをフィルタリングしたりすることはできません。",
+        "ko": "DNS는 도메인 전체를 필터링합니다. YouTube Shorts를 다른 YouTube 페이지와 구분하거나 앱 안의 혼합 콘텐츠를 필터링할 수는 없습니다.",
+        "zh-Hans": "DNS 过滤整个域名。它无法将 YouTube Shorts 与其他 YouTube 页面区分开来，也无法过滤应用内的混合内容。"
+      }
+    },
+    {
+      "source": "Selecting an app does not block it immediately. The daily timer applies after permissions and native configuration are ready. Schedules are separate optional blocking windows.",
+      "translations": {
+        "hi": "किसी ऐप को चुनने से वह तुरंत ब्लॉक नहीं होता। दैनिक टाइमर तब लागू होता है जब अनुमतियाँ और नेटिव कॉन्फ़िगरेशन तैयार हों। शेड्यूल अलग, वैकल्पिक ब्लॉकिंग समय-खंड हैं।",
+        "es": "Seleccionar una app no la bloquea de inmediato. El temporizador diario se aplica cuando los permisos y la configuración nativa están listos. Los horarios son franjas de bloqueo opcionales e independientes.",
+        "pt": "Selecionar um app não o bloqueia imediatamente. O temporizador diário se aplica quando as permissões e a configuração nativa estão prontas. Os agendamentos são períodos de bloqueio opcionais e separados.",
+        "fr": "Sélectionner une app ne la bloque pas immédiatement. Le minuteur quotidien s’applique lorsque les autorisations et la configuration native sont prêtes. Les horaires sont des plages de blocage facultatives et distinctes.",
+        "de": "Die Auswahl einer App blockiert sie nicht sofort. Der tägliche Timer greift, sobald die Berechtigungen und die native Konfiguration bereit sind. Zeitpläne sind separate, optionale Sperrzeiten.",
+        "ar": "اختيار تطبيق لا يحظره فورًا. يُطبّق المؤقت اليومي بعد تجهيز الأذونات والإعدادات الأصلية. الجداول نوافذ حظر اختيارية ومنفصلة.",
+        "ja": "アプリを選択しても、すぐにはブロックされません。必要な権限とネイティブ設定が整うと、1日のタイマーが適用されます。スケジュールは別途設定する任意のブロック時間帯です。",
+        "ko": "앱을 선택한다고 즉시 차단되지는 않습니다. 권한과 네이티브 설정이 준비되면 일일 타이머가 적용됩니다. 일정은 별도로 설정하는 선택적 차단 시간대입니다.",
+        "zh-Hans": "选择应用并不会立即将其屏蔽。权限和原生配置就绪后，每日计时器才会生效。定时计划是独立且可选的屏蔽时段。"
+      }
+    },
+    {
+      "source": "Cloudflare Families uses a public filtering resolver. No Cloudflare account or website setup is needed. A real iPhone with a properly signed build is required.",
+      "translations": {
+        "hi": "Cloudflare Families एक सार्वजनिक फ़िल्टरिंग रिज़ॉल्वर का उपयोग करता है। Cloudflare खाते या वेबसाइट सेटअप की ज़रूरत नहीं है। सही तरह से साइन किए गए बिल्ड वाला असली iPhone ज़रूरी है।",
+        "es": "Cloudflare Families usa un servidor DNS público con filtrado. No necesitas una cuenta de Cloudflare ni configurar un sitio web. Se requiere un iPhone real con una compilación correctamente firmada.",
+        "pt": "Cloudflare Families usa um resolvedor público com filtragem. Não é necessário ter uma conta Cloudflare nem configurar um site. É necessário um iPhone real com uma compilação devidamente assinada.",
+        "fr": "Cloudflare Families utilise un résolveur public avec filtrage. Aucun compte Cloudflare ni configuration de site web n’est nécessaire. Un véritable iPhone avec une version correctement signée est requis.",
+        "de": "Cloudflare Families nutzt einen öffentlichen Resolver mit Filterung. Du brauchst weder ein Cloudflare-Konto noch eine Website-Konfiguration. Ein echtes iPhone mit einem korrekt signierten Build ist erforderlich.",
+        "ar": "تستخدم Cloudflare Families محلّل DNS عامًا مع الترشيح. لا تحتاج إلى حساب Cloudflare أو إعداد موقع ويب. يلزم iPhone حقيقي بإصدار موقّع بشكل صحيح.",
+        "ja": "Cloudflare Familiesは、フィルタリングを行う公開リゾルバを使用します。Cloudflareアカウントやウェブサイトの設定は不要です。適切に署名されたビルドを搭載した実機のiPhoneが必要です。",
+        "ko": "Cloudflare Families는 필터링을 제공하는 공개 DNS 리졸버를 사용합니다. Cloudflare 계정이나 웹사이트 설정은 필요하지 않습니다. 올바르게 서명된 빌드가 설치된 실제 iPhone이 필요합니다.",
+        "zh-Hans": "Cloudflare Families 使用提供过滤功能的公共解析器。无需 Cloudflare 账户或网站设置。需要安装了正确签名构建版本的真实 iPhone。"
+      }
+    },
+    {
+      "source": "Screen Time web policy",
+      "translations": {
+        "hi": "स्क्रीन टाइम वेब नीति",
+        "es": "Política web de Tiempo de uso",
+        "pt": "Política web do Tempo de Uso",
+        "fr": "Politique web de Temps d’écran",
+        "de": "Webrichtlinie für Bildschirmzeit",
+        "ar": "سياسة الويب لمدة استخدام الجهاز",
+        "ja": "スクリーンタイムのウェブポリシー",
+        "ko": "스크린 타임 웹 정책",
+        "zh-Hans": "屏幕使用时间网页策略"
+      }
+    },
+    {
+      "source": "Screen Time also requires Apple's approval and a signed Family Controls capability. A build setting alone does not confirm signing or permission. This status covers the Screen Time layer only.",
+      "translations": {
+        "hi": "स्क्रीन टाइम के लिए Apple की स्वीकृति और साइन की गई Family Controls क्षमता भी ज़रूरी है। केवल बिल्ड सेटिंग से साइनिंग या अनुमति की पुष्टि नहीं होती। यह स्थिति केवल स्क्रीन टाइम परत के लिए है।",
+        "es": "Tiempo de uso también requiere la aprobación de Apple y la capacidad Family Controls firmada. Un ajuste de compilación por sí solo no confirma la firma ni el permiso. Este estado solo corresponde a la capa de Tiempo de uso.",
+        "pt": "O Tempo de Uso também exige a aprovação da Apple e a capacidade Family Controls assinada. Um ajuste de compilação por si só não confirma a assinatura nem a permissão. Este status cobre apenas a camada do Tempo de Uso.",
+        "fr": "Temps d’écran exige également l’approbation d’Apple et la capacité Family Controls signée. Un réglage de compilation seul ne confirme ni la signature ni l’autorisation. Cet état concerne uniquement la couche Temps d’écran.",
+        "de": "Bildschirmzeit erfordert außerdem Apples Genehmigung und eine signierte Family Controls-Berechtigung. Eine Build-Einstellung allein bestätigt weder Signierung noch Erlaubnis. Dieser Status gilt nur für die Bildschirmzeit-Ebene.",
+        "ar": "تتطلب مدة استخدام الجهاز أيضًا موافقة Apple وإمكانية Family Controls موقّعة. إعداد البناء وحده لا يؤكد التوقيع أو الإذن. تخص هذه الحالة طبقة مدة استخدام الجهاز فقط.",
+        "ja": "スクリーンタイムには、Appleの承認と署名済みのFamily Controls機能も必要です。ビルド設定だけでは、署名や権限が確認されたことにはなりません。この状態はスクリーンタイムのレイヤーのみを対象とします。",
+        "ko": "스크린 타임에는 Apple의 승인과 서명된 Family Controls 기능도 필요합니다. 빌드 설정만으로는 서명이나 권한을 확인할 수 없습니다. 이 상태는 스크린 타임 계층에만 해당합니다.",
+        "zh-Hans": "屏幕使用时间还需要 Apple 批准，以及经过签名的 Family Controls 功能。仅设置构建选项并不能确认签名或权限。此状态仅涵盖屏幕使用时间保护层。"
+      }
+    },
+    {
+      "source": "Unavailable in this build",
+      "translations": {
+        "hi": "इस बिल्ड में उपलब्ध नहीं",
+        "es": "No disponible en esta compilación",
+        "pt": "Indisponível nesta compilação",
+        "fr": "Indisponible dans cette version",
+        "de": "In diesem Build nicht verfügbar",
+        "ar": "غير متاح في هذا الإصدار",
+        "ja": "このビルドでは利用できません",
+        "ko": "이 빌드에서는 사용할 수 없음",
+        "zh-Hans": "此构建版本中不可用"
+      }
+    },
+    {
+      "source": "Check actual browsing",
+      "translations": {
+        "hi": "असली ब्राउज़िंग जाँचें",
+        "es": "Comprobar la navegación real",
+        "pt": "Verificar a navegação real",
+        "fr": "Vérifier la navigation réelle",
+        "de": "Tatsächliches Surfen prüfen",
+        "ar": "تحقق من التصفح الفعلي",
+        "ja": "実際のブラウジングを確認",
+        "ko": "실제 브라우징 확인",
+        "zh-Hans": "检查实际浏览情况"
+      }
+    },
+    {
+      "source": "Open Cloudflare's safe adult-category test page: it should be blocked when that filtering layer works. Then open example.com: it should load. These links open your browser; FREED does not observe the result or mark protection verified.",
+      "translations": {
+        "hi": "Cloudflare का सुरक्षित वयस्क-श्रेणी परीक्षण पेज खोलें: यह फ़िल्टरिंग परत काम कर रही हो तो पेज ब्लॉक होना चाहिए। फिर example.com खोलें: यह लोड होना चाहिए। ये लिंक आपका ब्राउज़र खोलते हैं; FREED नतीजा नहीं देखता और सुरक्षा को सत्यापित नहीं बताता।",
+        "es": "Abre la página segura de prueba de la categoría para adultos de Cloudflare: debería estar bloqueada si esa capa de filtrado funciona. Después abre example.com: debería cargar. Estos enlaces abren tu navegador; FREED no observa el resultado ni marca la protección como verificada.",
+        "pt": "Abra a página segura de teste da categoria adulta da Cloudflare: ela deve ser bloqueada quando essa camada de filtragem funciona. Depois abra example.com: ele deve carregar. Estes links abrem seu navegador; o FREED não observa o resultado nem marca a proteção como verificada.",
+        "fr": "Ouvrez la page de test sûre de la catégorie adulte de Cloudflare : elle devrait être bloquée si cette couche de filtrage fonctionne. Ouvrez ensuite example.com : le site devrait se charger. Ces liens ouvrent votre navigateur ; FREED n’observe pas le résultat et ne marque pas la protection comme vérifiée.",
+        "de": "Öffne Cloudflares sichere Testseite für die Kategorie Erwachseneninhalte: Sie sollte blockiert werden, wenn diese Filterebene funktioniert. Öffne dann example.com: Die Seite sollte laden. Diese Links öffnen deinen Browser; FREED beobachtet das Ergebnis nicht und kennzeichnet den Schutz nicht als verifiziert.",
+        "ar": "افتح صفحة الاختبار الآمنة لفئة البالغين من Cloudflare: ينبغي حظرها عندما تعمل طبقة الترشيح هذه. ثم افتح example.com: ينبغي أن يُحمّل. تفتح هذه الروابط متصفحك؛ لا يراقب FREED النتيجة ولا يضع علامة تفيد بأن الحماية تم التحقق منها.",
+        "ja": "Cloudflareの安全な成人向けカテゴリのテストページを開いてください。このフィルタリングレイヤーが機能していれば、ブロックされるはずです。次にexample.comを開き、読み込まれることを確認してください。これらのリンクはブラウザを開きます。FREEDは結果を観察せず、保護を検証済みとして記録しません。",
+        "ko": "Cloudflare의 안전한 성인 카테고리 테스트 페이지를 여세요. 해당 필터링 계층이 작동하면 차단되어야 합니다. 그런 다음 example.com을 여세요. 이 사이트는 로드되어야 합니다. 이 링크는 브라우저를 엽니다. FREED는 결과를 관찰하거나 보호를 검증됨으로 표시하지 않습니다.",
+        "zh-Hans": "打开 Cloudflare 安全的成人类别测试页面：如果该过滤层正常工作，此页面应被屏蔽。然后打开 example.com：它应能加载。这些链接会打开浏览器；FREED 不会观察结果，也不会将保护标记为已验证。"
+      }
+    },
+    {
+      "source": "Open adult-category test",
+      "translations": {
+        "hi": "वयस्क-श्रेणी परीक्षण खोलें",
+        "es": "Abrir prueba de categoría para adultos",
+        "pt": "Abrir teste da categoria adulta",
+        "fr": "Ouvrir le test de la catégorie adulte",
+        "de": "Test für Erwachseneninhalte öffnen",
+        "ar": "فتح اختبار فئة البالغين",
+        "ja": "成人向けカテゴリのテストを開く",
+        "ko": "성인 카테고리 테스트 열기",
+        "zh-Hans": "打开成人类别测试"
+      }
+    },
+    {
+      "source": "Open normal website test",
+      "translations": {
+        "hi": "सामान्य वेबसाइट परीक्षण खोलें",
+        "es": "Abrir prueba de sitio normal",
+        "pt": "Abrir teste de site normal",
+        "fr": "Ouvrir le test d’un site normal",
+        "de": "Test für normale Website öffnen",
+        "ar": "فتح اختبار موقع عادي",
+        "ja": "通常のウェブサイトのテストを開く",
+        "ko": "일반 웹사이트 테스트 열기",
+        "zh-Hans": "打开普通网站测试"
+      }
+    },
+    {
+      "source": "Optional: choose distracting apps and a daily limit. Website filtering is optional.",
+      "translations": {
+        "hi": "वैकल्पिक: ध्यान भटकाने वाले ऐप्स और दैनिक सीमा चुनें। वेबसाइट फ़िल्टरिंग वैकल्पिक है।",
+        "es": "Opcional: elige apps que te distraen y un límite diario. El filtrado web es opcional.",
+        "pt": "Opcional: escolha apps que distraem e um limite diário. A filtragem de sites é opcional.",
+        "fr": "Facultatif : choisissez des apps distrayantes et une limite quotidienne. Le filtrage des sites est facultatif.",
+        "de": "Optional: Wähle ablenkende Apps und ein Tageslimit. Website-Filterung ist optional.",
+        "ar": "اختياري: اختر التطبيقات المشتتة وحدًا يوميًا. ترشيح المواقع اختياري.",
+        "ja": "任意：気を散らすアプリと1日の上限を選んでください。ウェブサイトのフィルタリングは任意です。",
+        "ko": "선택 사항: 주의를 분산시키는 앱과 일일 제한을 선택하세요. 웹사이트 필터링은 선택 사항입니다.",
+        "zh-Hans": "可选：选择容易让你分心的应用和每日限额。网站过滤为可选功能。"
+      }
+    },
+    {
+      "source": "Screen Time · ",
+      "translations": {
+        "hi": "स्क्रीन टाइम · ",
+        "es": "Tiempo de uso · ",
+        "pt": "Tempo de Uso · ",
+        "fr": "Temps d’écran · ",
+        "de": "Bildschirmzeit · ",
+        "ar": "مدة استخدام الجهاز · ",
+        "ja": "スクリーンタイム · ",
+        "ko": "스크린 타임 · ",
+        "zh-Hans": "屏幕使用时间 · "
+      }
+    },
+    {
+      "source": "Review adult website protection",
+      "translations": {
+        "hi": "वयस्क वेबसाइट सुरक्षा की समीक्षा करें",
+        "es": "Revisar protección de sitios para adultos",
+        "pt": "Revisar proteção de sites adultos",
+        "fr": "Examiner la protection des sites pour adultes",
+        "de": "Schutz vor Websites mit Erwachseneninhalten prüfen",
+        "ar": "مراجعة حماية مواقع البالغين",
+        "ja": "成人向けウェブサイト保護を確認",
+        "ko": "성인 웹사이트 보호 검토",
+        "zh-Hans": "查看成人网站保护"
+      }
+    },
+    {
+      "source": "Set up adult website protection",
+      "translations": {
+        "hi": "वयस्क वेबसाइट सुरक्षा सेट अप करें",
+        "es": "Configurar protección de sitios para adultos",
+        "pt": "Configurar proteção de sites adultos",
+        "fr": "Configurer la protection des sites pour adultes",
+        "de": "Schutz vor Websites mit Erwachseneninhalten einrichten",
+        "ar": "إعداد حماية مواقع البالغين",
+        "ja": "成人向けウェブサイト保護を設定",
+        "ko": "성인 웹사이트 보호 설정",
+        "zh-Hans": "设置成人网站保护"
+      }
+    },
+    {
+      "source": "Review app limits",
+      "translations": {
+        "hi": "ऐप सीमाओं की समीक्षा करें",
+        "es": "Revisar límites de apps",
+        "pt": "Revisar limites de apps",
+        "fr": "Examiner les limites d’apps",
+        "de": "App-Limits prüfen",
+        "ar": "مراجعة حدود التطبيقات",
+        "ja": "アプリの制限を確認",
+        "ko": "앱 제한 검토",
+        "zh-Hans": "查看应用限额"
+      }
+    },
+    {
+      "source": "Fix app limits",
+      "translations": {
+        "hi": "ऐप सीमाएँ ठीक करें",
+        "es": "Corregir límites de apps",
+        "pt": "Corrigir limites de apps",
+        "fr": "Corriger les limites d’apps",
+        "de": "App-Limits korrigieren",
+        "ar": "إصلاح حدود التطبيقات",
+        "ja": "アプリの制限を修正",
+        "ko": "앱 제한 수정",
+        "zh-Hans": "修复应用限额"
+      }
+    },
+    {
+      "source": "Set up app limits",
+      "translations": {
+        "hi": "ऐप सीमाएँ सेट अप करें",
+        "es": "Configurar límites de apps",
+        "pt": "Configurar limites de apps",
+        "fr": "Configurer les limites d’apps",
+        "de": "App-Limits einrichten",
+        "ar": "إعداد حدود التطبيقات",
+        "ja": "アプリの制限を設定",
+        "ko": "앱 제한 설정",
+        "zh-Hans": "设置应用限额"
+      }
+    },
+    {
+      "source": "Block selected apps during chosen time windows",
+      "translations": {
+        "hi": "चुने हुए समय-खंडों में चुने गए ऐप्स ब्लॉक करें",
+        "es": "Bloquear apps seleccionadas en las franjas horarias elegidas",
+        "pt": "Bloquear apps selecionados nos períodos escolhidos",
+        "fr": "Bloquer les apps sélectionnées pendant les plages horaires choisies",
+        "de": "Ausgewählte Apps in gewählten Zeitfenstern blockieren",
+        "ar": "حظر التطبيقات المحددة خلال الفترات الزمنية المختارة",
+        "ja": "選択した時間帯に、選択したアプリをブロック",
+        "ko": "선택한 시간대에 선택한 앱 차단",
+        "zh-Hans": "在选定时段屏蔽所选应用"
+      }
+    },
+    {
+      "source": "Preset saved",
+      "translations": {
+        "hi": "प्रीसेट सेव किया गया",
+        "es": "Preajuste guardado",
+        "pt": "Predefinição salva",
+        "fr": "Préréglage enregistré",
+        "de": "Voreinstellung gespeichert",
+        "ar": "تم حفظ الإعداد المسبق",
+        "ja": "プリセットを保存しました",
+        "ko": "프리셋 저장됨",
+        "zh-Hans": "预设已保存"
+      }
+    },
+    {
+      "source": "saved; enforcement unavailable",
+      "translations": {
+        "hi": "सेव किया गया; लागू करना उपलब्ध नहीं",
+        "es": "guardado; aplicación no disponible",
+        "pt": "salvo; aplicação indisponível",
+        "fr": "enregistré ; application indisponible",
+        "de": "gespeichert; Durchsetzung nicht verfügbar",
+        "ar": "محفوظ؛ التطبيق الفعلي غير متاح",
+        "ja": "保存済み; 適用は利用不可",
+        "ko": "저장됨; 차단 적용 불가",
+        "zh-Hans": "已保存; 无法执行屏蔽"
+      }
+    },
+    {
+      "source": "Native YouTube Shorts and Instagram Reels surfaces are unavailable on iOS. Use whole-app Screen Time limits, or the Safari Focus Shield extension for supported web paths.",
+      "translations": {
+        "hi": "iOS पर YouTube Shorts और Instagram Reels के नेटिव भाग उपलब्ध नहीं हैं। पूरे ऐप के लिए स्क्रीन टाइम सीमाएँ या समर्थित वेब पाथ के लिए Safari Focus Shield एक्सटेंशन इस्तेमाल करें।",
+        "es": "Las interfaces nativas de YouTube Shorts e Instagram Reels no están disponibles en iOS. Usa límites de Tiempo de uso para toda la app o la extensión Safari Focus Shield para rutas web compatibles.",
+        "pt": "As interfaces nativas do YouTube Shorts e Instagram Reels não estão disponíveis no iOS. Use limites do Tempo de Uso para o app inteiro ou a extensão Safari Focus Shield para caminhos web compatíveis.",
+        "fr": "Les interfaces natives YouTube Shorts et Instagram Reels ne sont pas disponibles sur iOS. Utilisez les limites Temps d’écran pour l’app entière ou l’extension Safari Focus Shield pour les chemins web pris en charge.",
+        "de": "Die nativen Bereiche für YouTube Shorts und Instagram Reels sind unter iOS nicht verfügbar. Nutze Bildschirmzeit-Limits für die gesamte App oder die Erweiterung Safari Focus Shield für unterstützte Webpfade.",
+        "ar": "واجهات YouTube Shorts وInstagram Reels الأصلية غير متاحة على iOS. استخدم حدود مدة استخدام الجهاز للتطبيق بأكمله، أو إضافة Safari Focus Shield لمسارات الويب المدعومة.",
+        "ja": "iOSでは、YouTube ShortsとInstagram Reelsのネイティブ画面は利用できません。アプリ全体にスクリーンタイムの制限を設定するか、対応するウェブパスにSafari Focus Shield拡張機能を使用してください。",
+        "ko": "iOS에서는 YouTube Shorts와 Instagram Reels의 네이티브 화면을 사용할 수 없습니다. 앱 전체에 스크린 타임 제한을 적용하거나 지원되는 웹 경로에 Safari Focus Shield 확장 프로그램을 사용하세요.",
+        "zh-Hans": "YouTube Shorts 和 Instagram Reels 的原生界面在 iOS 上不可用。请使用屏幕使用时间限制整个应用，或使用 Safari Focus Shield 扩展保护受支持的网页路径。"
+      }
+    },
+    {
+      "source": "Safari's browser pause stays paused until you resume it in the extension. It is separate from an earned native Screen Time unlock; completing a challenge does not grant temporary Safari access.",
+      "translations": {
+        "hi": "Safari की ब्राउज़र रोक तब तक बनी रहती है जब तक आप एक्सटेंशन में उसे फिर शुरू नहीं करते। यह अर्जित नेटिव स्क्रीन टाइम अनलॉक से अलग है; चुनौती पूरी करने से Safari का अस्थायी एक्सेस नहीं मिलता।",
+        "es": "La pausa del navegador de Safari se mantiene hasta que la reanudes en la extensión. Es independiente de un desbloqueo nativo de Tiempo de uso ganado; completar un reto no concede acceso temporal a Safari.",
+        "pt": "A pausa do navegador Safari permanece até você retomá-lo na extensão. Ela é independente de um desbloqueio nativo do Tempo de Uso conquistado; concluir um desafio não concede acesso temporário ao Safari.",
+        "fr": "La pause du navigateur Safari reste active jusqu’à sa reprise dans l’extension. Elle est distincte d’un déverrouillage natif Temps d’écran obtenu ; terminer un défi ne donne pas d’accès temporaire à Safari.",
+        "de": "Safaris Browserpause bleibt bestehen, bis du sie in der Erweiterung beendest. Sie ist unabhängig von einer verdienten nativen Bildschirmzeit-Entsperrung; eine abgeschlossene Aufgabe gewährt keinen vorübergehenden Safari-Zugang.",
+        "ar": "يبقى إيقاف متصفح Safari مؤقتًا قائمًا حتى تستأنفه من الإضافة. وهو منفصل عن فتح القفل المكتسب في مدة استخدام الجهاز الأصلية؛ إكمال تحدٍ لا يمنح وصولًا مؤقتًا إلى Safari.",
+        "ja": "Safariのブラウザの一時停止は、拡張機能で再開するまで継続します。獲得したネイティブのスクリーンタイム解除とは別の機能です。チャレンジを完了しても、Safariを一時的に利用できるようにはなりません。",
+        "ko": "Safari 브라우저 일시 정지는 확장 프로그램에서 재개할 때까지 유지됩니다. 보상으로 얻은 네이티브 스크린 타임 잠금 해제와는 별개입니다. 챌린지를 완료해도 Safari에 임시로 접근할 수 있게 되지는 않습니다.",
+        "zh-Hans": "Safari 的浏览器暂停会一直持续，直到你在扩展中恢复。它与通过奖励获得的原生屏幕使用时间解锁相互独立；完成挑战不会授予 Safari 临时访问权限。"
+      }
+    },
+    {
+      "source": "Open Safari Focus Shield settings",
+      "translations": {
+        "hi": "Safari Focus Shield सेटिंग्स खोलें",
+        "es": "Abrir ajustes de Safari Focus Shield",
+        "pt": "Abrir ajustes do Safari Focus Shield",
+        "fr": "Ouvrir les réglages de Safari Focus Shield",
+        "de": "Safari Focus Shield-Einstellungen öffnen",
+        "ar": "فتح إعدادات Safari Focus Shield",
+        "ja": "Safari Focus Shieldの設定を開く",
+        "ko": "Safari Focus Shield 설정 열기",
+        "zh-Hans": "打开 Safari Focus Shield 设置"
+      }
+    },
+    {
+      "source": "Configuration ready",
+      "translations": {
+        "hi": "कॉन्फ़िगरेशन तैयार है",
+        "es": "Configuración lista",
+        "pt": "Configuração pronta",
+        "fr": "Configuration prête",
+        "de": "Konfiguration bereit",
+        "ar": "الإعدادات جاهزة",
+        "ja": "設定の準備完了",
+        "ko": "설정 준비 완료",
+        "zh-Hans": "配置就绪"
+      }
+    },
+    {
+      "source": "Your required permissions and local configuration checks passed on this device.",
+      "translations": {
+        "hi": "इस डिवाइस पर आपकी ज़रूरी अनुमतियों और स्थानीय कॉन्फ़िगरेशन की जाँचें सफल रहीं।",
+        "es": "Los permisos requeridos y las comprobaciones de configuración local se completaron correctamente en este dispositivo.",
+        "pt": "As permissões necessárias e as verificações de configuração local passaram neste dispositivo.",
+        "fr": "Les autorisations requises et les vérifications de configuration locale ont réussi sur cet appareil.",
+        "de": "Die erforderlichen Berechtigungen und lokalen Konfigurationsprüfungen waren auf diesem Gerät erfolgreich.",
+        "ar": "نجحت فحوص الأذونات المطلوبة والإعدادات المحلية على هذا الجهاز.",
+        "ja": "このデバイスで、必要な権限とローカル設定のチェックに合格しました。",
+        "ko": "이 기기에서 필요한 권한과 로컬 설정 점검을 통과했습니다.",
+        "zh-Hans": "此设备已通过所需权限和本地配置检查。"
+      }
+    },
+    {
+      "source": "Check actual browsing before relying on protection. You can change settings anytime from Protect.",
+      "translations": {
+        "hi": "सुरक्षा पर भरोसा करने से पहले असली ब्राउज़िंग जाँचें। आप “सुरक्षित रखें” से कभी भी सेटिंग्स बदल सकते हैं।",
+        "es": "Comprueba la navegación real antes de confiar en la protección. Puedes cambiar los ajustes cuando quieras desde Proteger.",
+        "pt": "Verifique a navegação real antes de confiar na proteção. Você pode alterar os ajustes a qualquer momento em Proteger.",
+        "fr": "Vérifiez la navigation réelle avant de vous fier à la protection. Vous pouvez modifier les réglages à tout moment depuis Protéger.",
+        "de": "Prüfe das tatsächliche Surfen, bevor du dich auf den Schutz verlässt. Du kannst die Einstellungen jederzeit unter Schützen ändern.",
+        "ar": "تحقق من التصفح الفعلي قبل الاعتماد على الحماية. يمكنك تغيير الإعدادات في أي وقت من قسم الحماية.",
+        "ja": "保護を頼りにする前に、実際のブラウジングを確認してください。「守る」からいつでも設定を変更できます。",
+        "ko": "보호 기능에 의존하기 전에 실제 브라우징을 확인하세요. “보호하다” 메뉴에서 언제든 설정을 변경할 수 있습니다.",
+        "zh-Hans": "在依赖保护功能之前，请检查实际浏览情况。你可以随时从“保护”更改设置。"
+      }
+    },
+    {
+      "source": "Check configuration",
+      "translations": {
+        "hi": "कॉन्फ़िगरेशन जाँचें",
+        "es": "Comprobar configuración",
+        "pt": "Verificar configuração",
+        "fr": "Vérifier la configuration",
+        "de": "Konfiguration prüfen",
+        "ar": "فحص الإعدادات",
+        "ja": "設定をチェック",
+        "ko": "설정 점검",
+        "zh-Hans": "检查配置"
+      }
+    },
+    {
+      "source": "Check native permissions, feed readiness and local URL classification.",
+      "translations": {
+        "hi": "नेटिव अनुमतियाँ, डोमेन सूची की तैयारी और स्थानीय URL वर्गीकरण जाँचें।",
+        "es": "Comprobar permisos nativos, disponibilidad de la lista de dominios y clasificación local de URL.",
+        "pt": "Verificar permissões nativas, disponibilidade da lista de domínios e classificação local de URLs.",
+        "fr": "Vérifier les autorisations natives, la disponibilité de la liste de domaines et la classification locale des URL.",
+        "de": "Native Berechtigungen, Verfügbarkeit der Domainliste und lokale URL-Klassifizierung prüfen.",
+        "ar": "فحص الأذونات الأصلية وجاهزية قائمة النطاقات والتصنيف المحلي لعناوين URL.",
+        "ja": "ネイティブ権限、ドメインリストの準備状況、ローカルURL分類をチェックします。",
+        "ko": "네이티브 권한, 도메인 목록 준비 상태, 로컬 URL 분류를 점검합니다.",
+        "zh-Hans": "检查原生权限、域名列表就绪状态和本地 URL 分类。"
+      }
+    },
+    {
+      "source": "This check does not open websites or verify real browser or network blocking.",
+      "translations": {
+        "hi": "यह जाँच वेबसाइटें नहीं खोलती और असली ब्राउज़र या नेटवर्क ब्लॉकिंग की पुष्टि नहीं करती।",
+        "es": "Esta comprobación no abre sitios web ni verifica el bloqueo real en el navegador o la red.",
+        "pt": "Esta verificação não abre sites nem verifica o bloqueio real no navegador ou na rede.",
+        "fr": "Cette vérification n’ouvre aucun site et ne vérifie pas le blocage réel dans le navigateur ou sur le réseau.",
+        "de": "Diese Prüfung öffnet keine Websites und verifiziert keine tatsächliche Sperre im Browser oder Netzwerk.",
+        "ar": "لا يفتح هذا الفحص المواقع ولا يتحقق من الحظر الفعلي في المتصفح أو الشبكة.",
+        "ja": "このチェックはウェブサイトを開かず、実際のブラウザやネットワークでのブロックを検証しません。",
+        "ko": "이 점검은 웹사이트를 열거나 실제 브라우저 또는 네트워크 차단을 검증하지 않습니다.",
+        "zh-Hans": "此检查不会打开网站，也不会验证实际浏览器或网络屏蔽。"
+      }
+    },
+    {
+      "source": "Checking configuration…",
+      "translations": {
+        "hi": "कॉन्फ़िगरेशन जाँचा जा रहा है…",
+        "es": "Comprobando configuración…",
+        "pt": "Verificando configuração…",
+        "fr": "Vérification de la configuration…",
+        "de": "Konfiguration wird geprüft…",
+        "ar": "جارٍ فحص الإعدادات…",
+        "ja": "設定をチェック中…",
+        "ko": "설정 점검 중…",
+        "zh-Hans": "正在检查配置…"
+      }
+    },
+    {
+      "source": "Configuration check needs attention: local adult-domain block and normal-site allow checks both failed.",
+      "translations": {
+        "hi": "कॉन्फ़िगरेशन जाँच पर ध्यान देना ज़रूरी है: स्थानीय वयस्क डोमेन ब्लॉक जाँच और सामान्य साइट को अनुमति देने की जाँच, दोनों असफल रहीं।",
+        "es": "La comprobación de configuración necesita atención: fallaron tanto el bloqueo local de dominios para adultos como la autorización de sitios normales.",
+        "pt": "A verificação de configuração precisa de atenção: falharam tanto o bloqueio local de domínios adultos quanto a liberação de sites normais.",
+        "fr": "La vérification de configuration nécessite votre attention : les vérifications locales du blocage des domaines pour adultes et de l’autorisation des sites normaux ont toutes deux échoué.",
+        "de": "Die Konfigurationsprüfung erfordert Aufmerksamkeit: Sowohl die lokale Sperrprüfung für Domains mit Erwachseneninhalten als auch die Freigabeprüfung für normale Websites sind fehlgeschlagen.",
+        "ar": "يحتاج فحص الإعدادات إلى انتباه: فشل كل من فحص حظر نطاقات البالغين محليًا وفحص السماح بالمواقع العادية.",
+        "ja": "設定チェックに対応が必要です。ローカルでの成人向けドメインのブロック確認と通常サイトの許可確認が、両方とも失敗しました。",
+        "ko": "설정 점검에 주의가 필요합니다. 로컬 성인 도메인 차단 점검과 일반 사이트 허용 점검이 모두 실패했습니다.",
+        "zh-Hans": "配置检查需要处理：本地成人域名屏蔽检查和普通网站允许检查均未通过。"
+      }
+    },
+    {
+      "source": "Configuration check needs attention: the local adult-domain check did not block.",
+      "translations": {
+        "hi": "कॉन्फ़िगरेशन जाँच पर ध्यान देना ज़रूरी है: स्थानीय वयस्क डोमेन जाँच ने डोमेन ब्लॉक नहीं किया।",
+        "es": "La comprobación de configuración necesita atención: la comprobación local de dominios para adultos no bloqueó el dominio.",
+        "pt": "A verificação de configuração precisa de atenção: a verificação local de domínios adultos não bloqueou o domínio.",
+        "fr": "La vérification de configuration nécessite votre attention : la vérification locale des domaines pour adultes n’a pas bloqué le domaine.",
+        "de": "Die Konfigurationsprüfung erfordert Aufmerksamkeit: Die lokale Prüfung für Domains mit Erwachseneninhalten hat die Domain nicht blockiert.",
+        "ar": "يحتاج فحص الإعدادات إلى انتباه: لم يحظر الفحص المحلي لنطاقات البالغين النطاق.",
+        "ja": "設定チェックに対応が必要です。ローカルの成人向けドメインチェックで、ドメインがブロックされませんでした。",
+        "ko": "설정 점검에 주의가 필요합니다. 로컬 성인 도메인 점검에서 도메인이 차단되지 않았습니다.",
+        "zh-Hans": "配置检查需要处理：本地成人域名检查未屏蔽该域名。"
+      }
+    },
+    {
+      "source": "Configuration check needs attention: the normal-site allow check did not pass.",
+      "translations": {
+        "hi": "कॉन्फ़िगरेशन जाँच पर ध्यान देना ज़रूरी है: सामान्य साइट को अनुमति देने की जाँच सफल नहीं हुई।",
+        "es": "La comprobación de configuración necesita atención: la comprobación de autorización de sitios normales no se completó correctamente.",
+        "pt": "A verificação de configuração precisa de atenção: a verificação de liberação de sites normais não passou.",
+        "fr": "La vérification de configuration nécessite votre attention : la vérification d’autorisation des sites normaux a échoué.",
+        "de": "Die Konfigurationsprüfung erfordert Aufmerksamkeit: Die Freigabeprüfung für normale Websites war nicht erfolgreich.",
+        "ar": "يحتاج فحص الإعدادات إلى انتباه: لم ينجح فحص السماح بالمواقع العادية.",
+        "ja": "設定チェックに対応が必要です。通常サイトの許可チェックに合格しませんでした。",
+        "ko": "설정 점검에 주의가 필요합니다. 일반 사이트 허용 점검을 통과하지 못했습니다.",
+        "zh-Hans": "配置检查需要处理：普通网站允许检查未通过。"
+      }
+    },
+    {
+      "source": "Configuration check passed. Native permission, feed and local classification checks are ready. This does not verify real browser or network blocking.",
+      "translations": {
+        "hi": "कॉन्फ़िगरेशन जाँच सफल रही। नेटिव अनुमतियाँ, डोमेन सूची और स्थानीय वर्गीकरण जाँचें तैयार हैं। इससे असली ब्राउज़र या नेटवर्क ब्लॉकिंग की पुष्टि नहीं होती।",
+        "es": "Configuración comprobada correctamente. Los permisos nativos, la lista de dominios y la clasificación local están listos. Esto no verifica el bloqueo real en el navegador o la red.",
+        "pt": "A configuração passou na verificação. As permissões nativas, a lista de domínios e a classificação local estão prontas. Isso não verifica o bloqueio real no navegador ou na rede.",
+        "fr": "La vérification de configuration a réussi. Les autorisations natives, la liste de domaines et la classification locale sont prêtes. Cela ne vérifie pas le blocage réel dans le navigateur ou sur le réseau.",
+        "de": "Konfigurationsprüfung erfolgreich. Native Berechtigungen, Domainliste und lokale Klassifizierung sind bereit. Dies verifiziert keine tatsächliche Sperre im Browser oder Netzwerk.",
+        "ar": "نجح فحص الإعدادات. الأذونات الأصلية وقائمة النطاقات وفحوص التصنيف المحلي جاهزة. هذا لا يتحقق من الحظر الفعلي في المتصفح أو الشبكة.",
+        "ja": "設定チェックに合格しました。ネイティブ権限、ドメインリスト、ローカル分類チェックの準備が整っています。実際のブラウザやネットワークでのブロックは検証されていません。",
+        "ko": "설정 점검을 통과했습니다. 네이티브 권한, 도메인 목록, 로컬 분류 점검이 준비되었습니다. 이는 실제 브라우저 또는 네트워크 차단을 검증한 것이 아닙니다.",
+        "zh-Hans": "配置检查已通过。原生权限、域名列表和本地分类检查已就绪。这并不验证实际浏览器或网络屏蔽。"
+      }
+    },
+    {
+      "source": "Protection status changed since the last configuration check. Run the configuration check again before activation can finish.",
+      "translations": {
+        "hi": "पिछली कॉन्फ़िगरेशन जाँच के बाद सुरक्षा की स्थिति बदल गई है। सक्रियण पूरा होने से पहले कॉन्फ़िगरेशन जाँच दोबारा चलाएँ।",
+        "es": "El estado de protección cambió desde la última comprobación de configuración. Vuelve a comprobar la configuración para poder finalizar la activación.",
+        "pt": "O status de proteção mudou desde a última verificação de configuração. Execute a verificação novamente para poder concluir a ativação.",
+        "fr": "L’état de protection a changé depuis la dernière vérification de configuration. Relancez la vérification avant de pouvoir terminer l’activation.",
+        "de": "Der Schutzstatus hat sich seit der letzten Konfigurationsprüfung geändert. Führe die Konfigurationsprüfung erneut aus, bevor die Aktivierung abgeschlossen werden kann.",
+        "ar": "تغيرت حالة الحماية منذ آخر فحص للإعدادات. أعد فحص الإعدادات قبل أن يمكن إكمال التفعيل.",
+        "ja": "前回の設定チェック以降に、保護の状態が変わりました。有効化を完了するには、設定チェックをもう一度実行してください。",
+        "ko": "마지막 설정 점검 이후 보호 상태가 변경되었습니다. 활성화를 완료하려면 설정 점검을 다시 실행하세요.",
+        "zh-Hans": "自上次配置检查以来，保护状态发生了变化。请再次运行配置检查，才能完成激活。"
+      }
+    },
+    {
+      "source": "Configuration check could not run native diagnostics. Return from system settings, then run the configuration check again.",
+      "translations": {
+        "hi": "कॉन्फ़िगरेशन जाँच नेटिव डायग्नोस्टिक्स नहीं चला सकी। सिस्टम सेटिंग्स से लौटें और कॉन्फ़िगरेशन जाँच दोबारा चलाएँ।",
+        "es": "La comprobación de configuración no pudo ejecutar el diagnóstico nativo. Vuelve de los ajustes del sistema y repite la comprobación.",
+        "pt": "A verificação de configuração não conseguiu executar o diagnóstico nativo. Volte dos ajustes do sistema e execute a verificação novamente.",
+        "fr": "La vérification de configuration n’a pas pu lancer les diagnostics natifs. Revenez des réglages système, puis relancez la vérification.",
+        "de": "Die Konfigurationsprüfung konnte die native Diagnose nicht ausführen. Kehre aus den Systemeinstellungen zurück und führe die Konfigurationsprüfung erneut aus.",
+        "ar": "تعذّر على فحص الإعدادات تشغيل التشخيصات الأصلية. عُد من إعدادات النظام، ثم أعد فحص الإعدادات.",
+        "ja": "設定チェックでネイティブ診断を実行できませんでした。システム設定から戻り、設定チェックをもう一度実行してください。",
+        "ko": "설정 점검에서 네이티브 진단을 실행하지 못했습니다. 시스템 설정에서 돌아온 다음 설정 점검을 다시 실행하세요.",
+        "zh-Hans": "配置检查无法运行原生诊断。请从系统设置返回，然后再次运行配置检查。"
+      }
+    },
+    {
+      "source": "Local classification checks passed, but current readiness changed. Review the required permission/feed rows, then run the configuration check again.",
+      "translations": {
+        "hi": "स्थानीय वर्गीकरण जाँचें सफल रहीं, लेकिन मौजूदा तैयारी बदल गई है। ज़रूरी अनुमति और डोमेन सूची की पंक्तियाँ देखें, फिर कॉन्फ़िगरेशन जाँच दोबारा चलाएँ।",
+        "es": "La clasificación local se comprobó correctamente, pero la disponibilidad actual cambió. Revisa las filas de permisos y lista de dominios requeridas y vuelve a comprobar la configuración.",
+        "pt": "As verificações de classificação local passaram, mas a disponibilidade atual mudou. Revise as linhas de permissões e lista de domínios necessárias e execute a verificação de configuração novamente.",
+        "fr": "Les vérifications de classification locale ont réussi, mais l’état de préparation actuel a changé. Examinez les lignes requises concernant les autorisations et la liste de domaines, puis relancez la vérification de configuration.",
+        "de": "Die lokalen Klassifizierungsprüfungen waren erfolgreich, aber der aktuelle Bereitschaftsstatus hat sich geändert. Prüfe die erforderlichen Berechtigungs- und Domainlistenzeilen und führe die Konfigurationsprüfung erneut aus.",
+        "ar": "نجحت فحوص التصنيف المحلي، لكن الجاهزية الحالية تغيرت. راجع صفوف الأذونات وقائمة النطاقات المطلوبة، ثم أعد فحص الإعدادات.",
+        "ja": "ローカル分類チェックに合格しましたが、現在の準備状況が変わりました。必要な権限とドメインリストの項目を確認し、設定チェックをもう一度実行してください。",
+        "ko": "로컬 분류 점검은 통과했지만 현재 준비 상태가 변경되었습니다. 필요한 권한 및 도메인 목록 항목을 검토한 다음 설정 점검을 다시 실행하세요.",
+        "zh-Hans": "本地分类检查已通过，但当前就绪状态发生了变化。请查看所需权限和域名列表条目，然后再次运行配置检查。"
+      }
+    },
+    {
+      "source": "Local classification checks passed without saving a blocked attempt. Finish the required permission and feed rows, then run this again.",
+      "translations": {
+        "hi": "स्थानीय वर्गीकरण जाँचें किसी ब्लॉक किए गए प्रयास को सेव किए बिना सफल रहीं। ज़रूरी अनुमति और डोमेन सूची की पंक्तियाँ पूरी करें, फिर यह जाँच दोबारा चलाएँ।",
+        "es": "La clasificación local se comprobó correctamente sin guardar un intento bloqueado. Completa las filas de permisos y lista de dominios requeridas y vuelve a ejecutarla.",
+        "pt": "As verificações de classificação local passaram sem salvar uma tentativa bloqueada. Conclua as linhas de permissões e lista de domínios necessárias e execute novamente.",
+        "fr": "Les vérifications de classification locale ont réussi sans enregistrer de tentative bloquée. Complétez les lignes requises concernant les autorisations et la liste de domaines, puis relancez cette vérification.",
+        "de": "Die lokalen Klassifizierungsprüfungen waren erfolgreich, ohne einen blockierten Versuch zu speichern. Schließe die erforderlichen Berechtigungs- und Domainlistenzeilen ab und führe diese Prüfung erneut aus.",
+        "ar": "نجحت فحوص التصنيف المحلي دون حفظ محاولة محظورة. أكمل صفوف الأذونات وقائمة النطاقات المطلوبة، ثم أعد تشغيل هذا الفحص.",
+        "ja": "ブロックされた試行を保存せずに、ローカル分類チェックに合格しました。必要な権限とドメインリストの項目を完了し、もう一度実行してください。",
+        "ko": "차단된 시도를 저장하지 않고 로컬 분류 점검을 통과했습니다. 필요한 권한 및 도메인 목록 항목을 완료한 다음 다시 실행하세요.",
+        "zh-Hans": "本地分类检查已通过，且未保存屏蔽尝试记录。请完成所需权限和域名列表条目，然后再次运行此检查。"
+      }
+    },
+    {
+      "source": "All required setup rows are ready. Running the local configuration check now.",
+      "translations": {
+        "hi": "सभी ज़रूरी सेटअप पंक्तियाँ तैयार हैं। अब स्थानीय कॉन्फ़िगरेशन जाँच चल रही है।",
+        "es": "Todas las filas de configuración requeridas están listas. Ejecutando ahora la comprobación de configuración local.",
+        "pt": "Todas as linhas de configuração necessárias estão prontas. Executando a verificação de configuração local agora.",
+        "fr": "Toutes les lignes de configuration requises sont prêtes. Lancement de la vérification de configuration locale.",
+        "de": "Alle erforderlichen Einrichtungszeilen sind bereit. Die lokale Konfigurationsprüfung wird jetzt ausgeführt.",
+        "ar": "جميع صفوف الإعداد المطلوبة جاهزة. يُجرى الآن فحص الإعدادات المحلية.",
+        "ja": "必要な設定項目はすべて準備完了です。ローカル設定チェックを実行しています。",
+        "ko": "필요한 모든 설정 항목이 준비되었습니다. 지금 로컬 설정 점검을 실행합니다.",
+        "zh-Hans": "所有必需的设置条目均已就绪。正在运行本地配置检查。"
+      }
+    },
+    {
+      "source": "FREED keeps a limited-protection banner on Home until the configuration check passes. You can reopen setup from that banner at any time.",
+      "translations": {
+        "hi": "कॉन्फ़िगरेशन जाँच सफल होने तक FREED होम पर सीमित सुरक्षा का बैनर रखता है। आप उस बैनर से कभी भी सेटअप दोबारा खोल सकते हैं।",
+        "es": "FREED mantiene un aviso de protección limitada en Inicio hasta que la configuración se compruebe correctamente. Puedes volver a abrir la configuración desde ese aviso cuando quieras.",
+        "pt": "O FREED mantém um aviso de proteção limitada na tela Início até a configuração passar na verificação. Você pode reabrir a configuração por esse aviso a qualquer momento.",
+        "fr": "FREED conserve une bannière de protection limitée sur l’accueil jusqu’à la réussite de la vérification de configuration. Vous pouvez rouvrir la configuration depuis cette bannière à tout moment.",
+        "de": "FREED zeigt auf der Startseite ein Banner für eingeschränkten Schutz, bis die Konfigurationsprüfung erfolgreich ist. Du kannst die Einrichtung jederzeit über dieses Banner erneut öffnen.",
+        "ar": "يُبقي FREED لافتة الحماية المحدودة على الرئيسية حتى ينجح فحص الإعدادات. يمكنك إعادة فتح الإعداد من هذه اللافتة في أي وقت.",
+        "ja": "設定チェックに合格するまで、FREEDはホームに保護が限定されていることを示すバナーを表示します。このバナーからいつでも設定を再度開けます。",
+        "ko": "FREED는 설정 점검을 통과할 때까지 홈에 제한된 보호 배너를 표시합니다. 언제든 이 배너에서 설정을 다시 열 수 있습니다.",
+        "zh-Hans": "在配置检查通过之前，FREED 会在首页保留保护受限横幅。你可以随时通过该横幅重新打开设置。"
+      }
+    },
+    {
+      "source": "Safari rules are loaded, but FREED Safari Blocker is disabled. Enable it in iOS Settings > Safari > Extensions, then return and run the configuration check.",
+      "translations": {
+        "hi": "Safari नियम लोड हैं, लेकिन FREED Safari Blocker बंद है। इसे iOS सेटिंग्स > Safari > एक्सटेंशन में चालू करें, फिर लौटकर कॉन्फ़िगरेशन जाँच चलाएँ।",
+        "es": "Las reglas de Safari están cargadas, pero FREED Safari Blocker está desactivado. Actívalo en Ajustes de iOS > Safari > Extensiones, vuelve y ejecuta la comprobación de configuración.",
+        "pt": "As regras do Safari estão carregadas, mas o FREED Safari Blocker está desativado. Ative-o em Ajustes do iOS > Safari > Extensões, volte e execute a verificação de configuração.",
+        "fr": "Les règles Safari sont chargées, mais FREED Safari Blocker est désactivé. Activez-le dans Réglages iOS > Safari > Extensions, puis revenez et lancez la vérification de configuration.",
+        "de": "Die Safari-Regeln sind geladen, aber FREED Safari Blocker ist deaktiviert. Aktiviere ihn unter iOS-Einstellungen > Safari > Erweiterungen, kehre zurück und führe die Konfigurationsprüfung aus.",
+        "ar": "تم تحميل قواعد Safari، لكن FREED Safari Blocker معطّل. فعّله في إعدادات iOS > Safari > الإضافات، ثم عُد وأجرِ فحص الإعدادات.",
+        "ja": "Safariルールは読み込まれていますが、FREED Safari Blockerは無効です。iOSの「設定」>「Safari」>「機能拡張」で有効にしてから戻り、設定チェックを実行してください。",
+        "ko": "Safari 규칙은 로드되었지만 FREED Safari Blocker는 비활성화되어 있습니다. iOS 설정 > Safari > 확장 프로그램에서 활성화한 다음 돌아와 설정 점검을 실행하세요.",
+        "zh-Hans": "Safari 规则已加载，但 FREED Safari Blocker 已停用。请在 iOS 设置 > Safari > 扩展中启用它，然后返回并运行配置检查。"
+      }
+    },
+    {
+      "source": "Configuration saved",
+      "translations": {
+        "hi": "कॉन्फ़िगरेशन सेव किया गया",
+        "es": "Configuración guardada",
+        "pt": "Configuração salva",
+        "fr": "Configuration enregistrée",
+        "de": "Konfiguration gespeichert",
+        "ar": "تم حفظ الإعدادات",
+        "ja": "設定を保存しました",
+        "ko": "설정 저장됨",
+        "zh-Hans": "配置已保存"
+      }
+    },
+    {
+      "source": "Configuration not saved",
+      "translations": {
+        "hi": "कॉन्फ़िगरेशन सेव नहीं किया गया",
+        "es": "Configuración no guardada",
+        "pt": "Configuração não salva",
+        "fr": "Configuration non enregistrée",
+        "de": "Konfiguration nicht gespeichert",
+        "ar": "لم تُحفظ الإعدادات",
+        "ja": "設定は保存されていません",
+        "ko": "설정 저장 안 됨",
+        "zh-Hans": "配置未保存"
+      }
+    },
+    {
+      "source": "Enabled in system settings",
+      "translations": {
+        "hi": "सिस्टम सेटिंग्स में चालू है",
+        "es": "Activado en los ajustes del sistema",
+        "pt": "Ativado nos ajustes do sistema",
+        "fr": "Activé dans les réglages système",
+        "de": "In den Systemeinstellungen aktiviert",
+        "ar": "مفعّل في إعدادات النظام",
+        "ja": "システム設定で有効",
+        "ko": "시스템 설정에서 활성화됨",
+        "zh-Hans": "已在系统设置中启用"
+      }
+    },
+    {
+      "source": "Not enabled in system settings",
+      "translations": {
+        "hi": "सिस्टम सेटिंग्स में चालू नहीं है",
+        "es": "No activado en los ajustes del sistema",
+        "pt": "Não ativado nos ajustes do sistema",
+        "fr": "Non activé dans les réglages système",
+        "de": "In den Systemeinstellungen nicht aktiviert",
+        "ar": "غير مفعّل في إعدادات النظام",
+        "ja": "システム設定で無効",
+        "ko": "시스템 설정에서 활성화되지 않음",
+        "zh-Hans": "未在系统设置中启用"
+      }
+    },
+    {
+      "source": "Native network check ready",
+      "translations": {
+        "hi": "नेटिव नेटवर्क जाँच तैयार है",
+        "es": "Comprobación de red nativa lista",
+        "pt": "Verificação nativa de rede pronta",
+        "fr": "Vérification réseau native prête",
+        "de": "Native Netzwerkprüfung bereit",
+        "ar": "فحص الشبكة الأصلي جاهز",
+        "ja": "ネイティブネットワークチェックの準備完了",
+        "ko": "네이티브 네트워크 점검 준비 완료",
+        "zh-Hans": "原生网络检查就绪"
+      }
+    },
+    {
+      "source": "Network check needs attention",
+      "translations": {
+        "hi": "नेटवर्क जाँच पर ध्यान देना ज़रूरी है",
+        "es": "La comprobación de red necesita atención",
+        "pt": "A verificação de rede precisa de atenção",
+        "fr": "La vérification réseau nécessite votre attention",
+        "de": "Netzwerkprüfung erfordert Aufmerksamkeit",
+        "ar": "يحتاج فحص الشبكة إلى انتباه",
+        "ja": "ネットワークチェックに対応が必要",
+        "ko": "네트워크 점검에 주의가 필요함",
+        "zh-Hans": "网络检查需要处理"
+      }
+    },
+    {
+      "source": "Network blocking not verified",
+      "translations": {
+        "hi": "नेटवर्क ब्लॉकिंग सत्यापित नहीं है",
+        "es": "Bloqueo de red no verificado",
+        "pt": "Bloqueio de rede não verificado",
+        "fr": "Blocage réseau non vérifié",
+        "de": "Netzwerksperre nicht verifiziert",
+        "ar": "لم يتم التحقق من حظر الشبكة",
+        "ja": "ネットワークでのブロックは未検証",
+        "ko": "네트워크 차단 검증 안 됨",
+        "zh-Hans": "网络屏蔽未验证"
+      }
+    },
+    {
+      "source": "iOS Simulator cannot enforce this DNS layer. Use a real iPhone with a properly signed build.",
+      "translations": {
+        "hi": "iOS सिम्युलेटर इस DNS परत को लागू नहीं कर सकता। सही तरह से साइन किए गए बिल्ड वाला असली iPhone इस्तेमाल करें।",
+        "es": "El simulador de iOS no puede aplicar esta capa DNS. Usa un iPhone real con una compilación correctamente firmada.",
+        "pt": "O Simulador do iOS não consegue aplicar esta camada DNS. Use um iPhone real com uma compilação devidamente assinada.",
+        "fr": "Le simulateur iOS ne peut pas appliquer cette couche DNS. Utilisez un véritable iPhone avec une version correctement signée.",
+        "de": "Der iOS-Simulator kann diese DNS-Ebene nicht durchsetzen. Nutze ein echtes iPhone mit einem korrekt signierten Build.",
+        "ar": "لا يمكن لمحاكي iOS تطبيق طبقة DNS هذه. استخدم iPhone حقيقيًا بإصدار موقّع بشكل صحيح.",
+        "ja": "iOSシミュレータでは、このDNSレイヤーを適用できません。適切に署名されたビルドを搭載した実機のiPhoneを使用してください。",
+        "ko": "iOS 시뮬레이터에서는 이 DNS 계층을 적용할 수 없습니다. 올바르게 서명된 빌드가 설치된 실제 iPhone을 사용하세요.",
+        "zh-Hans": "iOS 模拟器无法执行此 DNS 保护层。请使用安装了正确签名构建版本的真实 iPhone。"
+      }
+    },
+    {
+      "source": "After saving, select FREED · Cloudflare Families encrypted DNS in iOS DNS settings, then return and check settings again. Saving a configuration does not enable it or verify network blocking.",
+      "translations": {
+        "hi": "सेव करने के बाद iOS की DNS सेटिंग्स में FREED · Cloudflare Families एन्क्रिप्टेड DNS चुनें, फिर लौटकर सेटिंग्स दोबारा जाँचें। कॉन्फ़िगरेशन सेव करने से वह चालू नहीं होता और नेटवर्क ब्लॉकिंग की पुष्टि नहीं होती।",
+        "es": "Tras guardar, selecciona el DNS cifrado FREED · Cloudflare Families en los ajustes DNS de iOS, vuelve y revisa los ajustes de nuevo. Guardar una configuración no la activa ni verifica el bloqueo de red.",
+        "pt": "Após salvar, selecione o DNS criptografado FREED · Cloudflare Families nos ajustes de DNS do iOS, volte e verifique os ajustes novamente. Salvar uma configuração não a ativa nem verifica o bloqueio de rede.",
+        "fr": "Après l’enregistrement, sélectionnez le DNS chiffré FREED · Cloudflare Families dans les réglages DNS d’iOS, puis revenez et vérifiez à nouveau les réglages. Enregistrer une configuration ne l’active pas et ne vérifie pas le blocage réseau.",
+        "de": "Wähle nach dem Speichern FREED · Cloudflare Families als verschlüsseltes DNS in den iOS-DNS-Einstellungen, kehre zurück und prüfe die Einstellungen erneut. Das Speichern einer Konfiguration aktiviert sie nicht und verifiziert keine Netzwerksperre.",
+        "ar": "بعد الحفظ، اختر DNS المشفّر FREED · Cloudflare Families في إعدادات DNS في iOS، ثم عُد وتحقق من الإعدادات مجددًا. حفظ الإعدادات لا يفعّلها ولا يتحقق من حظر الشبكة.",
+        "ja": "保存後、iOSのDNS設定で「FREED · Cloudflare Families」の暗号化DNSを選び、戻って設定をもう一度確認してください。設定を保存しても有効化はされず、ネットワークでのブロックも検証されません。",
+        "ko": "저장한 후 iOS DNS 설정에서 FREED · Cloudflare Families 암호화 DNS를 선택하고 돌아와 설정을 다시 확인하세요. 설정을 저장해도 활성화되거나 네트워크 차단이 검증되지는 않습니다.",
+        "zh-Hans": "保存后，请在 iOS DNS 设置中选择 FREED · Cloudflare Families 加密 DNS，然后返回并再次检查设置。保存配置不会将其启用，也不会验证网络屏蔽。"
+      }
+    }
+  ]
+}

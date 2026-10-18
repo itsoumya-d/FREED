@@ -1,0 +1,122 @@
+[
+  {
+    "path": ".maestro/flows/encrypted-dns-consent.yaml",
+    "beforeSha256": "c6a080cb84637229da9ba73a16b108fbe192d679af5011845f7c0c039220e933",
+    "afterSha256": "05a7fbecfe53cb77348a16c99047ee13b7ca2b12705cd735fae6fb708e3d367a"
+  },
+  {
+    "path": ".maestro/flows/encrypted-dns-release-gated.yaml",
+    "beforeSha256": "8643fedb9026a47f13785b29027a04db16c90bac3ab0c397207022c784943d0e",
+    "afterSha256": "2f93066c41ab6494bcbdb4d6a84b11cea2176eb4c144473e66cdc245f86b9f65"
+  },
+  {
+    "path": ".maestro/flows/encrypted-dns-status.yaml",
+    "beforeSha256": "f400760bc59833e51abae14bd4a6a4d53390a56ab388f50e8ff6df08f40b8183",
+    "afterSha256": "f16d4d038a8b29ef9ced1615c818597a5b43a7498e41758dc89a9495056eb0cf"
+  },
+  {
+    "path": ".maestro/flows/shield-allowlist.yaml",
+    "beforeSha256": "9eb44bb008b963d41631d9f2f17a3527dba9253389ec9b58129686f033e50b1c",
+    "afterSha256": "2da73be9b674adba01c01ff23c7e929f44e470d0086746e9806df750a568ee41"
+  },
+  {
+    "path": ".maestro/flows/shield-diagnostics.yaml",
+    "beforeSha256": "0ca0746462a60aa09519e4c3e274eb01ed913e22e345aea7ee91033e6f0f6729",
+    "afterSha256": "b00af98e8108511ab8110498d0688428337178225885bc4172d6be8154b17898"
+  },
+  {
+    "path": ".maestro/flows/shield-url-check.yaml",
+    "beforeSha256": "314a5bbfb7554c5d70e731b0687e4ed250cbdd7dc6acc7de58ccd7d58fcec98f",
+    "afterSha256": "a2098c08dc37800c0bbcd51da76a9026b00f31469547f93ec9d7c0b66e8e30cf"
+  },
+  {
+    "path": ".maestro/flows/shield-preferences.yaml",
+    "beforeSha256": "dfb7970b6ac688f434dc8e7333c6d9eb142b717854fdfb4e3ccd1638d340e13b",
+    "afterSha256": "3c104da143171e6c42eb4ad8816dba06a8e2ec10f34e09f47d2d5f7f4c2c9be4"
+  },
+  {
+    "path": ".maestro/flows/shield-schedules.yaml",
+    "beforeSha256": "39a040b05d4ae1adb2dcf655dc88872ad43d5d21a7a0e584718aeff4527b229b",
+    "afterSha256": "c2274936f09daa1634e2438c1c1708a17d6764d832fa9bdd86ac2d126ef83620"
+  },
+  {
+    "path": ".maestro/flows/shield-health.yaml",
+    "beforeSha256": "25d6be44a11fb024e570f488ad227b0e1c674fd77140b37581417a93c46769c1",
+    "afterSha256": "4b980c33122b3f215191bcee29613b0d16c5a3c250c2d994e3ff285fa6a583d5"
+  },
+  {
+    "path": ".maestro/flows/protection-layers.yaml",
+    "beforeSha256": "889efec83bfc19ca1455b0d230500cba77933791ca283e1d22b6715e89a69b0e",
+    "afterSha256": "2531c5ac345e3c901dc8170ff15b64616979663e7c68744d9afcb6d2ada8c7e3"
+  },
+  {
+    "path": ".maestro/flows/platform-limits.yaml",
+    "beforeSha256": "8a208a9f4ef6a490abd92f160d78c34f3f7980d111e19e0b0a98cd6a1b5400be",
+    "afterSha256": "42104e2ff754d9c5c5ff73c7c767b193a4ddfa4fc70a4948edbece60d7edf0a3"
+  },
+  {
+    "path": ".maestro/flows/protection-setup.yaml",
+    "beforeSha256": "65b929ec1ff9800d8dd5255855a303e1c6f46d18bdc5f9c6c5e13b6362099dd1",
+    "afterSha256": "d1df025d5875296c275c5d9a046bce74a7fa18806d2d2e81c820f29bd8ba6541"
+  },
+  {
+    "path": ".maestro/flows/breathing.yaml",
+    "beforeSha256": "3d241587a0e9efced8e8896fc36feaab6e43929e6c5e24080a5b7f326a6d5bdf",
+    "afterSha256": "5bf9f7636d7b61cd2df494042e3c8c2fff2730a3b6891bbc04cc0dee0ddbff7f"
+  },
+  {
+    "path": ".maestro/flows/intercept.yaml",
+    "beforeSha256": "5ba20c4c880c668fd6519f442335b190df33af0358b1363cdb84bcf732225883",
+    "afterSha256": "b57c617fdb98e5164e50f7e45e0b1619f1c213bf97c10efed30aaeb20bdc3b54"
+  },
+  {
+    "path": ".maestro/flows/urgent-support.yaml",
+    "beforeSha256": "e6c690a937905905d66786df732736b77324fb157cde48b672d71f1b76523ebd",
+    "afterSha256": "fa1d72db9736afdf1124a77fa1ab65ad10e03fcea84d508aece5940f7d5a2250"
+  },
+  {
+    "path": ".maestro/flows/profile-shield.yaml",
+    "beforeSha256": "be408e0c8a72017741ef1489c7bf93f438c90df271173409dbf75cdc42233524",
+    "afterSha256": "dae58272c81adba44314472217b4fc3b6693cdd9ec47b1c6952ded3c1ff67ffa"
+  },
+  {
+    "path": ".maestro/flows/library-articles.yaml",
+    "beforeSha256": "fa1e155ed0fca35edc079789083d512ca02e1fe46682c256dab7fcb210285819",
+    "afterSha256": "cc4ede990d0b62bb3276f61401e242d6015b660a87d0c58c54d51212472c102d"
+  },
+  {
+    "path": ".maestro/flows/custom-reset.yaml",
+    "beforeSha256": "cb8a252cb833fca4e9851bb106edcab1beb7ae23382f28903ce62036ec3a254e",
+    "afterSha256": "b1e270b26d04c94247d306d265aeacdfa5db16cf605ca4197ac67f4843ce7f2e"
+  },
+  {
+    "path": ".maestro/flows/onboarding-app-selection.yaml",
+    "beforeSha256": "1978961712a292b9a09ff3477dff942de52a8f3e01bb3180578bffef8eea68f9",
+    "afterSha256": "bb59272d4e2a8e8cbe200c5141164724acca525051a993ea2b9a047ad4fbd2ee"
+  },
+  {
+    "path": ".maestro/flows/today-metrics.yaml",
+    "beforeSha256": "733e8b814fe16f8e260e9c05ceb079658da61833c0d746c91ee13c98b5ac86f5",
+    "afterSha256": "9382654f6e8f47a33ea17f568cedc4cb96d88e8ac4edaa704c58563bbdd8558e"
+  },
+  {
+    "path": ".maestro/flows/today-habits.yaml",
+    "beforeSha256": "43aab7f6591d56763611f4cb3955c9e31cca15716c74c3685a46a88c72b17ed8",
+    "afterSha256": "4f97174a4db6ed4c6e26081d606fcbb90ac08002e6f627830297747e8ff2104a"
+  },
+  {
+    "path": ".maestro/flows/today-pledge.yaml",
+    "beforeSha256": "564049f24ba0c93ea854eeadd02eb53d4ca471b73a6b69d2c10fb2364e34f1c9",
+    "afterSha256": "92e94c7148d8bb9611128bd17359e69498c1cf4aa8211b8bc2dbe4589199f9e2"
+  },
+  {
+    "path": ".maestro/flows/recovery-shortcuts.yaml",
+    "beforeSha256": "79bb3f137b883b49a9e776a2e0060164d9824458d44090c9abc9e142d9870dfe",
+    "afterSha256": "3f8c5a88e6c848ecf5244e2196cc35ce90172315cb5dad8ad001c2ea310256df"
+  },
+  {
+    "path": ".maestro/flows/recovery-drafts.yaml",
+    "beforeSha256": "136b49d5db541489de6a3b4aa848c1a08563c8a876385d718fb760d659c2b98e",
+    "afterSha256": "d60000337292c7406dfe313167167b9ecfefd14e0e79a7eaa3103b397e6de492"
+  }
+]

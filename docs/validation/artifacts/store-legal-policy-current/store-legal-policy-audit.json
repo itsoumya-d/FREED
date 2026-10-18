@@ -1,42 +1,46 @@
 {
   "schemaVersion": "freed-store-legal-policy-audit-v1",
-  "generatedAt": "2026-07-22T02:46:09.719Z",
+  "generatedAt": "2026-10-03T13:06:18.188Z",
   "sanitized": true,
   "result": "pass",
   "passCount": 14,
   "failCount": 0,
   "auditedSources": [
     {
+      "path": "store/store-products.json",
+      "sha256": "d67d971b0e4cd900159d4496fdda645a72325418d31071acf4639f8dfd46827e"
+    },
+    {
       "path": "store/privacy-policy.md",
-      "sha256": "20bf712b1668eb6bbf08eab8e0f6f8d1e302394b25d097cfeabc87893eae1eac"
+      "sha256": "3275d300108c0e388c5843afc1245d98344bfc15c68fdd66713be013db121a12"
     },
     {
       "path": "store/play-store/data-safety.md",
-      "sha256": "cdd2a2fb532e6da29f8a42ec1ea157c675ef8bf9c766a41bca06598b04113acf"
+      "sha256": "55107c2560efaf87583c62358f513108146217d8aaeb6e909e7403e9ba1624e6"
     },
     {
       "path": "store/play-store/metadata.md",
-      "sha256": "694664f55ec4c76779f73f895f75091718790fa4499023a7d80a11fa2e8ab12f"
+      "sha256": "bf59e59846eb52cd0af4a8adfcc804cfc7020c7e0c692b7d28bb40e26be88aa9"
     },
     {
       "path": "store/app-store/app-privacy.md",
-      "sha256": "150181ce0e953654b3c45977aa050c8e81d58114e928a3f1c812b799602a4531"
+      "sha256": "d123fb4b69838fee483be56e0c3ce8458bb1b32b00f2f0f5318c83f0974f98e7"
     },
     {
       "path": "store/app-store/metadata.md",
-      "sha256": "282ed323e5c9fce45e3a4d3129ea39c45312cfe3a80aa906773e1dcbc2110522"
+      "sha256": "7ba8716ba9d2a4dd6854b4b092a0957d4b04f85b3da116277bde9c2153b0416e"
     },
     {
       "path": "store/release-submission-checklist.md",
-      "sha256": "30efcda95058ca09ab2a7b41ab7f5ba8e3bdb850a60725c94ade53b0b8f92362"
+      "sha256": "5f1e7b6db5c3d67ae9d47feffaa66719aea437b277dfb471c4c7625e83fa884e"
     },
     {
       "path": "store/console-launch-packet.md",
-      "sha256": "069feddd0a0f0e44d7db825b4c2288d36ee2f57a05d660b28b1feaed95f276d6"
+      "sha256": "2781440c42b87ab3d6bfbc08772a7935d0f3503991c8595bc5ac9dd22d49f5a0"
     },
     {
       "path": "docs/privacy-data-map.md",
-      "sha256": "d126595e81f5d72667b01d1f4a2542f6560510156815572901166187a94174b8"
+      "sha256": "5eec331b71faebfd97c8cfb8831b175bd55ebb6ac7a67717789cdcf24de65f5b"
     },
     {
       "path": "docs/store-policy/android-accessibility-and-fgs-disclosure.md",
@@ -44,7 +48,7 @@
     },
     {
       "path": "docs/store-policy/ios-screen-time-safari-dns-review.md",
-      "sha256": "a0385970762d771676b73bf9039a275713bcf6c71ff75ed7a6d49d5fbc7738c2"
+      "sha256": "04e2cce40f1d256873e517cd0f3407b5a0f352661e89d8bc724ea394e48ff2ac"
     },
     {
       "path": "app/privacy.tsx",
@@ -60,13 +64,13 @@
     },
     {
       "path": "src/features/legal-pages.tsx",
-      "sha256": "159b3b3f5773f9d107af4e93cfff9d874baf9c66c5e7ce1301a007150db4d702"
+      "sha256": "a27ad737d3faa1a69c3cbac712c238031742892c6a72a5a31c247d9924e838f8"
     }
   ],
   "publicUrls": {
-    "privacy": "https://freedrecovery.app/privacy",
-    "support": "https://freedrecovery.app/support",
-    "accountDeletion": "https://freedrecovery.app/account-deletion"
+    "privacy": "https://freed-landing.web.app/privacy",
+    "support": "https://freed-landing.web.app/support",
+    "accountDeletion": "https://freed-landing.web.app/account-deletion"
   },
   "bundleId": "app.freed.recovery",
   "packageName": "app.freed.recovery",
@@ -133,10 +137,10 @@
       "next": ""
     },
     {
-      "id": "core3-products-only-in-store-metadata",
+      "id": "launch-products-only-in-store-metadata",
       "status": "pass",
-      "detail": "Store metadata/privacy packet includes Core 3 product IDs, keeps future SKU IDs out of active metadata/privacy answers, and documents future SKUs as disabled in the console packet.",
-      "next": "Keep future SKU IDs out of v1 active metadata, paywall, purchase calls, and screenshots; console handoffs may name them only as disabled/post-launch."
+      "detail": "Both platforms describe monthly/yearly launch products; the catalog matches those two subscriptions and inactive lifetime/future SKU IDs stay out of active metadata/privacy answers.",
+      "next": "Keep both monthly/yearly launch products in each platform's metadata, match the catalog, and keep inactive lifetime/future SKU IDs out of active metadata/privacy answers; console handoffs may name future SKUs only as disabled/post-launch."
     },
     {
       "id": "release-checklist-gates-production-submit",

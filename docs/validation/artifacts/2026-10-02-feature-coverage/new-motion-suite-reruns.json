@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "freed-affected-suite-reruns-v1",
+  "generatedAt": "2026-10-02T11:01:00.224Z",
+  "sanitized": true,
+  "suites": {
+    "tests/breathing-cadence.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T11:00:59.986Z",
+      "durationMs": 152,
+      "counts": {
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/reruns/final/breathing-cadence.test.ts.log",
+      "logSha256": "604b14c0782326c8113263d64e59bf8e1c9cb9ea2bf65feac35993f999d7a43d",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/breathing-cadence.test.ts"
+      ]
+    },
+    "tests/motion-policy.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T11:01:00.143Z",
+      "durationMs": 81,
+      "counts": {
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/reruns/final/motion-policy.test.ts.log",
+      "logSha256": "e10e3fa086b06e4f60209804742d94d13a4e8f3b3e5b35f3a39710e2103a9f23",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/motion-policy.test.ts"
+      ]
+    }
+  }
+}

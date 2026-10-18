@@ -1,0 +1,381 @@
+--- a/modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt
++++ b/modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt
+@@ -259,7 +259,7 @@
+         adultDomainFeedChecksum = FreedAdultDomainFeed.checksum(context),
+         adultDomainFeedDomainCount = FreedAdultDomainFeed.domainCount(context),
+         userAllowedDomainCount = FreedAdultDomainFeed.userAllowedDomainCount(context)
+-      ).let { suppressBreakEvidenceWhileStrict(context, it + appScheduleStatusPayload(context)) }
++      ).let { suppressBreakEvidenceWhileHardGuarded(context, it + appScheduleStatusPayload(context)) }
+     }
+ 
+     AsyncFunction("runActivationDiagnostics") { adultHost: String, normalHost: String, requireReviewedAdultFeed: Boolean ->
+@@ -902,7 +902,7 @@
+       val expiryMs = parseIsoMillis(expiresAt)
+       val authority = synchronized(FreedNativeUnlockStore.lock) {
+         if (kind == "android-surface" && ruleId != null && packageName != null && expiryMs != null &&
+-          isAccessibilityServiceEnabled(context) && FreedFocusShieldRollout.enabled(context) && !FreedAppScheduleStore.read(context).strictGuard) {
++          isAccessibilityServiceEnabled(context) && FreedFocusShieldRollout.enabled(context) && !hardAppGuardActive(context, packageName)) {
+           FreedNativeUnlockStore.fulfill(context, sanitizedPendingInterventionId(nativeInterventionId), packageName, ruleId, expiryMs)
+         } else null
+       }
+@@ -932,7 +932,7 @@
+         activeFocusShieldUnlockRuleId = if (boundedExpiresAt != null) ruleId else null,
+         activeFocusShieldUnlockPackageName = if (boundedExpiresAt != null) packageName else null
+       )).toMutableMap().apply {
+-        put("nativeUnlockGrantAccepted", boundedExpiresAt != null && !FreedAppScheduleStore.read(context).strictGuard)
++        put("nativeUnlockGrantAccepted", boundedExpiresAt != null && !hardAppGuardActive(context, packageName))
+         sanitizedPendingInterventionId(nativeInterventionId)?.let { put("nativeUnlockGrantInterventionId", it) }
+       }
+     }
+@@ -977,7 +977,7 @@
+ 
+       val authority = synchronized(FreedNativeUnlockStore.lock) {
+         if (isAccessibilityServiceEnabled(context) && sourcePackage in configuredBlockedPackages(context)) {
+-          if (FreedAppScheduleStore.read(context).strictGuard) null else FreedNativeUnlockStore.fulfill(context,
++          if (hardAppGuardActive(context, sourcePackage)) null else FreedNativeUnlockStore.fulfill(context,
+             sanitizedPendingInterventionId(nativeInterventionId), sourcePackage, null, expiryMs)
+         } else null
+       }
+@@ -998,6 +998,7 @@
+       )).toMutableMap().apply {
+         val id = sanitizedPendingInterventionId(nativeInterventionId)
+         val accepted = authority != null && id != null && isAccessibilityServiceEnabled(context) &&
++          !hardAppGuardActive(context, sourcePackage) &&
+           FreedNativeUnlockStore.hasActivePackageGrant(context, sourcePackage, authority.expiresAtMs, id)
+         put("nativeUnlockGrantAccepted", accepted)
+         id?.let { put("nativeUnlockGrantInterventionId", it) }
+@@ -1502,7 +1503,7 @@
+     putIfMissing("adultDomainFeedDomainCount", FreedAdultDomainFeed.domainCount(context))
+     putIfMissing("userAllowedDomainCount", FreedAdultDomainFeed.userAllowedDomainCount(context))
+ 
+-    return suppressBreakEvidenceWhileStrict(context, enriched)
++    return suppressBreakEvidenceWhileHardGuarded(context, enriched)
+   }
+ 
+   private fun statusPayload(
+@@ -1998,13 +1999,24 @@
+     }
+   }
+ 
+-  private fun suppressBreakEvidenceWhileStrict(context: Context, payload: Map<String, Any>): Map<String, Any> {
+-    if (!FreedAppScheduleStore.read(context).strictGuard) return payload
+-    // Keep receipts intact. Hard strict overrides their effectiveness until explicitly disabled.
+-    val breakFields = setOf("activeUnlockExpiresAt", "activeUnlockSourcePackage", "activeUnlockInterventionId",
++  private fun hardAppGuardActive(context: Context, packageName: String?): Boolean {
++    val configuration = FreedAppScheduleStore.read(context)
++    return FreedAppGuardModePolicy.hardGuardActive(packageName,
++      FreedAppSchedulePolicy.evaluate(configuration, System.currentTimeMillis()), configuration.strictGuard)
++  }
++
++  private fun suppressBreakEvidenceWhileHardGuarded(context: Context, payload: Map<String, Any>): Map<String, Any> {
++    // Hide only the effective evidence for each guarded target, without changing any stored receipt.
++    val packageSource = payload["activeUnlockSourcePackage"] as? String ?: storedEarnedUnlockSourcePackage(
++      context.getSharedPreferences(FreedAccessibilityService.PREFS_NAME, Context.MODE_PRIVATE))
++    val surfaceSource = payload["activeFocusShieldUnlockPackageName"] as? String
++    val suppressed = mutableSetOf<String>()
++    if (hardAppGuardActive(context, packageSource)) suppressed.addAll(setOf(
++      "activeUnlockExpiresAt", "activeUnlockSourcePackage", "activeUnlockInterventionId"))
++    if (hardAppGuardActive(context, surfaceSource)) suppressed.addAll(setOf(
+       "activeFocusShieldUnlockExpiresAt", "activeFocusShieldUnlockRuleId", "activeFocusShieldUnlockPackageName",
+-      "activeFocusShieldUnlockInterventionId")
+-    return payload.filterKeys { it !in breakFields }
++      "activeFocusShieldUnlockInterventionId"))
++    return payload.filterKeys { it !in suppressed }
+   }
+ 
+   private fun staticBlockedPackages(context: Context): List<String> = context
+@@ -2041,8 +2053,8 @@
+   }
+ 
+   private fun activeEarnedUnlockExpiresAt(context: Context): String? = synchronized(FreedNativeUnlockStore.lock) {
+-    if (FreedAppScheduleStore.read(context).strictGuard) return@synchronized null
+     val prefs = context.getSharedPreferences(FreedAccessibilityService.PREFS_NAME, Context.MODE_PRIVATE)
++    if (hardAppGuardActive(context, storedEarnedUnlockSourcePackage(prefs))) return@synchronized null
+     val expiresAt = prefs.getString(FreedAccessibilityService.EARNED_UNLOCK_EXPIRES_AT, null) ?: return@synchronized null
+     if (storedEarnedUnlockSourcePackage(prefs) == null) {
+       clearEarnedUnlockPrefs(context)
+--- a/modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt
++++ b/modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt
+@@ -193,7 +193,10 @@
+   private val focusShieldCalibrationTransitionLock = Any()
+   private var focusShieldCalibrationRequestedGeneration = 0L
+   private val appLimitRunnable = Runnable {
+-    if (!ownsConnectedRuntime() || !FreedProtectionConfiguration.interceptionEnabled(this)) return@Runnable
++    if (!ownsConnectedRuntime() || !FreedProtectionConfiguration.interceptionEnabled(this)) {
++      cancelAnyAppLimitCheck()
++      return@Runnable
++    }
+     val packageName = scheduledLimitPackage ?: return@Runnable
+     if (FreedAppGuardModeStore.read(this) != FreedAppGuardModePolicy.DAILY_LIMIT) {
+       cancelAnyAppLimitCheck()
+@@ -782,13 +785,21 @@
+ 
+   private fun scheduleAppLimitCheck(packageName: String) {
+     val normalizedPackage = packageName.lowercase(Locale.US)
+-    if (!ownsConnectedRuntime() || !isManuallyBlockedApp(normalizedPackage)) return
+-    if (FreedAppGuardModeStore.read(this) != FreedAppGuardModePolicy.DAILY_LIMIT) { cancelAppLimitCheck(normalizedPackage); return }
+-    if (currentForegroundPackage() != normalizedPackage) return
++    if (!ownsConnectedRuntime() || !FreedProtectionConfiguration.interceptionEnabled(this) ||
++      !isManuallyBlockedApp(normalizedPackage) ||
++      FreedAppGuardModeStore.read(this) != FreedAppGuardModePolicy.DAILY_LIMIT ||
++      liveScheduleForegroundPackage() != normalizedPackage || isEarnedUnlockActiveForPackage(normalizedPackage)) {
++      cancelAppLimitCheck(normalizedPackage)
++      return
++    }
+ 
+     val remainingMs = dailyLimitMinutes() * 60_000L - currentDailyUsageMs(normalizedPackage)
+     if (remainingMs <= 0L) {
+-      launchAppIntervention(normalizedPackage)
++      cancelAppLimitCheck(normalizedPackage)
++      // The fallback may run after a foreground, mode, grant or reset change.
++      if (liveScheduleForegroundPackage() == normalizedPackage && appGuardShouldInterrupt(normalizedPackage)) {
++        launchAppIntervention(normalizedPackage)
++      }
+       return
+     }
+ 
+@@ -1001,7 +1012,12 @@
+   }
+ 
+   private fun isEarnedUnlockActiveForPackage(packageName: String): Boolean = synchronized(FreedNativeUnlockStore.lock) {
+-    if (FreedAppScheduleStore.read(this).strictGuard) return@synchronized false
++    val configuration = FreedAppScheduleStore.read(this)
++    if (FreedAppGuardModePolicy.hardGuardActive(packageName.lowercase(Locale.US),
++      FreedAppSchedulePolicy.evaluate(configuration, System.currentTimeMillis()), configuration.strictGuard)) {
++      // Preserve the native receipt. Its original expiry still applies after the hard window ends.
++      return@synchronized false
++    }
+     val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+     val expiresAt = prefs.getString(EARNED_UNLOCK_EXPIRES_AT, null) ?: return@synchronized false
+     val expiryMs = parseIsoMillis(expiresAt)
+--- a/modules/freed-protection/android/src/main/java/app/freed/protection/FreedAppGuardModePolicy.kt
++++ b/modules/freed-protection/android/src/main/java/app/freed/protection/FreedAppGuardModePolicy.kt
+@@ -11,13 +11,15 @@
+   fun packageSource(input: String?): String? = input?.trim()?.lowercase(java.util.Locale.US)
+     ?.takeIf { it in FreedDoomscrollApps.SUPPORTED_BLOCKED_APP_PACKAGES }
+ 
++  /** Native strict and active timed package guards cannot be paused by an earned break. */
++  fun hardGuardActive(packageName: String?, schedules: FreedAppScheduleSnapshot, strict: Boolean): Boolean =
++    strict || (packageName != null && packageName in schedules.activePackages)
++
+   fun shouldInterrupt(packageName: String, selected: Set<String>, schedules: FreedAppScheduleSnapshot,
+     mode: String, strict: Boolean, dailyLimitReached: Boolean, earnedUnlockActive: Boolean, enabled: Boolean): Boolean {
+     if (!enabled || packageName !in FreedDoomscrollApps.SUPPORTED_BLOCKED_APP_PACKAGES) return false
+-    // A hard strict guard cannot be paused by an old or newly requested break.
+-    if (strict) return true
++    if (hardGuardActive(packageName, schedules, strict)) return true
+     if (earnedUnlockActive) return false
+-    if (packageName in schedules.activePackages) return true
+     if (packageName !in selected) return false
+     return when (mode) {
+       BEFORE_USE -> true
+--- a/modules/freed-protection/android/src/test/java/app/freed/protection/FreedAppGuardModePolicyCases.kt
++++ b/modules/freed-protection/android/src/test/java/app/freed/protection/FreedAppGuardModePolicyCases.kt
+@@ -43,7 +43,10 @@
+   check(!decide("before-use", target = instagram))
+   check(decide("daily-limit", target = instagram, schedules = active)) { "Independent schedules still protect other configured targets" }
+   for (mode in listOf("before-use", "daily-limit", "scheduled")) {
+-    check(!decide(mode, schedules = active, reached = true, grant = true))
++    check(decide(mode, schedules = active, reached = true, grant = true)) { "An active timed package guard must override an existing earned break" }
++    check(!decide(mode, schedules = FreedAppScheduleSnapshot(listOf("work"), setOf(instagram)), reached = true, grant = true)) {
++      "An unrelated scheduled package must not suppress this target's break"
++    }
+     check(decide(mode, strict = true, grant = true)) { "A prior earned break cannot bypass a hard independent strict guard" }
+     check(decide(mode, selected = emptySet(), target = instagram, strict = true)) { "Strict targets must not be narrowed to the user's ordinary selected set" }
+     check(!decide(mode, strict = true, reached = true, enabled = false)) { "Off/reset latches dominate all modes and strict guards" }
+--- a/modules/freed-protection/tests/run-app-guard-runtime-tests.js
++++ b/modules/freed-protection/tests/run-app-guard-runtime-tests.js
+@@ -30,20 +30,34 @@
+ object R{object string{const val freed_start_recovery=1}}
+ object FreedNativeCopy{fun text(c:Context,id:Int)="localized-copy"}
+ class Runtime:Context(){var connected=true;var interactive=true;var foreground:String?=FreedDoomscrollApps.YOUTUBE_PACKAGE;var manual=setOf(FreedDoomscrollApps.YOUTUBE_PACKAGE);var granted=false;var reached=true
+- var scheduledLimitPackage:String?=FreedDoomscrollApps.YOUTUBE_PACKAGE;var lastScheduleForegroundPackage:String?=null;var launches=0;var cancelCount=0;var rechecks=0
++ var scheduledLimitPackage:String?=FreedDoomscrollApps.YOUTUBE_PACKAGE;var lastScheduleForegroundPackage:String?=null;var launches=0;var rechecks=0
+  fun ownsConnectedRuntime()=connected;fun isScreenInteractiveAndUnlocked()=interactive;fun liveScheduleForegroundPackage()=if(interactive)foreground else null
+  fun blockedAppPackages()=manual;fun isManuallyBlockedApp(p:String)=p in manual;fun isDailyAppLimitReached(p:String)=reached;fun isEarnedUnlockActiveForPackage(p:String)=granted
+  fun isConfiguredBlockedApp(p:String)=p in manual||p in FreedAppScheduleStore.configuration.potentialPackages
+- fun cancelAppScheduleCheck(){};fun trackForegroundUsage(p:String){};fun cancelAppLimitCheck(p:String){};fun clearShortFormSession(){}
+- fun scheduleEarnedUnlockRelock(p:String){};fun cancelEarnedUnlockRelock(){};fun scheduleAppLimitCheck(p:String){};fun armAppScheduleCheck(){}
+- fun cancelAnyAppLimitCheck(){cancelCount++};fun postAppScheduleRecheck(){rechecks++};fun launchAppIntervention(p:String,reason:String=""){launches++}
++ fun cancelAppScheduleCheck(){};fun trackForegroundUsage(p:String){};fun clearShortFormSession(){}
++ fun scheduleEarnedUnlockRelock(p:String){};fun cancelEarnedUnlockRelock(){};fun armAppScheduleCheck(){}
++ fun currentForegroundPackage()=FreedDoomscrollApps.YOUTUBE_PACKAGE;fun dailyLimitMinutes()=5;fun currentDailyUsageMs(p:String)=if(reached)300_000L else 0L
++ val handler=Handler();class Handler{var posts=0;fun removeCallbacks(r:Runnable){};fun postDelayed(r:Runnable,ms:Long){posts++}}
++ fun postAppScheduleRecheck(){rechecks++};fun launchAppIntervention(p:String,reason:String=""){launches++}
+ ${member('private val appLimitRunnable = Runnable')}
+ ${member('private fun recheckAppSchedules()')}
+ ${member('private fun appGuardShouldInterrupt(')}
+- fun deadline(){appLimitRunnable.run()};fun recheck(){recheckAppSchedules()}
++${member('private fun scheduleAppLimitCheck(')}
++${member('private fun cancelAppLimitCheck(')}
++${member('private fun cancelAnyAppLimitCheck(')}
++ fun deadline(){scheduledLimitPackage=FreedDoomscrollApps.YOUTUBE_PACKAGE;appLimitRunnable.run()};fun recheck(){recheckAppSchedules()}
+ }
+ fun main(){
+  TimeZone.setDefault(TimeZone.getTimeZone("UTC"));fun at(s:String)=SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'",Locale.US).apply{timeZone=TimeZone.getTimeZone("UTC")}.parse(s)!!.time
++ // Exercise the actual runnable and fallback scheduler together, retaining stale cached foreground.
++ val deadline=Runtime();System.now=at("2026-10-05T08:59:59Z")
++ deadline.foreground=null;deadline.deadline();check(deadline.launches==0&&deadline.scheduledLimitPackage==null){"An expired daily timer must not launch from cached foreground when live root is absent"}
++ deadline.foreground=FreedDoomscrollApps.INSTAGRAM_PACKAGE;deadline.deadline();check(deadline.launches==0&&deadline.scheduledLimitPackage==null){"A changed live foreground cannot trigger the old target deadline"}
++ deadline.foreground=FreedDoomscrollApps.YOUTUBE_PACKAGE;deadline.granted=true;deadline.deadline();check(deadline.launches==0&&deadline.scheduledLimitPackage==null){"The fallback scheduler must retain a valid matching break"}
++ FreedProtectionConfiguration.enabled=false;deadline.deadline();check(deadline.launches==0);FreedProtectionConfiguration.enabled=true
++ FreedAppGuardModeStore.save(deadline,"before-use");deadline.deadline();check(deadline.launches==0){"A stale daily callback cannot act after mode change"}
++ FreedAppGuardModeStore.save(deadline,"daily-limit");deadline.granted=false;deadline.reached=false;deadline.deadline();check(deadline.launches==0&&deadline.handler.posts==1){"Only the real current target may arm its remaining daily deadline"}
++ deadline.reached=true;deadline.deadline();check(deadline.launches==1){"An eligible live target must still interrupt at its real deadline"}
+  val r=Runtime();r.storage.values.putAll(mapOf("daily-limit" to 47,"receipt-A" to "native-proof-A","receipt-B" to "native-proof-B"))
+  check(FreedAppGuardModeStore.read(r)=="daily-limit")
+  check(FreedAppGuardModeStore.save(r,"before-use").accepted);check(r.storage.values["daily-limit"]==47);check(r.storage.values["receipt-B"]=="native-proof-B")
+@@ -51,16 +65,22 @@
+  r.storage.failNext=true;check(!FreedAppGuardModeStore.save(r,"scheduled").accepted);check(r.storage.values==before){"Failed mode commit must restore only its key and preserve unrelated authority"}
+  FreedProtectionConfiguration.enabled=false;check(!FreedAppGuardModeStore.save(r,"scheduled").accepted);check(r.storage.values==before);FreedProtectionConfiguration.enabled=true
+  check(FreedAppGuardModeStore.save(r,"scheduled").accepted)
+- r.deadline();check(r.launches==0){"An old daily deadline must reread scheduled mode before launching"};check(r.cancelCount==1&&r.rechecks==1)
++ r.deadline();check(r.launches==0){"An old daily deadline must reread scheduled mode before launching"};check(r.scheduledLimitPackage==null&&r.rechecks==1)
+  val pkg=FreedDoomscrollApps.YOUTUBE_PACKAGE
+  FreedAppScheduleStore.configuration=FreedAppSchedulePolicy.parse(mapOf("version" to 1,"schedules" to listOf(mapOf("id" to "work","enabled" to true,"startMinute" to 540,"endMinute" to 780,"days" to listOf(1),"packages" to listOf(pkg)))),"app.freed")!!
++ val boundary=Runtime();FreedAppGuardModeStore.save(boundary,"scheduled");boundary.granted=true
++ System.now=at("2026-10-05T08:59:59Z");boundary.recheck();check(boundary.launches==0){"An accepted old break is effective before the independent timed window begins"}
++ System.now=at("2026-10-05T09:00:00Z");boundary.recheck();check(boundary.launches==1){"A live native boundary recheck must override the existing break for the same package"}
++ boundary.foreground=null;boundary.recheck();check(boundary.launches==1){"Hard windows still require current live foreground evidence"}
++ boundary.foreground=FreedDoomscrollApps.INSTAGRAM_PACKAGE;boundary.recheck();check(boundary.launches==1){"A timed package window cannot block a different unselected foreground package"}
++ boundary.foreground=pkg;System.now=at("2026-10-05T13:00:00Z");boundary.recheck();check(boundary.launches==1){"An ended timed window stops blocking when an old break remains effective"}
+  System.now=at("2026-10-05T13:00:00Z");r.recheck();check(r.launches==0){"Expired scheduled windows cannot relock a quiet foreground app due to its old daily threshold"}
+  System.now=at("2026-10-05T12:59:59Z");r.recheck();check(r.launches==1)
+- r.granted=true;r.recheck();check(r.launches==1)
+- FreedAppScheduleStore.configuration=FreedAppScheduleStore.configuration.copy(strictGuard=true);r.recheck();check(r.launches==2){"Hard strict must override a previously accepted break"}
+- r.manual=emptySet();r.foreground=FreedDoomscrollApps.INSTAGRAM_PACKAGE;r.recheck();check(r.launches==3){"Independent hard strict cannot be narrowed to ordinary selected packages"}
+- FreedProtectionConfiguration.enabled=false;r.recheck();check(r.launches==3);FreedProtectionConfiguration.enabled=true
+- FreedAppScheduleStore.configuration=FreedAppSchedulePolicy.empty;r.manual=setOf(pkg);r.foreground=null;r.granted=false;FreedAppGuardModeStore.save(r,"before-use");r.recheck();check(r.launches==3){"Never reuse historical foreground evidence"}
++ r.granted=true;r.recheck();check(r.launches==2){"An active timed package guard must override an old break"}
++ FreedAppScheduleStore.configuration=FreedAppScheduleStore.configuration.copy(strictGuard=true);r.recheck();check(r.launches==3){"Hard strict must override a previously accepted break"}
++ r.manual=emptySet();r.foreground=FreedDoomscrollApps.INSTAGRAM_PACKAGE;r.recheck();check(r.launches==4){"Independent hard strict cannot be narrowed to ordinary selected packages"}
++ FreedProtectionConfiguration.enabled=false;r.recheck();check(r.launches==4);FreedProtectionConfiguration.enabled=true
++ FreedAppScheduleStore.configuration=FreedAppSchedulePolicy.empty;r.manual=setOf(pkg);r.foreground=null;r.granted=false;FreedAppGuardModeStore.save(r,"before-use");r.recheck();check(r.launches==4){"Never reuse historical foreground evidence"}
+  println("Android actual deadline/recheck and mode-store cases: stale timers, expired windows, strict overlap, grants, foreground, reset, confirmed persistence and rollback passed")
+ }
+ `);
+--- a/modules/freed-protection/tests/run-app-guard-authority-tests.js
++++ b/modules/freed-protection/tests/run-app-guard-authority-tests.js
+@@ -0,0 +1,122 @@
++// Executes production module grant/getter/status and service lease authority members with local platform adapters.
++// Existing NativeUnlockStore JVM cases independently exercise private-ID, freshness, replay and atomic receipt proof.
++const assert = require('node:assert/strict');
++const fs = require('node:fs');
++const { tmpdir } = require('node:os');
++const { join, resolve } = require('node:path');
++const { spawnSync } = require('node:child_process');
++const root = resolve(__dirname, '../../..');
++const prefix = 'modules/freed-protection/android/src/main/java/app/freed/protection/';
++const moduleSource = fs.readFileSync(join(root, prefix, 'FreedProtectionModule.kt'), 'utf8');
++const serviceSource = fs.readFileSync(join(root, prefix, 'FreedAccessibilityService.kt'), 'utf8');
++function member(source, marker) {
++  const start = source.indexOf(marker); assert.ok(start >= 0, marker);
++  const brace = source.indexOf('{', start); let depth = 1, quoted = false, escaped = false;
++  for (let i = brace + 1; i < source.length; i++) {
++    const c = source[i];
++    if (quoted) { if (escaped) escaped = false; else if (c === '\\') escaped = true; else if (c === '"') quoted = false; continue; }
++    if (c === '"') { quoted = true; continue; }
++    if (c === '{') depth++; else if (c === '}' && --depth === 0) return source.slice(start, i + 1);
++  }
++  throw new Error(marker);
++}
++const getter = marker => member(moduleSource, marker);
++const grant = member(moduleSource, 'AsyncFunction("applyEarnedUnlockWindow")').replace(
++  'AsyncFunction("applyEarnedUnlockWindow") { expiresAt: String, sourceAttemptHost: String?, nativeInterventionId: String? ->',
++  'fun grant(expiresAt: String, sourceAttemptHost: String?, nativeInterventionId: String?): Map<String, Any> { return run authority@ {'
++).replaceAll('return@AsyncFunction', 'return@authority') + '}';
++const workspace = fs.mkdtempSync(join(tmpdir(), 'freed-guard-authority-'));
++function run(command, args) {
++  const result = spawnSync(command, args, { cwd: root, encoding: 'utf8', timeout: 120000 });
++  assert.equal(result.status, 0, result.error?.message || result.stdout + result.stderr);
++  if (result.stdout.trim()) process.stdout.write(result.stdout);
++}
++try {
++  const android = join(workspace, 'Android.kt');
++  fs.writeFileSync(android, `package android.content
++interface SharedPreferences { fun getString(k:String,d:String?):String?;fun edit():Editor;interface Editor {fun putString(k:String,v:String?):Editor;fun remove(k:String):Editor;fun apply()} }
++class MemoryPreferences:SharedPreferences {val values=mutableMapOf<String,String?>();override fun getString(k:String,d:String?)=values[k]?:d;override fun edit()=Write()
++ inner class Write:SharedPreferences.Editor {override fun putString(k:String,v:String?)=apply{values[k]=v};override fun remove(k:String)=apply{values.remove(k)};override fun apply(){} } }
++open class Context {val packageName="app.freed";open val storage=MemoryPreferences();fun getSharedPreferences(n:String,m:Int):SharedPreferences=storage;companion object {const val MODE_PRIVATE=0} }
++`);
++  const fixture = join(workspace, 'Authority.kt');
++  fs.writeFileSync(fixture, `package app.freed.protection
++import android.content.Context
++import android.content.SharedPreferences
++import java.util.Locale
++import java.time.Instant
++object System {var now=0L;fun currentTimeMillis()=now}
++fun parseIsoMillis(s:String):Long?=try {Instant.parse(s).toEpochMilli()}catch(e:Exception){null}
++fun formatIsoMillis(t:Long)=Instant.ofEpochMilli(t).toString()
++object FreedAccessibilityService {const val PREFS_NAME="owned";const val EARNED_UNLOCK_EXPIRES_AT="expiry";const val EARNED_UNLOCK_SOURCE_PACKAGE="source";const val MAX_EARNED_UNLOCK_MINUTES=15;const val MODE_PRIVATE=0}
++internal object FreedAppScheduleStore {var configuration=FreedAppSchedulePolicy.empty;fun read(c:Context)=configuration;fun snapshot(c:Context)=FreedAppSchedulePolicy.evaluate(configuration,System.now)}
++object FreedVpnService {var isRunning=true}
++object FreedProtectionConfiguration {var enabled=true;fun interceptionEnabled(c:Context)=enabled}
++internal object FreedNativeUnlockStore {
++ val lock=Any();var calls=0;var nativeId="native-ID-A";var nativePackage=FreedDoomscrollApps.YOUTUBE_PACKAGE
++ data class Authority(val expiresAtMs:Long,val firstFulfillment:Boolean=true)
++ fun fulfill(c:Context,id:String?,p:String,r:String?,expiry:Long):Authority? {calls++;if(id!=nativeId||p!=nativePackage)return null
++  c.storage.values.putAll(mapOf("proof-id" to id,"proof-pkg" to p,"proof-exp" to expiry.toString(),"expiry" to formatIsoMillis(expiry),"source" to p));return Authority(expiry)}
++ fun hasActivePackageGrant(c:Context,p:String,e:Long,id:String?=null)=FreedProtectionConfiguration.enabled&&e>System.now&&c.storage.values["proof-pkg"]==p&&c.storage.values["proof-exp"]==e.toString()&&(id==null||c.storage.values["proof-id"]==id)
++ fun clearPackageReceipt(e:SharedPreferences.Editor){e.remove("proof-id").remove("proof-pkg").remove("proof-exp")}
++}
++class AppContext(var reactContext:Context?)
++class Module(val context:Context) {
++ val appContext=AppContext(context);val SUPPORTED_BLOCKED_APP_PACKAGES=FreedDoomscrollApps.SUPPORTED_BLOCKED_APP_PACKAGES
++ fun isAccessibilityServiceEnabled(c:Context)=true;fun isUsageStatsAuthorized(c:Context)=true;fun isVpnConsentRequired(c:Context)=false;fun androidSettingsRoutes()=emptyList<String>();fun configuredBlockedPackages(c:Context)=listOf(FreedDoomscrollApps.YOUTUBE_PACKAGE,FreedDoomscrollApps.INSTAGRAM_PACKAGE)
++ fun sanitizedPendingInterventionId(s:String?)=s?.takeIf{it.startsWith("native-ID-")}
++ fun statusPayload(authorized:Boolean,active:Boolean,mode:String,message:String,adultFilterActive:Boolean?=null,appInterventionAuthorized:Boolean?=null,usageStatsAuthorized:Boolean?=null,vpnConsentRequired:Boolean?=null,androidSettingsRoutes:List<String>?=null,activeUnlockExpiresAt:String?=null,activeUnlockSourcePackage:String?=null):Map<String,Any> = mutableMapOf<String,Any>("adultFilterActive" to (adultFilterActive?:false)).apply {
++  activeUnlockExpiresAt?.let{put("activeUnlockExpiresAt",it)};activeUnlockSourcePackage?.let{put("activeUnlockSourcePackage",it)} }
++ fun statusPayloadWithAndroidDiagnostics(c:Context,p:Map<String,Any>):Map<String,Any> = ${moduleSource.includes('suppressBreakEvidenceWhileHardGuarded') ? 'suppressBreakEvidenceWhileHardGuarded' : 'suppressBreakEvidenceWhileStrict'}(c,p.toMutableMap().apply {
++  activeEarnedUnlockExpiresAt(c)?.let{put("activeUnlockExpiresAt",it)};activeUnlockSourcePackage(c)?.let{put("activeUnlockSourcePackage",it);c.storage.values["proof-id"]?.let{id->put("activeUnlockInterventionId",id)}} })
++${getter('private fun activeEarnedUnlockExpiresAt(')}
++${getter('private fun activeUnlockSourcePackage(')}
++${getter('private fun storedEarnedUnlockSourcePackage(')}
++${getter('private fun clearEarnedUnlockPrefs(context:')}
++${getter(moduleSource.includes('private fun suppressBreakEvidenceWhileHardGuarded') ? 'private fun suppressBreakEvidenceWhileHardGuarded' : 'private fun suppressBreakEvidenceWhileStrict')}
++${moduleSource.includes('private fun hardAppGuardActive(') ? getter('private fun hardAppGuardActive(') : ''}
++${grant}
++ fun status()=statusPayloadWithAndroidDiagnostics(context,emptyMap())
++ fun surfaceStatus(p:String)= ${moduleSource.includes('suppressBreakEvidenceWhileHardGuarded') ? 'suppressBreakEvidenceWhileHardGuarded' : 'suppressBreakEvidenceWhileStrict'}(context,mapOf("activeFocusShieldUnlockPackageName" to p,"activeFocusShieldUnlockExpiresAt" to "expiry","activeFocusShieldUnlockRuleId" to "rule","activeFocusShieldUnlockInterventionId" to "native-ID-surface"))
++}
++class Service(val context:Context):Context() {
++ override val storage get()=context.storage
++ val PREFS_NAME="owned";val MODE_PRIVATE=0;val EARNED_UNLOCK_EXPIRES_AT="expiry";val EARNED_UNLOCK_SOURCE_PACKAGE="source";val SUPPORTED_BLOCKED_APP_PACKAGES=FreedDoomscrollApps.SUPPORTED_BLOCKED_APP_PACKAGES
++ // Supply the same local persistence as the module to the unmodified production service getter.
++${member(serviceSource,'private fun isEarnedUnlockActiveForPackage(').replace('getSharedPreferences(PREFS_NAME, MODE_PRIVATE)','context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE)')}
++${member(serviceSource,'private fun clearEarnedUnlockPrefs(prefs:')}
++${member(serviceSource,'private fun earnedUnlockSourcePackage(')}
++ fun effective(p:String)=isEarnedUnlockActiveForPackage(p)
++}
++fun main() {
++ val failures=mutableListOf<String>()
++ fun expect(condition:Boolean,message:()->String={"Unlabelled authority assertion"}) {if(!condition)failures.add(message())}
++ fun at(s:String)=Instant.parse(s).toEpochMilli()
++ val youtube=FreedDoomscrollApps.YOUTUBE_PACKAGE;val instagram=FreedDoomscrollApps.INSTAGRAM_PACKAGE
++ java.util.TimeZone.setDefault(java.util.TimeZone.getTimeZone("UTC"));System.now=at("2026-10-05T08:59:00Z")
++ val c=Context();val module=Module(c);val service=Service(c);val expiry=at("2026-10-05T09:04:00Z")
++ expect(module.grant(formatIsoMillis(expiry),youtube,"native-ID-A")["nativeUnlockGrantAccepted"]==true);expect(service.effective(youtube));val saved=c.storage.values.toMap()
++ fun window(p:String)=FreedAppSchedulePolicy.parse(mapOf("version" to 1,"schedules" to listOf(mapOf("id" to "sleep","enabled" to true,"startMinute" to 540,"endMinute" to 542,"days" to listOf(1),"packages" to listOf(p)))),"app.freed")!!
++ FreedAppScheduleStore.configuration=window(youtube);System.now=at("2026-10-05T09:00:00Z")
++ expect(!service.effective(youtube)){"Actual service must suppress a still-valid old lease inside its matching timed package window"}
++ expect(module.status().keys.none{it.startsWith("activeUnlock")}){"Actual module status must hide expiry/source/exact ID while the matching hard window is active"}
++ expect(module.surfaceStatus(youtube).isEmpty()){"Matching surface evidence must be suppressed by its package hard guard"};expect(module.surfaceStatus(instagram).size==4){"An unrelated surface package receipt must remain visible"}
++ expect(c.storage.values==saved){"Hard windows must leave the original receipt and expiry intact"}
++ val priorCalls=FreedNativeUnlockStore.calls
++ expect(module.grant(formatIsoMillis(expiry),youtube,"native-ID-A")["nativeUnlockGrantAccepted"]==false){"Actual new grant acknowledgment must reject an active matching hard window"}
++ expect(FreedNativeUnlockStore.calls==priorCalls&&c.storage.values==saved){"A new grant inside the hard window must never reach native fulfillment or change any receipt"}
++ FreedAppScheduleStore.configuration=window(instagram);expect(service.effective(youtube));expect(module.status()["activeUnlockInterventionId"]=="native-ID-A"){"Unrelated timed package cannot suppress matching native proof"}
++ FreedAppScheduleStore.configuration=window(youtube);System.now=at("2026-10-05T09:02:00Z");expect(service.effective(youtube));expect(module.status()["activeUnlockExpiresAt"]==formatIsoMillis(expiry));expect(c.storage.values==saved)
++ System.now=expiry;expect(!service.effective(youtube));expect(module.status().keys.none{it.startsWith("activeUnlock")}){"Window ending must never revive an expired receipt"}
++ FreedAppScheduleStore.configuration=FreedAppSchedulePolicy.empty;System.now=at("2026-10-05T10:00:00Z")
++ val rejects=listOf("youtube.com","https://youtube.com/watch?v=1","adult","category:adult","com.google.android.youtube.invalid");val beforeInvalid=c.storage.values.toMap();val calls=FreedNativeUnlockStore.calls
++ rejects.forEach{expect(module.grant(formatIsoMillis(System.now+60_000),it,"native-ID-A")["nativeUnlockGrantAccepted"]!=true)};expect(FreedNativeUnlockStore.calls==calls&&c.storage.values==beforeInvalid){"Web/category inputs must never reach package authority"}
++ expect(module.grant(formatIsoMillis(System.now+60_000),youtube,"native-ID-wrong")["nativeUnlockGrantAccepted"]==false)
++ check(failures.isEmpty()){failures.joinToString(" | ")}
++ println("Actual module/service package authority cases passed: prior lease, timed boundary, new grant refusal, exact status proof, unrelated scope, unchanged expiry, expiry, invalid source and wrong ID")
++}
++`);
++  const jar = join(workspace, 'cases.jar');
++  run('kotlinc', [android, fixture, prefix + 'FreedAppGuardModePolicy.kt', prefix + 'FreedAppSchedulePolicy.kt', prefix + 'FreedDoomscrollApps.kt', '-include-runtime', '-d', jar]);
++  run('java', ['-jar', jar]);
++} finally { fs.rmSync(workspace, { recursive: true, force: true }); }

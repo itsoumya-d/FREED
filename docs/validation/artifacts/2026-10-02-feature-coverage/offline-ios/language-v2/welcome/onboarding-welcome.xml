@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="FREED Automated QA 2026-10-02 - iOS 26.5 - CB401DE2-5B73-4017-95B3-E2D609FB88DA" tests="1" failures="1" time="38.092" timestamp="2026-10-02T16:48:32">
+    <testcase id="onboarding-welcome" name="onboarding-welcome" classname="onboarding-welcome" file=".maestro/flows/onboarding-welcome.yaml" time="38.037" timestamp="2026-10-02T16:48:32" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: id: screen-quiz is visible</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

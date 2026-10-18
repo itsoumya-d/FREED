@@ -1,8 +1,13 @@
+import { getRewardedProviderDiagnostic } from './rewarded-ad-diagnostics';
+import type { RewardedDiagnosticInput, RewardedDiagnosticReceipt } from './rewarded-ad-diagnostics';
 import { getProductionEndpointIssues } from "@/lib/endpoint-safety";
 import { safeUserFacingMessage } from "@/lib/user-facing-error";
+import { readClientEnvironmentValue } from "@/lib/public-client-env";
+import type { StoreProductPrice } from "@/lib/store-pricing";
+import type { VerifiedPremiumEntitlement } from "@/lib/premium-entitlement";
 
 export type PremiumPlanId = "yearly" | "monthly" | "lifetime" | "family" | "accountability" | "ai-coach";
-export const LAUNCH_PREMIUM_PLAN_IDS = ["yearly", "monthly", "lifetime"] as const satisfies readonly PremiumPlanId[];
+export const LAUNCH_PREMIUM_PLAN_IDS = ["yearly", "monthly"] as const satisfies readonly PremiumPlanId[];
 export type LaunchPremiumPlanId = (typeof LAUNCH_PREMIUM_PLAN_IDS)[number];
 export type PremiumPlanAudience = "individual" | "family" | "accountability" | "coaching";
 export type MonetizationMode = "mock" | "native";
@@ -50,9 +55,12 @@ export type PurchaseResult = {
   provider: MonetizationProvider;
   message: string;
   planId: PremiumPlanId | null;
+  verifiedEntitlement?: VerifiedPremiumEntitlement;
+  purchaseStatus?: "purchased" | "pending" | "cancelled" | "failed" | "unavailable";
 };
 
 export type RewardedResetSession = {
+  diagnostic?: RewardedDiagnosticReceipt;
   id: string;
   provider: MonetizationProvider;
   status: "ready" | "fallback";
@@ -62,7 +70,19 @@ export type RewardedResetSession = {
   metadata?: Record<string, boolean | number | string>;
 };
 
+export type RewardedPresentationLifecycle = {
+  onPresenting: () => void;
+  onDismissed: () => void;
+  /** Consent preparation never authorizes loading. Recheck fresh authority afterwards. */
+  beforeLoad?: () => Promise<boolean>;
+  isPreparationCurrent?: () => boolean;
+  onConsentForm?: (presenting: boolean) => void;
+  afterConsentForm?: () => Promise<boolean>;
+  onDiagnostic?: (event: RewardedDiagnosticInput) => void;
+};
+
 export type RewardedResetResult = {
+  diagnostic?: RewardedDiagnosticReceipt;
   status: "completed" | "fallback" | "failed";
   rewardGranted: boolean;
   provider: MonetizationProvider;
@@ -84,6 +104,8 @@ export type MonetizationConfig = {
   rewardedResetPlacementId: string | null;
   adRequestCountryCode: string | null;
   allowTestAds: boolean;
+  /** Bundled build input; internal-testflight permits real SDK sample ads only. */
+  buildChannel?: string;
   productIds: Record<PremiumPlanId, string>;
   launchProductIds: Record<LaunchPremiumPlanId, string>;
 };
@@ -105,10 +127,13 @@ export type MonetizationReadiness = {
 };
 
 export type NativeMonetizationProvider = {
+  fetchStorePrices?: (config: MonetizationConfig) => Promise<StoreProductPrice[]>;
   purchasePremiumPlan?: (plan: PremiumPlan, config: MonetizationConfig) => Promise<PurchaseResult>;
   restorePremiumPurchases?: (plans: PremiumPlan[], config: MonetizationConfig) => Promise<PurchaseResult>;
+  getAdPrivacyOptionsRequired?: () => Promise<boolean | null>;
+  showAdPrivacyOptions?: (isCurrent?: () => boolean) => Promise<boolean>;
   createRewardedResetSession?: (config: MonetizationConfig) => RewardedResetSession | null;
-  completeRewardedResetSession?: (session: RewardedResetSession, config: MonetizationConfig) => Promise<RewardedResetResult>;
+  completeRewardedResetSession?: (session: RewardedResetSession, config: MonetizationConfig, isEligible?: () => boolean, lifecycle?: RewardedPresentationLifecycle) => Promise<RewardedResetResult>;
 };
 
 export const PREMIUM_PLANS: PremiumPlan[] = [
@@ -193,18 +218,6 @@ export const LAUNCH_PREMIUM_PLAN_ECONOMICS = {
       annualizedGrossUsd: 39.99,
       discountVsMonthlyPercent: 67,
       profitabilityRole: "primary-value"
-    },
-    {
-      planId: "lifetime",
-      grossUsd: 79.99,
-      estimatedNetUsdAt30PercentStoreFee: 55.99,
-      estimatedNetUsdAt15PercentStoreFee: 67.99,
-      monthlyEquivalentGrossUsd: null,
-      annualizedGrossUsd: null,
-      discountVsMonthlyPercent: null,
-      breakevenMonthsVsMonthly: 8,
-      breakevenYearsVsYearly: 2,
-      profitabilityRole: "cashflow-anchor"
     }
   ] satisfies LaunchPremiumPlanEconomics[]
 } as const;
@@ -246,7 +259,12 @@ export function getPremiumCapabilities(options: { premium: boolean; planId?: Pre
   if (!options.premium) return { ...FREE_CAPABILITIES };
 
   const capabilities: PremiumCapabilitySet = { ...BASE_PREMIUM_CAPABILITIES };
-  if (options.planId === "family") {
+  if (options.planId === "monthly" || options.planId === "yearly") {
+    capabilities.familySupport = true;
+    capabilities.sponsorAccountability = true;
+    capabilities.relapsePrediction = true;
+    capabilities.deepRecoveryReports = true;
+  } else if (options.planId === "family") {
     capabilities.familySupport = true;
     capabilities.sponsorAccountability = true;
   } else if (options.planId === "accountability") {
@@ -260,6 +278,56 @@ export function getPremiumCapabilities(options: { premium: boolean; planId?: Pre
 }
 
 let nativeProvider: NativeMonetizationProvider | null = null;
+const rewardedProviderListeners = new Set<() => void>();
+export function subscribeRewardedProvider(listener: () => void): () => void {
+  rewardedProviderListeners.add(listener);
+  return () => { rewardedProviderListeners.delete(listener); };
+}
+let nativeProviderPending: Promise<unknown> | null = null;
+let nativeDebugBuild: boolean | null = null;
+let retryRewardedProvider: (() => Promise<unknown>) | null = null;
+let rewardedProviderRetryPending: Promise<unknown> | null = null;
+export function configureRewardedProviderRetry(retry: () => Promise<unknown>) { retryRewardedProvider = retry; }
+
+/** Native build truth, supplied at startup; optimized JS alone does not make a Debug binary a Release binary. */
+export function configureNativeMonetizationBuild(debugBuild: boolean | null) {
+  nativeDebugBuild = debugBuild;
+}
+
+export function configureNativeMonetizationPending(pending: Promise<unknown>) {
+  nativeProviderPending = pending;
+}
+
+
+/** Explicit Watch waits for the lazily imported provider, with no SDK request on mount. */
+export async function awaitRewardedProvider(): Promise<void> {
+  if (nativeProviderPending) await nativeProviderPending.catch(() => undefined);
+  if (!nativeProvider?.completeRewardedResetSession && retryRewardedProvider) {
+    if (!rewardedProviderRetryPending) {
+      const pending = retryRewardedProvider();
+      rewardedProviderRetryPending = pending;
+      void pending.finally(() => { if (rewardedProviderRetryPending === pending) rewardedProviderRetryPending = null; }).catch(() => {});
+    }
+    await rewardedProviderRetryPending.catch(() => undefined);
+  }
+}
+export async function getAdPrivacyOptionsRequired(): Promise<boolean | null> {
+  if (nativeProviderPending) await nativeProviderPending.catch(() => undefined);
+  return await nativeProvider?.getAdPrivacyOptionsRequired?.() ?? null;
+}
+export async function showAdPrivacyOptions(isCurrent: () => boolean = () => true): Promise<boolean> {
+  await awaitRewardedProvider();
+  return await nativeProvider?.showAdPrivacyOptions?.(isCurrent) ?? false;
+}
+
+export async function fetchLaunchStorePrices(options: { platform?: MonetizationPlatform } = {}): Promise<StoreProductPrice[]> {
+  if (nativeProviderPending) await nativeProviderPending.catch(() => undefined);
+  const config = getMonetizationConfig(options);
+  if (config.mode !== "native" || !nativeProvider?.fetchStorePrices) return [];
+  const prices = await nativeProvider.fetchStorePrices(config);
+  const allowed = new Set(Object.values(config.launchProductIds));
+  return prices.filter(price => allowed.has(price.productId)).map(price => ({ ...price, freeTrialDays: null }));
+}
 
 const ISO_3166_ALPHA2_COUNTRY_CODES = new Set(
   [
@@ -275,10 +343,11 @@ const ISO_3166_ALPHA2_COUNTRY_CODES = new Set(
 
 export function configureNativeMonetizationProvider(provider: NativeMonetizationProvider | null) {
   nativeProvider = provider;
+  rewardedProviderListeners.forEach(listener => listener());
 }
 
 function readEnv(key: string): string | null {
-  const value = process.env[key];
+  const value = readClientEnvironmentValue(key);
   if (!value || !value.trim()) return null;
   return value.trim();
 }
@@ -289,6 +358,7 @@ function readBooleanEnv(key: string): boolean {
 }
 
 function isProductionRuntime(): boolean {
+  if (nativeDebugBuild !== null) return !nativeDebugBuild;
   const nodeEnv = readEnv("NODE_ENV")?.toLowerCase();
   if (nodeEnv === "production") return true;
   return typeof __DEV__ !== "undefined" ? !__DEV__ : false;
@@ -296,7 +366,7 @@ function isProductionRuntime(): boolean {
 
 function resolveMode(mode?: MonetizationMode): MonetizationMode {
   const requestedMode = mode ?? (process.env.EXPO_PUBLIC_MONETIZATION_MODE === "mock" ? "mock" : "native");
-  if (requestedMode === "mock" && isProductionRuntime()) return "native";
+  if (requestedMode === "mock" && (isProductionRuntime() || ["production", "internal-testflight"].includes(readEnv("EXPO_PUBLIC_BUILD_CHANNEL") ?? ""))) return "native";
   return requestedMode;
 }
 
@@ -362,6 +432,23 @@ function isValidAdMobRewardedUnitId(value: string | null): boolean {
   );
 }
 
+/** A Release TestFlight binary can request Google sample ads only on its explicit internal channel. */
+function isNativeTestAdRuntimeAllowed(config: MonetizationConfig): boolean {
+  const channel = readEnv("EXPO_PUBLIC_BUILD_CHANNEL");
+  if (channel === "production") return false;
+  if (channel === "internal-testflight") return config.mode === "native" && nativeDebugBuild === false && readBooleanEnv("EXPO_PUBLIC_ADMOB_USE_TEST_ADS");
+  return !isProductionRuntime();
+}
+
+/** Never load a native ad SDK on web or without the configured native app ID. */
+export function isRewardedAdSdkConfigured(config: MonetizationConfig): boolean {
+  return config.mode === "native" &&
+    (config.platform === "ios" || config.platform === "android") &&
+    isValidAdMobAppId(config.admobAppId) &&
+    ((config.allowTestAds && isNativeTestAdRuntimeAllowed(config) && Boolean(config.rewardedResetPlacementId)) ||
+      (!config.allowTestAds && isValidAdMobRewardedUnitId(config.rewardedResetPlacementId)));
+}
+
 function resolveStoreProvider(): StoreProvider {
   const explicit = readEnv("EXPO_PUBLIC_STORE_PROVIDER")?.toLowerCase();
   if (explicit === "revenuecat") return "revenuecat";
@@ -380,6 +467,9 @@ function isPurchaseVerifyEndpointReady(config: MonetizationConfig): boolean {
 
 function productionPurchaseVerificationIssue(config: MonetizationConfig): string | null {
   if (config.mode !== "native" || !isProductionRuntime()) return null;
+  // Native checkout first obtains an Auth/App Check-protected server identity;
+  // the purchase adapter then requires the injected Firebase verifier to grant.
+  if (config.storeProvider === "native-iap" && (readEnv("EXPO_PUBLIC_BACKEND_PROVIDER")?.toLowerCase() ?? "firebase") === "firebase") return null;
   if (isPurchaseVerifyEndpointReady(config)) return null;
   return "Premium purchase is unavailable until FREED's server purchase verification endpoint is configured.";
 }
@@ -408,16 +498,20 @@ export function getMonetizationConfig(options: { mode?: MonetizationMode; platfo
       "premium",
     purchaseVerifyEndpoint: readEnv("EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT"),
     admobAppId: readPlatformEnv("EXPO_PUBLIC_ADMOB_APP_ID", platform),
+    // Rewarded units are production-gated by scripts/release-env-preflight.js:
+    // real EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS/_ANDROID plus
+    // EXPO_PUBLIC_ADMOB_USE_TEST_ADS=false are required before release env passes.
+    // With test ads enabled, builds intentionally use Google's sample rewarded unit.
     rewardedResetPlacementId: allowTestAds
       ? "google-mobile-ads-test-rewarded"
       : readPlatformEnv("EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID", platform),
     adRequestCountryCode: normalizeCountryCode(readPlatformEnv("EXPO_PUBLIC_ADMOB_REQUEST_COUNTRY", platform)),
     allowTestAds,
+    buildChannel: readEnv("EXPO_PUBLIC_BUILD_CHANNEL") ?? undefined,
     productIds,
     launchProductIds: {
       yearly: productIds.yearly,
-      monthly: productIds.monthly,
-      lifetime: productIds.lifetime
+      monthly: productIds.monthly
     }
   };
 }
@@ -637,7 +731,8 @@ export async function restorePremiumPurchases(
   };
 }
 
-export function createRewardedResetSession(options: { mode?: MonetizationMode; platform?: MonetizationPlatform } = {}): RewardedResetSession {
+export function createRewardedResetSession(options: { mode?: MonetizationMode; platform?: MonetizationPlatform; premium?: boolean } = {}): RewardedResetSession {
+  if (options.premium === true) return createFallbackRewardedResetSession("Premium recovery does not request ads.");
   const config = getMonetizationConfig(options);
   if (config.mode === "mock") {
     return {
@@ -666,11 +761,12 @@ export function createRewardedResetSession(options: { mode?: MonetizationMode; p
 
 function createFallbackRewardedResetSession(reason: string): RewardedResetSession {
   return {
+    diagnostic: getRewardedProviderDiagnostic(),
     id: `fallback-reset-${Date.now()}`,
     provider: "fallback",
     status: "fallback",
     durationSeconds: 3,
-    message: "Rewarded ads are unavailable, so FREED starts a brief no-ad reset instead.",
+    message: "Rewarded ads are unavailable. Retry later or open Basic help.",
     metadata: {
       fallbackReason: reason
     }
@@ -679,20 +775,20 @@ function createFallbackRewardedResetSession(reason: string): RewardedResetSessio
 
 export async function completeRewardedResetSession(
   session: RewardedResetSession,
-  options: { mode?: MonetizationMode; platform?: MonetizationPlatform } = {}
+  options: { mode?: MonetizationMode; platform?: MonetizationPlatform; isEligible?: () => boolean; lifecycle?: RewardedPresentationLifecycle } = {}
 ): Promise<RewardedResetResult> {
   if (session.status === "fallback") {
     return {
       status: "fallback",
-      rewardGranted: true,
+      rewardGranted: false,
       provider: "fallback",
-      message: "Ad provider unavailable. Recovery challenge unlocked without an ad."
+      message: "Rewarded ads are unavailable. Retry later or open Basic help."
     };
   }
 
   if (session.provider === "native" && nativeProvider?.completeRewardedResetSession) {
     try {
-      const result = await nativeProvider.completeRewardedResetSession(session, getMonetizationConfig(options));
+      const result = await nativeProvider.completeRewardedResetSession(session, getMonetizationConfig(options), options.isEligible, options.lifecycle);
       return {
         ...result,
         provider: "native"
@@ -700,9 +796,9 @@ export async function completeRewardedResetSession(
     } catch {
       return {
         status: "fallback",
-        rewardGranted: true,
+        rewardGranted: false,
         provider: "fallback",
-        message: "Ad provider failed. Recovery challenge unlocked without an ad."
+        message: "Rewarded ads are unavailable. Retry later or open Basic help."
       };
     }
   }

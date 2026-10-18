@@ -1,0 +1,18 @@
+{
+  "validatedFromActualFirestoreMetadataAndStorageObject": true,
+  "usesExactDeployedCoreRetrievalImplementation": true,
+  "domainCount": 20376,
+  "checksum": "765c579402614895acf4c1eb69023f0e58d1ee6cdb80d43b87082d1631975468",
+  "version": "oisd-nsfw-small-765c579402614895",
+  "source": {
+    "id": "oisd-nsfw-small",
+    "label": "OISD NSFW Small",
+    "url": "https://nsfw-small.oisd.nl/"
+  },
+  "generatedAt": "2026-10-04T10:14:22.026Z",
+  "publishedAt": "2026-10-04T10:14:22.026Z",
+  "unsupportedSuffixesAbsent": true,
+  "omittedSuffixWideRuleCount": 8,
+  "authenticatedClientAppCheckScenario": false,
+  "omitsPublicDomainArrayFromReceipt": true
+}

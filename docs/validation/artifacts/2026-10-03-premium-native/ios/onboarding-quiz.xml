@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="FREED-Premium-Disposable - iOS 26.5 - EA53F394-3E1F-44A7-84EF-716A26BE9879" tests="1" failures="1" time="49.545" timestamp="2026-10-03T07:26:09">
+    <testcase id="onboarding-quiz" name="onboarding-quiz" classname="onboarding-quiz" file=".maestro/flows/onboarding-quiz.yaml" time="49.487" timestamp="2026-10-03T07:26:09" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+      <failure>Assertion is false: "How long has this cycle been a struggle\?" is visible</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

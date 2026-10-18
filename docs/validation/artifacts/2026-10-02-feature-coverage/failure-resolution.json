@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "freed-feature-failure-resolution-v1",
+  "generatedAt": "2026-10-02T11:40:28.322Z",
+  "sanitized": true,
+  "initialReport": "local-verification.json",
+  "fullRerunReport": "local-verification-final.json",
+  "affectedRerunReports": [
+    "affected-suite-reruns.json",
+    "affected-suite-reruns-final.json"
+  ],
+  "currentReport": "local-verification-current.json",
+  "failures": [
+    {
+      "suite": "tests/app-shell.test.ts",
+      "observed": "Expected the removed ROOT_DESTINATIONS.map custom BottomNav implementation.",
+      "resolution": "Checks four actual NativeTabs roots, route identity and reset behavior, and extracts exact named Profile/Shield/Backup functions with AST.",
+      "current": "passed"
+    },
+    {
+      "suite": "tests/firebase-repository-config.test.ts",
+      "observed": "Expected inline requireUid in functions/src/index.ts and omitted Foundation re-exports.",
+      "resolution": "AST export graph resolves nested star/named/import aliases and compares all17 deployment callables with the client contract; UID denial/AppCheck/limited-use gates preserved.",
+      "current": "passed"
+    },
+    {
+      "suite": "tests/release-audit-repair.test.ts",
+      "observed": "Store legal audit required obsolete lifetime/Core3 product scope.",
+      "resolution": "Actual monthly/yearly catalog and both platform metadata must match; inactive lifetime/future SKUs and omitted disabled declarations fail.",
+      "current": "passed"
+    },
+    {
+      "suite": "tests/core.test.ts",
+      "observed": "Full rerun275passed/4failed then180s timeout: stale DNS isRunning/Settings.Global gates, release native gate, performance diagnostics and home paths in concurrently generated UI report.",
+      "resolution": "Effective non-VPN LinkProperties and dnsGuardFilteringActive/Policy checked; original failure statuses retained, exposed command home prefixes sanitized; final core279/279passed in95seconds under600s bound.",
+      "current": "passed"
+    },
+    {
+      "suite": "tests/core.test.ts",
+      "observed": "First affected rerun276passed/3failed: additional old PrivateDNS string assertions, old Quiz isSelected/hint lexical check, concurrently completed old-process command paths.",
+      "resolution": "Remaining source assertions now bind actual public DNS state and policy; Quiz AST verifies radio/option label/selected comparison and rejects missing or fake semantics; privacy audit2/2passed.",
+      "current": "passed"
+    },
+    {
+      "suite": "tests/native-router-dispatch.test.ts",
+      "observed": "Root native Maestro welcome action showed quiz missing: installed Expo converter discards reserved React Navigation params.screen from dynamic routes.",
+      "resolution": "Root renamed both dynamic file routes to [destination]; this worker executed installed SDK converter plus affected native navigation, links, app-shell and Quiz/a11y checks with stable before/after input hashes.",
+      "current": "passed",
+      "sourceBoundReport": "router-destination-refresh/affected-suite-results.json",
+      "nativeExecutionByThisWorker": false
+    }
+  ],
+  "currentLocal": {
+    "suiteFilesPassed": 66,
+    "suiteFilesTotal": 66,
+    "observedCasesPassed": 583,
+    "failed": 0,
+    "skipped": 0,
+    "relatedLedgerChecksPassed": 99,
+    "relatedLedgerChecksTotal": 99,
+    "completeNativeLivePhysicalFeatures": 0,
+    "evidenceMeaning": "Mixed source epochs; latest destination/navigation checks have captured stable execution-source hashes, older runs are not exact proof of the changed app/build."
+  },
+  "releaseBoundary": "No native flow, physical device, live backend, mail, message or purchase was executed by this worker. Genuine release requirements remain blocking."
+}

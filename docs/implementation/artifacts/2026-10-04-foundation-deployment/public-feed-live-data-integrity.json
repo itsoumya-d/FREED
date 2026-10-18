@@ -1,0 +1,31 @@
+{
+  "metadata": {
+    "version": "oisd-nsfw-small-765c579402614895",
+    "checksum": "765c579402614895acf4c1eb69023f0e58d1ee6cdb80d43b87082d1631975468",
+    "generatedAt": "2026-10-04T10:14:22.026Z",
+    "publishedAt": "2026-10-04T10:14:22.026Z",
+    "domainCount": 20376,
+    "source": {
+      "id": "oisd-nsfw-small",
+      "label": "OISD NSFW Small",
+      "url": "https://nsfw-small.oisd.nl/"
+    },
+    "objectKey": "adult-domain-feeds/oisd-nsfw-small-765c579402614895.json"
+  },
+  "objectBytes": 337775,
+  "objectSha256": "42473066940823d5cfc591fad047702b0de079f3e65afaacdd30099bdd46aa0e",
+  "publicSourceDataOnly": true,
+  "existingPersonalDataReadOrWritten": false,
+  "omittedSuffixWideRuleCount": 8,
+  "omittedSuffixWideRules": [
+    "||adult^",
+    "||co.cz^",
+    "||cpanel.site^",
+    "||in.net^",
+    "||mex.com^",
+    "||porn^",
+    "||sex^",
+    "||xxx^"
+  ],
+  "authenticatedClientAppCheckProof": false
+}

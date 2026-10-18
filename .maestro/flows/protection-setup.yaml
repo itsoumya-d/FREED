@@ -1,0 +1,67 @@
+appId: app.freed.recovery
+name: protection-setup
+tags:
+  - smoke
+  - local-write
+---
+# Requires an English disposable fixture with saved setup intent both and native reset latch false.
+# Combined setup must start with help closed. Website/app variants are entered through real Protect actions.
+# Only status refresh is invoked; no permission, activation, reset or reactivation action is accepted.
+# Feature choices are saved in disposable local settings; all three renderers are mandatory.
+- openLink: "freed:///flow/protectionSetup"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "screen-protectionSetup" }
+    timeout: 15000
+- assertVisible: "Protection setup"
+- assertVisible: "Show setup help"
+- tapOn: "Show setup help"
+- scrollUntilVisible:
+    element: { text: "Refresh protection status" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Refresh protection status"
+- assertVisible: { id: "screen-protectionSetup" }
+- openLink: "freed:///shield"
+- extendedWaitUntil:
+    visible: { id: "screen-main-shield" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "protect-websites-setup" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "protect-websites-setup" }
+- extendedWaitUntil:
+    visible: { id: "screen-protectionSetup" }
+    timeout: 15000
+- assertVisible: { id: "setup-websites" }
+- scrollUntilVisible:
+    element: { id: "feature-setup-refresh" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "feature-setup-refresh" }
+- assertVisible: { id: "setup-websites" }
+- openLink: "freed:///shield"
+- extendedWaitUntil:
+    visible: { id: "screen-main-shield" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "protect-apps-setup" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "protect-apps-setup" }
+- extendedWaitUntil:
+    visible: { id: "screen-protectionSetup" }
+    timeout: 15000
+- assertVisible: { id: "setup-apps" }
+- scrollUntilVisible:
+    element: { id: "feature-setup-refresh" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "feature-setup-refresh" }
+- assertVisible: { id: "setup-apps" }
+- takeScreenshot: "protection-setup"

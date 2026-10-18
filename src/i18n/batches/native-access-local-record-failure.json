@@ -1,0 +1,18 @@
+{
+  "entries": [
+    {
+      "source": "Reset saved. Native access was confirmed, but its local record could not be saved.",
+      "translations": {
+        "hi": "रीसेट सहेज लिया गया। नेटिव पहुँच की पुष्टि हुई, लेकिन उसका स्थानीय रिकॉर्ड सहेजा नहीं जा सका।",
+        "es": "El reinicio se guardó. Se confirmó el acceso nativo, pero no se pudo guardar su registro local.",
+        "pt": "O reset foi salvo. O acesso nativo foi confirmado, mas seu registro local não pôde ser salvo.",
+        "fr": "La réinitialisation a été enregistrée. L’accès natif a été confirmé, mais son enregistrement local n’a pas pu être sauvegardé.",
+        "de": "Der Reset wurde gespeichert. Der native Zugriff wurde bestätigt, aber sein lokaler Eintrag konnte nicht gespeichert werden.",
+        "ar": "تم حفظ إعادة الضبط. تم تأكيد الوصول الأصلي، لكن تعذر حفظ سجله المحلي.",
+        "ja": "リセットは保存されました。ネイティブアクセスは確認されましたが、そのローカル記録を保存できませんでした。",
+        "ko": "리셋이 저장되었습니다. 네이티브 접근은 확인되었지만 해당 로컬 기록을 저장하지 못했습니다.",
+        "zh-Hans": "重置已保存。原生访问已确认，但无法保存其本地记录。"
+      }
+    }
+  ]
+}

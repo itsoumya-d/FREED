@@ -8,7 +8,7 @@ export interface RootDestination {
 
 export const ROOT_DESTINATIONS: readonly RootDestination[] = [
   { id: "today", accessibilityLabel: "Today recovery plan", compactLabel: "Today" },
-  { id: "shield", accessibilityLabel: "Focus Shield protection", compactLabel: "Shield" },
+  { id: "shield", accessibilityLabel: "Protection controls", compactLabel: "Protect" },
   { id: "progress", accessibilityLabel: "Recovery progress", compactLabel: "Progress" },
   { id: "profile", accessibilityLabel: "Profile and settings", compactLabel: "Profile" }
 ];

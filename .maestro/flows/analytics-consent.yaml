@@ -1,0 +1,25 @@
+appId: app.freed.recovery
+name: analytics-consent
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///progress"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-progress"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Enable Sharing|Turn Off"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Enable Sharing|Turn Off"
+- assertVisible: "Send Snapshot|Sending\\.\\.\\."
+- takeScreenshot: "analytics-consent"

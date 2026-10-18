@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { createHash, createPrivateKey, X509Certificate } from "node:crypto";
 
 import {
   APIError,
@@ -27,7 +27,7 @@ export type PurchasePlatform = "ios" | "android";
 export type PurchaseResultStatus = "verified" | "inactive" | "rejected" | "unavailable";
 
 export type VerifyStorePurchaseRequest =
-  | { platform: "ios"; productId: CoreProductId; transactionId: string; clientEventId: string; restore: boolean }
+  | { platform: "ios"; productId: CoreProductId; transactionId: string; signedTransactionInfo?: string; clientEventId: string; restore: boolean }
   | { platform: "android"; productId: CoreProductId; purchaseToken: string; clientEventId: string; restore: boolean };
 
 export type VerifyStorePurchaseResult = {
@@ -46,6 +46,10 @@ export type VerifiedStorePurchase = {
   orderReference?: string;
   expiresAt: number | null;
   environment?: "Production" | "Sandbox";
+  restoreWitnessVerified?: boolean;
+  initialOwnershipVerified?: boolean;
+  linkedStoreReference?: string;
+  storeAccountTokenHash?: string;
 };
 
 export type PurchaseClaimInput = {
@@ -56,10 +60,21 @@ export type PurchaseClaimInput = {
   orderReferenceHash?: string;
   verifiedAt: number;
   expiresAt: number | null;
+  restore?: boolean;
+  restoreWitnessVerified?: boolean;
+  initialOwnershipVerified?: boolean;
+  linkedStoreReferenceHash?: string;
+  storeAccountTokenHash?: string;
+  restoreContext?: {
+    expectedOwnerUid: string;
+    ownerIsAnonymous: boolean;
+    targetAuthenticated: boolean;
+    targetIsAnonymous: boolean;
+  };
 };
 
 export type PurchaseAuthorizationResult = "allowed" | "duplicate" | "rate-limited" | "account-deleting";
-export type PurchaseClaimResult = "claimed" | "owned" | "conflict" | "account-deleting" | "unavailable";
+export type PurchaseClaimResult = "claimed" | "owned" | "transferred" | "conflict" | "account-deleting" | "unavailable";
 
 export class PurchaseInputError extends Error {
   constructor() {
@@ -83,20 +98,24 @@ export class PurchaseProviderError extends Error {
 }
 
 export function parseVerifyStorePurchaseRequest(value: unknown): VerifyStorePurchaseRequest {
-  if (serializedBytes(value) > 16 * 1024 || !isRecord(value)) invalidInput();
+  if (!isRecord(value)) invalidInput();
   if (value.platform === "ios") {
-    if (!hasExactKeys(value, ["platform", "productId", "transactionId", "clientEventId", "restore"])) invalidInput();
+    if (serializedBytes(value) > 72 * 1024 || !hasExactKeys(value, ["platform", "productId", "transactionId", "clientEventId", "restore",
+      ...(Object.hasOwn(value, "signedTransactionInfo") ? ["signedTransactionInfo"] : [])])) invalidInput();
     if (!isCoreProductId(value.productId) || !isAppleTransactionId(value.transactionId) ||
-      !isClientEventId(value.clientEventId) || typeof value.restore !== "boolean") invalidInput();
+      !isClientEventId(value.clientEventId) || typeof value.restore !== "boolean" ||
+      (Object.hasOwn(value, "signedTransactionInfo") && !isCompactJws(value.signedTransactionInfo))) invalidInput();
     return {
       platform: "ios",
       productId: value.productId,
       transactionId: value.transactionId,
+      ...(typeof value.signedTransactionInfo === "string" ? { signedTransactionInfo: value.signedTransactionInfo } : {}),
       clientEventId: value.clientEventId,
       restore: value.restore
     };
   }
   if (value.platform === "android") {
+    if (serializedBytes(value) > 16 * 1024) invalidInput();
     if (!hasExactKeys(value, ["platform", "productId", "purchaseToken", "clientEventId", "restore"])) invalidInput();
     if (!isCoreProductId(value.productId) || !isGooglePurchaseToken(value.purchaseToken) ||
       !isClientEventId(value.clientEventId) || typeof value.restore !== "boolean") invalidInput();
@@ -126,6 +145,30 @@ export function deriveAppleAppAccountToken(uid: string): string {
   bytes[8] = ((bytes[8] ?? 0) & 0x3f) | 0x80;
   const hex = bytes.toString("hex");
   return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+}
+
+export function validateAppleStoreVerifierConfiguration(apple: Parameters<typeof createAppleStoreProvider>[0]): void {
+  try {
+    const config = parseAppleConfig(apple);
+    if (!isUuid(config.issuerId) || !/^[A-Za-z0-9]{10}$/.test(config.keyId)) throw new Error();
+    const appleKey = createPrivateKey(config.privateKey);
+    if (appleKey.asymmetricKeyType !== "ec" || appleKey.asymmetricKeyDetails?.namedCurve !== "prime256v1") throw new Error();
+    for (const bytes of config.rootCertificates) {
+      const root = new X509Certificate(bytes);
+      if (!root.ca || !root.verify(root.publicKey) || Date.parse(root.validFrom) > Date.now() || Date.parse(root.validTo) <= Date.now()) throw new Error();
+    }
+  } catch { throw new PurchaseProviderError('unavailable'); }
+}
+
+export function validateStoreVerifierConfiguration(apple: Parameters<typeof createAppleStoreProvider>[0], googleServiceAccountJson: string): void {
+  validateAppleStoreVerifierConfiguration(apple);
+  try {
+    const google = parseGoogleServiceAccount(googleServiceAccountJson);
+    const googleKey = createPrivateKey(google.private_key!);
+    if (googleKey.asymmetricKeyType !== "rsa" || (googleKey.asymmetricKeyDetails?.modulusLength ?? 0) < 2048) throw new Error();
+  } catch {
+    throw new PurchaseProviderError("unavailable");
+  }
 }
 
 export type PurchaseProvider = {
@@ -162,6 +205,8 @@ export function createPurchaseVerificationService(dependencies: {
           ? await dependencies.apple.verify({
               transactionId: input.transactionId,
               productId: input.productId,
+              restore: input.restore,
+              ...(input.signedTransactionInfo ? { signedTransactionInfo: input.signedTransactionInfo } : {}),
               expectedAppAccountToken: deriveAppleAppAccountToken(uid)
             })
           : await dependencies.google.verify({ productId: input.productId, purchaseToken: input.purchaseToken });
@@ -183,12 +228,17 @@ export function createPurchaseVerificationService(dependencies: {
           storeReferenceHash: hashStoreReference(verified.storeReference),
           ...(verified.orderReference ? { orderReferenceHash: hashStoreReference(verified.orderReference) } : {}),
           verifiedAt: dependencies.now(),
-          expiresAt: verified.expiresAt
+          expiresAt: verified.expiresAt,
+          restore: input.restore,
+          restoreWitnessVerified: verified.restoreWitnessVerified === true,
+          initialOwnershipVerified: verified.initialOwnershipVerified,
+          ...(verified.storeAccountTokenHash ? { storeAccountTokenHash: verified.storeAccountTokenHash } : {}),
+          ...(verified.linkedStoreReference ? { linkedStoreReferenceHash: hashStoreReference(verified.linkedStoreReference) } : {})
         });
       } catch {
         claim = "unavailable";
       }
-      if (claim !== "claimed" && claim !== "owned") return fallback(claim === "conflict" ? "rejected" : "unavailable");
+      if (claim !== "claimed" && claim !== "owned" && claim !== "transferred") return fallback(claim === "conflict" ? "rejected" : "unavailable");
 
       return {
         active: true,
@@ -264,7 +314,8 @@ export function createAppleStoreProvider(
       const productId = input.productId;
       const expectedAppAccountToken = input.expectedAppAccountToken;
       if (!isAppleTransactionId(transactionId) || !isCoreProductId(productId) ||
-        typeof expectedAppAccountToken !== "string" || !isUuid(expectedAppAccountToken)) {
+        typeof expectedAppAccountToken !== "string" || !isUuid(expectedAppAccountToken) ||
+        (input.signedTransactionInfo !== undefined && !isCompactJws(input.signedTransactionInfo))) {
         throw new PurchaseProviderError("rejected");
       }
       let config: ReturnType<typeof parseAppleConfig>;
@@ -276,11 +327,23 @@ export function createAppleStoreProvider(
       }
       const deadline = createProviderDeadline(timeoutMs);
       try {
+        // This untrusted hint selects a transport only. The unchanged Sandbox
+        // verifier still requires Apple's authoritative API result, both SDK-
+        // verified signatures and all identity/expiry/ownership checks.
+        if (appleWitnessEnvironmentHint(input.signedTransactionInfo) === "Sandbox") {
+          return await verifyAppleEnvironment("Sandbox", config, library, {
+            transactionId, productId, expectedAppAccountToken,
+            restore: input.restore === true,
+            signedTransactionInfo: input.signedTransactionInfo as string
+          }, now(), deadline);
+        }
         try {
           return await verifyAppleEnvironment("Production", config, library, {
             transactionId,
             productId,
-            expectedAppAccountToken
+            expectedAppAccountToken,
+            restore: input.restore === true,
+            signedTransactionInfo: input.signedTransactionInfo as string | undefined
           }, now(), deadline);
         } catch (error) {
           if (!library.isNotFoundOrEnvironmentMismatch(error)) {
@@ -291,7 +354,9 @@ export function createAppleStoreProvider(
         return await verifyAppleEnvironment("Sandbox", config, library, {
           transactionId,
           productId,
-          expectedAppAccountToken
+          expectedAppAccountToken,
+          restore: input.restore === true,
+          signedTransactionInfo: input.signedTransactionInfo as string | undefined
         }, now(), deadline);
       } catch (error) {
         if (error instanceof PurchaseProviderError) throw error;
@@ -307,7 +372,7 @@ async function verifyAppleEnvironment(
   environment: AppleEnvironmentName,
   config: ReturnType<typeof parseAppleConfig>,
   library: AppleLibraryBoundary,
-  input: { transactionId: string; productId: CoreProductId; expectedAppAccountToken: string },
+  input: { transactionId: string; productId: CoreProductId; expectedAppAccountToken: string; restore: boolean; signedTransactionInfo?: string },
   now: number,
   deadline: ProviderDeadline
 ): Promise<VerifiedStorePurchase> {
@@ -334,14 +399,35 @@ async function verifyAppleEnvironment(
     if (library.isNotFoundOrEnvironmentMismatch(error)) throw error;
     throw new PurchaseProviderError("rejected");
   }
-  validateAppleTransaction(decoded, environment, config.appAppleId, input, now);
+  // The API is authoritative for access; the device JWS proves possession of
+  // this exact transaction. A numeric transaction ID alone is never a witness.
+  let witnessVerified = false;
+  if (input.signedTransactionInfo) {
+    let witness: Record<string, unknown>;
+    try { witness = await deadline.run(verifier.verifyAndDecodeTransaction(input.signedTransactionInfo)); }
+    catch { throw new PurchaseProviderError("rejected"); }
+    const fields = ["transactionId", "originalTransactionId", "productId", "bundleId", "appAppleId", "environment", "type", "inAppOwnershipType", "appAccountToken", "purchaseDate"];
+    if (fields.some(field => field === "appAccountToken"
+      ? normalizedAppleAccountToken(witness[field]) !== normalizedAppleAccountToken(decoded[field])
+      : witness[field] !== decoded[field])) throw new PurchaseProviderError("rejected");
+    // signedDate may change when Apple signs the same transaction again.
+    validateAppleTransaction(witness, environment, config.appAppleId, input, now, true);
+    witnessVerified = true;
+  }
+  // Owned legacy restores can lack the device JWS. They may refresh only their
+  // already-owned claim; no new/cross-account claim accepts this weaker proof.
+  validateAppleTransaction(decoded, environment, config.appAppleId, input, now, input.restore || witnessVerified);
   return {
     platform: "ios",
     productId: input.productId,
     storeReference: decoded.originalTransactionId as string,
     orderReference: input.transactionId,
     expiresAt: input.productId === "freed_premium_lifetime" ? null : decoded.expiresDate as number,
-    environment
+    environment,
+    restoreWitnessVerified: witnessVerified,
+    initialOwnershipVerified: normalizedAppleAccountToken(decoded.appAccountToken) === input.expectedAppAccountToken.toLowerCase(),
+    ...(typeof decoded.appAccountToken === "string" && isUuid(decoded.appAccountToken)
+      ? { storeAccountTokenHash: hashStoreReference(decoded.appAccountToken.toLowerCase()) } : {})
   };
 }
 
@@ -350,12 +436,14 @@ function validateAppleTransaction(
   environment: AppleEnvironmentName,
   appAppleId: number,
   input: { transactionId: string; productId: CoreProductId; expectedAppAccountToken: string },
-  now: number
+  now: number,
+  permitRestoreAccountMismatch = false
 ): void {
   const subscription = input.productId !== "freed_premium_lifetime";
   const datesValid = validAppleDate(decoded.purchaseDate, now) && validAppleDate(decoded.signedDate, now);
   const appIdValid = decoded.appAppleId === undefined || decoded.appAppleId === appAppleId;
-  const accountTokenValid = decoded.appAccountToken === undefined || decoded.appAccountToken === input.expectedAppAccountToken;
+  const accountTokenValid = decoded.appAccountToken === undefined || normalizedAppleAccountToken(decoded.appAccountToken) === input.expectedAppAccountToken.toLowerCase() ||
+    (permitRestoreAccountMismatch && typeof decoded.appAccountToken === "string" && isUuid(decoded.appAccountToken));
   const baseValid = decoded.transactionId === input.transactionId && decoded.productId === input.productId &&
     isAppleTransactionId(decoded.originalTransactionId) &&
     decoded.bundleId === APPLE_BUNDLE_ID && decoded.environment === environment && appIdValid && accountTokenValid && datesValid &&
@@ -475,7 +563,7 @@ function validateGoogleSubscription(
   purchaseToken: string,
   now: number
 ): VerifiedStorePurchase {
-  if (!isRecord(value) || !["SUBSCRIPTION_STATE_ACTIVE", "SUBSCRIPTION_STATE_IN_GRACE_PERIOD"].includes(String(value.subscriptionState)) ||
+  if (!isRecord(value) || !["SUBSCRIPTION_STATE_ACTIVE", "SUBSCRIPTION_STATE_IN_GRACE_PERIOD", "SUBSCRIPTION_STATE_CANCELED"].includes(String(value.subscriptionState)) ||
     !["ACKNOWLEDGEMENT_STATE_PENDING", "ACKNOWLEDGEMENT_STATE_ACKNOWLEDGED"].includes(String(value.acknowledgementState)) ||
     !Array.isArray(value.lineItems) || value.lineItems.length !== 1 || !isRecord(value.lineItems[0]) ||
     value.lineItems[0].productId !== productId || !validFutureTimestamp(value.lineItems[0].expiryTime, now)) {
@@ -486,7 +574,12 @@ function validateGoogleSubscription(
     productId,
     storeReference: purchaseToken,
     ...(isBoundedProviderReference(value.latestOrderId) ? { orderReference: value.latestOrderId } : {}),
-    expiresAt: Date.parse(value.lineItems[0].expiryTime)
+    expiresAt: Date.parse(value.lineItems[0].expiryTime),
+    // The opaque Play token is proof only after the authenticated Publisher API
+    // confirms its exact package/product and active paid access.
+    restoreWitnessVerified: true,
+    initialOwnershipVerified: true,
+    ...(isGooglePurchaseToken(value.linkedPurchaseToken) && value.linkedPurchaseToken !== purchaseToken ? { linkedStoreReference: value.linkedPurchaseToken } : {})
   };
 }
 
@@ -511,7 +604,9 @@ function validateGoogleLifetime(
     productId,
     storeReference: purchaseToken,
     ...(isBoundedProviderReference(value.orderId) ? { orderReference: value.orderId } : {}),
-    expiresAt: null
+    expiresAt: null,
+    restoreWitnessVerified: true,
+    initialOwnershipVerified: true
   };
 }
 
@@ -627,8 +722,18 @@ function isGooglePurchaseToken(value: unknown): value is string {
 function isUuid(value: string): boolean {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 }
+function normalizedAppleAccountToken(value: unknown): string | undefined {
+  return typeof value === "string" && isUuid(value) ? value.toLowerCase() : undefined;
+}
 function isCompactJws(value: unknown): value is string {
-  return typeof value === "string" && value.length >= 16 && value.length <= 64 * 1024 && value.split(".").length === 3;
+  return typeof value === "string" && value.length >= 16 && value.length <= 64 * 1024 && /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(value);
+}
+function appleWitnessEnvironmentHint(value:unknown):"Sandbox"|null {
+  if(!isCompactJws(value))return null;
+  try {
+    const payload:unknown=JSON.parse(Buffer.from(value.split('.')[1]!,'base64url').toString('utf8'));
+    return isRecord(payload)&&payload.environment==='Sandbox'?'Sandbox':null;
+  } catch {return null;}
 }
 function isCanonicalBase64(value: unknown): value is string {
   if (typeof value !== "string" || value.length < 4 || value.length > 32 * 1024 || value.length % 4 !== 0 ||

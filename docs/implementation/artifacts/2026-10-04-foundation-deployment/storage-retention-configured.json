@@ -1,0 +1,78 @@
+{
+  "verifiedNoExistingObjects": {
+    "live": {
+      "anyObjects": false,
+      "hasMore": false
+    },
+    "softDeleted": {
+      "anyObjects": false,
+      "hasMore": false
+    }
+  },
+  "requestedPolicy": {
+    "softDeletePolicy": {
+      "retentionDurationSeconds": "0"
+    },
+    "lifecycle": {
+      "rule": [
+        {
+          "action": {
+            "type": "Delete"
+          },
+          "condition": {
+            "age": 400,
+            "matchesPrefix": [
+              "recovery-backups/"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "readback": {
+    "kind": "storage#bucket",
+    "selfLink": "https://www.googleapis.com/storage/v1/b/freed-7d5ee.firebasestorage.app",
+    "id": "freed-7d5ee.firebasestorage.app",
+    "name": "freed-7d5ee.firebasestorage.app",
+    "projectNumber": "5477978760",
+    "generation": "1791105029680832719",
+    "metageneration": "3",
+    "location": "ASIA-SOUTH1",
+    "storageClass": "STANDARD",
+    "etag": "CAM=",
+    "timeCreated": "2026-10-04T09:10:30.627Z",
+    "updated": "2026-10-04T09:40:53.443Z",
+    "lifecycle": {
+      "rule": [
+        {
+          "action": {
+            "type": "Delete"
+          },
+          "condition": {
+            "age": 400,
+            "matchesPrefix": [
+              "recovery-backups/"
+            ]
+          }
+        }
+      ]
+    },
+    "softDeletePolicy": {
+      "retentionDurationSeconds": "0"
+    },
+    "iamConfiguration": {
+      "bucketPolicyOnly": {
+        "enabled": true,
+        "lockedTime": "2027-01-02T09:10:30.627Z"
+      },
+      "uniformBucketLevelAccess": {
+        "enabled": true,
+        "lockedTime": "2027-01-02T09:10:30.627Z"
+      },
+      "publicAccessPrevention": "inherited"
+    },
+    "locationType": "region",
+    "satisfiesPZS": true,
+    "satisfiesPZI": true
+  }
+}

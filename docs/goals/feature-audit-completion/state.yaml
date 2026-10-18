@@ -1,0 +1,503 @@
+# GoalBuddy v2 state.yaml
+# Board truth lives here. goal.md is the editable charter; notes/ holds long receipts only.
+
+version: 2
+
+goal:
+  title: "FREED full feature audit and production completion"
+  slug: "feature-audit-completion"
+  kind: existing_plan # specific | open_ended | existing_plan | recovery | audit
+  tranche: "Continuous execution: finish discovery (validated feature inventory PLUS per-value data-accuracy verdict table PLUS native-capability requirement matrix PLUS per-platform Android/iOS verdicts from observed user-end behavior), then complete successive safe verified Worker slices until every feature is working with full UI-state + motion coverage, every derived value is provably accurate at time/clock/persistence boundaries, every platform-specific defect is fixed or explicitly blocked-with-receipt, test-ad markers are in place, and the deliverables exist."
+  status: active # active | blocked | done
+  oracle:
+    signal: "Green per-platform verification (commands discovered in T002) + feature inventory where every row is 'working' with empty/loading/error/success + motion evidence, or 'blocked' with a receipt naming the missing requirement; every ad surface has a test/mock unit plus a findable TODO(AD-SDK) marker; AND every user-visible derived value (streaks, counters, totals, timers, usage minutes, levels, percentages) has a deterministic time-frozen test proving it correct across midnight, timezone change, DST, clock change, reboot, reinstall and second device; AND every feature carries an explicit Android and iOS verdict where unproven is admissible only with a receipt naming the missing device."
+    cadence: "after each Worker package and at final audit"
+    final_proof: "Final Judge receipt mapping all done-task receipts to the original outcome, including the feature-inventory checklist deliverable, fix summary, test-ad placeholder confirmation, the per-value data-accuracy verdict table, the native-capability requirement matrix, and the per-platform Android/iOS verdict list with any unproven row justified by a device-availability receipt."
+    dimensions:
+      - "D1 verification-green: discovered typecheck/test suites pass on each Worker slice"
+      - "D2 feature-completeness: inventory row working with all four UI states + motion"
+      - "D3 data-accuracy: each derived value traced to one source of truth and frozen-time tested at boundaries"
+      - "D4 native-capability: declared permission/API/OS-floor requirement plus degradation path per capability"
+      - "D5 per-platform-verdict: Android and iOS each working/broken/degraded/unproven with evidence"
+      - "D6 saved-data-safety: pre-change persisted payload still loads with unchanged values"
+      - "D7 ad-placeholder: test/mock unit plus TODO(AD-SDK) marker on every ad surface"
+  intake:
+    original_request: "Complete audit of the codebase; bring every existing feature to 100% functional production quality (UI, interactions, motion). No real ad integration — use test/mock ad units. Deliver inventory checklist, fix summary, and test-ad confirmation."
+    interpreted_outcome: "Every existing FREED feature works end-to-end on both platforms with complete UI states, polished design-system-consistent motion, and marked mock/test ad surfaces."
+    input_shape: existing_plan # vague | specific | existing_plan | recovery | audit
+    audience: "Consumer app users; owner wants best-in-category consumer polish"
+    authority: requested # requested | approved | inferred | needs_approval | blocked
+    proof_type: test # test | demo | artifact | metric | review | source_backed_answer | decision
+    completion_proof: "Feature inventory checklist fully resolved (working or blocked-with-receipt), per-platform verification green, TODO(AD-SDK) markers confirmed on every ad surface, PLUS a per-value data-accuracy table where every user-visible derived value is covered by a passing frozen-time boundary test, PLUS per-platform Android/iOS verdicts with native-capability requirements and degradation paths, PLUS persisted-payload migration tests green, and final audit maps receipts to outcome."
+    likely_misfire: "Audit-only stop without fixes; reporting on data accuracy instead of fixing it; inventing net-new features instead of completing existing ones; integrating a real ad SDK; fixing one platform while regressing the other; marking stubs done without state/motion coverage; calling a streak 'accurate for all users' from a happy-path screenshot; treating a plausible on-screen number as proof the derivation is correct; refactoring persistence and silently losing users' saved streaks or history."
+    blind_spots_considered:
+      - "Expo/React Native app with native ios/ + android/ folders — parity means shared TS layer plus native modules behaving identically on both platforms."
+      - "Verification tooling unknown until mapped (tests/ exists; scripts in package.json and scripts/)."
+      - "'100% functional' unbounded until inventory exists — tranche bounds it via successive slices."
+      - "Existing goal docs/goals/android-setup-activation-recovery may overlap — check before scheduling conflicting slices."
+      - "Ad-surface locations unknown until discovery (stubs, mocks, or absent)."
+      - "Device clock is user-controllable: accuracy needs an explicit trust model (wall clock vs monotonic anchor vs persisted anchor) per derived value, and none exists yet."
+      - "T001 found one ~9241-line src/features/freed-app.tsx state machine — a single source of truth for streaks/counters may not exist, so the same value can be derived differently in several places."
+      - "Canonical backend is still ambiguous (Vercel routes vs Firebase Functions); whether a stat is device-local or server-derived changes what 'accurate for all users' and multi-device behavior mean."
+      - "Android and iOS are not OS-symmetric (usage-stats/DNS/VPN filtering, notification grant, overlays vs Device Activity/Screen Time extensions, App-Bound Domains); some features may be impossible or policy-blocked on one platform, which must be reported as a verdict plus product decision rather than faked parity."
+      - "A booted iOS simulator or physical device may be unreachable here, so iOS-only native claims may land as blocked-with-receipt instead of verified."
+      - "The worktree is dirty; current behavior must be read from the working tree rather than HEAD."
+    existing_plan_facts:
+      - "Phase 1 DISCOVERY first: walk entire codebase incl. native layers; document intended behavior, UI presentation, interaction paths, all UI states, animation/motion behavior, end-to-end wiring status; produce feature inventory BEFORE touching code."
+      - "Phase 2 GAP ANALYSIS: missing/broken/half-implemented/inconsistent work; cross-platform parity gaps; UI/UX and motion inconsistencies; flag placeholders/mocks/TODOs."
+      - "Phase 3 FIX & COMPLETE: every interaction works; all four UI states handled; animations smooth and consistent with design system; cross-platform parity."
+      - "EXCLUDE real ad network integration; ad surfaces use realistic test/mock units with clear marker/TODO for release-time SDK swap-in."
+      - "Deliverables: feature inventory checklist; broken/missing vs fixed summary; test-ad placeholder confirmation with markers."
+      - "Quality bar: best in category for a consumer app."
+      - "2026-09-26 reaffirmation: research every mobile feature deeply (code purpose, native capabilities needed, intended functionality), determine whether displayed data (streaks and all stats/counters) is accurate for ALL users, determine which features do not work on Android and which do not work on iOS, determine how each feature behaves on the user end in practice, then FIX the accuracy and functional problems found and close every gap that blocks 100% readiness."
+      - "2026-09-26 intake answer: this board is the single owner of this work — do not open a competing board over the same files."
+      - "2026-09-26 intake answer: proof gate is deterministic time-frozen tests for every derived value, plus real adb/emulator/simulator evidence for native-only behavior, degrading to blocked-with-receipt when no device is reachable."
+      - "2026-09-26 intake answer: blast radius is full (TS/state layer, persistence and derivation layer incl. storage-schema migration, modules/, ios/, android/, functions/) but only inside a Judge-specced slice gated by tests plus an existing-saved-data-still-loads test."
+
+rules:
+  pm_owns_state: true
+  one_active_task: true
+  max_write_workers: 1
+  no_implementation_without_worker_or_pm_task: true
+  no_completion_without_judge_or_pm_audit: true
+  planning_is_not_completion: true
+  queued_required_worker_blocks_completion: true
+  continuous_until_full_outcome: true
+  missing_input_or_credentials_do_not_stop_goal: true
+  preserve_and_validate_existing_plan: true
+  intake_misfire_must_be_audited: true
+  goal_pressure_requires_oracle: true
+  no_completion_on_weak_proof: true
+  data_claims_require_frozen_time_test: true
+  native_claims_require_device_evidence: true
+  persistence_change_requires_backcompat_test: true
+  per_platform_verdict_required: true
+  single_board_owns_these_files: true
+  slice_policy:
+    max_consecutive_tiny_tasks: 2
+    prefer_vertical_slices: true
+    judge_picks_largest_safe_slice: true
+    worker_completes_whole_slice: true
+
+agents:
+  # installed | bundled_not_installed | missing | unknown
+  scout: installed # verified ~/.claude/agents/goal-scout.md + ~/.codex/agents/goal_scout.toml
+  worker: installed # verified ~/.claude/agents/goal-worker.md + ~/.codex/agents/goal_worker.toml
+  judge: installed # verified ~/.claude/agents/goal-judge.md + ~/.codex/agents/goal_judge.toml
+
+visual_board:
+  # none | local | unknown
+  selected: local
+  local:
+    status: live
+    url: "http://goalbuddy.localhost:41737/feature-audit-completion/"
+    command: "node ~/.claude/skills/goal-prep/surfaces/local-goal-board/scripts/local-goal-board.mjs --goal docs/goals/feature-audit-completion"
+
+active_task: T003
+
+tasks:
+  - id: T001
+    type: scout
+    assignee: Scout
+    status: done
+    reasoning_hint: default # default | low | medium | high | xhigh
+    objective: "Walk the entire codebase (app/, src/, store/, modules/, functions/, ios/, android/, design/, tests/) and produce the Phase-1 feature inventory: for every feature — intended behavior, screens/components/flows, interaction paths, UI states (empty/loading/error/success), animation/motion behavior, end-to-end wiring status (working/partially working/broken/stubbed/missing), and any placeholder/mock/TODO flags including ad surfaces."
+    inputs:
+      - app/
+      - src/
+      - store/
+      - modules/
+      - functions/
+      - ios/
+      - android/
+      - design/
+      - tests/
+      - docs/
+      - package.json
+    constraints:
+      - "Read-only. Do not edit implementation files."
+      - "Inventory BEFORE any code changes (user's Phase 1 gate)."
+      - "Prefer concrete file-path evidence per feature row over generic claims."
+      - "Explicitly locate every current/future ad surface."
+      - "Note overlap risk with existing goal docs/goals/android-setup-activation-recovery/."
+    expected_output:
+      - "Feature inventory table: name, files, intended behavior, UI presentation, interaction paths, states coverage, motion, wiring status"
+      - "Placeholder/mock/TODO/ad-surface flags"
+      - "Cross-platform parity observations (iOS vs Android)"
+      - "Candidate gap-analysis findings for Phase 2"
+      - "Candidate next tasks"
+    receipt:
+      result: done
+      note: notes/T001-feature-inventory.md
+      summary: "Walked app/, src/, store/, modules/, functions/, ios/, android/, design/, tests/, docs/. Whole UI lives in one 9,241-line freed-app.tsx state machine (17 screens) behind a minimal expo-router shell. Inventoried 58 features across 20 domains: 24 working (local), 22 partially working (production env/evidence gaps), 3 broken/dead paths, 4 stubbed (community intentionally fail-closed), 5 missing/dead. Exactly ONE ad surface exists (rewarded reset ad); no banners/interstitials/native ads. Ad-marker contract mismatch vs goal charter. Heavy overlap with android-setup-activation-recovery goal on ProtectionSetupScreen — flagged for coordination."
+      evidence:
+        - src/features/freed-app.tsx
+        - src/lib/monetization.ts
+        - app.config.js
+        - modules/freed-protection/
+        - functions/src/index.ts
+        - docs/completion-audit.md
+        - docs/release-blockers.md
+        - notes/T001-feature-inventory.md
+      spawned_tasks: []
+      ambiguities_for_judge:
+        - "Which backend (Vercel routes vs Firebase Functions) is canonical per environment for purchases/analytics/AI"
+        - "Whether react-native-purchases fallback must be kept or dropped given expo-iap is preferred"
+        - "Whether community features (intentionally fail-closed stub) count as 'existing features' needing completion"
+        - "How to sequence Phase-3 fixes on ProtectionSetupScreen without conflicting with the active android-setup-activation-recovery board"
+
+  - id: T002
+    type: scout
+    assignee: Scout
+    status: done
+    reasoning_hint: default
+    objective: "Map verification and tooling truth: exact typecheck/lint/test/build/run commands for iOS, Android, and web; which test runner exists and whether it supports fake/frozen clocks and timezone override (needed by D3); where persisted app state is read/written and whether any test harness can drive the store layer headlessly; emulator/simulator and adb availability on this machine; Firebase/Supabase local dev setup; design-system and animation conventions in design/; which checks are currently green/red."
+    inputs:
+      - package.json
+      - scripts/
+      - eas.json
+      - app.config.js
+      - tests/
+      - design/
+      - firebase.json
+      - android/
+      - ios/
+      - modules/
+    constraints:
+      - "Read-only. Do not edit implementation files."
+      - "Run only safe read-only checks (e.g. tsc --noEmit, lint, unit tests); no builds that mutate state or require credentials."
+      - "Record commands that were actually run and their results; do not assume."
+    expected_output:
+      - "Verified command list per platform with pass/fail status"
+      - "How to run the app on iOS/Android/web"
+      - "Design-system + motion conventions reference"
+      - "Known red checks and their meaning"
+      - "Frozen-clock and timezone-override test capability: runner, exact API, and an example command that actually ran"
+      - "Device reachability reality: adb devices output, emulator availability, xcrun simctl and xcodebuild availability"
+      - "Whether a headless harness can drive the persisted-store layer, and how"
+    receipt:
+      result: done
+      harness: claude-code
+      note: notes/T002-verification-tooling.md
+      summary: "Verification baseline is green and measured, not assumed: npm run typecheck exit=0; all 10 enumerated test suites PASS (test:core, test:firebase-foundation, test:firebase-functions, test:firebase-migration, test:firebase-config, test:firebase-repository, test:firebase-native, test:firebase-runtime, test:firebase-privacy, test:firebase-email-links); npm run audit:runtime-data 12 PASS 0 FAIL. There is no jest/vitest: suites are plain node:assert files run by esbuild via 'node -- scripts/run-ts-entry.js tests/X.test.ts', so frozen-time tests must pass time as an argument rather than mock timers - and recovery-state.ts already accepts 'day: Date | string = new Date()' on nearly every derivation, with TZ= env forwarded to the child node process, so midnight/DST/timezone tests are possible today with no new dependency. Gate gaps found: tests/app-shell.test.ts and tests/design-system.test.ts appear in zero package.json scripts (never gated) and there is no aggregate npm test. The existing audit:runtime-data 'integrity' assurance is source-text string matching (readFileSync + String.includes) and proves nothing about computed values. Device reachability: adb present with no device attached, one bootable AVD (PrimerAuditApi36), iOS 18.2 simulator runtimes installed but all Shutdown, Xcode 26.5 - so emulator/simulator evidence IS obtainable here and 'unproven' is not automatically admissible; only physical-device-only behavior is. Persistence is a single key-value/JSON surface (src/lib/recovery-storage.ts 62 lines + recovery-state.ts normalization), so D6 backcompat tests are written as 'pre-change serialized payload hydrates identically'. freed-app.tsx is now 11002 lines (grew from the 9241 T001 recorded), so Workers must stay single and tightly scoped."
+      evidence:
+        - docs/goals/feature-audit-completion/notes/T002-verification-tooling.md
+        - "src/lib/recovery-state.ts:1274"
+        - scripts/run-ts-entry.js
+        - scripts/runtime-data-integrity-audit.js
+        - src/lib/recovery-storage.ts
+        - tests/app-shell.test.ts
+        - tests/design-system.test.ts
+  - id: T005
+    type: scout
+    assignee: Scout
+    status: done
+    reasoning_hint: high
+    objective: "Build the per-value DATA-ACCURACY verdict table: for every user-visible derived value (current and best streak, day counters, success and slip counts, totals, usage minutes, timers and countdowns, reset and unlock allowances, level or tier, progress percentages, charted history, reminder and notification schedules, days-installed, last-active) trace the value to its single source of truth, its derivation code path with file and line, and its storage key plus serialized format; then evaluate each rule against midnight crossing, timezone change, DST transition, user clock moved backward, user clock moved forward, app kill, device reboot, reinstall and restore, and a second device on the same account; return a verdict per value of accurate, wrong-for-some-users with repro, or unproven."
+    inputs:
+      - "T001 note notes/T001-feature-inventory.md"
+      - "T002 receipt (test runner and frozen-clock capability)"
+      - src/
+      - app/
+      - store/
+      - tests/
+    constraints:
+      - "Read-only. Do not edit product files; scratch harnesses go in a temp dir, never in the goal root."
+      - "Never accept a rendered number as proof: verify persisted state and derivation separately."
+      - "Every defect claim needs an exact file and line plus input timestamps with expected versus actual output."
+      - "A value with no test coverage is unproven, never accurate."
+      - "Report every place the same value is derived more than once and whether the copies can disagree."
+      - "State which clock each value trusts: wall clock, monotonic uptime, or persisted anchor."
+    expected_output:
+      - "Per-value table: value, source of truth, derivation location, storage key and format, clock trust model, tested or untested, verdict, repro"
+      - "Duplicate or conflicting derivations of the same value"
+      - "Storage schema inventory with versioning and migration status"
+      - "Ranked accuracy defects, wrong-for-some-users first, with repro steps"
+      - "Candidate Worker slices"
+    receipt:
+      result: done
+      harness: claude-code
+      note: notes/T005-data-accuracy.md
+      summary: "Per-value accuracy table produced with executed frozen-time probes against the real modules (TZ matrix: America/New_York, Europe/London, Australia/Sydney vs Asia/Kolkata and UTC controls). ROOT CAUSE: three sites convert local wall-clock days using a fixed 86,400,000 ms day (recovery-state.ts:1283 Math.floor, recovery-analytics.ts:247 'dayMs += 86_400_000', recovery-analytics.ts:370), while the rest of the repo already uses calendar-correct setDate/date-key math. BROKEN rows, all measured not inferred: streakDays shows 99 instead of 100 in New York and London and 57 instead of 58 in Sydney across its own 2026-10-04 transition (Kolkata/UTC accurate, control 20-day case accurate); bestStreakDays latches the wrong value and touchRecoveryState:1970-1978 WRITES IT TO SAVED STATE on every open; XP 1584 vs 1600; level progress 0.6914 vs 0.7143; at a true 30-day milestone the app shows 29 with '1 day until the next streak celebration' so the celebration never fires on the earned day; the same word 'streak' renders two different numbers (getPledgeStreakDays 100 vs calculateStreakDaysFrom 99); the streak-history chart emits 6 unique labels for a 7-day range because dateKeysForRange duplicates the fall-back day (US 2026-11-01, Sydney 2026-10-04); and a backwards device clock zeroes the headline streak in every timezone, DST-independent. ACCURATE rows (executed): unlock grant length and active-window boundary across the 23-hour day, session duration seconds, foreground-minute rounding, attempts-on-short-day counts, weekly report totals over the transition, and dayDifference which survives because it rounds. Also found: the green audit:runtime-data 12/12 is source-string matching and never exercised any of this. Three probe rows initially reported WRONG due to my own fixture bugs (missing seconds arg, month-index error, non-blocking sample URLs) and were re-run and re-recorded as accurate, so the accurate rows are real passes. Spawned T008 to fix the class, freeze the harness permanently, and sweep the remaining value classes (urge-risk forecast window, retention anniversary/days-installed, accountability lastSeen, notification snooze, daily unlock allowance, membership receipt age) plus the two rows still code-path-only (daysSinceLastRelapse, 7-day check-in window)."
+      evidence:
+        - docs/goals/feature-audit-completion/notes/T005-data-accuracy.md
+        - "src/lib/recovery-state.ts:1274"
+        - "src/lib/recovery-state.ts:1970"
+        - "src/lib/recovery-analytics.ts:241"
+        - "src/lib/recovery-analytics.ts:469"
+        - "src/features/freed-app.tsx:4379"
+      spawned_tasks:
+        - T008
+  - id: T006
+    type: scout
+    assignee: Scout
+    status: done
+    reasoning_hint: high
+    objective: "Build the NATIVE-CAPABILITY requirement matrix and the per-platform verdict list: for every feature name the native capability it needs (Android usage-stats, private DNS, VPN or filter, overlay, notification listener, foreground service, exact alarms, boot receiver, battery optimization; iOS Device Activity and Screen Time, content blocker, shared extension, notifications and focus, local network, keychain, biometric, background modes), its minimum OS version, its grant flow, and its degradation path when denied or unavailable; then give every feature an Android verdict and an iOS verdict of working, broken, degraded, or unproven, and record what this machine can actually prove via adb, emulator, and simulator."
+    inputs:
+      - modules/
+      - android/
+      - ios/
+      - app.config.js
+      - app.json
+      - "AndroidManifest.xml, Info.plist and entitlements files"
+      - "T002 receipt (device reachability)"
+    constraints:
+      - "Read-only. Do not edit product files."
+      - "Prove each requirement against the manifest, plist, entitlement, or module source that declares it; cite paths."
+      - "Separate four states: code absent, code present but permission not granted, blocked by platform policy, unverified for lack of a device."
+      - "Run and record real output of adb devices, emulator -avd list, xcrun simctl list, xcodebuild -version where available."
+      - "Never infer iOS behavior from Android code or the reverse."
+    expected_output:
+      - "Capability matrix: feature, capability, OS floor, grant flow, denial degradation path, file evidence"
+      - "Per-platform verdict list: Android verdict and iOS verdict for every feature"
+      - "Device-reachability report: provable here versus not provable here"
+      - "Platform-policy-impossible list needing a product decision rather than a code fix"
+      - "Candidate blocked tasks each naming the exact missing requirement"
+    receipt:
+      result: done
+      note: notes/T006-native-capability-matrix.md
+      summary: "Built the native-capability matrix from the real declarations (both AndroidManifests, 2014 lines of Kotlin in modules/freed-protection/android, 1933 lines of FreedProtectionModule.swift, all five iOS extension Info.plist + entitlement pairs, pbxproj target list, android/build.gradle + app/build.gradle, and the TS bridge layer). Confirmed iOS enforcement is genuinely OS-level (FamilyControls + ManagedSettings store + DeviceActivityCenter schedules + shield-configuration/shield-action/Safari-content-blocker/Safari-web-extension/deviceactivity-monitor extensions, all four carrying com.apple.developer.family-controls, iOS 15.1 pin) and Android has a real usage-stats grant activity, accessibility-reactive Focus Shield, DNS-only VPN with specialUse FGS and boot receivers. Verdicts: 6 broken/degraded findings. G1 BROKEN: the Safari Focus Shield handoff Universal Link host intervention.freed.app is NXDOMAIN (curl 000, host NXDOMAIN, independent Google DNS Status 3 with freed.app SOA so the parent is registered) while ios-safari-focus-shield-contract.js and build-ios-release-archive.js REQUIRE it, and no Android autoVerify filter exists for that host - a blocked user has no route into the recovery challenge; control measurement freed-7d5ee.firebaseapp.com AASA returned 200 in the same minute. G2: no explicit OS floor anywhere (Android inherits rootProject.ext.minSdkVersion, app.json declares no deploymentTarget). G3: D7 unmet - 0 TODO(AD-SDK) markers in the whole repo despite the AdMob test-app-id fallback wiring being correct. G4: reminders use an inexact DAILY trigger with no SCHEDULE_EXACT_ALARM/USE_EXACT_ALARM declaration so Android 12+ reminders can drift. G5: Android blocking is accessibility-reactive semi-enforcement, not OS-level. G6: aps-environment is 'development' so push cannot work on TestFlight/App Store builds, and no .storekit config exists for the three hardcoded premium product ids. Recorded the device-availability receipt that makes the only admissible unproven verdict honest: no device attached, one API-36 AVD (PrimerAuditApi36) and iPhone 16 Pro sims available, Xcode 26.5 - so Android rows and iOS app-level rows are provable here, while Family Controls shield enforcement is simulator-impossible and needs an Apple-approved entitlement plus a physical device."
+      evidence:
+        - notes/T006-native-capability-matrix.md
+        - android/app/src/main/AndroidManifest.xml
+        - modules/freed-protection/android/src/main/AndroidManifest.xml
+        - modules/freed-protection/ios/FreedProtectionModule.swift
+        - ios/FREED/FREED.entitlements
+        - scripts/lib/ios-safari-focus-shield-contract.js
+        - src/lib/recovery-reminders.ts
+        - src/lib/purchase-verification.ts
+        - android/build.gradle
+    spawned_tasks:
+      - T009
+    ambiguities_for_judge:
+      - "G1 has two halves: the DNS/AASA publish is an owner action no repo file can fix, while the Android autoVerify filter for the same host is repo work. Should that in-repo half be its own Worker slice now, or wait until the host resolves?"
+      - "D7 marker contract: should TODO(AD-SDK) placement be enforced by a script gate (risking release-readiness churn) or audited per slice by the Judge?"
+      - "G2: is pinning expo.ios.deploymentTarget / android.minSdkVersion desirable, or is the pbxproj + Expo default an accepted single source that should only be documented?"
+
+
+  - id: T007
+    type: scout
+    assignee: Scout
+    status: done
+    reasoning_hint: high
+    objective: "Walk the app AS A USER on the most reachable runtime and record observed behavior for every feature and flow: cold start, onboarding, paywall, activation and permission setup, the daily main loop, day rollover and streak behavior under a simulated clock change, reset and unlock paths, settings, notifications and reminders, offline, backgrounding and resume, and each surface's empty, loading, error, and success states; for each record what the user sees, what number they see, what that number should have been, and whether the flow dead-ends, loops, silently no-ops, or loses state, calling out Android-only and iOS-only divergences."
+    inputs:
+      - "T001 note (feature inventory)"
+      - "T002 receipt (how to run the app, which harness exists)"
+      - "T005 receipt (per-value expectations to check against)"
+      - "T006 receipt (per-platform verdicts to confirm or refute)"
+    constraints:
+      - "Do not edit product files; observation and instrumentation output only."
+      - "Prefer observed evidence over inference: record the command run and its actual output per claim."
+      - "Simulate day rollover and clock change where the harness allows; record before and after values."
+      - "No explicit adult content in evidence: sanitized host-level proof only."
+      - "If a runtime is unreachable, record exactly what blocked it instead of substituting a guess."
+    expected_output:
+      - "User-end behavior log per feature: screen, action, observed result, expected result"
+      - "Observed-vs-expected value table cross-checked against T005"
+      - "Dead-end, loop, silent no-op, and state-loss findings ranked by user harm"
+      - "Android versus iOS observed divergences"
+      - "Candidate Worker slices with the file each fix belongs in"
+    receipt:
+      result: done
+      harness: cdp-headless-chrome
+      note: notes/T007-user-end-behavior.md
+      summary: "Walked the app AS A USER on the exported web bundle driven under headless Chrome over CDP (real pointer events on measured rects, real screenshots, the app's own persistence, Emulation.setTimezoneOverride for clock-zone work) because the Android emulator cannot boot here (HVF error: HV_DENIED) and the iOS simulator build is red (error: The file RCTAppDependencyProvider.h couldn't be opened; ios/build/generated/ios empty; ios/Pods gitignored -> needs pod install, a write the Scout contract forbids). Screens captured verbatim: splash, welcome value props, assessment, app selection, paywall, protection setup, Today, Shield, plus pledge/habit interaction. HEADLINE U5 (user-end proof of the T005 class, before/after values recorded): with ONE stored state written by the app itself - pledgeKeys ['2026-09-27'] under Asia/Kolkata renders 'Today's pledge is locked in / 1-day pledge streak' and Habits 1/6 - switching only the device timezone to America/New_York or Pacific/Midway (localToday 2026-09-26) renders the pledge card GONE (back to 'Take Today's Pledge') and Habits 0/6, while the ADULT-CONTENT FREE timer keeps counting (0h47m -> 1h01m). So a user who pledges then travels west loses the locked-in pledge and can pledge twice for the same UTC day; eastward the stored dateKey sits permanently ahead of getPledgeStreakDays' backwards cursor (recovery-state.ts:2223-2236 over getLocalDateKey:1197-1204) and that pledge is orphaned forever. U6: header/summary 'Day Streak 0' coexists with the card's '1-day pledge streak' and the stored streakDays stayed 0 through a completed habit, a locked-in pledge and three timezone changes. Claim-safety findings: U1 'CLINICALLY BACKED RECOVERY' + '100% Private & On-Device - Your browsing activity never leaves your phone'; U2 paywall social proof '4.8/5 . 14,000+ Streaks Protected' and testimonial '— Marcus K. · Clean 142 Days' plus 'On-Device DNS Firewall: Basic vs Military-Grade'; U3 Shield tab promises 'keeps intervention challenges ad-free' while the APK bakes AdMob app id falling back to Google's public test id ca-app-pub-3940256099942544~3347511713 and ext.freedGoogleMobileAdsUsesLocalTestAppId (android/build.gradle:23) is read by nothing; U4 setup copy says 'monitor only selected apps and sites' / 'avoids continuous screen capture, OCR, packet inspection, and full-traffic proxying' while res/xml/freed_accessibility_service.xml ships canRetrieveWindowContent=true, notificationTimeout=250, accessibilityEventTypes=0x00401830 and NO packageNames filter at all. Artifact-level corrections to T006: G2 closed by measurement (merged manifest minSdkVersion=24, targetSdkVersion=36; android/build.gradle declares no minSdkVersion - it is an Expo autolinking default); G5 amended (enforcement ships as TWO mechanisms: FreedAccessibilityService AND FreedVpnService with foregroundServiceType=specialUse and PROPERTY_SPECIAL_USE_FGS_SUBTYPE 'User-enabled DNS-only VPN fallback...', plus FreedVpnAutostartReceiver - so the DNS promise has a real path); G4 corroborated (no SCHEDULE_EXACT_ALARM/USE_EXACT_ALARM though the paywall promises a Day-5 reminder) and new: no SYSTEM_ALERT_WINDOW anywhere while the intercept UI is an Activity (FreedInterventionActivity), so background-raised interventions depend on Android 10+ background-activity-start rules with only USE_FULL_SCREEN_INTENT. Cost/shape facts: BUILD SUCCESSFUL in 43m 53s, app-debug.apk 283,875,785 B across 4 ABIs. Method-blocked, not scored either way: offline UI (CDP offline emulation also kills loopback -> Chrome ERR_INTERNET_DISCONNECTED, app never rendered) and forged-state seeding (writing localStorage directly is overwritten by the app's expo-sqlite/localStorage backend, so all clock tests went through the app's own UI writes)."
+      evidence:
+        - notes/T007-user-end-behavior.md
+        - notes/artifacts/t007/t007-drive.mjs
+        - notes/artifacts/t007/t007-cmp-Asia_Kolkata.log
+        - notes/artifacts/t007/t007-cmp-America_New_York.log
+        - notes/artifacts/t007/t007-cmp-Pacific_Midway.log
+        - notes/artifacts/t007/t007-manifest.txt
+        - notes/artifacts/t007/t007-apk-badging.txt
+        - notes/artifacts/t007/t007-ios-build-failure.txt
+        - notes/artifacts/t007/click-1-Take-Today-s-Pledge.png
+        - notes/artifacts/t007/click-4-Shield.png
+    spawned_tasks:
+      - T008
+    ambiguities_for_judge:
+      - "U5/U6 are one defect class in two files (recovery-state.ts date-key/streak derivation, freed-app.tsx header rendering). Should the Judge fold U6 (two streak numbers on one screen) into the existing T008 DST slice, or is 'which streak is THE streak' a product decision that must be answered before code?"
+      - "U4 is a copy-versus-manifest contradiction (accessibility config reads every app's window content; in-app copy promises selected apps only). Fixing it honestly means either narrowing the accessibility config with packageNames or rewriting the privacy copy and the Play data-safety form - which is a product decision, not a Worker slice. Which does the Judge own?"
+      - "U3 is two lines of code (consume freedGoogleMobileAdsUsesLocalTestAppId in a preflight) but it collides with T006's D7 marker contract question (TODO(AD-SDK) placement). Same slice or separate?"
+      - "U10: the iOS simulator build needs 'pod install' in ios/, which no read-only Scout may run. Should the PM queue a write-enabled plumbing slice for it, since without it no iOS user-end evidence can ever be recorded on this machine?"
+      - "Method limits worth recording in the criteria: offline UI and native enforcement cannot be scored from this machine at all (U6 of T002's harness reality, U12 here), so any '100% functional' claim for those rows must wait for a device."
+
+
+
+  - id: T003
+    type: judge
+    assignee: Judge
+    status: active
+    reasoning_hint: high
+    objective: "Validate the Phase-1 inventory for completeness, then operationalize '100% functional and accurate' as per-feature acceptance criteria covering UI states, motion, native-capability requirements, per-platform verdicts, and per-value data accuracy; classify every feature and every derived value, rank all defects by user harm, and spec the first bounded Worker slice with allowed_files, verify, and stop_if."
+    inputs:
+      - "T001 receipt/note"
+      - "T002 receipt"
+      - "T005 receipt (per-value data-accuracy verdict table)"
+      - "T006 receipt (native-capability matrix and per-platform verdicts)"
+      - "T007 receipt (observed user-end behavior)"
+      - "docs/goals/feature-audit-completion/goal.md"
+    constraints:
+      - "Do not implement."
+      - "Reject vague criteria; every feature and every derived value needs testable acceptance criteria."
+      - "Respect the no-real-ads constraint in all slice specs."
+      - "Any slice that touches persistence or a storage key must include a saved-data backcompat test in verify."
+      - "Any fix needing device-only proof must be specced as blocked-with-receipt when no device is reachable, not as verified."
+      - "Do not schedule slices that collide with docs/goals/android-setup-activation-recovery files without recording the coordination."
+      - "Pick the largest safe useful first slice, preferring wrong-data defects that affect every user."
+    expected_output:
+      - "Validated inventory + status classifications including Android and iOS verdicts"
+      - "Per-feature and per-value acceptance criteria"
+      - "Ranked fix order across oracle dimensions D1 to D7"
+      - "Decision + exact Worker objective + allowed_files + verify + stop_if"
+      - "Blocked or deferred tasks with the exact missing requirement"
+    receipt: null
+
+  - id: T004
+    type: worker
+    assignee: Worker
+    status: queued
+    reasoning_hint: default
+    objective: "Execute the first fix slice selected by Judge (concretized after T003): make the targeted features fully functional with complete UI states and design-system-consistent motion, and make the targeted derived values provably correct by adding or repairing deterministic frozen-time tests; prove that previously saved data still loads unchanged when persistence is touched; use test/mock ad units with TODO(AD-SDK) markers wherever an ad surface is touched."
+    allowed_files: [] # filled by Judge decision in T003
+    verify: [] # filled by Judge decision from T002's verified command list; must include the frozen-time test suite when the slice touches any derived value
+    stop_if:
+      - "Need files outside allowed_files."
+      - "Behavior is ambiguous or requires inventing a net-new feature."
+      - "Real ad SDK integration would be required instead of mocks."
+      - "The fix would require migrating persisted data without a test proving a pre-change payload still loads with unchanged values."
+      - "Verification would require a physical device or booted simulator that is not reachable; record blocked with the missing requirement instead of claiming success."
+      - "A fix on one platform regresses the other platform."
+      - "Verification fails twice."
+    receipt: null
+
+  - id: T999
+    type: judge
+    assignee: Judge
+    status: queued
+    reasoning_hint: high
+    objective: "Final audit: verify every inventory row is working (or blocked-with-receipt), verification is green on both platforms, every user-visible derived value is provably accurate or fixed, every native capability has a declared requirement with a degradation path and an Android and iOS verdict, persisted-data backcompat tests are green, test-ad markers are present, the deliverables exist, and the original outcome is met. PM queues successive Worker slices between T004 and this audit until it can pass."
+    inputs:
+      - "All done task receipts"
+      - "Last verification"
+      - "Current dirty diff"
+      - "Feature inventory checklist deliverable"
+      - "Per-value data-accuracy verdict table (T005 lineage plus fix receipts)"
+      - "Native-capability matrix and per-platform verdict list (T006 lineage plus fix receipts)"
+      - "Observed user-end behavior log (T007 lineage)"
+    constraints:
+      - "Do not implement."
+      - "Reject completion if required Worker work is still queued or active."
+      - "Reject completion if any inventory row lacks state/motion evidence."
+      - "Reject completion if any derived user-facing value is still unproven or wrong-for-some-users."
+      - "Reject completion if any feature lacks an explicit Android and iOS verdict, or if an unproven verdict lacks a device-availability receipt."
+      - "Reject completion if a persistence change shipped without a pre-change-payload-loads test."
+      - "Reject completion if any ad surface lacks a test/mock unit + TODO(AD-SDK) marker."
+      - "Reject completion if the only evidence is planning, discovery, or Scout maps with no implementation receipts."
+      - "Reject stopping only because a slice needs owner input, credentials, production access, destructive operations, or policy decisions."
+    expected_output:
+      - "complete | not_complete"
+      - "full_outcome_complete: true | false"
+      - "missing evidence"
+      - "next task if not complete"
+    receipt: null
+
+  - id: T008
+    type: worker
+    assignee: Worker
+    status: done
+    reasoning_hint: high
+    inputs:
+      - "T005 receipt (broken rows with measured expected-vs-actual per timezone)"
+      - "notes/T005-data-accuracy.md"
+      - "T007 receipt U5/U6 (user-end reproduction: notes/T007-user-end-behavior.md sections 4-5)"
+    objective: "Fix the proven calendar-day/DST defect class in recovery time math and freeze the proof permanently: make all streak and day-range math calendar-correct, stop a backwards device clock from zeroing a persisted streak, add a permanent frozen-time suite (new tests file wired to a new test:* script, executed under at least TZ=America/New_York and TZ=Asia/Kolkata) covering the T005 broken rows plus the not-yet-executed backlog rows (daysSinceLastRelapse, 7-day check-in window), and prove with a saved-data test that a payload serialized before the change still hydrates with unchanged user progress."
+    allowed_files:
+      - src/lib/recovery-state.ts
+      - src/lib/recovery-analytics.ts
+      - tests/recovery-time.test.ts
+      - package.json
+    verify:
+      - npm run typecheck
+      - TZ=America/New_York node -- scripts/run-ts-entry.js tests/recovery-time.test.ts
+      - TZ=Asia/Kolkata node -- scripts/run-ts-entry.js tests/recovery-time.test.ts
+      - TZ=Australia/Sydney node -- scripts/run-ts-entry.js tests/recovery-time.test.ts
+      - npm run test:core
+      - npm run audit:runtime-data
+    stop_if:
+      - "Need files outside allowed_files (in particular do not touch src/features/freed-app.tsx display code in this slice)."
+      - "A new test or runtime dependency would be required; frozen-time tests must use node:assert and the existing run-ts-entry runner."
+      - "The fix would change ANALYTICS_SCHEMA_VERSION or remote payload shape without a Judge decision."
+      - "A pre-change persisted payload does not hydrate with unchanged values, or no backcompat test can be written for it."
+      - "Verification fails twice."
+    receipt:
+      result: done
+      harness: node-assert-frozen-time
+      note: notes/T008-streak-dst-fix.md
+      summary: "Fixed the proven calendar-day/DST defect class at its three root sites and froze the proof permanently. New shared helpers localDateKeyToUtcMs/localDateKeyDiffDays (recovery-state.ts:1206-1232) parse a YYYY-MM-DD key, REJECT impossible keys like 2026-13-45 and 2026-02-30 instead of letting Date.UTC silently roll them forward, and diff days with UTC arithmetic, which has no DST. calculateStreakDaysFrom no longer divides local-midnight milliseconds by a fixed 86,400,000 (that floor is what showed 99 instead of 100 for a real 100-day streak in NY/London/Sydney and then PERSISTED the bad number); it now returns localDateKeyDiffDays clamped at 0. touchRecoveryState gained the clock-rollback guard: when openedAt < lastOpenedAt it clamps to max(stored, derived), never moves the lastOpenedAt watermark backwards, and still writes the corrected value so a legacy bad streak self-heals upward instead of being re-zeroed. recovery-analytics.ts dateKeysForRange now steps with setDate(+1) and compares date keys instead of dayMs += 86_400_000 (which duplicated 2026-11-01 and dropped the 7th day), dayDifference delegates to the shared helper, and daysSinceLastRelapse uses calendar keys clamped at 0. After this slice no floor- or fixed-step day math remains anywhere in src/: the only surviving 86_400_000 division is recovery-analytics-ingestion.ts:781 which already uses DST-tolerant Math.round, and the six T005 not-yet-examined files contain zero per-day ms constants. New permanent suite tests/recovery-time.test.ts (228 lines, node:assert, existing run-ts-entry runner, wired as test:recovery-time) pins: helper diff 100/-100/1/1 and 0 for malformed keys; streak 2026-01-01 09:00 -> 2026-04-11 09:00 = 100 cross-checked against an independent Date.UTC-components oracle; Sydney 2026-09-05 -> 2026-10-05 = 30; the transition day itself = 1 on both the 23- and 25-hour day; the U6 agreement pledgeStreak(31) - 1 === recoveryStreak(30); the U5 rollback clamp 30/34 held with lastOpenedAt unchanged then still counting forward to 40; a legacy payload with the pre-fix streakDays: 99 hydrating unchanged (check-in record intact) and healing to 101 on next open with XP rising by exactly 12*2+4*2; the two T005 backlog rows (7-day analytics window yields 7 unique buckets 2026-10-29..2026-11-04 with the reset on index 3, daysSinceLastRelapse 3, currentStreakDays 307; Sydney 2026-10-01..2026-10-07; summarizeCheckIns total stays 7); milestone 30 fires and 29 targets 30. Negative control proves the guard bites: reverting the helper to the old fixed-ms formula makes the suite fail with 99 !== 100 under TZ=America/New_York and -101 !== -100 under TZ=Australia/Sydney, exactly T005's predicted rows; the suite then passed again. Allowed-files compliance: only the four permitted files were written, freed-app.tsx display code untouched, no ANALYTICS_SCHEMA_VERSION or payload-shape change, no new dependency."
+      verification:
+        result: pass
+        commands:
+          - "npm run typecheck -> exit=0 fail_lines=0"
+          - "TZ=America/New_York npm run test:recovery-time -> exit=0"
+          - "TZ=Europe/London npm run test:recovery-time -> exit=0 (beyond the required pair)"
+          - "TZ=Australia/Sydney npm run test:recovery-time -> exit=0"
+          - "TZ=UTC npm run test:recovery-time -> exit=0"
+          - "TZ=Asia/Kolkata npm run test:recovery-time -> exit=0"
+          - "npm run test:core -> exit=0 fail_lines=0"
+          - "npm run audit:runtime-data -> exit=0 fail_lines=0"
+      evidence:
+        - notes/T008-streak-dst-fix.md
+        - notes/artifacts/t008/t008-verification.log
+        - notes/artifacts/t008/t008-negative-control.log
+        - notes/artifacts/t008/t008-test-suite.txt
+        - notes/artifacts/t008/t008-code-after.txt
+      out_of_scope:
+        - "freed-app.tsx display of the second streak number (stop_if forbade touching it); its input is now correct so the U6 numeric disagreement is gone, but which streak is THE streak is a Judge/product decision."
+        - "Pledge local-day semantics (hasPledgedOnDate keys on the local date, so travel west still re-offers today's pledge); now internally consistent with streak math, semantics choice is a product decision."
+        - "No user-end re-drive of the fixed build in this slice; that is the next verification step and needs a fresh web export."
+      scout_notes_for_judge:
+        - "hydrateRecoveryState silently DROPS a dailyCheckIns record whose mood is outside low|steady|energized|stressed (measured: 1 record in, 0 out). Not a live defect, but any enum widening will delete stored history instead of defaulting it; relevant to the schema-migration slice."
+
+
+  - id: T009
+    type: worker
+    assignee: Worker
+    status: queued
+    reasoning_hint: default
+    depends_on:
+      - T008
+    objective: "Close oracle dimension D7 on the one ad surface that exists: make the test/mock ad configuration explicit and findable, by placing a `TODO(AD-SDK)` release-swap marker at the rewarded-ad call site and beside every ad unit id / app id resolution path, each naming the Google sample test id currently in use and the exact env var that must change for production, and add one deterministic check that fails if a rewarded ad can be reached with a non-test unit id when EXPO_PUBLIC_ADMOB_USE_TEST_ADS is not explicitly true."
+    allowed_files:
+      - src/lib/monetization.ts
+      - src/features/freed-app.tsx
+    constraints:
+      - "Confine freed-app.tsx edits to the RewardedAdScreen region (from line 8612 `type RewardedAdPhase`) plus at most its import block; do not touch streak, analytics, or reset derivation code, and do not touch any other screen."
+      - "Never introduce a real production ad unit id or app id; the Google sample id ca-app-pub-3940256099942544~3347511713 and its companion test units are the only acceptable values."
+      - "No new dependencies and no ad SDK initialization changes: react-native-google-mobile-ads stays as configured, and the Android manifest placeholder fallback in android/build.gradle:13-21 stays intact."
+      - "Markers must be plain comments so no runtime behavior changes; any behavioral change must be limited to failing closed when test mode is not proven."
+    verify:
+      - npm run typecheck
+      - grep -rn "TODO(AD-SDK)" src/lib/monetization.ts src/features/freed-app.tsx
+      - npm run test:core
+      - npm run audit:runtime-data
+    stop_if:
+      - "The rewarded-ad surface turns out to live in a file outside allowed_files."
+      - "A behavioral change is required beyond failing closed on unproven test mode."
+      - "A new dependency or an AdMob SDK initialization change is needed."
+      - "Verification fails twice."
+    receipt: null
+
+
+checks:
+  dirty_fingerprint: unknown
+  last_verification:
+    result: pass
+    task: T008
+    commands:
+      - npm run typecheck
+      - npm run test:recovery-time  # run under TZ=America/New_York, Europe/London, Australia/Sydney, UTC, Asia/Kolkata
+      - npm run test:core
+      - npm run audit:runtime-data

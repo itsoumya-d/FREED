@@ -1,6 +1,7 @@
 package app.freed.protection
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
@@ -15,8 +16,17 @@ import android.view.Window
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.ScrollView
 
 class FreedUsageAccessConfigActivity : Activity() {
+  private var companion: FreedNativeCompanion? = null
+  override fun attachBaseContext(base: Context) {
+    super.attachBaseContext(FreedNativeCopy.localizedContext(base))
+  }
+
+  override fun onResume() { super.onResume(); companion?.startMotion() }
+  override fun onPause() { companion?.stopMotion(); super.onPause() }
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -30,7 +40,7 @@ class FreedUsageAccessConfigActivity : Activity() {
       setPadding(dp(24), dp(32), dp(24), dp(32))
       background = GradientDrawable(
         GradientDrawable.Orientation.TOP_BOTTOM,
-        intArrayOf(Color.parseColor("#071613"), Color.parseColor("#10251F"))
+        intArrayOf(FreedNativeCopy.color(this@FreedUsageAccessConfigActivity, "#FAFAFB", "#101319"), FreedNativeCopy.color(this@FreedUsageAccessConfigActivity, "#FAFAFB", "#101319"))
       )
     }
 
@@ -38,20 +48,20 @@ class FreedUsageAccessConfigActivity : Activity() {
       orientation = LinearLayout.VERTICAL
       gravity = Gravity.CENTER_HORIZONTAL
       setPadding(dp(24), dp(24), dp(24), dp(22))
-      background = rounded(Color.parseColor("#F8F1E5"), dp(18).toFloat())
+      background = rounded(FreedNativeCopy.color(this@FreedUsageAccessConfigActivity, "#FFFFFF", "#1D222B"), dp(18).toFloat())
     }
 
     val eyebrow = TextView(this).apply {
-      text = "FREED USAGE ACCESS"
-      setTextColor(Color.parseColor("#53766C"))
+      text = FreedNativeCopy.text(this@FreedUsageAccessConfigActivity, R.string.freed_usage_eyebrow)
+      setTextColor(FreedNativeCopy.color(this@FreedUsageAccessConfigActivity, "#626977", "#B8C0D0"))
       textSize = 12f
       typeface = Typeface.DEFAULT_BOLD
       gravity = Gravity.CENTER
     }
 
     val title = TextView(this).apply {
-      text = "Usage Access stays limited to app timers."
-      setTextColor(Color.parseColor("#10251F"))
+      text = FreedNativeCopy.text(this@FreedUsageAccessConfigActivity, R.string.freed_usage_title)
+      setTextColor(FreedNativeCopy.color(this@FreedUsageAccessConfigActivity, "#141827", "#F5F6FA"))
       textSize = 24f
       typeface = Typeface.DEFAULT_BOLD
       gravity = Gravity.CENTER
@@ -59,42 +69,44 @@ class FreedUsageAccessConfigActivity : Activity() {
     }
 
     val subtitle = TextView(this).apply {
-      text = getString(R.string.freed_usage_access_reason)
-      setTextColor(Color.parseColor("#36534B"))
-      textSize = 16f
+      text = FreedNativeCopy.text(this@FreedUsageAccessConfigActivity, R.string.freed_usage_access_reason)
+      setTextColor(FreedNativeCopy.color(this@FreedUsageAccessConfigActivity, "#626977", "#B8C0D0"))
+      textSize = 17f
       gravity = Gravity.CENTER
       setLineSpacing(dp(2).toFloat(), 1f)
     }
 
     val note = TextView(this).apply {
-      text = "Usage Access is controlled by Android Settings. After enabling FREED, return to setup so the activation test can verify protection."
-      setTextColor(Color.parseColor("#53766C"))
+      text = FreedNativeCopy.text(this@FreedUsageAccessConfigActivity, R.string.freed_usage_note)
+      setTextColor(FreedNativeCopy.color(this@FreedUsageAccessConfigActivity, "#626977", "#B8C0D0"))
       textSize = 14f
       gravity = Gravity.CENTER
       setLineSpacing(dp(2).toFloat(), 1f)
     }
 
     val button = Button(this).apply {
-      text = "Return to FREED setup"
-      setTextColor(Color.parseColor("#071613"))
-      textSize = 16f
+      text = FreedNativeCopy.text(this@FreedUsageAccessConfigActivity, R.string.freed_usage_return)
+      setTextColor(FreedNativeCopy.color(this@FreedUsageAccessConfigActivity, "#FFFFFF", "#141827"))
+      textSize = 17f
       typeface = Typeface.DEFAULT_BOLD
-      background = rounded(Color.parseColor("#8FE3C8"), dp(18).toFloat())
+      background = rounded(FreedNativeCopy.color(this@FreedUsageAccessConfigActivity, "#414ACE", "#A1ADFF"), dp(18).toFloat())
       minHeight = dp(52)
       setOnClickListener { openFreedSetup() }
     }
 
     val backButton = Button(this).apply {
-      text = "Back to Android Settings"
-      setTextColor(Color.parseColor("#36534B"))
+      text = FreedNativeCopy.text(this@FreedUsageAccessConfigActivity, R.string.freed_usage_back)
+      setTextColor(FreedNativeCopy.color(this@FreedUsageAccessConfigActivity, "#626977", "#B8C0D0"))
       textSize = 15f
       background = rounded(Color.TRANSPARENT, dp(18).toFloat()).apply {
-        setStroke(dp(1), Color.parseColor("#53766C"))
+        setStroke(dp(1), FreedNativeCopy.color(this@FreedUsageAccessConfigActivity, "#626977", "#B8C0D0"))
       }
       minHeight = dp(48)
       setOnClickListener { finishCleanly() }
     }
 
+    val buddy = FreedNativeCompanion(this).also { companion = it }
+    card.addView(buddy, LinearLayout.LayoutParams(dp(104), dp(104)).apply { bottomMargin = dp(16) })
     card.addView(eyebrow, layoutParams(match = true, top = 0))
     card.addView(title, layoutParams(match = true, top = dp(14)))
     card.addView(subtitle, layoutParams(match = true, top = dp(14)))
@@ -107,7 +119,11 @@ class FreedUsageAccessConfigActivity : Activity() {
       ViewGroup.LayoutParams.WRAP_CONTENT
     ))
 
-    return root
+    return ScrollView(this).apply {
+      isFillViewport = true
+      clipToPadding = false
+      addView(root, android.widget.FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+    }
   }
 
   private fun openFreedSetup() {

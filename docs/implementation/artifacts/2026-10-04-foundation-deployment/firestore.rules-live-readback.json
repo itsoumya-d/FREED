@@ -1,0 +1,18 @@
+{
+  "release": {
+    "name": "projects/freed-7d5ee/releases/cloud.firestore",
+    "rulesetName": "projects/freed-7d5ee/rulesets/73cd3247-69da-46dc-b9a4-150f989b0276",
+    "createTime": "2026-08-26T04:14:26.381178Z",
+    "updateTime": "2026-10-04T09:24:57.344265Z"
+  },
+  "sha256": "92f8beb7f5a047aed24957c0e2a2ca6d79cb0d28800bc177421b606bb6ee1d23",
+  "matchesVerifiedLocalSource": true,
+  "source": {
+    "files": [
+      {
+        "content": "rules_version = '2';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    // Recovery data is local-only. Deployed Admin SDK code bypasses these rules.\n    match /{document=**} {\n      allow read, write: if false;\n    }\n  }\n}\n",
+        "name": "firestore.rules"
+      }
+    ]
+  }
+}

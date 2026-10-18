@@ -5,6 +5,7 @@ import { createHash } from "node:crypto";
 export const BACKUP_MAX_BYTES = 100 * 1024 * 1024;
 export const SIGNED_URL_TTL_MS = 10 * 60 * 1000;
 export const ACCOUNT_DELETION_COOLDOWN_MS = 2 * 60 * 60 * 1000;
+const ACCOUNT_DELETION_RECENT_AUTH_MS = 5 * 60 * 1000;
 export const USER_LINKED_RECORD_SCOPES = [
   "backup_metadata",
   "push_tokens",
@@ -15,12 +16,27 @@ export const USER_LINKED_RECORD_SCOPES = [
   "leases",
   "idempotency",
   "purchase_claims",
-  "purchase_audits"
+  "purchase_audits",
+  "purchase_account_fences",
+  "aggregate_analytics"
 ] as const;
 
 const PATH_SEGMENT = /^[A-Za-z0-9_-]{1,200}$/;
 const SHA256 = /^[a-f0-9]{64}$/;
 const GENERATION = /^\d+$/;
+
+/** Permanent identities must reauthenticate; guest deletion keeps its existing policy. */
+export function assertRecentAccountDeletionAuthentication(
+  input: { signInProvider?: unknown; authTime?: unknown },
+  now: number
+): void {
+  if (input.signInProvider === "anonymous") return;
+  const authTime = input.authTime;
+  if (typeof authTime !== "number" || !Number.isFinite(authTime) || authTime < 0 ||
+    authTime * 1000 > now || now - authTime * 1000 > ACCOUNT_DELETION_RECENT_AUTH_MS) {
+    throw new Error("Sign in again before deleting this account.");
+  }
+}
 
 export type BackupGenerationState = {
   expectedBytes: number;

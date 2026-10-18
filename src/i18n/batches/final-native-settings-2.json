@@ -1,0 +1,270 @@
+{
+  "entries": [
+    {
+      "source": "Opened an Android settings fallback. Go to Accessibility > downloaded or installed services > FREED Protection, enable it, then return to FREED.",
+      "translations": {
+        "hi": "Android की वैकल्पिक सेटिंग्स खुलीं। सुलभता > डाउनलोड या इंस्टॉल सेवाएँ > FREED Protection में इसे चालू करें, फिर FREED में लौटें।",
+        "es": "Se abrió una alternativa de ajustes de Android. Ve a Accesibilidad > Servicios descargados o instalados > FREED Protection, actívalo y vuelve a FREED.",
+        "pt": "Uma alternativa dos ajustes do Android foi aberta. Vá a Acessibilidade > Serviços baixados ou instalados > FREED Protection, ative e volte ao FREED.",
+        "fr": "Un écran de paramètres Android de secours est ouvert. Allez dans Accessibilité > Services téléchargés ou installés > FREED Protection, activez-le, puis revenez dans FREED.",
+        "de": "Ein alternativer Android-Einstellungsbildschirm ist geöffnet. Gehe zu Bedienungshilfen > Heruntergeladene oder installierte Dienste > FREED Protection, aktiviere den Dienst und kehre zu FREED zurück.",
+        "ar": "فُتحت شاشة إعدادات Android بديلة. انتقل إلى إمكانية الوصول > الخدمات المنزّلة أو المثبّتة > FREED Protection، وفعّله، ثم عُد إلى FREED.",
+        "ja": "Android の代替設定画面を開きました。ユーザー補助 > ダウンロードまたはインストール済みサービス > FREED Protection を有効にしてから FREED に戻ってください。",
+        "zh-Hans": "已打开 Android 备用设置页面。请前往无障碍 > 已下载或已安装的服务 > FREED Protection，将其启用，然后返回 FREED。",
+        "ko": "Android 설정 대체를 열었습니다. 접근성 > 다운로드 또는 설치된 서비스 > FREED Protection로 이동하여 활성화한 다음 FREED로 돌아갑니다."
+      }
+    },
+    {
+      "source": "Opened an Android settings fallback. Review Network & internet > Private DNS, then return to FREED and verify DNS Guard.",
+      "translations": {
+        "hi": "Android की वैकल्पिक सेटिंग्स खुलीं। नेटवर्क और इंटरनेट > निजी DNS जाँचें, फिर FREED में लौटकर DNS Guard सत्यापित करें।",
+        "es": "Se abrió una alternativa de ajustes de Android. Revisa Red e Internet > DNS privado, vuelve a FREED y verifica DNS Guard.",
+        "pt": "Uma alternativa dos ajustes do Android foi aberta. Revise Rede e internet > DNS privado, volte ao FREED e verifique DNS Guard.",
+        "fr": "Un écran de paramètres Android de secours est ouvert. Vérifiez Réseau et Internet > DNS privé, puis revenez dans FREED pour vérifier DNS Guard.",
+        "de": "Ein alternativer Android-Einstellungsbildschirm ist geöffnet. Prüfe Netzwerk und Internet > Privates DNS, kehre zu FREED zurück und prüfe DNS Guard.",
+        "ar": "فُتحت شاشة إعدادات Android بديلة. راجع الشبكة والإنترنت > DNS الخاص، ثم عُد إلى FREED وتحقق من DNS Guard.",
+        "ja": "Android の代替設定画面を開きました。ネットワークとインターネット > プライベート DNS を確認してから FREED に戻り、DNS Guard を検証してください。",
+        "zh-Hans": "已打开 Android 备用设置页面。请检查网络和互联网 > 私人 DNS，然后返回 FREED 验证 DNS Guard。",
+        "ko": "Android 설정 대체를 열었습니다. 네트워크 및 인터넷 > 비공개 DNS를 검토한 다음 FREED로 돌아가 DNS Guard를 확인합니다."
+      }
+    },
+    {
+      "source": "Opened Android Accessibility settings. Choose FREED Protection under downloaded or installed services, enable it, approve Android's request, then return to FREED.",
+      "translations": {
+        "hi": "Android सुलभता सेटिंग्स खुलीं। डाउनलोड या इंस्टॉल सेवाओं में FREED Protection चुनें, चालू करें, Android का अनुरोध स्वीकार करें, फिर FREED में लौटें।",
+        "es": "Se abrieron los ajustes de Accesibilidad de Android. Elige FREED Protection en servicios descargados o instalados, actívalo, acepta la solicitud de Android y vuelve a FREED.",
+        "pt": "Os ajustes de Acessibilidade do Android foram abertos. Escolha FREED Protection nos serviços baixados ou instalados, ative, aprove a solicitação do Android e volte ao FREED.",
+        "fr": "Les paramètres d’accessibilité Android sont ouverts. Choisissez FREED Protection dans les services téléchargés ou installés, activez-le, acceptez la demande Android, puis revenez dans FREED.",
+        "de": "Die Android-Bedienungshilfen sind geöffnet. Wähle FREED Protection unter heruntergeladenen oder installierten Diensten, aktiviere es, bestätige die Android-Anfrage und kehre zu FREED zurück.",
+        "ar": "فُتحت إعدادات إمكانية الوصول في Android. اختر FREED Protection ضمن الخدمات المنزّلة أو المثبّتة، وفعّله ووافق على طلب Android، ثم عُد إلى FREED.",
+        "ja": "Android のユーザー補助設定を開きました。ダウンロードまたはインストール済みサービスから FREED Protection を選んで有効にし、Android のリクエストを許可してから FREED に戻ってください。",
+        "zh-Hans": "已打开 Android 无障碍设置。请在已下载或已安装的服务中选择 FREED Protection，启用并同意 Android 请求，然后返回 FREED。",
+        "ko": "Android 접근성 설정을 열었습니다. 다운로드 또는 설치된 서비스에서 FREED Protection를 선택하고 활성화한 후 Android의 요청을 승인한 다음 FREED로 돌아갑니다."
+      }
+    },
+    {
+      "source": "Opened Android app settings as a fallback. Enable FREED notifications, then return so recovery challenges stay visible.",
+      "translations": {
+        "hi": "विकल्प के रूप में Android ऐप सेटिंग्स खुलीं। FREED सूचनाएँ चालू करें, फिर लौटें ताकि रिकवरी चुनौतियाँ दिखाई दें।",
+        "es": "Se abrieron los ajustes de la app de Android como alternativa. Activa las notificaciones de FREED y vuelve para que los retos de recuperación sigan visibles.",
+        "pt": "Os ajustes do app no Android foram abertos como alternativa. Ative as notificações do FREED e volte para manter os desafios de recuperação visíveis.",
+        "fr": "Les paramètres de l’app Android sont ouverts en secours. Activez les notifications FREED, puis revenez pour que les défis de rétablissement restent visibles.",
+        "de": "Die Android-App-Einstellungen wurden als Alternative geöffnet. Aktiviere FREED-Benachrichtigungen und kehre zurück, damit Erholungsherausforderungen sichtbar bleiben.",
+        "ar": "فُتحت إعدادات التطبيق في Android كبديل. فعّل إشعارات FREED، ثم عُد لتبقى تحديات التعافي مرئية.",
+        "ja": "代わりに Android のアプリ設定を開きました。回復チャレンジを表示できるよう、FREED の通知を有効にしてから戻ってください。",
+        "zh-Hans": "已打开 Android 应用设置作为备用方案。请启用 FREED 通知，然后返回，让恢复挑战保持可见。",
+        "ko": "대체 방법으로 Android 앱 설정을 열었습니다. FREED 알림을 활성화한 다음 반환하여 복구 문제가 계속 표시되도록 하세요."
+      }
+    },
+    {
+      "source": "Opened Android notification settings for FREED. Allow notifications so DNS Guard recovery challenges stay visible if Android blocks a background launch.",
+      "translations": {
+        "hi": "FREED की Android सूचना सेटिंग्स खुलीं। सूचनाएँ अनुमति दें ताकि Android पृष्ठभूमि में खोलना रोके तो भी DNS Guard रिकवरी चुनौतियाँ दिखाई दें।",
+        "es": "Se abrieron los ajustes de notificaciones de FREED en Android. Permite las notificaciones para que los retos de recuperación de DNS Guard sigan visibles si Android bloquea la apertura en segundo plano.",
+        "pt": "Os ajustes de notificações do FREED no Android foram abertos. Permita notificações para manter os desafios de recuperação do DNS Guard visíveis se o Android bloquear a abertura em segundo plano.",
+        "fr": "Les paramètres de notifications Android pour FREED sont ouverts. Autorisez les notifications pour que les défis de rétablissement DNS Guard restent visibles si Android bloque le lancement en arrière-plan.",
+        "de": "Die Android-Benachrichtigungseinstellungen für FREED sind geöffnet. Erlaube Benachrichtigungen, damit DNS-Guard-Erholungsherausforderungen sichtbar bleiben, wenn Android einen Hintergrundstart blockiert.",
+        "ar": "فُتحت إعدادات إشعارات FREED في Android. اسمح بالإشعارات لتبقى تحديات تعافي DNS Guard مرئية إذا منع Android التشغيل في الخلفية.",
+        "ja": "FREED の Android 通知設定を開きました。Android がバックグラウンド起動を防いでも DNS Guard の回復チャレンジが表示されるよう、通知を許可してください。",
+        "zh-Hans": "已打开 FREED 的 Android 通知设置。请允许通知，以便 Android 阻止后台启动时，DNS Guard 恢复挑战仍可见。",
+        "ko": "FREED에 대한 Android 알림 설정을 열었습니다. Android가 백그라운드 실행을 차단하는 경우 DNS Guard 복구 문제가 계속 표시되도록 알림을 허용합니다."
+      }
+    },
+    {
+      "source": "Opened Android Private DNS settings. Review strict encrypted DNS, then return to FREED and verify DNS Guard.",
+      "translations": {
+        "hi": "Android निजी DNS सेटिंग्स खुलीं। सख्त एन्क्रिप्टेड DNS जाँचें, फिर FREED में लौटकर DNS Guard सत्यापित करें।",
+        "es": "Se abrieron los ajustes de DNS privado de Android. Revisa el DNS cifrado estricto, vuelve a FREED y verifica DNS Guard.",
+        "pt": "Os ajustes de DNS privado do Android foram abertos. Revise o DNS criptografado estrito, volte ao FREED e verifique DNS Guard.",
+        "fr": "Les paramètres DNS privé Android sont ouverts. Vérifiez le DNS chiffré strict, puis revenez dans FREED pour vérifier DNS Guard.",
+        "de": "Die Android-Einstellungen für Privates DNS sind geöffnet. Prüfe striktes verschlüsseltes DNS, kehre zu FREED zurück und prüfe DNS Guard.",
+        "ar": "فُتحت إعدادات DNS الخاص في Android. راجع DNS المشفّر الصارم، ثم عُد إلى FREED وتحقق من DNS Guard.",
+        "ja": "Android のプライベート DNS 設定を開きました。厳格な暗号化 DNS を確認してから FREED に戻り、DNS Guard を検証してください。",
+        "zh-Hans": "已打开 Android 私人 DNS 设置。请检查严格加密 DNS，然后返回 FREED 验证 DNS Guard。",
+        "ko": "Android 프라이빗 DNS 설정을 열었습니다. 엄격하게 암호화된 DNS를 검토한 후 FREED로 돌아가 DNS Guard를 확인합니다."
+      }
+    },
+    {
+      "source": "Opened Android settings fallback. Go to Network & internet > VPN, review any conflicting VPN, then return to FREED and retry the connection request.",
+      "translations": {
+        "hi": "Android की वैकल्पिक सेटिंग्स खुलीं। नेटवर्क और इंटरनेट > VPN में विरोधी VPN जाँचें, फिर FREED में लौटकर कनेक्शन अनुरोध दोहराएँ।",
+        "es": "Se abrió una alternativa de ajustes de Android. Ve a Red e Internet > VPN, revisa las VPN en conflicto, vuelve a FREED y reintenta la conexión.",
+        "pt": "Uma alternativa dos ajustes do Android foi aberta. Vá a Rede e internet > VPN, revise VPNs em conflito, volte ao FREED e tente conectar novamente.",
+        "fr": "Un écran de paramètres Android de secours est ouvert. Allez dans Réseau et Internet > VPN, vérifiez les VPN en conflit, puis revenez dans FREED et réessayez la connexion.",
+        "de": "Ein alternativer Android-Einstellungsbildschirm ist geöffnet. Gehe zu Netzwerk und Internet > VPN, prüfe kollidierende VPNs, kehre zu FREED zurück und wiederhole die Verbindungsanfrage.",
+        "ar": "فُتحت شاشة إعدادات Android بديلة. انتقل إلى الشبكة والإنترنت > VPN، وراجع أي VPN متعارض، ثم عُد إلى FREED وأعد طلب الاتصال.",
+        "ja": "Android の代替設定画面を開きました。ネットワークとインターネット > VPN で競合する VPN を確認してから FREED に戻り、接続を再試行してください。",
+        "zh-Hans": "已打开 Android 备用设置页面。请前往网络和互联网 > VPN，检查冲突的 VPN，然后返回 FREED 重试连接请求。",
+        "ko": "Android 설정 대체를 열었습니다. 네트워크 및 인터넷 > VPN로 이동하여 충돌하는 VPN를 검토한 다음 FREED로 돌아가 연결 요청을 다시 시도하세요."
+      }
+    },
+    {
+      "source": "Opened Android VPN settings. Disconnect another VPN or review its always-on setting, then return to FREED and retry the connection request.",
+      "translations": {
+        "hi": "Android VPN सेटिंग्स खुलीं। अन्य VPN डिस्कनेक्ट करें या हमेशा चालू सेटिंग जाँचें, फिर FREED में लौटकर कनेक्शन अनुरोध दोहराएँ।",
+        "es": "Se abrieron los ajustes de VPN de Android. Desconecta otra VPN o revisa su ajuste siempre activo, vuelve a FREED y reintenta la conexión.",
+        "pt": "Os ajustes de VPN do Android foram abertos. Desconecte outra VPN ou revise sua opção de conexão sempre ativa, volte ao FREED e tente conectar novamente.",
+        "fr": "Les paramètres VPN Android sont ouverts. Déconnectez un autre VPN ou vérifiez son option toujours active, puis revenez dans FREED et réessayez la connexion.",
+        "de": "Die Android-VPN-Einstellungen sind geöffnet. Trenne ein anderes VPN oder prüfe dessen Immer-aktiv-Einstellung, kehre zu FREED zurück und wiederhole die Verbindungsanfrage.",
+        "ar": "فُتحت إعدادات VPN في Android. افصل VPN آخر أو راجع إعداد تشغيله الدائم، ثم عُد إلى FREED وأعد طلب الاتصال.",
+        "ja": "Android の VPN 設定を開きました。他の VPN を切断するか、その常時接続設定を確認してから FREED に戻り、接続を再試行してください。",
+        "zh-Hans": "已打开 Android VPN 设置。请断开其他 VPN 或检查其始终开启设置，然后返回 FREED 重试连接请求。",
+        "ko": "Android VPN 설정을 열었습니다. 다른 VPN의 연결을 끊거나 Always-On 설정을 검토한 다음 FREED로 돌아가서 연결 요청을 다시 시도하십시오."
+      }
+    },
+    {
+      "source": "Opened the Android Usage Access list. Select FREED, turn on Allow usage access, then return to FREED.",
+      "translations": {
+        "hi": "Android उपयोग पहुँच सूची खुली। FREED चुनें, उपयोग पहुँच की अनुमति चालू करें, फिर FREED में लौटें।",
+        "es": "Se abrió la lista de acceso de uso de Android. Selecciona FREED, activa Permitir acceso de uso y vuelve a FREED.",
+        "pt": "A lista de acesso ao uso do Android foi aberta. Selecione FREED, ative Permitir acesso ao uso e volte ao FREED.",
+        "fr": "La liste d’accès aux données d’utilisation Android est ouverte. Sélectionnez FREED, activez Autoriser l’accès aux données d’utilisation, puis revenez dans FREED.",
+        "de": "Die Android-Liste für Nutzungszugriff ist geöffnet. Wähle FREED, aktiviere Nutzungszugriff erlauben und kehre zu FREED zurück.",
+        "ar": "فُتحت قائمة الوصول إلى الاستخدام في Android. اختر FREED وفعّل السماح بالوصول إلى الاستخدام، ثم عُد إلى FREED.",
+        "ja": "Android の使用状況へのアクセス一覧を開きました。FREED を選び、使用状況へのアクセスを許可してから FREED に戻ってください。",
+        "zh-Hans": "已打开 Android 使用情况访问列表。请选择 FREED，启用允许使用情况访问，然后返回 FREED。",
+        "ko": "Android 사용 액세스 목록을 열었습니다. FREED를 선택하고 사용 액세스 허용을 켠 다음 FREED로 돌아갑니다."
+      }
+    },
+    {
+      "source": "Opened Usage Access for FREED. Turn on Allow usage access, then return to FREED.",
+      "translations": {
+        "hi": "FREED की उपयोग पहुँच खुली। उपयोग पहुँच की अनुमति चालू करें, फिर FREED में लौटें।",
+        "es": "Se abrió el acceso de uso para FREED. Activa Permitir acceso de uso y vuelve a FREED.",
+        "pt": "O acesso ao uso do FREED foi aberto. Ative Permitir acesso ao uso e volte ao FREED.",
+        "fr": "L’accès aux données d’utilisation pour FREED est ouvert. Activez Autoriser l’accès aux données d’utilisation, puis revenez dans FREED.",
+        "de": "Der Nutzungszugriff für FREED ist geöffnet. Aktiviere Nutzungszugriff erlauben und kehre zu FREED zurück.",
+        "ar": "فُتح الوصول إلى الاستخدام لتطبيق FREED. فعّل السماح بالوصول إلى الاستخدام، ثم عُد إلى FREED.",
+        "ja": "FREED の使用状況へのアクセス設定を開きました。使用状況へのアクセスを許可してから FREED に戻ってください。",
+        "zh-Hans": "已打开 FREED 使用情况访问设置。请启用允许使用情况访问，然后返回 FREED。",
+        "ko": "FREED에 대한 사용 액세스를 열었습니다. 사용 액세스 허용을 켠 다음 FREED로 돌아갑니다."
+      }
+    },
+    {
+      "source": "Opening iOS Settings so you can review FREED permissions. If Safari blocking is still needed, enable FREED Safari Blocker in Settings > Safari > Extensions, then return to FREED.",
+      "translations": {
+        "hi": "FREED अनुमतियाँ जाँचने के लिए iOS सेटिंग्स खुल रही हैं। Safari अवरोध चाहिए तो सेटिंग्स > Safari > एक्सटेंशन में FREED Safari Blocker चालू करें, फिर FREED में लौटें।",
+        "es": "Abriendo los ajustes de iOS para revisar los permisos de FREED. Si aún necesitas el bloqueo de Safari, activa FREED Safari Blocker en Ajustes > Safari > Extensiones y vuelve a FREED.",
+        "pt": "Abrindo os Ajustes do iOS para revisar as permissões do FREED. Se ainda precisar do bloqueio do Safari, ative FREED Safari Blocker em Ajustes > Safari > Extensões e volte ao FREED.",
+        "fr": "Ouverture des réglages iOS pour vérifier les autorisations FREED. Si le blocage Safari est encore nécessaire, activez FREED Safari Blocker dans Réglages > Safari > Extensions, puis revenez dans FREED.",
+        "de": "iOS-Einstellungen werden geöffnet, um FREED-Berechtigungen zu prüfen. Falls Safari-Blockierung noch nötig ist, aktiviere FREED Safari Blocker unter Einstellungen > Safari > Erweiterungen und kehre zu FREED zurück.",
+        "ar": "جارٍ فتح إعدادات iOS لمراجعة أذونات FREED. إذا كنت لا تزال بحاجة إلى حظر Safari، ففعّل FREED Safari Blocker في الإعدادات > Safari > الإضافات، ثم عُد إلى FREED.",
+        "ja": "FREED の許可を確認するため iOS の設定を開いています。Safari のブロックが必要な場合は、設定 > Safari > 機能拡張で FREED Safari Blocker を有効にしてから FREED に戻ってください。",
+        "zh-Hans": "正在打开 iOS 设置以检查 FREED 权限。如仍需 Safari 拦截，请在设置 > Safari > 扩展中启用 FREED Safari Blocker，然后返回 FREED。",
+        "ko": "FREED 권한을 검토할 수 있도록 iOS 설정을 엽니다. Safari 차단이 여전히 필요한 경우 설정 > Safari > 확장에서 FREED Safari 차단기를 활성화한 다음 FREED로 돌아갑니다."
+      }
+    },
+    {
+      "source": "Private DNS state is reported for QA because strict Private DNS can affect DNS Guard resolver behavior.",
+      "translations": {
+        "hi": "सख्त निजी DNS, DNS Guard रिज़ॉल्वर के व्यवहार को प्रभावित कर सकता है, इसलिए गुणवत्ता जाँच के लिए निजी DNS स्थिति रिपोर्ट होती है।",
+        "es": "Se informa del estado de DNS privado para control de calidad porque el modo estricto puede afectar al comportamiento de los resolutores de DNS Guard.",
+        "pt": "O estado do DNS privado é informado para controle de qualidade porque o modo estrito pode afetar o comportamento dos resolvedores do DNS Guard.",
+        "fr": "L’état du DNS privé est indiqué pour le contrôle qualité, car le mode strict peut affecter les résolveurs DNS Guard.",
+        "de": "Der Status von Privatem DNS wird für die Qualitätssicherung angezeigt, weil der strikte Modus das Verhalten der DNS-Guard-Resolver beeinflussen kann.",
+        "ar": "تُعرض حالة DNS الخاص لضمان الجودة لأن الوضع الصارم قد يؤثر في سلوك محلّلات DNS Guard.",
+        "ja": "厳格なプライベート DNS は DNS Guard のリゾルバー動作に影響する可能性があるため、品質確認用に状態を表示します。",
+        "zh-Hans": "严格私人 DNS 可能影响 DNS Guard 解析器的行为，因此会报告私人 DNS 状态以供质量检查。",
+        "ko": "엄격한 개인 DNS가 DNS Guard 확인자 동작에 영향을 미칠 수 있으므로 QA를 위해 개인 DNS 상태가 보고됩니다."
+      }
+    },
+    {
+      "source": "Safari adult-domain blocker synced with {{ruleCount}} entries. Short-form web paths are handled by Safari Focus Shield.",
+      "translations": {
+        "hi": "Safari वयस्क डोमेन अवरोधक {{ruleCount}} प्रविष्टियों के साथ सिंक हुआ। छोटे वीडियो की वेब पाथ Safari Focus Shield संभालता है।",
+        "es": "El bloqueador de dominios para adultos de Safari se sincronizó con {{ruleCount}} entradas. Safari Focus Shield gestiona las rutas web de contenido breve.",
+        "pt": "O bloqueador de domínios adultos do Safari foi sincronizado com {{ruleCount}} entradas. Os caminhos da web de conteúdo curto são tratados pelo Safari Focus Shield.",
+        "fr": "Le bloqueur Safari de domaines pour adultes a été synchronisé avec {{ruleCount}} entrées. Safari Focus Shield gère les chemins web de contenus courts.",
+        "de": "Der Safari-Blocker für Erwachsenendomains wurde mit {{ruleCount}} Einträgen synchronisiert. Safari Focus Shield behandelt Webpfade für Kurzform-Inhalte.",
+        "ar": "تمت مزامنة حاجب نطاقات محتوى البالغين في Safari مع {{ruleCount}} إدخالات. يتولى Safari Focus Shield مسارات الويب للمحتوى القصير.",
+        "ja": "Safari の成人向けドメインブロッカーを {{ruleCount}} 件のルールで同期しました。短編コンテンツの Web パスは Safari Focus Shield が処理します。",
+        "zh-Hans": "Safari 成人内容域名拦截器已同步 {{ruleCount}} 条规则。短内容网页路径由 Safari Focus Shield 处理。",
+        "ko": "Safari 성인 도메인 차단기는 {{ruleCount}} 항목과 동기화됩니다. 짧은 형식의 웹 경로는 Safari Focus Shield에 의해 처리됩니다."
+      }
+    },
+    {
+      "source": "Safari extension settings opened. Enable {{extensionName}}, then return to continue setup.",
+      "translations": {
+        "hi": "Safari एक्सटेंशन सेटिंग्स खुलीं। {{extensionName}} चालू करें, फिर सेटअप जारी रखने के लिए लौटें।",
+        "es": "Se abrieron los ajustes de extensiones de Safari. Activa {{extensionName}} y vuelve para continuar la configuración.",
+        "pt": "Os ajustes de extensões do Safari foram abertos. Ative {{extensionName}} e volte para continuar a configuração.",
+        "fr": "Les réglages des extensions Safari sont ouverts. Activez {{extensionName}}, puis revenez pour continuer la configuration.",
+        "de": "Die Safari-Erweiterungseinstellungen sind geöffnet. Aktiviere {{extensionName}} und kehre zurück, um die Einrichtung fortzusetzen.",
+        "ar": "فُتحت إعدادات إضافات Safari. فعّل {{extensionName}}، ثم عُد لمتابعة الإعداد.",
+        "ja": "Safari 拡張機能の設定を開きました。{{extensionName}} を有効にしてから戻って設定を続けてください。",
+        "zh-Hans": "已打开 Safari 扩展设置。请启用 {{extensionName}}，然后返回继续设置。",
+        "ko": "Safari 확장 설정이 열렸습니다. {{extensionName}}를 활성화한 다음 돌아가서 설정을 계속하세요."
+      }
+    },
+    {
+      "source": "The Android VPN approval dialog should be on screen now. Tap OK so FREED can start DNS Guard, which routes DNS resolver IPs only for adult-domain blocking.",
+      "translations": {
+        "hi": "Android VPN अनुमति संवाद अब दिखना चाहिए। OK दबाएँ ताकि FREED DNS Guard शुरू कर सके, जो केवल वयस्क डोमेन रोकने के लिए DNS रिज़ॉल्वर IP रूट करता है।",
+        "es": "El diálogo de aprobación de VPN de Android debería estar en pantalla. Toca OK para que FREED inicie DNS Guard, que solo enruta IP de resolutores DNS para bloquear dominios para adultos.",
+        "pt": "O diálogo de aprovação de VPN do Android deve estar na tela agora. Toque em OK para que FREED inicie DNS Guard, que roteia apenas IPs de resolvedores DNS para bloquear domínios adultos.",
+        "fr": "La boîte de dialogue d’autorisation VPN Android devrait être affichée. Touchez OK pour démarrer DNS Guard, qui achemine uniquement les IP des résolveurs DNS pour bloquer les domaines pour adultes.",
+        "de": "Der Android-VPN-Zustimmungsdialog sollte jetzt sichtbar sein. Tippe auf OK, damit FREED DNS Guard startet, das nur DNS-Resolver-IP-Adressen zur Blockierung von Erwachsenendomains weiterleitet.",
+        "ar": "يُفترض أن يظهر الآن مربع موافقة VPN في Android. اضغط OK ليبدأ FREED تشغيل DNS Guard، الذي يوجّه عناوين IP لمحلّلات DNS فقط لحظر نطاقات محتوى البالغين.",
+        "ja": "Android の VPN 許可ダイアログが表示されているはずです。OK をタップして DNS Guard を開始してください。成人向けドメインをブロックするため、DNS リゾルバーの IP のみをルーティングします。",
+        "zh-Hans": "Android VPN 授权对话框现在应该已显示。请点击 OK，让 FREED 启动 DNS Guard；它仅路由 DNS 解析器 IP，用于拦截成人内容域名。",
+        "ko": "이제 Android VPN 승인 대화 상자가 화면에 표시됩니다. 확인을 누르면 FREED가 DNS Guard를 시작할 수 있습니다. DNS Guard는 성인 도메인 차단을 위해서만 DNS 확인자 IP를 라우팅합니다."
+      }
+    },
+    {
+      "source": "The VPN dialog could not open, so FREED opened its app info page instead. Return and tap Start DNS Guard again; if it keeps failing, restart the phone and try once more.",
+      "translations": {
+        "hi": "VPN संवाद नहीं खुल सका, इसलिए FREED ऐप जानकारी खुली। लौटकर DNS Guard शुरू करें फिर दबाएँ; बार-बार विफल हो तो फ़ोन पुनः शुरू करके कोशिश करें।",
+        "es": "No se pudo abrir el diálogo de VPN, así que FREED abrió la información de la app. Vuelve y toca Iniciar DNS Guard otra vez; si sigue fallando, reinicia el teléfono y reintenta.",
+        "pt": "Não foi possível abrir o diálogo de VPN, então FREED abriu a página de informações do app. Volte e toque em Iniciar DNS Guard novamente; se continuar falhando, reinicie o telefone e tente outra vez.",
+        "fr": "Impossible d’ouvrir la boîte de dialogue VPN ; FREED a ouvert la page d’informations de l’app. Revenez et touchez à nouveau Démarrer DNS Guard ; si l’échec persiste, redémarrez le téléphone et réessayez.",
+        "de": "Der VPN-Dialog konnte nicht geöffnet werden, daher öffnete FREED seine App-Info. Kehre zurück und tippe erneut auf DNS Guard starten; falls es weiter fehlschlägt, starte das Telefon neu und versuche es erneut.",
+        "ar": "تعذّر فتح مربع VPN، لذا فتح FREED صفحة معلومات التطبيق. عُد واضغط بدء DNS Guard مجددًا؛ وإذا استمر الفشل، أعد تشغيل الهاتف وحاول مرة أخرى.",
+        "ja": "VPN ダイアログを開けなかったため、FREED のアプリ情報を開きました。戻って「DNS Guard を開始」を再度タップしてください。失敗が続く場合は、端末を再起動してお試しください。",
+        "zh-Hans": "无法打开 VPN 对话框，因此 FREED 已打开应用信息页面。请返回并再次点击启动 DNS Guard；如持续失败，请重启手机后重试。",
+        "ko": "VPN 대화상자를 열 수 없어 FREED가 대신 앱 정보 페이지를 열었습니다. 돌아가서 DNS Guard 시작을 다시 탭하세요. 계속 실패하면 전화를 다시 시작하고 다시 한 번 시도하십시오."
+      }
+    },
+    {
+      "source": "Usage Access could not open, so FREED app info is open instead. App info cannot enable this permission. Go to Android Settings > Special app access > Usage access > FREED, allow access, then return to FREED.",
+      "translations": {
+        "hi": "उपयोग पहुँच नहीं खुल सकी, इसलिए FREED ऐप जानकारी खुली है। वहाँ यह अनुमति चालू नहीं हो सकती। Android सेटिंग्स > विशेष ऐप पहुँच > उपयोग पहुँच > FREED में पहुँच दें, फिर लौटें।",
+        "es": "No se pudo abrir el acceso de uso, así que se abrió la información de FREED. Esa página no permite activarlo. Ve a Ajustes de Android > Acceso especial de apps > Acceso de uso > FREED, permite el acceso y vuelve.",
+        "pt": "Não foi possível abrir o acesso ao uso, então as informações do FREED estão abertas. Essa página não permite ativá-lo. Vá a Configurações do Android > Acesso especial a apps > Acesso ao uso > FREED, permita o acesso e volte.",
+        "fr": "Impossible d’ouvrir l’accès aux données d’utilisation ; les informations de FREED sont ouvertes. Cette page ne permet pas d’activer l’autorisation. Allez dans Paramètres Android > Accès spécial des applications > Accès aux données d’utilisation > FREED, autorisez l’accès, puis revenez.",
+        "de": "Der Nutzungszugriff konnte nicht geöffnet werden, daher ist die FREED-App-Info geöffnet. Dort kann diese Berechtigung nicht aktiviert werden. Gehe zu Android-Einstellungen > Spezieller App-Zugriff > Nutzungszugriff > FREED, erlaube den Zugriff und kehre zurück.",
+        "ar": "تعذّر فتح الوصول إلى الاستخدام، لذا فُتحت معلومات تطبيق FREED. لا يمكن تفعيل هذا الإذن هناك. انتقل إلى إعدادات Android > وصول خاص للتطبيقات > الوصول إلى الاستخدام > FREED، واسمح بالوصول، ثم عُد.",
+        "ja": "使用状況へのアクセスを開けなかったため、FREED のアプリ情報を開きました。この画面では許可できません。Android の設定 > 特別なアプリアクセス > 使用状況へのアクセス > FREED で許可してから戻ってください。",
+        "zh-Hans": "无法打开使用情况访问，因此已打开 FREED 应用信息。该页面无法启用此权限。请前往 Android 设置 > 特殊应用权限 > 使用情况访问 > FREED，允许访问后返回。",
+        "ko": "사용 액세스를 열 수 없어 FREED 앱 정보가 대신 열려 있습니다. 앱 정보에서는 이 권한을 활성화할 수 없습니다. Android 설정 > 특수 앱 접근 권한 > 사용 접근 권한 > FREED로 이동하여 접근을 허용한 후 FREED로 돌아갑니다."
+      }
+    },
+    {
+      "source": "Usage Access lets FREED cross-check selected app timers without reading in-app content.",
+      "translations": {
+        "hi": "उपयोग पहुँच से FREED चुने ऐप टाइमर की जाँच करता है, ऐप के भीतर की सामग्री पढ़े बिना।",
+        "es": "El acceso de uso permite a FREED comprobar los temporizadores de apps seleccionadas sin leer su contenido.",
+        "pt": "O acesso ao uso permite ao FREED conferir os temporizadores dos apps selecionados sem ler o conteúdo interno.",
+        "fr": "L’accès aux données d’utilisation permet à FREED de vérifier les minuteurs des apps sélectionnées sans lire leur contenu.",
+        "de": "Mit Nutzungszugriff kann FREED gewählte App-Timer gegenprüfen, ohne Inhalte in Apps zu lesen.",
+        "ar": "يتيح الوصول إلى الاستخدام لـ FREED التحقق من مؤقتات التطبيقات المحددة دون قراءة محتواها الداخلي.",
+        "ja": "使用状況へのアクセスにより、FREED はアプリ内のコンテンツを読まずに、選択したアプリのタイマーを照合できます。",
+        "zh-Hans": "使用情况访问让 FREED 核对所选应用计时器，而无需读取应用内内容。",
+        "ko": "사용 액세스를 사용하면 FREED가 인앱 콘텐츠를 읽지 않고도 선택한 앱 타이머를 교차 확인할 수 있습니다."
+      }
+    },
+    {
+      "source": "Uses Safari extensions with explicit host access for adult-domain and short-form web protection.",
+      "translations": {
+        "hi": "वयस्क डोमेन और छोटे वीडियो की वेब सुरक्षा के लिए स्पष्ट होस्ट अनुमति वाले Safari एक्सटेंशन उपयोग करता है।",
+        "es": "Usa extensiones de Safari con acceso explícito a sitios para proteger frente a dominios para adultos y contenido breve en la web.",
+        "pt": "Usa extensões do Safari com acesso explícito a sites para proteger contra domínios adultos e conteúdo curto na web.",
+        "fr": "Utilise des extensions Safari avec un accès explicite aux sites pour protéger contre les domaines pour adultes et les contenus courts sur le web.",
+        "de": "Verwendet Safari-Erweiterungen mit ausdrücklichem Hostzugriff zum Schutz vor Erwachsenendomains und Kurzform-Inhalten im Web.",
+        "ar": "يستخدم إضافات Safari مع إذن صريح للوصول إلى المواقع للحماية من نطاقات محتوى البالغين والمحتوى القصير على الويب.",
+        "ja": "明示的なホストアクセス許可を持つ Safari 拡張機能を使用し、成人向けドメインと短編コンテンツの Web 保護を行います。",
+        "zh-Hans": "使用具有明确网站访问权限的 Safari 扩展，保护成人内容域名和网页短内容。",
+        "ko": "성인 도메인 및 약식 웹 보호를 위해 명시적인 호스트 액세스가 포함된 Safari 확장을 사용합니다."
+      }
+    }
+  ]
+}

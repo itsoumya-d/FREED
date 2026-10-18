@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; connect-src 'none'">
+  <title>Open your FREED challenge</title>
+  <style>
+    :root { color-scheme: dark; font: 17px/1.5 -apple-system, BlinkMacSystemFont, sans-serif; background: #12101c; color: #fff; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; }
+    main { max-width: 28rem; padding: 2rem; text-align: center; }
+    h1 { font-size: 1.8rem; line-height: 1.2; }
+    p { color: #d7d2e3; }
+    a { display: inline-block; padding: 1rem 1.5rem; border-radius: 2rem; background: #b99aff; color: #171122; font-weight: 700; text-decoration: none; }
+    a:focus-visible { outline: 3px solid #fff; outline-offset: 5px; }
+    [hidden] { display: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Pause the loop</h1>
+    <p id="handoff-status" role="status">This challenge link is unavailable. Return to Safari and use the FREED pause button again.</p>
+    <a id="open-freed" hidden>Open FREED challenge</a>
+    <noscript><p>JavaScript is needed to check this link. You can open FREED from your Home Screen.</p></noscript>
+  </main>
+  <script>
+    (() => {
+      "use strict";
+      const link = document.getElementById("open-freed");
+      const status = document.getElementById("handoff-status");
+      try {
+        const page = new URL(location.href);
+        const route = location.href.split("#")[0];
+        if (route !== "https://freed-7d5ee.firebaseapp.com/intervention" &&
+            route !== "https://freed-7d5ee.firebaseapp.com:443/intervention") return;
+        if (page.protocol !== "https:" || page.username || page.password || page.port || page.search) return;
+
+        const params = new URLSearchParams(page.hash.slice(1));
+        const keys = ["source", "rule", "host"];
+        if ([...params.keys()].some(key => !keys.includes(key)) ||
+            keys.some(key => params.getAll(key).length !== 1)) return;
+        const source = params.get("source").trim().toLowerCase();
+        const rule = params.get("rule").trim().toLowerCase();
+        const approvedHosts = {
+          "short-form:youtube-shorts": "youtube.com",
+          "short-form:instagram-reels": "instagram.com",
+          "short-form:tiktok-feed": "tiktok.com"
+        };
+        const expectedHost = approvedHosts[rule];
+        const rawHost = params.get("host");
+        if (source !== "ios-safari-short-form" || !expectedHost || rawHost.length > 120 ||
+            !/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/i.test(rawHost)) return;
+        const host = rawHost.toLowerCase().replace(/^www\./, "");
+        if (host.split(".").some(part => !part || part.startsWith("-") || part.endsWith("-")) ||
+            (host !== expectedHost && !host.endsWith(`.${expectedHost}`))) return;
+
+        link.href = `freed://intervention?${new URLSearchParams({ source, rule, host }).toString()}`;
+        link.hidden = false;
+        status.textContent = "Tap below to open a local recovery challenge in FREED. If FREED is not installed, return to Safari.";
+      } catch {
+        // Invalid links retain the local message and never navigate.
+      }
+    })();
+  </script>
+</body>
+</html>

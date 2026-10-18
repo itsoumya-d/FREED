@@ -1,0 +1,301 @@
+{
+  "observedAt": "2026-10-03T13:34:02.884913+00:00",
+  "url": "https://support.google.com/code/contact/billing_quota_increase?pli=1&authuser=4",
+  "confirmation": "Your email has been sent",
+  "requestConfirmed": true,
+  "requestedAssociatedProjects": 6,
+  "billingAccount": "0193F1-FE1EDB-0ECFDB",
+  "project": "freed-7d5ee",
+  "status": "submitted-awaiting-google-review",
+  "expectedReply": "typically about 2 business days",
+  "caseIdDisplayed": false,
+  "snapshot": {
+    "url": "https://support.google.com/code/contact/billing_quota_increase?pli=1&authuser=4",
+    "title": "Google Cloud Platform/API Project: Request Billing Quota Increase - Google Developers Help",
+    "tree": [
+      {
+        "role": "button",
+        "name": "Open the CasperAI Extension",
+        "ref": "@e1",
+        "children": [
+          {
+            "role": "image"
+          }
+        ]
+      },
+      {
+        "role": "link",
+        "name": "Skip to main content",
+        "ref": "@e2",
+        "children": [
+          {
+            "role": "StaticText",
+            "name": "Skip to main content"
+          }
+        ]
+      },
+      {
+        "role": "banner",
+        "children": [
+          {
+            "role": "button",
+            "name": "Main menu",
+            "ref": "@e3",
+            "children": [
+              {
+                "role": "image"
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "Google Developers Help",
+            "ref": "@e4",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Google Developers Help"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Google apps",
+            "ref": "@e5",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "  "
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Google Account: Soumya Debnath (soumyadebnath1661@gmail.com), Google membership",
+            "ref": "@e6",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "  "
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "navigation",
+        "name": "Support page navigation bar",
+        "children": [
+          {
+            "role": "link",
+            "name": "Google Developers (Open in a new window)",
+            "ref": "@e7",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Google Developers"
+              },
+              {
+                "role": "image"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "main",
+        "children": [
+          {
+            "role": "article",
+            "children": [
+              {
+                "role": "form",
+                "children": [
+                  {
+                    "role": "status",
+                    "children": [
+                      {
+                        "role": "heading",
+                        "name": "Your email has been sent",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Your email has been sent"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "image"
+                      },
+                      {
+                        "role": "paragraph",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "You've successfully submitted the request for additional quota. A member of our team will review the request details and reply back, typically in about 2 business days. In some cases, we may need a little extra time. We will send follow-up communications to the email address you provided in your request."
+                          },
+                          {
+                            "role": "LineBreak",
+                            "name": "\n"
+                          },
+                          {
+                            "role": "LineBreak",
+                            "name": "\n"
+                          },
+                          {
+                            "role": "StaticText",
+                            "name": "You can find more details on the process on the "
+                          },
+                          {
+                            "role": "link",
+                            "name": "Project Quota Request FAQ",
+                            "ref": "@e8",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "Project Quota Request FAQ"
+                              }
+                            ]
+                          },
+                          {
+                            "role": "StaticText",
+                            "name": ". Thanks for your patience while we review your request."
+                          },
+                          {
+                            "role": "LineBreak",
+                            "name": "\n"
+                          },
+                          {
+                            "role": "LineBreak",
+                            "name": "\n"
+                          },
+                          {
+                            "role": "StaticText",
+                            "name": "Sincerely,"
+                          },
+                          {
+                            "role": "LineBreak",
+                            "name": "\n"
+                          },
+                          {
+                            "role": "LineBreak",
+                            "name": "\n"
+                          },
+                          {
+                            "role": "StaticText",
+                            "name": "Google Cloud Platform Trust & Safety"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "contentinfo",
+        "children": [
+          {
+            "role": "StaticText",
+            "name": "©2026 Google"
+          },
+          {
+            "role": "list",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "-"
+              },
+              {
+                "role": "link",
+                "name": "Privacy Policy",
+                "ref": "@e9",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Privacy Policy"
+                  }
+                ]
+              },
+              {
+                "role": "listitem",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "-"
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": " "
+                  },
+                  {
+                    "role": "link",
+                    "name": "Terms of Service",
+                    "ref": "@e10",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Terms of Service"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Disable Dark Mode",
+            "ref": "@e11",
+            "children": [
+              {
+                "role": "image"
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": " Send feedback about our Help Center",
+            "ref": "@e12",
+            "children": [
+              {
+                "role": "image"
+              },
+              {
+                "role": "StaticText",
+                "name": " Send feedback about our Help Center"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "banner",
+        "children": [
+          {
+            "role": "link",
+            "name": "SimplyCodes",
+            "ref": "@e13",
+            "children": [
+              {
+                "role": "image",
+                "name": "SimplyCodes"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Close",
+            "ref": "@e14"
+          }
+        ]
+      },
+      {
+        "role": "image"
+      }
+    ]
+  }
+}

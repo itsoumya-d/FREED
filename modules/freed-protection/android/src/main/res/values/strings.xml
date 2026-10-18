@@ -1,5 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from the audited authored-source catalogs. -->
 <resources>
-  <string name="freed_accessibility_description">Detect opted-in adult-site and doomscrolling risk moments from supported browser fields, selected app packages, and sustained short-form screens so FREED can open recovery challenges.</string>
-  <string name="freed_usage_access_config_label">FREED Usage Access</string>
-  <string name="freed_usage_access_reason">FREED uses Usage Access only to read aggregate foreground time for selected app packages so your app timers can trigger recovery challenges. It does not read screen contents, messages, keystrokes, browsing history, or raw usage events.</string>
+  <string name="freed_accessibility_description" formatted="false">Detect openings of selected apps to apply your whole-app guards. You choose whether to open FREED recovery. Native Shorts and Reels inspection is experimental and outside the public release.</string>
+  <string name="freed_usage_access_config_label" formatted="false">FREED Usage Access</string>
+  <string name="freed_usage_access_reason" formatted="false">FREED uses Usage Access only to read aggregate foreground time for selected app packages so your app timers can trigger recovery challenges. It does not read screen contents, messages, keystrokes, browsing history, or raw usage events.</string>
+  <string name="freed_protection_label" formatted="false">FREED Protection</string>
+  <string name="freed_dns_notification_title" formatted="false">FREED DNS Guard</string>
+  <string name="freed_dns_channel_description" formatted="false">Shows when FREED\'s DNS-only adult-domain filter is active.</string>
+  <string name="freed_dns_paused_notification" formatted="false">Filtering paused for this network\'s sign-in page. Normal browsing stays direct.</string>
+  <string name="freed_dns_active_notification" formatted="false">Adult-domain DNS filtering is active. Normal browsing stays direct.</string>
+  <string name="freed_recovery_channel" formatted="false">FREED recovery interventions</string>
+  <string name="freed_browser_notification_title" formatted="false">FREED protection notice</string>
+  <string name="freed_app_notification_title" formatted="false">FREED paused a selected app</string>
+  <string name="freed_browser_channel_description" formatted="false">Shows protection notices for supported blocks. FREED recovery opens only when you choose.</string>
+  <string name="freed_accessibility_notification" formatted="false">Open FREED to complete a recovery challenge. No overlays, screenshots, or OCR are used.</string>
+  <string name="freed_source_label" formatted="false">Source: {{host}}</string>
+  <string name="freed_dns_intervention_channel_description" formatted="false">Shows when FREED blocks an adult-domain DNS request. Recovery opens only when you choose.</string>
+  <string name="freed_dns_intervention_notification" formatted="false">Open FREED to complete a recovery challenge. Normal browsing stays direct.</string>
+  <string name="freed_dns_intervention_title" formatted="false">Hold on — your streak is worth protecting</string>
+  <string name="freed_blocked_host_label" formatted="false">Blocked host: {{host}}</string>
+  <string name="freed_intervention_eyebrow" formatted="false">FREED PROTECTION</string>
+  <string name="freed_intervention_title" formatted="false">Hold on. You are still in control.</string>
+  <string name="freed_intervention_subtitle" formatted="false">Your app boundary is active. Choose Start recovery to get support.</string>
+  <string name="freed_intervention_breathe" formatted="false">Breathe in. Breathe out.</string>
+  <string name="freed_start_recovery" formatted="false">Start recovery</string>
+  <string name="freed_usage_eyebrow" formatted="false">FREED USAGE ACCESS</string>
+  <string name="freed_usage_title" formatted="false">Usage Access stays limited to app timers.</string>
+  <string name="freed_usage_note" formatted="false">Usage Access is controlled by Android Settings. After enabling FREED, return to setup so the activation test can verify protection.</string>
+  <string name="freed_usage_return" formatted="false">Return to FREED setup</string>
+  <string name="freed_usage_back" formatted="false">Back to Android Settings</string>
+  <string name="freed_calibration_instruction" formatted="false">Tap the surface to calibrate. Only its stable view fingerprint stays on this device.</string>
+  <string name="freed_calibration_ready" formatted="false">Stable local selector found. Confirm to save it, or cancel to discard it.</string>
+  <string name="freed_cancel" formatted="false">Cancel</string>
+  <string name="freed_confirm" formatted="false">Confirm</string>
+  <string name="freed_companion_label" formatted="false">FREED companion</string>
+  <string name="freed_companion_hint" formatted="false">Tap to greet your companion.</string>
+  <string name="freed_companion_hello" formatted="false">One step at a time. You are making room for a better day.</string>
 </resources>

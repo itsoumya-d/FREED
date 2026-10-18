@@ -1,22 +1,22 @@
 {
   "schemaVersion": "freed-paywall-launch-source-audit-v1",
-  "generatedAt": "2026-07-22T02:46:09.170Z",
+  "generatedAt": "2026-10-01T23:22:16.130Z",
   "sanitized": true,
   "result": "pass",
-  "passCount": 15,
+  "passCount": 17,
   "failCount": 0,
   "releaseBoundary": "Local paywall source precheck only. This does not prove the submitted native build, store products, rewarded ads, server receipt verification, or sandbox purchases passed.",
   "checks": [
     {
       "id": "source-files-readable",
       "status": "pass",
-      "detail": "Paywall and monetization sources are readable.",
+      "detail": "Paywall controller, offer view, price presenter, and monetization sources are readable.",
       "next": ""
     },
     {
       "id": "launch-plan-ids-core3",
       "status": "pass",
-      "detail": "LAUNCH_PREMIUM_PLAN_IDS is yearly, monthly, lifetime in launch order.",
+      "detail": "LAUNCH_PREMIUM_PLAN_IDS is yearly, monthly in launch order.",
       "next": ""
     },
     {
@@ -52,7 +52,7 @@
     {
       "id": "paywall-renders-launch-plans",
       "status": "pass",
-      "detail": "PaywallScreen renders the launchPlans collection.",
+      "detail": "PaywallScreen passes launch product presentations to PremiumOffer, which displays each actual billed amount and cadence.",
       "next": ""
     },
     {
@@ -64,32 +64,44 @@
     {
       "id": "paywall-purchases-selected-plan",
       "status": "pass",
-      "detail": "PaywallScreen purchases the selected launch plan.",
+      "detail": "The selected launch plan reaches checkout only after the current store price is verified as purchasable and no purchase is busy.",
       "next": ""
     },
     {
       "id": "paywall-restore-visible",
       "status": "pass",
-      "detail": "PaywallScreen exposes restore purchase.",
+      "detail": "PaywallScreen passes restore through to the visible offer action.",
       "next": ""
     },
     {
       "id": "paywall-premium-no-ad-copy-visible",
       "status": "pass",
-      "detail": "PaywallScreen shows premium no-ad value.",
+      "detail": "PremiumOffer describes ad-free recovery value without fabricated introductory offers.",
       "next": ""
     },
     {
-      "id": "paywall-server-verification-copy-visible",
+      "id": "paywall-server-verification-gates-premium",
       "status": "pass",
-      "detail": "PaywallScreen shows secure store-verification copy before activation.",
+      "detail": "The native checkout runtime uses authenticated store verification and Premium state follows the verified purchase/restore result.",
       "next": ""
     },
     {
       "id": "paywall-future-products-hidden",
       "status": "pass",
-      "detail": "PaywallScreen omits family/accountability/AI-coach future SKUs and labels.",
+      "detail": "The paywall controller and offer view omit family/accountability/AI-coach future SKUs and labels.",
       "next": "Remove future product IDs or future plan labels from PaywallScreen until v1 evidence passes."
+    },
+    {
+      "id": "paywall-close-is-direct",
+      "status": "pass",
+      "detail": "The offer closes directly to the caller's free path, with no retention modal, except while checkout is busy.",
+      "next": ""
+    },
+    {
+      "id": "paywall-prices-fail-closed",
+      "status": "pass",
+      "detail": "Unavailable or loading prices disable checkout and expose a retry instead of using fallback prices for native purchases.",
+      "next": ""
     },
     {
       "id": "paywall-no-client-premium-bypass",
@@ -100,8 +112,7 @@
   ],
   "launchPlanIds": [
     "yearly",
-    "monthly",
-    "lifetime"
+    "monthly"
   ],
   "launchProductIds": {
     "yearly": "freed_premium_yearly",
@@ -121,11 +132,19 @@
   "sourceArtifacts": {
     "paywall": {
       "path": "src/features/freed-app.tsx",
-      "sha256": "sha256-a723ccc2e9be20533a4b6f6671203b7a223c058fd1c99864d1e33c81804371f4"
+      "sha256": "sha256-342f264be7ad2fdb8b35136d603b5dca39cbf090990e54364d2b74aef0374258"
+    },
+    "offer": {
+      "path": "src/components/PremiumOffer.tsx",
+      "sha256": "sha256-03e0bd7c6a12b0c78248a40a2d40902132526cec2975c4263200254aacb53931"
+    },
+    "presenter": {
+      "path": "src/lib/paywall-presenter.ts",
+      "sha256": "sha256-ae8ab5f97c59304afa63441d6d4aa5e224a03f964c0191f8707f6cb1db5977a7"
     },
     "monetization": {
       "path": "src/lib/monetization.ts",
-      "sha256": "sha256-3a2ab320edae496a97038b48c8d2f29cf7f42567ddb5821697a365b97443c898"
+      "sha256": "sha256-f8ac526600247fdf7714617d38ca3c484f9f5b9b0c832b04be3e97434af51fe6"
     }
   }
 }

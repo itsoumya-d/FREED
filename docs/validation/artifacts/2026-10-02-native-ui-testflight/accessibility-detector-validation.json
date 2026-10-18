@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "freed-native-accessibility-detector-validation-v1",
+  "generatedAt": "2026-10-02T06:52:29.535Z",
+  "sanitized": true,
+  "currentSourcesPass": true,
+  "brokenSourceScenariosRejected": [
+    "empty root label",
+    "duplicate root",
+    "empty SOS name",
+    "disconnected SOS callback",
+    "wrong controller route",
+    "missing allowed route",
+    "missing Today SOS"
+  ],
+  "scope": "Source parser mutation behavior only; no OS accessibility/runtime assertion"
+}

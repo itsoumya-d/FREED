@@ -1,0 +1,72 @@
+appId: app.freed.recovery
+name: onboarding-plan
+tags:
+  - smoke
+  - local-write
+---
+# Requires an English signed-out disposable fixture and Apple-capable iOS (or Android).
+# Build the real five-answer journey; no state or Keychain reset.
+- openLink: "freed:///onboarding/welcome"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "screen-welcome" }
+    timeout: 15000
+- tapOn: { id: "onboarding-start" }
+- extendedWaitUntil:
+    visible: { id: "screen-quiz" }
+    timeout: 15000
+- runFlow: "onboarding-quiz.yaml"
+- extendedWaitUntil:
+    visible:
+      id: "screen-planCalculation"
+    timeout: 15000
+- extendedWaitUntil:
+    visible: { id: "onboarding-protect" }
+    timeout: 15000
+- assertVisible: "Your Recovery Preferences"
+- scrollUntilVisible:
+    element: "Mental clarity & focus"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Mental clarity & focus"
+- scrollUntilVisible:
+    element: "Under 1 year"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Under 1 year"
+- scrollUntilVisible:
+    element: "Late night in bed"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Late night in bed"
+- scrollUntilVisible:
+    element: "Brain fog & low drive"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Brain fog & low drive"
+- scrollUntilVisible:
+    element: "Exercise & movement"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Exercise & movement"
+- assertVisible: "Continue to account"
+- assertNotVisible: { id: "screen-main-today" }
+- tapOn: { id: "onboarding-protect" }
+# Account is an app-owned native Modal; await its actual controls, not an underlying route marker.
+- extendedWaitUntil:
+    visible: "Connect your account"
+    timeout: 15000
+- assertVisible: "Sign in with Google"
+- extendedWaitUntil:
+    visible: "Continue with Apple"
+    timeout: 15000
+- assertVisible: "Create account with email"
+- assertVisible: "Sign in with email"
+- assertVisible: "Back to Welcome"
+- assertNotVisible: "Skip for now"
+- assertNotVisible: { id: "screen-main-today" }
+- takeScreenshot: "onboarding-plan"

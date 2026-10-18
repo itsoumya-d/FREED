@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import {getFirestore,Timestamp} from 'firebase-admin/firestore';
+import {getApp} from 'firebase-admin/app';
+import {reserveClaraOwnerQuota} from './clara-cloud-firebase.js';
+const NOW=Date.parse('2026-10-05T12:00:00Z');
+const local=!!process.env.FIRESTORE_EMULATOR_HOST && (process.env.GCLOUD_PROJECT??'').startsWith('demo-');
+test('actual Firestore contention enforces global budget, owner quota, TTL-normalized retries and review dates',{skip:!local},async()=>{
+ const db=getFirestore();assert.equal(getApp().options.projectId,process.env.GCLOUD_PROJECT);
+ const control=db.doc('ai_budget_controls/clara-internal-v1');
+ await control.set({month:'2026-10',reservedCents:2498,version:1});
+ const race=await Promise.all(Array.from({length:8},(_,i)=>reserveClaraOwnerQuota(`budget_user_${i}`,`event_${i}`,NOW)));
+ assert.equal(race.filter(result=>result.status==='allowed').length,1);
+ assert.equal((await control.get()).data()?.reservedCents,2500);
+ await control.set({month:'2026-10',reservedCents:0,version:1});
+ const quota=await Promise.all(Array.from({length:8},(_,i)=>reserveClaraOwnerQuota('free_owner',`quota_${i}`,NOW)));
+ assert.equal(quota.filter(result=>result.status==='allowed').length,3);
+ const daily=(await db.doc('rate_limits/free_owner_ai-clara-daily').get()).data();assert.equal(daily?.count,3);assert.ok(daily?.expiresAt instanceof Timestamp);
+ const acceptedIndex=quota.findIndex(result=>result.status==='allowed');const before=(await control.get()).data()?.reservedCents;
+ assert.equal((await reserveClaraOwnerQuota('free_owner',`quota_${acceptedIndex}`,NOW+60000)).status,'duplicate');assert.equal((await control.get()).data()?.reservedCents,before);
+ await db.doc('backend_jobs/reviewer_review-access-v1').set({uid:'reviewer',kind:'review-access-v1',status:'active',createdAt:Timestamp.fromMillis(NOW-1000),expiresAt:Timestamp.fromMillis(NOW+86400000)});
+ for(let i=0;i<20;i++)assert.equal((await reserveClaraOwnerQuota('reviewer',`review_${i}`,NOW+i*1000)).limit,20);
+ assert.equal((await reserveClaraOwnerQuota('reviewer','review_20',NOW+60001)).status,'daily-quota-exhausted');
+ await db.doc('deletion_tombstones/deleting').set({status:'deleting'});const spend=(await control.get()).data()?.reservedCents;
+ assert.equal((await reserveClaraOwnerQuota('deleting','deleted_event',NOW)).status,'account-deleting');assert.equal((await control.get()).data()?.reservedCents,spend);
+});

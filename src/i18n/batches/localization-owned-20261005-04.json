@@ -1,0 +1,564 @@
+{
+  "entries": [
+    {
+      "source": "Read calm practice instructions and optionally open breathing.",
+      "translations": {
+        "hi": "शांत अभ्यास के निर्देश पढ़ें और चाहें तो श्वास अभ्यास खोलें।",
+        "es": "Lee las instrucciones de calma y abre respiración si quieres.",
+        "pt": "Leia as orientações de calma e abra a respiração se quiser.",
+        "fr": "Lisez les conseils de calme et ouvrez la respiration si vous le souhaitez.",
+        "de": "Lies die Hinweise für eine ruhige Übung und öffne bei Bedarf das Atmen.",
+        "ar": "اقرأ إرشادات التهدئة وافتح تمرين التنفّس إن أردت.",
+        "ja": "落ち着くための習慣を読み、必要なら呼吸を開きます。",
+        "ko": "차분한 습관 안내를 읽고 원하면 호흡 활동을 여세요.",
+        "zh-Hans": "阅读舒缓习惯说明，并按需打开呼吸活动。"
+      }
+    },
+    {
+      "source": "Read comfortable shower instructions and record your practice.",
+      "translations": {
+        "hi": "आरामदायक शॉवर के निर्देश पढ़ें और अपना अभ्यास दर्ज करें।",
+        "es": "Lee las instrucciones para una ducha cómoda y registra tu práctica.",
+        "pt": "Leia as orientações para um banho confortável e registre sua prática.",
+        "fr": "Lisez les conseils pour une douche confortable et consignez votre pratique.",
+        "de": "Lies die Hinweise für eine angenehme Dusche und erfasse deine Übung.",
+        "ar": "اقرأ إرشادات الاستحمام المريح وسجّل ممارستك.",
+        "ja": "無理のないシャワーの説明を読み、実施を記録します。",
+        "ko": "편안한 샤워 안내를 읽고 습관을 기록하세요.",
+        "zh-Hans": "阅读舒适淋浴说明，并记录习惯。"
+      }
+    },
+    {
+      "source": "Read movement instructions and record your own exercise.",
+      "translations": {
+        "hi": "गतिविधि के निर्देश पढ़ें और अपना व्यायाम दर्ज करें।",
+        "es": "Lee las instrucciones de movimiento y registra tu ejercicio.",
+        "pt": "Leia as orientações de movimento e registre seu exercício.",
+        "fr": "Lisez les conseils de mouvement et consignez votre exercice.",
+        "de": "Lies die Bewegungsanleitung und erfasse deine eigene Aktivität.",
+        "ar": "اقرأ إرشادات الحركة وسجّل تمرينك بنفسك.",
+        "ja": "運動の説明を読み、自分で運動を記録します。",
+        "ko": "움직임 안내를 읽고 자신의 운동을 기록하세요.",
+        "zh-Hans": "阅读活动说明，并自行记录运动。"
+      }
+    },
+    {
+      "source": "Read privacy information, get help and manage deletion.",
+      "translations": {
+        "hi": "गोपनीयता जानकारी पढ़ें, मदद लें और मिटाने के विकल्प प्रबंधित करें।",
+        "es": "Lee la información de privacidad, pide ayuda y gestiona la eliminación.",
+        "pt": "Leia as informações de privacidade, peça ajuda e gerencie a exclusão.",
+        "fr": "Lisez les informations de confidentialité, obtenez de l’aide et gérez la suppression.",
+        "de": "Lies die Datenschutzinformationen, erhalte Hilfe und verwalte die Löschung.",
+        "ar": "اقرأ معلومات الخصوصية واحصل على المساعدة وأدِر الحذف.",
+        "ja": "プライバシー情報を読み、ヘルプと削除を管理します。",
+        "ko": "개인정보 안내를 읽고 도움을 받으며 삭제를 관리하세요.",
+        "zh-Hans": "阅读隐私信息、获取帮助并管理删除操作。"
+      }
+    },
+    {
+      "source": "Read recovery articles and open tools.",
+      "translations": {
+        "hi": "स्वस्थ आदतों के लेख पढ़ें और टूल खोलें।",
+        "es": "Lee artículos sobre recuperación y abre herramientas.",
+        "pt": "Leia artigos sobre recuperação e abra ferramentas.",
+        "fr": "Lisez des articles sur le rétablissement et ouvrez les outils.",
+        "de": "Lies Artikel über deinen Weg und öffne passende Werkzeuge.",
+        "ar": "اقرأ مقالات التعافي وافتح الأدوات.",
+        "ja": "回復に関する記事を読み、ツールを開きます。",
+        "ko": "회복 관련 글을 읽고 도구를 여세요.",
+        "zh-Hans": "阅读恢复习惯相关文章并打开工具。"
+      }
+    },
+    {
+      "source": "Read reflection instructions and open private writing.",
+      "translations": {
+        "hi": "चिंतन के निर्देश पढ़ें और निजी लेखन खोलें।",
+        "es": "Lee las instrucciones de reflexión y abre la escritura privada.",
+        "pt": "Leia as orientações de reflexão e abra a escrita privada.",
+        "fr": "Lisez les conseils de réflexion et ouvrez l’écriture privée.",
+        "de": "Lies die Hinweise zum Nachdenken und öffne privates Schreiben.",
+        "ar": "اقرأ إرشادات التأمل وافتح الكتابة الخاصة.",
+        "ja": "振り返りの説明を読み、非公開の文章を書きます。",
+        "ko": "성찰 안내를 읽고 개인 글쓰기를 여세요.",
+        "zh-Hans": "阅读反思说明并打开私人写作。"
+      }
+    },
+    {
+      "source": "Record a difficult moment and plan your next step.",
+      "translations": {
+        "hi": "मुश्किल पल दर्ज करें और अपना अगला कदम तय करें।",
+        "es": "Registra un momento difícil y planifica tu siguiente paso.",
+        "pt": "Registre um momento difícil e planeje seu próximo passo.",
+        "fr": "Consignez un moment difficile et préparez votre prochaine étape.",
+        "de": "Erfasse einen schwierigen Moment und plane deinen nächsten Schritt.",
+        "ar": "سجّل لحظة صعبة وخطّط لخطوتك التالية.",
+        "ja": "難しかった瞬間を記録し、次の一歩を考えます。",
+        "ko": "어려웠던 순간을 기록하고 다음 단계를 계획하세요.",
+        "zh-Hans": "记录困难时刻并规划下一步。"
+      }
+    },
+    {
+      "source": "Record an optional daily commitment.",
+      "translations": {
+        "hi": "वैकल्पिक दैनिक संकल्प दर्ज करें।",
+        "es": "Registra un compromiso diario opcional.",
+        "pt": "Registre um compromisso diário opcional.",
+        "fr": "Consignez un engagement quotidien facultatif.",
+        "de": "Erfasse ein freiwilliges tägliches Versprechen.",
+        "ar": "سجّل التزامًا يوميًا اختياريًا.",
+        "ja": "任意の毎日の誓いを記録します。",
+        "ko": "선택적인 일일 다짐을 기록하세요.",
+        "zh-Hans": "记录可选的每日承诺。"
+      }
+    },
+    {
+      "source": "Record exercise",
+      "translations": {
+        "hi": "व्यायाम दर्ज करें",
+        "es": "Registrar ejercicio",
+        "pt": "Registrar exercício",
+        "fr": "Enregistrer l’exercice",
+        "de": "Bewegung erfassen",
+        "ar": "تسجيل التمرين",
+        "ja": "運動を記録",
+        "ko": "운동 기록",
+        "zh-Hans": "记录运动"
+      }
+    },
+    {
+      "source": "Record mood, urges and sleep.",
+      "translations": {
+        "hi": "मूड, इच्छा और नींद दर्ज करें।",
+        "es": "Registra el ánimo, los impulsos y el sueño.",
+        "pt": "Registre humor, impulsos e sono.",
+        "fr": "Consignez l’humeur, les envies et le sommeil.",
+        "de": "Erfasse Stimmung, Drang und Schlaf.",
+        "ar": "سجّل المزاج والرغبات والنوم.",
+        "ja": "気分、衝動、睡眠を記録します。",
+        "ko": "기분, 충동, 수면을 기록하세요.",
+        "zh-Hans": "记录心情、冲动和睡眠。"
+      }
+    },
+    {
+      "source": "Record the practice you chose for today.",
+      "translations": {
+        "hi": "आज चुना गया अभ्यास दर्ज करें।",
+        "es": "Registra la práctica que elegiste para hoy.",
+        "pt": "Registre a prática escolhida para hoje.",
+        "fr": "Consignez la pratique choisie pour aujourd’hui.",
+        "de": "Erfasse die Übung, die du für heute gewählt hast.",
+        "ar": "سجّل الممارسة التي اخترتها لليوم.",
+        "ja": "今日選んだ習慣を記録しましょう。",
+        "ko": "오늘 선택한 습관을 기록하세요.",
+        "zh-Hans": "记录今天选择的习惯。"
+      }
+    },
+    {
+      "source": "Record this practice only when it reflects your day.",
+      "translations": {
+        "hi": "यह अभ्यास तभी दर्ज करें जब यह आपके दिन के अनुरूप हो।",
+        "es": "Registra esta práctica solo si refleja lo que hiciste hoy.",
+        "pt": "Registre esta prática apenas quando ela refletir seu dia.",
+        "fr": "Consignez cette pratique uniquement si elle reflète votre journée.",
+        "de": "Erfasse diese Übung nur, wenn sie deinen Tag tatsächlich beschreibt.",
+        "ar": "سجّل هذه الممارسة فقط إذا كانت تعبّر عن يومك.",
+        "ja": "その日の実際の行動に合う場合だけ、この習慣を記録してください。",
+        "ko": "실제 하루를 반영할 때만 이 습관을 기록하세요.",
+        "zh-Hans": "仅在符合当天实际情况时记录这项习惯。"
+      }
+    },
+    {
+      "source": "Refresh your routine",
+      "translations": {
+        "hi": "अपनी दिनचर्या ताज़ा करें",
+        "es": "Renueva tu rutina",
+        "pt": "Renove sua rotina",
+        "fr": "Renouveler votre routine",
+        "de": "Deine Routine auffrischen",
+        "ar": "جدّد روتينك",
+        "ja": "習慣を見直す",
+        "ko": "일상 새롭게 하기",
+        "zh-Hans": "调整日常习惯"
+      }
+    },
+    {
+      "source": "Registered time windows for selected individual iOS applications.",
+      "translations": {
+        "hi": "चुने गए अलग-अलग iOS ऐप के लिए दर्ज समय अंतराल।",
+        "es": "Horarios registrados para aplicaciones individuales seleccionadas en iOS.",
+        "pt": "Horários registrados para aplicativos individuais selecionados no iOS.",
+        "fr": "Créneaux enregistrés pour les applications iOS individuelles choisies.",
+        "de": "Registrierte Zeitfenster für ausgewählte einzelne iOS-Apps.",
+        "ar": "فترات مسجّلة لتطبيقات iOS الفردية المختارة.",
+        "ja": "選択した個別のiOSアプリに登録された時間帯です。",
+        "ko": "선택한 개별 iOS 앱에 등록된 시간대예요.",
+        "zh-Hans": "为所选 iOS 独立应用注册的时间段。"
+      }
+    },
+    {
+      "source": "relapse",
+      "translations": {
+        "hi": "फिसलन",
+        "es": "recaída",
+        "pt": "recaída",
+        "fr": "rechute",
+        "de": "Rückschlag",
+        "ar": "انتكاسة",
+        "ja": "つまずき",
+        "ko": "재발",
+        "zh-Hans": "反复"
+      }
+    },
+    {
+      "source": "remote",
+      "translations": {
+        "hi": "ऑनलाइन",
+        "es": "remoto",
+        "pt": "remoto",
+        "fr": "à distance",
+        "de": "online",
+        "ar": "عن بُعد",
+        "ja": "リモート",
+        "ko": "원격",
+        "zh-Hans": "远程"
+      }
+    },
+    {
+      "source": "Remove {{domain}} from local exceptions",
+      "translations": {
+        "hi": "{{domain}} को स्थानीय अपवादों से हटाएँ",
+        "es": "Quitar {{domain}} de las excepciones locales",
+        "pt": "Remover {{domain}} das exceções locais",
+        "fr": "Retirer {{domain}} des exceptions locales",
+        "de": "{{domain}} aus lokalen Ausnahmen entfernen",
+        "ar": "إزالة {{domain}} من الاستثناءات المحلية",
+        "ja": "{{domain}}をローカル例外から削除",
+        "ko": "{{domain}}을 로컬 예외에서 삭제",
+        "zh-Hans": "从本地例外中移除 {{domain}}"
+      }
+    },
+    {
+      "source": "report",
+      "translations": {
+        "hi": "रिपोर्ट",
+        "es": "informe",
+        "pt": "relatório",
+        "fr": "rapport",
+        "de": "Bericht",
+        "ar": "تقرير",
+        "ja": "レポート",
+        "ko": "보고서",
+        "zh-Hans": "报告"
+      }
+    },
+    {
+      "source": "Request {{value1}} min app break",
+      "translations": {
+        "hi": "ऐप में {{value1}} मिनट के विराम का अनुरोध करें",
+        "es": "Solicitar {{value1}} min de pausa de la aplicación",
+        "pt": "Solicitar pausa de {{value1}} min no aplicativo",
+        "fr": "Demander une pause d’application de {{value1}} min",
+        "de": "{{value1}} Min. App-Pause anfordern",
+        "ar": "طلب استراحة للتطبيق لمدة {{value1}} دقيقة",
+        "ja": "アプリの{{value1}}分休憩をリクエスト",
+        "ko": "{{value1}}분 앱 휴식 요청",
+        "zh-Hans": "请求 {{value1}} 分钟应用休息"
+      }
+    },
+    {
+      "source": "Requesting an app break for the original app…",
+      "translations": {
+        "hi": "मूल ऐप के लिए विराम का अनुरोध हो रहा है…",
+        "es": "Solicitando una pausa para la aplicación original…",
+        "pt": "Solicitando uma pausa para o aplicativo original…",
+        "fr": "Demande de pause pour l’application d’origine…",
+        "de": "Pause für die ursprüngliche App wird angefordert…",
+        "ar": "جارٍ طلب استراحة للتطبيق الأصلي…",
+        "ja": "元のアプリの休憩をリクエストしています…",
+        "ko": "원래 앱의 휴식을 요청하고 있어요…",
+        "zh-Hans": "正在请求原应用的休息…"
+      }
+    },
+    {
+      "source": "Rest your feet on the floor.",
+      "translations": {
+        "hi": "पैर ज़मीन पर टिकाएँ।",
+        "es": "Apoya los pies en el suelo.",
+        "pt": "Apoie os pés no chão.",
+        "fr": "Posez les pieds au sol.",
+        "de": "Stelle deine Füße auf den Boden.",
+        "ar": "ضع قدميك على الأرض.",
+        "ja": "足を床につけましょう。",
+        "ko": "발을 바닥에 편안하게 놓으세요.",
+        "zh-Hans": "将双脚放在地面上。"
+      }
+    },
+    {
+      "source": "Resume guided reset",
+      "translations": {
+        "hi": "निर्देशित विराम फिर शुरू करें",
+        "es": "Reanudar ejercicio guiado",
+        "pt": "Retomar exercício guiado",
+        "fr": "Reprendre l’exercice guidé",
+        "de": "Geführte Übung fortsetzen",
+        "ar": "استئناف التمرين الموجّه",
+        "ja": "ガイド付きリセットを再開",
+        "ko": "안내 활동 다시 시작",
+        "zh-Hans": "继续引导活动"
+      }
+    },
+    {
+      "source": "Retry access check",
+      "translations": {
+        "hi": "पहुँच की जाँच फिर करें",
+        "es": "Reintentar comprobación de acceso",
+        "pt": "Tentar verificar acesso novamente",
+        "fr": "Réessayer la vérification d’accès",
+        "de": "Zugriff erneut prüfen",
+        "ar": "إعادة فحص الوصول",
+        "ja": "アクセス確認を再試行",
+        "ko": "접근 확인 다시 시도",
+        "zh-Hans": "重试访问检查"
+      }
+    },
+    {
+      "source": "Retry account access",
+      "translations": {
+        "hi": "खाते की पहुँच फिर आज़माएँ",
+        "es": "Reintentar acceso a la cuenta",
+        "pt": "Tentar acesso à conta novamente",
+        "fr": "Réessayer l’accès au compte",
+        "de": "Kontozugriff erneut versuchen",
+        "ar": "إعادة محاولة الوصول للحساب",
+        "ja": "アカウントへのアクセスを再試行",
+        "ko": "계정 접근 다시 시도",
+        "zh-Hans": "重试账户访问"
+      }
+    },
+    {
+      "source": "Retry discarding saved reset",
+      "translations": {
+        "hi": "सहेजा गया विराम छोड़ने की फिर कोशिश करें",
+        "es": "Reintentar descartar el ejercicio guardado",
+        "pt": "Tentar descartar o exercício salvo novamente",
+        "fr": "Réessayer d’abandonner l’exercice enregistré",
+        "de": "Gespeicherte Übung erneut verwerfen",
+        "ar": "إعادة محاولة إلغاء التمرين المحفوظ",
+        "ja": "保存したリセットの破棄を再試行",
+        "ko": "저장된 활동 삭제 다시 시도",
+        "zh-Hans": "重试放弃已保存的活动"
+      }
+    },
+    {
+      "source": "Retry recording exercise",
+      "translations": {
+        "hi": "व्यायाम दर्ज करने की फिर कोशिश करें",
+        "es": "Reintentar registrar el ejercicio",
+        "pt": "Tentar registrar exercício novamente",
+        "fr": "Réessayer d’enregistrer l’exercice",
+        "de": "Bewegung erneut erfassen",
+        "ar": "إعادة محاولة تسجيل التمرين",
+        "ja": "運動の記録を再試行",
+        "ko": "운동 기록 다시 시도",
+        "zh-Hans": "重试记录运动"
+      }
+    },
+    {
+      "source": "Retry saving",
+      "translations": {
+        "hi": "सहेजने की फिर कोशिश करें",
+        "es": "Reintentar guardar",
+        "pt": "Tentar salvar novamente",
+        "fr": "Réessayer d’enregistrer",
+        "de": "Speichern erneut versuchen",
+        "ar": "إعادة محاولة الحفظ",
+        "ja": "保存を再試行",
+        "ko": "저장 다시 시도",
+        "zh-Hans": "重试保存"
+      }
+    },
+    {
+      "source": "Retry saving access",
+      "translations": {
+        "hi": "पहुँच सहेजने की फिर कोशिश करें",
+        "es": "Reintentar guardar el acceso",
+        "pt": "Tentar salvar o acesso novamente",
+        "fr": "Réessayer d’enregistrer l’accès",
+        "de": "Zugriff erneut speichern",
+        "ar": "إعادة محاولة حفظ الوصول",
+        "ja": "アクセスの保存を再試行",
+        "ko": "접근 권한 저장 다시 시도",
+        "zh-Hans": "重试保存访问权限"
+      }
+    },
+    {
+      "source": "Retry saving answers",
+      "translations": {
+        "hi": "उत्तर सहेजने की फिर कोशिश करें",
+        "es": "Reintentar guardar respuestas",
+        "pt": "Tentar salvar respostas novamente",
+        "fr": "Réessayer d’enregistrer les réponses",
+        "de": "Antworten erneut speichern",
+        "ar": "إعادة محاولة حفظ الإجابات",
+        "ja": "回答の保存を再試行",
+        "ko": "답변 저장 다시 시도",
+        "zh-Hans": "重试保存答案"
+      }
+    },
+    {
+      "source": "Return here to record the movement you completed.",
+      "translations": {
+        "hi": "पूरी की गई गतिविधि दर्ज करने के लिए यहाँ लौटें।",
+        "es": "Vuelve aquí para registrar el movimiento que completaste.",
+        "pt": "Volte aqui para registrar o movimento que você concluiu.",
+        "fr": "Revenez ici pour consigner le mouvement effectué.",
+        "de": "Kehre hierher zurück, um deine abgeschlossene Bewegung zu erfassen.",
+        "ar": "عُد هنا لتسجيل الحركة التي أكملتها.",
+        "ja": "終えた運動を記録するため、ここに戻ってください。",
+        "ko": "완료한 움직임을 기록하려면 여기로 돌아오세요.",
+        "zh-Hans": "返回这里记录已完成的活动。"
+      }
+    },
+    {
+      "source": "Return when you feel ready.",
+      "translations": {
+        "hi": "तैयार महसूस होने पर लौटें।",
+        "es": "Vuelve cuando te sientas listo.",
+        "pt": "Volte quando se sentir pronto.",
+        "fr": "Revenez quand vous vous sentez prêt.",
+        "de": "Kehre zurück, wenn du dich bereit fühlst.",
+        "ar": "عُد عندما تشعر بأنك مستعد.",
+        "ja": "準備ができたら戻りましょう。",
+        "ko": "준비되었다고 느낄 때 돌아오세요.",
+        "zh-Hans": "准备好后再回来。"
+      }
+    },
+    {
+      "source": "Review a local rule-based estimate when enough signals exist.",
+      "translations": {
+        "hi": "पर्याप्त संकेत होने पर स्थानीय नियम-आधारित अनुमान देखें।",
+        "es": "Revisa una estimación local basada en reglas cuando haya suficientes señales.",
+        "pt": "Revise uma estimativa local baseada em regras quando houver sinais suficientes.",
+        "fr": "Consultez une estimation locale fondée sur des règles lorsqu’il y a assez de signaux.",
+        "de": "Sieh dir eine lokale regelbasierte Einschätzung an, sobald genügend Hinweise vorliegen.",
+        "ar": "راجع تقديرًا محليًا قائمًا على قواعد عند توفّر إشارات كافية.",
+        "ja": "十分な記録がある場合に、ローカルのルールに基づく推定を確認します。",
+        "ko": "충분한 정보가 있을 때 로컬 규칙 기반 추정을 확인하세요.",
+        "zh-Hans": "信息足够时，查看基于本地规则的估计。"
+      }
+    },
+    {
+      "source": "Review access",
+      "translations": {
+        "hi": "समीक्षा पहुँच",
+        "es": "Acceso de revisión",
+        "pt": "Acesso para avaliação",
+        "fr": "Accès pour l’évaluation",
+        "de": "Prüfzugang",
+        "ar": "وصول المراجعة",
+        "ja": "審査用アクセス",
+        "ko": "검토용 접근",
+        "zh-Hans": "审核访问"
+      }
+    },
+    {
+      "source": "Review access accepts no payload.",
+      "translations": {
+        "hi": "समीक्षा पहुँच में कोई अतिरिक्त डेटा नहीं दिया जा सकता।",
+        "es": "El acceso de revisión no acepta datos de entrada.",
+        "pt": "O acesso para avaliação não aceita dados de entrada.",
+        "fr": "L’accès pour l’évaluation n’accepte aucune donnée d’entrée.",
+        "de": "Der Prüfzugriff akzeptiert keine Eingabedaten.",
+        "ar": "وصول المراجعة لا يقبل بيانات مُرسلة.",
+        "ja": "審査用アクセスに入力データは指定できません。",
+        "ko": "검토용 접근에는 입력 데이터를 보낼 수 없어요.",
+        "zh-Hans": "审核访问不接受输入数据。"
+      }
+    },
+    {
+      "source": "Review aggregate counts and optional sharing controls.",
+      "translations": {
+        "hi": "कुल गिनती और वैकल्पिक साझाकरण विकल्प देखें।",
+        "es": "Revisa los recuentos agregados y los controles opcionales para compartir.",
+        "pt": "Revise contagens agregadas e controles opcionais de compartilhamento.",
+        "fr": "Consultez les totaux et les commandes de partage facultatif.",
+        "de": "Sieh dir zusammengefasste Zahlen und optionale Freigabeeinstellungen an.",
+        "ar": "راجع الأعداد المجمّعة وخيارات المشاركة الاختيارية.",
+        "ja": "集計された数値と任意の共有設定を確認します。",
+        "ko": "집계된 수치와 선택적 공유 설정을 확인하세요.",
+        "zh-Hans": "查看汇总数量和可选共享设置。"
+      }
+    },
+    {
+      "source": "Review app protection",
+      "translations": {
+        "hi": "ऐप सुरक्षा देखें",
+        "es": "Revisar protección de aplicaciones",
+        "pt": "Revisar proteção de aplicativos",
+        "fr": "Vérifier la protection des applications",
+        "de": "App-Schutz prüfen",
+        "ar": "مراجعة حماية التطبيقات",
+        "ja": "アプリ保護を確認",
+        "ko": "앱 보호 확인",
+        "zh-Hans": "查看应用保护"
+      }
+    },
+    {
+      "source": "Review estimates based on your own recorded activity.",
+      "translations": {
+        "hi": "अपने दर्ज किए गए कार्यों पर आधारित अनुमान देखें।",
+        "es": "Revisa estimaciones basadas en tus actividades registradas.",
+        "pt": "Revise estimativas baseadas nas suas atividades registradas.",
+        "fr": "Consultez les estimations fondées sur vos propres activités enregistrées.",
+        "de": "Sieh dir Einschätzungen auf Basis deiner eigenen erfassten Aktivitäten an.",
+        "ar": "راجع تقديرات مبنية على نشاطك المسجّل.",
+        "ja": "自分が記録した活動に基づく推定を確認します。",
+        "ko": "자신이 기록한 활동에 기반한 추정을 확인하세요.",
+        "zh-Hans": "查看基于自己所记录活动的估计。"
+      }
+    },
+    {
+      "source": "Review filtering coverage, provider and connection health.",
+      "translations": {
+        "hi": "फ़िल्टर का दायरा, प्रदाता और कनेक्शन स्थिति देखें।",
+        "es": "Revisa la cobertura del filtro, el proveedor y el estado de conexión.",
+        "pt": "Revise a cobertura do filtro, o provedor e o estado da conexão.",
+        "fr": "Consultez la couverture du filtrage, le fournisseur et l’état de connexion.",
+        "de": "Prüfe Filterabdeckung, Anbieter und Verbindungsstatus.",
+        "ar": "راجع نطاق التصفية والمزوّد وحالة الاتصال.",
+        "ja": "フィルタの適用範囲、提供元、接続状態を確認します。",
+        "ko": "필터 적용 범위, 제공자, 연결 상태를 확인하세요.",
+        "zh-Hans": "查看过滤范围、提供方和连接状态。"
+      }
+    },
+    {
+      "source": "Review local ordinary-site exceptions and wrong-block support.",
+      "translations": {
+        "hi": "स्थानीय सामान्य-साइट अपवाद और गलत रोक के लिए मदद देखें।",
+        "es": "Revisa excepciones locales para sitios ordinarios y ayuda por bloqueos incorrectos.",
+        "pt": "Revise exceções locais para sites comuns e ajuda para bloqueios incorretos.",
+        "fr": "Consultez les exceptions locales pour les sites ordinaires et l’aide en cas de blocage incorrect.",
+        "de": "Prüfe lokale Ausnahmen für gewöhnliche Seiten und Hilfe bei falschen Sperren.",
+        "ar": "راجع الاستثناءات المحلية للمواقع العادية والمساعدة عند الحظر الخاطئ.",
+        "ja": "一般サイトのローカル例外と、誤ったブロックのヘルプを確認します。",
+        "ko": "일반 사이트의 로컬 예외와 잘못된 차단에 관한 도움말을 확인하세요.",
+        "zh-Hans": "查看普通网站的本地例外和错误拦截帮助。"
+      }
+    },
+    {
+      "source": "Review optional goals and preferred resets.",
+      "translations": {
+        "hi": "वैकल्पिक लक्ष्य और पसंदीदा विराम देखें।",
+        "es": "Revisa objetivos opcionales y ejercicios preferidos.",
+        "pt": "Revise objetivos opcionais e exercícios preferidos.",
+        "fr": "Consultez les objectifs facultatifs et les exercices préférés.",
+        "de": "Prüfe freiwillige Ziele und bevorzugte Übungen.",
+        "ar": "راجع الأهداف الاختيارية والتمارين المفضلة.",
+        "ja": "任意の目標と好みのリセットを確認します。",
+        "ko": "선택적 목표와 선호하는 활동을 확인하세요.",
+        "zh-Hans": "查看可选目标和偏好的调整活动。"
+      }
+    }
+  ]
+}

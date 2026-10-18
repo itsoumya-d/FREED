@@ -1,0 +1,2466 @@
+{
+  "schemaVersion": 1,
+  "researchedOn": "2026-10-12",
+  "requestedRegistry": "requested-browser-coverage-20261011.json",
+  "requestedRegistrySha256": "0e7a4f3657ae20a58c9797724f1ef4572545fd4ed1e25f606ae2df05b65da46b",
+  "products": 66,
+  "requestedPlatformCombinations": 102,
+  "meaning": "Official distribution/listing research; regional/account installability and exact build networking remain separate. Unavailable, uncertain, legacy and renamed requests remain visible. No availability row is a blocking/detection/handoff pass.",
+  "sourcePackets": [
+    {
+      "path": ".superpowers/sdd/2026-10-11-android-recovery-friend-lock/task-36-browser-availability.json",
+      "sha256": "e39d5e6ccafa8b572a2aefe6b12ff6d76d67b85a8b15917c0eb7ffaad7a3dafe"
+    },
+    {
+      "path": ".superpowers/sdd/2026-10-11-android-recovery-friend-lock/task-38-browser-availability.json",
+      "sha256": "90fe90f408dcf960da741a1f2c913165ec3c0337c8711efa91d687a4a4276c5c"
+    }
+  ],
+  "rows": [
+    {
+      "id": "google-chrome",
+      "requestedName": "Google Chrome",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Google mobile FAQ links Android Play and iOS App Store downloads.",
+          "sourceUrls": [
+            "https://www.google.com/chrome/mobile/",
+            "https://support.google.com/chrome/answer/10468685?hl=en&co=GENIE.Platform%3DAndroid"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Google mobile FAQ links Android Play and iOS App Store downloads.",
+          "sourceUrls": [
+            "https://www.google.com/chrome/mobile/",
+            "https://support.google.com/chrome/answer/10468685?hl=en&co=GENIE.Platform%3DAndroid"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Android support documents Secure DNS; record the actual provider/mode on the device rather than assuming system DNS.",
+      "sources": [
+        {
+          "url": "https://www.google.com/chrome/mobile/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://support.google.com/chrome/answer/10468685?hl=en&co=GENIE.Platform%3DAndroid",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "apple-safari",
+      "requestedName": "Apple Safari",
+      "requestedPlatforms": [
+        "ios",
+        "ipados"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-documented",
+          "finding": "Apple documents Safari across iPhone and iPad.",
+          "sourceUrls": [
+            "https://www.apple.com/safari/",
+            "https://support.apple.com/en-us/102602"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ipados",
+          "status": "officially-documented",
+          "finding": "Apple documents Safari across iPhone and iPad.",
+          "sourceUrls": [
+            "https://www.apple.com/safari/",
+            "https://support.apple.com/en-us/102602"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Optional iCloud Private Relay changes Safari request/DNS handling; evaluate its on/off state separately. Safari supports extensions.",
+      "sources": [
+        {
+          "url": "https://www.apple.com/safari/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://support.apple.com/en-us/102602",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "samsung-internet",
+      "requestedName": "Samsung Internet",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed-renamed",
+          "finding": "Original Samsung Internet URL now resolves to Samsung Browser; page lists Android Q or later.",
+          "sourceUrls": [
+            "https://www.samsung.com/us/apps/samsung-browser/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Samsung documents browser extensions; exact networking configuration remains unknown.",
+      "sources": [
+        {
+          "url": "https://www.samsung.com/us/apps/samsung-browser/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "microsoft-edge",
+      "requestedName": "Microsoft Edge",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Microsoft documents stable Android/iOS distribution through their app stores.",
+          "sourceUrls": [
+            "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-mobile-release-schedule"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Microsoft documents stable Android/iOS distribution through their app stores.",
+          "sourceUrls": [
+            "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-mobile-release-schedule"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://learn.microsoft.com/en-us/deployedge/microsoft-edge-mobile-release-schedule",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "mozilla-firefox",
+      "requestedName": "Mozilla Firefox",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Mozilla mobile page offers separate Android and iOS browsers.",
+          "sourceUrls": [
+            "https://www.firefox.com/en-US/mobile/"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Mozilla mobile page offers separate Android and iOS browsers.",
+          "sourceUrls": [
+            "https://www.firefox.com/en-US/mobile/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://www.firefox.com/en-US/mobile/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "amazon-silk",
+      "requestedName": "Amazon Silk",
+      "requestedPlatforms": [
+        "fire-os",
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "fire-os",
+          "status": "officially-documented",
+          "finding": "Amazon support documents Silk on Fire tablets.",
+          "sourceUrls": [
+            "https://digprjsurvey.amazon.com/csad/help/node/201829650",
+            "https://www.developer.amazon.com/docs/fire-tablets/ft-user-agent-strings.html"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "android",
+          "status": "uncertain-general-android",
+          "finding": "Fire-device documentation does not establish official distribution for arbitrary Android phones; do not treat Fire OS as a generic Android pass.",
+          "sourceUrls": [
+            "https://digprjsurvey.amazon.com/csad/help/node/201829650",
+            "https://www.developer.amazon.com/docs/fire-tablets/ft-user-agent-strings.html"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://digprjsurvey.amazon.com/csad/help/node/201829650",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://www.developer.amazon.com/docs/fire-tablets/ft-user-agent-strings.html",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "xiaomi-mi-browser",
+      "requestedName": "Xiaomi Mi Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "store-listed",
+          "finding": "Play listing identifies Mi Browser for Android and Xiaomi product lineage; publisher displayed as Zhigu Corporation Limited.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?id=com.mi.globalbrowser"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?id=com.mi.globalbrowser",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "mint-browser",
+      "requestedName": "Mint Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "store-listed-maintenance-unverified",
+          "finding": "Xiaomi Mint Android listing remains readable; listing presence does not establish current maintenance or target-device installability.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?id=com.mi.globalbrowser.mini"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Data saver is described as ad/image blocking; do not infer a cloud proxy from that label.",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?id=com.mi.globalbrowser.mini",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "vivo-browser",
+      "requestedName": "Vivo Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "store-listed",
+          "finding": "Vivo Browser Android Play listing is readable.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?hl=en&id=com.vivo.browser"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en&id=com.vivo.browser",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "oppo-heytap-browser",
+      "requestedName": "OPPO HeyTap Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "store-listed-name-variant",
+          "finding": "Exact matching HeyTap Play product is titled Internet Browser; preserve the requested OPPO/HeyTap name as an alias pending device identity.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?id=com.heytap.browser"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?id=com.heytap.browser",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "huawei-browser",
+      "requestedName": "Huawei Browser",
+      "requestedPlatforms": [
+        "harmonyos",
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "harmonyos",
+          "status": "officially-documented",
+          "finding": "Huawei explicitly documents its Browser on HarmonyOS 5.0+ phones/tablets.",
+          "sourceUrls": [
+            "https://consumer.huawei.com/cn/support/content/zh-cn16010239/",
+            "https://consumer.huawei.com/en/mobileservices/browser/"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "android",
+          "status": "uncertain-current-android-distribution",
+          "finding": "Global product page is readable but does not establish a current generic Android download or exact EMUI/device eligibility; not inferred from user-agent labels.",
+          "sourceUrls": [
+            "https://consumer.huawei.com/cn/support/content/zh-cn16010239/",
+            "https://consumer.huawei.com/en/mobileservices/browser/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://consumer.huawei.com/cn/support/content/zh-cn16010239/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://consumer.huawei.com/en/mobileservices/browser/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "brave-browser",
+      "requestedName": "Brave Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Brave download catalog provides Android and iOS routes.",
+          "sourceUrls": [
+            "https://brave.com/download/"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Brave download catalog provides Android and iOS routes.",
+          "sourceUrls": [
+            "https://brave.com/download/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "VPN is a separately advertised feature, but this catalog alone does not establish its enabled state or device routing; record configuration independently.",
+      "sources": [
+        {
+          "url": "https://brave.com/download/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "duckduckgo-private-browser",
+      "requestedName": "DuckDuckGo Private Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "DuckDuckGo browser page explicitly links Android and iOS.",
+          "sourceUrls": [
+            "https://duckduckgo.com/app"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "DuckDuckGo browser page explicitly links Android and iOS.",
+          "sourceUrls": [
+            "https://duckduckgo.com/app"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://duckduckgo.com/app",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "tor-browser",
+      "requestedName": "Tor Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "classification": "current-android-distribution",
+      "verifiedAvailability": "Tor Project download site offers Tor Browser for Android.",
+      "networkFactsAndImplications": "Tor routes browsing through encrypted relays. Inference: local DNS filtering must not be presumed to observe destination domains inside Tor.",
+      "uncertainty": null,
+      "sources": [
+        {
+          "url": "https://download.torproject.org/",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": null,
+          "supports": "Official Android browser download route."
+        },
+        {
+          "url": "https://support.torproject.org/tor-browser/getting-started/about-tor-browser/",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": null,
+          "supports": "Tor routing and modified Firefox identity."
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedDeviceEvidence": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "handoffEvidence": "unexecuted"
+    },
+    {
+      "id": "orbot",
+      "requestedName": "Orbot",
+      "requestedPlatforms": [
+        "ios"
+      ],
+      "classification": "current-ios-routing-app-not-browser",
+      "verifiedAvailability": "Official Orbot downloads link an iOS App Store release; also offered on Android beyond the requested row.",
+      "networkFactsAndImplications": "Tor VPN/proxy routing for app traffic, not a browser UI. Needs tunnel/coexistence scenarios and a named browser/client.",
+      "uncertainty": "No FREED/Orbot VPN coexistence, routing precedence or handoff result observed.",
+      "sources": [
+        {
+          "url": "https://orbot.app/en/download/",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": null,
+          "supports": "Official iOS and Android distribution links."
+        },
+        {
+          "url": "https://orbot.app/en/",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": null,
+          "supports": "Encrypted app routing through Tor and mobile platforms."
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedDeviceEvidence": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "handoffEvidence": "unexecuted"
+    },
+    {
+      "id": "onion-browser",
+      "requestedName": "Onion Browser",
+      "requestedPlatforms": [
+        "ios"
+      ],
+      "classification": "current-ios-browser",
+      "verifiedAvailability": "Official Onion Browser page links its iOS App Store listing.",
+      "networkFactsAndImplications": "WebKit browser with Tor routing. Developer release notes document built-in Tor via iOS 17 WKWebView proxy settings as an alternative to Orbot; do not require Orbot for every current scenario.",
+      "uncertainty": "Store user reviews were ignored. Built-in Tor, Orbot and bridges require separate device observations; no routing or coverage pass is inferred.",
+      "sources": [
+        {
+          "url": "https://onionbrowser.com/",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": null,
+          "supports": "iOS identity and official store link."
+        },
+        {
+          "url": "https://onionbrowser.com/faqs",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": null,
+          "supports": "WebKit and Tor routing."
+        },
+        {
+          "url": "https://apps.apple.com/us/app/onion-browser/id519296448",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": "2023-10-25",
+          "supports": "Developer version history: built-in Tor returned in 3.1.0 on iOS 17."
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedDeviceEvidence": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "handoffEvidence": "unexecuted"
+    },
+    {
+      "id": "firefox-focus",
+      "requestedName": "Firefox Focus",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Mozilla mobile catalog supplies Focus download links for Android and iOS.",
+          "sourceUrls": [
+            "https://www.firefox.com/en-US/mobile/",
+            "https://www.firefox.com/en-US/mobile/focus/"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Mozilla mobile catalog supplies Focus download links for Android and iOS.",
+          "sourceUrls": [
+            "https://www.firefox.com/en-US/mobile/",
+            "https://www.firefox.com/en-US/mobile/focus/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://www.firefox.com/en-US/mobile/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://www.firefox.com/en-US/mobile/focus/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "firefox-klar",
+      "requestedName": "Firefox Klar",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-documented",
+          "finding": "Mozilla support has separate Klar Android and iOS sections; iOS documentation says available on App Store. Storefront/region installation not checked.",
+          "sourceUrls": [
+            "https://support.mozilla.org/en-US/products/klar?mobile=1",
+            "https://support.mozilla.org/en-US/kb/what-firefox-klar-ios?redirectlocale=en-US&redirectslug=klar"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-documented",
+          "finding": "Mozilla support has separate Klar Android and iOS sections; iOS documentation says available on App Store. Storefront/region installation not checked.",
+          "sourceUrls": [
+            "https://support.mozilla.org/en-US/products/klar?mobile=1",
+            "https://support.mozilla.org/en-US/kb/what-firefox-klar-ios?redirectlocale=en-US&redirectslug=klar"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "iOS documentation distinguishes standalone browsing from Safari content blocking; those are different test surfaces.",
+      "sources": [
+        {
+          "url": "https://support.mozilla.org/en-US/products/klar?mobile=1",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://support.mozilla.org/en-US/kb/what-firefox-klar-ios?redirectlocale=en-US&redirectslug=klar",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "mull",
+      "requestedName": "Mull",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "classification": "discontinued-maintenance",
+      "verifiedAvailability": "DivestOS final announcement ends updates for its apps; Mull 133.0.3 appears in its final December 2024 app updates.",
+      "networkFactsAndImplications": "Historical Firefox-derived Android app. Remaining installs/archives are legacy targets, not current maintained distributions.",
+      "uncertainty": "Live divestos.org news was inaccessible in this research; used the developer-owned archived website source.",
+      "sources": [
+        {
+          "url": "https://raw.githubusercontent.com/Divested-Mobile/DivestOS-Website/master/stubs/news.html",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": "2024-12",
+          "supports": "Final update ends app maintenance; final Mull release records."
+        },
+        {
+          "url": "https://github.com/Divested-Mobile/DivestOS-Website",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": "2024-12-23",
+          "supports": "Developer website repository archived."
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedDeviceEvidence": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "handoffEvidence": "unexecuted"
+    },
+    {
+      "id": "bromite",
+      "requestedName": "Bromite",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "classification": "legacy-dormant-release",
+      "verifiedAvailability": "Official site still offers Android stable 108.0.5359.156; latest listed release assets are dated 2022-12-19.",
+      "networkFactsAndImplications": "Chromium fork; official site references proxy configuration and DoH support. Exact installed settings remain unknown.",
+      "uncertainty": "No formal developer retirement statement established; classify stale/dormant, not definitively discontinued. APK presence does not establish current security support.",
+      "sources": [
+        {
+          "url": "https://www.bromite.org/",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": null,
+          "supports": "Android product, current displayed version, proxy/DoH references."
+        },
+        {
+          "url": "https://github.com/bromite/bromite/releases",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": "2022-12-19",
+          "supports": "Latest displayed version and asset dates."
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedDeviceEvidence": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "handoffEvidence": "unexecuted"
+    },
+    {
+      "id": "cromite",
+      "requestedName": "Cromite",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "official-release-listed",
+          "finding": "Developer repository offers Android APK releases, Android 10+ across documented architectures.",
+          "sourceUrls": [
+            "https://github.com/uazo/cromite"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Developer identifies Chromium/Bromite fork; DNS/proxy configuration unknown.",
+      "sources": [
+        {
+          "url": "https://github.com/uazo/cromite",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "vanadium",
+      "requestedName": "Vanadium",
+      "requestedPlatforms": [
+        "grapheneos"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "grapheneos",
+          "status": "os-bundled-documented",
+          "finding": "GrapheneOS usage guide identifies Vanadium as its included browser.",
+          "sourceUrls": [
+            "https://grapheneos.org/usage#web-browsing"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "GrapheneOS identifies hardened Chromium plus a WebView provider for other apps. Browser and embedded WebView are distinct surfaces; do not generalize to stock Android.",
+      "sources": [
+        {
+          "url": "https://grapheneos.org/usage#web-browsing",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "librewolf-mobile",
+      "requestedName": "LibreWolf Mobile",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "classification": "no-official-android-version",
+      "verifiedAvailability": "LibreWolf FAQ explicitly says nobody is working on Android. It recommends another product; that is not LibreWolf Mobile.",
+      "networkFactsAndImplications": "Desktop LibreWolf settings must not be projected onto a nonexistent verified Android build.",
+      "uncertainty": null,
+      "sources": [
+        {
+          "url": "https://librewolf.net/docs/faq/",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": null,
+          "supports": "Android version is not being worked on."
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedDeviceEvidence": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "handoffEvidence": "unexecuted"
+    },
+    {
+      "id": "fennec-f-droid",
+      "requestedName": "Fennec F-Droid",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "classification": "current-android-distribution",
+      "verifiedAvailability": "F-Droid lists Fennec 157.0.0 added 2026-10-03, requiring Android 8.0+.",
+      "networkFactsAndImplications": "Firefox-based with add-ons/private mode and Mozilla service connections; exact DNS/proxy behavior must be measured per build.",
+      "uncertainty": "Fennec is a distinct product, not LibreWolf Mobile. No installation performed.",
+      "sources": [
+        {
+          "url": "https://f-droid.org/packages/org.mozilla.fennec_fdroid/",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": "2026-10-03",
+          "supports": "Current Android release and Firefox-based distribution."
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedDeviceEvidence": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "handoffEvidence": "unexecuted"
+    },
+    {
+      "id": "ghostery-dawn-privacy-browser",
+      "requestedName": "Ghostery Dawn Privacy Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "discontinued",
+          "finding": "Ghostery explicitly discontinued Private Browser, formerly Dawn, with no further security/feature updates; replacement extensions are separate products.",
+          "sourceUrls": [
+            "https://www.ghostery.com/blog/ghostery-private-browser-discontinued"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "discontinued",
+          "finding": "Ghostery explicitly discontinued Private Browser, formerly Dawn, with no further security/feature updates; replacement extensions are separate products.",
+          "sourceUrls": [
+            "https://www.ghostery.com/blog/ghostery-private-browser-discontinued"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://www.ghostery.com/blog/ghostery-private-browser-discontinued",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "startpage-private-browser",
+      "requestedName": "Startpage Private Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Startpage FAQ explicitly offers its browser on Android/iOS.",
+          "sourceUrls": [
+            "https://support.startpage.com/hc/en-us/articles/26200911319316-Startpage-App-FAQ"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Startpage FAQ explicitly offers its browser on Android/iOS.",
+          "sourceUrls": [
+            "https://support.startpage.com/hc/en-us/articles/26200911319316-Startpage-App-FAQ"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Anonymous View is a documented separate browsing mode; its routing needs separate investigation rather than equating it with direct navigation.",
+      "sources": [
+        {
+          "url": "https://support.startpage.com/hc/en-us/articles/26200911319316-Startpage-App-FAQ",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "aloha-browser",
+      "requestedName": "Aloha Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Aloha product page identifies Android and iOS store routes.",
+          "sourceUrls": [
+            "https://alohabrowser.com/"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Aloha product page identifies Android and iOS store routes.",
+          "sourceUrls": [
+            "https://alohabrowser.com/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Developer advertises built-in free VPN. No enabled-state or FREED coexistence result was observed.",
+      "sources": [
+        {
+          "url": "https://alohabrowser.com/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "avast-secure-browser",
+      "requestedName": "Avast Secure Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Avast browser product page explicitly provides Android/iOS availability and download variants.",
+          "sourceUrls": [
+            "https://www.avast.com/da-dk/secure-browser"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Avast browser product page explicitly provides Android/iOS availability and download variants.",
+          "sourceUrls": [
+            "https://www.avast.com/da-dk/secure-browser"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Product advertises browser VPN/PRO; precise mobile mode and configuration remain unverified.",
+      "sources": [
+        {
+          "url": "https://www.avast.com/da-dk/secure-browser",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "avg-secure-browser",
+      "requestedName": "AVG Secure Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "AVG browser page links Android download.",
+          "sourceUrls": [
+            "https://www.avg.com/en-us/secure-browser"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-unavailable",
+          "finding": "AVG explicitly states the browser is currently not available for iOS; generic antivirus/VPN footer links are not browser availability.",
+          "sourceUrls": [
+            "https://www.avg.com/en-us/secure-browser"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://www.avg.com/en-us/secure-browser",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "opera",
+      "requestedName": "Opera",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Opera download catalog separately lists Android and iOS.",
+          "sourceUrls": [
+            "https://www.opera.com/download",
+            "https://www.opera.com/features/free-vpn"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Opera download catalog separately lists Android and iOS.",
+          "sourceUrls": [
+            "https://www.opera.com/download",
+            "https://www.opera.com/features/free-vpn"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Opera documents free browser VPN; actual platform/version routing and enabled state need separate evidence.",
+      "sources": [
+        {
+          "url": "https://www.opera.com/download",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://www.opera.com/features/free-vpn",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "opera-gx-mobile",
+      "requestedName": "Opera GX Mobile",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Opera catalog explicitly lists GX for Android and iOS.",
+          "sourceUrls": [
+            "https://www.opera.com/download"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Opera catalog explicitly lists GX for Android and iOS.",
+          "sourceUrls": [
+            "https://www.opera.com/download"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://www.opera.com/download",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "opera-touch",
+      "requestedName": "Opera Touch",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "classification": "renamed-ios-archived-android",
+      "verifiedAvailability": "iOS was renamed Opera Browser on 2021-03-22. Current official download catalog puts Touch for Android under Archived versions.",
+      "networkFactsAndImplications": "My Flow transfers content between devices; its name is not evidence that page traffic is a cloud proxy. Do not inherit standard Opera VPN behavior without checking this exact version.",
+      "uncertainty": "Android archive link exists; current Play distribution and maintenance were not verified. iOS should be tracked as product lineage rather than counted as an independent current app.",
+      "sources": [
+        {
+          "url": "https://blogs.opera.com/mobile/2021/03/opera-touch-on-ios-becomes-opera/",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": "2021-03-22",
+          "supports": "Official iOS rename."
+        },
+        {
+          "url": "https://www.opera.com/download",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": null,
+          "supports": "Android Touch appears under Archived versions."
+        },
+        {
+          "url": "https://help.opera.com/en/touch/",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": null,
+          "supports": "Historical Android product and My Flow function."
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedDeviceEvidence": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "handoffEvidence": "unexecuted"
+    },
+    {
+      "id": "opera-air",
+      "requestedName": "Opera Air",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "classification": "desktop-only-current-catalog",
+      "verifiedAvailability": "Official catalog offers Windows and macOS; no Android/iOS Air distribution listed.",
+      "networkFactsAndImplications": "No mobile networking implementation established; ordinary Opera mobile is a separate product.",
+      "uncertainty": null,
+      "sources": [
+        {
+          "url": "https://www.opera.com/download",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": null,
+          "supports": "Air is listed for Windows and macOS, separately from mobile products."
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedDeviceEvidence": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "handoffEvidence": "unexecuted"
+    },
+    {
+      "id": "vivaldi",
+      "requestedName": "Vivaldi",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Vivaldi has separate Android and iOS product/download pages.",
+          "sourceUrls": [
+            "https://vivaldi.com/android/",
+            "https://vivaldi.com/ios/"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Vivaldi has separate Android and iOS product/download pages.",
+          "sourceUrls": [
+            "https://vivaldi.com/android/",
+            "https://vivaldi.com/ios/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Android page advertises extension customization; do not project that feature onto iOS or infer filtering authority.",
+      "sources": [
+        {
+          "url": "https://vivaldi.com/android/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://vivaldi.com/ios/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "arc-search",
+      "requestedName": "Arc Search",
+      "requestedPlatforms": [
+        "ios",
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Arc support directs iOS and Android users to their stores; stated minimums iOS 16/Android 10. Deprecated Mobile Companion is separate.",
+          "sourceUrls": [
+            "https://resources.arc.net/hc/en-us/articles/20887042551831-Arc-for-iOS-Android-Arc-Search"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Arc support directs iOS and Android users to their stores; stated minimums iOS 16/Android 10. Deprecated Mobile Companion is separate.",
+          "sourceUrls": [
+            "https://resources.arc.net/hc/en-us/articles/20887042551831-Arc-for-iOS-Android-Arc-Search"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Browse for Me searches/reads pages and generates an answer page; its fetch path is not established by ordinary navigation evidence.",
+      "sources": [
+        {
+          "url": "https://resources.arc.net/hc/en-us/articles/20887042551831-Arc-for-iOS-Android-Arc-Search",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "dia-browser",
+      "requestedName": "Dia Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "classification": "desktop-only-current-catalog",
+      "verifiedAvailability": "Official homepage explicitly lists macOS and Windows. Android/iOS release not established.",
+      "networkFactsAndImplications": "Desktop AI/browser features do not establish a mobile network stack.",
+      "uncertainty": null,
+      "sources": [
+        {
+          "url": "https://www.diabrowser.com/",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": null,
+          "supports": "Current available platforms: macOS and Windows."
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedDeviceEvidence": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "handoffEvidence": "unexecuted"
+    },
+    {
+      "id": "perplexity",
+      "requestedName": "Perplexity",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "store-listed-search-app-not-browser-equivalence",
+          "finding": "Perplexity AI Search/Ask Anything is listed for both phone platforms. Do not silently replace this requested app with the separately named Comet browser.",
+          "sourceUrls": [
+            "https://apps.apple.com/us/app/perplexity-ai-search-chat/id1668000334",
+            "https://play.google.com/store/apps/details?hl=en_US&id=ai.perplexity.app.android"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "store-listed-search-app-not-browser-equivalence",
+          "finding": "Perplexity AI Search/Ask Anything is listed for both phone platforms. Do not silently replace this requested app with the separately named Comet browser.",
+          "sourceUrls": [
+            "https://apps.apple.com/us/app/perplexity-ai-search-chat/id1668000334",
+            "https://play.google.com/store/apps/details?hl=en_US&id=ai.perplexity.app.android"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Store descriptions identify AI search/research; exact link-viewing, network fetch and browser-engine path unknown.",
+      "sources": [
+        {
+          "url": "https://apps.apple.com/us/app/perplexity-ai-search-chat/id1668000334",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en_US&id=ai.perplexity.app.android",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "sigmaos",
+      "requestedName": "SigmaOS",
+      "requestedPlatforms": [
+        "ios"
+      ],
+      "classification": "desktop-only-current-catalog",
+      "verifiedAvailability": "Official product describes macOS, Mac sync and native SwiftUI; no iOS release established.",
+      "networkFactsAndImplications": "Official site identifies WebKit on macOS. This is not evidence of an iOS app or Safari-equivalent protection.",
+      "uncertainty": null,
+      "sources": [
+        {
+          "url": "https://sigmaos.com/",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": null,
+          "supports": "Mac/macOS product and WebKit engine."
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedDeviceEvidence": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "handoffEvidence": "unexecuted"
+    },
+    {
+      "id": "puffin-web-browser",
+      "requestedName": "Puffin Web Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "classification": "mobile-listed-cloud-client",
+      "verifiedAvailability": "Android Google Play lists Puffin Web Browser updated 2026-09-02. US App Store old Web Browser URL resolves to Puffin Cloud Browser, compatible with iPhone/iPad; listed version 5.2.9 is dated 2023-02-15.",
+      "networkFactsAndImplications": "Publisher describes cloud-side browsing/rendering and encrypted client/server traffic. Inference: target websites may not appear as ordinary local device DNS requests; test cloud mode separately.",
+      "uncertainty": "Storefront listing is not proof of regional account download, current server access or paid entitlement. Pro/Flash/Incognito are separate variants; no subscription acquired.",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en&id=com.cloudmosa.puffinFree",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": "2026-09-02",
+          "supports": "Android listing and cloud/server traffic description."
+        },
+        {
+          "url": "https://apps.apple.com/us/app/puffin-cloud-browser/id472937654?platform=ipad",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": "2023-02-15",
+          "supports": "Cloud client identity, iPhone/iPad listing, remote rendering and version date."
+        },
+        {
+          "url": "https://www.puffin.com/browser-pro-has-retired",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": "2023-01-01",
+          "supports": "Pro edition retired, not a blanket retirement of all Puffin products."
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedDeviceEvidence": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "handoffEvidence": "unexecuted"
+    },
+    {
+      "id": "dolphin-browser",
+      "requestedName": "Dolphin Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "store-listed",
+          "finding": "Dolphin Android Play listing is readable and identifies MoboTap/Dolphin lineage.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?hl=en&id=mobi.mgeek.TunnyBrowser",
+            "https://dolphin.com/",
+            "https://apps.apple.com/us/app/dolphin-browser/id1440710469"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "uncertain-current-listing-access",
+          "finding": "Developer site retains iPhone/Android identity, but direct iOS listing reads failed/rate-limited. Search result alone was not used as a verified current iOS listing.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?hl=en&id=mobi.mgeek.TunnyBrowser",
+            "https://dolphin.com/",
+            "https://apps.apple.com/us/app/dolphin-browser/id1440710469"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Android product documents add-ons. Cloud sync is not evidence of cloud-rendered page traffic.",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en&id=mobi.mgeek.TunnyBrowser",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://dolphin.com/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://apps.apple.com/us/app/dolphin-browser/id1440710469",
+          "checkedOn": "2026-10-12",
+          "access": "inaccessible-or-rate-limited"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "sleipnir-mobile",
+      "requestedName": "Sleipnir Mobile",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Fenrir offers Android and iPhone/iPad variants. Separate iOS 5.1 announcement is dated 2026-07-30; Android page remains available.",
+          "sourceUrls": [
+            "https://www.fenrir-inc.com/jp/sleipnir-mobile/android/",
+            "https://www.fenrir-inc.com/jp/news/2026/7/30/sleipnir-mobile-for-iphone-ipad-5-1/"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Fenrir offers Android and iPhone/iPad variants. Separate iOS 5.1 announcement is dated 2026-07-30; Android page remains available.",
+          "sourceUrls": [
+            "https://www.fenrir-inc.com/jp/sleipnir-mobile/android/",
+            "https://www.fenrir-inc.com/jp/news/2026/7/30/sleipnir-mobile-for-iphone-ipad-5-1/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://www.fenrir-inc.com/jp/sleipnir-mobile/android/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://www.fenrir-inc.com/jp/news/2026/7/30/sleipnir-mobile-for-iphone-ipad-5-1/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "kiwi-browser",
+      "requestedName": "Kiwi Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "classification": "discontinued-maintenance",
+      "verifiedAvailability": "Developer README says archived, no maintenance after January 2025; it retains a last-release download route.",
+      "networkFactsAndImplications": "Historical Chromium Android browser with extensions. An installed legacy copy needs separate evidence.",
+      "uncertainty": null,
+      "sources": [
+        {
+          "url": "https://github.com/kiwibrowser/src.next/blob/kiwi/README.md",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": "2025-01",
+          "supports": "Maintenance termination after January 2025 and final-release route."
+        },
+        {
+          "url": "https://github.com/kiwibrowser/src",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": "2025-01-23",
+          "supports": "Android Chromium/extension identity and archived repository."
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedDeviceEvidence": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "handoffEvidence": "unexecuted"
+    },
+    {
+      "id": "yandex-browser",
+      "requestedName": "Yandex Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Yandex official mobile support explicitly lists Android and iPhone/iPad; separate Android store listing read.",
+          "sourceUrls": [
+            "https://yandex.com/support/browser-mobile/en/",
+            "https://yandex.com/support/browser-mobile-iphone/en/install/install",
+            "https://play.google.com/store/apps/details?hl=en&id=com.yandex.browser"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Yandex official mobile support explicitly lists Android and iPhone/iPad; separate Android store listing read.",
+          "sourceUrls": [
+            "https://yandex.com/support/browser-mobile/en/",
+            "https://yandex.com/support/browser-mobile-iphone/en/install/install",
+            "https://play.google.com/store/apps/details?hl=en&id=com.yandex.browser"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Android description mentions data compression; transport/routing not established. iPhone has a setting controlling third-party-app link opening, so handoff needs exact configuration evidence.",
+      "sources": [
+        {
+          "url": "https://yandex.com/support/browser-mobile/en/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://yandex.com/support/browser-mobile-iphone/en/install/install",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en&id=com.yandex.browser",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "lemur-browser",
+      "requestedName": "Lemur Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "store-listed",
+          "finding": "Current Lemur Browser: Web Extensions Android listing read; developer homepage timed out.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?hl=en_US&id=com.lemurbrowser.exts"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Extensions are explicit in the current listing identity; precise extension API, engine and DNS/proxy mode not established by the inspected text.",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en_US&id=com.lemurbrowser.exts",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "iceraven",
+      "requestedName": "Iceraven",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "official-release-listed",
+          "finding": "Developer repository documents Android APK installation/releases; device-specific distribution constraints remain unverified.",
+          "sourceUrls": [
+            "https://github.com/fork-maintainers/iceraven-browser"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Developer identifies Fenix/GeckoView, about:config and expanded add-ons. Exact settings matter; no default resolver inferred.",
+      "sources": [
+        {
+          "url": "https://github.com/fork-maintainers/iceraven-browser",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "waterfox-mobile",
+      "requestedName": "Waterfox Mobile",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Waterfox current download page explicitly links Android Google Play.",
+          "sourceUrls": [
+            "https://www.waterfox.com/download/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://www.waterfox.com/download/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "opera-mini",
+      "requestedName": "Opera Mini",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Current Opera catalog lists Mini for Android.",
+          "sourceUrls": [
+            "https://www.opera.com/download",
+            "https://blogs.opera.com/mobile/2019/11/opera-touch-will-replace-opera-mini-on-ios/"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "delisted-official-history",
+          "finding": "Opera confirms Mini was delisted from Apple App Store in August 2019. No current iOS Mini relaunch established; Touch/Opera are separate lineage.",
+          "sourceUrls": [
+            "https://www.opera.com/download",
+            "https://blogs.opera.com/mobile/2019/11/opera-touch-will-replace-opera-mini-on-ios/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Data saving is marketed, but this receipt does not establish which compression/proxy mode is enabled.",
+      "sources": [
+        {
+          "url": "https://www.opera.com/download",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://blogs.opera.com/mobile/2019/11/opera-touch-will-replace-opera-mini-on-ios/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "uc-browser",
+      "requestedName": "UC Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "store-listed",
+          "finding": "Android Play and iPhone App Store listings are readable; region/account download remains untested.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?hl=en&id=com.UCMobile.intl",
+            "https://apps.apple.com/us/app/uc-browser/id1048518592"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "store-listed",
+          "finding": "Android Play and iPhone App Store listings are readable; region/account download remains untested.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?hl=en&id=com.UCMobile.intl",
+            "https://apps.apple.com/us/app/uc-browser/id1048518592"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Current publisher descriptions advertise VPN and data compression. Modes need separate routing evidence; no coverage inference.",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en&id=com.UCMobile.intl",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://apps.apple.com/us/app/uc-browser/id1048518592",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "uc-mini",
+      "requestedName": "UC Mini",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "store-listed",
+          "finding": "Exact UC Mini Android Play listing is readable.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?hl=en_GB&id=com.uc.browser.en",
+            "https://www.ucweb.com/"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "uncertain-no-primary-release-established",
+          "finding": "No readable primary source established a distinct current UC Mini iOS release. UC Browser on iOS does not prove Mini availability.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?hl=en_GB&id=com.uc.browser.en",
+            "https://www.ucweb.com/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en_GB&id=com.uc.browser.en",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://www.ucweb.com/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "hermit",
+      "requestedName": "Hermit",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Developer documents Android Lite Apps browser with download route.",
+          "sourceUrls": [
+            "https://hermit.chimbori.com/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Developer documents WebView-related behavior, per-Lite-App settings and blocking native-app launching. Test links under the exact Lite App configuration.",
+      "sources": [
+        {
+          "url": "https://hermit.chimbori.com/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "foss-browser",
+      "requestedName": "FOSS Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "store-listed",
+          "finding": "F-Droid lists FOSS Browser for Android, including release/version information.",
+          "sourceUrls": [
+            "https://f-droid.org/packages/de.baumann.browser/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Per-domain profiles can override current profile settings. Engine/DNS/proxy details unknown from this listing.",
+      "sources": [
+        {
+          "url": "https://f-droid.org/packages/de.baumann.browser/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "via-browser",
+      "requestedName": "Via Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Via official page directly supplies Android APK and Play links.",
+          "sourceUrls": [
+            "https://viayoo.com/en/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Developer documents userscript support. WebView claims appearing only in user testimonials were not treated as primary engine evidence.",
+      "sources": [
+        {
+          "url": "https://viayoo.com/en/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "monument-browser",
+      "requestedName": "Monument Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "store-listed-name-changed",
+          "finding": "Observed Monument store URL now displays Orions - Privacy Browser. Preserve this name/URL lineage for device verification.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?id=br.marcelo.monumentbrowser"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?id=br.marcelo.monumentbrowser",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "lightning-browser",
+      "requestedName": "Lightning Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "uncertain-current-binary-distribution",
+          "finding": "Developer repository documents an Android browser, but inspected Download/Releases sections expose no usable release link. Source existence is established, current binary distribution is not.",
+          "sourceUrls": [
+            "https://github.com/anthonycr/Lightning-Browser"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://github.com/anthonycr/Lightning-Browser",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "smart-cookie-web",
+      "requestedName": "Smart Cookie Web",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "official-release-listed",
+          "finding": "Developer download page offers official APK, F-Droid and Play routes.",
+          "sourceUrls": [
+            "https://smartcookieweb.com/download/",
+            "https://smartcookieweb.com/browsers/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Original SmartCookieWeb uses WebView; Preview uses GeckoView with add-ons; Chromium version is experimental. Keep these distinct rather than substituting one build.",
+      "sources": [
+        {
+          "url": "https://smartcookieweb.com/download/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://smartcookieweb.com/browsers/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "phoenix-browser",
+      "requestedName": "Phoenix Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "store-listed",
+          "finding": "Phoenix - Fast & Safe Android listing read, matching browser identity.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?hl=en&id=com.transsion.phoenix"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Publisher documents data compression and BitTorrent/Magnet downloads; proxy location/transport remains unknown.",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en&id=com.transsion.phoenix",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "xbrowser",
+      "requestedName": "XBrowser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "store-listed",
+          "finding": "Byteman X Browser listing and matching developer site read; unrelated same-name downloaders were excluded.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?hl=en-US&id=com.xbrowser.play",
+            "https://www.xbext.com/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Developer documents userscripts and third-party downloader/player integration; DNS/proxy behavior unknown.",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en-US&id=com.xbrowser.play",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://www.xbext.com/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "ecosia-browser",
+      "requestedName": "Ecosia Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Ecosia support separately documents Android and iOS browser app download/default-browser setup.",
+          "sourceUrls": [
+            "https://support.ecosia.org/article/653-installing-ecosia-on-your-mobile-device"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Ecosia support separately documents Android and iOS browser app download/default-browser setup.",
+          "sourceUrls": [
+            "https://support.ecosia.org/article/653-installing-ecosia-on-your-mobile-device"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Browser app is distinct from merely selecting Ecosia as another browser search engine; no routing assumption.",
+      "sources": [
+        {
+          "url": "https://support.ecosia.org/article/653-installing-ecosia-on-your-mobile-device",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "oceanhero-browser",
+      "requestedName": "OceanHero Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed",
+          "finding": "Developer FAQ explicitly lists dedicated iOS/Android browsers; Android store listing also read.",
+          "sourceUrls": [
+            "https://oceanhero.today/",
+            "https://play.google.com/store/apps/details?id=com.oceanhero.search"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "officially-listed",
+          "finding": "Developer FAQ explicitly lists dedicated iOS/Android browsers; Android store listing also read.",
+          "sourceUrls": [
+            "https://oceanhero.today/",
+            "https://play.google.com/store/apps/details?id=com.oceanhero.search"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Desktop extensions and mobile browser apps are distinct. DNS/proxy/engine unknown.",
+      "sources": [
+        {
+          "url": "https://oceanhero.today/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://play.google.com/store/apps/details?id=com.oceanhero.search",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "naver-whale",
+      "requestedName": "Naver Whale",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "store-listed",
+          "finding": "NAVER publisher listings read on both Play and App Store; developer download page was script-only.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?id=com.naver.whale",
+            "https://apps.apple.com/us/app/whale-naver-whale-browser/id1374073304"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "store-listed",
+          "finding": "NAVER publisher listings read on both Play and App Store; developer download page was script-only.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?id=com.naver.whale",
+            "https://apps.apple.com/us/app/whale-naver-whale-browser/id1374073304"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?id=com.naver.whale",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        },
+        {
+          "url": "https://apps.apple.com/us/app/whale-naver-whale-browser/id1374073304",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "jiopages",
+      "requestedName": "JioPages",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "officially-listed-renamed",
+          "finding": "Jio explicitly identifies JioSphere as formerly JioPages and provides Android phone download instructions.",
+          "sourceUrls": [
+            "https://www.jio.com/apps/jiosphere/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Built-in VPN is expressly documented. It requires a separate enabled/disabled routing and coexistence scenario.",
+      "sources": [
+        {
+          "url": "https://www.jio.com/apps/jiosphere/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "soul-browser",
+      "requestedName": "Soul Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "store-listed",
+          "finding": "SoulSoft Android Play listing read.",
+          "sourceUrls": [
+            "https://play.google.com/store/apps/details?hl=en&id=com.mycompany.app.soulbrowser"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Publisher explicitly documents DNS changing through Android VpnService. Its interaction with FREED VPN is unexecuted.",
+      "sources": [
+        {
+          "url": "https://play.google.com/store/apps/details?hl=en&id=com.mycompany.app.soulbrowser",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "cake-browser",
+      "requestedName": "Cake Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android",
+          "status": "uncertain-inaccessible",
+          "finding": "Developer domain was inaccessible and primary-store searches did not yield a readable exact listing. Neither current availability nor formal retirement is established.",
+          "sourceUrls": [
+            "https://cakebrowser.com/"
+          ],
+          "checkedOn": "2026-10-12"
+        },
+        {
+          "requestedPlatform": "ios",
+          "status": "uncertain-inaccessible",
+          "finding": "Developer domain was inaccessible and primary-store searches did not yield a readable exact listing. Neither current availability nor formal retirement is established.",
+          "sourceUrls": [
+            "https://cakebrowser.com/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "unknown in the inspected primary sources; no default DNS/proxy behavior inferred",
+      "sources": [
+        {
+          "url": "https://cakebrowser.com/",
+          "checkedOn": "2026-10-12",
+          "access": "inaccessible-or-rate-limited"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "meta-quest-browser",
+      "requestedName": "Meta Quest Browser",
+      "requestedPlatforms": [
+        "android-xr"
+      ],
+      "platformAssessments": [
+        {
+          "requestedPlatform": "android-xr",
+          "status": "documented-headset-product-platform-mismatch",
+          "finding": "Meta documents Browser for Quest/Horizon headsets. Requested android-xr label must not be treated as generic Android XR/phone distribution.",
+          "sourceUrls": [
+            "https://developers.meta.com/vr/documentation/web/browser-specs/"
+          ],
+          "checkedOn": "2026-10-12"
+        }
+      ],
+      "networking": "Meta documents Chromium rendering and WebXR/headset testing; browser mobile viewing mode is not a phone platform. Exact DNS/VPN path unknown.",
+      "sources": [
+        {
+          "url": "https://developers.meta.com/vr/documentation/web/browser-specs/",
+          "checkedOn": "2026-10-12",
+          "access": "read-primary-page"
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedInventory": "unexecuted",
+      "blocking": "unexecuted",
+      "detection": "unexecuted",
+      "handoff": "unexecuted"
+    },
+    {
+      "id": "flow-browser",
+      "requestedName": "Flow Browser",
+      "requestedPlatforms": [
+        "linux",
+        "embedded",
+        "mobile"
+      ],
+      "classification": "embedded-sdk-not-verified-consumer-mobile-app",
+      "verifiedAvailability": "Ekioh offers Flow SDKs including Android, iOS and Linux, plus development builds; no consumer phone-store release established.",
+      "networkFactsAndImplications": "Embedded/custom engine integration means exact vendor build and networking configuration are needed.",
+      "uncertainty": "Interpreted as Ekioh Flow because requested platforms are linux/embedded/mobile; a different same-name app needs separate identification.",
+      "sources": [
+        {
+          "url": "https://www.ekioh.com/flow-browser/",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": null,
+          "supports": "Embedded product, SDK/development platforms and integration model."
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedDeviceEvidence": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "handoffEvidence": "unexecuted"
+    },
+    {
+      "id": "ladybird",
+      "requestedName": "Ladybird",
+      "requestedPlatforms": [
+        "mobile-development-target"
+      ],
+      "classification": "development-desktop-first",
+      "verifiedAvailability": "Official target is Linux/macOS alpha in 2026; Android/iOS are deferred until desktop is in a good state.",
+      "networkFactsAndImplications": "Independent engine under development; no released phone stack to certify here.",
+      "uncertainty": null,
+      "sources": [
+        {
+          "url": "https://ladybird.org/",
+          "accessedDate": "2026-10-12",
+          "publishedOrUpdatedDate": null,
+          "supports": "Active development, desktop alpha target, mobile not current focus."
+        }
+      ],
+      "packageOrBundleIds": null,
+      "installedDeviceEvidence": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "handoffEvidence": "unexecuted"
+    }
+  ],
+  "allDeviceChecks": "unexecuted",
+  "publicRelease": "blocked"
+}

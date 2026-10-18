@@ -497,12 +497,12 @@ Required fields:
 - [ ] `android.appSelectionReturnAutoSync=true`
 - [ ] `android.appSelectionReturnNativePackageSyncConfirmed=true`
 - [ ] `android.appSelectionReturnSelectedAppCount>0`
-- [ ] `android.permissionWizardArtifact checks include Android zero-app disabled, setup-launched app selection, return auto-sync, native package sync, app-selection auto-advance continuation, DNS Guard VPN-consent return refresh plus android.net.VpnService.prepare surface, Usage Access return refresh plus android.settings.USAGE_ACCESS_SETTINGS route, Accessibility return refresh plus android.settings.ACCESSIBILITY_DETAILS_SETTINGS and FREED service component target, and system-settings auto-advance continuation`
+- [ ] `android.permissionWizardArtifact checks include Android zero-app disabled, setup-launched app selection, return auto-sync, native package sync, app-selection auto-advance continuation, DNS Guard VPN-consent return refresh plus android.net.VpnService.prepare surface, Usage Access return refresh plus android.settings.USAGE_ACCESS_SETTINGS route, Accessibility return refresh plus public android.settings.ACCESSIBILITY_SETTINGS and user-enabled FREED service proof, and system-settings auto-advance continuation`
 - [ ] `android.accessibilityServiceEnabled=true`
 - [ ] `android.accessibilityPermissionRunId`
 - [ ] `android.accessibilityPermissionArtifact`
-- [ ] `android.accessibilityPermissionArtifact local freed-android-permission-report-v1 JSON with sanitized=true, matching runId, targeted FREED Accessibility details route, enabled AccessibilityService/user-granted/no-hidden-monitoring checks`
-- [ ] `android.accessibilitySettingsRouteComponent matches FREED AccessibilityService native target`
+- [ ] `android.accessibilityPermissionArtifact local freed-android-permission-report-v1 JSON with sanitized=true, matching runId, public Android Accessibility settings route, enabled AccessibilityService/user-granted/no-hidden-monitoring checks`
+- [ ] `android.accessibilityPermissionArtifact accessibilityServiceComponent identifies FREED AccessibilityService in enabled services`
 - [ ] `android.usageStatsAuthorized=true`
 - [ ] `android.usageAccessPermissionRunId`
 - [ ] `android.usageAccessPermissionArtifact`
@@ -944,9 +944,9 @@ Required fields:
 - [ ] `store.storeProvider matches configured monetization provider`
 - [ ] `store.iosProductId configured FREED Core 3 launch product ID`
 - [ ] `store.androidProductId configured FREED Core 3 launch product ID`
-- [ ] `store.iosLaunchProductIds.{monthly,yearly,lifetime} configured Core 3 launch product IDs only`
-- [ ] `store.androidLaunchProductIds.{monthly,yearly,lifetime} configured Core 3 launch product IDs only`
-- [ ] `store.launchProductSandboxMatrix[] includes yearly, monthly, and lifetime with App Store purchase/restore, Play purchase/restore, and local purchase-verification-smoke-v1 server entitlement verification artifacts inspected per row`
+- [ ] `store.iosLaunchProductIds.{monthly,yearly} configured Core 3 launch product IDs only`
+- [ ] `store.androidLaunchProductIds.{monthly,yearly} configured Core 3 launch product IDs only`
+- [ ] `store.launchProductSandboxMatrix[] includes yearly and monthly with App Store purchase/restore, Play purchase/restore, and local purchase-verification-smoke-v1 server entitlement verification artifacts inspected per row`
 - [ ] `store.purchaseVerifyEndpoint production-safe, no URL credentials/query/fragment, and matches configured purchase verification endpoint`
 - [ ] `store.releasePreflightCommand`
 - [ ] `store.releasePreflightRunId`
@@ -967,17 +967,17 @@ Required fields:
 - [ ] `store.purchaseSmokeCommand`
 - [ ] `store.paywallScopeRunId`
 - [ ] `store.paywallLaunchScopeArtifact`
-- [ ] `store.paywallLaunchScopeArtifact local freed-paywall-launch-scope-report-v1 JSON with sanitized=true, matching paywallScopeRunId, source hashes for the paywall and monetization code, Core 3 yearly/monthly/lifetime plan IDs and configured product IDs visible only, family/accountability/AI-coach product IDs hidden, yearly value anchor visible, restore visible, purchase buttons enabled, server verification copy visible, premium no-ad benefit visible, and no future upsell checks`
+- [ ] `store.paywallLaunchScopeArtifact local freed-paywall-launch-scope-report-v1 JSON with sanitized=true, matching paywallScopeRunId, source hashes for the paywall and monetization code, Core 3 yearly/monthly plan IDs and configured product IDs visible only, family/accountability/AI-coach product IDs hidden, yearly value anchor visible, restore visible, purchase buttons enabled, server verification copy visible, premium no-ad benefit visible, and no future upsell checks`
 - [ ] `store.consoleProductSetupRunId`
 - [ ] `store.consoleProductSetupArtifact`
-- [ ] `store.consoleProductSetupArtifact local freed-store-console-product-setup-report-v1 JSON with sanitized=true, matching consoleProductSetupRunId, source hashes for store product catalog, App Store IAP CSV, Play product CSV, screenshot manifest, read-only Browser app-record readiness report hash proving Play app record, App Store Connect app record, and Apple license-agreement readiness, Core 3 yearly/monthly/lifetime products configured only, App Store monthly/yearly subscription group and lifetime non-consumable configured, Play monthly/yearly base plans and lifetime one-time non-consumable configured, product localizations and review screenshots attached, server-verification metadata configured, redacted App Store Connect and Play Console evidence artifacts with matching hashes captured, future family/accountability/AI-coach SKUs inactive, no extra launch products active, and draft/internal/TestFlight-only status until evidence passes`
+- [ ] `store.consoleProductSetupArtifact local freed-store-console-product-setup-report-v1 JSON with sanitized=true, matching consoleProductSetupRunId, source hashes for store product catalog, App Store IAP CSV, Play product CSV, screenshot manifest, read-only Browser app-record readiness report hash proving Play app record, App Store Connect app record, and Apple license-agreement readiness, Core 3 yearly/monthly products configured only, App Store monthly/yearly subscription group configured, Play monthly/yearly base plans configured, product localizations and review screenshots attached, server-verification metadata configured, redacted App Store Connect and Play Console evidence artifacts with matching hashes captured, future family/accountability/AI-coach SKUs inactive, no extra launch products active, and draft/internal/TestFlight-only status until evidence passes`
 - [ ] `store.purchaseVerificationReportId`
-- [ ] `store.purchaseVerificationArtifact local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof, Core 3 fake-known yearly/monthly/lifetime PASS result rows, 0 failures, endpoint validation, bounded timeout, synthetic-only rejection proof, matching launchProductIdsChecked, no raw token/receipt/order/package echo, checked server-secret key names, and secretValuesOmitted=true`
-- [ ] `store.purchaseVerificationPassCount>=6`
+- [ ] `store.purchaseVerificationArtifact local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof, Core 3 fake-known yearly/monthly PASS result rows, 0 failures, endpoint validation, bounded timeout, synthetic-only rejection proof, matching launchProductIdsChecked, no raw token/receipt/order/package echo, checked server-secret key names, and secretValuesOmitted=true`
+- [ ] `store.purchaseVerificationPassCount>=5`
 - [ ] `store.purchaseVerificationFailedCount=0`
 - [ ] `store.restoreVerificationReportId`
-- [ ] `store.restoreVerificationArtifact local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof, Core 3 fake-known yearly/monthly/lifetime PASS result rows, 0 failures, endpoint validation, bounded timeout, synthetic-only rejection proof, matching launchProductIdsChecked, no raw token/receipt/order/package echo, checked server-secret key names, and secretValuesOmitted=true`
-- [ ] `store.restoreVerificationPassCount>=6`
+- [ ] `store.restoreVerificationArtifact local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof, Core 3 fake-known yearly/monthly PASS result rows, 0 failures, endpoint validation, bounded timeout, synthetic-only rejection proof, matching launchProductIdsChecked, no raw token/receipt/order/package echo, checked server-secret key names, and secretValuesOmitted=true`
+- [ ] `store.restoreVerificationPassCount>=5`
 - [ ] `store.restoreVerificationFailedCount=0`
 - [ ] `store.rewardedAdUnitId configured real AdMob format`
 - [ ] `store.rewardedAdFormat=rewarded`

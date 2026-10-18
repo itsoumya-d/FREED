@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "freed-paywall-launch-source-audit-v1",
+  "generatedAt": "2026-09-27T13:24:56.057Z",
+  "sanitized": true,
+  "result": "fail",
+  "passCount": 14,
+  "failCount": 1,
+  "releaseBoundary": "Local paywall source precheck only. This does not prove the submitted native build, store products, rewarded ads, server receipt verification, or sandbox purchases passed.",
+  "checks": [
+    {
+      "id": "source-files-readable",
+      "status": "pass",
+      "detail": "Paywall and monetization sources are readable.",
+      "next": ""
+    },
+    {
+      "id": "launch-plan-ids-core3",
+      "status": "fail",
+      "detail": "LAUNCH_PREMIUM_PLAN_IDS is yearly, monthly, lifetime in launch order.",
+      "next": ""
+    },
+    {
+      "id": "launch-product-ids-present",
+      "status": "pass",
+      "detail": "Core 3 product IDs are present in monetization config.",
+      "next": ""
+    },
+    {
+      "id": "launch-plan-api-filters-core3",
+      "status": "pass",
+      "detail": "getLaunchPremiumPlans filters products through isLaunchPremiumPlanId.",
+      "next": ""
+    },
+    {
+      "id": "purchase-api-launch-only",
+      "status": "pass",
+      "detail": "purchasePremiumPlan resolves only launch products and rejects future plans.",
+      "next": ""
+    },
+    {
+      "id": "restore-api-launch-only",
+      "status": "pass",
+      "detail": "restorePremiumPurchases passes only launch plans to native restore and rejects future products.",
+      "next": ""
+    },
+    {
+      "id": "paywall-uses-launch-plan-api",
+      "status": "pass",
+      "detail": "PaywallScreen gets plans from getLaunchPremiumPlans.",
+      "next": ""
+    },
+    {
+      "id": "paywall-renders-launch-plans",
+      "status": "pass",
+      "detail": "PaywallScreen renders the launchPlans collection.",
+      "next": ""
+    },
+    {
+      "id": "paywall-defaults-yearly-value-anchor",
+      "status": "pass",
+      "detail": "PaywallScreen defaults the selected plan to yearly.",
+      "next": ""
+    },
+    {
+      "id": "paywall-purchases-selected-plan",
+      "status": "pass",
+      "detail": "PaywallScreen purchases the selected launch plan.",
+      "next": ""
+    },
+    {
+      "id": "paywall-restore-visible",
+      "status": "pass",
+      "detail": "PaywallScreen exposes restore purchase.",
+      "next": ""
+    },
+    {
+      "id": "paywall-premium-no-ad-copy-visible",
+      "status": "pass",
+      "detail": "PaywallScreen shows premium no-ad value.",
+      "next": ""
+    },
+    {
+      "id": "paywall-server-verification-copy-visible",
+      "status": "pass",
+      "detail": "PaywallScreen shows secure store-verification copy before activation.",
+      "next": ""
+    },
+    {
+      "id": "paywall-future-products-hidden",
+      "status": "pass",
+      "detail": "PaywallScreen omits family/accountability/AI-coach future SKUs and labels.",
+      "next": "Remove future product IDs or future plan labels from PaywallScreen until v1 evidence passes."
+    },
+    {
+      "id": "paywall-no-client-premium-bypass",
+      "status": "pass",
+      "detail": "Premium state is set after purchase/restore result.premium, not from a visible client toggle.",
+      "next": ""
+    }
+  ],
+  "launchPlanIds": [
+    "yearly",
+    "monthly",
+    "lifetime"
+  ],
+  "launchProductIds": {
+    "yearly": "freed_premium_yearly",
+    "monthly": "freed_premium_monthly",
+    "lifetime": "freed_premium_lifetime"
+  },
+  "futurePlanIdsDisabledForV1": [
+    "family",
+    "accountability",
+    "ai-coach"
+  ],
+  "futureProductIdsDisabledForV1": [
+    "freed_family_yearly",
+    "freed_accountability_monthly",
+    "freed_ai_coach_monthly"
+  ],
+  "sourceArtifacts": {
+    "paywall": {
+      "path": "src/features/freed-app.tsx",
+      "sha256": "sha256-138f0e59d69b0bdc7a4f7cee144901c1aa2496e186809cb0babd62a2810706a2"
+    },
+    "monetization": {
+      "path": "src/lib/monetization.ts",
+      "sha256": "sha256-01b0e0a5cfb834804d0949eb3955c7ef31f307b7cadcf19ea287b1b5f9e1f89e"
+    }
+  }
+}

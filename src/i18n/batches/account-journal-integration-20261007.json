@@ -1,0 +1,1306 @@
+{
+  "entries": [
+    {
+      "source": "Account deletion completed. This account’s local data was removed.",
+      "translations": {
+        "hi": "खाता मिटा दिया गया। इस खाते का स्थानीय डेटा हटाया गया।",
+        "es": "Cuenta eliminada. Se borraron sus datos locales.",
+        "pt": "Conta excluída. Os dados locais desta conta foram removidos.",
+        "fr": "Compte supprimé. Ses données locales ont été effacées.",
+        "de": "Konto gelöscht. Seine lokalen Daten wurden entfernt.",
+        "ar": "تم حذف الحساب وإزالة بياناته المحلية.",
+        "ja": "アカウントの削除が完了し、このアカウントの端末内データを削除しました。",
+        "ko": "계정 삭제가 완료되었으며 이 계정의 기기 내 데이터가 삭제되었습니다.",
+        "zh-Hans": "账户删除已完成，此账户的本地数据已移除。"
+      }
+    },
+    {
+      "source": "Account deletion started. Cloud completion is still processing; local cleanup was confirmed separately.",
+      "translations": {
+        "hi": "खाता मिटाना शुरू हुआ। क्लाउड पर पूरा होना बाकी है; स्थानीय सफ़ाई की अलग पुष्टि हुई।",
+        "es": "El borrado empezó. Sigue pendiente la confirmación en la nube; la limpieza local se confirmó por separado.",
+        "pt": "A exclusão começou. A conclusão na nuvem segue pendente; a limpeza local foi confirmada separadamente.",
+        "fr": "La suppression a commencé. La confirmation cloud reste en cours ; le nettoyage local a été confirmé séparément.",
+        "de": "Die Löschung läuft. Die Cloud-Bestätigung steht noch aus; die lokale Bereinigung wurde separat bestätigt.",
+        "ar": "بدأ حذف الحساب. تأكيد اكتمال الحذف السحابي ما زال قيد المعالجة؛ وتم تأكيد التنظيف المحلي بشكل منفصل.",
+        "ja": "削除を開始しました。クラウドでの完了は処理中で、端末内の削除は別途確認済みです。",
+        "ko": "계정 삭제가 시작되었습니다. 클라우드 완료는 처리 중이며 로컬 정리는 별도로 확인되었습니다.",
+        "zh-Hans": "账户删除已开始。云端完成仍在处理中，本地清理已单独确认。"
+      }
+    },
+    {
+      "source": "Unclaimed history on this device",
+      "translations": {
+        "hi": "इस डिवाइस पर बिना खाते का पुराना इतिहास",
+        "es": "Historial sin asignar en este dispositivo",
+        "pt": "Histórico sem conta neste dispositivo",
+        "fr": "Historique sans compte sur cet appareil",
+        "de": "Nicht zugeordneter Verlauf auf diesem Gerät",
+        "ar": "سجل غير مرتبط بحساب على هذا الجهاز",
+        "ja": "この端末にある未割り当ての履歴",
+        "ko": "이 기기의 소유 계정 미확인 기록",
+        "zh-Hans": "此设备上尚未归属账户的历史记录"
+      }
+    },
+    {
+      "source": "This older history has no verified account owner. Choose explicitly whether to keep it for this account. Membership and protection permissions are checked separately.",
+      "translations": {
+        "hi": "इस पुराने इतिहास का खाता सत्यापित नहीं है। स्पष्ट रूप से चुनें कि इसे इस खाते के लिए रखना है या नहीं। सदस्यता और सुरक्षा अनुमतियाँ अलग जाँची जाती हैं।",
+        "es": "Este historial antiguo no tiene un titular verificado. Elige si guardarlo para esta cuenta. La suscripción y los permisos se verifican aparte.",
+        "pt": "Este histórico antigo não tem conta verificada. Escolha se deseja mantê-lo nesta conta. Assinatura e permissões são verificadas separadamente.",
+        "fr": "Cet ancien historique n'a pas de compte vérifié. Choisissez explicitement de le garder pour ce compte. L'abonnement et les permissions sont vérifiés séparément.",
+        "de": "Dieser ältere Verlauf hat keinen bestätigten Kontoinhaber. Entscheide ausdrücklich, ob er diesem Konto zugeordnet werden soll. Abo und Schutzberechtigungen werden separat geprüft.",
+        "ar": "لا يوجد مالك حساب موثّق لهذا السجل القديم. اختر صراحةً إن كنت تريد الاحتفاظ به لهذا الحساب. يتم التحقق من الاشتراك وأذونات الحماية بشكل منفصل.",
+        "ja": "この古い履歴の所有アカウントは確認されていません。このアカウントに保存するか明示的に選んでください。会員資格と保護の権限は別途確認されます。",
+        "ko": "이전 기록의 소유 계정이 확인되지 않았습니다. 이 계정에 보관할지 명시적으로 선택하세요. 구독과 보호 권한은 별도로 확인합니다.",
+        "zh-Hans": "此旧历史记录没有已验证的账户所有者。请明确选择是否将其保留给此账户。会员资格和保护权限会单独核验。"
+      }
+    },
+    {
+      "source": "Review local history adoption",
+      "translations": {
+        "hi": "स्थानीय इतिहास जोड़ने की समीक्षा करें",
+        "es": "Revisar asignación del historial local",
+        "pt": "Revisar vínculo do histórico local",
+        "fr": "Vérifier l'attribution de l'historique local",
+        "de": "Zuordnung des lokalen Verlaufs prüfen",
+        "ar": "مراجعة ربط السجل المحلي",
+        "ja": "端末内の履歴の割り当てを確認",
+        "ko": "로컬 기록 연결 검토",
+        "zh-Hans": "查看本地历史记录归属"
+      }
+    },
+    {
+      "source": "Delete account",
+      "translations": {
+        "hi": "खाता मिटाएँ",
+        "es": "Eliminar cuenta",
+        "pt": "Excluir conta",
+        "fr": "Supprimer le compte",
+        "de": "Konto löschen",
+        "ar": "حذف الحساب",
+        "ja": "アカウントを削除",
+        "ko": "계정 삭제",
+        "zh-Hans": "删除账户"
+      }
+    },
+    {
+      "source": "Confirm deletion of this account and its private data",
+      "translations": {
+        "hi": "इस खाते और उसके निजी डेटा को मिटाने की पुष्टि करें",
+        "es": "Confirmar el borrado de esta cuenta y sus datos privados",
+        "pt": "Confirmar exclusão desta conta e dos dados privados",
+        "fr": "Confirmer la suppression de ce compte et de ses données privées",
+        "de": "Löschung dieses Kontos und seiner privaten Daten bestätigen",
+        "ar": "تأكيد حذف هذا الحساب وبياناته الخاصة",
+        "ja": "このアカウントと個人データの削除を確認",
+        "ko": "이 계정과 개인 데이터 삭제 확인",
+        "zh-Hans": "确认删除此账户及其私密数据"
+      }
+    },
+    {
+      "source": "Your journal could not be opened. Its saved data was kept. Try again.",
+      "translations": {
+        "hi": "जर्नल नहीं खुल सका। सहेजा डेटा सुरक्षित है। फिर कोशिश करें।",
+        "es": "No se pudo abrir el diario. Los datos guardados se conservaron. Reintenta.",
+        "pt": "Não foi possível abrir o diário. Os dados salvos foram mantidos. Tente novamente.",
+        "fr": "Le journal n'a pas pu être ouvert. Les données ont été conservées. Réessayez.",
+        "de": "Das Tagebuch konnte nicht geöffnet werden. Gespeicherte Daten bleiben erhalten. Versuche es erneut.",
+        "ar": "تعذر فتح اليوميات. تم الاحتفاظ بالبيانات المحفوظة. حاول مجددًا.",
+        "ja": "日記を開けませんでした。保存データは保持されています。再試行してください。",
+        "ko": "일기를 열 수 없습니다. 저장된 데이터는 보관됩니다. 다시 시도하세요.",
+        "zh-Hans": "无法打开日记。已保存的数据已保留。请重试。"
+      }
+    },
+    {
+      "source": "Connect the owning account before changing automatic backup.",
+      "translations": {
+        "hi": "स्वचालित बैकअप बदलने से पहले उसके खाते से जुड़ें।",
+        "es": "Conecta la cuenta propietaria antes de cambiar el respaldo automático.",
+        "pt": "Conecte a conta proprietária antes de alterar o backup automático.",
+        "fr": "Connectez le compte propriétaire avant de modifier la sauvegarde automatique.",
+        "de": "Verbinde das zugehörige Konto, bevor du das automatische Backup änderst.",
+        "ar": "اربط الحساب المالك قبل تغيير النسخ الاحتياطي التلقائي.",
+        "ja": "自動バックアップを変更する前に所有アカウントに接続してください。",
+        "ko": "자동 백업을 변경하기 전에 소유 계정에 연결하세요.",
+        "zh-Hans": "更改自动备份前，请连接所属账户。"
+      }
+    },
+    {
+      "source": "The backup owner changed. Review the current account.",
+      "translations": {
+        "hi": "बैकअप का खाता बदल गया। वर्तमान खाते की जाँच करें।",
+        "es": "Cambió la cuenta del respaldo. Revisa la cuenta actual.",
+        "pt": "A conta do backup mudou. Confira a conta atual.",
+        "fr": "Le compte de la sauvegarde a changé. Vérifiez le compte actuel.",
+        "de": "Das Backup-Konto hat sich geändert. Prüfe das aktuelle Konto.",
+        "ar": "تغيّر حساب النسخة الاحتياطية. راجع الحساب الحالي.",
+        "ja": "バックアップのアカウントが変更されました。現在のアカウントを確認してください。",
+        "ko": "백업 소유 계정이 변경되었습니다. 현재 계정을 확인하세요.",
+        "zh-Hans": "备份所属账户已改变。请检查当前账户。"
+      }
+    },
+    {
+      "source": "The account changed before sign-out. Review the current account and try again.",
+      "translations": {
+        "hi": "साइन आउट से पहले खाता बदल गया। वर्तमान खाता जाँचकर फिर कोशिश करें।",
+        "es": "La cuenta cambió antes de cerrar sesión. Revísala y reintenta.",
+        "pt": "A conta mudou antes de sair. Confira a conta atual e tente novamente.",
+        "fr": "Le compte a changé avant la déconnexion. Vérifiez-le et réessayez.",
+        "de": "Das Konto hat sich vor dem Abmelden geändert. Prüfe es und versuche es erneut.",
+        "ar": "تغيّر الحساب قبل تسجيل الخروج. راجع الحساب الحالي وحاول مجددًا.",
+        "ja": "ログアウト前にアカウントが変更されました。現在のアカウントを確認して再試行してください。",
+        "ko": "로그아웃 전에 계정이 변경되었습니다. 현재 계정을 확인하고 다시 시도하세요.",
+        "zh-Hans": "退出前账户已改变。请检查当前账户并重试。"
+      }
+    },
+    {
+      "source": "Firebase Auth has not confirmed sign-out. Try again.",
+      "translations": {
+        "hi": "Firebase Auth ने साइन आउट की पुष्टि नहीं की। फिर कोशिश करें।",
+        "es": "Firebase Auth no confirmó el cierre de sesión. Reintenta.",
+        "pt": "O Firebase Auth não confirmou a saída. Tente novamente.",
+        "fr": "Firebase Auth n'a pas confirmé la déconnexion. Réessayez.",
+        "de": "Firebase Auth hat die Abmeldung nicht bestätigt. Versuche es erneut.",
+        "ar": "لم يؤكد Firebase Auth تسجيل الخروج. حاول مجددًا.",
+        "ja": "Firebase Authでログアウトが確認されていません。再試行してください。",
+        "ko": "Firebase Auth가 로그아웃을 확인하지 않았습니다. 다시 시도하세요.",
+        "zh-Hans": "Firebase Auth 尚未确认退出。请重试。"
+      }
+    },
+    {
+      "source": "Signed out. Your private history is kept for its original account on this device. Sign in to that account to open it again.",
+      "translations": {
+        "hi": "साइन आउट हो गया। निजी इतिहास इस डिवाइस पर उसके मूल खाते के लिए रखा गया है। इसे खोलने के लिए उसी खाते में साइन इन करें।",
+        "es": "Sesión cerrada. Tu historial privado se conserva para su cuenta original en este dispositivo. Entra en esa cuenta para abrirlo.",
+        "pt": "Você saiu. Seu histórico privado permanece neste dispositivo para a conta original. Entre nela para abri-lo.",
+        "fr": "Vous êtes déconnecté. Votre historique privé reste sur cet appareil pour son compte d'origine. Connectez ce compte pour le rouvrir.",
+        "de": "Abgemeldet. Dein privater Verlauf bleibt auf diesem Gerät für sein ursprüngliches Konto gespeichert. Melde dich dort an, um ihn zu öffnen.",
+        "ar": "تم تسجيل الخروج. يبقى سجلك الخاص على هذا الجهاز لحسابه الأصلي. سجّل الدخول إلى ذلك الحساب لفتحه مجددًا.",
+        "ja": "ログアウトしました。個人の履歴はこの端末に元のアカウント用として保持されます。同じアカウントでログインすると再び開けます。",
+        "ko": "로그아웃되었습니다. 개인 기록은 이 기기에 원래 계정용으로 보관됩니다. 해당 계정에 로그인하면 다시 열 수 있습니다.",
+        "zh-Hans": "已退出。私密历史记录将保留在此设备上，归原账户所有。登录该账户即可再次打开。"
+      }
+    },
+    {
+      "source": "Connect the owning account before restoring private history.",
+      "translations": {
+        "hi": "निजी इतिहास बहाल करने से पहले उसके खाते से जुड़ें।",
+        "es": "Conecta la cuenta propietaria antes de restaurar el historial privado.",
+        "pt": "Conecte a conta proprietária antes de restaurar o histórico privado.",
+        "fr": "Connectez le compte propriétaire avant de restaurer l'historique privé.",
+        "de": "Verbinde das zugehörige Konto, bevor du den privaten Verlauf wiederherstellst.",
+        "ar": "اربط الحساب المالك قبل استعادة السجل الخاص.",
+        "ja": "個人の履歴を復元する前に所有アカウントに接続してください。",
+        "ko": "개인 기록을 복원하기 전에 소유 계정에 연결하세요.",
+        "zh-Hans": "恢复私密历史记录前，请连接所属账户。"
+      }
+    },
+    {
+      "source": "Connect the owning account before exporting private history.",
+      "translations": {
+        "hi": "निजी इतिहास निर्यात करने से पहले उसके खाते से जुड़ें।",
+        "es": "Conecta la cuenta propietaria antes de exportar el historial privado.",
+        "pt": "Conecte a conta proprietária antes de exportar o histórico privado.",
+        "fr": "Connectez le compte propriétaire avant d'exporter l'historique privé.",
+        "de": "Verbinde das zugehörige Konto, bevor du den privaten Verlauf exportierst.",
+        "ar": "اربط الحساب المالك قبل تصدير السجل الخاص.",
+        "ja": "個人の履歴を書き出す前に所有アカウントに接続してください。",
+        "ko": "개인 기록을 내보내기 전에 소유 계정에 연결하세요.",
+        "zh-Hans": "导出私密历史记录前，请连接所属账户。"
+      }
+    },
+    {
+      "source": "The backup owner changed. File import was stopped.",
+      "translations": {
+        "hi": "बैकअप का खाता बदल गया। फ़ाइल आयात रोक दिया गया।",
+        "es": "Cambió la cuenta del respaldo. Se detuvo la importación.",
+        "pt": "A conta do backup mudou. A importação foi interrompida.",
+        "fr": "Le compte de la sauvegarde a changé. L'importation a été arrêtée.",
+        "de": "Das Backup-Konto hat sich geändert. Der Import wurde gestoppt.",
+        "ar": "تغيّر حساب النسخة الاحتياطية. تم إيقاف استيراد الملف.",
+        "ja": "バックアップのアカウントが変更されたため、ファイルの読み込みを停止しました。",
+        "ko": "백업 소유 계정이 변경되어 파일 가져오기를 중지했습니다.",
+        "zh-Hans": "备份所属账户已改变。文件导入已停止。"
+      }
+    },
+    {
+      "source": "Connect the owning account before restoring cloud text backup.",
+      "translations": {
+        "hi": "क्लाउड टेक्स्ट बैकअप बहाल करने से पहले उसके खाते से जुड़ें।",
+        "es": "Conecta la cuenta propietaria antes de restaurar el respaldo de texto en la nube.",
+        "pt": "Conecte a conta proprietária antes de restaurar o backup de texto na nuvem.",
+        "fr": "Connectez le compte propriétaire avant de restaurer la sauvegarde texte du cloud.",
+        "de": "Verbinde das zugehörige Konto, bevor du das Cloud-Textbackup wiederherstellst.",
+        "ar": "اربط الحساب المالك قبل استعادة النسخة النصية السحابية.",
+        "ja": "クラウドのテキストバックアップを復元する前に所有アカウントに接続してください。",
+        "ko": "클라우드 텍스트 백업을 복원하기 전에 소유 계정에 연결하세요.",
+        "zh-Hans": "恢复云端文本备份前，请连接所属账户。"
+      }
+    },
+    {
+      "source": "The backup owner changed. Restore was stopped.",
+      "translations": {
+        "hi": "बैकअप का खाता बदल गया। बहाली रोक दी गई।",
+        "es": "Cambió la cuenta del respaldo. Se detuvo la restauración.",
+        "pt": "A conta do backup mudou. A restauração foi interrompida.",
+        "fr": "Le compte de la sauvegarde a changé. La restauration a été arrêtée.",
+        "de": "Das Backup-Konto hat sich geändert. Die Wiederherstellung wurde gestoppt.",
+        "ar": "تغيّر حساب النسخة الاحتياطية. تم إيقاف الاستعادة.",
+        "ja": "バックアップのアカウントが変更されたため、復元を停止しました。",
+        "ko": "백업 소유 계정이 변경되어 복원을 중지했습니다.",
+        "zh-Hans": "备份所属账户已改变。恢复已停止。"
+      }
+    },
+    {
+      "source": "Cloud text backup could not be downloaded. Your local history was kept.",
+      "translations": {
+        "hi": "क्लाउड टेक्स्ट बैकअप डाउनलोड नहीं हो सका। स्थानीय इतिहास सुरक्षित है।",
+        "es": "No se pudo descargar el respaldo de texto. Tu historial local se conservó.",
+        "pt": "Não foi possível baixar o backup de texto. O histórico local foi mantido.",
+        "fr": "La sauvegarde texte n'a pas pu être téléchargée. Votre historique local a été conservé.",
+        "de": "Das Cloud-Textbackup konnte nicht heruntergeladen werden. Der lokale Verlauf bleibt erhalten.",
+        "ar": "تعذر تنزيل النسخة النصية السحابية. تم الاحتفاظ بسجلك المحلي.",
+        "ja": "クラウドのテキストバックアップをダウンロードできませんでした。端末内の履歴は保持されています。",
+        "ko": "클라우드 텍스트 백업을 다운로드하지 못했습니다. 로컬 기록은 보관됩니다.",
+        "zh-Hans": "无法下载云端文本备份。本地历史记录已保留。"
+      }
+    },
+    {
+      "source": "The backup owner changed. Review the current account and choose the file again.",
+      "translations": {
+        "hi": "बैकअप का खाता बदल गया। वर्तमान खाता जाँचकर फ़ाइल फिर चुनें।",
+        "es": "Cambió la cuenta del respaldo. Revisa la cuenta actual y elige el archivo otra vez.",
+        "pt": "A conta do backup mudou. Confira a conta atual e selecione o arquivo novamente.",
+        "fr": "Le compte a changé. Vérifiez le compte actuel et choisissez à nouveau le fichier.",
+        "de": "Das Backup-Konto hat sich geändert. Prüfe das aktuelle Konto und wähle die Datei erneut.",
+        "ar": "تغيّر حساب النسخة الاحتياطية. راجع الحساب الحالي واختر الملف مجددًا.",
+        "ja": "バックアップのアカウントが変更されました。現在のアカウントを確認し、ファイルを選び直してください。",
+        "ko": "백업 소유 계정이 변경되었습니다. 현재 계정을 확인하고 파일을 다시 선택하세요.",
+        "zh-Hans": "备份所属账户已改变。请检查当前账户并重新选择文件。"
+      }
+    },
+    {
+      "source": "Text backup restored. Photos were excluded from automatic backup and were not restored.",
+      "translations": {
+        "hi": "टेक्स्ट बैकअप बहाल हुआ। स्वचालित बैकअप में फ़ोटो शामिल नहीं थीं और वे बहाल नहीं हुईं।",
+        "es": "Respaldo de texto restaurado. Las fotos no se incluyeron en el respaldo automático y no se restauraron.",
+        "pt": "Backup de texto restaurado. Fotos não foram incluídas no backup automático e não foram restauradas.",
+        "fr": "Sauvegarde texte restaurée. Les photos étaient exclues de la sauvegarde automatique et n'ont pas été restaurées.",
+        "de": "Textbackup wiederhergestellt. Fotos waren im automatischen Backup ausgeschlossen und wurden nicht wiederhergestellt.",
+        "ar": "تمت استعادة النسخة النصية. لم تُضمّن الصور في النسخ التلقائي ولم تتم استعادتها.",
+        "ja": "テキストバックアップを復元しました。写真は自動バックアップに含まれず、復元されていません。",
+        "ko": "텍스트 백업을 복원했습니다. 사진은 자동 백업에서 제외되어 복원되지 않았습니다.",
+        "zh-Hans": "文本备份已恢复。自动备份不包含照片，因此照片未恢复。"
+      }
+    },
+    {
+      "source": "History restored. Unreferenced photo cleanup needs retry.",
+      "translations": {
+        "hi": "इतिहास बहाल हुआ। अनुपयोगी फ़ोटो की सफ़ाई फिर करनी होगी।",
+        "es": "Historial restaurado. Hay que reintentar la limpieza de fotos sin referencia.",
+        "pt": "Histórico restaurado. A limpeza de fotos sem referência precisa de nova tentativa.",
+        "fr": "Historique restauré. Le nettoyage des photos non référencées doit être réessayé.",
+        "de": "Verlauf wiederhergestellt. Die Bereinigung nicht verwendeter Fotos muss wiederholt werden.",
+        "ar": "تمت استعادة السجل. يلزم إعادة محاولة تنظيف الصور غير المرتبطة.",
+        "ja": "履歴を復元しました。参照されていない写真の削除は再試行が必要です。",
+        "ko": "기록을 복원했습니다. 참조되지 않는 사진 정리를 다시 시도해야 합니다.",
+        "zh-Hans": "历史记录已恢复。未引用照片的清理需要重试。"
+      }
+    },
+    {
+      "source": "Recovery history and journal restored. Membership and device permissions keep their current verified state.",
+      "translations": {
+        "hi": "रिकवरी इतिहास और जर्नल बहाल हुए। सदस्यता और डिवाइस अनुमतियों की मौजूदा सत्यापित स्थिति बरकरार है।",
+        "es": "Historial de recuperación y diario restaurados. La suscripción y los permisos conservan su estado verificado actual.",
+        "pt": "Histórico de recuperação e diário restaurados. Assinatura e permissões mantêm o estado verificado atual.",
+        "fr": "Historique de rétablissement et journal restaurés. L'abonnement et les permissions gardent leur état vérifié actuel.",
+        "de": "Erholungsverlauf und Tagebuch wiederhergestellt. Abo und Geräteberechtigungen behalten ihren bestätigten Status.",
+        "ar": "تمت استعادة سجل التعافي واليوميات. يحتفظ الاشتراك وأذونات الجهاز بحالتهما الموثّقة الحالية.",
+        "ja": "回復の履歴と日記を復元しました。会員資格と端末の権限は現在の確認済みの状態を維持します。",
+        "ko": "회복 기록과 일기를 복원했습니다. 구독과 기기 권한은 현재 확인된 상태를 유지합니다.",
+        "zh-Hans": "恢复历史记录和日记已还原。会员资格和设备权限保持当前已验证状态。"
+      }
+    },
+    {
+      "source": "Backup restore did not complete. Current history was preserved or rollback needs retry.",
+      "translations": {
+        "hi": "बैकअप बहाली पूरी नहीं हुई। मौजूदा इतिहास सुरक्षित है या पुरानी स्थिति लौटाने का पुनः प्रयास चाहिए।",
+        "es": "La restauración no terminó. El historial actual se conservó o hay que reintentar la reversión.",
+        "pt": "A restauração não terminou. O histórico atual foi mantido ou é necessário repetir a reversão.",
+        "fr": "La restauration n'est pas terminée. L'historique a été conservé ou le retour à l'état précédent doit être réessayé.",
+        "de": "Die Wiederherstellung ist nicht abgeschlossen. Der Verlauf bleibt erhalten oder die Rücksetzung muss wiederholt werden.",
+        "ar": "لم تكتمل الاستعادة. تم الاحتفاظ بالسجل الحالي أو يلزم إعادة محاولة التراجع.",
+        "ja": "バックアップの復元は完了していません。現在の履歴は保持されているか、元の状態への復帰を再試行する必要があります。",
+        "ko": "백업 복원이 완료되지 않았습니다. 기존 기록이 보관되었거나 롤백을 다시 시도해야 합니다.",
+        "zh-Hans": "备份恢复未完成。当前历史记录已保留，或需要重试回滚。"
+      }
+    },
+    {
+      "source": "Connect a permanent account before deleting hosted account data.",
+      "translations": {
+        "hi": "क्लाउड खाता डेटा मिटाने से पहले स्थायी खाते से जुड़ें।",
+        "es": "Conecta una cuenta permanente antes de borrar sus datos alojados.",
+        "pt": "Conecte uma conta permanente antes de excluir os dados hospedados.",
+        "fr": "Connectez un compte permanent avant de supprimer les données hébergées.",
+        "de": "Verbinde ein dauerhaftes Konto, bevor du gehostete Kontodaten löschst.",
+        "ar": "اربط حسابًا دائمًا قبل حذف بيانات الحساب المستضافة.",
+        "ja": "クラウド上のアカウントデータを削除する前に永続アカウントに接続してください。",
+        "ko": "서버의 계정 데이터를 삭제하기 전에 정식 계정에 연결하세요.",
+        "zh-Hans": "删除托管账户数据前，请连接正式账户。"
+      }
+    },
+    {
+      "source": "Subscription settings could not open. Try again from your store.",
+      "translations": {
+        "hi": "सदस्यता सेटिंग नहीं खुल सकी। अपनी स्टोर ऐप से फिर कोशिश करें।",
+        "es": "No se abrieron los ajustes de suscripción. Reintenta desde tu tienda.",
+        "pt": "Não foi possível abrir as configurações de assinatura. Tente pela loja.",
+        "fr": "Les réglages de l'abonnement n'ont pas pu s'ouvrir. Réessayez depuis votre boutique.",
+        "de": "Die Abo-Einstellungen konnten nicht geöffnet werden. Versuche es über deinen Store.",
+        "ar": "تعذر فتح إعدادات الاشتراك. حاول مجددًا من المتجر.",
+        "ja": "サブスクリプション設定を開けませんでした。ストアから再試行してください。",
+        "ko": "구독 설정을 열 수 없습니다. 스토어에서 다시 시도하세요.",
+        "zh-Hans": "无法打开订阅设置。请从应用商店重试。"
+      }
+    },
+    {
+      "source": "Confirmed cloud deletion must not request another account deletion.",
+      "translations": {
+        "hi": "पुष्ट क्लाउड विलोपन के बाद दोबारा खाता मिटाने का अनुरोध नहीं होना चाहिए।",
+        "es": "Un borrado en la nube confirmado no debe solicitar otro borrado de cuenta.",
+        "pt": "Uma exclusão na nuvem confirmada não deve solicitar nova exclusão da conta.",
+        "fr": "Une suppression cloud confirmée ne doit pas déclencher une autre demande de suppression.",
+        "de": "Nach bestätigter Cloud-Löschung darf keine neue Kontolöschung angefordert werden.",
+        "ar": "يجب ألا يؤدي الحذف السحابي المؤكد إلى طلب حذف آخر للحساب.",
+        "ja": "クラウドでの削除確認後は、アカウントの削除を再要求しません。",
+        "ko": "확인된 클라우드 삭제는 계정 삭제를 다시 요청하면 안 됩니다.",
+        "zh-Hans": "云端删除已确认后，不应再次请求删除账户。"
+      }
+    },
+    {
+      "source": "Connect the original account to retry its unconfirmed deletion.",
+      "translations": {
+        "hi": "अपुष्ट विलोपन का पुनः प्रयास करने के लिए मूल खाते से जुड़ें।",
+        "es": "Conecta la cuenta original para reintentar su borrado sin confirmar.",
+        "pt": "Conecte a conta original para repetir a exclusão ainda não confirmada.",
+        "fr": "Connectez le compte d'origine pour réessayer sa suppression non confirmée.",
+        "de": "Verbinde das ursprüngliche Konto, um die unbestätigte Löschung zu wiederholen.",
+        "ar": "اربط الحساب الأصلي لإعادة محاولة حذفه غير المؤكد.",
+        "ja": "削除が未確認のアカウントを再試行するには元のアカウントに接続してください。",
+        "ko": "미확인 삭제를 다시 시도하려면 원래 계정에 연결하세요.",
+        "zh-Hans": "请连接原账户，以重试尚未确认的删除请求。"
+      }
+    },
+    {
+      "source": "This group break was accepted. Another guard still restricts this app. Your completed activity is saved.",
+      "translations": {
+        "hi": "इस समूह का विराम स्वीकार हुआ। दूसरा सुरक्षा नियम अभी भी ऐप रोकता है। पूरी की गई गतिविधि सहेजी गई।",
+        "es": "Se aceptó la pausa del grupo. Otra protección aún restringe esta app. Tu actividad completada está guardada.",
+        "pt": "A pausa do grupo foi aceita. Outra proteção ainda restringe o app. Sua atividade concluída foi salva.",
+        "fr": "La pause du groupe a été acceptée. Une autre protection limite encore cette app. Votre activité est enregistrée.",
+        "de": "Die Gruppenpause wurde angenommen. Ein anderer Schutz beschränkt die App weiterhin. Deine Aktivität ist gespeichert.",
+        "ar": "تم قبول استراحة المجموعة. ما زالت حماية أخرى تقيّد هذا التطبيق. تم حفظ نشاطك المكتمل.",
+        "ja": "グループの休憩が受理されました。別の保護がこのアプリを制限しています。完了した活動は保存済みです。",
+        "ko": "그룹 휴식이 승인되었습니다. 다른 보호 기능이 이 앱을 계속 제한합니다. 완료한 활동은 저장되었습니다.",
+        "zh-Hans": "群组休息已接受。其他保护仍限制此应用。已完成的活动已保存。"
+      }
+    },
+    {
+      "source": "Your group app break was confirmed. Protection returns when it ends.",
+      "translations": {
+        "hi": "समूह ऐप का विराम पुष्ट हुआ। इसके अंत में सुरक्षा लौटेगी।",
+        "es": "La pausa de la app del grupo se confirmó. La protección vuelve al terminar.",
+        "pt": "A pausa do app do grupo foi confirmada. A proteção volta ao terminar.",
+        "fr": "La pause de l'app du groupe est confirmée. La protection reprend à son terme.",
+        "de": "Die Gruppen-App-Pause wurde bestätigt. Danach kehrt der Schutz zurück.",
+        "ar": "تم تأكيد استراحة تطبيق المجموعة. تعود الحماية عند انتهائها.",
+        "ja": "グループのアプリ休憩を確認しました。終了時に保護が戻ります。",
+        "ko": "그룹 앱 휴식이 확인되었습니다. 종료되면 보호가 돌아옵니다.",
+        "zh-Hans": "群组应用休息已确认。结束后保护会恢复。"
+      }
+    },
+    {
+      "source": "An interrupted backup restore needs rollback before your private history can open. Saved data was kept.",
+      "translations": {
+        "hi": "अधूरी बैकअप बहाली को वापस करना होगा, तभी निजी इतिहास खुलेगा। सहेजा डेटा सुरक्षित है।",
+        "es": "Hay que revertir la restauración interrumpida antes de abrir el historial privado. Los datos se conservaron.",
+        "pt": "É necessário reverter a restauração interrompida antes de abrir o histórico privado. Os dados foram mantidos.",
+        "fr": "Il faut annuler la restauration interrompue avant d'ouvrir l'historique privé. Les données ont été conservées.",
+        "de": "Die unterbrochene Wiederherstellung muss zurückgesetzt werden, bevor der private Verlauf geöffnet wird. Die Daten bleiben erhalten.",
+        "ar": "يلزم التراجع عن الاستعادة المتقطعة قبل فتح سجلك الخاص. تم الاحتفاظ بالبيانات.",
+        "ja": "中断された復元を元に戻すまで個人の履歴を開けません。保存データは保持されています。",
+        "ko": "개인 기록을 열기 전에 중단된 백업 복원을 롤백해야 합니다. 데이터는 보관됩니다.",
+        "zh-Hans": "打开私密历史记录前，需要回滚中断的备份恢复。已保存的数据已保留。"
+      }
+    },
+    {
+      "source": "Retry backup rollback",
+      "translations": {
+        "hi": "बैकअप वापस करने का पुनः प्रयास",
+        "es": "Reintentar reversión del respaldo",
+        "pt": "Repetir reversão do backup",
+        "fr": "Réessayer le retour à l'état précédent",
+        "de": "Backup-Rücksetzung wiederholen",
+        "ar": "إعادة محاولة التراجع عن النسخة",
+        "ja": "バックアップの復帰を再試行",
+        "ko": "백업 롤백 재시도",
+        "zh-Hans": "重试备份回滚"
+      }
+    },
+    {
+      "source": "Keep older history for this account?",
+      "translations": {
+        "hi": "पुराना इतिहास इस खाते के लिए रखें?",
+        "es": "¿Guardar el historial antiguo para esta cuenta?",
+        "pt": "Manter o histórico antigo nesta conta?",
+        "fr": "Garder l'ancien historique pour ce compte ?",
+        "de": "Älteren Verlauf diesem Konto zuordnen?",
+        "ar": "الاحتفاظ بالسجل القديم لهذا الحساب؟",
+        "ja": "古い履歴をこのアカウントに保存しますか？",
+        "ko": "이 계정에 이전 기록을 보관할까요?",
+        "zh-Hans": "将旧历史记录保留给此账户？"
+      }
+    },
+    {
+      "source": "Confirm that this unclaimed history belongs to you. It will be kept for the currently connected account. This choice does not restore purchases or device permissions.",
+      "translations": {
+        "hi": "पुष्टि करें कि यह बिना खाते का इतिहास आपका है। इसे वर्तमान खाते के लिए रखा जाएगा। इससे खरीद या डिवाइस अनुमतियाँ बहाल नहीं होतीं।",
+        "es": "Confirma que este historial sin asignar es tuyo. Se guardará para la cuenta actual. No restaura compras ni permisos del dispositivo.",
+        "pt": "Confirme que este histórico sem conta é seu. Ele será mantido para a conta conectada. Isso não restaura compras nem permissões do dispositivo.",
+        "fr": "Confirmez que cet historique sans compte vous appartient. Il sera gardé pour le compte connecté. Ce choix ne restaure ni achats ni permissions.",
+        "de": "Bestätige, dass dieser nicht zugeordnete Verlauf dir gehört. Er wird dem verbundenen Konto zugeordnet. Käufe und Geräteberechtigungen werden dadurch nicht wiederhergestellt.",
+        "ar": "أكّد أن هذا السجل غير المرتبط يخصك. سيُحتفظ به للحساب المتصل حاليًا. هذا الاختيار لا يستعيد المشتريات أو أذونات الجهاز.",
+        "ja": "この未割り当ての履歴が自分のものだと確認してください。現在接続中のアカウントに保存されます。購入や端末の権限は復元されません。",
+        "ko": "이 미연결 기록이 본인 것인지 확인하세요. 현재 연결된 계정에 보관됩니다. 구매 내역이나 기기 권한은 복원되지 않습니다.",
+        "zh-Hans": "请确认这些未归属的历史记录属于您。记录将保留给当前连接的账户。此选择不会恢复购买资格或设备权限。"
+      }
+    },
+    {
+      "source": "Keep history unclaimed",
+      "translations": {
+        "hi": "इतिहास बिना खाते का ही रखें",
+        "es": "Dejar historial sin asignar",
+        "pt": "Manter histórico sem conta",
+        "fr": "Garder l'historique sans compte",
+        "de": "Verlauf nicht zuordnen",
+        "ar": "إبقاء السجل غير مرتبط",
+        "ja": "履歴を未割り当てのままにする",
+        "ko": "기록을 미연결 상태로 유지",
+        "zh-Hans": "保持历史记录未归属"
+      }
+    },
+    {
+      "source": "Keep history for this account",
+      "translations": {
+        "hi": "इतिहास इस खाते के लिए रखें",
+        "es": "Guardar historial para esta cuenta",
+        "pt": "Manter histórico nesta conta",
+        "fr": "Garder l'historique pour ce compte",
+        "de": "Verlauf diesem Konto zuordnen",
+        "ar": "الاحتفاظ بالسجل لهذا الحساب",
+        "ja": "履歴をこのアカウントに保存",
+        "ko": "이 계정에 기록 보관",
+        "zh-Hans": "为此账户保留历史记录"
+      }
+    },
+    {
+      "source": "Older local history is now kept for this account.",
+      "translations": {
+        "hi": "पुराना स्थानीय इतिहास अब इस खाते के लिए रखा गया है।",
+        "es": "El historial local antiguo queda guardado para esta cuenta.",
+        "pt": "O histórico local antigo agora pertence a esta conta.",
+        "fr": "L'ancien historique local est maintenant gardé pour ce compte.",
+        "de": "Der ältere lokale Verlauf ist jetzt diesem Konto zugeordnet.",
+        "ar": "السجل المحلي القديم محفوظ الآن لهذا الحساب.",
+        "ja": "古い端末内の履歴をこのアカウント用に保存しました。",
+        "ko": "이전 로컬 기록이 이제 이 계정용으로 보관됩니다.",
+        "zh-Hans": "旧本地历史记录现已归属此账户。"
+      }
+    },
+    {
+      "source": "Local history could not be adopted. Its original copy was kept.",
+      "translations": {
+        "hi": "स्थानीय इतिहास नहीं जोड़ा जा सका। मूल प्रति सुरक्षित है।",
+        "es": "No se pudo asignar el historial local. Se conservó la copia original.",
+        "pt": "Não foi possível vincular o histórico local. A cópia original foi mantida.",
+        "fr": "L'historique local n'a pas pu être attribué. L'original a été conservé.",
+        "de": "Der lokale Verlauf konnte nicht zugeordnet werden. Die Originalkopie bleibt erhalten.",
+        "ar": "تعذر ربط السجل المحلي. تم الاحتفاظ بنسخته الأصلية.",
+        "ja": "端末内の履歴を割り当てられませんでした。元のコピーは保持されています。",
+        "ko": "로컬 기록을 연결하지 못했습니다. 원본은 보관됩니다.",
+        "zh-Hans": "无法归属本地历史记录。原始副本已保留。"
+      }
+    },
+    {
+      "source": "This restores recovery history and merges saved journal entries for this account. Deleted legacy notes stay deleted. Create a backup first if you want to keep the current history. Membership and device permissions are checked separately.",
+      "translations": {
+        "hi": "यह रिकवरी इतिहास बहाल करता है और खाते की जर्नल प्रविष्टियाँ मिलाता है। मिटाए गए पुराने नोट वापस नहीं आते। मौजूदा इतिहास रखना हो तो पहले बैकअप बनाएँ। सदस्यता और डिवाइस अनुमतियाँ अलग जाँची जाती हैं।",
+        "es": "Restaura el historial y combina entradas del diario de esta cuenta. Las notas antiguas borradas siguen borradas. Crea un respaldo para conservar el historial actual. La suscripción y los permisos se verifican aparte.",
+        "pt": "Restaura o histórico e mescla entradas do diário desta conta. Notas antigas excluídas continuam excluídas. Faça um backup antes para manter o histórico atual. Assinatura e permissões são verificadas separadamente.",
+        "fr": "Cette action restaure l'historique et fusionne les entrées du journal de ce compte. Les anciennes notes supprimées le restent. Sauvegardez d'abord l'historique actuel pour le garder. Abonnement et permissions sont vérifiés séparément.",
+        "de": "Dies stellt den Verlauf wieder her und führt Tagebucheinträge dieses Kontos zusammen. Gelöschte ältere Notizen bleiben gelöscht. Sichere zuerst den aktuellen Verlauf, wenn du ihn behalten möchtest. Abo und Geräteberechtigungen werden separat geprüft.",
+        "ar": "يستعيد هذا سجل التعافي ويدمج تدوينات هذا الحساب. تبقى الملاحظات القديمة المحذوفة محذوفة. أنشئ نسخة أولًا إن أردت الاحتفاظ بالسجل الحالي. يتم التحقق من الاشتراك والأذونات بشكل منفصل.",
+        "ja": "回復の履歴を復元し、このアカウントの日記を統合します。削除済みの古いメモは戻りません。現在の履歴を残したい場合は先にバックアップしてください。会員資格と端末の権限は別途確認されます。",
+        "ko": "회복 기록을 복원하고 이 계정의 일기 항목을 병합합니다. 삭제된 이전 메모는 복구하지 않습니다. 현재 기록을 보관하려면 먼저 백업하세요. 구독과 기기 권한은 별도로 확인합니다.",
+        "zh-Hans": "此操作会恢复康复历史记录并合并此账户的日记条目。已删除的旧笔记不会恢复。若要保留当前历史，请先备份。会员资格和设备权限会单独核验。"
+      }
+    },
+    {
+      "source": "Restoring backup…",
+      "translations": {
+        "hi": "बैकअप बहाल हो रहा है…",
+        "es": "Restaurando respaldo…",
+        "pt": "Restaurando backup…",
+        "fr": "Restauration de la sauvegarde…",
+        "de": "Backup wird wiederhergestellt…",
+        "ar": "جارٍ استعادة النسخة…",
+        "ja": "バックアップを復元中…",
+        "ko": "백업 복원 중…",
+        "zh-Hans": "正在恢复备份…"
+      }
+    },
+    {
+      "source": "Account deletion could not complete. Your receipt and remaining local data are kept for retry.",
+      "translations": {
+        "hi": "खाता मिटाना पूरा नहीं हुआ। पुनः प्रयास के लिए रसीद और बचा स्थानीय डेटा सुरक्षित हैं।",
+        "es": "No se completó el borrado. El recibo y los datos locales restantes se conservan para reintentar.",
+        "pt": "A exclusão não terminou. O recibo e os dados locais restantes foram mantidos para nova tentativa.",
+        "fr": "La suppression n'est pas terminée. Le reçu et les données locales restantes sont conservés pour réessayer.",
+        "de": "Die Löschung ist nicht abgeschlossen. Bestätigung und verbleibende lokale Daten bleiben für einen erneuten Versuch erhalten.",
+        "ar": "لم يكتمل حذف الحساب. تم الاحتفاظ بالإيصال والبيانات المحلية المتبقية لإعادة المحاولة.",
+        "ja": "アカウントの削除は完了していません。再試行用に記録と残りの端末内データを保持しています。",
+        "ko": "계정 삭제가 완료되지 않았습니다. 재시도를 위해 확인 기록과 남은 로컬 데이터를 보관합니다.",
+        "zh-Hans": "账户删除未完成。回执和剩余本地数据已保留，供重试使用。"
+      }
+    },
+    {
+      "source": "Deleting your account removes its hosted data and this account's private local history. Other accounts on this device are kept.",
+      "translations": {
+        "hi": "खाता मिटाने पर उसका क्लाउड डेटा और निजी स्थानीय इतिहास हटेंगे। इस डिवाइस के दूसरे खाते सुरक्षित रहेंगे।",
+        "es": "Eliminar la cuenta borra sus datos alojados y su historial privado local. Las demás cuentas del dispositivo se conservan.",
+        "pt": "Excluir a conta remove seus dados hospedados e histórico privado local. Outras contas neste dispositivo são mantidas.",
+        "fr": "Supprimer le compte efface ses données hébergées et son historique privé local. Les autres comptes de l'appareil sont conservés.",
+        "de": "Die Kontolöschung entfernt seine gehosteten Daten und seinen privaten lokalen Verlauf. Andere Konten auf diesem Gerät bleiben erhalten.",
+        "ar": "حذف الحساب يزيل بياناته المستضافة وسجله المحلي الخاص. تُحفظ الحسابات الأخرى على هذا الجهاز.",
+        "ja": "アカウントの削除でクラウド上のデータとこのアカウントの端末内の個人履歴を削除します。他のアカウントは保持されます。",
+        "ko": "계정을 삭제하면 서버 데이터와 이 계정의 개인 로컬 기록이 삭제됩니다. 이 기기의 다른 계정은 보관됩니다.",
+        "zh-Hans": "删除账户会移除其托管数据和私密本地历史记录。此设备上的其他账户将保留。"
+      }
+    },
+    {
+      "source": "Account deletion does not cancel an App Store or Google Play subscription. Manage your subscription separately.",
+      "translations": {
+        "hi": "खाता मिटाने से App Store या Google Play की सदस्यता रद्द नहीं होती। सदस्यता अलग प्रबंधित करें।",
+        "es": "Eliminar la cuenta no cancela una suscripción de App Store o Google Play. Gestiónala por separado.",
+        "pt": "Excluir a conta não cancela assinatura da App Store ou Google Play. Gerencie-a separadamente.",
+        "fr": "La suppression du compte n'annule pas un abonnement App Store ou Google Play. Gérez-le séparément.",
+        "de": "Die Kontolöschung kündigt kein App-Store- oder Google-Play-Abo. Verwalte es separat.",
+        "ar": "حذف الحساب لا يلغي اشتراك App Store أو Google Play. أدِر الاشتراك بشكل منفصل.",
+        "ja": "アカウントを削除してもApp StoreやGoogle Playのサブスクリプションは解約されません。別途管理してください。",
+        "ko": "계정을 삭제해도 App Store 또는 Google Play 구독은 취소되지 않습니다. 별도로 관리하세요.",
+        "zh-Hans": "删除账户不会取消 App Store 或 Google Play 订阅。请单独管理订阅。"
+      }
+    },
+    {
+      "source": "Account deletion completed and this account’s local data was removed.",
+      "translations": {
+        "hi": "खाता मिटा दिया गया और इस खाते का स्थानीय डेटा हट गया।",
+        "es": "Cuenta eliminada y sus datos locales borrados.",
+        "pt": "Conta excluída e dados locais desta conta removidos.",
+        "fr": "Compte supprimé et données locales effacées.",
+        "de": "Konto und seine lokalen Daten wurden gelöscht.",
+        "ar": "تم حذف الحساب وإزالة بياناته المحلية.",
+        "ja": "アカウントとこのアカウントの端末内データの削除が完了しました。",
+        "ko": "계정과 이 계정의 로컬 데이터 삭제가 완료되었습니다.",
+        "zh-Hans": "账户删除已完成，此账户的本地数据已移除。"
+      }
+    },
+    {
+      "source": "Cloud deletion is confirmed. Local cleanup still needs to finish.",
+      "translations": {
+        "hi": "क्लाउड पर विलोपन पुष्ट है। स्थानीय सफ़ाई अभी पूरी करनी है।",
+        "es": "El borrado en la nube está confirmado. Falta completar la limpieza local.",
+        "pt": "A exclusão na nuvem foi confirmada. A limpeza local ainda precisa terminar.",
+        "fr": "La suppression cloud est confirmée. Le nettoyage local doit encore finir.",
+        "de": "Die Cloud-Löschung ist bestätigt. Die lokale Bereinigung muss noch abgeschlossen werden.",
+        "ar": "تم تأكيد الحذف السحابي. لا يزال التنظيف المحلي بحاجة إلى إكمال.",
+        "ja": "クラウドでの削除は確認済みです。端末内の削除はまだ完了していません。",
+        "ko": "클라우드 삭제가 확인되었습니다. 로컬 정리는 아직 완료해야 합니다.",
+        "zh-Hans": "云端删除已确认。本地清理仍需完成。"
+      }
+    },
+    {
+      "source": "The server accepted deletion. Completion is still processing; it has not been confirmed.",
+      "translations": {
+        "hi": "सर्वर ने विलोपन स्वीकार किया। पूरा होना अभी प्रसंस्करण में है; इसकी पुष्टि नहीं हुई।",
+        "es": "El servidor aceptó el borrado. Sigue procesándose; su finalización no se ha confirmado.",
+        "pt": "O servidor aceitou a exclusão. A conclusão segue em processamento e não foi confirmada.",
+        "fr": "Le serveur a accepté la suppression. Elle reste en cours ; sa fin n'est pas confirmée.",
+        "de": "Der Server hat die Löschung angenommen. Sie wird noch verarbeitet; der Abschluss ist nicht bestätigt.",
+        "ar": "قبل الخادم الحذف. لا يزال الاكتمال قيد المعالجة ولم يتم تأكيده.",
+        "ja": "サーバーが削除を受理しました。処理中で、完了はまだ確認されていません。",
+        "ko": "서버가 삭제를 수락했습니다. 아직 처리 중이며 완료는 확인되지 않았습니다.",
+        "zh-Hans": "服务器已接受删除。完成状态仍在处理中，尚未确认。"
+      }
+    },
+    {
+      "source": "The deletion response was not confirmed. Retry or contact support; sign-out alone does not prove deletion.",
+      "translations": {
+        "hi": "विलोपन का उत्तर पुष्ट नहीं हुआ। फिर कोशिश करें या सहायता लें; केवल साइन आउट विलोपन का प्रमाण नहीं है।",
+        "es": "No se confirmó la respuesta de borrado. Reintenta o contacta con soporte; cerrar sesión no prueba el borrado.",
+        "pt": "A resposta da exclusão não foi confirmada. Tente novamente ou contate o suporte; sair não comprova exclusão.",
+        "fr": "La réponse de suppression n'est pas confirmée. Réessayez ou contactez l'assistance ; la déconnexion ne prouve pas la suppression.",
+        "de": "Die Löschantwort ist unbestätigt. Versuche es erneut oder kontaktiere den Support; Abmelden beweist keine Löschung.",
+        "ar": "لم يتم تأكيد استجابة الحذف. أعد المحاولة أو اتصل بالدعم؛ تسجيل الخروج وحده لا يثبت الحذف.",
+        "ja": "削除の応答を確認できませんでした。再試行またはサポートに連絡してください。ログアウトだけでは削除の完了を証明できません。",
+        "ko": "삭제 응답이 확인되지 않았습니다. 재시도하거나 지원팀에 문의하세요. 로그아웃만으로 삭제를 증명할 수 없습니다.",
+        "zh-Hans": "删除响应尚未确认。请重试或联系支持；仅退出登录不能证明已删除。"
+      }
+    },
+    {
+      "source": "I understand that this account and its private data will be deleted.",
+      "translations": {
+        "hi": "मैं समझता हूँ कि यह खाता और इसका निजी डेटा मिटा दिया जाएगा।",
+        "es": "Entiendo que esta cuenta y sus datos privados se eliminarán.",
+        "pt": "Entendo que esta conta e seus dados privados serão excluídos.",
+        "fr": "Je comprends que ce compte et ses données privées seront supprimés.",
+        "de": "Ich verstehe, dass dieses Konto und seine privaten Daten gelöscht werden.",
+        "ar": "أفهم أنه سيتم حذف هذا الحساب وبياناته الخاصة.",
+        "ja": "このアカウントと個人データが削除されることを理解しています。",
+        "ko": "이 계정과 개인 데이터가 삭제된다는 점을 이해합니다.",
+        "zh-Hans": "我理解此账户及其私密数据将被删除。"
+      }
+    },
+    {
+      "source": "Retry local cleanup",
+      "translations": {
+        "hi": "स्थानीय सफ़ाई फिर करें",
+        "es": "Reintentar limpieza local",
+        "pt": "Repetir limpeza local",
+        "fr": "Réessayer le nettoyage local",
+        "de": "Lokale Bereinigung wiederholen",
+        "ar": "إعادة محاولة التنظيف المحلي",
+        "ja": "端末内の削除を再試行",
+        "ko": "로컬 정리 재시도",
+        "zh-Hans": "重试本地清理"
+      }
+    },
+    {
+      "source": "Retry deletion request",
+      "translations": {
+        "hi": "विलोपन अनुरोध फिर करें",
+        "es": "Reintentar solicitud de borrado",
+        "pt": "Repetir pedido de exclusão",
+        "fr": "Réessayer la demande de suppression",
+        "de": "Löschanfrage wiederholen",
+        "ar": "إعادة طلب الحذف",
+        "ja": "削除要求を再試行",
+        "ko": "삭제 요청 재시도",
+        "zh-Hans": "重试删除请求"
+      }
+    },
+    {
+      "source": "Connect the account to delete it",
+      "translations": {
+        "hi": "खाता मिटाने के लिए उससे जुड़ें",
+        "es": "Conecta la cuenta para eliminarla",
+        "pt": "Conecte a conta para excluí-la",
+        "fr": "Connectez le compte à supprimer",
+        "de": "Verbinde das zu löschende Konto",
+        "ar": "اربط الحساب لحذفه",
+        "ja": "削除するアカウントに接続",
+        "ko": "삭제할 계정에 연결",
+        "zh-Hans": "连接要删除的账户"
+      }
+    },
+    {
+      "source": "Contact support",
+      "translations": {
+        "hi": "सहायता से संपर्क करें",
+        "es": "Contactar con soporte",
+        "pt": "Contatar suporte",
+        "fr": "Contacter l'assistance",
+        "de": "Support kontaktieren",
+        "ar": "الاتصال بالدعم",
+        "ja": "サポートに連絡",
+        "ko": "지원팀에 문의",
+        "zh-Hans": "联系支持"
+      }
+    },
+    {
+      "source": "File selection cancelled. Your history was kept.",
+      "translations": {
+        "hi": "फ़ाइल चुनना रद्द हुआ। इतिहास सुरक्षित है।",
+        "es": "Selección de archivo cancelada. Tu historial se conservó.",
+        "pt": "Seleção cancelada. Seu histórico foi mantido.",
+        "fr": "Sélection annulée. Votre historique a été conservé.",
+        "de": "Dateiauswahl abgebrochen. Der Verlauf bleibt erhalten.",
+        "ar": "تم إلغاء اختيار الملف. تم الاحتفاظ بسجلك.",
+        "ja": "ファイルの選択をキャンセルしました。履歴は保持されています。",
+        "ko": "파일 선택이 취소되었습니다. 기록은 보관됩니다.",
+        "zh-Hans": "文件选择已取消。历史记录已保留。"
+      }
+    },
+    {
+      "source": "Backup action could not complete. Your history was kept; check the file and passphrase and try again.",
+      "translations": {
+        "hi": "बैकअप कार्रवाई पूरी नहीं हुई। इतिहास सुरक्षित है; फ़ाइल और पासफ़्रेज़ जाँचकर फिर कोशिश करें।",
+        "es": "No se completó el respaldo. Tu historial se conservó; revisa el archivo y la contraseña y reintenta.",
+        "pt": "O backup não terminou. Seu histórico foi mantido; confira o arquivo e a senha e tente novamente.",
+        "fr": "La sauvegarde n'est pas terminée. Votre historique est conservé ; vérifiez le fichier et la phrase secrète, puis réessayez.",
+        "de": "Das Backup ist nicht abgeschlossen. Der Verlauf bleibt erhalten; prüfe Datei und Passphrase und versuche es erneut.",
+        "ar": "لم تكتمل عملية النسخ. تم الاحتفاظ بسجلك؛ تحقق من الملف وعبارة المرور وحاول مجددًا.",
+        "ja": "バックアップ操作は完了していません。履歴は保持されています。ファイルとパスフレーズを確認して再試行してください。",
+        "ko": "백업 작업이 완료되지 않았습니다. 기록은 보관됩니다. 파일과 암호문을 확인하고 다시 시도하세요.",
+        "zh-Hans": "备份操作未完成。历史记录已保留；请检查文件和口令并重试。"
+      }
+    },
+    {
+      "source": "Encrypted backup files",
+      "translations": {
+        "hi": "एन्क्रिप्टेड बैकअप फ़ाइलें",
+        "es": "Archivos de respaldo cifrados",
+        "pt": "Arquivos de backup criptografados",
+        "fr": "Fichiers de sauvegarde chiffrés",
+        "de": "Verschlüsselte Backup-Dateien",
+        "ar": "ملفات نسخ احتياطي مشفّرة",
+        "ja": "暗号化バックアップファイル",
+        "ko": "암호화된 백업 파일",
+        "zh-Hans": "加密备份文件"
+      }
+    },
+    {
+      "source": "Save recovery history and journal photos in an encrypted file. Keep your passphrase safe; FREED cannot recover it. Files up to 64 MiB are supported.",
+      "translations": {
+        "hi": "रिकवरी इतिहास और जर्नल फ़ोटो एन्क्रिप्टेड फ़ाइल में रखें। पासफ़्रेज़ सुरक्षित रखें; FREED इसे वापस नहीं दिला सकता। अधिकतम 64 MiB फ़ाइलें समर्थित हैं।",
+        "es": "Guarda el historial y las fotos del diario en un archivo cifrado. Conserva la contraseña; FREED no puede recuperarla. Se admiten archivos de hasta 64 MiB.",
+        "pt": "Salve histórico e fotos do diário em um arquivo criptografado. Guarde a senha; o FREED não pode recuperá-la. São aceitos arquivos de até 64 MiB.",
+        "fr": "Enregistrez l'historique et les photos du journal dans un fichier chiffré. Gardez votre phrase secrète ; FREED ne peut pas la récupérer. Limite : 64 MiB.",
+        "de": "Sichere Verlauf und Tagebuchfotos in einer verschlüsselten Datei. Bewahre die Passphrase sicher auf; FREED kann sie nicht wiederherstellen. Dateien bis 64 MiB werden unterstützt.",
+        "ar": "احفظ سجل التعافي وصور اليوميات في ملف مشفّر. احتفظ بعبارة المرور بأمان؛ لا يستطيع FREED استعادتها. الحد الأقصى للملف 64 MiB.",
+        "ja": "回復の履歴と日記の写真を暗号化ファイルに保存します。パスフレーズを安全に保管してください。FREEDは復元できません。64 MiBまでのファイルに対応します。",
+        "ko": "회복 기록과 일기 사진을 암호화된 파일로 저장하세요. 암호문을 안전하게 보관하세요. FREED는 복구할 수 없습니다. 최대 64 MiB 파일을 지원합니다.",
+        "zh-Hans": "将康复历史记录和日记照片保存为加密文件。请妥善保管口令，FREED 无法找回。支持最大 64 MiB 的文件。"
+      }
+    },
+    {
+      "source": "Connect your account to open its backup",
+      "translations": {
+        "hi": "बैकअप खोलने के लिए अपने खाते से जुड़ें",
+        "es": "Conecta tu cuenta para abrir su respaldo",
+        "pt": "Conecte sua conta para abrir o backup",
+        "fr": "Connectez votre compte pour ouvrir sa sauvegarde",
+        "de": "Verbinde dein Konto, um sein Backup zu öffnen",
+        "ar": "اربط حسابك لفتح نسخته الاحتياطية",
+        "ja": "バックアップを開くにはアカウントに接続",
+        "ko": "백업을 열려면 계정에 연결",
+        "zh-Hans": "连接账户以打开其备份"
+      }
+    },
+    {
+      "source": "Backup passphrase",
+      "translations": {
+        "hi": "बैकअप पासफ़्रेज़",
+        "es": "Contraseña del respaldo",
+        "pt": "Senha do backup",
+        "fr": "Phrase secrète de sauvegarde",
+        "de": "Backup-Passphrase",
+        "ar": "عبارة مرور النسخة",
+        "ja": "バックアップのパスフレーズ",
+        "ko": "백업 암호문",
+        "zh-Hans": "备份口令"
+      }
+    },
+    {
+      "source": "Save encrypted backup file",
+      "translations": {
+        "hi": "एन्क्रिप्टेड बैकअप फ़ाइल सहेजें",
+        "es": "Guardar archivo de respaldo cifrado",
+        "pt": "Salvar arquivo de backup criptografado",
+        "fr": "Enregistrer la sauvegarde chiffrée",
+        "de": "Verschlüsselte Backup-Datei speichern",
+        "ar": "حفظ ملف النسخة المشفّرة",
+        "ja": "暗号化バックアップファイルを保存",
+        "ko": "암호화된 백업 파일 저장",
+        "zh-Hans": "保存加密备份文件"
+      }
+    },
+    {
+      "source": "Encrypted file shared. Keep a saved copy before leaving the share sheet.",
+      "translations": {
+        "hi": "एन्क्रिप्टेड फ़ाइल साझा हुई। साझा स्क्रीन छोड़ने से पहले सहेजी प्रति रखें।",
+        "es": "Archivo cifrado compartido. Guarda una copia antes de salir del panel.",
+        "pt": "Arquivo criptografado compartilhado. Salve uma cópia antes de sair da tela de compartilhamento.",
+        "fr": "Fichier chiffré partagé. Gardez une copie enregistrée avant de quitter le partage.",
+        "de": "Verschlüsselte Datei geteilt. Speichere eine Kopie, bevor du den Teilen-Dialog schließt.",
+        "ar": "تمت مشاركة الملف المشفّر. احفظ نسخة قبل مغادرة نافذة المشاركة.",
+        "ja": "暗号化ファイルを共有しました。共有画面を閉じる前にコピーを保存してください。",
+        "ko": "암호화 파일을 공유했습니다. 공유 화면을 나가기 전에 사본을 저장하세요.",
+        "zh-Hans": "已分享加密文件。退出分享面板前，请保存一份副本。"
+      }
+    },
+    {
+      "source": "Choose a backup file to restore",
+      "translations": {
+        "hi": "बहाल करने के लिए बैकअप फ़ाइल चुनें",
+        "es": "Elegir archivo de respaldo para restaurar",
+        "pt": "Escolher arquivo de backup para restaurar",
+        "fr": "Choisir une sauvegarde à restaurer",
+        "de": "Backup-Datei zur Wiederherstellung wählen",
+        "ar": "اختيار ملف نسخة لاستعادته",
+        "ja": "復元するバックアップファイルを選択",
+        "ko": "복원할 백업 파일 선택",
+        "zh-Hans": "选择要恢复的备份文件"
+      }
+    },
+    {
+      "source": "Backup file checked. Confirm restore to apply it.",
+      "translations": {
+        "hi": "बैकअप फ़ाइल जाँची गई। लागू करने के लिए बहाली की पुष्टि करें।",
+        "es": "Archivo verificado. Confirma la restauración para aplicarlo.",
+        "pt": "Arquivo verificado. Confirme a restauração para aplicá-lo.",
+        "fr": "Fichier vérifié. Confirmez la restauration pour l'appliquer.",
+        "de": "Backup-Datei geprüft. Bestätige die Wiederherstellung, um sie anzuwenden.",
+        "ar": "تم التحقق من الملف. أكّد الاستعادة لتطبيقه.",
+        "ja": "バックアップファイルを確認しました。適用するには復元を確認してください。",
+        "ko": "백업 파일을 확인했습니다. 적용하려면 복원을 확인하세요.",
+        "zh-Hans": "备份文件已检查。请确认恢复以应用。"
+      }
+    },
+    {
+      "source": "Restore encrypted cloud text backup",
+      "translations": {
+        "hi": "एन्क्रिप्टेड क्लाउड टेक्स्ट बैकअप बहाल करें",
+        "es": "Restaurar respaldo de texto cifrado en la nube",
+        "pt": "Restaurar backup de texto criptografado na nuvem",
+        "fr": "Restaurer la sauvegarde texte chiffrée du cloud",
+        "de": "Verschlüsseltes Cloud-Textbackup wiederherstellen",
+        "ar": "استعادة النسخة النصية السحابية المشفّرة",
+        "ja": "暗号化クラウドテキストバックアップを復元",
+        "ko": "암호화된 클라우드 텍스트 백업 복원",
+        "zh-Hans": "恢复加密云端文本备份"
+      }
+    },
+    {
+      "source": "Text backup checked. Photos were excluded. Confirm restore to apply it.",
+      "translations": {
+        "hi": "टेक्स्ट बैकअप जाँचा गया। फ़ोटो शामिल नहीं थीं। लागू करने के लिए बहाली की पुष्टि करें।",
+        "es": "Respaldo de texto verificado. No incluye fotos. Confirma la restauración para aplicarlo.",
+        "pt": "Backup de texto verificado. Fotos foram excluídas. Confirme a restauração para aplicá-lo.",
+        "fr": "Sauvegarde texte vérifiée. Les photos étaient exclues. Confirmez la restauration.",
+        "de": "Textbackup geprüft. Fotos waren ausgeschlossen. Bestätige die Wiederherstellung.",
+        "ar": "تم التحقق من النسخة النصية. الصور مستثناة. أكّد الاستعادة لتطبيقها.",
+        "ja": "テキストバックアップを確認しました。写真は含まれていません。適用するには復元を確認してください。",
+        "ko": "텍스트 백업을 확인했습니다. 사진은 제외되었습니다. 적용하려면 복원을 확인하세요.",
+        "zh-Hans": "文本备份已检查。照片已排除。请确认恢复以应用。"
+      }
+    },
+    {
+      "source": "Optional automatic backup encrypts journal text and history. Photos stay on this device and are included only in manual backup files.",
+      "translations": {
+        "hi": "वैकल्पिक स्वचालित बैकअप जर्नल टेक्स्ट और इतिहास एन्क्रिप्ट करता है। फ़ोटो इस डिवाइस पर रहती हैं और केवल मैनुअल बैकअप फ़ाइलों में शामिल होती हैं।",
+        "es": "El respaldo automático opcional cifra el texto del diario y el historial. Las fotos quedan en este dispositivo y solo se incluyen en respaldos manuales.",
+        "pt": "O backup automático opcional criptografa texto do diário e histórico. Fotos ficam neste dispositivo e só entram nos backups manuais.",
+        "fr": "La sauvegarde automatique facultative chiffre le texte du journal et l'historique. Les photos restent sur l'appareil et figurent uniquement dans les sauvegardes manuelles.",
+        "de": "Das optionale automatische Backup verschlüsselt Tagebuchtext und Verlauf. Fotos bleiben auf diesem Gerät und sind nur in manuellen Backup-Dateien enthalten.",
+        "ar": "النسخ التلقائي الاختياري يشفّر نص اليوميات والسجل. تبقى الصور على الجهاز وتُضمّن فقط في ملفات النسخ اليدوي.",
+        "ja": "任意の自動バックアップでは日記のテキストと履歴を暗号化します。写真は端末に残り、手動バックアップファイルにのみ含まれます。",
+        "ko": "선택적 자동 백업은 일기 텍스트와 기록을 암호화합니다. 사진은 이 기기에 남으며 수동 백업 파일에만 포함됩니다.",
+        "zh-Hans": "可选自动备份会加密日记文本和历史记录。照片保留在此设备上，仅包含在手动备份文件中。"
+      }
+    },
+    {
+      "source": "Encrypted text backup upload confirmed.",
+      "translations": {
+        "hi": "एन्क्रिप्टेड टेक्स्ट बैकअप अपलोड पुष्ट हुआ।",
+        "es": "Carga del respaldo de texto cifrado confirmada.",
+        "pt": "Upload do backup de texto criptografado confirmado.",
+        "fr": "Envoi de la sauvegarde texte chiffrée confirmé.",
+        "de": "Upload des verschlüsselten Textbackups bestätigt.",
+        "ar": "تم تأكيد رفع النسخة النصية المشفّرة.",
+        "ja": "暗号化テキストバックアップのアップロードを確認しました。",
+        "ko": "암호화된 텍스트 백업 업로드가 확인되었습니다.",
+        "zh-Hans": "加密文本备份上传已确认。"
+      }
+    },
+    {
+      "source": "Turn off automatic text backup",
+      "translations": {
+        "hi": "स्वचालित टेक्स्ट बैकअप बंद करें",
+        "es": "Desactivar respaldo automático de texto",
+        "pt": "Desativar backup automático de texto",
+        "fr": "Désactiver la sauvegarde texte automatique",
+        "de": "Automatisches Textbackup ausschalten",
+        "ar": "إيقاف النسخ النصي التلقائي",
+        "ja": "自動テキストバックアップをオフ",
+        "ko": "자동 텍스트 백업 끄기",
+        "zh-Hans": "关闭自动文本备份"
+      }
+    },
+    {
+      "source": "Enable automatic text backup",
+      "translations": {
+        "hi": "स्वचालित टेक्स्ट बैकअप चालू करें",
+        "es": "Activar respaldo automático de texto",
+        "pt": "Ativar backup automático de texto",
+        "fr": "Activer la sauvegarde texte automatique",
+        "de": "Automatisches Textbackup einschalten",
+        "ar": "تفعيل النسخ النصي التلقائي",
+        "ja": "自動テキストバックアップをオン",
+        "ko": "자동 텍스트 백업 켜기",
+        "zh-Hans": "启用自动文本备份"
+      }
+    },
+    {
+      "source": "Automatic text backup is off.",
+      "translations": {
+        "hi": "स्वचालित टेक्स्ट बैकअप बंद है।",
+        "es": "El respaldo automático de texto está desactivado.",
+        "pt": "O backup automático de texto está desativado.",
+        "fr": "La sauvegarde texte automatique est désactivée.",
+        "de": "Automatisches Textbackup ist ausgeschaltet.",
+        "ar": "النسخ النصي التلقائي متوقف.",
+        "ja": "自動テキストバックアップはオフです。",
+        "ko": "자동 텍스트 백업이 꺼져 있습니다.",
+        "zh-Hans": "自动文本备份已关闭。"
+      }
+    },
+    {
+      "source": "Automatic text backup is enabled on this device.",
+      "translations": {
+        "hi": "इस डिवाइस पर स्वचालित टेक्स्ट बैकअप चालू है।",
+        "es": "El respaldo automático de texto está activado en este dispositivo.",
+        "pt": "O backup automático de texto está ativado neste dispositivo.",
+        "fr": "La sauvegarde texte automatique est activée sur cet appareil.",
+        "de": "Automatisches Textbackup ist auf diesem Gerät eingeschaltet.",
+        "ar": "النسخ النصي التلقائي مفعّل على هذا الجهاز.",
+        "ja": "この端末で自動テキストバックアップを有効にしました。",
+        "ko": "이 기기에서 자동 텍스트 백업이 활성화되었습니다.",
+        "zh-Hans": "此设备已启用自动文本备份。"
+      }
+    },
+    {
+      "source": "Backup action in progress",
+      "translations": {
+        "hi": "बैकअप कार्रवाई चल रही है",
+        "es": "Respaldo en curso",
+        "pt": "Backup em andamento",
+        "fr": "Sauvegarde en cours",
+        "de": "Backup läuft",
+        "ar": "عملية النسخ قيد التنفيذ",
+        "ja": "バックアップ操作中",
+        "ko": "백업 작업 진행 중",
+        "zh-Hans": "备份操作进行中"
+      }
+    },
+    {
+      "source": "Recovery owner is unavailable.",
+      "translations": {
+        "hi": "रिकवरी खाते का स्वामी उपलब्ध नहीं है।",
+        "es": "No está disponible el titular de la recuperación.",
+        "pt": "A conta proprietária da recuperação está indisponível.",
+        "fr": "Le propriétaire du rétablissement est indisponible.",
+        "de": "Der zugehörige Kontoinhaber ist nicht verfügbar.",
+        "ar": "مالك سجل التعافي غير متاح.",
+        "ja": "回復の所有アカウントを確認できません。",
+        "ko": "회복 기록의 소유 계정을 사용할 수 없습니다.",
+        "zh-Hans": "康复记录所属账户不可用。"
+      }
+    },
+    {
+      "source": "Owner recovery storage could not be read.",
+      "translations": {
+        "hi": "खाते का रिकवरी स्टोरेज पढ़ा नहीं जा सका।",
+        "es": "No se pudo leer el almacenamiento de recuperación de la cuenta.",
+        "pt": "Não foi possível ler o armazenamento de recuperação da conta.",
+        "fr": "Le stockage de rétablissement du compte est illisible.",
+        "de": "Der Erholungsspeicher des Kontos konnte nicht gelesen werden.",
+        "ar": "تعذر قراءة تخزين التعافي الخاص بالحساب.",
+        "ja": "アカウントの回復データを読み取れませんでした。",
+        "ko": "계정의 회복 데이터 저장소를 읽지 못했습니다.",
+        "zh-Hans": "无法读取账户的康复数据存储。"
+      }
+    },
+    {
+      "source": "The recovery owner changed. This write was stopped.",
+      "translations": {
+        "hi": "रिकवरी का खाता बदल गया। लिखना रोक दिया गया।",
+        "es": "Cambió el titular de la recuperación. Se detuvo la escritura.",
+        "pt": "A conta da recuperação mudou. A gravação foi interrompida.",
+        "fr": "Le compte du rétablissement a changé. L'écriture a été arrêtée.",
+        "de": "Das Erholungskonto hat sich geändert. Der Schreibvorgang wurde gestoppt.",
+        "ar": "تغيّر حساب التعافي. تم إيقاف الكتابة.",
+        "ja": "回復のアカウントが変更されたため、書き込みを停止しました。",
+        "ko": "회복 기록의 소유 계정이 변경되어 쓰기를 중지했습니다.",
+        "zh-Hans": "康复记录所属账户已改变。写入已停止。"
+      }
+    },
+    {
+      "source": "Explicit account confirmation is required to adopt local history.",
+      "translations": {
+        "hi": "स्थानीय इतिहास जोड़ने के लिए स्पष्ट खाता पुष्टि चाहिए।",
+        "es": "Hace falta confirmar explícitamente la cuenta para asignar el historial local.",
+        "pt": "É necessária confirmação explícita da conta para vincular o histórico local.",
+        "fr": "L'attribution de l'historique local exige une confirmation explicite du compte.",
+        "de": "Die Zuordnung des lokalen Verlaufs erfordert eine ausdrückliche Kontobestätigung.",
+        "ar": "يلزم تأكيد صريح للحساب لربط السجل المحلي.",
+        "ja": "端末内の履歴の割り当てには明示的なアカウント確認が必要です。",
+        "ko": "로컬 기록 연결에는 명시적인 계정 확인이 필요합니다.",
+        "zh-Hans": "归属本地历史记录需要明确确认账户。"
+      }
+    },
+    {
+      "source": "No unclaimed local history is available.",
+      "translations": {
+        "hi": "बिना खाते का स्थानीय इतिहास उपलब्ध नहीं है।",
+        "es": "No hay historial local sin asignar.",
+        "pt": "Não há histórico local sem conta disponível.",
+        "fr": "Aucun historique local sans compte n'est disponible.",
+        "de": "Kein nicht zugeordneter lokaler Verlauf verfügbar.",
+        "ar": "لا يوجد سجل محلي غير مرتبط متاح.",
+        "ja": "未割り当ての端末内の履歴はありません。",
+        "ko": "소유 계정 미확인 로컬 기록이 없습니다.",
+        "zh-Hans": "没有可归属的本地历史记录。"
+      }
+    },
+    {
+      "source": "This account already has saved history. Export it before adopting local history.",
+      "translations": {
+        "hi": "इस खाते में इतिहास पहले से है। पुराना स्थानीय इतिहास जोड़ने से पहले इसे निर्यात करें।",
+        "es": "Esta cuenta ya tiene historial. Expórtalo antes de asignar el historial local antiguo.",
+        "pt": "Esta conta já tem histórico. Exporte-o antes de vincular o histórico local antigo.",
+        "fr": "Ce compte a déjà un historique. Exportez-le avant d'attribuer l'ancien historique local.",
+        "de": "Dieses Konto hat bereits einen Verlauf. Exportiere ihn vor der Zuordnung des älteren lokalen Verlaufs.",
+        "ar": "لهذا الحساب سجل محفوظ بالفعل. صدّره قبل ربط السجل المحلي القديم.",
+        "ja": "このアカウントにはすでに履歴があります。古い端末内の履歴を割り当てる前に書き出してください。",
+        "ko": "이 계정에는 이미 기록이 있습니다. 이전 로컬 기록을 연결하기 전에 내보내세요.",
+        "zh-Hans": "此账户已有历史记录。归属旧本地历史记录前，请先导出。"
+      }
+    },
+    {
+      "source": "Backup file must be readable and no larger than 64 MiB.",
+      "translations": {
+        "hi": "बैकअप फ़ाइल पढ़ने योग्य और अधिकतम 64 MiB होनी चाहिए।",
+        "es": "El respaldo debe poder leerse y no superar 64 MiB.",
+        "pt": "O arquivo deve ser legível e ter no máximo 64 MiB.",
+        "fr": "Le fichier doit être lisible et ne pas dépasser 64 MiB.",
+        "de": "Die Backup-Datei muss lesbar und höchstens 64 MiB groß sein.",
+        "ar": "يجب أن يكون الملف قابلًا للقراءة وألا يتجاوز 64 MiB.",
+        "ja": "バックアップファイルは読み取り可能で64 MiB以下にしてください。",
+        "ko": "백업 파일은 읽을 수 있어야 하며 64 MiB 이하여야 합니다.",
+        "zh-Hans": "备份文件必须可读取，且不超过 64 MiB。"
+      }
+    },
+    {
+      "source": "The backup owner changed. Export was stopped.",
+      "translations": {
+        "hi": "बैकअप का खाता बदल गया। निर्यात रोक दिया गया।",
+        "es": "Cambió la cuenta del respaldo. Se detuvo la exportación.",
+        "pt": "A conta do backup mudou. A exportação foi interrompida.",
+        "fr": "Le compte de la sauvegarde a changé. L'exportation a été arrêtée.",
+        "de": "Das Backup-Konto hat sich geändert. Der Export wurde gestoppt.",
+        "ar": "تغيّر حساب النسخة الاحتياطية. تم إيقاف التصدير.",
+        "ja": "バックアップのアカウントが変更されたため、書き出しを停止しました。",
+        "ko": "백업 소유 계정이 변경되어 내보내기를 중지했습니다.",
+        "zh-Hans": "备份所属账户已改变。导出已停止。"
+      }
+    },
+    {
+      "source": "Backup rollback needs retry. Saved data was kept.",
+      "translations": {
+        "hi": "बैकअप वापस करने का पुनः प्रयास चाहिए। सहेजा डेटा सुरक्षित है।",
+        "es": "Hay que reintentar la reversión. Los datos guardados se conservaron.",
+        "pt": "É necessário repetir a reversão. Os dados salvos foram mantidos.",
+        "fr": "Le retour à l'état précédent doit être réessayé. Les données ont été conservées.",
+        "de": "Die Backup-Rücksetzung muss wiederholt werden. Gespeicherte Daten bleiben erhalten.",
+        "ar": "يلزم إعادة محاولة التراجع. تم الاحتفاظ بالبيانات.",
+        "ja": "バックアップの復帰を再試行してください。保存データは保持されています。",
+        "ko": "백업 롤백을 다시 시도해야 합니다. 데이터는 보관됩니다.",
+        "zh-Hans": "备份回滚需要重试。已保存的数据已保留。"
+      }
+    },
+    {
+      "source": "An interrupted backup restore needs rollback before another restore.",
+      "translations": {
+        "hi": "दूसरी बहाली से पहले अधूरी बैकअप बहाली वापस करनी होगी।",
+        "es": "Hay que revertir la restauración interrumpida antes de intentar otra.",
+        "pt": "É necessário reverter a restauração interrompida antes de outra.",
+        "fr": "Il faut annuler la restauration interrompue avant une autre restauration.",
+        "de": "Die unterbrochene Wiederherstellung muss vor einem neuen Versuch zurückgesetzt werden.",
+        "ar": "يلزم التراجع عن الاستعادة المتقطعة قبل استعادة أخرى.",
+        "ja": "別の復元を行う前に、中断された復元を元に戻してください。",
+        "ko": "다른 복원 전에 중단된 백업 복원을 롤백해야 합니다.",
+        "zh-Hans": "进行另一次恢复前，需要回滚中断的备份恢复。"
+      }
+    },
+    {
+      "source": "Backup restore did not complete. Durable rollback is pending; retry before opening this history.",
+      "translations": {
+        "hi": "बैकअप बहाली पूरी नहीं हुई। टिकाऊ स्टोरेज वापस करना बाकी है; इतिहास खोलने से पहले फिर कोशिश करें।",
+        "es": "La restauración no terminó. La reversión durable está pendiente; reintenta antes de abrir el historial.",
+        "pt": "A restauração não terminou. A reversão persistente está pendente; tente novamente antes de abrir o histórico.",
+        "fr": "La restauration n'est pas terminée. Le retour durable est en attente ; réessayez avant d'ouvrir l'historique.",
+        "de": "Die Wiederherstellung ist nicht abgeschlossen. Die dauerhafte Rücksetzung steht aus; wiederhole sie vor dem Öffnen des Verlaufs.",
+        "ar": "لم تكتمل الاستعادة. التراجع الدائم قيد الانتظار؛ أعد المحاولة قبل فتح السجل.",
+        "ja": "復元は完了していません。保存データの復帰が保留中です。履歴を開く前に再試行してください。",
+        "ko": "백업 복원이 완료되지 않았습니다. 영구 롤백이 대기 중입니다. 기록을 열기 전에 다시 시도하세요.",
+        "zh-Hans": "备份恢复未完成。持久回滚尚待完成；打开历史记录前请重试。"
+      }
+    },
+    {
+      "source": "The private draft owner changed.",
+      "translations": {
+        "hi": "निजी मसौदे का खाता बदल गया।",
+        "es": "Cambió la cuenta del borrador privado.",
+        "pt": "A conta do rascunho privado mudou.",
+        "fr": "Le compte du brouillon privé a changé.",
+        "de": "Das Konto des privaten Entwurfs hat sich geändert.",
+        "ar": "تغيّر حساب المسودة الخاصة.",
+        "ja": "個人の下書きのアカウントが変更されました。",
+        "ko": "개인 초안의 소유 계정이 변경되었습니다.",
+        "zh-Hans": "私密草稿所属账户已改变。"
+      }
+    },
+    {
+      "source": "The selected backup file could not be read.",
+      "translations": {
+        "hi": "चुनी गई बैकअप फ़ाइल पढ़ी नहीं जा सकी।",
+        "es": "No se pudo leer el archivo elegido.",
+        "pt": "Não foi possível ler o arquivo de backup selecionado.",
+        "fr": "Le fichier de sauvegarde choisi est illisible.",
+        "de": "Die ausgewählte Backup-Datei konnte nicht gelesen werden.",
+        "ar": "تعذر قراءة ملف النسخة المحدد.",
+        "ja": "選択したバックアップファイルを読み取れませんでした。",
+        "ko": "선택한 백업 파일을 읽지 못했습니다.",
+        "zh-Hans": "无法读取选定的备份文件。"
+      }
+    },
+    {
+      "source": "File sharing is unavailable. Try again.",
+      "translations": {
+        "hi": "फ़ाइल साझा करना उपलब्ध नहीं है। फिर कोशिश करें।",
+        "es": "No se puede compartir el archivo. Reintenta.",
+        "pt": "Compartilhamento de arquivos indisponível. Tente novamente.",
+        "fr": "Le partage de fichiers est indisponible. Réessayez.",
+        "de": "Dateifreigabe nicht verfügbar. Versuche es erneut.",
+        "ar": "مشاركة الملفات غير متاحة. حاول مجددًا.",
+        "ja": "ファイルを共有できません。再試行してください。",
+        "ko": "파일 공유를 사용할 수 없습니다. 다시 시도하세요.",
+        "zh-Hans": "文件分享不可用。请重试。"
+      }
+    },
+    {
+      "source": "Save encrypted FREED backup",
+      "translations": {
+        "hi": "एन्क्रिप्टेड FREED बैकअप सहेजें",
+        "es": "Guardar respaldo FREED cifrado",
+        "pt": "Salvar backup FREED criptografado",
+        "fr": "Enregistrer la sauvegarde FREED chiffrée",
+        "de": "Verschlüsseltes FREED-Backup speichern",
+        "ar": "حفظ نسخة FREED مشفّرة",
+        "ja": "暗号化FREEDバックアップを保存",
+        "ko": "암호화된 FREED 백업 저장",
+        "zh-Hans": "保存加密 FREED 备份"
+      }
+    },
+    {
+      "source": "Connect the original account before enabling automatic backup.",
+      "translations": {
+        "hi": "स्वचालित बैकअप चालू करने से पहले मूल खाते से जुड़ें।",
+        "es": "Conecta la cuenta original antes de activar el respaldo automático.",
+        "pt": "Conecte a conta original antes de ativar o backup automático.",
+        "fr": "Connectez le compte d'origine avant d'activer la sauvegarde automatique.",
+        "de": "Verbinde das ursprüngliche Konto, bevor du das automatische Backup aktivierst.",
+        "ar": "اربط الحساب الأصلي قبل تفعيل النسخ التلقائي.",
+        "ja": "自動バックアップを有効にする前に元のアカウントに接続してください。",
+        "ko": "자동 백업을 활성화하기 전에 원래 계정에 연결하세요.",
+        "zh-Hans": "启用自动备份前，请连接原账户。"
+      }
+    },
+    {
+      "source": "The backup owner changed. Confirm your account and try again.",
+      "translations": {
+        "hi": "बैकअप का खाता बदल गया। खाता पुष्ट करके फिर कोशिश करें।",
+        "es": "Cambió la cuenta del respaldo. Confirma tu cuenta y reintenta.",
+        "pt": "A conta do backup mudou. Confirme sua conta e tente novamente.",
+        "fr": "Le compte de la sauvegarde a changé. Confirmez votre compte et réessayez.",
+        "de": "Das Backup-Konto hat sich geändert. Bestätige dein Konto und versuche es erneut.",
+        "ar": "تغيّر حساب النسخة الاحتياطية. أكّد حسابك وحاول مجددًا.",
+        "ja": "バックアップのアカウントが変更されました。アカウントを確認して再試行してください。",
+        "ko": "백업 소유 계정이 변경되었습니다. 계정을 확인하고 다시 시도하세요.",
+        "zh-Hans": "备份所属账户已改变。请确认账户并重试。"
+      }
+    },
+    {
+      "source": "Cloud deletion must be confirmed before local cleanup.",
+      "translations": {
+        "hi": "स्थानीय सफ़ाई से पहले क्लाउड विलोपन की पुष्टि ज़रूरी है।",
+        "es": "El borrado en la nube debe confirmarse antes de la limpieza local.",
+        "pt": "A exclusão na nuvem deve ser confirmada antes da limpeza local.",
+        "fr": "La suppression cloud doit être confirmée avant le nettoyage local.",
+        "de": "Die Cloud-Löschung muss vor der lokalen Bereinigung bestätigt sein.",
+        "ar": "يجب تأكيد الحذف السحابي قبل التنظيف المحلي.",
+        "ja": "端末内の削除を行う前にクラウドでの削除確認が必要です。",
+        "ko": "로컬 정리 전에 클라우드 삭제가 확인되어야 합니다.",
+        "zh-Hans": "本地清理前必须确认云端删除。"
+      }
+    },
+    {
+      "source": "Private data cleanup needs retry before this history can open.",
+      "translations": {
+        "hi": "इतिहास खोलने से पहले निजी डेटा की सफ़ाई फिर करनी होगी।",
+        "es": "Reintenta la limpieza de datos privados antes de abrir este historial.",
+        "pt": "Repita a limpeza de dados privados antes de abrir este histórico.",
+        "fr": "Réessayez le nettoyage des données privées avant d’ouvrir cet historique.",
+        "de": "Wiederhole die Bereinigung privater Daten, bevor du diesen Verlauf öffnest.",
+        "ar": "أعد محاولة تنظيف البيانات الخاصة قبل فتح هذا السجل.",
+        "ja": "この履歴を開く前に個人データの削除を再試行してください。",
+        "ko": "이 기록을 열기 전에 개인 데이터 정리를 다시 시도하세요.",
+        "zh-Hans": "打开此历史记录前，请重试私密数据清理。"
+      }
+    },
+    {
+      "source": "Private data cleanup is pending. Retry deletion before opening this history.",
+      "translations": {
+        "hi": "निजी डेटा की सफ़ाई बाकी है। इतिहास खोलने से पहले विलोपन फिर करें।",
+        "es": "La limpieza de datos privados está pendiente. Reintenta el borrado antes de abrir el historial.",
+        "pt": "A limpeza de dados privados está pendente. Repita a exclusão antes de abrir o histórico.",
+        "fr": "Le nettoyage des données privées est en attente. Réessayez la suppression avant d’ouvrir l’historique.",
+        "de": "Die Bereinigung privater Daten steht aus. Wiederhole die Löschung vor dem Öffnen des Verlaufs.",
+        "ar": "تنظيف البيانات الخاصة قيد الانتظار. أعد محاولة الحذف قبل فتح السجل.",
+        "ja": "個人データの削除が保留中です。履歴を開く前に削除を再試行してください。",
+        "ko": "개인 데이터 정리가 대기 중입니다. 기록을 열기 전에 삭제를 다시 시도하세요.",
+        "zh-Hans": "私密数据清理尚待完成。打开历史记录前，请重试删除。"
+      }
+    },
+    {
+      "source": "Account deletion started. Cloud completion is still processing; local data is kept until completion is confirmed.",
+      "translations": {
+        "hi": "खाता मिटाना शुरू हुआ। क्लाउड पर पूरा होना बाकी है; पुष्टि तक स्थानीय डेटा रखा जाएगा।",
+        "es": "El borrado comenzó. La confirmación en la nube sigue pendiente; los datos locales se conservan hasta confirmarla.",
+        "pt": "A exclusão começou. A confirmação na nuvem segue pendente; os dados locais são mantidos até ela.",
+        "fr": "La suppression a commencé. La confirmation cloud reste en cours ; les données locales sont conservées jusqu’à confirmation.",
+        "de": "Die Löschung wurde gestartet. Die Cloud-Bestätigung steht noch aus; lokale Daten bleiben bis zur Bestätigung erhalten.",
+        "ar": "بدأ حذف الحساب. اكتمال الحذف السحابي قيد المعالجة؛ تُحفظ البيانات المحلية حتى تأكيد الاكتمال.",
+        "ja": "削除を開始しました。クラウドでの完了は処理中で、確認されるまで端末内のデータを保持します。",
+        "ko": "계정 삭제가 시작되었습니다. 클라우드 완료는 처리 중이며 확인될 때까지 로컬 데이터를 보관합니다.",
+        "zh-Hans": "账户删除已开始。云端完成仍在处理中，本地数据将保留至完成确认。"
+      }
+    },
+    {
+      "source": "The cleanup account changed. Return to the current account.",
+      "translations": {
+        "hi": "सफ़ाई का खाता बदल गया। वर्तमान खाते पर लौटें।",
+        "es": "La cuenta de la limpieza cambió. Vuelve a la cuenta actual.",
+        "pt": "A conta da limpeza mudou. Volte para a conta atual.",
+        "fr": "Le compte du nettoyage a changé. Revenez au compte actuel.",
+        "de": "Das Konto für die Bereinigung hat sich geändert. Kehre zum aktuellen Konto zurück.",
+        "ar": "تغيّر حساب التنظيف. عُد إلى الحساب الحالي.",
+        "ja": "削除対象のアカウントが変更されました。現在のアカウントに戻ってください。",
+        "ko": "정리 대상 계정이 변경되었습니다. 현재 계정으로 돌아가세요.",
+        "zh-Hans": "清理所属账户已改变。请返回当前账户。"
+      }
+    }
+  ]
+}

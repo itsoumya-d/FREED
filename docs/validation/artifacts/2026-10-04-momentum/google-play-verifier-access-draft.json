@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "freed-google-play-verifier-access-draft-v1",
+  "preparedAt": "2026-10-04T04:41:42.999027+00:00",
+  "sanitized": true,
+  "status": "prepared-awaiting-owner-access-and-key-approval",
+  "projectId": "freed-7d5ee",
+  "serviceAccount": "freed-play-verifier@freed-7d5ee.iam.gserviceaccount.com",
+  "serviceAccountCreated": true,
+  "projectIamRolesGranted": 0,
+  "userManagedPrivateKeys": 0,
+  "developerAccountId": "7120618648526345593",
+  "developerName": "OTAI Tech",
+  "appId": "4973054839707244779",
+  "packageName": "app.freed.recovery",
+  "appStatusObserved": "Draft",
+  "invitationUrl": "https://play.google.com/console/u/4/developers/7120618648526345593/users-and-permissions/invite",
+  "appScope": [
+    "FREED / app.freed.recovery"
+  ],
+  "appPermissions": [
+    "View app information (read only)",
+    "View app quality information (read-only)",
+    "View financial data",
+    "Manage orders and subscriptions"
+  ],
+  "accountWidePermissionsSelected": 0,
+  "invitationSubmitted": false,
+  "privateKeyCreated": false,
+  "plannedSecretName": "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON",
+  "plannedCustody": "Private file outside repository, restrictive permissions, and Firebase Secret Manager.",
+  "requiredPermissionsSource": "https://developers.google.com/android-publisher/getting_started",
+  "permissionMeaning": "Console requires app-read access, which also selects app-quality read access. Google Billing additionally requires financial and order/subscription access. The order-management permission can refund orders or cancel subscriptions; the backend uses it for verification.",
+  "androidPublisherApiObservedEnabled": false,
+  "billingProofMeaning": "Prepared access is not credential validation, deployment or sandbox purchase proof."
+}

@@ -1,0 +1,299 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="FREED-Premium-Disposable - iOS 26.5 - EA53F394-3E1F-44A7-84EF-716A26BE9879" tests="53" failures="29" time="1673.46" timestamp="2026-10-03T07:55:32">
+    <testcase id="native-permission-locales" name="native-permission-locales" classname="native-permission-locales" file="/tmp/freed-premium-ios-safe-flows/native-permission-locales.yaml" time="21.778" timestamp="2026-10-03T07:55:32" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: id: screen-preferences is visible</failure>
+    </testcase>
+    <testcase id="shield-health" name="shield-health" classname="shield-health" file="/tmp/freed-premium-ios-safe-flows/shield-health.yaml" time="18.303" timestamp="2026-10-03T07:55:54" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="clara-local" name="clara-local" classname="clara-local" file="/tmp/freed-premium-ios-safe-flows/clara-local.yaml" time="25.894" timestamp="2026-10-03T07:56:12" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+    </testcase>
+    <testcase id="recovery-drafts" name="recovery-drafts" classname="recovery-drafts" file="/tmp/freed-premium-ios-safe-flows/recovery-drafts.yaml" time="24.217" timestamp="2026-10-03T07:56:38" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+      <failure>Assertion is false: id: checkin-reflection is visible</failure>
+    </testcase>
+    <testcase id="shield-allowlist" name="shield-allowlist" classname="shield-allowlist" file="/tmp/freed-premium-ios-safe-flows/shield-allowlist.yaml" time="23.05" timestamp="2026-10-03T07:57:02" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+      <failure>Element not found: Text matching regex: Show advanced diagnostics</failure>
+    </testcase>
+    <testcase id="intercept" name="intercept" classname="intercept" file="/tmp/freed-premium-ios-safe-flows/intercept.yaml" time="32.927" timestamp="2026-10-03T07:57:26" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: "Back to Safety" is visible</failure>
+    </testcase>
+    <testcase id="challenge-list" name="challenge-list" classname="challenge-list" file="/tmp/freed-premium-ios-safe-flows/challenge-list.yaml" time="13.119" timestamp="2026-10-03T07:57:58" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="urgent-support" name="urgent-support" classname="urgent-support" file="/tmp/freed-premium-ios-safe-flows/urgent-support.yaml" time="32.401" timestamp="2026-10-03T07:58:12" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: "Back to Safety" is visible</failure>
+    </testcase>
+    <testcase id="onboarding-plan" name="onboarding-plan" classname="onboarding-plan" file="/tmp/freed-premium-ios-safe-flows/onboarding-plan.yaml" time="14.038" timestamp="2026-10-03T07:58:44" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="custom-reset" name="custom-reset" classname="custom-reset" file="/tmp/freed-premium-ios-safe-flows/custom-reset.yaml" time="15.845" timestamp="2026-10-03T07:58:58" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="encrypted-dns-status" name="encrypted-dns-status" classname="encrypted-dns-status" file="/tmp/freed-premium-ios-safe-flows/encrypted-dns-status.yaml" time="21.302" timestamp="2026-10-03T07:59:14" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="profile-shield" name="profile-shield" classname="profile-shield" file="/tmp/freed-premium-ios-safe-flows/profile-shield.yaml" time="15.319" timestamp="2026-10-03T07:59:35" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="paywall-free-exit" name="paywall-free-exit" classname="paywall-free-exit" file="/tmp/freed-premium-ios-safe-flows/paywall-free-exit.yaml" time="16.677" timestamp="2026-10-03T07:59:51" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="root-navigation" name="root-navigation" classname="root-navigation" file="/tmp/freed-premium-ios-safe-flows/root-navigation.yaml" time="25.592" timestamp="2026-10-03T08:00:07" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="onboarding-quiz" name="onboarding-quiz" classname="onboarding-quiz" file="/tmp/freed-premium-ios-safe-flows/onboarding-quiz.yaml" time="24.303" timestamp="2026-10-03T08:00:33" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+    </testcase>
+    <testcase id="preferences-appearance" name="preferences-appearance" classname="preferences-appearance" file="/tmp/freed-premium-ios-safe-flows/preferences-appearance.yaml" time="21.134" timestamp="2026-10-03T08:00:57" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+      <failure>Assertion is false: id: screen-preferences is visible</failure>
+    </testcase>
+    <testcase id="shield-schedules" name="shield-schedules" classname="shield-schedules" file="/tmp/freed-premium-ios-safe-flows/shield-schedules.yaml" time="27.626" timestamp="2026-10-03T08:01:18" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>No visible element found: "Sleep mode.*"</failure>
+    </testcase>
+    <testcase id="profile-history" name="profile-history" classname="profile-history" file="/tmp/freed-premium-ios-safe-flows/profile-history.yaml" time="36.465" timestamp="2026-10-03T08:01:46" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: ".*protected attempts.*" is visible</failure>
+    </testcase>
+    <testcase id="library-articles" name="library-articles" classname="library-articles" file="/tmp/freed-premium-ios-safe-flows/library-articles.yaml" time="58.404" timestamp="2026-10-03T08:02:22" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: id: screen-main-today is visible</failure>
+    </testcase>
+    <testcase id="profile-accountability" name="profile-accountability" classname="profile-accountability" file="/tmp/freed-premium-ios-safe-flows/profile-accountability.yaml" time="30.555" timestamp="2026-10-03T08:03:21" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>No visible element found: ".*Accountability.*|.*accountability.*"</failure>
+    </testcase>
+    <testcase id="shield-preferences" name="shield-preferences" classname="shield-preferences" file="/tmp/freed-premium-ios-safe-flows/shield-preferences.yaml" time="30.646" timestamp="2026-10-03T08:03:51" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+      <failure>No visible element found: "Daily limit"</failure>
+    </testcase>
+    <testcase id="progress-reports" name="progress-reports" classname="progress-reports" file="/tmp/freed-premium-ios-safe-flows/progress-reports.yaml" time="22.235" timestamp="2026-10-03T08:04:22" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="checkin-save" name="checkin-save" classname="checkin-save" file="/tmp/freed-premium-ios-safe-flows/checkin-save.yaml" time="37.628" timestamp="2026-10-03T08:04:44" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+    </testcase>
+    <testcase id="profile-reminders" name="profile-reminders" classname="profile-reminders" file="/tmp/freed-premium-ios-safe-flows/profile-reminders.yaml" time="39.898" timestamp="2026-10-03T08:05:22" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: "Evening.*" is visible</failure>
+    </testcase>
+    <testcase id="protection-layers" name="protection-layers" classname="protection-layers" file="/tmp/freed-premium-ios-safe-flows/protection-layers.yaml" time="20.387" timestamp="2026-10-03T08:06:02" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="platform-limits" name="platform-limits" classname="platform-limits" file="/tmp/freed-premium-ios-safe-flows/platform-limits.yaml" time="25.333" timestamp="2026-10-03T08:06:22" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: "Web safety" is visible</failure>
+    </testcase>
+    <testcase id="encrypted-dns-release-gated" name="encrypted-dns-release-gated" classname="encrypted-dns-release-gated" file="/tmp/freed-premium-ios-safe-flows/encrypted-dns-release-gated.yaml" time="23.989" timestamp="2026-10-03T08:06:48" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="protection-setup" name="protection-setup" classname="protection-setup" file="/tmp/freed-premium-ios-safe-flows/protection-setup.yaml" time="24.396" timestamp="2026-10-03T08:07:11" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>No visible element found: "Check settings again"</failure>
+    </testcase>
+    <testcase id="backup-local" name="backup-local" classname="backup-local" file="/tmp/freed-premium-ios-safe-flows/backup-local.yaml" time="88.356" timestamp="2026-10-03T08:07:36" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+      <failure>Couldn't hide the keyboard. This can happen if the app uses a custom input or doesn't expose a standard dismiss action.</failure>
+    </testcase>
+    <testcase id="preferences-language" name="preferences-language" classname="preferences-language" file="/tmp/freed-premium-ios-safe-flows/preferences-language.yaml" time="28.33" timestamp="2026-10-03T08:09:04" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+      <failure>Assertion is false: id: screen-preferences is visible</failure>
+    </testcase>
+    <testcase id="today-habits" name="today-habits" classname="today-habits" file="/tmp/freed-premium-ios-safe-flows/today-habits.yaml" time="57.058" timestamp="2026-10-03T08:09:33" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+    </testcase>
+    <testcase id="today-metrics" name="today-metrics" classname="today-metrics" file="/tmp/freed-premium-ios-safe-flows/today-metrics.yaml" time="36.466" timestamp="2026-10-03T08:10:30" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="account-validation" name="account-validation" classname="account-validation" file="/tmp/freed-premium-ios-safe-flows/account-validation.yaml" time="106.208" timestamp="2026-10-03T08:11:06" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: "The passwords do not match\. Enter them again\." is visible</failure>
+    </testcase>
+    <testcase id="privacy-support" name="privacy-support" classname="privacy-support" file="/tmp/freed-premium-ios-safe-flows/privacy-support.yaml" time="34.491" timestamp="2026-10-03T08:12:52" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="deletion-local" name="deletion-local" classname="deletion-local" file="/tmp/freed-premium-ios-safe-flows/deletion-local.yaml" time="35.157" timestamp="2026-10-03T08:13:27" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>No visible element found: "Privacy &amp; support"</failure>
+    </testcase>
+    <testcase id="encrypted-dns-consent" name="encrypted-dns-consent" classname="encrypted-dns-consent" file="/tmp/freed-premium-ios-safe-flows/encrypted-dns-consent.yaml" time="41.327" timestamp="2026-10-03T08:14:02" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>No visible element found: id: dns-consent-open</failure>
+    </testcase>
+    <testcase id="today-pledge" name="today-pledge" classname="today-pledge" file="/tmp/freed-premium-ios-safe-flows/today-pledge.yaml" time="31.22" timestamp="2026-10-03T08:14:43" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+    </testcase>
+    <testcase id="library-search" name="library-search" classname="library-search" file="/tmp/freed-premium-ios-safe-flows/library-search.yaml" time="26.094" timestamp="2026-10-03T08:15:15" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="slip-save" name="slip-save" classname="slip-save" file="/tmp/freed-premium-ios-safe-flows/slip-save.yaml" time="3.006" timestamp="2026-10-03T08:15:41" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+      <failure>Unknown error</failure>
+    </testcase>
+    <testcase id="shield-url-check" name="shield-url-check" classname="shield-url-check" file="/tmp/freed-premium-ios-safe-flows/shield-url-check.yaml" time="28.234" timestamp="2026-10-03T08:15:44" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Element not found: Text matching regex: Show advanced diagnostics</failure>
+    </testcase>
+    <testcase id="breathing" name="breathing" classname="breathing" file="/tmp/freed-premium-ios-safe-flows/breathing.yaml" time="21.943" timestamp="2026-10-03T08:16:12" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: id: screen-breathing is visible</failure>
+    </testcase>
+    <testcase id="paywall-plans" name="paywall-plans" classname="paywall-plans" file="/tmp/freed-premium-ios-safe-flows/paywall-plans.yaml" time="16.96" timestamp="2026-10-03T08:16:34" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="recovery-shortcuts" name="recovery-shortcuts" classname="recovery-shortcuts" file="/tmp/freed-premium-ios-safe-flows/recovery-shortcuts.yaml" time="50.93" timestamp="2026-10-03T08:16:51" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: id: screen-breathing is visible</failure>
+    </testcase>
+    <testcase id="onboarding-welcome" name="onboarding-welcome" classname="onboarding-welcome" file="/tmp/freed-premium-ios-safe-flows/onboarding-welcome.yaml" time="30.923" timestamp="2026-10-03T08:17:42" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="progress-zero" name="progress-zero" classname="progress-zero" file="/tmp/freed-premium-ios-safe-flows/progress-zero.yaml" time="43.225" timestamp="2026-10-03T08:18:13" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: "No signals yet" is visible</failure>
+    </testcase>
+    <testcase id="localization-rtl-restart" name="localization-rtl-restart" classname="localization-rtl-restart" file="/tmp/freed-premium-ios-safe-flows/localization-rtl-restart.yaml" time="43.942" timestamp="2026-10-03T08:18:56" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+      <failure>Assertion is false: id: screen-preferences is visible</failure>
+    </testcase>
+    <testcase id="analytics-consent" name="analytics-consent" classname="analytics-consent" file="/tmp/freed-premium-ios-safe-flows/analytics-consent.yaml" time="34.009" timestamp="2026-10-03T08:19:40" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>No visible element found: "Enable Sharing|Turn Off"</failure>
+    </testcase>
+    <testcase id="profile-plan" name="profile-plan" classname="profile-plan" file="/tmp/freed-premium-ios-safe-flows/profile-plan.yaml" time="42.436" timestamp="2026-10-03T08:20:14" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: id: screen-main-profile is visible</failure>
+    </testcase>
+    <testcase id="account-reset-validation" name="account-reset-validation" classname="account-reset-validation" file="/tmp/freed-premium-ios-safe-flows/account-reset-validation.yaml" time="57.464" timestamp="2026-10-03T08:20:57" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="paywall-legal" name="paywall-legal" classname="paywall-legal" file="/tmp/freed-premium-ios-safe-flows/paywall-legal.yaml" time="17.763" timestamp="2026-10-03T08:21:54" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="account-options" name="account-options" classname="account-options" file="/tmp/freed-premium-ios-safe-flows/account-options.yaml" time="19.38" timestamp="2026-10-03T08:22:12" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="onboarding-app-selection" name="onboarding-app-selection" classname="onboarding-app-selection" file="/tmp/freed-premium-ios-safe-flows/onboarding-app-selection.yaml" time="25.951" timestamp="2026-10-03T08:22:31" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+      <failure>Assertion is false: "Select At Least 1 App" is visible</failure>
+    </testcase>
+    <testcase id="shield-diagnostics" name="shield-diagnostics" classname="shield-diagnostics" file="/tmp/freed-premium-ios-safe-flows/shield-diagnostics.yaml" time="28.405" timestamp="2026-10-03T08:22:57" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Element not found: Text matching regex: Show advanced diagnostics</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

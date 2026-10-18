@@ -1,0 +1,12 @@
+{
+  "recordedAt": "2026-10-02T07:10:44.213Z",
+  "project": "freed-7d5ee",
+  "api": "https://firebasestorage.googleapis.com/v1alpha/projects/freed-7d5ee/defaultBucket",
+  "requestedLocation": "asia-south1",
+  "credentialSource": "existing-firebase-cli-session",
+  "credentialValuesOmitted": true,
+  "status": 403,
+  "error": {
+    "message": "Request to https://firebasestorage.googleapis.com/v1alpha/projects/freed-7d5ee/defaultBucket had HTTP Error: 403, The caller does not have permission"
+  }
+}

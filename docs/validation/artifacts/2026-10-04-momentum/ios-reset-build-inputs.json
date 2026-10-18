@@ -1,0 +1,13 @@
+{
+  "capturedAt": "2026-10-04T00:08:42.731530+00:00",
+  "scope": "iOS native reset framework/source compilation; not signed release or installed runtime proof",
+  "files": {
+    "modules/freed-protection/ios/FreedProtectionModule.swift": "fafd1fe5d3773920beefa7ea226988f6c6d7a2705b87524868016f048a39fcff",
+    "ios/FREEDDeviceActivityMonitor/DeviceActivityMonitorExtension.swift": "48acbebb6b045cab94eff4a38b50a99c27941c6218732d8554618f962c48ce51",
+    "ios/FREEDShieldAction/ShieldActionExtension.swift": "e95806bd59a5b7f2690d5f4e19e26c9454fbce98989acbe842565a07111e0ef2",
+    "ios/FREEDSafariContentBlocker/ContentBlockerRequestHandler.swift": "9ebd0213f46472e969d7bc90b9c894fbd4fbec5039dd45200d05cc15404fddf5",
+    "ios/FREEDSafariFocusShield/SafariWebExtensionHandler.swift": "982722c64fd468e9ee8771e5e6c36ee4d5ad8d8694f72a5389f1406b9b742e5b",
+    "ios/FREEDSafariFocusShield/background.js": "22e49d15614c4cf01f9fa9b1395e8480752ec3a52bd8a403f3db4ecea33fd6c3",
+    "ios/FREEDSafariFocusShield/content.js": "06a4112265600d8c903086b6cbd9146bc870ad34a71d8b8ca127b3aed3e9be3e"
+  }
+}

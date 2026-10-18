@@ -1,0 +1,340 @@
+{
+  "entries": [
+    {
+      "source": "flower",
+      "translations": {
+        "hi": "फूल",
+        "es": "flor",
+        "pt": "flor",
+        "fr": "fleur",
+        "de": "Blume",
+        "ar": "زهرة",
+        "ja": "花",
+        "ko": "꽃",
+        "zh-Hans": "花"
+      }
+    },
+    {
+      "source": "Find a flower",
+      "translations": {
+        "hi": "फूल ढूँढें",
+        "es": "Busca una flor",
+        "pt": "Encontre uma flor",
+        "fr": "Trouvez une fleur",
+        "de": "Finde eine Blume",
+        "ar": "ابحث عن زهرة",
+        "ja": "花を見つける",
+        "ko": "꽃 찾기",
+        "zh-Hans": "寻找花"
+      }
+    },
+    {
+      "source": "Find a flower nearby.",
+      "translations": {
+        "hi": "आसपास फूल ढूँढें।",
+        "es": "Busca una flor cerca.",
+        "pt": "Encontre uma flor por perto.",
+        "fr": "Trouvez une fleur à proximité.",
+        "de": "Finde eine Blume in deiner Nähe.",
+        "ar": "ابحث عن زهرة بالقرب منك.",
+        "ja": "近くで花を見つけてください。",
+        "ko": "주변에서 꽃을 찾아보세요.",
+        "zh-Hans": "在附近寻找花。"
+      }
+    },
+    {
+      "source": "plant",
+      "translations": {
+        "hi": "पौधा",
+        "es": "planta",
+        "pt": "planta",
+        "fr": "plante",
+        "de": "Pflanze",
+        "ar": "نبات",
+        "ja": "植物",
+        "ko": "식물",
+        "zh-Hans": "植物"
+      }
+    },
+    {
+      "source": "Find a plant",
+      "translations": {
+        "hi": "पौधा ढूँढें",
+        "es": "Busca una planta",
+        "pt": "Encontre uma planta",
+        "fr": "Trouvez une plante",
+        "de": "Finde eine Pflanze",
+        "ar": "ابحث عن نبات",
+        "ja": "植物を見つける",
+        "ko": "식물 찾기",
+        "zh-Hans": "寻找植物"
+      }
+    },
+    {
+      "source": "Find a plant nearby.",
+      "translations": {
+        "hi": "आसपास पौधा ढूँढें।",
+        "es": "Busca una planta cerca.",
+        "pt": "Encontre uma planta por perto.",
+        "fr": "Trouvez une plante à proximité.",
+        "de": "Finde eine Pflanze in deiner Nähe.",
+        "ar": "ابحث عن نبات بالقرب منك.",
+        "ja": "近くで植物を見つけてください。",
+        "ko": "주변에서 식물을 찾아보세요.",
+        "zh-Hans": "在附近寻找植物。"
+      }
+    },
+    {
+      "source": "chair",
+      "translations": {
+        "hi": "कुर्सी",
+        "es": "silla",
+        "pt": "cadeira",
+        "fr": "chaise",
+        "de": "Stuhl",
+        "ar": "كرسي",
+        "ja": "椅子",
+        "ko": "의자",
+        "zh-Hans": "椅子"
+      }
+    },
+    {
+      "source": "Find a chair",
+      "translations": {
+        "hi": "कुर्सी ढूँढें",
+        "es": "Busca una silla",
+        "pt": "Encontre uma cadeira",
+        "fr": "Trouvez une chaise",
+        "de": "Finde einen Stuhl",
+        "ar": "ابحث عن كرسي",
+        "ja": "椅子を見つける",
+        "ko": "의자 찾기",
+        "zh-Hans": "寻找椅子"
+      }
+    },
+    {
+      "source": "Find a chair nearby.",
+      "translations": {
+        "hi": "आसपास कुर्सी ढूँढें।",
+        "es": "Busca una silla cerca.",
+        "pt": "Encontre uma cadeira por perto.",
+        "fr": "Trouvez une chaise à proximité.",
+        "de": "Finde einen Stuhl in deiner Nähe.",
+        "ar": "ابحث عن كرسي بالقرب منك.",
+        "ja": "近くで椅子を見つけてください。",
+        "ko": "주변에서 의자를 찾아보세요.",
+        "zh-Hans": "在附近寻找椅子。"
+      }
+    },
+    {
+      "source": "cup",
+      "translations": {
+        "hi": "कप",
+        "es": "taza",
+        "pt": "xícara",
+        "fr": "tasse",
+        "de": "Tasse",
+        "ar": "كوب",
+        "ja": "カップ",
+        "ko": "컵",
+        "zh-Hans": "杯子"
+      }
+    },
+    {
+      "source": "Find a cup",
+      "translations": {
+        "hi": "कप ढूँढें",
+        "es": "Busca una taza",
+        "pt": "Encontre uma xícara",
+        "fr": "Trouvez une tasse",
+        "de": "Finde eine Tasse",
+        "ar": "ابحث عن كوب",
+        "ja": "カップを見つける",
+        "ko": "컵 찾기",
+        "zh-Hans": "寻找杯子"
+      }
+    },
+    {
+      "source": "Find a cup nearby.",
+      "translations": {
+        "hi": "आसपास कप ढूँढें।",
+        "es": "Busca una taza cerca.",
+        "pt": "Encontre uma xícara por perto.",
+        "fr": "Trouvez une tasse à proximité.",
+        "de": "Finde eine Tasse in deiner Nähe.",
+        "ar": "ابحث عن كوب بالقرب منك.",
+        "ja": "近くでカップを見つけてください。",
+        "ko": "주변에서 컵을 찾아보세요.",
+        "zh-Hans": "在附近寻找杯子。"
+      }
+    },
+    {
+      "source": "shoe",
+      "translations": {
+        "hi": "जूता",
+        "es": "zapato",
+        "pt": "sapato",
+        "fr": "chaussure",
+        "de": "Schuh",
+        "ar": "حذاء",
+        "ja": "靴",
+        "ko": "신발",
+        "zh-Hans": "鞋子"
+      }
+    },
+    {
+      "source": "Find a shoe",
+      "translations": {
+        "hi": "जूता ढूँढें",
+        "es": "Busca un zapato",
+        "pt": "Encontre um sapato",
+        "fr": "Trouvez une chaussure",
+        "de": "Finde einen Schuh",
+        "ar": "ابحث عن حذاء",
+        "ja": "靴を見つける",
+        "ko": "신발 찾기",
+        "zh-Hans": "寻找鞋子"
+      }
+    },
+    {
+      "source": "Find a shoe nearby.",
+      "translations": {
+        "hi": "आसपास जूता ढूँढें।",
+        "es": "Busca un zapato cerca.",
+        "pt": "Encontre um sapato por perto.",
+        "fr": "Trouvez une chaussure à proximité.",
+        "de": "Finde einen Schuh in deiner Nähe.",
+        "ar": "ابحث عن حذاء بالقرب منك.",
+        "ja": "近くで靴を見つけてください。",
+        "ko": "주변에서 신발을 찾아보세요.",
+        "zh-Hans": "在附近寻找鞋子。"
+      }
+    },
+    {
+      "source": "branch",
+      "translations": {
+        "hi": "टहनी",
+        "es": "rama",
+        "pt": "galho",
+        "fr": "branche",
+        "de": "Ast",
+        "ar": "غصن",
+        "ja": "枝",
+        "ko": "나뭇가지",
+        "zh-Hans": "树枝"
+      }
+    },
+    {
+      "source": "Find a branch",
+      "translations": {
+        "hi": "टहनी ढूँढें",
+        "es": "Busca una rama",
+        "pt": "Encontre um galho",
+        "fr": "Trouvez une branche",
+        "de": "Finde einen Ast",
+        "ar": "ابحث عن غصن",
+        "ja": "枝を見つける",
+        "ko": "나뭇가지 찾기",
+        "zh-Hans": "寻找树枝"
+      }
+    },
+    {
+      "source": "Find a branch nearby.",
+      "translations": {
+        "hi": "आसपास टहनी ढूँढें।",
+        "es": "Busca una rama cerca.",
+        "pt": "Encontre um galho por perto.",
+        "fr": "Trouvez une branche à proximité.",
+        "de": "Finde einen Ast in deiner Nähe.",
+        "ar": "ابحث عن غصن بالقرب منك.",
+        "ja": "近くで枝を見つけてください。",
+        "ko": "주변에서 나뭇가지를 찾아보세요.",
+        "zh-Hans": "在附近寻找树枝。"
+      }
+    },
+    {
+      "source": "clock",
+      "translations": {
+        "hi": "घड़ी",
+        "es": "reloj",
+        "pt": "relógio",
+        "fr": "horloge",
+        "de": "Uhr",
+        "ar": "ساعة",
+        "ja": "時計",
+        "ko": "시계",
+        "zh-Hans": "时钟"
+      }
+    },
+    {
+      "source": "Find a clock",
+      "translations": {
+        "hi": "घड़ी ढूँढें",
+        "es": "Busca un reloj",
+        "pt": "Encontre um relógio",
+        "fr": "Trouvez une horloge",
+        "de": "Finde eine Uhr",
+        "ar": "ابحث عن ساعة",
+        "ja": "時計を見つける",
+        "ko": "시계 찾기",
+        "zh-Hans": "寻找时钟"
+      }
+    },
+    {
+      "source": "Find a clock nearby.",
+      "translations": {
+        "hi": "आसपास घड़ी ढूँढें।",
+        "es": "Busca un reloj cerca.",
+        "pt": "Encontre um relógio por perto.",
+        "fr": "Trouvez une horloge à proximité.",
+        "de": "Finde eine Uhr in deiner Nähe.",
+        "ar": "ابحث عن ساعة بالقرب منك.",
+        "ja": "近くで時計を見つけてください。",
+        "ko": "주변에서 시계를 찾아보세요.",
+        "zh-Hans": "在附近寻找时钟。"
+      }
+    },
+    {
+      "source": "fruit",
+      "translations": {
+        "hi": "फल",
+        "es": "fruta",
+        "pt": "fruta",
+        "fr": "un fruit",
+        "de": "Obst",
+        "ar": "فاكهة",
+        "ja": "果物",
+        "ko": "과일",
+        "zh-Hans": "水果"
+      }
+    },
+    {
+      "source": "Find a fruit",
+      "translations": {
+        "hi": "फल ढूँढें",
+        "es": "Busca una fruta",
+        "pt": "Encontre uma fruta",
+        "fr": "Trouvez un fruit",
+        "de": "Finde Obst",
+        "ar": "ابحث عن فاكهة",
+        "ja": "果物を見つける",
+        "ko": "과일 찾기",
+        "zh-Hans": "寻找水果"
+      }
+    },
+    {
+      "source": "Find a fruit nearby.",
+      "translations": {
+        "hi": "आसपास फल ढूँढें।",
+        "es": "Busca una fruta cerca.",
+        "pt": "Encontre uma fruta por perto.",
+        "fr": "Trouvez un fruit à proximité.",
+        "de": "Finde Obst in deiner Nähe.",
+        "ar": "ابحث عن فاكهة بالقرب منك.",
+        "ja": "近くで果物を見つけてください。",
+        "ko": "주변에서 과일을 찾아보세요.",
+        "zh-Hans": "在附近寻找水果。"
+      }
+    }
+  ]
+}

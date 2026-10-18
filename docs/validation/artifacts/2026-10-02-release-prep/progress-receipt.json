@@ -1,0 +1,118 @@
+{
+  "app": "app.freed.recovery",
+  "asOf": "2026-10-02",
+  "coreTests": 278,
+  "serverTestsWithEmulators": 198,
+  "setupFlowTests": 8,
+  "paywallNavigationTests": 5,
+  "typecheck": "passed",
+  "nativeIosBuild": "succeeded",
+  "androidSignedBuild": {
+    "status": "succeeded",
+    "artifact": "android/app/build/outputs/bundle/release/app-release.aab",
+    "sha256": "169e79cb101e5529d040c1cdfbc9e4375ca480a997776434d77ffff5d97ca520",
+    "sizeBytes": 46979303,
+    "report": "android-signed-build-final.json",
+    "independentSignatureAndBytecodeProof": "android-artifact-verification.json",
+    "uploaded": false
+  },
+  "appleDraft": {
+    "reviewContactReused": true,
+    "signInRequired": false,
+    "publication": "manual",
+    "subscriptionGroupDisplayName": "FREED Premium",
+    "annualAvailability": "175 current regions, upfront only",
+    "annualEnglishDisplay": "FREED Premium Annual",
+    "monthlyAvailability": "175 current supported regions",
+    "monthlyEnglishDisplay": "FREED Premium Monthly",
+    "monthlyReviewNotes": "saved; read back with Save disabled",
+    "reviewScreenshotUpload": "blocked by local-file URL permission in both Chrome upload extensions",
+    "monthlyReviewScreenshot": "uploaded and saved; image SOURCE present",
+    "monthlyPurchaseOptions": "individual App Store purchases; multiseat Not Allowed",
+    "annualReviewNotes": "filled in browser but Save not confirmed after connection loss"
+  },
+  "unverified": [
+    "physical permission approval and enforcement",
+    "production Firebase functions and backup service",
+    "subscription sandbox lifecycle",
+    "production GCS generation enforcement",
+    "annual/monthly service level equality (manual editor prepared)",
+    "subscription review screenshot upload"
+  ],
+  "captureCorrection": {
+    "file": "paywall-monthly.png",
+    "actualScreen": "Profile; not a monthly paywall receipt"
+  },
+  "paywallRuntime": {
+    "bundleSha256": "a5779926976dbd1dbaba6c5a2a68f0502ebf38f8187a1b0570a205a06bb2e279",
+    "annual": "paywall-annual.png",
+    "monthly": "paywall-monthly-confirmed.png",
+    "restoreManageLegal": "paywall-utilities-confirmed.png",
+    "freeExit": "one tap returns to Profile; /tmp/freed-free-return-ui.json",
+    "finalBundleSha256": "5182f828b6a65d84491188b12930f0e197561c631bef4d54268cd7179b77a5b6",
+    "monthlyFinal": "paywall-final-monthly.png",
+    "largeActions": "paywall-large-actions-final.png",
+    "fontReduction": "Monthly remained checked; Subscribe9.99 permonth after returning to normal font size"
+  },
+  "playSubscriptions": "none yet; console requires first billing-enabled artifact upload",
+  "coreEvidence": "core-tests-handoff-current.log",
+  "hostedLegal": {
+    "passed": 18,
+    "failed": 0,
+    "report": "../store-legal-hosted-current/store-legal-hosted-url-audit.json"
+  },
+  "nativeIosStartup": {
+    "issue": "SafariServices shared XPC initializer raced concurrent background calls",
+    "fix": "MainActor API entry; exactly-once timeout retained",
+    "tests": 4,
+    "runtimeRebuild": "succeeded; ios-safari-build-retry.log",
+    "finalRuntime": "two cold launches remained running; no new Safari XPC startup trap observed"
+  },
+  "largeText": {
+    "freshLaunch": "wraps correctly; paywall-large-text-fresh.png",
+    "liveSizeChange": "fixed; paywall-live-large-fixed.png; Monthly selection remained checked in native accessibility state"
+  },
+  "buildHelperTests": {
+    "passed": 7,
+    "evidence": "android-build-tests-final.log",
+    "clock": "virtual deadlines after real worker readiness",
+    "cleanup": "detached descendant actually reaped"
+  },
+  "playPrivacy": "saved and confirmed after reload",
+  "playListing": "1961-character two-plan description saved as draft and confirmed after reload",
+  "androidSignedApk": {
+    "status": "succeeded",
+    "path": "android/app/build/outputs/apk/release/app-release.apk",
+    "report": "android-signed-apk.json",
+    "signatureVerified": true,
+    "debugSigned": false,
+    "sha256": "3b14f80e5831271391b59e5fd96ab6a0676bc4f30f67f8253b4b7397c05999dd"
+  },
+  "strictRelease": {
+    "passed": 27,
+    "failed": 10,
+    "environment": "configured production values and existing upload credentials; no secrets printed"
+  },
+  "androidRuntime": "isolated empty FREEDLaunchApi36 AVD could not initialize host Hypervisor.framework (HVF Invalid argument); no runtime pass claimed",
+  "storeUploads": "Chrome4 chooser accepts local files; monthly IAP review asset uploaded, annual and builds in progress",
+  "googleStoreContact": "edit prepared; browser snapshot became unresponsive, no changed contact value is claimed",
+  "serverVerificationPrepared": {
+    "appleAppId": "6816637268",
+    "publicTrustRoots": 3,
+    "privateKeysCreated": false,
+    "deployed": false
+  },
+  "safariHandoff": {
+    "canonical": "https://freed-7d5ee.firebaseapp.com/intervention",
+    "metadata": "validated source/rule/host in fragment only",
+    "fallback": "explicit freed://intervention",
+    "focusedTests": 6,
+    "associationGeneration": "matching root and well-known exact auth/intervention paths",
+    "deployed": true,
+    "signedPhysicalProof": false,
+    "liveProof": "handoff-hosting-live-proof.json",
+    "matchingAssociationEndpoints": true
+  },
+  "assetManifest": "store/screenshots/manifest.json (real FREED captures; twoPlanLaunchOnly)",
+  "nativeBuildRefresh": "iOS Simulator + signed Android AAB rebuilds running after handoff addition"
+}

@@ -1,0 +1,256 @@
+{
+  "entries": [
+    {
+      "source": "Adaptive signals",
+      "translations": {
+        "ja": "適応的なサイン",
+        "de": "ADAPTIVE SIGNALE",
+        "pt": "SINAIS ADAPTATIVOS",
+        "zh-Hans": "自适应信号",
+        "fr": "SIGNAUX ADAPTATIFS",
+        "hi": "अनुकूल संकेत",
+        "ko": "적응형 신호",
+        "es": "SEÑALES ADAPTATIVAS",
+        "ar": "إشارات تكيّفية"
+      }
+    },
+    {
+      "source": "Back to safety",
+      "translations": {
+        "ja": "安全な状態に戻る",
+        "de": "Zurück in die Sicherheit",
+        "pt": "Voltar à segurança",
+        "zh-Hans": "回到安全状态",
+        "fr": "Retour à la sécurité",
+        "hi": "सुरक्षा पर लौटें",
+        "ko": "안전으로 돌아가기",
+        "es": "Volver a un lugar seguro",
+        "ar": "العودة إلى الأمان"
+      }
+    },
+    {
+      "source": "challenge",
+      "translations": {
+        "ja": "チャレンジ",
+        "de": "Aufgabe",
+        "pt": "Desafio",
+        "zh-Hans": "挑战",
+        "fr": "Défi",
+        "hi": "चुनौती",
+        "ko": "도전",
+        "es": "Reto",
+        "ar": "تحدٍّ"
+      }
+    },
+    {
+      "source": "Custom reset",
+      "translations": {
+        "ja": "カスタムリセット",
+        "de": "Eigener Neustart",
+        "pt": "Recomeço personalizado",
+        "zh-Hans": "自定义重置",
+        "fr": "Pause personnalisée",
+        "hi": "कस्टम रीसेट",
+        "ko": "사용자 정의 재설정",
+        "es": "Reinicio personalizado",
+        "ar": "إعادة ضبط مخصصة"
+      }
+    },
+    {
+      "source": "dark",
+      "translations": {
+        "ja": "ダーク",
+        "de": "Dunkel",
+        "pt": "Escuro",
+        "zh-Hans": "深色",
+        "fr": "Sombre",
+        "hi": "गहरा",
+        "ko": "어둠",
+        "es": "Oscuro",
+        "ar": "داكن"
+      }
+    },
+    {
+      "source": "email",
+      "translations": {
+        "ja": "メール",
+        "de": "E-Mail",
+        "pt": "E-mail",
+        "zh-Hans": "邮箱",
+        "fr": "E-mail",
+        "hi": "ईमेल",
+        "ko": "이메일",
+        "es": "Email",
+        "ar": "البريد الإلكتروني"
+      }
+    },
+    {
+      "source": "exercise",
+      "translations": {
+        "ja": "運動",
+        "de": "Bewegung",
+        "pt": "Exercício",
+        "zh-Hans": "运动",
+        "fr": "Exercice",
+        "hi": "व्यायाम",
+        "ko": "운동",
+        "es": "Ejercicio",
+        "ar": "التمرين"
+      }
+    },
+    {
+      "source": "language",
+      "translations": {
+        "ja": "言語",
+        "de": "Sprache",
+        "pt": "Idioma",
+        "zh-Hans": "语言",
+        "fr": "Langue",
+        "hi": "भाषा",
+        "ko": "언어",
+        "es": "Idioma",
+        "ar": "اللغة"
+      }
+    },
+    {
+      "source": "meditation",
+      "translations": {
+        "ja": "瞑想",
+        "de": "Meditation üben",
+        "pt": "Meditação",
+        "zh-Hans": "冥想",
+        "fr": "Méditation",
+        "hi": "ध्यान",
+        "ko": "명상",
+        "es": "Meditación",
+        "ar": "التأمل"
+      }
+    },
+    {
+      "source": "Monthly growth",
+      "translations": {
+        "ja": "月ごとの成長",
+        "de": "MONATLICHE ENTWICKLUNG",
+        "pt": "CRESCIMENTO MENSAL",
+        "zh-Hans": "月度成长",
+        "fr": "PROGRESSION MENSUELLE",
+        "hi": "मासिक विकास",
+        "ko": "월별 성장",
+        "es": "CRECIMIENTO MENSUAL",
+        "ar": "النمو الشهري"
+      }
+    },
+    {
+      "source": "mood",
+      "translations": {
+        "ja": "気分",
+        "de": "Stimmung",
+        "pt": "Humor",
+        "zh-Hans": "心情",
+        "fr": "Humeur",
+        "hi": "मूड",
+        "ko": "기분",
+        "es": "Ánimo",
+        "ar": "المزاج"
+      }
+    },
+    {
+      "source": "Personal insight",
+      "translations": {
+        "ja": "自分への気づき",
+        "de": "PERSÖNLICHE EINSICHT",
+        "pt": "PERCEPÇÃO PESSOAL",
+        "zh-Hans": "个人洞察",
+        "fr": "APERÇU PERSONNEL",
+        "hi": "व्यक्तिगत अंतर्दृष्टि",
+        "ko": "개인적인 통찰력",
+        "es": "PERCEPCIÓN PERSONAL",
+        "ar": "رؤية شخصية"
+      }
+    },
+    {
+      "source": "plan",
+      "translations": {
+        "ja": "プラン",
+        "de": "Planung",
+        "pt": "Plano",
+        "zh-Hans": "计划",
+        "fr": "Programme",
+        "hi": "योजना",
+        "ko": "계획",
+        "es": "Plan personal",
+        "ar": "الخطة"
+      }
+    },
+    {
+      "source": "privacy",
+      "translations": {
+        "ja": "プライバシー",
+        "de": "Datenschutz",
+        "pt": "Privacidade",
+        "zh-Hans": "隐私",
+        "fr": "Confidentialité",
+        "hi": "गोपनीयता",
+        "ko": "개인 정보 보호",
+        "es": "Privacidad",
+        "ar": "الخصوصية"
+      }
+    },
+    {
+      "source": "restore",
+      "translations": {
+        "ja": "復元",
+        "de": "Wiederherstellen",
+        "pt": "Restaurar",
+        "zh-Hans": "恢复",
+        "fr": "Restaurer",
+        "hi": "बहाल करें",
+        "ko": "복원",
+        "es": "Restaurar",
+        "ar": "استعادة"
+      }
+    },
+    {
+      "source": "settings",
+      "translations": {
+        "ja": "設定",
+        "de": "Einstellungen",
+        "pt": "Configurações",
+        "zh-Hans": "设置",
+        "fr": "Réglages",
+        "hi": "सेटिंग्स",
+        "ko": "설정",
+        "es": "Ajustes",
+        "ar": "الإعدادات"
+      }
+    },
+    {
+      "source": "social",
+      "translations": {
+        "ja": "人とのつながり",
+        "de": "Sozial",
+        "pt": "Socializar",
+        "zh-Hans": "社交",
+        "fr": "Relations sociales",
+        "hi": "सामाजिक",
+        "ko": "소셜",
+        "es": "Sociabilidad",
+        "ar": "اجتماعي"
+      }
+    },
+    {
+      "source": "Urge estimate",
+      "translations": {
+        "ja": "衝動の推定",
+        "de": "DRANGSCHÄTZUNG",
+        "pt": "ESTIMATIVA DA VONTADE",
+        "zh-Hans": "冲动估计",
+        "fr": "ESTIMATION DE L’ENVIE",
+        "hi": "इच्छा का अनुमान",
+        "ko": "긴급 견적",
+        "es": "ESTIMACIÓN DEL IMPULSO",
+        "ar": "تقدير الرغبة"
+      }
+    }
+  ]
+}

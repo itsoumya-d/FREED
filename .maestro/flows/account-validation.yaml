@@ -1,0 +1,33 @@
+appId: app.freed.recovery
+name: account-validation
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///flow/account"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-account"
+    timeout: 15000
+- tapOn: "Create account with email|Connect email"
+- tapOn: "Email address"
+- inputText: "not-an-email"
+- tapOn: "Password"
+- inputText: "fixture-password-A"
+- tapOn: "Confirm password"
+- inputText: "fixture-password-B"
+- hideKeyboard
+- tapOn: "Create account|Connect email"
+- assertVisible: "The passwords do not match\\. Enter them again\\."
+- tapOn: "Show password"
+- assertVisible: "Hide password"
+- tapOn: "Hide password"
+- assertVisible: "Show password"
+- tapOn: "Back to account options"
+- takeScreenshot: "account-validation"

@@ -1,0 +1,46 @@
+appId: app.freed.recovery
+name: checkin-save
+tags:
+  - smoke
+  - local-write
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///flow/checkin"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-checkin"
+    timeout: 15000
+- tapOn:
+    id: "checkin-mood-steady"
+- tapOn:
+    id: "checkin-urge-2"
+- scrollUntilVisible:
+    element:
+      id: "checkin-sleep-3"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "checkin-sleep-3"
+- scrollUntilVisible:
+    element:
+      id: "checkin-reflection"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "checkin-reflection"
+- inputText: "Disposable fixture reflection"
+- hideKeyboard
+- scrollUntilVisible:
+    element:
+      text: "Save Check-In"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Save Check-In"
+- assertVisible:
+    id: "screen-main-today"
+- takeScreenshot: "checkin-save"

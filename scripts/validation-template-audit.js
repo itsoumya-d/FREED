@@ -23,11 +23,10 @@ const PERMISSION_EXPLANATION_REQUIRED_PHRASES = [
   "block known adult domains",
   "harmful site, search, or app-limit threshold"
 ];
-const LAUNCH_PREMIUM_PLAN_IDS = ["yearly", "monthly", "lifetime"];
+const LAUNCH_PREMIUM_PLAN_IDS = ["yearly", "monthly"];
 const DEFAULT_LAUNCH_PRODUCT_IDS = {
   monthly: "freed_premium_monthly",
-  yearly: "freed_premium_yearly",
-  lifetime: "freed_premium_lifetime"
+  yearly: "freed_premium_yearly"
 };
 
 function isRecord(value) {
@@ -721,7 +720,7 @@ function validateStoreAdTemplate(payload, missing) {
   } else {
     const launchMatrixPlanIds = launchMatrix.map((entry) => (isRecord(entry) ? entry.planId : ""));
     if (JSON.stringify(launchMatrixPlanIds) !== JSON.stringify(LAUNCH_PREMIUM_PLAN_IDS)) {
-      missing.push("store.launchProductSandboxMatrix order yearly/monthly/lifetime");
+      missing.push("store.launchProductSandboxMatrix order yearly/monthly");
     }
     for (const planId of LAUNCH_PREMIUM_PLAN_IDS) {
       const row = launchMatrix.find((entry) => isRecord(entry) && entry.planId === planId);
@@ -797,72 +796,9 @@ function validateStoreAdTemplate(payload, missing) {
 }
 
 function validateAiBackendTemplate(payload, missing) {
-  const ai = isRecord(payload) && isRecord(payload.ai) ? payload.ai : {};
-
-  requireStringFields(
-    ai,
-    "ai",
-    [
-      "coachEndpoint",
-      "challengeEndpoint",
-      "model",
-      "releasePreflightCommand",
-      "releasePreflightRunId",
-      "releasePreflightArtifact",
-      "safetyEvalCommand",
-      "smokeCommand",
-      "safetyEvalReportId",
-      "safetyEvalArtifact",
-      "smokeReportId",
-      "smokeReportArtifact",
-      "coachSmokeRunId",
-      "coachSmokeArtifact",
-      "challengeSmokeRunId",
-      "challengeSmokeArtifact",
-      "challengePersonalizationRunId",
-      "challengePersonalizationArtifact",
-      "noCoordinateFieldsRunId",
-      "noCoordinateFieldsArtifact",
-      "noSensitiveEchoRunId",
-      "noSensitiveEchoArtifact",
-      "redactionReportId",
-      "redactionArtifact",
-      "crisisFallbackRunId",
-      "crisisFallbackArtifact",
-      "providerFallbackRunId",
-      "providerFallbackArtifact"
-    ],
-    missing
-  );
-  requireNumberFields(
-    ai,
-    "ai",
-    [
-      "safetyEvalCaseCount",
-      "safetyEvalFailedCount",
-      "smokeEndpointPassCount",
-      "smokeEndpointFailCount",
-      "challengePersonalizationProfileCount",
-      "challengeRiskForecastProfileCount",
-      "challengeSessionDurationBucketProfileCount",
-      "challengeRecentFailureProfileCount",
-      "freeChallengePremiumCount",
-      "noSensitiveEchoSampleCount"
-    ],
-    missing
-  );
-  if (
-    nonEmptyString(ai.releasePreflightCommand) &&
-    !ai.releasePreflightCommand.includes("npm run preflight:release-env")
-  ) {
-    missing.push("ai.releasePreflightCommand includes preflight:release-env");
-  }
-  if (nonEmptyString(ai.safetyEvalCommand) && !ai.safetyEvalCommand.includes("npm run eval:ai-safety")) {
-    missing.push("ai.safetyEvalCommand includes eval:ai-safety");
-  }
-  if (nonEmptyString(ai.smokeCommand) && !ai.smokeCommand.includes("npm run smoke:ai-backend")) {
-    missing.push("ai.smokeCommand includes smoke:ai-backend");
-  }
+  if (payload.schemaVersion !== "freed-google-clara-evidence-v2") missing.push("current Google CLARA evidence schema");
+  requireStringFields(payload.ai || {}, "ai", ["smokeReportArtifact", "smokeReportSha256"], missing);
+  if (!/^[a-f0-9]{64}$/.test(payload.ai?.smokeReportSha256 || "")) missing.push("AI report SHA256 example");
 }
 
 function templateExampleLabel(specId) {

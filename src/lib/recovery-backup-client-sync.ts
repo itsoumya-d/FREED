@@ -4,10 +4,12 @@ import { redactOperationalText } from "@/lib/operational-redaction";
 import { safeUserFacingMessage } from "@/lib/user-facing-error";
 import {
   createEncryptedRecoveryBackup,
-  restoreEncryptedRecoveryBackup,
+  restoreEncryptedRecoveryBackupContent,
   type RecoveryBackupEnvelope
 } from "@/lib/recovery-backup";
 import type { RecoveryState } from "@/lib/recovery-state";
+import type { JournalTextBackup } from './journal-text-backup';
+import { BACKUP_KDF_ITERATIONS, MAX_BACKUP_ENVELOPE_CHARS, validateBackupCiphertext, validateBackupSaltAndIv } from "@/lib/backup-crypto-format";
 
 type Fetcher = typeof fetch;
 
@@ -22,7 +24,18 @@ export type RecoveryBackupClientSyncConfig = {
   endpointUrl?: string | null;
   getAuthToken?: () => Promise<string | null> | string | null;
   fetcher?: Fetcher;
+  backupId?: string;
+  signal?: AbortSignal;
 };
+
+export type RecoveryBackupClientSyncTransport = (
+  payload: Record<string, unknown>, config: RecoveryBackupClientSyncConfig
+) => Promise<unknown>;
+let backupSyncTransport: RecoveryBackupClientSyncTransport | null = null;
+
+export function configureRecoveryBackupClientSyncTransport(transport: RecoveryBackupClientSyncTransport | null) {
+  backupSyncTransport = transport;
+}
 
 export type RecoveryBackupClientSyncReadiness = {
   ready: boolean;
@@ -42,6 +55,7 @@ export type RecoveryBackupClientSyncResult = {
 
 export type RecoveryBackupDownloadResult = RecoveryBackupClientSyncResult & {
   restoredState?: RecoveryState;
+  restoredJournal?: JournalTextBackup;
 };
 
 export function getRecoveryBackupClientSyncReadiness(
@@ -49,13 +63,13 @@ export function getRecoveryBackupClientSyncReadiness(
 ): RecoveryBackupClientSyncReadiness {
   const endpointUrl = resolveEndpointUrl(config);
   const missing = [
-    ...getProductionEndpointIssues(endpointUrl, "Recovery backup sync endpoint").map((issue) => issue.issue),
+    ...(!backupSyncTransport ? getProductionEndpointIssues(endpointUrl, "Recovery backup sync endpoint").map((issue) => issue.issue) : []),
     ...(!config.getAuthToken ? ["signed-in account token provider"] : [])
   ];
   const uniqueMissing = Array.from(new Set(missing.filter(Boolean))).sort();
   return {
     ready: uniqueMissing.length === 0,
-    configured: Boolean(endpointUrl),
+    configured: Boolean(backupSyncTransport || endpointUrl),
     missing: uniqueMissing,
     dataBoundary:
       "Creates and restores backups on-device. Hosted sync sends only the encrypted backup envelope plus route metadata, never the passphrase or decrypted recovery state."
@@ -68,7 +82,24 @@ export async function uploadEncryptedRecoveryBackup(
   config: RecoveryBackupClientSyncConfig = {}
 ): Promise<RecoveryBackupClientSyncResult> {
   const encrypted = await createEncryptedRecoveryBackup(state, passphrase);
-  const envelope = JSON.parse(encrypted) as RecoveryBackupEnvelope;
+  return uploadSerializedEncryptedRecoveryBackup(encrypted, config);
+}
+
+/** Reuses an already encrypted envelope, so bounded retries retain its immutable upload identity. */
+export async function uploadSerializedEncryptedRecoveryBackup(
+  serialized: string,
+  config: RecoveryBackupClientSyncConfig = {}
+): Promise<RecoveryBackupClientSyncResult> {
+  let envelope: RecoveryBackupEnvelope | null;
+  try {
+    if (serialized.length > MAX_BACKUP_ENVELOPE_CHARS) throw new Error("Invalid envelope.");
+    envelope = sanitizeEnvelope(JSON.parse(serialized));
+    if (!envelope || envelope.kdf.iterations !== BACKUP_KDF_ITERATIONS) throw new Error("Invalid envelope.");
+    validateBackupSaltAndIv(envelope.kdf.salt, envelope.cipher.iv);
+    validateBackupCiphertext(envelope.payload);
+  } catch {
+    return { ok: false, status: "invalid", action: "upload", reason: "Recovery backup has an invalid encrypted envelope." };
+  }
   const result = await postRecoveryBackupSync(
     {
       action: "upload",
@@ -98,10 +129,11 @@ export async function downloadEncryptedRecoveryBackup(
     };
   }
 
-  const restoredState = await restoreEncryptedRecoveryBackup(JSON.stringify(envelope), passphrase);
+  const content = await restoreEncryptedRecoveryBackupContent(JSON.stringify(envelope), passphrase);
   return {
     ...sanitized,
-    restoredState
+    restoredState: content.state,
+    ...(content.journal ? { restoredJournal: content.journal } : {})
   };
 }
 
@@ -116,9 +148,10 @@ async function postRecoveryBackupSync(
   payload: Record<string, unknown>,
   config: RecoveryBackupClientSyncConfig
 ): Promise<unknown> {
+  if (config.signal?.aborted) return cancelledSyncResult();
   const endpointUrl = resolveEndpointUrl(config);
   const readiness = getRecoveryBackupClientSyncReadiness(config);
-  if (!endpointUrl || !readiness.ready) {
+  if ((!endpointUrl && !backupSyncTransport) || !readiness.ready) {
     return {
       ok: false,
       status: endpointUrl ? "invalid" : "unconfigured",
@@ -127,6 +160,7 @@ async function postRecoveryBackupSync(
   }
 
   const token = await resolveAuthToken(config);
+  if (config.signal?.aborted) return cancelledSyncResult();
   if (!token) {
     return {
       ok: false,
@@ -136,8 +170,11 @@ async function postRecoveryBackupSync(
   }
 
   try {
+    const cancellableConfig = config.signal ? { ...config, fetcher: linkedAbortFetcher(config.fetcher ?? fetch, config.signal) } : config;
+    if (backupSyncTransport) return await backupSyncTransport(payload, cancellableConfig);
+    if (!endpointUrl) throw new Error("Recovery backup sync endpoint is unavailable.");
     const { response, body } = await postRecoveryBackupSyncWithTimeout(
-      config.fetcher ?? fetch,
+      cancellableConfig.fetcher ?? fetch,
       endpointUrl,
       {
         method: "POST",
@@ -166,6 +203,27 @@ async function postRecoveryBackupSync(
       reason: safeUserFacingMessage(error, "Recovery backup sync request failed.")
     };
   }
+}
+
+function cancelledSyncResult() {
+  return { ok: false, status: "error", reason: "Recovery backup sync was cancelled." };
+}
+
+function linkedAbortFetcher(fetcher: Fetcher, parent: AbortSignal): Fetcher {
+  return async (input, init) => {
+    if (parent.aborted) throw new Error("Recovery backup sync was cancelled.");
+    const linked = new AbortController();
+    const abort = () => linked.abort();
+    const local = init?.signal;
+    parent.addEventListener("abort", abort, { once: true });
+    local?.addEventListener("abort", abort, { once: true });
+    if (local?.aborted) linked.abort();
+    try { return await fetcher(input, { ...init, signal: linked.signal }); }
+    finally {
+      parent.removeEventListener("abort", abort);
+      local?.removeEventListener("abort", abort);
+    }
+  };
 }
 
 async function resolveAuthToken(config: RecoveryBackupClientSyncConfig) {

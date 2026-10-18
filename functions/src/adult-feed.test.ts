@@ -59,11 +59,40 @@ test("hosts, plain-domain, and adblock rules normalize, deduplicate, and sort de
   ].join("\n")), ["a.example.xxx", "b.example.xxx", "c.example.xxx"]);
 });
 
+test("approved ABP parsing omits recognized ICANN and private suffix-wide rules without creating blocked hostnames", () => {
+  assert.deepEqual(parseApprovedSource([
+    "[Adblock Plus]", "||adult^", "||co.cz^", "||cpanel.site^", "||in.net^",
+    "||mex.com^", "||porn^", "||sex^", "||xxx^", "||b.example.xxx^", "||a.example.xxx^"
+  ].join("\n")), ["a.example.xxx", "b.example.xxx"]);
+});
+
+test("a feed containing only unsupported suffix-wide ABP rules remains unavailable", () => {
+  assert.throws(() => parseApprovedSource("[Adblock Plus]\n||adult^\n||co.cz^"), /reviewed feed is empty/i);
+});
+
+test("suffix-wide omission does not admit suffixes into plain-domain, hosts, or stored payload consumers", () => {
+  for (const suffix of ["adult", "co.cz", "cpanel.site", "in.net", "mex.com", "porn", "sex", "xxx"]) {
+    assert.throws(() => parseApprovedSource(`a.example.xxx\n${suffix}`), /invalid reviewed feed/i, suffix);
+    assert.throws(() => parseApprovedSource(`a.example.xxx\n0.0.0.0 ${suffix}`), /invalid reviewed feed/i, suffix);
+    assert.throws(() => createDomainPayload(["a.example.xxx", suffix]), /invalid reviewed feed/i, suffix);
+  }
+});
+
+test("suffix-wide ABP handling retains malformed, exception, wildcard, unknown-suffix, and protected-site rejection", () => {
+  for (const rule of [
+    "@@||co.cz^", "||*.co.cz^", "||co.cz^$all", "||co.cz^ trailing", "||co..cz^",
+    "||co.cz/path^", "||co.cz:443^", "||127.0.0.1^", "||localhost^", "||unknownsuffix^",
+    "||google.com^", "||sub.youtube.com^", "||sub.github.com^"
+  ]) {
+    assert.throws(() => parseApprovedSource(`a.example.xxx\n${rule}`), /invalid reviewed feed|protected normal domain/i, rule);
+  }
+});
+
 test("only the standard live-source Adblock Plus header is ignored", () => {
   assert.deepEqual(parseApprovedSource("[Adblock Plus]\n! Title: OISD NSFW Small\n||example.xxx^"), ["example.xxx"]);
   for (const malformed of [
     "[Adblock]", "[Adblock Plus 2.0]", "[Adblock Plus] trailing", "[arbitrary]",
-    "[Adblock Plus]\n[Adblock Plus]"
+    "[Adblock Plus]\n[Adblock Plus]", "||adult^\n[Adblock Plus]"
   ]) {
     assert.throws(() => parseApprovedSource(`${malformed}\n||example.xxx^`), /invalid reviewed feed/i, malformed);
   }

@@ -1,0 +1,170 @@
+{
+  "revision": "2026-10-12-challenge-presentation",
+  "entries": [
+    {
+      "source": "A quieter moment.",
+      "key": "resetChoices.breatheDetail",
+      "translations": {
+        "hi": "एक शांत पल।",
+        "es": "Un momento de calma.",
+        "pt": "Um momento de calma.",
+        "fr": "Un moment plus calme.",
+        "de": "Ein ruhiger Moment.",
+        "ar": "لحظة أكثر هدوءًا.",
+        "ja": "心を静めるひととき。",
+        "ko": "차분한 순간.",
+        "zh-Hans": "安静片刻。"
+      }
+    },
+    {
+      "source": "Make room to move.",
+      "key": "resetChoices.moveDetail",
+      "translations": {
+        "hi": "हल्की हलचल के लिए जगह बनाएँ।",
+        "es": "Haz espacio para moverte.",
+        "pt": "Abra espaço para se mover.",
+        "fr": "Faites place au mouvement.",
+        "de": "Raum für Bewegung.",
+        "ar": "أفسح مجالًا للحركة.",
+        "ja": "無理なく体を動かそう。",
+        "ko": "편하게 움직여 보세요.",
+        "zh-Hans": "轻松活动一下。"
+      }
+    },
+    {
+      "source": "Notice what is around you.",
+      "key": "resetChoices.findDetail",
+      "translations": {
+        "hi": "अपने आसपास ध्यान दें।",
+        "es": "Observa lo que te rodea.",
+        "pt": "Observe ao seu redor.",
+        "fr": "Observez ce qui vous entoure.",
+        "de": "Nimm deine Umgebung wahr.",
+        "ar": "لاحظ ما حولك.",
+        "ja": "身の回りに目を向けよう。",
+        "ko": "주변을 살펴보세요.",
+        "zh-Hans": "留意身边的事物。"
+      }
+    },
+    {
+      "source": "Photo matching is unavailable for this break. Choose Breathe or Move; your guided access is kept.",
+      "key": "resetChoices.findUnavailable",
+      "translations": {
+        "hi": "इस ब्रेक के लिए फ़ोटो मिलान उपलब्ध नहीं है। साँस या हलचल चुनें; आपका गाइडेड एक्सेस सुरक्षित है।",
+        "es": "La verificación de fotos no está disponible para esta pausa. Elige Respirar o Moverte; conservas tu acceso guiado.",
+        "pt": "A verificação de fotos não está disponível para esta pausa. Escolha Respirar ou Mover; seu acesso guiado é mantido.",
+        "fr": "La vérification photo est indisponible pour cette pause. Choisissez Respirer ou Bouger ; votre accès guidé est conservé.",
+        "de": "Fotoabgleich ist für diese Pause nicht verfügbar. Wähle Atmen oder Bewegen; dein geführter Zugang bleibt erhalten.",
+        "ar": "مطابقة الصور غير متاحة لهذه الاستراحة. اختر التنفس أو الحركة؛ يبقى وصولك إلى الجلسة الموجّهة محفوظًا.",
+        "ja": "この休憩では写真照合を利用できません。「呼吸」か「運動」を選んでください。ガイド付きセッションの利用権は保持されます。",
+        "ko": "이 휴식에서는 사진 확인을 사용할 수 없습니다. 호흡 또는 움직이기를 선택하세요. 가이드 세션 이용 권한은 유지됩니다.",
+        "zh-Hans": "本次休息暂不支持照片匹配。请选择呼吸或活动；你的引导练习权限将保留。"
+      }
+    },
+    {
+      "source": "Paused",
+      "key": "resetChoices.paused",
+      "translations": {
+        "hi": "रुका हुआ",
+        "es": "En pausa",
+        "pt": "Pausado",
+        "fr": "En pause",
+        "de": "Pausiert",
+        "ar": "متوقف مؤقتًا",
+        "ja": "一時停止中",
+        "ko": "일시 정지됨",
+        "zh-Hans": "已暂停"
+      }
+    },
+    {
+      "source": "Breathe in gently",
+      "key": "resetChoices.inhale",
+      "translations": {
+        "hi": "आराम से साँस लें",
+        "es": "Inhala suavemente",
+        "pt": "Inspire suavemente",
+        "fr": "Inspirez doucement",
+        "de": "Sanft einatmen",
+        "ar": "تنفّس للداخل برفق",
+        "ja": "やさしく吸って",
+        "ko": "부드럽게 들이쉬세요",
+        "zh-Hans": "轻轻吸气"
+      }
+    },
+    {
+      "source": "Let your breath out",
+      "key": "resetChoices.exhale",
+      "translations": {
+        "hi": "धीरे से साँस छोड़ें",
+        "es": "Deja salir el aire",
+        "pt": "Solte o ar",
+        "fr": "Laissez sortir le souffle",
+        "de": "Lass den Atem los",
+        "ar": "دع نَفَسك يخرج",
+        "ja": "ゆっくり吐いて",
+        "ko": "편하게 내쉬세요",
+        "zh-Hans": "缓缓呼气"
+      }
+    },
+    {
+      "source": "Follow only if comfortable. No breath holds; your own pace is welcome.",
+      "key": "resetChoices.easyBreathing",
+      "translations": {
+        "hi": "आरामदायक लगे तभी साथ दें। साँस न रोकें; अपनी गति से साँस लें।",
+        "es": "Sigue el ritmo solo si te resulta cómodo. Sin retener el aire; puedes ir a tu ritmo.",
+        "pt": "Siga apenas se for confortável. Sem prender a respiração; seu próprio ritmo é bem-vindo.",
+        "fr": "Suivez seulement si cela reste confortable. Sans retenir le souffle ; votre propre rythme convient.",
+        "de": "Folge nur, wenn es angenehm ist. Kein Luftanhalten; dein eigenes Tempo ist willkommen.",
+        "ar": "اتبع الإيقاع فقط إذا كان مريحًا. لا تحبس نَفَسك؛ يمكنك التنفس بوتيرتك الخاصة.",
+        "ja": "心地よい場合だけ合わせてください。息を止めず、自分のペースでも大丈夫です。",
+        "ko": "편안할 때만 따라 하세요. 숨을 참지 말고 자신의 속도로 호흡해도 괜찮아요.",
+        "zh-Hans": "感觉舒适时再跟随。无需屏息，也可以按自己的节奏呼吸。"
+      }
+    },
+    {
+      "source": "{{elapsed}} / {{required}} active seconds",
+      "key": "resetChoices.activeSeconds",
+      "translations": {
+        "hi": "{{elapsed}} / {{required}} सक्रिय सेकंड",
+        "es": "{{elapsed}} / {{required}} segundos activos",
+        "pt": "{{elapsed}} / {{required}} segundos ativos",
+        "fr": "{{elapsed}} / {{required}} secondes actives",
+        "de": "{{elapsed}} / {{required}} aktive Sekunden",
+        "ar": "{{elapsed}} / {{required}} ثانية نشطة",
+        "ja": "有効時間 {{elapsed}} / {{required}} 秒",
+        "ko": "활동 시간 {{elapsed}} / {{required}}초",
+        "zh-Hans": "已活动 {{elapsed}} / {{required}} 秒"
+      }
+    },
+    {
+      "source": "One activity to try",
+      "key": "resetChoices.suggested",
+      "translations": {
+        "hi": "आज़माने के लिए एक गतिविधि",
+        "es": "Una actividad para probar",
+        "pt": "Uma atividade para experimentar",
+        "fr": "Une activité à essayer",
+        "de": "Eine Aktivität zum Ausprobieren",
+        "ar": "نشاط يمكنك تجربته",
+        "ja": "試してみるアクティビティ",
+        "ko": "시도해 볼 활동",
+        "zh-Hans": "可以尝试的练习"
+      }
+    },
+    {
+      "source": "Continue your activity",
+      "key": "resetChoices.continue",
+      "translations": {
+        "hi": "अपनी गतिविधि जारी रखें",
+        "es": "Continúa con tu actividad",
+        "pt": "Continue sua atividade",
+        "fr": "Poursuivez votre activité",
+        "de": "Setze deine Aktivität fort",
+        "ar": "تابع نشاطك",
+        "ja": "アクティビティを続ける",
+        "ko": "활동을 계속하세요",
+        "zh-Hans": "继续练习"
+      }
+    }
+  ]
+}

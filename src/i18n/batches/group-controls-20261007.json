@@ -1,0 +1,928 @@
+{
+  "entries": [
+    {
+      "source": "Add group",
+      "translations": {
+        "hi": "समूह जोड़ें",
+        "es": "Añadir grupo",
+        "pt": "Adicionar grupo",
+        "fr": "Ajouter un groupe",
+        "de": "Gruppe hinzufügen",
+        "ar": "إضافة مجموعة",
+        "ja": "グループを追加",
+        "ko": "그룹 추가",
+        "zh-Hans": "添加组"
+      }
+    },
+    {
+      "source": "Advanced protection",
+      "translations": {
+        "hi": "उन्नत सुरक्षा",
+        "es": "Protección avanzada",
+        "pt": "Proteção avançada",
+        "fr": "Protection avancée",
+        "de": "Erweiterter Schutz",
+        "ar": "الحماية المتقدمة",
+        "ja": "高度な保護",
+        "ko": "고급 보호",
+        "zh-Hans": "高级防护"
+      }
+    },
+    {
+      "source": "Allow Screen Time and select individual apps before enabling this group.",
+      "translations": {
+        "hi": "इस समूह को चालू करने से पहले Screen Time की अनुमति दें और अलग-अलग ऐप चुनें।",
+        "es": "Permite Tiempo de uso y selecciona aplicaciones individuales antes de activar este grupo.",
+        "pt": "Permita Tempo de Uso e selecione aplicativos individuais antes de ativar este grupo.",
+        "fr": "Autorisez Temps d’écran et sélectionnez des apps individuelles avant d’activer ce groupe.",
+        "de": "Erlaube Bildschirmzeit und wähle einzelne Apps aus, bevor du diese Gruppe aktivierst.",
+        "ar": "اسمح بمدة استخدام الجهاز وحدد تطبيقات فردية قبل تفعيل هذه المجموعة.",
+        "ja": "このグループを有効にする前に、スクリーンタイムを許可し、個別のアプリを選択してください。",
+        "ko": "이 그룹을 활성화하기 전에 스크린 타임을 허용하고 개별 앱을 선택하세요.",
+        "zh-Hans": "启用此组前，请允许屏幕使用时间并选择单个应用。"
+      }
+    },
+    {
+      "source": "Allow Screen Time inside FREED to configure supported protection.",
+      "translations": {
+        "hi": "समर्थित सुरक्षा सेट करने के लिए FREED में Screen Time की अनुमति दें।",
+        "es": "Permite Tiempo de uso dentro de FREED para configurar la protección compatible.",
+        "pt": "Permita Tempo de Uso dentro do FREED para configurar a proteção compatível.",
+        "fr": "Autorisez Temps d’écran dans FREED pour configurer les protections prises en charge.",
+        "de": "Erlaube Bildschirmzeit in FREED, um den unterstützten Schutz einzurichten.",
+        "ar": "اسمح بمدة استخدام الجهاز داخل FREED لإعداد الحماية المدعومة.",
+        "ja": "対応する保護を設定するには、FREED内でスクリーンタイムを許可してください。",
+        "ko": "지원되는 보호 기능을 설정하려면 FREED에서 스크린 타임을 허용하세요.",
+        "zh-Hans": "请在 FREED 中允许屏幕使用时间，以配置受支持的防护。"
+      }
+    },
+    {
+      "source": "Allow the required device permission, then return to check it.",
+      "translations": {
+        "hi": "ज़रूरी डिवाइस अनुमति दें, फिर उसकी जाँच करने के लिए वापस आएँ।",
+        "es": "Concede el permiso necesario del dispositivo y vuelve para comprobarlo.",
+        "pt": "Conceda a permissão necessária do dispositivo e volte para verificá-la.",
+        "fr": "Accordez l’autorisation requise sur l’appareil, puis revenez la vérifier.",
+        "de": "Erteile die erforderliche Geräteberechtigung und kehre zurück, um sie zu prüfen.",
+        "ar": "امنح إذن الجهاز المطلوب، ثم عد للتحقق منه.",
+        "ja": "必要なデバイスの権限を許可してから、戻って確認してください。",
+        "ko": "필요한 기기 권한을 허용한 뒤 돌아와서 확인하세요.",
+        "zh-Hans": "请授予所需的设备权限，然后返回检查。"
+      }
+    },
+    {
+      "source": "An overnight window belongs to the day it starts. iOS requires at least 15 minutes.",
+      "translations": {
+        "hi": "रात भर चलने वाली समय अवधि उसी दिन की मानी जाती है जिस दिन वह शुरू होती है। iOS में कम से कम 15 मिनट ज़रूरी हैं।",
+        "es": "Un intervalo que cruza la medianoche corresponde al día en que empieza. iOS exige al menos 15 minutos.",
+        "pt": "Um intervalo que atravessa a meia-noite pertence ao dia em que começa. O iOS exige pelo menos 15 minutos.",
+        "fr": "Une plage horaire qui passe minuit appartient au jour où elle commence. iOS exige au moins 15 minutes.",
+        "de": "Ein Zeitfenster über Mitternacht gehört zu dem Tag, an dem es beginnt. iOS erfordert mindestens 15 Minuten.",
+        "ar": "تُحسب الفترة التي تمتد عبر منتصف الليل ضمن اليوم الذي تبدأ فيه. يتطلب iOS مدة لا تقل عن 15 دقيقة.",
+        "ja": "日付をまたぐ時間帯は、開始日のものとして扱われます。iOSでは15分以上が必要です。",
+        "ko": "자정을 넘기는 시간대는 시작한 날짜에 속합니다. iOS에서는 최소 15분이 필요합니다.",
+        "zh-Hans": "跨夜时段归属于开始的日期。iOS 要求至少 15 分钟。"
+      }
+    },
+    {
+      "source": "Android needs usage access and accessibility for app rules. Each action opens the supported device settings route.",
+      "translations": {
+        "hi": "ऐप के नियमों के लिए Android को उपयोग पहुँच और सुलभता की अनुमति चाहिए। हर कार्रवाई डिवाइस सेटिंग्स का समर्थित पृष्ठ खोलती है।",
+        "es": "Android necesita acceso de uso y accesibilidad para las reglas de aplicaciones. Cada acción abre la sección compatible de ajustes del dispositivo.",
+        "pt": "O Android precisa de acesso de uso e acessibilidade para as regras de aplicativos. Cada ação abre a seção compatível das configurações do dispositivo.",
+        "fr": "Android nécessite l’accès aux données d’utilisation et l’accessibilité pour les règles des apps. Chaque action ouvre la section prise en charge dans les réglages de l’appareil.",
+        "de": "Android benötigt Nutzungszugriff und Bedienungshilfen für App-Regeln. Jede Aktion öffnet den unterstützten Bereich der Geräteeinstellungen.",
+        "ar": "يحتاج Android إلى الوصول إلى بيانات الاستخدام وإمكانية الوصول لتطبيق قواعد التطبيقات. يفتح كل إجراء المسار المدعوم في إعدادات الجهاز.",
+        "ja": "Androidのアプリルールには、使用状況へのアクセスとユーザー補助が必要です。各操作で、対応するデバイス設定画面が開きます。",
+        "ko": "Android의 앱 규칙에는 사용 정보 접근 권한과 접근성 권한이 필요합니다. 각 작업은 지원되는 기기 설정 화면을 엽니다.",
+        "zh-Hans": "Android 的应用规则需要使用情况访问权限和无障碍权限。每项操作都会打开设备支持的对应设置页面。"
+      }
+    },
+    {
+      "source": "App group recovery break checked.",
+      "translations": {
+        "hi": "ऐप समूह के रिकवरी विराम की जाँच की गई।",
+        "es": "Se comprobó la pausa de recuperación del grupo de aplicaciones.",
+        "pt": "A pausa de recuperação do grupo de aplicativos foi verificada.",
+        "fr": "La pause de récupération du groupe d’apps a été vérifiée.",
+        "de": "Die Erholungspause der App-Gruppe wurde geprüft.",
+        "ar": "تم التحقق من استراحة التعافي لمجموعة التطبيقات.",
+        "ja": "アプリグループの回復のための休憩を確認しました。",
+        "ko": "앱 그룹의 회복 휴식을 확인했습니다.",
+        "zh-Hans": "已检查应用组的恢复休息。"
+      }
+    },
+    {
+      "source": "App groups",
+      "translations": {
+        "hi": "ऐप समूह",
+        "es": "Grupos de aplicaciones",
+        "pt": "Grupos de aplicativos",
+        "fr": "Groupes d’apps",
+        "de": "App-Gruppen",
+        "ar": "مجموعات التطبيقات",
+        "ja": "アプリグループ",
+        "ko": "앱 그룹",
+        "zh-Hans": "应用组"
+      }
+    },
+    {
+      "source": "App groups are unavailable in this installed build.",
+      "translations": {
+        "hi": "इस इंस्टॉल किए गए बिल्ड में ऐप समूह उपलब्ध नहीं हैं।",
+        "es": "Los grupos de aplicaciones no están disponibles en esta compilación instalada.",
+        "pt": "Os grupos de aplicativos não estão disponíveis nesta versão instalada.",
+        "fr": "Les groupes d’apps ne sont pas disponibles dans cette version installée.",
+        "de": "App-Gruppen sind in dieser installierten Version nicht verfügbar.",
+        "ar": "مجموعات التطبيقات غير متاحة في هذا الإصدار المثبّت.",
+        "ja": "このインストール済みビルドでは、アプリグループを利用できません。",
+        "ko": "설치된 이 빌드에서는 앱 그룹을 사용할 수 없습니다.",
+        "zh-Hans": "当前安装的版本不支持应用组。"
+      }
+    },
+    {
+      "source": "App previews are unavailable in this installed build.",
+      "translations": {
+        "hi": "इस इंस्टॉल किए गए बिल्ड में ऐप के पूर्वावलोकन उपलब्ध नहीं हैं।",
+        "es": "Las vistas previas de aplicaciones no están disponibles en esta compilación instalada.",
+        "pt": "As prévias de aplicativos não estão disponíveis nesta versão instalada.",
+        "fr": "Les aperçus des apps ne sont pas disponibles dans cette version installée.",
+        "de": "App-Vorschauen sind in dieser installierten Version nicht verfügbar.",
+        "ar": "معاينات التطبيقات غير متاحة في هذا الإصدار المثبّت.",
+        "ja": "このインストール済みビルドでは、アプリのプレビューを利用できません。",
+        "ko": "설치된 이 빌드에서는 앱 미리보기를 사용할 수 없습니다.",
+        "zh-Hans": "当前安装的版本不支持应用预览。"
+      }
+    },
+    {
+      "source": "Apps",
+      "translations": {
+        "hi": "ऐप्स",
+        "es": "Aplicaciones",
+        "pt": "Aplicativos",
+        "fr": "Applications",
+        "de": "Anwendungen",
+        "ar": "التطبيقات",
+        "ja": "アプリ",
+        "ko": "앱",
+        "zh-Hans": "应用"
+      }
+    },
+    {
+      "source": "Check configuration and a URL without claiming a browsing result.",
+      "translations": {
+        "hi": "कॉन्फ़िगरेशन और किसी URL की जाँच करें; इसे ब्राउज़िंग का नतीजा न मानें।",
+        "es": "Comprueba la configuración y una URL sin afirmar un resultado de navegación.",
+        "pt": "Verifique a configuração e uma URL sem afirmar um resultado de navegação.",
+        "fr": "Vérifiez la configuration et une URL sans affirmer un résultat de navigation.",
+        "de": "Prüfe die Konfiguration und eine URL, ohne ein Ergebnis des Surfens zu bestätigen.",
+        "ar": "تحقق من الإعدادات وعنوان URL دون الادعاء بنتيجة للتصفح.",
+        "ja": "設定とURLを確認します。閲覧結果を示すものではありません。",
+        "ko": "설정과 URL을 확인하되, 브라우징 결과를 확인했다고 단정하지 마세요.",
+        "zh-Hans": "检查配置和 URL，不据此声称已验证浏览结果。"
+      }
+    },
+    {
+      "source": "Check device configuration",
+      "translations": {
+        "hi": "डिवाइस कॉन्फ़िगरेशन जाँचें",
+        "es": "Comprobar configuración del dispositivo",
+        "pt": "Verificar configuração do dispositivo",
+        "fr": "Vérifier la configuration de l’appareil",
+        "de": "Gerätekonfiguration prüfen",
+        "ar": "التحقق من إعدادات الجهاز",
+        "ja": "デバイス設定を確認",
+        "ko": "기기 설정 확인",
+        "zh-Hans": "检查设备配置"
+      }
+    },
+    {
+      "source": "Check the group rule and selected apps before saving.",
+      "translations": {
+        "hi": "सहेजने से पहले समूह का नियम और चुने गए ऐप जाँचें।",
+        "es": "Comprueba la regla del grupo y las aplicaciones seleccionadas antes de guardar.",
+        "pt": "Verifique a regra do grupo e os aplicativos selecionados antes de salvar.",
+        "fr": "Vérifiez la règle du groupe et les apps sélectionnées avant d’enregistrer.",
+        "de": "Prüfe die Gruppenregel und die ausgewählten Apps vor dem Speichern.",
+        "ar": "تحقق من قاعدة المجموعة والتطبيقات المحددة قبل الحفظ.",
+        "ja": "保存する前に、グループのルールと選択したアプリを確認してください。",
+        "ko": "저장하기 전에 그룹 규칙과 선택한 앱을 확인하세요.",
+        "zh-Hans": "保存前，请检查组规则和所选应用。"
+      }
+    },
+    {
+      "source": "Checking device configuration",
+      "translations": {
+        "hi": "डिवाइस कॉन्फ़िगरेशन की जाँच हो रही है",
+        "es": "Comprobando configuración del dispositivo",
+        "pt": "Verificando configuração do dispositivo",
+        "fr": "Vérification de la configuration de l’appareil",
+        "de": "Gerätekonfiguration wird geprüft",
+        "ar": "جارٍ التحقق من إعدادات الجهاز",
+        "ja": "デバイス設定を確認中",
+        "ko": "기기 설정 확인 중",
+        "zh-Hans": "正在检查设备配置"
+      }
+    },
+    {
+      "source": "Checking installed apps…",
+      "translations": {
+        "hi": "इंस्टॉल किए गए ऐप की जाँच हो रही है…",
+        "es": "Comprobando aplicaciones instaladas…",
+        "pt": "Verificando aplicativos instalados…",
+        "fr": "Vérification des apps installées…",
+        "de": "Installierte Apps werden geprüft…",
+        "ar": "جارٍ التحقق من التطبيقات المثبّتة…",
+        "ja": "インストール済みアプリを確認中…",
+        "ko": "설치된 앱 확인 중…",
+        "zh-Hans": "正在检查已安装应用…"
+      }
+    },
+    {
+      "source": "Choose apps and one rule for each group. A recovery break applies only to the app and group that requested it.",
+      "translations": {
+        "hi": "हर समूह के लिए ऐप और एक नियम चुनें। रिकवरी विराम केवल उस ऐप और समूह पर लागू होता है जिसने इसका अनुरोध किया है।",
+        "es": "Elige aplicaciones y una regla para cada grupo. Una pausa de recuperación se aplica solo a la aplicación y al grupo que la solicitaron.",
+        "pt": "Escolha aplicativos e uma regra para cada grupo. Uma pausa de recuperação se aplica apenas ao aplicativo e ao grupo que a solicitaram.",
+        "fr": "Choisissez des apps et une règle pour chaque groupe. Une pause de récupération s’applique uniquement à l’app et au groupe qui l’ont demandée.",
+        "de": "Wähle Apps und eine Regel für jede Gruppe. Eine Erholungspause gilt nur für die App und die Gruppe, die sie angefordert haben.",
+        "ar": "اختر تطبيقات وقاعدة واحدة لكل مجموعة. تنطبق استراحة التعافي فقط على التطبيق والمجموعة اللذين طلباها.",
+        "ja": "各グループのアプリとルールを一つ選択してください。回復のための休憩は、申請したアプリとグループにのみ適用されます。",
+        "ko": "각 그룹의 앱과 규칙 하나를 선택하세요. 회복 휴식은 요청한 앱과 그룹에만 적용됩니다.",
+        "zh-Hans": "为每个组选择应用和一条规则。恢复休息仅适用于提出请求的应用及其组。"
+      }
+    },
+    {
+      "source": "Choose individual apps",
+      "translations": {
+        "hi": "अलग-अलग ऐप चुनें",
+        "es": "Elegir aplicaciones individuales",
+        "pt": "Escolher aplicativos individuais",
+        "fr": "Choisir des apps individuelles",
+        "de": "Einzelne Apps auswählen",
+        "ar": "اختيار تطبيقات فردية",
+        "ja": "個別のアプリを選択",
+        "ko": "개별 앱 선택",
+        "zh-Hans": "选择单个应用"
+      }
+    },
+    {
+      "source": "Choose installed apps",
+      "translations": {
+        "hi": "इंस्टॉल किए गए ऐप चुनें",
+        "es": "Elegir aplicaciones instaladas",
+        "pt": "Escolher aplicativos instalados",
+        "fr": "Choisir des apps installées",
+        "de": "Installierte Apps auswählen",
+        "ar": "اختيار تطبيقات مثبّتة",
+        "ja": "インストール済みアプリを選択",
+        "ko": "설치된 앱 선택",
+        "zh-Hans": "选择已安装应用"
+      }
+    },
+    {
+      "source": "Daily usage is combined across all apps in this group.",
+      "translations": {
+        "hi": "इस समूह के सभी ऐप का दैनिक उपयोग जोड़कर गिना जाता है।",
+        "es": "El uso diario se suma entre todas las aplicaciones de este grupo.",
+        "pt": "O uso diário é somado entre todos os aplicativos deste grupo.",
+        "fr": "L’utilisation quotidienne est cumulée pour toutes les apps de ce groupe.",
+        "de": "Die tägliche Nutzung aller Apps dieser Gruppe wird zusammengerechnet.",
+        "ar": "يُجمع الاستخدام اليومي لجميع التطبيقات في هذه المجموعة.",
+        "ja": "このグループ内のすべてのアプリの毎日の使用時間は合算されます。",
+        "ko": "이 그룹에 속한 모든 앱의 일일 사용량은 합산됩니다.",
+        "zh-Hans": "此组中所有应用的每日使用时间合并计算。"
+      }
+    },
+    {
+      "source": "Default group",
+      "translations": {
+        "hi": "डिफ़ॉल्ट समूह",
+        "es": "Grupo predeterminado",
+        "pt": "Grupo padrão",
+        "fr": "Groupe par défaut",
+        "de": "Standardgruppe",
+        "ar": "المجموعة الافتراضية",
+        "ja": "デフォルトグループ",
+        "ko": "기본 그룹",
+        "zh-Hans": "默认组"
+      }
+    },
+    {
+      "source": "Device permissions",
+      "translations": {
+        "hi": "डिवाइस की अनुमतियाँ",
+        "es": "Permisos del dispositivo",
+        "pt": "Permissões do dispositivo",
+        "fr": "Autorisations de l’appareil",
+        "de": "Geräteberechtigungen",
+        "ar": "أذونات الجهاز",
+        "ja": "デバイスの権限",
+        "ko": "기기 권한",
+        "zh-Hans": "设备权限"
+      }
+    },
+    {
+      "source": "Each group has its own apps and rule.",
+      "translations": {
+        "hi": "हर समूह के अपने ऐप और अपना नियम होता है।",
+        "es": "Cada grupo tiene sus propias aplicaciones y su propia regla.",
+        "pt": "Cada grupo tem seus próprios aplicativos e sua própria regra.",
+        "fr": "Chaque groupe a ses propres apps et sa propre règle.",
+        "de": "Jede Gruppe hat ihre eigenen Apps und ihre eigene Regel.",
+        "ar": "لكل مجموعة تطبيقاتها وقاعدتها الخاصة.",
+        "ja": "各グループには、それぞれのアプリとルールがあります。",
+        "ko": "각 그룹에는 고유한 앱과 규칙이 있습니다.",
+        "zh-Hans": "每个组都有各自的应用和规则。"
+      }
+    },
+    {
+      "source": "Edit group",
+      "translations": {
+        "hi": "समूह संपादित करें",
+        "es": "Editar grupo",
+        "pt": "Editar grupo",
+        "fr": "Modifier le groupe",
+        "de": "Gruppe bearbeiten",
+        "ar": "تعديل المجموعة",
+        "ja": "グループを編集",
+        "ko": "그룹 편집",
+        "zh-Hans": "编辑组"
+      }
+    },
+    {
+      "source": "Enable group",
+      "translations": {
+        "hi": "समूह चालू करें",
+        "es": "Activar grupo",
+        "pt": "Ativar grupo",
+        "fr": "Activer le groupe",
+        "de": "Gruppe aktivieren",
+        "ar": "تفعيل المجموعة",
+        "ja": "グループを有効にする",
+        "ko": "그룹 활성화",
+        "zh-Hans": "启用组"
+      }
+    },
+    {
+      "source": "End time",
+      "translations": {
+        "hi": "समाप्ति का समय",
+        "es": "Hora de fin",
+        "pt": "Hora de término",
+        "fr": "Heure de fin",
+        "de": "Endzeit",
+        "ar": "وقت الانتهاء",
+        "ja": "終了時刻",
+        "ko": "종료 시간",
+        "zh-Hans": "结束时间"
+      }
+    },
+    {
+      "source": "Existing category, website, and independent schedule protections are retained. Editing a group changes its individual apps only.",
+      "translations": {
+        "hi": "श्रेणियों, वेबसाइटों और स्वतंत्र समय-सारिणियों की मौजूदा सुरक्षा बनी रहती है। समूह को संपादित करने से केवल उसके अलग-अलग ऐप बदलते हैं।",
+        "es": "Se conservan las protecciones existentes de categorías, sitios web y horarios independientes. Editar un grupo solo cambia sus aplicaciones individuales.",
+        "pt": "As proteções existentes de categorias, sites e horários independentes são mantidas. Editar um grupo altera apenas seus aplicativos individuais.",
+        "fr": "Les protections existantes des catégories, des sites web et des horaires indépendants sont conservées. Modifier un groupe ne change que ses apps individuelles.",
+        "de": "Bestehender Schutz für Kategorien, Websites und unabhängige Zeitpläne bleibt erhalten. Beim Bearbeiten einer Gruppe werden nur ihre einzelnen Apps geändert.",
+        "ar": "تبقى الحماية الحالية للفئات والمواقع والجداول المستقلة محفوظة. يؤدي تعديل المجموعة إلى تغيير تطبيقاتها الفردية فقط.",
+        "ja": "既存のカテゴリ、ウェブサイト、独立したスケジュールの保護は維持されます。グループの編集で変更されるのは、そのグループの個別のアプリだけです。",
+        "ko": "기존 카테고리, 웹사이트 및 독립 일정의 보호는 유지됩니다. 그룹을 편집하면 해당 그룹의 개별 앱만 변경됩니다.",
+        "zh-Hans": "现有的类别、网站和独立日程防护会保留。编辑组只会更改该组的单个应用。"
+      }
+    },
+    {
+      "source": "Existing protection",
+      "translations": {
+        "hi": "मौजूदा सुरक्षा",
+        "es": "Protección existente",
+        "pt": "Proteção existente",
+        "fr": "Protection existante",
+        "de": "Bestehender Schutz",
+        "ar": "الحماية الحالية",
+        "ja": "既存の保護",
+        "ko": "기존 보호",
+        "zh-Hans": "现有防护"
+      }
+    },
+    {
+      "source": "Group name",
+      "translations": {
+        "hi": "समूह का नाम",
+        "es": "Nombre del grupo",
+        "pt": "Nome do grupo",
+        "fr": "Nom du groupe",
+        "de": "Gruppenname",
+        "ar": "اسم المجموعة",
+        "ja": "グループ名",
+        "ko": "그룹 이름",
+        "zh-Hans": "组名称"
+      }
+    },
+    {
+      "source": "Group rule",
+      "translations": {
+        "hi": "समूह का नियम",
+        "es": "Regla del grupo",
+        "pt": "Regra do grupo",
+        "fr": "Règle du groupe",
+        "de": "Gruppenregel",
+        "ar": "قاعدة المجموعة",
+        "ja": "グループのルール",
+        "ko": "그룹 규칙",
+        "zh-Hans": "组规则"
+      }
+    },
+    {
+      "source": "Installed app previews are unavailable. Check selection.",
+      "translations": {
+        "hi": "इंस्टॉल किए गए ऐप के पूर्वावलोकन उपलब्ध नहीं हैं। चुने गए ऐप जाँचें।",
+        "es": "Las vistas previas de aplicaciones instaladas no están disponibles. Comprueba la selección.",
+        "pt": "As prévias de aplicativos instalados não estão disponíveis. Verifique a seleção.",
+        "fr": "Les aperçus des apps installées ne sont pas disponibles. Vérifiez la sélection.",
+        "de": "Vorschauen installierter Apps sind nicht verfügbar. Prüfe die Auswahl.",
+        "ar": "معاينات التطبيقات المثبّتة غير متاحة. تحقق من الاختيار.",
+        "ja": "インストール済みアプリのプレビューを利用できません。選択内容を確認してください。",
+        "ko": "설치된 앱의 미리보기를 사용할 수 없습니다. 선택 사항을 확인하세요.",
+        "zh-Hans": "已安装应用的预览不可用。请检查所选应用。"
+      }
+    },
+    {
+      "source": "Installed apps could not be read. Retry on this device.",
+      "translations": {
+        "hi": "इंस्टॉल किए गए ऐप की जानकारी पढ़ी नहीं जा सकी। इसी डिवाइस पर फिर कोशिश करें।",
+        "es": "No se pudieron leer las aplicaciones instaladas. Vuelve a intentarlo en este dispositivo.",
+        "pt": "Não foi possível ler os aplicativos instalados. Tente novamente neste dispositivo.",
+        "fr": "Impossible de lire les apps installées. Réessayez sur cet appareil.",
+        "de": "Installierte Apps konnten nicht ausgelesen werden. Versuche es auf diesem Gerät erneut.",
+        "ar": "تعذّر قراءة التطبيقات المثبّتة. أعد المحاولة على هذا الجهاز.",
+        "ja": "インストール済みアプリを読み取れませんでした。このデバイスで再試行してください。",
+        "ko": "설치된 앱을 읽을 수 없습니다. 이 기기에서 다시 시도하세요.",
+        "zh-Hans": "无法读取已安装应用。请在此设备上重试。"
+      }
+    },
+    {
+      "source": "Link your account to create or edit private app groups.",
+      "translations": {
+        "hi": "निजी ऐप समूह बनाने या संपादित करने के लिए अपना खाता लिंक करें।",
+        "es": "Vincula tu cuenta para crear o editar grupos privados de aplicaciones.",
+        "pt": "Vincule sua conta para criar ou editar grupos privados de aplicativos.",
+        "fr": "Associez votre compte pour créer ou modifier des groupes d’apps privés.",
+        "de": "Verknüpfe dein Konto, um private App-Gruppen zu erstellen oder zu bearbeiten.",
+        "ar": "اربط حسابك لإنشاء مجموعات تطبيقات خاصة أو تعديلها.",
+        "ja": "非公開のアプリグループを作成・編集するには、アカウントを連携してください。",
+        "ko": "비공개 앱 그룹을 만들거나 편집하려면 계정을 연결하세요.",
+        "zh-Hans": "关联账户以创建或编辑私有应用组。"
+      }
+    },
+    {
+      "source": "ManagedSettings automatic adult-content policy observed. Check actual browsing before relying on protection.",
+      "translations": {
+        "hi": "ManagedSettings की स्वचालित वयस्क सामग्री नीति देखी गई। सुरक्षा पर भरोसा करने से पहले वास्तविक ब्राउज़िंग जाँचें।",
+        "es": "Se detectó la política automática de contenido para adultos de ManagedSettings. Comprueba la navegación real antes de confiar en la protección.",
+        "pt": "A política automática de conteúdo adulto do ManagedSettings foi observada. Verifique a navegação real antes de confiar na proteção.",
+        "fr": "La politique automatique de contenu pour adultes de ManagedSettings a été observée. Vérifiez la navigation réelle avant de vous fier à la protection.",
+        "de": "Die automatische Richtlinie für Erwachseneninhalte von ManagedSettings wurde festgestellt. Prüfe das tatsächliche Browsen, bevor du dich auf den Schutz verlässt.",
+        "ar": "تم رصد سياسة المحتوى للبالغين التلقائية في ManagedSettings. تحقق من التصفح الفعلي قبل الاعتماد على الحماية.",
+        "ja": "ManagedSettingsの成人向けコンテンツの自動ポリシーを確認しました。保護に頼る前に、実際の閲覧を確認してください。",
+        "ko": "ManagedSettings의 자동 성인 콘텐츠 정책이 확인되었습니다. 보호 기능에 의존하기 전에 실제 브라우징을 확인하세요.",
+        "zh-Hans": "已检测到 ManagedSettings 的自动成人内容策略。依赖防护前，请检查实际浏览情况。"
+      }
+    },
+    {
+      "source": "New group",
+      "translations": {
+        "hi": "नया समूह",
+        "es": "Nuevo grupo",
+        "pt": "Novo grupo",
+        "fr": "Nouveau groupe",
+        "de": "Neue Gruppe",
+        "ar": "مجموعة جديدة",
+        "ja": "新しいグループ",
+        "ko": "새 그룹",
+        "zh-Hans": "新组"
+      }
+    },
+    {
+      "source": "New groups start off with a 30-minute combined daily limit. Save and enable a group when its apps and rule are ready.",
+      "translations": {
+        "hi": "नए समूहों में शुरुआत में 30 मिनट की संयुक्त दैनिक सीमा होती है। ऐप और नियम तैयार होने पर समूह सहेजें और चालू करें।",
+        "es": "Los grupos nuevos empiezan con un límite diario combinado de 30 minutos. Guarda y activa un grupo cuando sus aplicaciones y su regla estén listos.",
+        "pt": "Novos grupos começam com um limite diário combinado de 30 minutos. Salve e ative um grupo quando seus aplicativos e sua regra estiverem prontos.",
+        "fr": "Les nouveaux groupes commencent avec une limite quotidienne cumulée de 30 minutes. Enregistrez et activez un groupe une fois ses apps et sa règle prêtes.",
+        "de": "Neue Gruppen beginnen mit einem gemeinsamen Tageslimit von 30 Minuten. Speichere und aktiviere eine Gruppe, sobald ihre Apps und ihre Regel bereit sind.",
+        "ar": "تبدأ المجموعات الجديدة بحد يومي إجمالي قدره 30 دقيقة. احفظ المجموعة وفعّلها عندما تكون تطبيقاتها وقاعدتها جاهزة.",
+        "ja": "新しいグループは、毎日の利用上限が合計30分に設定された状態で始まります。アプリとルールの準備ができたら、グループを保存して有効にしてください。",
+        "ko": "새 그룹은 합산 일일 한도 30분으로 시작합니다. 앱과 규칙이 준비되면 그룹을 저장하고 활성화하세요.",
+        "zh-Hans": "新组的初始合并每日限额为 30 分钟。应用和规则准备好后，请保存并启用组。"
+      }
+    },
+    {
+      "source": "No individual apps selected",
+      "translations": {
+        "hi": "कोई अलग-अलग ऐप नहीं चुना गया",
+        "es": "No se han seleccionado aplicaciones individuales",
+        "pt": "Nenhum aplicativo individual selecionado",
+        "fr": "Aucune app individuelle sélectionnée",
+        "de": "Keine einzelnen Apps ausgewählt",
+        "ar": "لم يتم تحديد تطبيقات فردية",
+        "ja": "個別のアプリが未選択",
+        "ko": "선택된 개별 앱 없음",
+        "zh-Hans": "未选择单个应用"
+      }
+    },
+    {
+      "source": "Open accessibility settings",
+      "translations": {
+        "hi": "सुलभता की सेटिंग्स खोलें",
+        "es": "Abrir ajustes de accesibilidad",
+        "pt": "Abrir configurações de acessibilidade",
+        "fr": "Ouvrir les réglages d’accessibilité",
+        "de": "Einstellungen für Bedienungshilfen öffnen",
+        "ar": "فتح إعدادات إمكانية الوصول",
+        "ja": "ユーザー補助の設定を開く",
+        "ko": "접근성 설정 열기",
+        "zh-Hans": "打开无障碍设置"
+      }
+    },
+    {
+      "source": "Optional DNS and advanced protection",
+      "translations": {
+        "hi": "वैकल्पिक DNS और उन्नत सुरक्षा",
+        "es": "DNS opcional y protección avanzada",
+        "pt": "DNS opcional e proteção avançada",
+        "fr": "DNS facultatif et protection avancée",
+        "de": "Optionales DNS und erweiterter Schutz",
+        "ar": "DNS اختياري وحماية متقدمة",
+        "ja": "任意のDNSと高度な保護",
+        "ko": "선택적 DNS 및 고급 보호",
+        "zh-Hans": "可选 DNS 和高级防护"
+      }
+    },
+    {
+      "source": "Optional DNS layer",
+      "translations": {
+        "hi": "वैकल्पिक DNS परत",
+        "es": "Capa DNS opcional",
+        "pt": "Camada DNS opcional",
+        "fr": "Couche DNS facultative",
+        "de": "Optionale DNS-Ebene",
+        "ar": "طبقة DNS اختيارية",
+        "ja": "任意のDNS保護レイヤー",
+        "ko": "선택적 DNS 계층",
+        "zh-Hans": "可选 DNS 防护层"
+      }
+    },
+    {
+      "source": "Optional layers and device checks. App timing belongs in each group’s rule.",
+      "translations": {
+        "hi": "वैकल्पिक परतें और डिवाइस की जाँच। ऐप के समय का निर्धारण हर समूह के नियम में होता है।",
+        "es": "Capas opcionales y comprobaciones del dispositivo. Los tiempos de las aplicaciones se configuran en la regla de cada grupo.",
+        "pt": "Camadas opcionais e verificações do dispositivo. Os horários dos aplicativos são definidos na regra de cada grupo.",
+        "fr": "Couches facultatives et vérifications de l’appareil. Le temps d’utilisation des apps se règle dans la règle de chaque groupe.",
+        "de": "Optionale Ebenen und Geräteprüfungen. Die Zeitsteuerung für Apps gehört in die Regel der jeweiligen Gruppe.",
+        "ar": "طبقات اختيارية وفحوصات للجهاز. تُضبط أوقات التطبيقات ضمن قاعدة كل مجموعة.",
+        "ja": "任意の保護レイヤーとデバイスの確認。アプリの時間設定は、各グループのルールで行います。",
+        "ko": "선택적 계층 및 기기 확인. 앱의 시간 설정은 각 그룹의 규칙에서 관리합니다.",
+        "zh-Hans": "可选防护层和设备检查。应用时间设置属于各组的规则。"
+      }
+    },
+    {
+      "source": "Optional layers, permissions, exceptions and diagnostics",
+      "translations": {
+        "hi": "वैकल्पिक परतें, अनुमतियाँ, अपवाद और निदान",
+        "es": "Capas opcionales, permisos, excepciones y diagnósticos",
+        "pt": "Camadas opcionais, permissões, exceções e diagnósticos",
+        "fr": "Couches facultatives, autorisations, exceptions et diagnostics",
+        "de": "Optionale Ebenen, Berechtigungen, Ausnahmen und Diagnose",
+        "ar": "طبقات اختيارية وأذونات واستثناءات وتشخيصات",
+        "ja": "任意の保護レイヤー、権限、例外、診断",
+        "ko": "선택적 계층, 권한, 예외 및 진단",
+        "zh-Hans": "可选防护层、权限、例外和诊断"
+      }
+    },
+    {
+      "source": "Other controls",
+      "translations": {
+        "hi": "अन्य नियंत्रण",
+        "es": "Otros controles",
+        "pt": "Outros controles",
+        "fr": "Autres contrôles",
+        "de": "Weitere Steuerungen",
+        "ar": "عناصر تحكم أخرى",
+        "ja": "その他の設定",
+        "ko": "기타 제어",
+        "zh-Hans": "其他控制项"
+      }
+    },
+    {
+      "source": "Overlapping groups and independent protections remain active during a scoped recovery break. Adult website protection stays on.",
+      "translations": {
+        "hi": "सीमित दायरे वाले रिकवरी विराम के दौरान एक-दूसरे से ओवरलैप करने वाले समूह और स्वतंत्र सुरक्षा सक्रिय रहते हैं। वयस्क वेबसाइटों की सुरक्षा चालू रहती है।",
+        "es": "Los grupos superpuestos y las protecciones independientes siguen activos durante una pausa de recuperación de alcance limitado. La protección de sitios web para adultos permanece activada.",
+        "pt": "Grupos sobrepostos e proteções independentes permanecem ativos durante uma pausa de recuperação de escopo limitado. A proteção de sites adultos continua ativada.",
+        "fr": "Les groupes qui se chevauchent et les protections indépendantes restent actifs pendant une pause de récupération à portée limitée. La protection contre les sites pour adultes reste activée.",
+        "de": "Überlappende Gruppen und unabhängige Schutzmaßnahmen bleiben während einer begrenzten Erholungspause aktiv. Der Schutz vor Websites für Erwachsene bleibt eingeschaltet.",
+        "ar": "تبقى المجموعات المتداخلة والحماية المستقلة نشطة أثناء استراحة تعافٍ محدودة النطاق. وتبقى حماية المواقع للبالغين مفعّلة.",
+        "ja": "対象範囲を限定した回復のための休憩中も、重複するグループや独立した保護は有効なままです。成人向けウェブサイトの保護も継続します。",
+        "ko": "범위가 제한된 회복 휴식 중에도 중복되는 그룹과 독립적인 보호는 활성 상태를 유지합니다. 성인 웹사이트 보호도 계속 켜져 있습니다.",
+        "zh-Hans": "限定范围的恢复休息期间，重叠组和独立防护仍保持启用。成人网站防护也会继续开启。"
+      }
+    },
+    {
+      "source": "Remove group",
+      "translations": {
+        "hi": "समूह हटाएँ",
+        "es": "Eliminar grupo",
+        "pt": "Remover grupo",
+        "fr": "Supprimer le groupe",
+        "de": "Gruppe entfernen",
+        "ar": "إزالة المجموعة",
+        "ja": "グループを削除",
+        "ko": "그룹 삭제",
+        "zh-Hans": "移除组"
+      }
+    },
+    {
+      "source": "Return to FREED after changing a permission to read the device state.",
+      "translations": {
+        "hi": "अनुमति बदलने के बाद FREED पर लौटें, ताकि डिवाइस की स्थिति पढ़ी जा सके।",
+        "es": "Vuelve a FREED después de cambiar un permiso para leer el estado del dispositivo.",
+        "pt": "Volte ao FREED após alterar uma permissão para ler o estado do dispositivo.",
+        "fr": "Revenez dans FREED après avoir modifié une autorisation pour lire l’état de l’appareil.",
+        "de": "Kehre nach dem Ändern einer Berechtigung zu FREED zurück, um den Gerätestatus auszulesen.",
+        "ar": "عد إلى FREED بعد تغيير أحد الأذونات لقراءة حالة الجهاز.",
+        "ja": "権限を変更した後、デバイスの状態を読み取るためにFREEDに戻ってください。",
+        "ko": "권한을 변경한 후 기기 상태를 읽을 수 있도록 FREED로 돌아오세요.",
+        "zh-Hans": "更改权限后，请返回 FREED 以读取设备状态。"
+      }
+    },
+    {
+      "source": "Review only FREED’s domain exceptions.",
+      "translations": {
+        "hi": "केवल FREED के डोमेन अपवादों की समीक्षा करें।",
+        "es": "Revisa solo las excepciones de dominios de FREED.",
+        "pt": "Revise apenas as exceções de domínios do FREED.",
+        "fr": "Consultez uniquement les exceptions de domaines de FREED.",
+        "de": "Prüfe nur die Domainausnahmen von FREED.",
+        "ar": "راجع استثناءات النطاقات الخاصة بـ FREED فقط.",
+        "ja": "FREEDのドメインの例外のみを確認してください。",
+        "ko": "FREED의 도메인 예외만 검토하세요.",
+        "zh-Hans": "仅检查 FREED 的域名例外。"
+      }
+    },
+    {
+      "source": "Review optional Safari extension permissions.",
+      "translations": {
+        "hi": "वैकल्पिक Safari एक्सटेंशन की अनुमतियों की समीक्षा करें।",
+        "es": "Revisa los permisos opcionales de la extensión de Safari.",
+        "pt": "Revise as permissões opcionais da extensão do Safari.",
+        "fr": "Consultez les autorisations facultatives de l’extension Safari.",
+        "de": "Prüfe die optionalen Berechtigungen der Safari-Erweiterung.",
+        "ar": "راجع أذونات إضافة Safari الاختيارية.",
+        "ja": "Safari拡張機能の任意の権限を確認してください。",
+        "ko": "선택적 Safari 확장 프로그램 권한을 검토하세요.",
+        "zh-Hans": "检查可选的 Safari 扩展权限。"
+      }
+    },
+    {
+      "source": "Review permissions",
+      "translations": {
+        "hi": "अनुमतियों की समीक्षा करें",
+        "es": "Revisar permisos",
+        "pt": "Revisar permissões",
+        "fr": "Vérifier les autorisations",
+        "de": "Berechtigungen prüfen",
+        "ar": "مراجعة الأذونات",
+        "ja": "権限を確認",
+        "ko": "권한 검토",
+        "zh-Hans": "检查权限"
+      }
+    },
+    {
+      "source": "Safari protection",
+      "translations": {
+        "hi": "Safari सुरक्षा",
+        "es": "Protección de Safari",
+        "pt": "Proteção do Safari",
+        "fr": "Protection Safari",
+        "de": "Safari-Schutz",
+        "ar": "حماية Safari",
+        "ja": "Safariの保護",
+        "ko": "Safari 보호",
+        "zh-Hans": "Safari 防护"
+      }
+    },
+    {
+      "source": "Save group",
+      "translations": {
+        "hi": "समूह सहेजें",
+        "es": "Guardar grupo",
+        "pt": "Salvar grupo",
+        "fr": "Enregistrer le groupe",
+        "de": "Gruppe speichern",
+        "ar": "حفظ المجموعة",
+        "ja": "グループを保存",
+        "ko": "그룹 저장",
+        "zh-Hans": "保存组"
+      }
+    },
+    {
+      "source": "Screen Time is authorized. Apply and check the adult policy in website setup.",
+      "translations": {
+        "hi": "Screen Time की अनुमति मिल गई है। वेबसाइट सेटअप में वयस्क सामग्री की नीति लागू करें और जाँचें।",
+        "es": "Tiempo de uso está autorizado. Aplica y comprueba la política para adultos en la configuración de sitios web.",
+        "pt": "Tempo de Uso está autorizado. Aplique e verifique a política para adultos na configuração de sites.",
+        "fr": "Temps d’écran est autorisé. Appliquez et vérifiez la politique de contenu pour adultes dans la configuration des sites web.",
+        "de": "Bildschirmzeit ist autorisiert. Wende die Richtlinie für Erwachseneninhalte in der Website-Einrichtung an und prüfe sie.",
+        "ar": "تم السماح بمدة استخدام الجهاز. طبّق سياسة المحتوى للبالغين وتحقق منها في إعداد المواقع.",
+        "ja": "スクリーンタイムは許可されています。ウェブサイトの設定で成人向けコンテンツのポリシーを適用し、確認してください。",
+        "ko": "스크린 타임이 허용되었습니다. 웹사이트 설정에서 성인 콘텐츠 정책을 적용하고 확인하세요.",
+        "zh-Hans": "屏幕使用时间已获授权。请在网站设置中应用并检查成人内容策略。"
+      }
+    },
+    {
+      "source": "Search installed apps",
+      "translations": {
+        "hi": "इंस्टॉल किए गए ऐप खोजें",
+        "es": "Buscar aplicaciones instaladas",
+        "pt": "Buscar aplicativos instalados",
+        "fr": "Rechercher des apps installées",
+        "de": "Installierte Apps suchen",
+        "ar": "البحث في التطبيقات المثبّتة",
+        "ja": "インストール済みアプリを検索",
+        "ko": "설치된 앱 검색",
+        "zh-Hans": "搜索已安装应用"
+      }
+    },
+    {
+      "source": "Selection stays a draft until you save the group.",
+      "translations": {
+        "hi": "समूह सहेजने तक आपका चयन ड्राफ़्ट बना रहता है।",
+        "es": "La selección sigue siendo un borrador hasta que guardes el grupo.",
+        "pt": "A seleção permanece como rascunho até você salvar o grupo.",
+        "fr": "La sélection reste un brouillon jusqu’à ce que vous enregistriez le groupe.",
+        "de": "Die Auswahl bleibt ein Entwurf, bis du die Gruppe speicherst.",
+        "ar": "يبقى الاختيار مسودة حتى تحفظ المجموعة.",
+        "ja": "グループを保存するまで、選択内容は下書きのままです。",
+        "ko": "그룹을 저장할 때까지 선택 사항은 초안으로 남아 있습니다.",
+        "zh-Hans": "保存组前，所选内容会保留为草稿。"
+      }
+    },
+    {
+      "source": "Show more apps",
+      "translations": {
+        "hi": "और ऐप दिखाएँ",
+        "es": "Mostrar más aplicaciones",
+        "pt": "Mostrar mais aplicativos",
+        "fr": "Afficher plus d’apps",
+        "de": "Weitere Apps anzeigen",
+        "ar": "عرض المزيد من التطبيقات",
+        "ja": "さらにアプリを表示",
+        "ko": "앱 더 보기",
+        "zh-Hans": "显示更多应用"
+      }
+    },
+    {
+      "source": "Start time",
+      "translations": {
+        "hi": "शुरू होने का समय",
+        "es": "Hora de inicio",
+        "pt": "Hora de início",
+        "fr": "Heure de début",
+        "de": "Startzeit",
+        "ar": "وقت البدء",
+        "ja": "開始時刻",
+        "ko": "시작 시간",
+        "zh-Hans": "开始时间"
+      }
+    },
+    {
+      "source": "The adult-content policy request was not accepted. Retry the indicated setup step.",
+      "translations": {
+        "hi": "वयस्क सामग्री की नीति का अनुरोध स्वीकार नहीं किया गया। बताए गए सेटअप चरण को फिर आज़माएँ।",
+        "es": "No se aceptó la solicitud de la política de contenido para adultos. Repite el paso de configuración indicado.",
+        "pt": "A solicitação da política de conteúdo adulto não foi aceita. Tente novamente a etapa de configuração indicada.",
+        "fr": "La demande de politique de contenu pour adultes n’a pas été acceptée. Réessayez l’étape de configuration indiquée.",
+        "de": "Die Anfrage für die Richtlinie zu Erwachseneninhalten wurde nicht angenommen. Wiederhole den angegebenen Einrichtungsschritt.",
+        "ar": "لم يُقبل طلب سياسة المحتوى للبالغين. أعد محاولة خطوة الإعداد المحددة.",
+        "ja": "成人向けコンテンツのポリシーのリクエストが受理されませんでした。指定された設定手順を再試行してください。",
+        "ko": "성인 콘텐츠 정책 요청이 수락되지 않았습니다. 안내된 설정 단계를 다시 시도하세요.",
+        "zh-Hans": "成人内容策略请求未被接受。请重试指定的设置步骤。"
+      }
+    },
+    {
+      "source": "This group changed. Review its current settings before saving again.",
+      "translations": {
+        "hi": "यह समूह बदल गया है। दोबारा सहेजने से पहले इसकी मौजूदा सेटिंग्स की समीक्षा करें।",
+        "es": "Este grupo ha cambiado. Revisa sus ajustes actuales antes de volver a guardar.",
+        "pt": "Este grupo mudou. Revise suas configurações atuais antes de salvar novamente.",
+        "fr": "Ce groupe a changé. Vérifiez ses réglages actuels avant de l’enregistrer à nouveau.",
+        "de": "Diese Gruppe wurde geändert. Prüfe ihre aktuellen Einstellungen, bevor du erneut speicherst.",
+        "ar": "تغيّرت هذه المجموعة. راجع إعداداتها الحالية قبل الحفظ مجددًا.",
+        "ja": "このグループは変更されました。再度保存する前に、現在の設定を確認してください。",
+        "ko": "이 그룹이 변경되었습니다. 다시 저장하기 전에 현재 설정을 검토하세요.",
+        "zh-Hans": "此组已更改。再次保存前，请检查当前设置。"
+      }
+    },
+    {
+      "source": "This group could not save. Check permissions and selection, then retry.",
+      "translations": {
+        "hi": "यह समूह सहेजा नहीं जा सका। अनुमतियाँ और चयन जाँचें, फिर दोबारा कोशिश करें।",
+        "es": "No se pudo guardar este grupo. Comprueba los permisos y la selección y vuelve a intentarlo.",
+        "pt": "Não foi possível salvar este grupo. Verifique as permissões e a seleção e tente novamente.",
+        "fr": "Impossible d’enregistrer ce groupe. Vérifiez les autorisations et la sélection, puis réessayez.",
+        "de": "Diese Gruppe konnte nicht gespeichert werden. Prüfe die Berechtigungen und die Auswahl und versuche es erneut.",
+        "ar": "تعذّر حفظ هذه المجموعة. تحقق من الأذونات والاختيار، ثم أعد المحاولة.",
+        "ja": "このグループを保存できませんでした。権限と選択内容を確認してから、再試行してください。",
+        "ko": "이 그룹을 저장할 수 없습니다. 권한과 선택 사항을 확인한 후 다시 시도하세요.",
+        "zh-Hans": "无法保存此组。请检查权限和所选内容后重试。"
+      }
+    },
+    {
+      "source": "Waiting for your account…",
+      "translations": {
+        "hi": "आपके खाते की प्रतीक्षा हो रही है…",
+        "es": "Esperando tu cuenta…",
+        "pt": "Aguardando sua conta…",
+        "fr": "En attente de votre compte…",
+        "de": "Warten auf dein Konto…",
+        "ar": "في انتظار حسابك…",
+        "ja": "アカウントを待機中…",
+        "ko": "계정 대기 중…",
+        "zh-Hans": "正在等待您的账户…"
+      }
+    },
+    {
+      "source": "Your device has no monitoring slots available. Reduce active schedules, then retry.",
+      "translations": {
+        "hi": "आपके डिवाइस पर निगरानी के लिए कोई स्लॉट उपलब्ध नहीं है। सक्रिय समय-सारिणियाँ कम करें, फिर दोबारा कोशिश करें।",
+        "es": "Tu dispositivo no tiene espacios de supervisión disponibles. Reduce los horarios activos y vuelve a intentarlo.",
+        "pt": "Seu dispositivo não tem vagas de monitoramento disponíveis. Reduza os horários ativos e tente novamente.",
+        "fr": "Votre appareil n’a plus d’emplacements de surveillance disponibles. Réduisez le nombre d’horaires actifs, puis réessayez.",
+        "de": "Auf deinem Gerät sind keine Überwachungsplätze verfügbar. Reduziere die aktiven Zeitpläne und versuche es erneut.",
+        "ar": "لا تتوفر في جهازك خانات مراقبة. قلّل الجداول النشطة، ثم أعد المحاولة.",
+        "ja": "このデバイスには、利用できる監視枠がありません。有効なスケジュールを減らしてから、再試行してください。",
+        "ko": "기기에 사용 가능한 모니터링 슬롯이 없습니다. 활성 일정을 줄인 후 다시 시도하세요.",
+        "zh-Hans": "设备没有可用的监测名额。请减少启用的日程后重试。"
+      }
+    },
+    {
+      "source": "minutes/day",
+      "translations": {
+        "hi": "मिनट/दिन",
+        "es": "minutos/día",
+        "pt": "minutos/dia",
+        "fr": "minutes/jour",
+        "de": "Minuten/Tag",
+        "ar": "دقائق/يوم",
+        "ja": "分/日",
+        "ko": "분/일",
+        "zh-Hans": "分钟/天"
+      }
+    },
+    {
+      "source": "selected apps",
+      "translations": {
+        "hi": "चुने गए ऐप",
+        "es": "aplicaciones seleccionadas",
+        "pt": "aplicativos selecionados",
+        "fr": "apps sélectionnées",
+        "de": "ausgewählte Apps",
+        "ar": "التطبيقات المحددة",
+        "ja": "選択したアプリ",
+        "ko": "선택한 앱",
+        "zh-Hans": "所选应用"
+      }
+    },
+    {
+      "source": "Choose a group rule to replace the existing individual-app rule.",
+      "translations": {
+        "hi": "मौजूदा अलग-अलग ऐप के नियम की जगह लागू करने के लिए समूह का नियम चुनें।",
+        "es": "Elige una regla de grupo para reemplazar la regla existente de aplicaciones individuales.",
+        "pt": "Escolha uma regra de grupo para substituir a regra existente de aplicativos individuais.",
+        "fr": "Choisissez une règle de groupe pour remplacer la règle existante des apps individuelles.",
+        "de": "Wähle eine Gruppenregel, um die bestehende Regel für einzelne Apps zu ersetzen.",
+        "ar": "اختر قاعدة للمجموعة لتحل محل القاعدة الحالية للتطبيقات الفردية.",
+        "ja": "既存の個別アプリのルールを置き換えるグループのルールを選択してください。",
+        "ko": "기존 개별 앱 규칙을 대체할 그룹 규칙을 선택하세요.",
+        "zh-Hans": "选择一条组规则，以替换现有的单个应用规则。"
+      }
+    },
+    {
+      "source": "Existing protection stays active until you choose and save a group rule.",
+      "translations": {
+        "hi": "जब तक आप समूह का नियम चुनकर सहेज नहीं लेते, मौजूदा सुरक्षा सक्रिय रहती है।",
+        "es": "La protección existente sigue activa hasta que elijas y guardes una regla de grupo.",
+        "pt": "A proteção existente permanece ativa até você escolher e salvar uma regra de grupo.",
+        "fr": "La protection existante reste active jusqu’à ce que vous choisissiez et enregistriez une règle de groupe.",
+        "de": "Der bestehende Schutz bleibt aktiv, bis du eine Gruppenregel auswählst und speicherst.",
+        "ar": "تبقى الحماية الحالية نشطة حتى تختار قاعدة للمجموعة وتحفظها.",
+        "ja": "グループのルールを選択して保存するまで、既存の保護は有効なままです。",
+        "ko": "그룹 규칙을 선택하고 저장할 때까지 기존 보호는 활성 상태를 유지합니다.",
+        "zh-Hans": "选择并保存组规则前，现有防护会保持启用。"
+      }
+    }
+  ]
+}

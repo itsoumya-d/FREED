@@ -1,0 +1,1428 @@
+[
+  {
+    "id": 1,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "adultfriendfinder.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "beeg.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "bongacams.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "brazzers.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "cam4.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "camsoda.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "chaturbate.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "drtuber.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "empflix.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "eporner.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 11,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "erome.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 12,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "fakku.net"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 13,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "flirt4free.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 14,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "fux.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 15,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "gotporn.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 16,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "hentaifox.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 17,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "hentaihaven.xxx"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 18,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "javhd.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 19,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "literotica.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 20,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "livejasmin.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 21,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "manyvids.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 22,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "motherless.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 23,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "myfreecams.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 24,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "naughtyamerica.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 25,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "nhentai.net"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 26,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "nuvid.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 27,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "onlyfans.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 28,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "porn.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 29,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "porn300.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 30,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "pornhub.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 31,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "porntrex.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 32,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "redtube.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 33,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "rule34.xxx"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 34,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "sex.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 35,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "spankbang.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 36,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "stripchat.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 37,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "sunporno.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 38,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "tnaflix.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 39,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "tube8.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 40,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "vporn.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 41,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "xhamster.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 42,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "xhamsterlive.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 43,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "xnxx.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 44,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "xvideos.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 45,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "youjizz.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  },
+  {
+    "id": 46,
+    "priority": 20,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/blocked/index.html"
+      }
+    },
+    "condition": {
+      "requestDomains": [
+        "youporn.com"
+      ],
+      "resourceTypes": [
+        "main_frame",
+        "sub_frame",
+        "stylesheet",
+        "script",
+        "image",
+        "font",
+        "object",
+        "xmlhttprequest",
+        "ping",
+        "media",
+        "websocket",
+        "webtransport",
+        "webbundle",
+        "other"
+      ]
+    }
+  }
+]

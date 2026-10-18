@@ -1,0 +1,3 @@
+# Language picker flags
+
+Small offline PNGs obtained 2026-10-03 from [FlagCDN](https://flagcdn.com/) / [Flagpedia](https://flagpedia.net/). Source URLs use https://flagcdn.com/w80/{country}.png. Codes: en=gb-eng, hi=in, es=es, pt=br, fr=fr, de=de, ar=eg, ja=jp, ko=kr, zh-Hans=cn. [Flagpedia’s terms](https://flagpedia.net/terms) state that its flag images are public domain and may be freely reused (verified 2026-10-03). The assets are decorative visual aids, not a claim that a language belongs exclusively to one country. Native language names carry the accessible label. System has no flag. Assets are bundled locally and no network request occurs in the picker.

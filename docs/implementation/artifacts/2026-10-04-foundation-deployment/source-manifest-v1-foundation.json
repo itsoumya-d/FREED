@@ -1,0 +1,344 @@
+{
+  "project": "freed-7d5ee",
+  "codebase": "freed",
+  "verifiedSnapshot": "/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-corrections-verify-5mcu171d/snapshot",
+  "stagingRoot": "/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-foundation-deploy-yvo2e4xz",
+  "inputs": [
+    {
+      "file": "functions/package.json",
+      "sha256": "724bb31715f825f1a3d4ab46d2d394b4db6dde70d3d890aa308789a6f71d4e83"
+    },
+    {
+      "file": "functions/package-lock.json",
+      "sha256": "79bdd391cbd284cce6852be5ec5d550fa4c626d9392074b582464b5fc78a81c5"
+    },
+    {
+      "file": "functions/tsconfig.json",
+      "sha256": "03d9f3702621e329c0a048736912e9dbea541c5624bbacb05f35473cf4cb790f"
+    },
+    {
+      "file": "functions/src/account-deletion-auth.test.ts",
+      "sha256": "55e467aacab100ba6b0b29a54e3ab0cc4457a59b4a1081ef069d7711a942a639"
+    },
+    {
+      "file": "functions/src/adult-feed-firebase.ts",
+      "sha256": "ed8e0187bf844f4229b2823563858f80135177b2d2e20e1d6bfa8c3cb11c91be"
+    },
+    {
+      "file": "functions/src/adult-feed.test.ts",
+      "sha256": "9de47dd53336895e7d8351318c23ecfb968e8ff951aa92e6fa5d911588506883"
+    },
+    {
+      "file": "functions/src/adult-feed.ts",
+      "sha256": "9ddad386cc0a9b757d676f01803e52bb17b012d6839c71b67abbc6c1df1a7dfd"
+    },
+    {
+      "file": "functions/src/aggregate-analytics.ts",
+      "sha256": "35f21d91bf382353cae0f052b2b4751e7ba2b4a0a19133cf8989fa87a4cb3c36"
+    },
+    {
+      "file": "functions/src/ai-firebase.test.ts",
+      "sha256": "73442b708297d117b2ca9f8950b50a020eec7cad219785073e178a56c49d3f7f"
+    },
+    {
+      "file": "functions/src/ai-firebase.ts",
+      "sha256": "f47f33e04451ab480eab33f02e26cfe450ae3c5f6c4ec853b57ee94c616a4cf0"
+    },
+    {
+      "file": "functions/src/ai-locale.test.ts",
+      "sha256": "0c383cb95f41ef9bfe9d9b6ffb0f492aa90c73b24f37bb273e4d2aa60b54d47e"
+    },
+    {
+      "file": "functions/src/ai-quota.test.ts",
+      "sha256": "42a756f9ab0deab709f98ca6b27ff38c2ac54365cde7caacb20064fba5675fc4"
+    },
+    {
+      "file": "functions/src/ai-quota.ts",
+      "sha256": "39254a27001fd1e94474a091a3ef369866858f8eb47c015174aeda31bb89d32c"
+    },
+    {
+      "file": "functions/src/ai.test.ts",
+      "sha256": "731999ccf2ddb3616e9f4fce96f8b4af723787df8d5544c5b4b933d035448571"
+    },
+    {
+      "file": "functions/src/ai.ts",
+      "sha256": "53a968ea64569dc5fa66665d38ab5c8ddbe9bb7c33b63bf324e7bf9464fc9b49"
+    },
+    {
+      "file": "functions/src/contracts.test.ts",
+      "sha256": "2073935919e8eac3ebfa507afc817fff8350fe7ec725db9dc31dfd09fdfb894b"
+    },
+    {
+      "file": "functions/src/contracts.ts",
+      "sha256": "923203cfd6376c23cb7b3be350c0d8c74c15f55c5b2d71bdfa175c018b938a46"
+    },
+    {
+      "file": "functions/src/core-data.test.ts",
+      "sha256": "d9e01d7e447df66bc948872a29c35ed106bb1df6d5d49b0bf587869771324be8"
+    },
+    {
+      "file": "functions/src/core-data.ts",
+      "sha256": "bfb5a8331780c83f43497a6c76332974cec7e7f6fe2b6233854b3e6db098ff73"
+    },
+    {
+      "file": "functions/src/emulator-adapters.test.ts",
+      "sha256": "21e5525a3f64084446cce8ad949597cdef25c299b82a2c2d58d21ace0531769a"
+    },
+    {
+      "file": "functions/src/foundation.test.ts",
+      "sha256": "032fd6653a2c157ff83ed23ff17ba8eecc014417badd063e1d5bd2a1bfce1be7"
+    },
+    {
+      "file": "functions/src/foundation.ts",
+      "sha256": "66eebce863551f7f2a47f3d684fe29eb636374cd3a10f319dd3bb8aa2a12115f",
+      "correctedAfterVerifiedSnapshot": true
+    },
+    {
+      "file": "functions/src/index.ts",
+      "sha256": "fe37a5f3593eb0ade5c0cf407b3d34da480acaec04632a6945195f6619665710"
+    },
+    {
+      "file": "functions/src/notification-firebase.test.ts",
+      "sha256": "48f39f61d47fba7ed3ebb96eb37a1ea6724a3e2c7baa9868900f1657055d3a21"
+    },
+    {
+      "file": "functions/src/notification-firebase.ts",
+      "sha256": "0ea8a8101db25b4e117bae0e5a21c2fe87bcd8763422fd942b2d159922f6b24d"
+    },
+    {
+      "file": "functions/src/notifications.test.ts",
+      "sha256": "7c7392188094080f4e467979e723bd6af83638d2613bbf37b464a8ccf80e8e3b"
+    },
+    {
+      "file": "functions/src/notifications.ts",
+      "sha256": "e955d50df1094cc0c2c0b8a4595712c9b8a97420755f61e3e6ce8a3b5ec0fcb9"
+    },
+    {
+      "file": "functions/src/premium-state.test.ts",
+      "sha256": "8f1131ac3aa86865bff5d75ace7f3c78e445e2e55c3eedfae29e9773e4939c00"
+    },
+    {
+      "file": "functions/src/premium-state.ts",
+      "sha256": "43a2bd0fc0e870794f37d841fe905e2b9f02e955e1c2e16bd747339ed732480a"
+    },
+    {
+      "file": "functions/src/purchase-account-fence.test.ts",
+      "sha256": "ac9463920bd1dfcf173e0e0396dbbd382e23f30b3fcbb0b653235a8a3197b8f2"
+    },
+    {
+      "file": "functions/src/purchase-checkout-readiness.test.ts",
+      "sha256": "ad314214b264ebc79d9ad5666e1a987af12f01f4a451e98d1abd3112f3f40bee"
+    },
+    {
+      "file": "functions/src/purchase-firebase.test.ts",
+      "sha256": "649e69ae1fb61083bf636974358dfd48fd0139239ffa3d271ffca9e3e8bcd3bb"
+    },
+    {
+      "file": "functions/src/purchase-firebase.ts",
+      "sha256": "ac2216ec56265f0ac629ff84a63a99a2253e1a355cde807659f755521a5ba269"
+    },
+    {
+      "file": "functions/src/purchase-foundation.ts",
+      "sha256": "bb6c8ca8159862061932c0c4a81f20637eb72db3f3ab4826953c4d3b1c2575df"
+    },
+    {
+      "file": "functions/src/purchase-guest-restore.test.ts",
+      "sha256": "148da8455b9510ab6a413ddfe49285fd76601d9297ad0f93dcac02b15c364691"
+    },
+    {
+      "file": "functions/src/purchase.test.ts",
+      "sha256": "865b5155d944f420bd0fa3b7f2b1cc86c1d9a33bd87a76073ebde0b4393e07ef"
+    },
+    {
+      "file": "functions/src/purchase.ts",
+      "sha256": "3f607a48c13eae175486a41bcc982ed03b3dd47fe3b84235a72acac5938f4c30"
+    },
+    {
+      "file": "functions/src/subscription-events.test.ts",
+      "sha256": "b6dbc8c29e0b40bb4a3ca39fe5671bb2cd9b0d50e0e1f7702794008c28829ca8"
+    },
+    {
+      "file": "functions/src/subscription-events.ts",
+      "sha256": "f460802f633ed4e39924d202031623e017c309d8afe03b17b92c1202a30007db"
+    },
+    {
+      "file": "functions/src/subscription-notifications.test.ts",
+      "sha256": "e8ed5b346abfefe7be138d01b94169d08330fdc40a05e0444291a0aba8142180"
+    },
+    {
+      "file": "functions/src/subscription-notifications.ts",
+      "sha256": "d817c315d5181e574f602a9bda1ba6432426c53d2f1669d2db660b6849f6da91"
+    },
+    {
+      "file": "functions/src/transactional.test.ts",
+      "sha256": "e7d7af8514a4b27571f7bf6369d13640ee436485565361b7700af49d89628187"
+    },
+    {
+      "file": "functions/src/transactional.ts",
+      "sha256": "437d3ff12e1a2b44ccc1253377c45bcf9e6de52cfdf02129d0f8e2267cd1cd0c"
+    },
+    {
+      "file": "firestore.rules",
+      "sha256": "92f8beb7f5a047aed24957c0e2a2ca6d79cb0d28800bc177421b606bb6ee1d23"
+    },
+    {
+      "file": "firestore.indexes.json",
+      "sha256": "c127fc5867c3f30ddcab6828b4ae06df01134ea5f57febd9d721909fd9b3a0ce"
+    },
+    {
+      "file": "storage.rules",
+      "sha256": "406073581b1053786192e821c91eb32d8f770061b14cb03b223dcd8670ad703f"
+    },
+    {
+      "file": "functions/src/foundation-expiry.test.ts",
+      "sha256": "05e762ccdeae201be87f5e033bd675c1d17a2063f8aaaa7f4b488d622d0500a7",
+      "newFocusedRegressionTest": true
+    }
+  ],
+  "credentialValuesOmitted": true,
+  "compiledFiles": [
+    {
+      "file": "lib/adult-feed-firebase.js",
+      "sha256": "a8e79e1c9edc43d996cc00f93c44e24ebbfc1ebfd1d7482799269410b8572cfe"
+    },
+    {
+      "file": "lib/adult-feed.js",
+      "sha256": "7affc1e8744ba50c76be55693d319925b3e16fb146256866d44baed88453466b"
+    },
+    {
+      "file": "lib/aggregate-analytics.js",
+      "sha256": "7e2ddc4a3c0e3cc9cf84c17de3b23eff5269c12679b34d46811dd64cc403d745"
+    },
+    {
+      "file": "lib/contracts.js",
+      "sha256": "ae3b1fde75263d89bd4d2963026901e1754bd63b7f2c09bfa9f310ef4eb90229"
+    },
+    {
+      "file": "lib/core-data.js",
+      "sha256": "d0546c68444ec5abe949098467c66363b5049bae161b6f7d7183e3bd77521edf"
+    },
+    {
+      "file": "lib/deployment.js",
+      "sha256": "e384ad5671d0e90e176894b5c621caa24615a811ef119eb7024f3e4f0a22a2e2"
+    },
+    {
+      "file": "lib/foundation.js",
+      "sha256": "a7c3acd98d8953a72e7f16ef23227a55650c3754100170328457bc78b1f2e1af"
+    },
+    {
+      "file": "lib/notification-firebase.js",
+      "sha256": "efd552651deb0ec24029bc7d8e440ed7f042914caea8f2efbe76289d2ebf0f3e"
+    },
+    {
+      "file": "lib/notifications.js",
+      "sha256": "0424cfe48ccde844e0cd7a067e770a06beb3b770688835dfa670866401936233"
+    },
+    {
+      "file": "lib/premium-state.js",
+      "sha256": "890442dd51c7a9120b28be4b78f3578a4c25ec4b1ca75dab1d1f058cfd169c44"
+    },
+    {
+      "file": "lib/purchase-foundation.js",
+      "sha256": "87cee2bc4a75091aad4366d39cc96daae4d44fcd40c29f76256ba0b8234fbb8f"
+    },
+    {
+      "file": "lib/purchase.js",
+      "sha256": "b7e3346e85d276e8a4c7dd57af7b1a3caa1de8ab9e47397245e05fcf82f4992d"
+    },
+    {
+      "file": "lib/subscription-events.js",
+      "sha256": "5030f3b2b209fd3982d72afdb66fe87e08710ed32c79a923dffb2c06d294eb38"
+    },
+    {
+      "file": "lib/subscription-notifications.js",
+      "sha256": "9c4db33ff2998186737abf618ddaf9eac14cd503bd693290f65683ce7ba5a4a2"
+    },
+    {
+      "file": "lib/transactional.js",
+      "sha256": "bda2fc850a204880ff0dd4a97f2bb07156f40bb3e70929d9fa34a22e2532cb8a"
+    }
+  ],
+  "packageSha256": "b8b2632e647db328b7170ce439399cd8ece6ca22e94a91d044df898c20cca909",
+  "wrapper": "const foundation = require(\"./foundation.js\");\nconst apple = require(\"./subscription-notifications.js\");\nmodule.exports = { ...foundation, appleSubscriptionNotifications: apple.appleSubscriptionNotifications, appleSubscriptionNotificationsSandbox: apple.appleSubscriptionNotificationsSandbox };\n",
+  "exportsScope": "Foundation plus existing Apple production and sandbox notification exports only",
+  "staticManifest": {
+    "sha256": "e3fdeb88d4e2fde21248a6289f97b871fb1504664081f1a21e33899d3b0c8f71",
+    "endpointNames": [
+      "appleSubscriptionNotifications",
+      "appleSubscriptionNotificationsSandbox",
+      "backendReadiness",
+      "cleanupExpiredServerRecords",
+      "deleteEncryptedBackup",
+      "dispatchReviewedNotifications",
+      "fencePurchaseAccountLink",
+      "finalizeEncryptedBackupUpload",
+      "getEncryptedBackupDownload",
+      "getLatestEncryptedBackupDownload",
+      "getPremiumEntitlement",
+      "getReviewedAdultDomainFeed",
+      "ingestAggregateAnalytics",
+      "refreshReviewedAdultDomainFeed",
+      "registerPushToken",
+      "requestAccountDeletion",
+      "retryPendingAccountDeletions",
+      "startEncryptedBackupUpload"
+    ],
+    "selectedSecretParameters": [
+      "APPLE_STORE_APP_ID",
+      "APPLE_STORE_ISSUER_ID",
+      "APPLE_STORE_KEY_ID",
+      "APPLE_STORE_PRIVATE_KEY",
+      "APPLE_STORE_ROOT_CAS_BASE64"
+    ],
+    "excludedUnreferencedDeclarations": [
+      "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON",
+      "GOOGLE_PLAY_SUBSCRIPTION_TOPIC"
+    ]
+  },
+  "correction": {
+    "files": [
+      "functions/src/foundation.ts",
+      "functions/src/foundation-expiry.test.ts"
+    ],
+    "reason": "Normalize Firestore TTL expiry at the production transaction boundary and preserve mutation-gate millisecond comparisons.",
+    "focusedTests": {
+      "red": {
+        "passed": 1,
+        "failed": 2
+      },
+      "green": {
+        "passed": 3,
+        "failed": 0
+      }
+    },
+    "unitSuite": {
+      "tests": 212,
+      "passed": 207,
+      "failed": 0,
+      "emulatorOnlySkipped": 5
+    },
+    "emulatorSuite": {
+      "tests": 212,
+      "passed": 212,
+      "failed": 0,
+      "skipped": 0,
+      "project": "demo-freed-foundation",
+      "only": [
+        "auth",
+        "firestore",
+        "storage"
+      ],
+      "actualProductionTTLDeletionProven": false
+    },
+    "node22EmulatorSuite": {
+      "tests": 212,
+      "passed": 212,
+      "failed": 0,
+      "skipped": 0,
+      "nodeBinary": "/opt/homebrew/opt/node@22/bin/node",
+      "project": "demo-freed-foundation",
+      "productionProviderOrTTLDeletionProof": false
+    }
+  },
+  "sourceSha256": "c9da09e76de9b873769664603f5f33ae9dd97b579f56a96c71b15b9bbb66e85f"
+}

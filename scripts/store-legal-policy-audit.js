@@ -10,6 +10,7 @@ const SCHEMA_VERSION = "freed-store-legal-policy-audit-v1";
 const DEFAULT_REPORT = "docs/validation/artifacts/store-legal-policy-current/store-legal-policy-audit.json";
 
 const SOURCE_PATHS = {
+  productCatalog: "store/store-products.json",
   privacyPolicy: "store/privacy-policy.md",
   playDataSafety: "store/play-store/data-safety.md",
   playMetadata: "store/play-store/metadata.md",
@@ -27,11 +28,11 @@ const SOURCE_PATHS = {
 };
 
 const PUBLIC_URLS = [
-  "https://freedrecovery.app/privacy",
-  "https://freedrecovery.app/support",
-  "https://freedrecovery.app/account-deletion",
+  "https://freed-landing.web.app/privacy",
+  "https://freed-landing.web.app/support",
+  "https://freed-landing.web.app/account-deletion",
 ];
-const CORE_PRODUCT_IDS = ["freed_premium_yearly", "freed_premium_monthly", "freed_premium_lifetime"];
+const LAUNCH_PRODUCT_IDS = ["freed_premium_yearly", "freed_premium_monthly"];
 const FUTURE_PRODUCT_IDS = ["freed_family_yearly", "freed_accountability_monthly", "freed_ai_coach_monthly"];
 
 function printHelp() {
@@ -170,7 +171,7 @@ function buildReport() {
     includesAll(files.privacyRoute, ["PrivacyPolicyPage"]) &&
       includesAll(files.supportRoute, ["SupportPage"]) &&
       includesAll(files.accountDeletionRoute, ["AccountDeletionPage"]) &&
-      includesAll(files.legalPages, ["PrivacyPolicyPage", "SupportPage", "AccountDeletionPage", "support@freedrecovery.app"]),
+      includesAll(files.legalPages, ["PrivacyPolicyPage", "SupportPage", "AccountDeletionPage", "soumyadebnath1661@gmail.com"]),
     "Expo public legal routes exist for privacy, support, and account deletion and route to shared legal page components.",
   );
   pushCheck(
@@ -199,7 +200,7 @@ function buildReport() {
       "Ads And Payments",
       "Permissions",
       "Retention And Deletion",
-      "Privacy contact: support@freedrecovery.app",
+      "Privacy contact: soumyadebnath1661@gmail.com",
     ]),
     "Privacy policy includes effective date, on-device data, optional server data, ads/payments, permissions, retention/deletion, and contact sections.",
   );
@@ -306,14 +307,20 @@ function buildReport() {
       ]),
     "App Store metadata and iOS policy pack include Screen Time and Safari review boundaries.",
   );
+  let productCatalog;
+  try { productCatalog = JSON.parse(files.productCatalog); } catch { productCatalog = null; }
+  const productScope = validateLaunchProductScope(productCatalog, {
+    playMetadata: files.playMetadata,
+    appStoreMetadata: files.appStoreMetadata,
+    activePrivacyText: [files.appStorePrivacy, files.playDataSafety].join("\n"),
+    consolePacket: files.consolePacket,
+  });
   pushCheck(
     checks,
-    "core3-products-only-in-store-metadata",
-    CORE_PRODUCT_IDS.every((id) => allStoreText.includes(id)) &&
-      excludesAll([files.playMetadata, files.appStoreMetadata, files.appStorePrivacy, files.playDataSafety].join("\n"), FUTURE_PRODUCT_IDS) &&
-      files.consolePacket.includes("Future SKUs are disabled for v1"),
-    "Store metadata/privacy packet includes Core 3 product IDs, keeps future SKU IDs out of active metadata/privacy answers, and documents future SKUs as disabled in the console packet.",
-    "Keep future SKU IDs out of v1 active metadata, paywall, purchase calls, and screenshots; console handoffs may name them only as disabled/post-launch.",
+    "launch-products-only-in-store-metadata",
+    productScope.passed,
+    productScope.passed ? "Both platforms describe monthly/yearly launch products; the catalog matches those two subscriptions and inactive lifetime/future SKU IDs stay out of active metadata/privacy answers." : `Launch product scope mismatch: ${productScope.failures.join("; ")}`,
+    "Keep both monthly/yearly launch products in each platform's metadata, match the catalog, and keep inactive lifetime/future SKU IDs out of active metadata/privacy answers; console handoffs may name future SKUs only as disabled/post-launch.",
   );
   pushCheck(
     checks,
@@ -385,7 +392,7 @@ function runSelfTest() {
   assert.equal(report.result, "fail");
   assert.equal(report.passCount, 1);
   assert.equal(report.failCount, 1);
-  assert.equal(report.publicUrls.privacy, "https://freedrecovery.app/privacy");
+  assert.equal(report.publicUrls.privacy, "https://freed-landing.web.app/privacy");
   assert.equal(report.packageName, "app.freed.recovery");
   console.log("store legal policy audit self-test: pass");
 }
@@ -416,4 +423,24 @@ function main() {
   if (report.failCount > 0) process.exitCode = 1;
 }
 
-main();
+function validateLaunchProductScope(catalog, metadata) {
+  const failures = [];
+  const sameIds = (actual, expected) => Array.isArray(actual) && actual.length === expected.length && actual.every(id => typeof id === 'string') && new Set(actual).size === actual.length && [...actual].sort().every((id, index) => id === [...expected].sort()[index]);
+  if (!catalog || catalog.schemaVersion !== 'freed-store-products-v1') failures.push('valid launch catalog schema is required');
+  if (!sameIds(catalog?.launchProductIds, LAUNCH_PRODUCT_IDS)) failures.push('launchProductIds must contain monthly/yearly only');
+  const catalogProductIds = Array.isArray(catalog?.products) ? catalog.products.map(product => product?.productId) : null;
+  if (!sameIds(catalogProductIds, LAUNCH_PRODUCT_IDS)) failures.push('catalog products must contain monthly/yearly only');
+  if (!sameIds(catalog?.futureProductsDisabledForV1, FUTURE_PRODUCT_IDS)) failures.push('all three future products must remain disabled in the catalog');
+  for (const platform of ['playMetadata', 'appStoreMetadata']) {
+    const source = metadata?.[platform] || '';
+    for (const id of LAUNCH_PRODUCT_IDS) if (!source.includes(id)) failures.push(`${platform} is missing ${id}`);
+  }
+  const active = [metadata?.playMetadata, metadata?.appStoreMetadata, metadata?.activePrivacyText].filter(Boolean).join('\n');
+  for (const id of ['freed_premium_lifetime', ...FUTURE_PRODUCT_IDS]) if (active.includes(id)) failures.push(`${id} appears in active metadata/privacy answers`);
+  const consolePacket = metadata?.consolePacket || '';
+  if (!consolePacket.includes('Future SKUs are disabled for v1') || !FUTURE_PRODUCT_IDS.every(id => consolePacket.includes(id))) failures.push('console handoff must explicitly keep every future SKU disabled');
+  return { passed: failures.length === 0, failures };
+}
+
+if (require.main === module) main();
+module.exports = { buildReport, validateLaunchProductScope };

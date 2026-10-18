@@ -1,0 +1,13 @@
+{
+  "workspacePath": "ios/FREED.xcworkspace",
+  "scheme": "FREED",
+  "configuration": "Debug",
+  "simulatorId": "EA53F394-3E1F-44A7-84EF-716A26BE9879",
+  "derivedDataPath": "ios/build",
+  "bundleId": "app.freed.recovery",
+  "runtime": "iOS 26.5",
+  "deviceName": "FREED-Premium-Disposable",
+  "nativeBuildSucceeded": true,
+  "buildCancellation": false,
+  "reason": "Parent native build finished dSYM/validation before cancellation was needed."
+}

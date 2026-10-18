@@ -1,0 +1,15 @@
+appId: app.freed.recovery
+name: library-search
+tags: [smoke, read-only]
+---
+- openLink: "freed:///today/library"
+- extendedWaitUntil:
+    visible: { id: "library-search" }
+    timeout: 15000
+- tapOn: { id: "library-search" }
+- inputText: "no-such-article-947"
+- assertVisible: { id: "library-empty" }
+- assertVisible: { id: "library-tool-breathe" }
+- eraseText: 100
+- assertNotVisible: { id: "library-empty" }
+- takeScreenshot: "library-search"

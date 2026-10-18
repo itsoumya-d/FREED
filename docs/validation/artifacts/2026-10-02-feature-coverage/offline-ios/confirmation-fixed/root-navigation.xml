@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="FREED Automated QA 2026-10-02 - iOS 26.5 - CB401DE2-5B73-4017-95B3-E2D609FB88DA" tests="1" failures="0" time="67.924" timestamp="2026-10-02T16:12:29">
+    <testcase id="root-navigation" name="root-navigation" classname="root-navigation" file=".maestro/flows/root-navigation.yaml" time="67.873" timestamp="2026-10-02T16:12:29" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,15 @@
+{
+  "recordedAt": "2026-10-02T07:09:07.263226+00:00",
+  "project": "freed-7d5ee",
+  "api": "https://firebasestorage.googleapis.com/v1alpha/projects/freed-7d5ee/defaultBucket",
+  "requestedLocation": "asia-south1",
+  "credentialValuesOmitted": true,
+  "status": 403,
+  "error": {
+    "error": {
+      "code": 403,
+      "message": "The caller does not have permission",
+      "status": "PERMISSION_DENIED"
+    }
+  }
+}

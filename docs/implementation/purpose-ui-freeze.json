@@ -1,0 +1,500 @@
+{
+  "schemaVersion": "freed-purpose-ui-freeze-v1",
+  "generatedAt": "2026-10-04T02:19:02.423753+00:00",
+  "scope": "UI and owned recovery/presentation contracts only. Native implementations, backend export builders and live deployment are separately owned and verified.",
+  "fileCount": 120,
+  "fingerprint": "281daff847cb6006b58f4d701bc804ee9c976bc8d8dcd4417e87a1bb634e38c3",
+  "files": [
+    {
+      "path": "app/(tabs)/_layout.tsx",
+      "sha256": "416b95cf53b99230b334afa4a642b4a47e4885c7361c658d264c3cf352e36655"
+    },
+    {
+      "path": "app/(tabs)/profile/_layout.tsx",
+      "sha256": "cfc1c9691e90a5a65c5d5bb5e793784338410ee15a4e15e8d32dec57ecdb79a9"
+    },
+    {
+      "path": "app/(tabs)/profile/index.tsx",
+      "sha256": "cd62850aa3bdf19fa84309a15eba5bbbb4eb4b23c2f5987544db4d600231bda2"
+    },
+    {
+      "path": "app/(tabs)/progress/_layout.tsx",
+      "sha256": "b3cebb3b273bfd2979da9ec3a42d5ba822227dbaaee3ef383f4b276ef5e4ad7c"
+    },
+    {
+      "path": "app/(tabs)/progress/index.tsx",
+      "sha256": "b9747776bb1412705c23b700bde5e493e67f4daddec5c765df16a3875c0c1655"
+    },
+    {
+      "path": "app/(tabs)/shield/[section].tsx",
+      "sha256": "1eaa5c7d0625486a22a848e67ce5a00a39bab709d90ab92d35039f0b49b1e70d"
+    },
+    {
+      "path": "app/(tabs)/shield/_layout.tsx",
+      "sha256": "6b6e4b3480b23871d68f00b2e474d00ea8096246e0497ae693b7f46bab524d8a"
+    },
+    {
+      "path": "app/(tabs)/shield/index.tsx",
+      "sha256": "a55b6fea692d6e366887cbf814162bd2f1a5d6705755d99e169b6761bfffe006"
+    },
+    {
+      "path": "app/(tabs)/today/_layout.tsx",
+      "sha256": "5bdc3bce6033e663e8738dac3bf239c31d37ab5b067d9c5aef4a76210e6395d7"
+    },
+    {
+      "path": "app/(tabs)/today/article.tsx",
+      "sha256": "5139dd6b7e360daa272d4b469a70ac4c6a202c6d30b7f8cd99b70e8133bb087b"
+    },
+    {
+      "path": "app/(tabs)/today/index.tsx",
+      "sha256": "2ee3dd3eaea6fd69dd6f96ae2bb165949b3fad679ff120a8ce45a3f28848a70a"
+    },
+    {
+      "path": "app/(tabs)/today/library.tsx",
+      "sha256": "8740f2f4725f3d474975d498bb67bf6799addfcbb0d545156d82e36947cf3207"
+    },
+    {
+      "path": "app/+native-intent.tsx",
+      "sha256": "68bad8aa58a8c453738f5a706134aa4b6db9c0d0b392658d8c68db231f79b7f6"
+    },
+    {
+      "path": "app/+not-found.tsx",
+      "sha256": "ea2198afccd48db493e380e756265d59174c7aa8db5508e3df204ddf89e7eda3"
+    },
+    {
+      "path": "app/_layout.tsx",
+      "sha256": "0ee1b4b6e1b55f58f8ae587a33e8da8598fb1ce99c9dc5288f132bd74cb7eefa"
+    },
+    {
+      "path": "app/account-deletion.tsx",
+      "sha256": "5375b09dafeb3a2337cddd53b713cc501153db4089ba83a06f265ee6eb761067"
+    },
+    {
+      "path": "app/api/adult-domain-feed+api.ts",
+      "sha256": "3aa4d2c95aea4cab2fdef66708974ae9ad592bbec817638fb99bf49f290cb6a1"
+    },
+    {
+      "path": "app/api/analytics+api.ts",
+      "sha256": "72cec83c948ce30ea0aaf2a964fe29a7cabeb966050f7271416204cb70b1f2bd"
+    },
+    {
+      "path": "app/api/backend/cleanup+api.ts",
+      "sha256": "49694f59c3aa97d5a6b0446cf3c9b4f2762f5f9537afb42d58b40ce07def5a29"
+    },
+    {
+      "path": "app/api/backend/readiness+api.ts",
+      "sha256": "c6f73ceed0997fa00a526347225427aeaa19d6c53ae7ef4b8f93964c11d1ff9c"
+    },
+    {
+      "path": "app/api/challenges+api.ts",
+      "sha256": "9ec7bb014e3300343e759ad6359f67ee7e0b97054069093f09c6bb0d1b197855"
+    },
+    {
+      "path": "app/api/clara+api.ts",
+      "sha256": "815c4b035890ec005e36cb0b0adca332f73056427c1a70e83a8154ad012bcdb2"
+    },
+    {
+      "path": "app/api/notifications/send+api.ts",
+      "sha256": "17c8141a5fed8b008775da760698b5319fa65638081a0c27d5801ad00f2ab46a"
+    },
+    {
+      "path": "app/api/purchases/verify+api.ts",
+      "sha256": "0b5441ea9e71587d7f8354eff0a12db0bf4b99d29bdfeac1b025a967be8ce8f1"
+    },
+    {
+      "path": "app/api/recovery-backup/sync+api.ts",
+      "sha256": "0fc99f78bcf91773bf27b113859b6863abf0d6ccf63d363c28f658af41d960cc"
+    },
+    {
+      "path": "app/api/retention+api.ts",
+      "sha256": "430e1d75851c882968ec5727d5c24b7a831244c3e84b625d7bcbe1f6bb32beb1"
+    },
+    {
+      "path": "app/flow/[destination].tsx",
+      "sha256": "e25762a04d9eeba0262e2d699adef12d572d12e8e36231e18511df6e3830606f"
+    },
+    {
+      "path": "app/index.tsx",
+      "sha256": "c9a140e84783a3e907781900992fed0045b3ef71900a0980248590c7f6dc008c"
+    },
+    {
+      "path": "app/onboarding/[destination].tsx",
+      "sha256": "ee130795cc4a9241f4b641e88d444a50d2432acb4d4d5154cdad87cb7b2e9339"
+    },
+    {
+      "path": "app/preferences.tsx",
+      "sha256": "8bc2313acc90e25a6e4ee1c468ad07d63a004d9fedf3bd9b4badc3eb06826438"
+    },
+    {
+      "path": "app/privacy.tsx",
+      "sha256": "c660dc1d3fae6cd3e2a23570ce210c6650fe6acd0f333b2b7a0d1f3f3e192cc1"
+    },
+    {
+      "path": "app/support.tsx",
+      "sha256": "d91663f9c6369548f58df88417619aac533f0333b228798b8771d0e2f66e1013"
+    },
+    {
+      "path": "src/components/AccountAccessScreen.tsx",
+      "sha256": "4c98d9dfcbac0ddd276b6ac0118f1cff5146be95676fd62611f0e96251d43a42"
+    },
+    {
+      "path": "src/components/AccountReauthenticationScreen.tsx",
+      "sha256": "1a859332c60d986e9be215a61c9b0cb39cc49b2498051ddb2da8fb29ed6db21d"
+    },
+    {
+      "path": "src/components/BrandLogo.tsx",
+      "sha256": "df25fb980de67bf65f69592dd58c7045aefcf615e64ccdc015d8432bd448340f"
+    },
+    {
+      "path": "src/components/BreathingCadenceArtwork.tsx",
+      "sha256": "04681c19b1cb4e06b88cd9710b3d583aaf427fd63310c48b086e9d586d31912e"
+    },
+    {
+      "path": "src/components/BreathingCadenceArtwork.web.tsx",
+      "sha256": "82309c421b3cc4c40822f1e9bbad0dfca0b2e8e34c634901f87c34dde36e0661"
+    },
+    {
+      "path": "src/components/ChallengePresentation.tsx",
+      "sha256": "41d8b8f7ac950684897041fbf9805fffdbefc235262f286d3af75dc62609cf49"
+    },
+    {
+      "path": "src/components/CompanionBackdrop.tsx",
+      "sha256": "2844f4c2a90c4853bbd106c05d8873f61c8dee7993ca6508ecff23d028a00aac"
+    },
+    {
+      "path": "src/components/DirectionalIcons.tsx",
+      "sha256": "f2fee3df153c05efa941e497412af3098549a71839c0c64dfcacd84824f2d239"
+    },
+    {
+      "path": "src/components/EncryptedDnsSection.tsx",
+      "sha256": "69d3e3ed489f65f72d1133e3fef96e9b314d0b23fcc03af03fca396aad648f55"
+    },
+    {
+      "path": "src/components/FunctionalBreathingScreen.tsx",
+      "sha256": "c04f2ff0816d01d2a4f4093d3b8aff23a1f562d5779de453087d6afaa284305a"
+    },
+    {
+      "path": "src/components/FunctionalPaywallScreen.tsx",
+      "sha256": "2ccf328993d9caafefc889e04528d7efb9f2441197c7f33e4c17476e37ea0118"
+    },
+    {
+      "path": "src/components/FunctionalToday.tsx",
+      "sha256": "57728969c1759d1d5e3657a71f79c207e6ecfa85c96c7f1fd9bfe58bbb6bd514"
+    },
+    {
+      "path": "src/components/JournalScreen.tsx",
+      "sha256": "301e4724b377c563b826eefc5a250c01e364b1d08bcb0c14fdd97eb980fc0ea1"
+    },
+    {
+      "path": "src/components/KiteCompanionRig.tsx",
+      "sha256": "c9653f13e3f555e96c96c874cd52db2c20e0ef0d45935e9864786817334cd87a"
+    },
+    {
+      "path": "src/components/LanguagePicker.tsx",
+      "sha256": "ff116060a5d1063218283d3e41db5b1addce890266a6a36ae1e9e8380a080198"
+    },
+    {
+      "path": "src/components/Localized.tsx",
+      "sha256": "cb1d488c8509afb2b28b9897db86277d60162db19f34ebea6c8a5b954650bcc7"
+    },
+    {
+      "path": "src/components/MomentumBreathingView.tsx",
+      "sha256": "cab4bef33659106e1d220875c19c308ee7c9584b7e25b2e47141e99323cf37c9"
+    },
+    {
+      "path": "src/components/MomentumCompanion.tsx",
+      "sha256": "68318ac37817d2f363c52cd5929eaa79748c9c24b1846a07ccfeb8c857a69128"
+    },
+    {
+      "path": "src/components/MomentumPageHeader.tsx",
+      "sha256": "24416865344885893ff0318fc4914367e9c8c7470bd0bc0c40fbf52340f4375e"
+    },
+    {
+      "path": "src/components/MomentumSettingHeader.tsx",
+      "sha256": "4b6bf909016ed92b67a8a3d54f7cefb2f5004fc6c489ca9c96ab3ee9bf2869ea"
+    },
+    {
+      "path": "src/components/MomentumToday.tsx",
+      "sha256": "fb475300ad72ffebaf425815d0acf5f22ed6260d5b4e53e7746454f02c632a74"
+    },
+    {
+      "path": "src/components/NativeTimeInput.tsx",
+      "sha256": "917aea3c7acd320613837d77ad3e62965088949ab7c8ec90fad4787f5f356654"
+    },
+    {
+      "path": "src/components/OnboardingPreferences.tsx",
+      "sha256": "edefad948dee296b47faab046093c7bf12e048bd7c58cc968b58e137eb90f0dd"
+    },
+    {
+      "path": "src/components/PassageArtwork.tsx",
+      "sha256": "c8cb280a666fc5523eb8318fee02222a67388cdc4066e2d04f6f69023512da9f"
+    },
+    {
+      "path": "src/components/PracticeDetail.tsx",
+      "sha256": "60e3c426ca337ff80b56e1e5d3da8a83c59f7a0c6016e6df112cabf0e3e5f9d1"
+    },
+    {
+      "path": "src/components/PreferencePicker.android.tsx",
+      "sha256": "3860274f267c946f800560237f9e85765b8cfa60367392699548154c0fcaef8c"
+    },
+    {
+      "path": "src/components/PreferencePicker.ios.tsx",
+      "sha256": "ce937ff26b51def8392553aa1442e8f119d98642473a564f4b6be163e157a182"
+    },
+    {
+      "path": "src/components/PreferencePicker.tsx",
+      "sha256": "97a992f469ea3cdf6d9469a389c0d7e275098b063a6b65cc3b1da4d89b8c2d15"
+    },
+    {
+      "path": "src/components/PreferencesScreen.tsx",
+      "sha256": "5631a3356c6f2d5eee6f286170864381a2b4022cb66ea9e168ee94a5a6b04bf0"
+    },
+    {
+      "path": "src/components/PremiumOffer.tsx",
+      "sha256": "d0b118d6a9c38f08a53152048eb21fd7724d4413d1d440a2179cd22ca99047b6"
+    },
+    {
+      "path": "src/components/ProtectOverview.tsx",
+      "sha256": "ed3d7854c407ea2405907dc09edbe1e0c3b963476c63b8b1eeedca98d9089a7f"
+    },
+    {
+      "path": "src/components/ProtectionFeatureSetup.tsx",
+      "sha256": "d30cbdf881472218a396369fe70dc5ac71a1e6c5a7fd3ee45647823b228c28ca"
+    },
+    {
+      "path": "src/components/ProtectionLayers.tsx",
+      "sha256": "118b3dbd1f31e95c5bad81dbb13f0b7609ba1be44c9e6d439f5ae3ecd4b59fc3"
+    },
+    {
+      "path": "src/components/ProtectionReactivation.tsx",
+      "sha256": "bd8b9cd3343c24839b32c9cfdc14038b96c0d140c72bd7f70c6f516441bc9e22"
+    },
+    {
+      "path": "src/components/ProtectionSetupView.tsx",
+      "sha256": "c698af0cd4aa4d888179ac71dc0a08ab12dcb514aa282bbede7160245abb62f1"
+    },
+    {
+      "path": "src/components/RecoveryHero.tsx",
+      "sha256": "6275c3ada2c89d14fc9219eebd3b276c752ba9838ad5eb2cec9a665b69acca9b"
+    },
+    {
+      "path": "src/components/RecoveryHistory.tsx",
+      "sha256": "c04a2708380ac8b69138b406ee285eec1be40cda7f5b9378e1eee8d651f421dd"
+    },
+    {
+      "path": "src/components/RecoveryMonthPicker.tsx",
+      "sha256": "f288c20383ee55b9c44639d98106d8e473bec5cb6a588454d3fcc4399117900f"
+    },
+    {
+      "path": "src/components/RecoveryPath.tsx",
+      "sha256": "fe726458407918af44f3d97a21bcc5295150d352825a84d0e7f30b70c215d651"
+    },
+    {
+      "path": "src/components/RootToolbarActions.tsx",
+      "sha256": "085fefc77ac493b53f6b12dd7b9b264f3f0caf724ac8c6003d6291f28c7744cc"
+    },
+    {
+      "path": "src/components/SocialSignInButtons.native.tsx",
+      "sha256": "4095f500d1e4d01255f8296b1a19f0044a44dcaffc2b29b9d061b573191d062b"
+    },
+    {
+      "path": "src/components/SocialSignInButtons.tsx",
+      "sha256": "5331453f6d6db1625d9f6a4d156932544f9590c5c2e05859699f5c453c1e5119"
+    },
+    {
+      "path": "src/components/ToolCompletionView.tsx",
+      "sha256": "d360c30c00d35bea85dffb3fa2a9ea8a3778cd11f3bcc8a9ef23265c665d5b04"
+    },
+    {
+      "path": "src/components/UrgeSupportButton.tsx",
+      "sha256": "3017fd869f2d579044e2578781658278cc2795592c2d72cf5910d7a9cf79297a"
+    },
+    {
+      "path": "src/components/momentum-breathing-clock.ts",
+      "sha256": "8f1fd8a0a62e5043996c9532531aa723e2f22922f215b6305f30ca90f9a9be39"
+    },
+    {
+      "path": "src/components/offer-theme.ts",
+      "sha256": "1b7b8a83dca8bfe0a2279a9f15e2c86d42299496764483d35586a401f4209a8a"
+    },
+    {
+      "path": "src/components/record-practice-toggle.ts",
+      "sha256": "42cdbd3e7cad02154694a9056627b37248eaa8a6880e0a0982b2ebaa05f3c269"
+    },
+    {
+      "path": "src/components/ui/Button.tsx",
+      "sha256": "61f3eaea67e3d7b650a4d912249c6987fec9a82eea53827fbd89af62e415d8c9"
+    },
+    {
+      "path": "src/components/ui/Card.tsx",
+      "sha256": "27efea449220448bdc71fc2b502b57af6c5942b2983a2c516c1d7c42bd4c6887"
+    },
+    {
+      "path": "src/components/ui/Metric.tsx",
+      "sha256": "2872727cdf7df03ad64a5104d44b2b977751c80135c3c2ad93e670719c4e7214"
+    },
+    {
+      "path": "src/components/ui/Switch.tsx",
+      "sha256": "d6be92a74ab2a82a6bcc20e659bd92ccbcb1c199743de6fb0eae51aea27901a5"
+    },
+    {
+      "path": "src/components/ui/TabularText.tsx",
+      "sha256": "4c0209c1faf719277b40a7f5ac2d6548768b2046f3d5a7bc4456b45eb08b980d"
+    },
+    {
+      "path": "src/components/ui/index.ts",
+      "sha256": "a5afc4ed3a47185e14e7c58ccd72e6a153040120f030e14cd2e3c7a5f01779a2"
+    },
+    {
+      "path": "src/components/use-today-clock.ts",
+      "sha256": "7a46c5680c4f09c7a7d50081c9a09d65172cccb3b08953f3832012a51f40ee61"
+    },
+    {
+      "path": "src/design-system/navigation.ts",
+      "sha256": "dd392a19bbcdfe1246aad8d921ffa649738adb4fdcdd993b2cf7d6a332a2220b"
+    },
+    {
+      "path": "src/features/freed-app.tsx",
+      "sha256": "ee5eabdce5397cbcd2178404a816116cd0b082267a08fe5f1b2438514c93ccb4"
+    },
+    {
+      "path": "src/i18n/locales/ar.json",
+      "sha256": "16856bfa16cbb517ad8794af6c48214d9ff6c622cfe8cfd709e1ce032e692073"
+    },
+    {
+      "path": "src/i18n/locales/de.json",
+      "sha256": "f019f71edbf795c1f31d54da6cdbce37700fe8c61385eedd837ec81138b1f2cd"
+    },
+    {
+      "path": "src/i18n/locales/en.json",
+      "sha256": "980073edd4e1978cc4787ae80844c55d2169ce717eed5293b5cf7f0f4424977a"
+    },
+    {
+      "path": "src/i18n/locales/es.json",
+      "sha256": "0f4cd0805fffb6386a28161e335374a8588a1e36456c2d51fa08e7a7aff458d7"
+    },
+    {
+      "path": "src/i18n/locales/fr.json",
+      "sha256": "3133a4a6ba1634c77a20dde139553c13af986304af3761901979133dd1c14bf1"
+    },
+    {
+      "path": "src/i18n/locales/hi.json",
+      "sha256": "7fa8f53a2f9c744ab9e1820ffdce9e0a9b174c06c3f717a2a7154a43a63e0239"
+    },
+    {
+      "path": "src/i18n/locales/ja.json",
+      "sha256": "fafb2286cb0e842e1b640e9c1c6ff120e5bb590dd35e2920d18de72baa62a5d1"
+    },
+    {
+      "path": "src/i18n/locales/ko.json",
+      "sha256": "e764341ea199c036d7550a779b3d8c7f25f41d16418098f29645016287ba0927"
+    },
+    {
+      "path": "src/i18n/locales/pt.json",
+      "sha256": "fb719792f1e6ba95b61b15706bafd263eee42b9a8bc6d51dc3b5002bb411ce51"
+    },
+    {
+      "path": "src/i18n/locales/zh-Hans.json",
+      "sha256": "00ae59f24bd40761bab76ef660900a5d31029561e18fc72ea2aee712ec0fa18c"
+    },
+    {
+      "path": "src/lib/breathing-session.ts",
+      "sha256": "f3e1ed9a8b31f1c5991bf0908a8cd09bf87ddd36f59b4838a3b2c7dd60a475ee"
+    },
+    {
+      "path": "src/lib/challenge-context.ts",
+      "sha256": "51e60aec61bb8a47b0cc134ff8499594184c7c156f39bf942a1ce27949f7d4fd"
+    },
+    {
+      "path": "src/lib/challenge-selection-key.ts",
+      "sha256": "36208027dae9b6b83bd92f66ef3f03d866692521a5c8b11c36abd263d9283b20"
+    },
+    {
+      "path": "src/lib/confirmed-cleanup.ts",
+      "sha256": "8b76ba5597babcf64ecbdaa1a9a795abe7314ffe5adf1b1c1b02bf70f34f7aa0"
+    },
+    {
+      "path": "src/lib/flow-presentation.ts",
+      "sha256": "60bb84f6450b99cc0d6b1a8db99c2cd58d17b498b5f2bcc53452e35b6922435f"
+    },
+    {
+      "path": "src/lib/latest-serial-job.ts",
+      "sha256": "68f7600b97f26668c82abf3ebe40f494056c249cff706473708f811e8b5201d5"
+    },
+    {
+      "path": "src/lib/native-navigation.ts",
+      "sha256": "534714d0c622e7b584536c64fbcc6062b20218c18e8de024a9af9fd633e92c5d"
+    },
+    {
+      "path": "src/lib/paywall-navigation.ts",
+      "sha256": "60754ed0d8910ae854bc6fcdc87f2471eab6af305aa87a10ac5a65c2e24b912e"
+    },
+    {
+      "path": "src/lib/paywall-presenter.ts",
+      "sha256": "8209aa9a3589c58fa1994ba1c9069266eb92d694aead19100eae93bea3af9d42"
+    },
+    {
+      "path": "src/lib/personal-daily-plan.ts",
+      "sha256": "3a8fb51c6242ec4532829f3115a11ca1b585060a4790b6d3745be5087f9e99d0"
+    },
+    {
+      "path": "src/lib/protection-intent-storage.ts",
+      "sha256": "f49e98e656391b09a423291a8218163078675854b7c809658eeeace89adcdda5"
+    },
+    {
+      "path": "src/lib/protection-permissions.ts",
+      "sha256": "a87e3b1b3eb6b19be53415e0a7e3d327bd08953bdad9f562709f997751a7dbf2"
+    },
+    {
+      "path": "src/lib/protection-reactivation.ts",
+      "sha256": "8ff4ee6e4a4c6df6c0473ce15b7464f74a7cfb3550b59dd1febe2b2c2d93a413"
+    },
+    {
+      "path": "src/lib/protection-readiness.ts",
+      "sha256": "427a7f12b85c71c89bca9c831a777d128d1c1adcf3286d0e75082e937b3472ef"
+    },
+    {
+      "path": "src/lib/recovery-analytics.ts",
+      "sha256": "a8549f261d42cb7f3c56902b2aa644167a499130ec7a9930e4cbcdd16ec4693b"
+    },
+    {
+      "path": "src/lib/recovery-day-snapshot.ts",
+      "sha256": "5f4eb165f9c76a02ead7e005179ff61c59f31e0d111e4f8c93c5975d1c99b389"
+    },
+    {
+      "path": "src/lib/recovery-day-write.ts",
+      "sha256": "7cb5adb0294e19037cfafc98161213d817d99bdb365e2636d728b28be788db3a"
+    },
+    {
+      "path": "src/lib/recovery-drafts.ts",
+      "sha256": "2ac42d2551e6f192125b1fa1141edb860bc049b437a2408f82f0466ff0dff0e2"
+    },
+    {
+      "path": "src/lib/recovery-state.ts",
+      "sha256": "a05a448ff3267db5ab93a62635ec99c07a31dc0ca5a5154ace0da25044e222a7"
+    },
+    {
+      "path": "src/lib/svg-companion-transform.ts",
+      "sha256": "538d2fae91e762a607e52eabcc6a852a219c734d92adf2356482a3a1325d34a3"
+    },
+    {
+      "path": "src/lib/tool-completion.ts",
+      "sha256": "363b9912c55b5e27e36e7af76fd44db10d354ae8d28dace43f019df4b196873e"
+    },
+    {
+      "path": "src/lib/urge-risk-forecast.ts",
+      "sha256": "9a5423b2be51bdf953c268b168fa873b5a96f64d2462df730e2eeb40d6838781"
+    }
+  ],
+  "validation": {
+    "ui": "28 suites / 221 tests passed after local selection repair",
+    "typecheck": "passed after local selection repair",
+    "webExport": "passed after local selection repair on the final captured UI snapshot",
+    "localization": "strict audit passed: ten languages, 2592 source keys, 0 uncovered / 0 errors; 16 catalog tests passed",
+    "runtime": "partial native QA, no full moving-flow/device/store/frame attestation",
+    "resetActivation": "3 acknowledgment/default contracts and 15 intent/readiness tests passed; independent caller review passed",
+    "localSelection": "12 tests passed; no remote export reads; independent read-only review passed",
+    "privacyBoundary": "off-device privacy suite5 plus top-level guard/export assertions passed"
+  },
+  "fingerprintAlgorithm": "SHA-256 of UTF-8 compact JSON files array, sorted by path; fields path then sha256"
+}

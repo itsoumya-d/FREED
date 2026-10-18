@@ -1,0 +1,22 @@
+{
+  "profileId": "XS9BWQ68H5",
+  "name": "FREED Momentum Full AppCheck Store 20261005",
+  "uuid": "b7c4228e-432c-4d13-88af-062117f2d2bb",
+  "state": "ACTIVE",
+  "team": "R5RX8WP8ZC",
+  "bundleId": "app.freed.recovery",
+  "certificateId": "WLP97US4C3",
+  "allowedAppAttestEnvironments": [
+    "development",
+    "production"
+  ],
+  "requiredAppBinaryAppAttestEnvironment": "production",
+  "familyControls": true,
+  "appGroup": "group.app.freed.recovery",
+  "profilePath": "/Users/soumyadebnath16/.config/freed/signing/FREED-Momentum-AppCheck-AppStore.mobileprovision",
+  "profileSha256": "10a2a3336d6dd5f96da503cda180baeb798015349a2a4e240cd935c480fdc49e",
+  "oldProfilesPreserved": true,
+  "newPrivateKeyCreated": false,
+  "signedClientProof": false,
+  "validationNote": "Profile permits both development and production; the app signed entitlement must explicitly choose production. Initial scalar-only validation was corrected without another create request."
+}

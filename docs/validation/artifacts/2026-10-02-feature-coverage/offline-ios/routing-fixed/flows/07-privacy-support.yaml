@@ -1,0 +1,32 @@
+appId: app.freed.recovery
+name: privacy-support
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///profile"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-profile"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Privacy & support"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Privacy & support"
+- scrollUntilVisible:
+    element:
+      text: "Privacy Policy"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Privacy Policy"
+- assertVisible: "Support"
+- assertVisible: "Account Deletion Help"
+- takeScreenshot: "privacy-support"

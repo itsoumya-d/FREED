@@ -1,0 +1,564 @@
+{
+  "entries": [
+    {
+      "source": "movement",
+      "translations": {
+        "hi": "गतिविधि",
+        "es": "movimiento",
+        "pt": "movimento",
+        "fr": "mouvement",
+        "de": "Bewegung",
+        "ar": "حركة",
+        "ja": "運動",
+        "ko": "움직임",
+        "zh-Hans": "活动"
+      }
+    },
+    {
+      "source": "Movement observed",
+      "translations": {
+        "hi": "गतिविधि देखी गई",
+        "es": "Movimiento observado",
+        "pt": "Movimento observado",
+        "fr": "Mouvement observé",
+        "de": "Bewegung erfasst",
+        "ar": "تم رصد الحركة",
+        "ja": "動きを検出しました",
+        "ko": "움직임이 감지되었어요",
+        "zh-Hans": "已检测到移动"
+      }
+    },
+    {
+      "source": "Native account service unavailable.",
+      "translations": {
+        "hi": "डिवाइस की खाता सेवा उपलब्ध नहीं है।",
+        "es": "El servicio de cuentas del dispositivo no está disponible.",
+        "pt": "O serviço de contas do dispositivo está indisponível.",
+        "fr": "Le service de compte de l’appareil est indisponible.",
+        "de": "Der Kontodienst des Geräts ist nicht verfügbar.",
+        "ar": "خدمة الحساب على الجهاز غير متاحة.",
+        "ja": "端末のアカウントサービスを利用できません。",
+        "ko": "기기의 계정 서비스를 사용할 수 없어요.",
+        "zh-Hans": "设备账户服务不可用。"
+      }
+    },
+    {
+      "source": "Native app guard configuration",
+      "translations": {
+        "hi": "डिवाइस की ऐप सुरक्षा सेटिंग",
+        "es": "Configuración de protección de aplicaciones del dispositivo",
+        "pt": "Configuração de proteção de aplicativos do dispositivo",
+        "fr": "Configuration de protection des applications sur l’appareil",
+        "de": "App-Schutzkonfiguration auf dem Gerät",
+        "ar": "إعداد حماية التطبيقات على الجهاز",
+        "ja": "端末のアプリ保護設定",
+        "ko": "기기의 앱 보호 설정",
+        "zh-Hans": "设备应用保护配置"
+      }
+    },
+    {
+      "source": "Native app guard mode was rejected.",
+      "translations": {
+        "hi": "डिवाइस ने ऐप सुरक्षा मोड अस्वीकार किया।",
+        "es": "El dispositivo rechazó el modo de protección de aplicaciones.",
+        "pt": "O dispositivo rejeitou o modo de proteção de aplicativos.",
+        "fr": "L’appareil a refusé le mode de protection des applications.",
+        "de": "Das Gerät hat den App-Schutzmodus abgelehnt.",
+        "ar": "رفض الجهاز وضع حماية التطبيقات.",
+        "ja": "端末がアプリ保護モードを拒否しました。",
+        "ko": "기기가 앱 보호 모드를 거부했어요.",
+        "zh-Hans": "设备拒绝了应用保护模式。"
+      }
+    },
+    {
+      "source": "Native expiry relock readback did not match.",
+      "translations": {
+        "hi": "समाप्ति पर दोबारा रोक लगाने की डिवाइस स्थिति मेल नहीं खाई।",
+        "es": "La lectura del dispositivo no coincidió con el bloqueo al finalizar.",
+        "pt": "A leitura do dispositivo não correspondeu ao novo bloqueio ao expirar.",
+        "fr": "L’état lu sur l’appareil ne confirme pas le rétablissement du blocage à l’expiration.",
+        "de": "Die Geräterückmeldung zur erneuten Sperre nach Ablauf stimmt nicht überein.",
+        "ar": "لم تتطابق قراءة الجهاز مع إعادة الحظر عند انتهاء المدة.",
+        "ja": "期限終了時の再ブロックについて、端末からの確認が一致しませんでした。",
+        "ko": "만료 후 다시 차단된다는 기기의 확인 정보가 일치하지 않았어요.",
+        "zh-Hans": "设备返回的到期重新锁定状态不匹配。"
+      }
+    },
+    {
+      "source": "Native strict app guard configuration was rejected.",
+      "translations": {
+        "hi": "डिवाइस ने सख्त ऐप सुरक्षा सेटिंग अस्वीकार की।",
+        "es": "El dispositivo rechazó la configuración estricta de protección de aplicaciones.",
+        "pt": "O dispositivo rejeitou a configuração de proteção estrita de aplicativos.",
+        "fr": "L’appareil a refusé la configuration stricte de protection des applications.",
+        "de": "Das Gerät hat die strenge App-Schutzkonfiguration abgelehnt.",
+        "ar": "رفض الجهاز إعداد الحماية الصارمة للتطبيقات.",
+        "ja": "端末が厳格なアプリ保護設定を拒否しました。",
+        "ko": "기기가 엄격한 앱 보호 설정을 거부했어요.",
+        "zh-Hans": "设备拒绝了严格应用保护配置。"
+      }
+    },
+    {
+      "source": "No features match your search. Try another word.",
+      "translations": {
+        "hi": "खोज से कोई सुविधा नहीं मिली। दूसरा शब्द आज़माएँ।",
+        "es": "Ninguna función coincide con tu búsqueda. Prueba otra palabra.",
+        "pt": "Nenhum recurso corresponde à busca. Tente outra palavra.",
+        "fr": "Aucune fonctionnalité ne correspond à votre recherche. Essayez un autre mot.",
+        "de": "Keine Funktion passt zu deiner Suche. Versuche ein anderes Wort.",
+        "ar": "لا توجد ميزات تطابق بحثك. جرّب كلمة أخرى.",
+        "ja": "検索に一致する機能がありません。別の言葉でお試しください。",
+        "ko": "검색과 일치하는 기능이 없어요. 다른 단어를 입력해 보세요.",
+        "zh-Hans": "没有匹配的功能，请尝试其他关键词。"
+      }
+    },
+    {
+      "source": "No Screen Time targets were selected. Choose at least one app before activation can finish.",
+      "translations": {
+        "hi": "Screen Time में कोई लक्ष्य नहीं चुना गया। सक्रिय करने से पहले कम से कम एक ऐप चुनें।",
+        "es": "No se seleccionaron objetivos en Tiempo de uso. Elige al menos una aplicación antes de completar la activación.",
+        "pt": "Nenhum alvo foi selecionado no Tempo de Uso. Escolha pelo menos um aplicativo antes de concluir a ativação.",
+        "fr": "Aucun élément n’a été choisi dans Temps d’écran. Choisissez au moins une application avant de terminer l’activation.",
+        "de": "Es wurden keine Bildschirmzeit-Ziele ausgewählt. Wähle vor Abschluss der Aktivierung mindestens eine App.",
+        "ar": "لم تُختر عناصر في مدة استخدام الجهاز. اختر تطبيقًا واحدًا على الأقل قبل إكمال التفعيل.",
+        "ja": "スクリーンタイムの対象が選択されていません。有効化するには、少なくとも1つのアプリを選んでください。",
+        "ko": "스크린 타임 대상이 선택되지 않았어요. 활성화를 완료하려면 앱을 하나 이상 선택하세요.",
+        "zh-Hans": "尚未选择屏幕使用时间目标。完成启用前，请至少选择一个应用。"
+      }
+    },
+    {
+      "source": "notes",
+      "translations": {
+        "hi": "नोट्स",
+        "es": "notas",
+        "pt": "notas",
+        "fr": "notes personnelles",
+        "de": "Notizen",
+        "ar": "ملاحظات",
+        "ja": "メモ",
+        "ko": "메모",
+        "zh-Hans": "笔记"
+      }
+    },
+    {
+      "source": "Notice five nearby objects",
+      "translations": {
+        "hi": "आसपास की पाँच वस्तुएँ देखें",
+        "es": "Observa cinco objetos cercanos",
+        "pt": "Observe cinco objetos próximos",
+        "fr": "Observer cinq objets à proximité",
+        "de": "Fünf Gegenstände in der Nähe wahrnehmen",
+        "ar": "لاحظ خمسة أشياء قريبة",
+        "ja": "近くの5つの物に目を向ける",
+        "ko": "주변 물건 다섯 개 살펴보기",
+        "zh-Hans": "留意附近的五件物品"
+      }
+    },
+    {
+      "source": "Notice five ordinary objects, one at a time.",
+      "translations": {
+        "hi": "एक-एक करके पाँच सामान्य वस्तुएँ देखें।",
+        "es": "Observa cinco objetos cotidianos, uno por uno.",
+        "pt": "Observe cinco objetos comuns, um de cada vez.",
+        "fr": "Observez cinq objets ordinaires, un à la fois.",
+        "de": "Nimm fünf alltägliche Gegenstände nacheinander wahr.",
+        "ar": "لاحظ خمسة أشياء عادية، واحدًا تلو الآخر.",
+        "ja": "身近な物を5つ、一つずつ観察しましょう。",
+        "ko": "일상적인 물건 다섯 개를 하나씩 살펴보세요.",
+        "zh-Hans": "逐一观察五件普通物品。"
+      }
+    },
+    {
+      "source": "Notice one object for a few quiet moments.",
+      "translations": {
+        "hi": "कुछ शांत पलों तक एक वस्तु पर ध्यान दें।",
+        "es": "Observa un objeto durante unos momentos tranquilos.",
+        "pt": "Observe um objeto por alguns momentos tranquilos.",
+        "fr": "Observez un objet pendant quelques instants calmes.",
+        "de": "Betrachte einen Gegenstand einige ruhige Momente lang.",
+        "ar": "تأمّل شيئًا واحدًا لبضع لحظات هادئة.",
+        "ja": "静かな時間を少し取り、一つの物に目を向けましょう。",
+        "ko": "잠시 차분하게 물건 하나를 살펴보세요.",
+        "zh-Hans": "静静观察一件物品片刻。"
+      }
+    },
+    {
+      "source": "Notice your breath without forcing it.",
+      "translations": {
+        "hi": "बिना ज़ोर लगाए अपनी साँस पर ध्यान दें।",
+        "es": "Observa tu respiración sin forzarla.",
+        "pt": "Perceba sua respiração sem forçá-la.",
+        "fr": "Observez votre respiration sans la forcer.",
+        "de": "Nimm deinen Atem wahr, ohne ihn zu erzwingen.",
+        "ar": "لاحظ تنفّسك دون إجبار.",
+        "ja": "無理をせず、自分の呼吸に気づきましょう。",
+        "ko": "억지로 조절하지 않고 호흡을 느껴보세요.",
+        "zh-Hans": "留意呼吸，不要勉强控制。"
+      }
+    },
+    {
+      "source": "notification",
+      "translations": {
+        "hi": "सूचना",
+        "es": "notificación",
+        "pt": "notificação",
+        "fr": "notification système",
+        "de": "Benachrichtigung",
+        "ar": "إشعار",
+        "ja": "通知",
+        "ko": "알림",
+        "zh-Hans": "通知"
+      }
+    },
+    {
+      "source": "Notifications and guided challenge sensors are optional. Protection settings are available in Protect.",
+      "translations": {
+        "hi": "सूचनाएँ और निर्देशित गतिविधियों के सेंसर वैकल्पिक हैं। सुरक्षा सेटिंग Protect में उपलब्ध हैं।",
+        "es": "Las notificaciones y los sensores de ejercicios guiados son opcionales. Los ajustes de protección están en Proteger.",
+        "pt": "Notificações e sensores dos exercícios guiados são opcionais. Os ajustes de proteção estão em Proteger.",
+        "fr": "Les notifications et les capteurs des exercices guidés sont facultatifs. Les réglages de protection se trouvent dans Protection.",
+        "de": "Benachrichtigungen und Sensoren für geführte Übungen sind optional. Die Schutzeinstellungen findest du unter Schutz.",
+        "ar": "الإشعارات ومستشعرات التمارين الموجّهة اختيارية. إعدادات الحماية متاحة في قسم الحماية.",
+        "ja": "通知とガイド付き活動のセンサーは任意です。保護設定は「保護」で変更できます。",
+        "ko": "알림과 안내 활동의 센서 사용은 선택 사항이에요. 보호 설정은 보호 탭에서 확인하세요.",
+        "zh-Hans": "通知和引导活动传感器均为可选项。保护设置位于“保护”中。"
+      }
+    },
+    {
+      "source": "off or not acknowledged",
+      "translations": {
+        "hi": "बंद या पुष्टि नहीं हुई",
+        "es": "desactivado o sin confirmar",
+        "pt": "desativado ou não confirmado",
+        "fr": "désactivé ou non confirmé",
+        "de": "aus oder nicht bestätigt",
+        "ar": "متوقف أو غير مؤكّد",
+        "ja": "オフ、または未確認",
+        "ko": "꺼짐 또는 확인되지 않음",
+        "zh-Hans": "已关闭或未确认"
+      }
+    },
+    {
+      "source": "Only the challenged Screen Time app is unlocked. Unrelated guards and adult web filtering stay active.",
+      "translations": {
+        "hi": "केवल चुनौती वाला Screen Time ऐप खुला है। अन्य सुरक्षा नियम और वयस्क वेबसाइट फ़िल्टर सक्रिय हैं।",
+        "es": "Solo se desbloqueó la aplicación de Tiempo de uso de este ejercicio. Las demás protecciones y el filtro web para adultos siguen activos.",
+        "pt": "Somente o aplicativo do Tempo de Uso deste desafio foi desbloqueado. As outras proteções e a filtragem de sites adultos continuam ativas.",
+        "fr": "Seule l’application Temps d’écran liée à cet exercice est débloquée. Les autres protections et le filtrage des sites pour adultes restent actifs.",
+        "de": "Nur die zu dieser Übung gehörende Bildschirmzeit-App ist freigegeben. Andere Schutzregeln und der Filter für Erwachsenen-Websites bleiben aktiv.",
+        "ar": "فُتح فقط تطبيق مدة استخدام الجهاز المرتبط بهذا التحدي. تظل قواعد الحماية الأخرى وتصفية مواقع البالغين فعّالة.",
+        "ja": "このチャレンジに対応するスクリーンタイムのアプリだけが解除されます。他の保護と成人向けサイトのフィルタは有効なままです。",
+        "ko": "이 활동에 해당하는 스크린 타임 앱만 잠시 열려요. 다른 보호 규칙과 성인 웹 필터는 계속 작동해요.",
+        "zh-Hans": "只解锁本次活动对应的屏幕使用时间应用。其他保护规则和成人网站过滤仍然有效。"
+      }
+    },
+    {
+      "source": "Open",
+      "translations": {
+        "hi": "खोलें",
+        "es": "Abrir",
+        "pt": "Abrir",
+        "fr": "Ouvrir",
+        "de": "Öffnen",
+        "ar": "فتح",
+        "ja": "開く",
+        "ko": "열기",
+        "zh-Hans": "打开"
+      }
+    },
+    {
+      "source": "Open app limits",
+      "translations": {
+        "hi": "ऐप सीमाएँ खोलें",
+        "es": "Abrir límites de aplicaciones",
+        "pt": "Abrir limites de aplicativos",
+        "fr": "Ouvrir les limites d’applications",
+        "de": "App-Limits öffnen",
+        "ar": "فتح حدود التطبيقات",
+        "ja": "アプリの制限を開く",
+        "ko": "앱 한도 열기",
+        "zh-Hans": "打开应用限额"
+      }
+    },
+    {
+      "source": "Open basic movement",
+      "translations": {
+        "hi": "सरल गतिविधि खोलें",
+        "es": "Abrir movimiento básico",
+        "pt": "Abrir movimento básico",
+        "fr": "Ouvrir un mouvement simple",
+        "de": "Einfache Bewegung öffnen",
+        "ar": "فتح حركة بسيطة",
+        "ja": "基本的な運動を開く",
+        "ko": "기본 움직임 열기",
+        "zh-Hans": "打开基础活动"
+      }
+    },
+    {
+      "source": "Open guided breathing",
+      "translations": {
+        "hi": "निर्देशित श्वास खोलें",
+        "es": "Abrir respiración guiada",
+        "pt": "Abrir respiração guiada",
+        "fr": "Ouvrir la respiration guidée",
+        "de": "Geführtes Atmen öffnen",
+        "ar": "فتح التنفّس الموجّه",
+        "ja": "ガイド付き呼吸を開く",
+        "ko": "호흡 안내 열기",
+        "zh-Hans": "打开呼吸引导"
+      }
+    },
+    {
+      "source": "Open Journal",
+      "translations": {
+        "hi": "डायरी खोलें",
+        "es": "Abrir diario",
+        "pt": "Abrir diário",
+        "fr": "Ouvrir le journal",
+        "de": "Tagebuch öffnen",
+        "ar": "فتح اليوميات",
+        "ja": "日記を開く",
+        "ko": "일기 열기",
+        "zh-Hans": "打开日记"
+      }
+    },
+    {
+      "source": "Open this feature from All features.",
+      "translations": {
+        "hi": "यह सुविधा सभी सुविधाओं की सूची से खोलें।",
+        "es": "Abre esta función desde Todas las funciones.",
+        "pt": "Abra este recurso em Todos os recursos.",
+        "fr": "Ouvrez cette fonctionnalité depuis Toutes les fonctionnalités.",
+        "de": "Öffne diese Funktion über Alle Funktionen.",
+        "ar": "افتح هذه الميزة من قائمة كل الميزات.",
+        "ja": "「すべての機能」からこの機能を開いてください。",
+        "ko": "전체 기능 목록에서 이 기능을 여세요.",
+        "zh-Hans": "请从“全部功能”中打开此功能。"
+      }
+    },
+    {
+      "source": "patterns",
+      "translations": {
+        "hi": "पैटर्न",
+        "es": "patrones",
+        "pt": "padrões",
+        "fr": "tendances",
+        "de": "Muster",
+        "ar": "أنماط",
+        "ja": "傾向",
+        "ko": "패턴",
+        "zh-Hans": "规律"
+      }
+    },
+    {
+      "source": "Pause or stop if you feel discomfort.",
+      "translations": {
+        "hi": "असहज लगे तो विराम लें या रुकें।",
+        "es": "Haz una pausa o detente si sientes molestias.",
+        "pt": "Pause ou pare se sentir desconforto.",
+        "fr": "Faites une pause ou arrêtez si vous ressentez une gêne.",
+        "de": "Pausiere oder höre auf, wenn du dich unwohl fühlst.",
+        "ar": "توقّف مؤقتًا أو أنهِ التمرين إذا شعرت بانزعاج.",
+        "ja": "違和感があれば、一度休むか中止してください。",
+        "ko": "불편함을 느끼면 잠시 쉬거나 멈추세요.",
+        "zh-Hans": "如果感到不适，请暂停或停止。"
+      }
+    },
+    {
+      "source": "permissions",
+      "translations": {
+        "hi": "अनुमतियाँ",
+        "es": "permisos",
+        "pt": "permissões",
+        "fr": "autorisations",
+        "de": "Berechtigungen",
+        "ar": "أذونات",
+        "ja": "権限",
+        "ko": "권한",
+        "zh-Hans": "权限"
+      }
+    },
+    {
+      "source": "Photo target matched",
+      "translations": {
+        "hi": "फ़ोटो का लक्ष्य मिला",
+        "es": "Objetivo de foto reconocido",
+        "pt": "Alvo da foto reconhecido",
+        "fr": "Cible de la photo reconnue",
+        "de": "Fotoziel erkannt",
+        "ar": "تمت مطابقة هدف الصورة",
+        "ja": "写真の対象が一致しました",
+        "ko": "사진 대상이 확인되었어요",
+        "zh-Hans": "照片目标已匹配"
+      }
+    },
+    {
+      "source": "pledge",
+      "translations": {
+        "hi": "संकल्प",
+        "es": "compromiso",
+        "pt": "compromisso",
+        "fr": "engagement",
+        "de": "Versprechen",
+        "ar": "التزام",
+        "ja": "誓い",
+        "ko": "다짐",
+        "zh-Hans": "承诺"
+      }
+    },
+    {
+      "source": "premium",
+      "translations": {
+        "hi": "प्रीमियम",
+        "es": "prémium",
+        "pt": "plano premium",
+        "fr": "offre Premium",
+        "de": "Premiumzugang",
+        "ar": "بريميوم",
+        "ja": "プレミアム",
+        "ko": "프리미엄",
+        "zh-Hans": "高级会员"
+      }
+    },
+    {
+      "source": "Premium available",
+      "translations": {
+        "hi": "प्रीमियम उपलब्ध",
+        "es": "Prémium disponible",
+        "pt": "Premium disponível",
+        "fr": "Premium disponible",
+        "de": "Premium verfügbar",
+        "ar": "بريميوم متاح",
+        "ja": "プレミアムが利用可能",
+        "ko": "프리미엄 이용 가능",
+        "zh-Hans": "高级会员可用"
+      }
+    },
+    {
+      "source": "Preparing your ad…",
+      "translations": {
+        "hi": "आपका विज्ञापन तैयार हो रहा है…",
+        "es": "Preparando tu anuncio…",
+        "pt": "Preparando seu anúncio…",
+        "fr": "Préparation de votre publicité…",
+        "de": "Deine Werbung wird vorbereitet…",
+        "ar": "جارٍ تجهيز إعلانك…",
+        "ja": "広告を準備しています…",
+        "ko": "광고를 준비하고 있어요…",
+        "zh-Hans": "正在准备广告…"
+      }
+    },
+    {
+      "source": "Previous native relock restoration could not be confirmed.",
+      "translations": {
+        "hi": "पिछली डिवाइस रोक की पुनर्स्थापना की पुष्टि नहीं हो सकी।",
+        "es": "No se pudo confirmar la restauración del bloqueo anterior del dispositivo.",
+        "pt": "Não foi possível confirmar a restauração do bloqueio anterior do dispositivo.",
+        "fr": "Le rétablissement du blocage précédent sur l’appareil n’a pas pu être confirmé.",
+        "de": "Die Wiederherstellung der vorherigen Gerätesperre konnte nicht bestätigt werden.",
+        "ar": "تعذّر تأكيد استعادة الحظر السابق على الجهاز.",
+        "ja": "以前の端末のブロック状態を復元できたか確認できませんでした。",
+        "ko": "이전 기기 차단 상태의 복원을 확인하지 못했어요.",
+        "zh-Hans": "无法确认先前设备锁定状态的恢复。"
+      }
+    },
+    {
+      "source": "Protect selected apps during chosen time windows.",
+      "translations": {
+        "hi": "चुने गए समय में चुनिंदा ऐप सुरक्षित रखें।",
+        "es": "Protege las aplicaciones seleccionadas en los horarios elegidos.",
+        "pt": "Proteja os aplicativos selecionados nos horários escolhidos.",
+        "fr": "Protégez les applications choisies pendant les créneaux définis.",
+        "de": "Schütze ausgewählte Apps in deinen festgelegten Zeitfenstern.",
+        "ar": "احمِ التطبيقات المختارة خلال الأوقات المحدّدة.",
+        "ja": "選んだ時間帯に、選択したアプリを保護します。",
+        "ko": "선택한 시간대에 지정한 앱을 보호하세요.",
+        "zh-Hans": "在所选时间段保护指定应用。"
+      }
+    },
+    {
+      "source": "Protect your attention",
+      "translations": {
+        "hi": "अपना ध्यान सुरक्षित रखें",
+        "es": "Protege tu atención",
+        "pt": "Proteja sua atenção",
+        "fr": "Protéger votre attention",
+        "de": "Deine Aufmerksamkeit schützen",
+        "ar": "احمِ انتباهك",
+        "ja": "集中力を守る",
+        "ko": "주의력 보호",
+        "zh-Hans": "保护注意力"
+      }
+    },
+    {
+      "source": "Protection is paused after reset. Explicitly resume it before applying app guards.",
+      "translations": {
+        "hi": "रीसेट के बाद सुरक्षा रुकी है। ऐप सुरक्षा लागू करने से पहले उसे स्पष्ट रूप से फिर शुरू करें।",
+        "es": "La protección está pausada tras el reinicio. Reanúdala explícitamente antes de aplicar reglas de aplicaciones.",
+        "pt": "A proteção está pausada após a redefinição. Retome-a explicitamente antes de aplicar regras de aplicativos.",
+        "fr": "La protection est en pause après la réinitialisation. Reprenez-la explicitement avant d’appliquer les règles d’applications.",
+        "de": "Nach dem Zurücksetzen ist der Schutz pausiert. Aktiviere ihn ausdrücklich erneut, bevor du App-Schutzregeln anwendest.",
+        "ar": "الحماية متوقفة بعد إعادة الضبط. استأنفها صراحةً قبل تطبيق قواعد حماية التطبيقات.",
+        "ja": "リセット後、保護は一時停止しています。アプリ保護を適用する前に、明示的に再開してください。",
+        "ko": "초기화 후 보호가 일시 중지되었어요. 앱 보호 규칙을 적용하기 전에 직접 다시 시작하세요.",
+        "zh-Hans": "重置后保护已暂停。应用保护规则前，请明确恢复保护。"
+      }
+    },
+    {
+      "source": "Put your phone away from the places where urges usually rise.",
+      "translations": {
+        "hi": "जहाँ आमतौर पर इच्छा बढ़ती है, वहाँ फ़ोन दूर रखें।",
+        "es": "Aparta el teléfono de los lugares donde suelen aumentar los impulsos.",
+        "pt": "Afaste o celular dos lugares onde seus impulsos costumam aumentar.",
+        "fr": "Éloignez le téléphone des endroits où les envies augmentent habituellement.",
+        "de": "Lege dein Handy außerhalb der Orte ab, an denen der Drang meist zunimmt.",
+        "ar": "أبعد هاتفك عن الأماكن التي تزداد فيها الرغبات عادةً.",
+        "ja": "衝動が強まりやすい場所から、スマートフォンを離しておきましょう。",
+        "ko": "충동이 강해지는 장소에서는 휴대폰을 멀리 두세요.",
+        "zh-Hans": "将手机远离通常会让冲动增强的地方。"
+      }
+    },
+    {
+      "source": "Read and self-report any of the six daily practices; choose up to two for today.",
+      "translations": {
+        "hi": "छह दैनिक अभ्यास पढ़ें और स्वयं दर्ज करें; आज के लिए अधिकतम दो चुनें।",
+        "es": "Lee y registra por tu cuenta cualquiera de las seis prácticas diarias; elige hasta dos para hoy.",
+        "pt": "Leia e registre por conta própria qualquer uma das seis práticas diárias; escolha até duas para hoje.",
+        "fr": "Lisez et déclarez vous-même l’une des six pratiques quotidiennes ; choisissez-en jusqu’à deux pour aujourd’hui.",
+        "de": "Lies die sechs täglichen Übungen und erfasse selbst, was du getan hast; wähle bis zu zwei für heute.",
+        "ar": "اقرأ أيًا من الممارسات اليومية الست وسجّلها بنفسك؛ اختر اثنتين كحد أقصى لليوم.",
+        "ja": "6つの毎日の習慣を読み、自分で実施を記録します。今日は2つまで選べます。",
+        "ko": "여섯 가지 일상 습관을 읽고 직접 기록하세요. 오늘은 최대 두 가지를 고를 수 있어요.",
+        "zh-Hans": "阅读并自行记录六项日常习惯中的任意一项；今天最多选择两项。"
+      }
+    },
+    {
+      "source": "Read attention-boundary instructions and record your own day.",
+      "translations": {
+        "hi": "ध्यान की सीमाओं के निर्देश पढ़ें और अपना दिन दर्ज करें।",
+        "es": "Lee las instrucciones sobre límites de atención y registra tu día.",
+        "pt": "Leia as orientações de limites de atenção e registre seu dia.",
+        "fr": "Lisez les conseils sur les limites d’attention et consignez votre journée.",
+        "de": "Lies die Hinweise zu Aufmerksamkeitsgrenzen und erfasse deinen Tag.",
+        "ar": "اقرأ إرشادات حدود الانتباه وسجّل يومك بنفسك.",
+        "ja": "注意を守るための境界について読み、自分の1日を記録します。",
+        "ko": "주의력을 지키는 경계에 관한 안내를 읽고 자신의 하루를 기록하세요.",
+        "zh-Hans": "阅读注意力边界说明，并记录自己的一天。"
+      }
+    },
+    {
+      "source": "Read boundary instructions and record your own daily practice.",
+      "translations": {
+        "hi": "सीमाओं के निर्देश पढ़ें और अपना दैनिक अभ्यास दर्ज करें।",
+        "es": "Lee las instrucciones sobre límites y registra tu práctica diaria.",
+        "pt": "Leia as orientações sobre limites e registre sua prática diária.",
+        "fr": "Lisez les conseils sur les limites et consignez votre pratique quotidienne.",
+        "de": "Lies die Hinweise zu Grenzen und erfasse deine tägliche Übung.",
+        "ar": "اقرأ إرشادات الحدود وسجّل ممارستك اليومية بنفسك.",
+        "ja": "境界についての説明を読み、毎日の習慣を自分で記録します。",
+        "ko": "경계에 관한 안내를 읽고 자신의 일상 습관을 기록하세요.",
+        "zh-Hans": "阅读边界说明，并自行记录每日习惯。"
+      }
+    }
+  ]
+}

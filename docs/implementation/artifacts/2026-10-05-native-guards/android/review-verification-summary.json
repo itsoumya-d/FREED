@@ -1,0 +1,74 @@
+[
+  {
+    "command": [
+      "node",
+      "modules/freed-protection/tests/run-app-guard-mode-policy-tests.js"
+    ],
+    "exitCode": 0,
+    "seconds": 3.38,
+    "log": "/private/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-android-app-guard-6lc75z53/review-guard-mode-final.log"
+  },
+  {
+    "command": [
+      "node",
+      "modules/freed-protection/tests/run-app-guard-runtime-tests.js"
+    ],
+    "exitCode": 0,
+    "seconds": 3.56,
+    "log": "/private/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-android-app-guard-6lc75z53/review-guard-runtime-final.log"
+  },
+  {
+    "command": [
+      "node",
+      "modules/freed-protection/tests/run-app-guard-authority-tests.js"
+    ],
+    "exitCode": 0,
+    "seconds": 3.93,
+    "log": "/private/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-android-app-guard-6lc75z53/review-guard-authority-final.log"
+  },
+  {
+    "command": [
+      "node",
+      "modules/freed-protection/tests/run-android-handoff-tests.js"
+    ],
+    "exitCode": 0,
+    "seconds": 5.17,
+    "log": "/private/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-android-app-guard-6lc75z53/review-handoff-final.log"
+  },
+  {
+    "command": [
+      "node",
+      "modules/freed-protection/tests/run-dns-requested-handoff-tests.js"
+    ],
+    "exitCode": 0,
+    "seconds": 5.55,
+    "log": "/private/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-android-app-guard-6lc75z53/review-dns-handoff-final.log"
+  },
+  {
+    "command": [
+      "node",
+      "modules/freed-protection/tests/run-app-schedule-policy-tests.js"
+    ],
+    "exitCode": 0,
+    "seconds": 15.82,
+    "log": "/private/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-android-app-guard-6lc75z53/review-schedule-final.log"
+  },
+  {
+    "command": [
+      "node",
+      "modules/freed-protection/tests/run-native-unlock-policy-tests.js"
+    ],
+    "exitCode": 0,
+    "seconds": 8.63,
+    "log": "/private/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-android-app-guard-6lc75z53/review-unlock-policy-final.log"
+  },
+  {
+    "command": [
+      "node",
+      "modules/freed-protection/tests/run-protection-reset-policy-tests.js"
+    ],
+    "exitCode": 0,
+    "seconds": 4.21,
+    "log": "/private/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-android-app-guard-6lc75z53/review-reset-policy-final.log"
+  }
+]

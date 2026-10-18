@@ -1,0 +1,1767 @@
+{
+  "observedAt": "2026-10-03T13:43:37.161526+00:00",
+  "appId": "6816637268",
+  "appleProductId": "6816653511",
+  "productId": "freed_premium_monthly",
+  "billingPeriod": "1 month",
+  "UnitedStates": {
+    "currency": "USD",
+    "formattedPrice": "$9.99"
+  },
+  "Canada": {
+    "currency": "CAD",
+    "formattedPrice": "$12.99"
+  },
+  "changePerformed": false,
+  "snapshot": {
+    "url": "https://appstoreconnect.apple.com/apps/6816637268/distribution/subscriptions/6816653511",
+    "title": "App Store Connect",
+    "tree": [
+      {
+        "role": "banner",
+        "name": "App Store Connect",
+        "children": [
+          {
+            "role": "heading",
+            "name": "App Store Connect",
+            "children": [
+              {
+                "role": "link",
+                "name": "App Store Connect",
+                "ref": "@e1"
+              }
+            ]
+          },
+          {
+            "role": "navigation",
+            "name": "Global",
+            "children": [
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Apps",
+                    "ref": "@e2",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Apps"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Xcode Cloud",
+                    "ref": "@e3",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Xcode Cloud"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Trends",
+                    "ref": "@e4",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Trends"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Reports",
+                    "ref": "@e5",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Reports"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Business",
+                    "ref": "@e6",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Business"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Users and Access",
+                    "ref": "@e7",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Users and Access"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Soumya Debnath OTAI TECHNOLOGIES Account name menu",
+            "ref": "@e8",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Soumya Debnath"
+              },
+              {
+                "role": "StaticText",
+                "name": "OTAI TECHNOLOGIES"
+              },
+              {
+                "role": "image"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "button",
+        "name": "Apps menu, FREED: Adult Content Blocker, selected",
+        "ref": "@e9",
+        "children": [
+          {
+            "role": "image",
+            "name": "FREED: Adult Content Blocker"
+          },
+          {
+            "role": "StaticText",
+            "name": "FREED: Adult Content Blocker"
+          },
+          {
+            "role": "image"
+          }
+        ]
+      },
+      {
+        "role": "navigation",
+        "name": "Apps",
+        "children": [
+          {
+            "role": "list",
+            "children": [
+              {
+                "role": "link",
+                "name": "Distribution",
+                "ref": "@e10",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Distribution"
+                  }
+                ]
+              },
+              {
+                "role": "link",
+                "name": "Analytics",
+                "ref": "@e11",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Analytics"
+                  }
+                ]
+              },
+              {
+                "role": "link",
+                "name": "TestFlight",
+                "ref": "@e12",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "TestFlight"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "main",
+        "children": [
+          {
+            "role": "link",
+            "name": "freed_premium",
+            "ref": "@e13",
+            "children": [
+              {
+                "role": "image"
+              },
+              {
+                "role": "StaticText",
+                "name": "freed_premium"
+              }
+            ]
+          },
+          {
+            "role": "heading",
+            "name": "FREED Premium Monthly",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "FREED Premium Monthly"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Save",
+            "ref": "@e14",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Save"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Add for Review",
+            "ref": "@e15",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Add for Review"
+              }
+            ]
+          },
+          {
+            "role": "image"
+          },
+          {
+            "role": "paragraph",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Your first auto-renewable subscription must be submitted with a new app version. "
+              },
+              {
+                "role": "link",
+                "name": "Learn More",
+                "ref": "@e16",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Learn More"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "LabelText",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Reference Name"
+              },
+              {
+                "role": "button",
+                "name": "More information",
+                "ref": "@e17",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "?"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "textbox",
+            "name": "Reference Name More information",
+            "value": "FREED Premium Monthly",
+            "ref": "@e18",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "FREED Premium Monthly"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "43"
+          },
+          {
+            "role": "StaticText",
+            "name": "Status"
+          },
+          {
+            "role": "StaticText",
+            "name": "Prepare for Submission"
+          },
+          {
+            "role": "paragraph",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Apple ID"
+              },
+              {
+                "role": "button",
+                "name": "More information",
+                "ref": "@e19",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "?"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "6816653511"
+          },
+          {
+            "role": "paragraph",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Product ID"
+              },
+              {
+                "role": "button",
+                "name": "More information",
+                "ref": "@e20",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "?"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "freed_premium_monthly"
+          },
+          {
+            "role": "paragraph",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Subscription Duration"
+              },
+              {
+                "role": "button",
+                "name": "More information",
+                "ref": "@e21",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "?"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "1 month"
+          },
+          {
+            "role": "button",
+            "name": "Edit",
+            "ref": "@e22",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Edit"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "Group Reference Name"
+          },
+          {
+            "role": "link",
+            "name": "freed_premium",
+            "ref": "@e23",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "freed_premium"
+              }
+            ]
+          },
+          {
+            "role": "paragraph",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Family Sharing"
+              },
+              {
+                "role": "button",
+                "name": "More information",
+                "ref": "@e24",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "?"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "Allow family members to share this subscription without having to use each other's accounts."
+          },
+          {
+            "role": "button",
+            "name": "Turn On",
+            "ref": "@e25",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Turn On"
+              }
+            ]
+          },
+          {
+            "role": "separator"
+          },
+          {
+            "role": "heading",
+            "name": "Availability",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Availability"
+              }
+            ]
+          },
+          {
+            "role": "paragraph",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "All countries or regions selected"
+              },
+              {
+                "role": "button",
+                "name": "Edit",
+                "ref": "@e26",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Edit"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Remove from Sale",
+            "ref": "@e27",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Remove from Sale"
+              }
+            ]
+          },
+          {
+            "role": "separator"
+          },
+          {
+            "role": "heading",
+            "name": "Subscription Prices Add Pricing",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Subscription Prices"
+              },
+              {
+                "role": "button",
+                "name": "Add Pricing",
+                "ref": "@e28",
+                "children": [
+                  {
+                    "role": "image"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "All Prices and Currencies",
+            "ref": "@e29",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "All Prices and Currencies"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "Below is a summary of your current pricing and any upcoming changes."
+          },
+          {
+            "role": "button",
+            "name": "Current Pricing for New Subscribers",
+            "ref": "@e30",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Current Pricing for New Subscribers"
+              }
+            ]
+          },
+          {
+            "role": "region",
+            "name": "Current Pricing for New Subscribers",
+            "children": [
+              {
+                "role": "button",
+                "name": "Filtered by Countries or Regions, showing The United States and Canada",
+                "ref": "@e31",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "The United States and Canada "
+                  },
+                  {
+                    "role": "image"
+                  }
+                ]
+              },
+              {
+                "role": "grid",
+                "children": [
+                  {
+                    "role": "row",
+                    "name": "territoryId PRICE INTRODUCTORY OFFERS (0) UPCOMING CHANGES (0)",
+                    "children": [
+                      {
+                        "role": "columnheader",
+                        "name": "territoryId",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "COUNTRIES OR REGIONS (2 OF 175)"
+                          },
+                          {
+                            "role": "image"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "columnheader",
+                        "name": "PRICE",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "PRICE"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "columnheader",
+                        "name": "INTRODUCTORY OFFERS (0)",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "INTRODUCTORY OFFERS (0)"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "columnheader",
+                        "name": "UPCOMING CHANGES (0)",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "UPCOMING CHANGES (0)"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "rowgroup",
+                    "name": "grid",
+                    "children": [
+                      {
+                        "role": "row",
+                        "children": [
+                          {
+                            "role": "row",
+                            "children": [
+                              {
+                                "role": "gridcell",
+                                "name": "Canada (CAD)",
+                                "children": [
+                                  {
+                                    "role": "StaticText",
+                                    "name": "Canada (CAD)"
+                                  }
+                                ]
+                              },
+                              {
+                                "role": "gridcell",
+                                "name": "$12.99",
+                                "children": [
+                                  {
+                                    "role": "StaticText",
+                                    "name": "$12.99"
+                                  }
+                                ]
+                              },
+                              {
+                                "role": "gridcell"
+                              },
+                              {
+                                "role": "gridcell"
+                              }
+                            ]
+                          },
+                          {
+                            "role": "row",
+                            "children": [
+                              {
+                                "role": "gridcell",
+                                "name": "United States (USD)",
+                                "children": [
+                                  {
+                                    "role": "StaticText",
+                                    "name": "United States (USD)"
+                                  }
+                                ]
+                              },
+                              {
+                                "role": "gridcell",
+                                "name": "$9.99",
+                                "children": [
+                                  {
+                                    "role": "StaticText",
+                                    "name": "$9.99"
+                                  }
+                                ]
+                              },
+                              {
+                                "role": "gridcell"
+                              },
+                              {
+                                "role": "gridcell"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "View all Subscription Pricing",
+            "ref": "@e32",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "View all Subscription Pricing"
+              }
+            ]
+          },
+          {
+            "role": "separator"
+          },
+          {
+            "role": "heading",
+            "name": "Display Name and Description",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Display Name and Description"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "ref": "@e33",
+            "children": [
+              {
+                "role": "image"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "The localized display name and description will show to customers when they purchase this subscription from the App Store, Apple Business, or Apple School Manager."
+          },
+          {
+            "role": "grid",
+            "name": "Display Name and Description",
+            "children": [
+              {
+                "role": "row",
+                "name": "LOCALIZATIONS DISPLAY NAME SUBSCRIPTION DESCRIPTION Actions",
+                "children": [
+                  {
+                    "role": "columnheader",
+                    "name": "LOCALIZATIONS",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "LOCALIZATIONS"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "columnheader",
+                    "name": "DISPLAY NAME",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "DISPLAY NAME"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "columnheader",
+                    "name": "SUBSCRIPTION DESCRIPTION",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "SUBSCRIPTION DESCRIPTION"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "columnheader",
+                    "name": "Actions"
+                  }
+                ]
+              },
+              {
+                "role": "rowgroup",
+                "children": [
+                  {
+                    "role": "row",
+                    "name": "Arabic",
+                    "children": [
+                      {
+                        "role": "rowheader",
+                        "name": "Arabic",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Arabic",
+                            "description": "Arabic",
+                            "ref": "@e34",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "Arabic"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "FREED Premium شهريا",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "FREED Premium شهريا"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "جميع الميزات المميزة. الفواتير الشهرية.",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "جميع الميزات المميزة. الفواتير الشهرية."
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "Delete",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Delete",
+                            "description": "Arabic",
+                            "ref": "@e35"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "row",
+                    "name": "Chinese (Simplified)",
+                    "children": [
+                      {
+                        "role": "rowheader",
+                        "name": "Chinese (Simplified)",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Chinese (Simplified)",
+                            "description": "Chinese (Simplified)",
+                            "ref": "@e36",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "Chinese (Simplified)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "FREED Premium 每月",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "FREED Premium 每月"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "所有高级功能。按月计费。",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "所有高级功能。按月计费。"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "Delete",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Delete",
+                            "description": "Chinese (Simplified)",
+                            "ref": "@e37"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "row",
+                    "name": "English (U.S.)",
+                    "children": [
+                      {
+                        "role": "rowheader",
+                        "name": "English (U.S.)",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "English (U.S.)",
+                            "description": "English (U.S.)",
+                            "ref": "@e38",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "English (U.S.)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "FREED Premium Monthly",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "FREED Premium Monthly"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "All Premium features. Monthly billing.",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "All Premium features. Monthly billing."
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "Delete",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Delete",
+                            "description": "English (U.S.)",
+                            "ref": "@e39"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "row",
+                    "name": "French",
+                    "children": [
+                      {
+                        "role": "rowheader",
+                        "name": "French",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "French",
+                            "description": "French",
+                            "ref": "@e40",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "French"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "FREED Premium Mensuel",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "FREED Premium Mensuel"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "Toutes les fonctions. Paiement mensuel.",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Toutes les fonctions. Paiement mensuel."
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "Delete",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Delete",
+                            "description": "French",
+                            "ref": "@e41"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "row",
+                    "name": "German",
+                    "children": [
+                      {
+                        "role": "rowheader",
+                        "name": "German",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "German",
+                            "description": "German",
+                            "ref": "@e42",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "German"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "FREED Premium Monatlich",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "FREED Premium Monatlich"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "Alle Funktionen. Monatliche Zahlung.",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Alle Funktionen. Monatliche Zahlung."
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "Delete",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Delete",
+                            "description": "German",
+                            "ref": "@e43"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "row",
+                    "name": "Hindi",
+                    "children": [
+                      {
+                        "role": "rowheader",
+                        "name": "Hindi",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Hindi",
+                            "description": "Hindi",
+                            "ref": "@e44",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "Hindi"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "FREED Premium मासिक",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "FREED Premium मासिक"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "सभी प्रीमियम सुविधाएँ. मासिक बिलिंग.",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "सभी प्रीमियम सुविधाएँ. मासिक बिलिंग."
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "Delete",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Delete",
+                            "description": "Hindi",
+                            "ref": "@e45"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "row",
+                    "name": "Japanese",
+                    "children": [
+                      {
+                        "role": "rowheader",
+                        "name": "Japanese",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Japanese",
+                            "description": "Japanese",
+                            "ref": "@e46",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "Japanese"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "FREED Premium 毎月",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "FREED Premium 毎月"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "すべてのプレミアム機能。毎月の請求。",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "すべてのプレミアム機能。毎月の請求。"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "Delete",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Delete",
+                            "description": "Japanese",
+                            "ref": "@e47"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "row",
+                    "name": "Korean",
+                    "children": [
+                      {
+                        "role": "rowheader",
+                        "name": "Korean",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Korean",
+                            "description": "Korean",
+                            "ref": "@e48",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "Korean"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "FREED Premium 월간",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "FREED Premium 월간"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "모든 프리미엄 기능. 월별 청구.",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "모든 프리미엄 기능. 월별 청구."
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "Delete",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Delete",
+                            "description": "Korean",
+                            "ref": "@e49"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "row",
+                    "name": "Portuguese (Brazil)",
+                    "children": [
+                      {
+                        "role": "rowheader",
+                        "name": "Portuguese (Brazil)",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Portuguese (Brazil)",
+                            "description": "Portuguese (Brazil)",
+                            "ref": "@e50",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "Portuguese (Brazil)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "FREED Premium Mensal",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "FREED Premium Mensal"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "Todos os recursos. Pagamento mensal.",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Todos os recursos. Pagamento mensal."
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "Delete",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Delete",
+                            "description": "Portuguese (Brazil)",
+                            "ref": "@e51"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "row",
+                    "name": "Spanish (Spain)",
+                    "children": [
+                      {
+                        "role": "rowheader",
+                        "name": "Spanish (Spain)",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Spanish (Spain)",
+                            "description": "Spanish (Spain)",
+                            "ref": "@e52",
+                            "children": [
+                              {
+                                "role": "StaticText",
+                                "name": "Spanish (Spain)"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "FREED Premium Mensual",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "FREED Premium Mensual"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "Todas las funciones. Cobro mensual.",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Todas las funciones. Cobro mensual."
+                          }
+                        ]
+                      },
+                      {
+                        "role": "gridcell",
+                        "name": "Delete",
+                        "children": [
+                          {
+                            "role": "button",
+                            "name": "Delete",
+                            "description": "Spanish (Spain)",
+                            "ref": "@e53"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "heading",
+            "name": "Image (Optional)",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Image (Optional)"
+              }
+            ]
+          },
+          {
+            "role": "paragraph",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Add a 1024 x 1024 pixel image that best represents this subscription. It will be used for any win-back offers or offer code redemptions for this subscription. If you enable App Store Promotion for this subscription, this image will also appear on your app's product page. "
+              },
+              {
+                "role": "link",
+                "name": "Learn More",
+                "ref": "@e54",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Learn More"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Choose File",
+            "value": "No file chosen",
+            "ref": "@e55"
+          },
+          {
+            "role": "StaticText",
+            "name": "Choose File"
+          },
+          {
+            "role": "separator"
+          },
+          {
+            "role": "heading",
+            "name": "Purchase Options",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Purchase Options"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Edit",
+            "ref": "@e56",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Edit"
+              }
+            ]
+          },
+          {
+            "role": "image"
+          },
+          {
+            "role": "paragraph",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Multiseat purchases will be available in the App Store, Apple Business, and Apple School Manager later this year. If you don't want to allow multiseat purchasing for this subscription, edit your purchase options. "
+              },
+              {
+                "role": "link",
+                "name": "Learn more...",
+                "ref": "@e57",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Learn more..."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "DescriptionList",
+            "children": [
+              {
+                "role": "term",
+                "name": "Available for Purchase From More information",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Available for Purchase From"
+                  },
+                  {
+                    "role": "button",
+                    "name": "More information",
+                    "ref": "@e58",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "?"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "definition",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "The App Store"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "DescriptionList",
+            "children": [
+              {
+                "role": "term",
+                "name": "Multiseat Purchases More information",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Multiseat Purchases"
+                  },
+                  {
+                    "role": "button",
+                    "name": "More information",
+                    "ref": "@e59",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "?"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "definition",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Not Allowed"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "separator"
+          },
+          {
+            "role": "heading",
+            "name": "Tax Category ? Edit",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Tax Category"
+              },
+              {
+                "role": "button",
+                "name": "?",
+                "ref": "@e60",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "?"
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "Edit",
+                "ref": "@e61",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Edit"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "paragraph",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "You’re responsible for selecting and maintaining accurate tax categories and all applicable attributes. This subscription will use the app’s tax category unless you choose a different one. Changing the tax category for this subscription won’t affect the tax category for your app or any other in-app purchase or subscription. Any changes will only affect future sales. "
+              },
+              {
+                "role": "link",
+                "name": "Learn More",
+                "ref": "@e62",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Learn More"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "Category"
+          },
+          {
+            "role": "StaticText",
+            "name": "Match to parent app"
+          },
+          {
+            "role": "separator"
+          },
+          {
+            "role": "heading",
+            "name": "Review Information",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Review Information"
+              }
+            ]
+          },
+          {
+            "role": "LabelText",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Screenshot"
+              },
+              {
+                "role": "button",
+                "name": "More information",
+                "ref": "@e63",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "?"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Choose file",
+            "value": "No file chosen",
+            "ref": "@e64"
+          },
+          {
+            "role": "image",
+            "name": "SOURCE"
+          },
+          {
+            "role": "button",
+            "name": "Delete",
+            "ref": "@e65"
+          },
+          {
+            "role": "LabelText",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Review Notes (Optional)"
+              },
+              {
+                "role": "button",
+                "name": "More information",
+                "ref": "@e66",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "?"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "textbox",
+            "name": "Review Notes (Optional) More information",
+            "value": "Monthly and annual subscriptions unlock the same full Premium feature set. No free trial. Checkout can use a guest identity; Google, Apple or email linking is optional afterward. Restore purchases and Manage subscription are available on the paywall. Cancellation preserves access until the verified paid expiry; expiry, payment hold, refund or revocation restores free access and eligible rewarded ads. Urgent SOS remains ad-free.",
+            "ref": "@e67",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Monthly and annual subscriptions unlock the same full Premium feature set. No free trial. Checkout can use a guest identity; Google, Apple or email linking is optional afterward. Restore purchases and Manage subscription are available on the paywall. Cancellation preserves access until the verified paid expiry; expiry, payment hold, refund or revocation restores free access and eligible rewarded ads. Urgent SOS remains ad-free."
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "3569"
+          },
+          {
+            "role": "separator"
+          },
+          {
+            "role": "button",
+            "name": "Delete This Subscription",
+            "ref": "@e68",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Delete This Subscription"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "contentinfo",
+        "children": [
+          {
+            "role": "list",
+            "children": [
+              {
+                "role": "link",
+                "name": "App Store Connect",
+                "ref": "@e69",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "App Store Connect"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "list",
+            "children": [
+              {
+                "role": "listitem",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Copyright © 2026 Apple Inc. All rights reserved."
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "|"
+                  }
+                ]
+              },
+              {
+                "role": "listitem",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Terms of Service",
+                    "ref": "@e70",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Terms of Service"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "|"
+                  }
+                ]
+              },
+              {
+                "role": "listitem",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Privacy Policy",
+                    "ref": "@e71",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Privacy Policy"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "|"
+                  }
+                ]
+              },
+              {
+                "role": "link",
+                "name": "Contact Us",
+                "ref": "@e72",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Contact Us"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "banner",
+        "children": [
+          {
+            "role": "link",
+            "name": "SimplyCodes",
+            "ref": "@e73",
+            "children": [
+              {
+                "role": "image",
+                "name": "SimplyCodes"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Close",
+            "ref": "@e74"
+          }
+        ]
+      },
+      {
+        "role": "image"
+      }
+    ]
+  }
+}

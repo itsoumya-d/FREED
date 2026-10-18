@@ -1,0 +1,226 @@
+{
+  "schemaVersion": "freed-timezone-validation-v1",
+  "generatedAt": "2026-10-02T06:32:35.940082+00:00",
+  "sanitized": true,
+  "scope": "local behavioral tests only; no native/device/live-service claim",
+  "allRunsPassed": true,
+  "initialReceipt": "timezone-validation.json",
+  "sourceSha256": {
+    "tests/recovery-data-accuracy.test.ts": "135fa9db2c6465e3ed95ff1dc885e7f65d9b61a7b19ce0cfa01cf074f310ba83",
+    "tests/recovery-time.test.ts": "1526e42e8bf7af24c19b3e4b520acc1d81bfb0eb389c5e5512a774b9912792b2",
+    "src/lib/recovery-state.ts": "b34f31495d1ba1fb080eefc656bf9c562d84a3cf8ddc9ee80e91468d53e78e25",
+    "src/lib/recovery-analytics.ts": "8f33d954b83f753dbbd180fbbb3bfb164b25d6a2debb291b46124a9a81960be3"
+  },
+  "runs": [
+    {
+      "zone": "UTC",
+      "suite": "tests/recovery-data-accuracy.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-UTC-recovery-data-accuracy.test.log",
+      "summary": [
+        "\u2139 tests 18",
+        "\u2139 pass 18",
+        "\u2139 fail 0"
+      ]
+    },
+    {
+      "zone": "UTC",
+      "suite": "tests/recovery-time.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-UTC-recovery-time.test.log",
+      "summary": [
+        "recovery-time checks passed in TZ=UTC (streak 100 across DST, 31/30 pledge-vs-recovery agreement, rollback clamp, legacy payload backcompat, 7-day DST windows)"
+      ]
+    },
+    {
+      "zone": "UTC",
+      "suite": "tests/recovery-analytics-snapshot.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-UTC-recovery-analytics-snapshot.test.log",
+      "summary": [
+        "\u2139 tests 6",
+        "\u2139 pass 6",
+        "\u2139 fail 0"
+      ]
+    },
+    {
+      "zone": "UTC",
+      "suite": "tests/analytics-reconciliation.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-UTC-analytics-reconciliation.test.log",
+      "summary": [
+        "\u2139 tests 5",
+        "\u2139 pass 5",
+        "\u2139 fail 0"
+      ]
+    },
+    {
+      "zone": "Asia/Kolkata",
+      "suite": "tests/recovery-data-accuracy.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-Asia-Kolkata-recovery-data-accuracy.test.log",
+      "summary": [
+        "\u2139 tests 18",
+        "\u2139 pass 18",
+        "\u2139 fail 0"
+      ]
+    },
+    {
+      "zone": "Asia/Kolkata",
+      "suite": "tests/recovery-time.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-Asia-Kolkata-recovery-time.test.log",
+      "summary": [
+        "recovery-time checks passed in TZ=Asia/Kolkata (streak 100 across DST, 31/30 pledge-vs-recovery agreement, rollback clamp, legacy payload backcompat, 7-day DST windows)"
+      ]
+    },
+    {
+      "zone": "Asia/Kolkata",
+      "suite": "tests/recovery-analytics-snapshot.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-Asia-Kolkata-recovery-analytics-snapshot.test.log",
+      "summary": [
+        "\u2139 tests 6",
+        "\u2139 pass 6",
+        "\u2139 fail 0"
+      ]
+    },
+    {
+      "zone": "Asia/Kolkata",
+      "suite": "tests/analytics-reconciliation.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-Asia-Kolkata-analytics-reconciliation.test.log",
+      "summary": [
+        "\u2139 tests 5",
+        "\u2139 pass 5",
+        "\u2139 fail 0"
+      ]
+    },
+    {
+      "zone": "America/New_York",
+      "suite": "tests/recovery-data-accuracy.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-America-New_York-recovery-data-accuracy.test.log",
+      "summary": [
+        "\u2139 tests 18",
+        "\u2139 pass 18",
+        "\u2139 fail 0"
+      ]
+    },
+    {
+      "zone": "America/New_York",
+      "suite": "tests/recovery-time.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-America-New_York-recovery-time.test.log",
+      "summary": [
+        "recovery-time checks passed in TZ=America/New_York (streak 100 across DST, 31/30 pledge-vs-recovery agreement, rollback clamp, legacy payload backcompat, 7-day DST windows)"
+      ]
+    },
+    {
+      "zone": "America/New_York",
+      "suite": "tests/recovery-analytics-snapshot.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-America-New_York-recovery-analytics-snapshot.test.log",
+      "summary": [
+        "\u2139 tests 6",
+        "\u2139 pass 6",
+        "\u2139 fail 0"
+      ]
+    },
+    {
+      "zone": "America/New_York",
+      "suite": "tests/analytics-reconciliation.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-America-New_York-analytics-reconciliation.test.log",
+      "summary": [
+        "\u2139 tests 5",
+        "\u2139 pass 5",
+        "\u2139 fail 0"
+      ]
+    },
+    {
+      "zone": "Europe/London",
+      "suite": "tests/recovery-data-accuracy.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-Europe-London-recovery-data-accuracy.test.log",
+      "summary": [
+        "\u2139 tests 18",
+        "\u2139 pass 18",
+        "\u2139 fail 0"
+      ]
+    },
+    {
+      "zone": "Europe/London",
+      "suite": "tests/recovery-time.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-Europe-London-recovery-time.test.log",
+      "summary": [
+        "recovery-time checks passed in TZ=Europe/London (streak 100 across DST, 31/30 pledge-vs-recovery agreement, rollback clamp, legacy payload backcompat, 7-day DST windows)"
+      ]
+    },
+    {
+      "zone": "Europe/London",
+      "suite": "tests/recovery-analytics-snapshot.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-Europe-London-recovery-analytics-snapshot.test.log",
+      "summary": [
+        "\u2139 tests 6",
+        "\u2139 pass 6",
+        "\u2139 fail 0"
+      ]
+    },
+    {
+      "zone": "Europe/London",
+      "suite": "tests/analytics-reconciliation.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-Europe-London-analytics-reconciliation.test.log",
+      "summary": [
+        "\u2139 tests 5",
+        "\u2139 pass 5",
+        "\u2139 fail 0"
+      ]
+    },
+    {
+      "zone": "Australia/Sydney",
+      "suite": "tests/recovery-data-accuracy.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-Australia-Sydney-recovery-data-accuracy.test.log",
+      "summary": [
+        "\u2139 tests 18",
+        "\u2139 pass 18",
+        "\u2139 fail 0"
+      ]
+    },
+    {
+      "zone": "Australia/Sydney",
+      "suite": "tests/recovery-time.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-Australia-Sydney-recovery-time.test.log",
+      "summary": [
+        "recovery-time checks passed in TZ=Australia/Sydney (streak 100 across DST, 31/30 pledge-vs-recovery agreement, rollback clamp, legacy payload backcompat, 7-day DST windows)"
+      ]
+    },
+    {
+      "zone": "Australia/Sydney",
+      "suite": "tests/recovery-analytics-snapshot.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-Australia-Sydney-recovery-analytics-snapshot.test.log",
+      "summary": [
+        "\u2139 tests 6",
+        "\u2139 pass 6",
+        "\u2139 fail 0"
+      ]
+    },
+    {
+      "zone": "Australia/Sydney",
+      "suite": "tests/analytics-reconciliation.test.ts",
+      "exitCode": 0,
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/test-final-Australia-Sydney-analytics-reconciliation.test.log",
+      "summary": [
+        "\u2139 tests 5",
+        "\u2139 pass 5",
+        "\u2139 fail 0"
+      ]
+    }
+  ]
+}

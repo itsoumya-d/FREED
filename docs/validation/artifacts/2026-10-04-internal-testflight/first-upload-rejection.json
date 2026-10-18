@@ -1,0 +1,12 @@
+{
+  "uploadId": "8b1cfd4b-c7fb-4d73-8774-a80dc055a55a",
+  "appId": "6816637268",
+  "version": "1.0",
+  "build": "1",
+  "state": "FAILED",
+  "code": "90849",
+  "cause": "Safari web extension manifest icons missing",
+  "ipaSha256": "3323f9c8b3348dda256434ef8984f2efed1f0a90d2b60331151f54e485cc3f34",
+  "testFlightAvailable": false,
+  "correction": "Numeric icon entries, actual PNG resources, folder-preserving Xcode/generator and strict file validator; rebuild2 required"
+}

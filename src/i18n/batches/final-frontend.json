@@ -1,0 +1,326 @@
+{
+  "entries": [
+    {
+      "source": "{{APP_CHECK_DEBUG_PROVIDER_ENV}} is forbidden for production builds",
+      "translations": {
+        "hi": "उत्पादन बिल्ड में {{APP_CHECK_DEBUG_PROVIDER_ENV}} निषिद्ध है",
+        "es": "{{APP_CHECK_DEBUG_PROVIDER_ENV}} está prohibido en compilaciones de producción",
+        "pt": "{{APP_CHECK_DEBUG_PROVIDER_ENV}} é proibido nas compilações de produção",
+        "fr": "{{APP_CHECK_DEBUG_PROVIDER_ENV}} est interdit dans les versions de production",
+        "de": "{{APP_CHECK_DEBUG_PROVIDER_ENV}} ist in Produktionsversionen verboten",
+        "ar": "يُحظر {{APP_CHECK_DEBUG_PROVIDER_ENV}} في إصدارات الإنتاج",
+        "ja": "本番ビルドでは {{APP_CHECK_DEBUG_PROVIDER_ENV}} は禁止されています",
+        "zh-Hans": "生产构建中禁止使用 {{APP_CHECK_DEBUG_PROVIDER_ENV}}",
+        "ko": "프로덕션 빌드에서는 {{APP_CHECK_DEBUG_PROVIDER_ENV}}가 금지됩니다."
+      }
+    },
+    {
+      "source": "{{APP_CHECK_DEBUG_TOKEN_ENV}} is required when debug App Check is enabled",
+      "translations": {
+        "hi": "डिबग App Check चालू होने पर {{APP_CHECK_DEBUG_TOKEN_ENV}} आवश्यक है",
+        "es": "Se requiere {{APP_CHECK_DEBUG_TOKEN_ENV}} cuando App Check de depuración está activado",
+        "pt": "{{APP_CHECK_DEBUG_TOKEN_ENV}} é obrigatório quando o App Check de depuração está ativado",
+        "fr": "{{APP_CHECK_DEBUG_TOKEN_ENV}} est requis lorsque App Check en mode débogage est activé",
+        "de": "{{APP_CHECK_DEBUG_TOKEN_ENV}} ist erforderlich, wenn App Check im Debugmodus aktiviert ist",
+        "ar": "يلزم {{APP_CHECK_DEBUG_TOKEN_ENV}} عند تفعيل وضع تصحيح App Check",
+        "ja": "デバッグ用 App Check が有効な場合、{{APP_CHECK_DEBUG_TOKEN_ENV}} が必要です",
+        "zh-Hans": "启用调试版 App Check 时必须提供 {{APP_CHECK_DEBUG_TOKEN_ENV}}",
+        "ko": "디버그 앱 체크가 활성화된 경우 {{APP_CHECK_DEBUG_TOKEN_ENV}}가 필요합니다."
+      }
+    },
+    {
+      "source": "{{EMAIL_LINK_ASSOCIATION_READY_ENV}} must equal {{EMAIL_LINK_ASSOCIATION_READY_VALUE}} only after Hosting association deployment and signed-device verification",
+      "translations": {
+        "hi": "Hosting संबंध परिनियोजन और हस्ताक्षरित डिवाइस सत्यापन के बाद ही {{EMAIL_LINK_ASSOCIATION_READY_ENV}} का मान {{EMAIL_LINK_ASSOCIATION_READY_VALUE}} होना चाहिए",
+        "es": "{{EMAIL_LINK_ASSOCIATION_READY_ENV}} debe ser {{EMAIL_LINK_ASSOCIATION_READY_VALUE}} solo después de desplegar las asociaciones de Hosting y verificarlas en un dispositivo con una compilación firmada",
+        "pt": "{{EMAIL_LINK_ASSOCIATION_READY_ENV}} deve ser {{EMAIL_LINK_ASSOCIATION_READY_VALUE}} somente após implantar as associações de Hosting e verificar em um dispositivo com uma compilação assinada",
+        "fr": "{{EMAIL_LINK_ASSOCIATION_READY_ENV}} doit valoir {{EMAIL_LINK_ASSOCIATION_READY_VALUE}} uniquement après le déploiement des associations Hosting et leur vérification sur un appareil avec une version signée",
+        "de": "{{EMAIL_LINK_ASSOCIATION_READY_ENV}} darf erst nach Bereitstellung der Hosting-Zuordnungen und Prüfung auf einem Gerät mit signierter App den Wert {{EMAIL_LINK_ASSOCIATION_READY_VALUE}} haben",
+        "ar": "يجب أن يساوي {{EMAIL_LINK_ASSOCIATION_READY_ENV}} القيمة {{EMAIL_LINK_ASSOCIATION_READY_VALUE}} فقط بعد نشر ارتباطات Hosting والتحقق على جهاز يستخدم إصدارًا موقّعًا",
+        "ja": "Hosting の関連付けをデプロイし、署名済みビルドを実機で検証してから、{{EMAIL_LINK_ASSOCIATION_READY_ENV}} を {{EMAIL_LINK_ASSOCIATION_READY_VALUE}} に設定してください",
+        "zh-Hans": "只有在部署 Hosting 关联并在使用签名构建的设备上验证后，{{EMAIL_LINK_ASSOCIATION_READY_ENV}} 才应等于 {{EMAIL_LINK_ASSOCIATION_READY_VALUE}}",
+        "ko": "{{EMAIL_LINK_ASSOCIATION_READY_ENV}}는 호스팅 연결 배포 및 서명된 장치 확인 후에만 {{EMAIL_LINK_ASSOCIATION_READY_VALUE}}와 동일해야 합니다."
+      }
+    },
+    {
+      "source": "{{EMAIL_LINK_DOMAIN_ENV}} must equal the production-safe Firebase Auth link domain {{FIREBASE_EMAIL_LINK_DOMAIN}} without a scheme, path, port, query, or fragment",
+      "translations": {
+        "hi": "{{EMAIL_LINK_DOMAIN_ENV}} उत्पादन के लिए सुरक्षित Firebase Auth लिंक डोमेन {{FIREBASE_EMAIL_LINK_DOMAIN}} के बराबर होना चाहिए; इसमें स्कीम, पाथ, पोर्ट, क्वेरी या फ़्रैगमेंट नहीं होना चाहिए",
+        "es": "{{EMAIL_LINK_DOMAIN_ENV}} debe ser el dominio de enlaces Firebase Auth seguro para producción {{FIREBASE_EMAIL_LINK_DOMAIN}}, sin esquema, ruta, puerto, consulta ni fragmento",
+        "pt": "{{EMAIL_LINK_DOMAIN_ENV}} deve ser o domínio de links Firebase Auth seguro para produção {{FIREBASE_EMAIL_LINK_DOMAIN}}, sem esquema, caminho, porta, consulta ou fragmento",
+        "fr": "{{EMAIL_LINK_DOMAIN_ENV}} doit correspondre au domaine de liens Firebase Auth sûr pour la production {{FIREBASE_EMAIL_LINK_DOMAIN}}, sans schéma, chemin, port, requête ni fragment",
+        "de": "{{EMAIL_LINK_DOMAIN_ENV}} muss der für die Produktion sichere Firebase-Auth-Link-Domain {{FIREBASE_EMAIL_LINK_DOMAIN}} entsprechen, ohne Schema, Pfad, Port, Abfrage oder Fragment",
+        "ar": "يجب أن يساوي {{EMAIL_LINK_DOMAIN_ENV}} نطاق روابط Firebase Auth الآمن للإنتاج {{FIREBASE_EMAIL_LINK_DOMAIN}} دون مخطط أو مسار أو منفذ أو استعلام أو جزء",
+        "ja": "{{EMAIL_LINK_DOMAIN_ENV}} は本番環境用の安全な Firebase Auth リンクドメイン {{FIREBASE_EMAIL_LINK_DOMAIN}} と一致する必要があります。スキーム、パス、ポート、クエリ、フラグメントは含めないでください",
+        "zh-Hans": "{{EMAIL_LINK_DOMAIN_ENV}} 必须等于生产环境安全的 Firebase Auth 链接域名 {{FIREBASE_EMAIL_LINK_DOMAIN}}，且不含协议、路径、端口、查询或片段",
+        "ko": "{{EMAIL_LINK_DOMAIN_ENV}}는 스키마, 경로, 포트, 쿼리 또는 조각 없이 프로덕션에 안전한 Firebase 인증 링크 도메인 {{FIREBASE_EMAIL_LINK_DOMAIN}}와 동일해야 합니다."
+      }
+    },
+    {
+      "source": "{{trialDays}}-day free trial for eligible new subscribers, then {{billed}} per month.",
+      "translations": {
+        "hi": "पात्र नए ग्राहकों के लिए {{trialDays}} दिन का मुफ़्त ट्रायल, फिर प्रति माह {{billed}}।",
+        "es": "Prueba gratuita de {{trialDays}} días para nuevos suscriptores elegibles; después, {{billed}} al mes.",
+        "pt": "Teste grátis de {{trialDays}} dias para novos assinantes elegíveis; depois, {{billed}} por mês.",
+        "fr": "Essai gratuit de {{trialDays}} jours pour les nouveaux abonnés éligibles, puis {{billed}} par mois.",
+        "de": "{{trialDays}} Tage kostenlos testen für berechtigte neue Abonnenten, danach {{billed}} pro Monat.",
+        "ar": "تجربة مجانية لمدة {{trialDays}} يومًا للمشتركين الجدد المؤهلين، ثم {{billed}} شهريًا.",
+        "ja": "対象となる新規加入者は {{trialDays}} 日間無料。その後は月額 {{billed}}。",
+        "zh-Hans": "符合条件的新订阅者可免费试用 {{trialDays}} 天，之后每月 {{billed}}。",
+        "ko": "자격을 갖춘 신규 가입자를 위한 {{trialDays}}일 무료 평가판 이후에는 매월 {{billed}}를 이용할 수 있습니다."
+      }
+    },
+    {
+      "source": "{{trialDays}}-day free trial for eligible new subscribers, then {{billed}} per year.",
+      "translations": {
+        "hi": "पात्र नए ग्राहकों के लिए {{trialDays}} दिन का मुफ़्त ट्रायल, फिर प्रति वर्ष {{billed}}।",
+        "es": "Prueba gratuita de {{trialDays}} días para nuevos suscriptores elegibles; después, {{billed}} al año.",
+        "pt": "Teste grátis de {{trialDays}} dias para novos assinantes elegíveis; depois, {{billed}} por ano.",
+        "fr": "Essai gratuit de {{trialDays}} jours pour les nouveaux abonnés éligibles, puis {{billed}} par an.",
+        "de": "{{trialDays}} Tage kostenlos testen für berechtigte neue Abonnenten, danach {{billed}} pro Jahr.",
+        "ar": "تجربة مجانية لمدة {{trialDays}} يومًا للمشتركين الجدد المؤهلين، ثم {{billed}} سنويًا.",
+        "ja": "対象となる新規加入者は {{trialDays}} 日間無料。その後は年額 {{billed}}。",
+        "zh-Hans": "符合条件的新订阅者可免费试用 {{trialDays}} 天，之后每年 {{billed}}。",
+        "ko": "자격을 갖춘 신규 가입자를 위한 {{trialDays}}일 무료 평가판 이후에는 연간 {{billed}}입니다."
+      }
+    },
+    {
+      "source": "{{value1}} sign-in could not open. Try again.",
+      "translations": {
+        "hi": "{{value1}} साइन-इन नहीं खुल सका। फिर कोशिश करें।",
+        "es": "No se pudo abrir el inicio de sesión con {{value1}}. Inténtalo de nuevo.",
+        "pt": "Não foi possível abrir o login com {{value1}}. Tente novamente.",
+        "fr": "Impossible d’ouvrir la connexion avec {{value1}}. Réessayez.",
+        "de": "Die Anmeldung mit {{value1}} konnte nicht geöffnet werden. Versuche es erneut.",
+        "ar": "تعذّر فتح تسجيل الدخول عبر {{value1}}. حاول مجددًا.",
+        "ja": "{{value1}} のログインを開けませんでした。もう一度お試しください。",
+        "zh-Hans": "无法打开 {{value1}} 登录。请重试。",
+        "ko": "{{value1}} 로그인을 열 수 없습니다. 다시 시도해 보세요."
+      }
+    },
+    {
+      "source": "Auto-renews at the price and interval shown. No free trial. Charged to your {{account}} at confirmation.",
+      "translations": {
+        "hi": "दिखाई गई कीमत और अवधि पर अपने आप नवीनीकृत होता है। कोई मुफ़्त ट्रायल नहीं। पुष्टि पर आपके {{account}} से शुल्क लिया जाएगा।",
+        "es": "Se renueva automáticamente al precio y con el intervalo indicados. Sin prueba gratuita. Se cobra a tu {{account}} al confirmar.",
+        "pt": "Renova automaticamente pelo preço e intervalo exibidos. Sem teste grátis. A cobrança será feita na sua {{account}} ao confirmar.",
+        "fr": "Renouvellement automatique au prix et à la fréquence affichés. Aucun essai gratuit. Votre {{account}} sera débité à la confirmation.",
+        "de": "Verlängert sich automatisch zum angezeigten Preis und Intervall. Kein kostenloser Testzeitraum. Dein {{account}} wird bei der Bestätigung belastet.",
+        "ar": "يتجدد تلقائيًا بالسعر والفترة الموضحين. لا توجد تجربة مجانية. يُخصم المبلغ من {{account}} عند التأكيد.",
+        "ja": "表示された料金と間隔で自動更新されます。無料トライアルはありません。確認時に {{account}} に請求されます。",
+        "zh-Hans": "将按显示的价格和周期自动续订。无免费试用。确认时将向您的 {{account}} 收费。",
+        "ko": "표시된 가격과 간격으로 자동 갱신됩니다. 무료 평가판이 없습니다. 확인 시 {{account}}에 요금이 청구됩니다."
+      }
+    },
+    {
+      "source": "Billed yearly · about {{value1}}/month",
+      "translations": {
+        "hi": "वार्षिक बिलिंग · लगभग {{value1}}/माह",
+        "es": "Facturación anual · unos {{value1}}/mes",
+        "pt": "Cobrança anual · cerca de {{value1}}/mês",
+        "fr": "Facturation annuelle · environ {{value1}}/mois",
+        "de": "Jährliche Abrechnung · etwa {{value1}}/Monat",
+        "ar": "فوترة سنوية · نحو {{value1}}/شهر",
+        "ja": "年払い · 月あたり約 {{value1}}",
+        "zh-Hans": "按年计费 · 约 {{value1}}/月",
+        "ko": "매년 청구됨 · 약 {{value1}}/월"
+      }
+    },
+    {
+      "source": "Buy lifetime · {{headline}}",
+      "translations": {
+        "hi": "आजीवन सदस्यता खरीदें · {{headline}}",
+        "es": "Comprar acceso de por vida · {{headline}}",
+        "pt": "Comprar acesso vitalício · {{headline}}",
+        "fr": "Acheter l’accès à vie · {{headline}}",
+        "de": "Lebenslangen Zugang kaufen · {{headline}}",
+        "ar": "اشترِ الوصول مدى الحياة · {{headline}}",
+        "ja": "永久アクセスを購入 · {{headline}}",
+        "zh-Hans": "购买终身访问权限 · {{headline}}",
+        "ko": "평생 구매 · {{headline}}"
+      }
+    },
+    {
+      "source": "Cancel in {{manage}} before renewal; access continues through the paid period.",
+      "translations": {
+        "hi": "नवीनीकरण से पहले {{manage}} में रद्द करें; भुगतान की गई अवधि तक पहुँच जारी रहेगी।",
+        "es": "Cancela en {{manage}} antes de la renovación; el acceso continúa durante el periodo pagado.",
+        "pt": "Cancele em {{manage}} antes da renovação; o acesso continua durante o período pago.",
+        "fr": "Annulez dans {{manage}} avant le renouvellement ; l’accès reste disponible jusqu’à la fin de la période payée.",
+        "de": "Kündige vor der Verlängerung unter {{manage}}; der Zugang bleibt bis zum Ende des bezahlten Zeitraums erhalten.",
+        "ar": "ألغِ في {{manage}} قبل التجديد؛ يستمر الوصول حتى نهاية الفترة المدفوعة.",
+        "ja": "更新前に {{manage}} から解約してください。支払い済みの期間は引き続き利用できます。",
+        "zh-Hans": "请在续订前于 {{manage}} 取消；已付费期间内仍可继续使用。",
+        "ko": "갱신하기 전에 {{manage}}에서 취소하세요. 유료 기간 동안 계속 액세스할 수 있습니다."
+      }
+    },
+    {
+      "source": "Connecting with {{value1}}…",
+      "translations": {
+        "hi": "{{value1}} से कनेक्ट हो रहा है…",
+        "es": "Conectando con {{value1}}…",
+        "pt": "Conectando com {{value1}}…",
+        "fr": "Connexion avec {{value1}}…",
+        "de": "Verbindung mit {{value1}} wird hergestellt…",
+        "ar": "جارٍ الاتصال عبر {{value1}}…",
+        "ja": "{{value1}} に接続中…",
+        "zh-Hans": "正在连接 {{value1}}…",
+        "ko": "{{value1}}와 연결 중…"
+      }
+    },
+    {
+      "source": "Development preview · {{value1}}",
+      "translations": {
+        "hi": "विकास पूर्वावलोकन · {{value1}}",
+        "es": "Vista previa de desarrollo · {{value1}}",
+        "pt": "Prévia de desenvolvimento · {{value1}}",
+        "fr": "Aperçu de développement · {{value1}}",
+        "de": "Entwicklungsvorschau · {{value1}}",
+        "ar": "معاينة التطوير · {{value1}}",
+        "ja": "開発プレビュー · {{value1}}",
+        "zh-Hans": "开发预览 · {{value1}}",
+        "ko": "개발 미리보기 · {{value1}}"
+      }
+    },
+    {
+      "source": "EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL must equal {{FIREBASE_EMAIL_LINK_CALLBACK_URL}}",
+      "translations": {
+        "hi": "EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL का मान {{FIREBASE_EMAIL_LINK_CALLBACK_URL}} होना चाहिए",
+        "es": "EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL debe ser {{FIREBASE_EMAIL_LINK_CALLBACK_URL}}",
+        "pt": "EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL deve ser {{FIREBASE_EMAIL_LINK_CALLBACK_URL}}",
+        "fr": "EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL doit valoir {{FIREBASE_EMAIL_LINK_CALLBACK_URL}}",
+        "de": "EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL muss {{FIREBASE_EMAIL_LINK_CALLBACK_URL}} entsprechen",
+        "ar": "يجب أن يساوي EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL القيمة {{FIREBASE_EMAIL_LINK_CALLBACK_URL}}",
+        "ja": "EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL は {{FIREBASE_EMAIL_LINK_CALLBACK_URL}} と一致する必要があります",
+        "zh-Hans": "EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL 必须等于 {{FIREBASE_EMAIL_LINK_CALLBACK_URL}}",
+        "ko": "EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL은 {{FIREBASE_EMAIL_LINK_CALLBACK_URL}}와 같아야 합니다."
+      }
+    },
+    {
+      "source": "EXPO_PUBLIC_FIREBASE_ENV must be either production or staging",
+      "translations": {
+        "hi": "EXPO_PUBLIC_FIREBASE_ENV का मान production या staging होना चाहिए",
+        "es": "EXPO_PUBLIC_FIREBASE_ENV debe ser production o staging",
+        "pt": "EXPO_PUBLIC_FIREBASE_ENV deve ser production ou staging",
+        "fr": "EXPO_PUBLIC_FIREBASE_ENV doit valoir production ou staging",
+        "de": "EXPO_PUBLIC_FIREBASE_ENV muss production oder staging sein",
+        "ar": "يجب أن تكون قيمة EXPO_PUBLIC_FIREBASE_ENV إما production أو staging",
+        "ja": "EXPO_PUBLIC_FIREBASE_ENV は production または staging にする必要があります",
+        "zh-Hans": "EXPO_PUBLIC_FIREBASE_ENV 必须为 production 或 staging",
+        "ko": "EXPO_PUBLIC_FIREBASE_ENV는 프로덕션 또는 스테이징이어야 합니다."
+      }
+    },
+    {
+      "source": "Firebase Auth session persistence is native. The client must not create Firestore documents, upload local recovery content, or bundle Firebase Admin credentials. Messaging registration contains only installation and FCM token identifiers.",
+      "translations": {
+        "hi": "Firebase Auth सत्र स्थायित्व नेटिव है। क्लाइंट को Firestore दस्तावेज़ नहीं बनाने चाहिए, स्थानीय रिकवरी सामग्री अपलोड नहीं करनी चाहिए या Firebase Admin क्रेडेंशियल साथ नहीं रखने चाहिए। मैसेजिंग पंजीकरण में केवल इंस्टॉलेशन और FCM टोकन पहचानकर्ता होते हैं।",
+        "es": "La persistencia de sesión de Firebase Auth es nativa. El cliente no debe crear documentos de Firestore, subir contenido local de recuperación ni incluir credenciales de Firebase Admin. El registro de mensajería solo contiene identificadores de instalación y de token FCM.",
+        "pt": "A persistência de sessão do Firebase Auth é nativa. O cliente não deve criar documentos do Firestore, enviar conteúdo local de recuperação nem incluir credenciais do Firebase Admin. O registro de mensagens contém apenas identificadores de instalação e de token FCM.",
+        "fr": "La persistance des sessions Firebase Auth est native. Le client ne doit pas créer de documents Firestore, envoyer du contenu local de rétablissement ni intégrer des identifiants Firebase Admin. L’inscription à la messagerie contient uniquement des identifiants d’installation et de jeton FCM.",
+        "de": "Firebase-Auth-Sitzungen werden nativ gespeichert. Der Client darf keine Firestore-Dokumente erstellen, lokale Erholungsinhalte hochladen oder Firebase-Admin-Zugangsdaten mitliefern. Die Messaging-Registrierung enthält nur Installations- und FCM-Token-Kennungen.",
+        "ar": "يُحفظ استمرار جلسة Firebase Auth على المستوى الأصلي. يجب ألا ينشئ العميل مستندات Firestore أو يرفع محتوى التعافي المحلي أو يضم بيانات اعتماد Firebase Admin. يتضمن تسجيل المراسلة معرّفات التثبيت ورمز FCM فقط.",
+        "ja": "Firebase Auth のセッションはネイティブで保持されます。クライアントは Firestore ドキュメントの作成、ローカルの回復コンテンツのアップロード、Firebase Admin 認証情報の同梱を行ってはいけません。メッセージ登録に含まれるのはインストールと FCM トークンの識別子のみです。",
+        "zh-Hans": "Firebase Auth 会话由原生层持久化。客户端不得创建 Firestore 文档、上传本地恢复内容或打包 Firebase Admin 凭据。消息注册仅包含安装标识符和 FCM 令牌标识符。",
+        "ko": "Firebase 인증 세션 지속성은 기본입니다. 클라이언트는 Firestore 문서를 생성하거나, 로컬 복구 콘텐츠를 업로드하거나, Firebase 관리자 사용자 인증 정보를 번들로 묶어서는 안 됩니다. 메시징 등록에는 설치 및 FCM 토큰 식별자만 포함됩니다."
+      }
+    },
+    {
+      "source": "Firebase staging project {{STAGING_PROJECT_ID}} is not provisioned (Google project-quota blocker). Do not use production credentials for staging.",
+      "translations": {
+        "hi": "Firebase स्टेजिंग प्रोजेक्ट {{STAGING_PROJECT_ID}} तैयार नहीं है (Google प्रोजेक्ट कोटा की बाधा)। स्टेजिंग के लिए उत्पादन क्रेडेंशियल का उपयोग न करें।",
+        "es": "El proyecto de staging Firebase {{STAGING_PROJECT_ID}} no está aprovisionado por un bloqueo de cuota de proyectos de Google. No uses credenciales de producción para staging.",
+        "pt": "O projeto de staging Firebase {{STAGING_PROJECT_ID}} não foi provisionado devido ao limite de projetos do Google. Não use credenciais de produção no staging.",
+        "fr": "Le projet de préproduction Firebase {{STAGING_PROJECT_ID}} n’est pas provisionné à cause du quota de projets Google. N’utilisez pas les identifiants de production en préproduction.",
+        "de": "Das Firebase-Staging-Projekt {{STAGING_PROJECT_ID}} ist wegen der Google-Projektquote nicht bereitgestellt. Verwende keine Produktionszugangsdaten für Staging.",
+        "ar": "لم يُجهّز مشروع Firebase التجريبي {{STAGING_PROJECT_ID}} بسبب حدّ حصة مشاريع Google. لا تستخدم بيانات اعتماد الإنتاج في البيئة التجريبية.",
+        "ja": "Firebase ステージングプロジェクト {{STAGING_PROJECT_ID}} は Google のプロジェクト上限により未構築です。ステージングで本番用の認証情報を使用しないでください。",
+        "zh-Hans": "Firebase 预发布项目 {{STAGING_PROJECT_ID}} 尚未配置（受 Google 项目配额限制）。请勿在预发布环境中使用生产凭据。",
+        "ko": "Firebase 스테이징 프로젝트 {{STAGING_PROJECT_ID}}가 프로비저닝되지 않았습니다(Google 프로젝트 할당량 차단기). 준비를 위해 프로덕션 자격 증명을 사용하지 마십시오."
+      }
+    },
+    {
+      "source": "Google Play account",
+      "translations": {
+        "hi": "Google Play खाता",
+        "es": "cuenta de Google Play",
+        "pt": "conta do Google Play",
+        "fr": "compte Google Play",
+        "de": "Google-Play-Konto",
+        "ar": "حساب Google Play",
+        "ja": "Google Play アカウント",
+        "zh-Hans": "Google Play 账号",
+        "ko": "Google Play 계정"
+      }
+    },
+    {
+      "source": "Google Play Store > Payments & subscriptions > Subscriptions",
+      "translations": {
+        "hi": "Google Play Store > भुगतान और सदस्यताएँ > सदस्यताएँ",
+        "es": "Google Play Store > Pagos y suscripciones > Suscripciones",
+        "pt": "Google Play Store > Pagamentos e assinaturas > Assinaturas",
+        "fr": "Google Play Store > Paiements et abonnements > Abonnements",
+        "de": "Google Play Store > Zahlungen und Abos > Abos",
+        "ar": "Google Play Store > الدفعات والاشتراكات > الاشتراكات",
+        "ja": "Google Play Store > お支払いと定期購入 > 定期購入",
+        "zh-Hans": "Google Play Store > 付款和订阅 > 订阅",
+        "ko": "Google Play 스토어 > 결제 및 구독 > 구독"
+      }
+    },
+    {
+      "source": "No checkout",
+      "translations": {
+        "hi": "खरीद प्रक्रिया नहीं",
+        "es": "Sin pago disponible",
+        "pt": "Sem finalização de compra",
+        "fr": "Aucun achat disponible",
+        "de": "Kein Kaufabschluss",
+        "ar": "لا توجد عملية شراء",
+        "ja": "購入手続きなし",
+        "zh-Hans": "无法结账",
+        "ko": "결제 불가"
+      }
+    },
+    {
+      "source": "One payment, no renewal",
+      "translations": {
+        "hi": "एक बार भुगतान, नवीनीकरण नहीं",
+        "es": "Un solo pago, sin renovación",
+        "pt": "Um pagamento, sem renovação",
+        "fr": "Paiement unique, sans renouvellement",
+        "de": "Einmalige Zahlung, keine Verlängerung",
+        "ar": "دفعة واحدة، بلا تجديد",
+        "ja": "一度の支払い、更新なし",
+        "zh-Hans": "一次付费，无需续订",
+        "ko": "한 번의 결제, 갱신 없음"
+      }
+    },
+    {
+      "source": "Settings > your name > Subscriptions",
+      "translations": {
+        "hi": "सेटिंग्स > आपका नाम > सदस्यताएँ",
+        "es": "Ajustes > tu nombre > Suscripciones",
+        "pt": "Ajustes > seu nome > Assinaturas",
+        "fr": "Réglages > votre nom > Abonnements",
+        "de": "Einstellungen > dein Name > Abonnements",
+        "ar": "الإعدادات > اسمك > الاشتراكات",
+        "ja": "設定 > 自分の名前 > サブスクリプション",
+        "zh-Hans": "设置 > 您的姓名 > 订阅",
+        "ko": "설정 > 이름 > 구독"
+      }
+    },
+    {
+      "source": "Start free trial",
+      "translations": {
+        "hi": "मुफ़्त ट्रायल शुरू करें",
+        "es": "Iniciar prueba gratuita",
+        "pt": "Iniciar teste grátis",
+        "fr": "Commencer l’essai gratuit",
+        "de": "Kostenlos testen",
+        "ar": "ابدأ التجربة المجانية",
+        "ja": "無料トライアルを開始",
+        "zh-Hans": "开始免费试用",
+        "ko": "무료 평가판 시작"
+      }
+    }
+  ]
+}

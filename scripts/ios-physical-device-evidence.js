@@ -8,6 +8,7 @@ const { spawn } = require("node:child_process");
 const { assertSafeArtifactOutputDir } = require("./lib/evidence-output-safety");
 const { safeExternalHost, safeExternalHttpsUrl } = require("./lib/evidence-target-safety");
 const { sanitizeLocalHomePaths } = require("./lib/local-path-privacy");
+const { inspectExtensionPrincipalClass } = require("./lib/ios-extension-principal-class");
 const {
   SAFARI_FOCUS_ALLOWED_DOMAINS,
   SAFARI_FOCUS_HOST_PERMISSIONS,
@@ -1044,7 +1045,7 @@ async function inspectSafariFocusShieldResources(bundlePath, outputDir) {
   const nativeHandlerBinary = executablePath && fs.existsSync(executablePath)
     ? fs.readFileSync(executablePath).toString("latin1")
     : "";
-  const contract = inspectSafariFocusShieldContract({ manifest, info, background, content, nativeHandlerBinary });
+  const contract = inspectSafariFocusShieldContract({ manifest, info, background, content, nativeHandlerBinary, extensionPath: bundlePath });
   return {
     backgroundAvailable: Boolean(background),
     contentAvailable: Boolean(content),
@@ -1096,13 +1097,15 @@ async function inspectAppPackage(appPath, outputDir, appGroupId) {
     const extensionPath = path.join(pluginsDir, expected.bundleName);
     if (fs.existsSync(extensionPath)) {
       const inspected = await inspectBundle(extensionPath, outputDir, appGroupId);
+      const principalClassRuntime = inspectExtensionPrincipalClass(path.join(extensionPath, inspected.executable), inspected.principalClass);
       extensions.push({
         ...inspected,
         embedded: true,
         expectedExtensionPoint: expected.extensionPoint,
         expectedPrincipalClass: expected.requiredPrincipalClass,
         extensionPointMatches: inspected.extensionPoint === expected.extensionPoint,
-        principalClassMatches: inspected.principalClass === expected.requiredPrincipalClass,
+        principalClassMatches: inspected.principalClass === expected.requiredPrincipalClass && principalClassRuntime.compatible === true,
+        principalClassRuntime,
         requiresFamilyControls: expected.requiresFamilyControls,
         requiresSafariRuleList: Boolean(expected.requiresSafariRuleList),
         requiresSafariFocusResources: Boolean(expected.requiresSafariFocusResources),
@@ -1127,6 +1130,7 @@ async function inspectAppPackage(appPath, outputDir, appGroupId) {
         packetTunnelProviderEntitled: false,
         principalClass: "",
         principalClassMatches: false,
+        principalClassRuntime: { available: false, compatible: false, reason: "principal-extension-missing" },
         requiresFamilyControls: expected.requiresFamilyControls,
         requiresSafariRuleList: Boolean(expected.requiresSafariRuleList),
         requiresSafariFocusResources: Boolean(expected.requiresSafariFocusResources),
@@ -2281,6 +2285,7 @@ async function runSelfTest() {
           browser_specific_settings: { safari: { strict_min_version: "15.4" } },
           background: { service_worker: "background.js" },
           permissions: ["nativeMessaging"],
+          icons: { "16": "icons/icon-16.png", "32": "icons/icon-32.png", "48": "icons/icon-48.png", "128": "icons/icon-128.png" },
           host_permissions: SAFARI_FOCUS_HOST_PERMISSIONS,
           content_scripts: [{ matches: SAFARI_FOCUS_HOST_PERMISSIONS, js: ["content.js"] }],
         }),
@@ -2288,13 +2293,28 @@ async function runSelfTest() {
       fs.writeFileSync(
         path.join(extensionPath, "background.js"),
         `const NATIVE_APP_ID = "app.freed.recovery";
-         const APPROVED_RULE_HOSTS = { "short-form:youtube-shorts": "youtube.com", "short-form:instagram-reels": "instagram.com", "short-form:tiktok-feed": "tiktok.com" };
-         function approvedNativePayload(host, rule) { return { type: "record-pending-intervention", source: "ios-safari-short-form", host, rule }; }
-         browser.runtime.onMessage.addListener(() => {
-           const payload = approvedNativePayload("youtube.com", "short-form:youtube-shorts");
-           return browser.runtime.sendNativeMessage(NATIVE_APP_ID, payload);
+         const APPROVED_RULE_HOSTS = Object.freeze({ "short-form:youtube-shorts": "youtube.com", "short-form:instagram-reels": "instagram.com", "short-form:tiktok-feed": "tiktok.com" });
+         function approvedNativePayload(message) {
+           if (!message || typeof message !== "object") return null;
+           const host = typeof message.host === "string" ? message.host : "";
+           const rule = typeof message.rule === "string" ? message.rule : "";
+           if (APPROVED_RULE_HOSTS[rule] !== host) return null;
+           return { type: "record-pending-intervention", source: "ios-safari-short-form", host, rule };
+         }
+         browser.runtime.onMessage.addListener((message) => {
+           if (message?.type === "get-protection-configuration") {
+             return browser.runtime.sendNativeMessage(NATIVE_APP_ID, { type: "get-protection-configuration" }).catch(() => ({ protectionConfigurationActive: false }));
+           }
+           const payload = approvedNativePayload(message);
+           if (!payload) return Promise.resolve({ accepted: false });
+           return browser.runtime.sendNativeMessage(NATIVE_APP_ID, payload).catch(() => ({ accepted: false }));
          });`,
       );
+      fs.mkdirSync(path.join(extensionPath, "icons"));
+      const { createRgbaPng } = require("./lib/png-screenshot-audit");
+      for (const size of [16, 32, 48, 128]) {
+        fs.writeFileSync(path.join(extensionPath, "icons", `icon-${size}.png`), createRgbaPng(size, size, () => [65, 74, 206, 255]));
+      }
       fs.writeFileSync(
         path.join(extensionPath, "content.js"),
         "const runtime = browser.runtime; if (runtime?.sendMessage) runtime.sendMessage({ rule: 'short-form:youtube-shorts', host: 'youtube.com' });",
@@ -2310,7 +2330,14 @@ async function runSelfTest() {
   assert.equal(packageProof.sanitized, true);
   assert.equal(packageProof.platform, "ios");
   assert.equal(packageProof.extensions.length, EXPECTED_APP_EXTENSIONS.length);
-  assert.deepEqual(packageProof.missingOrMismatchedExtensions, []);
+  // These fixtures prove bundled plist/resources only. Missing/text executables
+  // cannot prove that NSExtensionPrincipalClass is registered at runtime.
+  assert.ok(packageProof.extensions.every((entry) => entry.embedded === true && entry.extensionPointMatches === true));
+  assert.deepEqual(packageProof.missingOrMismatchedExtensions.slice().sort(), EXPECTED_APP_EXTENSIONS.map((entry) => entry.bundleName).sort());
+  assert.ok(packageProof.extensions.every((entry) => entry.principalClassRuntime.compatible === false && entry.principalClassMatches === false));
+  assert.equal(packageProof.checks.screenTimeExtensionsEmbedded, false);
+  assert.equal(packageProof.checks.safariContentBlockerEmbedded, false);
+  assert.equal(packageProof.checks.safariFocusShieldEmbedded, false);
   assert.deepEqual(packageProof.safariRuleFailures, []);
   assert.ok(packageProof.entitlementFailures.includes("app Complete Data Protection entitlement"));
   assert.ok(

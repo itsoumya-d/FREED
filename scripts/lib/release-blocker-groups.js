@@ -162,10 +162,11 @@ function productionEnvChecklist() {
   };
 }
 
-function productionBlockerGroups(artifactRoot = "docs/validation/artifacts/<run-id>", runId = "<run-id>") {
+function productionBlockerGroups(artifactRoot = "docs/validation/artifacts/<run-id>", runId = "<run-id>", provider = process.env.EXPO_PUBLIC_BACKEND_PROVIDER) {
   const resolvedRunId = runIdForArtifactRoot(artifactRoot, runId);
   const reports = reportArtifactCommands(artifactRoot);
   const helpers = captureHelperCommands(artifactRoot, resolvedRunId);
+  const legacyAi = ["legacy", "supabase"].includes(String(provider ?? "firebase").trim().toLowerCase());
   return [
     {
       id: "production-backend-infrastructure",
@@ -281,25 +282,18 @@ function productionBlockerGroups(artifactRoot = "docs/validation/artifacts/<run-
     {
       id: "production-ai-backend",
       category: "production-env",
-      requiredEnv: [
-        "EXPO_PUBLIC_AI_COACH_MODE=remote",
-        "EXPO_PUBLIC_AI_COACH_ENDPOINT",
-        "EXPO_PUBLIC_AI_CHALLENGE_MODE=remote",
-        "EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT",
-        "OPENAI_API_KEY + OPENAI_MODEL, or GEMINI_API_KEY/GOOGLE_API_KEY/GOOGLE_GENAI_API_KEY + GEMINI_MODEL"
-      ],
+      requiredEnv: ["Google CLARA attached runtime identity and reviewed current candidate/deployment binding; no static AI credential"],
       requiredReports: [reports.releaseEnvPreflight, reports.aiBackend],
-      preflightCheckIds: [
-        "server-secret-public-leakage",
+      preflightCheckIds: ["server-secret-public-leakage", ...(legacyAi ? [
         "ai-coach-mode",
         "ai-coach-endpoint",
         "ai-challenge-mode",
         "ai-challenge-endpoint",
         "server-ai-key",
         "optional-retention-endpoint"
-      ],
+      ] : ["firebase-backend-config", "firebase-production-runtime-evidence"])],
       evidenceFile: "docs/validation/evidence/ai-backend-smoke.json",
-      next: "Configure remote CLARA/challenge endpoints and server AI provider credentials, then prove AI safety plus deployed backend smoke evidence."
+      next: "Import fresh checksummed signed native Google CLARA and attached runtime/provider captures; challenges and retention remain LOCAL. Owner-token smoke and configuration alone do not prove positive client/provider success."
     },
     {
       id: "ios-physical-device-validation",
@@ -349,11 +343,11 @@ function productionBlockerGroups(artifactRoot = "docs/validation/artifacts/<run-
     {
       id: "ai-backend-smoke-validation",
       category: "deployed-evidence",
-      requiredEnv: ["remote AI production env from production-ai-backend"],
+      requiredEnv: ["current Google CLARA production proof from production-ai-backend"],
       requiredReports: [reports.aiBackend],
       captureHelperCommand: helpers.aiBackendSmoke,
       evidenceFile: "docs/validation/evidence/ai-backend-smoke.json",
-      next: "Capture AI safety eval plus deployed CLARA/challenge smoke reports without raw prompts, private notes, or provider output."
+      next: "Capture current Google CLARA consent/Auth/AppCheck/remote response/privacy/fallback proof and separate LOCAL zero-network challenge/retention capability/rule/licensing proof; omit raw prompts, notes and provider output."
     }
   ];
 }

@@ -1,0 +1,22 @@
+appId: app.freed.recovery
+name: onboarding-welcome
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///onboarding/welcome"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-welcome"
+    timeout: 15000
+- assertVisible: "Start My Recovery"
+- tapOn: "Start My Recovery"
+- assertVisible:
+    id: "screen-quiz"
+- takeScreenshot: "onboarding-welcome"

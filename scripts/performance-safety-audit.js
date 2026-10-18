@@ -1,5 +1,8 @@
+const { readChallengePhotoSafetySources, inspectChallengePhotoSafety } = require("./lib/challenge-photo-safety-contract");
 const { readFileSync } = require("node:fs");
 const { join } = require("node:path");
+const { readEncryptedDnsSafetySources, inspectIosEncryptedDnsSafety, inspectAndroidEncryptedDnsSafety } = require("./lib/encrypted-dns-safety-contract");
+const { inspectNativeUnlockWiring } = require('./lib/native-unlock-safety-contract');
 
 const root = process.cwd();
 
@@ -19,9 +22,13 @@ function lacksAny(source, needles) {
   return needles.every((needle) => !source.includes(needle));
 }
 
+const nativeEnglishCopy = JSON.parse(read("src/i18n/native-android-catalog.json"));
+const nativeEnglishResources = read("modules/freed-protection/android/src/main/res/values/strings.xml");
+
 const androidManifest = read("modules/freed-protection/android/src/main/AndroidManifest.xml");
 const appManifest = read("android/app/src/main/AndroidManifest.xml");
 const vpnService = read("modules/freed-protection/android/src/main/java/app/freed/protection/FreedVpnService.kt");
+const websiteRecoveryHandoff = read("modules/freed-protection/android/src/main/java/app/freed/protection/FreedWebsiteRecoveryHandoff.kt");
 const vpnAutostartReceiver = read("modules/freed-protection/android/src/main/java/app/freed/protection/FreedVpnAutostartReceiver.kt");
 const accessibilityService = read("modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt");
 const accessibilityServiceConfig = read("modules/freed-protection/android/src/main/res/xml/freed_accessibility_service.xml");
@@ -35,11 +42,20 @@ const blockingEngine = read("src/lib/blocking-engine.ts");
 const aiCoach = read("src/lib/ai-coach.ts");
 const challengeGenerator = read("src/lib/challenge-generator.ts");
 const androidModule = read("modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt");
+const androidNetworkDnsState = read("modules/freed-protection/android/src/main/java/app/freed/protection/FreedNetworkDnsState.kt");
+const androidDnsGuardPolicy = read("modules/freed-protection/android/src/main/java/app/freed/protection/FreedDnsGuardPolicy.kt");
 const iosModule = read("modules/freed-protection/ios/FreedProtectionModule.swift");
 const iosDeviceActivity = read("ios/FREEDDeviceActivityMonitor/DeviceActivityMonitorExtension.swift");
 const nativeIntervention = read("src/lib/native-intervention.ts");
 const safariContentBlockerHandler = read("ios/FREEDSafariContentBlocker/ContentBlockerRequestHandler.swift");
 const appSurface = read("src/features/freed-app.tsx");
+const nativeUnlockWiring = inspectNativeUnlockWiring(appSurface, read('src/lib/native-unlock-confirmation.ts'));
+const challengeVerificationHook = read("src/hooks/useChallengeVerification.ts");
+const challengeVerificationRuntime = read("src/lib/challenge-verification-runtime.ts");
+const photoSafetySources = readChallengePhotoSafetySources(root);
+const photoSafety = inspectChallengePhotoSafety(photoSafetySources);
+const challengePhotoSources = Object.values(photoSafetySources).join("\n");
+const interactiveChallengePhotoPath = Object.values(photoSafety).every(Boolean);
 const protectionPermissions = read("src/lib/protection-permissions.ts");
 const safariContentBlockerList = read("ios/FREEDSafariContentBlocker/blockerList.json");
 const safariFocusManifest = read("ios/FREEDSafariFocusShield/manifest.json");
@@ -50,6 +66,9 @@ const adultFeedIngestion = read("src/lib/adult-domain-feed-ingestion.ts");
 const adultFeedRoute = read("app/api/adult-domain-feed+api.ts");
 const boundedResponseJson = read("src/lib/bounded-response-json.ts");
 const shortFormWebContract = read("scripts/lib/short-form-web-contract.js");
+const encryptedDnsSources = readEncryptedDnsSafetySources(root);
+const iosEncryptedDnsSafety = inspectIosEncryptedDnsSafety(encryptedDnsSources);
+const androidEncryptedDnsSafety = inspectAndroidEncryptedDnsSafety(encryptedDnsSources);
 
 const screenshotOrOcrRuntimeApis = [
   "MediaProjection",
@@ -73,6 +92,11 @@ const imageClassificationRuntimeApis = [
 ];
 
 const checks = [
+  check(
+    "android-encrypted-dns-protected-https",
+    Object.values(androidEncryptedDnsSafety).every(Boolean),
+    "Opt-in encrypted DNS uses protected HTTPS sockets, normal TLS validation, bounded validated responses, and no plaintext fallback when encrypted DNS is selected."
+  ),
   check(
     "android-no-overlay-permission",
     !androidManifest.includes("SYSTEM_ALERT_WINDOW") && !/SYSTEM_ALERT_WINDOW(?![^<]*tools:node="remove")/.test(appManifest),
@@ -102,20 +126,23 @@ const checks = [
   check(
     "android-dns-resolver-failover",
     vpnService.includes("DNS_RESOLVERS = listOf(PRIMARY_DNS, SECONDARY_DNS)") &&
-      vpnService.includes("for (resolver in DNS_RESOLVERS)") &&
+      vpnService.includes("raceForward(dnsPayload, listOf(PRIMARY_DNS, SECONDARY_DNS), RACE_BUDGET_MS)") &&
+      vpnService.includes("for (resolver in networkResolvers)") &&
+      vpnService.includes("registerDefaultNetworkCallback") &&
       vpnService.includes("forwardDnsToResolver(dnsPayload, resolver)") &&
       vpnService.includes("lastForwardResolver") &&
       vpnService.includes("lastForwardFailure") &&
-      vpnService.includes("buildServfailResponse(envelope.dnsPayload)") &&
+      vpnService.includes("buildServfailResponse(dnsPayload)") &&
+      vpnService.includes("isValidDnsResponse(forwarded, dnsPayload)") &&
       vpnService.includes("DNS_RCODE_SERVFAIL"),
-    "DNS Guard tries both configured local resolver routes, returns a bounded SERVFAIL instead of letting allowed DNS hang, and exposes resolver diagnostics."
+    "When encrypted DNS is off, DNS Guard races both configured resolvers under a bounded budget and falls back to the active network's own DNS servers. Both transports validate responses, return bounded SERVFAIL instead of letting allowed DNS hang, and expose resolver diagnostics."
   ),
   check(
     "android-dns-malformed-servfail",
     vpnService.includes("parseDnsEnvelope(packet, readLength)") &&
       vpnService.includes("readDnsQuestionHost(envelope.dnsPayload)") &&
       vpnService.includes("dnsGuardMalformedPackets.incrementAndGet()") &&
-      vpnService.includes("output.write(buildUdpResponsePacket(envelope, dnsResponse))") &&
+      vpnService.includes("writeResponsePacket(envelope, dnsResponse)") &&
       vpnService.includes("val questionEnd = findQuestionEnd(queryPayload) ?: DNS_HEADER_SIZE") &&
       vpnService.includes("if (questionEnd == DNS_HEADER_SIZE) writeShort(response, 4, 0)"),
     "Malformed DNS questions are counted and receive bounded SERVFAIL responses when the DNS envelope is available, avoiding silent client hangs."
@@ -139,7 +166,7 @@ const checks = [
   ),
   check(
     "android-dns-block-intervention-notification",
-    vpnService.includes("val normalizedHost = dnsInterventionHost(host, classification)") &&
+    vpnService.includes("val normalizedHost = dnsInterventionHost(item.questionHost, classification)") &&
       vpnService.includes("lastBlockedHost = normalizedHost") &&
       vpnService.includes("recordAndLaunchDnsIntervention(normalizedHost, classification)") &&
       vpnService.includes("FreedUrlClassifier.normalizeHostForStorage(result.host)") &&
@@ -147,21 +174,39 @@ const checks = [
       !vpnService.includes("recordAndLaunchDnsIntervention(host, classification)") &&
       vpnService.includes("showDnsInterventionNotification(host, redactedUrl, result.matchedRule)") &&
       vpnService.includes("INTERVENTION_NOTIFICATION_CHANNEL_ID") &&
-      vpnService.includes("NotificationManager.IMPORTANCE_HIGH") &&
-      vpnService.includes("FREED blocked an adult-domain request") &&
+      vpnService.includes("NotificationManager.IMPORTANCE_DEFAULT") &&
+      vpnService.includes("setContentTitle(FreedNativeCopy.text(this@FreedVpnService, R.string.freed_recovery_channel))") &&
+      nativeEnglishCopy.freed_recovery_channel === "FREED recovery interventions" &&
+      nativeEnglishResources.includes("FREED recovery interventions") &&
+      vpnService.includes("setContentText(message)") &&
+      vpnService.includes("Notification.BigTextStyle().bigText(message)") &&
+      vpnService.includes("setVisibility(Notification.VISIBILITY_PRIVATE)") &&
+      vpnService.includes("setContentIntent(contentPendingIntent)") &&
+      !vpnService.includes("setFullScreenIntent(") &&
+      !vpnService.includes("canUseFullScreenIntents()") &&
       vpnService.includes("buildDnsInterventionIntent(host, redactedUrl, matchedRule)") &&
-      vpnService.includes('putExtra("freed_intervention_source", "android-dns")') &&
-      vpnService.includes("startActivity(buildDnsInterventionIntent(host, redactedUrl, result.matchedRule))") &&
+      vpnService.includes('data = Uri.parse("freed://guided-reset")') &&
+      vpnService.includes("packageManager.getLaunchIntentForPackage(packageName)") &&
+      !vpnService.includes("startActivity(") &&
+      vpnService.includes("runCatching { showDnsInterventionNotification(host, redactedUrl, result.matchedRule) }") &&
+      websiteRecoveryHandoff.includes('const val PREVIEW_FLAG = "app.freed.websiteRecoveryDevPreview"') &&
+      websiteRecoveryHandoff.includes("info.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0 && info.metaData?.getBoolean(PREVIEW_FLAG, false) == true") &&
+      !androidManifest.includes("app.freed.websiteRecoveryDevPreview") &&
+      !appManifest.includes("app.freed.websiteRecoveryDevPreview") &&
       !androidManifest.includes("SYSTEM_ALERT_WINDOW"),
-    "DNS Guard posts a no-overlay recovery notification with the same redacted intervention handoff before attempting the immediate activity launch, so Android background-start restrictions still leave a visible challenge path."
+    "DNS filtering posts a private generic notification with a payload-free manual recovery link. The separate connected-service launch probe is default-off and requires both explicit metadata and a debuggable binary; filtering is independent of either handoff. No full-screen intent, overlay permission or host in visible copy."
   ),
   check(
     "android-accessibility-intervention-notification",
     accessibilityService.includes("showAccessibilityInterventionNotification(") &&
       accessibilityService.includes("buildAccessibilityInterventionIntent(") &&
-      accessibilityService.includes("FREED recovery interventions") &&
+      accessibilityService.includes("R.string.freed_recovery_channel") &&
+      nativeEnglishCopy.freed_recovery_channel === "FREED recovery interventions" &&
+      nativeEnglishResources.includes("FREED recovery interventions") &&
       accessibilityService.includes("NotificationManager.IMPORTANCE_HIGH") &&
-      accessibilityService.includes("No overlays, screenshots, or OCR are used.") &&
+      accessibilityService.includes("FreedNativeCopy.text(this@FreedAccessibilityService, R.string.freed_accessibility_notification)") &&
+      nativeEnglishCopy.freed_accessibility_notification === "Open FREED to complete a recovery challenge. No overlays, screenshots, or OCR are used." &&
+      nativeEnglishResources.includes("No overlays, screenshots, or OCR are used.") &&
       accessibilityService.includes('putExtra("freed_intervention_rule", matchedRule)') &&
       accessibilityService.includes("runCatching { startActivity(intent) }") &&
       interventionActivity.includes('launchIntent.putExtra("freed_intervention_rule", intent.getStringExtra("freed_intervention_rule"))') &&
@@ -188,13 +233,9 @@ const checks = [
     "DNS Guard restart after boot/package update is gated by explicit user enablement and existing VPN consent, clears intent on manual stop/revoke, and exposes restart diagnostics for QA."
   ),
   check(
-    "ios-no-network-extension",
-    !iosModule.includes("import NetworkExtension") &&
-      !iosModule.includes("NEDNSSettingsManager") &&
-      !iosModule.includes("NEPacketTunnelProvider") &&
-      !iosModule.includes("NETunnelProviderManager") &&
-      !iosModule.includes("NEVPNManager"),
-    "iOS protection uses Screen Time and Safari extensions without a stale NetworkExtension, packet-tunnel, or VPN-manager path."
+    "ios-encrypted-dns-release-gated",
+    Object.values(iosEncryptedDnsSafety).every(Boolean),
+    "Optional iOS encrypted DNS uses public DNS settings APIs with explicit opt-in and normal TLS; the plugin defaults off, the current release flags are false and its DNS entitlement is absent. No packet tunnel, VPN manager, DNS proxy, or transparent proxy is permitted; health remains unverified."
   ),
   check(
     "ios-safari-short-form-web-rules",
@@ -227,7 +268,8 @@ const checks = [
     accessibilityService.includes("collectLikelyFocusedUrlText") &&
       accessibilityService.includes("isWebViewContext") &&
       accessibilityService.includes("node.isEditable || node.isFocused || node.isAccessibilityFocused") &&
-      accessibilityService.includes("FreedUrlClassifier.classifyFocusedInput(candidate, adultDomainFeed)") &&
+      accessibilityService.includes("FreedUrlClassifier.classifyFocusedInput(") &&
+      accessibilityService.includes("FreedAdultDomainFeed.userAllowedDomains(this)") &&
       accessibilityService.includes("shouldTrustEventText(packageName, event)") &&
       accessibilityService.includes("shouldCollectFocusedCandidateText(packageName, node, text)") &&
       accessibilityService.includes("sourceIsKnownBrowserUrlField(packageName, source)") &&
@@ -243,7 +285,7 @@ const checks = [
       androidClassifier.includes("focused-search-education:$explicitSearch") &&
       !accessibilityService.includes("if (looksLikeUrlOrSearch(text)) return true") &&
       !accessibilityService.includes("collectLikelyUrlText(root"),
-    "Accessibility scanner is scoped to supported stable/beta browsers and focused WebView URL/search fields, including raw adult search text, instead of page-wide text scraping."
+    "Accessibility scanning admits eligible installed web handlers and focused WebView URL/search fields. Stable/beta resource IDs are compatibility hints; these source checks do not prove browser network coverage or recovery handoff."
   ),
   check(
     "android-pending-url-redaction",
@@ -273,11 +315,16 @@ const checks = [
       iosModule.includes("sanitizeHostForStorage(trimmed) == screenTimeShieldHost") &&
       iosModule.includes('earnedUnlockSourceKey = "freed.earnedUnlock.source"') &&
       iosModule.includes("set(self.screenTimeShieldHost, forKey: self.earnedUnlockSourceKey)") &&
-      iosModule.includes("guard isScreenTimeUnlockSource(storedSource), let scope = activeEarnedUnlockScope(), isSelectedScreenTimeScope(scope) else") &&
+      iosModule.includes("guard isScreenTimeUnlockSource(storedSource),") &&
+      iosModule.includes("sanitizedPendingInterventionId(defaults.string(forKey: earnedUnlockInterventionIdKey)) != nil") &&
+      iosModule.includes("let scope = activeEarnedUnlockScope(), isSelectedScreenTimeScope(scope),") &&
+      iosModule.includes("isEarnedUnlockMonitoringReady(expiresAt: expiry) else") &&
       iosDeviceActivity.includes('earnedUnlockSourceKey = "freed.earnedUnlock.source"') &&
-      iosDeviceActivity.includes("guard isScreenTimeUnlockSource(storedSource), let scope = activeEarnedUnlockScope(), isSelectedScreenTimeScope(scope) else") &&
-      appSurface.includes("getActiveNativeEarnedUnlock(recoveryState.earnedUnlocks, Platform.OS") &&
-      appSurface.includes("activeNativeUnlock.nativeInterventionId") &&
+      iosDeviceActivity.includes("guard isScreenTimeUnlockSource(storedSource),") &&
+      iosDeviceActivity.includes("UUID(uuidString: interventionID) != nil") &&
+      iosDeviceActivity.includes("let scope = activeEarnedUnlockScope(), isSelectedScreenTimeScope(scope) else") &&
+      iosDeviceActivity.includes("hasNativeEarnedUnlockRelock(expiresAt: expiry)") &&
+      Object.values(nativeUnlockWiring).every(Boolean) &&
       nativeIntervention.includes('APP_INTERVENTION_FALLBACK_HOST = "selected-app.app.freed.local"') &&
       nativeIntervention.includes("configured-app:unsupported") &&
       nativeIntervention.includes("normalizePendingReason") &&
@@ -289,7 +336,8 @@ const checks = [
     appSurface.includes("isFreshPendingIntervention(pending)") &&
       androidModule.includes("PENDING_INTERVENTION_MAX_AGE_MS") &&
       androidModule.includes("isFreshPendingIntervention(detectedAt)") &&
-      androidModule.includes("claimPendingIntervention(prefs, interventionId)") &&
+      androidModule.includes("claimPendingIntervention(prefs, interventionId, stageUnlockLease = false)") &&
+      androidModule.includes("claimPendingIntervention(prefs, sanitizedExpectedInterventionId)") &&
       androidModule.includes("isPendingInterventionConsumed(prefs, interventionId)") &&
       iosModule.includes("pendingInterventionMaxAgeSeconds") &&
       iosModule.includes("self.isFreshPendingIntervention(record.detectedAt)") &&
@@ -418,17 +466,23 @@ const checks = [
   ),
   check(
     "android-private-dns-diagnostics",
-    androidModule.includes('"private_dns_mode"') &&
-      androidModule.includes('"private_dns_specifier"') &&
+    androidModule.includes('return FreedNetworkDnsState.read(context).mode') &&
+      androidModule.includes('return FreedNetworkDnsState.read(context).serverName') &&
+      androidNetworkDnsState.includes('manager.getLinkProperties(network)') &&
+      androidNetworkDnsState.includes('properties.privateDnsServerName') &&
+      androidNetworkDnsState.includes('properties.isPrivateDnsActive') &&
+      androidNetworkDnsState.includes('!caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN)') &&
+      androidDnsGuardPolicy.includes('privateDnsMode == "off"') &&
+      androidDnsGuardPolicy.includes('running && !captivePaused && allowsPlaintext(privateDnsMode)') &&
       androidModule.includes("privateDnsMode") &&
       androidModule.includes('AsyncFunction("openPrivateDnsSettings"') &&
       androidModule.includes("Settings.ACTION_WIRELESS_SETTINGS") &&
-      androidModule.includes("Strict Private DNS is enabled") &&
+      androidDnsGuardPolicy.includes("strict Private DNS is enabled") &&
       androidModule.includes("dnsGuardLastResolver") &&
       androidModule.includes("dnsGuardLastForwardFailure") &&
       appSurface.includes("Review Private DNS") &&
       appSurface.includes("openPrivateDnsSettings"),
-    "Android status exposes Private DNS mode/specifier, DNS Guard resolver diagnostics, and a guided Network settings path for physical-device QA."
+    "Android status reads effective Private DNS from public non-VPN LinkProperties, preserves encrypted or unknown DNS by keeping DNS Guard inactive, distinguishes captive pause from active filtering, and exposes resolver diagnostics and a guided Network settings path for physical-device QA."
   ),
   check(
     "android-native-domain-feed-sync",
@@ -437,7 +491,8 @@ const checks = [
       androidAdultDomainFeed.includes("cachedRawDomains") &&
       androidAdultDomainFeed.includes("cachedDomains") &&
       accessibilityService.includes("FreedAdultDomainFeed.domains(this)") &&
-      vpnService.includes('FreedUrlClassifier.classify("https://${host}", FreedAdultDomainFeed.domains(this))') &&
+      (vpnService.includes('FreedUrlClassifier.classify("https://${item.questionHost}", resolveAdultDomains(), FreedAdultDomainFeed.userAllowedDomains(this))')) &&
+      vpnService.includes("FEED_REFRESH_INTERVAL_MS") &&
       androidModule.includes('AsyncFunction("configureAdultDomainFeed"') &&
       androidModule.includes("adultDomainFeedDomainCount") &&
       androidModule.includes("statusPayloadWithAndroidDiagnostics") &&
@@ -490,16 +545,18 @@ const checks = [
       !accessibilityService.includes("CountDownTimer") &&
       accessibilityService.includes("scheduleAppLimitCheck") &&
       accessibilityService.includes("scheduleEarnedUnlockRelock") &&
-      !vpnService.includes("Thread.sleep") &&
-      !vpnService.includes("Timer("),
-    "Native protection does not use broad polling loops or timer-based URL scanning; Android timers are bounded deadline checks for app limits, sustained short-form sessions, and earned-unlock relock."
+      !vpnService.includes("Timer(") &&
+      !vpnService.includes("while (true)") &&
+      vpnService.includes("CAPTIVE_PROBE_INTERVAL_MS = 60_000L") &&
+      vpnService.includes("runCaptiveProbeLoop()"),
+    "Native protection does not use broad polling loops or timer-based URL scanning; Android timers are bounded deadline checks for app limits, sustained short-form sessions, and earned-unlock relock, and the only periodic native work is a bounded 60s network-health probe that pauses classification on captive portals."
   ),
   check(
     "runtime-no-continuous-screenshot-or-ocr",
     lacksAny(accessibilityService, screenshotOrOcrRuntimeApis) &&
       lacksAny(androidModule, screenshotOrOcrRuntimeApis) &&
       lacksAny(iosModule, screenshotOrOcrRuntimeApis) &&
-      lacksAny(appSurface, [
+      lacksAny(challengePhotoSources, [
         "captureRef",
         "takeSnapshotAsync",
         "MediaProjection",
@@ -508,12 +565,11 @@ const checks = [
         "TextRecognizer",
         "VNRecognizeTextRequest"
       ]) &&
-      appSurface.includes("ImagePicker.launchCameraAsync") &&
-      appSurface.includes("base64: false") &&
-      appSurface.includes("exif: false") &&
-      appSurface.includes("deleteTemporaryChallengePhoto(photoUri)") &&
+      interactiveChallengePhotoPath &&
+      challengeVerificationHook.includes("base64: false") &&
+      challengeVerificationHook.includes("exif: false") &&
       protectionPermissions.includes("No continuous camera, image classification, screenshot, OCR, or background location analysis is used"),
-    "Runtime protection avoids screenshot/OCR/screen-capture APIs; challenge photo capture is on-demand only, without base64/exif capture and with best-effort temporary-photo cleanup."
+    "Runtime protection avoids screenshot/OCR/screen-capture APIs; challenge photo capture is on-demand only, without base64/exif capture; owned temporary-photo cleanup preserves bounded retry and truthful failure reporting."
   ),
   check(
     "runtime-no-continuous-image-classification",
@@ -521,15 +577,12 @@ const checks = [
       lacksAny(vpnService, imageClassificationRuntimeApis) &&
       lacksAny(iosDeviceActivity, imageClassificationRuntimeApis) &&
       lacksAny(safariContentBlockerHandler, imageClassificationRuntimeApis) &&
-      appSurface.includes("const capturePhoto = React.useCallback(async () =>") &&
-      appSurface.includes("ImagePicker.launchCameraAsync") &&
-      appSurface.includes("classifyChallengePhoto(photoUri, expectedLabels)") &&
-      appSurface.includes("deleteTemporaryChallengePhoto(photoUri)") &&
-      iosModule.includes("VNClassifyImageRequest") &&
+      interactiveChallengePhotoPath &&
+      photoSafety.nativeDelegation &&
       iosModule.includes('AsyncFunction("classifyChallengePhoto"') &&
-      androidModule.includes("ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)") &&
+      photoSafety.boundedNativeOwner &&
       androidModule.includes('AsyncFunction("classifyChallengePhoto"') &&
-      androidModule.includes("Tasks.await(labeler.process(image), 8, TimeUnit.SECONDS)") &&
+      photoSafety.deadlineCancellationIdentity &&
       protectionPermissions.includes("continuous image classification"),
     "On-device image classification is reachable only through explicit photo challenge submission; Accessibility, DNS Guard, DeviceActivity, and Safari blocker protection paths do not run Vision/ML Kit loops."
   ),

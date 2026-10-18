@@ -1,0 +1,176 @@
+{
+  "tests": 19,
+  "passed": 9,
+  "failed": 10,
+  "cases": [
+    {
+      "case": "disabled-revoke",
+      "passed": false,
+      "exitCode": 2,
+      "authReads": 1,
+      "credentialReadsMockOnly": 1,
+      "writesMockOnly": []
+    },
+    {
+      "case": "disabled-provision",
+      "passed": true,
+      "exitCode": 2,
+      "authReads": 1,
+      "credentialReadsMockOnly": 1,
+      "writesMockOnly": []
+    },
+    {
+      "case": "provider-removed-revoke",
+      "passed": false,
+      "exitCode": 2,
+      "authReads": 1,
+      "credentialReadsMockOnly": 1,
+      "writesMockOnly": []
+    },
+    {
+      "case": "provider-removed-provision",
+      "passed": true,
+      "exitCode": 2,
+      "authReads": 1,
+      "credentialReadsMockOnly": 1,
+      "writesMockOnly": []
+    },
+    {
+      "case": "missing-revoke",
+      "passed": false,
+      "exitCode": 2,
+      "authReads": 1,
+      "credentialReadsMockOnly": 1,
+      "writesMockOnly": []
+    },
+    {
+      "case": "missing-provision",
+      "passed": true,
+      "exitCode": 2,
+      "authReads": 1,
+      "credentialReadsMockOnly": 1,
+      "writesMockOnly": []
+    },
+    {
+      "case": "already-revoked-missing-user",
+      "passed": false,
+      "exitCode": 2,
+      "authReads": 1,
+      "credentialReadsMockOnly": 1,
+      "writesMockOnly": []
+    },
+    {
+      "case": "wrong-owner-revoke",
+      "passed": false,
+      "exitCode": 2,
+      "authReads": 1,
+      "credentialReadsMockOnly": 2,
+      "writesMockOnly": []
+    },
+    {
+      "case": "wrong-kind-revoke",
+      "passed": false,
+      "exitCode": 2,
+      "authReads": 1,
+      "credentialReadsMockOnly": 2,
+      "writesMockOnly": []
+    },
+    {
+      "case": "extra-capabilities-revoke",
+      "passed": false,
+      "exitCode": 2,
+      "authReads": 1,
+      "credentialReadsMockOnly": 2,
+      "writesMockOnly": []
+    },
+    {
+      "case": "missing-marker-revoke",
+      "passed": false,
+      "exitCode": 2,
+      "authReads": 1,
+      "credentialReadsMockOnly": 2,
+      "writesMockOnly": []
+    },
+    {
+      "case": "overlong-marker-revoke",
+      "passed": false,
+      "exitCode": 2,
+      "authReads": 1,
+      "credentialReadsMockOnly": 2,
+      "writesMockOnly": []
+    },
+    {
+      "case": "deletion-fence-revoke",
+      "passed": false,
+      "exitCode": 2,
+      "authReads": 1,
+      "credentialReadsMockOnly": 2,
+      "writesMockOnly": []
+    },
+    {
+      "case": "connected-provision",
+      "passed": true,
+      "exitCode": 0,
+      "authReads": 1,
+      "credentialReadsMockOnly": 2,
+      "writesMockOnly": [
+        {
+          "method": "create",
+          "path": "backend_jobs/reviewOfflineFixture_review-access-v1",
+          "fields": [
+            "createdAt",
+            "expiresAt",
+            "kind",
+            "status",
+            "uid"
+          ],
+          "lifetimeMs": 1209600000
+        }
+      ]
+    },
+    {
+      "case": "no-overwrite-or-renew-provision",
+      "passed": true,
+      "exitCode": 2,
+      "authReads": 1,
+      "credentialReadsMockOnly": 2,
+      "writesMockOnly": []
+    },
+    {
+      "case": "approval-wrong-owner",
+      "passed": true,
+      "exitCode": 2,
+      "authReads": 0,
+      "credentialReadsMockOnly": 0,
+      "writesMockOnly": []
+    },
+    {
+      "case": "approval-wrong-action",
+      "passed": true,
+      "exitCode": 2,
+      "authReads": 0,
+      "credentialReadsMockOnly": 0,
+      "writesMockOnly": []
+    },
+    {
+      "case": "approval-stale",
+      "passed": true,
+      "exitCode": 2,
+      "authReads": 0,
+      "credentialReadsMockOnly": 0,
+      "writesMockOnly": []
+    },
+    {
+      "case": "approval-missing",
+      "passed": true,
+      "exitCode": 2,
+      "authReads": 0,
+      "credentialReadsMockOnly": 0,
+      "writesMockOnly": []
+    }
+  ],
+  "networkForbidden": true,
+  "realCredentialsUsed": false,
+  "realOperationsExecuted": false,
+  "syntheticApprovalFixturesRemoved": true
+}

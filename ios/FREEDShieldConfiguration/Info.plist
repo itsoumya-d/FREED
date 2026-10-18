@@ -20,6 +20,12 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FREEDWebsiteRecoveryProbeEnabled</key>
+	<false/>
+	<key>FREEDWebsiteRecoveryProbeChannel</key>
+	<string>production</string>
+	<key>FREEDWebsiteRecoveryProbeInternalTestflight</key>
+	<false/>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionPointIdentifier</key>

@@ -1,8 +1,14 @@
+import type { AppGuardMode } from './recovery-state';
+import { describeAppGuard } from './app-guard';
 import type { ProtectionActivationDiagnostics, ProtectionCapability, ProtectionStatus } from "freed-protection";
 import {
   nativeAdultDomainFeedReadyForActivation,
+  hasReviewedNativeAdultDomainFeed,
   safariAdultDomainFeedReadyForActivation
 } from "./adult-domain-feed-provenance";
+import { hasPrivateDnsSetupConflict } from "./protection-setup-presenter";
+
+export type ProtectionIntent = 'websites' | 'apps' | 'both';
 
 export type ProtectionPermissionStatus = "complete" | "needed" | "optional" | "unavailable";
 
@@ -16,6 +22,7 @@ export type ProtectionPermissionStep = {
   reason: string;
   dataBoundary: string;
   action:
+    | "configure-app-guard"
     | "apply-adult-filter"
     | "sync-adult-domain-feed"
     | "request-authorization"
@@ -41,7 +48,63 @@ export function getSelectedScreenTimeTargetCount(status: ProtectionStatus | null
   return Math.max(0, individualCount, aggregateCount);
 }
 
+/** Purpose-specific setup never asks for the other feature's native permissions. */
 export function buildProtectionPermissionPlan(
+  capability: ProtectionCapability | null,
+  status: ProtectionStatus | null,
+  intent: ProtectionIntent = 'both',
+  expectedAppGuardMode?: AppGuardMode
+): ProtectionPermissionStep[] {
+  let legacy = buildLegacyProtectionPermissionPlan(capability, status);
+  if (capability?.appGuardModes === true) {
+    const guard = describeAppGuard(capability, status, expectedAppGuardMode);
+    legacy = legacy.map(step => step.id === 'ios-screen-time-targets' ? { ...step, title: 'Selected individual applications',
+      status: !capability.screenTime ? 'unavailable' as const : guard.targets > 0 ? 'complete' as const : status?.authorized ? 'needed' as const : 'unavailable' as const,
+      reason: 'Choose individual applications in Apple’s picker. Categories and domains remain available to older policies but cannot enable this app guard.' }
+      : step.id === 'ios-selected-app-limit-monitor' ? { ...step, title: 'Saved app guard', permissionLabel: 'Native app guard configuration', action: 'configure-app-guard' as const,
+        status: !guard.supported ? 'unavailable' as const : guard.ready ? 'complete' as const : 'needed' as const, reason: guard.explanation } : step);
+    if (capability.platform === 'android') legacy.push({ id: 'android-app-guard', title: 'Saved app guard', permissionLabel: 'Native app guard configuration', platform: 'android', required: true,
+      status: !guard.supported ? 'unavailable' : guard.ready ? 'complete' : 'needed', reason: guard.explanation, dataBoundary: 'Selected package IDs and native guard state only.', action: 'configure-app-guard' });
+  }
+  if (intent === 'both') return legacy;
+  const websites = new Set([
+    'ios-screen-time', 'ios-adult-web-filter', 'ios-safari-content-blocker',
+    'android-native-adult-domain-feed', 'android-dns-guard',
+    'android-recovery-notifications', 'android-private-dns-guidance', 'native-build-required',
+  ]);
+  const apps = new Set([
+    'ios-screen-time', 'ios-screen-time-targets', 'ios-selected-app-limit-monitor',
+    'android-app-guard', 'android-usage-access', 'android-accessibility', 'android-doomscroll-apps', 'native-build-required',
+  ]);
+  return legacy.filter(step => (intent === 'websites' ? websites : apps).has(step.id)).map(step => {
+    if (step.id === 'ios-screen-time' && intent === 'apps' && !capability?.managedSettings) {
+      return { ...step, status: 'unavailable' as const };
+    }
+    if (step.status === 'complete' && (step.id === 'ios-adult-web-filter' && (status?.authorized !== true || status?.adultFilterActive !== true) || step.id === 'ios-selected-app-limit-monitor' && status?.authorized !== true)) {
+      return { ...step, status: 'needed' as const };
+    }
+    if (step.id === 'ios-safari-content-blocker') {
+      return { ...step, required: false,
+        reason: "Adds separate adult-domain rules in Safari. Apple's adult web policy can work independently." };
+    }
+    if (step.id === 'android-native-adult-domain-feed') {
+      return { ...step, status: step.status === 'unavailable' ? step.status : hasReviewedNativeAdultDomainFeed(status) ? 'complete' as const : 'needed' as const,
+        reason: 'Loads the reviewed adult-domain feed into Android DNS Guard before website protection is ready.' };
+    }
+    if (step.id === 'android-dns-guard') {
+      const nativeReady = status?.adultFilterActive === true && status?.dnsGuardCoverageReady === true && status?.vpnConsentRequired !== true;
+      return { ...step, status: step.status === 'complete' && !nativeReady ? 'needed' as const : step.status };
+    }
+    if (step.id === 'android-accessibility') {
+      return { ...step, title: 'Selected app interruption',
+        reason: capability?.appGuardModes ? 'Uses foreground app events to enforce the saved guard mode for selected packages.' : 'Uses foreground app events to enforce configured daily limits for selected packages.',
+        dataBoundary: 'App limits use package IDs and foreground duration. App-limit setup does not request in-app content inspection.' };
+    }
+    return step;
+  });
+}
+
+function buildLegacyProtectionPermissionPlan(
   capability: ProtectionCapability | null,
   status: ProtectionStatus | null
 ): ProtectionPermissionStep[] {
@@ -56,7 +119,9 @@ export function buildProtectionPermissionPlan(
     );
   const androidNativeFeedReady = nativeAdultDomainFeedReadyForActivation(status);
   const androidPrivateDnsMode = status?.privateDnsMode;
-  const androidDnsGuardRuntimeReady = status?.dnsGuardRuntimeReady === true;
+  const androidDnsGuardRuntimeReady = status?.dnsGuardRuntimeReady === true &&
+    status?.dnsGuardCaptivePaused !== true && status?.dnsGuardCoverageReady !== false &&
+    status?.privateDnsActive !== true && (!androidPrivateDnsMode || androidPrivateDnsMode === "off");
 
   if (platform === "ios") {
     const screenTimeAvailable = Boolean(capability?.screenTime);
@@ -285,6 +350,12 @@ export function getProtectionActivationRecoveryStep(
       return findStep("android-native-adult-domain-feed");
     }
     if (
+      hasPrivateDnsSetupConflict(diagnostics) ||
+      hasCode("android-private-dns-strict-unsupported", "android-private-dns-encrypted-unsupported", "android-private-dns-state-unknown")
+    ) {
+      return findStep("android-private-dns-guidance", "android-dns-guard");
+    }
+    if (
       hasCode(
         "android-dns-guard-not-running",
         "android-dns-guard-runtime-not-ready",
@@ -297,9 +368,6 @@ export function getProtectionActivationRecoveryStep(
       issueText.includes("dns guard")
     ) {
       return findStep("android-dns-guard");
-    }
-    if (diagnostics.normalAllowed === false && diagnostics.privateDnsMode === "hostname") {
-      return findStep("android-private-dns-guidance", "android-dns-guard");
     }
     if (hasCode("android-usage-access-disabled") || diagnostics.usageStatsAuthorized === false) {
       return findStep("android-usage-access");

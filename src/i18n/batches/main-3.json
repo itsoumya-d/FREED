@@ -1,0 +1,2104 @@
+{
+  "entries": [
+    {
+      "source": "Continue · {{selectedCount}} selected",
+      "translations": {
+        "hi": "जारी रखें · {{selectedCount}} चुने गए",
+        "es": "Continuar · {{selectedCount}} seleccionados",
+        "pt": "Continuar · {{selectedCount}} selecionados",
+        "fr": "Continuer · {{selectedCount}} sélectionnés",
+        "de": "Fortfahren · {{selectedCount}} ausgewählt",
+        "ar": "متابعة · {{selectedCount}} محدد",
+        "ja": "続ける · {{selectedCount}}件選択済み",
+        "zh-Hans": "继续 · 已选择 {{selectedCount}} 个",
+        "ko": "계속 · {{selectedCount}} 선택됨"
+      }
+    },
+    {
+      "source": "Generate reset",
+      "translations": {
+        "hi": "रीसेट बनाएँ",
+        "es": "Generar reinicio",
+        "pt": "Gerar recomeço",
+        "fr": "Générer une pause",
+        "de": "Neustart erstellen",
+        "ar": "إنشاء إعادة ضبط",
+        "ja": "リセットを生成",
+        "zh-Hans": "生成重置",
+        "ko": "재설정 생성"
+      }
+    },
+    {
+      "source": "Gentle",
+      "translations": {
+        "hi": "सौम्य",
+        "es": "Suave",
+        "pt": "Suave",
+        "fr": "Doux",
+        "de": "Sanft",
+        "ar": "لطيف",
+        "ja": "やさしい",
+        "zh-Hans": "温和",
+        "ko": "온화한"
+      }
+    },
+    {
+      "source": "Give me one two-minute clean reset action.",
+      "translations": {
+        "hi": "मुझे दो मिनट का एक सही रीसेट कदम दें।",
+        "es": "Dame una acción útil de reinicio de dos minutos.",
+        "pt": "Dê uma ação útil de recomeço de dois minutos.",
+        "fr": "Donnez-moi une action utile de deux minutes.",
+        "de": "Gib mir eine hilfreiche Zwei-Minuten-Neustartaktion.",
+        "ar": "أعطني خطوة مفيدة لإعادة ضبط مدتها دقيقتان.",
+        "ja": "2分でできる良いリセット行動を一つ教えてください。",
+        "zh-Hans": "给我一个两分钟的有益重置行动。",
+        "ko": "2분 동안 완전한 재설정 작업을 한 번만 수행해 주세요."
+      }
+    },
+    {
+      "source": "Go back",
+      "translations": {
+        "hi": "वापस जाएँ",
+        "es": "Volver",
+        "pt": "Voltar",
+        "fr": "Revenir",
+        "de": "Zurückgehen",
+        "ar": "العودة",
+        "ja": "戻る",
+        "zh-Hans": "返回",
+        "ko": "돌아가기"
+      }
+    },
+    {
+      "source": "Go Back",
+      "translations": {
+        "hi": "पीछे जाएँ",
+        "es": "Regresar",
+        "pt": "Voltar atrás",
+        "fr": "Retour",
+        "de": "Zurück",
+        "ar": "رجوع",
+        "ja": "前に戻る",
+        "zh-Hans": "后退",
+        "ko": "돌아가기"
+      }
+    },
+    {
+      "source": "Google",
+      "translations": {
+        "hi": "Google",
+        "es": "Google",
+        "pt": "Google",
+        "fr": "Google",
+        "de": "Google",
+        "ar": "Google",
+        "ja": "Google",
+        "zh-Hans": "Google",
+        "ko": "Google"
+      }
+    },
+    {
+      "source": "Google Play access-token request",
+      "translations": {
+        "hi": "Google Play एक्सेस-टोकन अनुरोध",
+        "es": "Solicitud de token de acceso de Google Play",
+        "pt": "Solicitação de token de acesso do Google Play",
+        "fr": "Demande de jeton d’accès Google Play",
+        "de": "Google-Play-Zugriffstokenanfrage",
+        "ar": "طلب رمز وصول Google Play",
+        "ja": "Google Playのアクセストークン要求",
+        "zh-Hans": "Google Play 访问令牌请求",
+        "ko": "Google Play 액세스 토큰 요청"
+      }
+    },
+    {
+      "source": "Google Play access-token request failed.",
+      "translations": {
+        "hi": "Google Play एक्सेस-टोकन अनुरोध असफल हुआ।",
+        "es": "Falló la solicitud de token de acceso de Google Play.",
+        "pt": "A solicitação de token de acesso do Google Play falhou.",
+        "fr": "La demande de jeton d’accès Google Play a échoué.",
+        "de": "Die Google-Play-Zugriffstokenanfrage ist fehlgeschlagen.",
+        "ar": "فشل طلب رمز الوصول لـGoogle Play.",
+        "ja": "Google Playのアクセストークン要求に失敗しました。",
+        "zh-Hans": "Google Play 访问令牌请求失败。",
+        "ko": "Google Play 액세스 토큰 요청이 실패했습니다."
+      }
+    },
+    {
+      "source": "Google Play access-token response",
+      "translations": {
+        "hi": "Google Play एक्सेस-टोकन प्रतिक्रिया",
+        "es": "Respuesta de token de acceso de Google Play",
+        "pt": "Resposta de token de acesso do Google Play",
+        "fr": "Réponse de jeton d’accès Google Play",
+        "de": "Google-Play-Zugriffstokenantwort",
+        "ar": "استجابة رمز وصول Google Play",
+        "ja": "Google Playのアクセストークン応答",
+        "zh-Hans": "Google Play 访问令牌响应",
+        "ko": "Google Play 액세스 토큰 응답"
+      }
+    },
+    {
+      "source": "Google Play package name does not match FREED configuration.",
+      "translations": {
+        "hi": "Google Play पैकेज नाम FREED कॉन्फ़िगरेशन से मेल नहीं खाता।",
+        "es": "El nombre del paquete de Google Play no coincide con FREED.",
+        "pt": "O nome do pacote do Google Play não corresponde à configuração do FREED.",
+        "fr": "Le nom du paquet Google Play ne correspond pas à la configuration FREED.",
+        "de": "Der Google-Play-Paketname stimmt nicht mit der FREED-Konfiguration überein.",
+        "ar": "اسم حزمة Google Play لا يطابق إعداد FREED.",
+        "ja": "Google Playのパッケージ名がFREEDの設定と一致しません。",
+        "zh-Hans": "Google Play 软件包名称与 FREED 配置不匹配。",
+        "ko": "Google Play 패키지 이름이 FREED 구성과 일치하지 않습니다."
+      }
+    },
+    {
+      "source": "Google Play product is not purchased.",
+      "translations": {
+        "hi": "Google Play उत्पाद खरीदा नहीं गया है।",
+        "es": "El producto de Google Play no está comprado.",
+        "pt": "O produto do Google Play não foi comprado.",
+        "fr": "Le produit Google Play n’a pas été acheté.",
+        "de": "Das Google-Play-Produkt wurde nicht gekauft.",
+        "ar": "منتج Google Play غير مشترى.",
+        "ja": "Google Playの製品は購入されていません。",
+        "zh-Hans": "Google Play 产品尚未购买。",
+        "ko": "Google Play 제품을 구매하지 않았습니다."
+      }
+    },
+    {
+      "source": "Google Play purchase response",
+      "translations": {
+        "hi": "Google Play खरीद प्रतिक्रिया",
+        "es": "Respuesta de compra de Google Play",
+        "pt": "Resposta de compra do Google Play",
+        "fr": "Réponse d’achat Google Play",
+        "de": "Google-Play-Kaufantwort",
+        "ar": "استجابة شراء Google Play",
+        "ja": "Google Playの購入応答",
+        "zh-Hans": "Google Play 购买响应",
+        "ko": "Google Play 구매 답변"
+      }
+    },
+    {
+      "source": "Google Play purchase verification",
+      "translations": {
+        "hi": "Google Play खरीद सत्यापन",
+        "es": "Verificación de compra de Google Play",
+        "pt": "Verificação de compra do Google Play",
+        "fr": "Vérification d’achat Google Play",
+        "de": "Google-Play-Kaufprüfung",
+        "ar": "التحقق من شراء Google Play",
+        "ja": "Google Playの購入確認",
+        "zh-Hans": "Google Play 购买验证",
+        "ko": "Google Play 구매확인"
+      }
+    },
+    {
+      "source": "Google Play subscription is not active.",
+      "translations": {
+        "hi": "Google Play सदस्यता सक्रिय नहीं है।",
+        "es": "La suscripción de Google Play no está activa.",
+        "pt": "A assinatura do Google Play não está ativa.",
+        "fr": "L’abonnement Google Play n’est pas actif.",
+        "de": "Das Google-Play-Abonnement ist nicht aktiv.",
+        "ar": "اشتراك Google Play غير نشط.",
+        "ja": "Google Playの定期購入は有効ではありません。",
+        "zh-Hans": "Google Play 订阅未生效。",
+        "ko": "Google Play 구독이 활성 상태가 아닙니다."
+      }
+    },
+    {
+      "source": "Google Play verification credentials are not configured.",
+      "translations": {
+        "hi": "Google Play सत्यापन के क्रेडेंशियल सेट नहीं हैं।",
+        "es": "Las credenciales de verificación de Google Play no están configuradas.",
+        "pt": "As credenciais de verificação do Google Play não estão configuradas.",
+        "fr": "Les identifiants de vérification Google Play ne sont pas configurés.",
+        "de": "Die Google-Play-Prüfzugangsdaten sind nicht eingerichtet.",
+        "ar": "بيانات اعتماد تحقق Google Play غير مضبوطة.",
+        "ja": "Google Playの確認用認証情報が設定されていません。",
+        "zh-Hans": "尚未配置 Google Play 验证凭据。",
+        "ko": "Google Play 확인 자격 증명이 구성되지 않았습니다."
+      }
+    },
+    {
+      "source": "Google Play verification failed.",
+      "translations": {
+        "hi": "Google Play सत्यापन असफल हुआ।",
+        "es": "Falló la verificación de Google Play.",
+        "pt": "A verificação do Google Play falhou.",
+        "fr": "La vérification Google Play a échoué.",
+        "de": "Die Google-Play-Prüfung ist fehlgeschlagen.",
+        "ar": "فشل تحقق Google Play.",
+        "ja": "Google Playの確認に失敗しました。",
+        "zh-Hans": "Google Play 验证失败。",
+        "ko": "Google Play 확인에 실패했습니다."
+      }
+    },
+    {
+      "source": "Google Play verification returned {{status}}.",
+      "translations": {
+        "hi": "Google Play सत्यापन ने {{status}} लौटाया।",
+        "es": "La verificación de Google Play devolvió {{status}}.",
+        "pt": "A verificação do Google Play retornou {{status}}.",
+        "fr": "La vérification Google Play a renvoyé {{status}}.",
+        "de": "Die Google-Play-Prüfung gab {{status}} zurück.",
+        "ar": "أعاد تحقق Google Play الحالة {{status}}.",
+        "ja": "Google Playの確認は{{status}}を返しました。",
+        "zh-Hans": "Google Play 验证返回 {{status}}。",
+        "ko": "Google Play 확인에서 {{status}}가 반환되었습니다."
+      }
+    },
+    {
+      "source": "Google Play verification returned malformed JSON.",
+      "translations": {
+        "hi": "Google Play सत्यापन ने गलत JSON लौटाया।",
+        "es": "La verificación de Google Play devolvió JSON incorrecto.",
+        "pt": "A verificação do Google Play retornou JSON malformado.",
+        "fr": "La vérification Google Play a renvoyé un JSON incorrect.",
+        "de": "Die Google-Play-Prüfung gab fehlerhaftes JSON zurück.",
+        "ar": "أعاد تحقق Google Play بيانات JSON غير سليمة.",
+        "ja": "Google Playの確認で不正なJSONが返されました。",
+        "zh-Hans": "Google Play 验证返回了格式错误的 JSON。",
+        "ko": "Google Play 확인에서 잘못된 JSON이 반환되었습니다."
+      }
+    },
+    {
+      "source": "Guard",
+      "translations": {
+        "hi": "सुरक्षा",
+        "es": "Protección",
+        "pt": "Proteção",
+        "fr": "Protection",
+        "de": "Schutz",
+        "ar": "الحماية",
+        "ja": "ガード",
+        "zh-Hans": "保护",
+        "ko": "가드"
+      }
+    },
+    {
+      "source": "Guide me through 3 slow grounding breaths.",
+      "translations": {
+        "hi": "मुझे 3 धीमी स्थिरता की साँसें लेने में मार्गदर्शन दें।",
+        "es": "Guíame en 3 respiraciones lentas para centrarme.",
+        "pt": "Guie 3 respirações lentas para me ancorar.",
+        "fr": "Guidez-moi dans 3 respirations lentes d’ancrage.",
+        "de": "Leite mich durch 3 langsame erdende Atemzüge.",
+        "ar": "أرشدني إلى ٣ أنفاس بطيئة للثبات.",
+        "ja": "落ち着くためのゆっくりした呼吸を3回、案内してください。",
+        "zh-Hans": "带我做 3 次缓慢的安定呼吸。",
+        "ko": "3번의 느린 접지 호흡을 안내해 주세요."
+      }
+    },
+    {
+      "source": "HALT check",
+      "translations": {
+        "hi": "HALT जाँच",
+        "es": "Comprobación HALT",
+        "pt": "Verificação HALT",
+        "fr": "Bilan HALT",
+        "de": "HALT-Check",
+        "ar": "فحص HALT",
+        "ja": "HALTチェック",
+        "zh-Hans": "HALT 检查",
+        "ko": "정지 확인"
+      }
+    },
+    {
+      "source": "Haptic cues",
+      "translations": {
+        "hi": "हैप्टिक संकेत",
+        "es": "Señales hápticas",
+        "pt": "Sinais táteis",
+        "fr": "Signaux haptiques",
+        "de": "Haptische Hinweise",
+        "ar": "إشارات لمسية",
+        "ja": "触覚の合図",
+        "zh-Hans": "触觉提示",
+        "ko": "햅틱 신호"
+      }
+    },
+    {
+      "source": "Help me evaluate if I am Hungry, Angry, Lonely, or Tired right now.",
+      "translations": {
+        "hi": "जाँचने में मदद करें कि अभी मैं भूखा, गुस्से में, अकेला या थका हूँ।",
+        "es": "Ayúdame a evaluar si tengo hambre, enfado, soledad o cansancio ahora.",
+        "pt": "Ajude a avaliar se estou com fome, raiva, solidão ou cansaço agora.",
+        "fr": "Aidez-moi à voir si j’ai faim, si je suis en colère, seul ou fatigué maintenant.",
+        "de": "Hilf mir zu prüfen, ob ich gerade hungrig, wütend, einsam oder müde bin.",
+        "ar": "ساعدني على معرفة إن كنت جائعًا أو غاضبًا أو وحيدًا أو متعبًا الآن.",
+        "ja": "今、お腹が空いているか、怒っているか、孤独か、疲れているかを考えるのを手伝ってください。",
+        "zh-Hans": "帮我判断现在是否饥饿、生气、孤独或疲惫。",
+        "ko": "내가 지금 배고픈지, 화난지, 외로운지, 피곤한지 평가하도록 도와주세요."
+      }
+    },
+    {
+      "source": "Help me understand this urge and choose a useful next action.",
+      "translations": {
+        "hi": "यह इच्छा समझने और अगला उपयोगी कदम चुनने में मदद करें।",
+        "es": "Ayúdame a entender este impulso y elegir una acción útil.",
+        "pt": "Ajude a entender esta vontade e escolher uma ação útil.",
+        "fr": "Aidez-moi à comprendre cette envie et choisir une action utile.",
+        "de": "Hilf mir, diesen Drang zu verstehen und einen hilfreichen Schritt zu wählen.",
+        "ar": "ساعدني على فهم هذه الرغبة واختيار خطوة مفيدة.",
+        "ja": "この衝動を理解し、役立つ次の行動を選ぶのを手伝ってください。",
+        "zh-Hans": "帮我理解这次冲动，并选择有益的下一步行动。",
+        "ko": "이러한 충동을 이해하고 유용한 다음 조치를 선택할 수 있도록 도와주세요."
+      }
+    },
+    {
+      "source": "Help rate",
+      "translations": {
+        "hi": "मदद की दर",
+        "es": "Tasa de ayuda",
+        "pt": "Taxa de ajuda",
+        "fr": "Taux d’aide",
+        "de": "Hilfsquote",
+        "ar": "معدل المساعدة",
+        "ja": "役立った割合",
+        "zh-Hans": "帮助率",
+        "ko": "도움말 비율"
+      }
+    },
+    {
+      "source": "Helpful",
+      "translations": {
+        "hi": "मददगार",
+        "es": "Útil",
+        "pt": "Útil",
+        "fr": "Utile",
+        "de": "Hilfreich",
+        "ar": "مفيد",
+        "ja": "役に立った",
+        "zh-Hans": "有帮助",
+        "ko": "도움이 됨"
+      }
+    },
+    {
+      "source": "Hi, I am CLARA. Tell me what is happening, and we will pick the next clean action together.",
+      "translations": {
+        "hi": "नमस्ते, मैं CLARA हूँ। क्या हो रहा है बताएँ, हम साथ में अगला सही कदम चुनेंगे।",
+        "es": "Hola, soy CLARA. Cuéntame qué ocurre y elegiremos juntos la siguiente acción útil.",
+        "pt": "Olá, sou a CLARA. Conte o que está acontecendo e escolheremos juntos a próxima ação útil.",
+        "fr": "Bonjour, je suis CLARA. Dites-moi ce qui se passe, et nous choisirons ensemble la prochaine action utile.",
+        "de": "Hallo, ich bin CLARA. Sag mir, was los ist, und wir wählen zusammen den nächsten hilfreichen Schritt.",
+        "ar": "مرحبًا، أنا CLARA. أخبرني بما يحدث لنختار معًا الخطوة المفيدة التالية.",
+        "ja": "こんにちは、CLARAです。何が起きているか教えてください。一緒に次の良い行動を選びましょう。",
+        "zh-Hans": "你好，我是 CLARA。告诉我发生了什么，我们一起选择下一项有益行动。",
+        "ko": "안녕하세요 CLARA 입니다. 무슨 일이 일어나고 있는지 알려주시면 다음 깨끗한 조치를 함께 선택하겠습니다."
+      }
+    },
+    {
+      "source": "Hide advanced diagnostics",
+      "translations": {
+        "hi": "उन्नत निदान छिपाएँ",
+        "es": "Ocultar diagnóstico avanzado",
+        "pt": "Ocultar diagnósticos avançados",
+        "fr": "Masquer les diagnostics avancés",
+        "de": "Erweiterte Diagnose ausblenden",
+        "ar": "إخفاء التشخيص المتقدم",
+        "ja": "詳細診断を隠す",
+        "zh-Hans": "隐藏高级诊断",
+        "ko": "고급 진단 숨기기"
+      }
+    },
+    {
+      "source": "High",
+      "translations": {
+        "hi": "उच्च",
+        "es": "Alto",
+        "pt": "Alto",
+        "fr": "Élevé",
+        "de": "Hoch",
+        "ar": "مرتفع",
+        "ja": "高い",
+        "zh-Hans": "高",
+        "ko": "높음"
+      }
+    },
+    {
+      "source": "High stress & pressure",
+      "translations": {
+        "hi": "अधिक तनाव और दबाव",
+        "es": "Estrés y presión elevados",
+        "pt": "Muito estresse e pressão",
+        "fr": "Stress et pression élevés",
+        "de": "Viel Stress und Druck",
+        "ar": "توتر وضغط مرتفعان",
+        "ja": "強いストレスとプレッシャー",
+        "zh-Hans": "高压与压力",
+        "ko": "높은 스트레스와 압박감"
+      }
+    },
+    {
+      "source": "Hold",
+      "translations": {
+        "hi": "रोकें",
+        "es": "Mantener",
+        "pt": "Segurar",
+        "fr": "Retenez",
+        "de": "Halten",
+        "ar": "احبس",
+        "ja": "止める",
+        "zh-Hans": "屏息",
+        "ko": "보류"
+      }
+    },
+    {
+      "source": "Hold Empty",
+      "translations": {
+        "hi": "खाली साँस रोकें",
+        "es": "Mantener sin aire",
+        "pt": "Segurar sem ar",
+        "fr": "Retenez à vide",
+        "de": "Leer halten",
+        "ar": "احبس بعد الزفير",
+        "ja": "吐いたまま止める",
+        "zh-Hans": "呼气后屏息",
+        "ko": "비워두기"
+      }
+    },
+    {
+      "source": "Hold for a short pause",
+      "translations": {
+        "hi": "थोड़ी देर रोकें",
+        "es": "Mantén una pausa breve",
+        "pt": "Segure por uma breve pausa",
+        "fr": "Retenez un court instant",
+        "de": "Kurz halten",
+        "ar": "احبس لوقفة قصيرة",
+        "ja": "少し止めます",
+        "zh-Hans": "短暂停顿",
+        "ko": "잠시 멈춤"
+      }
+    },
+    {
+      "source": "Hold for seven.",
+      "translations": {
+        "hi": "सात तक रोकें।",
+        "es": "Mantén durante siete.",
+        "pt": "Segure por sete.",
+        "fr": "Retenez pendant sept.",
+        "de": "Sieben Sekunden halten.",
+        "ar": "احبس لسبعٍ.",
+        "ja": "7秒止めます。",
+        "zh-Hans": "屏息七秒。",
+        "ko": "7분 동안 기다리세요."
+      }
+    },
+    {
+      "source": "How long has this cycle been a struggle?",
+      "translations": {
+        "hi": "यह चक्र कब से मुश्किल रहा है?",
+        "es": "¿Cuánto tiempo llevas luchando con este ciclo?",
+        "pt": "Há quanto tempo esse ciclo é uma dificuldade?",
+        "fr": "Depuis combien de temps ce cycle est-il difficile ?",
+        "de": "Wie lange kämpfst du schon mit diesem Kreislauf?",
+        "ar": "منذ متى يشكّل هذا النمط صعوبة؟",
+        "ja": "この繰り返しで悩んでいるのはどのくらいですか？",
+        "zh-Hans": "这个循环困扰你多久了？",
+        "ko": "이 주기가 얼마나 오랫동안 투쟁이었습니까?"
+      }
+    },
+    {
+      "source": "hurt myself",
+      "translations": {
+        "hi": "खुद को चोट पहुँचाऊँ",
+        "es": "hacerme daño",
+        "pt": "me machucar",
+        "fr": "me faire du mal",
+        "de": "mich verletzen",
+        "ar": "إيذاء نفسي",
+        "ja": "自分を傷つける",
+        "zh-Hans": "伤害自己",
+        "ko": "나 자신에게 상처를 입혔다"
+      }
+    },
+    {
+      "source": "I am having an intense urge right now. Guide me through it.",
+      "translations": {
+        "hi": "अभी मुझे तेज़ इच्छा हो रही है। इससे निकलने में मार्गदर्शन दें।",
+        "es": "Tengo un impulso intenso ahora. Guíame para atravesarlo.",
+        "pt": "Estou com uma vontade intensa agora. Me guie para atravessá-la.",
+        "fr": "J’ai une envie intense maintenant. Guidez-moi pour la traverser.",
+        "de": "Ich habe gerade starken Drang. Hilf mir, ihn zu durchstehen.",
+        "ar": "أشعر برغبة شديدة الآن. أرشدني لتجاوزها.",
+        "ja": "今、強い衝動を感じています。乗り切れるよう案内してください。",
+        "zh-Hans": "我现在有强烈冲动。请带我度过。",
+        "ko": "나는 지금 강렬한 충동을 느끼고 있습니다. 그 과정을 안내해 주세요."
+      }
+    },
+    {
+      "source": "I can't sleep and night urges are loud.",
+      "translations": {
+        "hi": "नींद नहीं आ रही और रात की इच्छाएँ तेज़ हैं।",
+        "es": "No puedo dormir y los impulsos nocturnos son intensos.",
+        "pt": "Não consigo dormir e as vontades à noite estão fortes.",
+        "fr": "Je n’arrive pas à dormir et les envies nocturnes sont fortes.",
+        "de": "Ich kann nicht schlafen und der nächtliche Drang ist laut.",
+        "ar": "لا أستطيع النوم والرغبات الليلية شديدة.",
+        "ja": "眠れず、夜の衝動が強くなっています。",
+        "zh-Hans": "我睡不着，夜间冲动很强。",
+        "ko": "잠을 못 자고 밤의 충동이 시끄럽습니다."
+      }
+    },
+    {
+      "source": "I had a slip. Help me reset without shame and learn from what triggered it.",
+      "translations": {
+        "hi": "मुझसे चूक हुई। बिना शर्म के रीसेट करने और कारण से सीखने में मदद करें।",
+        "es": "Tuve un desliz. Ayúdame a reiniciar sin vergüenza y aprender del desencadenante.",
+        "pt": "Tive um deslize. Ajude a recomeçar sem vergonha e aprender com o gatilho.",
+        "fr": "J’ai eu un écart. Aidez-moi à repartir sans honte et à comprendre le déclencheur.",
+        "de": "Ich hatte einen Ausrutscher. Hilf mir, ohne Scham neu zu starten und aus dem Auslöser zu lernen.",
+        "ar": "مررت بزلة. ساعدني على إعادة الضبط دون خجل والتعلم من سببها.",
+        "ja": "つまずいてしまいました。恥じずにリセットし、きっかけから学ぶのを手伝ってください。",
+        "zh-Hans": "我失误了。帮我不带羞耻地重置，并了解触发原因。",
+        "ko": "나는 실수를 했다. 부끄러움 없이 재설정할 수 있도록 도와주시고, 무엇이 이를 촉발했는지 알아보세요."
+      }
+    },
+    {
+      "source": "I reached out",
+      "translations": {
+        "hi": "मैंने संपर्क किया",
+        "es": "Me puse en contacto",
+        "pt": "Entrei em contato",
+        "fr": "J’ai pris contact",
+        "de": "Ich habe Kontakt aufgenommen",
+        "ar": "تواصلت",
+        "ja": "連絡しました",
+        "zh-Hans": "我已联系",
+        "ko": "나는 손을 뻗었다"
+      }
+    },
+    {
+      "source": "I saw the recent risk moment around {{host}}. FREED protected the streak; now let us protect your mood too. Pick one small reset and come back to the day you wanted.",
+      "translations": {
+        "hi": "मैंने {{host}} से जुड़ा हाल का जोखिम देखा। FREED ने स्ट्रिक बचाया; अब आपके मूड की भी देखभाल करें। छोटा रीसेट चुनें और अपने पसंद के दिन पर लौटें।",
+        "es": "Vi el momento de riesgo reciente en torno a {{host}}. FREED protegió tu racha; cuidemos también tu ánimo. Elige un pequeño reinicio y vuelve al día que querías.",
+        "pt": "Vi o momento de risco recente em torno de {{host}}. O FREED protegeu sua sequência; agora vamos cuidar do humor também. Escolha um pequeno recomeço e volte ao dia que queria.",
+        "fr": "J’ai vu le récent moment à risque autour de {{host}}. FREED a protégé votre série ; protégeons aussi votre humeur. Choisissez une petite pause et retrouvez la journée souhaitée.",
+        "de": "Ich habe den Risikomoment rund um {{host}} gesehen. FREED hat deine Serie geschützt. Schützen wir jetzt auch deine Stimmung. Wähle einen kleinen Neustart und kehre zu deinem gewünschten Tag zurück.",
+        "ar": "رأيت لحظة الخطر الأخيرة حول {{host}}. حمى FREED استمراريتك؛ لنحمِ مزاجك أيضًا. اختر إعادة ضبط صغيرة وعُد إلى اليوم الذي أردته.",
+        "ja": "{{host}}に関する最近のリスクを確認しました。FREEDは連続記録を守りました。今度は気分も守りましょう。小さなリセットを選び、望んだ一日に戻りましょう。",
+        "zh-Hans": "我看到了最近与 {{host}} 有关的风险时刻。FREED 保护了连续记录；现在也照顾一下心情。选择一次小重置，回到你想要的一天。",
+        "ko": "최근 {{host}}를 중심으로 위험 순간을 보았습니다. FREED는 연속 기록을 보호했습니다. 이제 당신의 기분도 지켜드리겠습니다. 작은 재설정 하나를 선택하고 원하는 날로 돌아오세요."
+      }
+    },
+    {
+      "source": "I'm Done",
+      "translations": {
+        "hi": "मैंने कर लिया",
+        "es": "He terminado",
+        "pt": "Terminei",
+        "fr": "J’ai terminé",
+        "de": "Ich bin fertig",
+        "ar": "انتهيت",
+        "ja": "完了しました",
+        "zh-Hans": "我完成了",
+        "ko": "난 끝났어"
+      }
+    },
+    {
+      "source": "Identity notes",
+      "translations": {
+        "hi": "पहचान के नोट",
+        "es": "Notas de identidad",
+        "pt": "Notas de identidade",
+        "fr": "Notes d’identité",
+        "de": "Identitätsnotizen",
+        "ar": "ملاحظات الهوية",
+        "ja": "自分らしさのメモ",
+        "zh-Hans": "自我认知笔记",
+        "ko": "신원 메모"
+      }
+    },
+    {
+      "source": "Identity reminders reconnect the present urge to the person you are becoming.",
+      "translations": {
+        "hi": "पहचान के स्मरण मौजूदा इच्छा को उस व्यक्ति से जोड़ते हैं जो आप बन रहे हैं।",
+        "es": "Los recordatorios de identidad conectan el impulso actual con la persona que estás construyendo.",
+        "pt": "Lembretes de identidade ligam a vontade atual à pessoa que você está se tornando.",
+        "fr": "Les rappels d’identité relient l’envie présente à la personne que vous devenez.",
+        "de": "Identitätserinnerungen verbinden den aktuellen Drang mit der Person, die du werden möchtest.",
+        "ar": "تربط تذكيرات الهوية الرغبة الحالية بالشخص الذي تصبحه.",
+        "ja": "自分らしさのリマインダーが、今の衝動をこれからの自分につなげます。",
+        "zh-Hans": "自我认知提醒将当下冲动与你正在成为的人联系起来。",
+        "ko": "신원 알림은 현재의 충동을 당신이 되고 있는 사람에게 다시 연결해줍니다."
+      }
+    },
+    {
+      "source": "Increase {{label}}",
+      "translations": {
+        "hi": "{{label}} बढ़ाएँ",
+        "es": "Aumentar {{label}}",
+        "pt": "Aumentar {{label}}",
+        "fr": "Augmenter {{label}}",
+        "de": "{{label}} erhöhen",
+        "ar": "زيادة {{label}}",
+        "ja": "{{label}}を増やす",
+        "zh-Hans": "增加 {{label}}",
+        "ko": "{{label}} 늘리기"
+      }
+    },
+    {
+      "source": "Inhale",
+      "translations": {
+        "hi": "साँस लें",
+        "es": "Inhalar",
+        "pt": "Inspirar",
+        "fr": "Inspirez",
+        "de": "Einatmen",
+        "ar": "شهيق",
+        "ja": "吸う",
+        "zh-Hans": "吸气",
+        "ko": "흡입"
+      }
+    },
+    {
+      "source": "Inhale for four.",
+      "translations": {
+        "hi": "चार तक साँस लें।",
+        "es": "Inhala durante cuatro.",
+        "pt": "Inspire por quatro.",
+        "fr": "Inspirez pendant quatre.",
+        "de": "Vier Sekunden einatmen.",
+        "ar": "استنشق لأربعٍ.",
+        "ja": "4秒で吸います。",
+        "zh-Hans": "吸气四秒。",
+        "ko": "4번 흡입합니다."
+      }
+    },
+    {
+      "source": "Inhale slowly for 4s, exhale for 6s",
+      "translations": {
+        "hi": "4 सेकंड धीरे साँस लें, 6 सेकंड छोड़ें",
+        "es": "Inhala despacio 4 s, exhala 6 s",
+        "pt": "Inspire devagar por 4 s, expire por 6 s",
+        "fr": "Inspirez lentement 4 s, expirez 6 s",
+        "de": "4 Sek. langsam einatmen, 6 Sek. ausatmen",
+        "ar": "استنشق ببطء ٤ ثوانٍ وازفر ٦ ثوانٍ",
+        "ja": "4秒でゆっくり吸い、6秒で吐く",
+        "zh-Hans": "缓慢吸气 4 秒，呼气 6 秒",
+        "ko": "4초 동안 천천히 들이마시고 6초 동안 내쉬세요."
+      }
+    },
+    {
+      "source": "Intensity",
+      "translations": {
+        "hi": "तीव्रता",
+        "es": "Intensidad",
+        "pt": "Intensidade",
+        "fr": "Intensité",
+        "de": "Intensität",
+        "ar": "الشدة",
+        "ja": "強度",
+        "zh-Hans": "强度",
+        "ko": "강도"
+      }
+    },
+    {
+      "source": "Invalid ECDSA signature component length.",
+      "translations": {
+        "hi": "ECDSA हस्ताक्षर घटक की लंबाई गलत है।",
+        "es": "Longitud incorrecta del componente de firma ECDSA.",
+        "pt": "Comprimento inválido do componente de assinatura ECDSA.",
+        "fr": "Longueur incorrecte du composant de signature ECDSA.",
+        "de": "Ungültige ECDSA-Signaturkomponentenlänge.",
+        "ar": "طول مكوّن توقيع ECDSA غير صالح.",
+        "ja": "ECDSA署名の構成要素の長さが無効です。",
+        "zh-Hans": "ECDSA 签名组件长度无效。",
+        "ko": "ECDSA 서명 구성 요소 길이가 잘못되었습니다."
+      }
+    },
+    {
+      "source": "Invalid ECDSA signature length.",
+      "translations": {
+        "hi": "ECDSA हस्ताक्षर की लंबाई गलत है।",
+        "es": "Longitud incorrecta de firma ECDSA.",
+        "pt": "Comprimento inválido da assinatura ECDSA.",
+        "fr": "Longueur incorrecte de signature ECDSA.",
+        "de": "Ungültige ECDSA-Signaturlänge.",
+        "ar": "طول توقيع ECDSA غير صالح.",
+        "ja": "ECDSA署名の長さが無効です。",
+        "zh-Hans": "ECDSA 签名长度无效。",
+        "ko": "ECDSA 서명 길이가 잘못되었습니다."
+      }
+    },
+    {
+      "source": "Invalid ECDSA signature R marker.",
+      "translations": {
+        "hi": "ECDSA हस्ताक्षर का R संकेत गलत है।",
+        "es": "Marcador R incorrecto de firma ECDSA.",
+        "pt": "Marcador R inválido da assinatura ECDSA.",
+        "fr": "Marqueur R incorrect de signature ECDSA.",
+        "de": "Ungültige ECDSA-Signaturmarkierung R.",
+        "ar": "علامة R في توقيع ECDSA غير صالحة.",
+        "ja": "ECDSA署名のRマーカーが無効です。",
+        "zh-Hans": "ECDSA 签名 R 标记无效。",
+        "ko": "ECDSA 서명 R 마커가 잘못되었습니다."
+      }
+    },
+    {
+      "source": "Invalid ECDSA signature S marker.",
+      "translations": {
+        "hi": "ECDSA हस्ताक्षर का S संकेत गलत है।",
+        "es": "Marcador S incorrecto de firma ECDSA.",
+        "pt": "Marcador S inválido da assinatura ECDSA.",
+        "fr": "Marqueur S incorrect de signature ECDSA.",
+        "de": "Ungültige ECDSA-Signaturmarkierung S.",
+        "ar": "علامة S في توقيع ECDSA غير صالحة.",
+        "ja": "ECDSA署名のSマーカーが無効です。",
+        "zh-Hans": "ECDSA 签名 S 标记无效。",
+        "ko": "ECDSA 서명 S 마커가 잘못되었습니다."
+      }
+    },
+    {
+      "source": "Invalid ECDSA signature.",
+      "translations": {
+        "hi": "ECDSA हस्ताक्षर गलत है।",
+        "es": "Firma ECDSA incorrecta.",
+        "pt": "Assinatura ECDSA inválida.",
+        "fr": "Signature ECDSA incorrecte.",
+        "de": "Ungültige ECDSA-Signatur.",
+        "ar": "توقيع ECDSA غير صالح.",
+        "ja": "ECDSA署名が無効です。",
+        "zh-Hans": "ECDSA 签名无效。",
+        "ko": "ECDSA 서명이 잘못되었습니다."
+      }
+    },
+    {
+      "source": "Invalid Google Play package name.",
+      "translations": {
+        "hi": "Google Play पैकेज नाम गलत है।",
+        "es": "Nombre de paquete de Google Play incorrecto.",
+        "pt": "Nome de pacote do Google Play inválido.",
+        "fr": "Nom de paquet Google Play incorrect.",
+        "de": "Ungültiger Google-Play-Paketname.",
+        "ar": "اسم حزمة Google Play غير صالح.",
+        "ja": "Google Playのパッケージ名が無効です。",
+        "zh-Hans": "Google Play 软件包名称无效。",
+        "ko": "Google Play 패키지 이름이 잘못되었습니다."
+      }
+    },
+    {
+      "source": "is unavailable",
+      "translations": {
+        "hi": "उपलब्ध नहीं है",
+        "es": "no está disponible",
+        "pt": "está indisponível",
+        "fr": "est indisponible",
+        "de": "ist nicht verfügbar",
+        "ar": "غير متاح",
+        "ja": "利用できません",
+        "zh-Hans": "不可用",
+        "ko": "사용할 수 없습니다"
+      }
+    },
+    {
+      "source": "Journal",
+      "translations": {
+        "hi": "जर्नल",
+        "es": "Diario",
+        "pt": "Diário",
+        "fr": "Journal personnel",
+        "de": "Tagebuch",
+        "ar": "اليوميات",
+        "ja": "日記",
+        "zh-Hans": "日记",
+        "ko": "저널"
+      }
+    },
+    {
+      "source": "Journaling & reflection",
+      "translations": {
+        "hi": "लिखना और मनन",
+        "es": "Escritura y reflexión",
+        "pt": "Escrita e reflexão",
+        "fr": "Écriture et réflexion",
+        "de": "Schreiben und Reflexion",
+        "ar": "الكتابة والتأمل",
+        "ja": "日記と振り返り",
+        "zh-Hans": "记录与反思",
+        "ko": "저널링 및 성찰"
+      }
+    },
+    {
+      "source": "Keep current history",
+      "translations": {
+        "hi": "वर्तमान इतिहास रखें",
+        "es": "Conservar historial actual",
+        "pt": "Manter histórico atual",
+        "fr": "Conserver l’historique actuel",
+        "de": "Aktuellen Verlauf behalten",
+        "ar": "الاحتفاظ بالسجل الحالي",
+        "ja": "現在の履歴を保持",
+        "zh-Hans": "保留当前历史",
+        "ko": "현재 기록 유지"
+      }
+    },
+    {
+      "source": "Keep Going {{pct}}%",
+      "translations": {
+        "hi": "जारी रखें {{pct}}%",
+        "es": "Sigue adelante {{pct}}%",
+        "pt": "Continue {{pct}}%",
+        "fr": "Continuez {{pct}} %",
+        "de": "Mach weiter {{pct}} %",
+        "ar": "واصل {{pct}}٪",
+        "ja": "続けよう {{pct}}%",
+        "zh-Hans": "继续加油 {{pct}}%",
+        "ko": "계속하세요 {{pct}}%"
+      }
+    },
+    {
+      "source": "Keep logging check-ins and reset outcomes to build a useful pattern.",
+      "translations": {
+        "hi": "उपयोगी पैटर्न बनाने के लिए चेक-इन और रीसेट परिणाम दर्ज करते रहें।",
+        "es": "Sigue registrando estados y resultados de reinicios para crear un patrón útil.",
+        "pt": "Continue registrando estados e resultados de recomeços para formar um padrão útil.",
+        "fr": "Continuez à noter vos bilans et résultats de pauses pour construire un schéma utile.",
+        "de": "Erfasse weiter Check-ins und Neustartergebnisse, um ein nützliches Muster aufzubauen.",
+        "ar": "واصل تسجيل الحالة ونتائج إعادة الضبط لبناء نمط مفيد.",
+        "ja": "役立つパターンを作るため、チェックインとリセット結果を記録し続けましょう。",
+        "zh-Hans": "继续记录状态和重置结果，形成有用的模式。",
+        "ko": "유용한 패턴을 구축하려면 계속해서 체크인을 기록하고 결과를 재설정하세요."
+      }
+    },
+    {
+      "source": "Keep trying",
+      "translations": {
+        "hi": "कोशिश जारी रखें",
+        "es": "Seguir intentando",
+        "pt": "Continuar tentando",
+        "fr": "Continuer d’essayer",
+        "de": "Weiter versuchen",
+        "ar": "واصل المحاولة",
+        "ja": "もう一度試す",
+        "zh-Hans": "继续尝试",
+        "ko": "계속 노력하세요"
+      }
+    },
+    {
+      "source": "kill myself",
+      "translations": {
+        "hi": "खुद की जान लूँ",
+        "es": "matarme",
+        "pt": "me matar",
+        "fr": "me tuer",
+        "de": "mich umbringen",
+        "ar": "قتل نفسي",
+        "ja": "自殺する",
+        "zh-Hans": "自杀",
+        "ko": "자살하다"
+      }
+    },
+    {
+      "source": "Known gaps: networks that resolve only over IPv6 or encrypted DNS (DoH/DoT) can bypass DNS-level filtering.",
+      "translations": {
+        "hi": "ज्ञात सीमाएँ: केवल IPv6 या एन्क्रिप्टेड DNS (DoH/DoT) वाले नेटवर्क DNS-स्तर की फ़िल्टरिंग से बच सकते हैं।",
+        "es": "Limitaciones conocidas: las redes que resuelven solo con IPv6 o DNS cifrado (DoH/DoT) pueden evitar el filtrado DNS.",
+        "pt": "Limitações conhecidas: redes que resolvem apenas por IPv6 ou DNS criptografado (DoH/DoT) podem contornar a filtragem DNS.",
+        "fr": "Limites connues : les réseaux utilisant uniquement IPv6 ou DNS chiffré (DoH/DoT) peuvent contourner le filtrage DNS.",
+        "de": "Bekannte Grenzen: Netzwerke, die nur über IPv6 oder verschlüsseltes DNS (DoH/DoT) auflösen, können die DNS-Filterung umgehen.",
+        "ar": "حدود معروفة: الشبكات التي تحل العناوين عبر IPv6 فقط أو DNS مشفّر (DoH/DoT) قد تتجاوز تصفية DNS.",
+        "ja": "既知の制限：IPv6のみ、または暗号化DNS（DoH/DoT）で名前解決するネットワークは、DNSレベルのフィルタリングを回避できます。",
+        "zh-Hans": "已知限制：仅通过 IPv6 或加密 DNS（DoH/DoT）解析的网络可能绕过 DNS 级过滤。",
+        "ko": "알려진 차이점: IPv6 또는 암호화된 DNS(DoH/DoT)를 통해서만 확인되는 네트워크는 DNS 수준 필터링을 우회할 수 있습니다."
+      }
+    },
+    {
+      "source": "Last contacted {{lastContacted}}.",
+      "translations": {
+        "hi": "अंतिम संपर्क {{lastContacted}}।",
+        "es": "Último contacto {{lastContacted}}.",
+        "pt": "Último contato {{lastContacted}}.",
+        "fr": "Dernier contact {{lastContacted}}.",
+        "de": "Zuletzt kontaktiert {{lastContacted}}.",
+        "ar": "آخر تواصل {{lastContacted}}.",
+        "ja": "最終連絡{{lastContacted}}。",
+        "zh-Hans": "上次联系 {{lastContacted}}。",
+        "ko": "{{lastContacted}}에 마지막으로 연락했습니다."
+      }
+    },
+    {
+      "source": "Last saved {{value1}}",
+      "translations": {
+        "hi": "आखिरी बार सेव {{value1}}",
+        "es": "Último guardado {{value1}}",
+        "pt": "Último salvamento {{value1}}",
+        "fr": "Dernier enregistrement {{value1}}",
+        "de": "Zuletzt gespeichert {{value1}}",
+        "ar": "آخر حفظ {{value1}}",
+        "ja": "最終保存{{value1}}",
+        "zh-Hans": "上次保存 {{value1}}",
+        "ko": "마지막으로 저장된 {{value1}}"
+      }
+    },
+    {
+      "source": "Late night",
+      "translations": {
+        "hi": "देर रात",
+        "es": "Tarde por la noche",
+        "pt": "Tarde da noite",
+        "fr": "Tard dans la nuit",
+        "de": "Spät nachts",
+        "ar": "وقت متأخر من الليل",
+        "ja": "深夜",
+        "zh-Hans": "深夜",
+        "ko": "늦은 밤"
+      }
+    },
+    {
+      "source": "Late night in bed",
+      "translations": {
+        "hi": "देर रात बिस्तर में",
+        "es": "Tarde por la noche en la cama",
+        "pt": "Tarde da noite na cama",
+        "fr": "Tard dans la nuit au lit",
+        "de": "Spät nachts im Bett",
+        "ar": "ليلًا في السرير",
+        "ja": "深夜にベッドで",
+        "zh-Hans": "深夜躺在床上",
+        "ko": "늦은 밤 침대에서"
+      }
+    },
+    {
+      "source": "learning latency",
+      "translations": {
+        "hi": "सीखने का विलंब",
+        "es": "latencia de aprendizaje",
+        "pt": "latência de aprendizado",
+        "fr": "latence d’apprentissage",
+        "de": "Lernlatenz",
+        "ar": "زمن التعلّم",
+        "ja": "学習の遅延",
+        "zh-Hans": "学习延迟",
+        "ko": "학습 대기 시간"
+      }
+    },
+    {
+      "source": "LEVEL",
+      "translations": {
+        "hi": "स्तर",
+        "es": "NIVEL",
+        "pt": "NÍVEL",
+        "fr": "NIVEAU",
+        "de": "STUFE",
+        "ar": "المستوى",
+        "ja": "レベル",
+        "zh-Hans": "等级",
+        "ko": "레벨"
+      }
+    },
+    {
+      "source": "Lifetime Premium",
+      "translations": {
+        "hi": "आजीवन प्रीमियम",
+        "es": "Premium de por vida",
+        "pt": "Premium vitalício",
+        "fr": "Premium à vie",
+        "de": "Lebenslanges Premium",
+        "ar": "Premium مدى الحياة",
+        "ja": "生涯Premium",
+        "zh-Hans": "终身 Premium",
+        "ko": "평생 프리미엄"
+      }
+    },
+    {
+      "source": "Link another provider or manage this account.",
+      "translations": {
+        "hi": "दूसरा प्रदाता जोड़ें या यह खाता प्रबंधित करें।",
+        "es": "Vincula otro proveedor o administra esta cuenta.",
+        "pt": "Vincule outro provedor ou gerencie esta conta.",
+        "fr": "Liez un autre fournisseur ou gérez ce compte.",
+        "de": "Verknüpfe einen anderen Anbieter oder verwalte dieses Konto.",
+        "ar": "اربط مزودًا آخر أو أدِر هذا الحساب.",
+        "ja": "別のプロバイダーをリンクするか、このアカウントを管理してください。",
+        "zh-Hans": "关联其他服务或管理此账户。",
+        "ko": "다른 제공업체를 연결하거나 이 계정을 관리하세요."
+      }
+    },
+    {
+      "source": "Link another sign-in",
+      "translations": {
+        "hi": "दूसरा साइन-इन जोड़ें",
+        "es": "Vincular otro acceso",
+        "pt": "Vincular outro login",
+        "fr": "Lier une autre connexion",
+        "de": "Andere Anmeldung verknüpfen",
+        "ar": "ربط تسجيل دخول آخر",
+        "ja": "別のログインをリンク",
+        "zh-Hans": "关联其他登录方式",
+        "ko": "다른 로그인 연결"
+      }
+    },
+    {
+      "source": "Local contacts only. FREED opens SMS or email when you choose to share.",
+      "translations": {
+        "hi": "केवल स्थानीय संपर्क। साझा करने का चुनाव करने पर FREED SMS या ईमेल खोलता है।",
+        "es": "Solo contactos locales. FREED abre SMS o correo cuando eliges compartir.",
+        "pt": "Apenas contatos locais. O FREED abre SMS ou e-mail quando você escolhe compartilhar.",
+        "fr": "Contacts locaux uniquement. FREED ouvre SMS ou e-mail lorsque vous choisissez de partager.",
+        "de": "Nur lokale Kontakte. FREED öffnet SMS oder E-Mail, wenn du Teilen auswählst.",
+        "ar": "جهات اتصال محلية فقط. يفتح FREED الرسائل أو البريد عندما تختار المشاركة.",
+        "ja": "連絡先は端末内のみ。共有を選ぶとFREEDがSMSまたはメールを開きます。",
+        "zh-Hans": "仅使用本地联系人。你选择分享时，FREED 会打开短信或邮件。",
+        "ko": "현지 연락처만 해당됩니다. FREED는 공유를 선택하면 SMS 또는 이메일을 엽니다."
+      }
+    },
+    {
+      "source": "Local recovery data could not be deleted.",
+      "translations": {
+        "hi": "स्थानीय रिकवरी डेटा हटाया नहीं जा सका।",
+        "es": "No se pudieron eliminar los datos locales de recuperación.",
+        "pt": "Não foi possível excluir os dados locais de recuperação.",
+        "fr": "Les données locales de rétablissement n’ont pas pu être supprimées.",
+        "de": "Lokale Erholungsdaten konnten nicht gelöscht werden.",
+        "ar": "تعذّر حذف بيانات التعافي المحلية.",
+        "ja": "端末内の回復データを削除できませんでした。",
+        "zh-Hans": "无法删除本地恢复数据。",
+        "ko": "로컬 복구 데이터를 삭제할 수 없습니다."
+      }
+    },
+    {
+      "source": "Local recovery data deleted from this device.",
+      "translations": {
+        "hi": "इस डिवाइस से स्थानीय रिकवरी डेटा हटा दिया गया।",
+        "es": "Datos locales de recuperación eliminados de este dispositivo.",
+        "pt": "Dados locais de recuperação excluídos deste dispositivo.",
+        "fr": "Données locales de rétablissement supprimées de cet appareil.",
+        "de": "Lokale Erholungsdaten von diesem Gerät gelöscht.",
+        "ar": "حُذفت بيانات التعافي المحلية من هذا الجهاز.",
+        "ja": "この端末から回復データを削除しました。",
+        "zh-Hans": "已从此设备删除本地恢复数据。",
+        "ko": "이 기기에서 로컬 복구 데이터가 삭제되었습니다."
+      }
+    },
+    {
+      "source": "Local rule ·",
+      "translations": {
+        "hi": "स्थानीय नियम ·",
+        "es": "Regla local ·",
+        "pt": "Regra local ·",
+        "fr": "Règle locale ·",
+        "de": "Lokale Regel ·",
+        "ar": "قاعدة محلية ·",
+        "ja": "端末内ルール ·",
+        "zh-Hans": "本地规则 ·",
+        "ko": "로컬 룰 ·"
+      }
+    },
+    {
+      "source": "LOCAL RULES (",
+      "translations": {
+        "hi": "स्थानीय नियम (",
+        "es": "REGLAS LOCALES (",
+        "pt": "REGRAS LOCAIS (",
+        "fr": "RÈGLES LOCALES (",
+        "de": "LOKALE REGELN (",
+        "ar": "قواعد محلية (",
+        "ja": "端末内ルール（",
+        "zh-Hans": "本地规则（",
+        "ko": "현지 규칙("
+      }
+    },
+    {
+      "source": "Log Slip Safely",
+      "translations": {
+        "hi": "चूक सुरक्षित रूप से दर्ज करें",
+        "es": "Registrar un desliz con seguridad",
+        "pt": "Registrar deslize com segurança",
+        "fr": "Noter un écart en sécurité",
+        "de": "Ausrutscher sicher erfassen",
+        "ar": "تسجيل الزلة بأمان",
+        "ja": "つまずきを安全に記録",
+        "zh-Hans": "安全记录失误",
+        "ko": "슬립을 안전하게 기록하세요"
+      }
+    },
+    {
+      "source": "Lonely",
+      "translations": {
+        "hi": "अकेला",
+        "es": "Solo",
+        "pt": "Solitário",
+        "fr": "Seul",
+        "de": "Einsam",
+        "ar": "وحيد",
+        "ja": "孤独",
+        "zh-Hans": "孤独",
+        "ko": "외로운"
+      }
+    },
+    {
+      "source": "Long Exhale",
+      "translations": {
+        "hi": "लंबी साँस छोड़ना",
+        "es": "Exhalación larga",
+        "pt": "Expiração longa",
+        "fr": "Longue expiration",
+        "de": "Langes Ausatmen",
+        "ar": "زفير طويل",
+        "ja": "長く吐く",
+        "zh-Hans": "长呼气",
+        "ko": "길게 내쉬다"
+      }
+    },
+    {
+      "source": "Low",
+      "translations": {
+        "hi": "कम",
+        "es": "Bajo",
+        "pt": "Baixo",
+        "fr": "Faible",
+        "de": "Niedrig",
+        "ar": "منخفض",
+        "ja": "低い",
+        "zh-Hans": "低",
+        "ko": "낮음"
+      }
+    },
+    {
+      "source": "Lower slowly.",
+      "translations": {
+        "hi": "धीरे नीचे आएँ।",
+        "es": "Baja despacio.",
+        "pt": "Desça devagar.",
+        "fr": "Descendez lentement.",
+        "de": "Langsam absenken.",
+        "ar": "انخفض ببطء.",
+        "ja": "ゆっくり下げましょう。",
+        "zh-Hans": "缓慢下降。",
+        "ko": "천천히 내립니다."
+      }
+    },
+    {
+      "source": "Main trigger",
+      "translations": {
+        "hi": "मुख्य ट्रिगर",
+        "es": "Desencadenante principal",
+        "pt": "Gatilho principal",
+        "fr": "Déclencheur principal",
+        "de": "Hauptauslöser",
+        "ar": "المحفّز الرئيسي",
+        "ja": "主なきっかけ",
+        "zh-Hans": "主要触发因素",
+        "ko": "주요 트리거"
+      }
+    },
+    {
+      "source": "Malformed verification request.",
+      "translations": {
+        "hi": "सत्यापन अनुरोध का प्रारूप गलत है।",
+        "es": "Solicitud de verificación incorrecta.",
+        "pt": "Solicitação de verificação malformada.",
+        "fr": "Demande de vérification incorrecte.",
+        "de": "Fehlerhafte Prüfanforderung.",
+        "ar": "طلب تحقق غير سليم.",
+        "ja": "確認リクエストの形式が不正です。",
+        "zh-Hans": "验证请求格式错误。",
+        "ko": "잘못된 확인 요청입니다."
+      }
+    },
+    {
+      "source": "Manage membership",
+      "translations": {
+        "hi": "सदस्यता प्रबंधित करें",
+        "es": "Administrar membresía",
+        "pt": "Gerenciar associação",
+        "fr": "Gérer l’adhésion",
+        "de": "Mitgliedschaft verwalten",
+        "ar": "إدارة العضوية",
+        "ja": "メンバーシップを管理",
+        "zh-Hans": "管理会员资格",
+        "ko": "멤버십 관리"
+      }
+    },
+    {
+      "source": "Meditation",
+      "translations": {
+        "hi": "ध्यान",
+        "es": "Meditación",
+        "pt": "Meditação",
+        "fr": "Méditation",
+        "de": "Meditation üben",
+        "ar": "التأمل",
+        "ja": "瞑想",
+        "zh-Hans": "冥想",
+        "ko": "명상"
+      }
+    },
+    {
+      "source": "Medium",
+      "translations": {
+        "hi": "मध्यम",
+        "es": "Medio",
+        "pt": "Médio",
+        "fr": "Moyen",
+        "de": "Mittel",
+        "ar": "متوسط",
+        "ja": "中程度",
+        "zh-Hans": "中等",
+        "ko": "중간"
+      }
+    },
+    {
+      "source": "Membership active",
+      "translations": {
+        "hi": "सदस्यता सक्रिय",
+        "es": "Membresía activa",
+        "pt": "Associação ativa",
+        "fr": "Adhésion active",
+        "de": "Mitgliedschaft aktiv",
+        "ar": "العضوية نشطة",
+        "ja": "メンバーシップは有効",
+        "zh-Hans": "会员资格已生效",
+        "ko": "멤버십 활성"
+      }
+    },
+    {
+      "source": "Membership could not be confirmed. Try again.",
+      "translations": {
+        "hi": "सदस्यता की पुष्टि नहीं हो सकी। फिर कोशिश करें।",
+        "es": "No se pudo confirmar la membresía. Reinténtalo.",
+        "pt": "Não foi possível confirmar a associação. Tente novamente.",
+        "fr": "L’adhésion n’a pas pu être confirmée. Réessayez.",
+        "de": "Die Mitgliedschaft konnte nicht bestätigt werden. Versuche es erneut.",
+        "ar": "تعذّر تأكيد العضوية. أعد المحاولة.",
+        "ja": "メンバーシップを確認できませんでした。再試行してください。",
+        "zh-Hans": "无法确认会员资格。请重试。",
+        "ko": "회원가입을 확인할 수 없습니다. 다시 시도해 보세요."
+      }
+    },
+    {
+      "source": "Mental clarity & focus",
+      "translations": {
+        "hi": "मानसिक स्पष्टता और ध्यान",
+        "es": "Claridad mental y enfoque",
+        "pt": "Clareza mental e foco",
+        "fr": "Clarté mentale et concentration",
+        "de": "Gedankliche Klarheit und Fokus",
+        "ar": "صفاء الذهن والتركيز",
+        "ja": "頭の明瞭さと集中",
+        "zh-Hans": "思维清晰与专注",
+        "ko": "정신적 명확성 및 집중력"
+      }
+    },
+    {
+      "source": "Message",
+      "translations": {
+        "hi": "संदेश",
+        "es": "Mensaje",
+        "pt": "Mensagem",
+        "fr": "Message écrit",
+        "de": "Nachricht",
+        "ar": "رسالة",
+        "ja": "メッセージ",
+        "zh-Hans": "消息",
+        "ko": "메시지"
+      }
+    },
+    {
+      "source": "Message partner",
+      "translations": {
+        "hi": "साथी को संदेश दें",
+        "es": "Enviar mensaje al compañero",
+        "pt": "Enviar mensagem ao parceiro",
+        "fr": "Écrire au partenaire",
+        "de": "Partner anschreiben",
+        "ar": "مراسلة الشريك",
+        "ja": "パートナーにメッセージ",
+        "zh-Hans": "给伙伴发消息",
+        "ko": "메시지 파트너"
+      }
+    },
+    {
+      "source": "Message template",
+      "translations": {
+        "hi": "संदेश टेम्पलेट",
+        "es": "Plantilla de mensaje",
+        "pt": "Modelo de mensagem",
+        "fr": "Modèle de message",
+        "de": "Nachrichtenvorlage",
+        "ar": "قالب الرسالة",
+        "ja": "メッセージのひな形",
+        "zh-Hans": "消息模板",
+        "ko": "메시지 템플릿"
+      }
+    },
+    {
+      "source": "Message your accountability partner",
+      "translations": {
+        "hi": "अपने जवाबदेही साथी को संदेश दें",
+        "es": "Escribe a tu compañero de apoyo",
+        "pt": "Envie mensagem ao parceiro de apoio",
+        "fr": "Écrivez à votre partenaire de soutien",
+        "de": "Schreibe deinem Unterstützungspartner",
+        "ar": "راسل شريك الدعم والمساءلة",
+        "ja": "見守りパートナーにメッセージ",
+        "zh-Hans": "给互助伙伴发消息",
+        "ko": "책임 파트너에게 메시지 보내기"
+      }
+    },
+    {
+      "source": "min -",
+      "translations": {
+        "hi": "मिनट -",
+        "es": "minutos -",
+        "pt": "minutos -",
+        "fr": "minutes -",
+        "de": "Min. -",
+        "ar": "دقيقة -",
+        "ja": "分 -",
+        "zh-Hans": "分钟 -",
+        "ko": "분 -"
+      }
+    },
+    {
+      "source": "min read",
+      "translations": {
+        "hi": "मिनट पढ़ना",
+        "es": "min de lectura",
+        "pt": "min de leitura",
+        "fr": "min de lecture",
+        "de": "Min. Lesezeit",
+        "ar": "دقائق قراءة",
+        "ja": "分で読めます",
+        "zh-Hans": "分钟阅读",
+        "ko": "분 읽음"
+      }
+    },
+    {
+      "source": "min unlock ready",
+      "translations": {
+        "hi": "मिनट का अनलॉक तैयार",
+        "es": "min de desbloqueo listos",
+        "pt": "min de liberação prontos",
+        "fr": "min de déverrouillage prêts",
+        "de": "Min. Freigabe bereit",
+        "ar": "دقائق فتح جاهزة",
+        "ja": "分の解除が可能",
+        "zh-Hans": "分钟解锁已就绪",
+        "ko": "최소 잠금 해제 준비됨"
+      }
+    },
+    {
+      "source": "MINDFUL RESET",
+      "translations": {
+        "hi": "सचेत रीसेट",
+        "es": "REINICIO CONSCIENTE",
+        "pt": "RECOMEÇO CONSCIENTE",
+        "fr": "PAUSE CONSCIENTE",
+        "de": "ACHTSAMER NEUSTART",
+        "ar": "إعادة ضبط واعية",
+        "ja": "マインドフル・リセット",
+        "zh-Hans": "正念重置",
+        "ko": "신중한 재설정"
+      }
+    },
+    {
+      "source": "Minutes",
+      "translations": {
+        "hi": "मिनट",
+        "es": "Minutos",
+        "pt": "Minutos",
+        "fr": "Durée en minutes",
+        "de": "Minuten",
+        "ar": "الدقائق",
+        "ja": "分",
+        "zh-Hans": "分钟",
+        "ko": "분"
+      }
+    },
+    {
+      "source": "Missing App Store transaction id.",
+      "translations": {
+        "hi": "App Store लेनदेन ID नहीं है।",
+        "es": "Falta el ID de transacción de App Store.",
+        "pt": "Falta o ID da transação da App Store.",
+        "fr": "Identifiant de transaction App Store manquant.",
+        "de": "App-Store-Transaktions-ID fehlt.",
+        "ar": "معرّف معاملة App Store مفقود.",
+        "ja": "App Storeの取引IDがありません。",
+        "zh-Hans": "缺少 App Store 交易 ID。",
+        "ko": "App Store 트랜잭션 ID가 누락되었습니다."
+      }
+    },
+    {
+      "source": "Missing Google Play product id or purchase token.",
+      "translations": {
+        "hi": "Google Play उत्पाद ID या खरीद टोकन नहीं है।",
+        "es": "Falta el ID de producto o token de compra de Google Play.",
+        "pt": "Falta o ID do produto ou token de compra do Google Play.",
+        "fr": "Identifiant de produit ou jeton d’achat Google Play manquant.",
+        "de": "Google-Play-Produkt-ID oder Kauftoken fehlt.",
+        "ar": "معرّف منتج Google Play أو رمز الشراء مفقود.",
+        "ja": "Google Playの製品IDまたは購入トークンがありません。",
+        "zh-Hans": "缺少 Google Play 产品 ID 或购买令牌。",
+        "ko": "Google Play 제품 ID 또는 구매 토큰이 누락되었습니다."
+      }
+    },
+    {
+      "source": "Missing or invalid App Store transaction id.",
+      "translations": {
+        "hi": "App Store लेनदेन ID नहीं है या गलत है।",
+        "es": "ID de transacción de App Store ausente o incorrecto.",
+        "pt": "ID de transação da App Store ausente ou inválido.",
+        "fr": "Identifiant de transaction App Store manquant ou incorrect.",
+        "de": "App-Store-Transaktions-ID fehlt oder ist ungültig.",
+        "ar": "معرّف معاملة App Store مفقود أو غير صالح.",
+        "ja": "App Storeの取引IDがないか、無効です。",
+        "zh-Hans": "App Store 交易 ID 缺失或无效。",
+        "ko": "App Store 트랜잭션 ID가 누락되었거나 잘못되었습니다."
+      }
+    },
+    {
+      "source": "Missing or invalid Google Play purchase token.",
+      "translations": {
+        "hi": "Google Play खरीद टोकन नहीं है या गलत है।",
+        "es": "Token de compra de Google Play ausente o incorrecto.",
+        "pt": "Token de compra do Google Play ausente ou inválido.",
+        "fr": "Jeton d’achat Google Play manquant ou incorrect.",
+        "de": "Google-Play-Kauftoken fehlt oder ist ungültig.",
+        "ar": "رمز شراء Google Play مفقود أو غير صالح.",
+        "ja": "Google Playの購入トークンがないか、無効です。",
+        "zh-Hans": "Google Play 购买令牌缺失或无效。",
+        "ko": "Google Play 구매 토큰이 누락되었거나 유효하지 않습니다."
+      }
+    },
+    {
+      "source": "Missing product id.",
+      "translations": {
+        "hi": "उत्पाद ID नहीं है।",
+        "es": "Falta el ID de producto.",
+        "pt": "Falta o ID do produto.",
+        "fr": "Identifiant de produit manquant.",
+        "de": "Produkt-ID fehlt.",
+        "ar": "معرّف المنتج مفقود.",
+        "ja": "製品IDがありません。",
+        "zh-Hans": "缺少产品 ID。",
+        "ko": "제품 ID가 누락되었습니다."
+      }
+    },
+    {
+      "source": "Modes",
+      "translations": {
+        "hi": "मोड",
+        "es": "Modos",
+        "pt": "Modos",
+        "fr": "Modes disponibles",
+        "de": "Modi",
+        "ar": "الأوضاع",
+        "ja": "モード",
+        "zh-Hans": "模式",
+        "ko": "모드"
+      }
+    },
+    {
+      "source": "Momentum",
+      "translations": {
+        "hi": "रफ़्तार",
+        "es": "Impulso",
+        "pt": "Ritmo",
+        "fr": "Élan",
+        "de": "Schwung",
+        "ar": "الزخم",
+        "ja": "勢い",
+        "zh-Hans": "动力",
+        "ko": "모멘텀"
+      }
+    },
+    {
+      "source": "MONTHLY GROWTH",
+      "translations": {
+        "hi": "मासिक विकास",
+        "es": "CRECIMIENTO MENSUAL",
+        "pt": "CRESCIMENTO MENSAL",
+        "fr": "PROGRESSION MENSUELLE",
+        "de": "MONATLICHE ENTWICKLUNG",
+        "ar": "النمو الشهري",
+        "ja": "月ごとの成長",
+        "zh-Hans": "月度成长",
+        "ko": "월별 성장"
+      }
+    },
+    {
+      "source": "Monthly Premium",
+      "translations": {
+        "hi": "मासिक प्रीमियम",
+        "es": "Premium mensual",
+        "pt": "Premium mensal",
+        "fr": "Premium mensuel",
+        "de": "Monatliches Premium",
+        "ar": "Premium شهري",
+        "ja": "月間Premium",
+        "zh-Hans": "月度 Premium",
+        "ko": "월 보험료"
+      }
+    },
+    {
+      "source": "Mood",
+      "translations": {
+        "hi": "मूड",
+        "es": "Ánimo",
+        "pt": "Humor",
+        "fr": "Humeur",
+        "de": "Stimmung",
+        "ar": "المزاج",
+        "ja": "気分",
+        "zh-Hans": "心情",
+        "ko": "기분"
+      }
+    },
+    {
+      "source": "Morning reset",
+      "translations": {
+        "hi": "सुबह का रीसेट",
+        "es": "Reinicio matutino",
+        "pt": "Recomeço matinal",
+        "fr": "Pause du matin",
+        "de": "Morgendlicher Neustart",
+        "ar": "إعادة ضبط الصباح",
+        "ja": "朝のリセット",
+        "zh-Hans": "晨间重置",
+        "ko": "모닝 리셋"
+      }
+    },
+    {
+      "source": "Motion sensor",
+      "translations": {
+        "hi": "गतिविधि सेंसर",
+        "es": "Sensor de movimiento",
+        "pt": "Sensor de movimento",
+        "fr": "Capteur de mouvement",
+        "de": "Bewegungssensor",
+        "ar": "مستشعر الحركة",
+        "ja": "モーションセンサー",
+        "zh-Hans": "运动传感器",
+        "ko": "모션 센서"
+      }
+    },
+    {
+      "source": "Move",
+      "translations": {
+        "hi": "चलें",
+        "es": "Moverse",
+        "pt": "Mover-se",
+        "fr": "Bouger",
+        "de": "Bewegen",
+        "ar": "تحرّك",
+        "ja": "動く",
+        "zh-Hans": "活动",
+        "ko": "이동"
+      }
+    },
+    {
+      "source": "Name",
+      "translations": {
+        "hi": "नाम",
+        "es": "Nombre",
+        "pt": "Nome",
+        "fr": "Nom",
+        "de": "Name eingeben",
+        "ar": "الاسم",
+        "ja": "名前",
+        "zh-Hans": "姓名",
+        "ko": "이름"
+      }
+    },
+    {
+      "source": "Name the pattern before it names the day.",
+      "translations": {
+        "hi": "पैटर्न पहचानें, इससे पहले कि वह आपका दिन तय करे।",
+        "es": "Nombra el patrón antes de que defina tu día.",
+        "pt": "Nomeie o padrão antes que ele defina seu dia.",
+        "fr": "Nommez le schéma avant qu’il ne définisse votre journée.",
+        "de": "Benenne das Muster, bevor es deinen Tag bestimmt.",
+        "ar": "سمّ النمط قبل أن يحدّد يومك.",
+        "ja": "パターンに気づき、一日を支配される前に言葉にしましょう。",
+        "zh-Hans": "在模式定义你的一天之前，先识别它。",
+        "ko": "요일의 이름을 지정하기 전에 패턴의 이름을 지정하세요."
+      }
+    },
+    {
+      "source": "Name the urge, then surf it",
+      "translations": {
+        "hi": "इच्छा पहचानें, फिर उसकी लहर से गुजरें",
+        "es": "Nombra el impulso y atraviesa la ola",
+        "pt": "Nomeie a vontade e atravesse a onda",
+        "fr": "Nommez l’envie, puis surfez dessus",
+        "de": "Drang benennen, die Welle durchstehen",
+        "ar": "سمّ الرغبة ثم اعبر موجتها",
+        "ja": "衝動を言葉にし、波を乗り切る",
+        "zh-Hans": "识别冲动，再度过它",
+        "ko": "충동의 이름을 정하고 서핑해 보세요."
+      }
+    },
+    {
+      "source": "Native adult-domain feed loaded: {{nativeAdultFeedCount}} reviewed domains.",
+      "translations": {
+        "hi": "नेटिव वयस्क-डोमेन सूची लोड हुई: {{nativeAdultFeedCount}} समीक्षित डोमेन।",
+        "es": "Lista nativa adulta cargada: {{nativeAdultFeedCount}} dominios revisados.",
+        "pt": "Lista nativa adulta carregada: {{nativeAdultFeedCount}} domínios revisados.",
+        "fr": "Liste native adulte chargée : {{nativeAdultFeedCount}} domaines vérifiés.",
+        "de": "Native Erwachsenendomainliste geladen: {{nativeAdultFeedCount}} geprüfte Domains.",
+        "ar": "حُمّلت القائمة الأصلية: {{nativeAdultFeedCount}} نطاقًا مراجعًا للبالغين.",
+        "ja": "ネイティブの成人向け一覧を読み込みました。確認済み{{nativeAdultFeedCount}}ドメイン。",
+        "zh-Hans": "原生成人内容域名列表已加载：{{nativeAdultFeedCount}} 个已审核域名。",
+        "ko": "기본 성인 도메인 피드 로드됨: {{nativeAdultFeedCount}}가 도메인을 검토했습니다."
+      }
+    },
+    {
+      "source": "Native diagnostics could not run.",
+      "translations": {
+        "hi": "नेटिव निदान नहीं चल सका।",
+        "es": "No se pudo ejecutar el diagnóstico nativo.",
+        "pt": "Não foi possível executar diagnósticos nativos.",
+        "fr": "Les diagnostics natifs n’ont pas pu démarrer.",
+        "de": "Native Diagnose konnte nicht ausgeführt werden.",
+        "ar": "تعذّر تشغيل التشخيص الأصلي.",
+        "ja": "ネイティブ診断を実行できませんでした。",
+        "zh-Hans": "无法运行原生诊断。",
+        "ko": "기본 진단을 실행할 수 없습니다."
+      }
+    },
+    {
+      "source": "Native diagnostics need attention: {{value1}}",
+      "translations": {
+        "hi": "नेटिव निदान में ध्यान दें: {{value1}}",
+        "es": "El diagnóstico nativo requiere atención: {{value1}}",
+        "pt": "Os diagnósticos nativos precisam de atenção: {{value1}}",
+        "fr": "Les diagnostics natifs nécessitent votre attention : {{value1}}",
+        "de": "Native Diagnose braucht Aufmerksamkeit: {{value1}}",
+        "ar": "التشخيص الأصلي يحتاج مراجعة: {{value1}}",
+        "ja": "ネイティブ診断の確認が必要です：{{value1}}",
+        "zh-Hans": "原生诊断需要处理：{{value1}}",
+        "ko": "기본 진단에 주의가 필요함: {{value1}}"
+      }
+    },
+    {
+      "source": "Native domain checks passed without saving a blocked attempt. Finish the required permission and feed rows, then run this again.",
+      "translations": {
+        "hi": "नेटिव डोमेन जाँचें सफल हुईं, कोई ब्लॉक प्रयास सेव नहीं हुआ। ज़रूरी अनुमति और सूची चरण पूरे करें, फिर यह जाँच चलाएँ।",
+        "es": "Pasaron las comprobaciones nativas sin guardar un intento bloqueado. Termina los pasos de permisos y lista, y ejecútalo de nuevo.",
+        "pt": "As verificações nativas passaram sem salvar uma tentativa bloqueada. Conclua as etapas de permissões e lista e execute novamente.",
+        "fr": "Les contrôles natifs ont réussi sans enregistrer de tentative bloquée. Terminez les étapes de permissions et de liste, puis relancez.",
+        "de": "Native Domainprüfungen bestanden ohne einen blockierten Versuch zu speichern. Schließe Berechtigungs- und Listenschritte ab und teste erneut.",
+        "ar": "نجحت فحوص النطاقات الأصلية دون حفظ محاولة محظورة. أكمل خطوات الأذونات والقائمة ثم أعد الفحص.",
+        "ja": "ブロックされた試みを保存せず、ネイティブのドメイン確認に成功しました。必要な権限と一覧の項目を完了して再実行してください。",
+        "zh-Hans": "原生域名检查已通过，未保存被拦截尝试。完成所需权限和列表项目后再运行。",
+        "ko": "차단된 시도를 저장하지 않고 기본 도메인 검사가 통과되었습니다. 필수 권한 및 피드 행을 완료한 후 다시 실행하세요."
+      }
+    },
+    {
+      "source": "Native domain checks passed, but current readiness changed. Review the required permission/feed rows, then run Test Protection again.",
+      "translations": {
+        "hi": "नेटिव डोमेन जाँचें सफल हुईं, लेकिन तैयारी की स्थिति बदली है। ज़रूरी अनुमति/सूची चरण जाँचें, फिर सुरक्षा परीक्षण चलाएँ।",
+        "es": "Las comprobaciones nativas pasaron, pero cambió la preparación actual. Revisa permisos/lista y ejecuta de nuevo Probar protección.",
+        "pt": "As verificações nativas passaram, mas a prontidão mudou. Revise permissões/lista e execute Testar proteção novamente.",
+        "fr": "Les contrôles natifs ont réussi, mais l’état a changé. Vérifiez les permissions et la liste, puis relancez Tester la protection.",
+        "de": "Native Domainprüfungen bestanden, aber die Bereitschaft hat sich geändert. Prüfe Berechtigungen/Listen und starte „Schutz testen“ erneut.",
+        "ar": "نجحت فحوص النطاقات الأصلية لكن الجاهزية تغيّرت. راجع الأذونات والقائمة ثم أعد اختبار الحماية.",
+        "ja": "ネイティブのドメイン確認に成功しましたが、準備状態が変わりました。権限と一覧を確認し、「保護をテスト」を再実行してください。",
+        "zh-Hans": "原生域名检查已通过，但当前准备状态已变化。检查所需权限/列表项目，再次测试保护。",
+        "ko": "기본 도메인 검사가 통과되었지만 현재 준비 상태가 변경되었습니다. 필요한 권한/피드 행을 검토한 후 테스트 보호를 다시 실행하세요."
+      }
+    },
+    {
+      "source": "Native protection is available in an iOS or Android device build.",
+      "translations": {
+        "hi": "नेटिव सुरक्षा iOS या Android डिवाइस बिल्ड में उपलब्ध है।",
+        "es": "La protección nativa está disponible en una versión para dispositivos iOS o Android.",
+        "pt": "A proteção nativa está disponível em uma versão para dispositivos iOS ou Android.",
+        "fr": "La protection native est disponible dans une version pour appareil iOS ou Android.",
+        "de": "Nativer Schutz ist in einem iOS- oder Android-Gerätebuild verfügbar.",
+        "ar": "الحماية الأصلية متاحة في نسخة لأجهزة iOS أو Android.",
+        "ja": "ネイティブ保護はiOSまたはAndroidの端末用ビルドで利用できます。",
+        "zh-Hans": "原生保护可在 iOS 或 Android 设备版本中使用。",
+        "ko": "기본 보호는 iOS 또는 Android 장치 빌드에서 사용할 수 있습니다."
+      }
+    },
+    {
+      "source": "Native setup target",
+      "translations": {
+        "hi": "नेटिव सेटअप लक्ष्य",
+        "es": "Objetivo de configuración nativa",
+        "pt": "Alvo da configuração nativa",
+        "fr": "Cible de configuration native",
+        "de": "Natives Einrichtungsziel",
+        "ar": "هدف الإعداد الأصلي",
+        "ja": "ネイティブ設定の対象",
+        "zh-Hans": "原生设置对象",
+        "ko": "네이티브 설정 대상"
+      }
+    },
+    {
+      "source": "needs data",
+      "translations": {
+        "hi": "डेटा चाहिए",
+        "es": "necesita datos",
+        "pt": "precisa de dados",
+        "fr": "nécessite des données",
+        "de": "benötigt Daten",
+        "ar": "يحتاج بيانات",
+        "ja": "データが必要",
+        "zh-Hans": "需要数据",
+        "ko": "데이터가 필요하다"
+      }
+    },
+    {
+      "source": "Needs setup",
+      "translations": {
+        "hi": "सेटअप चाहिए",
+        "es": "Necesita configuración",
+        "pt": "Precisa de configuração",
+        "fr": "Configuration nécessaire",
+        "de": "Einrichtung nötig",
+        "ar": "يحتاج إعدادًا",
+        "ja": "設定が必要",
+        "zh-Hans": "需要设置",
+        "ko": "설정 필요"
+      }
+    },
+    {
+      "source": "NEXT BEST ACTION",
+      "translations": {
+        "hi": "अगला बेहतर कदम",
+        "es": "SIGUIENTE MEJOR ACCIÓN",
+        "pt": "PRÓXIMA MELHOR AÇÃO",
+        "fr": "PROCHAINE ACTION UTILE",
+        "de": "NÄCHSTER GUTER SCHRITT",
+        "ar": "أفضل خطوة تالية",
+        "ja": "次の最適な行動",
+        "zh-Hans": "下一项最佳行动",
+        "ko": "다음 최고의 액션"
+      }
+    },
+    {
+      "source": "Night guard",
+      "translations": {
+        "hi": "रात्रि सुरक्षा",
+        "es": "Protección nocturna",
+        "pt": "Proteção noturna",
+        "fr": "Protection nocturne",
+        "de": "Nachtschutz",
+        "ar": "حماية الليل",
+        "ja": "夜のガード",
+        "zh-Hans": "夜间保护",
+        "ko": "나이트가드"
+      }
+    },
+    {
+      "source": "Night urges",
+      "translations": {
+        "hi": "रात की इच्छाएँ",
+        "es": "Impulsos nocturnos",
+        "pt": "Vontades noturnas",
+        "fr": "Envies nocturnes",
+        "de": "Nächtlicher Drang",
+        "ar": "الرغبات الليلية",
+        "ja": "夜の衝動",
+        "zh-Hans": "夜间冲动",
+        "ko": "밤의 촉구"
+      }
+    },
+    {
+      "source": "No active earned unlock",
+      "translations": {
+        "hi": "कोई कमाया हुआ अनलॉक सक्रिय नहीं",
+        "es": "Ningún desbloqueo ganado activo",
+        "pt": "Nenhum desbloqueio conquistado ativo",
+        "fr": "Aucun déverrouillage gagné actif",
+        "de": "Keine verdiente Freigabe aktiv",
+        "ar": "لا يوجد فتح مستحق نشط",
+        "ja": "獲得した解除は有効になっていません",
+        "zh-Hans": "没有已生效的获得解锁",
+        "ko": "활성 획득 잠금 해제 없음"
+      }
+    },
+    {
+      "source": "No adult content",
+      "translations": {
+        "hi": "कोई वयस्क सामग्री नहीं",
+        "es": "Sin contenido adulto",
+        "pt": "Sem conteúdo adulto",
+        "fr": "Aucun contenu adulte",
+        "de": "Keine Erwachseneninhalte",
+        "ar": "لا محتوى للبالغين",
+        "ja": "成人向けコンテンツなし",
+        "zh-Hans": "没有成人内容",
+        "ko": "성인용 콘텐츠 없음"
+      }
+    },
+    {
+      "source": "No articles match your search.",
+      "translations": {
+        "hi": "खोज से कोई लेख नहीं मिला।",
+        "es": "Ningún artículo coincide con tu búsqueda.",
+        "pt": "Nenhum artigo corresponde à sua busca.",
+        "fr": "Aucun article ne correspond à votre recherche.",
+        "de": "Keine Artikel entsprechen deiner Suche.",
+        "ar": "لا مقالات تطابق بحثك.",
+        "ja": "検索に一致する記事はありません。",
+        "zh-Hans": "没有与搜索匹配的文章。",
+        "ko": "검색어와 일치하는 기사가 없습니다."
+      }
+    },
+    {
+      "source": "No local Focus Shield rules yet. Enable a supported preset or calibrate a selected surface.",
+      "translations": {
+        "hi": "अभी कोई स्थानीय Focus Shield नियम नहीं है। समर्थित प्रीसेट चालू करें या चुना सतह कैलिब्रेट करें।",
+        "es": "Aún no hay reglas locales de Focus Shield. Activa un preajuste compatible o calibra una superficie elegida.",
+        "pt": "Ainda não há regras locais do Focus Shield. Ative uma predefinição compatível ou calibre uma superfície selecionada.",
+        "fr": "Aucune règle locale Focus Shield pour l’instant. Activez un préréglage pris en charge ou calibrez une surface choisie.",
+        "de": "Noch keine lokalen Focus-Shield-Regeln. Aktiviere eine unterstützte Vorlage oder kalibriere eine ausgewählte Oberfläche.",
+        "ar": "لا توجد قواعد Focus Shield محلية بعد. فعّل إعدادًا مدعومًا أو عاير سطحًا مختارًا.",
+        "ja": "端末内のFocus Shieldルールはまだありません。対応するプリセットを有効にするか、対象画面を調整してください。",
+        "zh-Hans": "还没有本地 Focus Shield 规则。启用受支持的预设，或校准所选界面。",
+        "ko": "아직 로컬 Focus Shield 규칙이 없습니다. 지원되는 사전 설정을 활성화하거나 선택한 표면을 보정하세요."
+      }
+    },
+    {
+      "source": "No native protection status is available yet.",
+      "translations": {
+        "hi": "अभी नेटिव सुरक्षा स्थिति उपलब्ध नहीं है।",
+        "es": "Aún no hay estado de protección nativa disponible.",
+        "pt": "Ainda não há estado de proteção nativa disponível.",
+        "fr": "Aucun état de protection native n’est encore disponible.",
+        "de": "Noch kein nativer Schutzstatus verfügbar.",
+        "ar": "لا توجد حالة حماية أصلية متاحة بعد.",
+        "ja": "ネイティブの保護状態はまだ利用できません。",
+        "zh-Hans": "尚无可用的原生保护状态。",
+        "ko": "아직 기본 보호 상태를 사용할 수 없습니다."
+      }
+    },
+    {
+      "source": "No signals yet",
+      "translations": {
+        "hi": "अभी कोई संकेत नहीं",
+        "es": "Aún no hay señales",
+        "pt": "Ainda não há sinais",
+        "fr": "Aucun signal pour l’instant",
+        "de": "Noch keine Signale",
+        "ar": "لا إشارات بعد",
+        "ja": "サインはまだありません",
+        "zh-Hans": "尚无信号",
+        "ko": "아직 신호 없음"
+      }
+    },
+    {
+      "source": "No social media",
+      "translations": {
+        "hi": "सोशल मीडिया नहीं",
+        "es": "Sin redes sociales",
+        "pt": "Sem redes sociais",
+        "fr": "Sans réseaux sociaux",
+        "de": "Keine sozialen Medien",
+        "ar": "لا وسائل تواصل",
+        "ja": "SNSなし",
+        "zh-Hans": "不使用社交媒体",
+        "ko": "소셜 미디어 없음"
+      }
+    },
+    {
+      "source": "Normal Web Allowlist",
+      "translations": {
+        "hi": "सामान्य वेब अनुमति सूची",
+        "es": "Lista permitida de web normal",
+        "pt": "Lista permitida da web normal",
+        "fr": "Liste autorisée du web normal",
+        "de": "Freigabeliste für normales Web",
+        "ar": "قائمة السماح للويب العادي",
+        "ja": "通常ウェブの許可リスト",
+        "zh-Hans": "普通网站允许列表",
+        "ko": "일반 웹 허용 목록"
+      }
+    },
+    {
+      "source": "Not enough data",
+      "translations": {
+        "hi": "पर्याप्त डेटा नहीं",
+        "es": "Datos insuficientes",
+        "pt": "Dados insuficientes",
+        "fr": "Données insuffisantes",
+        "de": "Zu wenig Daten",
+        "ar": "بيانات غير كافية",
+        "ja": "データが不足しています",
+        "zh-Hans": "数据不足",
+        "ko": "데이터가 충분하지 않습니다."
+      }
+    },
+    {
+      "source": "Not enough data for an estimate",
+      "translations": {
+        "hi": "अनुमान के लिए पर्याप्त डेटा नहीं",
+        "es": "Datos insuficientes para estimar",
+        "pt": "Dados insuficientes para estimar",
+        "fr": "Données insuffisantes pour une estimation",
+        "de": "Zu wenig Daten für eine Schätzung",
+        "ar": "بيانات غير كافية للتقدير",
+        "ja": "推定するためのデータが不足しています",
+        "zh-Hans": "没有足够数据进行估计",
+        "ko": "추정을 위한 데이터가 충분하지 않습니다."
+      }
+    },
+    {
+      "source": "Not enough data yet",
+      "translations": {
+        "hi": "अभी पर्याप्त डेटा नहीं",
+        "es": "Aún no hay datos suficientes",
+        "pt": "Ainda não há dados suficientes",
+        "fr": "Pas encore assez de données",
+        "de": "Noch nicht genug Daten",
+        "ar": "لا توجد بيانات كافية بعد",
+        "ja": "データはまだ不足しています",
+        "zh-Hans": "暂时数据不足",
+        "ko": "아직 데이터가 충분하지 않습니다."
+      }
+    },
+    {
+      "source": "Not selected",
+      "translations": {
+        "hi": "नहीं चुना गया",
+        "es": "No seleccionado",
+        "pt": "Não selecionado",
+        "fr": "Non sélectionné",
+        "de": "Nicht ausgewählt",
+        "ar": "غير محدد",
+        "ja": "未選択",
+        "zh-Hans": "未选择",
+        "ko": "선택되지 않음"
+      }
+    },
+    {
+      "source": "Notice five things around you.",
+      "translations": {
+        "hi": "आसपास की पाँच चीज़ें देखें।",
+        "es": "Observa cinco cosas a tu alrededor.",
+        "pt": "Observe cinco coisas ao redor.",
+        "fr": "Remarquez cinq choses autour de vous.",
+        "de": "Nimm fünf Dinge um dich herum wahr.",
+        "ar": "لاحظ خمسة أشياء حولك.",
+        "ja": "周りのものを五つ観察しましょう。",
+        "zh-Hans": "留意身边的五样东西。",
+        "ko": "주변에 있는 다섯 가지를 주목해 보세요."
+      }
+    },
+    {
+      "source": "Notifications, challenge sensors and Focus Shield are optional. You can set them up later in Shield.",
+      "translations": {
+        "hi": "सूचनाएँ, चुनौती सेंसर और Focus Shield वैकल्पिक हैं। इन्हें बाद में Shield में सेट कर सकते हैं।",
+        "es": "Las notificaciones, sensores de retos y Focus Shield son opcionales. Puedes configurarlos después en Shield.",
+        "pt": "Notificações, sensores dos desafios e Focus Shield são opcionais. Você pode configurá-los depois em Shield.",
+        "fr": "Les notifications, capteurs de défis et Focus Shield sont facultatifs. Vous pouvez les configurer plus tard dans Shield.",
+        "de": "Benachrichtigungen, Aufgabensensoren und Focus Shield sind optional. Du kannst sie später in Shield einrichten.",
+        "ar": "الإشعارات ومستشعرات التحديات وFocus Shield اختيارية. يمكنك إعدادها لاحقًا في Shield.",
+        "ja": "通知、チャレンジのセンサー、Focus Shieldは任意です。後でShieldから設定できます。",
+        "zh-Hans": "通知、挑战传感器和 Focus Shield 均可选择启用。你可稍后在 Shield 中设置。",
+        "ko": "알림, 챌린지 센서 및 Focus Shield는 선택 사항입니다. 나중에 Shield에서 설정할 수 있습니다."
+      }
+    },
+    {
+      "source": "Observing the craving without obeying it weakens the automatic response.",
+      "translations": {
+        "hi": "तीव्र इच्छा को मानने के बजाय देखना अपने-आप की प्रतिक्रिया कमजोर करता है।",
+        "es": "Observar el antojo sin obedecerlo debilita la respuesta automática.",
+        "pt": "Observar a vontade sem obedecê-la enfraquece a resposta automática.",
+        "fr": "Observer l’envie sans lui obéir affaiblit la réaction automatique.",
+        "de": "Das Verlangen beobachten, ohne ihm zu folgen, schwächt die automatische Reaktion.",
+        "ar": "مراقبة الرغبة دون طاعتها تضعف الاستجابة التلقائية.",
+        "ja": "欲求に従わず観察すると、自動的な反応が弱まります。",
+        "zh-Hans": "观察渴望而不听从它，能削弱自动反应。",
+        "ko": "갈망에 순종하지 않고 갈망을 관찰하면 자동 반응이 약화됩니다."
+      }
+    },
+    {
+      "source": "One clear minute now makes the next hard moment easier.",
+      "translations": {
+        "hi": "अभी एक स्पष्ट मिनट अगले कठिन पल को आसान बनाता है।",
+        "es": "Un minuto claro ahora facilita el siguiente momento difícil.",
+        "pt": "Um minuto de clareza agora facilita o próximo momento difícil.",
+        "fr": "Une minute de clarté maintenant facilite le prochain moment difficile.",
+        "de": "Eine klare Minute jetzt erleichtert den nächsten schwierigen Moment.",
+        "ar": "دقيقة واضحة الآن تجعل اللحظة الصعبة التالية أسهل.",
+        "ja": "今の落ち着いた1分が、次の難しい瞬間を乗り越えやすくします。",
+        "zh-Hans": "现在清醒的一分钟，能让下一个困难时刻更轻松。",
+        "ko": "이제 1분의 명확한 순간이 다음 어려운 순간을 더 쉽게 만듭니다."
+      }
+    },
+    {
+      "source": "One trusted person can be one tap away during a risk moment.",
+      "translations": {
+        "hi": "जोखिम के समय एक भरोसेमंद व्यक्ति बस एक टैप दूर हो सकता है।",
+        "es": "Una persona de confianza puede estar a un toque en un momento de riesgo.",
+        "pt": "Uma pessoa de confiança pode estar a um toque em um momento de risco.",
+        "fr": "Une personne de confiance peut être à un geste dans un moment à risque.",
+        "de": "Eine vertraute Person kann in einem Risikomoment nur einen Tipp entfernt sein.",
+        "ar": "قد يكون شخص موثوق على بُعد لمسة واحدة في لحظة خطر.",
+        "ja": "リスクのある瞬間に、信頼できる人へワンタップでつながれます。",
+        "zh-Hans": "在风险时刻，轻点一下就能联系到值得信任的人。",
+        "ko": "위험한 순간에 신뢰할 수 있는 사람 한 명은 탭 한 번이면 됩니다."
+      }
+    },
+    {
+      "source": "Only aggregate counts and rates are sent after consent. Notes, raw URLs, contacts, receipts, and transcripts stay off the payload.",
+      "translations": {
+        "hi": "सहमति के बाद केवल समेकित संख्या और दरें भेजी जाती हैं। नोट, मूल URL, संपर्क, रसीदें और बातचीत भेजी नहीं जातीं।",
+        "es": "Tras el consentimiento solo se envían recuentos y tasas agregados. No se incluyen notas, URLs originales, contactos, comprobantes ni transcripciones.",
+        "pt": "Após o consentimento, apenas contagens e taxas agregadas são enviadas. Notas, URLs originais, contatos, comprovantes e transcrições não são incluídos.",
+        "fr": "Seuls les nombres et taux agrégés sont envoyés après consentement. Notes, URL brutes, contacts, reçus et transcriptions restent exclus.",
+        "de": "Nach Zustimmung werden nur zusammengefasste Zahlen und Raten gesendet. Notizen, Roh-URLs, Kontakte, Belege und Transkripte sind nicht enthalten.",
+        "ar": "تُرسل الأعداد والمعدلات المجمّعة فقط بعد الموافقة. لا تُرسل الملاحظات والروابط الأصلية وجهات الاتصال والإيصالات والنصوص.",
+        "ja": "同意後に送信するのは集計された件数と割合だけです。メモ、生のURL、連絡先、領収書、会話内容は含めません。",
+        "zh-Hans": "同意后仅发送汇总数量和比率。笔记、原始网址、联系人、收据和对话记录不会包含在内。",
+        "ko": "동의 후에는 집계된 개수와 요율만 전송됩니다. 메모, 원시 URL, 연락처, 영수증 및 성적표는 페이로드에서 제외됩니다."
+      }
+    },
+    {
+      "source": "Open a note.",
+      "translations": {
+        "hi": "नोट खोलें।",
+        "es": "Abre una nota.",
+        "pt": "Abra uma nota.",
+        "fr": "Ouvrez une note.",
+        "de": "Öffne eine Notiz.",
+        "ar": "افتح ملاحظة.",
+        "ja": "メモを開きましょう。",
+        "zh-Hans": "打开一条笔记。",
+        "ko": "메모를 엽니다."
+      }
+    },
+    {
+      "source": "Open protection setup",
+      "translations": {
+        "hi": "सुरक्षा सेटअप खोलें",
+        "es": "Abrir configuración de protección",
+        "pt": "Abrir configuração de proteção",
+        "fr": "Ouvrir la configuration de protection",
+        "de": "Schutzeinrichtung öffnen",
+        "ar": "فتح إعداد الحماية",
+        "ja": "保護設定を開く",
+        "zh-Hans": "打开保护设置",
+        "ko": "개방형 보호 설정"
+      }
+    },
+    {
+      "source": "Open Shield",
+      "translations": {
+        "hi": "Shield खोलें",
+        "es": "Abrir Shield",
+        "pt": "Abrir Shield",
+        "fr": "Ouvrir Shield",
+        "de": "Shield öffnen",
+        "ar": "فتح Shield",
+        "ja": "Shieldを開く",
+        "zh-Hans": "打开 Shield",
+        "ko": "오픈 쉴드"
+      }
+    }
+  ]
+}

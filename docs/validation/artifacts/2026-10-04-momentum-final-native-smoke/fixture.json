@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "freed-disposable-ui-fixture-v1",
+  "deviceId": "EA53F394-3E1F-44A7-84EF-716A26BE9879",
+  "platform": "ios",
+  "disposable": true,
+  "dataOwner": "test-only",
+  "services": "disabled",
+  "allowRealEmail": false,
+  "allowRealPurchases": false,
+  "allowRealMessages": false,
+  "kind": "SIMULATOR_DEBUG",
+  "appBuildSha256": "717047958e22ea70bfce3fd27fac1fc762a2a4469ea7fec99200df4746fb689e"
+}

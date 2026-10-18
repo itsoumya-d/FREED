@@ -1,0 +1,33 @@
+appId: app.freed.recovery
+name: clara-local
+tags:
+  - smoke
+  - local-write
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///flow/coach"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-coach"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      id: "clara-message"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "clara-message"
+- inputText: "I need help taking one calm step."
+- tapOn: "Send message"
+- hideKeyboard
+- extendedWaitUntil:
+    visible: ".*calm.*|.*breath.*|.*reset.*|.*Reset.*"
+    timeout: 15000
+- assertVisible:
+    id: "screen-coach"
+- takeScreenshot: "clara-local"

@@ -1,0 +1,11 @@
+const assert=require('node:assert/strict');const fs=require('node:fs');
+const moduleSource=fs.readFileSync('modules/freed-protection/ios/FreedProtectionModule.swift','utf8');
+for(const api of ['getAppGroups','setAppGroupActionScope','suspendAppGroupOperations','createAppGroup','updateAppGroup','removeAppGroup','presentAppGroupPicker']) assert.ok(moduleSource.includes(`AsyncFunction("${api}")`),`${api} must reach the native runtime`);
+const monitor=fs.readFileSync('ios/FREEDDeviceActivityMonitor/DeviceActivityMonitorExtension.swift','utf8');
+assert.ok(monitor.includes('FreedAppGroupsRuntime.shared.callback'), 'real extension callbacks must reconcile owned group stores');
+const action=fs.readFileSync('ios/FREEDShieldAction/ShieldActionExtension.swift','utf8');
+assert.ok(action.includes('FreedAppGroupsRuntime.shared.issueScope'), 'shield action must bind exact opaque app token and current group revision');
+assert.ok(moduleSource.includes('"ios-app-group"'), 'public bridge group scope must omit private token bytes');
+const scope=moduleSource.slice(moduleSource.indexOf('  private func scopePayload('),moduleSource.indexOf('  private func sanitizedPendingHost(',moduleSource.indexOf('  private func scopePayload(')));
+assert.ok(scope.includes('\"ios-screen-time\"'));assert.ok(!scope.includes('\"token\": token'),'live legacy public DTO must not export FamilyControls token bytes');
+console.log('Native group bindings/extensions/public scope source wiring validated (not device enforcement proof)');

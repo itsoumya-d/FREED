@@ -1,0 +1,26 @@
+appId: app.freed.recovery
+name: profile-plan
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///profile"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-profile"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Your routine"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Your routine"
+- assertVisible:
+    id: "screen-main-profile"
+- takeScreenshot: "profile-plan"

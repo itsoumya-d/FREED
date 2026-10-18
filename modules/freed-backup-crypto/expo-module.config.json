@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android"],
+  "apple": {
+    "modules": ["FreedBackupCryptoModule"],
+    "podspecPath": "ios/FreedBackupCrypto.podspec",
+    "swiftModuleName": "FreedBackupCrypto"
+  },
+  "android": { "modules": ["app.freed.backupcrypto.FreedBackupCryptoModule"] }
+}

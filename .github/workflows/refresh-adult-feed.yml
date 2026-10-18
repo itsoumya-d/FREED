@@ -1,0 +1,38 @@
+name: Refresh adult-domain feed
+
+# The client rejects feeds older than 48h (fail-safe to the embedded seed).
+# This workflow rebuilds the static feed from OISD NSFW Small and redeploys
+# the landing site daily so the served feed is always fresh.
+
+on:
+  schedule:
+    - cron: "0 3 * * *" # daily 03:00 UTC
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build static adult-domain feed
+        run: npx tsx scripts/build-adult-feed-static.ts
+
+      - name: Deploy landing site (includes /api/adult-domain-feed)
+        run: npx firebase-tools deploy --only hosting:landing --non-interactive
+        env:
+          FIREBASE_SERVICE_ACCOUNT_FREED_7D5EE: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+
+      - name: Verify served feed
+        run: |
+          sleep 30
+          code=$(curl -s -o /dev/null -w "%{http_code}" https://freed-landing.web.app/api/adult-domain-feed)
+          echo "feed status: $code"
+          test "$code" = "200"

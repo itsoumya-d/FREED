@@ -1,4 +1,7 @@
+const { readChallengePhotoSafetySources, inspectChallengePhotoSafety } = require("./lib/challenge-photo-safety-contract");
+const { inspectRecoveryReminderPrivacySources } = require('./lib/recovery-reminder-privacy-contract');
 const { existsSync, readFileSync } = require("node:fs");
+const { inspectConfirmedNativeCleanup, inspectSetupConfigurationCheck, inspectModeAwareReadiness, inspectPublicPrivacyComposition } = require('./lib/cleanup-source-contract');
 const { join } = require("node:path");
 
 const root = process.cwd();
@@ -13,6 +16,27 @@ function has(path) {
 
 function check(id, condition, evidence) {
   return { id, status: condition ? "pass" : "fail", evidence };
+}
+
+function inspectEncryptedClientRestore(source) {
+  const ts = require('typescript');
+  const ast = ts.createSourceFile('backup-client.ts', source, ts.ScriptTarget.Latest, true);
+  const decoderName = 'restoreEncryptedRecoveryBackupContent', functions = [], imports = [], shadows = [];
+  const visit = node => {
+    if (ts.isFunctionDeclaration(node) && node.name?.text === 'downloadEncryptedRecoveryBackup') functions.push(node);
+    if (ts.isImportSpecifier(node) && node.name.text === decoderName) imports.push(node);
+    if ((ts.isParameter(node) || ts.isVariableDeclaration(node) || ts.isBindingElement(node) || ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isClassDeclaration(node) || ts.isClassExpression(node) || ts.isEnumDeclaration(node) || ts.isNamespaceImport(node) || ts.isImportClause(node)) && node.name && ts.isIdentifier(node.name) && node.name.text === decoderName) shadows.push(node);
+    ts.forEachChild(node, visit);
+  }; visit(ast);
+  const fn = functions.length === 1 && functions[0].parent === ast ? functions[0] : null;
+  const imported = ast.statements.some(node => ts.isImportDeclaration(node) && node.moduleSpecifier.text === '@/lib/recovery-backup' && node.importClause && !node.importClause.isTypeOnly && node.importClause.namedBindings && ts.isNamedImports(node.importClause.namedBindings) && node.importClause.namedBindings.elements.some(item => item === imports[0] && !item.isTypeOnly && !item.propertyName && item.name.text === decoderName));
+  const compact = node => node.getText(ast).replace(/\s+/g, '');
+  if (ast.parseDiagnostics.length || imports.length !== 1 || shadows.length || !imported || !fn?.body) return false;
+  const statements = fn.body.statements;
+  const decoded = statements.findIndex(node => ts.isVariableStatement(node) && node.declarationList.declarations.length === 1 && compact(node) === 'constcontent=awaitrestoreEncryptedRecoveryBackupContent(JSON.stringify(envelope),passphrase);');
+  const result = statements.at(-1);
+  return decoded === statements.length - 2 && result && ts.isReturnStatement(result) && result.expression && ts.isObjectLiteralExpression(result.expression) &&
+    compact(result.expression) === '{...sanitized,restoredState:content.state,...(content.journal?{restoredJournal:content.journal}:{})}';
 }
 
 function manifestPermissionTags(manifest, permission) {
@@ -105,9 +129,20 @@ const analyticsRoute = read("app/api/analytics+api.ts");
 const purchaseRoute = read("app/api/purchases/verify+api.ts");
 const purchaseVerification = read("src/lib/purchase-verification.ts");
 const reminders = read("src/lib/recovery-reminders.ts");
+const reminderHook = read("src/hooks/use-recovery-reminders.ts");
+const reminderController = read("src/lib/recovery-reminder-controller.ts");
 const remoteNotifications = read("src/lib/remote-notifications.ts");
 const remoteNotificationRoute = read("app/api/notifications/send+api.ts");
 const appSurface = read("src/features/freed-app.tsx");
+const challengeVerificationHook = read("src/hooks/useChallengeVerification.ts");
+const challengeVerificationRuntime = read("src/lib/challenge-verification-runtime.ts");
+const photoSafetySources = readChallengePhotoSafetySources(root);
+const photoSafety = inspectChallengePhotoSafety(photoSafetySources);
+const challengePhotoSources = Object.values(photoSafetySources).join("\n");
+const interactiveChallengePhotoPath = Object.values(photoSafety).every(Boolean);
+const protectionSetupView = read("src/components/ProtectionSetupView.tsx");
+const protectionSetupPresenter = read("src/lib/protection-setup-presenter.ts");
+const protectionCapabilities = read("src/lib/protection-capabilities.ts");
 const protectionReadiness = read("src/lib/protection-readiness.ts");
 const doomscrollApps = read("src/lib/doomscroll-apps.ts");
 const nativeIntervention = read("src/lib/native-intervention.ts");
@@ -165,10 +200,10 @@ const checks = [
     "iOS manifest declares no tracking and app config does not request ATT copy."
   ),
   check(
-    "ios-no-collected-data-in-current-build",
+    "ios-declared-firebase-data",
     privacyManifest.includes("<key>NSPrivacyCollectedDataTypes</key>") &&
-      privacyManifest.includes("<array/>"),
-    "Current iOS privacy manifest declares no collected data types for the local-first build."
+      ["UserID", "EmailAddress", "PurchaseHistory", "DeviceID", "ProductInteraction"].every(type => privacyManifest.includes(`NSPrivacyCollectedDataType${type}`)),
+    "iOS privacy manifest declares the Firebase launch data types and keeps tracking disabled."
   ),
   check(
     "ios-complete-file-protection",
@@ -357,7 +392,10 @@ const checks = [
       recoveryBackupClientSync.includes("uploadEncryptedRecoveryBackup") &&
       recoveryBackupClientSync.includes("downloadEncryptedRecoveryBackup") &&
       recoveryBackupClientSync.includes("createEncryptedRecoveryBackup(state, passphrase)") &&
-      recoveryBackupClientSync.includes("restoreEncryptedRecoveryBackup(JSON.stringify(envelope), passphrase)") &&
+      recoveryBackupClientSync.includes("restoreEncryptedRecoveryBackupContent(JSON.stringify(envelope), passphrase)") &&
+      recoveryBackupClientSync.includes("restoredState: content.state") &&
+      recoveryBackupClientSync.includes("...(content.journal ? { restoredJournal: content.journal } : {})") &&
+      inspectEncryptedClientRestore(recoveryBackupClientSync) &&
       recoveryBackupClientSync.includes("safeUserFacingMessage") &&
       userFacingError.includes("safeUserFacingMessage") &&
       userFacingError.includes("redactOperationalText") &&
@@ -383,16 +421,13 @@ const checks = [
     "in-app-privacy-support-deletion",
     appSurface.includes("PrivacySupportCard") &&
       appSurface.includes("FREED_PRIVACY_POLICY_URL") &&
-      appSurface.includes("support@freedrecovery.app") &&
+      appSurface.includes("soumyadebnath1661@gmail.com") &&
       appSurface.includes("Server Deletion") &&
       appSurface.includes("Delete Local Data") &&
       appSurface.includes("Confirm Delete") &&
       appSurface.includes("deleteLocalRecoveryData") &&
       appSurface.includes("createDefaultRecoveryState") &&
-      appSurface.includes("stopAdultContentFilter()") &&
-      appSurface.includes("stopRiskWindowMonitoring()") &&
-      appSurface.includes("clearEarnedUnlockWindow()") &&
-      appSurface.includes("configureBlockedAppPackages(\n        []") &&
+      inspectConfirmedNativeCleanup(appSurface, read("src/lib/confirmed-cleanup.ts")) &&
       appSurface.includes('setScreen("welcome")'),
     "Profile exposes privacy policy, support contact, server deletion request, hosted-sync deletion guidance, and two-step local data deletion with native protection cleanup."
   ),
@@ -402,8 +437,11 @@ const checks = [
       publicSupportRoute.includes("SupportPage") &&
       publicDeletionRoute.includes("AccountDeletionPage") &&
       legalPages.includes("FREED Privacy Policy") &&
-      legalPages.includes("Effective date: June 6, 2026") &&
-      legalPages.includes("Android Accessibility") &&
+      inspectPublicPrivacyComposition(legalPages, JSON.parse(read("src/i18n/native-android-catalog.json")), {
+        routes: { PrivacyPolicyPage: publicPrivacyRoute, SupportPage: publicSupportRoute, AccountDeletionPage: publicDeletionRoute },
+        locales: Object.fromEntries(["en","hi","es","pt","fr","de","ar","ja","ko","zh-Hans"].map(locale => [locale, JSON.parse(read(`src/i18n/locales/${locale}.json`))])),
+        website: read("website/build-legal-pages.js"),
+      }) &&
       legalPages.includes("DNS-only VPN") &&
       legalPages.includes("Family Controls") &&
       legalPages.includes("DeviceActivity") &&
@@ -416,8 +454,8 @@ const checks = [
       legalPages.includes("hosted encrypted backup sync") &&
       legalPages.includes("purchase audit records") &&
       legalPages.includes("legal retention") &&
-      legalPages.includes("support@freedrecovery.app"),
-    "Public /privacy, /support, and /account-deletion routes expose store-ready privacy, support, billing, protection-permission, local deletion, hosted deletion, and retention disclosures without requiring auth."
+      legalPages.includes("soumyadebnath1661@gmail.com"),
+    "Public /privacy, /support, and /account-deletion routes expose source privacy, support, billing, protection-permission, local deletion, hosted deletion, and retention disclosures without requiring auth."
   ),
   check(
     "accountability-report-privacy",
@@ -425,7 +463,7 @@ const checks = [
       accountability.includes("buildSupportCircleReportDeepLink") &&
       accountability.includes("hasUsableSupportCircleMember") &&
       accountability.includes("redactReportText") &&
-      accountability.includes("Private notes, contacts, and browsing details are not included.") &&
+      accountability.includes("Private notes, contacts, browsing details, and device protection history are not included.") &&
       !accountability.includes("relapseRecords.map") &&
       !accountability.includes("dailyCheckIns.map") &&
       !accountability.includes("attempt.host") &&
@@ -502,7 +540,7 @@ const checks = [
       recoveryAnalytics.includes("safeAnalyticsNextFocus") &&
       recoveryState.includes("analyticsSharing: AnalyticsSharingSettings") &&
       recoveryState.includes("updateAnalyticsSharingSettings") &&
-      appSurface.includes("sendGatedAnalyticsPayload(recoveryState, recoveryState.analyticsSharing)") &&
+      appSurface.includes("sendGatedAnalyticsPayload(staged, staged.analyticsSharing)") &&
       appSurface.includes("Only aggregate counts and rates are sent after consent") &&
 	      recoveryAnalyticsIngestion.includes("sanitizeAnalyticsIngestionRequest") &&
 	      recoveryAnalyticsIngestion.includes("ANALYTICS_CONSENT_VERSION") &&
@@ -658,7 +696,7 @@ const checks = [
   ),
   check(
     "notification-copy-privacy",
-    reminders.includes('data: { route: "checkin", kind: item.key }') &&
+    inspectRecoveryReminderPrivacySources({ reminders, hook: reminderHook, controller: reminderController }) &&
       reminders.includes("ReminderSyncOptions") &&
       reminders.includes("cancelScheduledNotificationAsync") &&
       remoteNotifications.includes("buildSafeRemoteNotificationPayload") &&
@@ -668,13 +706,12 @@ const checks = [
       remoteNotifications.includes("REMOTE_NOTIFICATION_DISPATCH_SECRET") &&
       remoteNotificationRoute.includes("validateRemoteNotificationAuth") &&
       remoteNotificationRoute.includes("sendRemoteNotification") &&
-      !/porn|adult|nsfw|explicit/i.test(reminders) &&
       !/porn|adult|nsfw|explicit/i.test(remoteNotifications) &&
       !/data:\s*{[^}]*reflection/i.test(reminders) &&
       !/data:\s*{[^}]*url/i.test(reminders) &&
       !/data:\s*{[^}]*token/i.test(reminders) &&
       !remoteNotificationRoute.includes("purchaseToken"),
-    "Reminder and remote push source copy avoid sensitive adult-content terms, cancel stale local IDs, require server authorization, and send only route/kind metadata."
+    "Reminder and remote push source copy avoid sensitive adult-content terms, cancel stale local IDs, and require server authorization. Local reminder metadata is limited to route/kind, scheduling version/timezone/revision, and a SHA256 owner digest; private fields and raw owner IDs are excluded."
   ),
   check(
     "permission-flow-disclosure-boundaries",
@@ -709,32 +746,33 @@ const checks = [
       protectionPermissions.includes("selectedScreenTimeTokenCount") &&
       appSurface.includes("PROTECTION_PERMISSION_EXPLANATION") &&
       appSurface.includes("getSelectedScreenTimeTargetCount") &&
-      appSurface.includes("Permission checklist") &&
-	      appSurface.includes("Each permission has one job") &&
+      appSurface.includes("<ProtectionSetupView") &&
+      appSurface.includes("steps={permissionPlan}") &&
+      appSurface.includes("onContinue={handleAndroidWizardPrimary}") &&
+      protectionSetupView.includes("{showDetails ? <View") &&
+      protectionSetupView.includes("steps.filter(step => step.required)") &&
       appSurface.includes("setupAutoAdvanceRef") &&
-      appSurface.includes("orderedSetupActionLabel") &&
-      appSurface.includes("Continuing setup: ${nextRequiredStep.title}.") &&
+      appSurface.includes("decideSetupAdvance({ pending, steps: permissionPlan") &&
+      appSurface.includes("runStepAction(advance.step)") &&
       appSurface.includes("Boolean(status.vpnConsentRequired && !status.adultFilterActive)") &&
       appSurface.includes("protectionStatus?.vpnConsentRequired === false") &&
       appSurface.includes("Android VPN permission is approved. Starting DNS Guard now.") &&
-      appSurface.includes("All required setup rows are ready. Running the activation test now.") &&
-      appSurface.includes("if (nextRequiredStep.id === completedStep.id) return") &&
-      appSurface.includes("return `Continue: ${nextRequiredStep.title}`") &&
-      appSurface.includes("Open: ${nextRequiredStep.title}") &&
-      appSurface.includes("adultFilterStep ? runStepAction(adultFilterStep) : runAction(\"adult\", applyAdultContentFilter)") &&
-      appSurface.includes("appInterventionStep ? runStepAction(appInterventionStep) : runAction(\"apps\", requestProtectionAuthorization)") &&
-      appSurface.includes("usageAccessStep ? runStepAction(usageAccessStep) : runAction(\"usage\", openUsageAccessSettings)") &&
-      appSurface.includes("orderedSetupActionLabel(adultFilterStep, \"Enable Adult Block\")") &&
-      appSurface.includes("orderedSetupActionLabel(appInterventionStep, \"Enable App Timer Permission\")") &&
-      appSurface.includes("orderedSetupActionLabel(usageAccessStep, \"Enable Usage Access\")") &&
-		      appSurface.includes("Native Reels, Shorts, and TikTok screens are not inspected") &&
-		      appSurface.includes("Accessibility and Usage Access handle selected app timers") &&
-		      appSurface.includes("when the selected surface is visible") &&
-		      appSurface.includes("DNS-only VPN") &&
-		      appSurface.includes("local VpnService routes DNS resolver IPs only") &&
-		      appSurface.includes("configured limits or selected short-form thresholds") &&
-		      appSurface.includes("Required Android setup: reviewed adult-domain feed, DNS-only VPN, Usage Access, Accessibility, selected app timers, then Test Protection") &&
-	      appSurface.includes("Required iOS setup: Screen Time authorization, adult-domain Safari Content Blocker, Safari Focus Shield for Shorts/Reels, selected targets, daily-limit monitoring, then Test Protection") &&
+      inspectSetupConfigurationCheck(appSurface) &&
+      protectionSetupPresenter.includes("next && next.id !== previous.id") &&
+      appSurface.includes('case "apply-adult-filter":') &&
+      appSurface.includes('runAction("adult", applyAdultContentFilter)') &&
+      appSurface.includes('case "request-authorization":') &&
+      appSurface.includes('runAction("apps", requestProtectionAuthorization)') &&
+      appSurface.includes('case "open-usage-access-settings":') &&
+      appSurface.includes('runAction("usage", openUsageAccessSettings)') &&
+      protectionCapabilities.includes("iOS cannot inspect native-app screens") &&
+      protectionPermissions.includes("aggregate foreground duration for selected packages only, not in-app content or screen text") &&
+      androidAccessibilityService.includes("requireSelectedSurfaceSignal = true") &&
+      androidAccessibilityService.includes("isCurrentShortFormSurface") &&
+			      appSurface.includes("DNS-only VPN") &&
+			      appSurface.includes("local VpnService routes DNS resolver IPs only") &&
+			      appSurface.includes("configured limits or selected short-form thresholds") &&
+      appSurface.includes("Notifications and guided challenge sensors are optional. Protection settings are available in Protect.") &&
       appSurface.includes("Test Protection") &&
       appSurface.includes("adultBlocked") &&
       appSurface.includes("normalAllowed") &&
@@ -745,7 +783,7 @@ const checks = [
       appSurface.includes("Activation test refreshed the reviewed adult-domain feed before checking native readiness") &&
       protectionReadiness.includes("nativeConfiguredAppCount = protectionStatus?.blockedApplications ?? 0") &&
       protectionReadiness.includes("getSelectedScreenTimeTargetCount(protectionStatus)") &&
-      protectionReadiness.includes("selectedIosTargets > 0 && protectionStatus?.appLimitScheduled") &&
+      inspectModeAwareReadiness(protectionReadiness, read("src/lib/app-guard.ts")) &&
       protectionReadiness.includes("protectionStatus?.appInterventionAuthorized") &&
       protectionReadiness.includes("protectionStatus?.usageStatsAuthorized") &&
       protectionReadiness.includes("nativeConfiguredAppCount > 0") &&
@@ -757,15 +795,15 @@ const checks = [
       appSurface.includes('protectionCapability?.platform === "android"') &&
       appSurface.includes("if (activationComplete || !nativeProtectionPlatform)") &&
       appSurface.includes("Finish required protection setup before entering FREED on this device") &&
-      appSurface.includes("Run Test First") &&
+      appSurface.includes("ready: activationReady") &&
       appSurface.includes("activationReady && !activationTestPassed") &&
-      appSurface.includes("Finish Setup") &&
-      appSurface.includes("Continue Preview") &&
+      appSurface.includes("complete: activationComplete") &&
+      protectionSetupPresenter.includes('context.platform === "preview"') &&
       !appSurface.includes("Continue Later") &&
       appSurface.includes("Native adult-domain feed loaded") &&
       appSurface.includes("native permission/feed status") &&
       appSurface.includes("without saving a blocked attempt"),
-	    "Protection setup explains platform permissions separately, documents Safari, Screen Time, Android DNS-only VPN, native feed sync, Usage Access, Accessibility, and platform-aware on-demand challenge-verification data boundaries, and tests activation without writing fake recovery history."
+		    "The permission plan documents Safari, Screen Time, Android DNS-only VPN, native feed sync, Usage Access, Accessibility, and on-demand challenge data boundaries. Shared setup uses those required steps and native activation checks without writing fake recovery history; native short-form checks still require the selected surface."
 	  ),
   check(
     "android-play-policy-disclosure-pack",
@@ -840,7 +878,7 @@ const checks = [
       playStoreDataSafety.includes("Web browsing history") &&
       playStoreDataSafety.includes("not sent off device") &&
       playStoreDataSafety.includes("Data deletion mechanism") &&
-      playStoreDataSafety.includes("support@freedrecovery.app") &&
+      playStoreDataSafety.includes("soumyadebnath1661@gmail.com") &&
       appStorePrivacy.includes("FREED App Store App Privacy Answer Sheet") &&
       appStorePrivacy.includes("Data used to track users: No") &&
       appStorePrivacy.includes("Purchase History") &&
@@ -864,19 +902,18 @@ const checks = [
       !iosInfoPlist.includes("NSPhotoLibraryUsageDescription") &&
       androidManifest.includes("android.permission.CAMERA") &&
       challengeVerification.includes("expectedPhotoLabels") &&
-      appSurface.includes("ImagePicker.launchCameraAsync") &&
-      appSurface.includes("base64: false") &&
-      appSurface.includes("exif: false") &&
-      appSurface.includes("deleteTemporaryChallengePhoto(photoUri)") &&
-      !appSurface.includes("launchImageLibraryAsync") &&
-      !appSurface.includes("base64: true") &&
+      interactiveChallengePhotoPath &&
+      challengeVerificationHook.includes("base64: false") &&
+      challengeVerificationHook.includes("exif: false") &&
+      !challengePhotoSources.includes("launchImageLibraryAsync") &&
+      !challengePhotoSources.includes("base64: true") &&
       nativeProtectionIndex.includes("classifyChallengePhoto") &&
-      nativeProtectionIndex.includes("labels: []") &&
-      iosProtectionModule.includes("VNClassifyImageRequest") &&
-      androidProtectionModule.includes("ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)") &&
+      photoSafety.unavailableFailsClosed &&
+      photoSafety.nativeDelegation &&
+      photoSafety.boundedNativeOwner &&
       !iosProtectionModule.includes("imageData.base64EncodedString") &&
       !androidProtectionModule.includes("Base64"),
-    "Photo challenge verification uses explicit camera copy, fresh camera capture, on-device labels, no microphone/photo-library permission copy, no base64/exif payloads, and best-effort temporary-photo cleanup after classification."
+    "Photo challenge verification uses explicit camera copy, fresh camera capture, on-device labels, no microphone/photo-library permission copy, no base64/exif payloads, and owned temporary-photo cleanup with bounded retry and truthful failure reporting after classification."
   )
 ];
 

@@ -1,0 +1,14 @@
+:root { color-scheme: light dark; font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif; background: #FAFAFB; color: #101319; --secondary: #555D6C; --action: #414ACE; --on-action: #FFFFFF; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { width: 100%; max-width: 480px; margin: auto; padding: max(32px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom)); }
+header { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 22px; margin-bottom: 48px; }
+.label { font-size: 12px; font-weight: 700; letter-spacing: .08em; color: var(--secondary); }
+h1 { font-size: clamp(32px, 9vw, 44px); line-height: 1.1; letter-spacing: -.025em; margin: 12px 0 20px; }
+p { font-size: 17px; line-height: 1.5; overflow-wrap: anywhere; }
+a { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 56px; padding: 16px 20px; border-radius: 18px; background: var(--action); color: var(--on-action); font-size: 17px; font-weight: 700; text-decoration: none; margin: 28px 0 24px; }
+a:focus-visible { outline: 3px solid var(--action); outline-offset: 4px; }
+.note, #status { font-size: 14px; color: var(--secondary); }
+@media (prefers-color-scheme: dark) { :root { background: #101319; color: #FAFAFB; --secondary: #B9C0CC; --action: #A1ADFF; --on-action: #101319; } }
+
+a.secondary { background: transparent; color: var(--secondary); justify-content: center; margin-top: 0; }

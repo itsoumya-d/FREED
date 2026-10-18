@@ -20,7 +20,6 @@ const CONSOLE_PACKET_PATH = "store/console-launch-packet.md";
 const LAUNCH_PLANS = [
   { planId: "yearly", productId: "freed_premium_yearly", priceUsd: "39.99" },
   { planId: "monthly", productId: "freed_premium_monthly", priceUsd: "9.99" },
-  { planId: "lifetime", productId: "freed_premium_lifetime", priceUsd: "79.99" },
 ];
 const LAUNCH_PRODUCT_IDS = LAUNCH_PLANS.map((plan) => plan.productId);
 const FUTURE_PRODUCT_IDS = ["freed_family_yearly", "freed_accountability_monthly", "freed_ai_coach_monthly"];
@@ -379,7 +378,7 @@ function buildReport() {
   pushCheck(checks, "catalog-schema", catalog.schemaVersion === "freed-store-products-v1", `${CATALOG_PATH} schema is ${catalog.schemaVersion || "missing"}.`);
   pushCheck(checks, "bundle-and-package", catalog.bundleId === "app.freed.recovery" && catalog.packageName === "app.freed.recovery", "Catalog bundle/package match app.freed.recovery.");
   pushCheck(checks, "premium-entitlement", catalog.entitlementId === "premium", "Catalog entitlement is premium.");
-  pushCheck(checks, "launch-product-order", JSON.stringify(catalog.launchProductIds || []) === JSON.stringify(LAUNCH_PRODUCT_IDS), "Launch products are yearly, monthly, lifetime in order.");
+  pushCheck(checks, "launch-product-order", JSON.stringify(catalog.launchProductIds || []) === JSON.stringify(LAUNCH_PRODUCT_IDS), "Launch products are yearly, monthly in order.");
   pushCheck(checks, "future-products-disabled", hasExactSet(catalog.futureProductsDisabledForV1 || [], FUTURE_PRODUCT_IDS), "Future family/accountability/AI coach SKUs are disabled for v1.");
   pushCheck(checks, "products-core3-only", hasExactSet(products.map((product) => product.productId), LAUNCH_PRODUCT_IDS), "Catalog products contain only Core 3 product IDs.");
 
@@ -399,20 +398,16 @@ function buildReport() {
     "apple-product-types",
     productPlanMap.yearly?.apple?.productType === "auto-renewable-subscription" &&
       productPlanMap.monthly?.apple?.productType === "auto-renewable-subscription" &&
-      productPlanMap.lifetime?.apple?.productType === "non-consumable" &&
       productPlanMap.yearly?.apple?.subscriptionGroupId === "freed_premium" &&
-      productPlanMap.monthly?.apple?.subscriptionGroupId === "freed_premium" &&
-      productPlanMap.lifetime?.apple?.subscriptionGroupId === null,
-    "App Store product types are subscription/subscription/non-consumable.",
+      productPlanMap.monthly?.apple?.subscriptionGroupId === "freed_premium",
+    "App Store product types are subscription/subscription.",
   );
   pushCheck(
     checks,
     "google-product-types",
     productPlanMap.yearly?.google?.productType === "subscription" &&
-      productPlanMap.monthly?.google?.productType === "subscription" &&
-      productPlanMap.lifetime?.google?.productType === "one-time-product" &&
-      productPlanMap.lifetime?.google?.purchaseType === "non-consumable",
-    "Play product types are subscription/subscription/one-time non-consumable.",
+      productPlanMap.monthly?.google?.productType === "subscription",
+    "Play product types are subscription/subscription.",
   );
   pushCheck(checks, "app-store-csv-core3-only", hasExactSet(appRows.map((row) => row.product_id), LAUNCH_PRODUCT_IDS), "App Store CSV contains only Core 3 product IDs.");
   pushCheck(checks, "play-store-csv-core3-only", hasExactSet(playRows.map((row) => row.product_id), LAUNCH_PRODUCT_IDS), "Play CSV contains only Core 3 product IDs.");

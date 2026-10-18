@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "freed-affected-suite-reruns-v1",
+  "generatedAt": "2026-10-02T10:45:56.538Z",
+  "sanitized": true,
+  "suites": {
+    "tests/app-theme.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T10:44:03.314Z",
+      "durationMs": 410,
+      "counts": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/reruns/app-theme.test.ts.log",
+      "logSha256": "81898ddded94cde157df78dba3897b7a67aaaa64c4ac80098bfd660042de834a",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/app-theme.test.ts"
+      ]
+    },
+    "tests/feature-test-manifest.test.js": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T10:44:03.760Z",
+      "durationMs": 784,
+      "counts": {
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/reruns/feature-test-manifest.test.js.log",
+      "logSha256": "be6f82a22366ccfd742757c6ccca277660f53d4c3629af16fc6116270362aab6",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/feature-test-manifest.test.js"
+      ]
+    },
+    "tests/core.test.ts": {
+      "status": "failed",
+      "exitCode": 1,
+      "timedOut": false,
+      "startedAt": "2026-10-02T10:44:04.544Z",
+      "durationMs": 111991,
+      "counts": {
+        "passed": 276,
+        "failed": 3,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/reruns/core.test.ts.log",
+      "logSha256": "0bea94c6094a1292117feb539370a507ff43a83484a4054fe430cff97881cb16",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/core.test.ts"
+      ]
+    }
+  }
+}

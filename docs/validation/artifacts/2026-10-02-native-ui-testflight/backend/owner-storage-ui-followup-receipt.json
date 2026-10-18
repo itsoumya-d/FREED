@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "freed-owner-storage-ui-followup-v1",
+  "recordedAt": "2026-10-02T08:30:01.079298+00:00",
+  "project": "freed-7d5ee",
+  "reportedOwnerConsoleAttempt": {
+    "reportedBy": "coordinating-root-agent",
+    "consoleAccountIndex": 4,
+    "planLabel": "Blaze",
+    "selectedLocation": "asia-south1",
+    "storageClass": "Standard",
+    "securityPreset": "production-deny-all",
+    "clickedCreate": true,
+    "observedSpinner": true,
+    "returnedToGetStarted": true,
+    "persistentErrorObserved": false,
+    "uiAttemptOutcome": "UNCONFIRMED_FAILURE_NO_BUCKET_IN_LIVE_READBACK"
+  },
+  "readback": {
+    "gcloudDefaultBucketStatus": 404,
+    "firebaseDefaultBucketStatus": 404,
+    "gcloudBucketCount": 0,
+    "firebaseBucketCount": 0,
+    "storageBucketExists": false,
+    "storageRulesDeploymentAttempted": false
+  },
+  "identity": {
+    "existingCliSessionsUseSamePrincipal": true,
+    "principalFingerprint": "7e8b670eab4c",
+    "gcloudDirectProjectRoles": [
+      "roles/owner"
+    ],
+    "firebaseDirectProjectRoles": [
+      "roles/owner"
+    ],
+    "requiredCreatePermissionsGrantedToBoth": true,
+    "ownerConsolePrincipalCompared": false,
+    "accountEmailsAndTokensOmitted": true
+  },
+  "billing": {
+    "projectBillingEnabled": true,
+    "billingAccountLinked": true,
+    "linkedBillingAccountOpen": false,
+    "linkedBillingAccountActive": false,
+    "knownCondition": "Linked billing account is closed; project billingEnabled and the Blaze label alone do not establish an open billing account.",
+    "service403CauseInferredFromClosedAccount": true,
+    "billingAccountIdsAndFinancialDetailsOmitted": true
+  },
+  "actions": {
+    "createRetried": false,
+    "rulesDeployed": false,
+    "remoteFlagsChanged": false,
+    "roleGrantsMade": false,
+    "billingOrPaymentChanged": false
+  },
+  "evidence": [
+    "owner-storage-followup-gcloud.json",
+    "owner-storage-followup-firebase.json"
+  ],
+  "officialReference": "https://cloud.google.com/billing/docs/reference/rest/v1/billingAccounts"
+}

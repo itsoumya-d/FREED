@@ -1,3 +1,4 @@
+import { sanitizeJourneyMetadata, type JourneyMetadata } from './user-journey';
 import { BlockingAttempt, normalizeHost, redactUrlForStorage } from "@/lib/blocking-engine";
 import {
   DOOMSCROLL_APP_OPTIONS,
@@ -6,7 +7,10 @@ import {
   normalizeDoomscrollAppPackage
 } from "@/lib/doomscroll-apps";
 import type { PremiumPlanAudience, PremiumPlanId } from "@/lib/monetization";
-import { ChallengeOutcome, ChallengePreferenceSignal, RecoveryChallenge } from "@/lib/recovery-engine";
+import { hasVerifiedPremium, sanitizePremiumEntitlement, type VerifiedPremiumEntitlement } from "@/lib/premium-entitlement";
+import { ChallengeOutcome, ChallengeFeedbackOutcome, ChallengePreferenceSignal, RecoveryChallenge } from "@/lib/recovery-engine";
+import { normalizeChallengeRule } from './challenge-rules';
+import { sanitizeCompletionProvenance, type CompletionProvenance } from './completion-provenance';
 
 export {
   DOOMSCROLL_APP_OPTIONS,
@@ -28,18 +32,27 @@ export {
   surfaceForDoomscrollAppPackage
 } from "@/lib/doomscroll-apps";
 
+import { createDefaultPersonalPlanPreferences, sanitizePersonalPlanPreferences, sanitizePersonalDailyPlan, markPersonalPlanDate, type PersonalDailyPlan, type PersonalPlanPreferences } from './personal-daily-plan';
+import { sanitizeToolCompletionReceipt, sanitizeToolSessionIds, TOOL_COMPLETION_DETAIL_LIMIT, type ToolCompletionReceipt } from './tool-completion';
+
 export const RECOVERY_STATE_VERSION = 1;
 export const MAX_EARNED_UNLOCK_MINUTES = 120;
 
 export type ChallengeCompletion = {
   id: string;
+  sessionId?: string;
+  observedActiveSec?: number;
+  provenance?: CompletionProvenance;
   title: string;
   category: RecoveryChallenge["category"];
-  outcome: ChallengeOutcome;
+  outcome: ChallengeFeedbackOutcome;
   completedAt: string;
   durationSec: number;
   premium: boolean;
   sourceAttemptHost?: string;
+  source?: 'tool';
+  toolId?: string;
+  dateKey?: string;
 };
 
 export type CustomChallengeInput = {
@@ -56,18 +69,20 @@ export type MoodLevel = "low" | "steady" | "energized" | "stressed";
 export type DailyCheckIn = {
   id: string;
   dateKey: string;
-  mood: MoodLevel;
-  urgeLevel: number;
-  sleepQuality: number;
+  mood: MoodLevel | null;
+  urgeLevel: number | null;
+  sleepQuality: number | null;
   reflection: string;
+  checkInCompleted?: boolean;
+  journalSaved?: boolean;
   createdAt: string;
   updatedAt: string;
 };
 
 export type DailyCheckInInput = {
-  mood: MoodLevel;
-  urgeLevel: number;
-  sleepQuality: number;
+  mood: MoodLevel | null;
+  urgeLevel: number | null;
+  sleepQuality: number | null;
   reflection?: string;
 };
 
@@ -175,9 +190,19 @@ export type AchievementBadge = {
   target: number;
 };
 
-export type ReminderPermissionStatus = "unknown" | "granted" | "denied" | "unavailable";
+export const REMINDER_CONTRACT_VERSION = 2;
+export type ReminderPermissionStatus = "authorized" | "provisional" | "ephemeral" | "denied" | "undetermined" | "unsupported";
+export type ReminderEffectiveStatus = "off" | "pending" | "active" | "quiet" | "permission-required" | "failed";
+export type ReminderPreferenceUpdate = Partial<Pick<ReminderPreferences,
+  "enabled" | "morningEnabled" | "eveningEnabled" | "guardEnabled" | "morningTime" | "eveningTime" | "guardTime"
+>>;
 
 export type ReminderPreferences = {
+  contractVersion: number;
+  revision: number;
+  effectiveStatus: ReminderEffectiveStatus;
+  timezone: string | null;
+  /** User intention. Permission and scheduling observations never change this switch. */
   enabled: boolean;
   morningEnabled: boolean;
   eveningEnabled: boolean;
@@ -221,7 +246,12 @@ export type ChallengeIntensityPreference = "gentle" | "balanced" | "strong";
 export type DisciplineFrequencyPreference = "low" | "balanced" | "high";
 export type SocialChallengeFrequencyPreference = "off" | "low" | "balanced" | "high";
 
+export type AppGuardMode = 'before-use' | 'daily-limit' | 'scheduled';
+
 export type DisciplineSettings = {
+  appGuardMode: AppGuardMode;
+  appGuardModeConfiguredAt: string | null;
+  strictGuardConfiguredAt: string | null;
   dailyLimitMinutes: number;
   shortFormInterruptionSeconds: number;
   unlockDurationMinutes: number;
@@ -230,6 +260,7 @@ export type DisciplineSettings = {
   exercisePreference: DisciplineFrequencyPreference;
   socialChallengeFrequency: SocialChallengeFrequencyPreference;
   blockedAppPackages: string[];
+  userAllowedDomains: string[];
   emergencyStrictMode: boolean;
   sleepModeEnabled: boolean;
   sleepStartTime: string;
@@ -250,6 +281,7 @@ export type EarnedUnlock = {
   sourceChallengeId: string;
   sourceAttemptHost?: string;
   nativeInterventionId?: string;
+  historicalOnly?: true;
 };
 
 export type AppUsageSession = {
@@ -257,6 +289,446 @@ export type AppUsageSession = {
   openedAt: string;
   closedAt: string | null;
   durationSec: number;
+};
+
+export type RecoveryAttemptSourceCounts = Partial<Record<BlockingAttempt["source"], number>>;
+type CompletionOutcomeCounts = Partial<Record<ChallengeFeedbackOutcome, number>>;
+type CompletionCategoryCounts = Partial<Record<RecoveryChallenge["category"], CompletionOutcomeCounts>>;
+type ArchivedSessionInterval = [openedMs: number, closedMs: number, observedSeconds: number];
+type ArchivedUnlockCounts = { count: number; seconds: number };
+
+/** Only evicted events live here. UTC minute keys survive timezone/DST changes. */
+export type RecoveryActivityArchive = {
+  attemptMinutes: Record<string, RecoveryAttemptSourceCounts>;
+  attemptTotals: RecoveryAttemptSourceCounts;
+  completionMinutes: Record<string, CompletionCategoryCounts>;
+  // Tool receipts retain their authored local date alongside a UTC minute for UTC analytics.
+  toolCompletionMinutes: Record<string, Record<string, CompletionCategoryCounts>>;
+  completionTotals: CompletionCategoryCounts;
+  // Closed numeric intervals retain precise overlap without identities or notes.
+  sessionIntervals: ArchivedSessionInterval[];
+  unlockMinutes: Record<string, ArchivedUnlockCounts>;
+  unlockTotals: ArchivedUnlockCounts;
+  // Legacy cumulative totals whose event times/outcomes were already lost.
+  legacyCompletedChallenges: number;
+};
+
+const recoveryAttemptSources: BlockingAttempt["source"][] = ["browser", "search", "app", "manual-check", "panic-button"];
+const protectionAttemptSources: BlockingAttempt["source"][] = ["browser", "search", "app"];
+const recoveryChallengeCategories: RecoveryChallenge["category"][] = ["physical", "breathing", "reflection", "connection", "reset"];
+const feedbackOutcomes: ChallengeFeedbackOutcome[] = ["helped", "still-urging", "unknown"];
+
+function createDefaultRecoveryActivityArchive(): RecoveryActivityArchive {
+  return {
+    attemptMinutes: {}, attemptTotals: {}, completionMinutes: {}, toolCompletionMinutes: {}, completionTotals: {},
+    sessionIntervals: [], unlockMinutes: {}, unlockTotals: { count: 0, seconds: 0 }, legacyCompletedChallenges: 0
+  };
+}
+
+function activityCount(value: unknown): number {
+  return typeof value === "number" && Number.isFinite(value) ? Math.max(0, Math.min(Number.MAX_SAFE_INTEGER, Math.floor(value))) : 0;
+}
+
+function activitySeconds(value: unknown): number {
+  return typeof value === "number" && Number.isFinite(value) ? Math.max(0, Math.min(Number.MAX_SAFE_INTEGER, value)) : 0;
+}
+
+function sanitizeUnlockCounts(value: unknown): ArchivedUnlockCounts {
+  if (!isRecord(value)) return { count: 0, seconds: 0 };
+  const count = activityCount(value.count);
+  return { count, seconds: Math.min(activitySeconds(value.seconds), count * MAX_EARNED_UNLOCK_MINUTES * 60) };
+}
+
+function addUnlockCounts(target: ArchivedUnlockCounts, source: ArchivedUnlockCounts) {
+  target.count = Math.min(Number.MAX_SAFE_INTEGER, target.count + source.count);
+  target.seconds = Math.min(Number.MAX_SAFE_INTEGER, target.seconds + source.seconds);
+}
+
+function observedUnlockSeconds(unlock: EarnedUnlock): number {
+  return Math.min(unlock.durationMinutes * 60, Math.max(0, (Date.parse(unlock.expiresAt) - Date.parse(unlock.startedAt)) / 1_000));
+}
+
+function sessionInterval(session: AppUsageSession): ArchivedSessionInterval {
+  const opened = Date.parse(session.openedAt);
+  // A dropped unclosed session has no measured foreground duration. Never let
+  // its archived form accrue time later, on this device or a restored device.
+  return [opened, session.closedAt ? Date.parse(session.closedAt) : opened, session.closedAt ? session.durationSec : 0];
+}
+
+function sanitizeSessionInterval(value: unknown): ArchivedSessionInterval | null {
+  if (!Array.isArray(value) || value.length !== 3) return null;
+  const [opened, closed, seconds] = value;
+  if (!Number.isSafeInteger(opened) || !Number.isSafeInteger(closed) || closed < opened ||
+      !Number.isFinite(new Date(opened).getTime()) || !Number.isFinite(new Date(closed).getTime())) return null;
+  return [opened, closed, Math.min(activitySeconds(seconds), 86_400, (closed - opened) / 1_000)];
+}
+
+function addSourceCounts(target: RecoveryAttemptSourceCounts, source: RecoveryAttemptSourceCounts) {
+  for (const key of recoveryAttemptSources) {
+    const count = activityCount(source[key]);
+    if (count) target[key] = Math.min(Number.MAX_SAFE_INTEGER, (target[key] ?? 0) + count);
+  }
+}
+
+function addCompletionCounts(target: CompletionCategoryCounts, source: CompletionCategoryCounts) {
+  for (const category of recoveryChallengeCategories) {
+    for (const outcome of feedbackOutcomes) {
+      const count = activityCount(source[category]?.[outcome]);
+      if (!count) continue;
+      target[category] ??= {};
+      target[category]![outcome] = Math.min(Number.MAX_SAFE_INTEGER, (target[category]![outcome] ?? 0) + count);
+    }
+  }
+}
+
+function sanitizeSourceCounts(value: unknown): RecoveryAttemptSourceCounts {
+  const result: RecoveryAttemptSourceCounts = {};
+  if (!isRecord(value)) return result;
+  for (const source of recoveryAttemptSources) {
+    const count = activityCount(value[source]);
+    if (count) result[source] = count;
+  }
+  return result;
+}
+
+function sanitizeCompletionCounts(value: unknown): CompletionCategoryCounts {
+  const result: CompletionCategoryCounts = {};
+  if (!isRecord(value)) return result;
+  for (const category of recoveryChallengeCategories) {
+    const counts = value[category];
+    if (!isRecord(counts)) continue;
+    for (const outcome of feedbackOutcomes) {
+      const count = activityCount(counts[outcome]);
+      if (!count) continue;
+      result[category] ??= {};
+      result[category]![outcome] = count;
+    }
+  }
+  return result;
+}
+
+function validActivityMinute(key: string) {
+  return /^-?\d{1,12}$/.test(key) && key === String(Number(key)) && Number.isSafeInteger(Number(key)) && Number.isFinite(new Date(Number(key) * 60_000).getTime());
+}
+
+function sanitizeRecoveryActivityArchive(value: unknown): RecoveryActivityArchive {
+  const result = createDefaultRecoveryActivityArchive();
+  if (!isRecord(value)) return result;
+  result.attemptTotals = sanitizeSourceCounts(value.attemptTotals);
+  result.completionTotals = sanitizeCompletionCounts(value.completionTotals);
+  result.legacyCompletedChallenges = activityCount(value.legacyCompletedChallenges);
+  result.sessionIntervals = Array.isArray(value.sessionIntervals)
+    ? value.sessionIntervals.map(sanitizeSessionInterval).filter((interval): interval is ArchivedSessionInterval => interval !== null)
+    : [];
+  const minuteUnlockTotals: ArchivedUnlockCounts = { count: 0, seconds: 0 };
+  if (isRecord(value.unlockMinutes)) {
+    for (const [key, counts] of Object.entries(value.unlockMinutes)) {
+      if (!validActivityMinute(key)) continue;
+      const sanitized = sanitizeUnlockCounts(counts);
+      if (sanitized.count) result.unlockMinutes[key] = sanitized;
+      addUnlockCounts(minuteUnlockTotals, sanitized);
+    }
+  }
+  const unlockTotals = sanitizeUnlockCounts(value.unlockTotals);
+  result.unlockTotals = { count: Math.max(unlockTotals.count, minuteUnlockTotals.count), seconds: Math.max(unlockTotals.seconds, minuteUnlockTotals.seconds) };
+  const minuteAttemptTotals: RecoveryAttemptSourceCounts = {};
+  if (isRecord(value.attemptMinutes)) {
+    for (const [key, counts] of Object.entries(value.attemptMinutes)) {
+      if (!validActivityMinute(key)) continue;
+      const sanitized = sanitizeSourceCounts(counts);
+      if (Object.keys(sanitized).length) result.attemptMinutes[String(Number(key))] = sanitized;
+      addSourceCounts(minuteAttemptTotals, sanitized);
+    }
+  }
+  for (const source of recoveryAttemptSources) {
+    const count = Math.max(result.attemptTotals[source] ?? 0, minuteAttemptTotals[source] ?? 0);
+    if (count) result.attemptTotals[source] = count;
+  }
+  const minuteCompletionTotals: CompletionCategoryCounts = {};
+  if (isRecord(value.completionMinutes)) {
+    for (const [key, counts] of Object.entries(value.completionMinutes)) {
+      if (!validActivityMinute(key)) continue;
+      const sanitized = sanitizeCompletionCounts(counts);
+      if (Object.keys(sanitized).length) result.completionMinutes[String(Number(key))] = sanitized;
+      addCompletionCounts(minuteCompletionTotals, sanitized);
+    }
+  }
+  if (isRecord(value.toolCompletionMinutes)) {
+    for (const [minute, dates] of Object.entries(value.toolCompletionMinutes)) {
+      if (!validActivityMinute(minute) || !isRecord(dates)) continue;
+      for (const [dateKey, counts] of Object.entries(dates)) {
+        if (!Number.isFinite(localDateKeyToUtcMs(dateKey))) continue;
+        const sanitized = sanitizeCompletionCounts(counts);
+        if (!Object.keys(sanitized).length) continue;
+        result.toolCompletionMinutes[minute] ??= {};
+        result.toolCompletionMinutes[minute][dateKey] = sanitized;
+        addCompletionCounts(minuteCompletionTotals, sanitized);
+      }
+    }
+  }
+  for (const category of recoveryChallengeCategories) {
+    for (const outcome of feedbackOutcomes) {
+      const count = Math.max(result.completionTotals[category]?.[outcome] ?? 0, minuteCompletionTotals[category]?.[outcome] ?? 0);
+      if (count) {
+        result.completionTotals[category] ??= {};
+        result.completionTotals[category]![outcome] = count;
+      }
+    }
+  }
+  return result;
+}
+
+function archiveAttempt(archive: RecoveryActivityArchive, attempt: BlockingAttempt) {
+  if (attempt.result.verdict !== "block") return;
+  const counts = { [attempt.source]: 1 };
+  const minute = String(Math.floor(Date.parse(attempt.detectedAt) / 60_000));
+  addSourceCounts(archive.attemptTotals, counts);
+  if (!validActivityMinute(minute)) return;
+  archive.attemptMinutes[minute] ??= {};
+  addSourceCounts(archive.attemptMinutes[minute], counts);
+}
+
+function archiveCompletion(archive: RecoveryActivityArchive, completion: ChallengeCompletion) {
+  const counts = { [completion.category]: { [completion.outcome]: 1 } };
+  const minute = String(Math.floor(Date.parse(completion.completedAt) / 60_000));
+  addCompletionCounts(archive.completionTotals, counts);
+  if (!validActivityMinute(minute)) return;
+  if (completion.source === 'tool' && completion.dateKey && Number.isFinite(localDateKeyToUtcMs(completion.dateKey))) {
+    archive.toolCompletionMinutes[minute] ??= {};
+    archive.toolCompletionMinutes[minute][completion.dateKey] ??= {};
+    addCompletionCounts(archive.toolCompletionMinutes[minute][completion.dateKey], counts);
+    return;
+  }
+  archive.completionMinutes[minute] ??= {};
+  addCompletionCounts(archive.completionMinutes[minute], counts);
+}
+
+function archiveSession(archive: RecoveryActivityArchive, session: AppUsageSession) {
+  archive.sessionIntervals.push(sessionInterval(session));
+}
+
+function archiveUnlock(archive: RecoveryActivityArchive, unlock: EarnedUnlock) {
+  const counts = { count: 1, seconds: observedUnlockSeconds(unlock) };
+  const minute = String(Math.floor(Date.parse(unlock.startedAt) / 60_000));
+  addUnlockCounts(archive.unlockTotals, counts);
+  if (!validActivityMinute(minute)) return;
+  archive.unlockMinutes[minute] ??= { count: 0, seconds: 0 };
+  addUnlockCounts(archive.unlockMinutes[minute], counts);
+}
+
+export function isProtectedAttempt(attempt: BlockingAttempt): boolean {
+  return attempt.result.verdict === "block" && protectionAttemptSources.includes(attempt.source);
+}
+
+function visitRecoveryAttemptCounts(
+  state: RecoveryState, startKey: string | undefined, endKey: string | undefined,
+  visitor: (timestamp: number, counts: RecoveryAttemptSourceCounts) => void
+) {
+  const within = (timestamp: number) => {
+    const key = getLocalDateKey(new Date(timestamp));
+    return (!startKey || key >= startKey) && (!endKey || key <= endKey);
+  };
+  for (const [minute, counts] of Object.entries(state.activityArchive?.attemptMinutes ?? {})) {
+    const timestamp = Number(minute) * 60_000;
+    if (within(timestamp)) visitor(timestamp, counts);
+  }
+  for (const attempt of state.attempts) {
+    if (attempt.result.verdict !== "block") continue;
+    const timestamp = Date.parse(attempt.detectedAt);
+    if (within(timestamp)) visitor(timestamp, { [attempt.source]: 1 });
+  }
+}
+
+export function getRecoveryAttemptSourceCounts(state: RecoveryState, startKey?: string, endKey?: string): RecoveryAttemptSourceCounts {
+  const result: RecoveryAttemptSourceCounts = {};
+  if (!startKey && !endKey) {
+    addSourceCounts(result, state.activityArchive?.attemptTotals ?? {});
+    for (const attempt of state.attempts) if (attempt.result.verdict === "block") addSourceCounts(result, { [attempt.source]: 1 });
+  } else {
+    visitRecoveryAttemptCounts(state, startKey, endKey, (_, counts) => addSourceCounts(result, counts));
+  }
+  return result;
+}
+
+export function getProtectedAttemptCount(counts: RecoveryAttemptSourceCounts): number {
+  return protectionAttemptSources.reduce((sum, source) => sum + (counts[source] ?? 0), 0);
+}
+
+export function getLifetimeProtectedAttemptCount(state: RecoveryState): number {
+  return getProtectedAttemptCount(getRecoveryAttemptSourceCounts(state));
+}
+
+export function countProtectedAttemptsForDay(state: RecoveryState, day: Date | string = new Date()): number {
+  const key = getLocalDateKey(day);
+  return getProtectedAttemptCount(getRecoveryAttemptSourceCounts(state, key, key));
+}
+
+export function countRecoveryRiskMomentsForDay(state: RecoveryState, day: Date | string = new Date()): number {
+  const key = getLocalDateKey(day);
+  const counts = getRecoveryAttemptSourceCounts(state, key, key);
+  return getProtectedAttemptCount(counts) + (counts["panic-button"] ?? 0);
+}
+
+export function getRecoveryRiskHourCounts(state: RecoveryState, startKey: string, endKey: string) {
+  const hours = Array.from({ length: 24 }, (_, hour) => ({ hour, count: 0 }));
+  visitRecoveryAttemptCounts(state, startKey, endKey, (timestamp, counts) => {
+    hours[new Date(timestamp).getHours()].count += getProtectedAttemptCount(counts) + (counts["panic-button"] ?? 0);
+  });
+  return hours;
+}
+
+export type RecoveryChallengeCounts = {
+  completed: number; helpful: number; stillUrging: number; unknown: number; answered: number;
+  byCategory: Array<{ category: RecoveryChallenge["category"]; completed: number; helpful: number; answered: number }>;
+};
+
+function totalCompletionCounts(counts: CompletionCategoryCounts): RecoveryChallengeCounts {
+  const byCategory = recoveryChallengeCategories.map(category => {
+    const value = counts[category] ?? {};
+    return { category, completed: (value.helped ?? 0) + (value["still-urging"] ?? 0) + (value.unknown ?? 0), helpful: value.helped ?? 0, answered: (value.helped ?? 0) + (value["still-urging"] ?? 0) };
+  });
+  const helpful = byCategory.reduce((sum, category) => sum + category.helpful, 0);
+  const answered = byCategory.reduce((sum, category) => sum + category.answered, 0);
+  const completed = byCategory.reduce((sum, category) => sum + category.completed, 0);
+  return { completed, helpful, stillUrging: answered - helpful, unknown: completed - answered, answered, byCategory };
+}
+
+export function getRecoveryChallengeCounts(state: RecoveryState, startKey?: string, endKey?: string): RecoveryChallengeCounts {
+  const counts: CompletionCategoryCounts = {};
+  const within = (timestamp: string | number) => {
+    const key = getLocalDateKey(typeof timestamp === "number" ? new Date(timestamp) : timestamp);
+    return (!startKey || key >= startKey) && (!endKey || key <= endKey);
+  };
+  if (!startKey && !endKey) addCompletionCounts(counts, state.activityArchive?.completionTotals ?? {});
+  else for (const [minute, archived] of Object.entries(state.activityArchive?.completionMinutes ?? {})) if (within(Number(minute) * 60_000)) addCompletionCounts(counts, archived);
+  if (startKey || endKey) for (const dates of Object.values(state.activityArchive?.toolCompletionMinutes ?? {})) {
+    for (const [dateKey, archived] of Object.entries(dates)) if ((!startKey || dateKey >= startKey) && (!endKey || dateKey <= endKey)) addCompletionCounts(counts, archived);
+  }
+  for (const completion of state.challengeHistory) {
+    const inRange = completion.source === 'tool' && completion.dateKey
+      ? (!startKey || completion.dateKey >= startKey) && (!endKey || completion.dateKey <= endKey)
+      : within(completion.completedAt);
+    if (inRange) addCompletionCounts(counts, { [completion.category]: { [completion.outcome]: 1 } });
+  }
+  const result = totalCompletionCounts(counts);
+  if (!startKey && !endKey) {
+    const total = Math.max(activityCount(state.completedChallenges), result.completed + (state.activityArchive?.legacyCompletedChallenges ?? 0));
+    result.unknown += total - result.completed;
+    result.completed = total;
+  }
+  return result;
+}
+
+export function getCurrentRecoveryStreakDays(state: RecoveryState, day: Date | string = new Date()): number {
+  const at = typeof day === "string" ? Date.parse(day) : day.getTime();
+  const derived = state.recoveryStartedAt ? calculateStreakDaysFrom(state.recoveryStartedAt, day) : activityCount(state.streakDays);
+  const watermark = state.lastOpenedAt ? Date.parse(state.lastOpenedAt) : Number.NaN;
+  return Number.isFinite(at) && Number.isFinite(watermark) && at < watermark ? Math.max(activityCount(state.streakDays), derived) : derived;
+}
+
+export function getRecoverySessionCounts(state: RecoveryState, startKey: string, endKey: string, asOf: Date | string = new Date()): { opens: number; foregroundSeconds: number } {
+  const start = new Date(`${startKey}T00:00:00`).getTime();
+  const end = new Date(`${endKey}T00:00:00`);
+  end.setDate(end.getDate() + 1);
+  const endMs = end.getTime();
+  const asOfMs = typeof asOf === "string" ? Date.parse(asOf) : asOf.getTime();
+  let opens = 0;
+  let foregroundSeconds = 0;
+  const include = ([opened, closed, measured]: ArchivedSessionInterval) => {
+    const key = getLocalDateKey(new Date(opened));
+    if (key >= startKey && key <= endKey) opens += 1;
+    const span = closed - opened;
+    if (!Number.isFinite(span) || span <= 0) return;
+    const overlap = Math.max(0, Math.min(closed, endMs) - Math.max(opened, start));
+    foregroundSeconds += measured * overlap / span;
+  };
+  for (const interval of state.activityArchive?.sessionIntervals ?? []) include(interval);
+  for (const session of state.appSessions) {
+    if (session.closedAt !== null) include(sessionInterval(session));
+    else {
+      const opened = Date.parse(session.openedAt);
+      include([opened, asOfMs, Math.min(86_400, Math.max(0, (asOfMs - opened) / 1_000))]);
+    }
+  }
+  return { opens, foregroundSeconds };
+}
+
+export function getRecoveryUnlockCounts(state: RecoveryState, startKey?: string, endKey?: string): ArchivedUnlockCounts {
+  const result: ArchivedUnlockCounts = { count: 0, seconds: 0 };
+  const within = (timestamp: number) => {
+    const key = getLocalDateKey(new Date(timestamp));
+    return (!startKey || key >= startKey) && (!endKey || key <= endKey);
+  };
+  if (!startKey && !endKey) addUnlockCounts(result, state.activityArchive?.unlockTotals ?? { count: 0, seconds: 0 });
+  else for (const [minute, counts] of Object.entries(state.activityArchive?.unlockMinutes ?? {})) if (within(Number(minute) * 60_000)) addUnlockCounts(result, counts);
+  for (const unlock of state.earnedUnlocks) if (within(Date.parse(unlock.startedAt))) addUnlockCounts(result, { count: 1, seconds: observedUnlockSeconds(unlock) });
+  return result;
+}
+
+export function buildPortableRecoverySessionState(state: RecoveryState, exportedAt: string): { appSessions: AppUsageSession[]; earnedUnlocks: EarnedUnlock[] } {
+  const exportedMs = Date.parse(exportedAt);
+  if (!Number.isFinite(exportedMs)) throw new Error("Recovery backup export time is invalid.");
+  return {
+    appSessions: state.appSessions.map(session => {
+      if (session.closedAt !== null) return { ...session };
+      const openedMs = Date.parse(session.openedAt);
+      const closedMs = Math.max(openedMs, exportedMs);
+      return { ...session, closedAt: new Date(closedMs).toISOString(), durationSec: Math.min(86_400, Math.max(0, Math.round((closedMs - openedMs) / 1_000))) };
+    }),
+    earnedUnlocks: state.earnedUnlocks.map(({ sourceAttemptHost: _source, nativeInterventionId: _nativeId, ...unlock }) => ({ ...unlock, historicalOnly: true as const }))
+  };
+}
+
+/** Remote analytics uses located UTC days only; legacy undated totals stay local. */
+export function getRecoveryUtcAnalyticsDayCounts(state: RecoveryState, end: Date | string = new Date()): AnalyticsUtcDayCounts[] {
+  const endMs = typeof end === "string" ? Date.parse(end) : end.getTime();
+  if (!Number.isFinite(endMs)) throw new Error("Analytics snapshot date is invalid.");
+  const endDayMs = Math.floor(endMs / 86_400_000) * 86_400_000;
+  const days = Array.from({ length: 14 }, (_unused, index): AnalyticsUtcDayCounts => ({
+    day: new Date(endDayMs - (13 - index) * 86_400_000).toISOString().slice(0, 10), checkIns: 0, completedChallenges: 0
+  }));
+  const buckets = new Map(days.map(day => [day.day, day]));
+  const bucketAt = (timestamp: number) => Number.isFinite(timestamp) ? buckets.get(new Date(timestamp).toISOString().slice(0, 10)) : undefined;
+  for (const checkIn of state.dailyCheckIns) {
+    if (!isCheckInCompleted(checkIn)) continue;
+    const bucket = bucketAt(Date.parse(checkIn.createdAt));
+    if (bucket) bucket.checkIns += 1;
+  }
+  for (const [minute, counts] of Object.entries(state.activityArchive.completionMinutes)) {
+    const bucket = bucketAt(Number(minute) * 60_000);
+    if (bucket) bucket.completedChallenges += totalCompletionCounts(counts).completed;
+  }
+  for (const [minute, dates] of Object.entries(state.activityArchive.toolCompletionMinutes ?? {})) {
+    const bucket = bucketAt(Number(minute) * 60_000);
+    if (bucket) for (const counts of Object.values(dates)) bucket.completedChallenges += totalCompletionCounts(counts).completed;
+  }
+  for (const completion of state.challengeHistory) {
+    const bucket = bucketAt(Date.parse(completion.completedAt));
+    if (bucket) bucket.completedChallenges += 1;
+  }
+  if (days.some(day => !Number.isSafeInteger(day.checkIns) || !Number.isSafeInteger(day.completedChallenges))) {
+    throw new Error("Analytics counts exceed the supported exact range.");
+  }
+  return days;
+}
+
+export type AnalyticsUtcDayCounts = { day: string; checkIns: number; completedChallenges: number };
+export type AnalyticsSnapshotCheckpoint = {
+  lineageId: string | null;
+  revision: number;
+  snapshotId: string | null;
+  // The exact absolute counters acknowledged by the server, never newer local counters.
+  days: AnalyticsUtcDayCounts[];
+};
+export type AnalyticsPendingSnapshot = {
+  schemaVersion: "aggregate-snapshot-v1";
+  lineageId: string;
+  baseRevision: number;
+  snapshotId: string;
+  days: AnalyticsUtcDayCounts[];
+  consentVersion: "analytics-consent-v1";
+  userOptedInAt: string;
+  dataRetentionDays: 14;
 };
 
 export type AnalyticsSharingSettings = {
@@ -272,10 +744,65 @@ export type AnalyticsSharingSettings = {
   lastSentAt: string | null;
   lastSendStatus: "never" | "blocked" | "ok" | "unconfigured" | "invalid" | "error";
   lastSendMessage: string | null;
+  snapshotCheckpoint: AnalyticsSnapshotCheckpoint;
+  pendingSnapshot: AnalyticsPendingSnapshot | null;
   updatedAt: string | null;
 };
 
 export type ProtectionActivationPlatform = "ios" | "android" | "web-preview";
+
+export type BlockedDomainFeedback = {
+  host: string;
+  matchedRule: string;
+  sourcePackage: string;
+  reportedAt: string;
+};
+
+export type PledgeRecord = {
+  dateKey: string;
+  createdAt: string;
+};
+
+export type CoachChatEntry = {
+  role: "user" | "ai";
+  text: string;
+  at: string;
+};
+
+export const MAX_COACH_CHAT_ENTRIES = 60;
+
+export function sanitizeCoachChatEntries(value: unknown): CoachChatEntry[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((entry): CoachChatEntry | null => {
+      if (!isRecord(entry)) return null;
+      const role = entry.role === "user" || entry.role === "ai" ? entry.role : null;
+      const text = typeof entry.text === "string" ? entry.text.slice(0, 1_000).trim() : "";
+      const at = validIso(entry.at);
+      if (!role || !text || !at) return null;
+      return { role, text, at };
+    })
+    .filter((entry): entry is CoachChatEntry => Boolean(entry))
+    .slice(0, MAX_COACH_CHAT_ENTRIES);
+}
+
+export type ProtectionSetupFallbackReason =
+  | "reviewed-feed-unavailable"
+  | "native-capability-unavailable"
+  | "activation-not-ready";
+
+/**
+ * Recorded when the user cannot finish the strict protection setup on this
+ * device (update service unreachable, capability missing in this build, or a
+ * required native step that keeps failing). This is deliberately NOT an
+ * activation marker: `hasProtectionActivationForPlatform` keeps failing, and
+ * every protection surface must keep saying protection is incomplete.
+ */
+export type ProtectionSetupFallback = {
+  acknowledgedAt: string;
+  platform: ProtectionActivationPlatform;
+  reason: ProtectionSetupFallbackReason;
+};
 
 export type RecoveryState = {
   version: typeof RECOVERY_STATE_VERSION;
@@ -283,15 +810,22 @@ export type RecoveryState = {
   premiumPlanId: PremiumPlanId | null;
   premiumPlanAudience: PremiumPlanAudience | null;
   premiumActivatedAt: string | null;
+  premiumEntitlement: VerifiedPremiumEntitlement | null;
+  automaticBackupEnabled: boolean;
   recoveryStartedAt: string | null;
   streakDays: number;
   bestStreakDays: number;
   completedChallenges: number;
+  activityArchive: RecoveryActivityArchive;
   attempts: BlockingAttempt[];
   challengeHistory: ChallengeCompletion[];
   customChallenges: RecoveryChallenge[];
   dailyCheckIns: DailyCheckIn[];
   dailyHabits: DailyHabitCompletion[];
+  personalPlanPreferences: PersonalPlanPreferences;
+  personalDailyPlans: PersonalDailyPlan[];
+  toolCompletions: ToolCompletionReceipt[];
+  toolCompletionSessionIds: string[];
   relapseRecords: RelapseRecord[];
   reminders: ReminderPreferences;
   accountability: AccountabilityPartner;
@@ -302,15 +836,27 @@ export type RecoveryState = {
   analyticsSharing: AnalyticsSharingSettings;
   answers: string[];
   hasCompletedOnboarding: boolean;
+  journey: JourneyMetadata;
   onboardingPaywallPresentedAt: string | null;
+  vpnDisclosureAcknowledgedAt: string | null;
+  accountSkippedAt: string | null;
+  signedInEmail: string | null;
   protectionActivatedAt: string | null;
   protectionActivationPlatform: ProtectionActivationPlatform | null;
+  protectionSetupFallback: ProtectionSetupFallback | null;
   lastOpenedAt: string | null;
   lastProtectedAt: string | null;
+  blockedDomainFeedback: BlockedDomainFeedback[];
+  pledges: PledgeRecord[];
+  coachMessages: CoachChatEntry[];
 };
 
 export function createDefaultReminderPreferences(): ReminderPreferences {
   return {
+    contractVersion: REMINDER_CONTRACT_VERSION,
+    revision: 0,
+    effectiveStatus: "off",
+    timezone: null,
     enabled: false,
     morningEnabled: true,
     eveningEnabled: true,
@@ -319,7 +865,7 @@ export function createDefaultReminderPreferences(): ReminderPreferences {
     eveningTime: "21:00",
     guardTime: "22:45",
     scheduledIds: [],
-    permissionStatus: "unknown",
+    permissionStatus: "undetermined",
     statusMessage: "Recovery reminders are off.",
     updatedAt: null,
     lastScheduledAt: null
@@ -341,6 +887,9 @@ export function createDefaultAccountabilityPartner(): AccountabilityPartner {
 
 export function createDefaultDisciplineSettings(): DisciplineSettings {
   return {
+    appGuardMode: 'before-use',
+    appGuardModeConfiguredAt: null,
+    strictGuardConfiguredAt: null,
     dailyLimitMinutes: 30,
     shortFormInterruptionSeconds: 90,
     unlockDurationMinutes: 10,
@@ -349,15 +898,16 @@ export function createDefaultDisciplineSettings(): DisciplineSettings {
     exercisePreference: "balanced",
     socialChallengeFrequency: "low",
     blockedAppPackages: [],
+    userAllowedDomains: [],
     emergencyStrictMode: false,
-    sleepModeEnabled: true,
+    sleepModeEnabled: false,
     sleepStartTime: "22:30",
     sleepEndTime: "06:30",
     deepFocusModeEnabled: false,
     workHoursEnabled: false,
     workStartTime: "09:00",
     workEndTime: "17:00",
-    weekendModeEnabled: true,
+    weekendModeEnabled: false,
     updatedAt: null
   };
 }
@@ -376,6 +926,8 @@ export function createDefaultAnalyticsSharingSettings(): AnalyticsSharingSetting
     lastSentAt: null,
     lastSendStatus: "never",
     lastSendMessage: null,
+    snapshotCheckpoint: { lineageId: null, revision: 0, snapshotId: null, days: [] },
+    pendingSnapshot: null,
     updatedAt: null
   };
 }
@@ -387,15 +939,22 @@ export function createDefaultRecoveryState(): RecoveryState {
     premiumPlanId: null,
     premiumPlanAudience: null,
     premiumActivatedAt: null,
+    premiumEntitlement: null,
+    automaticBackupEnabled: false,
     recoveryStartedAt: null,
     streakDays: 0,
     bestStreakDays: 0,
     completedChallenges: 0,
+    activityArchive: createDefaultRecoveryActivityArchive(),
     attempts: [],
     challengeHistory: [],
     customChallenges: [],
     dailyCheckIns: [],
     dailyHabits: [],
+    personalPlanPreferences: createDefaultPersonalPlanPreferences(),
+    personalDailyPlans: [],
+    toolCompletions: [],
+    toolCompletionSessionIds: [],
     relapseRecords: [],
     reminders: createDefaultReminderPreferences(),
     accountability: createDefaultAccountabilityPartner(),
@@ -406,11 +965,19 @@ export function createDefaultRecoveryState(): RecoveryState {
     analyticsSharing: createDefaultAnalyticsSharingSettings(),
     answers: [],
     hasCompletedOnboarding: false,
+    journey: { entry: null, introCompletedAt: null },
     onboardingPaywallPresentedAt: null,
+    vpnDisclosureAcknowledgedAt: null,
+    accountSkippedAt: null,
+    signedInEmail: null,
     protectionActivatedAt: null,
     protectionActivationPlatform: null,
+    protectionSetupFallback: null,
     lastOpenedAt: null,
-    lastProtectedAt: null
+    lastProtectedAt: null,
+    blockedDomainFeedback: [],
+    pledges: [],
+    coachMessages: []
   };
 }
 
@@ -452,6 +1019,25 @@ function premiumAudienceForPlan(planId: PremiumPlanId | null): PremiumPlanAudien
 function validIso(value: unknown) {
   if (typeof value !== "string") return null;
   return Number.isNaN(Date.parse(value)) ? null : value;
+}
+
+const PROTECTION_SETUP_FALLBACK_REASONS: ProtectionSetupFallbackReason[] = [
+  "reviewed-feed-unavailable",
+  "native-capability-unavailable",
+  "activation-not-ready"
+];
+
+function sanitizeProtectionSetupFallback(value: unknown): ProtectionSetupFallback | null {
+  if (!isRecord(value)) return null;
+  const acknowledgedAt = validIso(value.acknowledgedAt);
+  const platform = sanitizeProtectionActivationPlatform(value.platform);
+  const reason =
+    typeof value.reason === "string" &&
+    (PROTECTION_SETUP_FALLBACK_REASONS as string[]).includes(value.reason)
+      ? (value.reason as ProtectionSetupFallbackReason)
+      : null;
+  if (!acknowledgedAt || !platform || !reason) return null;
+  return { acknowledgedAt, platform, reason };
 }
 
 function sanitizeProtectionActivationPlatform(value: unknown): ProtectionActivationPlatform | null {
@@ -614,13 +1200,17 @@ function sanitizeCompletion(value: unknown): ChallengeCompletion | null {
 
   return {
     id: value.id,
+    ...(typeof value.sessionId === "string" && /^[A-Za-z0-9:_-]{1,160}$/.test(value.sessionId) ? { sessionId: value.sessionId } : {}),
+    ...(typeof value.observedActiveSec === "number" && Number.isFinite(value.observedActiveSec) && value.observedActiveSec >= 0 ? { observedActiveSec: Math.min(3600, value.observedActiveSec) } : {}),
+    ...(sanitizeCompletionProvenance(value.provenance, value.id) ? { provenance: sanitizeCompletionProvenance(value.provenance, value.id) } : {}),
     title: value.title,
     category: value.category as ChallengeCompletion["category"],
-    outcome: value.outcome === "still-urging" ? "still-urging" : "helped",
+    outcome: value.outcome === "still-urging" || value.outcome === "helped" ? value.outcome : "unknown",
     completedAt: validIso(value.completedAt) ?? new Date(0).toISOString(),
     durationSec: Math.max(0, finiteNumber(value.durationSec, 0)),
     premium: Boolean(value.premium),
-    sourceAttemptHost: sanitizeSourceAttemptHost(value.sourceAttemptHost)
+    sourceAttemptHost: sanitizeSourceAttemptHost(value.sourceAttemptHost),
+    ...(value.source === 'tool' ? { source: 'tool' as const, ...(typeof value.dateKey === 'string' && Number.isFinite(localDateKeyToUtcMs(value.dateKey)) ? { dateKey: value.dateKey } : {}), ...(typeof value.toolId === 'string' ? { toolId: value.toolId.slice(0, 160) } : {}) } : {})
   };
 }
 
@@ -648,6 +1238,7 @@ function sanitizeCustomChallenge(value: unknown): RecoveryChallenge | null {
   if (title.length < 4) return null;
   const category = sanitizeChallengeCategory(value.category);
   const intensity = sanitizeChallengeIntensity(value.intensity);
+  const verification = normalizeChallengeRule(value.verification);
   const steps = Array.isArray(value.steps)
     ? value.steps
         .filter((step): step is string => typeof step === "string")
@@ -676,6 +1267,7 @@ function sanitizeCustomChallenge(value: unknown): RecoveryChallenge | null {
       ? value.icon
       : iconForChallengeCategory(category),
     steps: steps.length > 0 ? steps : ["Start the reset.", "Stay present.", "Finish the action honestly."],
+    ...(verification ? { verification } : {}),
     why:
       typeof value.why === "string" && value.why.trim().length > 0
         ? value.why.trim().replace(/\s+/g, " ").slice(0, 180)
@@ -683,18 +1275,29 @@ function sanitizeCustomChallenge(value: unknown): RecoveryChallenge | null {
   };
 }
 
+/** Legacy records infer purpose from explicit answers; new records carry the intent. */
+export function isCheckInCompleted(record: DailyCheckIn | null | undefined): boolean {
+  if (!record) return false;
+  const answered = record.mood !== null && record.mood !== undefined && typeof record.urgeLevel === 'number' && Number.isFinite(record.urgeLevel);
+  return answered && record.checkInCompleted !== false;
+}
+export function hasSavedJournal(record: DailyCheckIn | null | undefined): boolean {
+  return Boolean(record && record.reflection.trim().length > 0 && record.journalSaved !== false);
+}
+function nullableAnswer(value: unknown, minimum: number): number | null {
+  return typeof value === 'number' && Number.isFinite(value) ? Math.min(5, Math.max(minimum, Math.round(value))) : null;
+}
 function sanitizeCheckIn(value: unknown): DailyCheckIn | null {
   if (!isRecord(value)) return null;
-  if (typeof value.id !== "string" || typeof value.dateKey !== "string") return null;
-  if (!["low", "steady", "energized", "stressed"].includes(String(value.mood))) return null;
-
+  if (typeof value.id !== 'string' || typeof value.dateKey !== 'string' || !Number.isFinite(localDateKeyToUtcMs(value.dateKey))) return null;
+  const mood = ['low', 'steady', 'energized', 'stressed'].includes(String(value.mood)) ? value.mood as MoodLevel : null;
+  const urgeLevel = nullableAnswer(value.urgeLevel, 0);
+  const sleepQuality = nullableAnswer(value.sleepQuality, 1);
+  const reflection = typeof value.reflection === 'string' ? value.reflection.slice(0, 4000) : '';
   return {
-    id: value.id,
-    dateKey: value.dateKey,
-    mood: value.mood as MoodLevel,
-    urgeLevel: Math.min(5, Math.max(0, Math.round(finiteNumber(value.urgeLevel, 0)))),
-    sleepQuality: Math.min(5, Math.max(1, Math.round(finiteNumber(value.sleepQuality, 3)))),
-    reflection: typeof value.reflection === "string" ? value.reflection.slice(0, 500) : "",
+    id: value.id, dateKey: value.dateKey, mood, urgeLevel, sleepQuality, reflection,
+    checkInCompleted: mood !== null && urgeLevel !== null && value.checkInCompleted !== false,
+    journalSaved: reflection.trim().length > 0 && value.journalSaved !== false,
     createdAt: validIso(value.createdAt) ?? new Date(0).toISOString(),
     updatedAt: validIso(value.updatedAt) ?? validIso(value.createdAt) ?? new Date(0).toISOString()
   };
@@ -734,21 +1337,37 @@ function sanitizeRelapseRecord(value: unknown): RelapseRecord | null {
 function sanitizeReminderPreferences(value: unknown): ReminderPreferences {
   const fallback = createDefaultReminderPreferences();
   if (!isRecord(value)) return fallback;
-  const permissionStatus = ["unknown", "granted", "denied", "unavailable"].includes(String(value.permissionStatus))
-    ? (value.permissionStatus as ReminderPermissionStatus)
-    : fallback.permissionStatus;
-
+  const legacyPermission = value.permissionStatus === "granted" ? "authorized"
+    : value.permissionStatus === "unknown" ? "undetermined"
+    : value.permissionStatus === "unavailable" ? "unsupported" : value.permissionStatus;
+  const permissionStatus = ["authorized", "provisional", "ephemeral", "denied", "undetermined", "unsupported"].includes(String(legacyPermission))
+    ? legacyPermission as ReminderPermissionStatus : fallback.permissionStatus;
+  const enabled = value.enabled === true;
+  const scheduledIds = Array.isArray(value.scheduledIds) ? [...new Set(value.scheduledIds.filter((id): id is string => typeof id === "string" && id.length > 0))].slice(0, 16) : [];
+  // A persisted legacy 'granted' and a list of IDs are not native readback evidence.
+  let effectiveStatus: ReminderEffectiveStatus = enabled ? "pending" : "off";
+  if (value.contractVersion === REMINDER_CONTRACT_VERSION && ["off", "pending", "active", "quiet", "permission-required", "failed"].includes(String(value.effectiveStatus))) {
+    effectiveStatus = value.effectiveStatus as ReminderEffectiveStatus;
+    if ((effectiveStatus === "active" || effectiveStatus === "quiet") && (!enabled || !scheduledIds.length || !["authorized", "provisional", "ephemeral"].includes(permissionStatus))) effectiveStatus = enabled ? "pending" : "off";
+    if (enabled && effectiveStatus === "off" && (value.morningEnabled !== false || value.eveningEnabled !== false || value.guardEnabled !== false)) effectiveStatus = "pending";
+  }
   return {
-    enabled: Boolean(value.enabled),
+    contractVersion: REMINDER_CONTRACT_VERSION,
+    revision: Math.max(0, Math.trunc(finiteNumber(value.revision, 0))),
+    effectiveStatus,
+    timezone: typeof value.timezone === "string" ? value.timezone.slice(0, 100) : null,
+    enabled,
     morningEnabled: typeof value.morningEnabled === "boolean" ? value.morningEnabled : fallback.morningEnabled,
     eveningEnabled: typeof value.eveningEnabled === "boolean" ? value.eveningEnabled : fallback.eveningEnabled,
     guardEnabled: typeof value.guardEnabled === "boolean" ? value.guardEnabled : fallback.guardEnabled,
     morningTime: sanitizeClockTime(value.morningTime, fallback.morningTime),
     eveningTime: sanitizeClockTime(value.eveningTime, fallback.eveningTime),
     guardTime: sanitizeClockTime(value.guardTime, fallback.guardTime),
-    scheduledIds: Array.isArray(value.scheduledIds) ? value.scheduledIds.filter((id): id is string => typeof id === "string").slice(0, 8) : [],
+    scheduledIds,
     permissionStatus,
-    statusMessage: typeof value.statusMessage === "string" ? value.statusMessage.slice(0, 180) : fallback.statusMessage,
+    statusMessage: value.contractVersion !== REMINDER_CONTRACT_VERSION
+      ? enabled ? "Checking recovery reminders on this device." : fallback.statusMessage
+      : typeof value.statusMessage === "string" ? value.statusMessage.slice(0, 180) : fallback.statusMessage,
     updatedAt: validIso(value.updatedAt),
     lastScheduledAt: validIso(value.lastScheduledAt)
   };
@@ -831,9 +1450,46 @@ function sanitizeBlockedAppPackages(value: unknown): string[] {
     });
 }
 
+function sanitizeEmailOrNull(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const normalized = value.trim().toLowerCase();
+  return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(normalized) && normalized.length <= 254 ? normalized : null;
+}
+
+// Hosts the user asked FREED to always allow. Mirrors the native/Kotlin
+// normalization: lowercase, no scheme/path/port, no leading www., bounded count.
+function sanitizeUserAllowedDomains(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set<string>();
+
+  for (const item of value) {
+    if (typeof item !== "string") continue;
+    const host = item
+      .trim()
+      .toLowerCase()
+      .replace(/^[a-z][a-z0-9+.-]*:\/\//, "")
+      .split("/")[0]
+      .split("?")[0]
+      .split("#")[0]
+      .split("@")
+      .pop()!
+      .split(":")[0]
+      .replace(/^www\./, "")
+      .replace(/[^a-z0-9.-]/g, "")
+      .replace(/^\.+|\.+$/g, "");
+    if (!host.includes(".") || host.length < 4 || host.length > 253) continue;
+    if (host.split(".").some((label) => !label || label.startsWith("-") || label.endsWith("-"))) continue;
+    if (seen.has(host)) continue;
+    seen.add(host);
+    if (seen.size >= 200) break;
+  }
+
+  return [...seen];
+}
+
 function sanitizeDisciplineSettings(value: unknown): DisciplineSettings {
   const fallback = createDefaultDisciplineSettings();
-  if (!isRecord(value)) return fallback;
+  if (!isRecord(value)) return { ...fallback, appGuardMode: 'daily-limit' };
   const challengeIntensity = ["gentle", "balanced", "strong"].includes(String(value.challengeIntensity))
     ? (value.challengeIntensity as ChallengeIntensityPreference)
     : fallback.challengeIntensity;
@@ -848,6 +1504,10 @@ function sanitizeDisciplineSettings(value: unknown): DisciplineSettings {
     : fallback.socialChallengeFrequency;
 
   return {
+    // Stored settings predate mode selection: preserve their daily-limit behavior.
+    appGuardMode: value.appGuardMode === 'before-use' || value.appGuardMode === 'scheduled' ? value.appGuardMode : 'daily-limit',
+    appGuardModeConfiguredAt: validIso(value.appGuardModeConfiguredAt),
+    strictGuardConfiguredAt: validIso(value.strictGuardConfiguredAt),
     dailyLimitMinutes: clampInteger(value.dailyLimitMinutes, fallback.dailyLimitMinutes, 5, 240),
     shortFormInterruptionSeconds: clampInteger(
       value.shortFormInterruptionSeconds,
@@ -861,6 +1521,7 @@ function sanitizeDisciplineSettings(value: unknown): DisciplineSettings {
     exercisePreference,
     socialChallengeFrequency,
     blockedAppPackages: sanitizeBlockedAppPackages(value.blockedAppPackages),
+    userAllowedDomains: sanitizeUserAllowedDomains(value.userAllowedDomains),
     emergencyStrictMode: Boolean(value.emergencyStrictMode),
     sleepModeEnabled: typeof value.sleepModeEnabled === "boolean" ? value.sleepModeEnabled : fallback.sleepModeEnabled,
     sleepStartTime: sanitizeClockTime(value.sleepStartTime, fallback.sleepStartTime),
@@ -889,7 +1550,7 @@ function sanitizeEarnedUnlock(value: unknown): EarnedUnlock | null {
     actualDurationMinutes,
     MAX_EARNED_UNLOCK_MINUTES
   );
-  const boundedExpiresAt = new Date(startedMs + durationMinutes * 60_000).toISOString();
+  const boundedExpiresAt = new Date(Math.min(expiresMs, startedMs + durationMinutes * 60_000)).toISOString();
   const id =
     typeof value.id === "string" && value.id.trim().length > 0
       ? value.id.trim().slice(0, 96)
@@ -907,7 +1568,8 @@ function sanitizeEarnedUnlock(value: unknown): EarnedUnlock | null {
     durationMinutes,
     sourceChallengeId,
     sourceAttemptHost: sanitizeSourceAttemptHost(value.sourceAttemptHost),
-    ...(nativeInterventionId ? { nativeInterventionId } : {})
+    ...(nativeInterventionId ? { nativeInterventionId } : {}),
+    ...(value.historicalOnly === true ? { historicalOnly: true as const } : {})
   };
 }
 
@@ -919,12 +1581,12 @@ function sanitizeAppUsageSession(value: unknown): AppUsageSession | null {
   const openedMs = Date.parse(openedAt);
   const closedMs = closedAt ? Date.parse(closedAt) : null;
   const measuredDuration = closedMs && closedMs > openedMs ? Math.round((closedMs - openedMs) / 1000) : 0;
-  const durationSec = Math.max(0, Math.min(86_400, Math.round(finiteNumber(value.durationSec, measuredDuration))));
+  const durationSec = Math.max(0, Math.min(86_400, closedMs !== null ? measuredDuration : 0, Math.round(finiteNumber(value.durationSec, measuredDuration))));
 
   return {
     id: typeof value.id === "string" && value.id.trim().length > 0 ? value.id.trim().slice(0, 96) : `app-session-${openedMs}`,
     openedAt,
-    closedAt: closedAt && closedMs && closedMs > openedMs ? closedAt : null,
+    closedAt: closedAt && closedMs !== null && closedMs >= openedMs ? closedAt : null,
     durationSec
   };
 }
@@ -941,6 +1603,7 @@ function sanitizeAnalyticsSharingSettings(value: unknown): AnalyticsSharingSetti
   const consentVersion = typeof value.consentVersion === "string" && value.consentVersion.trim().length > 0
     ? value.consentVersion.trim().replace(/[^a-zA-Z0-9._:-]/g, "").slice(0, 80) || null
     : null;
+  const snapshotCheckpoint = sanitizeAnalyticsSnapshotCheckpoint(value.snapshotCheckpoint);
 
   return {
     enabled: Boolean(value.enabled),
@@ -955,8 +1618,42 @@ function sanitizeAnalyticsSharingSettings(value: unknown): AnalyticsSharingSetti
     lastSentAt: validIso(value.lastSentAt),
     lastSendStatus,
     lastSendMessage: typeof value.lastSendMessage === "string" ? value.lastSendMessage.trim().slice(0, 220) || null : null,
+    snapshotCheckpoint,
+    pendingSnapshot: sanitizeAnalyticsPendingSnapshot(value.pendingSnapshot, snapshotCheckpoint),
     updatedAt: validIso(value.updatedAt)
   };
+}
+
+function sanitizeAnalyticsPendingSnapshot(value: unknown, checkpoint: AnalyticsSnapshotCheckpoint): AnalyticsPendingSnapshot | null {
+  if (!isRecord(value) || value.schemaVersion !== "aggregate-snapshot-v1" || value.consentVersion !== "analytics-consent-v1" ||
+      value.dataRetentionDays !== 14 || value.lineageId !== checkpoint.lineageId || value.baseRevision !== checkpoint.revision ||
+      typeof value.snapshotId !== "string" || !/^snap_[a-f0-9]{64}$/.test(value.snapshotId) ||
+      typeof value.userOptedInAt !== "string" || !Number.isFinite(Date.parse(value.userOptedInAt))) return null;
+  const checked = sanitizeAnalyticsSnapshotCheckpoint({ lineageId: value.lineageId, revision: 1, snapshotId: value.snapshotId, days: value.days });
+  if (!checked.lineageId || checked.days.length !== 14) return null;
+  return { schemaVersion: "aggregate-snapshot-v1", lineageId: checked.lineageId, baseRevision: checkpoint.revision,
+    snapshotId: value.snapshotId, days: checked.days, consentVersion: "analytics-consent-v1",
+    userOptedInAt: value.userOptedInAt, dataRetentionDays: 14 };
+}
+
+function sanitizeAnalyticsSnapshotCheckpoint(value: unknown): AnalyticsSnapshotCheckpoint {
+  const fallback: AnalyticsSnapshotCheckpoint = { lineageId: null, revision: 0, snapshotId: null, days: [] };
+  if (!isRecord(value) || typeof value.lineageId !== "string" || !/^lin_[a-f0-9]{32}$/.test(value.lineageId)) return fallback;
+  const revision = Number.isSafeInteger(value.revision) && (value.revision as number) >= 0 ? value.revision as number : 0;
+  if (revision === 0) return { ...fallback, lineageId: value.lineageId };
+  if (typeof value.snapshotId !== "string" || !/^snap_[a-f0-9]{64}$/.test(value.snapshotId) || !Array.isArray(value.days) || value.days.length !== 14) return fallback;
+  const days: AnalyticsUtcDayCounts[] = [];
+  for (const bucket of value.days) {
+    if (!isRecord(bucket) || typeof bucket.day !== "string") return fallback;
+    const timestamp = Date.parse(`${bucket.day}T00:00:00.000Z`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(bucket.day) || !Number.isFinite(timestamp) ||
+        new Date(timestamp).toISOString().slice(0, 10) !== bucket.day ||
+        !Number.isSafeInteger(bucket.checkIns) || (bucket.checkIns as number) < 0 ||
+        !Number.isSafeInteger(bucket.completedChallenges) || (bucket.completedChallenges as number) < 0) return fallback;
+    if (days.length && Date.parse(`${bucket.day}T00:00:00.000Z`) - Date.parse(`${days[days.length - 1].day}T00:00:00.000Z`) !== 86_400_000) return fallback;
+    days.push({ day: bucket.day, checkIns: bucket.checkIns as number, completedChallenges: bucket.completedChallenges as number });
+  }
+  return { lineageId: value.lineageId, revision, snapshotId: value.snapshotId, days };
 }
 
 export function hydrateRecoveryState(value: unknown): RecoveryState {
@@ -976,6 +1673,9 @@ export function hydrateRecoveryState(value: unknown): RecoveryState {
   const dailyHabits = Array.isArray(value.dailyHabits)
     ? value.dailyHabits.map(sanitizeHabitCompletion).filter((item): item is DailyHabitCompletion => Boolean(item))
     : [];
+  const personalDailyPlans = Array.isArray(value.personalDailyPlans) ? value.personalDailyPlans.map(sanitizePersonalDailyPlan).filter((plan): plan is PersonalDailyPlan => Boolean(plan)) : [];
+  const toolCompletions = Array.isArray(value.toolCompletions) ? value.toolCompletions.map(sanitizeToolCompletionReceipt).filter((receipt): receipt is ToolCompletionReceipt => Boolean(receipt)) : [];
+  const toolCompletionSessionIds = sanitizeToolSessionIds([...(Array.isArray(value.toolCompletionSessionIds) ? value.toolCompletionSessionIds : []), ...toolCompletions.map(receipt => receipt.sessionId), ...challengeHistory.filter(receipt => receipt.source === 'tool').map(receipt => receipt.sessionId)]);
   const relapseRecords = Array.isArray(value.relapseRecords)
     ? value.relapseRecords.map(sanitizeRelapseRecord).filter((item): item is RelapseRecord => Boolean(item))
     : [];
@@ -993,6 +1693,19 @@ export function hydrateRecoveryState(value: unknown): RecoveryState {
   const streakDays = Math.max(0, Math.round(finiteNumber(value.streakDays, fallback.streakDays)));
   const bestStreakDays = Math.max(streakDays, Math.round(finiteNumber(value.bestStreakDays, fallback.bestStreakDays)));
   const storedChallengeHistory = challengeHistory.slice(0, 200);
+  const activityArchive = sanitizeRecoveryActivityArchive(value.activityArchive);
+  const orderedUnlocks = earnedUnlocks.sort((left, right) => Date.parse(right.expiresAt) - Date.parse(left.expiresAt));
+  // Keep an active session ahead of closed detail even after a clock rollback.
+  const orderedSessions = appSessions.sort((left, right) => Number(right.closedAt === null) - Number(left.closedAt === null) || Date.parse(right.openedAt) - Date.parse(left.openedAt));
+  for (const attempt of attempts.slice(100)) archiveAttempt(activityArchive, attempt);
+  for (const completion of challengeHistory.slice(200)) archiveCompletion(activityArchive, completion);
+  for (const session of orderedSessions.slice(120)) archiveSession(activityArchive, session);
+  for (const unlock of orderedUnlocks.slice(40)) archiveUnlock(activityArchive, unlock);
+  const knownCompletions = totalCompletionCounts(activityArchive.completionTotals).completed + storedChallengeHistory.length;
+  activityArchive.legacyCompletedChallenges = Math.max(
+    activityArchive.legacyCompletedChallenges,
+    Math.max(0, activityCount(value.completedChallenges) - knownCompletions)
+  );
 
   return {
     version: RECOVERY_STATE_VERSION,
@@ -1002,35 +1715,74 @@ export function hydrateRecoveryState(value: unknown): RecoveryState {
       ? premiumAudienceForPlan(sanitizePremiumPlanId(value.premiumPlanId))
       : null,
     premiumActivatedAt: Boolean(value.premium) ? validIso(value.premiumActivatedAt) : null,
+    premiumEntitlement: sanitizePremiumEntitlement(value.premiumEntitlement),
+    automaticBackupEnabled: value.automaticBackupEnabled === true,
     recoveryStartedAt,
     streakDays,
     bestStreakDays,
-    completedChallenges: storedChallengeHistory.length,
+    completedChallenges: knownCompletions + activityArchive.legacyCompletedChallenges,
+    activityArchive,
     attempts: attempts.slice(0, 100),
     challengeHistory: storedChallengeHistory,
     customChallenges: customChallenges.slice(0, 12),
     dailyCheckIns: dailyCheckIns.slice(0, 120),
     dailyHabits: dailyHabits.slice(0, 400),
+    personalPlanPreferences: sanitizePersonalPlanPreferences(value.personalPlanPreferences),
+    personalDailyPlans: personalDailyPlans.filter((plan, index, plans) => plans.findIndex(item => item.dateKey === plan.dateKey) === index).slice(0, 400),
+    toolCompletions: toolCompletions.filter((receipt, index, receipts) => receipts.findIndex(item => item.sessionId === receipt.sessionId) === index).slice(0, TOOL_COMPLETION_DETAIL_LIMIT),
+    toolCompletionSessionIds,
     relapseRecords: relapseRecords.slice(0, 80),
     reminders: sanitizeReminderPreferences(value.reminders),
     accountability: sanitizeAccountabilityPartner(value.accountability),
     supportCircle: supportCircle.slice(0, 6),
     disciplineSettings: sanitizeDisciplineSettings(value.disciplineSettings),
-    earnedUnlocks: earnedUnlocks
-      .sort((a, b) => Date.parse(b.expiresAt) - Date.parse(a.expiresAt))
-      .slice(0, 40),
-    appSessions: appSessions
-      .sort((a, b) => Date.parse(b.openedAt) - Date.parse(a.openedAt))
-      .slice(0, 120),
+    earnedUnlocks: orderedUnlocks.slice(0, 40),
+    appSessions: orderedSessions.slice(0, 120),
     analyticsSharing: sanitizeAnalyticsSharingSettings(value.analyticsSharing),
     answers,
     hasCompletedOnboarding: Boolean(value.hasCompletedOnboarding),
+    journey: sanitizeJourneyMetadata(value.journey),
     onboardingPaywallPresentedAt: validIso(value.onboardingPaywallPresentedAt),
+    vpnDisclosureAcknowledgedAt: validIso(value.vpnDisclosureAcknowledgedAt),
+    accountSkippedAt: validIso(value.accountSkippedAt),
+    signedInEmail: sanitizeEmailOrNull(value.signedInEmail),
     protectionActivatedAt: validIso(value.protectionActivatedAt),
     protectionActivationPlatform: sanitizeProtectionActivationPlatform(value.protectionActivationPlatform),
+    protectionSetupFallback: sanitizeProtectionSetupFallback(value.protectionSetupFallback),
     lastOpenedAt: validIso(value.lastOpenedAt),
-    lastProtectedAt: validIso(value.lastProtectedAt)
+    lastProtectedAt: validIso(value.lastProtectedAt),
+    blockedDomainFeedback: Array.isArray(value.blockedDomainFeedback)
+      ? value.blockedDomainFeedback
+          .map(sanitizeBlockedDomainFeedback)
+          .filter((item): item is BlockedDomainFeedback => Boolean(item))
+          .slice(0, 50)
+      : [],
+    pledges: Array.isArray(value.pledges)
+      ? value.pledges
+          .map(sanitizePledgeRecord)
+          .filter((item): item is PledgeRecord => Boolean(item))
+          .slice(0, 400)
+      : [],
+    coachMessages: sanitizeCoachChatEntries(value.coachMessages)
   };
+}
+
+function sanitizePledgeRecord(value: unknown): PledgeRecord | null {
+  if (!isRecord(value)) return null;
+  const dateKey = typeof value.dateKey === "string" ? value.dateKey.trim().slice(0, 10) : "";
+  const createdAt = validIso(value.createdAt);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateKey) || !createdAt) return null;
+  return { dateKey, createdAt };
+}
+
+function sanitizeBlockedDomainFeedback(value: unknown): BlockedDomainFeedback | null {
+  if (!isRecord(value)) return null;
+  const host = typeof value.host === "string" ? value.host.trim().toLowerCase().slice(0, 253) : "";
+  const matchedRule = typeof value.matchedRule === "string" ? value.matchedRule.trim().slice(0, 96) : "";
+  const sourcePackage = typeof value.sourcePackage === "string" ? value.sourcePackage.trim().slice(0, 64) : "";
+  const reportedAt = validIso(value.reportedAt);
+  if (!host || !reportedAt) return null;
+  return { host, matchedRule, sourcePackage, reportedAt };
 }
 
 export function getLocalDateKey(value: Date | string) {
@@ -1040,6 +1792,32 @@ export function getLocalDateKey(value: Date | string) {
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
+}
+
+export function localDateKeyToUtcMs(dateKey: string) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateKey);
+  if (!match) return Number.NaN;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  if (month < 1 || month > 12 || day < 1 || day > 31) return Number.NaN;
+  const date = new Date(Date.UTC(year, month - 1, day));
+  // Reject impossible keys such as 2026-02-30, which Date.UTC would otherwise roll forward.
+  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) {
+    return Number.NaN;
+  }
+  return date.getTime();
+}
+
+/**
+ * Whole calendar days between two local date keys. UTC arithmetic has no DST transitions, so a
+ * local day that runs 23 or 25 hours still counts as exactly one day.
+ */
+export function localDateKeyDiffDays(fromKey: string, toKey: string) {
+  const fromMs = localDateKeyToUtcMs(fromKey);
+  const toMs = localDateKeyToUtcMs(toKey);
+  if (!Number.isFinite(fromMs) || !Number.isFinite(toMs)) return 0;
+  return Math.round((toMs - fromMs) / 86_400_000);
 }
 
 function clockMinutes(value: string) {
@@ -1067,8 +1845,7 @@ export function isWorkHoursModeActive(settings: DisciplineSettings, day: Date | 
   return settings.workHoursEnabled && isClockWindowActive(settings.workStartTime, settings.workEndTime, day);
 }
 
-export function isWeekendModeActive(settings: DisciplineSettings, day: Date | string = new Date()) {
-  if (!settings.weekendModeEnabled) return false;
+export function isWeekendModeActive(settings: DisciplineSettings, day: Date | string = new Date()) {  if (!settings.weekendModeEnabled) return false;
   const date = typeof day === "string" ? new Date(day) : day;
   if (Number.isNaN(date.getTime())) return false;
   const weekday = date.getDay();
@@ -1106,21 +1883,14 @@ export function buildChallengePreferenceSignal(
   };
 }
 
-function localDayStartMs(dateKey: string) {
-  const date = new Date(`${dateKey}T00:00:00`);
-  return date.getTime();
-}
-
 export function calculateStreakDaysFrom(startedAt: string | null, day: Date | string = new Date()) {
   if (!startedAt) return 0;
   const startedKey = getLocalDateKey(startedAt);
   const dayKey = getLocalDateKey(day);
   if (!startedKey || !dayKey) return 0;
 
-  const startedMs = localDayStartMs(startedKey);
-  const dayMs = localDayStartMs(dayKey);
-  if (!Number.isFinite(startedMs) || !Number.isFinite(dayMs) || dayMs < startedMs) return 0;
-  return Math.floor((dayMs - startedMs) / 86_400_000);
+  const elapsedDays = localDateKeyDiffDays(startedKey, dayKey);
+  return elapsedDays > 0 ? elapsedDays : 0;
 }
 
 export function countAttemptsForDay(attempts: BlockingAttempt[], day: Date | string = new Date()) {
@@ -1134,15 +1904,15 @@ export function getDailyHabitCompletionsForDay(state: RecoveryState, day: Date |
 }
 
 export function calculateRecoveryXp(state: RecoveryState) {
-  const helpfulChallenges = state.challengeHistory.filter((challenge) => challenge.outcome === "helped").length;
+  const helpfulChallenges = getRecoveryChallengeCounts(state).helpful;
   return Math.max(
     0,
     state.streakDays * 12 +
       state.bestStreakDays * 4 +
       state.completedChallenges * 45 +
       helpfulChallenges * 20 +
-      state.dailyCheckIns.length * 18 +
-      state.attempts.length * 8
+      state.dailyCheckIns.filter(isCheckInCompleted).length * 18 +
+      getLifetimeProtectedAttemptCount(state) * 8
   );
 }
 
@@ -1195,9 +1965,9 @@ export function getRecoveryMilestone(state: RecoveryState): RecoveryMilestone {
 }
 
 export function generateAchievementBadges(state: RecoveryState): AchievementBadge[] {
-  const helpfulChallenges = state.challengeHistory.filter((challenge) => challenge.outcome === "helped").length;
-  const checkIns = state.dailyCheckIns.length;
-  const protectedAttempts = state.attempts.filter((attempt) => attempt.result.verdict === "block").length;
+  const helpfulChallenges = getRecoveryChallengeCounts(state).helpful;
+  const checkIns = state.dailyCheckIns.filter(isCheckInCompleted).length;
+  const protectedAttempts = getLifetimeProtectedAttemptCount(state);
   const steadyCheckIns = state.dailyCheckIns.filter((checkIn) => checkIn.mood === "steady" || checkIn.mood === "energized").length;
   const badges: Array<Omit<AchievementBadge, "earned">> = [
     {
@@ -1298,35 +2068,50 @@ function getBestInterventionLabel(challenges: ChallengeCompletion[]) {
   return Object.entries(byTitle).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))[0]?.[0] ?? "More completions needed";
 }
 
-function getMomentumLabel(attempts: BlockingAttempt[], startKey: string, endKey: string) {
-  if (attempts.length < 2) return "Needs more signal";
-
+function getMomentumLabel(state: RecoveryState, startKey: string, endKey: string) {
   const start = new Date(`${startKey}T00:00:00`);
   const end = new Date(`${endKey}T23:59:59`);
   if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime())) return "Needs more signal";
 
   const midpoint = start.getTime() + (end.getTime() - start.getTime()) / 2;
-  const early = attempts.filter((attempt) => Date.parse(attempt.detectedAt) < midpoint).length;
-  const recent = attempts.length - early;
+  let early = 0;
+  let recent = 0;
+  visitRecoveryAttemptCounts(state, startKey, endKey, (timestamp, counts) => {
+    const risk = getProtectedAttemptCount(counts) + (counts["panic-button"] ?? 0);
+    if (timestamp < midpoint) early += risk;
+    else recent += risk;
+  });
+  if (early + recent < 2) return "Needs more signal";
 
   if (recent >= early + 2) return "Risk rising";
   if (early >= recent + 2) return "Risk easing";
   return "Stable";
 }
 
+function getRiskWindowLabel(state: RecoveryState, startKey: string, endKey: string): string {
+  const periods = ["Late night", "Morning", "Afternoon", "Evening"];
+  const counts = [0, 0, 0, 0];
+  for (const bucket of getRecoveryRiskHourCounts(state, startKey, endKey)) counts[Math.floor(bucket.hour / 6)] += bucket.count;
+  const ordered = periods.map((label, index) => ({ label, count: counts[index] })).sort((left, right) => right.count - left.count || left.label.localeCompare(right.label));
+  return ordered[0].count > 0 ? ordered[0].label : "No clear pattern yet";
+}
+
+function getBestInterventionForRange(state: RecoveryState, detailed: ChallengeCompletion[], startKey: string, endKey: string): string {
+  const totals = getRecoveryChallengeCounts(state, startKey, endKey);
+  const knownHelpful = detailed.filter(completion => completion.outcome === "helped").length;
+  if (totals.helpful <= knownHelpful) return getBestInterventionLabel(detailed);
+  const best = [...totals.byCategory].sort((left, right) => right.helpful - left.helpful || left.category.localeCompare(right.category))[0];
+  const labels = { physical: "Physical resets", breathing: "Breathing resets", reflection: "Reflection resets", connection: "Connection resets", reset: "Practical resets" };
+  return best?.helpful > 0 ? labels[best.category] : "More completions needed";
+}
+
 function summarizeCheckInRecords(records: DailyCheckIn[]): Omit<CheckInSummary, "latest"> {
-  if (records.length === 0) return { total: 0, averageUrge: 0, averageSleep: 0, steadyDays: 0 };
-
-  const averageUrge = Math.round((records.reduce((sum, item) => sum + item.urgeLevel, 0) / records.length) * 10) / 10;
-  const averageSleep = Math.round((records.reduce((sum, item) => sum + item.sleepQuality, 0) / records.length) * 10) / 10;
-  const steadyDays = records.filter((item) => item.mood === "steady" || item.mood === "energized").length;
-
-  return {
-    total: records.length,
-    averageUrge,
-    averageSleep,
-    steadyDays
-  };
+  const completed = records.filter(isCheckInCompleted);
+  const urges = completed.flatMap(item => item.urgeLevel === null ? [] : [item.urgeLevel]);
+  const sleeps = completed.flatMap(item => item.sleepQuality === null ? [] : [item.sleepQuality]);
+  const average = (values: number[]) => values.length ? Math.round(values.reduce((sum, value) => sum + value, 0) / values.length * 10) / 10 : 0;
+  return { total: completed.length, averageUrge: average(urges), averageSleep: average(sleeps),
+    steadyDays: completed.filter(item => item.mood === 'steady' || item.mood === 'energized').length };
 }
 
 export function recordDailyCheckIn(
@@ -1336,19 +2121,21 @@ export function recordDailyCheckIn(
 ): RecoveryState {
   const dateKey = getLocalDateKey(checkedAt);
   const existing = getDailyCheckInForDay(state, checkedAt);
+  if (!dateKey) throw new RangeError('checkin-date-invalid');
+  const reflection = input.reflection === undefined ? existing?.reflection ?? '' : input.reflection.slice(0, 4000);
+  const mood = ['low', 'steady', 'energized', 'stressed'].includes(String(input.mood)) ? input.mood : null;
+  const urgeLevel = nullableAnswer(input.urgeLevel, 0);
   const checkIn: DailyCheckIn = {
     id: existing?.id ?? `checkin-${dateKey}`,
     dateKey,
-    mood: input.mood,
-    urgeLevel: Math.min(5, Math.max(0, Math.round(input.urgeLevel))),
-    sleepQuality: Math.min(5, Math.max(1, Math.round(input.sleepQuality))),
-    reflection: input.reflection?.trim().slice(0, 500) ?? "",
+    mood, urgeLevel, sleepQuality: nullableAnswer(input.sleepQuality, 1), reflection,
+    checkInCompleted: mood !== null && urgeLevel !== null, journalSaved: reflection.trim().length > 0,
     createdAt: existing?.createdAt ?? checkedAt,
     updatedAt: checkedAt
   };
 
   return hydrateRecoveryState({
-    ...state,
+    ...markPersonalPlanDate(state, checkedAt),
     dailyCheckIns: [checkIn, ...state.dailyCheckIns.filter((item) => item.dateKey !== dateKey)].slice(0, 120)
   });
 }
@@ -1368,7 +2155,7 @@ export function recordDailyHabitCompletion(
   };
 
   return hydrateRecoveryState({
-    ...state,
+    ...markPersonalPlanDate(state, updatedAt),
     dailyHabits: [
       habit,
       ...state.dailyHabits.filter((item) => !(item.key === input.key && item.dateKey === dateKey))
@@ -1393,7 +2180,7 @@ export function recordRelapse(
   };
 
   return hydrateRecoveryState({
-    ...state,
+    ...markPersonalPlanDate(state, safeOccurredAt),
     streakDays: 0,
     bestStreakDays: Math.max(state.bestStreakDays, state.streakDays),
     recoveryStartedAt: safeOccurredAt,
@@ -1432,7 +2219,7 @@ export function generateRecoveryInsight(state: RecoveryState, attemptsToday: num
     return "Today has multiple risk moments. Keep the evening simple: movement, phone away from bed, and one short reflection before sleep.";
   }
 
-  if (summary.averageSleep <= 2.5) {
+  if (summary.averageSleep > 0 && summary.averageSleep <= 2.5) {
     return "Sleep is the main recovery lever this week. Lower stimulation tonight and make the phone physically harder to reach.";
   }
 
@@ -1454,32 +2241,31 @@ export function generateWeeklyRecoveryReport(state: RecoveryState, day: Date | s
   const startKey = getLocalDateKey(start);
   const endKey = getLocalDateKey(targetDate);
   const summary = summarizeCheckIns(state, day);
-  const attempts = state.attempts.filter((attempt) => {
-    const key = getLocalDateKey(attempt.detectedAt);
-    return attempt.result.verdict === "block" && key >= startKey && key <= endKey;
-  });
+  const attemptCounts = getRecoveryAttemptSourceCounts(state, startKey, endKey);
+  const protectedAttempts = getProtectedAttemptCount(attemptCounts);
   const completedChallenges = state.challengeHistory.filter((challenge) => {
-    const key = getLocalDateKey(challenge.completedAt);
+    const key = challenge.source === 'tool' && challenge.dateKey ? challenge.dateKey : getLocalDateKey(challenge.completedAt);
     return key >= startKey && key <= endKey;
   });
   const relapses = state.relapseRecords.filter((record) => {
     const key = getLocalDateKey(record.occurredAt);
     return key >= startKey && key <= endKey;
   });
-  const riskWindow = mostCommonLabel(attempts.map((attempt) => hourBucketLabel(attempt.detectedAt))) ?? "No clear pattern yet";
+  const challengeCounts = getRecoveryChallengeCounts(state, startKey, endKey);
+  const riskWindow = getRiskWindowLabel(state, startKey, endKey);
   const slipWindow = mostCommonLabel(relapses.map((record) => hourBucketLabel(record.occurredAt))) ?? "No slips logged";
   const slipTrigger = mostCommonLabel(relapses.map((record) => record.trigger ?? "Unlabeled")) ?? "No slips logged";
-  const bestIntervention = getBestInterventionLabel(completedChallenges);
-  const momentum = getMomentumLabel(attempts, startKey, endKey);
+  const bestIntervention = getBestInterventionForRange(state, completedChallenges, startKey, endKey);
+  const momentum = getMomentumLabel(state, startKey, endKey);
 
   const strongestPattern =
-    relapses.length > 0 && attempts.length === 0
+    relapses.length > 0 && protectedAttempts === 0
       ? "A slip was logged honestly; use that data to shape the next safer window."
       : relapses.length > 0
       ? "Risk moments and honest reset logs both point to a pattern worth protecting early."
-      : attempts.length === 0
+      : protectedAttempts === 0
       ? "No blocked attempts landed in the last seven days."
-      : attempts.length >= 3
+      : protectedAttempts >= 3
       ? "Risk moments clustered this week; plan friction before the highest-risk window."
       : "FREED interrupted risk early enough for recovery actions to work.";
 
@@ -1488,26 +2274,26 @@ export function generateWeeklyRecoveryReport(state: RecoveryState, day: Date | s
       ? `Treat ${slipTrigger.toLowerCase()} as the next setup cue. Add one physical barrier before ${slipWindow.toLowerCase()} and start with a short reset instead of willpower.`
       : summary.total < 3
       ? "Build the check-in rhythm so the intervention engine has better signal."
-      : summary.averageSleep <= 2.5
+      : summary.averageSleep > 0 && summary.averageSleep <= 2.5
       ? "Protect sleep first; low sleep is the strongest relapse amplifier this week."
       : summary.averageUrge >= 4
       ? "Prepare body-first resets before urge intensity rises."
-      : completedChallenges.length > 0
+      : challengeCounts.helpful > 0
       ? "Repeat the interventions that already helped instead of adding complexity."
       : "Keep the routine simple: check in, protect the phone boundary, and act early.";
 
   const wins = [
-    `${completedChallenges.length} recovery ${completedChallenges.length === 1 ? "challenge" : "challenges"} completed`,
+    `${challengeCounts.completed} recovery ${challengeCounts.completed === 1 ? "challenge" : "challenges"} completed`,
     `${summary.steadyDays} steady or energized ${summary.steadyDays === 1 ? "day" : "days"} logged`,
-    attempts.length === 0 ? "No protected risk attempts this week" : `${attempts.length} risk ${attempts.length === 1 ? "moment was" : "moments were"} interrupted`,
+    protectedAttempts === 0 ? "No protected risk attempts this week" : `${protectedAttempts} risk ${protectedAttempts === 1 ? "moment was" : "moments were"} interrupted`,
     relapses.length === 0 ? "No slips logged this week" : `${relapses.length} honest ${relapses.length === 1 ? "reset was" : "resets were"} logged`
   ];
 
   return {
     rangeLabel: `${startKey} to ${endKey}`,
-    attempts: attempts.length,
+    attempts: protectedAttempts,
     slips: relapses.length,
-    completedChallenges: completedChallenges.length,
+    completedChallenges: challengeCounts.completed,
     checkIns: summary.total,
     averageUrge: summary.averageUrge,
     averageSleep: summary.averageSleep,
@@ -1531,27 +2317,24 @@ export function generateMonthlyGrowthReport(state: RecoveryState, day: Date | st
   const endKey = getLocalDateKey(targetDate);
   const checkIns = state.dailyCheckIns.filter((checkIn) => checkIn.dateKey >= startKey && checkIn.dateKey <= endKey);
   const checkInSummary = summarizeCheckInRecords(checkIns);
-  const attempts = state.attempts.filter((attempt) => {
-    const key = getLocalDateKey(attempt.detectedAt);
-    return attempt.result.verdict === "block" && key >= startKey && key <= endKey;
-  });
+  const attemptCounts = getRecoveryAttemptSourceCounts(state, startKey, endKey);
   const completedChallenges = state.challengeHistory.filter((challenge) => {
-    const key = getLocalDateKey(challenge.completedAt);
+    const key = challenge.source === 'tool' && challenge.dateKey ? challenge.dateKey : getLocalDateKey(challenge.completedAt);
     return key >= startKey && key <= endKey;
   });
-  const helpfulChallenges = completedChallenges.filter((challenge) => challenge.outcome === "helped");
+  const challengeCounts = getRecoveryChallengeCounts(state, startKey, endKey);
   const relapses = state.relapseRecords.filter((record) => {
     const key = getLocalDateKey(record.occurredAt);
     return key >= startKey && key <= endKey;
   });
-  const protectedMoments = attempts.length;
-  const appInterventions = attempts.filter((attempt) => attempt.source === "app").length;
-  const selfReportedUrges = attempts.filter((attempt) => attempt.source === "panic-button").length;
-  const riskWindow = mostCommonLabel(attempts.map((attempt) => hourBucketLabel(attempt.detectedAt))) ?? "No clear pattern yet";
+  const protectedMoments = getProtectedAttemptCount(attemptCounts);
+  const appInterventions = attemptCounts.app ?? 0;
+  const selfReportedUrges = attemptCounts["panic-button"] ?? 0;
+  const riskWindow = getRiskWindowLabel(state, startKey, endKey);
   const slipWindow = mostCommonLabel(relapses.map((record) => hourBucketLabel(record.occurredAt))) ?? "No slips logged";
   const slipTrigger = mostCommonLabel(relapses.map((record) => record.trigger ?? "Unlabeled")) ?? "No slips logged";
-  const bestIntervention = getBestInterventionLabel(completedChallenges);
-  const signalCount = protectedMoments + completedChallenges.length + checkInSummary.total + relapses.length;
+  const bestIntervention = getBestInterventionForRange(state, completedChallenges, startKey, endKey);
+  const signalCount = protectedMoments + selfReportedUrges + challengeCounts.completed + checkInSummary.total + relapses.length;
   const growthScore =
     signalCount === 0
       ? 0
@@ -1562,8 +2345,8 @@ export function generateMonthlyGrowthReport(state: RecoveryState, day: Date | st
             Math.round(
               checkInSummary.steadyDays * 4 +
                 checkInSummary.total * 2 +
-                completedChallenges.length * 5 +
-                helpfulChallenges.length * 7 +
+                challengeCounts.completed * 5 +
+                challengeCounts.helpful * 7 +
                 protectedMoments * 3 -
                 relapses.length * 10 -
                 Math.max(0, checkInSummary.averageUrge - 3) * 5
@@ -1576,10 +2359,12 @@ export function generateMonthlyGrowthReport(state: RecoveryState, day: Date | st
       ? "No monthly pattern yet. FREED needs real check-ins, protected moments, resets, or honest logs before it can summarize growth."
       : relapses.length > 0
       ? "This month has honest reset data. Use the pattern without shame and make the risky window easier to survive."
-      : helpfulChallenges.length >= 3
+      : challengeCounts.helpful >= 3
       ? "Helpful resets are becoming repeatable. Keep the same playbook close to the moments where risk shows up."
       : protectedMoments > 0
       ? "FREED interrupted real risk this month. The next gain is turning those interruptions into completed resets."
+      : selfReportedUrges > 0
+      ? "You asked for urge support this month. Keep practicing the resets that help."
       : "The month is quiet. Keep check-ins steady so early warning signals stay visible.";
 
   const nextExperiment =
@@ -1587,7 +2372,7 @@ export function generateMonthlyGrowthReport(state: RecoveryState, day: Date | st
       ? `Before ${slipWindow.toLowerCase()}, treat ${slipTrigger.toLowerCase()} as the setup cue and start one short body reset early.`
       : checkInSummary.averageSleep > 0 && checkInSummary.averageSleep <= 2.5
       ? "Run a seven-night sleep guard experiment: phone away from bed, Night Guard on, and one calm reset before the window."
-      : helpfulChallenges.length > 0
+      : challengeCounts.helpful > 0
       ? `Repeat ${bestIntervention.toLowerCase()} first when the next risk signal appears.`
       : checkInSummary.total < 8
       ? "Make daily check-ins the experiment. More signal means better interventions."
@@ -1598,8 +2383,8 @@ export function generateMonthlyGrowthReport(state: RecoveryState, day: Date | st
     protectedMoments,
     appInterventions,
     selfReportedUrges,
-    completedChallenges: completedChallenges.length,
-    helpfulChallenges: helpfulChallenges.length,
+    completedChallenges: challengeCounts.completed,
+    helpfulChallenges: challengeCounts.helpful,
     slips: relapses.length,
     checkIns: checkInSummary.total,
     averageUrge: checkInSummary.averageUrge,
@@ -1614,7 +2399,7 @@ export function generateMonthlyGrowthReport(state: RecoveryState, day: Date | st
     nextExperiment,
     wins: [
       `${protectedMoments} protected ${protectedMoments === 1 ? "moment" : "moments"}`,
-      `${helpfulChallenges.length} helpful ${helpfulChallenges.length === 1 ? "reset" : "resets"}`,
+      `${challengeCounts.helpful} helpful ${challengeCounts.helpful === 1 ? "reset" : "resets"}`,
       `${checkInSummary.total} real ${checkInSummary.total === 1 ? "check-in" : "check-ins"}`,
       relapses.length === 0 ? "No slips logged in the range" : `${relapses.length} honest ${relapses.length === 1 ? "reset" : "resets"} logged`
     ]
@@ -1623,14 +2408,22 @@ export function generateMonthlyGrowthReport(state: RecoveryState, day: Date | st
 
 export function updateReminderPreferences(
   state: RecoveryState,
-  update: Partial<Omit<ReminderPreferences, "scheduledIds" | "permissionStatus" | "statusMessage" | "updatedAt" | "lastScheduledAt">>,
+  update: ReminderPreferenceUpdate,
   updatedAt = new Date().toISOString()
 ): RecoveryState {
+  // Only intent fields may enter through the user-facing update boundary.
+  const allowed: ReminderPreferenceUpdate = {};
+  for (const key of ["enabled", "morningEnabled", "eveningEnabled", "guardEnabled", "morningTime", "eveningTime", "guardTime"] as const) {
+    if (key in update) Object.assign(allowed, { [key]: update[key] });
+  }
   return hydrateRecoveryState({
     ...state,
     reminders: {
       ...state.reminders,
-      ...update,
+      ...allowed,
+      revision: state.reminders.revision + 1,
+      effectiveStatus: "pending",
+      statusMessage: "Checking recovery reminders on this device.",
       updatedAt
     }
   });
@@ -1642,20 +2435,26 @@ export function recordReminderSync(
     scheduledIds: string[];
     permissionStatus: ReminderPermissionStatus;
     statusMessage: string;
+    effectiveStatus?: ReminderEffectiveStatus;
+    revision?: number;
+    timezone?: string | null;
+    stale?: boolean;
     enabled?: boolean;
   },
   syncedAt = new Date().toISOString()
 ): RecoveryState {
+  if (result.stale || (result.revision !== undefined && result.revision !== state.reminders.revision)) return state;
+  const effectiveStatus = result.effectiveStatus ?? (state.reminders.enabled ? "pending" : "off");
   return hydrateRecoveryState({
     ...state,
     reminders: {
       ...state.reminders,
-      enabled: result.enabled ?? state.reminders.enabled,
       scheduledIds: result.scheduledIds,
       permissionStatus: result.permissionStatus,
+      effectiveStatus,
+      timezone: result.timezone ?? state.reminders.timezone,
       statusMessage: result.statusMessage,
-      updatedAt: syncedAt,
-      lastScheduledAt: result.scheduledIds.length > 0 ? syncedAt : state.reminders.lastScheduledAt
+      lastScheduledAt: ["active", "quiet"].includes(effectiveStatus) ? syncedAt : state.reminders.lastScheduledAt
     }
   });
 }
@@ -1685,6 +2484,8 @@ export function updateDisciplineSettings(
     disciplineSettings: {
       ...state.disciplineSettings,
       ...update,
+      ...(update.appGuardMode !== undefined ? { appGuardModeConfiguredAt: updatedAt } : {}),
+      ...(update.emergencyStrictMode !== undefined || update.deepFocusModeEnabled !== undefined ? { strictGuardConfiguredAt: updatedAt } : {}),
       updatedAt
     }
   });
@@ -1777,7 +2578,7 @@ export function getActiveEarnedUnlock(state: RecoveryState, at: Date | string = 
   if (!Number.isFinite(atMs)) return null;
   return (
     state.earnedUnlocks
-      .filter((unlock) => Date.parse(unlock.startedAt) <= atMs && Date.parse(unlock.expiresAt) > atMs)
+      .filter((unlock) => !unlock.historicalOnly && Date.parse(unlock.startedAt) <= atMs && Date.parse(unlock.expiresAt) > atMs)
       .sort((a, b) => Date.parse(b.expiresAt) - Date.parse(a.expiresAt))[0] ?? null
   );
 }
@@ -1803,17 +2604,24 @@ export function recordEarnedUnlock(
 
   return hydrateRecoveryState({
     ...state,
-    earnedUnlocks: [unlock, ...state.earnedUnlocks].slice(0, 40)
+    earnedUnlocks: [unlock, ...state.earnedUnlocks]
   });
 }
 
 export function touchRecoveryState(state: RecoveryState, openedAt = new Date().toISOString()): RecoveryState {
-  const currentStreak = state.recoveryStartedAt ? calculateStreakDaysFrom(state.recoveryStartedAt, openedAt) : state.streakDays;
+  const openedMs = Date.parse(openedAt);
+  const lastOpenedMs = state.lastOpenedAt ? Date.parse(state.lastOpenedAt) : Number.NaN;
+  const clockMovedBackward =
+    Number.isFinite(openedMs) && Number.isFinite(lastOpenedMs) && openedMs < lastOpenedMs;
+  const derivedStreak = state.recoveryStartedAt ? calculateStreakDaysFrom(state.recoveryStartedAt, openedAt) : state.streakDays;
+  // A device clock that jumped backwards (travel, bad auto-time) must never silently zero a
+  // persisted streak; the corrected value still climbs, and the open watermark never moves back.
+  const currentStreak = Math.max(0, clockMovedBackward ? Math.max(state.streakDays, derivedStreak) : derivedStreak);
   return hydrateRecoveryState({
     ...state,
     streakDays: currentStreak,
     bestStreakDays: Math.max(state.bestStreakDays, currentStreak),
-    lastOpenedAt: openedAt
+    lastOpenedAt: clockMovedBackward && state.lastOpenedAt ? state.lastOpenedAt : openedAt
   });
 }
 
@@ -1849,7 +2657,7 @@ export function recordAppSessionStart(state: RecoveryState, openedAt = new Date(
           durationSec: 0
         },
         ...sessions
-      ].slice(0, 120)
+      ]
     },
     opened
   );
@@ -1866,6 +2674,7 @@ export function recordAppSessionEnd(state: RecoveryState, closedAt = new Date().
   const closedMs = Date.parse(closed);
   const openedMs = Date.parse(openSession.openedAt);
   const durationSec = closedMs > openedMs ? Math.round((closedMs - openedMs) / 1000) : 0;
+  const boundedClosedAt = new Date(Math.max(openedMs, closedMs)).toISOString();
 
   return touchRecoveryState(
     {
@@ -1874,7 +2683,7 @@ export function recordAppSessionEnd(state: RecoveryState, closedAt = new Date().
         session.id === openSession.id
           ? {
               ...session,
-              closedAt: closed,
+              closedAt: boundedClosedAt,
               durationSec
             }
           : session
@@ -1882,6 +2691,26 @@ export function recordAppSessionEnd(state: RecoveryState, closedAt = new Date().
     },
     closed
   );
+}
+
+export function setVerifiedPremiumEntitlement(
+  state: RecoveryState,
+  evidence: VerifiedPremiumEntitlement | null,
+  checkedAt = new Date().toISOString()
+): RecoveryState {
+  const entitlement = sanitizePremiumEntitlement(evidence);
+  const active = hasVerifiedPremium(entitlement, Date.parse(checkedAt));
+  const planId: PremiumPlanId | null = active && entitlement
+    ? entitlement.productId === "freed_premium_monthly" ? "monthly" : entitlement.productId === "freed_premium_yearly" ? "yearly" : "lifetime"
+    : null;
+  return hydrateRecoveryState({
+    ...state,
+    premium: active,
+    premiumPlanId: planId,
+    premiumPlanAudience: active ? "individual" : null,
+    premiumActivatedAt: active ? state.premiumActivatedAt ?? checkedAt : null,
+    premiumEntitlement: entitlement
+  });
 }
 
 export function setPremiumPlan(
@@ -1925,6 +2754,28 @@ export function markOnboardingPaywallPresented(
   });
 }
 
+export function markVpnDisclosureAcknowledged(
+  state: RecoveryState,
+  acknowledgedAt = new Date().toISOString()
+): RecoveryState {
+  return hydrateRecoveryState({
+    ...state,
+    vpnDisclosureAcknowledgedAt: state.vpnDisclosureAcknowledgedAt ?? acknowledgedAt
+  });
+}
+
+export function markAccountStepCompleted(
+  state: RecoveryState,
+  input: { skipped?: boolean; email?: string | null } = {}
+): RecoveryState {
+  return hydrateRecoveryState({
+    ...state,
+    accountSkippedAt:
+      input.skipped && !state.accountSkippedAt ? new Date().toISOString() : state.accountSkippedAt,
+    signedInEmail: input.email !== undefined ? sanitizeEmailOrNull(input.email) : state.signedInEmail
+  });
+}
+
 export function markProtectionActivated(
   state: RecoveryState,
   platform: ProtectionActivationPlatform,
@@ -1933,7 +2784,9 @@ export function markProtectionActivated(
   return hydrateRecoveryState({
     ...state,
     protectionActivatedAt: activatedAt,
-    protectionActivationPlatform: platform
+    protectionActivationPlatform: platform,
+    // Completing the real activation test clears the limited-protection state.
+    protectionSetupFallback: null
   });
 }
 
@@ -1952,6 +2805,40 @@ export function hasProtectionActivationForPlatform(
   return Boolean(state.protectionActivatedAt && state.protectionActivationPlatform === platform);
 }
 
+export function hasProtectionSetupFallback(
+  state: RecoveryState,
+  platform: ProtectionActivationPlatform
+): boolean {
+  return Boolean(state.protectionSetupFallback && state.protectionSetupFallback.platform === platform);
+}
+
+/**
+ * Records the user's explicit acknowledgement that protection setup could not
+ * be completed on this device, so FREED stops trapping them on the setup
+ * screen. Activation stays incomplete; the Shield/Home surfaces keep showing a
+ * limited-protection banner until the real activation test passes.
+ */
+export function markProtectionSetupFallback(
+  state: RecoveryState,
+  platform: ProtectionActivationPlatform,
+  reason: ProtectionSetupFallbackReason,
+  acknowledgedAt = new Date().toISOString()
+): RecoveryState {
+  return hydrateRecoveryState({
+    ...state,
+    protectionSetupFallback: {
+      acknowledgedAt: validIso(acknowledgedAt) ?? acknowledgedAt,
+      platform,
+      reason
+    }
+  });
+}
+
+export function clearProtectionSetupFallback(state: RecoveryState): RecoveryState {
+  if (!state.protectionSetupFallback) return state;
+  return hydrateRecoveryState({ ...state, protectionSetupFallback: null });
+}
+
 export function recordBlockingAttempt(state: RecoveryState, attempt: BlockingAttempt): RecoveryState {
   const isBlocked = attempt.result.verdict === "block";
   const host = sanitizeStoredAttemptHost(attempt.host, attempt.url, attempt.result.host);
@@ -1966,11 +2853,88 @@ export function recordBlockingAttempt(state: RecoveryState, attempt: BlockingAtt
   };
 
   return hydrateRecoveryState({
-    ...state,
-    attempts: isBlocked ? [sanitizedAttempt, ...state.attempts].slice(0, 100) : state.attempts,
+    ...markPersonalPlanDate(state, attempt.detectedAt),
+    attempts: isBlocked ? [sanitizedAttempt, ...state.attempts] : state.attempts,
     bestStreakDays: Math.max(state.bestStreakDays, state.streakDays),
-    lastProtectedAt: isBlocked ? sanitizedAttempt.detectedAt : state.lastProtectedAt
+    lastProtectedAt: isProtectedAttempt(sanitizedAttempt) ? sanitizedAttempt.detectedAt : state.lastProtectedAt
   });
+}
+
+export function recordBlockedDomainFeedback(
+  state: RecoveryState,
+  host: string,
+  matchedRule: string,
+  sourcePackage: string,
+  reportedAt = new Date().toISOString()
+): RecoveryState {
+  const sanitizedHost = host.trim().toLowerCase().slice(0, 253);
+  if (!sanitizedHost) return state;
+
+  const entry: BlockedDomainFeedback = {
+    host: sanitizedHost,
+    matchedRule: matchedRule.trim().slice(0, 96),
+    sourcePackage: sourcePackage.trim().slice(0, 64),
+    reportedAt
+  };
+
+  const deduped = [
+    entry,
+    ...state.blockedDomainFeedback.filter((item) => item.host !== sanitizedHost)
+  ].slice(0, 50);
+
+  return hydrateRecoveryState({ ...state, blockedDomainFeedback: deduped });
+}
+
+export function hasPledgedOnDate(state: RecoveryState, dateKey = getLocalDateKey(new Date())): boolean {
+  return state.pledges.some((pledge) => pledge.dateKey === dateKey);
+}
+
+export function getPledgeStreakDays(state: RecoveryState, today = new Date()): number {
+  const pledgedKeys = new Set(state.pledges.map((pledge) => pledge.dateKey));
+  let streak = 0;
+  const cursor = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  if (!pledgedKeys.has(getLocalDateKey(cursor))) {
+    cursor.setDate(cursor.getDate() - 1);
+    if (!pledgedKeys.has(getLocalDateKey(cursor))) return 0;
+  }
+  while (pledgedKeys.has(getLocalDateKey(cursor)) && streak < 400) {
+    streak += 1;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return streak;
+}
+
+export function recordDailyPledge(
+  state: RecoveryState,
+  now = new Date()
+): RecoveryState {
+  const dateKey = getLocalDateKey(now);
+  if (state.pledges.some((pledge) => pledge.dateKey === dateKey)) return state;
+
+  const entry: PledgeRecord = { dateKey, createdAt: now.toISOString() };
+  return hydrateRecoveryState({
+    ...markPersonalPlanDate(state, now),
+    pledges: [entry, ...state.pledges].slice(0, 400)
+  });
+}
+
+export function recordCoachMessages(
+  state: RecoveryState,
+  messages: Array<{ role: "user" | "ai"; text: string }>,
+  redactText: (input: string) => string,
+  now = new Date()
+): RecoveryState {
+  const at = now.toISOString();
+  const entries = messages
+    .slice(-MAX_COACH_CHAT_ENTRIES)
+    .map((message) => ({
+      role: message.role,
+      text: redactText(message.text).slice(0, 1_000),
+      at
+    }))
+    .filter((entry) => entry.text.length > 0);
+
+  return hydrateRecoveryState({ ...state, coachMessages: entries });
 }
 
 export function recordChallengeCompletion(
@@ -1978,10 +2942,18 @@ export function recordChallengeCompletion(
   challenge: RecoveryChallenge,
   completedAt = new Date().toISOString(),
   sourceAttemptHost?: string,
-  outcome: ChallengeOutcome = "helped"
+  outcome: ChallengeFeedbackOutcome = "helped",
+  sessionId?: string,
+  observedActiveSec?: number,
+  provenance?: CompletionProvenance
 ): RecoveryState {
+  const receiptId = typeof sessionId === "string" && /^[A-Za-z0-9:_-]{1,160}$/.test(sessionId) ? sessionId : undefined;
+  if (receiptId && state.challengeHistory.some(completion => completion.sessionId === receiptId)) return state;
   const completion: ChallengeCompletion = {
     id: challenge.id,
+    ...(receiptId ? { sessionId: receiptId } : {}),
+    ...(typeof observedActiveSec === "number" && Number.isFinite(observedActiveSec) && observedActiveSec >= 0 ? { observedActiveSec: Math.min(3600, observedActiveSec) } : {}),
+    ...(sanitizeCompletionProvenance(provenance, challenge.id) ? { provenance: sanitizeCompletionProvenance(provenance, challenge.id) } : {}),
     title: challenge.title,
     category: challenge.category,
     outcome,
@@ -1992,10 +2964,10 @@ export function recordChallengeCompletion(
   };
 
   return hydrateRecoveryState({
-    ...state,
+    ...markPersonalPlanDate(state, completedAt),
     completedChallenges: state.completedChallenges + 1,
     bestStreakDays: Math.max(state.bestStreakDays, state.streakDays),
-    challengeHistory: [completion, ...state.challengeHistory].slice(0, 200),
+    challengeHistory: [completion, ...state.challengeHistory],
     lastProtectedAt: completedAt
   });
 }
@@ -2008,6 +2980,7 @@ export function createCustomRecoveryChallenge(input: CustomChallengeInput, creat
   const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 48) || "reset";
   const challenge = sanitizeCustomChallenge({
     id: `custom-${timestamp}-${slug}`,
+    verification: { version: 1, kind: 'timer' },
     title: title || "Custom recovery reset",
     category,
     durationSec: input.durationSec,
@@ -2020,6 +2993,7 @@ export function createCustomRecoveryChallenge(input: CustomChallengeInput, creat
 
   return challenge ?? {
     id: `custom-${timestamp}-reset`,
+    verification: { version: 1, kind: 'timer' },
     title: "Custom recovery reset",
     category: "reset",
     durationSec: 120,

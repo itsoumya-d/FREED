@@ -1,6 +1,6 @@
 {
   "schemaVersion": "freed-store-legal-web-export-audit-v1",
-  "generatedAt": "2026-07-22T02:46:09.941Z",
+  "generatedAt": "2026-10-01T02:32:55.767Z",
   "sanitized": true,
   "result": "pass",
   "passCount": 21,
@@ -43,8 +43,8 @@
       "id": "privacy",
       "publicUrl": "https://freedrecovery.app/privacy",
       "routePath": "/privacy",
-      "sha256": "sha256-009b086671a37b3bee3e9e28bb54677f688d94e49e2cbd4ae27cf67236de430d",
-      "sizeBytes": 26133,
+      "sha256": "sha256-510694909d3250aa2e7aed5c189963a1b5a82eb5dab7a927101ac010442f3788",
+      "sizeBytes": 26666,
       "sourceFile": "app/privacy.tsx"
     },
     {
@@ -75,8 +75,8 @@
       "id": "support",
       "publicUrl": "https://freedrecovery.app/support",
       "routePath": "/support",
-      "sha256": "sha256-0e98e4c0bb4cd639ace95dba0a1c4f5ce83f6fa273be1a04aeffd631ed049b9d",
-      "sizeBytes": 24300,
+      "sha256": "sha256-c8aa3864bf36f961de920ca7bda156f194c28a81ac2faec0e2c6211a6bc022e0",
+      "sizeBytes": 24844,
       "sourceFile": "app/support.tsx"
     },
     {
@@ -107,8 +107,8 @@
       "id": "account-deletion",
       "publicUrl": "https://freedrecovery.app/account-deletion",
       "routePath": "/account-deletion",
-      "sha256": "sha256-65562cdd19c3325cd7796865d5f76abb114d4bb627a370d59dc33e60b8091e6b",
-      "sizeBytes": 24067,
+      "sha256": "sha256-dea1a60b04b5597ffb7c143fa15d47e7178af3617849103bfaf6ae7a55844685",
+      "sizeBytes": 24445,
       "sourceFile": "app/account-deletion.tsx"
     }
   ],

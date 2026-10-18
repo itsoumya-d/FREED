@@ -1,0 +1,473 @@
+{
+  "schemaVersion": "freed-ios-release-archive-report-v1",
+  "generatedAt": "2026-10-04T11:55:05.574Z",
+  "sanitized": true,
+  "platform": "ios",
+  "result": "pass",
+  "archiveResult": "pass",
+  "exportResult": "pass",
+  "summary": {
+    "passCount": 8,
+    "failCount": 0
+  },
+  "results": [
+    {
+      "id": "ios-release-archive-build",
+      "status": "PASS",
+      "detail": "Release archive contains the FREED app bundle with the configured production bundle identifier."
+    },
+    {
+      "id": "ios-release-export",
+      "status": "PASS",
+      "detail": "App Store Connect export produced an IPA containing the app and expected extensions."
+    },
+    {
+      "id": "ios-release-signing",
+      "status": "PASS",
+      "detail": "Every app and extension bundle is signed with Apple Distribution for the configured team."
+    },
+    {
+      "id": "ios-release-bundle-id",
+      "status": "PASS",
+      "detail": "Main app and embedded extension bundle identifiers match the store launch identifiers."
+    },
+    {
+      "id": "ios-release-entitlements",
+      "status": "PASS",
+      "detail": "Signed app and extensions include Family Controls where required, shared app group, Complete Data Protection, and no packet tunnel/inspection entitlements."
+    },
+    {
+      "id": "ios-release-embedded-extensions",
+      "status": "PASS",
+      "detail": "Release archive embeds Shield Configuration, Shield Action, Device Activity Monitor, Safari Content Blocker, and Safari Focus Shield extensions."
+    },
+    {
+      "id": "ios-release-safari-content-blocker",
+      "status": "PASS",
+      "detail": "Safari Content Blocker includes adult-domain-only block rules with block actions."
+    },
+    {
+      "id": "ios-release-safari-focus-shield",
+      "status": "PASS",
+      "detail": "Safari Focus Shield includes the scoped MV3 manifest, iOS 15.4 minimum, content script, and background-worker native relay."
+    }
+  ],
+  "requested": {
+    "allowProvisioningUpdates": false,
+    "bundleId": "app.freed.recovery",
+    "configuration": "Release",
+    "destination": "generic/platform=iOS",
+    "requireReleaseSigning": true,
+    "scheme": "FREED",
+    "sdk": "iphoneos",
+    "skipExport": false
+  },
+  "exportOptions": {
+    "generated": true,
+    "method": "app-store-connect",
+    "path": "ios/build/FREED-export-options.plist",
+    "provisioningProfileBundleIds": [
+      "app.freed.recovery",
+      "app.freed.recovery.device-activity-monitor",
+      "app.freed.recovery.safari-content-blocker",
+      "app.freed.recovery.safari-focus-shield",
+      "app.freed.recovery.shield-action",
+      "app.freed.recovery.shield-configuration"
+    ],
+    "signingStyle": "manual",
+    "teamIdConfigured": true
+  },
+  "signing": {
+    "allSignedBundleTeamIdsMatch": true,
+    "appleDistributionSigned": true,
+    "debugSigned": false,
+    "mode": "app-store-distribution",
+    "required": true,
+    "teamIdConfigured": true
+  },
+  "archive": {
+    "appBundleIdentifier": "app.freed.recovery",
+    "appGroupEntitledBundleIds": [
+      "app.freed.recovery",
+      "app.freed.recovery.shield-configuration",
+      "app.freed.recovery.shield-action",
+      "app.freed.recovery.device-activity-monitor",
+      "app.freed.recovery.safari-content-blocker",
+      "app.freed.recovery.safari-focus-shield"
+    ],
+    "appleDistributionSignedBundleIds": [
+      "app.freed.recovery",
+      "app.freed.recovery.shield-configuration",
+      "app.freed.recovery.shield-action",
+      "app.freed.recovery.device-activity-monitor",
+      "app.freed.recovery.safari-content-blocker",
+      "app.freed.recovery.safari-focus-shield"
+    ],
+    "archivePath": "FREED-resource-build2.xcarchive",
+    "bundlePath": "FREED.app",
+    "codesignAvailableBundleIds": [
+      "app.freed.recovery",
+      "app.freed.recovery.shield-configuration",
+      "app.freed.recovery.shield-action",
+      "app.freed.recovery.device-activity-monitor",
+      "app.freed.recovery.safari-content-blocker",
+      "app.freed.recovery.safari-focus-shield"
+    ],
+    "completeDataProtectionEntitledBundleIds": [
+      "app.freed.recovery",
+      "app.freed.recovery.shield-configuration",
+      "app.freed.recovery.shield-action",
+      "app.freed.recovery.device-activity-monitor",
+      "app.freed.recovery.safari-content-blocker",
+      "app.freed.recovery.safari-focus-shield"
+    ],
+    "debugSignedBundleIds": [],
+    "embeddedExtensionBundleIds": [
+      "app.freed.recovery.shield-configuration",
+      "app.freed.recovery.shield-action",
+      "app.freed.recovery.device-activity-monitor",
+      "app.freed.recovery.safari-content-blocker",
+      "app.freed.recovery.safari-focus-shield"
+    ],
+    "embeddedExtensionNames": [
+      "FREEDShieldConfiguration.appex",
+      "FREEDShieldAction.appex",
+      "FREEDDeviceActivityMonitor.appex",
+      "FREEDSafariContentBlocker.appex",
+      "FREEDSafariFocusShield.appex"
+    ],
+    "extensions": [
+      {
+        "appGroupPresent": true,
+        "appleDistributionSigned": true,
+        "bundleId": "app.freed.recovery.shield-configuration",
+        "bundleName": "FREEDShieldConfiguration.appex",
+        "codesignAvailable": true,
+        "completeDataProtectionEntitled": true,
+        "debugSigned": false,
+        "embedded": true,
+        "entitlementsAvailable": true,
+        "extensionPoint": "com.apple.ManagedSettingsUI.shield-configuration-service",
+        "extensionPointMatches": true,
+        "familyControlsEntitled": true,
+        "expectedBundleId": "app.freed.recovery.shield-configuration",
+        "expectedBundleIdMatches": true,
+        "expectedExtensionPoint": "com.apple.ManagedSettingsUI.shield-configuration-service",
+        "expectedPrincipalClass": "ShieldConfigurationExtension",
+        "packetInspectionEntitled": false,
+        "packetTunnelProviderEntitled": false,
+        "principalClass": "ShieldConfigurationExtension",
+        "principalClassMatches": true,
+        "requiresFamilyControls": true,
+        "teamIdentifier": "R5RX8WP8ZC"
+      },
+      {
+        "appGroupPresent": true,
+        "appleDistributionSigned": true,
+        "bundleId": "app.freed.recovery.shield-action",
+        "bundleName": "FREEDShieldAction.appex",
+        "codesignAvailable": true,
+        "completeDataProtectionEntitled": true,
+        "debugSigned": false,
+        "embedded": true,
+        "entitlementsAvailable": true,
+        "extensionPoint": "com.apple.ManagedSettings.shield-action-service",
+        "extensionPointMatches": true,
+        "familyControlsEntitled": true,
+        "expectedBundleId": "app.freed.recovery.shield-action",
+        "expectedBundleIdMatches": true,
+        "expectedExtensionPoint": "com.apple.ManagedSettings.shield-action-service",
+        "expectedPrincipalClass": "ShieldActionExtension",
+        "packetInspectionEntitled": false,
+        "packetTunnelProviderEntitled": false,
+        "principalClass": "ShieldActionExtension",
+        "principalClassMatches": true,
+        "requiresFamilyControls": true,
+        "teamIdentifier": "R5RX8WP8ZC"
+      },
+      {
+        "appGroupPresent": true,
+        "appleDistributionSigned": true,
+        "bundleId": "app.freed.recovery.device-activity-monitor",
+        "bundleName": "FREEDDeviceActivityMonitor.appex",
+        "codesignAvailable": true,
+        "completeDataProtectionEntitled": true,
+        "debugSigned": false,
+        "embedded": true,
+        "entitlementsAvailable": true,
+        "extensionPoint": "com.apple.deviceactivity.monitor-extension",
+        "extensionPointMatches": true,
+        "familyControlsEntitled": true,
+        "expectedBundleId": "app.freed.recovery.device-activity-monitor",
+        "expectedBundleIdMatches": true,
+        "expectedExtensionPoint": "com.apple.deviceactivity.monitor-extension",
+        "expectedPrincipalClass": "DeviceActivityMonitorExtension",
+        "packetInspectionEntitled": false,
+        "packetTunnelProviderEntitled": false,
+        "principalClass": "DeviceActivityMonitorExtension",
+        "principalClassMatches": true,
+        "requiresFamilyControls": true,
+        "teamIdentifier": "R5RX8WP8ZC"
+      },
+      {
+        "appGroupPresent": true,
+        "appleDistributionSigned": true,
+        "bundleId": "app.freed.recovery.safari-content-blocker",
+        "bundleName": "FREEDSafariContentBlocker.appex",
+        "codesignAvailable": true,
+        "completeDataProtectionEntitled": true,
+        "debugSigned": false,
+        "embedded": true,
+        "entitlementsAvailable": true,
+        "extensionPoint": "com.apple.Safari.content-blocker",
+        "extensionPointMatches": true,
+        "familyControlsEntitled": false,
+        "expectedBundleId": "app.freed.recovery.safari-content-blocker",
+        "expectedBundleIdMatches": true,
+        "expectedExtensionPoint": "com.apple.Safari.content-blocker",
+        "expectedPrincipalClass": "ContentBlockerRequestHandler",
+        "packetInspectionEntitled": false,
+        "packetTunnelProviderEntitled": false,
+        "principalClass": "ContentBlockerRequestHandler",
+        "principalClassMatches": true,
+        "requiresFamilyControls": false,
+        "teamIdentifier": "R5RX8WP8ZC",
+        "safariRuleList": {
+          "adultDomainRulesPresent": true,
+          "allRulesBlock": true,
+          "available": true,
+          "missingSignals": [],
+          "ruleCount": 46,
+          "ruleSignals": {
+            "adult-domain-pornhub": true,
+            "adult-domain-xvideos": true
+          },
+          "usableForManualEvidence": true
+        }
+      },
+      {
+        "appGroupPresent": true,
+        "appleDistributionSigned": true,
+        "bundleId": "app.freed.recovery.safari-focus-shield",
+        "bundleName": "FREEDSafariFocusShield.appex",
+        "codesignAvailable": true,
+        "completeDataProtectionEntitled": true,
+        "debugSigned": false,
+        "embedded": true,
+        "entitlementsAvailable": true,
+        "extensionPoint": "com.apple.Safari.web-extension",
+        "extensionPointMatches": true,
+        "familyControlsEntitled": false,
+        "expectedBundleId": "app.freed.recovery.safari-focus-shield",
+        "expectedBundleIdMatches": true,
+        "expectedExtensionPoint": "com.apple.Safari.web-extension",
+        "expectedPrincipalClass": "FREEDSafariFocusShield.SafariWebExtensionHandler",
+        "packetInspectionEntitled": false,
+        "packetTunnelProviderEntitled": false,
+        "principalClass": "FREEDSafariFocusShield.SafariWebExtensionHandler",
+        "principalClassMatches": true,
+        "requiresFamilyControls": false,
+        "teamIdentifier": "R5RX8WP8ZC",
+        "safariFocusShield": {
+          "backgroundAvailable": true,
+          "contentAvailable": true,
+          "manifestAvailable": true,
+          "manifestError": "",
+          "nativeHandlerBinaryAvailable": true,
+          "iconsManifestValid": true,
+          "iconResourcesValid": true,
+          "icons": [
+            {
+              "size": 16,
+              "path": "icons/icon-16.png",
+              "available": true,
+              "width": 16,
+              "height": 16,
+              "valid": true
+            },
+            {
+              "size": 32,
+              "path": "icons/icon-32.png",
+              "available": true,
+              "width": 32,
+              "height": 32,
+              "valid": true
+            },
+            {
+              "size": 48,
+              "path": "icons/icon-48.png",
+              "available": true,
+              "width": 48,
+              "height": 48,
+              "valid": true
+            },
+            {
+              "size": 128,
+              "path": "icons/icon-128.png",
+              "available": true,
+              "width": 128,
+              "height": 128,
+              "valid": true
+            }
+          ],
+          "allowedDomains": [
+            "youtube.com",
+            "*.youtube.com",
+            "instagram.com",
+            "*.instagram.com",
+            "tiktok.com",
+            "*.tiktok.com"
+          ],
+          "approvedRuleHostsPresent": true,
+          "backgroundIsExecutableJavaScript": true,
+          "backgroundOwnsNativeMessaging": true,
+          "backgroundServiceWorkerValid": true,
+          "contentScriptsScoped": true,
+          "contentUsesRuntimeMessaging": true,
+          "fixedNativeEnvelope": true,
+          "hostPermissions": [
+            "*://youtube.com/*",
+            "*://*.youtube.com/*",
+            "*://instagram.com/*",
+            "*://*.instagram.com/*",
+            "*://tiktok.com/*",
+            "*://*.tiktok.com/*"
+          ],
+          "hostPermissionsScoped": true,
+          "infoAllowedDomainsScoped": true,
+          "manifestVersion3": true,
+          "minimumOSVersion": "15.4",
+          "minimumOSVersionAtLeast154": true,
+          "minimumSafariVersion": "15.4",
+          "nativeAppIdentifierValid": true,
+          "nativeHandlerContractValid": true,
+          "nativeMessagingPermission": true,
+          "nativePayloadSchemaValid": true,
+          "serviceWorker": "background.js",
+          "usableForManualEvidence": true
+        }
+      }
+    ],
+    "familyControlsEntitledBundleIds": [
+      "app.freed.recovery",
+      "app.freed.recovery.shield-configuration",
+      "app.freed.recovery.shield-action",
+      "app.freed.recovery.device-activity-monitor"
+    ],
+    "missingOrMismatchedExtensions": [],
+    "packetInspectionEntitled": false,
+    "packetTunnelProviderEntitled": false,
+    "safariRuleList": {
+      "adultDomainRulesPresent": true,
+      "allRulesBlock": true,
+      "available": true,
+      "missingSignals": [],
+      "ruleCount": 46,
+      "ruleSignals": {
+        "adult-domain-pornhub": true,
+        "adult-domain-xvideos": true
+      },
+      "usableForManualEvidence": true
+    },
+    "safariFocusShield": {
+      "backgroundAvailable": true,
+      "contentAvailable": true,
+      "manifestAvailable": true,
+      "manifestError": "",
+      "nativeHandlerBinaryAvailable": true,
+      "iconsManifestValid": true,
+      "iconResourcesValid": true,
+      "icons": [
+        {
+          "size": 16,
+          "path": "icons/icon-16.png",
+          "available": true,
+          "width": 16,
+          "height": 16,
+          "valid": true
+        },
+        {
+          "size": 32,
+          "path": "icons/icon-32.png",
+          "available": true,
+          "width": 32,
+          "height": 32,
+          "valid": true
+        },
+        {
+          "size": 48,
+          "path": "icons/icon-48.png",
+          "available": true,
+          "width": 48,
+          "height": 48,
+          "valid": true
+        },
+        {
+          "size": 128,
+          "path": "icons/icon-128.png",
+          "available": true,
+          "width": 128,
+          "height": 128,
+          "valid": true
+        }
+      ],
+      "allowedDomains": [
+        "youtube.com",
+        "*.youtube.com",
+        "instagram.com",
+        "*.instagram.com",
+        "tiktok.com",
+        "*.tiktok.com"
+      ],
+      "approvedRuleHostsPresent": true,
+      "backgroundIsExecutableJavaScript": true,
+      "backgroundOwnsNativeMessaging": true,
+      "backgroundServiceWorkerValid": true,
+      "contentScriptsScoped": true,
+      "contentUsesRuntimeMessaging": true,
+      "fixedNativeEnvelope": true,
+      "hostPermissions": [
+        "*://youtube.com/*",
+        "*://*.youtube.com/*",
+        "*://instagram.com/*",
+        "*://*.instagram.com/*",
+        "*://tiktok.com/*",
+        "*://*.tiktok.com/*"
+      ],
+      "hostPermissionsScoped": true,
+      "infoAllowedDomainsScoped": true,
+      "manifestVersion3": true,
+      "minimumOSVersion": "15.4",
+      "minimumOSVersionAtLeast154": true,
+      "minimumSafariVersion": "15.4",
+      "nativeAppIdentifierValid": true,
+      "nativeHandlerContractValid": true,
+      "nativeMessagingPermission": true,
+      "nativePayloadSchemaValid": true,
+      "serviceWorker": "background.js",
+      "usableForManualEvidence": true
+    },
+    "signedBundleTeamIds": [
+      "R5RX8WP8ZC"
+    ]
+  },
+  "ipa": {
+    "embeddedExtensionNames": [
+      "FREEDShieldConfiguration.appex",
+      "FREEDShieldAction.appex",
+      "FREEDDeviceActivityMonitor.appex",
+      "FREEDSafariContentBlocker.appex",
+      "FREEDSafariFocusShield.appex"
+    ],
+    "exists": true,
+    "hasPayloadApp": true,
+    "ipaPath": "FREED.ipa",
+    "sha256": "d443affbf43a5553e5754f18cd1192aceaf7d859014eaaaa9603c9bc5bd993c6",
+    "sizeBytes": 38767764
+  },
+  "durations": {
+    "archiveDurationMs": 2819709,
+    "exportDurationMs": 71314
+  },
+  "logPath": "freed-ios-release-archive-2026-10-04T11-55-05-141Z.log"
+}

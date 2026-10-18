@@ -1,0 +1,337 @@
+{
+  "recordedAt": "2026-10-05T00:22:18.343823+00:00",
+  "status": "independently-reviewed-deployed-source-verified",
+  "project": "freed-7d5ee",
+  "region": "asia-south1",
+  "codebase": "freed",
+  "runtime": "nodejs22",
+  "preparedEndpoint": "getReviewAccess",
+  "deployed": true,
+  "response": {
+    "reviewAccessVersion": 1,
+    "ownerUid": "verified Firebase UID",
+    "access": [
+      "none",
+      "review"
+    ],
+    "expiresAt": "null or canonical ISO",
+    "capabilities": [
+      [],
+      [
+        "ad-free",
+        "premium-features"
+      ]
+    ]
+  },
+  "noPayload": true,
+  "connectedProviders": [
+    "password",
+    "google.com",
+    "apple.com"
+  ],
+  "authAndAppCheckRequiredInPreparedSource": true,
+  "namespace": "backend_jobs/<verifiedUid>_review-access-v1",
+  "markerFields": [
+    "uid",
+    "kind",
+    "status",
+    "createdAt",
+    "expiresAt"
+  ],
+  "kind": "review-access-v1",
+  "maximumLifetimeDays": 14,
+  "firestoreTimestampsRequired": true,
+  "malformedRevokedExpiredMissingFutureCreatedOrWrongOwner": "none",
+  "clientWriteOrRenewEndpoint": false,
+  "purchaseOrClaimsAuthorityMutation": false,
+  "rateLimitPerMinute": 10,
+  "deletionAndCooldownFences": true,
+  "existingDispatcherActions": 0,
+  "existingExpirySweepRemovesExpired": true,
+  "existingUidDeletionRemovesMarker": true,
+  "existingLiveFunctionRecordsUnchanged": 20,
+  "newRealAccountsOrRecordsOrKeysOrLicenses": false,
+  "privateAdminDryRun": {
+    "scriptPath": "/Users/soumyadebnath16/.config/freed/admin/review-access-v1-2026-10-05.mjs",
+    "scriptSha256": "3e0ed7b00fbeb0631f30a8fb731a255423b54dafc5df3b8e31be4904484860ed",
+    "permissions": "0o600",
+    "fix": "Enabled/connected Auth eligibility applies to provision only; revoke validates approved UID and exact owned marker then updates status alone without reading Auth.",
+    "red": {
+      "tests": 19,
+      "passed": 9,
+      "failed": 10
+    },
+    "green": {
+      "tests": 19,
+      "passed": 19,
+      "failed": 0,
+      "cases": [
+        {
+          "case": "disabled-revoke",
+          "passed": true,
+          "exitCode": 0,
+          "authReads": 0,
+          "credentialReadsMockOnly": 1,
+          "writesMockOnly": [
+            {
+              "method": "update",
+              "path": "backend_jobs/reviewOfflineFixture_review-access-v1",
+              "fields": {
+                "status": "revoked"
+              }
+            }
+          ]
+        },
+        {
+          "case": "disabled-provision",
+          "passed": true,
+          "exitCode": 2,
+          "authReads": 1,
+          "credentialReadsMockOnly": 1,
+          "writesMockOnly": []
+        },
+        {
+          "case": "provider-removed-revoke",
+          "passed": true,
+          "exitCode": 0,
+          "authReads": 0,
+          "credentialReadsMockOnly": 1,
+          "writesMockOnly": [
+            {
+              "method": "update",
+              "path": "backend_jobs/reviewOfflineFixture_review-access-v1",
+              "fields": {
+                "status": "revoked"
+              }
+            }
+          ]
+        },
+        {
+          "case": "provider-removed-provision",
+          "passed": true,
+          "exitCode": 2,
+          "authReads": 1,
+          "credentialReadsMockOnly": 1,
+          "writesMockOnly": []
+        },
+        {
+          "case": "missing-revoke",
+          "passed": true,
+          "exitCode": 0,
+          "authReads": 0,
+          "credentialReadsMockOnly": 1,
+          "writesMockOnly": [
+            {
+              "method": "update",
+              "path": "backend_jobs/reviewOfflineFixture_review-access-v1",
+              "fields": {
+                "status": "revoked"
+              }
+            }
+          ]
+        },
+        {
+          "case": "missing-provision",
+          "passed": true,
+          "exitCode": 2,
+          "authReads": 1,
+          "credentialReadsMockOnly": 1,
+          "writesMockOnly": []
+        },
+        {
+          "case": "already-revoked-missing-user",
+          "passed": true,
+          "exitCode": 0,
+          "authReads": 0,
+          "credentialReadsMockOnly": 1,
+          "writesMockOnly": []
+        },
+        {
+          "case": "wrong-owner-revoke",
+          "passed": true,
+          "exitCode": 2,
+          "authReads": 0,
+          "credentialReadsMockOnly": 1,
+          "writesMockOnly": []
+        },
+        {
+          "case": "wrong-kind-revoke",
+          "passed": true,
+          "exitCode": 2,
+          "authReads": 0,
+          "credentialReadsMockOnly": 1,
+          "writesMockOnly": []
+        },
+        {
+          "case": "extra-capabilities-revoke",
+          "passed": true,
+          "exitCode": 2,
+          "authReads": 0,
+          "credentialReadsMockOnly": 1,
+          "writesMockOnly": []
+        },
+        {
+          "case": "missing-marker-revoke",
+          "passed": true,
+          "exitCode": 2,
+          "authReads": 0,
+          "credentialReadsMockOnly": 1,
+          "writesMockOnly": []
+        },
+        {
+          "case": "overlong-marker-revoke",
+          "passed": true,
+          "exitCode": 2,
+          "authReads": 0,
+          "credentialReadsMockOnly": 1,
+          "writesMockOnly": []
+        },
+        {
+          "case": "deletion-fence-revoke",
+          "passed": true,
+          "exitCode": 2,
+          "authReads": 0,
+          "credentialReadsMockOnly": 1,
+          "writesMockOnly": []
+        },
+        {
+          "case": "connected-provision",
+          "passed": true,
+          "exitCode": 0,
+          "authReads": 1,
+          "credentialReadsMockOnly": 2,
+          "writesMockOnly": [
+            {
+              "method": "create",
+              "path": "backend_jobs/reviewOfflineFixture_review-access-v1",
+              "fields": [
+                "createdAt",
+                "expiresAt",
+                "kind",
+                "status",
+                "uid"
+              ],
+              "lifetimeMs": 1209600000
+            }
+          ]
+        },
+        {
+          "case": "no-overwrite-or-renew-provision",
+          "passed": true,
+          "exitCode": 2,
+          "authReads": 1,
+          "credentialReadsMockOnly": 2,
+          "writesMockOnly": []
+        },
+        {
+          "case": "approval-wrong-owner",
+          "passed": true,
+          "exitCode": 2,
+          "authReads": 0,
+          "credentialReadsMockOnly": 0,
+          "writesMockOnly": []
+        },
+        {
+          "case": "approval-wrong-action",
+          "passed": true,
+          "exitCode": 2,
+          "authReads": 0,
+          "credentialReadsMockOnly": 0,
+          "writesMockOnly": []
+        },
+        {
+          "case": "approval-stale",
+          "passed": true,
+          "exitCode": 2,
+          "authReads": 0,
+          "credentialReadsMockOnly": 0,
+          "writesMockOnly": []
+        },
+        {
+          "case": "approval-missing",
+          "passed": true,
+          "exitCode": 2,
+          "authReads": 0,
+          "credentialReadsMockOnly": 0,
+          "writesMockOnly": []
+        }
+      ],
+      "networkForbidden": true,
+      "realCredentialsUsed": false,
+      "realOperationsExecuted": false,
+      "syntheticApprovalFixturesRemoved": true
+    },
+    "actualProvisionOrRevokeExecuted": false,
+    "actualHumanApprovalReceiptCreated": false,
+    "realCredentialsUsed": false
+  },
+  "sourceHashes": {
+    "functions/src/contracts.ts": "81c33cc06e8a896dcfc98f6fbed4ae39f37e438fdd208287e8bb4ae5d657218c",
+    "functions/src/foundation.test.ts": "de2d3e5c7812d95cddd80224ecde8948ba389ef109c780905ff75955f3d92a72",
+    "functions/src/foundation.ts": "d6dafd824d86ada4047f67f0d2cfb268bd8407751c3e1b394893d1cc0cc23b94",
+    "functions/src/review-access.ts": "a49ddbbdc053635335449527abea9be404f40e35629c01c8d3666c6469c8298c",
+    "functions/src/review-access-firebase.ts": "01fc4d11465f170c3fa96621f311d4484f1ff1e046e51a3957bcf88de3011f28",
+    "functions/src/review-access.test.ts": "fc28cf1115e552514fa501f19a31a9e9081b50cfec209115c256b05f6893242e",
+    "functions/src/review-access-emulator.test.ts": "6758dc13756f48b61fdea03f5470f63f8e63fca77426d1dd8b14abcae99b740d"
+  },
+  "unownedSourceAndFourPrivacyModulesFrozen": true,
+  "preparedPackage": {
+    "files": {
+      "functions.yaml": "33b628e90159e568bfbe355f887aaab4c237151e9d100e8ab9731afe87554f83",
+      "lib/contracts.js": "1dfa5ce6bbd0c6ea120b65af4aab9d7b1b694458552ef66d03ed7c48e4535e25",
+      "lib/notifications.js": "0424cfe48ccde844e0cd7a067e770a06beb3b770688835dfa670866401936233",
+      "lib/review-access-firebase.js": "370f7edb73dd8a7523363cc52389bdc5d8fd55675c9686f5e18ff510b8f6ee72",
+      "lib/review-access.js": "d488f4a7e0262ff951ca97bfc3c1f60f9db9e92e9398db7a32d9555931262b77",
+      "lib/transactional.js": "bda2fc850a204880ff0dd4a97f2bb07156f40bb3e70929d9fa34a22e2532cb8a",
+      "package-lock.json": "79bdd391cbd284cce6852be5ec5d550fa4c626d9392074b582464b5fc78a81c5",
+      "package.json": "843c9eee556c7ac6933481eb600503e6e37bd3156dd241e5597e1d9ae6e0926c"
+    },
+    "sha256OfSortedCompactJsonHashMap": "7642e5e45d0377d1060f3b6556faec84cbd1befdb22b9dbe08a08503f1615062"
+  },
+  "testResults": {
+    "red": {
+      "tests": 10,
+      "pass": 0,
+      "fail": 10,
+      "skipped": 0
+    },
+    "focused": {
+      "tests": 11,
+      "pass": 11,
+      "fail": 0,
+      "skipped": 0
+    },
+    "affectedEmulators": {
+      "tests": 72,
+      "pass": 72,
+      "fail": 0,
+      "skipped": 0
+    },
+    "fullBackend": {
+      "tests": 240,
+      "pass": 240,
+      "fail": 0,
+      "skipped": 0
+    }
+  },
+  "testProject": "demo-freed-review-access",
+  "earlierHarnessFailure": {
+    "tests": 72,
+    "passed": 69,
+    "failed": 3,
+    "reason": "Three existing core-data file reads ran from the temporary project root; corrected to isolated functions cwd, no source changes."
+  },
+  "broadSharedSourceGatesRunForThisTask": false,
+  "authenticatedProductionOrDeviceAppCheckProof": false,
+  "secretsOrCredentialValuesOmitted": true,
+  "testLogSha256": {
+    "review-access-red.log": "cfb3b3f6dea8bd0bd98ca64fcf7869b170d91e794c5a60fcd4b2e627d74779a1",
+    "review-access-green.log": "b8995c1a2fb88eb7896761596e2d6a2daf2fc958e57866caff667c3cc4d2ff61",
+    "review-access-affected-emulator.log": "715cb9a62f5b831dfec3a3ff2fab275bea0b12f8654d65bc5199630abf7d26ac",
+    "review-access-full-backend.log": "7b4da166788b5f91566385fa90107824c68c1c01f038e9755563ba4094e0c95f",
+    "review-access-first-emulator-wrong-cwd.log": "598282fad2ec8110ae0ee32af45e733752596e0c75590326ecb6f9cc48e1ca89"
+  },
+  "independentRootReviewAccepted": true,
+  "privateAdminScriptIndependentTechnicalReviewAccepted": true,
+  "actualHumanCredentialProvisionOrSharingApproval": false
+}

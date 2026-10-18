@@ -1,0 +1,6 @@
+{
+  "hostAdvertisesHypervisorSupport": true,
+  "sysctl": "kern.hv_support: 1",
+  "observedError": "HVF error: HV_DENIED",
+  "rootCauseScope": "Host process hypervisor access was refused; exact host-policy cause not established. No system binaries/entitlements were modified."
+}

@@ -1,0 +1,27 @@
+appId: app.freed.recovery
+name: protection-layers
+tags:
+  - smoke
+  - read-only
+---
+# Unexecuted smoke scenario. Requires an isolated disposable English/LTR fixture.
+# Full scenario and physical-device receipts remain separate obligations.
+- openLink: "freed:///shield/dns"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-shield-dns"
+    timeout: 15000
+- assertVisible: "Protection health"
+- assertVisible: "Review website protection"
+- scrollUntilVisible:
+    element: { id: "dns-status" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: { id: "dns-status" }
+- takeScreenshot: "independent-dns-status"
+# Per-layer grant/deny/revoke and measured enforcement require native receipts.

@@ -1,0 +1,71 @@
+{
+  "flows": [
+    {
+      "flow": "Onboarding",
+      "slug": "onboarding",
+      "screens": 19671,
+      "apps": 1202
+    },
+    {
+      "flow": "Welcome Screen",
+      "slug": "welcome-screen",
+      "screens": 3614,
+      "apps": 1285
+    },
+    {
+      "flow": "Paywall",
+      "slug": "paywall",
+      "screens": 2395,
+      "apps": 1256
+    },
+    {
+      "flow": "Settings",
+      "slug": "settings",
+      "screens": 1929,
+      "apps": 566
+    },
+    {
+      "flow": "Others",
+      "slug": "others",
+      "screens": 1485,
+      "apps": 717
+    },
+    {
+      "flow": "Profile",
+      "slug": "profile",
+      "screens": 584,
+      "apps": 184
+    },
+    {
+      "flow": "Home",
+      "slug": "home",
+      "screens": 371,
+      "apps": 126
+    },
+    {
+      "flow": "Explore",
+      "slug": "explore",
+      "screens": 261,
+      "apps": 66
+    },
+    {
+      "flow": "Food Logging",
+      "slug": "food-logging",
+      "screens": 245,
+      "apps": 32
+    },
+    {
+      "flow": "Workout Session",
+      "slug": "workout-session",
+      "screens": 230,
+      "apps": 31
+    }
+  ],
+  "total": 3937,
+  "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2Zsb3dzIiwicSI6IjMwMzg2OGY5MjcyZDk2NDZiNTZlMjkxNSIsIm8iOjEwLCJodyI6MjAsImV4cCI6MTc5MDM4NTM5OX0.hQS1cjpNZiWL0mx0oKHZAhSWWdU",
+  "hint": "Use get_flow_apps to see which apps contain a flow, then list_app_screens with flow=\u2026 to study it.",
+  "credits": {
+    "spent": 1,
+    "remaining_this_month": 1003
+  }
+}

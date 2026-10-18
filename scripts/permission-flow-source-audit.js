@@ -6,13 +6,19 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { assertSafeReportPath } = require("./lib/report-path-safety");
 
+const { inspectIosPickerInstallation, inspectModeAwareReadiness, inspectSetupConfigurationCheck, inspectPermissionActivation, inspectUsageAccessRationale } = require('./lib/cleanup-source-contract');
+
 const SCHEMA_VERSION = "freed-permission-flow-source-audit-v1";
 const DEFAULT_REPORT = "docs/validation/artifacts/permission-flow-current/permission-flow-source-audit.json";
 
 const SOURCE_PATHS = {
   permissionPlan: "src/lib/protection-permissions.ts",
   readiness: "src/lib/protection-readiness.ts",
+  appGuard: "src/lib/app-guard.ts",
+  setupCompletion: "src/lib/protection-setup-completion.ts",
   appSurface: "src/features/freed-app.tsx",
+  setupView: "src/components/ProtectionSetupView.tsx",
+  setupPresenter: "src/lib/protection-setup-presenter.ts",
   recoveryNotificationPermission: "src/lib/recovery-notification-permission.ts",
   nativeBridge: "modules/freed-protection/src/index.ts",
   androidNative: "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
@@ -216,26 +222,28 @@ function buildReport() {
   pushCheck(
     checks,
     "android-readiness-native-status-gate",
-    includesAll(files.readiness, [
+    inspectModeAwareReadiness(files.readiness, files.appGuard) && includesAll(files.readiness, [
       "protectionCapability.localVpnFallback",
       "protectionStatus?.dnsGuardRuntimeReady === true",
       "protectionStatus?.appInterventionAuthorized",
       "protectionStatus?.usageStatsAuthorized",
       "nativeConfiguredAppCount > 0",
-      "activationReady: permissionProgress.ready && adultFilterActive && appInterventionReady",
+      "permissionProgress.ready",
+      "!resetDisabled",
     ]),
     "Android activation readiness depends on DNS Guard runtime, Accessibility, Usage Access, native selected packages, and permission progress.",
   );
   pushCheck(
     checks,
     "ios-readiness-native-status-gate",
-    includesAll(files.readiness, [
+    inspectModeAwareReadiness(files.readiness, files.appGuard) && includesAll(files.readiness, [
       "protectionCapability.managedSettings",
-      "protectionCapability.screenTime",
+      "protectionCapability?.screenTime",
       "protectionStatus?.authorized",
       "selectedIosTargets > 0",
       "protectionStatus?.appLimitScheduled",
-      "activationReady: permissionProgress.ready && adultFilterActive && appInterventionReady",
+      "permissionProgress.ready",
+      "!resetDisabled",
     ]),
     "iOS activation readiness depends on Screen Time authorization, ManagedSettings adult filter, selected targets, DeviceActivity scheduling, and permission progress.",
   );
@@ -246,15 +254,15 @@ function buildReport() {
       "firstRequiredStep",
       "targetStep = firstRequiredStep",
       "Continuing required setup in order: ${targetStep.title}.",
-      "orderedSetupActionLabel",
-      "return `Continue: ${nextRequiredStep.title}`",
+      "onContinue={handleAndroidWizardPrimary}",
+      "runStepAction(nextRequiredStep)",
     ]),
-    "Setup UI redirects out-of-order taps to the first missing required step and labels buttons with the next required row.",
+    "The shared setup action reaches the controller, which redirects out-of-order requests to the first missing required step.",
   );
   pushCheck(
     checks,
     "ui-refreshes-and-auto-advances-on-return",
-    includesAll(files.appSurface, [
+    inspectSetupConfigurationCheck(files.appSurface) && includesAll(files.appSurface, [
       'AppState.addEventListener("change"',
       "void onRefresh()",
       "setupAutoAdvanceRef",
@@ -264,27 +272,34 @@ function buildReport() {
       "is still not complete. Finish the opened setup step and return to FREED; setup will continue automatically.",
       "can be finished later. Continuing setup:",
       "runStepAction(nextRequiredStep)",
-      "All required setup rows are ready. Running the activation test now.",
+      "All required setup rows are ready. Running the local configuration check now.",
     ]),
     "Setup refreshes native status on app return, waits for unfinished required OS settings rows, continues after optional Android settings routes, then auto-advances or runs Test Protection.",
   );
   pushCheck(
     checks,
-    "android-one-step-setup-wizard",
+    "shared-one-step-setup-wizard",
     includesAll(files.appSurface, [
       "setupDetailsExpanded",
-      "androidOneStepSetup",
-      "if (androidOneStepSetup)",
-      "androidWizardStep",
-      "getAndroidSetupStepSummary",
-      "getAndroidSetupStepActionLabel",
-      "One step at a time. Android opens the right screen",
-      "Advanced details",
-      "FREED cannot turn Android permissions on silently",
-      "permissionPlan.map((step) => {",
+      "presentProtectionSetup({",
+      "<ProtectionSetupView",
+      "presentation={setupPresentation}",
+      "steps={permissionPlan}",
+      "onContinue={handleAndroidWizardPrimary}",
+      "showDetails={setupDetailsExpanded}",
+    ]) && includesAll(files.setupView, [
+      "presentation.action",
+      "onPress={onContinue}",
+      "{showDetails ? <View",
+      "steps.filter(step => step.required)",
+      'accessibilityRole="progressbar"',
+    ]) && includesAll(files.setupPresenter, [
+      'context.platform === "ios"',
+      '"ios-screen-time"',
+      '"android-dns-guard"',
     ]),
-    "Android setup defaults to a one-step wizard with one primary action, short copy, progress, and advanced checklist/details hidden behind an explicit affordance.",
-    "Keep Android post-paywall setup focused on the next missing required step; do not restore the full checklist as the default path.",
+    "iOS and Android share a current-step view with one primary action, progress, and required checklist/details disclosed through Help.",
+    "Keep both platforms focused on the next missing required step and retain the controller's native readiness gate.",
   );
   pushCheck(
     checks,
@@ -295,11 +310,11 @@ function buildReport() {
       "prepareSetupAutoAdvance(targetStep);",
       "runAction(\"apps\", presentFamilyActivityPicker)",
     ]) &&
-      includesAll(files.iosNative, [
+      inspectIosPickerInstallation(files.iosNative) && includesAll(files.iosNative, [
         'AsyncFunction("presentFamilyActivityPicker") { () async -> [String: Any] in',
         "withCheckedContinuation",
         "finishPicker(message:",
-        "Screen Time targets saved and selected app limits scheduled.",
+        "Screen Time targets saved and the selected app guard installed.",
         "No Screen Time targets were selected.",
       ]),
     "iOS Screen Time authorization and picker flows resolve in-app before setup auto-advances instead of waiting for an external AppState return.",
@@ -319,7 +334,7 @@ function buildReport() {
   pushCheck(
     checks,
     "activation-test-blocks-activation-save",
-    includesAll(files.appSurface, [
+    inspectPermissionActivation(files.appSurface, files.setupCompletion) && includesAll(files.appSurface, [
       "buildProtectionActivationSignature",
       "statusSignature",
       "activationTestMatchesCurrentStatus",
@@ -328,9 +343,12 @@ function buildReport() {
       "freshReadiness.activationReady",
       "nativeDiagnostics.nativeChecksPassed",
       "activationTest?.adultBlocked &&",
+      "activationTest.normalAllowed &&",
+      "activationTest.nativeReady &&",
+      "activationReady &&",
       "activationTestMatchesCurrentStatus",
       "const activationComplete = activationReady && activationTestPassed",
-      "Protection status changed since the last activation test. Run Test Protection again before activation can finish.",
+      "Protection status changed since the last configuration check. Run the configuration check again before activation can finish.",
       "statusSignature: testedActivationSignature",
       "Finish required protection setup before entering FREED on this device.",
     ]),
@@ -341,8 +359,9 @@ function buildReport() {
     "android-native-settings-and-consent-routes",
     includesAll(files.androidNative, [
       "VpnService.prepare(context)",
-      "context.startActivity(prepareIntent)",
-      "ACTION_ACCESSIBILITY_DETAILS_SETTINGS",
+      "startActivityForResult(prepareIntent, VPN_CONSENT_REQUEST_CODE)",
+      "activity.startActivity(prepareIntent)",
+      "context.startActivity(taskIntent)",
       "Settings.ACTION_APP_NOTIFICATION_SETTINGS",
       "Settings.ACTION_ACCESSIBILITY_SETTINGS",
       "usageAccessSettingsIntent(context)",
@@ -350,14 +369,15 @@ function buildReport() {
       "Settings.EXTRA_APP_PACKAGE",
       "Intent.EXTRA_PACKAGE_NAME",
       "Uri.parse(\"package:${context.packageName}\")",
-      "usageAccessConfigIntent(context)",
+      "Settings.ACTION_VPN_SETTINGS",
       "ACTION_PRIVATE_DNS_SETTINGS",
       "Settings.ACTION_APPLICATION_DETAILS_SETTINGS",
       "androidSettingsRoutes()",
       "androidSettingsRouteLabel",
       "androidSettingsRouteInstruction",
       "persistAndroidSettingsRoute",
-    ]),
+    ]) && !files.androidNative.includes("ACTION_ACCESSIBILITY_DETAILS_SETTINGS") &&
+      !files.androidNative.includes("usageAccessConfigIntent"),
     "Android native module opens exact/fallback OS surfaces for VPN consent, notification visibility, Accessibility, Usage Access, Private DNS, and app settings while recording the route plus a sanitized return instruction.",
   );
   pushCheck(
@@ -421,16 +441,15 @@ function buildReport() {
         "does not read screen contents",
         "raw usage events",
       ]) &&
-      includesAll(files.androidUsageAccessConfigActivity, [
+      inspectUsageAccessRationale(files.androidUsageAccessConfigActivity, files.androidStrings) && includesAll(files.androidUsageAccessConfigActivity, [
         "class FreedUsageAccessConfigActivity : Activity()",
-        "Usage Access is controlled by Android Settings",
+        "R.string.freed_usage_note",
         "freed://protection-setup?source=usage-access-config",
         "openFreedSetup()",
         "freed_settings_return_source",
       ]) &&
       includesAll(files.androidNative, [
-        "INTENT_CATEGORY_USAGE_ACCESS_CONFIG",
-        "usageAccessConfigIntent(context)",
+        "usageAccessConfigActivityName(context)",
         "FreedUsageAccessConfigActivity::class.java",
         "androidUsageAccessConfigActivity",
         "androidUsageAccessReason",
@@ -452,7 +471,7 @@ function buildReport() {
       'setScreen("protectionSetup")',
       "consumeFreedLink",
     ]) &&
-      includesAll(files.androidUsageAccessConfigActivity, [
+      inspectUsageAccessRationale(files.androidUsageAccessConfigActivity, files.androidStrings) && includesAll(files.androidUsageAccessConfigActivity, [
         "Intent.ACTION_VIEW",
         "freed://protection-setup?source=usage-access-config",
         "setPackage(packageName)",
@@ -525,11 +544,13 @@ function buildReport() {
     "ios-safari-disabled-settings-route",
     includesAll(files.appSurface, [
       'targetStep.id === "ios-safari-content-blocker"',
-      "protectionStatus?.safariContentBlockerEnabled === false",
-      "Opening iOS Settings so you can enable the extension",
-      "runAction(\"settings\", openProtectionSettings)",
-    ]),
-    "When Safari rules exist but the extension is disabled, setup opens iOS Settings instead of pretending sync is enough.",
+      'safariSetupAction(protectionStatus?.safariContentBlockerEnabled) === "settings"',
+      "return openSafariExtensionSettings()",
+      "prepareSetupAutoAdvance(targetStep, { waitingForAppReturn: true })",
+    ]) && includesAll(files.setupPresenter, [
+      'return enabled === true ? "sync" : "settings"',
+    ]) && files.nativeBridge.includes("openSafariExtensionSettings"),
+    "Disabled or unknown Safari extension state opens Safari extension settings and waits for confirmed readiness after return; only an enabled extension uses feed sync.",
   );
   pushCheck(
     checks,

@@ -1,0 +1,96 @@
+{
+  "completedAt": "2026-10-05T00:58:05.876096+00:00",
+  "scope": "Cloudflare Families IPv4 plaintext defaults and preserved ordinary Cloudflare DNS interception routes",
+  "sourceBeforeSha256": "d4a0ff8ef998e34158e2b1b7f12f42c2f9fc1b81e6959b9e74e0e436d26d5cd8",
+  "sourceAfterSha256": "efa8bae67cf3ac4e45fd8c832a58733e919c1bf2082b82f085dd00ed0a8adfc3",
+  "files": [
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedVpnService.kt",
+      "sha256": "efa8bae67cf3ac4e45fd8c832a58733e919c1bf2082b82f085dd00ed0a8adfc3"
+    },
+    {
+      "path": "modules/freed-protection/tests/run-dns-upstream-routing-tests.js",
+      "sha256": "bc2ed70c7e6ef4f311db483dd833135b04bb169f0d6b3c6bfa0811e270d3f6b8"
+    },
+    {
+      "path": "tests/dns-upstream-routing-native.test.js",
+      "sha256": "77310fe9f4bec1a0d56e7116418f3e99b6bfa8e2f389240e4ff14ec16104d73e"
+    }
+  ],
+  "productionDeltaMatchesAuthorizedChangeExactly": true,
+  "red": {
+    "command": "node --test tests/dns-upstream-routing-native.test.js",
+    "exitCode": 1,
+    "log": "red.log",
+    "observedFailure": "Actual VPN advertised/raced ordinary Cloudflare defaults and omitted Families routes"
+  },
+  "verification": [
+    {
+      "label": "green",
+      "command": [
+        "node",
+        "--test",
+        "tests/dns-upstream-routing-native.test.js"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "dns-safety",
+      "command": [
+        "node",
+        "--test",
+        "tests/protection-dns-safety.test.js"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "dns-health",
+      "command": [
+        "node",
+        "--",
+        "scripts/run-ts-entry.js",
+        "tests/dns-guard-health.test.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "encrypted-dns",
+      "command": [
+        "node",
+        "modules/freed-protection/tests/run-encrypted-dns-tests.js"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "runtime-ownership",
+      "command": [
+        "node",
+        "--test",
+        "tests/dns-runtime-ownership-native.test.js"
+      ],
+      "exitCode": 0
+    },
+    {
+      "label": "requested-handoff",
+      "command": [
+        "node",
+        "modules/freed-protection/tests/run-dns-requested-handoff-tests.js"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "wholeAndroidCompile": {
+    "performed": false,
+    "reason": "No running Gradle runtime was present; checked-in JVM heap is 2048m rather than the requested existing 8GB runtime. No heavyweight parallel build started."
+  },
+  "networkResolverQueriesPerformed": false,
+  "deviceCoverageVerified": false,
+  "coverageLimitations": [
+    "Underlying-network fallback does not guarantee Cloudflare Families filtering; local feed/classifier remains active outside captive pause.",
+    "Captive sign-in still pauses local classification and surfaces paused coverage.",
+    "Encrypted opt-in still has no plaintext fallback; strict/opportunistic/unknown device Private DNS remains preserved.",
+    "The JVM harness replaces Android framework and network I/O boundaries and does not establish a VPN or query a resolver."
+  ],
+  "primaryResolverDocumentation": "https://developers.cloudflare.com/1.1.1.1/setup/#1111-for-families",
+  "otherSourceAndControllerFilesEdited": false
+}

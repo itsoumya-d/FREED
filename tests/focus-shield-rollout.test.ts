@@ -1,0 +1,16 @@
+import assert from "node:assert/strict";
+import { getFocusShieldCapabilityModel } from "../src/lib/protection-capabilities";
+import type { ProtectionCapability, ProtectionStatus } from "freed-protection";
+const capability: ProtectionCapability = { platform: "android", screenTime: false, managedSettings: false, accessibility: true, dnsFiltering: true, usageStats: true, localVpnFallback: true, notes: [] };
+const status: ProtectionStatus = { authorized: true, active: true, appInterventionAuthorized: true, mode: "accessibility" };
+assert.equal(getFocusShieldCapabilityModel(capability, status, []).available, false, "An older binary without explicit surface rollout evidence must remain release-gated.");
+const build = { ...capability, focusShieldSurfaceInspection: true };
+assert.equal(getFocusShieldCapabilityModel(build, { ...status, focusShieldSurfaceEnabled: false }, []).surfaceState, "release-gated");
+const allowed = { ...status, focusShieldSurfaceEnabled: true };
+assert.equal(getFocusShieldCapabilityModel(build, allowed, []).available, true);
+assert.equal(getFocusShieldCapabilityModel(build, allowed, []).surfaceState, "ready");
+assert.equal(getFocusShieldCapabilityModel(build, { ...allowed, appInterventionAuthorized: false }, []).surfaceState, "permission-required");
+const ios = getFocusShieldCapabilityModel({ ...capability, platform: "ios", screenTime: true, managedSettings: true, safariContentBlocker: true }, status, []);
+assert.equal(ios.surfaceState, "unsupported");
+assert.equal(ios.available, true, "Supported iOS Screen Time and Safari paths remain available.");
+console.log("Focus Shield rollout presentation tests passed");

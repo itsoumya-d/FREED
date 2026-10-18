@@ -1,0 +1,414 @@
+{
+  "schema": "freed-production-env-gap-checklist-v1",
+  "sanitized": true,
+  "secretValuesOmitted": true,
+  "generatedAt": "2026-10-03T12:58:09.662Z",
+  "sourcePreflightReport": "docs/validation/artifacts/2026-10-03-momentum/release-env-preflight.json",
+  "sourcePreflightReportSha256": "sha256-fe81950880364a45d5f3f02bbafc2f9af47d25a11996a5a8d69e4c12c14651a5",
+  "source": "process.env",
+  "preflight": {
+    "result": "fail",
+    "passCount": 8,
+    "failCount": 7,
+    "statusCounts": {
+      "fail": 7,
+      "external": 6
+    }
+  },
+  "result": "pending",
+  "failedProductionEnvGroups": [
+    {
+      "captureHelperCommand": "",
+      "category": "production-env",
+      "evidenceFile": "",
+      "failedPreflightChecks": [
+        {
+          "detail": "APPLE_STORE_ISSUER_ID is not configured in the server release environment; APPLE_STORE_KEY_ID is not configured in the server release environment; APPLE_STORE_PRIVATE_KEY is not configured in the server release environment; APPLE_STORE_APP_ID is not configured in the server release environment; APPLE_STORE_ROOT_CAS_BASE64 is not configured in the server release environment; GOOGLE_PLAY_SERVICE_ACCOUNT_JSON is not configured in the server release environment; OPENAI_API_KEY is not configured in the server release environment",
+          "id": "firebase-server-secret-configuration",
+          "next": "Configure server-only APPLE_STORE_ISSUER_ID, APPLE_STORE_KEY_ID, APPLE_STORE_PRIVATE_KEY, APPLE_STORE_APP_ID, APPLE_STORE_ROOT_CAS_BASE64, GOOGLE_PLAY_SERVICE_ACCOUNT_JSON, OPENAI_API_KEY; never expose their values in reports or EXPO_PUBLIC variables."
+        },
+        {
+          "detail": "Missing readable sanitized Firebase production runtime evidence (FREED_FIREBASE_RUNTIME_EVIDENCE)",
+          "id": "firebase-production-runtime-evidence",
+          "next": "Capture sanitized production-native Firebase runtime evidence with checksummed native app, callable inventory/smoke, secret-name inventory, and AppCheck proof artifacts; set FREED_FIREBASE_RUNTIME_EVIDENCE."
+        }
+      ],
+      "id": "production-backend-infrastructure",
+      "next": "Configure the selected Firebase native backend and server secret names, then capture fresh production-native callable, Secrets, and AppCheck evidence. Files alone do not prove deployment.",
+      "requiredEnv": [
+        "EXPO_PUBLIC_BACKEND_PROVIDER=firebase",
+        "EXPO_PUBLIC_FIREBASE_ENV=production",
+        "APPLE_STORE_ISSUER_ID",
+        "APPLE_STORE_KEY_ID",
+        "APPLE_STORE_PRIVATE_KEY",
+        "APPLE_STORE_APP_ID",
+        "APPLE_STORE_ROOT_CAS_BASE64",
+        "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON",
+        "OPENAI_API_KEY"
+      ],
+      "requiredReports": [
+        "docs/validation/artifacts/2026-10-03-momentum/release-env-preflight-report.json"
+      ],
+      "status": "fail"
+    },
+    {
+      "captureHelperCommand": "",
+      "category": "production-env",
+      "evidenceFile": "",
+      "failedPreflightChecks": [
+        {
+          "detail": "APPLE_STORE_ISSUER_ID is not configured in the server release environment; APPLE_STORE_KEY_ID is not configured in the server release environment; APPLE_STORE_PRIVATE_KEY is not configured in the server release environment; APPLE_STORE_APP_ID is not configured in the server release environment; APPLE_STORE_ROOT_CAS_BASE64 is not configured in the server release environment; GOOGLE_PLAY_SERVICE_ACCOUNT_JSON is not configured in the server release environment; OPENAI_API_KEY is not configured in the server release environment",
+          "id": "firebase-server-secret-configuration",
+          "next": "Configure server-only APPLE_STORE_ISSUER_ID, APPLE_STORE_KEY_ID, APPLE_STORE_PRIVATE_KEY, APPLE_STORE_APP_ID, APPLE_STORE_ROOT_CAS_BASE64, GOOGLE_PLAY_SERVICE_ACCOUNT_JSON, OPENAI_API_KEY; never expose their values in reports or EXPO_PUBLIC variables."
+        },
+        {
+          "detail": "Missing readable sanitized Firebase production runtime evidence (FREED_FIREBASE_RUNTIME_EVIDENCE)",
+          "id": "firebase-production-runtime-evidence",
+          "next": "Capture sanitized production-native Firebase runtime evidence with checksummed native app, callable inventory/smoke, secret-name inventory, and AppCheck proof artifacts; set FREED_FIREBASE_RUNTIME_EVIDENCE."
+        }
+      ],
+      "id": "production-analytics-ingestion",
+      "next": "Configure the selected Firebase native backend and server secret names, then capture fresh production-native callable, Secrets, and AppCheck evidence. Files alone do not prove deployment.",
+      "requiredEnv": [
+        "EXPO_PUBLIC_BACKEND_PROVIDER=firebase",
+        "EXPO_PUBLIC_FIREBASE_ENV=production",
+        "APPLE_STORE_ISSUER_ID",
+        "APPLE_STORE_KEY_ID",
+        "APPLE_STORE_PRIVATE_KEY",
+        "APPLE_STORE_APP_ID",
+        "APPLE_STORE_ROOT_CAS_BASE64",
+        "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON",
+        "OPENAI_API_KEY"
+      ],
+      "requiredReports": [
+        "docs/validation/artifacts/2026-10-03-momentum/release-env-preflight-report.json"
+      ],
+      "status": "fail"
+    },
+    {
+      "captureHelperCommand": "",
+      "category": "production-env",
+      "evidenceFile": "",
+      "failedPreflightChecks": [
+        {
+          "detail": "APPLE_STORE_ISSUER_ID is not configured in the server release environment; APPLE_STORE_KEY_ID is not configured in the server release environment; APPLE_STORE_PRIVATE_KEY is not configured in the server release environment; APPLE_STORE_APP_ID is not configured in the server release environment; APPLE_STORE_ROOT_CAS_BASE64 is not configured in the server release environment; GOOGLE_PLAY_SERVICE_ACCOUNT_JSON is not configured in the server release environment; OPENAI_API_KEY is not configured in the server release environment",
+          "id": "firebase-server-secret-configuration",
+          "next": "Configure server-only APPLE_STORE_ISSUER_ID, APPLE_STORE_KEY_ID, APPLE_STORE_PRIVATE_KEY, APPLE_STORE_APP_ID, APPLE_STORE_ROOT_CAS_BASE64, GOOGLE_PLAY_SERVICE_ACCOUNT_JSON, OPENAI_API_KEY; never expose their values in reports or EXPO_PUBLIC variables."
+        },
+        {
+          "detail": "Missing readable sanitized Firebase production runtime evidence (FREED_FIREBASE_RUNTIME_EVIDENCE)",
+          "id": "firebase-production-runtime-evidence",
+          "next": "Capture sanitized production-native Firebase runtime evidence with checksummed native app, callable inventory/smoke, secret-name inventory, and AppCheck proof artifacts; set FREED_FIREBASE_RUNTIME_EVIDENCE."
+        }
+      ],
+      "id": "production-notification-backend",
+      "next": "Configure the selected Firebase native backend and server secret names, then capture fresh production-native callable, Secrets, and AppCheck evidence. Files alone do not prove deployment.",
+      "requiredEnv": [
+        "EXPO_PUBLIC_BACKEND_PROVIDER=firebase",
+        "EXPO_PUBLIC_FIREBASE_ENV=production",
+        "APPLE_STORE_ISSUER_ID",
+        "APPLE_STORE_KEY_ID",
+        "APPLE_STORE_PRIVATE_KEY",
+        "APPLE_STORE_APP_ID",
+        "APPLE_STORE_ROOT_CAS_BASE64",
+        "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON",
+        "OPENAI_API_KEY"
+      ],
+      "requiredReports": [
+        "docs/validation/artifacts/2026-10-03-momentum/release-env-preflight-report.json"
+      ],
+      "status": "fail"
+    },
+    {
+      "captureHelperCommand": "",
+      "category": "production-env",
+      "evidenceFile": "",
+      "failedPreflightChecks": [
+        {
+          "detail": "APPLE_STORE_ISSUER_ID is not configured in the server release environment; APPLE_STORE_KEY_ID is not configured in the server release environment; APPLE_STORE_PRIVATE_KEY is not configured in the server release environment; APPLE_STORE_APP_ID is not configured in the server release environment; APPLE_STORE_ROOT_CAS_BASE64 is not configured in the server release environment; GOOGLE_PLAY_SERVICE_ACCOUNT_JSON is not configured in the server release environment; OPENAI_API_KEY is not configured in the server release environment",
+          "id": "firebase-server-secret-configuration",
+          "next": "Configure server-only APPLE_STORE_ISSUER_ID, APPLE_STORE_KEY_ID, APPLE_STORE_PRIVATE_KEY, APPLE_STORE_APP_ID, APPLE_STORE_ROOT_CAS_BASE64, GOOGLE_PLAY_SERVICE_ACCOUNT_JSON, OPENAI_API_KEY; never expose their values in reports or EXPO_PUBLIC variables."
+        },
+        {
+          "detail": "Missing readable sanitized Firebase production runtime evidence (FREED_FIREBASE_RUNTIME_EVIDENCE)",
+          "id": "firebase-production-runtime-evidence",
+          "next": "Capture sanitized production-native Firebase runtime evidence with checksummed native app, callable inventory/smoke, secret-name inventory, and AppCheck proof artifacts; set FREED_FIREBASE_RUNTIME_EVIDENCE."
+        }
+      ],
+      "id": "production-adult-domain-feed",
+      "next": "Configure the selected Firebase native backend and server secret names, then capture fresh production-native callable, Secrets, and AppCheck evidence. Files alone do not prove deployment.",
+      "requiredEnv": [
+        "EXPO_PUBLIC_BACKEND_PROVIDER=firebase",
+        "EXPO_PUBLIC_FIREBASE_ENV=production",
+        "APPLE_STORE_ISSUER_ID",
+        "APPLE_STORE_KEY_ID",
+        "APPLE_STORE_PRIVATE_KEY",
+        "APPLE_STORE_APP_ID",
+        "APPLE_STORE_ROOT_CAS_BASE64",
+        "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON",
+        "OPENAI_API_KEY"
+      ],
+      "requiredReports": [
+        "docs/validation/artifacts/2026-10-03-momentum/release-env-preflight-report.json"
+      ],
+      "status": "fail"
+    },
+    {
+      "captureHelperCommand": "",
+      "category": "production-env",
+      "evidenceFile": "docs/validation/evidence/store-ad-sandbox.json",
+      "failedPreflightChecks": [
+        {
+          "detail": "EXPO_PUBLIC_MONETIZATION_MODE is not native.",
+          "id": "release-monetization-mode",
+          "next": "Set EXPO_PUBLIC_MONETIZATION_MODE=native for signed release verification."
+        },
+        {
+          "detail": "FREED_ANDROID_UPLOAD_STORE_FILE is not configured, FREED_ANDROID_UPLOAD_STORE_PASSWORD is not configured, FREED_ANDROID_UPLOAD_KEY_ALIAS is not configured, FREED_ANDROID_UPLOAD_KEY_PASSWORD is not configured",
+          "id": "android-release-signing",
+          "next": "Configure FREED_ANDROID_UPLOAD_STORE_FILE, FREED_ANDROID_UPLOAD_STORE_PASSWORD, FREED_ANDROID_UPLOAD_KEY_ALIAS, and FREED_ANDROID_UPLOAD_KEY_PASSWORD with secure production upload signing values."
+        },
+        {
+          "detail": "iOS and Android AdMob app IDs are checked for production format and non-sample publisher IDs.",
+          "id": "admob-app-ids",
+          "next": "Configure EXPO_PUBLIC_ADMOB_APP_ID_IOS and EXPO_PUBLIC_ADMOB_APP_ID_ANDROID with real ca-app-pub IDs."
+        },
+        {
+          "detail": "iOS and Android rewarded reset units are checked for production format and non-sample publisher IDs.",
+          "id": "admob-rewarded-units",
+          "next": "Configure real rewarded unit IDs for both platforms."
+        },
+        {
+          "detail": "EXPO_PUBLIC_ADMOB_USE_TEST_ADS is not explicitly false.",
+          "id": "admob-test-ads-disabled",
+          "next": "Set EXPO_PUBLIC_ADMOB_USE_TEST_ADS=false for production release verification."
+        },
+        {
+          "detail": "APPLE_STORE_ISSUER_ID is not configured in the server release environment; APPLE_STORE_KEY_ID is not configured in the server release environment; APPLE_STORE_PRIVATE_KEY is not configured in the server release environment; APPLE_STORE_APP_ID is not configured in the server release environment; APPLE_STORE_ROOT_CAS_BASE64 is not configured in the server release environment; GOOGLE_PLAY_SERVICE_ACCOUNT_JSON is not configured in the server release environment; OPENAI_API_KEY is not configured in the server release environment",
+          "id": "firebase-server-secret-configuration",
+          "next": "Configure server-only APPLE_STORE_ISSUER_ID, APPLE_STORE_KEY_ID, APPLE_STORE_PRIVATE_KEY, APPLE_STORE_APP_ID, APPLE_STORE_ROOT_CAS_BASE64, GOOGLE_PLAY_SERVICE_ACCOUNT_JSON, OPENAI_API_KEY; never expose their values in reports or EXPO_PUBLIC variables."
+        },
+        {
+          "detail": "Missing readable sanitized Firebase production runtime evidence (FREED_FIREBASE_RUNTIME_EVIDENCE)",
+          "id": "firebase-production-runtime-evidence",
+          "next": "Capture sanitized production-native Firebase runtime evidence with checksummed native app, callable inventory/smoke, secret-name inventory, and AppCheck proof artifacts; set FREED_FIREBASE_RUNTIME_EVIDENCE."
+        }
+      ],
+      "id": "production-monetization",
+      "next": "Configure the selected Firebase native backend and server secret names, then capture fresh production-native callable, Secrets, and AppCheck evidence. Files alone do not prove deployment.",
+      "requiredEnv": [
+        "EXPO_PUBLIC_BACKEND_PROVIDER=firebase",
+        "EXPO_PUBLIC_FIREBASE_ENV=production",
+        "APPLE_STORE_ISSUER_ID",
+        "APPLE_STORE_KEY_ID",
+        "APPLE_STORE_PRIVATE_KEY",
+        "APPLE_STORE_APP_ID",
+        "APPLE_STORE_ROOT_CAS_BASE64",
+        "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON",
+        "OPENAI_API_KEY"
+      ],
+      "requiredReports": [
+        "docs/validation/artifacts/2026-10-03-momentum/release-env-preflight-report.json"
+      ],
+      "status": "fail"
+    },
+    {
+      "captureHelperCommand": "",
+      "category": "production-env",
+      "evidenceFile": "",
+      "failedPreflightChecks": [
+        {
+          "detail": "FREED_ANDROID_UPLOAD_STORE_FILE is not configured, FREED_ANDROID_UPLOAD_STORE_PASSWORD is not configured, FREED_ANDROID_UPLOAD_KEY_ALIAS is not configured, FREED_ANDROID_UPLOAD_KEY_PASSWORD is not configured",
+          "id": "android-release-signing",
+          "next": "Configure FREED_ANDROID_UPLOAD_STORE_FILE, FREED_ANDROID_UPLOAD_STORE_PASSWORD, FREED_ANDROID_UPLOAD_KEY_ALIAS, and FREED_ANDROID_UPLOAD_KEY_PASSWORD with secure production upload signing values."
+        }
+      ],
+      "id": "production-android-signing",
+      "next": "Run npm run setup:android-upload-keystore -- --generate-passwords or configure existing secure Android upload signing credentials, point the store-file env value at the secure CI/local keystore, then produce sanitized upload-signed APK and AAB build reports before Play upload.",
+      "requiredEnv": [
+        "FREED_ANDROID_UPLOAD_STORE_FILE",
+        "FREED_ANDROID_UPLOAD_STORE_PASSWORD",
+        "FREED_ANDROID_UPLOAD_KEY_ALIAS",
+        "FREED_ANDROID_UPLOAD_KEY_PASSWORD"
+      ],
+      "requiredReports": [
+        "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/2026-10-03-momentum/release-env-preflight-report.json",
+        "npm run build:android-apk:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/2026-10-03-momentum/android-apk-build-report.json",
+        "npm run build:android-aab:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/2026-10-03-momentum/android-aab-build-report.json"
+      ],
+      "status": "fail"
+    },
+    {
+      "captureHelperCommand": "",
+      "category": "production-env",
+      "evidenceFile": "docs/validation/evidence/ai-backend-smoke.json",
+      "failedPreflightChecks": [
+        {
+          "detail": "APPLE_STORE_ISSUER_ID is not configured in the server release environment; APPLE_STORE_KEY_ID is not configured in the server release environment; APPLE_STORE_PRIVATE_KEY is not configured in the server release environment; APPLE_STORE_APP_ID is not configured in the server release environment; APPLE_STORE_ROOT_CAS_BASE64 is not configured in the server release environment; GOOGLE_PLAY_SERVICE_ACCOUNT_JSON is not configured in the server release environment; OPENAI_API_KEY is not configured in the server release environment",
+          "id": "firebase-server-secret-configuration",
+          "next": "Configure server-only APPLE_STORE_ISSUER_ID, APPLE_STORE_KEY_ID, APPLE_STORE_PRIVATE_KEY, APPLE_STORE_APP_ID, APPLE_STORE_ROOT_CAS_BASE64, GOOGLE_PLAY_SERVICE_ACCOUNT_JSON, OPENAI_API_KEY; never expose their values in reports or EXPO_PUBLIC variables."
+        },
+        {
+          "detail": "Missing readable sanitized Firebase production runtime evidence (FREED_FIREBASE_RUNTIME_EVIDENCE)",
+          "id": "firebase-production-runtime-evidence",
+          "next": "Capture sanitized production-native Firebase runtime evidence with checksummed native app, callable inventory/smoke, secret-name inventory, and AppCheck proof artifacts; set FREED_FIREBASE_RUNTIME_EVIDENCE."
+        }
+      ],
+      "id": "production-ai-backend",
+      "next": "Configure the selected Firebase native backend and server secret names, then capture fresh production-native callable, Secrets, and AppCheck evidence. Files alone do not prove deployment.",
+      "requiredEnv": [
+        "EXPO_PUBLIC_BACKEND_PROVIDER=firebase",
+        "EXPO_PUBLIC_FIREBASE_ENV=production",
+        "APPLE_STORE_ISSUER_ID",
+        "APPLE_STORE_KEY_ID",
+        "APPLE_STORE_PRIVATE_KEY",
+        "APPLE_STORE_APP_ID",
+        "APPLE_STORE_ROOT_CAS_BASE64",
+        "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON",
+        "OPENAI_API_KEY"
+      ],
+      "requiredReports": [
+        "docs/validation/artifacts/2026-10-03-momentum/release-env-preflight-report.json"
+      ],
+      "status": "fail"
+    }
+  ],
+  "passedProductionEnvGroupIds": [],
+  "externalValidationGroups": [
+    {
+      "captureHelperCommand": "npm run evidence:ios-physical-device -- --device <udid-or-name> --adult-host <real-adult-host> --app <signed-freed-app-or-ipa> --short-form-url <youtube-shorts-url> --run-id 2026-10-03-momentum --output-dir docs/validation/artifacts/2026-10-03-momentum/ios-physical-device-capture",
+      "category": "physical-evidence",
+      "evidenceFile": "docs/validation/evidence/ios-physical-device.json",
+      "failedPreflightChecks": [],
+      "id": "ios-physical-device-validation",
+      "next": "Produce a sanitized signed iOS Release archive/IPA report, then capture entitlement-approved iOS hardware evidence for Screen Time, Safari Content Blocker, Safari Focus Shield, app shields, and challenge verification.",
+      "requiredEnv": [],
+      "requiredReports": [
+        "npm run build:ios-archive:release -- --report docs/validation/artifacts/2026-10-03-momentum/ios-release-archive-report.json"
+      ],
+      "status": "external"
+    },
+    {
+      "captureHelperCommand": "npm run evidence:android-real-browser -- --device <serial> --adult-url <real-adult-url> --permission-proof --native-status-proof --dns-guard-proof --run-id 2026-10-03-momentum --output-dir docs/validation/artifacts/2026-10-03-momentum/android-real-browser-capture",
+      "category": "physical-evidence",
+      "evidenceFile": "docs/validation/evidence/android-real-browser.json",
+      "failedPreflightChecks": [],
+      "id": "android-real-browser-validation",
+      "next": "Capture physical Android browser, DNS Guard, Accessibility, app shield, short-form, unlock, and Play policy evidence.",
+      "requiredEnv": [],
+      "requiredReports": [],
+      "status": "external"
+    },
+    {
+      "captureHelperCommand": "npm run evidence:normal-browsing-corpus -- --run-id 2026-10-03-momentum --output-dir docs/validation/artifacts/2026-10-03-momentum/normal-browsing-corpus-capture",
+      "category": "physical-evidence",
+      "evidenceFile": "docs/validation/evidence/normal-browsing-corpus.json",
+      "failedPreflightChecks": [],
+      "id": "normal-browsing-corpus-validation",
+      "next": "Run the physical-browser normal browsing corpus and promote only after every allow/block matrix row passes.",
+      "requiredEnv": [],
+      "requiredReports": [],
+      "status": "external"
+    },
+    {
+      "captureHelperCommand": "npm run evidence:performance-profile -- --ios-device <udid-or-name> --android-device <serial> --android-background-cpu-proof --run-id 2026-10-03-momentum --output-dir docs/validation/artifacts/2026-10-03-momentum/performance-profile-capture",
+      "category": "physical-evidence",
+      "evidenceFile": "docs/validation/evidence/performance-profile.json",
+      "failedPreflightChecks": [],
+      "id": "performance-validation",
+      "next": "Capture battery, RAM, thermal, background CPU, DNS latency, network speed, and no-full-VPN/no-screenshot proof.",
+      "requiredEnv": [],
+      "requiredReports": [],
+      "status": "external"
+    },
+    {
+      "captureHelperCommand": "npm run evidence:store-ad-sandbox -- --release-env-file <production-env-file> --run-id 2026-10-03-momentum --output-dir docs/validation/artifacts/2026-10-03-momentum/store-ad-sandbox-capture",
+      "category": "deployed-evidence",
+      "evidenceFile": "docs/validation/evidence/store-ad-sandbox.json",
+      "failedPreflightChecks": [],
+      "id": "store-ad-sandbox-validation",
+      "next": "Capture monthly/yearly-only console product setup, paywall proof, App Store/Play Billing sandbox purchases, restore, rewarded ad completion, and premium no-ad behavior without raw receipts/tokens.",
+      "requiredEnv": [
+        "store/ad production env from production-monetization"
+      ],
+      "requiredReports": [
+        "docs/validation/artifacts/2026-10-03-momentum/release-env-preflight-report.json"
+      ],
+      "status": "external"
+    },
+    {
+      "captureHelperCommand": "npm run evidence:ai-backend-smoke -- --release-env-file <production-env-file> --run-id 2026-10-03-momentum --output-dir docs/validation/artifacts/2026-10-03-momentum/ai-backend-smoke-capture",
+      "category": "deployed-evidence",
+      "evidenceFile": "docs/validation/evidence/ai-backend-smoke.json",
+      "failedPreflightChecks": [],
+      "id": "ai-backend-smoke-validation",
+      "next": "Capture AI safety eval plus production-native Firebase CLARA/challenge capture reports without raw prompts, private notes, or provider output.",
+      "requiredEnv": [
+        "remote AI production env from production-ai-backend"
+      ],
+      "requiredReports": [
+        "docs/validation/artifacts/2026-10-03-momentum/release-env-preflight-report.json"
+      ],
+      "status": "external"
+    }
+  ],
+  "otherOpenGroups": [],
+  "launchPlatformEnvSetup": {
+    "id": "expo-eas-project-metadata",
+    "next": "Set EAS_PROJECT_ID or EXPO_PROJECT_ID from the linked Expo project, and optionally EXPO_OWNER, before EAS builds, submits, or legal web deploys.",
+    "requiredEnv": [
+      "EAS_PROJECT_ID",
+      "EXPO_PROJECT_ID",
+      "EXPO_OWNER"
+    ],
+    "skeletonLines": [
+      "# Expo/EAS project metadata for production builds, submits, and legal web deploys.",
+      "# EAS_PROJECT_ID and EXPO_PROJECT_ID are accepted aliases; set one real project ID.",
+      "EAS_PROJECT_ID=",
+      "EXPO_PROJECT_ID=",
+      "# Optional Expo account/organization owner.",
+      "EXPO_OWNER="
+    ]
+  },
+  "requiredEnv": [
+    "EAS_PROJECT_ID",
+    "EXPO_PROJECT_ID",
+    "EXPO_OWNER",
+    "EXPO_PUBLIC_BACKEND_PROVIDER=firebase",
+    "EXPO_PUBLIC_FIREBASE_ENV=production",
+    "APPLE_STORE_ISSUER_ID",
+    "APPLE_STORE_KEY_ID",
+    "APPLE_STORE_PRIVATE_KEY",
+    "APPLE_STORE_APP_ID",
+    "APPLE_STORE_ROOT_CAS_BASE64",
+    "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON",
+    "OPENAI_API_KEY",
+    "FREED_ANDROID_UPLOAD_STORE_FILE",
+    "FREED_ANDROID_UPLOAD_STORE_PASSWORD",
+    "FREED_ANDROID_UPLOAD_KEY_ALIAS",
+    "FREED_ANDROID_UPLOAD_KEY_PASSWORD"
+  ],
+  "requiredReports": [
+    "docs/validation/artifacts/2026-10-03-momentum/release-env-preflight-report.json",
+    "npm run preflight:release-env -- --env-file <production-env-file> --report docs/validation/artifacts/2026-10-03-momentum/release-env-preflight-report.json",
+    "npm run build:android-apk:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/2026-10-03-momentum/android-apk-build-report.json",
+    "npm run build:android-aab:upload-signed -- --env-file <production-env-file> --report docs/validation/artifacts/2026-10-03-momentum/android-aab-build-report.json",
+    "npm run build:ios-archive:release -- --report docs/validation/artifacts/2026-10-03-momentum/ios-release-archive-report.json"
+  ],
+  "captureHelperCommands": [
+    "npm run evidence:ios-physical-device -- --device <udid-or-name> --adult-host <real-adult-host> --app <signed-freed-app-or-ipa> --short-form-url <youtube-shorts-url> --run-id 2026-10-03-momentum --output-dir docs/validation/artifacts/2026-10-03-momentum/ios-physical-device-capture",
+    "npm run evidence:android-real-browser -- --device <serial> --adult-url <real-adult-url> --permission-proof --native-status-proof --dns-guard-proof --run-id 2026-10-03-momentum --output-dir docs/validation/artifacts/2026-10-03-momentum/android-real-browser-capture",
+    "npm run evidence:normal-browsing-corpus -- --run-id 2026-10-03-momentum --output-dir docs/validation/artifacts/2026-10-03-momentum/normal-browsing-corpus-capture",
+    "npm run evidence:performance-profile -- --ios-device <udid-or-name> --android-device <serial> --android-background-cpu-proof --run-id 2026-10-03-momentum --output-dir docs/validation/artifacts/2026-10-03-momentum/performance-profile-capture",
+    "npm run evidence:store-ad-sandbox -- --release-env-file <production-env-file> --run-id 2026-10-03-momentum --output-dir docs/validation/artifacts/2026-10-03-momentum/store-ad-sandbox-capture",
+    "npm run evidence:ai-backend-smoke -- --release-env-file <production-env-file> --run-id 2026-10-03-momentum --output-dir docs/validation/artifacts/2026-10-03-momentum/ai-backend-smoke-capture"
+  ],
+  "releaseBoundary": "This checklist is a configuration handoff only. It does not prove deployed services, physical-device behavior, sandbox purchases, or store approval.",
+  "secretBoundary": "Do not paste real secrets, purchase receipts, raw purchase tokens, App Store private keys, Play service accounts, Supabase service-role keys, Redis tokens, APNs/FCM credentials, maintenance secrets, or AI provider keys into docs/validation artifacts.",
+  "runId": "release-env-current",
+  "checklistArtifact": "docs/validation/artifacts/2026-10-03-momentum/server-gates/PRODUCTION_ENV_GAP_CHECKLIST.md",
+  "envSkeletonArtifact": "docs/validation/artifacts/2026-10-03-momentum/server-gates/PRODUCTION_ENV_MISSING_KEYS.env",
+  "jsonArtifact": "docs/validation/artifacts/2026-10-03-momentum/server-gates/production-env-gap-checklist.json",
+  "checklistSha256": "sha256-8605823bb738fc7348b7f50555cffdd9e3eb017db4277cea8a5025816c582896",
+  "envSkeletonSha256": "sha256-0cf486933d66c1cbb49872617e7877271e56a6acddc5a88e749b532277fb3736"
+}

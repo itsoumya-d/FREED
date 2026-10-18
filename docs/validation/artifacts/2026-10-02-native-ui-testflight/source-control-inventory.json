@@ -1,0 +1,2875 @@
+{
+  "schemaVersion": "freed-source-control-inventory-v1",
+  "generatedAt": "2026-10-02T06:56:23.892937+00:00",
+  "sanitized": true,
+  "scope": "Static labels only; dynamic/data-driven options recorded in feature-ledger.json; no runtime proof",
+  "sourceSha256": {
+    "src/features/freed-app.tsx": "407857bdfa56e8bcaae7fd58a9ce234d80b418c56fb2241d8a7ac7f1b67673f0",
+    "src/components/PremiumOffer.tsx": "a45d94fbfb32b083f1e89850b75ceaa220a0cc0e00b29567723c164f8fbc7599",
+    "src/components/ProtectionSetupView.tsx": "b53150455715a08907c66474deae61f76b7eb20ac602b8e29a4b1ddb6eef51df",
+    "src/features/use-freed-navigation.ts": "c5a50bbdd318522bf446d508c5d0661753578bd49099e3f66e53d3e0dbefaa14",
+    "src/design-system/navigation.ts": "a5e028ce75ec8cf2cee5ce7c4bbcb475d68f640beb3ceecc909e5765156f85af",
+    "store/app-store/metadata.md": "7ba8716ba9d2a4dd6854b4b092a0957d4b04f85b3da116277bde9c2153b0416e",
+    "store/play-store/metadata.md": "bf59e59846eb52cd0af4a8adfcc804cfc7020c7e0c692b7d28bb40e26be88aa9",
+    "src/components/AccountAccessScreen.tsx": "4aceae990dd3bd42a6b0df5e0058acffa12bb3190e358cd71106b2035bff5e3a",
+    "src/components/UrgeSupportButton.tsx": "16081fc9e2b5cc5dab35d9cc7ca54895c4b5f4b1cde724e38c9dac4d0e5e9758"
+  },
+  "controls": [
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 889,
+      "component": "PillButton",
+      "screenComponent": "EmptyState",
+      "labelSource": "{actionLabel} onPress={onAction}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 1055,
+      "component": "PillButton",
+      "screenComponent": "WelcomeScreen",
+      "labelSource": "\"Start My Recovery\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 1056,
+      "component": "PillButton",
+      "screenComponent": "WelcomeScreen",
+      "labelSource": "\"Skip Assessment\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 1333,
+      "component": "PillButton",
+      "screenComponent": "PlanCalculationScreen",
+      "labelSource": "\"Protect My Apps & Proceed\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 1474,
+      "component": "PillButton",
+      "screenComponent": "AppSelectionScreen",
+      "labelSource": "{selectedCount > 0 ? `Continue with ${selectedCount} App${selectedCount === 1 ? \"\" : \"s\"}` : \"Select At Least 1 App\"}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 1813,
+      "component": "PillButton",
+      "screenComponent": "FocusShieldSection",
+      "labelSource": "{enabled ? \"Preset On\" : \"Enable\"}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 1821,
+      "component": "PillButton",
+      "screenComponent": "FocusShieldSection",
+      "labelSource": "\"Calibrate\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 1993,
+      "component": "PillButton",
+      "screenComponent": "AccountScreen",
+      "labelSource": "\"Skip for now\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 2850,
+      "component": "PillButton",
+      "screenComponent": "DNS_GUARD_AUTO_START_MIN_GAP_MS",
+      "labelSource": "\"Not now\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 2853,
+      "component": "PillButton",
+      "screenComponent": "DNS_GUARD_AUTO_START_MIN_GAP_MS",
+      "labelSource": "\"I understand\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 2909,
+      "component": "PillButton",
+      "screenComponent": "DNS_GUARD_AUTO_START_MIN_GAP_MS",
+      "labelSource": "\"Keep trying\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 2912,
+      "component": "PillButton",
+      "screenComponent": "DNS_GUARD_AUTO_START_MIN_GAP_MS",
+      "labelSource": "\"Continue anyway\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 3082,
+      "component": "PillButton",
+      "screenComponent": "AlwaysAllowSection",
+      "labelSource": "\"Add\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 3453,
+      "component": "PillButton",
+      "screenComponent": "HomeScreen",
+      "labelSource": "{todayCheckIn ? \"Explore recovery tools\" : \"Start today's check-in\"} onPress={todayCheckIn ? onOpenLibrary : onCheckIn}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 3623,
+      "component": "PillButton",
+      "screenComponent": "HomeScreen",
+      "labelSource": "\"Open Recovery Tools\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 3628,
+      "component": "PillButton",
+      "screenComponent": "HomeScreen",
+      "labelSource": "\"Simulate adult attempt (QA)\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 3748,
+      "component": "Metric",
+      "screenComponent": "AnalyticsScreen",
+      "labelSource": "\"Current\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 3749,
+      "component": "Metric",
+      "screenComponent": "AnalyticsScreen",
+      "labelSource": "\"Best\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 3750,
+      "component": "Metric",
+      "screenComponent": "AnalyticsScreen",
+      "labelSource": "\"Attempts\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4020,
+      "component": "PillButton",
+      "screenComponent": "AnalyticsScreen",
+      "labelSource": "{analyticsSharing.enabled ? \"Turn Off\" : \"Enable Sharing\"}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4028,
+      "component": "PillButton",
+      "screenComponent": "AnalyticsScreen",
+      "labelSource": "{analyticsSendBusy ? \"Sending...\" : \"Send Snapshot\"}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4434,
+      "component": "PillButton",
+      "screenComponent": "DnsGuardHealthSection",
+      "labelSource": "{busy === \"vpn\" ? \"Opening\u2026\" : \"Open VPN settings\"} variant=\"ghost\" onPress={openVpnSettingsSafely}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4439,
+      "component": "PillButton",
+      "screenComponent": "DnsGuardHealthSection",
+      "labelSource": "{busy === \"dns\" ? \"Opening\u2026\" : \"Open Private DNS settings\"} variant=\"ghost\" onPress={openPrivateDnsSettingsSafely}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4500,
+      "component": "PillButton",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Open protection setup\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4516,
+      "component": "PillButton",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Simulate Adult Intercept\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4585,
+      "component": "PillButton",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Check\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4588,
+      "component": "PillButton",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Visit\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4606,
+      "component": "SettingStepper",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Daily limit\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4615,
+      "component": "SettingStepper",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Unlock\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4626,
+      "component": "SettingStepper",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Shorts guard\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4643,
+      "component": "SettingSegment",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Intensity\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4653,
+      "component": "SettingSegment",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Outdoor\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4663,
+      "component": "SettingSegment",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Exercise\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4673,
+      "component": "SettingSegment",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Social\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4693,
+      "component": "SettingToggle",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "{option.label}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4708,
+      "component": "SettingToggle",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Emergency strict mode\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4709,
+      "component": "SettingToggle",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "{`Sleep mode ${disciplineSettings.sleepStartTime}-${disciplineSettings.sleepEndTime}`} value={disciplineSettings.sleepModeEnabled} onChange={(sleepModeEnabled) => onDisciplineChange({ sleepModeEnabled })}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4711,
+      "component": "SettingTimeInput",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Sleep start\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4712,
+      "component": "SettingTimeInput",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Wake\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4714,
+      "component": "SettingToggle",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Deep focus mode\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4715,
+      "component": "SettingToggle",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "{`Work hours ${disciplineSettings.workStartTime}-${disciplineSettings.workEndTime}`} value={disciplineSettings.workHoursEnabled} onChange={(workHoursEnabled) => onDisciplineChange({ workHoursEnabled })}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4717,
+      "component": "SettingTimeInput",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Work start\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4718,
+      "component": "SettingTimeInput",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Work end\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4720,
+      "component": "SettingToggle",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Weekend adventure mode\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4726,
+      "component": "PillButton",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Google\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4729,
+      "component": "PillButton",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"YouTube\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4732,
+      "component": "PillButton",
+      "screenComponent": "ShieldScreen",
+      "labelSource": "\"Adult Search Test\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4788,
+      "component": "BackButton",
+      "screenComponent": "ArticleReaderScreen",
+      "labelSource": "\"Back to Library\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4862,
+      "component": "BackButton",
+      "screenComponent": "LibraryScreen",
+      "labelSource": "\"Back to Today\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 4984,
+      "component": "PillButton",
+      "screenComponent": "CustomChallengeScreen",
+      "labelSource": "\"Upgrade\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 5028,
+      "component": "SettingSegment",
+      "screenComponent": "CustomChallengeScreen",
+      "labelSource": "\"Type\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 5041,
+      "component": "SettingSegment",
+      "screenComponent": "CustomChallengeScreen",
+      "labelSource": "\"Intensity\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 5052,
+      "component": "SettingStepper",
+      "screenComponent": "CustomChallengeScreen",
+      "labelSource": "\"Minutes\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 5102,
+      "component": "PillButton",
+      "screenComponent": "CustomChallengeScreen",
+      "labelSource": "\"Save and Start\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 5525,
+      "component": "PillButton",
+      "screenComponent": "RecoveryBackupCard",
+      "labelSource": "{recoveryState.automaticBackupEnabled ? \"Turn off automatic backup\" : \"Enable automatic backup\"}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 5794,
+      "component": "PillButton",
+      "screenComponent": "PrivacySupportCard",
+      "labelSource": "\"Privacy Policy\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 5802,
+      "component": "PillButton",
+      "screenComponent": "PrivacySupportCard",
+      "labelSource": "\"Support\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 5812,
+      "component": "PillButton",
+      "screenComponent": "PrivacySupportCard",
+      "labelSource": "{confirmAccountDelete ? \"Confirm Account & Data Deletion\" : \"Delete Account & Data\"}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 5823,
+      "component": "PillButton",
+      "screenComponent": "PrivacySupportCard",
+      "labelSource": "{confirmDelete ? \"Confirm Delete\" : \"Delete Local Data\"}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 5833,
+      "component": "PillButton",
+      "screenComponent": "PrivacySupportCard",
+      "labelSource": "\"Account Deletion Help\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 6432,
+      "component": "Metric",
+      "screenComponent": "LegacyProfileScreen",
+      "labelSource": "\"Protected\"",
+      "reachability": "legacy/source-only",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 6433,
+      "component": "Metric",
+      "screenComponent": "LegacyProfileScreen",
+      "labelSource": "\"Best\"",
+      "reachability": "legacy/source-only",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 6468,
+      "component": "PillButton",
+      "screenComponent": "LegacyProfileScreen",
+      "labelSource": "\"Log Slip Safely\"",
+      "reachability": "legacy/source-only",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 6718,
+      "component": "PillButton",
+      "screenComponent": "LegacyProfileScreen",
+      "labelSource": "{privateDnsStrict ? \"Review Private DNS\" : \"Open Network DNS\"}",
+      "reachability": "legacy/source-only",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 6728,
+      "component": "PillButton",
+      "screenComponent": "LegacyProfileScreen",
+      "labelSource": "\"Authorize\"",
+      "reachability": "legacy/source-only",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 6738,
+      "component": "PillButton",
+      "screenComponent": "LegacyProfileScreen",
+      "labelSource": "\"Settings\"",
+      "reachability": "legacy/source-only",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 6765,
+      "component": "PillButton",
+      "screenComponent": "LegacyProfileScreen",
+      "labelSource": "\"Stop DNS\"",
+      "reachability": "legacy/source-only",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 6778,
+      "component": "PillButton",
+      "screenComponent": "LegacyProfileScreen",
+      "labelSource": "{screenTimeFilterActive ? \"Filter On\" : \"Apply Filter\"}",
+      "reachability": "legacy/source-only",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 6786,
+      "component": "PillButton",
+      "screenComponent": "LegacyProfileScreen",
+      "labelSource": "\"Pause Filter\"",
+      "reachability": "legacy/source-only",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 6796,
+      "component": "PillButton",
+      "screenComponent": "LegacyProfileScreen",
+      "labelSource": "{screenTimeScheduleActive ? \"Night Guard On\" : \"Night Guard\"}",
+      "reachability": "legacy/source-only",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 6808,
+      "component": "PillButton",
+      "screenComponent": "LegacyProfileScreen",
+      "labelSource": "\"Stop Guard\"",
+      "reachability": "legacy/source-only",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 6818,
+      "component": "PillButton",
+      "screenComponent": "LegacyProfileScreen",
+      "labelSource": "{screenTimeSelectionCount > 0 ? \"Edit Selection\" : \"Choose Apps\"}",
+      "reachability": "legacy/source-only",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 6973,
+      "component": "BackButton",
+      "screenComponent": "CoachPanel",
+      "labelSource": "\"Back\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 7129,
+      "component": "BackButton",
+      "screenComponent": "CheckInScreen",
+      "labelSource": "\"Back\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 7253,
+      "component": "PillButton",
+      "screenComponent": "CheckInScreen",
+      "labelSource": "\"Save Check-In\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 7287,
+      "component": "BackButton",
+      "screenComponent": "SlipLogScreen",
+      "labelSource": "\"Back\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 7373,
+      "component": "PillButton",
+      "screenComponent": "SlipLogScreen",
+      "labelSource": "\"Save and Start Again\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 7374,
+      "component": "PillButton",
+      "screenComponent": "SlipLogScreen",
+      "labelSource": "\"Go Back\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 7619,
+      "component": "Metric",
+      "screenComponent": "InterceptScreen",
+      "labelSource": "\"Current streak\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 7620,
+      "component": "Metric",
+      "screenComponent": "InterceptScreen",
+      "labelSource": "\"Plan\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 7646,
+      "component": "PillButton",
+      "screenComponent": "InterceptScreen",
+      "labelSource": "{premium || selfUrge || shouldBypassRewardedAdForAttempt(attempt) ? \"Surf the Urge (Recovery Challenge)\" : \"Continue to Reset\"}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 7652,
+      "component": "PillButton",
+      "screenComponent": "InterceptScreen",
+      "labelSource": "\"Back to Safety\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 7815,
+      "component": "PillButton",
+      "screenComponent": "RewardedAdScreen",
+      "labelSource": "\"Watch again\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 7818,
+      "component": "PillButton",
+      "screenComponent": "RewardedAdScreen",
+      "labelSource": "\"Continue without ad\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 8418,
+      "component": "PillButton",
+      "screenComponent": "Icon",
+      "labelSource": "{completionSubmitting ? \"Saving...\" : \"Urge Passed\"}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 8424,
+      "component": "PillButton",
+      "screenComponent": "Icon",
+      "labelSource": "\"Still Need Support\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 8536,
+      "component": "PillButton",
+      "screenComponent": "Icon",
+      "labelSource": "{onMessagePartner ? \"Message Partner\" : \"I Reached Out\"}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 8547,
+      "component": "PillButton",
+      "screenComponent": "Icon",
+      "labelSource": "{verification.satisfied ? \"I'm Done\" : seconds >= max ? \"Verify Action\" : `Keep Going ${pct}%`}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 8655,
+      "component": "BackButton",
+      "screenComponent": "BreathingScreen",
+      "labelSource": "\"Back\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 8754,
+      "component": "PillButton",
+      "screenComponent": "BreathingScreen",
+      "labelSource": "{running ? \"Pause Exercise\" : \"Begin Breathing\"}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 8785,
+      "component": "PillButton",
+      "screenComponent": "ProfileScreen",
+      "labelSource": "{premium ? \"Membership active\" : \"Manage membership\"} variant=\"ghost\" onPress={onManagePlan}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 8793,
+      "component": "PillButton",
+      "screenComponent": "ProfileScreen",
+      "labelSource": "{account.signedIn && !account.anonymous ? \"Link another sign-in\" : \"Connect Apple, Google or email\"} variant=\"ghost\" onPress={onConnectAccount}",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 8794,
+      "component": "PillButton",
+      "screenComponent": "ProfileScreen",
+      "labelSource": "\"Sign out\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 8798,
+      "component": "PillButton",
+      "screenComponent": "ProfileScreen",
+      "labelSource": "\"Log Slip Safely\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 8804,
+      "component": "PillButton",
+      "screenComponent": "ProfileScreen",
+      "labelSource": "\"Open Shield\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 10278,
+      "component": "PillButton",
+      "screenComponent": "FreedAppProvider",
+      "labelSource": "\"Keep current history\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/features/freed-app.tsx",
+      "line": 10279,
+      "component": "PillButton",
+      "screenComponent": "FreedAppProvider",
+      "labelSource": "\"Restore backup\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/PremiumOffer.tsx",
+      "line": 123,
+      "component": "QuietAction",
+      "screenComponent": "PremiumOffer",
+      "labelSource": "\"Continue with Free\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/PremiumOffer.tsx",
+      "line": 234,
+      "component": "QuietAction",
+      "screenComponent": "PremiumOffer",
+      "labelSource": "\"Retry store prices\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/PremiumOffer.tsx",
+      "line": 242,
+      "component": "QuietAction",
+      "screenComponent": "PremiumOffer",
+      "labelSource": "\"Restore purchases\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/PremiumOffer.tsx",
+      "line": 243,
+      "component": "QuietAction",
+      "screenComponent": "PremiumOffer",
+      "labelSource": "\"Manage subscription\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/PremiumOffer.tsx",
+      "line": 246,
+      "component": "QuietAction",
+      "screenComponent": "PremiumOffer",
+      "labelSource": "\"Privacy\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/PremiumOffer.tsx",
+      "line": 247,
+      "component": "QuietAction",
+      "screenComponent": "PremiumOffer",
+      "labelSource": "\"Terms\"",
+      "reachability": "native integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-proved-by-source",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/AccountAccessScreen.tsx",
+      "line": 200,
+      "component": "accessibilityLabel",
+      "screenComponent": "AccountAccessScreen",
+      "labelSource": "\"Back to account options\"",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/AccountAccessScreen.tsx",
+      "line": 210,
+      "component": "accountActionButton",
+      "screenComponent": "AccountAccessScreen",
+      "labelSource": "\"Continue\"",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/AccountAccessScreen.tsx",
+      "line": 214,
+      "component": "accountActionButton",
+      "screenComponent": "AccountAccessScreen",
+      "labelSource": "\"Sign in with email\"",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/AccountAccessScreen.tsx",
+      "line": 220,
+      "component": "accessibilityLabel",
+      "screenComponent": "AccountAccessScreen",
+      "labelSource": "\"Email address\"",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/AccountAccessScreen.tsx",
+      "line": 226,
+      "component": "accessibilityLabel",
+      "screenComponent": "AccountAccessScreen",
+      "labelSource": "\"Password\"",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/AccountAccessScreen.tsx",
+      "line": 227,
+      "component": "accessibilityLabel",
+      "screenComponent": "AccountAccessScreen",
+      "labelSource": "{passwordVisible ? \"Hide password\" : \"Show password\"} style={styles.eye}>{passwordVisible ? <EyeOff size={20} color={colors.text2} /> : <Eye size={20} color={colors.text2} />}",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/AccountAccessScreen.tsx",
+      "line": 233,
+      "component": "accessibilityLabel",
+      "screenComponent": "AccountAccessScreen",
+      "labelSource": "\"Confirm password\"",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/AccountAccessScreen.tsx",
+      "line": 234,
+      "component": "accountActionButton",
+      "screenComponent": "AccountAccessScreen",
+      "labelSource": "\"Forgot password?\"",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/AccountAccessScreen.tsx",
+      "line": 237,
+      "component": "accountActionButton",
+      "screenComponent": "AccountAccessScreen",
+      "labelSource": "\"Already have an account? Sign in\"",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/AccountAccessScreen.tsx",
+      "line": 240,
+      "component": "accountActionButton",
+      "screenComponent": "AccountAccessScreen",
+      "labelSource": "\"Back to sign in\"",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/AccountAccessScreen.tsx",
+      "line": 240,
+      "component": "accountActionButton",
+      "screenComponent": "AccountAccessScreen",
+      "labelSource": "\"Use a different email\"",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/AccountAccessScreen.tsx",
+      "line": 241,
+      "component": "accountActionButton",
+      "screenComponent": "AccountAccessScreen",
+      "labelSource": "\"I've verified my email\"",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/AccountAccessScreen.tsx",
+      "line": 241,
+      "component": "accountActionButton",
+      "screenComponent": "AccountAccessScreen",
+      "labelSource": "\"Resend verification email\"",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/AccountAccessScreen.tsx",
+      "line": 241,
+      "component": "accountActionButton",
+      "screenComponent": "AccountAccessScreen",
+      "labelSource": "\"Continue and verify later\"",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/AccountAccessScreen.tsx",
+      "line": 243,
+      "component": "accessibilityLabel",
+      "screenComponent": "AccountAccessScreen",
+      "labelSource": "{busy === \"refresh\" ? \"Checking email verification\" : busy === \"finish\" ? \"Connecting your account\" : \"Contacting account service\"} accessibilityLiveRegion=\"polite\" style={styles.status}><ActivityIndicator color={colors.mint} /><Text style={styles.description}>{busy === \"refresh\" ? \"Checking verification\u2026\" : busy === \"finish\" ? \"Connecting your account\u2026\" : \"Please wait\u2026\"}</Text></View> : null}",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    },
+    {
+      "source": "src/components/UrgeSupportButton.tsx",
+      "line": 7,
+      "component": "accessibilityLabel",
+      "screenComponent": "UrgeSupportButton",
+      "labelSource": "\"SOS: open urge support\"",
+      "reachability": "current native integration; runtime pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": "see feature-ledger.json",
+        "unsupported": "see platform rows"
+      }
+    }
+  ]
+}

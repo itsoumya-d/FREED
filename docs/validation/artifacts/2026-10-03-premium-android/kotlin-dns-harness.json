@@ -1,0 +1,53 @@
+{
+  "capturedAt": "2026-10-03T01:23:49.403041+00:00",
+  "result": "pass",
+  "commands": [
+    {
+      "kind": "encrypted-dns",
+      "command": [
+        "/opt/homebrew/bin/kotlinc",
+        "modules/freed-protection/android/src/main/java/app/freed/protection/FreedDnsGuardPolicy.kt",
+        "modules/freed-protection/android/src/main/java/app/freed/protection/FreedEncryptedDnsPolicy.kt",
+        "modules/freed-protection/android/src/main/java/app/freed/protection/FreedDohPolicy.kt",
+        "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectedSocketFactory.kt",
+        "modules/freed-protection/android/src/test/java/app/freed/protection/FreedEncryptedDnsCases.kt",
+        "-include-runtime",
+        "-d",
+        "<temporary-path>"
+      ],
+      "exitCode": 0
+    },
+    {
+      "kind": "encrypted-dns",
+      "command": [
+        "/opt/homebrew/opt/openjdk@17/bin/java",
+        "-jar",
+        "<temporary-path>"
+      ],
+      "exitCode": 0
+    },
+    {
+      "kind": "dns-readiness",
+      "command": [
+        "/opt/homebrew/bin/kotlinc",
+        "modules/freed-protection/android/src/main/java/app/freed/protection/FreedDnsGuardPolicy.kt",
+        "modules/freed-protection/android/src/test/java/app/freed/protection/FreedDnsGuardPolicyCases.kt",
+        "-include-runtime",
+        "-d",
+        "<temporary-path>"
+      ],
+      "exitCode": 0
+    },
+    {
+      "kind": "dns-readiness",
+      "command": [
+        "/opt/homebrew/opt/openjdk@17/bin/java",
+        "-jar",
+        "<temporary-path>"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "logSha256": "041a3bd916947973ecc5a48fb3ae0ac954bc55765a53572497c9fa67eeae9c4f",
+  "boundary": "Production policy/protected-socket JVM cases only; no VpnService/device traffic observed"
+}

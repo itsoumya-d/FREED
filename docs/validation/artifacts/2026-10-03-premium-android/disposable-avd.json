@@ -1,0 +1,10 @@
+{
+  "createdAt": "2026-10-03T01:24:31.105992+00:00",
+  "name": "FREEDPremiumDisposable20261003",
+  "avdHome": "/tmp/freed-premium-android-qa-20261003/avds",
+  "path": "/tmp/freed-premium-android-qa-20261003/device",
+  "image": "system-images;android-36;google_apis;arm64-v8a",
+  "createExitCode": 0,
+  "existingAvdsTouched": false,
+  "port": 5580
+}

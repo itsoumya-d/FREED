@@ -1,0 +1,16 @@
+{
+  "completedAt": "2026-10-04T01:04:31.217519+00:00",
+  "result": "pass",
+  "scope": "unsigned simulator native compile with frozen source; not installed flow, physical, performance or store proof",
+  "sourceInputs": "ios-reset-bound-build-inputs.json",
+  "sourceUnchangedAcrossBuild": true,
+  "sourceFileCount": 10,
+  "log": "ios-reset-bound-framework-build.log",
+  "logSha256": "223847bd956c7bf9d19c7770ad2ece56e35127f110e6337fe3ff556f02edd315",
+  "configuration": "Debug",
+  "codeSigningAllowed": false,
+  "binarySha256": "42f3ff93a505c28c1a87c697ab68260828cf241e068ff195b54a173b5f16d97e",
+  "nativeSourceOnly": true,
+  "signedReleaseReady": false,
+  "physicalResetPerformed": false
+}

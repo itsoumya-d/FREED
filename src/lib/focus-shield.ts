@@ -3,6 +3,7 @@
  * Selector fingerprints deliberately exclude node text, screenshots, and raw
  * accessibility trees so the data remains safe to persist on-device.
  */
+import { sanitizeAppGroupInterventionScope, type AppGroupInterventionScope } from './app-group-intervention';
 export const FOCUS_SHIELD_CONTRACT_VERSION = 1 as const;
 
 export type FocusShieldPresetId = "youtube-shorts" | "instagram-reels" | "tiktok-for-you";
@@ -71,9 +72,11 @@ export type FocusShieldCalibrationResult = {
 };
 
 export type FocusShieldInterventionScope =
+  | AppGroupInterventionScope
   | { kind: "android-surface"; ruleId: FocusShieldRuleId; packageName: string }
   | { kind: "android-package"; packageName: string }
   | { kind: "ios-token"; tokenType: "application" | "category" | "domain"; token: string }
+  | { kind: "ios-screen-time"; tokenType: "application" | "category" | "domain" }
   | { kind: "browser-domain"; domain: string };
 
 export const FOCUS_SHIELD_PRESETS: readonly FocusShieldPreset[] = [
@@ -219,6 +222,12 @@ export function focusShieldScopesMatch(
       return right.kind === "android-package" && normalizeScopePackage(left.packageName) === normalizeScopePackage(right.packageName);
     case "ios-token":
       return right.kind === "ios-token" && left.tokenType === right.tokenType && left.token === right.token;
+    case 'ios-screen-time':
+      // A generic public kind cannot identify a private target. The native event ID carries live authority.
+      return false;
+    case 'ios-app-group':
+    case 'android-app-group':
+      return false;
     case "browser-domain":
       return right.kind === "browser-domain" && normalizeDomain(left.domain) === normalizeDomain(right.domain);
   }
@@ -226,6 +235,11 @@ export function focusShieldScopesMatch(
 
 export function sanitizeFocusShieldInterventionScope(value: unknown): FocusShieldInterventionScope | null {
   if (!isRecord(value) || typeof value.kind !== "string") return null;
+  const group = sanitizeAppGroupInterventionScope(value); if (group) return group;
+  if (value.kind === 'ios-screen-time') {
+    return Object.keys(value).every(key => key === 'kind' || key === 'tokenType') && ['application','category','domain'].includes(String(value.tokenType))
+      ? { kind:'ios-screen-time', tokenType:value.tokenType as 'application'|'category'|'domain' } : null;
+  }
 
   if (value.kind === "android-surface") {
     const packageName = sanitizePackageName(value.packageName);

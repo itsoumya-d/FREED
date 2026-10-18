@@ -58,6 +58,19 @@ allprojects {
 
 subprojects { subproject ->
   subproject.afterEvaluate {
+    // AGP invokes Ninja directly, so CMAKE_BUILD_PARALLEL_LEVEL does not cap
+    // its compiler jobs. Apply a Ninja pool before native targets are created.
+    def nativeJobs = rootProject.findProperty("android.native.build.maxJobs")
+    def nativeAndroid = subproject.extensions.findByName("android")
+    if (nativeJobs != null && nativeAndroid != null) {
+      def count = nativeJobs.toString().toInteger()
+      if (count < 1 || count > 16) throw new GradleException("Native build jobs must be between 1 and 16")
+      nativeAndroid.defaultConfig.externalNativeBuild.cmake.arguments(
+        "-DCMAKE_JOB_POOLS=freed_native=${count}",
+        "-DCMAKE_JOB_POOL_COMPILE=freed_native",
+        "-DCMAKE_JOB_POOL_LINK=freed_native"
+      )
+    }
     if (subproject.name == "react-native-google-mobile-ads") {
       def androidExtension = subproject.extensions.findByName("android")
       if (androidExtension != null) {

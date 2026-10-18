@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "freed-momentum-native-copy-scope-v2",
+  "nativeAuthoredOutputFiles": {
+    "ios/FREEDSafariContentBlocker/ContentBlockerRequestHandler.swift": {
+      "phrases": 2,
+      "covered": 2,
+      "uncovered": 0
+    },
+    "ios/FREEDSafariFocusShield/SafariWebExtensionHandler.swift": {
+      "phrases": 1,
+      "covered": 1,
+      "uncovered": 0
+    },
+    "ios/FREEDShieldAction/ShieldActionExtension.swift": {
+      "phrases": 3,
+      "covered": 3,
+      "uncovered": 0
+    },
+    "modules/freed-protection/ios/FreedProtectionModule.swift": {
+      "phrases": 70,
+      "covered": 70,
+      "uncovered": 0
+    },
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt": {
+      "phrases": 68,
+      "covered": 68,
+      "uncovered": 0
+    },
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedDnsGuardPolicy.kt": {
+      "phrases": 3,
+      "covered": 3,
+      "uncovered": 0
+    },
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt": {
+      "phrases": 14,
+      "covered": 14,
+      "uncovered": 0
+    },
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedVpnService.kt": {
+      "phrases": 9,
+      "covered": 9,
+      "uncovered": 0
+    },
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedInterventionActivity.kt": {
+      "phrases": 5,
+      "covered": 5,
+      "uncovered": 0
+    },
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedUsageAccessConfigActivity.kt": {
+      "phrases": 6,
+      "covered": 6,
+      "uncovered": 0
+    },
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt": {
+      "phrases": 22,
+      "covered": 22,
+      "uncovered": 0
+    },
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedNativeCompanion.kt": {
+      "phrases": 3,
+      "covered": 3,
+      "uncovered": 0
+    }
+  },
+  "androidResourceStrings": 35,
+  "iosPermissionDescriptions": 5,
+  "iosShieldLabels": 5,
+  "iosActionNotificationStrings": 2,
+  "iosContentBlockerErrors": 2,
+  "locales": [
+    "en",
+    "hi",
+    "es",
+    "pt",
+    "fr",
+    "de",
+    "ar",
+    "ja",
+    "ko",
+    "zh-Hans"
+  ],
+  "sourceCoverage": {
+    "catalog": 2377,
+    "semantic": 127,
+    "inventoried": 2261,
+    "uncovered": 0,
+    "errors": []
+  },
+  "proofBoundary": "Source/SDK evidence only; neither all64 visual acceptance nor physical runtime evidence.",
+  "sourceReview": [
+    {
+      "file": "ios/FREED/AppDelegate.swift",
+      "classification": "Host app lifecycle, no authored native presentation copy found in output scan"
+    },
+    {
+      "file": "ios/FREEDDeviceActivityMonitor/DeviceActivityMonitorExtension.swift",
+      "classification": "Enforcement/lifecycle callbacks, no authored native presentation copy found in output scan"
+    },
+    {
+      "file": "ios/FREEDSafariContentBlocker/ContentBlockerRequestHandler.swift",
+      "classification": "Two generated localized NSError messages; identical domains/codes"
+    },
+    {
+      "file": "ios/FREEDShieldConfiguration/ShieldConfigurationExtension.swift",
+      "classification": "Five generated localized system Shield labels; static supported native glyph"
+    }
+  ],
+  "restrictions": [
+    "OS-owned payment, permission and Shield layouts remain system-controlled",
+    "iOS ManagedSettings Shield icon is static; no fake animated capability",
+    "App-owned native activities have bounded lifecycle/Reduce Motion-aware motion",
+    "Native full-build/device/ten-language two-theme visual and screen-reader proof remains integration-owned",
+    "Machine-generated Korean and new public copy requires human language-quality review"
+  ]
+}

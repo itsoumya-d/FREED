@@ -1,0 +1,49 @@
+{
+  "recordedAt": "2026-10-02T08:27:41.239035+00:00",
+  "project": "freed-7d5ee",
+  "credentialLabel": "active-gcloud-session",
+  "credentialValuesOmitted": true,
+  "personalIdentityOmitted": true,
+  "ownerConsoleAccountIndex": 4,
+  "ownerConsoleIdentityCompared": false,
+  "activePrincipalFingerprint": "7e8b670eab4c",
+  "createAttempted": false,
+  "defaultBucket": {
+    "httpStatus": 404,
+    "status": "NOT_FOUND",
+    "message": "Requested entity was not found."
+  },
+  "buckets": {
+    "httpStatus": 200,
+    "items": []
+  },
+  "projectBilling": {
+    "httpStatus": 200,
+    "billingEnabled": true,
+    "billingAccountLinked": true
+  },
+  "billingAccount": {
+    "httpStatus": 200,
+    "open": false,
+    "masterBillingAccountLinked": false
+  },
+  "projectRoles": {
+    "httpStatus": 200,
+    "directRolesForActivePrincipal": [
+      "roles/owner"
+    ],
+    "groupInheritedRolesNotResolved": true
+  },
+  "knownGrantedPermissions": {
+    "httpStatus": 200,
+    "permissions": [
+      "cloudfunctions.functions.create",
+      "cloudfunctions.functions.get",
+      "firebasestorage.defaultBucket.create",
+      "resourcemanager.projects.getIamPolicy",
+      "resourcemanager.projects.setIamPolicy",
+      "storage.buckets.create",
+      "storage.buckets.list"
+    ]
+  }
+}

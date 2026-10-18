@@ -1,0 +1,2865 @@
+{
+  "features": 109,
+  "meaning": "109 retained feature obligations. Current authored-source localization is verified separately; device/store/service/motion scenarios remain unexecuted or separately blocked.",
+  "rows": [
+    {
+      "id": "feature-001",
+      "category": "Onboarding",
+      "feature": "splash/welcome",
+      "userControls": "Purpose, language/appearance,18+ confirmation, Get started or I have an account; required real account; basic help remains available",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "onboarding-welcome",
+      "expectedOutcomes": [
+        "actual account restoration chooses the correct entry",
+        "current account interaction is retained until explicit finish/cancel",
+        "permissions and membership failures keep basic support available"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Cold launch and saved onboarding routing",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-002",
+      "category": "Onboarding",
+      "feature": "quiz",
+      "userControls": "Five goal/history/trigger/symptom/reset questions; option radios; Back/Next; step counter",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "onboarding-quiz",
+      "expectedOutcomes": [
+        "all five questions accept every option",
+        "Back retains the previous answer",
+        "restart preserves only committed onboarding preferences"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "All options retain selection through native back/restart",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-003",
+      "category": "Onboarding",
+      "feature": "planCalculation",
+      "userControls": "Preparation progress; preference goal/trigger/reset/concern summary; Protect My Apps & Proceed",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "onboarding-plan",
+      "expectedOutcomes": [
+        "answered goal and triggers appear in plan",
+        "calculation progress ends with a reachable action",
+        "no measured brain chemistry or projected recovery date is claimed"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Answers faithfully presented; no measured brain chemistry or recovery-date projection",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-004",
+      "category": "Onboarding",
+      "feature": "appSelection",
+      "userControls": "Supported apps/package aliases; selection, Back, Continue",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "onboarding-app-selection",
+      "expectedOutcomes": [
+        "selected package aliases map to supported targets",
+        "Back retains selection and zero selection disables Continue",
+        "iOS selections remain opaque Screen Time tokens"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Android packages and iOS opaque target selection reconcile",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-005",
+      "category": "Onboarding",
+      "feature": "account sign-in",
+      "userControls": "Apple, Google and email; required sign-in, explicit verification/later, cancellation and retry; no guest entry",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "account-options",
+      "expectedOutcomes": [
+        "current connected SDK identity owns sign-in",
+        "cancel/failure retains actionable account UI and basic-help availability; no unauthenticated Home bypass",
+        "stale provider result cannot replace another account or finish a later interaction"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Actual signed-device provider login and cancellation",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-006",
+      "category": "Onboarding",
+      "feature": "account linking",
+      "userControls": "Link another sign-in, collision notice, same-UID purchase ownership, Sign out",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "account-options",
+      "expectedOutcomes": [
+        "link provider keeps guest UID and purchase owner",
+        "collision presents an explicit guest switch choice",
+        "sign out and delayed results preserve local recovery history"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Delayed/stale account results, link collision/cancel/restart",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-007",
+      "category": "Onboarding",
+      "feature": "protectionSetup",
+      "userControls": "Stage/step/progress, required authorization action, settings return/auto-advance",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "protection-setup",
+      "expectedOutcomes": [
+        "required stages advance only after actual authorization",
+        "denial and settings return show truthful status",
+        "revocation and restart refresh native authorization"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Physical permission grant/denial/revocation and activation proof",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-008",
+      "category": "Onboarding",
+      "feature": "setup retry/fallback",
+      "userControls": "Keep trying, Continue anyway, limited warning, Finish setup",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "protection-setup",
+      "expectedOutcomes": [
+        "retry is bounded and Continue anyway remains reachable",
+        "limited protection is visibly inactive",
+        "warning clears only after measured native activation"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Bounded retries and truthful inactive state; banner clears on real activation",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-009",
+      "category": "Protection",
+      "feature": "Android adult feed",
+      "userControls": "Reviewed feed sync/checksum/304/stale fallback",
+      "platforms": [
+        "android"
+      ],
+      "navigationFlow": "shield-diagnostics",
+      "expectedOutcomes": [
+        "reviewed feed validates checksum and conditional HTTP response",
+        "stale or malformed feed keeps safe fallback",
+        "native import enforces adult corpus while normal corpus passes"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Native import and real blocking corpus",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-010",
+      "category": "Protection",
+      "feature": "Android DNS guard",
+      "userControls": "Disclosure, Not now/I understand, start/stop, VPN/settings/health diagnostics",
+      "platforms": [
+        "android"
+      ],
+      "navigationFlow": "shield-health",
+      "expectedOutcomes": [
+        "disclosure permits Not now without starting VPN",
+        "start and stop reflect real DNS routing and health",
+        "physical failover VPN coexistence and latency meet measured limits"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "DNS routing/failover/VPN coexistence/latency on physical device",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-011",
+      "category": "Protection",
+      "feature": "Android Private DNS",
+      "userControls": "Open/Review Private DNS/network settings and strict-state check",
+      "platforms": [
+        "android"
+      ],
+      "navigationFlow": "shield-health",
+      "expectedOutcomes": [
+        "Private DNS action opens correct OEM settings",
+        "strict DNS state is read again on return",
+        "denied revoked and unreachable settings remain truthful"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Correct OEM settings and actual permission/return state",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-012",
+      "category": "Protection",
+      "feature": "Android Usage Access",
+      "userControls": "Open Usage Access/settings, grant recheck and app-time limits",
+      "platforms": [
+        "android"
+      ],
+      "navigationFlow": "protection-setup",
+      "expectedOutcomes": [
+        "Usage Access permission is detected after settings return",
+        "selected app threshold produces a native intervention",
+        "denial revocation and reboot never fabricate app usage"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Physical threshold, denial/revocation and restart",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-013",
+      "category": "Protection",
+      "feature": "Android Accessibility",
+      "userControls": "Authorize app intervention/settings return and service state",
+      "platforms": [
+        "android"
+      ],
+      "navigationFlow": "protection-setup",
+      "expectedOutcomes": [
+        "Accessibility state is read from native service",
+        "real browser handoff reaches the matching reset",
+        "revocation stops unsupported interception and refreshes health"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Real browser/app handoff and revocation",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-014",
+      "category": "Protection",
+      "feature": "Android selected app limits",
+      "userControls": "Daily limit, package choices/aliases, selected-app intervention",
+      "platforms": [
+        "android"
+      ],
+      "navigationFlow": "shield-preferences",
+      "expectedOutcomes": [
+        "selected package and alias limit uses configured duration",
+        "unselected app remains unaffected at threshold",
+        "restart and day boundary preserve intended limits"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Real selected/unselected app behavior at threshold",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-015",
+      "category": "Protection",
+      "feature": "iOS Screen Time",
+      "userControls": "Authorize Family Controls, apply/pause adult filter, Choose/Edit Apps",
+      "platforms": [
+        "ios"
+      ],
+      "navigationFlow": "shield-health",
+      "expectedOutcomes": [
+        "signed Family Controls grant enables adult filter",
+        "Choose Apps uses opaque picker targets and cancel preserves state",
+        "pause or revoke removes claimed protection"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Signed physical device authorization and selected token shields",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-016",
+      "category": "Protection",
+      "feature": "iOS app limit monitor",
+      "userControls": "Daily limit, DeviceActivity, Night Guard/Stop Guard",
+      "platforms": [
+        "ios"
+      ],
+      "navigationFlow": "shield-preferences",
+      "expectedOutcomes": [
+        "DeviceActivity threshold applies selected shields",
+        "Night Guard schedule handles overnight day transitions",
+        "Stop Guard reboot and revocation remove or restore only authorized shields"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Physical threshold callback/schedule/reboot/revocation",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-017",
+      "category": "Protection",
+      "feature": "iOS Safari adult blocker",
+      "userControls": "Safari Settings enablement and adult-only domain rules",
+      "platforms": [
+        "ios"
+      ],
+      "navigationFlow": "shield-health",
+      "expectedOutcomes": [
+        "Safari extension enablement is accurately shown",
+        "adult domains are blocked on physical Safari",
+        "normal corpus opens without full VPN or HTTPS inspection claims"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Physical Safari adult block/normal browsing",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-018",
+      "category": "Protection",
+      "feature": "iOS Safari Focus Shield",
+      "userControls": "Approved Shorts/Reels/For You web handoff and extension settings",
+      "platforms": [
+        "ios"
+      ],
+      "navigationFlow": "shield-diagnostics",
+      "expectedOutcomes": [
+        "browser extension behavior is evaluated separately",
+        "native iOS app surfaces are not inspected",
+        "public activation requires the supported mechanism and device/policy gates"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Signed physical extension/universal-link/recovery flow",
+      "dependencies": "native permissions/enforcement",
+      "supportStatus": "browser-only; native app surfaces are not inspected; separate policy/device gates required",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-019",
+      "category": "Protection",
+      "feature": "iOS native-app surface inspection",
+      "userControls": "Inspect/calibrate screens inside other native apps",
+      "platforms": [
+        "ios"
+      ],
+      "navigationFlow": "platform-limits",
+      "expectedOutcomes": [
+        "iOS native third party screen inspection is explicitly unsupported",
+        "Screen Time target picker remains an available alternative",
+        "no OCR calibration or native inspection is falsely reported successful"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Unsupported platform limit; use Screen Time opaque targets",
+      "dependencies": "native permissions/enforcement",
+      "supportStatus": "unsupported iOS native-app surface inspection; whole-app alternative",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-020",
+      "category": "Protection",
+      "feature": "Focus Shield presets",
+      "userControls": "Enable/Preset On YouTube Shorts/Instagram Reels/TikTok For You",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "shield-diagnostics",
+      "expectedOutcomes": [
+        "experimental native short-form behavior is not advertised as shared public coverage",
+        "browser mechanisms state their actual supported scope",
+        "whole-app protection remains the supported alternative"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Actual Android native surface and iOS Safari/Screen Time enforcement",
+      "dependencies": "native permissions/enforcement",
+      "supportStatus": "native short-form controls deferred from public release; explicitly supported browser behavior evaluated separately",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-021",
+      "category": "Protection",
+      "feature": "Focus Shield calibration",
+      "userControls": "Calibrate, cancel calibration, saved local rules/remove",
+      "platforms": [
+        "android"
+      ],
+      "navigationFlow": "shield-diagnostics",
+      "expectedOutcomes": [
+        "experimental calibration retains only reviewed local selector configuration",
+        "cancel/remove affect intended configuration only",
+        "public enablement waits policy and actual device tests"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Android physical selector targeting and false-positive corpus",
+      "dependencies": "native permissions/enforcement",
+      "supportStatus": "experimental/calibration outside shared public core until platform/policy/device gates",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-022",
+      "category": "Protection",
+      "feature": "Focus Shield diagnostics",
+      "userControls": "Rule count, health/degraded/revoked state, refresh/removal",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "shield-diagnostics",
+      "expectedOutcomes": [
+        "rule count and native service health reconcile",
+        "refresh detects permission loss and degraded storage",
+        "removal and corruption never claim active enforcement"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Actual native state after permission loss/store corruption",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-023",
+      "category": "Protection",
+      "feature": "always allow domains",
+      "userControls": "Android local ordinary-site exception list and wrong-block help; unavailable native override on iOS",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "shield-allowlist",
+      "expectedOutcomes": [
+        "known local/feed adult domains cannot become exceptions",
+        "Cloudflare Families category decisions remain independent",
+        "save reports actual supported local configuration rather than universal whitelist"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Native/classifier parity without bypassing explicit adult matches",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-024",
+      "category": "Protection",
+      "feature": "URL diagnostics",
+      "userControls": "Input, Check, Visit, Google/YouTube quick fill, Adult Search Test",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "shield-url-check",
+      "expectedOutcomes": [
+        "Google and YouTube diagnostics classify known normal URLs",
+        "adult and malformed diagnostic inputs render explicit verdict",
+        "manual checks receive no real protection credit"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Manual test events excluded from production protection credit",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-025",
+      "category": "Protection",
+      "feature": "discipline preferences",
+      "userControls": "Daily limit, Unlock, Shorts guard, Intensity/Outdoor/Exercise/Social",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "shield-preferences",
+      "expectedOutcomes": [
+        "daily limit unlock and preferences update within bounds",
+        "all supported choices persist through restart",
+        "native settings use committed preferences without inventing permission"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Persist and apply settings after restart",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-026",
+      "category": "Protection",
+      "feature": "strict/focus modes",
+      "userControls": "Emergency strict and Deep focus toggles",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "shield-preferences",
+      "expectedOutcomes": [
+        "strict and Deep focus switches commit supported target expansion",
+        "switching off removes only intended restriction",
+        "permission loss and restart show actual enforced state"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Actual supported target expansion and native enforcement",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-027",
+      "category": "Protection",
+      "feature": "sleep/work/weekend modes",
+      "userControls": "Sleep start/Wake, Work start/end, enable toggles, Weekend adventure",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "shield-schedules",
+      "expectedOutcomes": [
+        "sleep work and weekend toggles preserve clock inputs",
+        "overnight DST and day boundaries resolve correctly",
+        "restart schedules only authorized native activity",
+        "native background boundaries preserve manual and overlapping guards without a running React screen"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Local schedules/overnight/DST/restart semantics",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-028",
+      "category": "Protection",
+      "feature": "earned unlock",
+      "userControls": "Explicit app-break request after saved verified activity; configured duration; exact original native scope/ID/expiry",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "challenge-list",
+      "expectedOutcomes": [
+        "adult domains remain blocked",
+        "only matching current original application authority can acknowledge a timed break",
+        "feedback and restored history do not create or renew native access"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Physical target matching; restored historical grants never native authority",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-029",
+      "category": "Today",
+      "feature": "native roots",
+      "userControls": "Today, Protect, Progress, Profile; native stacks and actual origin returns; All features directory",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "root-navigation",
+      "expectedOutcomes": [
+        "one-tap feature directory reaches focused forms/tools",
+        "ordinary back preserves origin and tab identity",
+        "account host preserves current form across real route-leaf changes"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Final Android/iOS UI navigation/cold-start/back evidence",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-030",
+      "category": "Today",
+      "feature": "SOS/urge support",
+      "userControls": "Urgent support entry from all roots; Back to Safety; reset continuation",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "urgent-support",
+      "expectedOutcomes": [
+        "urgent action opens immediately from every root",
+        "free users can reach Back to Safety and reset tools",
+        "SOS does not grant native protection credit or require an ad"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Immediate native route action and free/premium availability",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-031",
+      "category": "Today",
+      "feature": "daily pledge",
+      "userControls": "Take pledge, pledged state/check-in, pledge streak",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "today-pledge",
+      "expectedOutcomes": [
+        "pledge increments once for local day",
+        "repeat tap rollback and DST never duplicate streak",
+        "pledged state and check-in route survive restart"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Once per local day, DST/rollback and restart",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-032",
+      "category": "Today",
+      "feature": "habit toggles",
+      "userControls": "No adult content, Cold shower, Exercise, Meditation, Journal, No social media",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "today-habits",
+      "expectedOutcomes": [
+        "each habit toggles and total reconciles",
+        "untoggle decrements exactly once",
+        "restart and day roll show the correct local daily state"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Tap/restart/day-roll and decrement behavior",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-033",
+      "category": "Today",
+      "feature": "dashboard metrics",
+      "userControls": "Current independent protection; one next action; Help now; small dated plan; actual saved records",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "today-metrics",
+      "expectedOutcomes": [
+        "zero and known-event streak habit and points reconcile",
+        "elapsed clock uses the actual recovery start",
+        "days to milestone is distance rather than medical projection"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Known-event/zero-state reconciliation; milestone distance only",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-034",
+      "category": "Today",
+      "feature": "week/milestones",
+      "userControls": "Progress recorded-day history and secondary earned milestones; past entries reviewed with actual availability",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "today-metrics",
+      "expectedOutcomes": [
+        "week strip reflects all seven local dates",
+        "slip retains best while restarting current streak",
+        "next milestone and celebration do not duplicate after restart"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Local-day/DST/slip reset/history correctness",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-035",
+      "category": "Today",
+      "feature": "recovery shortcuts",
+      "userControls": "Library/article, breathing/custom reset, CLARA/check-in, Progress/Profile",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "recovery-shortcuts",
+      "expectedOutcomes": [
+        "all recovery shortcuts push correct native routes",
+        "Back returns to originating root",
+        "Library article and paywall flows do not duplicate shell"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Native push/back returns to correct root without duplicate custom shell",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-036",
+      "category": "Recovery",
+      "feature": "intercept",
+      "userControls": "Reason, streak/plan, Surf the Urge/Continue to Reset/Back to Safety",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "intercept",
+      "expectedOutcomes": [
+        "fresh native event shows matching reason once",
+        "Surf Urge Continue Reset and Back Safety follow correct route",
+        "stale or untrusted link cannot grant target authority"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Fresh event identity consumed once; stale/untrusted link rejects authority",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-037",
+      "category": "Recovery",
+      "feature": "rewarded reset",
+      "userControls": "Explicit Watch ad or Go Pro, verified access check, safe basic-help exit and reward/save/cleanup repair",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "rewarded-reset",
+      "expectedOutcomes": [
+        "actual native SDK reward licenses one owned guided session",
+        "Premium/review/unknown access does not request ads",
+        "ad/callback/cleanup failures preserve protection and basic use"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Real ad consent/reward callback; SOS/native ad bypass where required",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-038",
+      "category": "Recovery",
+      "feature": "challenge list",
+      "userControls": "Deterministic local Breathe, Find something and Move choices; capability/accessibility alternatives; replacement",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "challenge-list",
+      "expectedOutcomes": [
+        "explicit versioned metadata determines verification independently of translation",
+        "replacement retains the same earned session",
+        "unsupported/unvalidated photo targets stay unavailable"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Known preferences/outcomes shape local list",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-039",
+      "category": "Recovery",
+      "feature": "challenge completion",
+      "userControls": "Verify actual activity, save completion once, optional helpfulness, separate app-break request",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "challenge-list",
+      "expectedOutcomes": [
+        "completion waits for verified action and explicit outcome",
+        "helped and need-support outcomes save once with correct XP",
+        "restart retry and concurrent callbacks cannot duplicate completion"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Exactly-once completion/outcome/XP; real device verification required",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-040",
+      "category": "Recovery",
+      "feature": "timer verification",
+      "userControls": "Duration/countdown and finish gating",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "challenge-list",
+      "expectedOutcomes": [
+        "timer gates finish until required active duration",
+        "background pause and reentry preserve measured active seconds",
+        "elapsed wall clock alone cannot satisfy foreground activity"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Foreground/background/pause/reentry timing",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-041",
+      "category": "Recovery",
+      "feature": "motion verification",
+      "userControls": "Real samples, threshold, denied/unavailable state",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "challenge-list",
+      "expectedOutcomes": [
+        "real accelerometer samples satisfy expected motion threshold",
+        "permission denied unavailable and timeout offer safe alternative",
+        "synthetic count or background time cannot pass measured motion"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Physical accelerometer proof",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-042",
+      "category": "Recovery",
+      "feature": "steps verification",
+      "userControls": "Pedometer/minimum steps, permission unavailable state",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "challenge-list",
+      "expectedOutcomes": [
+        "native pedometer records minimum fresh steps",
+        "denied or unsupported step sensor offers truthful alternative",
+        "historical baseline and restored steps never satisfy new challenge"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Physical steps and honest unsupported alternative",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-043",
+      "category": "Recovery",
+      "feature": "outdoor verification",
+      "userControls": "On-demand location and measured sampled displacement",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "challenge-list",
+      "expectedOutcomes": [
+        "on demand samples use displacement and accuracy threshold",
+        "denied cancelled and low accuracy location stay incomplete",
+        "no background tracking is started or claimed"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Physical movement/accuracy/denial; no background tracking claim",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-044",
+      "category": "Recovery",
+      "feature": "photo verification",
+      "userControls": "Fresh camera capture; local Apple Vision/bundled ML Kit; reviewed target rules; retry/uncertain/replacement",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "challenge-list",
+      "expectedOutcomes": [
+        "no cloud photo upload or classifier fallback",
+        "only provider-calibrated targets are enabled",
+        "temporary app-owned photos are removed through failure/cancel/restart"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Physical model/camera/error/cancel/cleanup; challenge integration pending",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-045",
+      "category": "Recovery",
+      "feature": "connection verification",
+      "userControls": "Message Partner/I Reached Out",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "challenge-list",
+      "expectedOutcomes": [
+        "partner action opens native compose only by user request",
+        "cancel or return does not claim message delivery",
+        "explicit reached-out action alone confirms connection challenge"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Native compose/cancel and explicit user action",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-046",
+      "category": "Recovery",
+      "feature": "customChallenge",
+      "userControls": "Upgrade, title/why/steps, Type/Intensity/Minutes, Save and Start",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "custom-reset",
+      "expectedOutcomes": [
+        "free path opens reachable upgrade and returns safely",
+        "entitled title why steps type intensity and minutes save",
+        "caps persistence and list inclusion reconcile without duplicate reset"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Verified entitlement gate, persistence/caps/list inclusion",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-047",
+      "category": "Recovery",
+      "feature": "breathing",
+      "userControls": "Actual foreground cadence; pause/resume; optional nonverbal sound/haptics; text equivalents",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "breathing",
+      "expectedOutcomes": [
+        "all breathing modes follow declared phase durations",
+        "Begin Pause background and restart control running state",
+        "haptics reduced motion and timed phase transitions work on device"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Device timing/background/haptics and content review",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-048",
+      "category": "Recovery",
+      "feature": "checkin",
+      "userControls": "Mood/urge/sleep/reflection, Save Check-In, Back",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "checkin-save",
+      "expectedOutcomes": [
+        "all mood urge sleep values and private reflection save",
+        "same local day updates instead of duplicate records",
+        "restart summary redaction and Back without save are correct"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Local-day single update, redaction/restart/summary",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-049",
+      "category": "Recovery",
+      "feature": "slip log",
+      "userControls": "Trigger/note, Save and Start Again/Go Back/Log Slip Safely",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "slip-save",
+      "expectedOutcomes": [
+        "trigger and private note save once",
+        "current streak resets while personal best remains",
+        "risk hours and private report reconcile after restart"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Active reset/best retained, local risk hours/private report",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-050",
+      "category": "Recovery",
+      "feature": "CLARA local",
+      "userControls": "Input/send, reply/history, offline fallback/redaction/crisis links",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "clara-local",
+      "expectedOutcomes": [
+        "input send and history reply render with native keyboard",
+        "offline timeout and cancel preserve a safe local reply",
+        "redaction and reviewed crisis scenarios provide appropriate links"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Native keyboard/back/cancel and reviewed safety scenarios",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-051",
+      "category": "Recovery",
+      "feature": "CLARA remote",
+      "userControls": "Cloud chat consent off by default; separate deliberate previous-user-message context opt-in; localized daily allowance, testing-budget, local, retry and unavailable states",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "clara-local",
+      "expectedOutcomes": [
+        "explicit cloud consent and connected Auth/App Check precede Google-hosted CLARA",
+        "testing cost reservations enforce server cutoff separately from alerts",
+        "only deliberate message/context is sent; local continuation survives quota/outage"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Deployed secret/model/AppCheck and actual quota/safety smoke",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "supportStatus": "Google-hosted CLARA only; connected Auth/App Check/explicit consent; $25/month test reservation cutoff; live deployment proof required",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-052",
+      "category": "Recovery",
+      "feature": "remote challenges",
+      "userControls": "Server generation from answered feedback/preferences",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "challenge-list",
+      "expectedOutcomes": [
+        "device/user capability filtering and recent-template avoidance run locally",
+        "translation never changes rule IDs or provider thresholds"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Remote flags disabled until deployed callable/secret/device evidence",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "supportStatus": "local deterministic challenge selection; no remote challenge model service",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-053",
+      "category": "Recovery",
+      "feature": "remote retention",
+      "userControls": "Next action/focus tags/suggested guard/local fallback",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "profile-plan",
+      "expectedOutcomes": [
+        "remote plan uses explicitly supplied aggregate context",
+        "disabled unavailable and stale response keep local plan",
+        "privacy and account ownership boundaries are enforced"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Deployed callable/privacy/error proof",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "supportStatus": "local rule-based retention suggestions; no remote retention model service",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-054",
+      "category": "Recovery",
+      "feature": "Library/article",
+      "userControls": "Category/content/reset links, article scroll, Back to Library/Today",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "library-articles",
+      "expectedOutcomes": [
+        "every article is readable and scrollable to end",
+        "all reset category links reach intended tool",
+        "Back Library and Back Today preserve correct native root"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Every article/readability/back flow on final native build",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-055",
+      "category": "Progress",
+      "feature": "zero-state",
+      "userControls": "No signals/Not enough data; no fabricated measured score",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "progress-zero",
+      "expectedOutcomes": [
+        "fresh fixture shows No signals and Not enough data",
+        "no measured score is fabricated from missing events",
+        "known first event transitions only relevant metrics"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Fresh install and known first-event transition",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-056",
+      "category": "Progress",
+      "feature": "recovery score",
+      "userControls": "Recorded actions, optional helpfulness, source-labelled estimates and useful next adjustment",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "progress-reports",
+      "expectedOutcomes": [
+        "no fabricated clinical recovery percentage or timeline",
+        "self-reported and measured values are clearly distinguished",
+        "no-data states explain a useful first action"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Current-day risk plus streak/completions; never clinical measurement",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-057",
+      "category": "Progress",
+      "feature": "XP/level/badges",
+      "userControls": "XP/to-next/level; Honest Check-In, Seven Clean Days, Reset Practice, Urge Surfer, Protected Moment, Steady Rhythm, Honest Reset",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "progress-reports",
+      "expectedOutcomes": [
+        "known fixtures unlock every documented badge",
+        "XP cap cumulative totals and migration are correct",
+        "manual diagnostic or SOS event receives no protection credit"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Cumulative cap/legacy/migration correctness; manual/SOS no protection credit",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-058",
+      "category": "Progress",
+      "feature": "insight metrics",
+      "userControls": "Check-ins/7, average urge/sleep, strongest pattern",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "progress-reports",
+      "expectedOutcomes": [
+        "local week oracle matches check-ins average urge and sleep",
+        "strongest pattern uses sufficient actual samples",
+        "thin data and DST boundaries remain explicit"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Independent local-week oracle and data-thin state",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-059",
+      "category": "Progress",
+      "feature": "urge estimate",
+      "userControls": "Premium score/level/confidence/action/window/drivers; low-data blank",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "progress-reports",
+      "expectedOutcomes": [
+        "entitled urge estimate explains level confidence and drivers",
+        "free and low-data states are honest and reachable",
+        "estimate never becomes measured clinical probability"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Rule-based estimate and truthful entitlement gate, no measured probability",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-060",
+      "category": "Progress",
+      "feature": "weekly report",
+      "userControls": "Risks/Resets/Slips/Check-ins, range/pattern/next focus",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "progress-reports",
+      "expectedOutcomes": [
+        "weekly risks resets slips and check-ins match independent fixture",
+        "archive DST and unknown answers preserve boundaries",
+        "private text is absent from shareable report"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Local boundaries/DST/archive/answered-vs-unknown/redaction",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-061",
+      "category": "Progress",
+      "feature": "monthly growth",
+      "userControls": "Premium activity index, Protected/Helpful/Check-ins/Slips, summary/range/experiment",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "progress-reports",
+      "expectedOutcomes": [
+        "known month and archive totals match independent oracle",
+        "free gate and zero state render accurately",
+        "growth activity index is not clinical projection"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Known month/zero/archive history; no clinical projection",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-062",
+      "category": "Progress",
+      "feature": "snapshot metrics",
+      "userControls": "Help rate/Peak risk/Reset rate/App shields/App opens/Unlock per week",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "progress-reports",
+      "expectedOutcomes": [
+        "help rate peak risk reset rate and app totals use correct denominators",
+        "DST repeated hour and history caps reconcile",
+        "unlocks per week excludes invalid historical authority"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Count/denominator/hour oracle, DST repeated hour and history caps",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-063",
+      "category": "Progress",
+      "feature": "extra snapshot values",
+      "userControls": "Foreground minutes/source/category success/unlock minutes/streak-history/resets",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "progress-reports",
+      "expectedOutcomes": [
+        "foreground intervals and category success reconcile",
+        "archive rollback and overlaps do not duplicate minutes",
+        "portable own actions exclude device history while legacy restore preserves local records"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Interval overlaps/archives/rollback/encryption roundtrip",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-064",
+      "category": "Progress",
+      "feature": "analytics controls",
+      "userControls": "Enable Sharing/Turn Off, Send Snapshot, busy/status/last-sent/retention",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "analytics-consent",
+      "expectedOutcomes": [
+        "sharing requires explicit consent and can turn off",
+        "send snapshot handles busy retry and retention receipt",
+        "deployed multi-device lineage rejects private payload and stale owner"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Explicit consent and deployed lineage/retry/multi-device receipt",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-065",
+      "category": "Profile",
+      "feature": "account/membership card",
+      "userControls": "Connect/link provider/Sign out, Manage membership/Membership active",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "account-options",
+      "expectedOutcomes": [
+        "account card shows current provider and verified membership",
+        "link sign out and manage preserve intended navigation",
+        "delayed account request cannot change newer membership owner"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Current auth worker/entitlement state, delayed stale requests",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-066",
+      "category": "Profile",
+      "feature": "Premium authority",
+      "userControls": "Equal yearly/monthly capabilities, expiry/revoke/offline cache/ad-free",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "paywall-plans",
+      "expectedOutcomes": [
+        "monthly and yearly have equal capabilities",
+        "verified renew restore refund and revoke control access",
+        "offline cache and owner fences cannot invent Premium authority"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Store sandbox verification, restore/refund/renewal/revoke/owner fences",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-067",
+      "category": "Profile",
+      "feature": "recovery history",
+      "userControls": "Lifetime protected attempts and private slip count/Log Slip Safely",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "profile-history",
+      "expectedOutcomes": [
+        "archived protected attempts and slip counts reconcile",
+        "Log Slip Safely opens private form",
+        "diagnostic and SOS history never inflate protection count"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Archived counts persist; diagnostics/SOS not protection",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-068",
+      "category": "Profile",
+      "feature": "reminders",
+      "userControls": "Master On/Off; Morning/Evening/Night guard; Smart guard time/reason",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "profile-reminders",
+      "expectedOutcomes": [
+        "master morning evening night and smart schedules persist",
+        "grant denial revocation DST and restart resolve actual schedules",
+        "device delivery and tap open correct route without invented remote success"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Permission/actual scheduled delivery/tap/DST/restart on device",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-069",
+      "category": "Profile",
+      "feature": "daily plan",
+      "userControls": "Next action/check-in prompt/focus tags/suggested guard time",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "profile-plan",
+      "expectedOutcomes": [
+        "known signals produce expected next action and focus tags",
+        "answered check-in changes supported guard suggestion",
+        "remote disabled state clearly retains local fallback"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Known local signal mapping and clear remote fallback",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-070",
+      "category": "Profile",
+      "feature": "local encrypted backup",
+      "userControls": "Passphrase/text, Create/Restore Backup, wrong-passphrase/corruption",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "backup-local",
+      "expectedOutcomes": [
+        "passphrase encrypts portable actual history",
+        "wrong passphrase corrupt data and cancelled restore change nothing",
+        "native crypto roundtrip keeps history without granting old unlock authority"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Device native crypto and portable history/unlock authority behavior",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-071",
+      "category": "Profile",
+      "feature": "automatic backup",
+      "userControls": "Enable/Turn off, securely stored passphrase, upload after changes/retry",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "backup-local",
+      "expectedOutcomes": [
+        "enable stores passphrase in native secure store only",
+        "changes upload once with bounded retry and abort",
+        "turn off account switch and deletion remove obsolete passphrase"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Physical secure store and deployed service; account switch/abort/remove passphrase",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-072",
+      "category": "Profile",
+      "feature": "hosted backup",
+      "userControls": "Connect email/auth, Upload/Download Latest/Restore/Delete encrypted remote data",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "backup-hosted",
+      "expectedOutcomes": [
+        "upload download restore and delete use encrypted owner bucket",
+        "generation signed URL and account fence prevent stale restore",
+        "second disposable device restores only with correct passphrase"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Storage signed URL/GCS generation/account fence and second-device passphrase proof",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-073",
+      "category": "Profile",
+      "feature": "restore conflict",
+      "userControls": "Keep current history/Restore backup explicit choice",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "backup-local",
+      "expectedOutcomes": [
+        "Keep current history leaves all state unchanged",
+        "explicit Restore backup replaces only intended recovery state",
+        "stale download and account switch cannot apply old owner backup"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Both choices and stale-download/account fence scenarios",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-074",
+      "category": "Profile",
+      "feature": "email-link auth",
+      "userControls": "Send link/pending-link/handoff/UID ownership",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "account-options",
+      "expectedOutcomes": [
+        "actual disposable mailbox receives signed account link",
+        "native association and pending link handoff resolve expected UID",
+        "wrong owner expired and cancelled links preserve current history"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Real mail and signed native association/provider proof",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run",
+      "supportStatus": "native email-link support requires verified signed association and deployment evidence; normal email/password remains separate"
+    },
+    {
+      "id": "feature-075",
+      "category": "Profile",
+      "feature": "accountability partner",
+      "userControls": "Enable, SMS/email, name/contact/template, Message Partner",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "profile-accountability",
+      "expectedOutcomes": [
+        "enable SMS email name contact and template persist",
+        "native compose opens only after explicit user action",
+        "cancel consent and private fields never trigger automatic send"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Consent and native compose/cancel; no automatic messages",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-076",
+      "category": "Profile",
+      "feature": "sponsor report",
+      "userControls": "Weekly aggregate preview, Send Report/premium upgrade",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "profile-accountability",
+      "expectedOutcomes": [
+        "weekly aggregate preview excludes private details",
+        "free upgrade and entitled report compose both return safely",
+        "Send Report requires explicit recipient action and never sends automatically"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Entitlement and user-initiated native compose/privacy",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-077",
+      "category": "Profile",
+      "feature": "support circle",
+      "userControls": "Add member/draft, SMS/email switch, name/contact, Send report/Remove",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "profile-accountability",
+      "expectedOutcomes": [
+        "member cap add remove and persistence are correct",
+        "SMS email and draft validate consent and recipient",
+        "aggregate native compose cancel leaves recovery history unchanged"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Caps/persistence/recipient consent/native compose",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-078",
+      "category": "Profile",
+      "feature": "privacy/support links",
+      "userControls": "Privacy/Support/Account Deletion Help/Terms",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "privacy-support",
+      "expectedOutcomes": [
+        "Privacy Support Terms and deletion help are reachable",
+        "live linked pages contain matching release policies",
+        "native browser return restores Profile and scroll position"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Live content and final native external-browser return",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-079",
+      "category": "Profile",
+      "feature": "local deletion",
+      "userControls": "Delete Local Data/Confirm Delete",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "deletion-local",
+      "expectedOutcomes": [
+        "cancel deletion preserves local and secure data",
+        "explicit confirmation purges recovery and stored backup key",
+        "in-flight async writes cannot resurrect deleted data",
+        "owned native configuration reset is acknowledged before local erasure; failure preserves drafts and permits retry"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Correct local/secure state purge; async stale-write fences",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-080",
+      "category": "Profile",
+      "feature": "account deletion",
+      "userControls": "Delete Account & Data/confirmation/error/completion",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "deletion-account",
+      "expectedOutcomes": [
+        "cancel and failed deletion preserve truthful current status",
+        "deployed tombstone removes owner ciphertext and auth state",
+        "late callbacks and second device cannot resurrect deleted owner data",
+        "accepted hosted deletion and failed device cleanup remain distinct and retryable"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Deployed deletion/tombstone/ciphertext purge and auth state",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-081",
+      "category": "Profile",
+      "feature": "Shield shortcut",
+      "userControls": "Open Shield",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "profile-shield",
+      "expectedOutcomes": [
+        "Open Shield chooses the native Shield root",
+        "Back cannot revive a stale duplicate Profile shell",
+        "subsequent tabs keep correct root identities"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Correct native destination/stack",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-082",
+      "category": "Paywall",
+      "feature": "annual/monthly selection",
+      "userControls": "Two equal-benefit radios, no trial/future plans, selection retained",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "paywall-plans",
+      "expectedOutcomes": [
+        "yearly monthly radio selection is mutually exclusive",
+        "real localized currency cadence and price match store",
+        "selection survives large font changes and offers no phantom trial"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Real store price/currency/cadence and font change",
+      "dependencies": "store verification and consented SDK behavior",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-083",
+      "category": "Paywall",
+      "feature": "price/subscribe",
+      "userControls": "Store price/detail, Subscribe/busy, Retry store prices",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "paywall-plans",
+      "expectedOutcomes": [
+        "store price loading retry and unavailable states are reachable",
+        "sandbox Subscribe cancel failure and busy have correct transitions",
+        "server verified receipt alone enables purchased membership"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Real products/purchase/cancel/error and server verification",
+      "dependencies": "store verification and consented SDK behavior",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-084",
+      "category": "Paywall",
+      "feature": "free exit",
+      "userControls": "Close/Continue with Free and correct origin",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "paywall-free-exit",
+      "expectedOutcomes": [
+        "Close and Continue with Free return to every origin",
+        "native Back and large text retain reachable free exit",
+        "busy confirmation prevents unsafe duplicate checkout"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Every native origin/back/large-text/busy scenario",
+      "dependencies": "store verification and consented SDK behavior",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-085",
+      "category": "Paywall",
+      "feature": "Restore purchases",
+      "userControls": "Guest/account restore and ownership fence",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "paywall-plans",
+      "expectedOutcomes": [
+        "guest and linked owner restore use valid sandbox receipt",
+        "invalid expired and other-owner receipt are rejected",
+        "AppCheck and server entitlement authority survive cancellation and restart"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Valid/invalid/other-owner sandbox receipt and server/AppCheck",
+      "dependencies": "store verification and consented SDK behavior",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-086",
+      "category": "Paywall",
+      "feature": "Manage subscription",
+      "userControls": "Native store manage/cancel and refresh state",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "paywall-plans",
+      "expectedOutcomes": [
+        "Manage Subscription opens correct native store management",
+        "cancel and return refresh actual membership state",
+        "refund or revoke does not keep stale verified Premium"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Actual App Store/Play management return",
+      "dependencies": "store verification and consented SDK behavior",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-087",
+      "category": "Paywall",
+      "feature": "benefit promises",
+      "userControls": "Ad-free resets/challenges, deeper reports/estimated forecasts, support-circle reports, CLARA 20/day",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "paywall-plans",
+      "expectedOutcomes": [
+        "each promised benefit has implemented entitled control",
+        "disabled remote CLARA never claims live remote availability",
+        "free local support remains usable after upgrade cancellation"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Local controls present; remote CLARA disabled/undeployed at snapshot",
+      "dependencies": "store verification and consented SDK behavior",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-088",
+      "category": "Paywall",
+      "feature": "legal actions",
+      "userControls": "Privacy/Terms and free path",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "paywall-legal",
+      "expectedOutcomes": [
+        "Privacy and Terms open current live pages",
+        "browser return retains selected plan",
+        "free continuation remains reachable at large font sizes"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Native browser return/content alignment",
+      "dependencies": "store verification and consented SDK behavior",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-089",
+      "category": "Platform",
+      "feature": "auth/App Check",
+      "userControls": "Guest/linked UID, account fences, Play Integrity/App Attest",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "account-options",
+      "expectedOutcomes": [
+        "signed physical AppAttest or Play Integrity token is enforced",
+        "guest linked and stale owner callables obey account fence",
+        "missing invalid and revoked AppCheck proof is rejected"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Physical signed token/enforcement and provider proof",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-090",
+      "category": "Platform",
+      "feature": "push notifications",
+      "userControls": "FCM/APNs registration/refresh/delivery/open/disable consent",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "profile-reminders",
+      "expectedOutcomes": [
+        "consented signed APNs or FCM registration refreshes token",
+        "actual remote delivery and open match intended check-in route",
+        "disabled flag or withdrawn consent stops claimed remote delivery"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Remote flag false; production signed devices/tokens/server proof",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-091",
+      "category": "Platform",
+      "feature": "Firebase foundation",
+      "userControls": "Rules/indexes/owner data/idempotency/rate limits/tombstones/storage policy",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": null,
+      "expectedOutcomes": [
+        "emulator rules indexes storage and owner constraints pass",
+        "idempotency rate limits and tombstones reject invalid writes",
+        "live deployed functions and bucket inventory match signed build config"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Fresh emulator plus live inventory/smoke; at read time Functions0 and buckets0",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-092",
+      "category": "Platform",
+      "feature": "adult feed hosting",
+      "userControls": "Reviewed feed/conditional HTTP/checksum/import",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "shield-diagnostics",
+      "expectedOutcomes": [
+        "hosted reviewed feed returns valid version checksum",
+        "conditional HTTP and stale fallback follow import contract",
+        "device native enforcement is separately proved with normal corpus"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Hosted delivery and on-device enforcement are separate receipts",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-093",
+      "category": "Platform",
+      "feature": "final release binary",
+      "userControls": "Android upload-signed AAB/APK/Hermes; iOS five embedded extensions",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "root-navigation",
+      "expectedOutcomes": [
+        "final binary hash matches installed tested source revision",
+        "Android upload signature Hermes and AAB APK integrity pass",
+        "iOS required five extensions and entitlement signatures are embedded"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Fresh checksum/signature/entitlements/source binding and installed final UI",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-094",
+      "category": "Platform",
+      "feature": "TestFlight",
+      "userControls": "Distribution archive/export/upload/processing/install",
+      "platforms": [
+        "ios"
+      ],
+      "navigationFlow": null,
+      "expectedOutcomes": [
+        "distribution archive and export match signed app profile",
+        "upload accepted and build processing completes in App Store Connect",
+        "TestFlight install launches the identical processed build on signed device"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Distribution identity present; no cached FREED App Store profile/current IPA/upload proof",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-095",
+      "category": "Platform",
+      "feature": "unsupported iOS inspection",
+      "userControls": "Full VPN/HTTPS inspection/native third-party screen OCR",
+      "platforms": [
+        "ios"
+      ],
+      "navigationFlow": "platform-limits",
+      "expectedOutcomes": [
+        "full VPN HTTPS and third party OCR claims remain unsupported",
+        "supported Safari and Screen Time scope is accurately shown",
+        "absence of packet tunnel entitlement never masquerades as inspection"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Unsupported advertised scope; no packet tunnel/inspection entitlement",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-096",
+      "category": "Platform",
+      "feature": "community workflows",
+      "userControls": "Remote community/milestone sharing",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": null,
+      "expectedOutcomes": [
+        "remote community remains disabled without reviewed consent",
+        "unavailable or abused sharing fails closed",
+        "provider moderation and revocable consent proof precede any live claim"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Fail-closed until reviewed consent/abuse controls/provider",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "supportStatus": "community remains outside this public core",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-097",
+      "category": "Onboarding",
+      "feature": "email create/sign-in",
+      "userControls": "Email/password/confirm password, Show/Hide password, Create account/Connect email/Sign in, Back/Already have an account/Skip for now/Cancel",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "account-validation",
+      "expectedOutcomes": [
+        "email password confirmation and Show Hide have correct native behavior",
+        "invalid email short or mismatched password never creates account",
+        "guest linking collision loading cancellation and autofill retain owner"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Native provider execution, same-UID guest linking, collision/validation/loading/cancel/keyboard/autofill",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-098",
+      "category": "Onboarding",
+      "feature": "email verification",
+      "userControls": "Resend verification email, I have verified my email, Continue and verify later, busy/error/verification state",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "account-verification",
+      "expectedOutcomes": [
+        "disposable mailbox receives verification link once per request",
+        "reload detects actual current user verified state",
+        "resend error later continuation and stale owner are handled safely"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Actual delivery plus signed-device reload/current-user verified state",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-099",
+      "category": "Onboarding",
+      "feature": "password reset",
+      "userControls": "Forgot password, Send reset email, Check your email, Back to sign in, Use a different email",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "account-reset-validation",
+      "expectedOutcomes": [
+        "invalid email reset is rejected without delivery",
+        "disposable mailbox reset returns nonenumerating Check email response",
+        "Back to sign in different email cancel and keyboard preserve flow"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "Actual reset delivery, nonenumerating response, cancellation/return",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-100",
+      "category": "Preferences",
+      "feature": "System, light and dark appearance",
+      "userControls": "Appearance choice, committed storage and device theme",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "preferences-appearance",
+      "expectedOutcomes": [
+        "System follows actual device appearance while explicit light and dark remain fixed",
+        "all three choices persist after cold restart without changing recovery history",
+        "a failed storage write preserves the last committed selection and exposes a retryable error",
+        "large text and native accessible picker controls keep every option reachable"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "all three appearance choices, storage failure recovery, device changes and a cold restart",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-101",
+      "category": "Localization",
+      "feature": "Ten-language resource and authored-string completeness",
+      "userControls": "en, hi, es, pt, fr, de, ar, ja, ko and zh-Hans",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "preferences-language",
+      "expectedOutcomes": [
+        "ten catalogs preserve reviewed values and exact semantic topology/plural/interpolation",
+        "all current authored copy including finite photo-target nouns has translated coverage",
+        "private text/URLs/identifiers stay unchanged"
+      ],
+      "localChecks": "source audit and focused catalog/runtime resource tests passed on2026-10-05; not native matrix execution",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "every supported language on all app routes, translated accessibility labels and parameterized numbers and dates",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-102",
+      "category": "Localization",
+      "feature": "Arabic RTL and explicit layout restart",
+      "userControls": "Saved language, resolved system locale, reading direction and restart action",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "localization-rtl-restart",
+      "expectedOutcomes": [
+        "Arabic selection saves before offering an explicit RTL restart",
+        "LTR and System choices resolve the real device locale before deciding whether a direction restart is needed",
+        "successful restart applies mirrored native layout and preserves committed preferences and recovery data",
+        "restart failure keeps the saved preference and a reachable retry without fabricating applied layout"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "LTR to Arabic and Arabic to LTR or System with restart, restart failure, mirrored navigation and preserved input",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-103",
+      "category": "Protection",
+      "feature": "Independent protection layer status",
+      "userControls": "Website DNS, Android app intervention, iOS Screen Time and Safari",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "protection-layers",
+      "expectedOutcomes": [
+        "each supported protection layer displays its own actual authorization configuration and runtime health",
+        "one failed or denied layer never hides an active independent layer or claims total protection",
+        "permission revocation pause and restart refresh each native layer without inferred success",
+        "unsupported iOS packet inspection remains explicit while Safari Screen Time and local recovery remain reachable"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "permission granted denied revoked and restart for each supported layer independently",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-104",
+      "category": "Protection",
+      "feature": "Opt-in encrypted DNS consent and release gate",
+      "userControls": "Explicit consent, reviewed provider, native capability and release configuration",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "encrypted-dns-consent",
+      "expectedOutcomes": [
+        "fresh install does not start encrypted DNS before explicit informed consent",
+        "declining consent remains usable and release gate prevents activation even after consent",
+        "consent alone never reports native authorization or active encrypted DNS",
+        "missing module older binary invalid provider and revoked consent fail closed with truthful status"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "fresh no-consent fixture, decline, consent, gated build, provider policy and authorization denial",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-105",
+      "category": "Protection",
+      "feature": "Encrypted DNS runtime health and failure behavior",
+      "userControls": "Configured enabled active degraded captive portal VPN conflict and stopped states",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "encrypted-dns-status",
+      "expectedOutcomes": [
+        "configured profile enabled setting and verified active runtime remain distinct states",
+        "captive portal VPN conflict timeout and malformed resolver reply never report active protection",
+        "disable revoke background restart and network change refresh the measured native state",
+        "physical normal browsing blocked adult domain and latency traces establish actual enforcement without silent plaintext downgrade"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "physical resolver success failure captive portal conflicting VPN background restart and stop with sanitized network traces",
+      "dependencies": "native permissions/enforcement",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-106",
+      "category": "Premium",
+      "feature": "Unavailable, retry and store-localized pricing",
+      "userControls": "Monthly yearly loading error store currency subscribe and free exit",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "paywall-price-recovery",
+      "expectedOutcomes": [
+        "unavailable or loading store prices disable subscription and keep free continuation reachable",
+        "retry reloads actual store prices without fabricating a fallback amount or starting checkout",
+        "monthly and yearly show the exact store-localized currency amount and billing period with equal capabilities",
+        "busy failure cancellation and restore preserve plan ownership and truthful entitlement"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "sandbox storefront currency, unavailable offering, retry success, cancellation and preserved plan selection",
+      "dependencies": "store verification and consented SDK behavior",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-107",
+      "category": "Recovery",
+      "feature": "Retained drafts and durable form saves",
+      "userControls": "Check-in, setback and custom reset drafts",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "recovery-drafts",
+      "expectedOutcomes": [
+        "unfinished form values survive navigation and restart without creating history",
+        "check-in drafts apply only to their local date while custom and setback drafts remain bounded",
+        "failed durable saves keep fields and errors; retry never duplicates a committed record",
+        "explicit local data deletion removes all drafts while preferences remain independent"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "edit each form, navigate back, restart, commit, cleanup failure and local deletion",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-108",
+      "category": "Recovery",
+      "feature": "Localized Library search and tools",
+      "userControls": "Search, empty results, articles and recovery shortcuts",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "library-search",
+      "expectedOutcomes": [
+        "search matches localized article titles and categories",
+        "empty search results do not hide recovery tools",
+        "clearing search restores all local articles",
+        "article and tool actions preserve the originating native stack"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "search titles and categories in each selected language, clear search and open tools",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    },
+    {
+      "id": "feature-109",
+      "category": "Localization",
+      "feature": "Native permission translations",
+      "userControls": "Ten permission-string resources, host bundle and system app languages",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "navigationFlow": "native-permission-locales",
+      "expectedOutcomes": [
+        "all ten permission resource files resolve and have complete descriptions",
+        "native localized resources belong to the host app rather than monitor extensions",
+        "system app-language declarations include all ten supported languages",
+        "actual system permission dialogs use the configured system app language without claiming unsupported vendor localization"
+      ],
+      "localChecks": "Prior checks retained as historical; current language source catalog verified, device/service/store execution not established.",
+      "fullScenarioEvidence": "required; incomplete — source localization does not execute device/service/store flow",
+      "nextVerification": "inspect installed localized resources and permission dialogs under each supported system app language",
+      "dependencies": "local persistence, optional authenticated services and native navigation",
+      "sourceLocalization": {
+        "status": "current-source-catalog-verified",
+        "checkedOn": "2026-10-05",
+        "runtimeVerified": false
+      },
+      "historicalLocalChecks": "passed in173-suite integrated run"
+    }
+  ],
+  "sourceVerification": {
+    "date": "2026-10-05",
+    "scope": "localization-only",
+    "surfaces": 85,
+    "locales": [
+      "en",
+      "hi",
+      "es",
+      "pt",
+      "fr",
+      "de",
+      "ar",
+      "ja",
+      "ko",
+      "zh-Hans"
+    ],
+    "sourceAudit": "errors0/uncovered0 including generated Android resource validation at final stable source window",
+    "deviceMatrixPromoted": 0
+  }
+}

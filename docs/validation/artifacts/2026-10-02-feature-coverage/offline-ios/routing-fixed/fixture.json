@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "freed-disposable-ui-fixture-v1",
+  "deviceId": "CB401DE2-5B73-4017-95B3-E2D609FB88DA",
+  "platform": "ios",
+  "disposable": true,
+  "dataOwner": "test-only",
+  "services": "disabled",
+  "allowRealEmail": false,
+  "allowRealPurchases": false,
+  "allowRealMessages": false,
+  "appBuildSha256": "fef4829c005f12d717c6814e1f720dde1fd0ec5d5e5e5b2dccdd9d942fce2ecc",
+  "configuration": "Offline UI-only copy; EXPO_PUBLIC_FIREBASE_APP_CHECK_DEBUG_PROVIDER=enabled without token causes production Firebase readiness to fail closed. Not a releasable configuration."
+}

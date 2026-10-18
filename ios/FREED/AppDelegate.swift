@@ -1,6 +1,8 @@
 internal import Expo
 import React
 import ReactAppDependencyProvider
+internal import GoogleSignIn
+internal import FirebaseCore
 
 @main
 class AppDelegate: ExpoAppDelegate {
@@ -13,6 +15,10 @@ class AppDelegate: ExpoAppDelegate {
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
   ) -> Bool {
+    // @generated begin freed-app-check-startup
+    RNFBAppCheckModule.sharedInstance()
+    if FirebaseApp.app() == nil { FirebaseApp.configure() }
+    // @generated end freed-app-check-startup
     let delegate = ReactNativeDelegate()
     let factory = ExpoReactNativeFactory(delegate: delegate)
     delegate.dependencyProvider = RCTAppDependencyProvider()
@@ -37,6 +43,7 @@ class AppDelegate: ExpoAppDelegate {
     open url: URL,
     options: [UIApplication.OpenURLOptionsKey: Any] = [:]
   ) -> Bool {
+    if GIDSignIn.sharedInstance.handle(url) { return true }
     return super.application(app, open: url, options: options) || RCTLinkingManager.application(app, open: url, options: options)
   }
 
@@ -60,6 +67,12 @@ class ReactNativeDelegate: ExpoReactNativeFactoryDelegate {
   }
 
   override func bundleURL() -> URL? {
+#if DEBUG
+    if (ProcessInfo.processInfo.environment["FREED_QA_EMBEDDED_BUNDLE"] == "1" || Bundle.main.url(forResource: "freed-qa-embedded-marker", withExtension: nil) != nil),
+       let embeddedBundle = Bundle.main.url(forResource: "main", withExtension: "jsbundle") {
+      return embeddedBundle
+    }
+#endif
 #if DEBUG
     return RCTBundleURLProvider.sharedSettings().jsBundleURL(forBundleRoot: ".expo/.virtual-metro-entry")
 #else

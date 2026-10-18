@@ -1,0 +1,1 @@
+{"tests":3,"passed":1,"failed":2,"failures":["rate-limit expiry must be a Firestore timestamp","timestamp idempotency receipt was treated as expired before its expiry boundary"],"productionSourceUnmodifiedDuringRedRun":true}

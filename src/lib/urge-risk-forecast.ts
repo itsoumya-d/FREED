@@ -142,21 +142,21 @@ export function buildLocalUrgeRiskForecast(state: RecoveryState, day: Date | str
   let score = 18;
 
   if (todayCheckIn) {
-    if (todayCheckIn.urgeLevel >= 4) {
+    if (todayCheckIn.urgeLevel !== null && todayCheckIn.urgeLevel >= 4) {
       score += 26;
       addUnique(drivers, "High urge check-in today");
     } else if (todayCheckIn.urgeLevel === 3) {
       score += 12;
       addUnique(drivers, "Moderate urge check-in today");
-    } else if (todayCheckIn.urgeLevel <= 1) {
+    } else if (todayCheckIn.urgeLevel !== null && todayCheckIn.urgeLevel <= 1) {
       score -= 8;
       addUnique(protectiveFactors, "Low urge check-in today");
     }
 
-    if (todayCheckIn.sleepQuality <= 2) {
+    if (todayCheckIn.sleepQuality !== null && todayCheckIn.sleepQuality <= 2) {
       score += 16;
       addUnique(drivers, "Low sleep reported today");
-    } else if (todayCheckIn.sleepQuality >= 4) {
+    } else if (todayCheckIn.sleepQuality !== null && todayCheckIn.sleepQuality >= 4) {
       score -= 6;
       addUnique(protectiveFactors, "Solid sleep reported today");
     }
@@ -281,7 +281,7 @@ export function buildLocalUrgeRiskForecast(state: RecoveryState, day: Date | str
       hasCheckInToday: Boolean(todayCheckIn)
     }),
     nextCheckInPrompt:
-      todayCheckIn?.urgeLevel && todayCheckIn.urgeLevel >= 4
+      todayCheckIn?.urgeLevel && todayCheckIn.urgeLevel !== null && todayCheckIn.urgeLevel >= 4
         ? "What would lower stimulation in the next ten minutes?"
         : "What is the smallest boundary that protects the next hour?",
     privacy: {

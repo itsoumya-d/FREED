@@ -1,0 +1,3 @@
+const {mkdtempSync,rmSync}=require('node:fs');const {tmpdir}=require('node:os');const {join}=require('node:path');const {spawnSync}=require('node:child_process');const assert=require('node:assert/strict');
+const scratch=mkdtempSync(join(tmpdir(),'freed-atomic-state-tests-'));
+try {const binary=join(scratch,'cases');for(const [cmd,args] of [['xcrun',['swiftc','-parse-as-library','-swift-version','5','modules/freed-protection/ios/FreedProtectionConfigurationLock.swift','modules/freed-protection/tests/AtomicEnforcementStateCases.swift','-o',binary]],[binary,[]]]){const r=spawnSync(cmd,args,{encoding:'utf8',timeout:60000});process.stdout.write(r.stdout+r.stderr);assert.equal(r.status,0,`${cmd} failed`);}}finally{rmSync(scratch,{recursive:true,force:true});}

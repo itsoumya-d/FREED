@@ -1,0 +1,28 @@
+appId: app.freed.recovery
+name: encrypted-dns-release-gated
+tags:
+  - smoke
+  - read-only
+---
+# Unexecuted smoke scenario. Requires an isolated disposable English/LTR fixture.
+# Full scenario and physical-device receipts remain separate obligations.
+- openLink: "freed:///shield/dns"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-shield-dns"
+    timeout: 15000
+# Precondition: default release-disabled native build, with no DNS configuration.
+- scrollUntilVisible:
+    element: { id: "dns-consent-open" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: { id: "dns-consent-open", enabled: false }
+- assertVisible: { id: "dns-status", text: "Protection unavailable" }
+- assertNotVisible: { id: "dns-consent" }
+- assertNotVisible: { id: "dns-status", text: "Protection active" }
+- takeScreenshot: "encrypted-dns-release-gated"

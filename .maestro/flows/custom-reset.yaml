@@ -1,0 +1,31 @@
+appId: app.freed.recovery
+name: custom-reset
+tags:
+  - smoke
+  - read-only
+---
+# Requires an English disposable free-membership fixture; no state or Keychain reset.
+# Upgrade only opens the offer, and Continue with Free returns without checkout.
+- openLink: "freed:///flow/customChallenge"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-customChallenge"
+    timeout: 15000
+- assertVisible: "Custom Reset Builder"
+- tapOn: "Upgrade"
+- assertVisible:
+    id: "screen-paywall"
+- scrollUntilVisible:
+    element:
+      text: "Continue with Free"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Continue with Free"
+- assertVisible:
+    id: "screen-customChallenge"
+- takeScreenshot: "custom-reset"

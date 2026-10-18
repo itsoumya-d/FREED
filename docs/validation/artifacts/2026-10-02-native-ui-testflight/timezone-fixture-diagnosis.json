@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "freed-timezone-fixture-diagnosis-v1",
+  "generatedAt": "2026-10-02T06:57:16.594676+00:00",
+  "sanitized": true,
+  "productionEdits": false,
+  "cause": "UTC timestamps encoded intended local-day/time fixtures; production reports and schedule windows intentionally use local calendar fields",
+  "initialFocusedResults": {
+    "UTC": "18/18",
+    "Asia/Kolkata": "17/18"
+  },
+  "repairs": [
+    "independent Date calendar report boundaries (normal/March/November weeks); overlaps/edge no-overlap/opencount preserved",
+    "epoch-minute alias count queried at same epoch instant, accounting for negative-offset local date",
+    "discipline settings/learning queried by local configured clock time",
+    "weekly slip two late-night events and one evening event expressed as local times",
+    "analytics privacy fixture local hours explicit: three04xx signals, same-local-day slip; expected counts/hour/denominators unchanged"
+  ],
+  "finalFocusedReceipt": "timezone-validation-final.json",
+  "initialCoreReceipt": "core-timezone-validation.json",
+  "finalCoreReceipt": "core-timezone-validation-final.json"
+}

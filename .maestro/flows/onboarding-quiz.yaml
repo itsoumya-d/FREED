@@ -1,0 +1,40 @@
+appId: app.freed.recovery
+name: onboarding-quiz
+tags:
+  - smoke
+  - local-write
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///onboarding/quiz"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-quiz"
+    timeout: 15000
+- assertVisible: "What is your main reason for changing\\?"
+- tapOn: "Mental clarity & focus"
+- tapOn:
+    id: "quiz-continue"
+- assertVisible: "How long has this cycle been a struggle\\?"
+- tapOn: "Under 1 year"
+- tapOn:
+    id: "quiz-continue"
+- assertVisible: "When are urges most likely to strike\\?"
+- tapOn: "Late night in bed"
+- tapOn:
+    id: "quiz-continue"
+- assertVisible: "What symptoms affect your daily life most\\?"
+- tapOn: "Brain fog & low drive"
+- tapOn:
+    id: "quiz-continue"
+- assertVisible: "What helps you reset and ground fastest\\?"
+- tapOn: "Exercise & movement"
+- tapOn:
+    id: "quiz-continue"
+- assertVisible:
+    id: "screen-planCalculation"
+- takeScreenshot: "onboarding-quiz"

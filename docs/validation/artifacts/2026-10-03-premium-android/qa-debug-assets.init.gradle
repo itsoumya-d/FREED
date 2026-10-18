@@ -1,0 +1,17 @@
+// Local QA only: inject the fresh development bundle without rewriting the
+// existing dirty app/src/main/assets bundle or committing build configuration.
+gradle.beforeProject { project ->
+  // Plugin callbacks run before AGP snapshots variant asset providers.
+  // Included Gradle plugin builds never apply the Android application plugin.
+  project.plugins.withId('com.android.application') {
+    def qa = new File('/tmp/freed-premium-android-qa-20261003')
+    def bundle = new File(qa, 'assets/index.android.bundle')
+    if (!bundle.isFile()) {
+      throw new GradleException('Build the isolated FREED QA development bundle first.')
+    }
+    def android = project.extensions.getByName('android')
+    def debug = android.sourceSets.getByName('debug')
+    debug.assets.srcDir(new File(qa, 'assets'))
+    debug.res.srcDir(new File(qa, 'resources'))
+  }
+}

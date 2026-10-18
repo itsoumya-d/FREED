@@ -1,0 +1,34 @@
+jest.mock('@/components/MomentumCompanion', () => ({ MomentumCompanion: () => null }));
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react-native';
+import { within } from '@testing-library/react-native';
+import { I18nextProvider } from 'react-i18next';
+import { appI18n, translateSource } from '@/i18n/runtime';
+import { LIBRARY_ARTICLES } from '@/data/library-articles';
+import { SUPPORTED_LANGUAGES } from '@/lib/app-preferences';
+import { LibraryScreen } from '../../src/features/library-screen';
+jest.mock('@/design-system/use-app-theme', () => ({ useAppTheme: () => ({ colors: require('../../src/design-system/app-palette').getAppPalette('light') }) }));
+jest.mock('@/components/ui/Button', () => ({ Button: ({ label, onPress }: any) => { const { Text, Pressable } = require('react-native'); return <Pressable onPress={onPress}><Text>{label}</Text></Pressable>; } }));
+test('article search has an empty result state while all recovery tools remain reachable', () => {
+  const breathe = jest.fn(); const props = { onBack: jest.fn(), onBreathing: breathe, onChallenge: jest.fn(), onCustomChallenge: jest.fn(), onCoach: jest.fn(), onJournal: jest.fn(), onMove: jest.fn(), onOpenArticle: jest.fn(), customChallengeCount: 0, customChallengesEnabled: false };
+  const screen = render(<LibraryScreen {...props} />);
+  fireEvent.changeText(screen.getByTestId('library-search'), 'no-such-article-947');
+  expect(screen.getByTestId('library-empty')).toBeTruthy();
+  fireEvent.press(screen.getByTestId('library-tool-breathe'));
+  expect(breathe).toHaveBeenCalledTimes(1);
+  fireEvent.changeText(screen.getByTestId('library-search'), '');
+  expect(screen.queryByTestId('library-empty')).toBeNull();
+});
+afterEach(async () => { await appI18n.changeLanguage('en'); });
+test.each(SUPPORTED_LANGUAGES)('%s localizes article metadata fragments and opens the original article', async language => {
+  await appI18n.changeLanguage(language);
+  const open = jest.fn();
+  const props = { onBack: jest.fn(), onBreathing: jest.fn(), onChallenge: jest.fn(), onCustomChallenge: jest.fn(), onCoach: jest.fn(), onJournal: jest.fn(), onMove: jest.fn(), onOpenArticle: open, customChallengeCount: 0, customChallengesEnabled: false };
+  const screen = render(<I18nextProvider i18n={appI18n}><LibraryScreen {...props} /></I18nextProvider>);
+  const article = LIBRARY_ARTICLES[0];
+  const metadata = within(screen.getByTestId(`library-article-metadata-${article.id}`));
+  expect(metadata.getByText(translateSource(article.tag, language))).toBeOnTheScreen();
+  expect(metadata.getByText(translateSource(`${article.readMinutes} min read`, language))).toBeOnTheScreen();
+  await fireEvent.press(screen.getByTestId(`library-article-${article.id}`));
+  expect(open).toHaveBeenCalledWith(article);
+});

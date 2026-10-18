@@ -1,0 +1,30 @@
+appId: app.freed.recovery
+name: shield-diagnostics
+tags:
+  - smoke
+  - read-only
+---
+# Requires an English disposable fixture; no state or Keychain reset.
+# Diagnostics and Focus Shield are separate native detail routes.
+- openLink: "freed:///shield/diagnostics"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "screen-main-shield-diagnostics" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { text: "Show advanced diagnostics" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Show advanced diagnostics"
+- assertVisible: "Advanced diagnostics"
+- openLink: "freed:///shield/focus-shield"
+- extendedWaitUntil:
+    visible: { id: "screen-main-shield-focus-shield" }
+    timeout: 15000
+- assertVisible: "Focus Shield"
+- assertVisible: { id: "screen-main-shield-focus-shield" }
+- takeScreenshot: "shield-diagnostics"

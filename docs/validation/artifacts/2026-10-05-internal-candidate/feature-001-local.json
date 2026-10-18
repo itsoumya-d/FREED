@@ -1,0 +1,274 @@
+{
+  "schemaVersion": "freed-feature-verification-report-v1",
+  "generatedAt": "2026-10-05T07:45:18.265Z",
+  "sanitized": true,
+  "mode": "local",
+  "catalog": "all",
+  "planOnly": false,
+  "ledgerPath": "docs/validation/artifacts/2026-10-02-native-ui-testflight/feature-ledger.json",
+  "baselineFeatureCount": 99,
+  "additionalFeatureCount": 10,
+  "ledgerSha256": "44c2654bc4c8740eee2426cab0bc05de195015e71908270b6bfa6ed0b771a532",
+  "installedBuildSha256": null,
+  "meaning": "Passing local contracts or Maestro smoke does not prove all native, live, physical, visual or motion behavior. All required checks stay in the denominator.",
+  "requestedSummary": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1,
+    "blocked": 0,
+    "notRun": 0,
+    "passedPercent": 0,
+    "complete": false
+  },
+  "allRequiredChecks": {
+    "total": 5,
+    "passed": 0,
+    "failed": 1,
+    "blocked": 0,
+    "notRun": 4,
+    "passedPercent": 0,
+    "complete": false
+  },
+  "fullFeatureSummary": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1,
+    "blocked": 0,
+    "notRun": 0,
+    "passedPercent": 0,
+    "complete": false
+  },
+  "testSuiteSummary": {
+    "total": 4,
+    "passed": 3,
+    "failed": 1,
+    "blocked": 0,
+    "notRun": 0,
+    "passedPercent": 75,
+    "complete": false
+  },
+  "localTestCounts": {
+    "passed": 13,
+    "failed": 0,
+    "skipped": 0
+  },
+  "suites": {
+    "tests/app-shell.test.ts": {
+      "status": "failed",
+      "exitCode": 1,
+      "timedOut": false,
+      "startedAt": "2026-10-05T07:45:16.766Z",
+      "durationMs": 845,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-05-internal-candidate/logs/app-shell.test.ts.log",
+      "logSha256": "c7b4b8ab6d13168e6f550a7d9d040dabc7e7bb8019873cb834c1f1a01cef4c42",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/app-shell.test.ts"
+      ]
+    },
+    "tests/motion-policy.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-05T07:45:17.614Z",
+      "durationMs": 76,
+      "counts": {
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-05-internal-candidate/logs/motion-policy.test.ts.log",
+      "logSha256": "116de943917eede1ba2cb264681b40e21d3d859520a42c2fe1bf9e141efb4d2c",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/motion-policy.test.ts"
+      ]
+    },
+    "tests/native-navigation.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-05T07:45:17.690Z",
+      "durationMs": 73,
+      "counts": {
+        "passed": 9,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-05-internal-candidate/logs/native-navigation.test.ts.log",
+      "logSha256": "cf3e4fbe03762a5166375ea5b7e4f06faebbc3f5d0c863646ee412ec6f3051ba",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/native-navigation.test.ts"
+      ]
+    },
+    "tests/native-router-dispatch.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-05T07:45:17.763Z",
+      "durationMs": 501,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-05-internal-candidate/logs/native-router-dispatch.test.ts.log",
+      "logSha256": "4524084aee2386c922c2be1d7c6b500644d7d6a5fd8e4d19728fbd2b8958ce21",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/native-router-dispatch.test.ts"
+      ]
+    }
+  },
+  "uiSmoke": {},
+  "features": [
+    {
+      "id": "feature-001",
+      "category": "Onboarding",
+      "feature": "splash/welcome",
+      "controls": "Brand/loading, start quiz, skip/free entry",
+      "nextVerification": "Cold launch and saved onboarding routing",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "flow": "onboarding-welcome",
+      "suites": [
+        "tests/native-navigation.test.ts",
+        "tests/app-shell.test.ts",
+        "tests/motion-policy.test.ts",
+        "tests/native-router-dispatch.test.ts"
+      ],
+      "scenarios": [
+        {
+          "id": "feature-001:scenario-1",
+          "expected": "cold launch resolves saved onboarding"
+        },
+        {
+          "id": "feature-001:scenario-2",
+          "expected": "welcome starts assessment"
+        },
+        {
+          "id": "feature-001:scenario-3",
+          "expected": "free entry returns to Today without old onboarding history"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "feature-001:local",
+          "mode": "local",
+          "suites": [
+            "tests/native-navigation.test.ts",
+            "tests/app-shell.test.ts",
+            "tests/motion-policy.test.ts",
+            "tests/native-router-dispatch.test.ts"
+          ],
+          "assertions": [
+            "behavioral-suite:tests/native-navigation.test.ts",
+            "behavioral-suite:tests/app-shell.test.ts",
+            "behavioral-suite:tests/motion-policy.test.ts",
+            "behavioral-suite:tests/native-router-dispatch.test.ts"
+          ],
+          "nextAction": "node scripts/run-feature-verification.js --mode local --feature feature-001",
+          "selected": true,
+          "status": "failed",
+          "reason": "A required behavioral test suite failed."
+        },
+        {
+          "id": "feature-001:ios",
+          "mode": "ios",
+          "platform": "ios",
+          "flow": "onboarding-welcome",
+          "assertions": [
+            "feature-001:scenario-1",
+            "feature-001:scenario-2",
+            "feature-001:scenario-3"
+          ],
+          "nextAction": "Run --mode ios --feature feature-001 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-001:device:ios",
+          "mode": "device",
+          "platform": "ios",
+          "motion": true,
+          "assertions": [
+            "feature-001:scenario-1",
+            "feature-001:scenario-2",
+            "feature-001:scenario-3",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical ios device and capture Cold launch and saved onboarding routing, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-001:android",
+          "mode": "android",
+          "platform": "android",
+          "flow": "onboarding-welcome",
+          "assertions": [
+            "feature-001:scenario-1",
+            "feature-001:scenario-2",
+            "feature-001:scenario-3"
+          ],
+          "nextAction": "Run --mode android --feature feature-001 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-001:device:android",
+          "mode": "device",
+          "platform": "android",
+          "motion": true,
+          "assertions": [
+            "feature-001:scenario-1",
+            "feature-001:scenario-2",
+            "feature-001:scenario-3",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical android device and capture Cold launch and saved onboarding routing, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        }
+      ],
+      "requestedSummary": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1,
+        "blocked": 0,
+        "notRun": 0,
+        "passedPercent": 0,
+        "complete": false
+      },
+      "status": "failed"
+    }
+  ]
+}

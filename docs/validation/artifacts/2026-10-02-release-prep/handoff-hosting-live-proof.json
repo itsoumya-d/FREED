@@ -1,0 +1,27 @@
+{
+  "sanitized": true,
+  "capturedAt": "2026-10-02T05:28:11.721Z",
+  "site": "https://freed-7d5ee.firebaseapp.com",
+  "routes": [
+    {
+      "path": "/intervention",
+      "status": 200,
+      "type": "text/html; charset=utf-8",
+      "sha256": "77378d9c23f74b560f753769d82bae32a5d268d622e32386d94a74f5ad2e720b"
+    },
+    {
+      "path": "/apple-app-site-association",
+      "status": 200,
+      "type": "application/json",
+      "sha256": "3206f3604b1db5f8d6c2d642a4d4c21b1b86db20a420d149e54222c884891794"
+    },
+    {
+      "path": "/.well-known/apple-app-site-association",
+      "status": 200,
+      "type": "application/json",
+      "sha256": "3206f3604b1db5f8d6c2d642a4d4c21b1b86db20a420d149e54222c884891794"
+    }
+  ],
+  "matchingAssociationEndpoints": true,
+  "physicalNativeDeliveryVerified": false
+}

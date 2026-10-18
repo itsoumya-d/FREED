@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "supported": true,
+  "platform": "android",
+  "revision": 3,
+  "configurationGeneration": 1000002,
+  "scopeEpoch": 1,
+  "groups": [
+    {
+      "id": "86dd511e-a683-4eba-8d84-9af3dc5e4dea",
+      "revision": 2,
+      "name": "Reading",
+      "enabled": true,
+      "rule": { "kind": "before-use" },
+      "packages": ["com.example.reader"],
+      "applicationCount": 1,
+      "categoryCount": 0,
+      "webDomainCount": 0,
+      "legacy": false,
+      "configured": true,
+      "ready": true,
+      "active": true,
+      "thresholdReached": false,
+      "unavailablePackages": [],
+      "usageMinutes": null,
+      "nextBoundaryAt": null,
+      "break": null
+    }
+  ],
+  "configuredGroupCount": 1,
+  "permissions": { "authorized": true, "usageAccess": false, "runtimeConnected": true },
+  "monitorBudget": { "used": 1, "limit": 6 },
+  "maxGroups": 6,
+  "legacyCompatibility": { "retained": false, "applicationCount": 0, "categoryCount": 0, "webDomainCount": 0 },
+  "reason": null
+}

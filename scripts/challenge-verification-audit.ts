@@ -11,6 +11,8 @@ import {
   getChallengeVerificationRequirement,
   isChallengeVerificationSatisfied
 } from "../src/lib/challenge-verification";
+import {LOCAL_PHOTO_TARGETS} from "../src/lib/challenge-rules";
+import {getChallengeCapability,type ChallengeCapabilities} from "../src/lib/challenge-capability";
 import { challengeLibrary, type RecoveryChallenge } from "../src/lib/recovery-engine";
 
 type AuditEntry = {
@@ -51,6 +53,7 @@ const checks = [
     const requirement = getChallengeVerificationRequirement(
       challenge({
         id: "audit-pushups",
+        verification: {version:1,kind:"motion",minMotionSamples:6},
         title: "20 controlled pushups",
         category: "physical",
         durationSec: 90,
@@ -65,12 +68,12 @@ const checks = [
       isChallengeVerificationSatisfied(requirement, { elapsedSec: 90, motionSamples: requirement.minMotionSamples }),
       true
     );
-    return "Physical effort fails closed until accelerometer movement samples meet the threshold.";
+    return "Phone movement requires real samples; this does not count exercise repetitions.";
   }),
   runCase("outdoor-walk-requires-location", () => {
     const templateWalk = CHALLENGE_TEMPLATES.find((item) => item.title.toLowerCase().includes("walk outside"));
     assert.ok(templateWalk, "walk outside template exists");
-    const requirement = getChallengeVerificationRequirement(templateWalk);
+    const requirement = getChallengeVerificationRequirement({...templateWalk, verification:{version:1,kind:"location",minDistanceMeters:25}});
 
     assert.equal(requirement.kind, "location");
     assert.equal(isChallengeVerificationSatisfied(requirement, { elapsedSec: templateWalk.durationSec, distanceMeters: 1, locationSamples: 2, bestLocationAccuracyMeters: 20 }), false);
@@ -107,6 +110,7 @@ const checks = [
     const requirement = getChallengeVerificationRequirement(
       challenge({
         id: "audit-clean-desk",
+        verification: {version:1,kind:"steps",minSteps:20},
         title: "Clean your desk for 3 minutes",
         category: "reset",
         durationSec: 180,
@@ -123,6 +127,7 @@ const checks = [
     const requirement = getChallengeVerificationRequirement(
       challenge({
         id: "audit-indoor-walk",
+        verification: {version:1,kind:"steps",minSteps:40},
         title: "Walk 40 steps around your room",
         category: "reset",
         durationSec: 120,
@@ -139,6 +144,7 @@ const checks = [
     const requirement = getChallengeVerificationRequirement(
       challenge({
         id: "audit-flower-photo",
+        verification: {version:1,kind:"photo",targetId:"flower"},
         title: "Take a photo of a flower nearby",
         category: "reset",
         durationSec: 60,
@@ -170,33 +176,27 @@ const checks = [
     );
     return "Specific photo challenges fail closed until native on-device labels match the target.";
   }),
-  runCase("photo-label-lexicon-covers-core-outdoor-quests", () => {
-    const targets = [
-      ["flower", "Take a picture of a flower nearby"],
-      ["tree", "Photograph a tree outside"],
-      ["sky", "Take a photo of the sky"],
-      ["dog", "Take a picture of a dog outside"]
-    ] as const;
-
-    for (const [label, title] of targets) {
-      const requirement = getChallengeVerificationRequirement(
-        challenge({
-          id: `audit-${label}-photo`,
-          title,
-          category: "reset",
-          icon: "Camera",
-          steps: ["Use the camera.", "Capture the target."]
-        })
-      );
-      assert.equal(requirement.kind, "photo", `${label} should be photo-verified`);
-      assert.ok(requirement.expectedPhotoLabels?.includes(label), `${label} label missing`);
+  runCase("photo-target-rules-are-explicit-and-calibration-gated", () => {
+    const unavailable={available:false,permission:"unavailable" as const,canAskAgain:false};
+    const capabilities:ChallengeCapabilities={motion:unavailable,steps:unavailable,location:unavailable,connection:unavailable,photo:{available:true,permission:"granted",canAskAgain:false}};
+    for(const targetId of Object.keys(LOCAL_PHOTO_TARGETS) as Array<keyof typeof LOCAL_PHOTO_TARGETS>){
+      const item=challenge({verification:{version:1,kind:"photo",targetId}});
+      const requirement=getChallengeVerificationRequirement(item);
+      assert.equal(requirement.kind,"photo");
+      assert.deepEqual(requirement.expectedPhotoLabels,[...LOCAL_PHOTO_TARGETS[targetId]]);
+      assert.equal(getChallengeCapability(item,capabilities).eligible,false);
     }
-    return "Photo verification recognizes flower, tree, sky, and dog target labels.";
+    const flower=getChallengeVerificationRequirement(challenge({verification:{version:1,kind:"photo",targetId:"flower"}}));
+    assert.equal(isChallengeVerificationSatisfied(flower,{elapsedSec:60,photoMatched:true,photoLabels:["plant"],photoConfidence:.99}),false);
+    assert.equal(getChallengeVerificationRequirement(challenge({title:"Photograph the sky",verification:{version:1,kind:"photo",targetId:"sky"} as any})).kind,"unavailable");
+    assert.equal(getChallengeVerificationRequirement(challenge({title:"Walk outside and photograph a flower"})).kind,"unavailable");
+    return "Eight explicit candidate rules reject broad/unknown labels and remain unavailable without provider/model held-out calibration. Unit checks do not establish accuracy.";
   }),
   runCase("connection-requires-explicit-action", () => {
     const requirement = getChallengeVerificationRequirement(
       challenge({
         id: "audit-partner",
+        verification: {version:1,kind:"connection"},
         title: "Message your accountability partner",
         category: "connection",
         durationSec: 90,
@@ -206,7 +206,7 @@ const checks = [
     );
 
     assert.equal(requirement.kind, "connection");
-    assert.match(requirement.detail, /Complete the connection action/);
+    assert.match(requirement.detail, /Confirm the connection action/);
     assert.equal(isChallengeVerificationSatisfied(requirement, { elapsedSec: 90, connectionActionComplete: false }), false);
     assert.equal(isChallengeVerificationSatisfied(requirement, { elapsedSec: 90, connectionActionComplete: true }), true);
     return "Connection challenges require an explicit user action before completion, without depending only on a configured partner.";

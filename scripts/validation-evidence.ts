@@ -86,7 +86,7 @@ const ANDROID_PERMISSION_WIZARD_REQUIRED_CHECKS = [
   "androidUsageAccessExactSettingsRouteObserved",
   "androidAccessibilitySettingsReturnRefreshed",
   "androidAccessibilityExactSettingsRouteObserved",
-  "androidAccessibilityServiceDetailsTargetObserved",
+  "androidAccessibilityServiceEnabledObserved",
   "androidSystemSettingsReturnAutoAdvanceContinued"
 ];
 const IOS_PERMISSION_WIZARD_REQUIRED_CHECKS = [
@@ -154,7 +154,6 @@ const STORE_PAYWALL_LAUNCH_SCOPE_REQUIRED_CHECKS = [
   "postLaunchProductIdsHidden",
   "yearlyValueAnchorVisible",
   "monthlyRecurringVisible",
-  "lifetimeOneTimeVisible",
   "restorePurchasesVisible",
   "purchaseButtonsEnabled",
   "serverVerificationCopyVisible",
@@ -188,9 +187,7 @@ const STORE_CONSOLE_APP_RECORD_READINESS_REQUIRED_CHECKS = [
 const STORE_CONSOLE_PRODUCT_SETUP_REQUIRED_CHECKS = [
   "core3ProductsCreated",
   "appStoreMonthlyYearlySubscriptionGroupConfigured",
-  "appStoreLifetimeNonConsumableConfigured",
   "playMonthlyYearlyBasePlansConfigured",
-  "playLifetimeOneTimeProductConfigured",
   "launchPricesMatchCatalog",
   "reviewScreenshotsAttached",
   "productLocalizationsConfigured",
@@ -206,7 +203,6 @@ const STORE_CONSOLE_PRODUCT_SETUP_EVIDENCE_SCREENS = {
     "subscription-group",
     "yearly-subscription",
     "monthly-subscription",
-    "lifetime-non-consumable",
     "future-skus-inactive"
   ],
   googlePlay: [
@@ -214,7 +210,6 @@ const STORE_CONSOLE_PRODUCT_SETUP_EVIDENCE_SCREENS = {
     "subscriptions-list",
     "yearly-base-plan",
     "monthly-base-plan",
-    "lifetime-one-time-product",
     "future-skus-inactive"
   ]
 } as const;
@@ -335,12 +330,7 @@ const STORE_INTERVENTION_FLOW_REQUIRED_CHECKS_BY_TYPE: Record<string, string[]> 
     "noRawEntitlementTokenStored"
   ]
 };
-const AI_BACKEND_REQUIRED_RESULT_IDS = [
-  "configured-ai-model",
-  "clara-remote-endpoint",
-  "challenge-remote-endpoint",
-  "challenge-personalization-profiles"
-];
+const AI_BACKEND_REQUIRED_RESULT_IDS = require('./lib/google-clara-release-evidence').REQUIRED_RESULT_IDS;
 const ANDROID_PLAY_POLICY_PROOF_SCHEMA_VERSION = "freed-android-play-policy-report-v1";
 const ANDROID_PLAY_POLICY_REQUIRED_SIGNALS = [
   "accessibilityDisclosureMatchesPolicyPack",
@@ -2040,6 +2030,16 @@ function androidPermissionReportIssues(
     reportIssues.push(`${path}.appPackage`);
   }
 
+  const reportedSettingsRoutes = nonEmptyStringArray(report.androidSettingsRoutes)
+    ? report.androidSettingsRoutes.map(entry => entry.trim())
+    : [];
+  if (reportedSettingsRoutes.includes("android.settings.ACCESSIBILITY_DETAILS_SETTINGS")) {
+    reportIssues.push(`${path}.androidSettingsRoutes contains a protected legacy Accessibility route; capture current public settings routes`);
+  }
+  if (reportedSettingsRoutes.includes("android.intent.category.USAGE_ACCESS_CONFIG")) {
+    reportIssues.push(`${path}.androidSettingsRoutes contains an app-owned explanation route; capture current public permission settings routes`);
+  }
+
   if (config.reportKind === "dns-guard-vpn-consent") {
     if (report.vpnConsentRequiredBeforeApproval !== true || record.dnsGuardVpnConsentRequiredBeforeApproval !== true) {
       reportIssues.push(`${path}.vpnConsentRequiredBeforeApproval must be true`);
@@ -2061,7 +2061,7 @@ function androidPermissionReportIssues(
       ? report.androidSettingsRoutes.map((entry) => entry.trim())
       : [];
     const requiredRoutes = [
-      "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
+      "android.settings.VPN_SETTINGS",
       "android.settings.PRIVATE_DNS_SETTINGS",
       "android.settings.ACCESSIBILITY_SETTINGS",
       "android.settings.USAGE_ACCESS_SETTINGS",
@@ -2140,23 +2140,25 @@ function androidPermissionReportIssues(
     const settingsRoutes = nonEmptyStringArray(report.androidSettingsRoutes)
       ? report.androidSettingsRoutes.map((entry) => entry.trim())
       : [];
-    if (!settingsRoutes.includes("android.settings.ACCESSIBILITY_DETAILS_SETTINGS")) {
-      reportIssues.push(`${path}.androidSettingsRoutes must include android.settings.ACCESSIBILITY_DETAILS_SETTINGS`);
+    if (!settingsRoutes.includes("android.settings.ACCESSIBILITY_SETTINGS")) {
+      reportIssues.push(`${path}.androidSettingsRoutes must include android.settings.ACCESSIBILITY_SETTINGS`);
     }
-    if (!nonEmptyString(report.androidSettingsRouteOpened)) {
-      reportIssues.push(`${path}.androidSettingsRouteOpened`);
+    if (report.androidSettingsRouteOpened !== "android.settings.ACCESSIBILITY_SETTINGS") {
+      reportIssues.push(`${path}.androidSettingsRouteOpened must be android.settings.ACCESSIBILITY_SETTINGS`);
     }
-    if (!nonEmptyString(report.androidSettingsRouteComponent)) {
-      reportIssues.push(`${path}.androidSettingsRouteComponent`);
+    // The public implicit settings intent does not target FREED's service.
+    // Service identity must come from enabled-service proof instead.
+    if (!nonEmptyString(report.accessibilityServiceComponent)) {
+      reportIssues.push(`${path}.accessibilityServiceComponent`);
     } else {
-      const routeComponent = report.androidSettingsRouteComponent.trim();
-      if (!routeComponent.includes(report.appPackage) || !routeComponent.includes("FreedAccessibilityService")) {
-        reportIssues.push(`${path}.androidSettingsRouteComponent must target FREED AccessibilityService`);
+      const serviceComponent = report.accessibilityServiceComponent.trim();
+      if (serviceComponent !== `${report.appPackage}/app.freed.protection.FreedAccessibilityService`) {
+        reportIssues.push(`${path}.accessibilityServiceComponent must identify FREED AccessibilityService in enabled services`);
       }
     }
     const requiredChecks = [
       "explicitUserPermissionConfirmed",
-      "accessibilityServiceDetailsRouteCaptured",
+      "accessibilityPublicSettingsRouteCaptured",
       "accessibilitySettingsCaptured",
       "enabledServicesCaptured",
       "serviceComponentMatchesFreed",
@@ -3177,22 +3179,16 @@ function permissionWizardReportIssues(record: Record<string, unknown>, path: "io
     if (report.androidUsageAccessSettingsRoute !== "android.settings.USAGE_ACCESS_SETTINGS") {
       reportIssues.push(`${artifactPath}.androidUsageAccessSettingsRoute must be android.settings.USAGE_ACCESS_SETTINGS`);
     }
-    if (report.androidAccessibilitySettingsRoute !== "android.settings.ACCESSIBILITY_DETAILS_SETTINGS") {
+    if (report.androidAccessibilitySettingsRoute !== "android.settings.ACCESSIBILITY_SETTINGS") {
       reportIssues.push(
-        `${artifactPath}.androidAccessibilitySettingsRoute must be android.settings.ACCESSIBILITY_DETAILS_SETTINGS`
+        `${artifactPath}.androidAccessibilitySettingsRoute must be android.settings.ACCESSIBILITY_SETTINGS`
       );
     }
     if (!nonEmptyString(report.androidAppPackage)) {
       reportIssues.push(`${artifactPath}.androidAppPackage`);
     }
-    if (!nonEmptyString(report.androidAccessibilitySettingsRouteComponent)) {
-      reportIssues.push(`${artifactPath}.androidAccessibilitySettingsRouteComponent`);
-    } else {
-      const component = String(report.androidAccessibilitySettingsRouteComponent).trim();
-      const appPackage = nonEmptyString(report.androidAppPackage) ? String(report.androidAppPackage).trim() : "";
-      if (!component.includes("FreedAccessibilityService") || (appPackage && !component.includes(appPackage))) {
-        reportIssues.push(`${artifactPath}.androidAccessibilitySettingsRouteComponent must target FREED AccessibilityService`);
-      }
+    if (report.androidAccessibilityServiceEnabled !== true || record.accessibilityServiceEnabled !== true) {
+      reportIssues.push(`${artifactPath}.androidAccessibilityServiceEnabled must confirm the user-enabled service`);
     }
   }
 
@@ -5383,7 +5379,7 @@ function launchProductSandboxMatrixIssues(
   if (!Array.isArray(matrix)) return ["store.launchProductSandboxMatrix[]"];
 
   if (matrix.length !== LAUNCH_PREMIUM_PLAN_IDS.length) {
-    issues.push("store.launchProductSandboxMatrix must include exactly yearly, monthly, and lifetime");
+    issues.push(`store.launchProductSandboxMatrix must include exactly ${LAUNCH_PREMIUM_PLAN_IDS.join(" and ")}`);
   }
 
   const requiredIdFields = [
@@ -5422,7 +5418,7 @@ function launchProductSandboxMatrixIssues(
 
     const planId = nonEmptyString(rawEntry.planId) ? rawEntry.planId.trim() : "";
     if (!LAUNCH_PREMIUM_PLAN_IDS.includes(planId as (typeof LAUNCH_PREMIUM_PLAN_IDS)[number])) {
-      issues.push(`${path}.planId must be yearly, monthly, or lifetime`);
+      issues.push(`${path}.planId must be ${LAUNCH_PREMIUM_PLAN_IDS.join(" or ")}`);
     } else if (seenPlans.has(planId)) {
       issues.push(`${path}.planId duplicates ${planId}`);
     } else {
@@ -5614,7 +5610,8 @@ function storeConsoleLaunchProductRowsIssues(
   const issues: string[] = [];
   if (!Array.isArray(rows)) return [`${path} must include Core 3 launch products`];
   const rowsByPlan = productsByPlan(rows);
-  if (rows.length !== LAUNCH_PREMIUM_PLAN_IDS.length) issues.push(`${path} must include exactly Core 3 products`);
+  if (rows.length !== LAUNCH_PREMIUM_PLAN_IDS.length)
+    issues.push(`${path} must include exactly ${LAUNCH_PREMIUM_PLAN_IDS.join("/")} products`);
 
   for (const row of rows) {
     if (!isRecord(row) || !nonEmptyString(row.planId)) continue;
@@ -7170,6 +7167,11 @@ function purchaseVerificationReportArtifactIssues(
 }
 
 function aiBackendSmokeIssues(payload: Record<string, unknown>, root: string): string[] {
+  return require('./lib/google-clara-release-evidence').evidenceIssues(payload, root);
+}
+
+// Frozen v1 validator retained for historical reference only. Never called by current release acceptance.
+function legacyAiBackendSmokeIssues(payload: Record<string, unknown>, root: string): string[] {
   const ai = isRecord(payload.ai) ? payload.ai : {};
   const forbiddenSensitiveAiFields = [
     "rawPrompt",

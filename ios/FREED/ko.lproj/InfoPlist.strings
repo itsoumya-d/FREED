@@ -1,0 +1,5 @@
+"NSFaceIDUsageDescription" = "FREED는 장치 인증을 사용하여 복구 설정을 보호합니다.";
+"NSCameraUsageDescription" = "FREED는 실제 이미지 확인이 필요한 사진 챌린지를 선택한 경우에만 카메라를 사용합니다.";
+"NSLocationWhenInUseUsageDescription" = "FREED는 실외 복구 문제를 확인하는 데에만 임시 전경 위치를 사용합니다.";
+"NSMotionUsageDescription" = "FREED는 활성 챌린지 중에만 모션 데이터를 사용하여 실제 움직임을 확인합니다.";
+"NSUserNotificationsUsageDescription" = "FREED는 지원 복구 체크인 및 긴급 연속 방지 알림을 보냅니다.";

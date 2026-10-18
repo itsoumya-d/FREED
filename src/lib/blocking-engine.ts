@@ -1,3 +1,5 @@
+import type { AppGroupInterventionScope } from './app-group-intervention';
+import type { FocusShieldInterventionScope } from './focus-shield';
 export type BlockVerdict = "allow" | "block" | "review";
 
 export type ClassificationResult = {
@@ -17,6 +19,8 @@ export type BlockingAttempt = {
   source: "browser" | "search" | "manual-check" | "panic-button" | "app";
   sourcePackage?: string;
   sessionDurationSec?: number;
+  /** Runtime-only native handoff. Storage hydration intentionally does not restore unlock authority. */
+  scope?: FocusShieldInterventionScope | AppGroupInterventionScope;
 };
 
 export type AdultDomainFeedSource = {
@@ -150,6 +154,23 @@ const explicitDomainTokens = [
   "hentai",
   "nsfw",
   "xxx"
+];
+
+// Developer-hosting platforms where the project label sits three labels deep.
+// Token matching extends one label further on these hosts only; user-content
+// platforms (blogspot, wordpress, …) are deliberately excluded because adult
+// content is common there and feeds already cover the popular ones.
+const MULTI_PART_DEV_HOSTING_SUFFIXES = [
+  "github.io",
+  "gitlab.io",
+  "pages.dev",
+  "netlify.app",
+  "vercel.app",
+  "herokuapp.com",
+  "web.app",
+  "firebaseapp.com",
+  "repl.co",
+  "glitch.me"
 ];
 
 const explicitSearchTerms = [
@@ -497,10 +518,139 @@ function extractSearchText(input: string) {
   }
 }
 
-export function classifyUrl(input: string, options: { adultDomainFeed?: AdultDomainFeed } = {}): ClassificationResult {
+const consumptionNegationWords = new Set([
+  "stop",
+  "stopped",
+  "stopping",
+  "quit",
+  "quitting",
+  "no",
+  "never",
+  "avoid",
+  "avoiding",
+  "block",
+  "blocked",
+  "blocking",
+  "less",
+  "overcome",
+  "overcoming",
+  "fight",
+  "fighting",
+  "end",
+  "ending",
+  "ended"
+]);
+
+const neutralHelpMarkerWords = new Set([
+  "is",
+  "are",
+  "am",
+  "was",
+  "were",
+  "be",
+  "been",
+  "does",
+  "do",
+  "did",
+  "can",
+  "cannot",
+  "cant",
+  "could",
+  "why",
+  "how",
+  "what",
+  "which",
+  "who",
+  "should",
+  "would",
+  "will",
+  "meaning",
+  "mean",
+  "means",
+  "define",
+  "definition",
+  "bad",
+  "good",
+  "wrong",
+  "harm",
+  "harmful",
+  "healthy",
+  "unhealthy",
+  "sin",
+  "sinful",
+  "say",
+  "says",
+  "bible",
+  "quran",
+  "biblical",
+  "morality",
+  "moral",
+  "ethics",
+  "ethical",
+  "legal",
+  "illegal",
+  "law",
+  "laws",
+  "age",
+  "history",
+  "statistics",
+  "study",
+  "studies",
+  "research",
+  "science",
+  "scientific",
+  "brain",
+  "dopamine",
+  "psychology",
+  "psychological",
+  "religion",
+  "religious",
+  "facts",
+  "evidence"
+]);
+
+function splitSearchWords(searchText: string): string[] {
+  return searchText.split(/[^a-z0-9']+/).filter(Boolean);
+}
+
+function isConsumptionIntentNegated(searchText: string): boolean {
+  const words = splitSearchWords(searchText);
+  if (words.length === 0) return false;
+
+  return consumptionIntentSearchTerms.some((term) => {
+    const termWords = term.split(" ");
+    let wordIndex: number;
+    if (termWords.length > 1) {
+      const phraseIndex = searchText.indexOf(term);
+      if (phraseIndex < 0) return false;
+      const before = searchText.slice(0, phraseIndex).trim();
+      wordIndex = before ? splitSearchWords(before).length : 0;
+    } else {
+      wordIndex = words.findIndex((word) => word.includes(term));
+      if (wordIndex < 0) return false;
+    }
+    const windowStart = Math.max(0, wordIndex - 3);
+    return words
+      .slice(windowStart, wordIndex)
+      .some((word) => consumptionNegationWords.has(word));
+  });
+}
+
+function hasNeutralHelpContext(searchText: string, explicitTerm: string): boolean {
+  const explicitTokens = new Set(explicitTerm.split(" "));
+  return splitSearchWords(searchText).some(
+    (word) => !explicitTokens.has(word) && neutralHelpMarkerWords.has(word)
+  );
+}
+
+export function classifyUrl(
+  input: string,
+  options: { adultDomainFeed?: AdultDomainFeed; userAllowedDomains?: string[] } = {}
+): ClassificationResult {
   const host = normalizeHost(input);
   const searchText = extractSearchText(input);
   const adultDomains = options.adultDomainFeed?.domains ?? ADULT_DOMAIN_SEEDS;
+  const userAllowedDomains = options.userAllowedDomains ?? [];
 
   if (!host) {
     return {
@@ -513,14 +663,29 @@ export function classifyUrl(input: string, options: { adultDomainFeed?: AdultDom
     };
   }
 
+  // Exceptions apply to ordinary sites. Known adult domains and supported
+  // search-engine consumption intent still pass through the protection rules.
   const normalAllowlisted = DEFAULT_ALLOWED_NORMAL_DOMAINS.some((domain) => hostMatches(host, domain));
   const knownSearchEngine = isKnownSearchEngineHost(host);
+  const requestedException = !normalAllowlisted && !knownSearchEngine && userAllowedDomains.some((domain) => hostMatches(host, domain));
+  const knownAdultDomain = requestedException && (adultDomains.some((domain) => hostMatches(host, domain)) || ADULT_DOMAIN_SEEDS.some((domain) => hostMatches(host, domain)));
+  if (requestedException && !knownAdultDomain) {
+    return {
+      verdict: "allow",
+      confidence: 0.99,
+      host,
+      category: "known-safe",
+      reason: "You asked FREED to always allow this site.",
+      matchedRule: "user-allowlist"
+    };
+  }
 
   if (normalAllowlisted || knownSearchEngine) {
     const explicitSearch = explicitSearchTerms.find((term) => searchText.includes(term));
     if (explicitSearch) {
       const educationalIntent = recoveryEducationSearchTerms.some((term) => searchText.includes(term));
-      const consumptionIntent = consumptionIntentSearchTerms.some((term) => searchText.includes(term));
+      const rawConsumptionIntent = consumptionIntentSearchTerms.some((term) => searchText.includes(term));
+      const consumptionIntent = rawConsumptionIntent && !isConsumptionIntentNegated(searchText);
 
       if (educationalIntent && !consumptionIntent) {
         return {
@@ -530,6 +695,17 @@ export function classifyUrl(input: string, options: { adultDomainFeed?: AdultDom
           category: "known-safe",
           reason: "The query mentions adult terms in a recovery, health, or education context.",
           matchedRule: `safe-site-education:${explicitSearch}`
+        };
+      }
+
+      if (!consumptionIntent && hasNeutralHelpContext(searchText, explicitSearch)) {
+        return {
+          verdict: "allow",
+          confidence: 0.85,
+          host,
+          category: "known-safe",
+          reason: "The query mentions adult terms as a question or help-seeking, not consumption.",
+          matchedRule: `safe-site-neutral-query:${explicitSearch}`
         };
       }
 
@@ -567,11 +743,27 @@ export function classifyUrl(input: string, options: { adultDomainFeed?: AdultDom
     };
   }
 
-  const tokenMatch = explicitDomainTokens.find((token) => {
-    const parts = host.split(".");
-    return parts.some((part) => part === token || part.startsWith(`${token}-`) || part.endsWith(`-${token}`));
-  });
+  const tokenParts = host.split(".");
+  // Registrable-domain boundary: last two labels, extended by one extra label on
+  // known developer-hosting platforms so porn.github.io-style project hosts stay
+  // covered.
+  let tokenMinIndex = Math.max(0, tokenParts.length - 2);
+  if (MULTI_PART_DEV_HOSTING_SUFFIXES.some((suffix) => hostMatches(host, suffix))) {
+    tokenMinIndex = Math.max(0, tokenParts.length - 3);
+  }
+  const tokenInScope = (token: string) =>
+    tokenParts.some(
+      (part, index) =>
+        index >= tokenMinIndex &&
+        (part === token || part.startsWith(`${token}-`) || part.endsWith(`-${token}`))
+    );
+  const tokenOnlyInSubdomain = (token: string) =>
+    tokenParts.some((part, index) =>
+      index < tokenMinIndex &&
+      (part === token || part.startsWith(`${token}-`) || part.endsWith(`-${token}`))
+    );
 
+  const tokenMatch = explicitDomainTokens.find(tokenInScope);
   if (tokenMatch) {
     const recoveryContext = hasHostContext(host, recoveryDomainContextTerms);
     const consumptionContext = hasHostContext(host, consumptionDomainContextTerms);
@@ -594,6 +786,45 @@ export function classifyUrl(input: string, options: { adultDomainFeed?: AdultDom
       category: "adult",
       reason: "The hostname contains a high-confidence adult-content token.",
       matchedRule: `explicit-domain-token:${tokenMatch}`
+    };
+  }
+
+  // A token appearing only inside a deeper subdomain of an otherwise benign
+  // registrable domain is allowed unless the host carries consumption signals.
+  const subdomainTokenMatch = explicitDomainTokens.find(tokenOnlyInSubdomain);
+  if (subdomainTokenMatch) {
+    const subRecoveryContext = hasHostContext(host, recoveryDomainContextTerms);
+    const subConsumptionContext = hasHostContext(host, consumptionDomainContextTerms);
+
+    if (subRecoveryContext && !subConsumptionContext) {
+      return {
+        verdict: "allow",
+        confidence: 0.82,
+        host,
+        category: "unknown",
+        reason: "The hostname contains an adult-looking token in a recovery, health, or filtering context.",
+        matchedRule: `explicit-domain-token-recovery-context:${subdomainTokenMatch}`
+      };
+    }
+
+    if (!subConsumptionContext) {
+      return {
+        verdict: "allow",
+        confidence: 0.78,
+        host,
+        category: "unknown",
+        reason: "An adult-looking token appears in a subdomain without any consumption signal.",
+        matchedRule: `explicit-domain-token-subdomain-benign:${subdomainTokenMatch}`
+      };
+    }
+
+    return {
+      verdict: "block",
+      confidence: 0.8,
+      host,
+      category: "adult",
+      reason: "The hostname combines an adult-content token with consumption signals.",
+      matchedRule: `explicit-domain-token:${subdomainTokenMatch}`
     };
   }
 

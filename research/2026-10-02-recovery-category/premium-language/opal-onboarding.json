@@ -1,0 +1,921 @@
+[
+  {
+    "app": {
+      "app_id": "1497465230",
+      "name": "Opal: Screen Time Control"
+    },
+    "screens": [
+      {
+        "screen_id": "onb_7eb0l",
+        "name": null,
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 1,
+        "kind": "video",
+        "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxL2QzMWVlZjM4ODEzZDkyYTExOWZlN2UyYWY1OWEyMGY0NWQxMzFkODMubXA0IiwiZXhwIjoxNzkwOTQwODM2fWI2A8qn1q7HBqV238dWHQcKIleMxHACrA.mp4",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#FFFFFF",
+          "#1C1C1E",
+          "#2F80ED",
+          "#2EE5A3"
+        ],
+        "ui_elements": [
+          "Pill Action Button",
+          "Text Input Field",
+          "Rounded Selection Card",
+          "System Alert Dialog",
+          "Horizontal Progress Bar",
+          "Expandable List Item",
+          "Inline Error Modal",
+          "Feature Checklist Layout",
+          "Bottom Navigation Bar"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_j01b2",
+        "name": "Onboarding Intro",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 2,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2Y5NmU5ZDZlYWQ5ZDU5YWQ4ZGMxZDZjOGNjZWM2MTVlNmEwYzk3MjYud2VicCIsImV4cCI6MTc5MDk0MDgzNn0U_BF8EhW8bZMDRrhQcJV9e1aby7bP0Ao.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#0B0C0C",
+          "#1A1C1C",
+          "#E8E8E4",
+          "#9EF4D0"
+        ],
+        "ui_elements": [
+          "Centered Rock Gem",
+          "Dark Rock Backdrop",
+          "Centered Prompt Text",
+          "Bottom Tap Prompt"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_u92lp",
+        "name": "Onboarding Zoom Intro",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 3,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzE4YWQxYzRlZDFhZWMyM2IwOTMxNDA5ZDFkNjRlOGM4NjRmZTk2YzEud2VicCIsImV4cCI6MTc5MDk0MDgzNn0NX0ntOUJNJj15DabOkKDrhnoQbTPXJ7Q.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#0B0C0C",
+          "#181A1A",
+          "#E2E2DE",
+          "#92EFD1"
+        ],
+        "ui_elements": [
+          "Centered Rock Gem",
+          "Dark Rock Backdrop",
+          "Centered Prompt Text",
+          "Bottom Tap Prompt"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_im9zk",
+        "name": "Noise Pain Point",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 4,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzVjM2I2NTVkYmQ3OTAyMjM3YzEwMWM4MjZlYzkxNmViYWU1M2FiZDcud2VicCIsImV4cCI6MTc5MDk0MDgzNn3KS9jpzi6-HyE5z37LGskQ1XZ6BXHt6xY.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#101112",
+          "#252B2A",
+          "#F1F1EC",
+          "#69DDE7"
+        ],
+        "ui_elements": [
+          "Large Opal Gem",
+          "Dark Rock Backdrop",
+          "Left Aligned Copy",
+          "Bottom Tap Prompt"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_25n4j",
+        "name": "Focus Promise",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 5,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzRmY2VhNGQyNDI0ZWUzNGY0MTEzOGY5ZjA5MWVjYjdkMjMwMjU2YTUud2VicCIsImV4cCI6MTc5MDk0MDgzNn2jijZfq0Ec7cOWuUMGfqDwH7Ny3wMlyWg.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#0C1110",
+          "#1D2A25",
+          "#EDEDEA",
+          "#6FDDE6"
+        ],
+        "ui_elements": [
+          "Top Glowing Opal",
+          "Green Glow Gradient",
+          "Centered Promise Text"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_5rl7x",
+        "name": "Name Entry",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 6,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2M1ZDgyMmE3ZjgxYTgyMzkxYmM4MDBiNWE2ZmU2NTQ4YzBhODViYWQud2VicCIsImV4cCI6MTc5MDk0MDgzNn3lkt0MnewkGLVu_cbC48sjxKwe1Wt-EpE.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#161718",
+          "#343638",
+          "#F2F2EF",
+          "#8FE7B7"
+        ],
+        "ui_elements": [
+          "Top Glowing Opal",
+          "Name Text Field",
+          "Disabled Gradient CTA",
+          "iOS Keyboard"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_tvdoy",
+        "name": "Personal Welcome",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 7,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzBiNDUzOGI2OGUxYmZkZTBkNzFkOWQyNzMzZTQ3NGZkYzdjYzk3Zjcud2VicCIsImV4cCI6MTc5MDk0MDgzNn1fqLsI_mw702NiXqFAN8PUVvicKT3oFko.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#0C1110",
+          "#27362F",
+          "#F2F2EF",
+          "#8EEAAE"
+        ],
+        "ui_elements": [
+          "Top Glowing Opal",
+          "Indented Chat Copy",
+          "Green Name Highlight",
+          "Stacked Intro Copy"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_akxn1",
+        "name": "Returning User Check",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 8,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzFjNjlmYzc5ZjRlMTQ0ZDczNjFiMmM5N2Q0MjRjOTZjMjNkNjFjN2Qud2VicCIsImV4cCI6MTc5MDk0MDgzNn132xvvUYgRD2-NN3TwlAttDGKjcOfeUFc.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#101614",
+          "#1C1C1E",
+          "#F2F2EF",
+          "#8FD9BF"
+        ],
+        "ui_elements": [
+          "Top Glowing Opal",
+          "Stacked Intro Copy",
+          "Dual Choice Pills",
+          "Gradient CTA Pill"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_hsavz",
+        "name": "Sign Up",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 9,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzVmNDZlN2U5ZmJkYTA3NjBiODc4ODBiZDUyMmI2MDFkNDQzYmRmOTIud2VicCIsImV4cCI6MTc5MDk0MDgzNn1OfMJw846G-QA0MlyJZFxTYtdYyr8Untk.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#1C1C1E",
+        "colors": [
+          "#1C1C1E",
+          "#000000",
+          "#FFFFFF",
+          "#303033",
+          "#8E8E93"
+        ],
+        "ui_elements": [
+          "Full Screen Sign Up",
+          "Close Circle Icon",
+          "Apple Auth Button",
+          "Phone Auth Button",
+          "Email Auth Button",
+          "Privacy Footnote"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_46zet",
+        "name": "Goal Prompt Intro",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 10,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzQ2MzQ2YjhkM2VjMzRmODJkZjE1OWNhOWQ1ZmU3NDQ1NWEwNmEwZmQud2VicCIsImV4cCI6MTc5MDk0MDgzNn01czA-xU2NJ9o4_l5md47zQJtht-fKE5s.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#0C1110",
+          "#24352F",
+          "#F1F1EE",
+          "#8FE5A6"
+        ],
+        "ui_elements": [
+          "Top Glowing Opal",
+          "Setup Copy Stack",
+          "Green Status Text",
+          "Question Text Stack"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      }
+    ],
+    "total": 29,
+    "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2FwcF9zY3JlZW5zIiwicSI6IjFiNDRiYmU3NzIxY2ExZjkwOWMyNWVlMyIsIm8iOjEwLCJodyI6MjAsImV4cCI6MTc5MDk0MDgzNn0.1urz4dx6CA1cOkYYJwIMReNXcxU",
+    "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+    "credits": {
+      "spent": 1,
+      "remaining_this_month": 1435
+    }
+  },
+  {
+    "app": {
+      "app_id": "1497465230",
+      "name": "Opal: Screen Time Control"
+    },
+    "screens": [
+      {
+        "screen_id": "onb_t4sye",
+        "name": "Goal Selection",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 11,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzBhNGM0ZTY3NDE2OTc5M2MyYjdhYmUyZjYyMmEyYTAxZGE4ZTJmNmIud2VicCIsImV4cCI6MTc5MDk0MDgzN31MqFXbKqcB0PUjb_sxiP8oQTbwCe0fQ6E.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#101614",
+          "#1B1B1C",
+          "#F2F2EF",
+          "#85E7B1"
+        ],
+        "ui_elements": [
+          "Top Glowing Opal",
+          "Question Text Stack",
+          "Rounded Choice Pills",
+          "Green Option Icons"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_4thdr",
+        "name": "Age Prompt Intro",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 12,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzkxNjdlZTI5MjJmMjY5NjZmNWRhM2NmYTYwOWI0NDViNmYyYzU4ZWEud2VicCIsImV4cCI6MTc5MDk0MDgzN33FaYQrCYyCjM-iVQSWZlbn-crVAOT5sb4.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#0C1110",
+          "#24342F",
+          "#F2F2EF",
+          "#8EE6A8"
+        ],
+        "ui_elements": [
+          "Top Glowing Opal",
+          "Selected Green Answer",
+          "Question Text Stack"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_qzh0b",
+        "name": "Age Input",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 13,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzlhYmFmZDViZTY1MzE5MmFmYmM4ODhiNGZkN2UxMzY5YzlhNWNiZjYud2VicCIsImV4cCI6MTc5MDk0MDgzN331m_mU64aOdTGa-POqPdaM0d1Ni_v4U7c.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#1C1C1E",
+          "#303033",
+          "#F2F2EF",
+          "#8FE1BD"
+        ],
+        "ui_elements": [
+          "Top Glowing Opal",
+          "Circular Age Chips",
+          "Gradient CTA Pill",
+          "Numeric Keypad"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_4xknx",
+        "name": "Persona Prompt Intro",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 14,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2RhOTBiODFmYzJkNDU1NTM0YmNjNGRjOWI5MzhjYTUwY2MzODY1MDMud2VicCIsImV4cCI6MTc5MDk0MDgzN31xl8g76GIRcW0LXjJfJ5RaTMDeoQgnFCo.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#0C1110",
+          "#24342F",
+          "#F2F2EF",
+          "#8DE5A6"
+        ],
+        "ui_elements": [
+          "Top Glowing Opal",
+          "Answer History Stack",
+          "Green Answer Text",
+          "Question Text Stack"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_rdy44",
+        "name": "Persona Selection",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 15,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzNmNDU0ZmIyYmJjYTBjMTY3NDI5NzkxNGJlMjZkY2QyZWQ3OTdkMmMud2VicCIsImV4cCI6MTc5MDk0MDgzN30fQ9C1t-gfhDV3l9opO9HNS1qmQhStvpE.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#101614",
+          "#1B1B1C",
+          "#F2F2EF",
+          "#8DEBB4"
+        ],
+        "ui_elements": [
+          "Top Glowing Opal",
+          "Persona Choice List",
+          "Icon Choice Rows",
+          "Rounded Choice Pills"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_frigk",
+        "name": "Persona Follow Up",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 16,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzFkNTk5OGE4MDg1N2U1ZjM0ZTVhNTFiNGY5MmQxMDUxM2Q1ZGZjZmMud2VicCIsImV4cCI6MTc5MDk0MDgzN33frcWFfSMWhQ-_V8q2fRcStmGVrym-roI.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#0C1110",
+          "#24342F",
+          "#F2F2EF",
+          "#8DE5A6"
+        ],
+        "ui_elements": [
+          "Top Glowing Opal",
+          "Selected Persona Text",
+          "Follow Up Copy",
+          "Question Text Stack"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_hhiva",
+        "name": "Persona Insight",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 17,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2ZjYjkzMzg0MjdkNDhmOGU2NTdkNzZlYmIxNGQzMzhmOWVlM2JiOGUud2VicCIsImV4cCI6MTc5MDk0MDgzN31ufFaDJJ6tOqMZYXLUlVxUwCTlqusXhII.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#0C1110",
+          "#24342F",
+          "#F2F2EF",
+          "#8DE5A6"
+        ],
+        "ui_elements": [
+          "Top Glowing Opal",
+          "Selected Persona Text",
+          "Profile Insight Copy",
+          "Question Text Stack"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_1xuyp",
+        "name": "Screen Time Survey",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 18,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2U3ZTRlYzIzMjk4OTBiYTE5NjY3ZDhlNzQxYzhmNjI2MTM3Yzk4OTEud2VicCIsImV4cCI6MTc5MDk0MDgzN31R6Sz2-HWwTFb6mHqNZg08xiHK3YaTjwA.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#101614",
+          "#1B1B1C",
+          "#F2F2EF",
+          "#8DE5A6"
+        ],
+        "ui_elements": [
+          "Top Glowing Opal",
+          "Question Text Stack",
+          "Screen Time Options",
+          "Rounded Choice Pills"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_ln0xe",
+        "name": "Response Analysis",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 19,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2NhZjg3NGRhZWRkZjFlMDc0NDY3Y2FlNTA2MThjZGU4MjcxNTg1MzIud2VicCIsImV4cCI6MTc5MDk0MDgzN33A5zkmVXtAAvDM6UDOu4wwjRwm93IxZZQ.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#0C1110",
+          "#1B1F1E",
+          "#F2F2EF",
+          "#8EEFE2"
+        ],
+        "ui_elements": [
+          "Top Glowing Opal",
+          "Answer History Stack",
+          "Progress Caption",
+          "Analysis Progress Bar"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_sqrlv",
+        "name": "Habit Change Intro",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 20,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzcyMGRjYThlY2Y5YWQ5OTgzZGE1MWZjMjVlYTBlYjJmNzE2ZTJkMTcud2VicCIsImV4cCI6MTc5MDk0MDgzN31YJOgYNv7Ucc9AQGNouqDXDjyVQ5k79nk.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#0C1110",
+          "#1B1F1E",
+          "#F2F2EF",
+          "#8FD9BF"
+        ],
+        "ui_elements": [
+          "Top Glowing Opal",
+          "Progress Bar",
+          "Stacked Result Copy",
+          "Bottom CTA Pill"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      }
+    ],
+    "total": 29,
+    "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2FwcF9zY3JlZW5zIiwicSI6IjFiNDRiYmU3NzIxY2ExZjkwOWMyNWVlMyIsIm8iOjIwLCJodyI6MzAsImV4cCI6MTc5MDk0MDgzN30.339lxfsNXS15tVOVbWQMyBP2I4w",
+    "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+    "credits": {
+      "spent": 1,
+      "remaining_this_month": 1434
+    }
+  },
+  {
+    "app": {
+      "app_id": "1497465230",
+      "name": "Opal: Screen Time Control"
+    },
+    "screens": [
+      {
+        "screen_id": "onb_a2e80",
+        "name": "Screen Time Permission Intro",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 21,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzcyMGVlZjM3NzIxNjFjNWI0YjY0YjhmOGFlMTYyYmE2ZmYwZDEwNmUud2VicCIsImV4cCI6MTc5MDk0MDgzOH1f5-Lw9dHXhSNQGDR4W-o0mx4cW6gMAxI.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#101614",
+          "#D8D8D4",
+          "#007AFF",
+          "#8FD9BF"
+        ],
+        "ui_elements": [
+          "Permission Mockup Card",
+          "Green Pointer Arrow",
+          "Gradient CTA Pill",
+          "Privacy Footnote"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_r20yw",
+        "name": "Screen Time Access",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 22,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2JhMzY1YzcyMmZhYWQxMDIxZmI3MDg4ZjBiZDRhYTFkOGU3MzM0YzEud2VicCIsImV4cCI6MTc5MDk0MDgzOH3DEQU8k_7NyQbvuzVmO-6veSs69V3XPvs.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FFFFFF",
+        "colors": [
+          "#FFFFFF",
+          "#F2F2F7",
+          "#111111",
+          "#007AFF",
+          "#5E5CE6"
+        ],
+        "ui_elements": [
+          "White Permission Sheet",
+          "App Icon Pair",
+          "Blue Allow Button",
+          "Bottom Deny Link"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_bewpt",
+        "name": "Distraction Selection",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 23,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzc4NDVkNGIwOWJkZTk1ZjJmZTllYTc2MmViMjhlNjc2MTlmYTFlM2Qud2VicCIsImV4cCI6MTc5MDk0MDgzOH2VXhPFLCzdOEOC_7RfFO7OZRLI3onh9qs.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#101614",
+          "#1C1C1E",
+          "#F2F2EF",
+          "#8FD9BF"
+        ],
+        "ui_elements": [
+          "App Category Picker",
+          "Checkbox App Rows",
+          "Nested Category Row",
+          "Bottom CTA Pill"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_uc8ir",
+        "name": "Category Selection Error",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 24,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzIyYTI3OTU2YjNkZDE1Y2NjZjk4OTAxMzA0MGVjNDlhYzI2ZWUxMDIud2VicCIsImV4cCI6MTc5MDk0MDgzOH2YsDRoDJFKyazXK5sYN2yDI2NjlGgREVs.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#1C1C1E",
+          "#2C2C2E",
+          "#48121B",
+          "#FF4968"
+        ],
+        "ui_elements": [
+          "Category Search Field",
+          "Radio Category List",
+          "Red Warning Toast",
+          "Secondary Help Link"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_if7uc",
+        "name": "Impact Teaser",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 25,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzIwM2EyNGQwMzg5ZjhiYjU5ZmJmNTM3NzMyZjAyNjE1ODQ4YTU0MmUud2VicCIsImV4cCI6MTc5MDk0MDgzOH1zi-vlVmkkRk9skORw0Nx2aOsAZWetO4U.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#0C1110",
+          "#24342F",
+          "#F2F2EF",
+          "#78C8B4"
+        ],
+        "ui_elements": [
+          "Centered Logo Wordmark",
+          "Green Glow Gradient",
+          "Centered News Copy"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_0m8b4",
+        "name": "Lifetime Usage Reveal",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 26,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzZmZDEyY2M1NzI3ODQyYmFiN2M1MGQ0ODdkZDgwYmI5NTRhM2EwNzAud2VicCIsImV4cCI6MTc5MDk0MDgzOH3ZM3iDlErFpDsMv1-a0Vit8gKS5PyFZjg.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#0C1110",
+          "#F2F2EF",
+          "#C9FF9B",
+          "#83E6E6"
+        ],
+        "ui_elements": [
+          "Centered Logo Wordmark",
+          "Large Number Picker",
+          "Gradient Year Numerals",
+          "Small Disclaimer Text"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_gvpoa",
+        "name": "Time Savings Reveal",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 27,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzY4ZTE1YzExM2ZkNmUwNDQ5YzgzODdiMjc1MTVkNDdkYmU1NmM5ZWUud2VicCIsImV4cCI6MTc5MDk0MDgzOH2ib-15eIXzvxqA8rLUXmRBruvxfezUM7Q.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#0C1110",
+          "#F2F2EF",
+          "#C9FF9B",
+          "#83E6E6"
+        ],
+        "ui_elements": [
+          "Centered Logo Wordmark",
+          "Large Number Picker",
+          "Gradient Year Numerals",
+          "Small Disclaimer Text"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_cc559",
+        "name": "Notification Permission Intro",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 28,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2IzNmZhNGY1NDhkZTdmMmQ4MWFiMzI0ZWM1ODFjNjI4MmE1MDc1ZGEud2VicCIsImV4cCI6MTc5MDk0MDgzOH13frYhmrOsSMw5Z7Yheqjokn37TVP_58w.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#101614",
+          "#D8D8D4",
+          "#F2F2EF",
+          "#8FD9BF"
+        ],
+        "ui_elements": [
+          "Notification Mockup",
+          "Green Pointer Arrow",
+          "Faded Disabled CTA",
+          "Centered Prompt Text"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_bgoa3",
+        "name": "Results Summary",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 29,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2Q2YmQxZDZhOGJjMTYwNDYyN2JkZDliZGY0YTU4Mjg4ZmY4MDU3NTUud2VicCIsImV4cCI6MTc5MDk0MDgzOH3-wSHR1iVV9GXoD95Op4DAzEe5KcjyJQA.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "colors": [
+          "#000000",
+          "#0C1110",
+          "#F2F2EF",
+          "#C9FF9B",
+          "#83E6E6"
+        ],
+        "ui_elements": [
+          "Results Headline",
+          "Metric Icon Rows",
+          "Green Benefit Icons",
+          "Locked CTA Bar"
+        ],
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      }
+    ],
+    "total": 29,
+    "next_cursor": null,
+    "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+    "credits": {
+      "spent": 1,
+      "remaining_this_month": 1433
+    }
+  }
+]

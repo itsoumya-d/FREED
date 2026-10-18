@@ -14,12 +14,11 @@ const { buildReport: buildPaywallLaunchSourceAuditReport } = require("./paywall-
 
 const PURCHASE_VERIFY_ENDPOINT_PATH = "/api/purchases/verify";
 const GOOGLE_SAMPLE_ADMOB_PUBLISHER = "ca-app-pub-3940256099942544";
-const LAUNCH_PREMIUM_PLAN_IDS = ["yearly", "monthly", "lifetime"];
+const LAUNCH_PREMIUM_PLAN_IDS = ["yearly", "monthly"];
 const LAUNCH_PREMIUM_PLAN_LABEL = LAUNCH_PREMIUM_PLAN_IDS.join("/");
 const DEFAULT_LAUNCH_PRODUCT_IDS = {
   yearly: "freed_premium_yearly",
-  monthly: "freed_premium_monthly",
-  lifetime: "freed_premium_lifetime"
+  monthly: "freed_premium_monthly"
 };
 const POST_LAUNCH_PREMIUM_PLAN_IDS = ["family", "accountability", "ai-coach"];
 const DEFAULT_POST_LAUNCH_PRODUCT_IDS = {
@@ -34,7 +33,6 @@ const STORE_PAYWALL_LAUNCH_SCOPE_REQUIRED_CHECKS = [
   "postLaunchProductIdsHidden",
   "yearlyValueAnchorVisible",
   "monthlyRecurringVisible",
-  "lifetimeOneTimeVisible",
   "restorePurchasesVisible",
   "purchaseButtonsEnabled",
   "serverVerificationCopyVisible",
@@ -74,7 +72,6 @@ const STORE_CONSOLE_PRODUCT_SETUP_EVIDENCE_SCREENS = {
     "subscription-group",
     "yearly-subscription",
     "monthly-subscription",
-    "lifetime-non-consumable",
     "future-skus-inactive",
   ],
   googlePlay: [
@@ -82,7 +79,6 @@ const STORE_CONSOLE_PRODUCT_SETUP_EVIDENCE_SCREENS = {
     "subscriptions-list",
     "yearly-base-plan",
     "monthly-base-plan",
-    "lifetime-one-time-product",
     "future-skus-inactive",
   ],
 };
@@ -392,7 +388,6 @@ function launchProductIdsFromEnv(env) {
   return {
     yearly: firstEnv(env, ["EXPO_PUBLIC_IAP_PRODUCT_YEARLY", "IAP_PRODUCT_YEARLY"]) || DEFAULT_LAUNCH_PRODUCT_IDS.yearly,
     monthly: firstEnv(env, ["EXPO_PUBLIC_IAP_PRODUCT_MONTHLY", "IAP_PRODUCT_MONTHLY"]) || DEFAULT_LAUNCH_PRODUCT_IDS.monthly,
-    lifetime: firstEnv(env, ["EXPO_PUBLIC_IAP_PRODUCT_LIFETIME", "IAP_PRODUCT_LIFETIME"]) || DEFAULT_LAUNCH_PRODUCT_IDS.lifetime,
   };
 }
 
@@ -603,7 +598,7 @@ function requiredManualFlows(options) {
       metricFields: "store.consoleProductSetupRunId, checks.storeConsoleProductsConfigured",
       runId: `${prefix}-store-console-product-setup`,
       summary:
-        "Capture App Store Connect and Play Console product setup proof for Core 3 only: read-only Browser app-record readiness, monthly/yearly subscriptions, lifetime non-consumable/one-time product, attached screenshots/localizations, server-verification metadata, redacted console evidence artifacts with matching hashes, future SKUs inactive, and draft/internal/TestFlight-only status until evidence passes.",
+        "Capture App Store Connect and Play Console product setup proof for Core 3 only: read-only Browser app-record readiness, monthly/yearly subscriptions and base plans, attached screenshots/localizations, server-verification metadata, redacted console evidence artifacts with matching hashes, future SKUs inactive, and draft/internal/TestFlight-only status until evidence passes.",
     },
     {
       artifactField: "store.rewardedAdRequestArtifact",
@@ -899,10 +894,9 @@ function buildStoreConsoleExecutionRunbook(options, manifest) {
     `4. Create or confirm subscription group \`${subscriptionGroupId}\`.`,
     `5. Create \`${configured.iosLaunchProductIds.yearly || DEFAULT_LAUNCH_PRODUCT_IDS.yearly}\` as an auto-renewable yearly subscription in that group with duration \`P1Y\` and USD intent \`39.99\`.`,
     `6. Create \`${configured.iosLaunchProductIds.monthly || DEFAULT_LAUNCH_PRODUCT_IDS.monthly}\` as an auto-renewable monthly subscription in that group with duration \`P1M\` and USD intent \`9.99\`.`,
-    `7. Create \`${configured.iosLaunchProductIds.lifetime || DEFAULT_LAUNCH_PRODUCT_IDS.lifetime}\` as a non-consumable in-app purchase with USD intent \`79.99\`.`,
-    "8. Add en-US localization/metadata from `store/app-store/in-app-purchases.csv` and attach the matching review screenshot from the table above.",
-    "9. Keep future SKUs inactive/not-created for v1: " + futureSkuIds.map((sku) => `\`${sku}\``).join(", ") + ".",
-    "10. Capture the required redacted App Store Connect evidence screens:",
+    "7. Add en-US localization/metadata from `store/app-store/in-app-purchases.csv` and attach the matching review screenshot from the table above.",
+    "8. Keep future SKUs inactive/not-created for v1: " + futureSkuIds.map((sku) => `\`${sku}\``).join(", ") + ".",
+    "9. Capture the required redacted App Store Connect evidence screens:",
     "",
     toMarkdownTable(["Screen ID", "Capture Requirement"], appStoreScreens.map((screenId) => [screenId, "Save a redacted screenshot or PDF, then record artifactPath, artifactHash, capturedAt, redacted=true, accountIdentifiersRedacted=true."])),
     "",
@@ -913,10 +907,9 @@ function buildStoreConsoleExecutionRunbook(options, manifest) {
     "3. Rerun read-only Browser readiness and continue only after both app records exist and the Apple license agreement is accepted.",
     `4. Create \`${configured.androidLaunchProductIds.yearly || DEFAULT_LAUNCH_PRODUCT_IDS.yearly}\` as a subscription with base plan \`yearly\`, billing period \`P1Y\`, and offer \`yearly-standard\`.`,
     `5. Create \`${configured.androidLaunchProductIds.monthly || DEFAULT_LAUNCH_PRODUCT_IDS.monthly}\` as a subscription with base plan \`monthly\`, billing period \`P1M\`, and offer \`monthly-standard\`.`,
-    `6. Create \`${configured.androidLaunchProductIds.lifetime || DEFAULT_LAUNCH_PRODUCT_IDS.lifetime}\` as a one-time non-consumable product with USD intent \`79.99\`.`,
-    "7. Add localizations/metadata from `store/play-store/products.csv`.",
-    "8. Keep future SKUs inactive/not-created for v1: " + futureSkuIds.map((sku) => `\`${sku}\``).join(", ") + ".",
-    "9. Capture the required redacted Google Play evidence screens:",
+    "6. Add localizations/metadata from `store/play-store/products.csv`.",
+    "7. Keep future SKUs inactive/not-created for v1: " + futureSkuIds.map((sku) => `\`${sku}\``).join(", ") + ".",
+    "8. Capture the required redacted Google Play evidence screens:",
     "",
     toMarkdownTable(["Screen ID", "Capture Requirement"], googlePlayScreens.map((screenId) => [screenId, "Save a redacted screenshot or PDF, then record artifactPath, artifactHash, capturedAt, redacted=true, accountIdentifiersRedacted=true."])),
     "",
@@ -1643,7 +1636,6 @@ function buildConsolePaymentHandoff(options, manifest) {
     "",
     "- Continue only after the hosted legal URL gate passes and read-only app-record readiness proves the App Store Connect app exists.",
     `- Create monthly and yearly as auto-renewable subscriptions in subscription group \`${subscriptionGroupId}\`.`,
-    "- Create lifetime as a non-consumable in-app purchase.",
     "- Attach the review screenshots listed above and keep localizations aligned with `store/app-store/in-app-purchases.csv`.",
     `- Map every purchase to entitlement \`${entitlementId}\` only after server verification succeeds.`,
     "- Keep any family/accountability/AI products inactive for v1.",
@@ -1652,7 +1644,6 @@ function buildConsolePaymentHandoff(options, manifest) {
     "",
     "- Continue only after the hosted legal URL gate passes and read-only app-record readiness proves the Play app exists.",
     "- Create monthly and yearly as subscriptions with base plans `monthly` and `yearly`, billing periods `P1M` and `P1Y`.",
-    "- Create lifetime as a one-time non-consumable product.",
     "- Keep product rows aligned with `store/play-store/products.csv` and leave products draft/internal until sandbox evidence passes.",
     `- Map every purchase to entitlement \`${entitlementId}\` only after server verification succeeds.`,
     "- Keep any family/accountability/AI products inactive for v1.",
@@ -1670,7 +1661,6 @@ function buildConsolePaymentHandoff(options, manifest) {
         ["EXPO_PUBLIC_PREMIUM_ENTITLEMENT_ID", entitlementId],
         ["EXPO_PUBLIC_IAP_PRODUCT_YEARLY", configured.iosLaunchProductIds.yearly || DEFAULT_LAUNCH_PRODUCT_IDS.yearly],
         ["EXPO_PUBLIC_IAP_PRODUCT_MONTHLY", configured.iosLaunchProductIds.monthly || DEFAULT_LAUNCH_PRODUCT_IDS.monthly],
-        ["EXPO_PUBLIC_IAP_PRODUCT_LIFETIME", configured.iosLaunchProductIds.lifetime || DEFAULT_LAUNCH_PRODUCT_IDS.lifetime],
         ["EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT", configured.purchaseVerifyEndpoint || "https://<production-host>/api/purchases/verify"],
         ["EXPO_PUBLIC_ADMOB_APP_ID_IOS", configured.adMobAppIdIos || "ca-app-pub-<16-digits>~<10-digits>"],
         ["EXPO_PUBLIC_ADMOB_APP_ID_ANDROID", configured.adMobAppIdAndroid || "ca-app-pub-<16-digits>~<10-digits>"],
@@ -1773,7 +1763,7 @@ function buildStoreSandboxTestPlan(options, manifest) {
     "- `store-console-product-setup-report.template.json` has been filled from redacted App Store Connect, Google Play, and AdMob console evidence.",
     "- App Store sandbox testers and Play license testers can purchase without production charging.",
     "- The production env file has real Core 3 product IDs, platform AdMob app IDs, platform rewarded-unit IDs, and `EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT` for `/api/purchases/verify`.",
-    "- Product types match the launch catalog: yearly/monthly are recurring subscriptions, lifetime is non-consumable on App Store and one-time non-consumable on Play.",
+    "- Product types match the launch catalog: yearly/monthly are recurring subscriptions on App Store and Play.",
     "- `npm run preflight:release-env -- --env-file <production-env-file>` passes and writes a sanitized report.",
     "- `npm run smoke:purchase-verification -- --env-file <production-env-file> --report docs/validation/artifacts/<run-id>/purchase-verification-smoke-report.json` passes against the deployed purchase endpoint.",
     "",
@@ -1799,18 +1789,18 @@ function buildStoreSandboxTestPlan(options, manifest) {
     ),
     "",
     `Every row must grant entitlement \`${entitlementId}\` only after server verification succeeds.`,
-    "Do not proceed if the yearly/monthly rows are not subscriptions, or if lifetime is not a non-consumable / one-time product in the relevant store console.",
+    "Do not proceed if the yearly/monthly rows are not subscriptions in the relevant store console.",
     "",
     "## Product Test Loop",
     "",
-    "For each yearly, monthly, and lifetime row:",
+    "For each yearly and monthly row:",
     "",
     "1. Confirm the paywall shows only Core 3 products, yearly as the value anchor, restore visible, purchase buttons enabled, server-verification copy visible, and premium no-ad value visible.",
     "2. Run the App Store sandbox purchase in TestFlight or the signed sandbox build. Save a redacted local proof artifact and record only the numeric StoreKit transaction ID.",
     "3. Delete/reinstall or clear entitlement state as appropriate, then run App Store restore. Save the redacted restore proof and verified entitlement state.",
     "4. Run the Play Billing license-test purchase on Android. Save a redacted local proof artifact, the GPA order ID, and a sha256 hash label of the purchase token.",
     "5. Delete/reinstall or clear entitlement state as appropriate, then run Play restore. Save the redacted restore proof and verified entitlement state.",
-    "6. Attach the sanitized `purchase-verification-smoke-v1` report for purchase and restore verification. It must include Core 3 yearly/monthly/lifetime PASS rows, endpoint validation, rejection-proof booleans, checked secret-key names, and no raw receipt/token/order/package echo.",
+    "6. Attach the sanitized `purchase-verification-smoke-v1` report for purchase and restore verification. It must include Core 3 yearly/monthly PASS rows, endpoint validation, rejection-proof booleans, checked secret-key names, and no raw receipt/token/order/package echo.",
     "",
     "## Rewarded Ad And Intervention Flows",
     "",
@@ -1862,7 +1852,7 @@ function buildNotes(manifest) {
     "",
     "`STORE_CONSOLE_EXECUTION_RUNBOOK.md` gives the logged-in console operator the hosted legal URL gate, step-by-step App Store Connect, Google Play, and AdMob execution order, plus redacted evidence capture rules for the console product setup report.",
     "",
-    "`STORE_SANDBOX_TEST_PLAN.md` gives QA the hosted legal URL gate, yearly/monthly/lifetime App Store and Play purchase/restore run matrix, purchase-verification report requirements, rewarded-ad proof requirements, and premium no-ad intervention checks before filling final evidence.",
+    "`STORE_SANDBOX_TEST_PLAN.md` gives QA the hosted legal URL gate, yearly/monthly App Store and Play purchase/restore run matrix, purchase-verification report requirements, rewarded-ad proof requirements, and premium no-ad intervention checks before filling final evidence.",
     "",
     "`STORE_APP_RECORD_ACTION_PACKET.md` and `.json` give the exact draft app-record fields, action-time Browser confirmation token, Apple agreement prerequisite, and hard stops before any Play Console or App Store Connect app-record mutation.",
     "",
@@ -1870,13 +1860,13 @@ function buildNotes(manifest) {
     "",
     "`paywall-launch-source-audit.json` is a local source precheck proving the current PaywallScreen uses the Core 3 launch plan API, shows store-verification/no-ad copy, and hides post-launch family/accountability/AI-coach products. It supports QA but does not replace the submitted-build `freed-paywall-launch-scope-report-v1` proof.",
     "",
-    "The Core 3 launch-product matrix must cover yearly, monthly, and lifetime for App Store purchase/restore, Play purchase/restore, and server entitlement verification. Keep future family/accountability/AI-coach SKUs out of this v1 evidence.",
+    "The Core 3 launch-product matrix must cover yearly and monthly for App Store purchase/restore, Play purchase/restore, and server entitlement verification. Keep future family/accountability/AI-coach SKUs out of this v1 evidence.",
     "",
     "`rewarded-ad-request-report.template.json` gives QA the required local `freed-rewarded-ad-request-report-v1` shape for `store.rewardedAdRequestArtifact`; set `result=rewarded-ad-request-captured`, `rewardedAdRequestProofUsableForManualEvidence=true`, and every rewarded-only/privacy check to true only after the loaded ad response proves a real rewarded unit, non-personalized request mode, coarse country context, and no banner/interstitial/app-open/native ad request.",
     "",
-    "`paywall-launch-scope-report.template.json` gives QA the required local `freed-paywall-launch-scope-report-v1` shape for `store.paywallLaunchScopeArtifact`; set `result=paywall-launch-scope-captured`, `paywallLaunchScopeProofUsableForManualEvidence=true`, and every paywall-scope check to true only after the submitted build shows Core 3 yearly/monthly/lifetime only, hides family/accountability/AI-coach products, presents yearly as the primary value anchor, exposes restore, and enables purchase buttons.",
+    "`paywall-launch-scope-report.template.json` gives QA the required local `freed-paywall-launch-scope-report-v1` shape for `store.paywallLaunchScopeArtifact`; set `result=paywall-launch-scope-captured`, `paywallLaunchScopeProofUsableForManualEvidence=true`, and every paywall-scope check to true only after the submitted build shows Core 3 yearly/monthly only, hides family/accountability/AI-coach products, presents yearly as the primary value anchor, exposes restore, and enables purchase buttons.",
     "",
-    "`store-console-product-setup-report.template.json` gives QA the required local `freed-store-console-product-setup-report-v1` shape for `store.consoleProductSetupArtifact`; set `result=store-console-product-setup-captured`, `consoleProductSetupProofUsableForManualEvidence=true`, fill `appRecordReadiness` from a sanitized read-only Browser readiness report, fill the redacted console evidence artifacts with sanitized screenshot/report paths plus hashes, and set every console-product check to true only after App Store Connect and Play Console contain Core 3 products only, monthly/yearly subscriptions, lifetime one-time/non-consumable setup, screenshots/localizations, server-verification metadata, inactive future SKUs, and draft/internal/TestFlight-only status until evidence passes.",
+    "`store-console-product-setup-report.template.json` gives QA the required local `freed-store-console-product-setup-report-v1` shape for `store.consoleProductSetupArtifact`; set `result=store-console-product-setup-captured`, `consoleProductSetupProofUsableForManualEvidence=true`, fill `appRecordReadiness` from a sanitized read-only Browser readiness report, fill the redacted console evidence artifacts with sanitized screenshot/report paths plus hashes, and set every console-product check to true only after App Store Connect and Play Console contain Core 3 products only, monthly/yearly subscriptions and base plans, screenshots/localizations, server-verification metadata, inactive future SKUs, and draft/internal/TestFlight-only status until evidence passes.",
     "",
     "`store-intervention-flow-report.templates.json` gives QA the required local `freed-store-intervention-flow-report-v1` shapes for free rewarded gate, rewarded completion, ad-failure fallback, and premium no-ad challenge entry artifacts.",
     "",
@@ -2525,10 +2515,9 @@ function runSelfTest() {
   assert.match(storeSandboxMatrixCsv, /playProductType,playBasePlan,playBillingOrPurchase/);
   assert.match(storeSandboxMatrixCsv, /launch-product-sandbox,yearly,freed_premium_yearly,auto-renewable-subscription,P1Y/);
   assert.match(storeSandboxMatrixCsv, /launch-product-sandbox,monthly,freed_premium_monthly,auto-renewable-subscription,P1M/);
-  assert.match(storeSandboxMatrixCsv, /launch-product-sandbox,lifetime,freed_premium_lifetime,non-consumable,lifetime/);
+  assert.doesNotMatch(storeSandboxMatrixCsv, /launch-product-sandbox,lifetime/);
   assert.match(storeSandboxMatrixCsv, /subscription,yearly,P1Y/);
   assert.match(storeSandboxMatrixCsv, /subscription,monthly,P1M/);
-  assert.match(storeSandboxMatrixCsv, /one-time-product,,non-consumable/);
   assert.match(storeSandboxMatrixCsv, /manual-flow,,,,,,,,,,,,,,self-test-release-env-preflight/);
   const captureNotes = buildNotes(manifest);
   assert.match(captureNotes, /Evidence satisfied: `false`/);
@@ -2554,7 +2543,7 @@ function runSelfTest() {
   );
   assert.equal(fillTemplate.store.launchProductSandboxMatrix[0].iosProductId, "freed_premium_yearly");
   assert.equal(fillTemplate.store.launchProductSandboxMatrix[1].androidProductId, "freed_premium_monthly");
-  assert.equal(fillTemplate.store.launchProductSandboxMatrix[2].receiptOrEntitlementVerified, false);
+  assert.equal(fillTemplate.store.launchProductSandboxMatrix[1].receiptOrEntitlementVerified, false);
   assert.equal(fillTemplate.store.rewardedAdFormat, "rewarded");
   assert.equal(fillTemplate.store.rewardedAdRequestArtifact, "path/to/local-freed-rewarded-ad-request-report-v1.json");
   assert.equal(fillTemplate.store.noInterstitialOrBannerAdRequestsConfirmed, false);
@@ -2579,7 +2568,6 @@ function runSelfTest() {
   assert.match(consolePaymentHandoff, /Core 3 Launch Products/);
   assert.match(consolePaymentHandoff, /freed_premium_yearly/);
   assert.match(consolePaymentHandoff, /freed_premium_monthly/);
-  assert.match(consolePaymentHandoff, /freed_premium_lifetime/);
   assert.match(consolePaymentHandoff, /Future SKUs Inactive/);
   assert.match(consolePaymentHandoff, /freed_family_yearly/);
   assert.match(consolePaymentHandoff, /freed_accountability_monthly/);
@@ -2620,13 +2608,10 @@ function runSelfTest() {
   assert.match(sandboxTestPlan, /Play Type/);
   assert.match(sandboxTestPlan, /Play Billing\/Purchase/);
   assert.match(sandboxTestPlan, /auto-renewable-subscription/);
-  assert.match(sandboxTestPlan, /non-consumable/);
-  assert.match(sandboxTestPlan, /one-time-product/);
+  assert.doesNotMatch(sandboxTestPlan, /lifetime/);
   assert.match(sandboxTestPlan, /yearly\/monthly rows are not subscriptions/);
-  assert.match(sandboxTestPlan, /lifetime is not a non-consumable \/ one-time product/);
   assert.match(sandboxTestPlan, /self-test-ios-yearly-purchase-sandbox/);
   assert.match(sandboxTestPlan, /self-test-android-monthly-restore-sandbox/);
-  assert.match(sandboxTestPlan, /freed_premium_lifetime/);
   assert.match(sandboxTestPlan, /purchase-verification-smoke-v1/);
   assert.match(sandboxTestPlan, /premium-no-ad-intervention/);
   assert.match(sandboxTestPlan, /sha256-<hex>/);
@@ -2661,7 +2646,7 @@ function runSelfTest() {
   assert.equal(consoleProductSetupTemplate.setupRunId, "self-test-store-console-product-setup");
   assert.deepEqual(consoleProductSetupTemplate.launchPlanIdsConfigured, LAUNCH_PREMIUM_PLAN_IDS);
   assert.equal(consoleProductSetupTemplate.subscriptionGroupId, "freed_premium");
-  assert.equal(consoleProductSetupTemplate.appStoreConnect.launchProducts.length, 3);
+  assert.equal(consoleProductSetupTemplate.appStoreConnect.launchProducts.length, 2);
   assert.deepEqual(
     consoleProductSetupTemplate.appStoreConnect.launchProducts.map((product) => product.planId),
     LAUNCH_PREMIUM_PLAN_IDS,

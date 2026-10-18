@@ -1,0 +1,46 @@
+{
+  "entries": [
+    {
+      "source": "Photos are checked on your device with Apple Vision or bundled ML Kit. Photos are not uploaded. ML Kit may send operational SDK metrics.",
+      "translations": {
+        "hi": "तस्वीरों की जाँच आपके डिवाइस पर Apple Vision या ऐप में शामिल ML Kit से होती है। तस्वीरें अपलोड नहीं की जातीं। ML Kit संचालन से जुड़े SDK मेट्रिक्स भेज सकता है।",
+        "es": "Las fotos se comprueban en tu dispositivo con Apple Vision o ML Kit incluido en la app. No se suben las fotos. ML Kit puede enviar métricas operativas del SDK.",
+        "pt": "As fotos são verificadas no seu dispositivo com Apple Vision ou ML Kit incluído no aplicativo. As fotos não são enviadas. O ML Kit pode enviar métricas operacionais do SDK.",
+        "fr": "Les photos sont vérifiées sur votre appareil avec Apple Vision ou ML Kit intégré à l’application. Les photos ne sont pas téléversées. ML Kit peut envoyer des mesures de fonctionnement du SDK.",
+        "de": "Fotos werden auf deinem Gerät mit Apple Vision oder dem enthaltenen ML Kit geprüft. Fotos werden nicht hochgeladen. ML Kit kann Betriebsmetriken des SDK senden.",
+        "ar": "تُفحص الصور على جهازك باستخدام Apple Vision أو ML Kit المضمّن. لا تُرفع الصور. قد يرسل ML Kit مقاييس تشغيلية لحزمة SDK.",
+        "ja": "写真はApple Visionまたは同梱のML Kitを使って端末上で確認されます。写真はアップロードされません。ML KitはSDKの動作に関する指標を送信することがあります。",
+        "ko": "사진은 Apple Vision 또는 앱에 포함된 ML Kit로 기기에서 확인됩니다. 사진은 업로드되지 않습니다. ML Kit는 SDK 운영 측정항목을 전송할 수 있습니다.",
+        "zh-Hans": "照片通过 Apple Vision 或内置 ML Kit 在你的设备上检查。照片不会上传。ML Kit 可能发送 SDK 运行指标。"
+      }
+    },
+    {
+      "source": "Effective date: October 5, 2026",
+      "translations": {
+        "hi": "प्रभावी तिथि: 5 अक्टूबर 2026",
+        "es": "Fecha de entrada en vigor: 5 de octubre de 2026",
+        "pt": "Data de vigência: 5 de outubro de 2026",
+        "fr": "Date d’entrée en vigueur : 5 octobre 2026",
+        "de": "Gültig ab: 5. Oktober 2026",
+        "ar": "تاريخ السريان: 5 أكتوبر 2026",
+        "ja": "施行日：2026年10月5日",
+        "ko": "시행일: 2026년 10월 5일",
+        "zh-Hans": "生效日期：2026年10月5日"
+      }
+    },
+    {
+      "source": "Messages you send are processed by Google through FREED. Browsing activity, journal entries, photos and Screen Time data are not attached. Processing may happen outside your country. Google applies its service processing and retention terms.",
+      "translations": {
+        "hi": "आपके भेजे संदेश FREED के माध्यम से Google द्वारा संसाधित होते हैं। ब्राउज़िंग गतिविधि, डायरी प्रविष्टियाँ, फ़ोटो और Screen Time डेटा साथ नहीं भेजे जाते। प्रक्रिया आपके देश के बाहर हो सकती है। Google की सेवा-प्रसंस्करण और डेटा-रखाव शर्तें लागू होती हैं।",
+        "es": "Google procesa los mensajes que envías a través de FREED. No se adjuntan actividad de navegación, diarios, fotos ni datos de Tiempo de uso. El procesamiento puede ocurrir fuera de tu país. Se aplican las condiciones de procesamiento y retención de Google.",
+        "pt": "As mensagens enviadas são processadas pelo Google através do FREED. Atividade de navegação, diário, fotos e dados do Tempo de Uso não são anexados. O processamento pode ocorrer fora do seu país. Aplicam-se os termos de processamento e retenção do Google.",
+        "fr": "Google traite vos messages via FREED. L’activité de navigation, les entrées de journal, les photos et les données Temps d’écran ne sont pas jointes. Le traitement peut avoir lieu hors de votre pays. Les conditions de traitement et de conservation de Google s’appliquent.",
+        "de": "Google verarbeitet deine gesendeten Nachrichten über FREED. Surfaktivität, Tagebucheinträge, Fotos und Bildschirmzeitdaten werden nicht angehängt. Die Verarbeitung kann außerhalb deines Landes erfolgen. Googles Bedingungen zur Verarbeitung und Aufbewahrung gelten.",
+        "ar": "يعالج Google رسائلك المرسلة عبر FREED. لا يُرفق نشاط التصفح أو اليوميات أو الصور أو بيانات مدة استخدام الجهاز. قد تتم المعالجة خارج بلدك. تنطبق شروط Google لمعالجة الخدمة والاحتفاظ بالبيانات.",
+        "ja": "送信したメッセージはFREEDを通じてGoogleが処理します。閲覧履歴、日記、写真、スクリーンタイムのデータは添付されません。処理は国外で行われる場合があります。Googleのサービス処理と保存期間に関する条件が適用されます。",
+        "ko": "보낸 메시지는 FREED를 통해 Google이 처리해요. 검색·브라우징 활동, 일기, 사진, 스크린 타임 데이터는 첨부되지 않아요. 처리는 국외에서 이루어질 수 있으며 Google의 서비스 처리 및 보관 조건이 적용돼요.",
+        "zh-Hans": "您发送的消息将通过 FREED 由 Google 处理。不会附加浏览活动、日记、照片或屏幕使用时间数据。处理可能在您的国家或地区之外进行，并适用 Google 的服务处理及数据保留条款。"
+      }
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from the audited authored-source catalogs. -->
+<resources>
+  <string name="freed_accessibility_description" formatted="false">检测所选应用的打开行为，以执行整个应用的保护。是否打开 FREED 支持由您决定。原生应用内的 Shorts 和 Reels 检测属于实验功能，不包含在公开版本中。</string>
+  <string name="freed_usage_access_config_label" formatted="false">FREED 使用访问</string>
+  <string name="freed_usage_access_reason" formatted="false">FREED 仅使用使用访问来读取所选应用程序包的总前台时间，以便您的应用程序计时器可以触发恢复挑战。它不会读取屏幕内容、消息、击键、浏览历史记录或原始使用事件。</string>
+  <string name="freed_protection_label" formatted="false">FREED Protection</string>
+  <string name="freed_dns_notification_title" formatted="false">FREED DNS Guard</string>
+  <string name="freed_dns_channel_description" formatted="false">显示 FREED 的仅 DNS 成人域过滤器何时处于活动状态。</string>
+  <string name="freed_dns_paused_notification" formatted="false">已暂停对该网络登录页面的过滤。正常浏览保持直接。</string>
+  <string name="freed_dns_active_notification" formatted="false">成人域 DNS 过滤处于活动状态。正常浏览保持直接。</string>
+  <string name="freed_recovery_channel" formatted="false">FREED 恢复干预</string>
+  <string name="freed_browser_notification_title" formatted="false">FREED 保护通知</string>
+  <string name="freed_app_notification_title" formatted="false">FREED 已暂停所选应用</string>
+  <string name="freed_browser_channel_description" formatted="false">显示受支持拦截的保护通知。仅在您选择时打开 FREED 支持。</string>
+  <string name="freed_accessibility_notification" formatted="false">打开 FREED 完成恢复挑战。不使用叠加、屏幕截图或 OCR。</string>
+  <string name="freed_source_label" formatted="false">来源：{{host}}</string>
+  <string name="freed_dns_intervention_channel_description" formatted="false">当 FREED 拦截成人域名的 DNS 请求时显示通知。仅在您选择时打开支持。</string>
+  <string name="freed_dns_intervention_notification" formatted="false">打开 FREED 完成恢复挑战。正常浏览保持直接。</string>
+  <string name="freed_dns_intervention_title" formatted="false">坚持住——你的连胜值得保护</string>
+  <string name="freed_blocked_host_label" formatted="false">被阻止的主机：{{host}}</string>
+  <string name="freed_intervention_eyebrow" formatted="false">FREED 保护</string>
+  <string name="freed_intervention_title" formatted="false">坚持，稍等。您仍然掌控一切。</string>
+  <string name="freed_intervention_subtitle" formatted="false">应用边界正在生效。请选择“开始恢复”以获得支持。</string>
+  <string name="freed_intervention_breathe" formatted="false">吸气。呼气。</string>
+  <string name="freed_start_recovery" formatted="false">开始恢复</string>
+  <string name="freed_usage_eyebrow" formatted="false">FREED 使用访问</string>
+  <string name="freed_usage_title" formatted="false">使用访问权限仅限于应用程序计时器。</string>
+  <string name="freed_usage_note" formatted="false">使用访问由 Android 设置控制。启用 FREED 后，返回设置，以便激活测试可以验证保护。</string>
+  <string name="freed_usage_return" formatted="false">返回 FREED 设置</string>
+  <string name="freed_usage_back" formatted="false">返回 Android 设置</string>
+  <string name="freed_calibration_instruction" formatted="false">点击表面进行校准。该设备上仅保留其稳定的视图指纹。</string>
+  <string name="freed_calibration_ready" formatted="false">找到稳定的本地选择器。确认保存它，或取消放弃它。</string>
+  <string name="freed_cancel" formatted="false">取消</string>
+  <string name="freed_confirm" formatted="false">确认</string>
+  <string name="freed_companion_label" formatted="false">FREED 伴侣</string>
+  <string name="freed_companion_hint" formatted="false">点击向您的同伴打招呼。</string>
+  <string name="freed_companion_hello" formatted="false">一次一步。您正在为更好的一天腾出空间。</string>
+</resources>

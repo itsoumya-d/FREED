@@ -1,0 +1,27 @@
+appId: app.freed.recovery
+name: shield-schedules
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///shield/schedules"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-shield-schedules"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Sleep mode.*"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Sleep mode.*"
+- assertVisible: "Deep focus mode"
+- assertVisible: "Work hours.*"
+- assertVisible: "Weekend adventure mode"
+- takeScreenshot: "shield-schedules"

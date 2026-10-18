@@ -1,0 +1,26 @@
+{
+  "publicPlanPath": "/Users/soumyadebnath16/.config/freed/admin/reviewer-account-plan-2026-10-05-b5ab657b.json",
+  "publicPlanSha256": "2936079d4012039cac762c8be4a4bbf1f0534ea71b958b6df804b063d0ae399c",
+  "creationScriptPath": "/Users/soumyadebnath16/.config/freed/admin/create-reviewer-account-2026-10-05-b5ab657b.mjs",
+  "creationScriptSha256": "56e3334d5eace9cedbbb7a145bddaa8ec2bcfc7f61a06205b2690b5fa707334b",
+  "privateCredentialPath": "/Users/soumyadebnath16/.config/freed/secrets/review-account/2026-10-05-b5ab657b/planned-credentials.json",
+  "privateCredentialFileSha256": "f69c8fad7769df3578b3587d13edd8f6a135251f069b5deb0c1760f30ebc1cb7",
+  "ownerUidSha256": "3f8ee2749a843657586ae2ee698024b5abde5d41dc6f28defa1bd7358bd680a8",
+  "email": "soumyadebnath1661+freedappreview@gmail.com",
+  "displayName": "FREEDAppReview",
+  "reviewAccessLifetimeDays": 14,
+  "credentialSharingDestinations": [
+    "apple-app-review:6816637268",
+    "google-play-app-review:app.freed.recovery"
+  ],
+  "actualAccountCreated": false,
+  "actualReviewAccessProvisioned": false,
+  "credentialsShared": false,
+  "actualHumanApprovalPresent": false,
+  "privateSecretValuesOmitted": true,
+  "proposedApprovalPath": "/Users/soumyadebnath16/.config/freed/admin/reviewer-account-proposed-approval-2026-10-05-b5ab657b.json",
+  "proposedApprovalSha256": "ddb403444cba90ececbf81bcf3d0244570d60c3874454d65d0b1d8f4361900a6",
+  "creationIntentPath": "/Users/soumyadebnath16/.config/freed/secrets/review-account/2026-10-05-b5ab657b/creation-intent.json",
+  "manualReconciliationPath": "/Users/soumyadebnath16/.config/freed/secrets/review-account/2026-10-05-b5ab657b/manual-reconciliation.md",
+  "manualReconciliationSha256": "ce16735adb7b28507d8fedf53641287b4f1eb886f1101362d92fcaaecbf99318"
+}

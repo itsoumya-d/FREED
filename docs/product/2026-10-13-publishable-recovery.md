@@ -1,0 +1,31 @@
+# FREED — publishable recovery, earned app time and complete usability
+
+Approved 13 October 2026. This is the execution contract for the user's accepted plan. It supersedes the universal-only launch gate, not the historical evidence. Preserve the shared checkout, Expo55/RN0.83.6, kite/Momentum identity, approved home/paywall, ten languages and both themes.
+
+## Product and acceptance
+
+Website boundary → supported page/barrier/notification → Open Challenge → verified access → local activity → durable completion → safe activity. Adult websites never unlock. App daily allowance → native barrier → activity → explicit 5/10/20-minute originating-app window → native relock. Keep the 30-minute allowance default (5–240 range), 20-minute daily extra-time cap, exact retries, overlaps and immutable v1 leases.
+
+Paid users choose directly; free users explicitly opt into one genuine rewarded video; unknown access gets retry/basic help. Earned sessions resume/replace without another ad. Photos stay local and remain unavailable until provider/target qualification reaches95% precision/85% recall on separate held-out100positive/100negative sets; two qualified targets are needed for longer Find offers. Calm/Move require60active seconds for5-minute offers and120seconds for10/20, or30/60 supported observed steps for Move.
+
+Version3 public release requires complete selected-app journeys on both platforms and Safari/iOS plus Chrome/Android recovery. Other paths are verified recovery, blocking only, unsupported or untested, bound to declared OS/permissions/network conditions. No inherited browser results or universal claims. Every claim needs source/binary/device/OS/scenario/artifact evidence; source tests never establish device behavior. Unverified optional browsers do not veto the minimum verified release.
+
+## Implementation order
+
+1. Update charter/instructions and version3 declared-coverage gate, preserving v1/v2 inputs/results.
+2. Publish the original-art recovery page at https://freed-landing.web.app/recovery, with Open Challenge, safe exit, no ads/target data, exact validated app links and extension-local offline equivalent. Resolve all entry routes through the existing owner-fenced recovery coordinator; links grant no app authority.
+3. Validate Safari's safe DNR probe, then reviewed adult-domain rules and host permissions. Verify Android's disclosed native browser barrier/notification path. Prove selection, activation, threshold, challenge, explicit native break and relock before visual expansion. Preserve prior working rules and configuration on failure.
+4. Build the optional DNS pilot: existing Google Cloud project, one isolated small server, initially five test installations, $25/month planning ceiling separate from CLARA. Use maintained dnsproxy v0.86.0 transport for DoH/DoT and retain the tested prototype consent/ownership/alert contracts. Native-compatible installation credentials, normal TLS/separate approved hostname, reviewed feed updates, encrypted upstream without forced SafeSearch, immediate bounded generic FCM/APNs alerts. No query/history/credential logs; no domain data to ads. Domain/server costs must be presented before purchase/provisioning. Protocol/privacy/cost/device gates precede any migration from current protection; retain rollback. Cache/prefetch/OS preemption/bypass and push restrictions remain explicit limits.
+5. Complete challenge evidence, account/provider recovery, friend-lock native mutation/lifecycle enforcement, journal/media/encrypted backup, reminders, optional capped CLARA, genuine membership prices and purchase lifecycle.
+6. Refine all86units and added destinations in this order: recovery/access; Protect/setup; app rules; chooser; activity/completion; onboarding/account; Today/check-in; Progress/history; journal; CLARA; Profile/settings; membership; library; support/legal. Use retained Mobbin/Appllama references and Oil UI, native/Reanimated state motion, and Oil Motion only for authored imagery that needs it. Restore fresh research access when available. Keep one primary action; remove duplicate prose, preserve essential consent/requirements/failures; natural text sizing, compact native controls, neutral large dark surfaces, Reduce Motion and focus/background suspension.
+7. Produce signed iOS/Android internal candidates one native build at a time. Use only the existing iPhone16Plus simulator; no new runtime. Do not request Mirroring again; accept structured user phone tests. Capture genuine store/subscription review screenshots from tested binaries and submit only verified claims.
+
+## Required verification
+
+Web: search, blocked/allowed, cold/warm cache, private/existing tabs, Wi-Fi/cellular, conflicts, denied permissions, restart and actual handoff. Apps: pending/cancelled selection, save rollback, thresholds, overnight schedules, overlaps,300/600/1200second windows, caps/replay/clock/restart/relock. Access: paid/free/unknown, real video reward/skip/no-fill, resumed sessions, active-time/sensor/photo proof, cleanup and failed saves. Accounts/data: signed providers/linking, owner isolation, logout/deletion, media/backup/reminders. Purchases: prices, cancellation, renewal/grace/hold/expiry/restore/revocation. UI: all retained units×10languages×2themes×2platforms, RTL, large text, screen readers, keyboards, settled screenshots and motion/performance.
+
+Production-ad eligibility is an independent gate: evaluate the full guided-session/earned-app-time reward chain and Play VPN use, not merely the label or an intermediate page. Test units remain during implementation. No paid infrastructure, broad IAM access or live ads are enabled merely to pass a check. Existing Firebase/GCP/Apple/Play/AdMob are reused; missing APNs/FCM/hostname/Mobbin access is recorded precisely.
+
+## Starting baseline
+
+TestFlight1.0(17) is available internally; its native clock repair and safe Safari page probe are not phone proof. The compact chooser and selected-row→rule fix are reviewed live source but absent from17. Hosted DNS prototype has18focused source tests and clean scoped review, with no service/native deployment. Device, purchase, photo qualification, friend-lock integration and the full UI matrix remain incomplete.

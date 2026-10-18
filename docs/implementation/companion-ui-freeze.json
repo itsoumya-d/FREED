@@ -1,0 +1,295 @@
+{
+  "schemaVersion": "freed-companion-ui-freeze-v1",
+  "generatedAt": "2026-10-03T11:34:59.901972+00:00",
+  "authority": "Approved plan in current UI chat",
+  "status": "source-stable; native visual pass in progress",
+  "checks": {
+    "typecheck": "passed",
+    "uiSuites": 24,
+    "uiTests": 183,
+    "firebaseEmulatorTests": 209,
+    "localization": "0 uncovered",
+    "webExport": "passed",
+    "fullLocalSuites": {
+      "passed": 136,
+      "failed": 3,
+      "total": 139,
+      "nativeGateOwner": "Redesign app with premium themes chat"
+    }
+  },
+  "limits": [
+    "Staged Debug native binary with production JS is not final release/physical evidence",
+    "Android fresh emulator HV_DENIED",
+    "Native/store/live/physical evidence remains separate"
+  ],
+  "files": {
+    "src/components/PremiumOffer.tsx": {
+      "sha256": "395e76aff25693debe1dc85a57a84e42bcd1ceaa49517dab6de97b46cee8137e",
+      "modifiedAt": "2026-10-03T10:25:36.615486+00:00"
+    },
+    "src/components/RecoveryHero.tsx": {
+      "sha256": "6275c3ada2c89d14fc9219eebd3b276c752ba9838ad5eb2cec9a665b69acca9b",
+      "modifiedAt": "2026-10-03T11:18:02.894956+00:00"
+    },
+    "src/components/PreferencePicker.android.tsx": {
+      "sha256": "3860274f267c946f800560237f9e85765b8cfa60367392699548154c0fcaef8c",
+      "modifiedAt": "2026-10-03T04:02:24.746158+00:00"
+    },
+    "src/components/Localized.tsx": {
+      "sha256": "cb1d488c8509afb2b28b9897db86277d60162db19f34ebea6c8a5b954650bcc7",
+      "modifiedAt": "2026-10-03T05:32:15.049511+00:00"
+    },
+    "src/components/LanguagePicker.tsx": {
+      "sha256": "ff116060a5d1063218283d3e41db5b1addce890266a6a36ae1e9e8380a080198",
+      "modifiedAt": "2026-10-03T04:02:24.711639+00:00"
+    },
+    "src/components/KiteCompanionRig.tsx": {
+      "sha256": "aaa852a37ee55a38014e75d6d9858ea1cb3c6b7c25d1482edd7677097fa475ba",
+      "modifiedAt": "2026-10-03T11:26:05.606580+00:00"
+    },
+    "src/components/OnboardingPreferences.tsx": {
+      "sha256": "edefad948dee296b47faab046093c7bf12e048bd7c58cc968b58e137eb90f0dd",
+      "modifiedAt": "2026-10-03T04:02:24.747679+00:00"
+    },
+    "src/components/BrandLogo.tsx": {
+      "sha256": "df25fb980de67bf65f69592dd58c7045aefcf615e64ccdc015d8432bd448340f",
+      "modifiedAt": "2026-10-03T04:28:28.855807+00:00"
+    },
+    "src/components/RecoveryPath.tsx": {
+      "sha256": "fe726458407918af44f3d97a21bcc5295150d352825a84d0e7f30b70c215d651",
+      "modifiedAt": "2026-10-03T04:14:15.502602+00:00"
+    },
+    "src/components/BreathingCadenceArtwork.tsx": {
+      "sha256": "04681c19b1cb4e06b88cd9710b3d583aaf427fd63310c48b086e9d586d31912e",
+      "modifiedAt": "2026-10-03T06:21:44.216133+00:00"
+    },
+    "src/components/UrgeSupportButton.tsx": {
+      "sha256": "59616c429c0ad3968a706e1c53d10bb33882a827fc87bbdbd2a86cd3192a1f65",
+      "modifiedAt": "2026-10-02T12:13:28.729202+00:00"
+    },
+    "src/components/MomentumSettingHeader.tsx": {
+      "sha256": "4b6bf909016ed92b67a8a3d54f7cefb2f5004fc6c489ca9c96ab3ee9bf2869ea",
+      "modifiedAt": "2026-10-03T10:24:06.657909+00:00"
+    },
+    "src/components/ProtectionSetupView.tsx": {
+      "sha256": "c698af0cd4aa4d888179ac71dc0a08ab12dcb514aa282bbede7160245abb62f1",
+      "modifiedAt": "2026-10-03T10:25:36.614858+00:00"
+    },
+    "src/components/AccountReauthenticationScreen.tsx": {
+      "sha256": "1a859332c60d986e9be215a61c9b0cb39cc49b2498051ddb2da8fb29ed6db21d",
+      "modifiedAt": "2026-10-03T10:25:36.614258+00:00"
+    },
+    "src/components/MomentumPageHeader.tsx": {
+      "sha256": "24416865344885893ff0318fc4914367e9c8c7470bd0bc0c40fbf52340f4375e",
+      "modifiedAt": "2026-10-03T10:49:01.183257+00:00"
+    },
+    "src/components/BreathingCadenceArtwork.web.tsx": {
+      "sha256": "82309c421b3cc4c40822f1e9bbad0dfca0b2e8e34c634901f87c34dde36e0661",
+      "modifiedAt": "2026-10-03T11:00:39.484161+00:00"
+    },
+    "src/components/PracticeDetail.tsx": {
+      "sha256": "60e3c426ca337ff80b56e1e5d3da8a83c59f7a0c6016e6df112cabf0e3e5f9d1",
+      "modifiedAt": "2026-10-03T10:49:01.184724+00:00"
+    },
+    "src/components/MomentumBreathingView.tsx": {
+      "sha256": "f10b0d9ae00523389395070e9152c11e884d8ff7593189a6f1fd6ddeaab02815",
+      "modifiedAt": "2026-10-03T10:25:36.617254+00:00"
+    },
+    "src/components/MomentumCompanion.tsx": {
+      "sha256": "68318ac37817d2f363c52cd5929eaa79748c9c24b1846a07ccfeb8c857a69128",
+      "modifiedAt": "2026-10-03T10:44:38.705578+00:00"
+    },
+    "src/components/SocialSignInButtons.tsx": {
+      "sha256": "5331453f6d6db1625d9f6a4d156932544f9590c5c2e05859699f5c453c1e5119",
+      "modifiedAt": "2026-10-02T12:13:28.715206+00:00"
+    },
+    "src/components/ProtectionLayers.tsx": {
+      "sha256": "118b3dbd1f31e95c5bad81dbb13f0b7609ba1be44c9e6d439f5ae3ecd4b59fc3",
+      "modifiedAt": "2026-10-03T07:28:05.466913+00:00"
+    },
+    "src/components/RootToolbarActions.tsx": {
+      "sha256": "085fefc77ac493b53f6b12dd7b9b264f3f0caf724ac8c6003d6291f28c7744cc",
+      "modifiedAt": "2026-10-03T10:23:46.992984+00:00"
+    },
+    "src/components/PreferencePicker.tsx": {
+      "sha256": "97a992f469ea3cdf6d9469a389c0d7e275098b063a6b65cc3b1da4d89b8c2d15",
+      "modifiedAt": "2026-10-03T04:02:57.231535+00:00"
+    },
+    "src/components/MomentumToday.tsx": {
+      "sha256": "bf1796024e89c8a6c055f851b9d78b86bf8a98960299877c5b88244e4d8a614b",
+      "modifiedAt": "2026-10-03T11:23:17.189642+00:00"
+    },
+    "src/components/CompanionBackdrop.tsx": {
+      "sha256": "2844f4c2a90c4853bbd106c05d8873f61c8dee7993ca6508ecff23d028a00aac",
+      "modifiedAt": "2026-10-03T10:34:08.744362+00:00"
+    },
+    "src/components/PassageArtwork.tsx": {
+      "sha256": "c8cb280a666fc5523eb8318fee02222a67388cdc4066e2d04f6f69023512da9f",
+      "modifiedAt": "2026-10-03T04:02:43.054511+00:00"
+    },
+    "src/components/EncryptedDnsSection.tsx": {
+      "sha256": "69d3e3ed489f65f72d1133e3fef96e9b314d0b23fcc03af03fca396aad648f55",
+      "modifiedAt": "2026-10-03T10:25:36.616701+00:00"
+    },
+    "src/components/PreferencesScreen.tsx": {
+      "sha256": "5631a3356c6f2d5eee6f286170864381a2b4022cb66ea9e168ee94a5a6b04bf0",
+      "modifiedAt": "2026-10-03T10:31:39.967525+00:00"
+    },
+    "src/components/PreferencePicker.ios.tsx": {
+      "sha256": "ce937ff26b51def8392553aa1442e8f119d98642473a564f4b6be163e157a182",
+      "modifiedAt": "2026-10-03T04:02:24.745774+00:00"
+    },
+    "src/components/AccountAccessScreen.tsx": {
+      "sha256": "4c98d9dfcbac0ddd276b6ac0118f1cff5146be95676fd62611f0e96251d43a42",
+      "modifiedAt": "2026-10-03T10:25:36.613722+00:00"
+    },
+    "src/components/DirectionalIcons.tsx": {
+      "sha256": "f2fee3df153c05efa941e497412af3098549a71839c0c64dfcacd84824f2d239",
+      "modifiedAt": "2026-10-03T02:16:59.766518+00:00"
+    },
+    "src/components/ChallengePresentation.tsx": {
+      "sha256": "41d8b8f7ac950684897041fbf9805fffdbefc235262f286d3af75dc62609cf49",
+      "modifiedAt": "2026-10-03T05:36:18.318046+00:00"
+    },
+    "src/components/SocialSignInButtons.native.tsx": {
+      "sha256": "4095f500d1e4d01255f8296b1a19f0044a44dcaffc2b29b9d061b573191d062b",
+      "modifiedAt": "2026-10-02T12:13:28.706069+00:00"
+    },
+    "src/components/ui/Card.tsx": {
+      "sha256": "27efea449220448bdc71fc2b502b57af6c5942b2983a2c516c1d7c42bd4c6887",
+      "modifiedAt": "2026-10-02T12:38:26.073128+00:00"
+    },
+    "src/components/ui/TabularText.tsx": {
+      "sha256": "4c0209c1faf719277b40a7f5ac2d6548768b2046f3d5a7bc4456b45eb08b980d",
+      "modifiedAt": "2026-10-02T12:13:28.763551+00:00"
+    },
+    "src/components/ui/Metric.tsx": {
+      "sha256": "2872727cdf7df03ad64a5104d44b2b977751c80135c3c2ad93e670719c4e7214",
+      "modifiedAt": "2026-10-02T12:38:28.093078+00:00"
+    },
+    "src/components/ui/Switch.tsx": {
+      "sha256": "d6be92a74ab2a82a6bcc20e659bd92ccbcb1c199743de6fb0eae51aea27901a5",
+      "modifiedAt": "2026-10-03T03:00:12.388504+00:00"
+    },
+    "src/components/ui/Button.tsx": {
+      "sha256": "61f3eaea67e3d7b650a4d912249c6987fec9a82eea53827fbd89af62e415d8c9",
+      "modifiedAt": "2026-10-03T07:28:05.469012+00:00"
+    },
+    "src/hooks/use-companion-viewport.ts": {
+      "sha256": "da2cc60a35593f44e0addd4fd9bb07476ad200e3d43fdd4817a7e1d4e362a8a4",
+      "modifiedAt": "2026-10-03T10:23:46.991863+00:00"
+    },
+    "src/features/freed-app.tsx": {
+      "sha256": "07a108bbc889c1f36e7b0e21290b04cee56afa4f3ca66013c4b5ffdd65a7795f",
+      "modifiedAt": "2026-10-03T11:24:53.950463+00:00"
+    },
+    "src/features/library-screen.tsx": {
+      "sha256": "f1cecb03ec2c0c9c7e8976765f3b3065a37a218819868640929ab7e33b1aea5e",
+      "modifiedAt": "2026-10-03T10:25:36.615997+00:00"
+    },
+    "src/features/legal-pages.tsx": {
+      "sha256": "a27ad737d3faa1a69c3cbac712c238031742892c6a72a5a31c247d9924e838f8",
+      "modifiedAt": "2026-10-03T10:25:36.616327+00:00"
+    },
+    "app/(tabs)/_layout.tsx": {
+      "sha256": "368fa909883449462294e78ec72837614b0c19076802d073c345e1d51e0c7646",
+      "modifiedAt": "2026-10-03T11:21:59.157142+00:00"
+    },
+    "src/lib/recovery-day-snapshot.ts": {
+      "sha256": "796ba51dc43af3d2c35ef7284a9203231fce8e9f16ac4eae83fd31bc44eeb64d",
+      "modifiedAt": "2026-10-03T10:32:10.380043+00:00"
+    },
+    "src/lib/recovery-day-write.ts": {
+      "sha256": "7d6087e7998301a3666c899266bc877f6796acb74327b509235a2361839463b4",
+      "modifiedAt": "2026-10-03T10:23:11.007177+00:00"
+    },
+    "src/lib/recovery-companion-cue.ts": {
+      "sha256": "4ec9fd3c04fddfe60d7d816d2b460727f4e43d99df488f4bf387686253307c93",
+      "modifiedAt": "2026-10-03T10:48:35.110969+00:00"
+    },
+    "src/lib/recovery-drafts.ts": {
+      "sha256": "f22b50aa059aff1fbcc45e44d2b474a1e53ee2d98787d17ba79884b983e86b0f",
+      "modifiedAt": "2026-10-03T10:48:35.112211+00:00"
+    },
+    "src/lib/recovery-state.ts": {
+      "sha256": "11e0c246cd630563dfda7e699468bd40298b9da91b4a228cf40649b7282c3d51",
+      "modifiedAt": "2026-10-03T10:48:35.116532+00:00"
+    },
+    "src/lib/app-preferences.ts": {
+      "sha256": "e4bd6dee6dd2a15a9ce9c3bd00991a8046c7487f0bfc1252cc3d59863359acd7",
+      "modifiedAt": "2026-10-03T10:22:21.889151+00:00"
+    },
+    "src/lib/companion-policy.ts": {
+      "sha256": "2c7bb2fc92810443aeb01d9d9793ad19cce81adbb2faee82227eb49c621a33b0",
+      "modifiedAt": "2026-10-03T10:43:59.419740+00:00"
+    },
+    "src/lib/companion-viewport.ts": {
+      "sha256": "b705eefaef359717eaa465394c15d998c1dec0f03e01e78444d33972132f24c1",
+      "modifiedAt": "2026-10-03T10:23:46.991315+00:00"
+    },
+    "src/i18n/locales/ja.json": {
+      "sha256": "9d72ec7daef4a5a24a8038ed4435aa9d131e56a69241e41091e9541977cf0046",
+      "modifiedAt": "2026-10-03T10:42:22.511309+00:00"
+    },
+    "src/i18n/locales/de.json": {
+      "sha256": "3f4c6450eb0d469736c187f68bcea34da5890a58b1e7416717983975e9478015",
+      "modifiedAt": "2026-10-03T10:42:22.495250+00:00"
+    },
+    "src/i18n/locales/pt.json": {
+      "sha256": "8db497f543022ea08bed9dcd12e61a577e15d53a205a19e1b06fbd3e2f7efd29",
+      "modifiedAt": "2026-10-03T10:42:22.483459+00:00"
+    },
+    "src/i18n/locales/en.json": {
+      "sha256": "99cf9afdd841bf2d34f876df5368d702bfdbc7caed5191b0e0781075283d3ab0",
+      "modifiedAt": "2026-10-03T10:42:22.458629+00:00"
+    },
+    "src/i18n/locales/zh-Hans.json": {
+      "sha256": "e12c563491334d111d45b4bf8e134a5e4371b366af1a8fea6378d57598068ed8",
+      "modifiedAt": "2026-10-03T10:42:22.531357+00:00"
+    },
+    "src/i18n/locales/fr.json": {
+      "sha256": "1297cb78aaf3a9039a2883b5fc5572dd297fcfedf0ebf1f3a0b25689cd6dc9a3",
+      "modifiedAt": "2026-10-03T10:42:22.490605+00:00"
+    },
+    "src/i18n/locales/hi.json": {
+      "sha256": "23499131c96fbe8b360eb2dc33aec052f2640400519cc1de91200f795274e0c0",
+      "modifiedAt": "2026-10-03T10:42:22.467038+00:00"
+    },
+    "src/i18n/locales/ko.json": {
+      "sha256": "4b838d857fb3d515393dc823cbf09cefa7009d1ee8f477e18604e6149bc71f82",
+      "modifiedAt": "2026-10-03T10:42:22.522100+00:00"
+    },
+    "src/i18n/locales/es.json": {
+      "sha256": "a18658e921e857a3523eda5ac0f4c8760767ce86c25f9f35539e6d28764c3918",
+      "modifiedAt": "2026-10-03T10:42:22.475121+00:00"
+    },
+    "src/i18n/locales/ar.json": {
+      "sha256": "b9fa6b4910a7745e120953858dc34947113792a1f6eb59cf84b7e2005317ee70",
+      "modifiedAt": "2026-10-03T10:42:22.501549+00:00"
+    },
+    "assets/artwork/companion/scene-protection-privacy.png": {
+      "sha256": "e73eb5f8665bdc2ae1f4bb0831c359ce133c145d9acb269f22308071bfa7a61a",
+      "modifiedAt": "2026-10-03T10:32:26.267860+00:00"
+    },
+    "assets/artwork/companion/scene-reflection-desk.png": {
+      "sha256": "c6c7c75dc17965ac1ef8b391e652823407e60672d073656102f6c99c1fd64e49",
+      "modifiedAt": "2026-10-03T10:32:24.681768+00:00"
+    },
+    "assets/artwork/companion/scene-movement-ground.png": {
+      "sha256": "03cf114ee4ed6a65cb8197854086db9341e85d7f22713c96187146bc33df61c8",
+      "modifiedAt": "2026-10-03T10:32:22.869629+00:00"
+    },
+    "assets/artwork/companion/scene-cloud-path.png": {
+      "sha256": "d09acc58f94ee01b54b16eea76a4407191d837d34175d2f2cbde65d131af0f72",
+      "modifiedAt": "2026-10-03T10:32:19.913652+00:00"
+    },
+    "assets/artwork/companion/scene-calm-circle.png": {
+      "sha256": "5daae3b439cef616c06035183ef047ba3e8afe4430f9f75ee0d08f483c612382",
+      "modifiedAt": "2026-10-03T10:32:21.337319+00:00"
+    },
+    "assets/artwork/companion/pose-reference-18.png": {
+      "sha256": "53fae463de4974ec03eca27541bcf0542c6a8cc56a6b8d546ca4af6e11203dfd",
+      "modifiedAt": "2026-10-03T10:24:27.707630+00:00"
+    }
+  }
+}

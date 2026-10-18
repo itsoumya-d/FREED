@@ -1,0 +1,246 @@
+{
+  "result": "pass",
+  "scope": "Fresh headless localhost task browser only; existing tabs untouched; no hosted or device proof.",
+  "checks": [
+    {
+      "id": "privacy",
+      "layout": "mobile",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "documentWidth": 375,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 6,
+      "directlyLoadedDestination": "/privacy",
+      "clickedDestinations": [
+        "/privacy",
+        "/support",
+        "/account-deletion",
+        "/terms"
+      ],
+      "contactCheck": "visible mailto href only; no message sent",
+      "googleReferenceCheck": "href presence only; official destination verified separately by read-only documentation lookup",
+      "screenshot": "privacy-mobile.png",
+      "htmlSha256": "6acd197d88837d533413fc57608fd867f1e54b6a2a83647ac1f3257b5b2cd548",
+      "screenshotSha256": "d50bbdd1825a2c8983b04ac0e7289dcc3b6a523050494f9514d7856e02672593",
+      "consoleErrors": []
+    },
+    {
+      "id": "support",
+      "layout": "mobile",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "documentWidth": 375,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 4,
+      "directlyLoadedDestination": "/support",
+      "clickedDestinations": [
+        "/privacy",
+        "/support",
+        "/account-deletion",
+        "/terms"
+      ],
+      "contactCheck": "visible mailto href only; no message sent",
+      "googleReferenceCheck": "href presence only; official destination verified separately by read-only documentation lookup",
+      "screenshot": "support-mobile.png",
+      "htmlSha256": "c490273d80d4cf144f3ac43f52c54e10ad0788f81c6beb25e785974e21b1ca9c",
+      "screenshotSha256": "c1a766e56368714dda1483aaeaa79100621b15a0bc3c77ca08a8e034f8782672",
+      "consoleErrors": []
+    },
+    {
+      "id": "account-deletion",
+      "layout": "mobile",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "documentWidth": 375,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 4,
+      "directlyLoadedDestination": "/account-deletion",
+      "clickedDestinations": [
+        "/privacy",
+        "/support",
+        "/account-deletion",
+        "/terms"
+      ],
+      "contactCheck": "visible mailto href only; no message sent",
+      "googleReferenceCheck": "href presence only; official destination verified separately by read-only documentation lookup",
+      "screenshot": "account-deletion-mobile.png",
+      "htmlSha256": "964c8d8eeaf08980d7ba0994b2e72ad6dc6eeb3f2a1c4b2857f54146fd4fcd5e",
+      "screenshotSha256": "b32631fd190ba705832ab9dca196e76b6c32f7cdbb48700e84e6354089995025",
+      "consoleErrors": []
+    },
+    {
+      "id": "terms",
+      "layout": "mobile",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "documentWidth": 375,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 7,
+      "directlyLoadedDestination": "/terms",
+      "clickedDestinations": [
+        "/privacy",
+        "/support",
+        "/account-deletion",
+        "/terms"
+      ],
+      "contactCheck": "visible mailto href only; no message sent",
+      "googleReferenceCheck": "href presence only; official destination verified separately by read-only documentation lookup",
+      "screenshot": "terms-mobile.png",
+      "htmlSha256": "80f2d2fd786e15507eef8abe4deb959c721568060b1e87e956a0e770474160b5",
+      "screenshotSha256": "f8b081d201d7e1512550c02b28dd9dc7da9e36016ea2737cc7bfa4c4e44f5c66",
+      "consoleErrors": []
+    },
+    {
+      "id": "privacy",
+      "layout": "desktop",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "documentWidth": 1440,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 6,
+      "directlyLoadedDestination": "/privacy",
+      "clickedDestinations": [
+        "/privacy",
+        "/support",
+        "/account-deletion",
+        "/terms"
+      ],
+      "contactCheck": "visible mailto href only; no message sent",
+      "googleReferenceCheck": "href presence only; official destination verified separately by read-only documentation lookup",
+      "screenshot": "privacy-desktop.png",
+      "htmlSha256": "6acd197d88837d533413fc57608fd867f1e54b6a2a83647ac1f3257b5b2cd548",
+      "screenshotSha256": "0e79c753ecf3cf2b72902cc43772c476b8f8b8d39344426c368192a91c7afc44",
+      "consoleErrors": []
+    },
+    {
+      "id": "support",
+      "layout": "desktop",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "documentWidth": 1440,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 4,
+      "directlyLoadedDestination": "/support",
+      "clickedDestinations": [
+        "/privacy",
+        "/support",
+        "/account-deletion",
+        "/terms"
+      ],
+      "contactCheck": "visible mailto href only; no message sent",
+      "googleReferenceCheck": "href presence only; official destination verified separately by read-only documentation lookup",
+      "screenshot": "support-desktop.png",
+      "htmlSha256": "c490273d80d4cf144f3ac43f52c54e10ad0788f81c6beb25e785974e21b1ca9c",
+      "screenshotSha256": "d4d2fe01af35baa9c9da831868ad2418f517e2b2b901334fa31a86d50694894b",
+      "consoleErrors": []
+    },
+    {
+      "id": "account-deletion",
+      "layout": "desktop",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "documentWidth": 1440,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 4,
+      "directlyLoadedDestination": "/account-deletion",
+      "clickedDestinations": [
+        "/privacy",
+        "/support",
+        "/account-deletion",
+        "/terms"
+      ],
+      "contactCheck": "visible mailto href only; no message sent",
+      "googleReferenceCheck": "href presence only; official destination verified separately by read-only documentation lookup",
+      "screenshot": "account-deletion-desktop.png",
+      "htmlSha256": "964c8d8eeaf08980d7ba0994b2e72ad6dc6eeb3f2a1c4b2857f54146fd4fcd5e",
+      "screenshotSha256": "c18403de62feb83e2f2a377facd7df44d46231507a87f3de7f24671160bf1d78",
+      "consoleErrors": []
+    },
+    {
+      "id": "terms",
+      "layout": "desktop",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "documentWidth": 1440,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 7,
+      "directlyLoadedDestination": "/terms",
+      "clickedDestinations": [
+        "/privacy",
+        "/support",
+        "/account-deletion",
+        "/terms"
+      ],
+      "contactCheck": "visible mailto href only; no message sent",
+      "googleReferenceCheck": "href presence only; official destination verified separately by read-only documentation lookup",
+      "screenshot": "terms-desktop.png",
+      "htmlSha256": "80f2d2fd786e15507eef8abe4deb959c721568060b1e87e956a0e770474160b5",
+      "screenshotSha256": "89a31619bbdfa96cc657fb39255bf2cd903342c924d13b6cee8c2f064863576a",
+      "consoleErrors": []
+    }
+  ]
+}

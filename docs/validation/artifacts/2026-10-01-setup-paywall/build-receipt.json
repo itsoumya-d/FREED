@@ -1,0 +1,28 @@
+{
+  "app": "app.freed.recovery",
+  "version": "1.0.0 (1)",
+  "platform": "iOS Simulator 26.5",
+  "configuration": "Release",
+  "distributionSigned": false,
+  "nativeBuildLog": "build_run_sim_2026-10-01T11-40-30-751Z_pid77158_0398dc2c.log",
+  "javascriptBundleSha256": "add74ac3f1bb425de4d8d39e7cc063aa79cf3fae01de0aee6051e78cf1877d19",
+  "sourceSha256": {
+    "src/components/PremiumOffer.tsx": "03e0bd7c6a12b0c78248a40a2d40902132526cec2975c4263200254aacb53931",
+    "src/components/ProtectionSetupView.tsx": "886b6560a4c794c3beb7c72ae83f7e8f0672f587d8ee88baf62c9ab7de1854f2",
+    "src/components/offer-theme.ts": "4984e7fd7b954cc9c5405870a66e60e9addd74d7a65a494ee849a50d3eee061c",
+    "src/lib/paywall-navigation.ts": "075785a443e55037c2991d42adae71ce0477b86bc357aba87f2f5a1d7f469f0f",
+    "src/lib/protection-setup-presenter.ts": "e605070d08c451b445213eb17d8d31d91f7c50e481bf1d54245a62388d320902",
+    "src/lib/store-pricing.ts": "84a5de66f2c88811d6b2bad02f5357d2528d55d30bcfb81ba1d943d3ac3be6d5",
+    "src/features/freed-app.tsx": "e5268808604dca160fff9a3d7a964ba1d0afe1e2392989d33dab413c7094e6be",
+    "modules/freed-protection/src/index.ts": "64385f6d8fa6fe2a2856420f75f8336b7843723bef2317fbe6564a8563aaa85d",
+    "modules/freed-protection/ios/FreedProtectionModule.swift": "410a63ad13615b3e1a7aafd0c96b9f3760a8dfb9512117a85df492d4fd80834a",
+    "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt": "746050071052cddb7a512997636f6b57c4b2e287acc276af8f4c21b15ed70368"
+  },
+  "limitations": [
+    "No physical-device permission approval or enforcement proof",
+    "No real purchase/renewal/refund or rewarded-ad proof",
+    "Navigation recording captured at supported 30 fps",
+    "Light appearance not yet runtime verified; isolated fixture was only prepared"
+  ],
+  "metadataCorrection": "2026-10-02: removed an unverified light-appearance claim; original captured build hashes are preserved."
+}

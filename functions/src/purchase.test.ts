@@ -278,25 +278,39 @@ test("Apple falls back to Sandbox only for an exact not-found or environment mis
   }
 });
 
-test("Apple API and cryptographic verification each have a hard timeout", async () => {
-  const boundary = appleBoundary([], () => appleDecoded());
-  boundary.createClient = () => ({ getTransactionInfo: async () => new Promise(() => undefined) });
-  const startedAt = Date.now();
-  await assert.rejects(() => createAppleStoreProvider(appleConfig(), boundary, () => NOW, 5).verify({
-    transactionId: "2000001234567890",
-    productId: "freed_premium_monthly",
-    expectedAppAccountToken: deriveAppleAppAccountToken(UID)
-  }), PurchaseProviderError);
-  assert.ok(Date.now() - startedAt < 100);
-
-  const verifyBoundary = appleBoundary([], () => new Promise<Record<string, unknown>>(() => undefined) as never);
-  const verificationStartedAt = Date.now();
-  await assert.rejects(() => createAppleStoreProvider(appleConfig(), verifyBoundary, () => NOW, 5).verify({
-    transactionId: "2000001234567890",
-    productId: "freed_premium_monthly",
-    expectedAppAccountToken: deriveAppleAppAccountToken(UID)
-  }), PurchaseProviderError);
-  assert.ok(Date.now() - verificationStartedAt < 100);
+test("Apple API and cryptographic verification each have a hard timeout", async (context) => {
+  context.mock.timers.enable({ apis: ["setTimeout"] });
+  for (const phase of ["api", "signature"] as const) {
+    let notifyStarted!: () => void;
+    const started = new Promise<void>(resolve => { notifyStarted = resolve; });
+    const boundary = appleBoundary([], () => appleDecoded());
+    if (phase === "api") {
+      boundary.createClient = () => ({ getTransactionInfo: async () => {
+        notifyStarted();
+        return new Promise(() => undefined);
+      } });
+    } else {
+      boundary.createVerifier = () => ({ verifyAndDecodeTransaction: async () => {
+        notifyStarted();
+        return new Promise(() => undefined);
+      } });
+    }
+    const pending = createAppleStoreProvider(appleConfig(), boundary, () => NOW, 5).verify({
+      transactionId: "2000001234567890",
+      productId: "freed_premium_monthly",
+      expectedAppAccountToken: deriveAppleAppAccountToken(UID)
+    });
+    let settled = false;
+    void pending.then(() => { settled = true; }, () => { settled = true; });
+    const rejected = assert.rejects(pending, PurchaseProviderError);
+    await started;
+    context.mock.timers.tick(4);
+    await Promise.resolve();
+    assert.equal(settled, false, `${phase} must remain pending before the configured deadline`);
+    context.mock.timers.tick(1);
+    await rejected;
+    assert.equal(settled, true, `${phase} must reject at the configured deadline`);
+  }
 });
 
 test("Google subscriptions use OAuth scope, exact encoded v2 path, and active line-item state", async () => {
@@ -428,24 +442,32 @@ test("Google provider fails closed for timeout, redirect, non-JSON, oversized, m
 
 test("Google deadline remains active until a streaming response body fully closes", async () => {
   const token = "play-token_stream-timeout_123";
+  const lifecycle: { signal?: AbortSignal | null; bodyCancelled: boolean } = { bodyCancelled: false };
   const provider = createGooglePlayProvider(googleServiceAccount(), {
     getAuthorizationHeaders: async () => ({ authorization: "Bearer server-only" }),
-    fetch: async () => new Response(new ReadableStream<Uint8Array>({
-      start(controller) {
-        controller.enqueue(new TextEncoder().encode("{"));
-        // Intentionally never close: the provider deadline must cancel this body.
-      }
-    }), { status: 200, headers: { "content-type": "application/json" } })
+    fetch: async (_url, init) => {
+      lifecycle.signal = init?.signal;
+      return new Response(new ReadableStream<Uint8Array>({
+        start(controller) {
+          controller.enqueue(new TextEncoder().encode("{"));
+          // Intentionally never close: the provider deadline must cancel this body.
+        },
+        cancel() { lifecycle.bodyCancelled = true; }
+      }), { status: 200, headers: { "content-type": "application/json" } });
+    }
   }, () => NOW, 5);
-  const startedAt = Date.now();
-  await assert.rejects(
-    Promise.race([
-      provider.verify({ productId: "freed_premium_monthly", purchaseToken: token }),
-      new Promise<never>((_resolve, reject) => setTimeout(() => reject(new Error(`test guard leaked ${token}`)), 100))
-    ]),
-    (error: unknown) => error instanceof PurchaseProviderError && !String(error).includes(token)
-  );
-  assert.ok(Date.now() - startedAt < 100, "the configured provider deadline must include body streaming");
+  let guard: ReturnType<typeof setTimeout> | undefined;
+  try {
+    await assert.rejects(
+      Promise.race([
+        provider.verify({ productId: "freed_premium_monthly", purchaseToken: token }),
+        new Promise<never>((_resolve, reject) => { guard = setTimeout(() => reject(new Error(`test guard leaked ${token}`)), 2000); })
+      ]),
+      (error: unknown) => error instanceof PurchaseProviderError && !String(error).includes(token)
+    );
+    assert.equal(lifecycle.signal?.aborted, true, "The configured deadline aborts the actual provider request.");
+    assert.equal(lifecycle.bodyCancelled, true, "The same deadline cancels a streaming body that never closes.");
+  } finally { if (guard) clearTimeout(guard); }
 });
 
 function iosRequest() {

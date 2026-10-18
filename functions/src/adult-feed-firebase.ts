@@ -28,6 +28,7 @@ const LATEST_ID = "latest";
 
 export const refreshReviewedAdultDomainFeed = onSchedule({
   region: "asia-south1",
+  maxInstances: 1,
   schedule: "every 24 hours",
   timeZone: "Asia/Kolkata"
 }, async () => {
@@ -43,7 +44,7 @@ export const refreshReviewedAdultDomainFeed = onSchedule({
   });
 });
 
-export const getReviewedAdultDomainFeed = onCall({ region: "asia-south1", enforceAppCheck: true }, async (request) => {
+export const getReviewedAdultDomainFeed = onCall({ region: "asia-south1", maxInstances: 5, enforceAppCheck: true }, async (request) => {
   requireAuthenticatedUid(request.auth?.uid);
   try {
     assertEmptyRetrievalPayload(request.data);

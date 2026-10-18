@@ -2,7 +2,7 @@
   "schema": "freed-production-env-gap-checklist-v1",
   "sanitized": true,
   "secretValuesOmitted": true,
-  "generatedAt": "2026-06-10T23:01:10.720Z",
+  "generatedAt": "2026-09-28T01:34:42.860Z",
   "sourcePreflightReport": "docs/validation/artifacts/release-env-current/release-env-preflight-report.json",
   "sourcePreflightReportSha256": "sha256-d9a738ed0afa6bce269fe5bd05e4b3005b450a235ed6154e7302d62ff557d16a",
   "source": "process.env",
@@ -443,6 +443,6 @@
   "checklistArtifact": "docs/validation/artifacts/release-env-current/PRODUCTION_ENV_GAP_CHECKLIST.md",
   "envSkeletonArtifact": "docs/validation/artifacts/release-env-current/PRODUCTION_ENV_MISSING_KEYS.env",
   "jsonArtifact": "docs/validation/artifacts/release-env-current/production-env-gap-checklist.json",
-  "checklistSha256": "sha256-6fb3a685e4c540d2af555dda3d7d7dc374527ff9f1d00843a506592fcbb501b1",
+  "checklistSha256": "sha256-9b9afdaa3ed13f4f787a8a1a84bf955a4bc5f64941718243a74e8e8089a3a76a",
   "envSkeletonSha256": "sha256-0059612ba92dc4bfbdd485c98f2600e88b4e3e456d3de6414be529a65917b42e"
 }

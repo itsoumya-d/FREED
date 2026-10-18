@@ -1,0 +1,53 @@
+appId: app.freed.recovery
+name: account-options
+tags:
+  - smoke
+  - local-write
+---
+# Requires an English signed-out disposable fixture and Apple-capable iOS (or Android).
+# Enter through the real Welcome control; no state or Keychain reset.
+- openLink: "freed:///onboarding/welcome"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "screen-welcome" }
+    timeout: 15000
+- tapOn: { id: "onboarding-personalize" }
+# Account is an app-owned native Modal; await its actual controls, not an underlying route marker.
+- extendedWaitUntil:
+    visible: "Connect your account"
+    timeout: 15000
+- assertVisible: "Sign in with Google"
+- extendedWaitUntil:
+    visible: "Continue with Apple"
+    timeout: 15000
+- assertVisible: "Create account with email"
+- assertVisible: "Sign in with email"
+- assertVisible: "Back to Welcome"
+- assertNotVisible: "Skip for now"
+- assertNotVisible: { id: "screen-main-today" }
+- tapOn: "Create account with email"
+- assertVisible: "Create your account"
+- assertVisible: "Email address"
+- assertVisible: "Password"
+- assertVisible: "Confirm password"
+- tapOn: "Back to account options"
+- assertVisible: "Connect your account"
+- tapOn: "Sign in with email"
+- assertVisible: "Welcome back"
+- assertVisible: "Email address"
+- assertVisible: "Password"
+- assertNotVisible: "Confirm password"
+- assertVisible: "Forgot password\\?"
+- tapOn: "Back to account options"
+- assertVisible: "Back to Welcome"
+- assertNotVisible: "Skip for now"
+- assertNotVisible: { id: "screen-main-today" }
+- takeScreenshot: "account-options"
+- tapOn: "Back to Welcome"
+- assertVisible: { id: "screen-welcome" }
+- assertVisible: { id: "onboarding-start" }
+- assertNotVisible: { id: "screen-main-today" }

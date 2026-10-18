@@ -1,0 +1,269 @@
+{
+  "schemaVersion": "freed-ios-release-archive-report-v1",
+  "generatedAt": "2026-10-03T11:52:02.453Z",
+  "sanitized": true,
+  "platform": "ios",
+  "result": "fail",
+  "archiveResult": "fail",
+  "exportResult": "fail",
+  "summary": {
+    "passCount": 0,
+    "failCount": 8
+  },
+  "results": [
+    {
+      "id": "ios-release-archive-build",
+      "status": "FAIL",
+      "detail": "xcodebuild failed with exit code 70 after 91381ms Log: ~/Developer/live/FREED/docs/validation/artifacts/2026-10-03-momentum/ios-release-archive-resume.log Recent output: 2026-10-03 17:20:34.544 xcodebuild[14493:2153416] [MT] IDEDistribution: -[IDEDistributionLogging _createLoggingBundleAtPath:]: Created bundle at path \"/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/FREED_2026-10-03_17-20-34.521.xcdistributionlogs\". error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the com.apple.developer.family-controls entitlement. ** EXPORT FAILED ** This blocker snapshot is not release evidence."
+    },
+    {
+      "id": "ios-release-export",
+      "status": "FAIL",
+      "detail": "xcodebuild failed with exit code 70 after 91381ms Log: ~/Developer/live/FREED/docs/validation/artifacts/2026-10-03-momentum/ios-release-archive-resume.log Recent output: 2026-10-03 17:20:34.544 xcodebuild[14493:2153416] [MT] IDEDistribution: -[IDEDistributionLogging _createLoggingBundleAtPath:]: Created bundle at path \"/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/FREED_2026-10-03_17-20-34.521.xcdistributionlogs\". error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the com.apple.developer.family-controls entitlement. ** EXPORT FAILED ** This blocker snapshot is not release evidence."
+    },
+    {
+      "id": "ios-release-signing",
+      "status": "FAIL",
+      "detail": "xcodebuild failed with exit code 70 after 91381ms Log: ~/Developer/live/FREED/docs/validation/artifacts/2026-10-03-momentum/ios-release-archive-resume.log Recent output: 2026-10-03 17:20:34.544 xcodebuild[14493:2153416] [MT] IDEDistribution: -[IDEDistributionLogging _createLoggingBundleAtPath:]: Created bundle at path \"/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/FREED_2026-10-03_17-20-34.521.xcdistributionlogs\". error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the com.apple.developer.family-controls entitlement. ** EXPORT FAILED ** This blocker snapshot is not release evidence."
+    },
+    {
+      "id": "ios-release-bundle-id",
+      "status": "FAIL",
+      "detail": "xcodebuild failed with exit code 70 after 91381ms Log: ~/Developer/live/FREED/docs/validation/artifacts/2026-10-03-momentum/ios-release-archive-resume.log Recent output: 2026-10-03 17:20:34.544 xcodebuild[14493:2153416] [MT] IDEDistribution: -[IDEDistributionLogging _createLoggingBundleAtPath:]: Created bundle at path \"/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/FREED_2026-10-03_17-20-34.521.xcdistributionlogs\". error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the com.apple.developer.family-controls entitlement. ** EXPORT FAILED ** This blocker snapshot is not release evidence."
+    },
+    {
+      "id": "ios-release-entitlements",
+      "status": "FAIL",
+      "detail": "xcodebuild failed with exit code 70 after 91381ms Log: ~/Developer/live/FREED/docs/validation/artifacts/2026-10-03-momentum/ios-release-archive-resume.log Recent output: 2026-10-03 17:20:34.544 xcodebuild[14493:2153416] [MT] IDEDistribution: -[IDEDistributionLogging _createLoggingBundleAtPath:]: Created bundle at path \"/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/FREED_2026-10-03_17-20-34.521.xcdistributionlogs\". error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the com.apple.developer.family-controls entitlement. ** EXPORT FAILED ** This blocker snapshot is not release evidence."
+    },
+    {
+      "id": "ios-release-embedded-extensions",
+      "status": "FAIL",
+      "detail": "xcodebuild failed with exit code 70 after 91381ms Log: ~/Developer/live/FREED/docs/validation/artifacts/2026-10-03-momentum/ios-release-archive-resume.log Recent output: 2026-10-03 17:20:34.544 xcodebuild[14493:2153416] [MT] IDEDistribution: -[IDEDistributionLogging _createLoggingBundleAtPath:]: Created bundle at path \"/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/FREED_2026-10-03_17-20-34.521.xcdistributionlogs\". error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the com.apple.developer.family-controls entitlement. ** EXPORT FAILED ** This blocker snapshot is not release evidence."
+    },
+    {
+      "id": "ios-release-safari-content-blocker",
+      "status": "FAIL",
+      "detail": "xcodebuild failed with exit code 70 after 91381ms Log: ~/Developer/live/FREED/docs/validation/artifacts/2026-10-03-momentum/ios-release-archive-resume.log Recent output: 2026-10-03 17:20:34.544 xcodebuild[14493:2153416] [MT] IDEDistribution: -[IDEDistributionLogging _createLoggingBundleAtPath:]: Created bundle at path \"/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/FREED_2026-10-03_17-20-34.521.xcdistributionlogs\". error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the com.apple.developer.family-controls entitlement. ** EXPORT FAILED ** This blocker snapshot is not release evidence."
+    },
+    {
+      "id": "ios-release-safari-focus-shield",
+      "status": "FAIL",
+      "detail": "xcodebuild failed with exit code 70 after 91381ms Log: ~/Developer/live/FREED/docs/validation/artifacts/2026-10-03-momentum/ios-release-archive-resume.log Recent output: 2026-10-03 17:20:34.544 xcodebuild[14493:2153416] [MT] IDEDistribution: -[IDEDistributionLogging _createLoggingBundleAtPath:]: Created bundle at path \"/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/FREED_2026-10-03_17-20-34.521.xcdistributionlogs\". error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the com.apple.developer.family-controls entitlement. ** EXPORT FAILED ** This blocker snapshot is not release evidence."
+    }
+  ],
+  "requested": {
+    "allowProvisioningUpdates": true,
+    "bundleId": "app.freed.recovery",
+    "configuration": "Release",
+    "destination": "generic/platform=iOS",
+    "requireReleaseSigning": true,
+    "scheme": "FREED",
+    "sdk": "iphoneos",
+    "skipExport": false
+  },
+  "exportOptions": {
+    "generated": true,
+    "method": "app-store-connect",
+    "path": "ios/build/FREED-export-options.plist",
+    "provisioningProfileBundleIds": [],
+    "signingStyle": "automatic",
+    "teamIdConfigured": true
+  },
+  "signing": {
+    "allSignedBundleTeamIdsMatch": false,
+    "appleDistributionSigned": false,
+    "debugSigned": false,
+    "mode": "not-app-store-distribution",
+    "required": true,
+    "teamIdConfigured": true
+  },
+  "archive": {
+    "appBundleIdentifier": "",
+    "appGroupEntitledBundleIds": [],
+    "appleDistributionSignedBundleIds": [],
+    "archivePath": "",
+    "bundlePath": "",
+    "codesignAvailableBundleIds": [],
+    "completeDataProtectionEntitledBundleIds": [],
+    "debugSignedBundleIds": [],
+    "embeddedExtensionBundleIds": [],
+    "embeddedExtensionNames": [],
+    "extensions": [
+      {
+        "appGroupPresent": false,
+        "appleDistributionSigned": false,
+        "bundleId": "",
+        "bundleName": "FREEDShieldConfiguration.appex",
+        "codesignAvailable": false,
+        "completeDataProtectionEntitled": false,
+        "debugSigned": false,
+        "embedded": false,
+        "entitlementsAvailable": false,
+        "extensionPoint": "",
+        "extensionPointMatches": false,
+        "familyControlsEntitled": false,
+        "expectedBundleId": "app.freed.recovery.shield-configuration",
+        "expectedBundleIdMatches": false,
+        "expectedExtensionPoint": "com.apple.ManagedSettingsUI.shield-configuration-service",
+        "expectedPrincipalClass": "ShieldConfigurationExtension",
+        "packetInspectionEntitled": false,
+        "packetTunnelProviderEntitled": false,
+        "principalClass": "",
+        "principalClassMatches": false,
+        "requiresFamilyControls": true,
+        "teamIdentifier": ""
+      },
+      {
+        "appGroupPresent": false,
+        "appleDistributionSigned": false,
+        "bundleId": "",
+        "bundleName": "FREEDShieldAction.appex",
+        "codesignAvailable": false,
+        "completeDataProtectionEntitled": false,
+        "debugSigned": false,
+        "embedded": false,
+        "entitlementsAvailable": false,
+        "extensionPoint": "",
+        "extensionPointMatches": false,
+        "familyControlsEntitled": false,
+        "expectedBundleId": "app.freed.recovery.shield-action",
+        "expectedBundleIdMatches": false,
+        "expectedExtensionPoint": "com.apple.ManagedSettings.shield-action-service",
+        "expectedPrincipalClass": "ShieldActionExtension",
+        "packetInspectionEntitled": false,
+        "packetTunnelProviderEntitled": false,
+        "principalClass": "",
+        "principalClassMatches": false,
+        "requiresFamilyControls": true,
+        "teamIdentifier": ""
+      },
+      {
+        "appGroupPresent": false,
+        "appleDistributionSigned": false,
+        "bundleId": "",
+        "bundleName": "FREEDDeviceActivityMonitor.appex",
+        "codesignAvailable": false,
+        "completeDataProtectionEntitled": false,
+        "debugSigned": false,
+        "embedded": false,
+        "entitlementsAvailable": false,
+        "extensionPoint": "",
+        "extensionPointMatches": false,
+        "familyControlsEntitled": false,
+        "expectedBundleId": "app.freed.recovery.device-activity-monitor",
+        "expectedBundleIdMatches": false,
+        "expectedExtensionPoint": "com.apple.deviceactivity.monitor-extension",
+        "expectedPrincipalClass": "DeviceActivityMonitorExtension",
+        "packetInspectionEntitled": false,
+        "packetTunnelProviderEntitled": false,
+        "principalClass": "",
+        "principalClassMatches": false,
+        "requiresFamilyControls": true,
+        "teamIdentifier": ""
+      },
+      {
+        "appGroupPresent": false,
+        "appleDistributionSigned": false,
+        "bundleId": "",
+        "bundleName": "FREEDSafariContentBlocker.appex",
+        "codesignAvailable": false,
+        "completeDataProtectionEntitled": false,
+        "debugSigned": false,
+        "embedded": false,
+        "entitlementsAvailable": false,
+        "extensionPoint": "",
+        "extensionPointMatches": false,
+        "familyControlsEntitled": false,
+        "expectedBundleId": "app.freed.recovery.safari-content-blocker",
+        "expectedBundleIdMatches": false,
+        "expectedExtensionPoint": "com.apple.Safari.content-blocker",
+        "expectedPrincipalClass": "ContentBlockerRequestHandler",
+        "packetInspectionEntitled": false,
+        "packetTunnelProviderEntitled": false,
+        "principalClass": "",
+        "principalClassMatches": false,
+        "requiresFamilyControls": false,
+        "teamIdentifier": ""
+      },
+      {
+        "appGroupPresent": false,
+        "appleDistributionSigned": false,
+        "bundleId": "",
+        "bundleName": "FREEDSafariFocusShield.appex",
+        "codesignAvailable": false,
+        "completeDataProtectionEntitled": false,
+        "debugSigned": false,
+        "embedded": false,
+        "entitlementsAvailable": false,
+        "extensionPoint": "",
+        "extensionPointMatches": false,
+        "familyControlsEntitled": false,
+        "expectedBundleId": "app.freed.recovery.safari-focus-shield",
+        "expectedBundleIdMatches": false,
+        "expectedExtensionPoint": "com.apple.Safari.web-extension",
+        "expectedPrincipalClass": "FREEDSafariFocusShield.SafariWebExtensionHandler",
+        "packetInspectionEntitled": false,
+        "packetTunnelProviderEntitled": false,
+        "principalClass": "",
+        "principalClassMatches": false,
+        "requiresFamilyControls": false,
+        "teamIdentifier": ""
+      }
+    ],
+    "familyControlsEntitledBundleIds": [],
+    "missingOrMismatchedExtensions": [
+      "FREEDShieldConfiguration.appex",
+      "FREEDShieldAction.appex",
+      "FREEDDeviceActivityMonitor.appex",
+      "FREEDSafariContentBlocker.appex",
+      "FREEDSafariFocusShield.appex"
+    ],
+    "packetInspectionEntitled": false,
+    "packetTunnelProviderEntitled": false,
+    "safariRuleList": {
+      "adultDomainRulesPresent": false,
+      "allRulesBlock": false,
+      "available": false,
+      "missingSignals": [
+        "adult-domain-pornhub",
+        "adult-domain-xvideos"
+      ],
+      "ruleCount": 0,
+      "usableForManualEvidence": false
+    },
+    "safariFocusShield": {
+      "backgroundAvailable": false,
+      "backgroundOwnsNativeMessaging": false,
+      "contentAvailable": false,
+      "contentUsesRuntimeMessaging": false,
+      "hostPermissions": [],
+      "hostPermissionsScoped": false,
+      "manifestAvailable": false,
+      "manifestVersion3": false,
+      "minimumSafariVersion": "",
+      "nativeMessagingPermission": false,
+      "serviceWorker": "",
+      "usableForManualEvidence": false
+    },
+    "signedBundleTeamIds": [],
+    "expectedBundleId": "app.freed.recovery"
+  },
+  "ipa": {
+    "embeddedExtensionNames": [],
+    "exists": false,
+    "hasPayloadApp": false,
+    "ipaPath": "",
+    "sha256": "",
+    "sizeBytes": 0
+  },
+  "durations": {
+    "archiveDurationMs": 0,
+    "exportDurationMs": 0
+  },
+  "failure": {
+    "phase": "archive",
+    "message": "xcodebuild failed with exit code 70 after 91381ms Log: ~/Developer/live/FREED/docs/validation/artifacts/2026-10-03-momentum/ios-release-archive-resume.log Recent output: 2026-10-03 17:20:34.544 xcodebuild[14493:2153416] [MT] IDEDistribution: -[IDEDistributionLogging _createLoggingBundleAtPath:]: Created bundle at path \"/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/FREED_2026-10-03_17-20-34.521.xcdistributionlogs\". error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-action\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.device-activity-monitor\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery.shield-configuration\" doesn't include the com.apple.developer.family-controls entitlement. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the Family Controls (Development) capability. error: exportArchive Provisioning profile \"iOS Team Store Provisioning Profile: app.freed.recovery\" doesn't include the com.apple.developer.family-controls entitlement. ** EXPORT FAILED **"
+  },
+  "logPath": "docs/validation/artifacts/2026-10-03-momentum/ios-release-archive-resume.log"
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from the audited authored-source catalogs. -->
+<resources>
+  <string name="freed_accessibility_description" formatted="false">चुने गए ऐप खुलने पर पूरे ऐप की सुरक्षा लागू करें। FREED की मदद खोलना आपका निर्णय है। ऐप के भीतर Shorts और Reels की जाँच प्रयोगात्मक है और सार्वजनिक रिलीज़ में शामिल नहीं है।</string>
+  <string name="freed_usage_access_config_label" formatted="false">FREED उपयोग पहुंच</string>
+  <string name="freed_usage_access_reason" formatted="false">FREED केवल चयनित ऐप पैकेजों के लिए समग्र अग्रभूमि समय को पढ़ने के लिए उपयोग पहुंच का उपयोग करता है ताकि आपके ऐप टाइमर पुनर्प्राप्ति चुनौतियों को ट्रिगर कर सकें। यह स्क्रीन सामग्री, संदेश, कीस्ट्रोक्स, ब्राउज़िंग इतिहास या कच्चे उपयोग की घटनाओं को नहीं पढ़ता है।</string>
+  <string name="freed_protection_label" formatted="false">FREED Protection</string>
+  <string name="freed_dns_notification_title" formatted="false">FREED DNS Guard</string>
+  <string name="freed_dns_channel_description" formatted="false">दिखाता है कि FREED का DNS-केवल वयस्क-डोमेन फ़िल्टर कब सक्रिय है।</string>
+  <string name="freed_dns_paused_notification" formatted="false">इस नेटवर्क के साइन-इन पृष्ठ के लिए फ़िल्टरिंग रोक दी गई है। सामान्य ब्राउज़िंग प्रत्यक्ष रहती है.</string>
+  <string name="freed_dns_active_notification" formatted="false">वयस्क-डोमेन DNS फ़िल्टरिंग सक्रिय है. सामान्य ब्राउज़िंग प्रत्यक्ष रहती है.</string>
+  <string name="freed_recovery_channel" formatted="false">FREED पुनर्प्राप्ति हस्तक्षेप</string>
+  <string name="freed_browser_notification_title" formatted="false">FREED सुरक्षा सूचना</string>
+  <string name="freed_app_notification_title" formatted="false">FREED ने चुना गया ऐप रोका</string>
+  <string name="freed_browser_channel_description" formatted="false">समर्थित रोक के लिए सुरक्षा सूचना दिखाता है। FREED की मदद तभी खुलती है जब आप चुनते हैं।</string>
+  <string name="freed_accessibility_notification" formatted="false">पुनर्प्राप्ति चुनौती को पूरा करने के लिए FREED खोलें। कोई ओवरले, स्क्रीनशॉट या ओसीआर का उपयोग नहीं किया जाता है।</string>
+  <string name="freed_source_label" formatted="false">स्रोत: {{host}}</string>
+  <string name="freed_dns_intervention_channel_description" formatted="false">FREED द्वारा वयस्क डोमेन का DNS अनुरोध रोके जाने पर सूचना दिखाता है। मदद तभी खुलती है जब आप चुनते हैं।</string>
+  <string name="freed_dns_intervention_notification" formatted="false">पुनर्प्राप्ति चुनौती को पूरा करने के लिए FREED खोलें। सामान्य ब्राउज़िंग प्रत्यक्ष रहती है.</string>
+  <string name="freed_dns_intervention_title" formatted="false">रुको - आपकी लकीर सुरक्षा के लायक है</string>
+  <string name="freed_blocked_host_label" formatted="false">अवरुद्ध होस्ट: {{host}}</string>
+  <string name="freed_intervention_eyebrow" formatted="false">FREED सुरक्षा</string>
+  <string name="freed_intervention_title" formatted="false">रुको. आप अभी भी नियंत्रण में हैं.</string>
+  <string name="freed_intervention_subtitle" formatted="false">आपकी ऐप सीमा सक्रिय है। मदद के लिए «पुनर्प्राप्ति प्रारंभ करें» चुनें।</string>
+  <string name="freed_intervention_breathe" formatted="false">साँस अंदर लें। साँस छोड़ें।</string>
+  <string name="freed_start_recovery" formatted="false">पुनर्प्राप्ति प्रारंभ करें</string>
+  <string name="freed_usage_eyebrow" formatted="false">FREED उपयोग पहुंच</string>
+  <string name="freed_usage_title" formatted="false">उपयोग की पहुंच ऐप टाइमर तक ही सीमित रहती है।</string>
+  <string name="freed_usage_note" formatted="false">उपयोग एक्सेस को Android सेटिंग्स द्वारा नियंत्रित किया जाता है। FREED को सक्षम करने के बाद, सेटअप पर वापस लौटें ताकि सक्रियण परीक्षण सुरक्षा को सत्यापित कर सके।</string>
+  <string name="freed_usage_return" formatted="false">FREED सेटअप पर वापस लौटें</string>
+  <string name="freed_usage_back" formatted="false">Android सेटिंग्स पर वापस जाएँ</string>
+  <string name="freed_calibration_instruction" formatted="false">अंशांकन करने के लिए सतह पर टैप करें। इस डिवाइस पर केवल इसका स्टेबल व्यू फिंगरप्रिंट ही रहता है।</string>
+  <string name="freed_calibration_ready" formatted="false">स्थिर स्थानीय चयनकर्ता मिला. इसे सहेजने की पुष्टि करें, या इसे त्यागने के लिए रद्द करें।</string>
+  <string name="freed_cancel" formatted="false">रद्द करें</string>
+  <string name="freed_confirm" formatted="false">पुष्टि करना</string>
+  <string name="freed_companion_label" formatted="false">FREED साथी</string>
+  <string name="freed_companion_hint" formatted="false">अपने साथी का स्वागत करने के लिए टैप करें.</string>
+  <string name="freed_companion_hello" formatted="false">एक समय में एक कदम. आप एक बेहतर दिन के लिए जगह बना रहे हैं।</string>
+</resources>

@@ -1,0 +1,564 @@
+{
+  "entries": [
+    {
+      "source": "Selected-app schedule persistence could not be confirmed.",
+      "translations": {
+        "hi": "चुनिंदा ऐप की समय सेटिंग सहेजे जाने की पुष्टि नहीं हुई।",
+        "es": "No se pudo confirmar que los horarios de las aplicaciones seleccionadas se guardaran.",
+        "pt": "Não foi possível confirmar que os horários dos aplicativos selecionados foram salvos.",
+        "fr": "L’enregistrement des horaires des applications choisies n’a pas pu être confirmé.",
+        "de": "Das Speichern der Zeitpläne für ausgewählte Apps konnte nicht bestätigt werden.",
+        "ar": "تعذّر تأكيد حفظ جدول التطبيقات المختارة.",
+        "ja": "選択したアプリのスケジュールが保存されたか確認できませんでした。",
+        "ko": "선택한 앱의 일정 저장을 확인하지 못했어요.",
+        "zh-Hans": "无法确认所选应用的计划已保存。"
+      }
+    },
+    {
+      "source": "Selected-app schedule update was rejected. The existing configuration remains installed.",
+      "translations": {
+        "hi": "चुनिंदा ऐप का समय बदलाव अस्वीकार हुआ। मौजूदा सेटिंग बनी हुई है।",
+        "es": "Se rechazó el cambio de horarios de las aplicaciones seleccionadas. La configuración anterior sigue instalada.",
+        "pt": "A alteração dos horários dos aplicativos selecionados foi rejeitada. A configuração anterior continua instalada.",
+        "fr": "La modification des horaires des applications choisies a été refusée. La configuration existante reste installée.",
+        "de": "Die Zeitplanänderung für ausgewählte Apps wurde abgelehnt. Die bisherige Konfiguration bleibt eingerichtet.",
+        "ar": "رُفض تحديث جدول التطبيقات المختارة. تظل الإعدادات الحالية مثبّتة.",
+        "ja": "選択したアプリのスケジュール変更が拒否されました。既存の設定は維持されています。",
+        "ko": "선택한 앱의 일정 변경이 거부되었어요. 기존 설정은 유지돼요.",
+        "zh-Hans": "所选应用的计划更新被拒绝，原配置仍保持安装。"
+      }
+    },
+    {
+      "source": "Selected-app schedules could not be installed. The previous configuration has been retained.",
+      "translations": {
+        "hi": "चुनिंदा ऐप की समय-सारणियाँ लागू नहीं हुईं। पिछली सेटिंग रखी गई है।",
+        "es": "No se pudieron instalar los horarios de las aplicaciones seleccionadas. Se conservó la configuración anterior.",
+        "pt": "Não foi possível instalar os horários dos aplicativos selecionados. A configuração anterior foi mantida.",
+        "fr": "Les horaires des applications choisies n’ont pas pu être installés. La configuration précédente a été conservée.",
+        "de": "Die Zeitpläne für ausgewählte Apps konnten nicht eingerichtet werden. Die vorherige Konfiguration wurde beibehalten.",
+        "ar": "تعذّر تثبيت جداول التطبيقات المختارة. حُفظت الإعدادات السابقة.",
+        "ja": "選択したアプリのスケジュールを設定できませんでした。以前の設定は維持されています。",
+        "ko": "선택한 앱의 일정을 설치하지 못했어요. 이전 설정은 유지돼요.",
+        "zh-Hans": "无法安装所选应用的计划，先前配置已保留。"
+      }
+    },
+    {
+      "source": "Set up app protection",
+      "translations": {
+        "hi": "ऐप सुरक्षा सेट करें",
+        "es": "Configurar protección de aplicaciones",
+        "pt": "Configurar proteção de aplicativos",
+        "fr": "Configurer la protection des applications",
+        "de": "App-Schutz einrichten",
+        "ar": "إعداد حماية التطبيقات",
+        "ja": "アプリ保護を設定",
+        "ko": "앱 보호 설정",
+        "zh-Hans": "设置应用保护"
+      }
+    },
+    {
+      "source": "Sharing configured · check readiness",
+      "translations": {
+        "hi": "साझाकरण सेट है · तैयारी जाँचें",
+        "es": "Compartir configurado · comprueba disponibilidad",
+        "pt": "Compartilhamento configurado · verifique a preparação",
+        "fr": "Partage configuré · vérifier la disponibilité",
+        "de": "Teilen eingerichtet · Bereitschaft prüfen",
+        "ar": "المشاركة مضبوطة · تحقّق من الجاهزية",
+        "ja": "共有設定済み · 準備状態を確認",
+        "ko": "공유 설정됨 · 준비 상태 확인",
+        "zh-Hans": "已配置共享 · 检查就绪状态"
+      }
+    },
+    {
+      "source": "Short-form filtering and calibration are unavailable in this release. Use app limits to protect time in distracting apps.",
+      "translations": {
+        "hi": "इस रिलीज़ में शॉर्ट-फ़ॉर्म फ़िल्टर और कैलिब्रेशन उपलब्ध नहीं हैं। ध्यान भटकाने वाले ऐप में समय सुरक्षित रखने के लिए ऐप सीमाएँ इस्तेमाल करें।",
+        "es": "El filtrado de contenido breve y la calibración no están disponibles en esta versión. Usa límites para proteger tu tiempo en aplicaciones que distraen.",
+        "pt": "A filtragem de conteúdo curto e a calibração estão indisponíveis nesta versão. Use limites de aplicativos para proteger seu tempo em apps que distraem.",
+        "fr": "Le filtrage des formats courts et l’étalonnage ne sont pas disponibles dans cette version. Utilisez les limites d’applications pour protéger votre temps.",
+        "de": "Kurzformatfilter und Kalibrierung sind in dieser Version nicht verfügbar. Nutze App-Limits, um deine Zeit in ablenkenden Apps zu schützen.",
+        "ar": "تصفية المحتوى القصير والمعايرة غير متاحتين في هذا الإصدار. استخدم حدود التطبيقات لحماية وقتك من التطبيقات المشتّتة.",
+        "ja": "このリリースでは短い動画のフィルタと調整は利用できません。気が散るアプリの利用時間を守るには、アプリの制限を使ってください。",
+        "ko": "이 버전에서는 짧은 콘텐츠 필터와 보정을 사용할 수 없어요. 주의를 분산시키는 앱의 시간을 관리하려면 앱 한도를 사용하세요.",
+        "zh-Hans": "此版本不支持短视频过滤和校准。请使用应用限额，保护您在干扰应用中花费的时间。"
+      }
+    },
+    {
+      "source": "shower",
+      "translations": {
+        "hi": "शॉवर",
+        "es": "ducha",
+        "pt": "banho",
+        "fr": "douche",
+        "de": "Dusche",
+        "ar": "استحمام",
+        "ja": "シャワー",
+        "ko": "샤워",
+        "zh-Hans": "淋浴"
+      }
+    },
+    {
+      "source": "Sign-in cancelled. Choose another method or return to Welcome.",
+      "translations": {
+        "hi": "साइन-इन रद्द हुआ। दूसरा तरीका चुनें या Welcome पर लौटें।",
+        "es": "Se canceló el inicio de sesión. Elige otro método o vuelve a la bienvenida.",
+        "pt": "O login foi cancelado. Escolha outro método ou volte às boas-vindas.",
+        "fr": "Connexion annulée. Choisissez une autre méthode ou revenez à l’accueil.",
+        "de": "Anmeldung abgebrochen. Wähle eine andere Methode oder kehre zur Begrüßung zurück.",
+        "ar": "أُلغي تسجيل الدخول. اختر طريقة أخرى أو عُد لشاشة الترحيب.",
+        "ja": "ログインがキャンセルされました。別の方法を選ぶか、ようこそ画面に戻ってください。",
+        "ko": "로그인이 취소되었어요. 다른 방법을 선택하거나 시작 화면으로 돌아가세요.",
+        "zh-Hans": "登录已取消。请选择其他方式，或返回欢迎页面。"
+      }
+    },
+    {
+      "source": "signals",
+      "translations": {
+        "hi": "संकेत",
+        "es": "señales",
+        "pt": "sinais",
+        "fr": "signaux",
+        "de": "Hinweise",
+        "ar": "إشارات",
+        "ja": "手がかり",
+        "ko": "신호",
+        "zh-Hans": "信息信号"
+      }
+    },
+    {
+      "source": "Signed in",
+      "translations": {
+        "hi": "साइन-इन है",
+        "es": "Sesión iniciada",
+        "pt": "Conectado",
+        "fr": "Connecté",
+        "de": "Angemeldet",
+        "ar": "تم تسجيل الدخول",
+        "ja": "ログイン済み",
+        "ko": "로그인됨",
+        "zh-Hans": "已登录"
+      }
+    },
+    {
+      "source": "Sit comfortably and let your shoulders relax.",
+      "translations": {
+        "hi": "आराम से बैठें और कंधे ढीले छोड़ें।",
+        "es": "Siéntate cómodamente y relaja los hombros.",
+        "pt": "Sente-se confortavelmente e relaxe os ombros.",
+        "fr": "Asseyez-vous confortablement et détendez les épaules.",
+        "de": "Setze dich bequem hin und entspanne deine Schultern.",
+        "ar": "اجلس براحة وأرخِ كتفيك.",
+        "ja": "楽に座り、肩の力を抜きましょう。",
+        "ko": "편안하게 앉아 어깨의 힘을 빼세요.",
+        "zh-Hans": "舒适地坐下，放松肩膀。"
+      }
+    },
+    {
+      "source": "Skip feedback",
+      "translations": {
+        "hi": "प्रतिक्रिया छोड़ें",
+        "es": "Omitir valoración",
+        "pt": "Pular avaliação",
+        "fr": "Passer l’avis",
+        "de": "Rückmeldung überspringen",
+        "ar": "تخطّي التقييم",
+        "ja": "感想をスキップ",
+        "ko": "피드백 건너뛰기",
+        "zh-Hans": "跳过反馈"
+      }
+    },
+    {
+      "source": "Sleep, work, weekend and strict guards cover only retained individual application selections. FREED cannot select every installed app. Ending one guard keeps overlapping guards in effect.",
+      "translations": {
+        "hi": "नींद, काम, सप्ताहांत और सख्त सुरक्षा केवल रखे गए अलग-अलग ऐप चयन पर लागू हैं। FREED हर इंस्टॉल किए गए ऐप को नहीं चुन सकता। एक सुरक्षा नियम समाप्त करने से अन्य एक साथ लागू नियम बने रहते हैं।",
+        "es": "Las protecciones de sueño, trabajo, fin de semana y estrictas cubren solo las aplicaciones individuales seleccionadas y conservadas. FREED no puede seleccionar todas las aplicaciones instaladas. Al terminar una protección, las que coinciden siguen activas.",
+        "pt": "As proteções de sono, trabalho, fim de semana e estritas cobrem apenas as seleções individuais de aplicativos mantidas. O FREED não pode selecionar todos os aplicativos instalados. Encerrar uma proteção mantém as outras proteções sobrepostas ativas.",
+        "fr": "Les protections sommeil, travail, week-end et strictes couvrent uniquement les applications individuelles dont le choix est conservé. FREED ne peut pas choisir toutes les applications installées. Terminer une protection conserve les autres protections qui se chevauchent.",
+        "de": "Schlaf-, Arbeits-, Wochenend- und strenge Schutzregeln gelten nur für gespeicherte einzelne App-Auswahlen. FREED kann nicht alle installierten Apps auswählen. Wenn eine Regel endet, bleiben überlappende Regeln wirksam.",
+        "ar": "تشمل حماية النوم والعمل وعطلة الأسبوع والحماية الصارمة اختيارات التطبيقات الفردية المحفوظة فقط. لا يستطيع FREED اختيار كل التطبيقات المثبّتة. إنهاء قاعدة واحدة يُبقي القواعد المتداخلة فعّالة.",
+        "ja": "睡眠、仕事、週末、厳格な保護は、保存されている個別のアプリ選択のみが対象です。FREEDはすべてのインストール済みアプリを選べません。一つの保護が終了しても、重なる他の保護は維持されます。",
+        "ko": "수면, 업무, 주말, 엄격한 보호는 저장된 개별 앱 선택에만 적용돼요. FREED는 설치된 모든 앱을 선택할 수 없어요. 보호 하나가 끝나도 겹치는 다른 보호는 유지돼요.",
+        "zh-Hans": "睡眠、工作、周末和严格保护仅覆盖保留的独立应用选择。FREED 不能选择所有已安装应用。结束一项保护后，其他重叠规则仍然有效。"
+      }
+    },
+    {
+      "source": "slip",
+      "translations": {
+        "hi": "फिसलन का रिकॉर्ड",
+        "es": "desliz",
+        "pt": "deslize",
+        "fr": "écart",
+        "de": "Ausrutscher",
+        "ar": "تعثّر",
+        "ja": "つまずきの記録",
+        "ko": "흔들림",
+        "zh-Hans": "失守记录"
+      }
+    },
+    {
+      "source": "Sound cues",
+      "translations": {
+        "hi": "ध्वनि संकेत",
+        "es": "Señales de sonido",
+        "pt": "Sinais sonoros",
+        "fr": "Repères sonores",
+        "de": "Klangsignale",
+        "ar": "إشارات صوتية",
+        "ja": "音の合図",
+        "ko": "소리 안내",
+        "zh-Hans": "声音提示"
+      }
+    },
+    {
+      "source": "Sound cues are unavailable. You can continue with the visual guide.",
+      "translations": {
+        "hi": "ध्वनि संकेत उपलब्ध नहीं हैं। आप दृश्य निर्देशों से जारी रख सकते हैं।",
+        "es": "Las señales de sonido no están disponibles. Puedes continuar con la guía visual.",
+        "pt": "Os sinais sonoros estão indisponíveis. Você pode continuar com a orientação visual.",
+        "fr": "Les repères sonores sont indisponibles. Vous pouvez continuer avec le guide visuel.",
+        "de": "Klangsignale sind nicht verfügbar. Du kannst mit der visuellen Anleitung fortfahren.",
+        "ar": "الإشارات الصوتية غير متاحة. يمكنك المتابعة بالدليل المرئي.",
+        "ja": "音の合図は利用できません。画面のガイドで続けられます。",
+        "ko": "소리 안내를 사용할 수 없어요. 화면 안내로 계속할 수 있어요.",
+        "zh-Hans": "声音提示不可用，您可以继续使用视觉引导。"
+      }
+    },
+    {
+      "source": "sponsor",
+      "translations": {
+        "hi": "सहयोगी",
+        "es": "persona de apoyo",
+        "pt": "pessoa de apoio",
+        "fr": "personne de soutien",
+        "de": "Unterstützer",
+        "ar": "شخص داعم",
+        "ja": "サポーター",
+        "ko": "지원자",
+        "zh-Hans": "支持者"
+      }
+    },
+    {
+      "source": "Stand or sit comfortably. Relax your shoulders and notice your feet touching the ground.",
+      "translations": {
+        "hi": "आराम से बैठें या खड़े हों। कंधे ढीले छोड़ें और पैरों का ज़मीन से स्पर्श महसूस करें।",
+        "es": "Ponte de pie o siéntate cómodamente. Relaja los hombros y nota los pies en contacto con el suelo.",
+        "pt": "Fique em pé ou sente-se confortavelmente. Relaxe os ombros e perceba seus pés tocando o chão.",
+        "fr": "Restez debout ou asseyez-vous confortablement. Détendez les épaules et sentez vos pieds au sol.",
+        "de": "Stehe oder sitze bequem. Entspanne die Schultern und spüre den Kontakt deiner Füße mit dem Boden.",
+        "ar": "قف أو اجلس براحة. أرخِ كتفيك ولاحظ ملامسة قدميك للأرض.",
+        "ja": "楽に立つか座ってください。肩の力を抜き、足が地面に触れる感覚に気づきましょう。",
+        "ko": "편안하게 서거나 앉으세요. 어깨의 힘을 빼고 발이 바닥에 닿는 느낌을 알아차리세요.",
+        "zh-Hans": "舒适地站立或坐下。放松肩膀，感受双脚接触地面。"
+      }
+    },
+    {
+      "source": "Start challenge",
+      "translations": {
+        "hi": "चुनौती शुरू करें",
+        "es": "Empezar desafío",
+        "pt": "Iniciar desafio",
+        "fr": "Commencer le défi",
+        "de": "Challenge starten",
+        "ar": "بدء التحدي",
+        "ja": "チャレンジを始める",
+        "ko": "활동 시작",
+        "zh-Hans": "开始挑战"
+      }
+    },
+    {
+      "source": "Stay seated in a comfortable position.",
+      "translations": {
+        "hi": "आरामदायक मुद्रा में बैठे रहें।",
+        "es": "Quédate sentado en una posición cómoda.",
+        "pt": "Permaneça sentado em uma posição confortável.",
+        "fr": "Restez assis dans une position confortable.",
+        "de": "Bleibe in einer angenehmen Sitzposition.",
+        "ar": "ابقَ جالسًا بوضعية مريحة.",
+        "ja": "楽な姿勢で座ったまま行いましょう。",
+        "ko": "편안한 자세로 앉아 있으세요.",
+        "zh-Hans": "保持舒适的坐姿。"
+      }
+    },
+    {
+      "source": "Stay with the reset, then confirm that you finished. A timer cannot prove physical activity.",
+      "translations": {
+        "hi": "विराम में बने रहें, फिर पूरा करने की पुष्टि करें। टाइमर शारीरिक गतिविधि साबित नहीं कर सकता।",
+        "es": "Sigue con el ejercicio y confirma que lo terminaste. Un temporizador no puede demostrar actividad física.",
+        "pt": "Continue o exercício e confirme que terminou. Um cronômetro não comprova atividade física.",
+        "fr": "Poursuivez l’exercice, puis confirmez l’avoir terminé. Un minuteur ne peut pas prouver une activité physique.",
+        "de": "Bleibe bei der Übung und bestätige dann ihren Abschluss. Ein Timer kann körperliche Aktivität nicht nachweisen.",
+        "ar": "واصل التمرين ثم أكّد أنك أنهيته. المؤقّت لا يثبت القيام بنشاط بدني.",
+        "ja": "リセットを続け、終えたことを確認してください。タイマーだけでは身体活動を証明できません。",
+        "ko": "활동을 진행한 뒤 완료를 확인하세요. 타이머만으로 신체 활동을 증명할 수는 없어요.",
+        "zh-Hans": "继续活动，然后确认完成。计时器不能证明实际进行了身体活动。"
+      }
+    },
+    {
+      "source": "Steps observed",
+      "translations": {
+        "hi": "कदम देखे गए",
+        "es": "Pasos observados",
+        "pt": "Passos observados",
+        "fr": "Pas observés",
+        "de": "Schritte erfasst",
+        "ar": "تم رصد الخطوات",
+        "ja": "歩数を検出しました",
+        "ko": "걸음 수가 감지되었어요",
+        "zh-Hans": "已检测到步数"
+      }
+    },
+    {
+      "source": "Stop whenever you need.",
+      "translations": {
+        "hi": "जब चाहें रुकें।",
+        "es": "Detente cuando lo necesites.",
+        "pt": "Pare sempre que precisar.",
+        "fr": "Arrêtez quand vous en avez besoin.",
+        "de": "Höre auf, wann immer du möchtest.",
+        "ar": "توقّف متى احتجت.",
+        "ja": "必要なときはいつでも止めてください。",
+        "ko": "필요할 때 언제든 멈추세요.",
+        "zh-Hans": "需要时随时停止。"
+      }
+    },
+    {
+      "source": "streak",
+      "translations": {
+        "hi": "लगातार दिन",
+        "es": "racha",
+        "pt": "sequência",
+        "fr": "série",
+        "de": "Serie",
+        "ar": "أيام متتالية",
+        "ja": "連続記録",
+        "ko": "연속 기록",
+        "zh-Hans": "连续记录"
+      }
+    },
+    {
+      "source": "Strict guard: {{value1}} · {{value2}}",
+      "translations": {
+        "hi": "सख्त सुरक्षा: {{value1}} · {{value2}}",
+        "es": "Protección estricta: {{value1}} · {{value2}}",
+        "pt": "Proteção estrita: {{value1}} · {{value2}}",
+        "fr": "Protection stricte : {{value1}} · {{value2}}",
+        "de": "Strenger Schutz: {{value1}} · {{value2}}",
+        "ar": "الحماية الصارمة: {{value1}} · {{value2}}",
+        "ja": "厳格な保護：{{value1}} · {{value2}}",
+        "ko": "엄격한 보호: {{value1}} · {{value2}}",
+        "zh-Hans": "严格保护：{{value1}} · {{value2}}"
+      }
+    },
+    {
+      "source": "subscription",
+      "translations": {
+        "hi": "सदस्यता",
+        "es": "suscripción",
+        "pt": "assinatura",
+        "fr": "abonnement",
+        "de": "Abonnement",
+        "ar": "اشتراك",
+        "ja": "サブスクリプション",
+        "ko": "구독",
+        "zh-Hans": "订阅"
+      }
+    },
+    {
+      "source": "suggestions",
+      "translations": {
+        "hi": "सुझाव",
+        "es": "sugerencias",
+        "pt": "sugestões",
+        "fr": "suggestions proposées",
+        "de": "Vorschläge",
+        "ar": "اقتراحات",
+        "ja": "提案",
+        "ko": "제안",
+        "zh-Hans": "建议"
+      }
+    },
+    {
+      "source": "Take a comfortable breath in and let it out slowly.",
+      "translations": {
+        "hi": "आराम से साँस लें और धीरे छोड़ें।",
+        "es": "Inspira cómodamente y suelta el aire despacio.",
+        "pt": "Inspire com conforto e solte o ar devagar.",
+        "fr": "Inspirez confortablement et expirez lentement.",
+        "de": "Atme angenehm ein und langsam wieder aus.",
+        "ar": "خذ شهيقًا مريحًا ثم أخرج النفس ببطء.",
+        "ja": "楽に息を吸い、ゆっくり吐きましょう。",
+        "ko": "편안하게 들이쉰 다음 천천히 내쉬세요.",
+        "zh-Hans": "舒适地吸气，再慢慢呼出。"
+      }
+    },
+    {
+      "source": "Take a few nearby steps",
+      "translations": {
+        "hi": "आसपास कुछ कदम चलें",
+        "es": "Da unos pasos cerca",
+        "pt": "Dê alguns passos por perto",
+        "fr": "Faire quelques pas à proximité",
+        "de": "Ein paar Schritte in der Nähe gehen",
+        "ar": "امشِ بضع خطوات قريبة",
+        "ja": "近くを少し歩く",
+        "ko": "주변에서 몇 걸음 걷기",
+        "zh-Hans": "在附近走几步"
+      }
+    },
+    {
+      "source": "Take a free breathing pause.",
+      "translations": {
+        "hi": "निःशुल्क श्वास विराम लें।",
+        "es": "Haz una pausa de respiración gratuita.",
+        "pt": "Faça uma pausa de respiração gratuita.",
+        "fr": "Prenez une pause respiratoire gratuite.",
+        "de": "Nimm eine kostenlose Atempause.",
+        "ar": "خذ استراحة تنفّس مجانية.",
+        "ja": "無料の呼吸休憩を取りましょう。",
+        "ko": "무료 호흡 휴식을 해보세요.",
+        "zh-Hans": "进行免费呼吸休息。"
+      }
+    },
+    {
+      "source": "Take a fresh photo of the requested object. It is checked on this device.",
+      "translations": {
+        "hi": "माँगी गई वस्तु की नई फ़ोटो लें। इसे इसी डिवाइस पर जाँचा जाता है।",
+        "es": "Toma una foto nueva del objeto indicado. Se comprueba en este dispositivo.",
+        "pt": "Tire uma nova foto do objeto solicitado. Ela é verificada neste dispositivo.",
+        "fr": "Prenez une nouvelle photo de l’objet demandé. Elle est vérifiée sur cet appareil.",
+        "de": "Fotografiere den angeforderten Gegenstand neu. Das Foto wird auf diesem Gerät geprüft.",
+        "ar": "التقط صورة جديدة للجسم المطلوب. تُفحص على هذا الجهاز.",
+        "ja": "指定された物を新しく撮影してください。確認はこの端末で行われます。",
+        "ko": "요청된 물건의 새 사진을 찍으세요. 이 기기에서 확인해요.",
+        "zh-Hans": "为指定物品拍摄新照片，照片将在本设备上验证。"
+      }
+    },
+    {
+      "source": "Take a guided reset",
+      "translations": {
+        "hi": "निर्देशित विराम लें",
+        "es": "Haz un ejercicio guiado",
+        "pt": "Faça um exercício guiado",
+        "fr": "Faire un exercice guidé",
+        "de": "Eine geführte Übung machen",
+        "ar": "ابدأ تمرينًا موجّهًا",
+        "ja": "ガイド付きリセットを行う",
+        "ko": "안내 활동 하기",
+        "zh-Hans": "进行引导活动"
+      }
+    },
+    {
+      "source": "Take a moment to rest before deciding what comes next.",
+      "translations": {
+        "hi": "अगला कदम तय करने से पहले थोड़ा आराम करें।",
+        "es": "Descansa un momento antes de decidir qué hacer después.",
+        "pt": "Descanse um pouco antes de decidir o próximo passo.",
+        "fr": "Prenez un instant de repos avant de décider de la suite.",
+        "de": "Ruhe dich kurz aus, bevor du entscheidest, was als Nächstes kommt.",
+        "ar": "استرح لحظة قبل تحديد خطوتك التالية.",
+        "ja": "次にすることを決める前に、少し休みましょう。",
+        "ko": "다음 일을 정하기 전에 잠시 쉬세요.",
+        "zh-Hans": "在决定下一步之前，休息片刻。"
+      }
+    },
+    {
+      "source": "Take a short walk or try comfortable basic movement.",
+      "translations": {
+        "hi": "थोड़ा चलें या आरामदायक सरल गतिविधि करें।",
+        "es": "Da un paseo corto o prueba movimientos básicos cómodos.",
+        "pt": "Faça uma caminhada curta ou movimentos básicos confortáveis.",
+        "fr": "Faites une courte marche ou essayez un mouvement simple et confortable.",
+        "de": "Mache einen kurzen Spaziergang oder probiere einfache, angenehme Bewegungen.",
+        "ar": "امشِ قليلًا أو جرّب حركة بسيطة مريحة.",
+        "ja": "短く歩くか、無理のない基本的な運動を試しましょう。",
+        "ko": "잠깐 걷거나 편안한 기본 움직임을 해보세요.",
+        "zh-Hans": "短暂散步，或尝试舒适的基础活动。"
+      }
+    },
+    {
+      "source": "Take one comfortable action, then choose what you want to do next.",
+      "translations": {
+        "hi": "एक आरामदायक काम करें, फिर अपना अगला कदम चुनें।",
+        "es": "Haz una acción cómoda y luego elige qué hacer después.",
+        "pt": "Faça uma ação confortável e depois escolha o próximo passo.",
+        "fr": "Faites une action confortable, puis choisissez la suite.",
+        "de": "Mache eine angenehme Aktivität und wähle dann deinen nächsten Schritt.",
+        "ar": "قم بخطوة مريحة ثم اختر ما تريد فعله بعد ذلك.",
+        "ja": "無理のない行動を一つ行い、次にすることを選びましょう。",
+        "ko": "편안한 행동 하나를 한 뒤 다음 할 일을 선택하세요.",
+        "zh-Hans": "做一件舒适的事，再选择下一步。"
+      }
+    },
+    {
+      "source": "Talk it through with local CLARA support.",
+      "translations": {
+        "hi": "स्थानीय CLARA मदद से बात करें।",
+        "es": "Háblalo con el apoyo local de CLARA.",
+        "pt": "Converse com o apoio local da CLARA.",
+        "fr": "Parlez-en avec l’aide locale de CLARA.",
+        "de": "Sprich darüber mit der lokalen CLARA-Unterstützung.",
+        "ar": "تحدّث مع دعم CLARA المحلي.",
+        "ja": "ローカルのCLARAサポートと話してみましょう。",
+        "ko": "CLARA의 로컬 지원과 이야기해 보세요.",
+        "zh-Hans": "与 CLARA 本地支持聊一聊。"
+      }
+    },
+    {
+      "source": "That domain is already on the local exception list.",
+      "translations": {
+        "hi": "यह डोमेन पहले से स्थानीय अपवाद सूची में है।",
+        "es": "Ese dominio ya está en la lista de excepciones locales.",
+        "pt": "Esse domínio já está na lista de exceções locais.",
+        "fr": "Ce domaine figure déjà dans les exceptions locales.",
+        "de": "Diese Domain steht bereits auf der lokalen Ausnahmeliste.",
+        "ar": "هذا النطاق موجود بالفعل في قائمة الاستثناءات المحلية.",
+        "ja": "そのドメインは既にローカル例外リストにあります。",
+        "ko": "해당 도메인은 이미 로컬 예외 목록에 있어요.",
+        "zh-Hans": "此域名已在本地例外列表中。"
+      }
+    },
+    {
+      "source": "The app break could not be confirmed or recorded. Your completed activity is saved; check Protect for current status.",
+      "translations": {
+        "hi": "ऐप विराम की पुष्टि या रिकॉर्ड नहीं हो सका। पूरी गतिविधि सहेजी गई है; मौजूदा स्थिति Protect में देखें।",
+        "es": "No se pudo confirmar o registrar la pausa de la aplicación. Tu actividad está guardada; consulta Proteger para ver el estado actual.",
+        "pt": "Não foi possível confirmar ou registrar a pausa do aplicativo. Sua atividade foi salva; consulte Proteger para ver o estado atual.",
+        "fr": "La pause d’application n’a pas pu être confirmée ou enregistrée. Votre activité est conservée ; consultez Protection pour l’état actuel.",
+        "de": "Die App-Pause konnte nicht bestätigt oder erfasst werden. Deine abgeschlossene Aktivität ist gespeichert; prüfe den aktuellen Status unter Schutz.",
+        "ar": "تعذّر تأكيد استراحة التطبيق أو تسجيلها. نشاطك المكتمل محفوظ؛ راجع قسم الحماية لمعرفة الحالة الحالية.",
+        "ja": "アプリの休憩を確認または記録できませんでした。完了した活動は保存済みです。現在の状態は「保護」で確認してください。",
+        "ko": "앱 휴식을 확인하거나 기록하지 못했어요. 완료한 활동은 저장되었으니 보호 탭에서 현재 상태를 확인하세요.",
+        "zh-Hans": "无法确认或记录应用休息。已完成的活动已保存，请在“保护”中查看当前状态。"
+      }
+    },
+    {
+      "source": "The app guard could not sync. Check permissions and targets, then retry saving this mode.",
+      "translations": {
+        "hi": "ऐप सुरक्षा सिंक नहीं हो सकी। अनुमति और लक्ष्य जाँचें, फिर मोड सहेजने की कोशिश करें।",
+        "es": "No se pudo sincronizar la protección. Revisa permisos y objetivos, y vuelve a guardar este modo.",
+        "pt": "Não foi possível sincronizar a proteção. Verifique permissões e alvos e tente salvar este modo novamente.",
+        "fr": "La protection des applications n’a pas pu être synchronisée. Vérifiez les autorisations et les éléments choisis, puis réessayez d’enregistrer ce mode.",
+        "de": "Der App-Schutz konnte nicht synchronisiert werden. Prüfe Berechtigungen und Ziele und speichere diesen Modus erneut.",
+        "ar": "تعذّرت مزامنة حماية التطبيقات. افحص الأذونات والعناصر المختارة ثم أعد حفظ هذا الوضع.",
+        "ja": "アプリ保護を同期できませんでした。権限と対象を確認し、モードの保存を再試行してください。",
+        "ko": "앱 보호를 동기화하지 못했어요. 권한과 대상을 확인한 뒤 모드 저장을 다시 시도하세요.",
+        "zh-Hans": "无法同步应用保护。请检查权限和目标，再重试保存此模式。"
+      }
+    },
+    {
+      "source": "The before-use default is inactive until you save a guard mode.",
+      "translations": {
+        "hi": "उपयोग-पूर्व डिफ़ॉल्ट मोड तब तक बंद है जब तक आप सुरक्षा मोड नहीं सहेजते।",
+        "es": "El modo predeterminado antes del uso está inactivo hasta que guardes un modo de protección.",
+        "pt": "O padrão antes do uso fica inativo até você salvar um modo de proteção.",
+        "fr": "Le mode par défaut avant utilisation reste inactif tant que vous n’enregistrez pas un mode de protection.",
+        "de": "Der Standard vor der Nutzung bleibt inaktiv, bis du einen Schutzmodus speicherst.",
+        "ar": "يبقى الوضع الافتراضي قبل الاستخدام غير مفعّل حتى تحفظ وضع حماية.",
+        "ja": "初期設定の使用前モードは、保護モードを保存するまで無効です。",
+        "ko": "기본 사용 전 모드는 보호 모드를 저장할 때까지 비활성화돼요.",
+        "zh-Hans": "保存保护模式之前，默认的使用前模式不会生效。"
+      }
+    }
+  ]
+}

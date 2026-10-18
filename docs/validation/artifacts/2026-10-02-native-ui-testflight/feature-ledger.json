@@ -1,0 +1,2534 @@
+{
+  "schemaVersion": "freed-platform-feature-ledger-v1",
+  "generatedAt": "2026-10-02T06:56:23.886153+00:00",
+  "sanitized": true,
+  "status": "baseline-during-native-rebuild; append final binary/device receipts",
+  "meaning": "Local behavioral/source evidence never proves native/live feature execution. Pending physical proof is explicit.",
+  "sourceSha256": {
+    "src/features/freed-app.tsx": "407857bdfa56e8bcaae7fd58a9ce234d80b418c56fb2241d8a7ac7f1b67673f0",
+    "src/components/PremiumOffer.tsx": "a45d94fbfb32b083f1e89850b75ceaa220a0cc0e00b29567723c164f8fbc7599",
+    "src/components/ProtectionSetupView.tsx": "b53150455715a08907c66474deae61f76b7eb20ac602b8e29a4b1ddb6eef51df",
+    "src/features/use-freed-navigation.ts": "c5a50bbdd318522bf446d508c5d0661753578bd49099e3f66e53d3e0dbefaa14",
+    "src/design-system/navigation.ts": "a5e028ce75ec8cf2cee5ce7c4bbcb475d68f640beb3ceecc909e5765156f85af",
+    "store/app-store/metadata.md": "7ba8716ba9d2a4dd6854b4b092a0957d4b04f85b3da116277bde9c2153b0416e",
+    "store/play-store/metadata.md": "bf59e59846eb52cd0af4a8adfcc804cfc7020c7e0c692b7d28bb40e26be88aa9",
+    "src/components/AccountAccessScreen.tsx": "4aceae990dd3bd42a6b0df5e0058acffa12bb3190e358cd71106b2035bff5e3a",
+    "src/components/UrgeSupportButton.tsx": "16081fc9e2b5cc5dab35d9cc7ca54895c4b5f4b1cde724e38c9dac4d0e5e9758",
+    "app/(tabs)/_layout.tsx": "d450fc5a895b2c88a0a0c40b1a926da1fa3f590a8b141f02b059ac0b522e7870"
+  },
+  "routeFiles": [
+    "app/index.tsx",
+    "app/account-deletion.tsx",
+    "app/support.tsx",
+    "app/+native-intent.tsx",
+    "app/+not-found.tsx",
+    "app/privacy.tsx",
+    "app/_layout.tsx",
+    "app/(tabs)/_layout.tsx",
+    "app/onboarding/[screen].tsx",
+    "app/flow/[screen].tsx",
+    "app/(tabs)/shield/index.tsx",
+    "app/(tabs)/shield/_layout.tsx",
+    "app/(tabs)/progress/index.tsx",
+    "app/(tabs)/progress/_layout.tsx",
+    "app/(tabs)/today/index.tsx",
+    "app/(tabs)/today/library.tsx",
+    "app/(tabs)/today/_layout.tsx",
+    "app/(tabs)/today/article.tsx",
+    "app/(tabs)/profile/index.tsx",
+    "app/(tabs)/profile/_layout.tsx"
+  ],
+  "rows": [
+    {
+      "id": "feature-001",
+      "category": "Onboarding",
+      "feature": "splash/welcome",
+      "controlsOrMetrics": "Brand/loading, start quiz, skip/free entry",
+      "kind": "source",
+      "nextVerification": "Cold launch and saved onboarding routing",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-002",
+      "category": "Onboarding",
+      "feature": "quiz",
+      "controlsOrMetrics": "Five goal/history/trigger/symptom/reset questions; option radios; Back/Next; step counter",
+      "kind": "source",
+      "nextVerification": "All options retain selection through native back/restart",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-003",
+      "category": "Onboarding",
+      "feature": "planCalculation",
+      "controlsOrMetrics": "Preparation progress; preference goal/trigger/reset/concern summary; Protect My Apps & Proceed",
+      "kind": "source",
+      "nextVerification": "Answers faithfully presented; no measured brain chemistry or recovery-date projection",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-004",
+      "category": "Onboarding",
+      "feature": "appSelection",
+      "controlsOrMetrics": "Supported apps/package aliases; selection, Back, Continue",
+      "kind": "source",
+      "nextVerification": "Android packages and iOS opaque target selection reconcile",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-005",
+      "category": "Onboarding",
+      "feature": "account sign-in",
+      "controlsOrMetrics": "Google, Apple, continue without account, cancel/loading/disabled/error",
+      "kind": "source",
+      "nextVerification": "Actual signed-device provider login and cancellation",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-006",
+      "category": "Onboarding",
+      "feature": "account linking",
+      "controlsOrMetrics": "Link another sign-in, collision notice, same-UID purchase ownership, Sign out",
+      "kind": "source",
+      "nextVerification": "Delayed/stale account results, link collision/cancel/restart",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-007",
+      "category": "Onboarding",
+      "feature": "protectionSetup",
+      "controlsOrMetrics": "Stage/step/progress, required authorization action, settings return/auto-advance",
+      "kind": "setup",
+      "nextVerification": "Physical permission grant/denial/revocation and activation proof",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-008",
+      "category": "Onboarding",
+      "feature": "setup retry/fallback",
+      "controlsOrMetrics": "Keep trying, Continue anyway, limited warning, Finish setup",
+      "kind": "setup",
+      "nextVerification": "Bounded retries and truthful inactive state; banner clears on real activation",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-009",
+      "category": "Protection",
+      "feature": "Android adult feed",
+      "controlsOrMetrics": "Reviewed feed sync/checksum/304/stale fallback",
+      "kind": "source",
+      "nextVerification": "Native import and real blocking corpus",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "not-applicable",
+        "simulator": "not-applicable",
+        "live": "not-applicable",
+        "physicalDevice": "not-applicable",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-010",
+      "category": "Protection",
+      "feature": "Android DNS guard",
+      "controlsOrMetrics": "Disclosure, Not now/I understand, start/stop, VPN/settings/health diagnostics",
+      "kind": "source",
+      "nextVerification": "DNS routing/failover/VPN coexistence/latency on physical device",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "not-applicable",
+        "simulator": "not-applicable",
+        "live": "not-applicable",
+        "physicalDevice": "not-applicable",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-011",
+      "category": "Protection",
+      "feature": "Android Private DNS",
+      "controlsOrMetrics": "Open/Review Private DNS/network settings and strict-state check",
+      "kind": "setup",
+      "nextVerification": "Correct OEM settings and actual permission/return state",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "not-applicable",
+        "simulator": "not-applicable",
+        "live": "not-applicable",
+        "physicalDevice": "not-applicable",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-012",
+      "category": "Protection",
+      "feature": "Android Usage Access",
+      "controlsOrMetrics": "Open Usage Access/settings, grant recheck and app-time limits",
+      "kind": "setup",
+      "nextVerification": "Physical threshold, denial/revocation and restart",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "not-applicable",
+        "simulator": "not-applicable",
+        "live": "not-applicable",
+        "physicalDevice": "not-applicable",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-013",
+      "category": "Protection",
+      "feature": "Android Accessibility",
+      "controlsOrMetrics": "Authorize app intervention/settings return and service state",
+      "kind": "setup",
+      "nextVerification": "Real browser/app handoff and revocation",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "not-applicable",
+        "simulator": "not-applicable",
+        "live": "not-applicable",
+        "physicalDevice": "not-applicable",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-014",
+      "category": "Protection",
+      "feature": "Android selected app limits",
+      "controlsOrMetrics": "Daily limit, package choices/aliases, selected-app intervention",
+      "kind": "source",
+      "nextVerification": "Real selected/unselected app behavior at threshold",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "not-applicable",
+        "simulator": "not-applicable",
+        "live": "not-applicable",
+        "physicalDevice": "not-applicable",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-015",
+      "category": "Protection",
+      "feature": "iOS Screen Time",
+      "controlsOrMetrics": "Authorize Family Controls, apply/pause adult filter, Choose/Edit Apps",
+      "kind": "setup",
+      "nextVerification": "Signed physical device authorization and selected token shields",
+      "android": {
+        "local": "not-applicable",
+        "emulator": "not-applicable",
+        "live": "not-applicable",
+        "physicalDevice": "not-applicable",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-016",
+      "category": "Protection",
+      "feature": "iOS app limit monitor",
+      "controlsOrMetrics": "Daily limit, DeviceActivity, Night Guard/Stop Guard",
+      "kind": "source",
+      "nextVerification": "Physical threshold callback/schedule/reboot/revocation",
+      "android": {
+        "local": "not-applicable",
+        "emulator": "not-applicable",
+        "live": "not-applicable",
+        "physicalDevice": "not-applicable",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-017",
+      "category": "Protection",
+      "feature": "iOS Safari adult blocker",
+      "controlsOrMetrics": "Safari Settings enablement and adult-only domain rules",
+      "kind": "source",
+      "nextVerification": "Physical Safari adult block/normal browsing",
+      "android": {
+        "local": "not-applicable",
+        "emulator": "not-applicable",
+        "live": "not-applicable",
+        "physicalDevice": "not-applicable",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-018",
+      "category": "Protection",
+      "feature": "iOS Safari Focus Shield",
+      "controlsOrMetrics": "Approved Shorts/Reels/For You web handoff and extension settings",
+      "kind": "links",
+      "nextVerification": "Signed physical extension/universal-link/recovery flow",
+      "android": {
+        "local": "not-applicable",
+        "emulator": "not-applicable",
+        "live": "not-applicable",
+        "physicalDevice": "not-applicable",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-019",
+      "category": "Protection",
+      "feature": "iOS native-app surface inspection",
+      "controlsOrMetrics": "Inspect/calibrate screens inside other native apps",
+      "kind": "unsupported-ios",
+      "nextVerification": "Unsupported platform limit; use Screen Time opaque targets",
+      "android": {
+        "local": "not-applicable",
+        "emulator": "not-applicable",
+        "live": "not-applicable",
+        "physicalDevice": "not-applicable",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "unsupported",
+        "simulator": "unsupported",
+        "live": "not-applicable",
+        "physicalDevice": "unsupported",
+        "blocked": [],
+        "unsupported": true
+      }
+    },
+    {
+      "id": "feature-020",
+      "category": "Protection",
+      "feature": "Focus Shield presets",
+      "controlsOrMetrics": "Enable/Preset On YouTube Shorts/Instagram Reels/TikTok For You",
+      "kind": "source",
+      "nextVerification": "Actual Android native surface and iOS Safari/Screen Time enforcement",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-021",
+      "category": "Protection",
+      "feature": "Focus Shield calibration",
+      "controlsOrMetrics": "Calibrate, cancel calibration, saved local rules/remove",
+      "kind": "android-only",
+      "nextVerification": "Android physical selector targeting and false-positive corpus",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "unsupported",
+        "simulator": "unsupported",
+        "live": "not-applicable",
+        "physicalDevice": "unsupported",
+        "blocked": [],
+        "unsupported": true
+      }
+    },
+    {
+      "id": "feature-022",
+      "category": "Protection",
+      "feature": "Focus Shield diagnostics",
+      "controlsOrMetrics": "Rule count, health/degraded/revoked state, refresh/removal",
+      "kind": "source",
+      "nextVerification": "Actual native state after permission loss/store corruption",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-023",
+      "category": "Protection",
+      "feature": "always allow domains",
+      "controlsOrMetrics": "Enter domain, Add, remove, persistence",
+      "kind": "source",
+      "nextVerification": "Native/classifier parity without bypassing explicit adult matches",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-024",
+      "category": "Protection",
+      "feature": "URL diagnostics",
+      "controlsOrMetrics": "Input, Check, Visit, Google/YouTube quick fill, Adult Search Test",
+      "kind": "source",
+      "nextVerification": "Manual test events excluded from production protection credit",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-025",
+      "category": "Protection",
+      "feature": "discipline preferences",
+      "controlsOrMetrics": "Daily limit, Unlock, Shorts guard, Intensity/Outdoor/Exercise/Social",
+      "kind": "source",
+      "nextVerification": "Persist and apply settings after restart",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-026",
+      "category": "Protection",
+      "feature": "strict/focus modes",
+      "controlsOrMetrics": "Emergency strict and Deep focus toggles",
+      "kind": "source",
+      "nextVerification": "Actual supported target expansion and native enforcement",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-027",
+      "category": "Protection",
+      "feature": "sleep/work/weekend modes",
+      "controlsOrMetrics": "Sleep start/Wake, Work start/end, enable toggles, Weekend adventure",
+      "kind": "source",
+      "nextVerification": "Local schedules/overnight/DST/restart semantics",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-028",
+      "category": "Protection",
+      "feature": "earned unlock",
+      "controlsOrMetrics": "Active duration/countdown, scoped helped challenge, expiry/relock",
+      "kind": "accuracy",
+      "nextVerification": "Physical target matching; restored historical grants never native authority",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "timezone-validation-final.json"
+    },
+    {
+      "id": "feature-029",
+      "category": "Today",
+      "feature": "native roots",
+      "controlsOrMetrics": "Today/Shield/Progress/Profile tabs; per-tab push/back/restore",
+      "kind": "source",
+      "nextVerification": "Final Android/iOS UI navigation/cold-start/back evidence",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-030",
+      "category": "Today",
+      "feature": "SOS/urge support",
+      "controlsOrMetrics": "Urgent support entry from all roots; Back to Safety; reset continuation",
+      "kind": "source",
+      "nextVerification": "Immediate native route action and free/premium availability",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-031",
+      "category": "Today",
+      "feature": "daily pledge",
+      "controlsOrMetrics": "Take pledge, pledged state/check-in, pledge streak",
+      "kind": "source",
+      "nextVerification": "Once per local day, DST/rollback and restart",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-032",
+      "category": "Today",
+      "feature": "habit toggles",
+      "controlsOrMetrics": "No adult content, Cold shower, Exercise, Meditation, Journal, No social media",
+      "kind": "source",
+      "nextVerification": "Tap/restart/day-roll and decrement behavior",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-033",
+      "category": "Today",
+      "feature": "dashboard metrics",
+      "controlsOrMetrics": "Day Streak, Habits Done count/total, Days to 90, Karma Points, elapsed clock",
+      "kind": "accuracy",
+      "nextVerification": "Known-event/zero-state reconciliation; milestone distance only",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "timezone-validation-final.json"
+    },
+    {
+      "id": "feature-034",
+      "category": "Today",
+      "feature": "week/milestones",
+      "controlsOrMetrics": "Seven-day strip, current/best, next milestone and celebration",
+      "kind": "accuracy",
+      "nextVerification": "Local-day/DST/slip reset/history correctness",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "timezone-validation-final.json"
+    },
+    {
+      "id": "feature-035",
+      "category": "Today",
+      "feature": "recovery shortcuts",
+      "controlsOrMetrics": "Library/article, breathing/custom reset, CLARA/check-in, Progress/Profile",
+      "kind": "source",
+      "nextVerification": "Native push/back returns to correct root without duplicate custom shell",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-036",
+      "category": "Recovery",
+      "feature": "intercept",
+      "controlsOrMetrics": "Reason, streak/plan, Surf the Urge/Continue to Reset/Back to Safety",
+      "kind": "links",
+      "nextVerification": "Fresh event identity consumed once; stale/untrusted link rejects authority",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-037",
+      "category": "Recovery",
+      "feature": "rewarded reset",
+      "controlsOrMetrics": "Loading, Watch again, Continue without ad/pause, cancellation/reward/failure",
+      "kind": "purchases",
+      "nextVerification": "Real ad consent/reward callback; SOS/native ad bypass where required",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-038",
+      "category": "Recovery",
+      "feature": "challenge list",
+      "controlsOrMetrics": "Adaptive category/title/intensity/steps, choose reset, Back",
+      "kind": "source",
+      "nextVerification": "Known preferences/outcomes shape local list",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-039",
+      "category": "Recovery",
+      "feature": "challenge completion",
+      "controlsOrMetrics": "Keep Going/Verify Action/I'm Done, Urge Passed/Still Need Support/Saving",
+      "kind": "accuracy",
+      "nextVerification": "Exactly-once completion/outcome/XP; real device verification required",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "timezone-validation-final.json"
+    },
+    {
+      "id": "feature-040",
+      "category": "Recovery",
+      "feature": "timer verification",
+      "controlsOrMetrics": "Duration/countdown and finish gating",
+      "kind": "source",
+      "nextVerification": "Foreground/background/pause/reentry timing",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-041",
+      "category": "Recovery",
+      "feature": "motion verification",
+      "controlsOrMetrics": "Real samples, threshold, denied/unavailable state",
+      "kind": "source",
+      "nextVerification": "Physical accelerometer proof",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-042",
+      "category": "Recovery",
+      "feature": "steps verification",
+      "controlsOrMetrics": "Pedometer/minimum steps, permission unavailable state",
+      "kind": "source",
+      "nextVerification": "Physical steps and honest unsupported alternative",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-043",
+      "category": "Recovery",
+      "feature": "outdoor verification",
+      "controlsOrMetrics": "On-demand location and measured sampled displacement",
+      "kind": "source",
+      "nextVerification": "Physical movement/accuracy/denial; no background tracking claim",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-044",
+      "category": "Recovery",
+      "feature": "photo verification",
+      "controlsOrMetrics": "Fresh camera, on-device label/confidence match, temporary cleanup",
+      "kind": "source",
+      "nextVerification": "Physical model/camera/error/cancel/cleanup; challenge integration pending",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-045",
+      "category": "Recovery",
+      "feature": "connection verification",
+      "controlsOrMetrics": "Message Partner/I Reached Out",
+      "kind": "source",
+      "nextVerification": "Native compose/cancel and explicit user action",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-046",
+      "category": "Recovery",
+      "feature": "customChallenge",
+      "controlsOrMetrics": "Upgrade, title/why/steps, Type/Intensity/Minutes, Save and Start",
+      "kind": "source",
+      "nextVerification": "Verified entitlement gate, persistence/caps/list inclusion",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-047",
+      "category": "Recovery",
+      "feature": "breathing",
+      "controlsOrMetrics": "4-7-8/box/physiological sigh, Begin/Pause, phases/haptics, Back",
+      "kind": "source",
+      "nextVerification": "Device timing/background/haptics and content review",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-048",
+      "category": "Recovery",
+      "feature": "checkin",
+      "controlsOrMetrics": "Mood/urge/sleep/reflection, Save Check-In, Back",
+      "kind": "accuracy",
+      "nextVerification": "Local-day single update, redaction/restart/summary",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "timezone-validation-final.json"
+    },
+    {
+      "id": "feature-049",
+      "category": "Recovery",
+      "feature": "slip log",
+      "controlsOrMetrics": "Trigger/note, Save and Start Again/Go Back/Log Slip Safely",
+      "kind": "accuracy",
+      "nextVerification": "Active reset/best retained, local risk hours/private report",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "timezone-validation-final.json"
+    },
+    {
+      "id": "feature-050",
+      "category": "Recovery",
+      "feature": "CLARA local",
+      "controlsOrMetrics": "Input/send, reply/history, offline fallback/redaction/crisis links",
+      "kind": "source",
+      "nextVerification": "Native keyboard/back/cancel and reviewed safety scenarios",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-051",
+      "category": "Recovery",
+      "feature": "CLARA remote",
+      "controlsOrMetrics": "Up to 20 remote replies/day, quota/timeout/aggregate context",
+      "kind": "backend-ai",
+      "nextVerification": "Deployed secret/model/AppCheck and actual quota/safety smoke",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "Remote AI flags false; model secret absent locally"
+        ],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "Remote AI flags false; model secret absent locally"
+        ],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-052",
+      "category": "Recovery",
+      "feature": "remote challenges",
+      "controlsOrMetrics": "Server generation from answered feedback/preferences",
+      "kind": "backend-ai",
+      "nextVerification": "Remote flags disabled until deployed callable/secret/device evidence",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "Remote AI flags false; model secret absent locally"
+        ],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "Remote AI flags false; model secret absent locally"
+        ],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-053",
+      "category": "Recovery",
+      "feature": "remote retention",
+      "controlsOrMetrics": "Next action/focus tags/suggested guard/local fallback",
+      "kind": "backend-ai",
+      "nextVerification": "Deployed callable/privacy/error proof",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "Remote AI flags false; model secret absent locally"
+        ],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "Remote AI flags false; model secret absent locally"
+        ],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-054",
+      "category": "Recovery",
+      "feature": "Library/article",
+      "controlsOrMetrics": "Category/content/reset links, article scroll, Back to Library/Today",
+      "kind": "source",
+      "nextVerification": "Every article/readability/back flow on final native build",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-055",
+      "category": "Progress",
+      "feature": "zero-state",
+      "controlsOrMetrics": "No signals/Not enough data; no fabricated measured score",
+      "kind": "accuracy",
+      "nextVerification": "Fresh install and known first-event transition",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "timezone-validation-final.json"
+    },
+    {
+      "id": "feature-056",
+      "category": "Progress",
+      "feature": "recovery score",
+      "controlsOrMetrics": "Activity estimate; Current/Best/Attempts",
+      "kind": "accuracy",
+      "nextVerification": "Current-day risk plus streak/completions; never clinical measurement",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "timezone-validation-final.json"
+    },
+    {
+      "id": "feature-057",
+      "category": "Progress",
+      "feature": "XP/level/badges",
+      "controlsOrMetrics": "XP/to-next/level; Honest Check-In, Seven Clean Days, Reset Practice, Urge Surfer, Protected Moment, Steady Rhythm, Honest Reset",
+      "kind": "accuracy",
+      "nextVerification": "Cumulative cap/legacy/migration correctness; manual/SOS no protection credit",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "timezone-validation-final.json"
+    },
+    {
+      "id": "feature-058",
+      "category": "Progress",
+      "feature": "insight metrics",
+      "controlsOrMetrics": "Check-ins/7, average urge/sleep, strongest pattern",
+      "kind": "accuracy",
+      "nextVerification": "Independent local-week oracle and data-thin state",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "timezone-validation-final.json"
+    },
+    {
+      "id": "feature-059",
+      "category": "Progress",
+      "feature": "urge estimate",
+      "controlsOrMetrics": "Premium score/level/confidence/action/window/drivers; low-data blank",
+      "kind": "source",
+      "nextVerification": "Rule-based estimate and truthful entitlement gate, no measured probability",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-060",
+      "category": "Progress",
+      "feature": "weekly report",
+      "controlsOrMetrics": "Risks/Resets/Slips/Check-ins, range/pattern/next focus",
+      "kind": "accuracy",
+      "nextVerification": "Local boundaries/DST/archive/answered-vs-unknown/redaction",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "timezone-validation-final.json"
+    },
+    {
+      "id": "feature-061",
+      "category": "Progress",
+      "feature": "monthly growth",
+      "controlsOrMetrics": "Premium activity index, Protected/Helpful/Check-ins/Slips, summary/range/experiment",
+      "kind": "accuracy",
+      "nextVerification": "Known month/zero/archive history; no clinical projection",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "timezone-validation-final.json"
+    },
+    {
+      "id": "feature-062",
+      "category": "Progress",
+      "feature": "snapshot metrics",
+      "controlsOrMetrics": "Help rate/Peak risk/Reset rate/App shields/App opens/Unlock per week",
+      "kind": "accuracy",
+      "nextVerification": "Count/denominator/hour oracle, DST repeated hour and history caps",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "timezone-validation-final.json"
+    },
+    {
+      "id": "feature-063",
+      "category": "Progress",
+      "feature": "extra snapshot values",
+      "controlsOrMetrics": "Foreground minutes/source/category success/unlock minutes/streak-history/resets",
+      "kind": "accuracy",
+      "nextVerification": "Interval overlaps/archives/rollback/encryption roundtrip",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "timezone-validation-final.json"
+    },
+    {
+      "id": "feature-064",
+      "category": "Progress",
+      "feature": "analytics controls",
+      "controlsOrMetrics": "Enable Sharing/Turn Off, Send Snapshot, busy/status/last-sent/retention",
+      "kind": "backend-core",
+      "nextVerification": "Explicit consent and deployed lineage/retry/multi-device receipt",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "No Storage bucket at read time"
+        ],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "No Storage bucket at read time"
+        ],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-065",
+      "category": "Profile",
+      "feature": "account/membership card",
+      "controlsOrMetrics": "Connect/link provider/Sign out, Manage membership/Membership active",
+      "kind": "source",
+      "nextVerification": "Current auth worker/entitlement state, delayed stale requests",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-066",
+      "category": "Profile",
+      "feature": "Premium authority",
+      "controlsOrMetrics": "Equal yearly/monthly capabilities, expiry/revoke/offline cache/ad-free",
+      "kind": "entitlement",
+      "nextVerification": "Store sandbox verification, restore/refund/renewal/revoke/owner fences",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-067",
+      "category": "Profile",
+      "feature": "recovery history",
+      "controlsOrMetrics": "Lifetime protected attempts and private slip count/Log Slip Safely",
+      "kind": "accuracy",
+      "nextVerification": "Archived counts persist; diagnostics/SOS not protection",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "timezone-validation-final.json"
+    },
+    {
+      "id": "feature-068",
+      "category": "Profile",
+      "feature": "reminders",
+      "controlsOrMetrics": "Master On/Off; Morning/Evening/Night guard; Smart guard time/reason",
+      "kind": "source",
+      "nextVerification": "Permission/actual scheduled delivery/tap/DST/restart on device",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-069",
+      "category": "Profile",
+      "feature": "daily plan",
+      "controlsOrMetrics": "Next action/check-in prompt/focus tags/suggested guard time",
+      "kind": "source",
+      "nextVerification": "Known local signal mapping and clear remote fallback",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-070",
+      "category": "Profile",
+      "feature": "local encrypted backup",
+      "controlsOrMetrics": "Passphrase/text, Create/Restore Backup, wrong-passphrase/corruption",
+      "kind": "backup",
+      "nextVerification": "Device native crypto and portable history/unlock authority behavior",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-071",
+      "category": "Profile",
+      "feature": "automatic backup",
+      "controlsOrMetrics": "Enable/Turn off, securely stored passphrase, upload after changes/retry",
+      "kind": "backup-remote",
+      "nextVerification": "Physical secure store and deployed service; account switch/abort/remove passphrase",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "No Storage bucket at read time"
+        ],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "No Storage bucket at read time"
+        ],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-072",
+      "category": "Profile",
+      "feature": "hosted backup",
+      "controlsOrMetrics": "Connect email/auth, Upload/Download Latest/Restore/Delete encrypted remote data",
+      "kind": "backend-core",
+      "nextVerification": "Storage signed URL/GCS generation/account fence and second-device passphrase proof",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "No Storage bucket at read time"
+        ],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "No Storage bucket at read time"
+        ],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-073",
+      "category": "Profile",
+      "feature": "restore conflict",
+      "controlsOrMetrics": "Keep current history/Restore backup explicit choice",
+      "kind": "backup",
+      "nextVerification": "Both choices and stale-download/account fence scenarios",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-074",
+      "category": "Profile",
+      "feature": "email-link auth",
+      "controlsOrMetrics": "Send link/pending-link/handoff/UID ownership",
+      "kind": "source",
+      "nextVerification": "Real mail and signed native association/provider proof",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-075",
+      "category": "Profile",
+      "feature": "accountability partner",
+      "controlsOrMetrics": "Enable, SMS/email, name/contact/template, Message Partner",
+      "kind": "source",
+      "nextVerification": "Consent and native compose/cancel; no automatic messages",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-076",
+      "category": "Profile",
+      "feature": "sponsor report",
+      "controlsOrMetrics": "Weekly aggregate preview, Send Report/premium upgrade",
+      "kind": "source",
+      "nextVerification": "Entitlement and user-initiated native compose/privacy",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-077",
+      "category": "Profile",
+      "feature": "support circle",
+      "controlsOrMetrics": "Add member/draft, SMS/email switch, name/contact, Send report/Remove",
+      "kind": "source",
+      "nextVerification": "Caps/persistence/recipient consent/native compose",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-078",
+      "category": "Profile",
+      "feature": "privacy/support links",
+      "controlsOrMetrics": "Privacy/Support/Account Deletion Help/Terms",
+      "kind": "legal",
+      "nextVerification": "Live content and final native external-browser return",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "historical-hosting-pass-native-open-pending",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "historical-hosting-pass-native-open-pending",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-079",
+      "category": "Profile",
+      "feature": "local deletion",
+      "controlsOrMetrics": "Delete Local Data/Confirm Delete",
+      "kind": "source",
+      "nextVerification": "Correct local/secure state purge; async stale-write fences",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-080",
+      "category": "Profile",
+      "feature": "account deletion",
+      "controlsOrMetrics": "Delete Account & Data/confirmation/error/completion",
+      "kind": "backend-core",
+      "nextVerification": "Deployed deletion/tombstone/ciphertext purge and auth state",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "No Storage bucket at read time"
+        ],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "No Storage bucket at read time"
+        ],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-081",
+      "category": "Profile",
+      "feature": "Shield shortcut",
+      "controlsOrMetrics": "Open Shield",
+      "kind": "source",
+      "nextVerification": "Correct native destination/stack",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-082",
+      "category": "Paywall",
+      "feature": "annual/monthly selection",
+      "controlsOrMetrics": "Two equal-benefit radios, no trial/future plans, selection retained",
+      "kind": "paywall",
+      "nextVerification": "Real store price/currency/cadence and font change",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-083",
+      "category": "Paywall",
+      "feature": "price/subscribe",
+      "controlsOrMetrics": "Store price/detail, Subscribe/busy, Retry store prices",
+      "kind": "purchases",
+      "nextVerification": "Real products/purchase/cancel/error and server verification",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-084",
+      "category": "Paywall",
+      "feature": "free exit",
+      "controlsOrMetrics": "Close/Continue with Free and correct origin",
+      "kind": "paywall",
+      "nextVerification": "Every native origin/back/large-text/busy scenario",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-085",
+      "category": "Paywall",
+      "feature": "Restore purchases",
+      "controlsOrMetrics": "Guest/account restore and ownership fence",
+      "kind": "purchases",
+      "nextVerification": "Valid/invalid/other-owner sandbox receipt and server/AppCheck",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-086",
+      "category": "Paywall",
+      "feature": "Manage subscription",
+      "controlsOrMetrics": "Native store manage/cancel and refresh state",
+      "kind": "purchases",
+      "nextVerification": "Actual App Store/Play management return",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-087",
+      "category": "Paywall",
+      "feature": "benefit promises",
+      "controlsOrMetrics": "Ad-free resets/challenges, deeper reports/estimated forecasts, support-circle reports, CLARA 20/day",
+      "kind": "entitlement",
+      "nextVerification": "Local controls present; remote CLARA disabled/undeployed at snapshot",
+      "android": {
+        "local": "passed-isolated-behavior",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "passed-isolated-behavior",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "localEvidence": "local-feature-validation.json"
+    },
+    {
+      "id": "feature-088",
+      "category": "Paywall",
+      "feature": "legal actions",
+      "controlsOrMetrics": "Privacy/Terms and free path",
+      "kind": "legal",
+      "nextVerification": "Native browser return/content alignment",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "historical-hosting-pass-native-open-pending",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "historical-hosting-pass-native-open-pending",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-089",
+      "category": "Platform",
+      "feature": "auth/App Check",
+      "controlsOrMetrics": "Guest/linked UID, account fences, Play Integrity/App Attest",
+      "kind": "source",
+      "nextVerification": "Physical signed token/enforcement and provider proof",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-090",
+      "category": "Platform",
+      "feature": "push notifications",
+      "controlsOrMetrics": "FCM/APNs registration/refresh/delivery/open/disable consent",
+      "kind": "backend-core",
+      "nextVerification": "Remote flag false; production signed devices/tokens/server proof",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "No Storage bucket at read time"
+        ],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "No Storage bucket at read time"
+        ],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-091",
+      "category": "Platform",
+      "feature": "Firebase foundation",
+      "controlsOrMetrics": "Rules/indexes/owner data/idempotency/rate limits/tombstones/storage policy",
+      "kind": "backend-core",
+      "nextVerification": "Fresh emulator plus live inventory/smoke; at read time Functions0 and buckets0",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "No Storage bucket at read time"
+        ],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "blocked-undeployed",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No deployed Functions at read time",
+          "Production App Check physical proof pending",
+          "No Storage bucket at read time"
+        ],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-092",
+      "category": "Platform",
+      "feature": "adult feed hosting",
+      "controlsOrMetrics": "Reviewed feed/conditional HTTP/checksum/import",
+      "kind": "source",
+      "nextVerification": "Hosted delivery and on-device enforcement are separate receipts",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-093",
+      "category": "Platform",
+      "feature": "final release binary",
+      "controlsOrMetrics": "Android upload-signed AAB/APK/Hermes; iOS five embedded extensions",
+      "kind": "source",
+      "nextVerification": "Fresh checksum/signature/entitlements/source binding and installed final UI",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-094",
+      "category": "Platform",
+      "feature": "TestFlight",
+      "controlsOrMetrics": "Distribution archive/export/upload/processing/install",
+      "kind": "testflight",
+      "nextVerification": "Distribution identity present; no cached FREED App Store profile/current IPA/upload proof",
+      "android": {
+        "local": "not-applicable",
+        "emulator": "not-applicable",
+        "live": "not-applicable",
+        "physicalDevice": "not-applicable",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-upload",
+        "physicalDevice": "pending",
+        "blocked": [
+          "No cached FREED App Store distribution profile",
+          "Distribution Family Controls approval unverified"
+        ],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-095",
+      "category": "Platform",
+      "feature": "unsupported iOS inspection",
+      "controlsOrMetrics": "Full VPN/HTTPS inspection/native third-party screen OCR",
+      "kind": "unsupported-ios",
+      "nextVerification": "Unsupported advertised scope; no packet tunnel/inspection entitlement",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "not-applicable",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "unsupported",
+        "simulator": "unsupported",
+        "live": "not-applicable",
+        "physicalDevice": "unsupported",
+        "blocked": [],
+        "unsupported": true
+      }
+    },
+    {
+      "id": "feature-096",
+      "category": "Platform",
+      "feature": "community workflows",
+      "controlsOrMetrics": "Remote community/milestone sharing",
+      "kind": "blocked-community",
+      "nextVerification": "Fail-closed until reviewed consent/abuse controls/provider",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "blocked-disabled",
+        "physicalDevice": "pending",
+        "blocked": [
+          "Consent/abuse controls/provider not evidenced"
+        ],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "blocked-disabled",
+        "physicalDevice": "pending",
+        "blocked": [
+          "Consent/abuse controls/provider not evidenced"
+        ],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-097",
+      "category": "Onboarding",
+      "feature": "email create/sign-in",
+      "controlsOrMetrics": "Email/password/confirm password, Show/Hide password, Create account/Connect email/Sign in, Back/Already have an account/Skip for now/Cancel",
+      "kind": "source",
+      "source": "src/components/AccountAccessScreen.tsx",
+      "nextVerification": "Native provider execution, same-UID guest linking, collision/validation/loading/cancel/keyboard/autofill",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-098",
+      "category": "Onboarding",
+      "feature": "email verification",
+      "controlsOrMetrics": "Resend verification email, I have verified my email, Continue and verify later, busy/error/verification state",
+      "kind": "source",
+      "source": "src/components/AccountAccessScreen.tsx",
+      "nextVerification": "Actual delivery plus signed-device reload/current-user verified state",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    },
+    {
+      "id": "feature-099",
+      "category": "Onboarding",
+      "feature": "password reset",
+      "controlsOrMetrics": "Forgot password, Send reset email, Check your email, Back to sign in, Use a different email",
+      "kind": "source",
+      "source": "src/components/AccountAccessScreen.tsx",
+      "nextVerification": "Actual reset delivery, nonenumerating response, cancellation/return",
+      "android": {
+        "local": "source-inspected",
+        "emulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      },
+      "ios": {
+        "local": "source-inspected",
+        "simulator": "pending-final-build",
+        "live": "pending-provider-validation",
+        "physicalDevice": "pending",
+        "blocked": [],
+        "unsupported": false
+      }
+    }
+  ]
+}

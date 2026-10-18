@@ -6,9 +6,9 @@
 - Subtitle: Recovery-first adult blocker
 - Bundle ID: app.freed.recovery
 - Category: Health & Fitness
-- Privacy Policy URL: https://freedrecovery.app/privacy
-- Support URL: https://freedrecovery.app/support
-- Account deletion URL: https://freedrecovery.app/account-deletion
+- Privacy Policy URL: https://freed-landing.web.app/privacy
+- Support URL: https://freed-landing.web.app/support
+- Account deletion URL: https://freed-landing.web.app/account-deletion
 
 ## Description
 
@@ -16,7 +16,7 @@ FREED helps you break explicit-content and doomscroll loops with recovery-first 
 
 FREED does not rely on shame or traps. Protection setup explains each permission, sends you directly to the required system authorization screen, and confirms activation with a protection test before the app marks setup complete.
 
-Premium unlocks no-ad interventions, adaptive recovery challenges, deeper local analytics, and CLARA recovery patterns.
+Premium removes eligible reset ads and unlocks forecasts, deep reports, and accountability/support-circle reports. Forecasts and recovery scores are estimates based on recorded behavior. CLARA remote guidance has daily limits; local recovery guidance stays available.
 
 ## Keywords
 
@@ -30,19 +30,19 @@ recovery, blocker, adult blocker, porn blocker, screen time, focus, habits, self
 - FREED does not collect screenshots, OCR/image analysis, or Safari browsing history.
 - FREED does not include a packet-tunnel provider, full VPN, packet inspection, or HTTPS interception.
 - Camera, motion, location, and notifications are requested only for user-initiated challenges or reminders.
-- Core 3 launch products: `freed_premium_yearly`, `freed_premium_monthly`, `freed_premium_lifetime`.
+- Two launch subscriptions: `freed_premium_yearly` and `freed_premium_monthly`; no trial and equal service levels. Both unlock all current Premium capabilities.
 
 ## Screenshot Set
 
 Current IAP review screenshots are checked in under `store/screenshots/` and mapped by `store/screenshots/manifest.json`.
 
-Store listing screenshot capture requirements and draft benefit copy are tracked in `store/screenshots/listing-screenshot-plan.md`. Keep public listing screenshots separate from the Core 3 IAP review screenshots and separate from physical-device protection evidence.
+Store listing screenshot capture requirements and draft benefit copy are tracked in `store/screenshots/listing-screenshot-plan.md`. Keep public listing screenshots separate from the two-plan IAP review screenshots and separate from physical-device protection evidence.
 
 Required before submission:
 
 - Onboarding goals
 - App selection
-- Paywall with Core 3 plans only
+- Paywall with monthly and annual plans only
 - Protection setup checklist
 - Activation test passed
 - Main dashboard

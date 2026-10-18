@@ -1,0 +1,44 @@
+appId: app.freed.recovery
+name: encrypted-dns-consent
+tags:
+  - smoke
+  - read-only
+---
+# Unexecuted smoke scenario. Requires an isolated disposable English/LTR fixture.
+# Full scenario and physical-device receipts remain separate obligations.
+# Fixture has no existing encrypted-DNS configuration; acceptance and OS authorization are not performed.
+- openLink: "freed:///shield/dns"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-shield-dns"
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "dns-consent-open" }
+    direction: DOWN
+    timeout: 10000
+- runFlow:
+    when:
+      visible: { id: "dns-consent-open", enabled: true }
+    commands:
+      - tapOn: { id: "dns-consent-open" }
+      - scrollUntilVisible:
+          element: { id: "dns-consent-cancel" }
+          direction: DOWN
+          timeout: 10000
+      - assertVisible: { id: "dns-consent" }
+      - assertVisible: { id: "dns-consent-accept" }
+      - takeScreenshot: "encrypted-dns-consent-disclosure"
+      - tapOn: { id: "dns-consent-cancel" }
+      - assertNotVisible: { id: "dns-consent" }
+- runFlow:
+    when:
+      visible: { id: "dns-consent-open", enabled: false }
+    commands:
+      - assertNotVisible: { id: "dns-consent" }
+      - takeScreenshot: "encrypted-dns-consent-gated"
+# This flow deliberately stops before acceptance or OS authorization.

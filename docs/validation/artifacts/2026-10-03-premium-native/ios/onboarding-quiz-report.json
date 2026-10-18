@@ -1,0 +1,228 @@
+{
+  "schemaVersion": "freed-feature-verification-report-v1",
+  "generatedAt": "2026-10-03T01:57:01.761Z",
+  "sanitized": true,
+  "mode": "ios",
+  "catalog": "all",
+  "planOnly": false,
+  "ledgerPath": "docs/validation/artifacts/2026-10-02-native-ui-testflight/feature-ledger.json",
+  "baselineFeatureCount": 99,
+  "additionalFeatureCount": 10,
+  "ledgerSha256": "44c2654bc4c8740eee2426cab0bc05de195015e71908270b6bfa6ed0b771a532",
+  "installedBuildSha256": "a3b8988c60909a227560a39afb158f7b1a4f06a05a500184f4902dfb1fed63db",
+  "meaning": "Passing local contracts or Maestro smoke does not prove all native, live, physical, visual or motion behavior. All required checks stay in the denominator.",
+  "requestedSummary": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1,
+    "blocked": 0,
+    "notRun": 0,
+    "passedPercent": 0,
+    "complete": false
+  },
+  "allRequiredChecks": {
+    "total": 5,
+    "passed": 0,
+    "failed": 1,
+    "blocked": 0,
+    "notRun": 4,
+    "passedPercent": 0,
+    "complete": false
+  },
+  "fullFeatureSummary": {
+    "total": 1,
+    "passed": 0,
+    "failed": 1,
+    "blocked": 0,
+    "notRun": 0,
+    "passedPercent": 0,
+    "complete": false
+  },
+  "testSuiteSummary": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "blocked": 0,
+    "notRun": 0,
+    "passedPercent": 0,
+    "complete": false
+  },
+  "localTestCounts": {
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0
+  },
+  "suites": {},
+  "uiSmoke": {
+    "onboarding-quiz": {
+      "status": "failed",
+      "exitCode": 1,
+      "timedOut": false,
+      "startedAt": "2026-10-03T01:55:03.896Z",
+      "durationMs": 117853,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-03-premium-native/ios/logs/onboarding-quiz.log",
+      "logSha256": "65eb9c4d67397eb8dd4796698d60e71e02123df2f57ceaa83b2c60b6fa8e6c3f",
+      "command": [
+        "maestro",
+        "--device",
+        "EA53F394-3E1F-44A7-84EF-716A26BE9879",
+        "test",
+        "--format",
+        "junit",
+        "--output",
+        "~/Developer/live/FREED/docs/validation/artifacts/2026-10-03-premium-native/ios/onboarding-quiz.xml",
+        "--test-output-dir",
+        "~/Developer/live/FREED/docs/validation/artifacts/2026-10-03-premium-native/ios/maestro/onboarding-quiz",
+        "-e",
+        "APP_ID=app.freed.recovery",
+        ".maestro/flows/onboarding-quiz.yaml"
+      ]
+    }
+  },
+  "features": [
+    {
+      "id": "feature-002",
+      "category": "Onboarding",
+      "feature": "quiz",
+      "controls": "Five goal/history/trigger/symptom/reset questions; option radios; Back/Next; step counter",
+      "nextVerification": "All options retain selection through native back/restart",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "flow": "onboarding-quiz",
+      "suites": [
+        "tests/core.test.ts",
+        "tests/native-navigation.test.ts",
+        "tests/motion-policy.test.ts",
+        "tests/native-router-dispatch.test.ts"
+      ],
+      "scenarios": [
+        {
+          "id": "feature-002:scenario-1",
+          "expected": "all five questions accept every option"
+        },
+        {
+          "id": "feature-002:scenario-2",
+          "expected": "Back retains the previous answer"
+        },
+        {
+          "id": "feature-002:scenario-3",
+          "expected": "restart preserves only committed onboarding preferences"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "feature-002:local",
+          "mode": "local",
+          "suites": [
+            "tests/core.test.ts",
+            "tests/native-navigation.test.ts",
+            "tests/motion-policy.test.ts",
+            "tests/native-router-dispatch.test.ts"
+          ],
+          "assertions": [
+            "behavioral-suite:tests/core.test.ts",
+            "behavioral-suite:tests/native-navigation.test.ts",
+            "behavioral-suite:tests/motion-policy.test.ts",
+            "behavioral-suite:tests/native-router-dispatch.test.ts"
+          ],
+          "nextAction": "node scripts/run-feature-verification.js --mode local --feature feature-002",
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by ios mode."
+        },
+        {
+          "id": "feature-002:ios",
+          "mode": "ios",
+          "platform": "ios",
+          "flow": "onboarding-quiz",
+          "assertions": [
+            "feature-002:scenario-1",
+            "feature-002:scenario-2",
+            "feature-002:scenario-3"
+          ],
+          "nextAction": "Run --mode ios --feature feature-002 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": true,
+          "status": "failed",
+          "uiSmoke": "failed",
+          "reason": "Maestro assertions failed. Inspect the flow log and screenshots."
+        },
+        {
+          "id": "feature-002:device:ios",
+          "mode": "device",
+          "platform": "ios",
+          "motion": true,
+          "assertions": [
+            "feature-002:scenario-1",
+            "feature-002:scenario-2",
+            "feature-002:scenario-3",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical ios device and capture All options retain selection through native back/restart, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by ios mode."
+        },
+        {
+          "id": "feature-002:android",
+          "mode": "android",
+          "platform": "android",
+          "flow": "onboarding-quiz",
+          "assertions": [
+            "feature-002:scenario-1",
+            "feature-002:scenario-2",
+            "feature-002:scenario-3"
+          ],
+          "nextAction": "Run --mode android --feature feature-002 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by ios mode."
+        },
+        {
+          "id": "feature-002:device:android",
+          "mode": "device",
+          "platform": "android",
+          "motion": true,
+          "assertions": [
+            "feature-002:scenario-1",
+            "feature-002:scenario-2",
+            "feature-002:scenario-3",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical android device and capture All options retain selection through native back/restart, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by ios mode."
+        }
+      ],
+      "requestedSummary": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1,
+        "blocked": 0,
+        "notRun": 0,
+        "passedPercent": 0,
+        "complete": false
+      },
+      "status": "failed"
+    }
+  ]
+}

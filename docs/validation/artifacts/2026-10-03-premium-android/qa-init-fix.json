@@ -1,0 +1,29 @@
+{
+  "initialResult": "fail",
+  "exitCode": 1,
+  "log": "assemble-qa-debug-first-attempt.log",
+  "rootCause": "Gradle init scripts run in included plugin builds as well as the Android root build. Included builds lack :app, and the scratch QA asset hook erroneously threw its missing-bundle message for that condition. The bundle file existed.",
+  "fix": "Skip included builds with no :app; retain missing-bundle failure for the actual Android app.",
+  "changedFile": "qa-debug-assets.init.gradle",
+  "nativeImplementationChanged": false,
+  "verification": {
+    "result": "pass",
+    "assembleExitCode": 0,
+    "assembleDuration": "35s",
+    "tasks": {
+      "total": 608,
+      "executed": 20,
+      "upToDate": 588
+    },
+    "log": "assemble-qa-debug.log",
+    "embeddedBundleMatchesQaBundle": true,
+    "inspection": "apk-inspection.json"
+  },
+  "secondaryFinding": {
+    "assembleExitCode": 0,
+    "log": "assemble-qa-debug-late-assets-attempt.log",
+    "apkInspection": "apk-inspection-late-assets-attempt.json",
+    "rootCause": "projectsEvaluated ran after AGP had snapshotted variant asset providers. :app:mergeDebugAssets remained UP-TO-DATE and APK retained the original main bundle, despite changed source-set directories.",
+    "fix": "Register Debug directories when the Android application plugin is applied, before AGP builds variant asset providers."
+  }
+}

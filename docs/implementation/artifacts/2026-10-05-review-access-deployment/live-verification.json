@@ -1,0 +1,325 @@
+{
+  "recordedAt": "2026-10-05T00:33:59.331740+00:00",
+  "project": "freed-7d5ee",
+  "region": "asia-south1",
+  "codebase": "freed",
+  "runtime": "nodejs22",
+  "deploymentSourceSha256": "7642e5e45d0377d1060f3b6556faec84cbd1befdb22b9dbe08a08503f1615062",
+  "deployedFunctionCount": 1,
+  "existingFunctionCount": 20,
+  "existingFunctionsUnchanged": true,
+  "totalActiveFunctionCount": 21,
+  "existingFunctionInventory": [
+    {
+      "function": "startEncryptedBackupUpload",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:07.659890321Z",
+      "revision": "startencryptedbackupupload-00001-sun",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "startEncryptedBackupUpload/function-source.zip",
+        "generation": "1791107215274429"
+      }
+    },
+    {
+      "function": "appleSubscriptionNotifications",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:11.392902670Z",
+      "revision": "applesubscriptionnotifications-00001-juq",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "appleSubscriptionNotifications/function-source.zip",
+        "generation": "1791107215777672"
+      }
+    },
+    {
+      "function": "refreshReviewedAdultDomainFeed",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T10:12:33.376266846Z",
+      "revision": "refreshreviewedadultdomainfeed-00002-kes",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "refreshReviewedAdultDomainFeed/function-source.zip",
+        "generation": "1791108745187083"
+      }
+    },
+    {
+      "function": "cleanupExpiredServerRecords",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:05.201422835Z",
+      "revision": "cleanupexpiredserverrecords-00001-yam",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "cleanupExpiredServerRecords/function-source.zip",
+        "generation": "1791107215782036"
+      }
+    },
+    {
+      "function": "appleSubscriptionNotificationsSandbox",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:15.070549105Z",
+      "revision": "applesubscriptionnotificationssandbox-00001-hud",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "appleSubscriptionNotificationsSandbox/function-source.zip",
+        "generation": "1791107215280947"
+      }
+    },
+    {
+      "function": "getLatestEncryptedBackupDownload",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:04.843994264Z",
+      "revision": "getlatestencryptedbackupdownload-00001-kic",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "getLatestEncryptedBackupDownload/function-source.zip",
+        "generation": "1791107215279121"
+      }
+    },
+    {
+      "function": "backendReadiness",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:43:44.943569466Z",
+      "revision": "backendreadiness-00001-cow",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "backendReadiness/function-source.zip",
+        "generation": "1791106964206369"
+      }
+    },
+    {
+      "function": "deleteEncryptedBackup",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:14.280412419Z",
+      "revision": "deleteencryptedbackup-00001-yij",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "deleteEncryptedBackup/function-source.zip",
+        "generation": "1791107215291638"
+      }
+    },
+    {
+      "function": "dispatchReviewedNotifications",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:08.022311733Z",
+      "revision": "dispatchreviewednotifications-00001-kaf",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "dispatchReviewedNotifications/function-source.zip",
+        "generation": "1791107215517997"
+      }
+    },
+    {
+      "function": "fencePurchaseAccountLink",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:20.500582796Z",
+      "revision": "fencepurchaseaccountlink-00001-vas",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "fencePurchaseAccountLink/function-source.zip",
+        "generation": "1791107215279890"
+      }
+    },
+    {
+      "function": "getReviewedAdultDomainFeed",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T10:12:29.518473507Z",
+      "revision": "getreviewedadultdomainfeed-00002-haw",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "getReviewedAdultDomainFeed/function-source.zip",
+        "generation": "1791108701775482"
+      }
+    },
+    {
+      "function": "requestAccountDeletion",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:09.724979210Z",
+      "revision": "requestaccountdeletion-00001-rid",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "requestAccountDeletion/function-source.zip",
+        "generation": "1791107215017595"
+      }
+    },
+    {
+      "function": "finalizeEncryptedBackupUpload",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:11.646413956Z",
+      "revision": "finalizeencryptedbackupupload-00001-zil",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "finalizeEncryptedBackupUpload/function-source.zip",
+        "generation": "1791107215363041"
+      }
+    },
+    {
+      "function": "acknowledgeJourneyOffer",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T23:35:59.690934784Z",
+      "revision": "acknowledgejourneyoffer-00001-tac",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "acknowledgeJourneyOffer/function-source.zip",
+        "generation": "1791156949953842"
+      }
+    },
+    {
+      "function": "registerPushToken",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:09.875712309Z",
+      "revision": "registerpushtoken-00001-hox",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "registerPushToken/function-source.zip",
+        "generation": "1791107215288811"
+      }
+    },
+    {
+      "function": "ingestAggregateAnalytics",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:09.612067787Z",
+      "revision": "ingestaggregateanalytics-00001-mef",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "ingestAggregateAnalytics/function-source.zip",
+        "generation": "1791107215771372"
+      }
+    },
+    {
+      "function": "getEncryptedBackupDownload",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:18.978886249Z",
+      "revision": "getencryptedbackupdownload-00001-zuh",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "getEncryptedBackupDownload/function-source.zip",
+        "generation": "1791107215300763"
+      }
+    },
+    {
+      "function": "retryPendingAccountDeletions",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:06.747786953Z",
+      "revision": "retrypendingaccountdeletions-00001-din",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "retryPendingAccountDeletions/function-source.zip",
+        "generation": "1791107215786706"
+      }
+    },
+    {
+      "function": "getJourneyOfferState",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T23:35:56.737560255Z",
+      "revision": "getjourneyofferstate-00001-wis",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "getJourneyOfferState/function-source.zip",
+        "generation": "1791156907681148"
+      }
+    },
+    {
+      "function": "getPremiumEntitlement",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:10.119778323Z",
+      "revision": "getpremiumentitlement-00001-taf",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "getPremiumEntitlement/function-source.zip",
+        "generation": "1791107215276663"
+      }
+    }
+  ],
+  "deployedFunctions": [
+    {
+      "function": "getReviewAccess",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-05T00:33:14.731119465Z",
+      "runtime": "nodejs22",
+      "entryPoint": "getReviewAccess",
+      "codebase": "freed",
+      "region": "asia-south1",
+      "maxInstances": 5,
+      "uri": "https://getreviewaccess-yibq7klssa-el.a.run.app",
+      "service": "projects/freed-7d5ee/locations/asia-south1/services/getreviewaccess",
+      "revision": "getreviewaccess-00001-yum",
+      "serviceAccountEmail": "5477978760-compute@developer.gserviceaccount.com",
+      "secretEnvironmentVariableCount": 0,
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "getReviewAccess/function-source.zip",
+        "generation": "1791160341848189"
+      },
+      "sourceArchiveSha256": "8c506af649ba5c7774952d24a8541e71ff15ee4f0297d5eb9bec00d207818ddf",
+      "sourceMemberSha256": {
+        "functions.yaml": "33b628e90159e568bfbe355f887aaab4c237151e9d100e8ab9731afe87554f83",
+        "lib/contracts.js": "1dfa5ce6bbd0c6ea120b65af4aab9d7b1b694458552ef66d03ed7c48e4535e25",
+        "lib/notifications.js": "0424cfe48ccde844e0cd7a067e770a06beb3b770688835dfa670866401936233",
+        "lib/review-access-firebase.js": "370f7edb73dd8a7523363cc52389bdc5d8fd55675c9686f5e18ff510b8f6ee72",
+        "lib/review-access.js": "d488f4a7e0262ff951ca97bfc3c1f60f9db9e92e9398db7a32d9555931262b77",
+        "lib/transactional.js": "bda2fc850a204880ff0dd4a97f2bb07156f40bb3e70929d9fa34a22e2532cb8a",
+        "package-lock.json": "79bdd391cbd284cce6852be5ec5d550fa4c626d9392074b582464b5fc78a81c5",
+        "package.json": "843c9eee556c7ac6933481eb600503e6e37bd3156dd241e5597e1d9ae6e0926c"
+      },
+      "advertisedParameters": [],
+      "appCheckEnforcedInVerifiedSource": true,
+      "connectedAuthRequiredInVerifiedSource": true
+    }
+  ],
+  "negativeLiveProbes": [
+    {
+      "function": "getReviewAccess",
+      "case": "unauthenticated-valid-envelope",
+      "httpStatus": 401,
+      "response": {
+        "error": {
+          "message": "Unauthenticated",
+          "status": "UNAUTHENTICATED"
+        }
+      }
+    },
+    {
+      "function": "getReviewAccess",
+      "case": "missing-data-envelope",
+      "httpStatus": 400,
+      "response": {
+        "error": {
+          "message": "Bad Request",
+          "status": "INVALID_ARGUMENT"
+        }
+      }
+    },
+    {
+      "function": "getReviewAccess",
+      "case": "malformed-json",
+      "httpStatus": 400,
+      "response": {
+        "bodySha256": "dc0a4948011b3bf48695d6b088a8ad2a65b902eee0dfa2bff5ec3b7d77e9941c",
+        "bodyBytes": 138
+      }
+    }
+  ],
+  "positiveAuthenticatedSignedClientProof": false,
+  "positiveDeviceAppCheckProof": false,
+  "personalDataWrittenByLiveProbes": false,
+  "newAccountsCreated": false,
+  "billingOrEntitlementAuthority": false,
+  "reviewAccessRecordProvisioned": false,
+  "newSecrets": false,
+  "manualIamChanges": false,
+  "aiRollout": false,
+  "transportIamReadback": {
+    "bindings": [
+      {
+        "role": "roles/run.invoker",
+        "members": [
+          "allUsers"
+        ]
+      }
+    ],
+    "manualIamMutation": false,
+    "meaning": "Standard public callable transport; Auth/App Check enforced by matching uploaded code."
+  },
+  "firebaseCliCreationConfiguredPublicCallableTransport": true
+}

@@ -11,15 +11,22 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["nativeMessaging"],
+  "permissions": [
+    "nativeMessaging"
+  ],
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
   "host_permissions": [
     "*://youtube.com/*",
     "*://*.youtube.com/*",
     "*://instagram.com/*",
     "*://*.instagram.com/*",
     "*://tiktok.com/*",
-    "*://*.tiktok.com/*",
-    "https://intervention.freed.app/*"
+    "*://*.tiktok.com/*"
   ],
   "content_scripts": [
     {
@@ -29,11 +36,15 @@
         "*://instagram.com/*",
         "*://*.instagram.com/*",
         "*://tiktok.com/*",
-        "*://*.tiktok.com/*",
-        "https://intervention.freed.app/*"
+        "*://*.tiktok.com/*"
       ],
-      "js": ["content.js"],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_start"
     }
-  ]
+  ],
+  "action": {
+    "default_popup": "safari-observation/check.html"
+  }
 }

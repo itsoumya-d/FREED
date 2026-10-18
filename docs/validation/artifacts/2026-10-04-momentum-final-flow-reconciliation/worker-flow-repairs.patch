@@ -1,0 +1,1073 @@
+--- a/.maestro/flows/encrypted-dns-consent.yaml
++++ b/.maestro/flows/encrypted-dns-consent.yaml
+@@ -6,7 +6,8 @@
+ ---
+ # Unexecuted smoke scenario. Requires an isolated disposable English/LTR fixture.
+ # Full scenario and physical-device receipts remain separate obligations.
+-- openLink: "freed:///shield"
++# Fixture has no existing encrypted-DNS configuration; acceptance and OS authorization are not performed.
++- openLink: "freed:///shield/dns"
+ - runFlow:
+     when:
+       visible: "Open in.*FREED.*"
+@@ -14,7 +15,7 @@
+       - tapOn: "Open"
+ - extendedWaitUntil:
+     visible:
+-      id: "screen-main-shield"
++      id: "screen-main-shield-dns"
+     timeout: 15000
+ - scrollUntilVisible:
+     element: { id: "dns-consent-open" }
+--- a/.maestro/flows/encrypted-dns-release-gated.yaml
++++ b/.maestro/flows/encrypted-dns-release-gated.yaml
+@@ -6,7 +6,7 @@
+ ---
+ # Unexecuted smoke scenario. Requires an isolated disposable English/LTR fixture.
+ # Full scenario and physical-device receipts remain separate obligations.
+-- openLink: "freed:///shield"
++- openLink: "freed:///shield/dns"
+ - runFlow:
+     when:
+       visible: "Open in.*FREED.*"
+@@ -14,7 +14,7 @@
+       - tapOn: "Open"
+ - extendedWaitUntil:
+     visible:
+-      id: "screen-main-shield"
++      id: "screen-main-shield-dns"
+     timeout: 15000
+ # Precondition: default release-disabled native build, with no DNS configuration.
+ - scrollUntilVisible:
+--- a/.maestro/flows/encrypted-dns-status.yaml
++++ b/.maestro/flows/encrypted-dns-status.yaml
+@@ -6,7 +6,7 @@
+ ---
+ # Unexecuted smoke scenario. Requires an isolated disposable English/LTR fixture.
+ # Full scenario and physical-device receipts remain separate obligations.
+-- openLink: "freed:///shield"
++- openLink: "freed:///shield/dns"
+ - runFlow:
+     when:
+       visible: "Open in.*FREED.*"
+@@ -14,7 +14,7 @@
+       - tapOn: "Open"
+ - extendedWaitUntil:
+     visible:
+-      id: "screen-main-shield"
++      id: "screen-main-shield-dns"
+     timeout: 15000
+ - scrollUntilVisible:
+     element: { id: "dns-status" }
+--- a/.maestro/flows/shield-allowlist.yaml
++++ b/.maestro/flows/shield-allowlist.yaml
+@@ -4,8 +4,9 @@
+   - smoke
+   - local-write
+ ---
+-# Requires a disposable isolated fixture; no state or Keychain reset.
+-- openLink: "freed:///shield"
++# Requires an English disposable fixture with example.com absent from userAllowedDomains.
++# Add then remove only this disposable domain; no state or Keychain reset.
++- openLink: "freed:///shield/websites"
+ - runFlow:
+     when:
+       visible: "Open in.*FREED.*"
+@@ -13,9 +14,9 @@
+       - tapOn: "Open"
+ - extendedWaitUntil:
+     visible:
+-      id: "screen-main-shield"
++      id: "screen-main-shield-websites"
+     timeout: 15000
+-- tapOn: "Show advanced diagnostics"
++- assertVisible: { id: "shield-detail-websites" }
+ - scrollUntilVisible:
+     element:
+       id: "shield-allow-domain"
+--- a/.maestro/flows/shield-diagnostics.yaml
++++ b/.maestro/flows/shield-diagnostics.yaml
+@@ -4,24 +4,27 @@
+   - smoke
+   - read-only
+ ---
+-# Requires a disposable isolated fixture; no state or Keychain reset.
+-- openLink: "freed:///shield"
++# Requires an English disposable fixture; no state or Keychain reset.
++# Diagnostics and Focus Shield are separate native detail routes.
++- openLink: "freed:///shield/diagnostics"
+ - runFlow:
+     when:
+       visible: "Open in.*FREED.*"
+     commands:
+       - tapOn: "Open"
+ - extendedWaitUntil:
+-    visible:
+-      id: "screen-main-shield"
++    visible: { id: "screen-main-shield-diagnostics" }
+     timeout: 15000
++- scrollUntilVisible:
++    element: { text: "Show advanced diagnostics" }
++    direction: DOWN
++    timeout: 10000
+ - tapOn: "Show advanced diagnostics"
+ - assertVisible: "Advanced diagnostics"
+-- scrollUntilVisible:
+-    element:
+-      text: "Focus Shield"
+-    direction: DOWN
+-    timeout: 10000
+-- assertVisible:
+-    id: "screen-main-shield"
++- openLink: "freed:///shield/focus-shield"
++- extendedWaitUntil:
++    visible: { id: "screen-main-shield-focus-shield" }
++    timeout: 15000
++- assertVisible: "Focus Shield"
++- assertVisible: { id: "screen-main-shield-focus-shield" }
+ - takeScreenshot: "shield-diagnostics"
+--- a/.maestro/flows/shield-url-check.yaml
++++ b/.maestro/flows/shield-url-check.yaml
+@@ -5,7 +5,7 @@
+   - read-only
+ ---
+ # Requires a disposable isolated fixture; no state or Keychain reset.
+-- openLink: "freed:///shield"
++- openLink: "freed:///shield/diagnostics"
+ - runFlow:
+     when:
+       visible: "Open in.*FREED.*"
+@@ -13,7 +13,7 @@
+       - tapOn: "Open"
+ - extendedWaitUntil:
+     visible:
+-      id: "screen-main-shield"
++      id: "screen-main-shield-diagnostics"
+     timeout: 15000
+ - tapOn: "Show advanced diagnostics"
+ - scrollUntilVisible:
+@@ -23,9 +23,9 @@
+     timeout: 10000
+ - tapOn: "Google"
+ - tapOn: "Check"
+-- assertVisible: "Allow|Safe|Allowed|Normal"
++- assertVisible: "Allowed: normal browsing"
+ - tapOn: "YouTube"
+ - tapOn: "Check"
+ - assertVisible:
+-    id: "screen-main-shield"
++    id: "screen-main-shield-diagnostics"
+ - takeScreenshot: "shield-url-check"
+--- a/.maestro/flows/shield-preferences.yaml
++++ b/.maestro/flows/shield-preferences.yaml
+@@ -4,8 +4,9 @@
+   - smoke
+   - local-write
+ ---
+-# Requires a disposable isolated fixture; no state or Keychain reset.
+-- openLink: "freed:///shield"
++# Requires an English disposable fixture with daily limit 30 minutes, allowing increase then undo.
++# No state or Keychain reset; changes belong only to the disposable settings.
++- openLink: "freed:///shield/apps"
+ - runFlow:
+     when:
+       visible: "Open in.*FREED.*"
+@@ -13,7 +14,7 @@
+       - tapOn: "Open"
+ - extendedWaitUntil:
+     visible:
+-      id: "screen-main-shield"
++      id: "screen-main-shield-apps"
+     timeout: 15000
+ - scrollUntilVisible:
+     element:
+--- a/.maestro/flows/shield-schedules.yaml
++++ b/.maestro/flows/shield-schedules.yaml
+@@ -5,7 +5,7 @@
+   - read-only
+ ---
+ # Requires a disposable isolated fixture; no state or Keychain reset.
+-- openLink: "freed:///shield"
++- openLink: "freed:///shield/schedules"
+ - runFlow:
+     when:
+       visible: "Open in.*FREED.*"
+@@ -13,7 +13,7 @@
+       - tapOn: "Open"
+ - extendedWaitUntil:
+     visible:
+-      id: "screen-main-shield"
++      id: "screen-main-shield-schedules"
+     timeout: 15000
+ - scrollUntilVisible:
+     element:
+--- a/.maestro/flows/shield-health.yaml
++++ b/.maestro/flows/shield-health.yaml
+@@ -5,7 +5,7 @@
+   - read-only
+ ---
+ # Requires a disposable isolated fixture; no state or Keychain reset.
+-- openLink: "freed:///shield"
++- openLink: "freed:///shield/dns"
+ - runFlow:
+     when:
+       visible: "Open in.*FREED.*"
+@@ -13,11 +13,11 @@
+       - tapOn: "Open"
+ - extendedWaitUntil:
+     visible:
+-      id: "screen-main-shield"
++      id: "screen-main-shield-dns"
+     timeout: 15000
+ - assertVisible: "Protection health"
+-- assertVisible: "Open protection setup"
+-- tapOn: "Open protection setup"
++- assertVisible: "Review website protection"
++- tapOn: "Review website protection"
+ - assertVisible:
+     id: "screen-protectionSetup"
+ - takeScreenshot: "shield-health"
+--- a/.maestro/flows/protection-layers.yaml
++++ b/.maestro/flows/protection-layers.yaml
+@@ -6,7 +6,7 @@
+ ---
+ # Unexecuted smoke scenario. Requires an isolated disposable English/LTR fixture.
+ # Full scenario and physical-device receipts remain separate obligations.
+-- openLink: "freed:///shield"
++- openLink: "freed:///shield/dns"
+ - runFlow:
+     when:
+       visible: "Open in.*FREED.*"
+@@ -14,10 +14,10 @@
+       - tapOn: "Open"
+ - extendedWaitUntil:
+     visible:
+-      id: "screen-main-shield"
++      id: "screen-main-shield-dns"
+     timeout: 15000
+ - assertVisible: "Protection health"
+-- assertVisible: "Open protection setup"
++- assertVisible: "Review website protection"
+ - scrollUntilVisible:
+     element: { id: "dns-status" }
+     direction: DOWN
+--- a/.maestro/flows/platform-limits.yaml
++++ b/.maestro/flows/platform-limits.yaml
+@@ -4,20 +4,32 @@
+   - smoke
+   - read-only
+ ---
+-# Requires a disposable isolated fixture; no state or Keychain reset.
+-- openLink: "freed:///shield"
++# Requires an English disposable fixture; no state or Keychain reset.
++# Each assertion targets its current native detail page; this is UI smoke, not enforcement proof.
++- openLink: "freed:///shield/dns"
+ - runFlow:
+     when:
+       visible: "Open in.*FREED.*"
+     commands:
+       - tapOn: "Open"
+ - extendedWaitUntil:
+-    visible:
+-      id: "screen-main-shield"
++    visible: { id: "screen-main-shield-dns" }
+     timeout: 15000
+ - assertVisible: "Protection health"
++- openLink: "freed:///shield/websites"
++- extendedWaitUntil:
++    visible: { id: "screen-main-shield-websites" }
++    timeout: 15000
+ - assertVisible: "Web safety"
++- openLink: "freed:///shield/diagnostics"
++- extendedWaitUntil:
++    visible: { id: "screen-main-shield-diagnostics" }
++    timeout: 15000
++- scrollUntilVisible:
++    element: { text: "Show advanced diagnostics" }
++    direction: DOWN
++    timeout: 10000
+ - tapOn: "Show advanced diagnostics"
+-- assertVisible:
+-    id: "screen-main-shield"
++- assertVisible: "Advanced diagnostics"
++- assertVisible: { id: "screen-main-shield-diagnostics" }
+ - takeScreenshot: "platform-limits"
+--- a/.maestro/flows/protection-setup.yaml
++++ b/.maestro/flows/protection-setup.yaml
+@@ -2,9 +2,12 @@
+ name: protection-setup
+ tags:
+   - smoke
+-  - read-only
++  - local-write
+ ---
+-# Requires a disposable isolated fixture; no state or Keychain reset.
++# Requires an English disposable fixture with saved setup intent both and native reset latch false.
++# Combined setup must start with help closed. Website/app variants are entered through real Protect actions.
++# Only status refresh is invoked; no permission, activation, reset or reactivation action is accepted.
++# Feature choices are saved in disposable local settings; all three renderers are mandatory.
+ - openLink: "freed:///flow/protectionSetup"
+ - runFlow:
+     when:
+@@ -12,17 +15,53 @@
+     commands:
+       - tapOn: "Open"
+ - extendedWaitUntil:
+-    visible:
+-      id: "screen-protectionSetup"
++    visible: { id: "screen-protectionSetup" }
+     timeout: 15000
+-- assertVisible:
+-    id: "screen-protectionSetup"
++- assertVisible: "Protection setup"
++- assertVisible: "Show setup help"
++- tapOn: "Show setup help"
+ - scrollUntilVisible:
+-    element:
+-      text: "Check settings again"
++    element: { text: "Refresh protection status" }
+     direction: DOWN
+     timeout: 10000
+ - tapOn: "Refresh protection status"
+-- assertVisible:
+-    id: "screen-protectionSetup"
++- assertVisible: { id: "screen-protectionSetup" }
++- openLink: "freed:///shield"
++- extendedWaitUntil:
++    visible: { id: "screen-main-shield" }
++    timeout: 15000
++- scrollUntilVisible:
++    element: { id: "protect-websites-setup" }
++    direction: DOWN
++    timeout: 10000
++- tapOn: { id: "protect-websites-setup" }
++- extendedWaitUntil:
++    visible: { id: "screen-protectionSetup" }
++    timeout: 15000
++- assertVisible: { id: "setup-websites" }
++- scrollUntilVisible:
++    element: { id: "feature-setup-refresh" }
++    direction: DOWN
++    timeout: 10000
++- tapOn: { id: "feature-setup-refresh" }
++- assertVisible: { id: "setup-websites" }
++- openLink: "freed:///shield"
++- extendedWaitUntil:
++    visible: { id: "screen-main-shield" }
++    timeout: 15000
++- scrollUntilVisible:
++    element: { id: "protect-apps-setup" }
++    direction: DOWN
++    timeout: 10000
++- tapOn: { id: "protect-apps-setup" }
++- extendedWaitUntil:
++    visible: { id: "screen-protectionSetup" }
++    timeout: 15000
++- assertVisible: { id: "setup-apps" }
++- scrollUntilVisible:
++    element: { id: "feature-setup-refresh" }
++    direction: DOWN
++    timeout: 10000
++- tapOn: { id: "feature-setup-refresh" }
++- assertVisible: { id: "setup-apps" }
+ - takeScreenshot: "protection-setup"
+--- a/.maestro/flows/breathing.yaml
++++ b/.maestro/flows/breathing.yaml
+@@ -2,26 +2,46 @@
+ name: breathing
+ tags:
+   - smoke
+-  - read-only
++  - local-write
+ ---
+-# Requires a disposable isolated fixture; no state or Keychain reset.
+-- openLink: "freed:///flow/breathing"
++# Requires an English disposable fixture with no pending breathing completion receipt.
++# Begin/pause/close retains only disposable exercise progress; no session is marked completed.
++- openLink: "freed:///today"
+ - runFlow:
+     when:
+       visible: "Open in.*FREED.*"
+     commands:
+       - tapOn: "Open"
+ - extendedWaitUntil:
+-    visible:
+-      id: "screen-breathing"
++    visible: { id: "screen-main-today" }
+     timeout: 15000
++- openLink: "freed:///flow/breathing"
++- extendedWaitUntil:
++    visible: { id: "screen-breathing" }
++    timeout: 15000
++- scrollUntilVisible:
++    element: { text: "4-7-8 Relax" }
++    direction: DOWN
++    timeout: 10000
+ - assertVisible: "4-7-8 Relax"
+ - tapOn: "Box \\(4-4-4-4\\)"
+ - tapOn: "Physio Sigh"
+ - tapOn: "4-7-8 Relax"
+-- tapOn: "Begin Breathing"
++- scrollUntilVisible:
++    element: { id: "breathing-toggle" }
++    direction: UP
++    timeout: 10000
++- assertVisible: "Begin Breathing"
++- tapOn: { id: "breathing-toggle" }
+ - assertVisible: "Pause Exercise"
+-- tapOn: "Pause Exercise"
++- tapOn: { id: "breathing-toggle" }
+ - assertVisible: "Begin Breathing"
+-- tapOn: "Back"
++- scrollUntilVisible:
++    element: { text: "Close breathing exercise" }
++    direction: UP
++    timeout: 10000
++- tapOn: "Close breathing exercise"
++- extendedWaitUntil:
++    visible: { id: "screen-main-today" }
++    timeout: 15000
+ - takeScreenshot: "breathing"
+--- a/.maestro/flows/intercept.yaml
++++ b/.maestro/flows/intercept.yaml
+@@ -2,7 +2,7 @@
+ name: intercept
+ tags:
+   - smoke
+-  - read-only
++  - local-write
+ ---
+ # Requires a disposable isolated fixture; no state or Keychain reset.
+ - openLink: "freed:///today"
+@@ -15,9 +15,17 @@
+     visible:
+       id: "screen-main-today"
+     timeout: 15000
+-- tapOn: "SOS: open urge support"
++- scrollUntilVisible:
++    element: { id: "home-help-now" }
++    direction: DOWN
++    timeout: 10000
++- tapOn: { id: "home-help-now" }
+ - assertVisible:
+     id: "screen-intercept"
++- scrollUntilVisible:
++    element: { text: "Back to Safety" }
++    direction: DOWN
++    timeout: 10000
+ - assertVisible: "Back to Safety"
+ - assertVisible: "Surf the Urge.*|Continue to Reset"
+ - tapOn: "Back to Safety"
+--- a/.maestro/flows/urgent-support.yaml
++++ b/.maestro/flows/urgent-support.yaml
+@@ -2,7 +2,7 @@
+ name: urgent-support
+ tags:
+   - smoke
+-  - read-only
++  - local-write
+ ---
+ # Requires a disposable isolated fixture; no state or Keychain reset.
+ - openLink: "freed:///today"
+@@ -15,9 +15,17 @@
+     visible:
+       id: "screen-main-today"
+     timeout: 15000
+-- tapOn: "SOS: open urge support"
++- scrollUntilVisible:
++    element: { id: "home-help-now" }
++    direction: DOWN
++    timeout: 10000
++- tapOn: { id: "home-help-now" }
+ - assertVisible:
+     id: "screen-intercept"
++- scrollUntilVisible:
++    element: { text: "Back to Safety" }
++    direction: DOWN
++    timeout: 10000
+ - assertVisible: "Back to Safety"
+ - tapOn: "Back to Safety"
+ - assertVisible:
+--- a/.maestro/flows/profile-shield.yaml
++++ b/.maestro/flows/profile-shield.yaml
+@@ -17,10 +17,10 @@
+     timeout: 15000
+ - scrollUntilVisible:
+     element:
+-      text: "Open Shield"
++      text: "Open Protect"
+     direction: DOWN
+     timeout: 10000
+-- tapOn: "Open Shield"
++- tapOn: "Open Protect"
+ - assertVisible:
+     id: "screen-main-shield"
+ - takeScreenshot: "profile-shield"
+--- a/.maestro/flows/library-articles.yaml
++++ b/.maestro/flows/library-articles.yaml
+@@ -15,7 +15,7 @@
+     visible:
+       id: "screen-library"
+     timeout: 15000
+-- assertVisible: "Library"
++- assertVisible: "Recovery Tools"
+ - scrollUntilVisible:
+     element:
+       text: "How urges peak and fade"
+--- a/.maestro/flows/custom-reset.yaml
++++ b/.maestro/flows/custom-reset.yaml
+@@ -4,7 +4,8 @@
+   - smoke
+   - read-only
+ ---
+-# Requires a disposable isolated fixture; no state or Keychain reset.
++# Requires an English disposable free-membership fixture; no state or Keychain reset.
++# Upgrade only opens the offer, and Continue with Free returns without checkout.
+ - openLink: "freed:///flow/customChallenge"
+ - runFlow:
+     when:
+@@ -15,7 +16,7 @@
+     visible:
+       id: "screen-customChallenge"
+     timeout: 15000
+-- assertVisible: "Custom Reset"
++- assertVisible: "Custom Reset Builder"
+ - tapOn: "Upgrade"
+ - assertVisible:
+     id: "screen-paywall"
+--- a/.maestro/flows/onboarding-app-selection.yaml
++++ b/.maestro/flows/onboarding-app-selection.yaml
+@@ -4,7 +4,10 @@
+   - smoke
+   - local-write
+ ---
+-# Requires a disposable isolated fixture; no state or Keychain reset.
++# Requires an English disposable native fixture with empty stored blockedAppPackages.
++# Android empty settings render the real Instagram/TikTok/YouTube recommendations (three selected).
++# Toggle YouTube off then on to verify selection and undo without saving the chooser.
++# iOS displays the Apple target handoff; it does not expose Android package checkboxes.
+ - openLink: "freed:///onboarding/appSelection"
+ - runFlow:
+     when:
+@@ -12,12 +15,27 @@
+     commands:
+       - tapOn: "Open"
+ - extendedWaitUntil:
+-    visible:
+-      id: "screen-appSelection"
++    visible: { id: "screen-appSelection" }
+     timeout: 15000
+-- assertVisible:
+-    id: "screen-appSelection"
+-- assertVisible: "Select At Least 1 App"
+-- tapOn: "Protect YouTube"
+-- assertVisible: "Continue with 1 App"
++- runFlow:
++    when:
++      platform: Android
++    commands:
++      - assertVisible: "Choose the apps FREED can interrupt."
++      - assertVisible: { text: "Protect YouTube", checked: true }
++      - assertVisible: "Continue · 3 selected"
++      - tapOn: "Protect YouTube"
++      - assertVisible: { text: "Protect YouTube", checked: false }
++      - assertVisible: "Continue · 2 selected"
++      - tapOn: "Protect YouTube"
++      - assertVisible: { text: "Protect YouTube", checked: true }
++      - assertVisible: "Continue · 3 selected"
++- runFlow:
++    when:
++      platform: iOS
++    commands:
++      - assertVisible: "Choose your protection targets."
++      - assertVisible: "Your selection stays with Apple."
++      - assertNotVisible: "Protect YouTube"
++      - assertVisible: { text: "Continue to setup", enabled: true }
+ - takeScreenshot: "onboarding-app-selection"
+--- a/.maestro/flows/today-metrics.yaml
++++ b/.maestro/flows/today-metrics.yaml
+@@ -4,7 +4,8 @@
+   - smoke
+   - read-only
+ ---
+-# Requires a disposable isolated fixture; no state or Keychain reset.
++# Requires an English disposable fixture; no state or Keychain reset.
++# Current Today renders its recorded streak and history action; the retired elapsed hero is not present.
+ - openLink: "freed:///today"
+ - runFlow:
+     when:
+@@ -12,14 +13,21 @@
+     commands:
+       - tapOn: "Open"
+ - extendedWaitUntil:
+-    visible:
+-      id: "screen-main-today"
++    visible: { id: "screen-main-today" }
+     timeout: 15000
+-- assertVisible: "YOUR RECORDED STREAK"
+-- assertVisible:
+-    id: "home-streak-days"
+-- assertVisible: ".*since your recorded restart"
+-- tapOn: "View milestones and recovery history"
+-- assertVisible:
+-    id: "screen-main-progress"
++- scrollUntilVisible:
++    element: { id: "today-recorded-streak" }
++    direction: DOWN
++    timeout: 10000
++- assertVisible: { id: "today-recorded-streak" }
++- assertVisible: "Your recorded streak.*"
++- scrollUntilVisible:
++    element: { id: "today-history" }
++    direction: UP
++    timeout: 10000
++- assertVisible: "View history"
++- tapOn: { id: "today-history" }
++- extendedWaitUntil:
++    visible: { id: "screen-main-progress" }
++    timeout: 15000
+ - takeScreenshot: "today-metrics"
+--- a/.maestro/flows/today-habits.yaml
++++ b/.maestro/flows/today-habits.yaml
+@@ -4,7 +4,10 @@
+   - smoke
+   - local-write
+ ---
+-# Requires a disposable isolated fixture; no state or Keychain reset.
++# Requires an English disposable current-day fixture with all six practices initially unrecorded.
++# The tools sheet opens PracticeDetail; only chosen plan rows have direct habit checkboxes.
++# Each current-day practice is recorded once and explicitly undone before continuing.
++# No historical date, guided verification or private owner record is changed.
+ - openLink: "freed:///today"
+ - runFlow:
+     when:
+@@ -12,50 +15,187 @@
+     commands:
+       - tapOn: "Open"
+ - extendedWaitUntil:
+-    visible:
+-      id: "screen-main-today"
+-    timeout: 15000
+-- scrollUntilVisible:
+-    element:
+-      text: "No adult content"
++    visible: { id: "screen-main-today" }
++    timeout: 15000
++- scrollUntilVisible:
++    element: { id: "home-all-practices" }
++    direction: DOWN
++    timeout: 10000
++- tapOn: { id: "home-all-practices" }
++- scrollUntilVisible:
++    element: { text: "No adult content" }
+     direction: DOWN
+     timeout: 10000
+ - assertVisible: "No adult content"
++- tapOn: "No adult content"
++- extendedWaitUntil:
++    visible: { id: "practice-detail-modal" }
++    timeout: 15000
++- scrollUntilVisible:
++    element: { id: "practice-mark-done" }
++    direction: DOWN
++    timeout: 10000
++- assertVisible: "Mark as done"
++- tapOn: { id: "practice-mark-done" }
++- assertVisible: "Mark as not done"
++- takeScreenshot: "habit-adult-content-toggled"
++- tapOn: { id: "practice-mark-done" }
++- assertVisible: "Mark as done"
++- scrollUntilVisible:
++    element: { id: "practice-detail-close" }
++    direction: UP
++    timeout: 10000
++- tapOn: { id: "practice-detail-close" }
++- assertNotVisible: { id: "practice-detail-modal" }
++- assertVisible: { id: "screen-main-today" }
++- scrollUntilVisible:
++    element: { id: "home-all-practices" }
++    direction: DOWN
++    timeout: 10000
++- tapOn: { id: "home-all-practices" }
++- scrollUntilVisible:
++    element: { text: "Cold shower" }
++    direction: DOWN
++    timeout: 10000
+ - assertVisible: "Cold shower"
++- tapOn: "Cold shower"
++- extendedWaitUntil:
++    visible: { id: "practice-detail-modal" }
++    timeout: 15000
++- scrollUntilVisible:
++    element: { id: "practice-mark-done" }
++    direction: DOWN
++    timeout: 10000
++- assertVisible: "Mark as done"
++- tapOn: { id: "practice-mark-done" }
++- assertVisible: "Mark as not done"
++- tapOn: { id: "practice-mark-done" }
++- assertVisible: "Mark as done"
++- scrollUntilVisible:
++    element: { id: "practice-detail-close" }
++    direction: UP
++    timeout: 10000
++- tapOn: { id: "practice-detail-close" }
++- assertNotVisible: { id: "practice-detail-modal" }
++- assertVisible: { id: "screen-main-today" }
++- scrollUntilVisible:
++    element: { id: "home-all-practices" }
++    direction: DOWN
++    timeout: 10000
++- tapOn: { id: "home-all-practices" }
++- scrollUntilVisible:
++    element: { text: "Exercise" }
++    direction: DOWN
++    timeout: 10000
+ - assertVisible: "Exercise"
+-- scrollUntilVisible:
+-    element:
+-      id: "home-all-practices"
+-    direction: DOWN
+-    timeout: 10000
+-- tapOn:
+-    id: "home-all-practices"
++- tapOn: "Exercise"
++- extendedWaitUntil:
++    visible: { id: "practice-detail-modal" }
++    timeout: 15000
++- scrollUntilVisible:
++    element: { id: "practice-mark-done" }
++    direction: DOWN
++    timeout: 10000
++- assertVisible: "Mark as done"
++- tapOn: { id: "practice-mark-done" }
++- assertVisible: "Mark as not done"
++- tapOn: { id: "practice-mark-done" }
++- assertVisible: "Mark as done"
++- scrollUntilVisible:
++    element: { id: "practice-detail-close" }
++    direction: UP
++    timeout: 10000
++- tapOn: { id: "practice-detail-close" }
++- assertNotVisible: { id: "practice-detail-modal" }
++- assertVisible: { id: "screen-main-today" }
++- scrollUntilVisible:
++    element: { id: "home-all-practices" }
++    direction: DOWN
++    timeout: 10000
++- tapOn: { id: "home-all-practices" }
++- scrollUntilVisible:
++    element: { text: "Meditation" }
++    direction: DOWN
++    timeout: 10000
+ - assertVisible: "Meditation"
++- tapOn: "Meditation"
++- extendedWaitUntil:
++    visible: { id: "practice-detail-modal" }
++    timeout: 15000
++- scrollUntilVisible:
++    element: { id: "practice-mark-done" }
++    direction: DOWN
++    timeout: 10000
++- assertVisible: "Mark as done"
++- tapOn: { id: "practice-mark-done" }
++- assertVisible: "Mark as not done"
++- tapOn: { id: "practice-mark-done" }
++- assertVisible: "Mark as done"
++- scrollUntilVisible:
++    element: { id: "practice-detail-close" }
++    direction: UP
++    timeout: 10000
++- tapOn: { id: "practice-detail-close" }
++- assertNotVisible: { id: "practice-detail-modal" }
++- assertVisible: { id: "screen-main-today" }
++- scrollUntilVisible:
++    element: { id: "home-all-practices" }
++    direction: DOWN
++    timeout: 10000
++- tapOn: { id: "home-all-practices" }
++- scrollUntilVisible:
++    element: { text: "Journal" }
++    direction: DOWN
++    timeout: 10000
+ - assertVisible: "Journal"
++- tapOn: "Journal"
++- extendedWaitUntil:
++    visible: { id: "practice-detail-modal" }
++    timeout: 15000
++- scrollUntilVisible:
++    element: { id: "practice-mark-done" }
++    direction: DOWN
++    timeout: 10000
++- assertVisible: "Mark as done"
++- tapOn: { id: "practice-mark-done" }
++- assertVisible: "Mark as not done"
++- tapOn: { id: "practice-mark-done" }
++- assertVisible: "Mark as done"
++- scrollUntilVisible:
++    element: { id: "practice-detail-close" }
++    direction: UP
++    timeout: 10000
++- tapOn: { id: "practice-detail-close" }
++- assertNotVisible: { id: "practice-detail-modal" }
++- assertVisible: { id: "screen-main-today" }
++- scrollUntilVisible:
++    element: { id: "home-all-practices" }
++    direction: DOWN
++    timeout: 10000
++- tapOn: { id: "home-all-practices" }
++- scrollUntilVisible:
++    element: { text: "No social media" }
++    direction: DOWN
++    timeout: 10000
+ - assertVisible: "No social media"
+-- tapOn:
+-    id: "habit-adult-content-boundary"
+-- takeScreenshot: "habit-adult-content-toggled"
+-- tapOn:
+-    id: "habit-adult-content-boundary"
+-- tapOn:
+-    id: "habit-cold-shower"
+-- tapOn:
+-    id: "habit-cold-shower"
+-- tapOn:
+-    id: "habit-exercise"
+-- tapOn:
+-    id: "habit-exercise"
+-- tapOn:
+-    id: "habit-meditation"
+-- tapOn:
+-    id: "habit-meditation"
+-- tapOn:
+-    id: "habit-journal"
+-- tapOn:
+-    id: "habit-journal"
+-- tapOn:
+-    id: "habit-social-media-boundary"
+-- tapOn:
+-    id: "habit-social-media-boundary"
++- tapOn: "No social media"
++- extendedWaitUntil:
++    visible: { id: "practice-detail-modal" }
++    timeout: 15000
++- scrollUntilVisible:
++    element: { id: "practice-mark-done" }
++    direction: DOWN
++    timeout: 10000
++- assertVisible: "Mark as done"
++- tapOn: { id: "practice-mark-done" }
++- assertVisible: "Mark as not done"
++- tapOn: { id: "practice-mark-done" }
++- assertVisible: "Mark as done"
++- scrollUntilVisible:
++    element: { id: "practice-detail-close" }
++    direction: UP
++    timeout: 10000
++- tapOn: { id: "practice-detail-close" }
++- assertNotVisible: { id: "practice-detail-modal" }
++- assertVisible: { id: "screen-main-today" }
+ - takeScreenshot: "today-habits"
+--- a/.maestro/flows/today-pledge.yaml
++++ b/.maestro/flows/today-pledge.yaml
+@@ -4,7 +4,9 @@
+   - smoke
+   - local-write
+ ---
+-# Requires a disposable isolated fixture; no state or Keychain reset.
++# Requires an English disposable writable current-day fixture with no pledge recorded today.
++# Always choose a real mood and urge before saving; sleep remains optional.
++# The pledge lives in the tools sheet and records a pledge without launching a reset.
+ - openLink: "freed:///today"
+ - runFlow:
+     when:
+@@ -12,38 +14,41 @@
+     commands:
+       - tapOn: "Open"
+ - extendedWaitUntil:
+-    visible:
+-      id: "screen-main-today"
++    visible: { id: "screen-main-today" }
+     timeout: 15000
+ - scrollUntilVisible:
+-    element:
+-      id: "home-primary-action"
++    element: { id: "plan-checkin" }
+     direction: DOWN
+     timeout: 10000
+-- runFlow:
+-    when:
+-      visible: "Start today's check-in"
+-    commands:
+-      - tapOn: "Start today's check-in"
+-      - extendedWaitUntil:
+-          visible:
+-            id: "screen-checkin"
+-          timeout: 15000
+-      - scrollUntilVisible:
+-          element:
+-            text: "Save Check-In"
+-          direction: DOWN
+-          timeout: 10000
+-      - tapOn: "Save Check-In"
+-      - extendedWaitUntil:
+-          visible:
+-            id: "screen-main-today"
+-          timeout: 15000
++- tapOn: { id: "plan-checkin" }
++- extendedWaitUntil:
++    visible: { id: "screen-checkin" }
++    timeout: 15000
++- tapOn: { id: "checkin-mood-steady" }
++- tapOn: { id: "checkin-urge-2" }
+ - scrollUntilVisible:
+-    element:
+-      text: "Take today's pledge"
++    element: { text: "Save Check-In" }
++    direction: DOWN
++    timeout: 10000
++- tapOn: "Save Check-In"
++- extendedWaitUntil:
++    visible: { id: "screen-main-today" }
++    timeout: 15000
++- scrollUntilVisible:
++    element: { id: "home-all-practices" }
++    direction: DOWN
++    timeout: 10000
++- tapOn: { id: "home-all-practices" }
++- scrollUntilVisible:
++    element: { text: "Take today's pledge" }
+     direction: DOWN
+     timeout: 10000
+ - tapOn: "Take today's pledge"
+-- assertVisible: "Start a reset"
++- assertVisible: "Pledge recorded"
++- scrollUntilVisible:
++    element: { text: "Close" }
++    direction: UP
++    timeout: 10000
++- tapOn: "Close"
++- assertVisible: { id: "screen-main-today" }
+ - takeScreenshot: "today-pledge"
+--- a/.maestro/flows/recovery-shortcuts.yaml
++++ b/.maestro/flows/recovery-shortcuts.yaml
+@@ -2,9 +2,12 @@
+ name: recovery-shortcuts
+ tags:
+   - smoke
+-  - read-only
++  - local-write
+ ---
+-# Requires a disposable isolated fixture; no state or Keychain reset.
++# Requires an English disposable fixture with no pending breathing completion receipt.
++# Exercise both the stable Today shortcut and the Library tool through their actual controls.
++# The current breathing close callback returns to Today, including when opened from Library.
++# Closing may retain disposable breathing progress; no completion is recorded.
+ - openLink: "freed:///today"
+ - runFlow:
+     when:
+@@ -12,21 +15,43 @@
+     commands:
+       - tapOn: "Open"
+ - extendedWaitUntil:
+-    visible:
+-      id: "screen-main-today"
++    visible: { id: "screen-main-today" }
+     timeout: 15000
+ - scrollUntilVisible:
+-    element:
+-      text: "Open Recovery Tools"
++    element: { id: "home-tool-breathe" }
+     direction: DOWN
+     timeout: 10000
+-- tapOn: "Open Recovery Tools"
+-- assertVisible:
+-    id: "screen-library"
+-- tapOn: "Breathe"
+-- assertVisible:
+-    id: "screen-breathing"
+-- tapOn: "Back"
+-- assertVisible:
+-    id: "screen-library"
++- tapOn: { id: "home-tool-breathe" }
++- extendedWaitUntil:
++    visible: { id: "screen-breathing" }
++    timeout: 15000
++- scrollUntilVisible:
++    element: { text: "Close breathing exercise" }
++    direction: UP
++    timeout: 10000
++- tapOn: "Close breathing exercise"
++- extendedWaitUntil:
++    visible: { id: "screen-main-today" }
++    timeout: 15000
++- openLink: "freed:///today/library"
++- extendedWaitUntil:
++    visible: { id: "screen-library" }
++    timeout: 15000
++- assertVisible: "Recovery Tools"
++- scrollUntilVisible:
++    element: { id: "library-tool-breathe" }
++    direction: DOWN
++    timeout: 10000
++- tapOn: { id: "library-tool-breathe" }
++- extendedWaitUntil:
++    visible: { id: "screen-breathing" }
++    timeout: 15000
++- scrollUntilVisible:
++    element: { text: "Close breathing exercise" }
++    direction: UP
++    timeout: 10000
++- tapOn: "Close breathing exercise"
++- extendedWaitUntil:
++    visible: { id: "screen-main-today" }
++    timeout: 15000
+ - takeScreenshot: "recovery-shortcuts"
+--- a/.maestro/flows/recovery-drafts.yaml
++++ b/.maestro/flows/recovery-drafts.yaml
+@@ -2,14 +2,44 @@
+ name: recovery-drafts
+ tags: [smoke, local-write]
+ ---
++# Requires an English disposable same-local-day fixture with empty reflection and no retained check-in draft.
++# Leave through the real no-save Back action on both platforms, then reopen the same-day draft.
++# No hardware-back assumption, history save, app-data reset or Keychain reset is used.
++- openLink: "freed:///today"
++- runFlow:
++    when:
++      visible: "Open in.*FREED.*"
++    commands:
++      - tapOn: "Open"
++- extendedWaitUntil:
++    visible: { id: "screen-main-today" }
++    timeout: 15000
+ - openLink: "freed:///flow/checkin"
+ - extendedWaitUntil:
+-    visible: { id: "checkin-reflection" }
++    visible: { id: "screen-checkin" }
+     timeout: 15000
++- scrollUntilVisible:
++    element: { id: "checkin-reflection" }
++    direction: DOWN
++    timeout: 10000
+ - tapOn: { id: "checkin-reflection" }
+ - inputText: "Disposable recovery draft"
+ - hideKeyboard
+-- back
++- scrollUntilVisible:
++    element: { text: "Back" }
++    direction: UP
++    timeout: 10000
++- tapOn: "Back"
++- extendedWaitUntil:
++    visible: { id: "screen-main-today" }
++    timeout: 15000
+ - openLink: "freed:///flow/checkin"
++- extendedWaitUntil:
++    visible: { id: "screen-checkin" }
++    timeout: 15000
++- scrollUntilVisible:
++    element: { id: "checkin-reflection" }
++    direction: DOWN
++    timeout: 10000
+ - assertVisible: "Disposable recovery draft"
+ - takeScreenshot: "recovery-draft-restored"

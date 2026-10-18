@@ -1,0 +1,12 @@
+{
+  "sanitized": true,
+  "sourceChecksums": {
+    "public/intervention.html": "77378d9c23f74b560f753769d82bae32a5d268d622e32386d94a74f5ad2e720b",
+    "src/lib/native-intervention.ts": "706aacb894b5df4129a6ad9a3e93d6e239ad8ddcf30063b1b387d9c58ed19bd8",
+    "scripts/lib/firebase-email-link-association.js": "ffc359b70b89520f030a266f18d957538bebe6aca8a7c85db26aac2a8caac8a2",
+    "dist/intervention.html": "77378d9c23f74b560f753769d82bae32a5d268d622e32386d94a74f5ad2e720b",
+    "dist/apple-app-site-association": "3206f3604b1db5f8d6c2d642a4d4c21b1b86db20a420d149e54222c884891794"
+  },
+  "exportLog": "/tmp/freed-handoff-web-export.log",
+  "publicationScope": "existing freed-7d5ee public Hosting site; no Functions, secrets or financial changes"
+}

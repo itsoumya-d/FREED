@@ -1,0 +1,1094 @@
+[
+  {
+    "screens": [
+      {
+        "screen_id": "onb_iz977",
+        "name": null,
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "video",
+        "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxLzBiNzBhOTJiZTRiZGUyNGYwZGYyYmZlNjI5YTVmY2UzMzYwNTcyM2QubXA0IiwiZXhwIjoxNzkwODU2MTg5fedidW9i2ebFMxjSGroB-y8wOV53dQDiPg.mp4",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#1E4387",
+        "similarity": 0.4572,
+        "app": {
+          "app_id": "571800810",
+          "name": "Calm"
+        }
+      },
+      {
+        "screen_id": "pay_p2w6l",
+        "name": "Subscription Offer",
+        "flow": "Paywall",
+        "section": "paywall",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzMwOWFhMDhlOTc0MmJkZGVkNjVhOTIzNmIwMTcwZGExMWRmY2EyMjkud2VicCIsImV4cCI6MTc5MDg1NjE4OX1EOapx7WzapyN7mneaAgPwqZaly68wPsg.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#163E6B",
+        "similarity": 0.4442,
+        "app": {
+          "app_id": "6468002313",
+          "name": "Brainpal: Heal & Meditation"
+        }
+      },
+      {
+        "screen_id": "pay_n8qy6",
+        "name": "Manage Subscription",
+        "flow": "Paywall",
+        "section": "paywall",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzcxZGY3MGE4ODM2M2NkNWQxZWQ4M2Y0ZWMxYTQ2NGNhYTg3ODgxZjQud2VicCIsImV4cCI6MTc5MDg1NjE4OX2sNoi3fCP-RASU-QY1vhdmf9Jbyed7v2w.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#F2F2F2",
+        "similarity": 0.4337,
+        "app": {
+          "app_id": "6447434453",
+          "name": "Calo: AI Food Calorie Counter"
+        }
+      },
+      {
+        "screen_id": "pay_rrmgr",
+        "name": "Subscription Offer",
+        "flow": "Paywall",
+        "section": "paywall",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzRhMmE5NzhjNjNiMzQ1MTk1MjUyNDg4YmViMDU5NWE5NDFjY2UzMjAud2VicCIsImV4cCI6MTc5MDg1NjE4OX0O1vuQh4ppneHNpKz6eViuMBS72DrXBJw.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#3D1E68",
+        "similarity": 0.432,
+        "app": {
+          "app_id": "6478942469",
+          "name": "Life Reset: 66 Day Habit"
+        }
+      },
+      {
+        "screen_id": "pay_qju42",
+        "name": "Subscription Plan Selection",
+        "flow": "Paywall",
+        "section": "paywall",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2YyMzRlNzgyZjc0M2QxMjRiNjQwNDY0MmJlNDA0YjAxMmQwZGQ0YWMud2VicCIsImV4cCI6MTc5MDg1NjE4OX0MGSqrPF_W5Psp4LZIMF9bMZl6RRboiiA.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FFFFFF",
+        "similarity": 0.4182,
+        "app": {
+          "app_id": "459387986",
+          "name": "KOMPASS Outdoor & Hiking Maps"
+        }
+      },
+      {
+        "screen_id": "pay_evjot",
+        "name": "Subscription Offer",
+        "flow": "Paywall",
+        "section": "paywall",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2ZhODI2Yzc2NjViOWYzODcxMGQzYzk1ZjY0MGUyMDU5MDNhODY4MWYud2VicCIsImV4cCI6MTc5MDg1NjE4OX0l_77z8AAcrGPow3ZlnoG2Rx1yJJAbu8s.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FBFBFC",
+        "similarity": 0.4156,
+        "app": {
+          "app_id": "6443918070",
+          "name": "Habit Tracker - HabitKit"
+        }
+      },
+      {
+        "screen_id": "pay_diesu",
+        "name": "Subscription FAQ",
+        "flow": "Paywall",
+        "section": "paywall",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzMxN2JjMTNmMzFiNzZjMjg1ODU2OGQ4MTQ0YmJkNzgxYWJhNTFmZGQud2VicCIsImV4cCI6MTc5MDg1NjE4OX3As41YKmtqEG0qJQw29XGPRZc217X1BKM.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FFFFFF",
+        "similarity": 0.4138,
+        "app": {
+          "app_id": "549217094",
+          "name": "Arise: AI Food Calorie Counter"
+        }
+      },
+      {
+        "screen_id": "pay_1xp0b",
+        "name": "Subscription Offer",
+        "flow": "Paywall",
+        "section": "paywall",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2VhM2YwZTk4Mzc4YWNlNGFkN2Q5NmQ3MjZjYTNlZjZlNjEzZDljODEud2VicCIsImV4cCI6MTc5MDg1NjE4OX0gVkriaebJiFLjkFBZvbq3tDPhRRcCMzY.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#42C6F2",
+        "similarity": 0.4138,
+        "app": {
+          "app_id": "1498897320",
+          "name": "Sweepy: Home Cleaning Schedule"
+        }
+      },
+      {
+        "screen_id": "pay_fiqex",
+        "name": "Manage Subscription",
+        "flow": "Paywall",
+        "section": "paywall",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzdmYzRmYWI2NjBlZTRhNGQxMzE5MDIxZTBkOTY2M2RjZmMyYmQ2YTAud2VicCIsImV4cCI6MTc5MDg1NjE4OX0frooDqj2geD4x0wLdERVKworToM-JXr8.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#F2F2F2",
+        "similarity": 0.4108,
+        "app": {
+          "app_id": "6447434453",
+          "name": "Calo: AI Food Calorie Counter"
+        }
+      },
+      {
+        "screen_id": "onb_gw3st",
+        "name": null,
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "video",
+        "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxLzJhYzhlZWQwYjZkYjVhMjkzYjkzNGE5MWIxMjM0MzQ3MjZkYjE3YzAubXA0IiwiZXhwIjoxNzkwODU2MTg5fZTQ4SX4G-Bl2gun5dd3iphKZW6ebqLNWw.mp4",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "similarity": 0.4105,
+        "app": {
+          "app_id": "885697368",
+          "name": "Halide Mark III - Pro Camera"
+        }
+      }
+    ],
+    "total": null,
+    "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJzZWFyY2hfc2NyZWVucyIsInEiOiIwMWQ0Yjg5OWRjMjhhNTJhNTM4N2E1NDIiLCJvIjoxMCwiaHciOjIwLCJleHAiOjE3OTA4NTYxODl9.c2CBstV9n6Lx4G-7q61irUQaxHs",
+    "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+    "credits": {
+      "spent": 1,
+      "remaining_this_month": 1498
+    }
+  },
+  {
+    "screens": [
+      {
+        "screen_id": "onb_8n0ji",
+        "name": null,
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "video",
+        "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxLzk1NjYyYjNlYmZhMGZkYmY2NTBlNDExNTY4OWI3ZWYxZDA1MTU3ZjcubXA0IiwiZXhwIjoxNzkwODU2MTg5fVdmzVxIinWbGm_oogjqrb7ZBPc75SG7MQ.mp4",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#1C1C1E",
+        "similarity": 0.4239,
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "oth_e1iw9",
+        "name": "Insights Settings",
+        "flow": "Insights",
+        "section": "other-tabs",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzc2ZTdhNjY4NTM5YjNmNzY2YTFiOWE5YTAzMDBiNDJkZmI1YWM5YjEud2VicCIsImV4cCI6MTc5MDg1NjE4OX1y5tqxZPch52vjsREzePhdP30eKZjUIKs.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#EBF1FB",
+        "similarity": 0.4108,
+        "app": {
+          "app_id": "1515753232",
+          "name": "AppBlock: Block Apps, Websites"
+        }
+      },
+      {
+        "screen_id": "onb_5ue13",
+        "name": "Screen Time Permission Intro",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2JlZjMxZjgyOGI1MzA5MjM3YjFiYzVhNzhkZTU1YTlhZDFmY2M4MzYud2VicCIsImV4cCI6MTc5MDg1NjE4OX1X_n5z7L_PT78YAZ-ARh_ZVvjVaMX90_Y.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#1B1B1B",
+        "similarity": 0.4103,
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_5sxxt",
+        "name": null,
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "video",
+        "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxLzAwNWUyNzQ1YThiZDQwM2RkZTEwZGQ3OGFmMmM2ZGQ5Y2M2YmVkNzMubXA0IiwiZXhwIjoxNzkwODU2MTg5fQLDkZdMyJeoi7hDRAd6D33qjQ6HmuxEug.mp4",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FFFFFF",
+        "similarity": 0.41,
+        "app": {
+          "app_id": "1659162950",
+          "name": "Blockin -Screen Time for Focus"
+        }
+      },
+      {
+        "screen_id": "onb_hzj9m",
+        "name": "Screen Time Permission Prompt",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2JkM2I2ODIxOTMzODJkMjY2ZDM5MmQxMzZjZjYxNWMzMzgxYjY1Mjgud2VicCIsImV4cCI6MTc5MDg1NjE4OX0CQMoZswthzRsE5R90W4FAcJeldRil7yI.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#171717",
+        "similarity": 0.4064,
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_bf6c2",
+        "name": null,
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "video",
+        "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxLzEwOTI5NWVkZGFmMzlmZWVkMmJmZmY4ZGQ2YmY0NTQxZThlYjk3MDQubXA0IiwiZXhwIjoxNzkwODU2MTg5fbSm5bSi00N9rGJf1C_SF2sp_fLmNKpyHg.mp4",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FFFFFF",
+        "similarity": 0.4002,
+        "app": {
+          "app_id": "1018301773",
+          "name": "AdBlock Pro for Safari"
+        }
+      },
+      {
+        "screen_id": "onb_61kn5",
+        "name": "Screen Time Retry Alert",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzUxYTdlMTBiN2NiOGNhODkzZGU0ODAxODFhMDJhOWE1OWM3NGNmZTgud2VicCIsImV4cCI6MTc5MDg1NjE4OX0lm-x20VYRWg8CoZLpYdTPs12YNZS_K3w.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#B0B5C1",
+        "similarity": 0.3974,
+        "app": {
+          "app_id": "1515753232",
+          "name": "AppBlock: Block Apps, Websites"
+        }
+      },
+      {
+        "screen_id": "onb_68pxd",
+        "name": null,
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "video",
+        "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxL2I5Mjk0ODM5ZTg5YzhmZGE3YTYyODc5YjMwNGZlOWY2NmJmZGEyODUubXA0IiwiZXhwIjoxNzkwODU2MTg5fUiRkCg_7A5pg_Z5FWalx4kFMCvxTThI6g.mp4",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FFFFFF",
+        "similarity": 0.3946,
+        "app": {
+          "app_id": "577232024",
+          "name": "Lumosity: Brain Training Games"
+        }
+      },
+      {
+        "screen_id": "oth_9xjd3",
+        "name": "App Blocking Intro",
+        "flow": "App Blocking",
+        "section": "other-tabs",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2MxNDNkOWQ0MTQ3NzlkNTNlZTIwOGM5OTcyMDI3OWQzOWNmMzYzMDQud2VicCIsImV4cCI6MTc5MDg1NjE4OX11dmH-hS0zwPo8xjuA5_NOXV4QWh_L4j8.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FDF9EF",
+        "similarity": 0.3891,
+        "app": {
+          "app_id": "6744124873",
+          "name": "Bible Mode: Reduce Screen Time"
+        }
+      },
+      {
+        "screen_id": "onb_lczhz",
+        "name": "Screen Time Permission",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2ZiYjNjMDY0MTc5NGQyNWQzZjY0YzExYmE4ODdlM2I0NTc0NWFhOWQud2VicCIsImV4cCI6MTc5MDg1NjE4OX3A6RbPccYxD8uZu9LR3QThK_WhRZMtfIs.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#C5C5C5",
+        "similarity": 0.3877,
+        "app": {
+          "app_id": "1659162950",
+          "name": "Blockin -Screen Time for Focus"
+        }
+      }
+    ],
+    "total": null,
+    "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJzZWFyY2hfc2NyZWVucyIsInEiOiIwMzE1MThkM2U1NDY1NWJjMzhlMmQzODUiLCJvIjoxMCwiaHciOjIwLCJleHAiOjE3OTA4NTYxODl9.zpkvhXIcLd1jsYoDfC2Nlz-uMV0",
+    "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+    "credits": {
+      "spent": 1,
+      "remaining_this_month": 1499
+    }
+  },
+  {
+    "screens": [
+      {
+        "screen_id": "pay_elvfo",
+        "name": "Subscription Plans",
+        "flow": "Paywall",
+        "section": "paywall",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2ZkZDc5Y2FiZGFlMTY2NzA1MzZkMzQ1NzhlMDUzOWY4MDI0MGM0OTgud2VicCIsImV4cCI6MTc5MDg1Njg0NX3d3R5BD4SWFf74GdJsROy0lJaNCVCPdJQ.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#E8E5FF",
+        "similarity": 0.4089,
+        "app": {
+          "app_id": "1545223887",
+          "name": "Lungy: Breathing Exercises"
+        }
+      },
+      {
+        "screen_id": "onb_9ingn",
+        "name": "Subscription Offer",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzgyMDA5MWMyYjY2MzI0ZDg3MWQxMzczZDJmM2JiZjAyZDhiMTUxMTAud2VicCIsImV4cCI6MTc5MDg1Njg0NX15K7XpLi8omjd71r3M2bx3XnCh0-PHKBc.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#3EC7FE",
+        "similarity": 0.4058,
+        "app": {
+          "app_id": "1498897320",
+          "name": "Sweepy: Home Cleaning Schedule"
+        }
+      },
+      {
+        "screen_id": "onb_g2zx4",
+        "name": "Subscription Offer",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzQzNGZkODczOGNmZTlhZDlkODJjYTNkMDUwYzgzMTZkZmZkNjZhNDUud2VicCIsImV4cCI6MTc5MDg1Njg0NX3mSeLk9T95MZ4YdQiS-CiE5oO-eJQ8QVU.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#3EC7FE",
+        "similarity": 0.4049,
+        "app": {
+          "app_id": "1498897320",
+          "name": "Sweepy: Home Cleaning Schedule"
+        }
+      },
+      {
+        "screen_id": "pay_dcwkz",
+        "name": "Subscription Paywall",
+        "flow": "Paywall",
+        "section": "paywall",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzFmMjExOGU4MjdkODhlNjY1ODVhNjBjZTkzZDUwYjAyZjE1MWEzYWUud2VicCIsImV4cCI6MTc5MDg1Njg0NX0YE_rDU9ToKPakjL-Pe44Qv0hx_jh3W80.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FFFFFF",
+        "similarity": 0.4013,
+        "app": {
+          "app_id": "1249805978",
+          "name": "MealPrepPro Planner & Recipes"
+        }
+      },
+      {
+        "screen_id": "pay_qund1",
+        "name": "Subscription Offer",
+        "flow": "Paywall",
+        "section": "paywall",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2M4MDEzOGRiYThlMTU1NDM5N2E1ZDU5MmM1MmI4ZTliMzUwYmU2MzIud2VicCIsImV4cCI6MTc5MDg1Njg0NX20HpAGICYkTreU9hl2sRKJBv549ZGaUBM.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "similarity": 0.401,
+        "app": {
+          "app_id": "1523032268",
+          "name": "BEASTLY: Build Muscle Fast"
+        }
+      },
+      {
+        "screen_id": "pay_ep6uc",
+        "name": "App Bundle Offer",
+        "flow": "Paywall",
+        "section": "paywall",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2VkMjIzOGI5OWE0ODk4ZTQ1YWY4Mjk0Mzc3NjUwZWE2N2M1NzVmYzQud2VicCIsImV4cCI6MTc5MDg1Njg0NX18lhK-4NQ_K0qWK7TkdRfW3t4udM0Wcac.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#EBDED6",
+        "similarity": 0.4005,
+        "app": {
+          "app_id": "874656917",
+          "name": "I am - Daily Affirmations"
+        }
+      },
+      {
+        "screen_id": "pay_hzaxg",
+        "name": "Annual Subscription Offer",
+        "flow": "Paywall",
+        "section": "paywall",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzdmM2ZjZWM0YzEyYjZkNDViZWI2N2M1MDIwNWZiNDMzYjBkZjc2ZmMud2VicCIsImV4cCI6MTc5MDg1Njg0NX24wqGifXHZXB1TiXCllrdsmezSf44ol4c.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#63D6A1",
+        "similarity": 0.3999,
+        "app": {
+          "app_id": "1241229134",
+          "name": "Reflectly - Journal & AI Diary"
+        }
+      },
+      {
+        "screen_id": "oth_c31g2",
+        "name": "Settings",
+        "flow": "Settings",
+        "section": "other-tabs",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzI4ZmVkZDFlYmUxMDYxODAwNTZlMjU4ODlmN2FiZjQyODg0MjJlMjEud2VicCIsImV4cCI6MTc5MDg1Njg0NX24IJICGcG292vh7rmJoiA3DsiIW_wCAo8.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#282930",
+        "similarity": 0.3997,
+        "app": {
+          "app_id": "6458828132",
+          "name": "SUPERHUMAN."
+        }
+      },
+      {
+        "screen_id": "pay_4e7uo",
+        "name": "Subscription Options",
+        "flow": "Paywall",
+        "section": "paywall",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzk1NjJkN2FjOTU5NDNmZjI4ZDFjZjliN2JlYzNhMTFmMjNjNGZjZDMud2VicCIsImV4cCI6MTc5MDg1Njg0NX23DiLeX-B2MQmVqqqo3DUVwBOByNE1sKk.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FFFFFF",
+        "similarity": 0.3989,
+        "app": {
+          "app_id": "1363637349",
+          "name": "Unread: An RSS Reader"
+        }
+      },
+      {
+        "screen_id": "pay_jck97",
+        "name": "Subscription Plans",
+        "flow": "Paywall",
+        "section": "paywall",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzk2NzMyZDI3OTg2YTYwY2M4MWEzOWVjMjA1ZTg1OWE5NGU3OGI5N2Yud2VicCIsImV4cCI6MTc5MDg1Njg0NX2GI1iIlMI7QtMq7p9deGl5l2tHIsTCgUI.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#101010",
+        "similarity": 0.3974,
+        "app": {
+          "app_id": "1444636541",
+          "name": "Photomator \u2013 Photo Editor"
+        }
+      }
+    ],
+    "total": null,
+    "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJzZWFyY2hfc2NyZWVucyIsInEiOiIwMWQ0Yjg5OWRjMjhhNTJhNTM4N2E1NDIiLCJvIjoyMCwiaHciOjMwLCJleHAiOjE3OTA4NTY4NDV9.7ZPgDmbSp0V5K7sqklvOJ4hTNZI",
+    "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+    "credits": {
+      "spent": 1,
+      "remaining_this_month": 1495
+    }
+  },
+  {
+    "screens": [
+      {
+        "screen_id": "onb_bao4e",
+        "name": null,
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "video",
+        "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxL2ZkNWEzOTQ1OTBjZTNhZTk1MjdhNDFkZDQ3ODNkODRhMjNlMmFmYjgubXA0IiwiZXhwIjoxNzkwODU2ODQ1fR_htC5WtMzcTSnRRagrdVR6tLcPN4gTeA.mp4",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FF4B72",
+        "similarity": 0.3876,
+        "app": {
+          "app_id": "1038369065",
+          "name": "Flo Cycle & Period Tracker"
+        }
+      },
+      {
+        "screen_id": "onb_dck6m",
+        "name": null,
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "video",
+        "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxL2I5MTBkM2MzMzI1NGM0Y2RhZDZkNzFhZGViMjYxNzBiOTQzYTkzMmYubXA0IiwiZXhwIjoxNzkwODU2ODQ1fVsMdW7WavUnkpyg6ShMN-r5MEmwuTXTgw.mp4",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "similarity": 0.3866,
+        "app": {
+          "app_id": "1532875441",
+          "name": "one sec | screen time + focus"
+        }
+      },
+      {
+        "screen_id": "spl_d2dch",
+        "name": null,
+        "flow": "Welcome Screen",
+        "section": "welcome-screen",
+        "kind": "video",
+        "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxLzA0YmIxNjE4M2MyYjMyMjQ4YWEzYTJhN2FkOWM4M2Q2MmM2NWQzZTEubXA0IiwiZXhwIjoxNzkwODU2ODQ1fe2CNJmhYzv9UFz7PlR4en_9_DqG3t5Pkw.mp4",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#141517",
+        "similarity": 0.3857,
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_o4c9m",
+        "name": null,
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "video",
+        "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxL2RjNTE4ZWU1MTdjYzIwN2JmNjg5NWZjM2E5OGU4ZDcxNzBhNTM5YzMubXA0IiwiZXhwIjoxNzkwODU2ODQ1feOWt5VxtxfTaJw4ahxna4COimZHnoSBvg.mp4",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#5233CE",
+        "similarity": 0.3807,
+        "app": {
+          "app_id": "1508098273",
+          "name": "Keiki Learning games for Kids"
+        }
+      },
+      {
+        "screen_id": "oth_e5pp4",
+        "name": "Help & More",
+        "flow": "Help & Support",
+        "section": "other-tabs",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzliNTc1MTA3YmFlZWFjYjdhYmJhMmYzYThiZGJiYzNkNWM5YzQ5NmYud2VicCIsImV4cCI6MTc5MDg1Njg0NX00XRSQImvCo-KVV_ueluLKXY5X4MfFZog.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#1D1D1D",
+        "similarity": 0.3796,
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_a2e80",
+        "name": "Screen Time Permission Intro",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzcyMGVlZjM3NzIxNjFjNWI0YjY0YjhmOGFlMTYyYmE2ZmYwZDEwNmUud2VicCIsImV4cCI6MTc5MDg1Njg0NX2Pbr6GVl-7SEs3LRuIBDzuPJuXDnyuv3Q.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#000000",
+        "similarity": 0.3774,
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_ty6ka",
+        "name": "Onboarding App Blocker",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzEyNTY4ZTBjNGEyNTQ0MWI2NDZjNjg3NTQxMDJiNmZlMTdjZWRmZjMud2VicCIsImV4cCI6MTc5MDg1Njg0NX1RElX35wmIdWCha4MZBAsFi5sYmSs185U.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FFFFFF",
+        "similarity": 0.3741,
+        "app": {
+          "app_id": "1528322796",
+          "name": "FocusPomo \u00b7 Pomodoro Timer"
+        }
+      },
+      {
+        "screen_id": "onb_x9468",
+        "name": "Screen Time Authorization",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzE3YmEyZjhkOWJhMjg3MDg0OTA5YzIxMzE3YzRjZjJiMzRjOTNjYjkud2VicCIsImV4cCI6MTc5MDg1Njg0NX23MWvwtXfqgVgJSz1qB5D3a-haagd26hg.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FFFFFF",
+        "similarity": 0.3721,
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_ib0hs",
+        "name": "Screen Time Approved",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2YxY2MwMDJkYTkzNDM3YjYwOGY3N2E0OTcxNTYyYjVjYzQxODE5YTcud2VicCIsImV4cCI6MTc5MDg1Njg0NX1ymDFhwGtj9KuPlWxmfvEsuZAER74E1rI.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FFFFFF",
+        "similarity": 0.3709,
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_juvs7",
+        "name": "Screen Time Permission",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2NlNGM3NDcyNmM3MjM3ZTlmNTlmMjdiOTgxNjc5ZjQyNDI2NWJhZjAud2VicCIsImV4cCI6MTc5MDg1Njg0NX1E3at2v7gHzS9Z5zfh3JnpXN2HEQZjsko.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FFFFFF",
+        "similarity": 0.3708,
+        "app": {
+          "app_id": "1515753232",
+          "name": "AppBlock: Block Apps, Websites"
+        }
+      }
+    ],
+    "total": null,
+    "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJzZWFyY2hfc2NyZWVucyIsInEiOiIwMzE1MThkM2U1NDY1NWJjMzhlMmQzODUiLCJvIjoyMCwiaHciOjMwLCJleHAiOjE3OTA4NTY4NDV9.R8UiZnYcnONfCzYBul8HS7qAooM",
+    "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+    "credits": {
+      "spent": 1,
+      "remaining_this_month": 1496
+    }
+  },
+  {
+    "screens": [
+      {
+        "screen_id": "pay_evjot",
+        "name": "Subscription Offer",
+        "flow": "Paywall",
+        "section": "paywall",
+        "position": 1,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2ZhODI2Yzc2NjViOWYzODcxMGQzYzk1ZjY0MGUyMDU5MDNhODY4MWYud2VicCIsImV4cCI6MTc5MDg1Njg0NH3nJ676aNl5AlOKcvg6rsaDbCudiWnIcd0.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#FBFBFC",
+        "colors": [
+          "#FBFBFC",
+          "#E6E6F7",
+          "#5250F5",
+          "#111118",
+          "#8B8B93"
+        ],
+        "ui_elements": [
+          "Rounded Close Button",
+          "Centered Paywall Title",
+          "Pricing Option Cards",
+          "Selected Annual Plan",
+          "Radio Selection Icons",
+          "Discount Pill Badge",
+          "Restore Purchase Link",
+          "Feature Benefit Cards",
+          "Pastel Feature Icons",
+          "Rounded Primary CTA"
+        ],
+        "app": {
+          "app_id": "6443918070",
+          "name": "Habit Tracker - HabitKit"
+        }
+      }
+    ],
+    "total": 1,
+    "next_cursor": null,
+    "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+    "credits": {
+      "spent": 1,
+      "remaining_this_month": 1497
+    }
+  },
+  {
+    "screens": [
+      {
+        "screen_id": "onb_ea21y",
+        "name": "Mindful Sessions Benefit",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 2,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzFkNDdiYjViMWM4MzM0YzEzN2U5ZWNkYjJmOTY0MmFhNjdjODM4MTQud2VicCIsImV4cCI6MTc5MDg1Njg0NX3aUHhQM_lMZu_dNXtPeZXx1UK1X9-N7m8.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#1B1B1B",
+        "colors": [
+          "#1B1B1B",
+          "#565EFB",
+          "#F5F5F5",
+          "#8E8E93",
+          "#252525"
+        ],
+        "ui_elements": [
+          "Top Skip Link",
+          "Centered Benefit Copy",
+          "Outlined Clock Icon",
+          "Segmented Progress Dots",
+          "Rounded Primary CTA"
+        ],
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_nnuot",
+        "name": "Distracting App Picker",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 12,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzQwNzYzZjkzZjg3ODM1YmJlYjA2YjI3OWE2N2ZjZTQwNzU1ODJjZjYud2VicCIsImV4cCI6MTc5MDg1Njg0NX2iGQN3MpAjlV1tqU83BIOpzyOmZyHn0jw.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#1B1B1B",
+        "colors": [
+          "#1B1B1B",
+          "#2B2B2E",
+          "#565EFB",
+          "#F5F5F5",
+          "#8E8E93"
+        ],
+        "ui_elements": [
+          "Top Step Progress Bar",
+          "Centered Instruction",
+          "App Selection Card",
+          "App Icon Rows",
+          "Radio Selection Dots",
+          "Rounded Primary CTA"
+        ],
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_n80c6",
+        "name": "Sleep Feature Loading",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 21,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2VlM2U5Y2Q2NzA4NTM4ODY0YWU1ZmY1NzcwOTBkYzZlM2NmY2ZmOTgud2VicCIsImV4cCI6MTc5MDg1Njg0NX2amu1_6FSuC0PhDzQleiIFpr3z680JlZI.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#1B1B1B",
+        "colors": [
+          "#1B1B1B",
+          "#FAFAFB",
+          "#616164",
+          "#F5F5F5"
+        ],
+        "ui_elements": [
+          "Back Circle Icon",
+          "Close Circle Icon",
+          "3D Product Render",
+          "Centered Loading Copy",
+          "Loading Spinner"
+        ],
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_axbb9",
+        "name": "Category Picker Scrolled",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 17,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzk5MjE3NjlhMzM4NGVmYzQ5OWQ2YWY2Nzg3MzAwMjAyYmNmMjQ0NGIud2VicCIsImV4cCI6MTc5MDg1Njg0NX2RT6FCGPgIckCPyhqLB-qqWFFAvjbrbgs.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#1C1C1E",
+        "colors": [
+          "#1C1C1E",
+          "#2C2C2E",
+          "#0A84FF",
+          "#F2F2F7",
+          "#8E8E93"
+        ],
+        "ui_elements": [
+          "Native Category Picker",
+          "Checked Category Rows",
+          "Category Icons",
+          "Scroll Indicator",
+          "Bottom Search Field"
+        ],
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_s7s1x",
+        "name": "Selected Distracting Apps",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 14,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzJjZjdlMzg4NzdkMTNhZWRmZTIyYjNlMzg3NWQ3YjAzM2QyZThhYTkud2VicCIsImV4cCI6MTc5MDg1Njg0NX1VszXhksodssiLKHQk4c-p5uquWkSQoVI.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#1B1B1B",
+        "colors": [
+          "#1B1B1B",
+          "#2B2B2E",
+          "#565EFB",
+          "#0A84FF",
+          "#F5F5F5"
+        ],
+        "ui_elements": [
+          "Top Step Progress Bar",
+          "App Selection Card",
+          "Selected App Rows",
+          "Blue Check Circles",
+          "Rounded Primary CTA"
+        ],
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_powdu",
+        "name": "Notification Permission Prompt",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 11,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzM2YTA1NmU3OTJmMThlZTc4OWM1ZDllYTBhZmE5MzcyMzVjYTdjNzgud2VicCIsImV4cCI6MTc5MDg1Njg0NX0BkQm4XmlFtNcIW8mm3mTx2D8kWXxad_8.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#171717",
+        "colors": [
+          "#171717",
+          "#AAAAAC",
+          "#111111",
+          "#565EFB",
+          "#C1C1C1"
+        ],
+        "ui_elements": [
+          "Top Step Progress Bar",
+          "System Notification Alert",
+          "Dual Alert Actions",
+          "Rounded Primary CTA"
+        ],
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_x0rl5",
+        "name": "Friction Setup",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 25,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2RjNjE3YWRkNmJkNDM2M2M4MDllOTEwNmIyNTZhNjE4NDEzYjI2YjIud2VicCIsImV4cCI6MTc5MDg1Njg0NX21ZOkZ8XmNrwLG4vcAoQ5D0RvzvbX0o2I.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#1B1B1B",
+        "colors": [
+          "#1B1B1B",
+          "#252525",
+          "#565EFB",
+          "#F5F5F5",
+          "#8E8E93"
+        ],
+        "ui_elements": [
+          "Back Chevron",
+          "Top Step Progress Bar",
+          "Centered Instruction",
+          "Friction Setting Pills",
+          "Rounded Primary CTA"
+        ],
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_074vn",
+        "name": "Sleep Feature Upsell",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 18,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzMxYjFkNDdkZDhmZjRiN2YyODc2NGVlZTAwMWEyYmVkYjk1NzE4MmIud2VicCIsImV4cCI6MTc5MDg1Njg0NX34UPLXXEwCiEzsyYGNXTGPW7Fqg0NpYfU.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#1B1B1B",
+        "colors": [
+          "#1B1B1B",
+          "#565EFB",
+          "#3D251E",
+          "#2A1612",
+          "#F5F5F5"
+        ],
+        "ui_elements": [
+          "Photo Carousel Card",
+          "Close Circle Icon",
+          "Carousel Page Dots",
+          "Numbered Feature Row",
+          "Rounded Primary CTA",
+          "Secondary Text CTA"
+        ],
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_hzj9m",
+        "name": "Screen Time Permission Prompt",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 7,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2JkM2I2ODIxOTMzODJkMjY2ZDM5MmQxMzZjZjYxNWMzMzgxYjY1Mjgud2VicCIsImV4cCI6MTc5MDg1Njg0NX3E7Jtz35WH1n9Z1AAnqn3GxWwQc8pVa-c.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#171717",
+        "colors": [
+          "#171717",
+          "#C2C2C5",
+          "#0A84FF",
+          "#111111",
+          "#565EFB"
+        ],
+        "ui_elements": [
+          "Top Step Progress Bar",
+          "System Permission Alert",
+          "Dual Alert Actions",
+          "Upward Guidance Arrow",
+          "Bottom Help Link"
+        ],
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      },
+      {
+        "screen_id": "onb_bvkms",
+        "name": "Category Selection Sheet",
+        "flow": "Onboarding",
+        "section": "onboarding",
+        "position": 13,
+        "kind": "image",
+        "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2I5MWE1MzdjMTZkYzEzNTVlMTU5MTEwMGQ5YTUzNDJjZDMwYzMxMmEud2VicCIsImV4cCI6MTc5MDg1Njg0NX3EZiA_bQA-vr4lrYDs4wBqsTXVgBIJDjo.webp",
+        "width": null,
+        "height": null,
+        "duration_ms": null,
+        "dominant_color": "#1C1C1E",
+        "colors": [
+          "#1C1C1E",
+          "#2C2C2E",
+          "#0A84FF",
+          "#F2F2F7",
+          "#8E8E93"
+        ],
+        "ui_elements": [
+          "Native Category Picker",
+          "Checked Category Rows",
+          "Category Icons",
+          "Top Done Action",
+          "Bottom Search Field"
+        ],
+        "app": {
+          "app_id": "1541027222",
+          "name": "ScreenZen- Screen Time Control"
+        }
+      }
+    ],
+    "total": 28,
+    "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJzZWFyY2hfc2NyZWVucyIsInEiOiJiODk4MzQ4NWM2Y2Q4NDRkMjcxZGZhNzkiLCJvIjoxMCwiaHciOjIwLCJleHAiOjE3OTA4NTY4NDV9.6yngF9b7K-Caev-o1LaEdVLy46I",
+    "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+    "credits": {
+      "spent": 1,
+      "remaining_this_month": 1494
+    }
+  }
+]

@@ -1,0 +1,329 @@
+{
+  "app": {
+    "app_id": "6532588521",
+    "name": "QUITTR - Break Free Now"
+  },
+  "screens": [
+    {
+      "screen_id": "onb_a08z8",
+      "name": null,
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 1,
+      "kind": "video",
+      "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxL2MxNzhhYzgzY2M4N2I4N2VhNGViNDYzZTA1NTE2MWVlZDBkYTFlYmYubXA0IiwiZXhwIjoxNzkwMzg1NDU4fX6wN77-JUod2EZYgpxGdbUrUf7WGPNEmg.mp4",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#0B132B",
+      "colors": [
+        "#0B132B",
+        "#FFFFFF",
+        "#8B5CF6",
+        "#D9383A",
+        "#34D399"
+      ],
+      "ui_elements": [
+        "Pill Action Button",
+        "Gradient Profile Card",
+        "Circular Progress Bar",
+        "Dual Bar Chart",
+        "Multi-select List",
+        "Pagination Dots",
+        "Line Graph",
+        "Plan Picker Cards",
+        "Testimonial Cards"
+      ],
+      "app": {
+        "app_id": "6532588521",
+        "name": "QUITTR - Break Free Now"
+      }
+    },
+    {
+      "screen_id": "onb_x3no4",
+      "name": "Quiz Intro",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 2,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzhiODgzMmJiYmQ1YTUzNmJhNmUzM2IxODU0NjQ4YTk0OTBlYjgxM2Yud2VicCIsImV4cCI6MTc5MDM4NTQ1OH0lkGXufL3vig7Qc9MRXdW6NvFM5pejv-w.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#011432",
+      "colors": [
+        "#011432",
+        "#041B3A",
+        "#2F6BFF",
+        "#FF5A12",
+        "#35CBEF"
+      ],
+      "ui_elements": [
+        "Starry Navy Backdrop",
+        "Back Circle Icon",
+        "Large Card Preview",
+        "Sparkle Accent",
+        "Primary Blue CTA"
+      ],
+      "app": {
+        "app_id": "6532588521",
+        "name": "QUITTR - Break Free Now"
+      }
+    },
+    {
+      "screen_id": "onb_ewxms",
+      "name": "Gender Question",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 3,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzMzNTVjNTAwMjY3NGI1MWIyNWQyNDAyN2I2MmFkZDBlODAzNzZmM2Yud2VicCIsImV4cCI6MTc5MDM4NTQ1OH3kog41Zy2ShTncCH_eJMexUBPBsvYOqTY.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#011432",
+      "colors": [
+        "#011432",
+        "#021635",
+        "#1B2A44",
+        "#25D4F5",
+        "#FFFFFF"
+      ],
+      "ui_elements": [
+        "Gradient Progress Bar",
+        "Numbered Option Pills",
+        "Starry Navy Backdrop",
+        "Bottom Step Counter",
+        "Back Arrow Icon"
+      ],
+      "app": {
+        "app_id": "6532588521",
+        "name": "QUITTR - Break Free Now"
+      }
+    },
+    {
+      "screen_id": "onb_nij60",
+      "name": "Quiz Question 2",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 4,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2IwNjIyY2JhNzIxNzJkOWIxMGYwZjAwZWVjNzJhZjJiNTZiNTJhNjkud2VicCIsImV4cCI6MTc5MDM4NTQ1OH2jSn60-QDuTssPv5V_q2vi6uHjh0Cu1d4.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#011432",
+      "colors": [
+        "#011432",
+        "#021635",
+        "#1B2A44",
+        "#25D4F5",
+        "#FFFFFF"
+      ],
+      "ui_elements": [
+        "Gradient Progress Bar",
+        "Numbered Option Pills",
+        "Starry Navy Backdrop",
+        "Bottom Step Counter",
+        "Back Arrow Icon"
+      ],
+      "app": {
+        "app_id": "6532588521",
+        "name": "QUITTR - Break Free Now"
+      }
+    },
+    {
+      "screen_id": "onb_3pdqb",
+      "name": "Usage Frequency Question",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 5,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2NkOTk0OTQxMTk0MjI0N2I0OGE2ZTkwMTdkNDNmNjUwNTYwMDBjOGMud2VicCIsImV4cCI6MTc5MDM4NTQ1OH2vPYFKSa756na8jZzqJfwpBhCy8mfIV1g.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#011432",
+      "colors": [
+        "#011432",
+        "#021635",
+        "#1B2A44",
+        "#8647E8",
+        "#25D4F5"
+      ],
+      "ui_elements": [
+        "Gradient Progress Bar",
+        "Purple Selected Pill",
+        "Numbered Option Pills",
+        "Starry Navy Backdrop",
+        "Bottom Step Counter"
+      ],
+      "app": {
+        "app_id": "6532588521",
+        "name": "QUITTR - Break Free Now"
+      }
+    },
+    {
+      "screen_id": "onb_kcttj",
+      "name": "Source Question",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 6,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzRlMjdmN2M0NmRhZTdjMjMyYTU5MWVjM2RmYTYyMDNjM2MxY2IxMWEud2VicCIsImV4cCI6MTc5MDM4NTQ1OH0zCWUgAjnSn4r8tXe3FDjWZxAb2-KJLnE.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#011432",
+      "colors": [
+        "#011432",
+        "#021635",
+        "#1B2A44",
+        "#25D4F5",
+        "#FFFFFF"
+      ],
+      "ui_elements": [
+        "Gradient Progress Bar",
+        "Icon Option Pills",
+        "Social Media Icons",
+        "Starry Navy Backdrop",
+        "Bottom Step Counter"
+      ],
+      "app": {
+        "app_id": "6532588521",
+        "name": "QUITTR - Break Free Now"
+      }
+    },
+    {
+      "screen_id": "onb_ci3z3",
+      "name": "Awareness Question",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 7,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2FjNTBjNTNlMTFlMDhkNTM0MGUyODA5ZTU3Y2NhZGI5OWEyOGU3ZDIud2VicCIsImV4cCI6MTc5MDM4NTQ1OH3dU3t0MGj0A19us3Cnyng236rfcca8AwQ.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#011432",
+      "colors": [
+        "#011432",
+        "#021635",
+        "#1B2A44",
+        "#25D4F5",
+        "#FFFFFF"
+      ],
+      "ui_elements": [
+        "Gradient Progress Bar",
+        "Numbered Option Pills",
+        "Starry Navy Backdrop",
+        "Bottom Step Counter",
+        "Back Arrow Icon"
+      ],
+      "app": {
+        "app_id": "6532588521",
+        "name": "QUITTR - Break Free Now"
+      }
+    },
+    {
+      "screen_id": "onb_jigun",
+      "name": "Age Question",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 8,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzA0Y2JlNGVhNWNlNjViMDc3MThhM2IwNzM3NmJiNGE2ZmFkYWJkYTQud2VicCIsImV4cCI6MTc5MDM4NTQ1OH1Hl7HU6EmC2rDd4hkLUZnMW4-6XWG8IIs.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#011432",
+      "colors": [
+        "#011432",
+        "#021635",
+        "#1B2A44",
+        "#25D4F5",
+        "#FFFFFF"
+      ],
+      "ui_elements": [
+        "Gradient Progress Bar",
+        "Numbered Option Pills",
+        "Starry Navy Backdrop",
+        "Bottom Step Counter",
+        "Back Arrow Icon"
+      ],
+      "app": {
+        "app_id": "6532588521",
+        "name": "QUITTR - Break Free Now"
+      }
+    },
+    {
+      "screen_id": "onb_3lphq",
+      "name": "Habit Frequency Question",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 9,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzE5ZmNiNDE5MTFlODk0NmYzMDAyMDNmMWYzNzlkYWY2MmZkMGZkNTAud2VicCIsImV4cCI6MTc5MDM4NTQ1OH14_kekIQeKUnszOlX2JCq4Q2jVuQBTvhc.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#011432",
+      "colors": [
+        "#011432",
+        "#021635",
+        "#1B2A44",
+        "#8647E8",
+        "#25D4F5"
+      ],
+      "ui_elements": [
+        "Gradient Progress Bar",
+        "Purple Selected Pill",
+        "Numbered Option Pills",
+        "Starry Navy Backdrop",
+        "Bottom Step Counter"
+      ],
+      "app": {
+        "app_id": "6532588521",
+        "name": "QUITTR - Break Free Now"
+      }
+    },
+    {
+      "screen_id": "onb_4ldig",
+      "name": "Self Control Question",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "position": 10,
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzk1NTQxYzAyZDY2MDg4NDEyNDQ0NTI3Y2M4OGQzZTZkZTlkMzlhODEud2VicCIsImV4cCI6MTc5MDM4NTQ1OH2cvCK1VIQy_4Zo59p3_EKxo17ZF_iKEu8.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#011432",
+      "colors": [
+        "#011432",
+        "#021635",
+        "#1B2A44",
+        "#25D4F5",
+        "#FFFFFF"
+      ],
+      "ui_elements": [
+        "Gradient Progress Bar",
+        "Numbered Option Pills",
+        "Starry Navy Backdrop",
+        "Bottom Step Counter",
+        "Back Arrow Icon"
+      ],
+      "app": {
+        "app_id": "6532588521",
+        "name": "QUITTR - Break Free Now"
+      }
+    }
+  ],
+  "total": 41,
+  "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2FwcF9zY3JlZW5zIiwicSI6Ijc3MGFmMjllNTA1OWY0ZjcyN2MzN2E1NCIsIm8iOjEwLCJodyI6MjAsImV4cCI6MTc5MDM4NTQ1OH0.VT-GUGHW1Xc2HBAulXyUawmDtiM",
+  "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+  "credits": {
+    "spent": 1,
+    "remaining_this_month": 996
+  }
+}

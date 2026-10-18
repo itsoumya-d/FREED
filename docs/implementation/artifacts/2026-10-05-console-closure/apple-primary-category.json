@@ -1,0 +1,17 @@
+{
+  "data": {
+    "type": "appCategories",
+    "id": "PRODUCTIVITY",
+    "attributes": {
+      "platforms": [
+        "IOS",
+        "MAC_OS",
+        "TV_OS",
+        "VISION_OS"
+      ]
+    }
+  },
+  "links": {
+    "self": "https://api.appstoreconnect.apple.com/v1/appInfos/74c0ca28-717f-495f-9a63-2e9ea6b72026/primaryCategory"
+  }
+}

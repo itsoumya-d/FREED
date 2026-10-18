@@ -1,0 +1,14 @@
+const assert = require('node:assert/strict');
+const plugin = require('../modules/freed-protection/app.plugin.js');
+assert.equal(typeof plugin.applyFocusShieldAndroidMetadata, 'function', 'Surface rollout requires separate default-off native build metadata.');
+const app = { 'meta-data': [{ $: { 'android:name': 'unrelated', 'android:value': 'keep' } }] };
+plugin.applyFocusShieldAndroidMetadata(app, {});
+plugin.applyFocusShieldAndroidMetadata(app, { focusShieldDevPreview: true });
+assert.equal(app['meta-data'].length, 3);
+assert.equal(app['meta-data'][0].$['android:value'], 'keep');
+assert.equal(app['meta-data'][1].$['android:name'], 'app.freed.protection.FOCUS_SHIELD_SURFACE_RELEASE_ENABLED');
+assert.equal(app['meta-data'][1].$['android:value'], 'false');
+assert.equal(app['meta-data'][2].$['android:value'], 'true');
+const template = require('../remoteconfig.template.json');
+assert.equal(template.parameters.android_surface_interception_enabled.defaultValue.value, 'false');
+console.log('Focus Shield native build and RemoteConfig defaults passed');

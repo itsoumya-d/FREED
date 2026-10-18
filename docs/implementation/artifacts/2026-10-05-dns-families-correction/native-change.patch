@@ -1,0 +1,22 @@
+--- modules/freed-protection/android/src/main/java/app/freed/protection/FreedVpnService.kt (before)
++++ modules/freed-protection/android/src/main/java/app/freed/protection/FreedVpnService.kt (after)
+@@ -158,6 +158,8 @@
+       .setMtu(VPN_MTU)
+ 
+     val commonDnsRoutes = listOf(
++      // Intercept app-selected ordinary Cloudflare DNS; upstream defaults are Families.
++      "1.1.1.1", "1.0.0.1",
+       "8.8.8.8", "8.8.4.4",
+       "9.9.9.9", "149.112.112.112",
+       "208.67.222.222", "208.67.220.220"
+@@ -1353,8 +1355,8 @@
+     private const val INTERVENTION_NOTIFICATION_ID = 9403
+     private const val NOTIFICATION_CHANNEL_ID = "freed_dns_guard"
+     private const val INTERVENTION_NOTIFICATION_CHANNEL_ID = "freed_dns_interventions"
+-    private const val PRIMARY_DNS = "1.1.1.1"
+-    private const val SECONDARY_DNS = "1.0.0.1"
++    private const val PRIMARY_DNS = "1.1.1.3"
++    private const val SECONDARY_DNS = "1.0.0.3"
+     val DNS_RESOLVERS = listOf(PRIMARY_DNS, SECONDARY_DNS)
+     private const val MAX_PACKET_SIZE = 32767
+     private const val MAX_DNS_PAYLOAD_SIZE = 4096

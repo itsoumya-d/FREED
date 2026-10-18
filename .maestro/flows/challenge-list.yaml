@@ -1,0 +1,21 @@
+appId: app.freed.recovery
+name: challenge-list
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///flow/challenge"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-challenge"
+    timeout: 15000
+- assertVisible:
+    id: "screen-challenge"
+- assertVisible: ".*reset.*|.*Reset.*|.*challenge.*|.*Challenge.*"
+- takeScreenshot: "challenge-list"

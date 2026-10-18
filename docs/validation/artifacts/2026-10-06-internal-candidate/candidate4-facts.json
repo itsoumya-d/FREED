@@ -1,0 +1,52 @@
+{
+  "version": "1.0",
+  "build": "4",
+  "bundleId": "app.freed.recovery",
+  "ipaBytes": 39208337,
+  "ipaSha256": "74dc5817308b0ef6c6dfcd87fd7ec6bca6c9f3b66283f6ef2970846870eb0e22",
+  "bundleSha256": "2a00edebb6641212e4c5b6c467120f9eb017254317984bab1245413b73dc47e7",
+  "executableSha256": "402be929321bf59a6a10dd6c6a94a243c9f8592e1aa2205108006d598aeba824",
+  "extensions": [
+    {
+      "bundle": "app.freed.recovery.device-activity-monitor",
+      "version": "1.0",
+      "build": "4"
+    },
+    {
+      "bundle": "app.freed.recovery.safari-content-blocker",
+      "version": "1.0",
+      "build": "4"
+    },
+    {
+      "bundle": "app.freed.recovery.safari-focus-shield",
+      "version": "1.0",
+      "build": "4"
+    },
+    {
+      "bundle": "app.freed.recovery.shield-action",
+      "version": "1.0",
+      "build": "4"
+    },
+    {
+      "bundle": "app.freed.recovery.shield-configuration",
+      "version": "1.0",
+      "build": "4"
+    }
+  ],
+  "audio": [
+    "assets/assets/audio/breathing/exhale.wav",
+    "assets/assets/audio/breathing/hold.wav",
+    "assets/assets/audio/breathing/inhale.wav"
+  ],
+  "qaMarkerAbsent": true,
+  "qaTraceNotIncluded": true,
+  "sourceSnapshotSha256": "21b27cad69029ef374b8165e3914671467909c69e60aab7e3b2ef88fd3853601",
+  "nativeHelpersCompiled": true,
+  "strictCodesignPassed": true,
+  "physicalRuntimePass": false,
+  "publicLaunchReady": false,
+  "nativeCompilationDurationMs": 1301488,
+  "exportDurationMs": 75813,
+  "artifactGatesPassed": 8,
+  "actualNewPhotoHelperCompilationConfirmed": true
+}

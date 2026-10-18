@@ -1,0 +1,36 @@
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react-native';
+import { Text, Pressable } from 'react-native';
+import { ClaraCompactHeader } from '@/components/ClaraCompactHeader';
+import { ClaraConsentSheet } from '@/components/ClaraConsentSheet';
+import { appI18n } from '@/i18n/runtime';
+jest.mock('@/hooks/use-app-preferences', () => ({ useAppPreferences: () => ({ mode: 'light' }) }));
+jest.mock('@/components/MomentumCompanion', () => ({ MomentumCompanion: () => null }));
+jest.mock('@/components/DirectionalIcons', () => ({ ArrowLeft: () => null }));
+jest.mock('lucide-react-native', () => ({ Settings: () => null, X: () => null }));
+beforeEach(async () => { await appI18n.changeLanguage('en'); });
+test('compact CLARA header keeps back and cloud settings reachable and never calls consent enabled a working service', () => {
+  const back = jest.fn(), settings = jest.fn();
+  const view = render(<ClaraCompactHeader onBack={back} onOpenSettings={settings} cloudEnabled />);
+  expect(view.getByText('CLARA')).toBeOnTheScreen();
+  expect(view.getByText('Cloud permission on')).toBeOnTheScreen();
+  expect(view.queryByText('Cloud reply received')).toBeNull();
+  fireEvent.press(view.getByRole('button', { name: 'Back' })); expect(back).toHaveBeenCalledTimes(1);
+  fireEvent.press(view.getByRole('button', { name: 'Cloud chat settings' })); expect(settings).toHaveBeenCalledTimes(1);
+  view.rerender(<ClaraCompactHeader onBack={back} onOpenSettings={settings} cloudEnabled state="unavailable" />);
+  expect(view.getByText('Cloud unavailable')).toBeOnTheScreen();
+  view.rerender(<ClaraCompactHeader onBack={back} onOpenSettings={settings} cloudEnabled={false} state="online" />);
+  expect(view.getByText('Built-in guidance')).toBeOnTheScreen();
+  expect(view.queryByText('Cloud reply received')).toBeNull();
+});
+test('cloud consent sheet preserves its supplied controls and closing changes only sheet visibility', () => {
+  const close = jest.fn(), consent = jest.fn();
+  const controls = <Pressable accessibilityRole="button" accessibilityLabel="Existing consent control" onPress={consent}><Text>Unchanged consent details</Text></Pressable>;
+  const view = render(<ClaraConsentSheet visible onClose={close}>{controls}</ClaraConsentSheet>);
+  expect(view.getByText('Unchanged consent details')).toBeOnTheScreen();
+  fireEvent.press(view.getByRole('button', { name: 'Existing consent control' })); expect(consent).toHaveBeenCalledTimes(1);
+  fireEvent.press(view.getByRole('button', { name: 'Close cloud settings' })); expect(close).toHaveBeenCalledTimes(1);
+  expect(consent).toHaveBeenCalledTimes(1);
+  view.rerender(<ClaraConsentSheet visible={false} onClose={close}>{controls}</ClaraConsentSheet>);
+  expect(view.queryByText('Unchanged consent details')).toBeNull();
+});

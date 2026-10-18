@@ -1,0 +1,25 @@
+{
+  "name": "query-string",
+  "version": "9.5.1-freed.1",
+  "private": true,
+  "description": "FREED namespace/CommonJS compatibility wrapper for unmodified upstream query-string 9.5.1.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./index.cjs",
+  "module": "./index.js",
+  "react-native": "./index.js",
+  "types": "./index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "require": "./index.cjs",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": ["index.js", "index.cjs", "index.d.ts", "README.md", "LICENSE.upstream"],
+  "engines": { "node": ">=20.19" },
+  "dependencies": { "query-string-upstream": "npm:query-string@9.5.1" }
+}

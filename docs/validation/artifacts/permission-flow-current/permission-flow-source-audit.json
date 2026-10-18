@@ -1,6 +1,6 @@
 {
   "schemaVersion": "freed-permission-flow-source-audit-v1",
-  "generatedAt": "2026-07-22T02:46:09.501Z",
+  "generatedAt": "2026-10-01T23:34:28.564Z",
   "sanitized": true,
   "result": "pass",
   "passCount": 23,
@@ -16,7 +16,15 @@
     },
     {
       "path": "src/features/freed-app.tsx",
-      "sha256": "a723ccc2e9be20533a4b6f6671203b7a223c058fd1c99864d1e33c81804371f4"
+      "sha256": "342f264be7ad2fdb8b35136d603b5dca39cbf090990e54364d2b74aef0374258"
+    },
+    {
+      "path": "src/components/ProtectionSetupView.tsx",
+      "sha256": "838c443a38cb30aa70ad3920a96ae1564912afe8b0cf1385211a2ef733f4124b"
+    },
+    {
+      "path": "src/lib/protection-setup-presenter.ts",
+      "sha256": "28c6024dcb73cfb23befe43f3d6101975948b68e4ab7fa6d5acfbc9d0a9af155"
     },
     {
       "path": "src/lib/recovery-notification-permission.ts",
@@ -24,11 +32,11 @@
     },
     {
       "path": "modules/freed-protection/src/index.ts",
-      "sha256": "2e9934fbac9a9a9a77cdf3ee20a315e4489ffd31d96630eaaba159ce4cd96914"
+      "sha256": "64385f6d8fa6fe2a2856420f75f8336b7843723bef2317fbe6564a8563aaa85d"
     },
     {
       "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
-      "sha256": "799ad16df18115fb6f5593db3eec9b41242de26ffc7f877551322367f190b30a"
+      "sha256": "746050071052cddb7a512997636f6b57c4b2e287acc276af8f4c21b15ed70368"
     },
     {
       "path": "modules/freed-protection/android/src/main/AndroidManifest.xml",
@@ -44,7 +52,7 @@
     },
     {
       "path": "modules/freed-protection/ios/FreedProtectionModule.swift",
-      "sha256": "68fbc5a440bc8121f5b139b7c85878af8f393156d2170179ffd9fca1ee4603a6"
+      "sha256": "410a63ad13615b3e1a7aafd0c96b9f3760a8dfb9512117a85df492d4fd80834a"
     },
     {
       "path": "docs/validation/README.md",
@@ -106,7 +114,7 @@
     {
       "id": "ui-enforces-next-missing-step",
       "status": "pass",
-      "detail": "Setup UI redirects out-of-order taps to the first missing required step and labels buttons with the next required row.",
+      "detail": "The shared setup action reaches the controller, which redirects out-of-order requests to the first missing required step.",
       "next": ""
     },
     {
@@ -116,10 +124,10 @@
       "next": ""
     },
     {
-      "id": "android-one-step-setup-wizard",
+      "id": "shared-one-step-setup-wizard",
       "status": "pass",
-      "detail": "Android setup defaults to a one-step wizard with one primary action, short copy, progress, and advanced checklist/details hidden behind an explicit affordance.",
-      "next": "Keep Android post-paywall setup focused on the next missing required step; do not restore the full checklist as the default path."
+      "detail": "iOS and Android share a current-step view with one primary action, progress, and required checklist/details disclosed through Help.",
+      "next": "Keep both platforms focused on the next missing required step and retain the controller's native readiness gate."
     },
     {
       "id": "ios-picker-resolves-before-auto-advance",
@@ -184,7 +192,7 @@
     {
       "id": "ios-safari-disabled-settings-route",
       "status": "pass",
-      "detail": "When Safari rules exist but the extension is disabled, setup opens iOS Settings instead of pretending sync is enough.",
+      "detail": "Disabled or unknown Safari extension state opens Safari extension settings and waits for confirmed readiness after return; only an enabled extension uses feed sync.",
       "next": ""
     },
     {

@@ -30,6 +30,7 @@
     {
       "target": "web",
       "public": "dist",
+      "appAssociation": "NONE",
       "predeploy": ["npm run prepare:firebase-hosting"],
       "ignore": ["firebase.json", ".firebaserc", "**/.DS_Store", "**/node_modules/**"],
       "cleanUrls": true,
@@ -42,6 +43,10 @@
         {
           "source": "/apple-app-site-association",
           "headers": [{ "key": "Content-Type", "value": "application/json" }]
+        },
+        {
+          "source": "/.well-known/apple-app-site-association",
+          "headers": [{ "key": "Content-Type", "value": "application/json" }]
         }
       ],
       "rewrites": [
@@ -49,6 +54,31 @@
         { "source": "/intervention/**", "destination": "/index.html" },
         { "source": "/legal/**", "destination": "/index.html" },
         { "source": "**", "destination": "/index.html" }
+      ]
+    },
+    {
+      "target": "landing",
+      "public": "website",
+      "ignore": ["firebase.json", "**/.DS_Store", "**/node_modules/**", "build-legal-pages.js", "legal-template.js"],
+      "cleanUrls": true,
+      "trailingSlash": false,
+      "headers": [
+        {
+          "source": "/api/adult-domain-feed",
+          "headers": [
+            { "key": "Content-Type", "value": "application/json" },
+            { "key": "Cache-Control", "value": "public, max-age=1800" },
+            { "key": "Access-Control-Allow-Origin", "value": "*" }
+          ]
+        },
+        {
+          "source": "/assets/**",
+          "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
+        }
+      ],
+      "rewrites": [
+        { "source": "/api/adult-domain-feed", "destination": "/adult-domain-feed.json" },
+        { "source": "/api/adult-domain-feed/", "destination": "/adult-domain-feed.json" }
       ]
     }
   ],

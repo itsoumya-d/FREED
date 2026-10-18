@@ -1,0 +1,32 @@
+{
+  "capturedAt": "2026-10-03T01:26:06.611639+00:00",
+  "result": "blocked",
+  "fixture": "FREEDPremiumDisposable20261003",
+  "adbSerial": "emulator-5580",
+  "image": "API36 google_apis arm64-v8a",
+  "attempts": [
+    {
+      "acceleration": "default-HVF",
+      "exitCode": 0,
+      "log": "emulator.log",
+      "observedFailure": "HVF error: HV_DENIED; QEMU main loop exits abnormally with code 1"
+    },
+    {
+      "acceleration": "requested-off",
+      "exitCode": 0,
+      "log": "emulator-software.log",
+      "observedFailure": "HVF error: HV_DENIED; QEMU main loop exits abnormally with code 1"
+    }
+  ],
+  "appInstalled": false,
+  "ownerDevicesOrAvdsTouched": false,
+  "vpnOrPrivateDnsChanged": false,
+  "claims": [
+    "No Android runtime/UI/network enforcement evidence collected",
+    "Boot launcher exited 0 after QEMU reported its internal code 1; successful shell exit does not indicate boot"
+  ],
+  "requiredBeforeInstall": "Fresh JS bundle must route Auth and Functions to emulators, use mock monetization/local coach, and skip production Firebase startup.",
+  "fixtureRemoved": true,
+  "cleanupLog": "avd-cleanup.log",
+  "cleanupExitCode": 0
+}

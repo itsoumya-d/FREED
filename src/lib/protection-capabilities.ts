@@ -13,7 +13,7 @@ import {
   type NativeInterventionAttempt,
   type NativePendingInterventionPayload
 } from "./native-intervention";
-import type { ChallengeOutcome } from "./recovery-engine";
+import type { ChallengeFeedbackOutcome } from "./recovery-engine";
 
 /**
  * Deliberately excludes selector fingerprints and calibration payloads. This is
@@ -29,6 +29,7 @@ export type FocusShieldCapabilityModel = {
   available: boolean;
   calibrationAvailable: boolean;
   ruleManagementAvailable: boolean;
+  surfaceState: "release-gated" | "permission-required" | "ready" | "unsupported";
   description: string;
   diagnostics: string[];
 };
@@ -38,7 +39,7 @@ export type PendingInterventionTracker = {
   consumedKeys: Set<string>;
 };
 
-type ScopedBlockingAttempt = BlockingAttempt & { scope?: FocusShieldInterventionScope };
+type ScopedBlockingAttempt = BlockingAttempt;
 
 export function summarizeFocusShieldRules(rules: readonly unknown[]): FocusShieldRuleSummary[] {
   return rules.flatMap((candidate) => {
@@ -66,6 +67,10 @@ export function getFocusShieldCapabilityModel(
   const diagnostics: string[] = [];
 
   if (platform === "android") {
+    const rolloutAllowed = capability?.focusShieldSurfaceInspection === true && status?.focusShieldSurfaceEnabled === true;
+    if (!rolloutAllowed) {
+      diagnostics.push("Android selected surface inspection is release-gated pending policy and device validation.");
+    }
     if (!capability?.accessibility) {
       diagnostics.push("This Android build does not expose the Accessibility-backed Focus Shield capability.");
     } else if (status?.appInterventionAuthorized !== true) {
@@ -85,12 +90,14 @@ export function getFocusShieldCapabilityModel(
 
     return {
       platform,
-      available: capability?.accessibility === true,
+      available: capability?.accessibility === true && rolloutAllowed,
       calibrationAvailable:
-        capability?.accessibility === true && status?.appInterventionAuthorized === true,
-      ruleManagementAvailable: capability?.accessibility === true,
-      description:
-        "Android Focus Shield interrupts selected native-app surfaces using local selector fingerprints. FREED never keeps screen text, screenshots, or raw accessibility trees in recovery state.",
+        capability?.accessibility === true && rolloutAllowed && status?.appInterventionAuthorized === true,
+      ruleManagementAvailable: capability?.accessibility === true && rolloutAllowed,
+      surfaceState: !rolloutAllowed ? "release-gated" : status?.appInterventionAuthorized !== true ? "permission-required" : "ready",
+      description: rolloutAllowed
+        ? "Android Focus Shield interrupts selected native-app surfaces using local selector fingerprints. FREED never keeps screen text, screenshots, or raw accessibility trees in recovery state."
+        : "Android selected surface inspection is release-gated pending policy and device validation.",
       diagnostics
     };
   }
@@ -113,6 +120,7 @@ export function getFocusShieldCapabilityModel(
       available: Boolean(capability?.screenTime && capability?.managedSettings),
       calibrationAvailable: false,
       ruleManagementAvailable: false,
+      surfaceState: "unsupported",
       description:
         "iOS cannot inspect native-app screens. Focus Shield uses Screen Time selections for apps and the Safari Focus Shield extension for supported short-form routes; Safari Content Blocker remains adult-domain-only.",
       diagnostics
@@ -127,6 +135,7 @@ export function getFocusShieldCapabilityModel(
     available: false,
     calibrationAvailable: false,
     ruleManagementAvailable: false,
+    surfaceState: "unsupported",
     description:
       "Preview builds can show Focus Shield setup copy, but they cannot inspect native app surfaces or enforce device shields.",
     diagnostics
@@ -139,9 +148,11 @@ export function shouldBypassRewardedAdForAttempt(attempt: BlockingAttempt | null
 
 export function getProtectionChallengeCompletionDecision(
   attempt: ScopedBlockingAttempt | null | undefined,
-  outcome: ChallengeOutcome
+  outcome: ChallengeFeedbackOutcome
 ): { grantEarnedUnlock: boolean; applyFocusShieldScope: boolean } {
-  const grantEarnedUnlock = outcome === "helped";
+  const scope = attempt?.scope;
+  const appScope = scope?.kind === "android-package" || scope?.kind === "android-surface" || scope?.kind === 'android-app-group' || scope?.kind === 'ios-app-group' || (scope?.kind === "ios-screen-time" && scope.tokenType === "application");
+  const grantEarnedUnlock = (outcome === "helped" || outcome === "unknown") && Boolean(attempt?.source === "app" && sanitizeNativeInterventionId((attempt as NativeInterventionAttempt).nativeInterventionId) && appScope);
   return {
     grantEarnedUnlock,
     applyFocusShieldScope: Boolean(
@@ -190,7 +201,13 @@ export async function consumePendingInterventionOnce({
     }
 
     if (!isFreshPendingIntervention(pending, nowMs)) return null;
-    return createNativeInterventionAttempt(pending);
+    const attempt = createNativeInterventionAttempt(pending);
+    if (attempt.source === "app" && !attempt.result.matchedRule.startsWith("ios-screen-time-shield") && !attempt.sourcePackage) return null;
+    // Invalid scope evidence cannot silently become a broader package unlock.
+    if ((pending.scope !== undefined && !attempt.scope) ||
+      (attempt.result.matchedRule.startsWith("focus-shield:") && attempt.scope?.kind !== "android-surface") ||
+      (attempt.result.matchedRule.startsWith('app-group:') && attempt.scope?.kind !== 'android-app-group' && attempt.scope?.kind !== 'ios-app-group')) return null;
+    return attempt;
   } finally {
     tracker.inFlight = false;
   }

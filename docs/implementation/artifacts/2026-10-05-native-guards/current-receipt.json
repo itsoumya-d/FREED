@@ -1,0 +1,50 @@
+{
+  "recordedFor": "2026-10-05",
+  "iOSScopedReview": "approved after actual lease reader and unknown-field repairs",
+  "bridgeModesTests": {
+    "passed": 5,
+    "skipped": 0
+  },
+  "iOSNativeHarnessCases": {
+    "reportedPassed": 16,
+    "skipped": 0
+  },
+  "sourceCompatibilityTests": {
+    "passed": 14,
+    "skipped": 0
+  },
+  "safetyAuditTests": {
+    "passed": 12,
+    "skipped": 0
+  },
+  "generatorIsolatedIdempotence": true,
+  "iOSSchedulingFrontendValidator": "type/builder integrated for bridge tests; full UI caller review pending",
+  "androidScopedReview": "approved after timed-guard precedence and actual runnable/helper repair",
+  "physicalAndSignedEvidence": "pending",
+  "sourceHashes": {
+    "modules/freed-protection/ios/FreedProtectionModule.swift": "5ec4454116d725abe7adc0ca353c38a54424b8ba900865796141734d58bb2c15",
+    "ios/FREEDDeviceActivityMonitor/DeviceActivityMonitorExtension.swift": "b953035b65edb5c371d2d9965b6929e6a8364730107307fc7beeac1533e18990",
+    "modules/freed-protection/ios/FreedAppGuardPolicy.swift": "0b1235eacdadbf3aa2010a4ac0b66b090299050766cbf596bedcb418bbe4936f",
+    "modules/freed-protection/src/index.ts": "ec3dc41c0c3a4d5be3e38b7843b4ef4bd532dc7846859bc0585ded47a346c5e0",
+    "ios/FREED.xcodeproj/project.pbxproj": "ef09b02c2eb07b9e0e992d76589a1f538deb2557c74531c2b5ff4a69920b4576",
+    "scripts/add-ios-screen-time-extensions.rb": "79ac62fcc405ed9c22669058b03a456a5a83064c1c427edaf209bac96928298c",
+    "scripts/performance-safety-audit.js": "fce28d00d40540e2fbdceb1d64dd41046b398690b13bf233e75648c1175d65b8",
+    "tests/native-app-guard-modes.test.ts": "5d1d3b3f8e11673e2b91b9e0605e6d4c1d34b912148d76fcd797a14c2338c097",
+    "tests/app-schedule-native-wiring.test.js": "c5ea327b6aec0e2e2c7a95921976a8b9c922867476d17928018f56b8766f6143",
+    "tests/protection-reset-native-wiring.test.js": "35dc8564721ca3c770db917f3819bb2b984f5e20faf91da312fd152348c69d6b"
+  },
+  "runtimeArtifactPolicy": "ignored workspace path; original OS temporary native directory unavailable",
+  "privateCredentialValuesIncluded": false,
+  "androidNativeProgramsPassed": 8,
+  "bridgeScheduleTests": {
+    "passed": 7,
+    "skipped": 0,
+    "scope": "actual public bridge with explicit iOS/Android scope isolation and strictGuard false"
+  },
+  "scopeNotes": [
+    "accepted flags are mutation acknowledgements only",
+    "stable readiness uses matching current mode and actual native installed rules",
+    "public native Shorts/Reels remains off",
+    "background DNS never auto-opens a commercial recovery offer"
+  ]
+}

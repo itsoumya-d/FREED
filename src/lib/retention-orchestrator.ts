@@ -1,8 +1,9 @@
+import { readClientEnvironmentValue } from "@/lib/public-client-env";
 import { redactCoachText } from "@/lib/ai-coach";
 import { getProductionEndpointIssues } from "@/lib/endpoint-safety";
 import { getSmartReminderSuggestion } from "@/lib/recovery-reminders";
-import { coarseRecoveryTriggerLabel } from "@/lib/recovery-signal-privacy";
-import { generateWeeklyRecoveryReport, getLocalDateKey, type RecoveryState } from "@/lib/recovery-state";
+import { coarseRecoveryTriggerLabel, projectRecoveryStateForOffDevice } from "@/lib/recovery-signal-privacy";
+import { generateWeeklyRecoveryReport, getLocalDateKey, getRecoveryAttemptSourceCounts, type RecoveryState } from "@/lib/recovery-state";
 import { fetchRemoteProviderJson } from "@/lib/remote-provider-timeout";
 import { buildLocalUrgeRiskForecast, type UrgeRiskForecastConfidence, type UrgeRiskLevel } from "@/lib/urge-risk-forecast";
 
@@ -68,7 +69,7 @@ export function configureRemoteRetentionProvider(provider: RemoteRetentionProvid
 }
 
 function readEnv(key: string): string | null {
-  const value = process.env[key];
+  const value = readClientEnvironmentValue(key);
   if (!value || !value.trim()) return null;
   return value.trim();
 }
@@ -125,8 +126,8 @@ function retentionDriverSignals(value: unknown): string[] {
 export function getRetentionConfig(options: { mode?: RetentionMode } = {}): RetentionConfig {
   const timeoutValue = Number.parseInt(readEnv("EXPO_PUBLIC_RETENTION_TIMEOUT_MS") ?? "", 10);
   return {
-    mode: options.mode ?? (readEnv("EXPO_PUBLIC_RETENTION_MODE") === "remote" ? "remote" : "local"),
-    endpointUrl: readEnv("EXPO_PUBLIC_RETENTION_ENDPOINT"),
+    mode: 'local',
+    endpointUrl: null,
     timeoutMs: Number.isFinite(timeoutValue) && timeoutValue >= 1_000 ? Math.min(timeoutValue, 12_000) : 7_000
   };
 }
@@ -137,7 +138,7 @@ export function getRetentionReadiness(options: { mode?: RetentionMode } = {}) {
   if (config.mode === "remote" && !remoteProvider && !config.endpointUrl) {
     missing.push("remote retention provider or endpoint");
   }
-  if (config.endpointUrl) {
+  if (!remoteProvider && config.endpointUrl) {
     missing.push(...getProductionEndpointIssues(config.endpointUrl, "remote retention endpoint").map((issue) => issue.issue));
   }
 
@@ -200,6 +201,16 @@ export function buildRetentionRequest(
       "Do not include raw URLs, domains, provider secrets, or sensitive personal details."
     ]
   };
+}
+
+export function buildOffDeviceRetentionRequest(state: RecoveryState, options: { day?: Date | string; timezoneOffsetMinutes?: number } = {}): RetentionRequest {
+  const own = projectRecoveryStateForOffDevice(state);
+  const day = options.day ?? new Date();
+  const end = typeof day === "string" ? new Date(day) : day;
+  const start = new Date(end); start.setDate(start.getDate() - 6);
+  const request = buildRetentionRequest(own, options);
+  request.profile.attemptsThisWeek = getRecoveryAttemptSourceCounts(own, getLocalDateKey(start), getLocalDateKey(end))["panic-button"] ?? 0;
+  return request;
 }
 
 export function sanitizeRetentionRequest(value: unknown): RetentionRequest | null {
@@ -273,8 +284,8 @@ export function normalizeRetentionPlan(value: unknown, fallback: RetentionPlan):
     checkInPrompt: retentionOutputText(value.checkInPrompt, fallback.checkInPrompt, 140),
     suggestedGuardTime,
     focusTags: retentionFocusTags(value.focusTags),
-    provider: value.provider === "remote" ? "remote" : fallback.provider,
-    status: value.status === "ok" ? "ok" : fallback.status
+    provider: value.provider === "remote" || value.provider === "fallback" ? value.provider : fallback.provider,
+    status: value.status === "ok" || value.status === "fallback" ? value.status : fallback.status
   };
 }
 
@@ -398,6 +409,7 @@ export async function generateRetentionPlan(
   if (config.mode === "local") return localPlan;
 
   try {
+    const request = buildOffDeviceRetentionRequest(state, options);
     if (remoteProvider) {
       return normalizeRetentionPlan(await remoteProvider(request), { ...localPlan, provider: "remote", status: "ok" });
     }

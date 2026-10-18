@@ -52,7 +52,7 @@ const ANDROID_PROTECTION_FLOW_DETAILS = Object.freeze([
   "android-native-adult-domain-feed: sync the reviewed adult-domain feed in FREED before OS permission prompts",
   "android-dns-guard: request Android VpnService consent for DNS-only adult-domain blocking",
   "android-usage-access: open Android Usage Access settings for aggregate selected-app timers",
-  "android-accessibility: open the FREED Accessibility service details screen for browser and selected-app interruption",
+  "android-accessibility: open Android Accessibility services and enable FREED Protection for browser and selected-app interruption",
   "android-doomscroll-apps: choose at least one supported app package and sync blocked-app config",
   "activation-test: verify adult-domain blocking, normal browsing allow behavior, and fresh native readiness before saving activation"
 ]);
@@ -64,6 +64,13 @@ const RN_GRADLE_PLUGIN_SETTINGS = path.join(
   "@react-native",
   "gradle-plugin",
   "settings.gradle.kts",
+);
+const WORKLETS_GRADLE_FILE = path.join(
+  ROOT,
+  "node_modules",
+  "react-native-worklets",
+  "android",
+  "build.gradle",
 );
 const FOOJAY_OLD = 'id("org.gradle.toolchains.foojay-resolver-convention").version("0.5.0")';
 const FOOJAY_NEW = 'id("org.gradle.toolchains.foojay-resolver-convention").version("1.0.0")';
@@ -80,7 +87,7 @@ Options:
                              AAB builds are Play upload artifacts and require upload signing.
   --arch <abi-list>          Native ABI list. Default: arm64-v8a
                              Use "all" for armeabi-v7a,arm64-v8a,x86,x86_64.
-  --engine <auto|hermes|jsc> JS engine for the release artifact. Default: auto.
+  --engine <auto|hermes|jsc> JS engine (jsc requires legacy React Native tooling). Default: auto.
                              Local auto builds may retry JSC; upload-signed builds do not.
   --java-home <path>         JDK home to use. Also honors JAVA_HOME.
   --gradle-user-home <path>  Isolated Gradle home. Default: ${DEFAULT_GRADLE_USER_HOME}
@@ -93,7 +100,7 @@ Options:
   --native-build-jobs <n>    CMake/Ninja native job cap. Default: ${DEFAULT_NATIVE_BUILD_JOBS}
   --build-timeout-ms <ms>    Wall-clock timeout for each Gradle attempt. Default: ${DEFAULT_BUILD_TIMEOUT_MS}
   --build-idle-timeout-ms <ms>
-                             No-output timeout for each Gradle attempt. Default: ${DEFAULT_BUILD_IDLE_TIMEOUT_MS}
+                             No-output/native-progress timeout for each Gradle attempt. Default: ${DEFAULT_BUILD_IDLE_TIMEOUT_MS}
   --output-dir <path>        Copy destination. Default: ~/Downloads
   --stable-name <name>       Stable artifact filename. Default: FREED-release-<arch>.<ext>
   --timestamped-name <name>  Timestamped artifact filename.
@@ -387,12 +394,53 @@ function validateArtifactName(name, optionName, extension) {
   if (path.basename(name) !== name) throw new Error(`${optionName} must be a filename, not a path`);
 }
 
+function terminateBuildProcessTree(pid) {
+  let signalsSucceeded = true;
+  const signal = (target, kind) => {
+    try { process.kill(target, kind); } catch (error) {
+      if (error.code !== "ESRCH") signalsSucceeded = false;
+    }
+  };
+  // Gradle daemons and AGP compiler launches create additional process groups.
+  // Stop the owned ancestry before killing it so workers cannot keep forking.
+  signal(pid, "SIGSTOP");
+  const owned = new Set([pid]);
+  const cleanupDeadline = Date.now() + 10_000;
+  let enumerationStable = false;
+  for (let pass = 0; pass < 6 && Date.now() < cleanupDeadline; pass++) {
+    const table = spawnSync("ps", ["-axo", "pid=,ppid="], {
+      encoding: "utf8", timeout: Math.max(1, Math.min(3000, cleanupDeadline - Date.now())), maxBuffer: 2_000_000
+    });
+    if (table.status !== 0) continue;
+    const rows = table.stdout.split("\n").map(line => line.trim().split(/\s+/).map(Number));
+    const countBefore = owned.size;
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (const [child, parent] of rows) {
+        if (child > 1 && owned.has(parent) && !owned.has(child)) {
+          owned.add(child);
+          signal(child, "SIGSTOP");
+          changed = true;
+        }
+      }
+    }
+    // Newly stopped descendants may have forked after this snapshot. Require a
+    // later successful quiet snapshot before claiming the whole tree was found.
+    if (owned.size === countBefore) { enumerationStable = true; break; }
+  }
+  for (const child of [...owned].reverse()) signal(child, "SIGKILL");
+  signal(-pid, "SIGKILL");
+  return enumerationStable && signalsSucceeded;
+}
+
 function run(command, args, options = {}) {
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, {
       cwd: options.cwd,
       env: { ...process.env, ...options.env },
       stdio: options.stdio || "pipe",
+      detached: options.killProcessTree && process.platform !== "win32",
     });
     let stdout = "";
     let stderr = "";
@@ -400,22 +448,26 @@ function run(command, args, options = {}) {
     let timeoutReason = "";
     let timeout = null;
     let idleTimeout = null;
+    let progressInterval = null;
 
     const clearTimers = () => {
       if (timeout) clearTimeout(timeout);
       if (idleTimeout) clearTimeout(idleTimeout);
+      if (progressInterval) clearInterval(progressInterval);
     };
     const killForTimeout = (reason) => {
       if (timedOut) return;
       timedOut = true;
       timeoutReason = reason;
-      child.kill("SIGKILL");
+      if (options.killProcessTree && process.platform !== "win32") {
+        if (!terminateBuildProcessTree(child.pid)) timeoutReason += "; process-tree cleanup incomplete";
+      } else child.kill("SIGKILL");
     };
     const resetIdleTimeout = () => {
       if (!options.idleTimeoutMs) return;
       if (idleTimeout) clearTimeout(idleTimeout);
       idleTimeout = setTimeout(() => {
-        killForTimeout(`timed out after ${options.idleTimeoutMs}ms without Gradle output`);
+        killForTimeout(`timed out after ${options.idleTimeoutMs}ms without output or native build progress`);
       }, options.idleTimeoutMs);
     };
 
@@ -425,6 +477,17 @@ function run(command, args, options = {}) {
       }, options.timeoutMs);
     }
     resetIdleTimeout();
+    if (options.progressSnapshot && options.idleTimeoutMs) {
+      let previous = options.progressSnapshot();
+      progressInterval = setInterval(() => {
+        let current;
+        try { current = options.progressSnapshot(); } catch { return; }
+        if (current === previous) return;
+        previous = current;
+        resetIdleTimeout();
+        if (options.echo) process.stdout.write("Native object compilation advanced.\n");
+      }, options.progressPollMs || 15_000);
+    }
 
     if (child.stdout) {
       child.stdout.on("data", (chunk) => {
@@ -530,33 +593,51 @@ function patchFoojayResolverIfNeeded(enabled) {
   return "patched-node-modules";
 }
 
+function patchWorkletsJsRuntimeIfNeeded() {
+  if (!fs.existsSync(WORKLETS_GRADLE_FILE)) return "missing";
+  const before = fs.readFileSync(WORKLETS_GRADLE_FILE, "utf8");
+  const oldPattern = /appProject\?\.hermesEnabled\?\.toBoolean\(\)\s*\|\|\s*appProject\?\.ext\?\.react\?\.enableHermes\?\.toBoolean\(\)/;
+  if (!oldPattern.test(before)) return "already-compatible";
+  const replacement = `appProject?.findProperty("hermesEnabled")?.toString()?.toBoolean() || appProject?.ext?.react?.enableHermes?.toBoolean() || project.findProperty("hermesEnabled")?.toString()?.toBoolean()`;
+  fs.writeFileSync(WORKLETS_GRADLE_FILE, before.replace(oldPattern, replacement));
+  return "patched-node-modules";
+}
+
 async function hermesWorks() {
   if (!fs.existsSync(HERMESC)) {
     return { ok: false, reason: `Hermes compiler missing at ${relative(HERMESC)}` };
   }
   try {
-    await run(HERMESC, ["-help"], { timeoutMs: 5000 });
-    return { ok: true, reason: "hermesc responded within 5s" };
+    await run(HERMESC, ["-help"], { timeoutMs: 30000 });
+    return { ok: true, reason: "hermesc responded within 30s" };
   } catch (error) {
     return { ok: false, reason: error.message.replace(/\s+/g, " ").trim() };
   }
 }
 
+function supportsLegacyJscTooling(version = require("react-native/package.json").version) {
+  const match = /^(\d+)\.(\d+)\./.exec(version);
+  // RN 0.81 removed bundled JSC tooling. Worklets links that missing target;
+  // toggling hermesEnabled is not a supported migration to community JSC.
+  return Boolean(match && Number(match[1]) === 0 && Number(match[2]) < 81);
+}
+
 async function resolveEngine(requestedEngine) {
   if (requestedEngine === "jsc") {
+    if (!supportsLegacyJscTooling()) throw new Error("This React Native / Worklets build requires Hermes. JavaScriptCore's bundled native tooling was removed in React Native 0.81; --engine jsc cannot build this app.");
     return { engine: "jsc", hermesProbe: { ok: false, reason: "skipped because --engine jsc was requested" } };
   }
 
   const hermesProbe = await hermesWorks();
   if (hermesProbe.ok) return { engine: "hermes", hermesProbe };
-  if (requestedEngine === "hermes") {
-    throw new Error(`Hermes was requested but is not usable: ${hermesProbe.reason}`);
+  if (requestedEngine === "hermes" || !supportsLegacyJscTooling()) {
+    throw new Error(`Hermes is required but the compiler probe failed: ${hermesProbe.reason}`);
   }
   return { engine: "jsc", hermesProbe };
 }
 
-function canRetryWithJsc(options, finalEngine) {
-  return options.engine === "auto" && finalEngine === "hermes" && !options.requireUploadSigning;
+function canRetryWithJsc(options, finalEngine, legacyJscSupported = supportsLegacyJscTooling()) {
+  return legacyJscSupported && options.engine === "auto" && finalEngine === "hermes" && !options.requireUploadSigning;
 }
 
 function assertUploadSignedEnginePolicy(options, engine, hermesProbe) {
@@ -600,12 +681,56 @@ async function runGradleBuild(gradleArgs, env, buildTimeoutMs, buildIdleTimeoutM
     echo: true,
     env,
     idleTimeoutMs: buildIdleTimeoutMs,
+    progressSnapshot: createNativeBuildProgressSnapshot(ROOT),
+    killProcessTree: true,
     stdio: "pipe",
     timeoutMs: buildTimeoutMs,
   });
 }
 
-function buildEnvironment(javaHome, gradleUserHome, nativeBuildJobs = DEFAULT_NATIVE_BUILD_JOBS) {
+// AGP buffers Ninja's stdout until a whole target completes. Its object log is
+// evidence of real progress; merely polling or seeing a live process is not.
+function createNativeBuildProgressSnapshot(root) {
+  const cxxRoots = [path.join(root, "android", "app", ".cxx")];
+  const modules = path.join(root, "node_modules");
+  const addPackage = (folder) => cxxRoots.push(path.join(folder, "android", ".cxx"));
+  for (const entry of fs.readdirSync(modules, { withFileTypes: true })) {
+    if (!entry.isDirectory()) continue;
+    const folder = path.join(modules, entry.name);
+    if (entry.name.startsWith("@")) {
+      for (const child of fs.readdirSync(folder, { withFileTypes: true })) {
+        if (child.isDirectory()) addPackage(path.join(folder, child.name));
+      }
+    } else addPackage(folder);
+  }
+  return () => {
+    const records = [];
+    const visit = (folder, depth) => {
+      if (depth > 4) return;
+      let entries;
+      try { entries = fs.readdirSync(folder, { withFileTypes: true }); } catch { return; }
+      for (const entry of entries) {
+        const file = path.join(folder, entry.name);
+        if (entry.isDirectory()) visit(file, depth + 1);
+        else if (entry.isFile() && entry.name === ".ninja_log") {
+          try {
+            const stat = fs.statSync(file);
+            records.push(`${file}:${stat.mtimeMs}:${stat.size}`);
+          } catch { /* The build can replace a log between listing and stat. */ }
+        }
+      }
+    };
+    for (const folder of cxxRoots) visit(folder, 0);
+    return records.sort().join("\n");
+  };
+}
+
+function buildEnvironment(
+  javaHome,
+  gradleUserHome,
+  nativeBuildJobs = DEFAULT_NATIVE_BUILD_JOBS,
+  engine = "hermes",
+) {
   const pathEntries = [
     path.dirname(process.execPath),
     "/opt/homebrew/bin",
@@ -623,6 +748,7 @@ function buildEnvironment(javaHome, gradleUserHome, nativeBuildJobs = DEFAULT_NA
     CMAKE_BUILD_PARALLEL_LEVEL: String(nativeBuildJobs),
     GRADLE_USER_HOME: gradleUserHome,
     JAVA_HOME: javaHome,
+    JS_RUNTIME: engine,
     NODE_ENV: "production",
     NODE_BINARY: process.execPath,
     PATH: uniquePath,
@@ -855,6 +981,35 @@ async function inspectApk(apkPath) {
   return inspectAndroidZipArtifact(apkPath);
 }
 
+async function hasHermesZipEntry(artifactPath, entry) {
+  // Hermes' execution header, not the asset extension, identifies bytecode:
+  // https://github.com/facebook/hermes/blob/main/include/hermes/BCGen/HBC/BytecodeFileFormat.h
+  const magic = Buffer.from("c61fbc03c103191f", "hex");
+  return new Promise((resolve) => {
+    const child = spawn("unzip", ["-p", artifactPath, entry], {stdio:["ignore", "pipe", "pipe"]});
+    const header = Buffer.alloc(8);
+    let length = 0;
+    let settled = false;
+    const finish = (value) => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      child.kill("SIGTERM");
+      resolve(value);
+    };
+    const timer = setTimeout(() => finish(false), 5000);
+    child.stdout.on("data", chunk => {
+      const count = Math.min(header.length - length, chunk.length);
+      chunk.copy(header, length, 0, count);
+      length += count;
+      if (length === header.length) finish(header.equals(magic));
+    });
+    child.stderr.resume();
+    child.on("error", () => finish(false));
+    child.on("close", () => finish(false));
+  });
+}
+
 async function inspectAndroidZipArtifact(artifactPath) {
   const { stdout } = await run("unzip", ["-l", artifactPath], { timeoutMs: 30000 });
   const entries = stdout.split(/\r?\n/);
@@ -863,9 +1018,11 @@ async function inspectAndroidZipArtifact(artifactPath) {
     const match = line.match(/\s(?:base\/)?lib\/([^/]+)\//);
     if (match) abiSet.add(match[1]);
   }
+  const bundles = [...new Set(entries.map(line => line.match(/\s((?:base\/)?assets\/index\.android\.bundle(?:\.hbc)?)$/)?.[1]).filter(Boolean))];
+  const bytecode = await Promise.all(bundles.map(entry => hasHermesZipEntry(artifactPath, entry)));
   return {
     abis: [...abiSet].sort(),
-    hasHermesBytecode: entries.some((line) => /(?:^|\s)(?:base\/)?assets\/index\.android\.bundle\.hbc\b/.test(line)),
+    hasHermesBytecode: bytecode.some(Boolean),
     hasHermesRuntime: entries.some((line) => /\s(?:base\/)?lib\/[^/]+\/libhermes[^/]*\.so\b/.test(line)),
     hasJsBundle: entries.some((line) => /(?:^|\s)(?:base\/)?assets\/index\.android\.bundle\b/.test(line)),
     hasJscRuntime: entries.some((line) => /\s(?:base\/)?lib\/[^/]+\/libjsc[^/]*\.so\b/.test(line)),
@@ -1494,6 +1651,7 @@ function runSelfTest() {
     );
     assert.equal(buildEnv.NODE_BINARY, process.execPath);
     assert.equal(buildEnv.CMAKE_BUILD_PARALLEL_LEVEL, String(DEFAULT_NATIVE_BUILD_JOBS));
+    assert.equal(buildEnv.JS_RUNTIME, "hermes");
     assert.ok(buildEnv.PATH.split(path.delimiter).includes(path.dirname(process.execPath)));
     const envKeysToRestore = [
       "FREED_RELEASE_ENV_FILE",
@@ -1616,7 +1774,7 @@ function runSelfTest() {
       "android-native-adult-domain-feed: sync the reviewed adult-domain feed in FREED before OS permission prompts",
       "android-dns-guard: request Android VpnService consent for DNS-only adult-domain blocking",
       "android-usage-access: open Android Usage Access settings for aggregate selected-app timers",
-      "android-accessibility: open the FREED Accessibility service details screen for browser and selected-app interruption",
+      "android-accessibility: open Android Accessibility services and enable FREED Protection for browser and selected-app interruption",
       "android-doomscroll-apps: choose at least one supported app package and sync blocked-app config",
       "activation-test: verify adult-domain blocking, normal browsing allow behavior, and fresh native readiness before saving activation",
     ]);
@@ -1689,7 +1847,7 @@ function runSelfTest() {
     assert.match(selfTestHandoffMarkdown, /sync the reviewed adult-domain feed in FREED before OS permission prompts/);
     assert.match(selfTestHandoffMarkdown, /request Android VpnService consent for DNS-only adult-domain blocking/);
     assert.match(selfTestHandoffMarkdown, /open Android Usage Access settings/);
-    assert.match(selfTestHandoffMarkdown, /open the FREED Accessibility service details screen/);
+    assert.match(selfTestHandoffMarkdown, /open Android Accessibility services and enable FREED Protection/);
     assert.match(selfTestHandoffMarkdown, /Activation rule:/);
     assert.equal(options.buildTimeoutMs, DEFAULT_BUILD_TIMEOUT_MS);
     assert.equal(options.buildIdleTimeoutMs, DEFAULT_BUILD_IDLE_TIMEOUT_MS);
@@ -2030,7 +2188,12 @@ function runSelfTest() {
     assert.equal(blockedReport.releaseBoundary.uploadSignedBuildProduced, false);
     assert.equal(blockedReport.results[0].id, "android-apk-pre-gradle-prerequisites");
     assert.equal(JSON.stringify(blockedReport).includes(os.homedir()), false);
-    assert.equal(canRetryWithJsc({ engine: "auto", requireUploadSigning: false }, "hermes"), true);
+    assert.equal(canRetryWithJsc({ engine: "auto", requireUploadSigning: false }, "hermes"), false);
+    assert.equal(canRetryWithJsc({ engine: "auto", requireUploadSigning: false }, "hermes", true), true);
+    assert.equal(supportsLegacyJscTooling("0.80.3"), true);
+    assert.equal(supportsLegacyJscTooling("0.81.0"), false);
+    assert.equal(supportsLegacyJscTooling("0.83.6"), false);
+    assert.equal(supportsLegacyJscTooling("invalid"), false);
     assert.equal(canRetryWithJsc({ engine: "auto", requireUploadSigning: true }, "hermes"), false);
     assert.equal(canRetryWithJsc({ engine: "hermes", requireUploadSigning: false }, "hermes"), false);
     assert.equal(canRetryWithJsc({ engine: "auto", requireUploadSigning: false }, "jsc"), false);
@@ -2088,6 +2251,7 @@ async function main() {
       options.nativeBuildJobs,
     );
     foojayStatus = patchFoojayResolverIfNeeded(options.patchFoojay);
+    patchWorkletsJsRuntimeIfNeeded();
     ({ engine, hermesProbe } = await resolveEngine(options.engine));
     assertUploadSignedEnginePolicy(options, engine, hermesProbe);
     finalEngine = engine;
@@ -2101,7 +2265,7 @@ async function main() {
       options.ndkVersion,
       options.cmakeVersion,
     );
-    env = buildEnvironment(javaHome, options.gradleUserHome, options.nativeBuildJobs);
+    env = buildEnvironment(javaHome, options.gradleUserHome, options.nativeBuildJobs, finalEngine);
     if (options.requireUploadSigning) env.FREED_REQUIRE_ANDROID_RELEASE_SIGNING = "true";
     signingStatus = resolveSigningStatus(options.requireUploadSigning);
     adMobStatus = resolveAdMobStatus(options.requireUploadSigning);
@@ -2125,7 +2289,7 @@ async function main() {
   console.log(`Hermes probe: ${hermesProbe.ok ? "pass" : "fail"} - ${hermesProbe.reason}`);
   console.log(`Architectures: ${options.arch}`);
   console.log(`Build timeout: ${options.buildTimeoutMs}ms per attempt`);
-  console.log(`Build idle timeout: ${options.buildIdleTimeoutMs}ms without Gradle output`);
+  console.log(`Build idle timeout: ${options.buildIdleTimeoutMs}ms without output or native build progress`);
   console.log(`Android AdMob app id mode: ${adMobStatus.mode}`);
   console.log(
     `Signing mode: ${signingStatus.mode}` +
@@ -2193,6 +2357,7 @@ async function main() {
     console.warn(`Hermes release build failed in auto mode: ${error.message.split(/\r?\n/)[0]}`);
     console.warn("Retrying once with JavaScriptCore so a local APK can still be produced.");
     finalEngine = "jsc";
+    env = buildEnvironment(javaHome, options.gradleUserHome, options.nativeBuildJobs, finalEngine);
     gradleArgs = buildGradleArgs(
       options.arch,
       finalEngine,
@@ -2329,7 +2494,9 @@ async function main() {
   console.log(`Hermes bytecode bundle: ${inspection.hasHermesBytecode ? "present" : "absent"}`);
 }
 
-main().catch((error) => {
+if (require.main === module) main().catch((error) => {
   console.error(error instanceof Error ? error.message : "Android release APK build failed.");
   process.exitCode = 1;
 });
+
+module.exports = { run, createNativeBuildProgressSnapshot, inspectAndroidZipArtifact };

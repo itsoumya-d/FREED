@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "freed-firebase-foundation-deployment-v1",
+  "recordedAt": "2026-10-02T07:33:32.506938+00:00",
+  "project": "freed-7d5ee",
+  "region": "asia-south1",
+  "codebase": "freed",
+  "status": "BLOCKED_LIVE_DEPLOYMENT",
+  "foundation": {
+    "selectedFunctionCount": 16,
+    "callableCount": 12,
+    "scheduledCount": 4,
+    "maxInstances": {
+      "normal": 5,
+      "feedRefresh": 1,
+      "notificationDispatch": 1
+    },
+    "minimumInstancesConfigured": false,
+    "secretParameterCount": 0,
+    "secretBindingCount": 0,
+    "preparedSourceSha256": "75e1a9be3166b5f42080684f25c686b9be697d438ebf062942ca17b891f23ddb",
+    "attemptedSourceSha256": "204883dee4d509eb0657205c75f4a934f5ddc4ecf71215f17a91f54ff8d988f4",
+    "attemptedSourceDeployed": false,
+    "currentPreparedSourceDeployed": false,
+    "liveFunctionCount": 0
+  },
+  "accountDeletion": {
+    "recentAuthenticationMaximumAgeSeconds": 300,
+    "permanentAccountAuthTimeRequired": true,
+    "guestExemptionChecksCurrentAdminIdentity": true,
+    "expectedAccountUidMandatory": true,
+    "expectedAccountUidMustEqualVerifiedAuthUid": true,
+    "writesBeginAfterAuthenticationAndIdentityChecks": true,
+    "existingDeletionFenceAndScheduledRetryPreserved": true,
+    "repeatGuestDeletionVerifiedInEmulators": true
+  },
+  "verification": {
+    "build": "PASS",
+    "nodeVersion": "22.23.1",
+    "unitTests": {
+      "total": 207,
+      "passed": 202,
+      "failed": 0,
+      "skippedEmulatorTests": 5
+    },
+    "authFirestoreStorageEmulatorTests": {
+      "total": 207,
+      "passed": 207,
+      "failed": 0,
+      "skipped": 0,
+      "project": "demo-freed-recent-auth"
+    },
+    "redGreenReceipts": [
+      "recent-auth-red.log",
+      "recent-auth-green.log",
+      "deletion-uid-red.log",
+      "foundation-red.log",
+      "linked-anonymous-deletion-red.log"
+    ]
+  },
+  "live": {
+    "billingEnabled": true,
+    "firestoreRulesDeployed": true,
+    "firestoreRulesReadbackMatchesLocal": true,
+    "directFirestoreClientsDenied": true,
+    "readyCompositeIndexCount": 3,
+    "ttlPolicyCount": 0,
+    "defaultStorageBucketCreated": false,
+    "storageBucketCount": 0,
+    "storageRulesDeployed": false,
+    "remoteFlags": {
+      "firebase_foundation_enabled": "false",
+      "app_check_enforcement_enabled": "false",
+      "ai_clara_enabled": "false",
+      "ai_challenges_enabled": "false",
+      "ai_retention_enabled": "false",
+      "remote_notifications_enabled": "false"
+    },
+    "remoteConditionalValuesPresent": false,
+    "remoteFlagsChanged": false,
+    "linkedBillingAccountOpen": false,
+    "existingCliSessionsHaveOwnerRoleAndRequiredCreatePermissions": true
+  },
+  "blockers": [
+    {
+      "action": "Create default Firebase Storage bucket in asia-south1",
+      "httpStatus": 403,
+      "error": "PERMISSION_DENIED: The caller does not have permission",
+      "credentialsTried": [
+        "existing-gcloud-session",
+        "existing-firebase-cli-session"
+      ],
+      "requiredOperationPermission": "firebasestorage.defaultBucket.create",
+      "receipts": [
+        "storage-default-bucket-create.json",
+        "storage-default-bucket-firebase-session.json"
+      ],
+      "subsequentKnownBillingBlocker": "Linked billing account is closed (open=false).",
+      "subsequentOwnerPermissionEvidence": "Both CLI sessions have roles/owner and the required creation permissions."
+    },
+    {
+      "action": "Deploy the isolated secret-free foundation functions",
+      "httpStatus": 403,
+      "api": "https://cloudfunctions.googleapis.com/v2/projects/freed-7d5ee/locations/asia-south1/functions:generateUploadUrl",
+      "error": "Could not create bucket gcf-v2-uploads-5477978760.asia-south1.cloudfunctions.appspot.com.",
+      "receipt": "foundation-deploy.log",
+      "subsequentKnownBillingBlocker": "Linked billing account is closed (open=false).",
+      "subsequentOwnerPermissionEvidence": "Both CLI sessions have roles/owner and the required creation permissions."
+    },
+    {
+      "action": "Deploy Firestore expiresAt TTL field overrides",
+      "httpStatus": 403,
+      "error": "Project freed-7d5ee has billing disabled. Please enable it.",
+      "billingEnabledMetadataContradictsServiceResponse": true,
+      "receipt": "firestore-deploy.log",
+      "subsequentKnownBillingBlocker": "Linked billing account is closed (open=false).",
+      "subsequentOwnerPermissionEvidence": "Both CLI sessions have roles/owner and the required creation permissions.",
+      "causeNotEstablishedAtOriginalAttempt": true
+    },
+    {
+      "action": "Deploy full entrypoint using selected names",
+      "httpStatus": 403,
+      "error": "Secret Manager OPENAI_API_KEY metadata lookup requires billing; all declared secret parameters are resolved before filtering selected exports.",
+      "avoidedByIsolatedFoundationEntrypoint": true,
+      "receipt": "functions-deploy.log"
+    },
+    {
+      "action": "Deploy Storage deny-all client rules",
+      "error": "Firebase Storage has not been set up on project freed-7d5ee.",
+      "receipt": "storage-rules-deploy.log"
+    }
+  ],
+  "boundaries": {
+    "fakeCredentialsCreated": false,
+    "billingOrPaymentChanged": false,
+    "projectIamRoleGrantsMade": false,
+    "standardFunctionServiceApisEnabled": [
+      "cloudscheduler.googleapis.com",
+      "run.googleapis.com",
+      "eventarc.googleapis.com"
+    ],
+    "standardFunctionServiceIdentitiesGenerated": [
+      "pubsub.googleapis.com",
+      "eventarc.googleapis.com"
+    ],
+    "liveSignedDeviceAppCheckProven": false,
+    "liveBackupRoundTripProven": false,
+    "liveNotificationDeliveryProven": false,
+    "mobilePublicReleasePerformed": false,
+    "emulatorResultsAreLiveProof": false,
+    "providerSecretValuesReadOrWritten": false,
+    "credentialValuesPrintedOrSaved": false
+  },
+  "logSha256": {
+    "functions-emulator-tests.log": "05f3229cfd675fcf1d0dec7b536b5cce339305e0feaa72a8f9fb8109abde253f",
+    "foundation-red.log": "cf7454a47e1d05c5f0ac0d6c7a7c76b4b6effa3e2fafaae8d2685818b8e7a1a6",
+    "recent-auth-green.log": "e184f27ecf3beb84d6bf7ede93af19f6508e7a93292eb11406efcfddb1244e0c",
+    "linked-anonymous-deletion-red.log": "229c66fa3b2762e27916ee41170b522226238ec148c7667d05e379a5a404c04b",
+    "functions-tests.log": "d0c1eefdb4e4df5fbb1d3ced1d69eb8afe0157a8c6b93990f10bc69afb0981ac",
+    "recent-auth-red.log": "a2996d58c0b3ace9b3b26cea5053a8be98e38683888b64d50cabcf5e62e26116",
+    "firestore-rules-deploy.log": "31c9d2ff56573848c57dace38b9c222f09a17a10b4f4440666f20d55c1e4ee27",
+    "firestore-deploy.log": "fbc7e590ea227adaeafd00c35cc4638eb6fa310af6994f33a1e8501fc479fecd",
+    "deletion-uid-red.log": "a607030308de8aa04813cf05972a63a4f963ff3bb78d15ef2979cc8a09ea0a46",
+    "functions-deploy.log": "14d622703515076616c6da84920dd46858a99e000feacadeaf01e5d4690fb63a",
+    "storage-rules-deploy.log": "13ca11482af56534551bcaaf42d63b022fcce70be6eb0ead70a1d1ad094cc448",
+    "foundation-deploy.log": "9b5394fa0462085d4c41794467bdbebf91b1269be8c1727e74daec5985311fa8"
+  },
+  "officialReferences": [
+    "https://firebase.google.com/docs/reference/rest/storage/rest/v1alpha/projects.defaultBucket/create",
+    "https://firebase.google.com/docs/firestore/ttl"
+  ],
+  "ownerStorageUiFollowup": {
+    "receipt": "owner-storage-ui-followup-receipt.json",
+    "bucketCreated": false,
+    "billingAccountOpen": false,
+    "createRetried": false,
+    "rulesDeploymentAttempted": false
+  }
+}

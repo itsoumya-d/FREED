@@ -1,0 +1,441 @@
+{
+  "recordedAt": "2026-10-05T01:03:21.424977+00:00",
+  "status": "offline-repaired-independently-reviewed-frozen-awaiting-actual-human-approval",
+  "metadata": {
+    "publicPlanPath": "/Users/soumyadebnath16/.config/freed/admin/reviewer-account-plan-2026-10-05-b5ab657b.json",
+    "publicPlanSha256": "2936079d4012039cac762c8be4a4bbf1f0534ea71b958b6df804b063d0ae399c",
+    "creationScriptPath": "/Users/soumyadebnath16/.config/freed/admin/create-reviewer-account-2026-10-05-b5ab657b.mjs",
+    "creationScriptSha256": "56e3334d5eace9cedbbb7a145bddaa8ec2bcfc7f61a06205b2690b5fa707334b",
+    "privateCredentialPath": "/Users/soumyadebnath16/.config/freed/secrets/review-account/2026-10-05-b5ab657b/planned-credentials.json",
+    "privateCredentialFileSha256": "f69c8fad7769df3578b3587d13edd8f6a135251f069b5deb0c1760f30ebc1cb7",
+    "ownerUidSha256": "3f8ee2749a843657586ae2ee698024b5abde5d41dc6f28defa1bd7358bd680a8",
+    "email": "soumyadebnath1661+freedappreview@gmail.com",
+    "displayName": "FREEDAppReview",
+    "reviewAccessLifetimeDays": 14,
+    "credentialSharingDestinations": [
+      "apple-app-review:6816637268",
+      "google-play-app-review:app.freed.recovery"
+    ],
+    "actualAccountCreated": false,
+    "actualReviewAccessProvisioned": false,
+    "credentialsShared": false,
+    "actualHumanApprovalPresent": false,
+    "privateSecretValuesOmitted": true,
+    "proposedApprovalPath": "/Users/soumyadebnath16/.config/freed/admin/reviewer-account-proposed-approval-2026-10-05-b5ab657b.json",
+    "proposedApprovalSha256": "ddb403444cba90ececbf81bcf3d0244570d60c3874454d65d0b1d8f4361900a6",
+    "creationIntentPath": "/Users/soumyadebnath16/.config/freed/secrets/review-account/2026-10-05-b5ab657b/creation-intent.json",
+    "manualReconciliationPath": "/Users/soumyadebnath16/.config/freed/secrets/review-account/2026-10-05-b5ab657b/manual-reconciliation.md",
+    "manualReconciliationSha256": "ce16735adb7b28507d8fedf53641287b4f1eb886f1101362d92fcaaecbf99318"
+  },
+  "creationOutcomeRed": {
+    "tests": 18,
+    "passed": 0,
+    "failed": 18
+  },
+  "creationOutcomeGreen": {
+    "tests": 19,
+    "passed": 19,
+    "failed": 0,
+    "cases": [
+      {
+        "case": "success-is-unconfirmed",
+        "passed": true,
+        "exitCode": 3,
+        "outcome": "created-unconfirmed",
+        "createCallsMockOnly": 1,
+        "readbacksMockOnly": 1,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "committed-response-lost",
+        "passed": true,
+        "exitCode": 4,
+        "outcome": "indeterminate",
+        "createCallsMockOnly": 1,
+        "readbacksMockOnly": 0,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "uid-collision-no-adoption",
+        "passed": true,
+        "exitCode": 4,
+        "outcome": "indeterminate",
+        "createCallsMockOnly": 1,
+        "readbacksMockOnly": 0,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "email-collision-no-adoption",
+        "passed": true,
+        "exitCode": 4,
+        "outcome": "indeterminate",
+        "createCallsMockOnly": 1,
+        "readbacksMockOnly": 0,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "wrong-owner-readback",
+        "passed": true,
+        "exitCode": 3,
+        "outcome": "created-unconfirmed",
+        "createCallsMockOnly": 1,
+        "readbacksMockOnly": 1,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "wrong-email-readback",
+        "passed": true,
+        "exitCode": 3,
+        "outcome": "created-unconfirmed",
+        "createCallsMockOnly": 1,
+        "readbacksMockOnly": 1,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "disabled-readback",
+        "passed": true,
+        "exitCode": 3,
+        "outcome": "created-unconfirmed",
+        "createCallsMockOnly": 1,
+        "readbacksMockOnly": 1,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "provider-mismatch",
+        "passed": true,
+        "exitCode": 3,
+        "outcome": "created-unconfirmed",
+        "createCallsMockOnly": 1,
+        "readbacksMockOnly": 1,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "custom-claims-present",
+        "passed": true,
+        "exitCode": 3,
+        "outcome": "created-unconfirmed",
+        "createCallsMockOnly": 1,
+        "readbacksMockOnly": 1,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "mfa-enrolled",
+        "passed": true,
+        "exitCode": 3,
+        "outcome": "created-unconfirmed",
+        "createCallsMockOnly": 1,
+        "readbacksMockOnly": 1,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "creation-time-before-intent",
+        "passed": true,
+        "exitCode": 3,
+        "outcome": "created-unconfirmed",
+        "createCallsMockOnly": 1,
+        "readbacksMockOnly": 1,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "readback-unavailable",
+        "passed": true,
+        "exitCode": 4,
+        "outcome": "indeterminate",
+        "createCallsMockOnly": 1,
+        "readbacksMockOnly": 1,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "intent-fsync-fails-before-create",
+        "passed": true,
+        "exitCode": 2,
+        "outcome": "refused-before-create",
+        "createCallsMockOnly": 0,
+        "readbacksMockOnly": 0,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "intent-write-fails-before-create",
+        "passed": true,
+        "exitCode": 2,
+        "outcome": "refused-before-create",
+        "createCallsMockOnly": 0,
+        "readbacksMockOnly": 0,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "corrupt-existing-intent-blocks",
+        "passed": true,
+        "exitCode": 4,
+        "outcome": "existing-intent-blocked",
+        "createCallsMockOnly": 0,
+        "readbacksMockOnly": 0,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "incomplete-existing-intent-blocks",
+        "passed": true,
+        "exitCode": 4,
+        "outcome": "existing-intent-blocked",
+        "createCallsMockOnly": 0,
+        "readbacksMockOnly": 0,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "duplicate-after-unconfirmed-blocks",
+        "passed": true,
+        "exitCode": 4,
+        "outcome": "existing-intent-blocked",
+        "createCallsMockOnly": 0,
+        "readbacksMockOnly": 0,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "duplicate-after-lost-response-blocks",
+        "passed": true,
+        "exitCode": 4,
+        "outcome": "existing-intent-blocked",
+        "createCallsMockOnly": 0,
+        "readbacksMockOnly": 0,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      },
+      {
+        "case": "untrusted-proof-file-cannot-confirm",
+        "passed": true,
+        "exitCode": 2,
+        "outcome": "refused-before-create",
+        "createCallsMockOnly": 0,
+        "readbacksMockOnly": 0,
+        "destructiveCalls": 0,
+        "networkCalls": 0,
+        "identityConfirmed": false,
+        "passwordProofVerified": false
+      }
+    ],
+    "sdkMockOnly": true,
+    "actualPrivateCandidateRead": false,
+    "realAccountsOrNetworkOrCredentials": false,
+    "temporarySyntheticApprovalsAndIntentsRemoved": true
+  },
+  "preapprovalGreen": {
+    "tests": 13,
+    "passed": 13,
+    "failed": 0,
+    "cases": [
+      {
+        "case": "dry-run",
+        "passed": true,
+        "exitCode": 0,
+        "guard": {
+          "sdkLoads": 0,
+          "currentCredentialCalls": 0,
+          "networkCalls": 0,
+          "privateCredentialReads": 0
+        }
+      },
+      {
+        "case": "no-receipt",
+        "passed": true,
+        "exitCode": 2,
+        "guard": {
+          "sdkLoads": 0,
+          "currentCredentialCalls": 0,
+          "networkCalls": 0,
+          "privateCredentialReads": 0
+        }
+      },
+      {
+        "case": "not-approved",
+        "passed": true,
+        "exitCode": 2,
+        "guard": {
+          "sdkLoads": 0,
+          "currentCredentialCalls": 0,
+          "networkCalls": 0,
+          "privateCredentialReads": 0
+        }
+      },
+      {
+        "case": "wrong-owner",
+        "passed": true,
+        "exitCode": 2,
+        "guard": {
+          "sdkLoads": 0,
+          "currentCredentialCalls": 0,
+          "networkCalls": 0,
+          "privateCredentialReads": 0
+        }
+      },
+      {
+        "case": "wrong-email",
+        "passed": true,
+        "exitCode": 2,
+        "guard": {
+          "sdkLoads": 0,
+          "currentCredentialCalls": 0,
+          "networkCalls": 0,
+          "privateCredentialReads": 0
+        }
+      },
+      {
+        "case": "wrong-plan-hash",
+        "passed": true,
+        "exitCode": 2,
+        "guard": {
+          "sdkLoads": 0,
+          "currentCredentialCalls": 0,
+          "networkCalls": 0,
+          "privateCredentialReads": 0
+        }
+      },
+      {
+        "case": "wrong-creator-hash",
+        "passed": true,
+        "exitCode": 2,
+        "guard": {
+          "sdkLoads": 0,
+          "currentCredentialCalls": 0,
+          "networkCalls": 0,
+          "privateCredentialReads": 0
+        }
+      },
+      {
+        "case": "overlong-review",
+        "passed": true,
+        "exitCode": 2,
+        "guard": {
+          "sdkLoads": 0,
+          "currentCredentialCalls": 0,
+          "networkCalls": 0,
+          "privateCredentialReads": 0
+        }
+      },
+      {
+        "case": "wrong-sharing-destination",
+        "passed": true,
+        "exitCode": 2,
+        "guard": {
+          "sdkLoads": 0,
+          "currentCredentialCalls": 0,
+          "networkCalls": 0,
+          "privateCredentialReads": 0
+        }
+      },
+      {
+        "case": "missing-owner-email-delivery-approval",
+        "passed": true,
+        "exitCode": 2,
+        "guard": {
+          "sdkLoads": 0,
+          "currentCredentialCalls": 0,
+          "networkCalls": 0,
+          "privateCredentialReads": 0
+        }
+      },
+      {
+        "case": "missing-native-password-proof-approval",
+        "passed": true,
+        "exitCode": 2,
+        "guard": {
+          "sdkLoads": 0,
+          "currentCredentialCalls": 0,
+          "networkCalls": 0,
+          "privateCredentialReads": 0
+        }
+      },
+      {
+        "case": "stale",
+        "passed": true,
+        "exitCode": 2,
+        "guard": {
+          "sdkLoads": 0,
+          "currentCredentialCalls": 0,
+          "networkCalls": 0,
+          "privateCredentialReads": 0
+        }
+      },
+      {
+        "case": "unknown-field",
+        "passed": true,
+        "exitCode": 2,
+        "guard": {
+          "sdkLoads": 0,
+          "currentCredentialCalls": 0,
+          "networkCalls": 0,
+          "privateCredentialReads": 0
+        }
+      }
+    ],
+    "privatePasswordRead": false,
+    "sdkOrCurrentCredentialsOrNetworkAccess": false,
+    "temporarySyntheticApprovalFixturesRemoved": true
+  },
+  "manualReconciliationSelected": true,
+  "matchingPropertiesCanConfirm": false,
+  "creatorCanConfirm": false,
+  "normalNativeCandidatePasswordAndRootReviewRequired": true,
+  "realOwnerEmailVerificationBeforeReviewerSharingRequired": true,
+  "generalCustomerVerifiedEmailGateAdded": false,
+  "adminForgedEmailVerification": false,
+  "actualHumanApprovalPresent": false,
+  "actualAccountOrEmailOrReviewGrantOrSharingOperations": false,
+  "realCreationIntentExists": false,
+  "plannedUidAndPasswordRetainedPrivately": true,
+  "callableSourceFrozen": true,
+  "allSyntheticApprovalIntentAndCredentialFixturesRemoved": true,
+  "independentCreatorRepairReviewAccepted": true
+}

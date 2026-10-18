@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { isIP } from "node:net";
-import { getDomain } from "tldts";
+import { getDomain, parse } from "tldts";
 
 export const SOURCE_TIMEOUT_MS = 8_000;
 export const MAX_SOURCE_BYTES = 2_000_000;
@@ -156,14 +156,18 @@ export function parseApprovedSource(text: string): string[] {
   if (typeof text !== "string" || !text.trim()) throw new Error("Reviewed feed is empty.");
   const domains = new Set<string>();
   let headerSeen = false;
+  let ruleSeen = false;
   for (const rawLine of text.split(/\r?\n/)) {
     const line = rawLine.trim();
     if (!line || line.startsWith("#") || line.startsWith("!")) continue;
     if (line === "[Adblock Plus]") {
-      if (headerSeen || domains.size > 0) throw new Error("Invalid reviewed feed rule.");
+      if (headerSeen || ruleSeen) throw new Error("Invalid reviewed feed rule.");
       headerSeen = true;
       continue;
     }
+    ruleSeen = true;
+    // Host-only consumers cannot safely enforce an entire public or private suffix.
+    if (isUnsupportedSuffixWideAdblockRule(line)) continue;
     const candidate = extractCandidate(line);
     const domain = canonicalDomain(candidate);
     if (isProtectedNormalDomain(domain)) throw new Error("Reviewed feed contains a protected normal domain.");
@@ -278,6 +282,16 @@ function extractCandidate(line: string): string {
   if (adblock) return adblock[1] ?? "";
   if (/\s/.test(line)) throw new Error("Invalid reviewed feed rule.");
   return line;
+}
+
+/** This omission applies only to exact ABP rules at the approved-source parsing boundary. */
+function isUnsupportedSuffixWideAdblockRule(line: string): boolean {
+  const match = line.match(/^\|\|([a-z0-9.-]+)\^$/i);
+  if (!match) return false;
+  const candidate = (match[1] ?? "").toLowerCase();
+  const parsed = parse(candidate, { allowPrivateDomains: true });
+  return parsed.hostname === candidate && parsed.domain === null && parsed.publicSuffix === candidate &&
+    (parsed.isIcann === true || parsed.isPrivate === true);
 }
 
 function canonicalDomain(value: string): string {

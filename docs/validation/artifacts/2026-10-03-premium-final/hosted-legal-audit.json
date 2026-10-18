@@ -1,0 +1,232 @@
+{
+  "schemaVersion": "freed-store-legal-hosted-url-audit-v1",
+  "generatedAt": "2026-10-03T01:48:55.390Z",
+  "sanitized": true,
+  "result": "pass",
+  "passCount": 18,
+  "failCount": 0,
+  "timeoutMs": 10000,
+  "responseMaxBytes": 262144,
+  "publicUrls": {
+    "privacy": "https://freed-landing.web.app/privacy",
+    "support": "https://freed-landing.web.app/support",
+    "account-deletion": "https://freed-landing.web.app/account-deletion"
+  },
+  "routeResults": [
+    {
+      "contentChecks": [
+        {
+          "text": "FREED Privacy Policy",
+          "present": true
+        },
+        {
+          "text": "Effective date: June 6, 2026",
+          "present": true
+        },
+        {
+          "text": "Android Accessibility",
+          "present": true
+        },
+        {
+          "text": "DNS-only VPN",
+          "present": true
+        },
+        {
+          "text": "Family Controls",
+          "present": true
+        },
+        {
+          "text": "Purchase verification",
+          "present": true
+        },
+        {
+          "text": "soumyadebnath1661@gmail.com",
+          "present": true
+        }
+      ],
+      "contentType": "text/html; charset=utf-8",
+      "expectedUrl": "https://freed-landing.web.app/privacy",
+      "finalUrl": "https://freed-landing.web.app/privacy",
+      "id": "privacy",
+      "publicUrl": "https://freed-landing.web.app/privacy",
+      "routePath": "/privacy",
+      "status": 200,
+      "sizeBytes": 6462
+    },
+    {
+      "contentChecks": [
+        {
+          "text": "FREED Support",
+          "present": true
+        },
+        {
+          "text": "Protection setup help",
+          "present": true
+        },
+        {
+          "text": "Google Play",
+          "present": true
+        },
+        {
+          "text": "App Store",
+          "present": true
+        },
+        {
+          "text": "soumyadebnath1661@gmail.com",
+          "present": true
+        }
+      ],
+      "contentType": "text/html; charset=utf-8",
+      "expectedUrl": "https://freed-landing.web.app/support",
+      "finalUrl": "https://freed-landing.web.app/support",
+      "id": "support",
+      "publicUrl": "https://freed-landing.web.app/support",
+      "routePath": "/support",
+      "status": 200,
+      "sizeBytes": 4909
+    },
+    {
+      "contentChecks": [
+        {
+          "text": "FREED Account Deletion",
+          "present": true
+        },
+        {
+          "text": "Delete local app data",
+          "present": true
+        },
+        {
+          "text": "Request hosted data deletion",
+          "present": true
+        },
+        {
+          "text": "https://freed-landing.web.app/account-deletion",
+          "present": true
+        },
+        {
+          "text": "soumyadebnath1661@gmail.com",
+          "present": true
+        }
+      ],
+      "contentType": "text/html; charset=utf-8",
+      "expectedUrl": "https://freed-landing.web.app/account-deletion",
+      "finalUrl": "https://freed-landing.web.app/account-deletion",
+      "id": "account-deletion",
+      "publicUrl": "https://freed-landing.web.app/account-deletion",
+      "routePath": "/account-deletion",
+      "status": 200,
+      "sizeBytes": 4705
+    }
+  ],
+  "releaseBoundary": "Hosted URL availability proof only. Legal review, store-console entry, platform approval, sandbox purchases, and physical-device evidence still gate production submission.",
+  "checks": [
+    {
+      "id": "hosted-status-privacy",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/privacy returned HTTP 200.",
+      "next": "Store legal URLs should return 2xx HTML responses before console submission."
+    },
+    {
+      "id": "hosted-final-url-privacy",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/privacy final URL is https://freed-landing.web.app/privacy.",
+      "next": "Avoid redirects to unrelated paths or non-HTTPS URLs for store crawler reliability."
+    },
+    {
+      "id": "hosted-content-type-privacy",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/privacy returned content type text/html; charset=utf-8.",
+      "next": "Serve the public legal route as HTML."
+    },
+    {
+      "id": "hosted-body-privacy",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/privacy returned 6462 bytes of HTML.",
+      "next": "Deploy a non-empty static legal page."
+    },
+    {
+      "id": "hosted-content-privacy",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/privacy includes required store-review legal text.",
+      "next": "Deploy the latest static export and verify the public legal page content."
+    },
+    {
+      "id": "hosted-indexing-privacy",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/privacy does not include a noindex directive.",
+      "next": "Remove noindex from store-facing legal URLs."
+    },
+    {
+      "id": "hosted-status-support",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/support returned HTTP 200.",
+      "next": "Store legal URLs should return 2xx HTML responses before console submission."
+    },
+    {
+      "id": "hosted-final-url-support",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/support final URL is https://freed-landing.web.app/support.",
+      "next": "Avoid redirects to unrelated paths or non-HTTPS URLs for store crawler reliability."
+    },
+    {
+      "id": "hosted-content-type-support",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/support returned content type text/html; charset=utf-8.",
+      "next": "Serve the public legal route as HTML."
+    },
+    {
+      "id": "hosted-body-support",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/support returned 4909 bytes of HTML.",
+      "next": "Deploy a non-empty static legal page."
+    },
+    {
+      "id": "hosted-content-support",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/support includes required store-review legal text.",
+      "next": "Deploy the latest static export and verify the public legal page content."
+    },
+    {
+      "id": "hosted-indexing-support",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/support does not include a noindex directive.",
+      "next": "Remove noindex from store-facing legal URLs."
+    },
+    {
+      "id": "hosted-status-account-deletion",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/account-deletion returned HTTP 200.",
+      "next": "Store legal URLs should return 2xx HTML responses before console submission."
+    },
+    {
+      "id": "hosted-final-url-account-deletion",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/account-deletion final URL is https://freed-landing.web.app/account-deletion.",
+      "next": "Avoid redirects to unrelated paths or non-HTTPS URLs for store crawler reliability."
+    },
+    {
+      "id": "hosted-content-type-account-deletion",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/account-deletion returned content type text/html; charset=utf-8.",
+      "next": "Serve the public legal route as HTML."
+    },
+    {
+      "id": "hosted-body-account-deletion",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/account-deletion returned 4705 bytes of HTML.",
+      "next": "Deploy a non-empty static legal page."
+    },
+    {
+      "id": "hosted-content-account-deletion",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/account-deletion includes required store-review legal text.",
+      "next": "Deploy the latest static export and verify the public legal page content."
+    },
+    {
+      "id": "hosted-indexing-account-deletion",
+      "status": "pass",
+      "detail": "https://freed-landing.web.app/account-deletion does not include a noindex directive.",
+      "next": "Remove noindex from store-facing legal URLs."
+    }
+  ]
+}

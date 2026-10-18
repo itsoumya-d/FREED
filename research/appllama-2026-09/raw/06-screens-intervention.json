@@ -1,0 +1,181 @@
+{
+  "screens": [
+    {
+      "screen_id": "oth_e5pp4",
+      "name": "Help & More",
+      "flow": "Help & Support",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzliNTc1MTA3YmFlZWFjYjdhYmJhMmYzYThiZGJiYzNkNWM5YzQ5NmYud2VicCIsImV4cCI6MTc5MDM4NTQwMH02bk7jQNT_oxFX_lYajDTnGAfdwOHqm8o.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#1D1D1D",
+      "similarity": 0.3952,
+      "app": {
+        "app_id": "1541027222",
+        "name": "ScreenZen- Screen Time Control"
+      }
+    },
+    {
+      "screen_id": "oth_kpibq",
+      "name": "Options",
+      "flow": "Options Settings",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzgzODc4NjFhNmZjMTJhYjkyNzExOTZjNzhiM2M2ZDIyMWMyYTUwY2Mud2VicCIsImV4cCI6MTc5MDM4NTQwMH22KrxJoyzKAp3MZsaYBTiygCKOM7v05t4.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#1D1D1D",
+      "similarity": 0.3771,
+      "app": {
+        "app_id": "1541027222",
+        "name": "ScreenZen- Screen Time Control"
+      }
+    },
+    {
+      "screen_id": "oth_ov5o1",
+      "name": "Troubleshooting Help",
+      "flow": "Help & Support",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzQ4Nzc1NmYzMDNiZWYzYmZlYzNhMmVhZDIzNjZkNzEyZjVkN2E0YWYud2VicCIsImV4cCI6MTc5MDM4NTQwMH2k1pfys1vuUfZ8-y4_XFIWiQgCMbov8Es.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#2A2A2A",
+      "similarity": 0.3719,
+      "app": {
+        "app_id": "1541027222",
+        "name": "ScreenZen- Screen Time Control"
+      }
+    },
+    {
+      "screen_id": "onb_bf6c2",
+      "name": null,
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "kind": "video",
+      "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxLzEwOTI5NWVkZGFmMzlmZWVkMmJmZmY4ZGQ2YmY0NTQxZThlYjk3MDQubXA0IiwiZXhwIjoxNzkwMzg1NDAwfQw7qoLytJWXLkuJQ0kO_nUQz9JDcjILHA.mp4",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FFFFFF",
+      "similarity": 0.3995,
+      "app": {
+        "app_id": "1018301773",
+        "name": "AdBlock Pro for Safari"
+      }
+    },
+    {
+      "screen_id": "oth_78gi9",
+      "name": "App Blocking Settings",
+      "flow": "App Blocking",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzI1NzMxMTY2N2I3MmEyNTZkZDFhNjRiM2QzOGYwYzA1ODFiMTE2ZjMud2VicCIsImV4cCI6MTc5MDM4NTQwMH32vlyLwFyuIgmIYWZgbb0vIkdNuyNr7IM.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FDF8EF",
+      "similarity": 0.3676,
+      "app": {
+        "app_id": "6744124873",
+        "name": "Bible Mode: Reduce Screen Time"
+      }
+    },
+    {
+      "screen_id": "oth_zekjp",
+      "name": "Selected Apps List",
+      "flow": "App Management",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzZkMjIwOWE0NGQ0YzIzYzg2ZjFlZjc4OWQ4NzI4Mjc4ODQyNDU3ZDMud2VicCIsImV4cCI6MTc5MDM4NTQwMH2J853yfsmEMOxhytfvXLFP7dhHn-5HJcI.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#000000",
+      "similarity": 0.3644,
+      "app": {
+        "app_id": "1497465230",
+        "name": "Opal: Screen Time Control"
+      }
+    },
+    {
+      "screen_id": "oth_1wb39",
+      "name": "Customize Advanced",
+      "flow": "Settings",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzZmNGM0ZDcxNTBkNTM3MDI0OWE4N2YxMjc2MTE5N2E4OGMzMGU3NTYud2VicCIsImV4cCI6MTc5MDM4NTQwMH12Ln0xhyi3t7onR9_m5meYLR-n-D26i9g.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FFFFFF",
+      "similarity": 0.3628,
+      "app": {
+        "app_id": "1532875441",
+        "name": "one sec | screen time + focus"
+      }
+    },
+    {
+      "screen_id": "oth_quc01",
+      "name": "Screen Time Connect",
+      "flow": "Detox Mode",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzkyZTI4N2Y4MjFiM2JiM2I2ZTE3ZDM2MjVhNzUzY2ZmNDY0MzZlMDQud2VicCIsImV4cCI6MTc5MDM4NTQwMH3JHzWCWWskHVdIbie66w_3dxAi9QWjSSE.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#2E2E30",
+      "similarity": 0.3611,
+      "app": {
+        "app_id": "6504743503",
+        "name": "Dumb Phone (dp)"
+      }
+    },
+    {
+      "screen_id": "oth_il0a8",
+      "name": "Support",
+      "flow": "Others",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2YzZmIxMDBmZTJmMmM5NWZhYWUyNmJjMDQzOTIxYjZhYTRmYmY2YzQud2VicCIsImV4cCI6MTc5MDM4NTQwMH15LmKI8Pcq4dEnoVp7cS5hSx26MBzMXlk.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#F2F2F7",
+      "similarity": 0.3587,
+      "app": {
+        "app_id": "1018301773",
+        "name": "AdBlock Pro for Safari"
+      }
+    },
+    {
+      "screen_id": "onb_jvfeh",
+      "name": null,
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "kind": "video",
+      "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxLzI3NWM1M2Q3ODIwZDAwMDJjYWYyZDE2NWY3OTI1ZGU2YmNiOWZlNzAubXA0IiwiZXhwIjoxNzkwMzg1NDAwfYVfdESMbgWF_0vRv24U5QkXY8KFfFQr9A.mp4",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FFFFFF",
+      "similarity": 0.3719,
+      "app": {
+        "app_id": "1047223162",
+        "name": "AdGuard Ad Blocker for Safari"
+      }
+    }
+  ],
+  "total": null,
+  "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJzZWFyY2hfc2NyZWVucyIsInEiOiJjOWY5NTI0M2VjZjVkODNlMGJiZTM2MzgiLCJvIjoxMCwiaHciOjIwLCJleHAiOjE3OTAzODU0MDB9.LwIYw9Yy8JOuQtoQYYU0SqYYvwQ",
+  "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+  "credits": {
+    "spent": 1,
+    "remaining_this_month": 1000
+  }
+}

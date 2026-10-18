@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "freed-store-privacy-disclosure-report-v1",
+  "templateStatus": "pending-manual-review",
+  "sanitized": true,
+  "result": "pending-manual-review",
+  "privacyDisclosureProofUsableForManualEvidence": false,
+  "reviewId": "2026-09-27T13-24-56-033Z-store-privacy-review",
+  "platformsReviewed": [
+    "ios",
+    "android"
+  ],
+  "reviewedStoreSurfaces": [
+    "app-store-connect-app-privacy",
+    "play-console-data-safety",
+    "app-review-notes",
+    "play-policy-declarations"
+  ],
+  "suggestedEvidenceFields": [
+    "store.privacyDisclosureArtifact"
+  ],
+  "privacyDataMapPath": "docs/privacy-data-map.md",
+  "privacyDataMapHash": "sha256-d126595e81f5d72667b01d1f4a2542f6560510156815572901166187a94174b8",
+  "iosReviewPackPath": "docs/store-policy/ios-screen-time-safari-dns-review.md",
+  "iosReviewPackHash": "sha256-a0385970762d771676b73bf9039a275713bcf6c71ff75ed7a6d49d5fbc7738c2",
+  "androidPolicyPackPath": "docs/store-policy/android-accessibility-and-fgs-disclosure.md",
+  "androidPolicyPackHash": "sha256-6abf7383ac1d7c154232cb68a912232fc40d56ad7c2af506578573f41c5e39db",
+  "signals": {
+    "appStorePrivacyDisclosureReviewed": false,
+    "playDataSafetyDisclosureReviewed": false,
+    "billingDataUseReviewed": false,
+    "purchaseVerificationDataUseReviewed": false,
+    "rewardedAdsDataUseReviewed": false,
+    "nonPersonalizedAdsRequestReviewed": false,
+    "aggregateAnalyticsOptInReviewed": false,
+    "remoteAnalyticsDisabledByDefaultReviewed": false,
+    "noTrackingDeclared": false,
+    "noAdvertisingIdPermissionDeclared": false,
+    "noRawReceiptsOrTokensStored": false,
+    "noStoreCredentialsOrAdSecretsStored": false,
+    "noSensitiveRecoveryContentShared": false,
+    "noChallengeMediaUploaded": false
+  },
+  "checks": {
+    "appStorePrivacyDisclosureReviewed": false,
+    "playDataSafetyDisclosureReviewed": false,
+    "billingDataUseReviewed": false,
+    "purchaseVerificationDataUseReviewed": false,
+    "rewardedAdsDataUseReviewed": false,
+    "nonPersonalizedAdsRequestReviewed": false,
+    "aggregateAnalyticsOptInReviewed": false,
+    "remoteAnalyticsDisabledByDefaultReviewed": false,
+    "noTrackingDeclared": false,
+    "noAdvertisingIdPermissionDeclared": false,
+    "noRawReceiptsOrTokensStored": false,
+    "noStoreCredentialsOrAdSecretsStored": false,
+    "noSensitiveRecoveryContentShared": false,
+    "noChallengeMediaUploaded": false
+  }
+}

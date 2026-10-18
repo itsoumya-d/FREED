@@ -3,9 +3,11 @@ import {
   ANALYTICS_BLOCKED_ATTEMPT_SOURCES,
   ANALYTICS_CONSENT_VERSION,
   ANALYTICS_SCHEMA_VERSION,
+  OFF_DEVICE_ANALYTICS_SCHEMA_VERSION,
   sanitizeAnalyticsReason,
   type AnalyticsBlockedAttemptSource,
-  type RecoveryAnalyticsSnapshot
+  type RecoveryAnalyticsSnapshot,
+  type OffDeviceRecoveryAnalyticsSnapshot
 } from "@/lib/recovery-analytics";
 import { redactRecoverySignalText } from "@/lib/recovery-signal-privacy";
 import { isSupabaseServiceRoleKey } from "@/lib/server-credential-safety";
@@ -14,7 +16,7 @@ export type AnalyticsIngestionRequest = {
   consentVersion: string;
   userOptedInAt: string;
   dataRetentionDays: number;
-  snapshot: RecoveryAnalyticsSnapshot;
+  snapshot: RecoveryAnalyticsSnapshot | OffDeviceRecoveryAnalyticsSnapshot;
 };
 
 export type AnalyticsIngestionResult = {
@@ -355,9 +357,10 @@ function cleanAnalyticsIngestionStatus(value: unknown): AnalyticsIngestionResult
   return value === "ok" || value === "unconfigured" || value === "invalid" || value === "error" ? value : "error";
 }
 
-function sanitizeAnalyticsSnapshot(value: unknown): RecoveryAnalyticsSnapshot | null {
+function sanitizeAnalyticsSnapshot(value: unknown): RecoveryAnalyticsSnapshot | OffDeviceRecoveryAnalyticsSnapshot | null {
   if (!isRecord(value)) return null;
-  if (value.schemaVersion !== ANALYTICS_SCHEMA_VERSION) return null;
+  const ownData = value.schemaVersion === OFF_DEVICE_ANALYTICS_SCHEMA_VERSION;
+  if (!ownData && value.schemaVersion !== ANALYTICS_SCHEMA_VERSION) return null;
 
   const generatedForDateKey = cleanDateKey(value.generatedForDateKey);
   const rangeLabel = cleanText(value.rangeLabel, 80);
@@ -383,6 +386,10 @@ function sanitizeAnalyticsSnapshot(value: unknown): RecoveryAnalyticsSnapshot | 
     return null;
   }
 
+  if (ownData && (privacy.dataset !== "freed-user-recorded-actions" || privacy.excludesDeviceProtectionHistory !== true ||
+    Object.keys(behavior).some(key => !["selfReportedUrges", "manualCheckInterceptions"].includes(key)) ||
+    ["blockedAttempts", "blockedAttemptSourceBreakdown", "earnedUnlocks", "unlockMinutesGranted", "unlockFrequencyPerWeek"].some(key => key in productionMetrics))) return null;
+
   if (
     privacy.aggregateOnly !== true ||
     privacy.excludesPrivateNotes !== true ||
@@ -394,7 +401,7 @@ function sanitizeAnalyticsSnapshot(value: unknown): RecoveryAnalyticsSnapshot | 
   if (
     !hasBooleanField(summary, "premium") ||
     !hasNonNegativeNumberFields(summary, ["streakDays", "bestStreakDays", "recoveryScore"]) ||
-    !hasNonNegativeNumberFields(behavior, [
+    !hasNonNegativeNumberFields(behavior, ownData ? ["selfReportedUrges", "manualCheckInterceptions"] : [
       "protectedRiskMoments",
       "selfReportedUrges",
       "browserInterceptions",
@@ -407,7 +414,7 @@ function sanitizeAnalyticsSnapshot(value: unknown): RecoveryAnalyticsSnapshot | 
     !hasScaleNumberField(emotion, "averageSleep", 5) ||
     !hasNonNegativeNumberFields(interventions, ["completedChallenges", "helpfulChallenges", "stillUrgingChallenges"]) ||
     !hasScaleNumberField(interventions, "challengeHelpRate", 100) ||
-    !hasNonNegativeNumberFields(productionMetrics, [
+    !hasNonNegativeNumberFields(productionMetrics, (ownData ? ["appOpens", "appForegroundMinutes", "challengeCompletions", "currentStreakDays", "bestStreakDays", "relapseResets", "peakUrgeCount", "recoveryScore"] : [
       "appOpens",
       "appForegroundMinutes",
       "blockedAttempts",
@@ -420,12 +427,12 @@ function sanitizeAnalyticsSnapshot(value: unknown): RecoveryAnalyticsSnapshot | 
       "relapseResets",
       "peakUrgeCount",
       "recoveryScore"
-    ]) ||
+    ])) ||
     !hasScaleNumberField(productionMetrics, "relapseResetRate", 100) ||
     !hasScaleNumberField(productionMetrics, "challengeSuccessRate", 100) ||
     !hasNullableCountField(productionMetrics, "daysSinceLastRelapse") ||
     !hasNullableHourField(productionMetrics, "peakUrgeHour") ||
-    !hasCompleteBlockedAttemptSourceBreakdown(productionMetrics.blockedAttemptSourceBreakdown) ||
+    (!ownData && !hasCompleteBlockedAttemptSourceBreakdown(productionMetrics.blockedAttemptSourceBreakdown)) ||
     !hasCompleteStreakHistory(productionMetrics.streakHistory, generatedForDateKey) ||
     !hasCompleteHourlyUrgePattern(productionMetrics.hourlyUrgePattern) ||
     !hasCompleteChallengeSuccessByCategory(productionMetrics.challengeSuccessByCategory) ||
@@ -438,10 +445,10 @@ function sanitizeAnalyticsSnapshot(value: unknown): RecoveryAnalyticsSnapshot | 
     return null;
   }
 
-  const blockedAttempts = cleanCount(productionMetrics.blockedAttempts);
-  const blockedAttemptSourceBreakdown = cleanBlockedAttemptSourceBreakdown(
-    productionMetrics.blockedAttemptSourceBreakdown
-  );
+  // Legacy reconciliation is used only for legacy bodies, never as invented
+  // counters in the own-data transport or its stored snapshot.
+  const blockedAttempts = ownData ? 0 : cleanCount(productionMetrics.blockedAttempts);
+  const blockedAttemptSourceBreakdown = ownData ? [] : cleanBlockedAttemptSourceBreakdown(productionMetrics.blockedAttemptSourceBreakdown);
   const blockedAttemptSourceTotal = blockedAttemptSourceBreakdown.reduce((total, bucket) => total + bucket.count, 0);
   if (blockedAttemptSourceTotal !== blockedAttempts) return null;
   const hourlyUrgePattern = cleanHourlyUrgePattern(productionMetrics.hourlyUrgePattern);
@@ -456,7 +463,7 @@ function sanitizeAnalyticsSnapshot(value: unknown): RecoveryAnalyticsSnapshot | 
   if (cleanCount(summary.streakDays) !== cleanCount(productionMetrics.currentStreakDays)) return null;
   if (cleanCount(summary.bestStreakDays) !== cleanCount(productionMetrics.bestStreakDays)) return null;
   if (cleanPercentLike(summary.recoveryScore) !== cleanPercentLike(productionMetrics.recoveryScore)) return null;
-  if (cleanCount(behavior.protectedRiskMoments) !== blockedAttempts) return null;
+  if (!ownData && cleanCount(behavior.protectedRiskMoments) !== blockedAttempts) return null;
   if (cleanCount(interventions.completedChallenges) !== cleanCount(productionMetrics.challengeCompletions)) return null;
   if (cleanScale(interventions.challengeHelpRate, 100) !== cleanScale(productionMetrics.challengeSuccessRate, 100)) return null;
   const streakHistory = cleanStreakHistory(productionMetrics.streakHistory);
@@ -465,7 +472,7 @@ function sanitizeAnalyticsSnapshot(value: unknown): RecoveryAnalyticsSnapshot | 
     return null;
   }
 
-  return {
+  const snapshot: RecoveryAnalyticsSnapshot = {
     schemaVersion: ANALYTICS_SCHEMA_VERSION,
     generatedForDateKey,
     rangeLabel,
@@ -530,6 +537,14 @@ function sanitizeAnalyticsSnapshot(value: unknown): RecoveryAnalyticsSnapshot | 
       excludesBrowsingDetails: true,
       excludesSupportContacts: true
     }
+  };
+  if (!ownData) return snapshot;
+  const { blockedAttempts: _blocks, blockedAttemptSourceBreakdown: _sources, earnedUnlocks: _windows,
+    unlockMinutesGranted: _minutes, unlockFrequencyPerWeek: _frequency, ...ownMetrics } = snapshot.productionMetrics;
+  return { ...snapshot, schemaVersion: OFF_DEVICE_ANALYTICS_SCHEMA_VERSION,
+    behavior: { selfReportedUrges: snapshot.behavior.selfReportedUrges, manualCheckInterceptions: snapshot.behavior.manualCheckInterceptions },
+    productionMetrics: ownMetrics,
+    privacy: { ...snapshot.privacy, dataset: "freed-user-recorded-actions", excludesDeviceProtectionHistory: true }
   };
 }
 

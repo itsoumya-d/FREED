@@ -1,0 +1,24 @@
+plugins {
+  id 'com.android.library'
+  id 'expo-module-gradle-plugin'
+}
+
+group = 'app.freed.appleauth'
+version = '0.1.0'
+
+android {
+  namespace "app.freed.appleauth"
+  defaultConfig {
+    versionCode 1
+    versionName "0.1.0"
+  }
+  // Firebase's Java API is compatible; its unused Kotlin extensions carry
+  // newer metadata than Expo 55's compiler. Keep this workaround module-local.
+  kotlinOptions { freeCompilerArgs += ["-Xskip-metadata-version-check"] }
+}
+
+dependencies {
+  implementation platform("com.google.firebase:firebase-bom:34.15.0")
+  implementation "com.google.firebase:firebase-auth"
+  testImplementation "junit:junit:4.13.2"
+}

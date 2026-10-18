@@ -1,0 +1,650 @@
+{
+  "schemaVersion": "freed-ui-app-fingerprint-v1",
+  "appBuildSha256": "fef4829c005f12d717c6814e1f720dde1fd0ec5d5e5e5b2dccdd9d942fce2ecc",
+  "files": [
+    {
+      "path": "AppAuthCore_Privacy.bundle/Info.plist",
+      "sha256": "4a90c20a3030a654551a676d1f5433923ec17ed3b143e99bd788ea6a515e3cc7"
+    },
+    {
+      "path": "AppAuthCore_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "5ade962faaea1eddbbdd06c4cf8a872cec554f64c55a00e00136004d378e1ced"
+    },
+    {
+      "path": "AppIcon60x60@2x.png",
+      "sha256": "a8b0ad0147049dc8d34405eee19bc6a27029ec11e84f6de62b7af085c5c20a3a"
+    },
+    {
+      "path": "AppIcon76x76@2x~ipad.png",
+      "sha256": "5432e79c8e970be07455403b5f7ad1a252315d2a89e49db6dbf8c75f46a9b303"
+    },
+    {
+      "path": "Assets.car",
+      "sha256": "bc7fd64575674d31a3bfff7df92af3c444166b0feb7b35131ac62da454ea374d"
+    },
+    {
+      "path": "EXConstants.bundle/Info.plist",
+      "sha256": "814fec329f60462496771ad9c5aac9c9a30e4d0e80f15add830a0a3303ec1eb4"
+    },
+    {
+      "path": "EXConstants.bundle/app.config",
+      "sha256": "0120c83616ad1ad0bac58dbed07acc30d8e18d117b00dca8cab11b446c965329"
+    },
+    {
+      "path": "Expo.plist",
+      "sha256": "d2c3b3debad33db2b8577ca98ae6201b46e5f8af792b23a68717ac7e395cefbd"
+    },
+    {
+      "path": "ExpoApplication_privacy.bundle/Info.plist",
+      "sha256": "1e65e43f681dcf4e081fd8b1aede41d80342c885336c5523fa185348cc46d060"
+    },
+    {
+      "path": "ExpoApplication_privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "b48763ffd29cbad815125ae56e1073273e418ae086103fc7dff7efbec1675aaa"
+    },
+    {
+      "path": "ExpoConstants_privacy.bundle/Info.plist",
+      "sha256": "3ce8365bc258863e4eea50f2a9a152b2c8528c940b76d47370eac21c60ec1fed"
+    },
+    {
+      "path": "ExpoConstants_privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "2b2d8edb71d51c5b1f1ace4cdb28a94baf22fdde9bbf2e2bfc17d187ff7b5f47"
+    },
+    {
+      "path": "ExpoFileSystem_privacy.bundle/Info.plist",
+      "sha256": "518db5dc7b416e9a12b256b55b5cce955e248144ec6b7692e3fbe88c47a591d8"
+    },
+    {
+      "path": "ExpoFileSystem_privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "33b0e074f273f588a64ba5632909c6a8cf1f16db8e4cd84c6978bd222dfd65bd"
+    },
+    {
+      "path": "ExpoNotifications_privacy.bundle/Info.plist",
+      "sha256": "2a9e7f4610914b402cc8e90c66407aa1768ceda395181c4470fabfc571d0f1fc"
+    },
+    {
+      "path": "ExpoNotifications_privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "2b2d8edb71d51c5b1f1ace4cdb28a94baf22fdde9bbf2e2bfc17d187ff7b5f47"
+    },
+    {
+      "path": "ExpoSystemUI_privacy.bundle/Info.plist",
+      "sha256": "ab98542074a7d225e9a494502174c00c08be321eda882375b3811c3865893b20"
+    },
+    {
+      "path": "ExpoSystemUI_privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "2b2d8edb71d51c5b1f1ace4cdb28a94baf22fdde9bbf2e2bfc17d187ff7b5f47"
+    },
+    {
+      "path": "FBLPromises_Privacy.bundle/Info.plist",
+      "sha256": "cae665464655d3c84cbced7660e1e93348ae453a067b16924dbac2c0bb4bbf1e"
+    },
+    {
+      "path": "FBLPromises_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "74b0cd72fc23c1ef302f22ee2753f61817cdc5af0ff7a7f2d0632b524fb8acea"
+    },
+    {
+      "path": "FREED",
+      "sha256": "5d29750e227e025351275f9d1abe83866db2513fa3e11ee657aa8772c57e715c"
+    },
+    {
+      "path": "FirebaseABTesting_Privacy.bundle/Info.plist",
+      "sha256": "0b1de772151291b7e75f672544527bef7f187b17dde73cb48d16f163874f2c07"
+    },
+    {
+      "path": "FirebaseABTesting_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "1377eccedff8f8320f78040e9c9d3e17ecc0ea569594b56af0ef17be44197c7a"
+    },
+    {
+      "path": "FirebaseAuth_Privacy.bundle/Info.plist",
+      "sha256": "088eeeff5a2a1624da0d7393a6f7cbfaa45db2d1b90d57165542e0ecdb433dac"
+    },
+    {
+      "path": "FirebaseAuth_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "04c162eafa49b2ced0663231a89cc9f5793506c802b68486719b5da0608aefd5"
+    },
+    {
+      "path": "FirebaseCoreExtension_Privacy.bundle/Info.plist",
+      "sha256": "66c01f4f347ec3e236be296d57cc5373d4ec87fb31eb7d395a2f5efb034d8743"
+    },
+    {
+      "path": "FirebaseCoreExtension_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "1377eccedff8f8320f78040e9c9d3e17ecc0ea569594b56af0ef17be44197c7a"
+    },
+    {
+      "path": "FirebaseCoreInternal_Privacy.bundle/Info.plist",
+      "sha256": "c95ee083e0116cec832c8498f6f3bfd4ff2c27b67b0d15375c920ee7bc8d7e3c"
+    },
+    {
+      "path": "FirebaseCoreInternal_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "5b7fe979423dede3e08afc29a42f00f6086275dc548a84c29774235863eed3ef"
+    },
+    {
+      "path": "FirebaseCore_Privacy.bundle/Info.plist",
+      "sha256": "6a1ed21618a6656946a45ecc2ca0dcae11db37228fd0d76ede5cd0507bfc64c7"
+    },
+    {
+      "path": "FirebaseCore_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "11e31f5f6b60e80ebd5901549fce5043f9af3e683f874022945000b405306c3f"
+    },
+    {
+      "path": "FirebaseCrashlytics_Privacy.bundle/Info.plist",
+      "sha256": "0cf11c5e9f40fdbd8d7bd1189aa2d0c5782fe80f37796479075f23a1d9ca730c"
+    },
+    {
+      "path": "FirebaseCrashlytics_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "e9bcc6e9c7382bf506cadabe74cfd4ed155686806ba81c195a634b86aa5fcce0"
+    },
+    {
+      "path": "FirebaseInstallations_Privacy.bundle/Info.plist",
+      "sha256": "82f5c27462b2d2200e069a21044b148769abdb8f28ff74bf769ced7330e0c195"
+    },
+    {
+      "path": "FirebaseInstallations_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "cfbb3c4f76a66d53698bae91f7110c00f2148e6e6f13ad7d32592909bc010e51"
+    },
+    {
+      "path": "FirebaseMessaging_Privacy.bundle/Info.plist",
+      "sha256": "ed8a5d87b8f20cd3f507806d4fcbbac570d3014878e847b3742e448ad9fa948c"
+    },
+    {
+      "path": "FirebaseMessaging_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "98762096372ac27f5e888c7372d512f0d3f5cf3283c64006070f4cde1a72a071"
+    },
+    {
+      "path": "FirebaseRemoteConfig_Privacy.bundle/Info.plist",
+      "sha256": "015c64ee8d1608864a642e4ae7ef6702b695ad7607111c8c2bff5affb0171229"
+    },
+    {
+      "path": "FirebaseRemoteConfig_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "b9c360b5bb58ddb18eab5282ea4c8145e1f7ad0de14563916ab9a5a420fe4f38"
+    },
+    {
+      "path": "Frameworks/hermesvm.framework/Info.plist",
+      "sha256": "68392ac7d0ea45036f5c7dc9ea07ec070f6dab01b11081879aef453fc0c25532"
+    },
+    {
+      "path": "Frameworks/hermesvm.framework/hermesvm",
+      "sha256": "42221dfb1550c8eb3c7cbd0399ceafe3017282db252f215ee5cbe788c2ec7e08"
+    },
+    {
+      "path": "GTMAppAuth_Privacy.bundle/Info.plist",
+      "sha256": "b5a21744b417d13184b91a1057f974eec381c6a94f46b9cf5a4db454ffb70644"
+    },
+    {
+      "path": "GTMAppAuth_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "5a9b8fc0cddb10201bb47cc2804b3f004c7251476622d25bfc4eb54ed46e1084"
+    },
+    {
+      "path": "GTMSessionFetcher_Core_Privacy.bundle/Info.plist",
+      "sha256": "f93cc09658b1e4b6c8ecbe7a0fb927d44e6a0b9f8899380e9df27db3069941d8"
+    },
+    {
+      "path": "GTMSessionFetcher_Core_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "3e4a93cbe86acef7dd7e063a28c849992f556e7f52cadc5f37c1e8b0e1b54686"
+    },
+    {
+      "path": "GoogleDataTransport_Privacy.bundle/Info.plist",
+      "sha256": "453dcee38a40a996b73e64836302b3f793fac2f63b3bfc25586cd00d7654b3de"
+    },
+    {
+      "path": "GoogleDataTransport_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "cfbb3c4f76a66d53698bae91f7110c00f2148e6e6f13ad7d32592909bc010e51"
+    },
+    {
+      "path": "GoogleMobileAdsResources.bundle/Info.plist",
+      "sha256": "c39c4ddb8b524be5b37b4d3698d96b207b649aaf0a8ae5632944573246771691"
+    },
+    {
+      "path": "GoogleMobileAdsResources.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "69fb112582fc23fc06c635c961d262a3f7b4b5654d284787491de3000dadf9d2"
+    },
+    {
+      "path": "GoogleService-Info.plist",
+      "sha256": "2a633601f790d28cfce48f71fede53d4e5fc9067febbdd5aff2901f3c9bf36e9"
+    },
+    {
+      "path": "GoogleSignIn.bundle/Info.plist",
+      "sha256": "e0bfd0eae0e0f965bcb410b1fda55e3792517f03d70939b8e76702801e0fef70"
+    },
+    {
+      "path": "GoogleSignIn.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "9300972853096f7d570d6c4a4bf7152a36c798e89c4f0d81d3b4c6b5dfaddfd0"
+    },
+    {
+      "path": "GoogleSignIn.bundle/Roboto-Bold.ttf",
+      "sha256": "594d74a49e307be7cc9e1ee5f1023684e6820cf11bcc968bee590391e1ad5a5a"
+    },
+    {
+      "path": "GoogleSignIn.bundle/ar.lproj/GoogleSignIn.strings",
+      "sha256": "b2cf9e8d9fc8ad0f9610b3e54ef0b8b494f021b7fa23acef6094b2205abe8c72"
+    },
+    {
+      "path": "GoogleSignIn.bundle/ca.lproj/GoogleSignIn.strings",
+      "sha256": "33e88ff500dc3db2462e2ac933c11c28929fad351f57b3e6d62ac44610ad61aa"
+    },
+    {
+      "path": "GoogleSignIn.bundle/cs.lproj/GoogleSignIn.strings",
+      "sha256": "51da08624c2a79de47c81683b29e8a1344a47887563be256e1a77a67f6be3544"
+    },
+    {
+      "path": "GoogleSignIn.bundle/da.lproj/GoogleSignIn.strings",
+      "sha256": "e8261b9646d8ea89f7bf7a61a73aedce30fe51f68aa947ecbdfe8cc7e04db7da"
+    },
+    {
+      "path": "GoogleSignIn.bundle/de.lproj/GoogleSignIn.strings",
+      "sha256": "16cd413df1ab77e509df76f873a5a687ffcf360b1f150743d934c5ab3377c228"
+    },
+    {
+      "path": "GoogleSignIn.bundle/el.lproj/GoogleSignIn.strings",
+      "sha256": "9cc0c1349cf665fc773330d31a2628f600a43caa8b5c880b034a5667f8f0fabc"
+    },
+    {
+      "path": "GoogleSignIn.bundle/en.lproj/GoogleSignIn.strings",
+      "sha256": "c726a39c382e3f1a7c1f58ecf470f812da263749f930da87f7c0c3aa0ec648c2"
+    },
+    {
+      "path": "GoogleSignIn.bundle/en_GB.lproj/GoogleSignIn.strings",
+      "sha256": "a2bd782a051b1a0b3c437ec6a31e9bf7f6778995a72acc32a0eb4a6399ad1ac2"
+    },
+    {
+      "path": "GoogleSignIn.bundle/es.lproj/GoogleSignIn.strings",
+      "sha256": "501e44c4f3bb9c05b13297c60240fd0e16e79f8a63e6fb25198208dcb9421ca6"
+    },
+    {
+      "path": "GoogleSignIn.bundle/es_MX.lproj/GoogleSignIn.strings",
+      "sha256": "84d327c7197b7e549a1e9e8d8bb3e1cb02e0282c6323e5fb3dde0a47395af634"
+    },
+    {
+      "path": "GoogleSignIn.bundle/fi.lproj/GoogleSignIn.strings",
+      "sha256": "0e99f31a89ead8cc0fc72ad6abdcc84abd26f699265eeff61a889b3739da773b"
+    },
+    {
+      "path": "GoogleSignIn.bundle/fr.lproj/GoogleSignIn.strings",
+      "sha256": "b5513877acf2d79c8f0eaff7fcde4aa165f3abb01611b606112602fd443777ba"
+    },
+    {
+      "path": "GoogleSignIn.bundle/fr_CA.lproj/GoogleSignIn.strings",
+      "sha256": "f71092cf3fdba7e3e03d0d99748378b111947ca77a991830ddd24c39922b086e"
+    },
+    {
+      "path": "GoogleSignIn.bundle/google.png",
+      "sha256": "299600c6c3f9960bc680b76e12317dd350d63a00ecbf5de478311bd943e986f6"
+    },
+    {
+      "path": "GoogleSignIn.bundle/google@2x.png",
+      "sha256": "6083050c6e2f77dc978e0e13d70700b430bb56b7a36b5a5c80a2733ac66072a6"
+    },
+    {
+      "path": "GoogleSignIn.bundle/google@3x.png",
+      "sha256": "56a3d9d4042a18a595a677ed6464dea105f1e8da32e07c3c5c8404af3aaa878c"
+    },
+    {
+      "path": "GoogleSignIn.bundle/he.lproj/GoogleSignIn.strings",
+      "sha256": "2ad0751665fa6100761107c40a08df049067400ed7d8d3fb42e3eec4567a60b0"
+    },
+    {
+      "path": "GoogleSignIn.bundle/hi.lproj/GoogleSignIn.strings",
+      "sha256": "dd41d72736ab5f4a97d09ddb14c4800ee40b9bed2369d64f0c5ffab96a62461e"
+    },
+    {
+      "path": "GoogleSignIn.bundle/hr.lproj/GoogleSignIn.strings",
+      "sha256": "240fb2998ce9e3a796a97906fc6f960a5611c0784dc73b16cae914faed0a5bfe"
+    },
+    {
+      "path": "GoogleSignIn.bundle/hu.lproj/GoogleSignIn.strings",
+      "sha256": "1a8445f99c68fbb05f3714f80f70ed088a62371b5b9885e312b4516f07d89e4f"
+    },
+    {
+      "path": "GoogleSignIn.bundle/id.lproj/GoogleSignIn.strings",
+      "sha256": "3f246fe3732f813c93a04952365102a965a2248ae24e504f19531398588b2bf9"
+    },
+    {
+      "path": "GoogleSignIn.bundle/it.lproj/GoogleSignIn.strings",
+      "sha256": "4edc697cfa93600e8b6904d8722840355057bcb2e9c62426a97cecb642f633c8"
+    },
+    {
+      "path": "GoogleSignIn.bundle/ja.lproj/GoogleSignIn.strings",
+      "sha256": "864dce623eb1a99beea7e72a1db9008610c403c97585704c1f780b2089381114"
+    },
+    {
+      "path": "GoogleSignIn.bundle/ko.lproj/GoogleSignIn.strings",
+      "sha256": "021a829945c7e477b6e89a7cd9da683f5a29c0ffc0c012ee839baf50ef7ac013"
+    },
+    {
+      "path": "GoogleSignIn.bundle/ms.lproj/GoogleSignIn.strings",
+      "sha256": "cb6c11480bf45c4b99ac1c2dcfdb67a5f82a799917a2630d4fb3e961357b5c93"
+    },
+    {
+      "path": "GoogleSignIn.bundle/nb.lproj/GoogleSignIn.strings",
+      "sha256": "02a0ce4613ef0c23ec3f161d59d5c493e9de626c81b04be93180a11a42caeab0"
+    },
+    {
+      "path": "GoogleSignIn.bundle/nl.lproj/GoogleSignIn.strings",
+      "sha256": "49051865c00640eded4c359b1e820e11d1f191055dbb480591f9397d37ab5e0d"
+    },
+    {
+      "path": "GoogleSignIn.bundle/pl.lproj/GoogleSignIn.strings",
+      "sha256": "cc1ef4452fcc98acbeed22950bd7f0a22a579e025a8f50c78fdbb600ed38e55d"
+    },
+    {
+      "path": "GoogleSignIn.bundle/pt.lproj/GoogleSignIn.strings",
+      "sha256": "8789b92e1a14c1fd45f26619273c573d1b109e3cf400e56e80a5870baaebccee"
+    },
+    {
+      "path": "GoogleSignIn.bundle/pt_BR.lproj/GoogleSignIn.strings",
+      "sha256": "8789b92e1a14c1fd45f26619273c573d1b109e3cf400e56e80a5870baaebccee"
+    },
+    {
+      "path": "GoogleSignIn.bundle/pt_PT.lproj/GoogleSignIn.strings",
+      "sha256": "56004febb8c697dfc2844b493b2d1fda94f7d71881c5e9f457dd50b434600e99"
+    },
+    {
+      "path": "GoogleSignIn.bundle/ro.lproj/GoogleSignIn.strings",
+      "sha256": "af87451f0d584649dc36d5bd174adbf3aa7a490e7742272f2f7dd86e2262e3dd"
+    },
+    {
+      "path": "GoogleSignIn.bundle/ru.lproj/GoogleSignIn.strings",
+      "sha256": "1d379702a951ecf98843d957092a8c4afee3eefe866a6001643e3b77755dc5dc"
+    },
+    {
+      "path": "GoogleSignIn.bundle/sk.lproj/GoogleSignIn.strings",
+      "sha256": "3ff722865a3c2e610d9b84cb055d936320b83d66cafa24c8eb819368d41d5dac"
+    },
+    {
+      "path": "GoogleSignIn.bundle/sv.lproj/GoogleSignIn.strings",
+      "sha256": "101e93a9c6ce8a01e7a86337aa212f6881045411d6e45270179fef261861431e"
+    },
+    {
+      "path": "GoogleSignIn.bundle/th.lproj/GoogleSignIn.strings",
+      "sha256": "f3b0083f38b726109db921a7904a98de4a5017b978c5b09a8480c5447a3c4fc7"
+    },
+    {
+      "path": "GoogleSignIn.bundle/tr.lproj/GoogleSignIn.strings",
+      "sha256": "0d49eb542849a6b7c689a72562f7204ca7451ce1be2beaad0743520d9bab80d2"
+    },
+    {
+      "path": "GoogleSignIn.bundle/uk.lproj/GoogleSignIn.strings",
+      "sha256": "261c6ee81d9ffeb32feefaa9e2bf490ca6dbfa56e788432a95b4a333e2c7aeef"
+    },
+    {
+      "path": "GoogleSignIn.bundle/vi.lproj/GoogleSignIn.strings",
+      "sha256": "5dd81023a8de776c88096b792e07363668e595dead4be8e5219bbbdd88398fe0"
+    },
+    {
+      "path": "GoogleSignIn.bundle/zh_CN.lproj/GoogleSignIn.strings",
+      "sha256": "5274434127f770963d92af8700a2b838cae491bb7608642d4ff2a517fb81d677"
+    },
+    {
+      "path": "GoogleSignIn.bundle/zh_TW.lproj/GoogleSignIn.strings",
+      "sha256": "f0af4ba5c0339e860cb1b938679f8f4cd1f910401bbea187cfbb239ab13bb7e5"
+    },
+    {
+      "path": "GoogleUtilities_Privacy.bundle/Info.plist",
+      "sha256": "e77ebb7942abd44c963a1ae2b43fe89f5da6607c1ae01f85119eb49fd08c8312"
+    },
+    {
+      "path": "GoogleUtilities_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "f81b5cf8f043662712eca9e9785767264cf190025fe7bdb49777296c068de53c"
+    },
+    {
+      "path": "Info.plist",
+      "sha256": "b2957acbc83884045e11c15a952ad67290696a5ae0af56e7374e0c03366445ef"
+    },
+    {
+      "path": "PkgInfo",
+      "sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0"
+    },
+    {
+      "path": "PlugIns/FREEDDeviceActivityMonitor.appex/FREEDDeviceActivityMonitor",
+      "sha256": "d60425c58b09f1781b2d0e52853d61fc1a8df97c45c39eb0f27cc259df65bbe8"
+    },
+    {
+      "path": "PlugIns/FREEDDeviceActivityMonitor.appex/Info.plist",
+      "sha256": "fd61628277c02f5f1d789d68afa0f9557822ef4c93d063888a6b9e5d19932997"
+    },
+    {
+      "path": "PlugIns/FREEDSafariContentBlocker.appex/FREEDSafariContentBlocker",
+      "sha256": "ab1cf4ef5cb4bc71f3307888b87ac600ea22810545e1370ce7a3bc46edcf7cd9"
+    },
+    {
+      "path": "PlugIns/FREEDSafariContentBlocker.appex/Info.plist",
+      "sha256": "6004263e8c53f2cb643dcf36bdb5db28ae29d3a1027bf4e3af0963596bb66b58"
+    },
+    {
+      "path": "PlugIns/FREEDSafariContentBlocker.appex/blockerList.json",
+      "sha256": "52a97e2f9315111577c4b991f36eaa53e037e6154cb9ee9c1cafd02d56f4a37d"
+    },
+    {
+      "path": "PlugIns/FREEDSafariFocusShield.appex/FREEDSafariFocusShield",
+      "sha256": "afcfa078a168c812dcc8513b9daaa8cf6a3dad131626fc5de10648f67bfb9fc3"
+    },
+    {
+      "path": "PlugIns/FREEDSafariFocusShield.appex/Info.plist",
+      "sha256": "7875ab97460a82965afaf4b6c0dd716b930a6ebd094042b7357b2a185aa4b710"
+    },
+    {
+      "path": "PlugIns/FREEDSafariFocusShield.appex/background.js",
+      "sha256": "75713cba6412cc5a37d42dcaeb8057fc92d393a316c02328a2e98f4668d8034b"
+    },
+    {
+      "path": "PlugIns/FREEDSafariFocusShield.appex/content.js",
+      "sha256": "ead0b5ae7b8c4da2945f0a9d31fb109412780d59a61e796b93f51d7b81aabf14"
+    },
+    {
+      "path": "PlugIns/FREEDSafariFocusShield.appex/manifest.json",
+      "sha256": "ef75eebb496fb9ad7b3b3e41b796491fb57a5334368c63e3562a37f2355d4f49"
+    },
+    {
+      "path": "PlugIns/FREEDShieldAction.appex/FREEDShieldAction",
+      "sha256": "5c306371a328ee27ef40119053298ae9a8a56594f094eab97aa5940000611c90"
+    },
+    {
+      "path": "PlugIns/FREEDShieldAction.appex/Info.plist",
+      "sha256": "6d2fe6c342a3aad57851fd1c36c414f061d1c3c6dedf92cf63d99f34dca66118"
+    },
+    {
+      "path": "PlugIns/FREEDShieldConfiguration.appex/FREEDShieldConfiguration",
+      "sha256": "86771687d37328aebf1a0cc234fca53932be5a725ca622857abc2c3b7024f5b1"
+    },
+    {
+      "path": "PlugIns/FREEDShieldConfiguration.appex/Info.plist",
+      "sha256": "6e0f734d7a85c9e551f5025d68b9e6e4fd885f1433daba2e23f7b96684330617"
+    },
+    {
+      "path": "PrivacyInfo.xcprivacy",
+      "sha256": "e00a246366b26d1230c8713cedf7bf1cd698399231bb269571f1d1009b57f9e6"
+    },
+    {
+      "path": "Promises_Privacy.bundle/Info.plist",
+      "sha256": "9e01f24f710503443c91c830f347c9fe7627f72121cfa8cff03515e73ebf412e"
+    },
+    {
+      "path": "Promises_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "74b0cd72fc23c1ef302f22ee2753f61817cdc5af0ff7a7f2d0632b524fb8acea"
+    },
+    {
+      "path": "PurchasesHybridCommon.bundle/Info.plist",
+      "sha256": "dacfbd8466440c050e38a34bc190d4cb44ba7540148f1da061d6ff0b0fce47f7"
+    },
+    {
+      "path": "PurchasesHybridCommon.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "86676ccabdb5115b8907bfe0e1912fd5e2e8edf2716838b7bc890be63eda9282"
+    },
+    {
+      "path": "RCT-Folly_privacy.bundle/Info.plist",
+      "sha256": "7b582d7c14286d7d731f8b91e3d645da9d686bcab484227e7cd64f9e143047b9"
+    },
+    {
+      "path": "RNSVGFilters.bundle/Info.plist",
+      "sha256": "0531f58c6066b535ad5e97f682a6f05379009187c997c9c7190867d06fd575b4"
+    },
+    {
+      "path": "RNSVGFilters.bundle/RNSVGArithmeticFilter.iphoneos.metallib",
+      "sha256": "691465fdf22be2942a906482998440cb0d3f68639372936b8add3395c0b40ed9"
+    },
+    {
+      "path": "RNSVGFilters.bundle/RNSVGCompositeXor.iphoneos.metallib",
+      "sha256": "2237a864d7884ec5daa984293d775be61aea68993eb3642acb97b9579953fff2"
+    },
+    {
+      "path": "React-Core_privacy.bundle/Info.plist",
+      "sha256": "f589a9eb040cf0c6925cadb442cf8c17adf30789d1394b9ce4cc705032f06bdc"
+    },
+    {
+      "path": "React-Core_privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "7c08969e459621a6ecec043ccdb9012651f185811945f75517c623dae2e11627"
+    },
+    {
+      "path": "React-cxxreact_privacy.bundle/Info.plist",
+      "sha256": "e1edbd397d24396ac2a0210fd886a3cee0665f36c97f02c4c282e90fc95d76ff"
+    },
+    {
+      "path": "React-cxxreact_privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "0587d155c56a6f4f0647ebc6b6a0bd026615cd610ee8f209a9786b79a96ad335"
+    },
+    {
+      "path": "RevenueCat.bundle/Info.plist",
+      "sha256": "968840cf011f5c7d6559c78347e985b8b873272e43fd6d562ede1562f72c7aed"
+    },
+    {
+      "path": "RevenueCat.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "76c876c73bf37d63b2944d0491e4d9a43d420de78b66512fcca27a484ae92e79"
+    },
+    {
+      "path": "SDWebImage.bundle/Info.plist",
+      "sha256": "7bc54f33f25c5903ce2a694d7a0e968f0313d65d64622904b2a38c12150e1d0e"
+    },
+    {
+      "path": "SDWebImage.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "03b2c70833a331a2b1efd11ff168ed02a8eadfd5e7d1fbf30eecc7509a4aea47"
+    },
+    {
+      "path": "SplashScreen.storyboardc/EXPO-VIEWCONTROLLER-1-view-EXPO-ContainerView.nib",
+      "sha256": "70b4e26c548ba9b66a1bb698e0d49a79432a5d4a4aa6de93b7bbfdd7d6c656da"
+    },
+    {
+      "path": "SplashScreen.storyboardc/Info.plist",
+      "sha256": "74dbceed6cf0a5e5c69834793328c9783ecab1de482d4954e257ca2132b743af"
+    },
+    {
+      "path": "SplashScreen.storyboardc/SplashScreenViewController.nib",
+      "sha256": "9c1a34c121d22479408cf0eaacb3491548ced16655799bae3b5f7f2380314ba8"
+    },
+    {
+      "path": "UserMessagingPlatformResources.bundle/Info.plist",
+      "sha256": "0d0a729b1abd79de072fe5b02dfef03879c5d0d19b14911098267b70bf70e236"
+    },
+    {
+      "path": "UserMessagingPlatformResources.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "45b7adb99fcd2d962a1c800fbfcc1325b57a7fa4165f416182323bb5ffe9c900"
+    },
+    {
+      "path": "assets/assets/adaptive-icon.png",
+      "sha256": "c83d9fa22def385336c5c17e84b5c81c0cf4c9d60cd9cd5af9428f86541f1d82"
+    },
+    {
+      "path": "assets/assets/brand/freed-symbol.png",
+      "sha256": "d1b79f1e34ee758d8166aaa1874e6bc5f8d2c52ead853b2ba79e8a546483102b"
+    },
+    {
+      "path": "assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon-mask.png",
+      "sha256": "9adb8c5efca932e2b732b293da813bd2e31952263056bce9e2517fec0f0b6a76"
+    },
+    {
+      "path": "assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon.png",
+      "sha256": "2cdfeb8e5ccde7976f7012fb8cce73af2229029ee21d4f1509fed114871c6cd8"
+    },
+    {
+      "path": "assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon@2x.png",
+      "sha256": "2b7443a9a58e92ca11a575bdc11598615a57dde305cd8ce70d602606b302cd98"
+    },
+    {
+      "path": "assets/node_modules/@react-navigation/elements/lib/module/assets/back-icon@3x.png",
+      "sha256": "3ddd0773ed27e23d25789f301731b3ac455ad8be5aa27a0a1b838f89c6d27225"
+    },
+    {
+      "path": "assets/node_modules/@react-navigation/elements/lib/module/assets/clear-icon.png",
+      "sha256": "d03a5cd7a66ef10c5147916f9d5878b2d0a0a5ad46f405a31cd9967efaa55afd"
+    },
+    {
+      "path": "assets/node_modules/@react-navigation/elements/lib/module/assets/clear-icon@2x.png",
+      "sha256": "ab5613d2ce70fa67c5926e831353664945199fc195fa6fe76c5fe3cec452e31a"
+    },
+    {
+      "path": "assets/node_modules/@react-navigation/elements/lib/module/assets/clear-icon@3x.png",
+      "sha256": "c4e54e6a0a7de636aa153378fbc62ea4a41695bfedf807f90df7b18ffd733f67"
+    },
+    {
+      "path": "assets/node_modules/@react-navigation/elements/lib/module/assets/close-icon.png",
+      "sha256": "b1bc1810ca23e2c38cd76971c43591d726161061240d8b792b05757196ddb528"
+    },
+    {
+      "path": "assets/node_modules/@react-navigation/elements/lib/module/assets/close-icon@2x.png",
+      "sha256": "cbdf9213e55f65c48d076acd8423b7c9aee4f1b81101ff6c95a38c4cd8a86461"
+    },
+    {
+      "path": "assets/node_modules/@react-navigation/elements/lib/module/assets/close-icon@3x.png",
+      "sha256": "d05c9d30d79f45a78e5585a2e7ec67c6a06a883dd9137e1d5059e8c87b33ce76"
+    },
+    {
+      "path": "assets/node_modules/@react-navigation/elements/lib/module/assets/search-icon.png",
+      "sha256": "dc56b976bd45638e1125f6689743525e6886ae0bef2c8f4651994833685a831f"
+    },
+    {
+      "path": "assets/node_modules/@react-navigation/elements/lib/module/assets/search-icon@2x.png",
+      "sha256": "ef13fc0dfc52ec23817585fd7e109fbdf593a3b2549c40ce71ac9b0eda12cc2c"
+    },
+    {
+      "path": "assets/node_modules/@react-navigation/elements/lib/module/assets/search-icon@3x.png",
+      "sha256": "b434a7cf18c2d4ce747c70942ea2fee2d4412d93967ed92b372f810bb9261ea5"
+    },
+    {
+      "path": "assets/node_modules/expo-router/assets/arrow_down.png",
+      "sha256": "6deca32b56b97fa1fa87facd6996b46cc45190a553400e7febdf1d2093099b57"
+    },
+    {
+      "path": "assets/node_modules/expo-router/assets/error.png",
+      "sha256": "c15ec72a74d13957211808313d5c35deb7f7606c6d22dbddceb0000d4e0547ad"
+    },
+    {
+      "path": "assets/node_modules/expo-router/assets/file.png",
+      "sha256": "a69a2edb5b6c60b8433d5b6d23c69f520ccd8a602f3f60e7996e489718bc175c"
+    },
+    {
+      "path": "assets/node_modules/expo-router/assets/forward.png",
+      "sha256": "708a79cf561b8a2a4850ce0254584d3a5231046be08fb7fadf4b6edfdb31178b"
+    },
+    {
+      "path": "assets/node_modules/expo-router/assets/pkg.png",
+      "sha256": "27f4d229d440925bf7212d5dfffa45d596b2c7b3bb2905c96b839b2081a1dbeb"
+    },
+    {
+      "path": "assets/node_modules/expo-router/assets/sitemap.png",
+      "sha256": "acf691957a3bcce7d195856dce98a5cf14dce10bea28aa5c10b3550c078e23b5"
+    },
+    {
+      "path": "assets/node_modules/expo-router/assets/unmatched.png",
+      "sha256": "efc79da3c4c97dfb1571bff6202958ab0529c5aa31e8392600578b3e359d1447"
+    },
+    {
+      "path": "boost_privacy.bundle/Info.plist",
+      "sha256": "caccbfc52345f8ed673c4d0793e87f034cbc1345cfefcf2958cf23d9f27a683a"
+    },
+    {
+      "path": "glog_privacy.bundle/Info.plist",
+      "sha256": "f0a6b30c54f533a41f9c5864cd80dc467cc316c0ff9ee3c308bbbfd1ec775c18"
+    },
+    {
+      "path": "main.jsbundle",
+      "sha256": "8d1312051d4a1a99ce95dbfa89a022d773024ff071fd52f64a9462a07822411b"
+    },
+    {
+      "path": "nanopb_Privacy.bundle/Info.plist",
+      "sha256": "87b70a8ee0cff03ceb6537dcb32331a015a8022a50ee1ebe77898bcb5c1df8b6"
+    },
+    {
+      "path": "nanopb_Privacy.bundle/PrivacyInfo.xcprivacy",
+      "sha256": "729ba3cbd0f458c78cd61edf17350edafe0e34ca86e314ec64c8cb22ccd21b54"
+    }
+  ]
+}

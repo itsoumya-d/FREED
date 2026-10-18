@@ -1,0 +1,181 @@
+{
+  "screens": [
+    {
+      "screen_id": "oth_72pev",
+      "name": "Resilience Quest Steps",
+      "flow": "Resilience Quest",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzYyYmYxODkyZjMwNTY0YmM0NTQ3Zjg4ZWMzMTllZGU3MjFkYzViM2Uud2VicCIsImV4cCI6MTc5MDM4NTQwMX2_kpWeD17RWZEorGDaynTRWLkB05gvpso.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FCFCFB",
+      "similarity": 0.394,
+      "app": {
+        "app_id": "6749098156",
+        "name": "Purpose: AI Mentor & Coach"
+      }
+    },
+    {
+      "screen_id": "oth_yzhkb",
+      "name": "New Habit Schedule",
+      "flow": "Habit Creation",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzFjNWZmZmExZTJhZDA1ZWNlMDE3MTFjYmUzYTg3NWMyZWIwMzM3MWYud2VicCIsImV4cCI6MTc5MDM4NTQwMX2_ZoVg5DoS1EpbNZcwcdbRjC8uDImw5qo.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#F1F1F3",
+      "similarity": 0.3771,
+      "app": {
+        "app_id": "6443918070",
+        "name": "Habit Tracker - HabitKit"
+      }
+    },
+    {
+      "screen_id": "oth_v23jw",
+      "name": "Profile Settings",
+      "flow": "Profile & Settings",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzUwZjQ4MDgzNjMzN2RmMTM0OTNhMmNjZDg4OGI5NmYwY2JiMjYyMzAud2VicCIsImV4cCI6MTc5MDM4NTQwMX24GFViuUv6Mmrp9vt2Wk7LLwlCaaxeXyg.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#F2F1F6",
+      "similarity": 0.3759,
+      "app": {
+        "app_id": "6741105248",
+        "name": "Lean: AI Macro Tracker"
+      }
+    },
+    {
+      "screen_id": "oth_5lf6a",
+      "name": "Dashboard Summary",
+      "flow": "Progress Dashboard",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzYzMThjYjQ4OWRhOWI2YjgyYTE1MGVmMWFhNDUxM2M5NzRmYTU3NDYud2VicCIsImV4cCI6MTc5MDM4NTQwMX3NoDbVuAjJLzak1M4M9gKZVPU5HZ7DJLE.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FFFFFF",
+      "similarity": 0.3726,
+      "app": {
+        "app_id": "1513988468",
+        "name": "Bend: Stretching & Flexibility"
+      }
+    },
+    {
+      "screen_id": "oth_yjhq9",
+      "name": "Recovery Summary",
+      "flow": "Recovery",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzgzMTM2YmQ5ZGFjMWEwYjRlMThmNjczOGFkZTk2YTA2OTRjNjhmMWEud2VicCIsImV4cCI6MTc5MDM4NTQwMX3_30mZH5oVUIABY4hiRY-C18CdbbMKvdU.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#C5DCF0",
+      "similarity": 0.3683,
+      "app": {
+        "app_id": "6456176249",
+        "name": "Bevel: AI Health Coach"
+      }
+    },
+    {
+      "screen_id": "oth_0sydv",
+      "name": "Streak Stats",
+      "flow": "Streak Tracking",
+      "section": "other-tabs",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzQ4Y2IwOGFlMDkzMDE4YTUyZmIxYWQ4N2RkNjQ1MTM4NzE2OTI5MDQud2VicCIsImV4cCI6MTc5MDM4NTQwMX2tOixo6fG7DElQ_WwujsQ_eBhf7PEzfqM.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FFFFFF",
+      "similarity": 0.357,
+      "app": {
+        "app_id": "1541193285",
+        "name": "Protein Tracker: Protein Pal"
+      }
+    },
+    {
+      "screen_id": "spl_0p466",
+      "name": "Onboarding Welcome",
+      "flow": "Welcome Screen",
+      "section": "welcome-screen",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2VjMzFlMDI2ZWE2MTE1MzFlMzkyMTUyYmQ1NmRkYmI5NDliMWMwY2Qud2VicCIsImV4cCI6MTc5MDM4NTQwMX2NaCGhoT-Xpeu9mmPfYzgnUL5ss2fDlT4.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FBF9FE",
+      "similarity": 0.3695,
+      "app": {
+        "app_id": "6443918070",
+        "name": "Habit Tracker - HabitKit"
+      }
+    },
+    {
+      "screen_id": "onb_259cq",
+      "name": "Overcome Goal Entry",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzFlMmU2OTg0YWQ5N2NjZDY1MGI5ZDE1ZjYzNTU0ZWUwZWFiM2Q4M2Iud2VicCIsImV4cCI6MTc5MDM4NTQwMX0cMIN_7KaVTiyH-THlvsKHTBMDFltXdxU.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#442436",
+      "similarity": 0.3693,
+      "app": {
+        "app_id": "6759759625",
+        "name": "From Bible: Bible Widgets"
+      }
+    },
+    {
+      "screen_id": "onb_z8qqk",
+      "name": "Method Overview",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzUxYjcxMGRkNzQxZTMxZTIwODU4MmZjNDA1MDBkMDMxYTBmYjZiMzMud2VicCIsImV4cCI6MTc5MDM4NTQwMX0ragBYe_pF0oVp38q_kmm26ofTBVWBL3M.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#000000",
+      "similarity": 0.3667,
+      "app": {
+        "app_id": "6450723685",
+        "name": "75 Days Challenge Tough & Soft"
+      }
+    },
+    {
+      "screen_id": "onb_jqghx",
+      "name": "Goal Selection",
+      "flow": "Onboarding",
+      "section": "onboarding",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2EwNWVmY2U1NGY2YzY2OWIxZjhlZjQ5YTkzOTQzM2ZhMjcwMzFmOTUud2VicCIsImV4cCI6MTc5MDM4NTQwMX0P9GAutAo4j3RuKFZc-bMU6puV0-YpmxI.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#000000",
+      "similarity": 0.3575,
+      "app": {
+        "app_id": "6450723685",
+        "name": "75 Days Challenge Tough & Soft"
+      }
+    }
+  ],
+  "total": null,
+  "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJzZWFyY2hfc2NyZWVucyIsInEiOiJkZjY3OTBjZmRhOWJjNjljMzgzMGM3OTEiLCJvIjoxMCwiaHciOjIwLCJleHAiOjE3OTAzODU0MDF9.aIyJ8zS6WE0I0Zvrk2h17Gfb5Ro",
+  "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+  "credits": {
+    "spent": 1,
+    "remaining_this_month": 999
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "sourceSnapshot": "daily-usability-v6-comfort",
+  "sourceInventorySha256": "386307d0c02540a26cf6dfc3d111f5a50d7897c9a76ebb2b07bd95017460a12b",
+  "version": "1.0",
+  "buildNumber": "3",
+  "channel": "internal-testflight",
+  "testAds": true,
+  "ipaSha256": "8f9518f35f572998e4d91edadc79a4f6a9b363a8cfb69fca12a778adfcdb9388",
+  "nativeExecutableSha256": "46abdbd5deb2640cfd68d2fa0a43bb8ff5c6fbae9ce6f5fcb8a9da3b5a8abb61",
+  "jsBundleSha256": "11bfab7635576c2a6bb1db4c603b2be2b26e6e6b5102a5c6d15daa70c6cac3e6",
+  "actualAudioFiles": [
+    "hold.wav",
+    "inhale.wav",
+    "exhale.wav"
+  ],
+  "codeSignatureStrictVerification": "PASS",
+  "artifactGate": "PASS",
+  "positiveDeviceEvidence": false,
+  "testflightInstallability": "Internal group IN_BETA_TESTING; VALID and unexpired",
+  "buildId": "81033208-9f34-45ff-8791-cec8abbde21b"
+}

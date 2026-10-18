@@ -6,14 +6,18 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.AppOpsManager
+import android.app.KeyguardManager
 import android.app.usage.UsageStatsManager
 import android.content.Context
+import android.content.BroadcastReceiver
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.os.Process
+import android.os.PowerManager
 import android.os.SystemClock
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
@@ -61,29 +65,47 @@ class FreedAccessibilityService : AccessibilityService() {
     private const val SHORT_FORM_SCROLL_WINDOW_MS = 30_000L
     private const val INTERVENTION_NOTIFICATION_ID = 9404
     private const val INTERVENTION_NOTIFICATION_CHANNEL_ID = "freed_accessibility_interventions"
+    @Volatile
+    private var connectedService: FreedAccessibilityService? = null
+    /** Exact existing system connection only; no binding, service start, or inferred DNS target app. */
+    fun captureWebsiteRecoveryRequest(id: String, configurationEpoch: Long, vpnCurrent: () -> Boolean): (() -> Unit)? {
+      val service = connectedService?.takeIf { it.ownsConnectedRuntime() && FreedWebsiteRecoveryHandoff.previewEnabled(it) }
+        ?: return null
+      val connectionEpoch = service.scheduleConnectionEpoch
+      return { service.handler.post {
+        service.requestWebsiteRecovery(id, configurationEpoch, connectionEpoch, vpnCurrent)
+      }; Unit }
+    }
+    fun requestAppGroupRecheck() {
+      connectedService?.let { service -> service.handler.post { if (service.ownsConnectedRuntime()) service.recheckAppGroups() } }
+    }
+    fun observedAppGroupUsage(context: Context, packages: Set<String>): Map<String, Long> {
+      val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+      val today = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(Date())
+      val service = connectedService?.takeIf { it.ownsConnectedRuntime() }
+      return packages.associateWith { target ->
+        val stored = if (prefs.getString(APP_USAGE_DATE_KEY, null) == today) prefs.getLong(APP_USAGE_PREFIX + target, 0L) else 0L
+        val live = service?.takeIf { it.liveScheduleForegroundPackage() == target }?.currentForegroundSessionMs(target) ?: 0L
+        (stored + live).coerceIn(0L, 86_400_000L)
+      }
+    }
+    val appSchedulesServiceConnected: Boolean
+      get() = connectedService?.ownsConnectedRuntime() == true
+
+    fun clearOwnedRuntimeForCleanup(valid: () -> Boolean): Boolean = FreedProtectionConfiguration.runOnMainForReset {
+      synchronized(FreedNativeUnlockStore.lock) {
+        if (!valid()) return@synchronized false
+        connectedService?.clearOwnedProtectionRuntime() ?: true
+      }
+    }
+
+    fun clearOwnedRuntimeForReset(): Boolean = FreedProtectionConfiguration.runOnMainForReset {
+      FreedFocusShieldCalibrationBridge.resetConfigurationResult()
+      connectedService?.clearOwnedProtectionRuntime() ?: true
+    }
   }
 
-  private val supportedBrowsers = setOf(
-    "com.android.chrome",
-    "com.chrome.beta",
-    "com.chrome.dev",
-    "com.chrome.canary",
-    "org.mozilla.firefox",
-    "org.mozilla.firefox_beta",
-    "org.mozilla.fenix",
-    "org.mozilla.focus",
-    "com.brave.browser",
-    "com.microsoft.emmx",
-    "com.microsoft.emmx.beta",
-    "com.microsoft.emmx.dev",
-    "com.microsoft.emmx.canary",
-    "com.opera.browser",
-    "com.sec.android.app.sbrowser",
-    "com.sec.android.app.sbrowser.beta",
-    "com.duckduckgo.mobile.android",
-    "com.vivaldi.browser",
-    "com.kiwibrowser.browser"
-  )
+  private var eligibleWebHandlers: FreedBrowserHandlers? = null
 
   private val browserUrlViewIds = mapOf(
     "com.android.chrome" to chromiumUrlFields("com.android.chrome"),
@@ -134,6 +156,40 @@ class FreedAccessibilityService : AccessibilityService() {
   private var lastLaunchElapsedMs = 0L
   private var lastBlockedKey = ""
   private val handler = Handler(Looper.getMainLooper())
+  @Volatile
+  private var serviceConnected = false
+  @Volatile
+  private var scheduleConnectionEpoch = 0L
+  private var appScheduleCheckRunnable: Runnable? = null
+  private var lastScheduleForegroundPackage: String? = null
+  private var scheduleReceiverRegistered = false
+  private var schedulePreferencesRegistered = false
+  private val schedulePreferencesListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+    if (key == FreedAppGroupStore.CONFIGURATION_KEY) {
+      requestAppGroupRecheck()
+    }
+    if (key == FreedAppScheduleStore.CONFIGURATION_KEY || key == BLOCKED_APP_PACKAGES || key == DAILY_LIMIT_MINUTES || key == FreedAppGuardModeStore.MODE_KEY) {
+      postAppScheduleRecheck()
+    }
+  }
+  private val scheduleClockReceiver = object : BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {
+      if (!ownsConnectedRuntime()) return
+      if (intent?.action == Intent.ACTION_SCREEN_OFF) {
+        finishForegroundUsageSegment()
+        lastScheduleForegroundPackage = null
+        cancelAppScheduleCheck()
+        cancelAppGroupCheck()
+        cancelAnyAppLimitCheck()
+        clearShortFormSession()
+        cancelEarnedUnlockRelock()
+      } else {
+        if (intent?.action == Intent.ACTION_TIMEZONE_CHANGED) TimeZone.setDefault(null)
+        recheckAppSchedules()
+        recheckAppGroups()
+      }
+    }
+  }
   private var scheduledLimitPackage: String? = null
   private var shortFormPackage: String? = null
   private var shortFormRule: String? = null
@@ -151,23 +207,30 @@ class FreedAccessibilityService : AccessibilityService() {
   private val focusShieldCalibrationTransitionLock = Any()
   private var focusShieldCalibrationRequestedGeneration = 0L
   private val appLimitRunnable = Runnable {
+    if (!ownsConnectedRuntime() || !FreedProtectionConfiguration.interceptionEnabled(this)) {
+      cancelAnyAppLimitCheck()
+      return@Runnable
+    }
     val packageName = scheduledLimitPackage ?: return@Runnable
-    if (
-      isConfiguredBlockedApp(packageName) &&
-      !isEarnedUnlockActiveForPackage(packageName) &&
-      currentForegroundPackage() == packageName &&
-      isDailyAppLimitReached(packageName)
-    ) {
+    if (FreedAppGuardModeStore.read(this) != FreedAppGuardModePolicy.DAILY_LIMIT) {
+      cancelAnyAppLimitCheck()
+      postAppScheduleRecheck()
+      return@Runnable
+    }
+    if (liveScheduleForegroundPackage() == packageName && appGuardShouldInterrupt(packageName)) {
       launchAppIntervention(packageName)
     } else {
       scheduleAppLimitCheck(packageName)
     }
   }
   private val shortFormRunnable = Runnable {
+    if (!ownsConnectedRuntime() || !FreedProtectionConfiguration.interceptionEnabled(this)) return@Runnable
     val packageName = shortFormPackage ?: return@Runnable
     val rule = shortFormRule ?: return@Runnable
     val elapsedMs = SystemClock.elapsedRealtime() - shortFormStartedElapsedMs
     if (
+      FreedFocusShieldRollout.enabled(this) &&
+      FreedFocusShieldRules.hasEnabledPresetRulesForPackage(this, packageName) &&
       isConfiguredBlockedApp(packageName) &&
       !isEarnedUnlockActiveForPackage(packageName) &&
       currentForegroundPackage() == packageName &&
@@ -180,14 +243,16 @@ class FreedAccessibilityService : AccessibilityService() {
     }
   }
   private val earnedUnlockRelockRunnable = Runnable {
+    if (!ownsConnectedRuntime() || !FreedProtectionConfiguration.interceptionEnabled(this)) return@Runnable
     val packageName = scheduledEarnedUnlockRelockPackage ?: return@Runnable
     scheduledEarnedUnlockRelockPackage = null
 
-    if (
-      isConfiguredBlockedApp(packageName) &&
-      !isEarnedUnlockActiveForPackage(packageName) &&
-      currentForegroundPackage() == packageName
-    ) {
+    if (FreedAppSchedulePolicy.shouldRelock(
+      packageName,
+      currentBlockingPackagesFor(packageName),
+      liveScheduleForegroundPackage(),
+      isEarnedUnlockActiveForPackage(packageName)
+    )) {
       launchAppIntervention(
         packageName,
         reason = "Earned unlock expired. FREED is relocking the selected app."
@@ -197,35 +262,85 @@ class FreedAccessibilityService : AccessibilityService() {
 
   override fun onServiceConnected() {
     super.onServiceConnected()
+    connectedService?.takeIf { it !== this }?.disconnectAppScheduleRuntime()
+    if (serviceConnected) disconnectAppScheduleRuntime()
+    serviceConnected = true
+    scheduleConnectionEpoch += 1
+    connectedService = this
+    eligibleWebHandlers = FreedBrowserHandlers(this).also { it.connect() }
+    // A prior process/boot's elapsed marker is not live foreground evidence.
+    getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
+      .remove(LAST_FOREGROUND_PACKAGE).remove(LAST_FOREGROUND_ELAPSED_MS).apply()
+    getSharedPreferences(PREFS_NAME, MODE_PRIVATE).registerOnSharedPreferenceChangeListener(schedulePreferencesListener)
+    schedulePreferencesRegistered = true
+    val filter = IntentFilter().apply {
+      addAction(Intent.ACTION_TIME_CHANGED)
+      addAction(Intent.ACTION_DATE_CHANGED)
+      addAction(Intent.ACTION_TIMEZONE_CHANGED)
+      addAction(Intent.ACTION_SCREEN_ON)
+      addAction(Intent.ACTION_SCREEN_OFF)
+      addAction(Intent.ACTION_USER_PRESENT)
+    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+      registerReceiver(scheduleClockReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+    } else {
+      registerReceiver(scheduleClockReceiver, filter)
+    }
+    scheduleReceiverRegistered = true
+    recheckAppSchedules()
+    recheckAppGroups()
     FreedFocusShieldCalibrationBridge.attach(this)
   }
 
   override fun onAccessibilityEvent(event: AccessibilityEvent?) {
+    if (!ownsConnectedRuntime() || !FreedProtectionConfiguration.interceptionEnabled(this)) return
+    val previousUsageScope = privateUsageCallbackScope.get()
+    privateUsageCallbackScope.set(PrivateUsageScope(FreedAppGroupStore.capturePolicyScope(this)))
+    try {
     val accessibilityEvent = event ?: return
     val normalizedPackage = accessibilityEvent.packageName
       ?.toString()
       ?.trim()
       ?.lowercase(Locale.US)
       ?.takeIf(String::isNotBlank)
-    focusShieldCalibrationSession?.onAccessibilityEvent(accessibilityEvent, normalizedPackage)
+    val surfaceInspectionEnabled = FreedFocusShieldRollout.enabled(this)
+    if (surfaceInspectionEnabled) focusShieldCalibrationSession?.onAccessibilityEvent(accessibilityEvent, normalizedPackage)
     if (normalizedPackage == null) return
     trackForegroundUsage(normalizedPackage)
+    val freshForegroundEvent = accessibilityEvent.eventType == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED
+    val liveSchedulePackage = liveScheduleForegroundPackage()
+    if (liveSchedulePackage == normalizedPackage || (liveSchedulePackage == null && freshForegroundEvent)) {
+      lastScheduleForegroundPackage = normalizedPackage
+    }
+    armAppScheduleCheck()
+    if (isScreenInteractiveAndUnlocked() && (liveSchedulePackage == normalizedPackage || (liveSchedulePackage == null && freshForegroundEvent))) {
+      recheckAppGroups(normalizedPackage)
+    }
     val configuredApp = isConfiguredBlockedApp(normalizedPackage)
-    val hasFocusShieldPresetRules = FreedFocusShieldRules.hasEnabledPresetRulesForPackage(this, normalizedPackage)
-    val detectedShortFormRule = if (configuredApp || hasFocusShieldPresetRules) {
+    val configuration = FreedAppScheduleStore.read(this)
+    val scheduledApp = FreedAppSchedulePolicy.evaluate(configuration, System.currentTimeMillis()).activePackages.contains(normalizedPackage)
+    val currentAppEvent = isScreenInteractiveAndUnlocked() &&
+      (liveSchedulePackage == normalizedPackage || (liveSchedulePackage == null && freshForegroundEvent))
+    val hasFocusShieldPresetRules = surfaceInspectionEnabled && FreedFocusShieldRules.hasEnabledPresetRulesForPackage(this, normalizedPackage)
+    val detectedShortFormRule = if (hasFocusShieldPresetRules) {
       shortFormRuleForEvent(normalizedPackage, accessibilityEvent)
     } else {
       null
     }
 
     if (configuredApp) {
-      if (isEarnedUnlockActiveForPackage(normalizedPackage)) {
+      if (currentAppEvent && appGuardShouldInterrupt(normalizedPackage)) {
+        launchAppIntervention(normalizedPackage, reason = when {
+          configuration.strictGuard || FreedAppGuardModeStore.read(this) == FreedAppGuardModePolicy.BEFORE_USE ->
+            FreedNativeCopy.text(this, R.string.freed_start_recovery)
+          scheduledApp -> "Configured app schedule is active."
+          else -> "Configured app limit reached."
+        })
+        return
+      } else if (isEarnedUnlockActiveForPackage(normalizedPackage)) {
         cancelAppLimitCheck(normalizedPackage)
         clearShortFormSession()
         scheduleEarnedUnlockRelock(normalizedPackage)
-      } else if (isDailyAppLimitReached(normalizedPackage)) {
-        launchAppIntervention(normalizedPackage)
-        return
       } else {
         val matchingFocusShieldRules = detectedShortFormRule
           ?.let { rule -> FreedFocusShieldRules.matchingPresetRules(this, normalizedPackage, rule) }
@@ -273,17 +388,28 @@ class FreedAccessibilityService : AccessibilityService() {
       }
     }
 
-    if (!supportedBrowsers.contains(normalizedPackage) && !isWebViewContext(accessibilityEvent)) return
+    if (eligibleWebHandlers?.contains(normalizedPackage) != true && !isWebViewContext(accessibilityEvent)) return
 
+    val adultGeneration = FreedAdultProtectionState.callbackEpoch(this)
+    if (!FreedAdultProtectionState.permitsClassification(this, adultGeneration)) return
     val candidates = extractUrlCandidates(normalizedPackage, accessibilityEvent)
     val adultDomainFeed = FreedAdultDomainFeed.domains(this)
 
     for (candidate in candidates) {
-      val result = FreedUrlClassifier.classifyFocusedInput(candidate, adultDomainFeed)
+      if (!FreedAdultProtectionState.permitsClassification(this, adultGeneration)) return
+      val result = FreedUrlClassifier.classifyFocusedInput(
+        candidate,
+        adultDomainFeed,
+        FreedAdultDomainFeed.userAllowedDomains(this)
+      )
       if (result.shouldBlock) {
-        launchIntervention(candidate, normalizedPackage, result)
+        launchIntervention(candidate, normalizedPackage, result, adultGeneration)
         return
       }
+    }
+    } finally {
+      if (previousUsageScope == null) privateUsageCallbackScope.remove()
+      else privateUsageCallbackScope.set(previousUsageScope)
     }
   }
 
@@ -295,9 +421,12 @@ class FreedAccessibilityService : AccessibilityService() {
     handler.removeCallbacks(appLimitRunnable)
     handler.removeCallbacks(shortFormRunnable)
     handler.removeCallbacks(earnedUnlockRelockRunnable)
+    cancelAppScheduleCheck()
+    postAppScheduleRecheck()
   }
 
   override fun onUnbind(intent: Intent?): Boolean {
+    disconnectAppScheduleRuntime()
     FreedFocusShieldCalibrationBridge.detach(
       service = this,
       state = "revoked-permission",
@@ -307,6 +436,7 @@ class FreedAccessibilityService : AccessibilityService() {
   }
 
   override fun onDestroy() {
+    disconnectAppScheduleRuntime()
     stopFocusShieldCalibration(
       state = "service-interrupted",
       message = "Accessibility service stopped, so calibration ended and no selector was stored."
@@ -345,6 +475,7 @@ class FreedAccessibilityService : AccessibilityService() {
     request: FreedFocusShieldCalibrationRequest,
     ownerEpoch: Long
   ) {
+    if (!FreedFocusShieldRollout.enabled(this)) return
     val initial = FreedFocusShieldCalibrationResult(
       state = "calibrating",
       message = "Open the selected app, then tap the temporary FREED edge handle."
@@ -461,9 +592,55 @@ class FreedAccessibilityService : AccessibilityService() {
     focusShieldCalibrationSessionOwnerEpoch = 0L
   }
 
+  private var appGroupCheckRunnable: Runnable? = null
+
+  private fun recheckAppGroups(eventForeground: String? = null) {
+    appGroupCheckRunnable?.let(handler::removeCallbacks)
+    appGroupCheckRunnable = null
+    if (!ownsConnectedRuntime() || !FreedProtectionConfiguration.interceptionEnabled(this) || !isScreenInteractiveAndUnlocked()) return
+    val foreground = liveScheduleForegroundPackage() ?: eventForeground ?: return
+    val targets = FreedAppGroupStore.potentialPackages(this)
+    if (foreground !in targets) return
+    trackForegroundUsage(foreground)
+    FreedAppGroupStore.blockingGroup(this, foreground)?.let { group ->
+      launchAppIntervention(foreground, reason = "A selected app group rule is active.",
+        matchedRule = "app-group:${group["id"]}:${group["revision"]}", appGroup = group)
+    }
+    val epoch = scheduleConnectionEpoch
+    lateinit var callback: Runnable
+    callback = Runnable {
+      if (ownsConnectedRuntime() && scheduleConnectionEpoch == epoch && appGroupCheckRunnable === callback) recheckAppGroups()
+    }
+    appGroupCheckRunnable = callback
+    handler.postDelayed(callback, 1_000L)
+  }
+
   private fun isConfiguredBlockedApp(packageName: String): Boolean {
+    if (!FreedProtectionConfiguration.interceptionEnabled(this)) return false
     if (packageName == applicationContext.packageName) return false
-    return blockedAppPackages().contains(packageName.lowercase(Locale.US))
+    val normalized = packageName.lowercase(Locale.US)
+    if (normalized !in FreedInstalledApplications.eligible(this)) return false
+    return blockedAppPackages().contains(normalized) || FreedAppScheduleStore.snapshot(this).activePackages.contains(normalized) ||
+      (FreedAppScheduleStore.read(this).strictGuard && normalized in SUPPORTED_BLOCKED_APP_PACKAGES) ||
+      normalized in FreedAppGroupStore.potentialPackages(this)
+  }
+
+  private fun appGuardShouldInterrupt(packageName: String, ignoreGrant: Boolean = false): Boolean {
+    if (packageName.lowercase(Locale.US) !in FreedInstalledApplications.eligible(this)) return false
+    val configuration = FreedAppScheduleStore.read(this)
+    val mode = FreedAppGuardModeStore.read(this)
+    return FreedAppGuardModePolicy.shouldInterrupt(packageName, blockedAppPackages(),
+      FreedAppSchedulePolicy.evaluate(configuration, System.currentTimeMillis()), mode, configuration.strictGuard,
+      mode == FreedAppGuardModePolicy.DAILY_LIMIT && isManuallyBlockedApp(packageName) && isDailyAppLimitReached(packageName),
+      !ignoreGrant && isEarnedUnlockActiveForPackage(packageName), FreedProtectionConfiguration.interceptionEnabled(this))
+  }
+
+  private fun currentBlockingPackagesFor(packageName: String): Set<String> =
+    if (appGuardShouldInterrupt(packageName, ignoreGrant = true)) setOf(packageName) else emptySet()
+
+  private fun isManuallyBlockedApp(packageName: String): Boolean {
+    if (!FreedProtectionConfiguration.interceptionEnabled(this)) return false
+    return packageName != applicationContext.packageName && blockedAppPackages().contains(packageName.lowercase(Locale.US))
   }
 
   private fun blockedAppPackages(): Set<String> {
@@ -473,20 +650,182 @@ class FreedAccessibilityService : AccessibilityService() {
       .split(",")
       .map { it.trim().lowercase(Locale.US) }
       .filter { it.isNotBlank() }
-      .toSet()
+      .filter { FreedInstalledAppPolicy.validPackage(it) && it != applicationContext.packageName }
+      .toSet().intersect(FreedInstalledApplications.eligible(this))
   }
 
-  private fun trackForegroundUsage(packageName: String) {
+  private fun ownsConnectedRuntime(): Boolean = serviceConnected && connectedService === this
+
+  private fun isScreenInteractiveAndUnlocked(): Boolean {
+    val power = getSystemService(Context.POWER_SERVICE) as? PowerManager ?: return false
+    val keyguard = getSystemService(Context.KEYGUARD_SERVICE) as? KeyguardManager ?: return false
+    return power.isInteractive && !keyguard.isKeyguardLocked
+  }
+
+  /** Only current window package evidence can authorize a timer-triggered intervention. */
+  private fun liveScheduleForegroundPackage(): String? {
+    if (!ownsConnectedRuntime() || !isScreenInteractiveAndUnlocked()) return null
+    val root = runCatching { rootInActiveWindow }.getOrNull() ?: return null
+    return try {
+      root.packageName?.toString()?.trim()?.lowercase(Locale.US)?.takeIf { it.isNotBlank() }
+    } finally {
+      @Suppress("DEPRECATION")
+      root.recycle()
+    }
+  }
+
+  private fun postAppScheduleRecheck() {
+    val ownerEpoch = scheduleConnectionEpoch
+    handler.post {
+      if (ownsConnectedRuntime() && ownerEpoch == scheduleConnectionEpoch) recheckAppSchedules()
+    }
+  }
+
+  private fun recheckAppSchedules() {
+    if (!ownsConnectedRuntime() || !FreedProtectionConfiguration.interceptionEnabled(this)) {
+      cancelAppScheduleCheck()
+      return
+    }
+    if (!isScreenInteractiveAndUnlocked()) {
+      lastScheduleForegroundPackage = null
+      cancelAppScheduleCheck()
+      return
+    }
+    val configuration = FreedAppScheduleStore.read(this)
+    val manual = blockedAppPackages()
+    val potentialTargets = manual + configuration.potentialPackages
+    // Never fall back to LAST_FOREGROUND_PACKAGE after reconnect/reboot: it may be stale.
+    val foreground = liveScheduleForegroundPackage()
+    if (foreground != null) {
+      lastScheduleForegroundPackage = foreground
+      trackForegroundUsage(foreground)
+      if (foreground in potentialTargets) {
+        val snapshot = FreedAppSchedulePolicy.evaluate(configuration, System.currentTimeMillis())
+        val earnedUnlock = isEarnedUnlockActiveForPackage(foreground)
+        if (appGuardShouldInterrupt(foreground)) {
+          launchAppIntervention(foreground, reason = if (configuration.strictGuard || FreedAppGuardModeStore.read(this) == FreedAppGuardModePolicy.BEFORE_USE) {
+            FreedNativeCopy.text(this, R.string.freed_start_recovery)
+          } else if (foreground in snapshot.activePackages) {
+            "Configured app schedule is active."
+          } else "Configured app limit reached.")
+        } else if (earnedUnlock && isConfiguredBlockedApp(foreground)) {
+          cancelAppLimitCheck(foreground)
+          clearShortFormSession()
+          scheduleEarnedUnlockRelock(foreground)
+        } else {
+          cancelEarnedUnlockRelock()
+          if (foreground in manual) {
+            scheduleAppLimitCheck(foreground)
+          } else {
+            cancelAppLimitCheck(foreground)
+            clearShortFormSession()
+          }
+        }
+      } else {
+        cancelAnyAppLimitCheck()
+        cancelEarnedUnlockRelock()
+        clearShortFormSession()
+      }
+    }
+    armAppScheduleCheck()
+  }
+
+  private fun armAppScheduleCheck() {
+    cancelAppScheduleCheck()
+    if (!ownsConnectedRuntime() || !FreedProtectionConfiguration.interceptionEnabled(this) || !isScreenInteractiveAndUnlocked()) return
+    val foreground = lastScheduleForegroundPackage ?: return
+    if (foreground !in (blockedAppPackages() + FreedAppScheduleStore.read(this).potentialPackages)) return
+    val ownerEpoch = scheduleConnectionEpoch
+    lateinit var callback: Runnable
+    callback = Runnable {
+      if (!ownsConnectedRuntime() || ownerEpoch != scheduleConnectionEpoch || appScheduleCheckRunnable !== callback) return@Runnable
+      appScheduleCheckRunnable = null
+      recheckAppSchedules()
+    }
+    appScheduleCheckRunnable = callback
+    // Handler uses uptime, so sleep may defer a check. Screen-on/user-present always re-evaluates wall time.
+    val delay = (60_000L - Math.floorMod(System.currentTimeMillis(), 60_000L) + 50L).coerceIn(250L, 60_050L)
+    handler.postDelayed(callback, delay)
+  }
+
+  private fun cancelAppScheduleCheck() {
+    appScheduleCheckRunnable?.let { handler.removeCallbacks(it) }
+    appScheduleCheckRunnable = null
+  }
+
+  private fun cancelAppGroupCheck() {
+    appGroupCheckRunnable?.let(handler::removeCallbacks)
+    appGroupCheckRunnable = null
+  }
+
+  private fun disconnectAppScheduleRuntime() {
+    eligibleWebHandlers?.disconnect()
+    eligibleWebHandlers = null
+    cancelAppGroupCheck()
+    if (ownsConnectedRuntime()) finishForegroundUsageSegment()
+    serviceConnected = false
+    scheduleConnectionEpoch += 1
+    if (connectedService === this) connectedService = null
+    lastScheduleForegroundPackage = null
+    cancelAppScheduleCheck()
+    cancelAnyAppLimitCheck()
+    clearShortFormSession()
+    cancelEarnedUnlockRelock()
+    if (scheduleReceiverRegistered) {
+      unregisterReceiver(scheduleClockReceiver)
+      scheduleReceiverRegistered = false
+    }
+    if (schedulePreferencesRegistered) {
+      getSharedPreferences(PREFS_NAME, MODE_PRIVATE).unregisterOnSharedPreferenceChangeListener(schedulePreferencesListener)
+      schedulePreferencesRegistered = false
+    }
+  }
+
+  private fun clearOwnedProtectionRuntime(): Boolean {
+    cancelAppGroupCheck()
+    scheduleConnectionEpoch += 1
+    lastScheduleForegroundPackage = null
+    foregroundUsageOwnerScope = null
+    cancelAppScheduleCheck()
+    cancelAnyAppLimitCheck()
+    clearShortFormSession()
+    cancelEarnedUnlockRelock()
+    synchronized(focusShieldCalibrationTransitionLock) {
+      focusShieldCalibrationRequestedGeneration += 1
+      focusShieldCalibrationSession?.disposeWithoutResult()
+      focusShieldCalibrationSession = null
+      focusShieldCalibrationSessionOwnerEpoch = 0L
+    }
+    lastLaunchElapsedMs = 0L
+    lastBlockedKey = ""
+    return appGroupCheckRunnable == null && appScheduleCheckRunnable == null && scheduledLimitPackage == null &&
+      shortFormPackage == null && scheduledEarnedUnlockRelockPackage == null && focusShieldCalibrationSession == null
+  }
+
+  private class PrivateUsageScope(val owner: String?)
+  private val privateUsageCallbackScope = ThreadLocal<PrivateUsageScope>()
+  // This live session is never rebound to a different account by reading persisted foreground markers.
+  private var foregroundUsageOwnerScope: String? = null
+
+  private fun capturePrivateUsageScope(): String? {
+    val callback = privateUsageCallbackScope.get()
+    return if (callback == null) FreedAppGroupStore.capturePolicyScope(this) else callback.owner
+  }
+
+  private fun trackForegroundUsage(packageName: String, ownerScope: String? = capturePrivateUsageScope()): Unit = synchronized(FreedNativeUnlockStore.lock) {
+    if (!ownsConnectedRuntime() || !FreedProtectionConfiguration.interceptionEnabled(this) ||
+      !FreedAppGroupStore.ownerScopeCurrent(ownerScope)) return@synchronized
     val normalizedPackage = packageName.lowercase(Locale.US)
     val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-    ensureDailyUsageWindow(prefs)
+    if (!ensureDailyUsageWindow(prefs, ownerScope)) return@synchronized
 
     val now = SystemClock.elapsedRealtime()
-    val lastPackage = prefs.getString(LAST_FOREGROUND_PACKAGE, null)?.lowercase(Locale.US)
-    val lastStartedAt = prefs.getLong(LAST_FOREGROUND_ELAPSED_MS, 0L)
+    val sameOwner = foregroundUsageOwnerScope == ownerScope
+    val lastPackage = if (sameOwner) prefs.getString(LAST_FOREGROUND_PACKAGE, null)?.lowercase(Locale.US) else null
+    val lastStartedAt = if (sameOwner) prefs.getLong(LAST_FOREGROUND_ELAPSED_MS, 0L) else 0L
     val hasValidStart = lastStartedAt in 1..now
 
-    if (lastPackage == normalizedPackage && hasValidStart) return
+    if (lastPackage == normalizedPackage && hasValidStart) return@synchronized
 
     val editor = prefs.edit()
     if (!lastPackage.isNullOrBlank() && lastPackage != normalizedPackage && hasValidStart && isConfiguredBlockedApp(lastPackage)) {
@@ -496,10 +835,30 @@ class FreedAccessibilityService : AccessibilityService() {
       }
     }
 
+    if (!ownsConnectedRuntime() || !FreedAppGroupStore.ownerScopeCurrent(ownerScope)) return@synchronized
     editor
       .putString(LAST_FOREGROUND_PACKAGE, normalizedPackage)
       .putLong(LAST_FOREGROUND_ELAPSED_MS, now)
       .apply()
+    foregroundUsageOwnerScope = ownerScope
+  }
+
+  private fun finishForegroundUsageSegment(ownerScope: String? = foregroundUsageOwnerScope): Unit = synchronized(FreedNativeUnlockStore.lock) {
+    if (!ownsConnectedRuntime() || !FreedProtectionConfiguration.interceptionEnabled(this) ||
+      ownerScope != foregroundUsageOwnerScope || !FreedAppGroupStore.ownerScopeCurrent(ownerScope)) return@synchronized
+    val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+    if (!ensureDailyUsageWindow(prefs, ownerScope)) return@synchronized
+    val packageName = prefs.getString(LAST_FOREGROUND_PACKAGE, null)?.lowercase(Locale.US)
+    val startedAt = prefs.getLong(LAST_FOREGROUND_ELAPSED_MS, 0L)
+    val elapsedNow = SystemClock.elapsedRealtime()
+    val editor = prefs.edit().remove(LAST_FOREGROUND_PACKAGE).remove(LAST_FOREGROUND_ELAPSED_MS)
+    if (packageName != null && isConfiguredBlockedApp(packageName) && startedAt in 1..elapsedNow) {
+      val segment = (elapsedNow - startedAt).coerceIn(0L, MAX_FOREGROUND_SEGMENT_MS)
+      editor.putLong(usageKey(packageName), prefs.getLong(usageKey(packageName), 0L) + segment)
+    }
+    if (!ownsConnectedRuntime() || !FreedAppGroupStore.ownerScopeCurrent(ownerScope)) return@synchronized
+    editor.apply()
+    foregroundUsageOwnerScope = null
   }
 
   private fun isDailyAppLimitReached(packageName: String): Boolean {
@@ -508,11 +867,21 @@ class FreedAccessibilityService : AccessibilityService() {
 
   private fun scheduleAppLimitCheck(packageName: String) {
     val normalizedPackage = packageName.lowercase(Locale.US)
-    if (currentForegroundPackage() != normalizedPackage) return
+    if (!ownsConnectedRuntime() || !FreedProtectionConfiguration.interceptionEnabled(this) ||
+      !isManuallyBlockedApp(normalizedPackage) ||
+      FreedAppGuardModeStore.read(this) != FreedAppGuardModePolicy.DAILY_LIMIT ||
+      liveScheduleForegroundPackage() != normalizedPackage || isEarnedUnlockActiveForPackage(normalizedPackage)) {
+      cancelAppLimitCheck(normalizedPackage)
+      return
+    }
 
     val remainingMs = dailyLimitMinutes() * 60_000L - currentDailyUsageMs(normalizedPackage)
     if (remainingMs <= 0L) {
-      launchAppIntervention(normalizedPackage)
+      cancelAppLimitCheck(normalizedPackage)
+      // The fallback may run after a foreground, mode, grant or reset change.
+      if (liveScheduleForegroundPackage() == normalizedPackage && appGuardShouldInterrupt(normalizedPackage)) {
+        launchAppIntervention(normalizedPackage)
+      }
       return
     }
 
@@ -534,6 +903,7 @@ class FreedAccessibilityService : AccessibilityService() {
   }
 
   private fun scheduleEarnedUnlockRelock(packageName: String) {
+    if (!ownsConnectedRuntime()) return
     val normalizedPackage = packageName.lowercase(Locale.US)
     val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
     val sourcePackage = earnedUnlockSourcePackage(prefs)
@@ -564,7 +934,12 @@ class FreedAccessibilityService : AccessibilityService() {
     val remainingMs = expiryMs - System.currentTimeMillis()
     if (remainingMs <= 0L) {
       clearEarnedUnlockPrefs(prefs)
-      if (currentForegroundPackage() == normalizedPackage) {
+      if (FreedAppSchedulePolicy.shouldRelock(
+        normalizedPackage,
+        currentBlockingPackagesFor(normalizedPackage),
+        liveScheduleForegroundPackage(),
+        false
+      )) {
         launchAppIntervention(
           normalizedPackage,
           reason = "Earned unlock expired. FREED is relocking the selected app."
@@ -584,6 +959,7 @@ class FreedAccessibilityService : AccessibilityService() {
   }
 
   private fun beginOrContinueShortFormSession(packageName: String, rule: String) {
+    if (!ownsConnectedRuntime()) return
     val normalizedPackage = packageName.lowercase(Locale.US)
     val now = SystemClock.elapsedRealtime()
     if (shortFormPackage != normalizedPackage || shortFormRule != rule || shortFormStartedElapsedMs <= 0L) {
@@ -691,9 +1067,11 @@ class FreedAccessibilityService : AccessibilityService() {
       .toLong() * 1_000L
   }
 
-  private fun ensureDailyUsageWindow(prefs: SharedPreferences) {
+  private fun ensureDailyUsageWindow(prefs: SharedPreferences, ownerScope: String? = capturePrivateUsageScope()): Boolean = synchronized(FreedNativeUnlockStore.lock) {
+    if (!ownsConnectedRuntime() || !FreedProtectionConfiguration.interceptionEnabled(this) ||
+      !FreedAppGroupStore.ownerScopeCurrent(ownerScope)) return@synchronized false
     val today = appUsageDateKey()
-    if (prefs.getString(APP_USAGE_DATE_KEY, null) == today) return
+    if (prefs.getString(APP_USAGE_DATE_KEY, null) == today) return@synchronized true
 
     val editor = prefs.edit()
     prefs.all.keys
@@ -703,7 +1081,9 @@ class FreedAccessibilityService : AccessibilityService() {
           key == LAST_FOREGROUND_ELAPSED_MS
       }
       .forEach { key -> editor.remove(key) }
+    if (!ownsConnectedRuntime() || !FreedAppGroupStore.ownerScopeCurrent(ownerScope)) return@synchronized false
     editor.putString(APP_USAGE_DATE_KEY, today).apply()
+    true
   }
 
   private fun usageKey(packageName: String): String {
@@ -716,29 +1096,34 @@ class FreedAccessibilityService : AccessibilityService() {
     }.format(Date())
   }
 
-  private fun isEarnedUnlockActiveForPackage(packageName: String): Boolean {
+  private fun isEarnedUnlockActiveForPackage(packageName: String): Boolean = synchronized(FreedNativeUnlockStore.lock) {
+    val configuration = FreedAppScheduleStore.read(this)
+    if (FreedAppGuardModePolicy.hardGuardActive(packageName.lowercase(Locale.US),
+      FreedAppSchedulePolicy.evaluate(configuration, System.currentTimeMillis()), configuration.strictGuard)) {
+      // Preserve the native receipt. Its original expiry still applies after the hard window ends.
+      return@synchronized false
+    }
     val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-    val expiresAt = prefs.getString(EARNED_UNLOCK_EXPIRES_AT, null) ?: return false
+    val expiresAt = prefs.getString(EARNED_UNLOCK_EXPIRES_AT, null) ?: return@synchronized false
     val expiryMs = parseIsoMillis(expiresAt)
 
     if (expiryMs != null && expiryMs > System.currentTimeMillis()) {
       val sourcePackage = earnedUnlockSourcePackage(prefs)
-      if (sourcePackage == null) {
+      if (sourcePackage == null || !FreedNativeUnlockStore.hasActivePackageGrant(this, sourcePackage, expiryMs)) {
         clearEarnedUnlockPrefs(prefs)
-        return false
+        return@synchronized false
       }
-      return sourcePackage == packageName.lowercase(Locale.US)
+      return@synchronized sourcePackage == packageName.lowercase(Locale.US)
     }
 
     clearEarnedUnlockPrefs(prefs)
-    return false
+    return@synchronized false
   }
 
   private fun clearEarnedUnlockPrefs(prefs: SharedPreferences) {
-    prefs.edit()
-      .remove(EARNED_UNLOCK_EXPIRES_AT)
-      .remove(EARNED_UNLOCK_SOURCE_PACKAGE)
-      .apply()
+    val editor = prefs.edit().remove(EARNED_UNLOCK_EXPIRES_AT).remove(EARNED_UNLOCK_SOURCE_PACKAGE)
+    FreedNativeUnlockStore.clearPackageReceipt(editor)
+    editor.apply()
   }
 
   private fun earnedUnlockSourcePackage(prefs: SharedPreferences): String? {
@@ -828,6 +1213,7 @@ class FreedAccessibilityService : AccessibilityService() {
   }
 
   private fun shortFormRuleForEvent(packageName: String, event: AccessibilityEvent): String? {
+    if (!FreedFocusShieldRollout.enabled(this) || !FreedFocusShieldRules.hasEnabledPresetRulesForPackage(this, packageName)) return null
     if (event.eventType == AccessibilityEvent.TYPE_VIEW_TEXT_CHANGED) return null
 
     if (packageName == YOUTUBE_PACKAGE && isYouTubeShortsSurface(event)) {
@@ -957,6 +1343,7 @@ class FreedAccessibilityService : AccessibilityService() {
   }
 
   private fun isCurrentShortFormSurface(packageName: String, rule: String): Boolean {
+    if (!FreedFocusShieldRollout.enabled(this) || !FreedFocusShieldRules.hasEnabledPresetRulesForPackage(this, packageName)) return false
     return when (rule) {
       YOUTUBE_SHORTS_RULE -> packageName == YOUTUBE_PACKAGE && containsSelectedShortsNode(rootInActiveWindow, depth = 0)
       INSTAGRAM_REELS_RULE -> packageName == INSTAGRAM_PACKAGE && containsSelectedReelsNode(rootInActiveWindow, depth = 0)
@@ -1174,52 +1561,76 @@ class FreedAccessibilityService : AccessibilityService() {
       normalized.contains("search_query=")
   }
 
-  private fun launchIntervention(url: String, sourcePackage: String, result: FreedClassification) {
+  private fun requestWebsiteRecovery(id: String, configurationEpoch: Long, connectionEpoch: Long, vpnCurrent: () -> Boolean) {
+    synchronized(FreedNativeUnlockStore.lock) {
+      val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+      FreedWebsiteRecoveryHandoff.requestOnce(id, SystemClock.elapsedRealtime(), {
+        ownsConnectedRuntime() && scheduleConnectionEpoch == connectionEpoch && vpnCurrent() &&
+          configurationEpoch == FreedProtectionConfiguration.epoch(this) && FreedWebsiteRecoveryHandoff.previewEnabled(this) &&
+          isScreenInteractiveAndUnlocked() && eligibleWebHandlers?.contains(liveScheduleForegroundPackage()) == true &&
+          prefs.getString(PENDING_SOURCE_PACKAGE, null) == "android-dns" && FreedWebsiteRecoveryHandoff.current(this, prefs.all, id)
+      }, {
+        val snapshot = prefs.all
+        val intent = buildAccessibilityInterventionIntent("android-dns", snapshot[PENDING_URL] as? String ?: "",
+          snapshot[PENDING_HOST] as? String ?: "", snapshot[PENDING_RULE] as? String ?: "")
+        intent.putExtra(FreedProtectionConfiguration.INTENT_EPOCH, configurationEpoch)
+        intent.putExtra(FreedInterventionActivity.INTERVENTION_ID_EXTRA, id)
+        startActivity(intent)
+      })
+    }
+  }
+
+  private fun launchIntervention(url: String, sourcePackage: String, result: FreedClassification, adultGeneration: Pair<Long?, Long>): Unit = FreedAdultProtectionState.guarded(this) {
+    if (!FreedAdultProtectionState.permitsClassification(this, adultGeneration)) return@guarded
+    synchronized(FreedNativeUnlockStore.lock) {
+    if (!FreedProtectionConfiguration.interceptionEnabled(this)) return@synchronized
     val now = SystemClock.elapsedRealtime()
     val host = FreedUrlClassifier.normalizeHostForStorage(result.host).ifBlank { "redacted.freed.local" }
     val key = "$host:${result.matchedRule}"
-    if (key == lastBlockedKey && now - lastLaunchElapsedMs < 4_000) return
+    if (key == lastBlockedKey && now - lastLaunchElapsedMs < 4_000) return@synchronized
     lastBlockedKey = key
     lastLaunchElapsedMs = now
     val redactedUrl = "https://$host"
     val interventionId = UUID.randomUUID().toString()
 
-    getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-      .edit()
-      .putString(PENDING_INTERVENTION_ID, interventionId)
-      .putString(PENDING_URL, redactedUrl)
-      .putString(PENDING_HOST, host)
-      .putString(PENDING_SOURCE_PACKAGE, sourcePackage)
-      .putString(PENDING_REASON, result.reason)
-      .putString(PENDING_RULE, result.matchedRule)
-      .putString(PENDING_DETECTED_AT, nowIsoString())
-      .remove(PENDING_FOCUS_SHIELD_RULE_ID)
-      .remove(PENDING_SESSION_DURATION_SECONDS)
-      .apply()
-
+    val prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+    val published = FreedWebsiteRecoveryHandoff.publish(this, prefs, interventionId) {
+      putString(PENDING_INTERVENTION_ID, interventionId)
+      putString(PENDING_URL, redactedUrl)
+      putString(PENDING_HOST, host)
+      putString(PENDING_SOURCE_PACKAGE, sourcePackage)
+      putString(PENDING_REASON, result.reason)
+      putString(PENDING_RULE, result.matchedRule)
+      putString(PENDING_DETECTED_AT, nowIsoString())
+    }
+    if (!published) return@synchronized
     val intent = buildAccessibilityInterventionIntent(sourcePackage, redactedUrl, host, result.matchedRule)
-    showAccessibilityInterventionNotification(
-      title = "FREED blocked a high-risk browser moment",
-      sourceLabel = host,
-      sourcePackage = sourcePackage,
-      redactedUrl = redactedUrl,
-      host = host,
-      matchedRule = result.matchedRule
-    )
-    runCatching { startActivity(intent) }
+    runCatching { showAccessibilityInterventionNotification(
+      title = FreedNativeCopy.text(this@FreedAccessibilityService, R.string.freed_recovery_channel),
+      sourceLabel = host, sourcePackage = sourcePackage, redactedUrl = redactedUrl,
+      host = host, matchedRule = result.matchedRule
+    ) }
+    FreedWebsiteRecoveryHandoff.requestOnce(interventionId, now, {
+      FreedAdultProtectionState.permitsClassification(this, adultGeneration) && ownsConnectedRuntime() && isScreenInteractiveAndUnlocked() && liveScheduleForegroundPackage() == sourcePackage &&
+        FreedWebsiteRecoveryHandoff.current(this, prefs.all, interventionId)
+    }, { startActivity(intent) })
+    Unit
+    }
   }
 
   private fun launchAppIntervention(
     packageName: String,
-    reason: String = "Configured app limit reached. FREED is opening an earned-reset challenge.",
+    reason: String = "Configured app limit reached.",
     matchedRule: String? = null,
     hostOverride: String? = null,
     focusShieldRuleId: String? = null,
-    sessionDurationSeconds: Long = (currentForegroundSessionMs(packageName) / 1_000L).coerceAtLeast(0L)
-  ) {
+    sessionDurationSeconds: Long = (currentForegroundSessionMs(packageName) / 1_000L).coerceAtLeast(0L),
+    appGroup: Map<String, Any?>? = null
+  ): Unit = synchronized(FreedNativeUnlockStore.lock) {
+    if (!FreedProtectionConfiguration.interceptionEnabled(this) || packageName !in FreedInstalledApplications.eligible(this)) return@synchronized
     val now = SystemClock.elapsedRealtime()
     val rule = matchedRule ?: "configured-app:${packageName.lowercase(Locale.US)}"
-    if (rule == lastBlockedKey && now - lastLaunchElapsedMs < 4_000) return
+    if (rule == lastBlockedKey && now - lastLaunchElapsedMs < 4_000) return@synchronized
 
     lastBlockedKey = rule
     lastLaunchElapsedMs = now
@@ -1227,8 +1638,9 @@ class FreedAccessibilityService : AccessibilityService() {
     val redactedUrl = "https://$host"
     val interventionId = UUID.randomUUID().toString()
 
-    getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-      .edit()
+    val pendingEditor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit()
+    if (appGroup != null && !FreedAppGroupStore.issue(this, appGroup, packageName, interventionId, pendingEditor)) return@synchronized
+    pendingEditor
       .putString(PENDING_INTERVENTION_ID, interventionId)
       .putString(PENDING_URL, redactedUrl)
       .putString(PENDING_HOST, host)
@@ -1251,16 +1663,17 @@ class FreedAccessibilityService : AccessibilityService() {
       .apply()
 
     val intent = buildAccessibilityInterventionIntent(packageName, redactedUrl, host, rule, focusShieldRuleId)
-    showAccessibilityInterventionNotification(
-      title = "FREED opened a recovery challenge",
+    runCatching { showAccessibilityInterventionNotification(
+      title = FreedNativeCopy.text(this@FreedAccessibilityService, R.string.freed_recovery_channel),
       sourceLabel = host,
       sourcePackage = packageName,
       redactedUrl = redactedUrl,
       host = host,
       matchedRule = rule,
       focusShieldRuleId = focusShieldRuleId
-    )
+    ) }
     runCatching { startActivity(intent) }
+    Unit
   }
 
   private fun launchShortFormIntervention(packageName: String, rule: String) {
@@ -1287,7 +1700,7 @@ class FreedAccessibilityService : AccessibilityService() {
     clearShortFormSession()
     launchAppIntervention(
       packageName = packageName,
-      reason = "Focus Shield matched a configured surface rule. FREED is opening an earned-reset challenge.",
+      reason = "Focus Shield matched a configured surface rule.",
       matchedRule = "focus-shield:${focusShieldRule.id}",
       hostOverride = shortFormHostForRule(shortFormRule),
       focusShieldRuleId = focusShieldRule.id
@@ -1316,6 +1729,9 @@ class FreedAccessibilityService : AccessibilityService() {
   ): Intent {
     return Intent(this, FreedInterventionActivity::class.java).apply {
       action = Intent.ACTION_VIEW
+      putExtra(FreedProtectionConfiguration.INTENT_EPOCH, FreedProtectionConfiguration.epoch(this@FreedAccessibilityService))
+      putExtra(FreedInterventionActivity.INTERVENTION_ID_EXTRA,
+        getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString(PENDING_INTERVENTION_ID, null))
       addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
       putExtra("freed_intervention_source", sourcePackage)
       putExtra("freed_intervention_url", redactedUrl)
@@ -1334,15 +1750,20 @@ class FreedAccessibilityService : AccessibilityService() {
     matchedRule: String,
     focusShieldRuleId: String? = null
   ) {
+    if (focusShieldRuleId == null && FreedWebsiteRecoveryHandoff.isWebsite(mapOf(
+        PENDING_SOURCE_PACKAGE to sourcePackage, PENDING_RULE to matchedRule))) {
+      FreedWebsiteRecoveryNotification.show(this, INTERVENTION_NOTIFICATION_CHANNEL_ID, INTERVENTION_NOTIFICATION_ID)
+      return
+    }
     val notificationManager = getSystemService(NotificationManager::class.java)
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
       notificationManager.createNotificationChannel(
         NotificationChannel(
           INTERVENTION_NOTIFICATION_CHANNEL_ID,
-          "FREED recovery interventions",
+          FreedNativeCopy.text(this@FreedAccessibilityService, R.string.freed_recovery_channel),
           NotificationManager.IMPORTANCE_HIGH
         ).apply {
-          description = "Shows when FREED redirects a supported browser, WebView, or selected app into a recovery challenge."
+          description = FreedNativeCopy.text(this@FreedAccessibilityService, R.string.freed_browser_channel_description)
         }
       )
     }
@@ -1354,7 +1775,7 @@ class FreedAccessibilityService : AccessibilityService() {
       PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
     val icon = applicationInfo.icon.takeIf { it != 0 } ?: android.R.drawable.ic_lock_lock
-    val message = "Open FREED to complete a recovery challenge. No overlays, screenshots, or OCR are used."
+    val message = FreedNativeCopy.text(this@FreedAccessibilityService, R.string.freed_accessibility_notification)
     val builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
       Notification.Builder(this, INTERVENTION_NOTIFICATION_CHANNEL_ID)
     } else {
@@ -1366,7 +1787,7 @@ class FreedAccessibilityService : AccessibilityService() {
       .setSmallIcon(icon)
       .setContentTitle(title)
       .setContentText(message)
-      .setStyle(Notification.BigTextStyle().bigText("$message\nSource: ${sourceLabel.take(80)}"))
+      .setStyle(Notification.BigTextStyle().bigText(message + "\n" + FreedNativeCopy.text(this, R.string.freed_source_label, mapOf("host" to sourceLabel.take(80)))))
       .setContentIntent(pendingIntent)
       .setAutoCancel(true)
       .setCategory(Notification.CATEGORY_STATUS)
@@ -1376,7 +1797,9 @@ class FreedAccessibilityService : AccessibilityService() {
       builder.setPriority(Notification.PRIORITY_HIGH)
     }
 
-    notificationManager.notify(INTERVENTION_NOTIFICATION_ID, builder.build())
+    FreedRetainedAdultProtection.publishPrivateNotice(this, INTERVENTION_NOTIFICATION_ID) {
+      notificationManager.notify(INTERVENTION_NOTIFICATION_ID, builder.build())
+    }
   }
 
   private fun nowIsoString(): String {

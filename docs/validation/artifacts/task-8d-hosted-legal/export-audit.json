@@ -1,0 +1,483 @@
+{
+  "schemaVersion": "freed-store-legal-web-export-audit-v1",
+  "generatedAt": "2026-10-05T10:46:39.330Z",
+  "sanitized": true,
+  "mode": "website",
+  "result": "pass",
+  "passCount": 8,
+  "failCount": 0,
+  "exportDir": "website",
+  "routeExports": [
+    {
+      "id": "privacy",
+      "exists": true,
+      "htmlArtifact": "website/privacy.html",
+      "publicUrl": "https://freed-landing.web.app/privacy",
+      "contentChecks": [
+        {
+          "text": "Effective date: October 5, 2026",
+          "present": true
+        },
+        {
+          "text": "soumyadebnath1661@gmail.com",
+          "present": true
+        },
+        {
+          "text": "FREED Privacy Policy",
+          "present": true
+        },
+        {
+          "text": "adults 18+",
+          "present": true
+        },
+        {
+          "text": "account is required",
+          "present": true
+        },
+        {
+          "text": "opaque",
+          "present": true
+        },
+        {
+          "text": "Apple Vision",
+          "present": true
+        },
+        {
+          "text": "bundled ML Kit",
+          "present": true
+        },
+        {
+          "text": "operational SDK metrics",
+          "present": true
+        },
+        {
+          "text": "up to six recent user-authored messages",
+          "present": true
+        },
+        {
+          "text": "not automatically attached",
+          "present": true
+        },
+        {
+          "text": "outside your country",
+          "present": true
+        },
+        {
+          "text": "processing and retention terms",
+          "present": true
+        },
+        {
+          "text": "retention planning run locally",
+          "present": true
+        },
+        {
+          "text": "aggregate",
+          "present": true
+        },
+        {
+          "text": "encrypted backup",
+          "present": true
+        },
+        {
+          "text": "baseline adult-domain protection",
+          "present": true
+        },
+        {
+          "text": "native protection barrier are ad-free",
+          "present": true
+        },
+        {
+          "text": "Detect openings of selected apps to apply your whole-app guards. You choose whether to open FREED recovery. Native Shorts and Reels inspection is experimental and outside the public release.",
+          "present": true
+        }
+      ],
+      "obsoleteChecks": [
+        {
+          "text": "June 6, 2026",
+          "absent": true
+        },
+        {
+          "text": "at least 13",
+          "absent": true
+        },
+        {
+          "text": "optional) account",
+          "absent": true
+        },
+        {
+          "text": "optional accounts",
+          "absent": true
+        },
+        {
+          "text": "lifetime",
+          "absent": true
+        },
+        {
+          "text": "remote challenge generation",
+          "absent": true
+        },
+        {
+          "text": "selected short-form surfaces",
+          "absent": true
+        },
+        {
+          "text": "bounded scroll events",
+          "absent": true
+        },
+        {
+          "text": "free users may see rewarded ads before some recovery challenges",
+          "absent": true
+        }
+      ],
+      "sha256": "sha256-9a62d364fcf89b316c0d073cdae736cb2b8c193f4213cee4b0d8fd691841cf22",
+      "sizeBytes": 9640
+    },
+    {
+      "id": "support",
+      "exists": true,
+      "htmlArtifact": "website/support.html",
+      "publicUrl": "https://freed-landing.web.app/support",
+      "contentChecks": [
+        {
+          "text": "Effective date: October 5, 2026",
+          "present": true
+        },
+        {
+          "text": "soumyadebnath1661@gmail.com",
+          "present": true
+        },
+        {
+          "text": "FREED Support",
+          "present": true
+        },
+        {
+          "text": "Protection setup help",
+          "present": true
+        },
+        {
+          "text": "account ownership verification",
+          "present": true
+        },
+        {
+          "text": "verified paid expiry",
+          "present": true
+        },
+        {
+          "text": "Restore purchases",
+          "present": true
+        },
+        {
+          "text": "Manage subscription",
+          "present": true
+        },
+        {
+          "text": "freed_premium_yearly",
+          "present": true
+        },
+        {
+          "text": "freed_premium_monthly",
+          "present": true
+        },
+        {
+          "text": "retry",
+          "present": true
+        },
+        {
+          "text": "Google Play",
+          "present": true
+        },
+        {
+          "text": "App Store",
+          "present": true
+        },
+        {
+          "text": "Detect openings of selected apps to apply your whole-app guards. You choose whether to open FREED recovery. Native Shorts and Reels inspection is experimental and outside the public release.",
+          "present": true
+        }
+      ],
+      "obsoleteChecks": [
+        {
+          "text": "June 6, 2026",
+          "absent": true
+        },
+        {
+          "text": "at least 13",
+          "absent": true
+        },
+        {
+          "text": "optional) account",
+          "absent": true
+        },
+        {
+          "text": "optional accounts",
+          "absent": true
+        },
+        {
+          "text": "lifetime",
+          "absent": true
+        },
+        {
+          "text": "remote challenge generation",
+          "absent": true
+        },
+        {
+          "text": "selected short-form surfaces",
+          "absent": true
+        },
+        {
+          "text": "bounded scroll events",
+          "absent": true
+        },
+        {
+          "text": "free users may see rewarded ads before some recovery challenges",
+          "absent": true
+        }
+      ],
+      "sha256": "sha256-26ad4eaa4b32fea274b9b3f1c5b0a35d4d082fdc3dd83385c5f180fb5f543657",
+      "sizeBytes": 7080
+    },
+    {
+      "id": "account-deletion",
+      "exists": true,
+      "htmlArtifact": "website/account-deletion.html",
+      "publicUrl": "https://freed-landing.web.app/account-deletion",
+      "contentChecks": [
+        {
+          "text": "Effective date: October 5, 2026",
+          "present": true
+        },
+        {
+          "text": "soumyadebnath1661@gmail.com",
+          "present": true
+        },
+        {
+          "text": "FREED Account Deletion",
+          "present": true
+        },
+        {
+          "text": "Delete local app data",
+          "present": true
+        },
+        {
+          "text": "Request hosted data deletion",
+          "present": true
+        },
+        {
+          "text": "native acknowledgment",
+          "present": true
+        },
+        {
+          "text": "Recovery records are preserved",
+          "present": true
+        },
+        {
+          "text": "Delete Account &amp; Data",
+          "present": true
+        },
+        {
+          "text": "deletion is in progress",
+          "present": true
+        },
+        {
+          "text": "does not cancel",
+          "present": true
+        },
+        {
+          "text": "instantaneous provider",
+          "present": true
+        },
+        {
+          "text": "https://freed-landing.web.app/account-deletion",
+          "present": true
+        }
+      ],
+      "obsoleteChecks": [
+        {
+          "text": "June 6, 2026",
+          "absent": true
+        },
+        {
+          "text": "at least 13",
+          "absent": true
+        },
+        {
+          "text": "optional) account",
+          "absent": true
+        },
+        {
+          "text": "optional accounts",
+          "absent": true
+        },
+        {
+          "text": "lifetime",
+          "absent": true
+        },
+        {
+          "text": "remote challenge generation",
+          "absent": true
+        },
+        {
+          "text": "selected short-form surfaces",
+          "absent": true
+        },
+        {
+          "text": "bounded scroll events",
+          "absent": true
+        },
+        {
+          "text": "free users may see rewarded ads before some recovery challenges",
+          "absent": true
+        }
+      ],
+      "sha256": "sha256-964c8d8eeaf08980d7ba0994b2e72ad6dc6eeb3f2a1c4b2857f54146fd4fcd5e",
+      "sizeBytes": 6411
+    },
+    {
+      "id": "terms",
+      "exists": true,
+      "htmlArtifact": "website/terms.html",
+      "publicUrl": "https://freed-landing.web.app/terms",
+      "contentChecks": [
+        {
+          "text": "Effective date: October 5, 2026",
+          "present": true
+        },
+        {
+          "text": "soumyadebnath1661@gmail.com",
+          "present": true
+        },
+        {
+          "text": "FREED Terms of Service",
+          "present": true
+        },
+        {
+          "text": "adults 18+",
+          "present": true
+        },
+        {
+          "text": "voluntary personal use",
+          "present": true
+        },
+        {
+          "text": "account is required",
+          "present": true
+        },
+        {
+          "text": "same features",
+          "present": true
+        },
+        {
+          "text": "auto-renewing",
+          "present": true
+        },
+        {
+          "text": "not a medical device",
+          "present": true
+        },
+        {
+          "text": "Strenuous exercise is not required",
+          "present": true
+        },
+        {
+          "text": "never turn off baseline adult-domain protection",
+          "present": true
+        },
+        {
+          "text": "Detect openings of selected apps to apply your whole-app guards. You choose whether to open FREED recovery. Native Shorts and Reels inspection is experimental and outside the public release.",
+          "present": true
+        }
+      ],
+      "obsoleteChecks": [
+        {
+          "text": "June 6, 2026",
+          "absent": true
+        },
+        {
+          "text": "at least 13",
+          "absent": true
+        },
+        {
+          "text": "optional) account",
+          "absent": true
+        },
+        {
+          "text": "optional accounts",
+          "absent": true
+        },
+        {
+          "text": "lifetime",
+          "absent": true
+        },
+        {
+          "text": "remote challenge generation",
+          "absent": true
+        },
+        {
+          "text": "selected short-form surfaces",
+          "absent": true
+        },
+        {
+          "text": "bounded scroll events",
+          "absent": true
+        },
+        {
+          "text": "free users may see rewarded ads before some recovery challenges",
+          "absent": true
+        }
+      ],
+      "sha256": "sha256-732cb5bdf3a0f53f1972b0868bbcb7b0cb9e0b66dd1ff61da0fcb60822ef6f30",
+      "sizeBytes": 8776
+    }
+  ],
+  "checks": [
+    {
+      "id": "website-content-privacy",
+      "status": "pass",
+      "detail": "privacy has current disclosure and excludes obsolete scope.",
+      "next": ""
+    },
+    {
+      "id": "website-navigation-privacy",
+      "status": "pass",
+      "detail": "privacy retains canonical URL, legal navigation and contact.",
+      "next": ""
+    },
+    {
+      "id": "website-content-support",
+      "status": "pass",
+      "detail": "support has current disclosure and excludes obsolete scope.",
+      "next": ""
+    },
+    {
+      "id": "website-navigation-support",
+      "status": "pass",
+      "detail": "support retains canonical URL, legal navigation and contact.",
+      "next": ""
+    },
+    {
+      "id": "website-content-account-deletion",
+      "status": "pass",
+      "detail": "account-deletion has current disclosure and excludes obsolete scope.",
+      "next": ""
+    },
+    {
+      "id": "website-navigation-account-deletion",
+      "status": "pass",
+      "detail": "account-deletion retains canonical URL, legal navigation and contact.",
+      "next": ""
+    },
+    {
+      "id": "website-content-terms",
+      "status": "pass",
+      "detail": "terms has current disclosure and excludes obsolete scope.",
+      "next": ""
+    },
+    {
+      "id": "website-navigation-terms",
+      "status": "pass",
+      "detail": "terms retains canonical URL, legal navigation and contact.",
+      "next": ""
+    }
+  ],
+  "releaseBoundary": "Local four-page content proof only. Browser rendering, publication/readback, legal review, and actual device/store/provider proof are separate gates."
+}

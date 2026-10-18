@@ -1,0 +1,56 @@
+appId: app.freed.recovery
+name: localization-rtl-restart
+tags:
+  - smoke
+  - local-write
+---
+# Unexecuted smoke scenario. Requires an isolated disposable English/LTR fixture.
+# Full scenario and physical-device receipts remain separate obligations.
+- openLink: "freed:///preferences"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-preferences"
+    timeout: 15000
+# Both platforms use the same language rows; this requires an English/LTR starting fixture.
+- scrollUntilVisible:
+    element: { id: "language-ar" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "language-ar" }
+- scrollUntilVisible:
+    element: { id: "language-restart" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: { id: "language-restart-notice" }
+- takeScreenshot: "arabic-restart-pending"
+- tapOn: { id: "language-restart" }
+- openLink: "freed:///preferences"
+- extendedWaitUntil:
+    visible: { id: "screen-preferences" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "language-ar" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: { id: "language-ar", checked: true }
+- scrollUntilVisible:
+    element: { id: "language-en" }
+    direction: UP
+    timeout: 10000
+- tapOn: { id: "language-en" }
+- scrollUntilVisible:
+    element: { id: "language-restart" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: { id: "language-restart-notice" }
+- tapOn: { id: "language-restart" }
+- openLink: "freed:///preferences"
+- extendedWaitUntil:
+    visible: { id: "screen-preferences" }
+    timeout: 15000
+- takeScreenshot: "localization-rtl-restart"

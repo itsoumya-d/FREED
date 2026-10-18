@@ -1,0 +1,732 @@
+{
+  "entries": [
+    {
+      "source": "Activate protection",
+      "translations": {
+        "hi": "सुरक्षा सक्रिय करें",
+        "es": "Activar protección",
+        "pt": "Ativar proteção",
+        "fr": "Activer la protection",
+        "de": "Schutz aktivieren",
+        "ar": "تفعيل الحماية",
+        "ja": "保護を有効にする",
+        "ko": "보호 활성화",
+        "zh-Hans": "启用保护"
+      }
+    },
+    {
+      "source": "Add apps",
+      "translations": {
+        "hi": "ऐप जोड़ें",
+        "es": "Añadir apps",
+        "pt": "Adicionar apps",
+        "fr": "Ajouter des apps",
+        "de": "Apps hinzufügen",
+        "ar": "إضافة تطبيقات",
+        "ja": "アプリを追加",
+        "ko": "앱 추가",
+        "zh-Hans": "添加应用"
+      }
+    },
+    {
+      "source": "Allow Screen Time to choose apps.",
+      "translations": {
+        "hi": "ऐप चुनने के लिए Screen Time को अनुमति दें।",
+        "es": "Permite el acceso a Tiempo de uso para elegir apps.",
+        "pt": "Permita o acesso ao Tempo de Uso para escolher apps.",
+        "fr": "Autorisez l’accès à Temps d’écran pour choisir des apps.",
+        "de": "Erlaube den Zugriff auf Bildschirmzeit, um Apps auszuwählen.",
+        "ar": "اسمح بالوصول إلى مدة استخدام الجهاز لاختيار التطبيقات.",
+        "ja": "アプリを選択するには、スクリーンタイムへのアクセスを許可してください。",
+        "ko": "앱을 선택하려면 스크린 타임 접근을 허용해 주세요.",
+        "zh-Hans": "请允许访问屏幕使用时间，以选择应用。"
+      }
+    },
+    {
+      "source": "Allow the required permission to activate app protection.",
+      "translations": {
+        "hi": "ऐप सुरक्षा सक्रिय करने के लिए आवश्यक अनुमति दें।",
+        "es": "Concede el permiso necesario para activar la protección de apps.",
+        "pt": "Conceda a permissão necessária para ativar a proteção de apps.",
+        "fr": "Accordez l’autorisation requise pour activer la protection des apps.",
+        "de": "Erteile die erforderliche Berechtigung, um den App-Schutz zu aktivieren.",
+        "ar": "امنح الإذن المطلوب لتفعيل حماية التطبيقات.",
+        "ja": "アプリの保護を有効にするには、必要な権限を許可してください。",
+        "ko": "앱 보호를 활성화하려면 필요한 권한을 허용해 주세요.",
+        "zh-Hans": "请授予所需权限，以启用应用保护。"
+      }
+    },
+    {
+      "source": "App selection is unavailable in this installed build.",
+      "translations": {
+        "hi": "इस इंस्टॉल किए गए बिल्ड में ऐप चुनना उपलब्ध नहीं है।",
+        "es": "La selección de apps no está disponible en esta versión instalada.",
+        "pt": "A seleção de apps não está disponível nesta versão instalada.",
+        "fr": "La sélection des apps n’est pas disponible dans cette version installée.",
+        "de": "Die App-Auswahl ist in dieser installierten Version nicht verfügbar.",
+        "ar": "اختيار التطبيقات غير متاح في هذا الإصدار المثبّت.",
+        "ja": "インストールされているこのビルドでは、アプリの選択は利用できません。",
+        "ko": "설치된 이 빌드에서는 앱 선택을 사용할 수 없습니다.",
+        "zh-Hans": "当前安装的版本不支持选择应用。"
+      }
+    },
+    {
+      "source": "Check the saved setup before testing a website.",
+      "translations": {
+        "hi": "किसी वेबसाइट की जाँच करने से पहले सहेजा गया सेटअप जाँचें।",
+        "es": "Revisa la configuración guardada antes de probar un sitio web.",
+        "pt": "Confira a configuração salva antes de testar um site.",
+        "fr": "Vérifiez la configuration enregistrée avant de tester un site web.",
+        "de": "Prüfe die gespeicherte Einrichtung, bevor du eine Website testest.",
+        "ar": "راجع الإعداد المحفوظ قبل اختبار موقع ويب.",
+        "ja": "ウェブサイトをテストする前に、保存済みの設定を確認してください。",
+        "ko": "웹사이트를 테스트하기 전에 저장된 설정을 확인해 주세요.",
+        "zh-Hans": "测试网站前，请检查已保存的设置。"
+      }
+    },
+    {
+      "source": "Choose apps to pause, then review their shared rule.",
+      "translations": {
+        "hi": "रोकने के लिए ऐप चुनें, फिर उनका साझा नियम देखें।",
+        "es": "Elige las apps que quieres pausar y luego revisa su regla compartida.",
+        "pt": "Escolha os apps que deseja pausar e depois revise a regra compartilhada.",
+        "fr": "Choisissez les apps à mettre en pause, puis vérifiez leur règle commune.",
+        "de": "Wähle Apps zum Pausieren aus und prüfe dann ihre gemeinsame Regel.",
+        "ar": "اختر التطبيقات التي تريد إيقافها مؤقتًا، ثم راجع القاعدة المشتركة بينها.",
+        "ja": "一時停止するアプリを選び、共通のルールを確認してください。",
+        "ko": "일시 중지할 앱을 선택한 다음 공통 규칙을 검토해 주세요.",
+        "zh-Hans": "选择要暂停使用的应用，然后检查它们共用的规则。"
+      }
+    },
+    {
+      "source": "Continue draft",
+      "translations": {
+        "hi": "ड्राफ़्ट लिखना जारी रखें",
+        "es": "Continuar borrador",
+        "pt": "Continuar rascunho",
+        "fr": "Reprendre le brouillon",
+        "de": "Entwurf fortsetzen",
+        "ar": "متابعة المسودة",
+        "ja": "下書きの続きを書く",
+        "ko": "초안 이어 쓰기",
+        "zh-Hans": "继续编辑草稿"
+      }
+    },
+    {
+      "source": "Device protection storage could not be opened. Retry loading; your existing protection stays in place.",
+      "translations": {
+        "hi": "डिवाइस की सुरक्षा का स्टोरेज नहीं खोला जा सका। फिर से लोड करें; आपकी मौजूदा सुरक्षा लागू रहेगी।",
+        "es": "No se pudo abrir el almacenamiento de protección del dispositivo. Vuelve a cargarlo; la protección existente seguirá activa.",
+        "pt": "Não foi possível abrir o armazenamento de proteção do dispositivo. Tente carregar novamente; a proteção existente continuará em vigor.",
+        "fr": "Impossible d’ouvrir le stockage de protection de l’appareil. Réessayez le chargement ; votre protection existante reste en place.",
+        "de": "Der Schutzspeicher des Geräts konnte nicht geöffnet werden. Versuche das Laden erneut; dein bestehender Schutz bleibt erhalten.",
+        "ar": "تعذّر فتح مساحة تخزين حماية الجهاز. أعد محاولة التحميل؛ ستبقى الحماية الحالية في مكانها.",
+        "ja": "端末の保護設定用ストレージを開けませんでした。再読み込みしてください。現在の保護は維持されます。",
+        "ko": "기기의 보호 설정 저장소를 열 수 없습니다. 다시 불러와 주세요. 기존 보호는 유지됩니다.",
+        "zh-Hans": "无法打开设备保护设置的存储空间。请重新加载；现有保护将保持生效。"
+      }
+    },
+    {
+      "source": "DNS, Safari, permissions and repair details",
+      "translations": {
+        "hi": "DNS, Safari, अनुमतियों और सुधार का विवरण",
+        "es": "DNS, Safari, permisos y detalles de reparación",
+        "pt": "DNS, Safari, permissões e detalhes de reparo",
+        "fr": "DNS, Safari, autorisations et détails de réparation",
+        "de": "DNS, Safari, Berechtigungen und Details zur Reparatur",
+        "ar": "DNS وSafari والأذونات وتفاصيل الإصلاح",
+        "ja": "DNS、Safari、権限、修復の詳細",
+        "ko": "DNS, Safari, 권한 및 복구 세부 정보",
+        "zh-Hans": "DNS、Safari、权限和修复详情"
+      }
+    },
+    {
+      "source": "Edit",
+      "translations": {
+        "hi": "संपादित करें",
+        "es": "Editar",
+        "pt": "Editar",
+        "fr": "Modifier",
+        "de": "Bearbeiten",
+        "ar": "تعديل",
+        "ja": "編集",
+        "ko": "편집",
+        "zh-Hans": "编辑"
+      }
+    },
+    {
+      "source": "Edit shared rule",
+      "translations": {
+        "hi": "साझा नियम संपादित करें",
+        "es": "Editar regla compartida",
+        "pt": "Editar regra compartilhada",
+        "fr": "Modifier la règle commune",
+        "de": "Gemeinsame Regel bearbeiten",
+        "ar": "تعديل القاعدة المشتركة",
+        "ja": "共通のルールを編集",
+        "ko": "공통 규칙 편집",
+        "zh-Hans": "编辑共用规则"
+      }
+    },
+    {
+      "source": "Manage groups",
+      "translations": {
+        "hi": "समूह प्रबंधित करें",
+        "es": "Gestionar grupos",
+        "pt": "Gerenciar grupos",
+        "fr": "Gérer les groupes",
+        "de": "Gruppen verwalten",
+        "ar": "إدارة المجموعات",
+        "ja": "グループを管理",
+        "ko": "그룹 관리",
+        "zh-Hans": "管理分组"
+      }
+    },
+    {
+      "source": "minutes shared across these apps",
+      "translations": {
+        "hi": "मिनट इन ऐप के बीच साझा हैं",
+        "es": "minutos compartidos entre estas apps",
+        "pt": "minutos compartilhados entre estes apps",
+        "fr": "minutes partagées entre ces apps",
+        "de": "Minuten gemeinsam für diese Apps",
+        "ar": "دقيقة مشتركة بين هذه التطبيقات",
+        "ja": "分（これらのアプリで共有）",
+        "ko": "분을 이 앱들이 함께 사용",
+        "zh-Hans": "分钟，由这些应用共用"
+      }
+    },
+    {
+      "source": "My apps",
+      "translations": {
+        "hi": "मेरे ऐप",
+        "es": "Mis apps",
+        "pt": "Meus apps",
+        "fr": "Mes apps",
+        "de": "Meine Apps",
+        "ar": "تطبيقاتي",
+        "ja": "マイアプリ",
+        "ko": "내 앱",
+        "zh-Hans": "我的应用"
+      }
+    },
+    {
+      "source": "No apps selected. Add apps to get started.",
+      "translations": {
+        "hi": "कोई ऐप नहीं चुना गया है। शुरू करने के लिए ऐप जोड़ें।",
+        "es": "No hay apps seleccionadas. Añade apps para empezar.",
+        "pt": "Nenhum app selecionado. Adicione apps para começar.",
+        "fr": "Aucune app sélectionnée. Ajoutez des apps pour commencer.",
+        "de": "Keine Apps ausgewählt. Füge Apps hinzu, um zu beginnen.",
+        "ar": "لم يتم اختيار أي تطبيقات. أضف تطبيقات للبدء.",
+        "ja": "アプリが選択されていません。アプリを追加して始めましょう。",
+        "ko": "선택한 앱이 없습니다. 앱을 추가하여 시작하세요.",
+        "zh-Hans": "尚未选择应用。请添加应用以开始使用。"
+      }
+    },
+    {
+      "source": "Protection details",
+      "translations": {
+        "hi": "सुरक्षा का विवरण",
+        "es": "Detalles de protección",
+        "pt": "Detalhes da proteção",
+        "fr": "Détails de la protection",
+        "de": "Schutzdetails",
+        "ar": "تفاصيل الحماية",
+        "ja": "保護の詳細",
+        "ko": "보호 세부 정보",
+        "zh-Hans": "保护详情"
+      }
+    },
+    {
+      "source": "Ready - last sent {{date}}",
+      "translations": {
+        "hi": "तैयार — आख़िरी बार {{date}} को भेजा गया",
+        "es": "Listo — último envío: {{date}}",
+        "pt": "Pronto — último envio: {{date}}",
+        "fr": "Prêt — dernier envoi : {{date}}",
+        "de": "Bereit — zuletzt gesendet: {{date}}",
+        "ar": "جاهز — آخر إرسال: {{date}}",
+        "ja": "準備完了 — 最終送信日：{{date}}",
+        "ko": "준비됨 — 마지막 전송: {{date}}",
+        "zh-Hans": "已就绪 — 上次发送：{{date}}"
+      }
+    },
+    {
+      "source": "Reminders are delivered quietly.",
+      "translations": {
+        "hi": "स्मरण चुपचाप पहुँचाए जाते हैं।",
+        "es": "Los recordatorios se entregan de forma silenciosa.",
+        "pt": "Os lembretes são entregues silenciosamente.",
+        "fr": "Les rappels sont délivrés silencieusement.",
+        "de": "Erinnerungen werden lautlos zugestellt.",
+        "ar": "تصل التذكيرات بصمت.",
+        "ja": "リマインダーは静かに届きます。",
+        "ko": "알림이 조용히 전달됩니다.",
+        "zh-Hans": "提醒会静默送达。"
+      }
+    },
+    {
+      "source": "Reminders are off.",
+      "translations": {
+        "hi": "स्मरण बंद हैं।",
+        "es": "Los recordatorios están desactivados.",
+        "pt": "Os lembretes estão desativados.",
+        "fr": "Les rappels sont désactivés.",
+        "de": "Erinnerungen sind ausgeschaltet.",
+        "ar": "التذكيرات متوقفة.",
+        "ja": "リマインダーはオフです。",
+        "ko": "알림이 꺼져 있습니다.",
+        "zh-Hans": "提醒已关闭。"
+      }
+    },
+    {
+      "source": "Reminders are requested. Checking delivery.",
+      "translations": {
+        "hi": "स्मरण का अनुरोध किया गया है। उनकी डिलीवरी जाँची जा रही है।",
+        "es": "Has solicitado recordatorios. Comprobando la entrega.",
+        "pt": "Você solicitou lembretes. Verificando a entrega.",
+        "fr": "Vous avez demandé des rappels. Vérification de leur réception.",
+        "de": "Du hast Erinnerungen angefordert. Die Zustellung wird geprüft.",
+        "ar": "طلبت التذكيرات. جارٍ التحقق من وصولها.",
+        "ja": "リマインダーが希望されています。配信を確認しています。",
+        "ko": "알림을 요청했습니다. 전달 여부를 확인하고 있습니다.",
+        "zh-Hans": "已请求提醒。正在检查送达情况。"
+      }
+    },
+    {
+      "source": "Reminders are requested. Notification access needs attention.",
+      "translations": {
+        "hi": "स्मरण का अनुरोध किया गया है। सूचनाओं की अनुमति पर ध्यान देना ज़रूरी है।",
+        "es": "Has solicitado recordatorios. El acceso a las notificaciones requiere atención.",
+        "pt": "Você solicitou lembretes. O acesso às notificações precisa de atenção.",
+        "fr": "Vous avez demandé des rappels. L’accès aux notifications nécessite votre attention.",
+        "de": "Du hast Erinnerungen angefordert. Der Zugriff auf Mitteilungen muss geprüft werden.",
+        "ar": "طلبت التذكيرات. يحتاج الوصول إلى الإشعارات إلى المراجعة.",
+        "ja": "リマインダーが希望されています。通知のアクセス許可を確認する必要があります。",
+        "ko": "알림을 요청했습니다. 알림 접근 권한을 확인해야 합니다.",
+        "zh-Hans": "已请求提醒。需要检查通知权限。"
+      }
+    },
+    {
+      "source": "Reminders are requested. Scheduling needs attention.",
+      "translations": {
+        "hi": "स्मरण का अनुरोध किया गया है। उनका समय निर्धारित करने में समस्या है।",
+        "es": "Has solicitado recordatorios. La programación requiere atención.",
+        "pt": "Você solicitou lembretes. O agendamento precisa de atenção.",
+        "fr": "Vous avez demandé des rappels. Leur programmation nécessite votre attention.",
+        "de": "Du hast Erinnerungen angefordert. Die Zeitplanung muss geprüft werden.",
+        "ar": "طلبت التذكيرات. تحتاج الجدولة إلى المراجعة.",
+        "ja": "リマインダーが希望されています。スケジュールを確認する必要があります。",
+        "ko": "알림을 요청했습니다. 예약 설정을 확인해야 합니다.",
+        "zh-Hans": "已请求提醒。需要检查定时设置。"
+      }
+    },
+    {
+      "source": "Reminders are scheduled.",
+      "translations": {
+        "hi": "स्मरण का समय निर्धारित हो गया है।",
+        "es": "Los recordatorios están programados.",
+        "pt": "Os lembretes estão agendados.",
+        "fr": "Les rappels sont programmés.",
+        "de": "Erinnerungen sind geplant.",
+        "ar": "تمت جدولة التذكيرات.",
+        "ja": "リマインダーが設定されています。",
+        "ko": "알림이 예약되어 있습니다.",
+        "zh-Hans": "提醒已设置好时间。"
+      }
+    },
+    {
+      "source": "Retry loading apps",
+      "translations": {
+        "hi": "ऐप फिर से लोड करें",
+        "es": "Volver a cargar apps",
+        "pt": "Tentar carregar apps novamente",
+        "fr": "Réessayer le chargement des apps",
+        "de": "Apps erneut laden",
+        "ar": "إعادة محاولة تحميل التطبيقات",
+        "ja": "アプリの読み込みを再試行",
+        "ko": "앱 다시 불러오기",
+        "zh-Hans": "重新加载应用"
+      }
+    },
+    {
+      "source": "Review apps",
+      "translations": {
+        "hi": "ऐप की समीक्षा करें",
+        "es": "Revisar apps",
+        "pt": "Revisar apps",
+        "fr": "Vérifier les apps",
+        "de": "Apps prüfen",
+        "ar": "مراجعة التطبيقات",
+        "ja": "アプリを確認",
+        "ko": "앱 검토",
+        "zh-Hans": "检查应用"
+      }
+    },
+    {
+      "source": "Review notification access",
+      "translations": {
+        "hi": "सूचनाओं की अनुमति जाँचें",
+        "es": "Revisar acceso a notificaciones",
+        "pt": "Revisar acesso às notificações",
+        "fr": "Vérifier l’accès aux notifications",
+        "de": "Zugriff auf Mitteilungen prüfen",
+        "ar": "مراجعة الوصول إلى الإشعارات",
+        "ja": "通知のアクセス許可を確認",
+        "ko": "알림 접근 권한 검토",
+        "zh-Hans": "检查通知权限"
+      }
+    },
+    {
+      "source": "Save changes",
+      "translations": {
+        "hi": "बदलाव सहेजें",
+        "es": "Guardar cambios",
+        "pt": "Salvar alterações",
+        "fr": "Enregistrer les modifications",
+        "de": "Änderungen speichern",
+        "ar": "حفظ التغييرات",
+        "ja": "変更を保存",
+        "ko": "변경 사항 저장",
+        "zh-Hans": "保存更改"
+      }
+    },
+    {
+      "source": "Selected apps share a rule. Daily limits are combined across these apps.",
+      "translations": {
+        "hi": "चुने गए ऐप एक साझा नियम का पालन करते हैं। दैनिक सीमाएँ इन सभी ऐप के लिए संयुक्त हैं।",
+        "es": "Las apps seleccionadas comparten una regla. Los límites diarios se aplican al uso combinado de estas apps.",
+        "pt": "Os apps selecionados compartilham uma regra. Os limites diários se aplicam ao uso combinado destes apps.",
+        "fr": "Les apps sélectionnées partagent une règle. Les limites quotidiennes s’appliquent à l’utilisation cumulée de ces apps.",
+        "de": "Die ausgewählten Apps teilen eine Regel. Die Tageslimits gelten für die gemeinsame Nutzung dieser Apps.",
+        "ar": "تشترك التطبيقات المختارة في قاعدة واحدة. تُحتسب الحدود اليومية لاستخدام هذه التطبيقات مجتمعة.",
+        "ja": "選択したアプリは共通のルールを使います。1日の制限はこれらのアプリの合計利用時間に適用されます。",
+        "ko": "선택한 앱은 공통 규칙을 따릅니다. 일일 한도는 이 앱들의 합산 사용 시간에 적용됩니다.",
+        "zh-Hans": "所选应用共用一条规则。每日限额按这些应用的合计使用时间计算。"
+      }
+    },
+    {
+      "source": "Selected apps stay off until you review the rule and activate protection.",
+      "translations": {
+        "hi": "जब तक आप नियम की समीक्षा करके सुरक्षा सक्रिय नहीं करते, चुने गए ऐप की सुरक्षा बंद रहती है।",
+        "es": "La protección de las apps seleccionadas permanece desactivada hasta que revises la regla y actives la protección.",
+        "pt": "A proteção dos apps selecionados permanece desativada até você revisar a regra e ativar a proteção.",
+        "fr": "La protection des apps sélectionnées reste désactivée jusqu’à ce que vous vérifiiez la règle et activiez la protection.",
+        "de": "Der Schutz der ausgewählten Apps bleibt ausgeschaltet, bis du die Regel geprüft und den Schutz aktiviert hast.",
+        "ar": "تبقى حماية التطبيقات المختارة متوقفة حتى تراجع القاعدة وتفعّل الحماية.",
+        "ja": "選択したアプリの保護は、ルールを確認して保護を有効にするまでオフのままです。",
+        "ko": "규칙을 검토하고 보호를 활성화할 때까지 선택한 앱의 보호는 꺼진 상태로 유지됩니다.",
+        "zh-Hans": "在你检查规则并启用保护之前，所选应用的保护将保持关闭。"
+      }
+    },
+    {
+      "source": "Selected day",
+      "translations": {
+        "hi": "चुना गया दिन",
+        "es": "Día seleccionado",
+        "pt": "Dia selecionado",
+        "fr": "Jour sélectionné",
+        "de": "Ausgewählter Tag",
+        "ar": "اليوم المختار",
+        "ja": "選択した日",
+        "ko": "선택한 날짜",
+        "zh-Hans": "所选日期"
+      }
+    },
+    {
+      "source": "Selected week",
+      "translations": {
+        "hi": "चुना गया सप्ताह",
+        "es": "Semana seleccionada",
+        "pt": "Semana selecionada",
+        "fr": "Semaine sélectionnée",
+        "de": "Ausgewählte Woche",
+        "ar": "الأسبوع المختار",
+        "ja": "選択した週",
+        "ko": "선택한 주",
+        "zh-Hans": "所选周"
+      }
+    },
+    {
+      "source": "Send test notification",
+      "translations": {
+        "hi": "परीक्षण सूचना भेजें",
+        "es": "Enviar notificación de prueba",
+        "pt": "Enviar notificação de teste",
+        "fr": "Envoyer une notification de test",
+        "de": "Testmitteilung senden",
+        "ar": "إرسال إشعار تجريبي",
+        "ja": "テスト通知を送信",
+        "ko": "테스트 알림 보내기",
+        "zh-Hans": "发送测试通知"
+      }
+    },
+    {
+      "source": "Shared rule",
+      "translations": {
+        "hi": "साझा नियम",
+        "es": "Regla compartida",
+        "pt": "Regra compartilhada",
+        "fr": "Règle commune",
+        "de": "Gemeinsame Regel",
+        "ar": "قاعدة مشتركة",
+        "ja": "共通のルール",
+        "ko": "공통 규칙",
+        "zh-Hans": "共用规则"
+      }
+    },
+    {
+      "source": "Sign in to choose and protect your apps.",
+      "translations": {
+        "hi": "अपने ऐप चुनने और उनकी सुरक्षा करने के लिए साइन इन करें।",
+        "es": "Inicia sesión para elegir y proteger tus apps.",
+        "pt": "Entre para escolher e proteger seus apps.",
+        "fr": "Connectez-vous pour choisir et protéger vos apps.",
+        "de": "Melde dich an, um deine Apps auszuwählen und zu schützen.",
+        "ar": "سجّل الدخول لاختيار تطبيقاتك وحمايتها.",
+        "ja": "アプリを選択して保護するには、ログインしてください。",
+        "ko": "앱을 선택하고 보호하려면 로그인하세요.",
+        "zh-Hans": "请登录，以选择并保护你的应用。"
+      }
+    },
+    {
+      "source": "This view is unavailable. Your recorded history is shown below.",
+      "translations": {
+        "hi": "यह दृश्य उपलब्ध नहीं है। आपका दर्ज किया गया इतिहास नीचे दिखाया गया है।",
+        "es": "Esta vista no está disponible. A continuación se muestra tu historial registrado.",
+        "pt": "Esta visualização está indisponível. Seu histórico registrado é exibido abaixo.",
+        "fr": "Cette vue n’est pas disponible. Votre historique enregistré est affiché ci-dessous.",
+        "de": "Diese Ansicht ist nicht verfügbar. Dein aufgezeichneter Verlauf wird unten angezeigt.",
+        "ar": "هذا العرض غير متاح. يظهر سجلك المسجّل أدناه.",
+        "ja": "この表示は利用できません。記録済みの履歴を以下に表示しています。",
+        "ko": "이 화면은 사용할 수 없습니다. 기록된 내역이 아래에 표시됩니다.",
+        "zh-Hans": "此视图不可用。下方显示你已记录的历史。"
+      }
+    },
+    {
+      "source": "Use suggested guard time",
+      "translations": {
+        "hi": "सुझाया गया सुरक्षा-स्मरण समय अपनाएँ",
+        "es": "Usar la hora sugerida para la protección nocturna",
+        "pt": "Usar o horário sugerido para a proteção noturna",
+        "fr": "Utiliser l’heure suggérée pour la protection nocturne",
+        "de": "Vorgeschlagene Zeit für den Nachtschutz verwenden",
+        "ar": "استخدام الوقت المقترح لحماية الليل",
+        "ja": "提案された夜のガード時刻を使う",
+        "ko": "제안된 나이트가드 시간 사용",
+        "zh-Hans": "使用建议的夜间保护时间"
+      }
+    },
+    {
+      "source": "Your recorded day",
+      "translations": {
+        "hi": "आपके दिन का दर्ज विवरण",
+        "es": "Tu día registrado",
+        "pt": "Seu dia registrado",
+        "fr": "Votre journée enregistrée",
+        "de": "Dein aufgezeichneter Tag",
+        "ar": "سجل يومك",
+        "ja": "その日の記録",
+        "ko": "그날의 기록",
+        "zh-Hans": "当天的记录"
+      }
+    },
+    {
+      "source": "Retry reminder setup",
+      "translations": {
+        "hi": "स्मरण सेटअप का फिर प्रयास करें",
+        "es": "Reintentar configuración de recordatorios",
+        "pt": "Tentar configurar lembretes novamente",
+        "fr": "Réessayer la configuration des rappels",
+        "de": "Einrichtung der Erinnerungen erneut versuchen",
+        "ar": "إعادة محاولة إعداد التذكيرات",
+        "ja": "リマインダーの設定を再試行",
+        "ko": "알림 설정 다시 시도",
+        "zh-Hans": "重试设置提醒"
+      }
+    },
+    {
+      "source": "Morning reset time",
+      "translations": {
+        "hi": "सुबह के रीसेट का समय",
+        "es": "Hora del reinicio matutino",
+        "pt": "Horário do recomeço matinal",
+        "fr": "Heure de la pause du matin",
+        "de": "Zeit für den morgendlichen Neustart",
+        "ar": "وقت إعادة ضبط الصباح",
+        "ja": "朝のリセット時刻",
+        "ko": "모닝 리셋 시간",
+        "zh-Hans": "晨间重置时间"
+      }
+    },
+    {
+      "source": "Evening reflection time",
+      "translations": {
+        "hi": "शाम के मनन का समय",
+        "es": "Hora de la reflexión nocturna",
+        "pt": "Horário da reflexão noturna",
+        "fr": "Heure de la réflexion du soir",
+        "de": "Zeit für die Abendreflexion",
+        "ar": "وقت تأمل المساء",
+        "ja": "夜の振り返り時刻",
+        "ko": "저녁 반성 시간",
+        "zh-Hans": "晚间反思时间"
+      }
+    },
+    {
+      "source": "Night guard time",
+      "translations": {
+        "hi": "रात्रि सुरक्षा का समय",
+        "es": "Hora de la protección nocturna",
+        "pt": "Horário da proteção noturna",
+        "fr": "Heure de la protection nocturne",
+        "de": "Zeit für den Nachtschutz",
+        "ar": "وقت حماية الليل",
+        "ja": "夜のガード時刻",
+        "ko": "나이트가드 시간",
+        "zh-Hans": "夜间保护时间"
+      }
+    },
+    {
+      "source": "Reminder changes could not be saved on this device. Existing reminders were kept. Retry your change.",
+      "translations": {
+        "hi": "इस डिवाइस पर स्मरण में किए गए बदलाव सहेजे नहीं जा सके। मौजूदा स्मरण बनाए रखे गए हैं। बदलाव का फिर प्रयास करें।",
+        "es": "No se pudieron guardar los cambios de los recordatorios en este dispositivo. Se conservaron los recordatorios existentes. Vuelve a intentar el cambio.",
+        "pt": "Não foi possível salvar as alterações dos lembretes neste dispositivo. Os lembretes existentes foram mantidos. Tente fazer a alteração novamente.",
+        "fr": "Impossible d’enregistrer les modifications des rappels sur cet appareil. Les rappels existants ont été conservés. Réessayez votre modification.",
+        "de": "Die Änderungen an den Erinnerungen konnten auf diesem Gerät nicht gespeichert werden. Bestehende Erinnerungen wurden beibehalten. Versuche die Änderung erneut.",
+        "ar": "تعذّر حفظ تغييرات التذكيرات على هذا الجهاز. تم الاحتفاظ بالتذكيرات الحالية. أعد محاولة التغيير.",
+        "ja": "この端末にリマインダーの変更を保存できませんでした。既存のリマインダーは維持されています。変更を再試行してください。",
+        "ko": "이 기기에 알림 변경 사항을 저장하지 못했습니다. 기존 알림은 유지됩니다. 변경을 다시 시도해 주세요.",
+        "zh-Hans": "无法在此设备上保存提醒更改。现有提醒已保留。请重试更改。"
+      }
+    },
+    {
+      "source": "Reminder timing is saved, but delivery status could not be saved. Verified reminders were kept. Retry to save their status.",
+      "translations": {
+        "hi": "स्मरण का समय सहेजा गया है, लेकिन डिलीवरी की स्थिति सहेजी नहीं जा सकी। सत्यापित स्मरण बनाए रखे गए हैं। उनकी स्थिति सहेजने का फिर प्रयास करें।",
+        "es": "El horario de los recordatorios está guardado, pero no se pudo guardar el estado de entrega. Se conservaron los recordatorios verificados. Vuelve a intentar guardar su estado.",
+        "pt": "O horário dos lembretes está salvo, mas não foi possível salvar o status de entrega. Os lembretes verificados foram mantidos. Tente salvar o status novamente.",
+        "fr": "L’horaire des rappels est enregistré, mais leur état de réception n’a pas pu être enregistré. Les rappels vérifiés ont été conservés. Réessayez d’enregistrer leur état.",
+        "de": "Die Erinnerungszeiten sind gespeichert, aber der Zustellstatus konnte nicht gespeichert werden. Verifizierte Erinnerungen wurden beibehalten. Versuche erneut, ihren Status zu speichern.",
+        "ar": "تم حفظ توقيت التذكيرات، لكن تعذّر حفظ حالة وصولها. تم الاحتفاظ بالتذكيرات التي تم التحقق منها. أعد محاولة حفظ حالتها.",
+        "ja": "リマインダーの時刻は保存されましたが、配信状況を保存できませんでした。確認済みのリマインダーは維持されています。状況の保存を再試行してください。",
+        "ko": "알림 시간은 저장되었지만 전달 상태를 저장하지 못했습니다. 확인된 알림은 유지됩니다. 상태 저장을 다시 시도해 주세요.",
+        "zh-Hans": "提醒时间已保存，但无法保存送达状态。已验证的提醒已保留。请重试保存其状态。"
+      }
+    },
+    {
+      "source": "The reminder account could not be verified. Retry to repair reminders.",
+      "translations": {
+        "hi": "स्मरण के खाते का सत्यापन नहीं हो सका। स्मरण ठीक करने का फिर प्रयास करें।",
+        "es": "No se pudo verificar la cuenta de los recordatorios. Vuelve a intentar reparar los recordatorios.",
+        "pt": "Não foi possível verificar a conta dos lembretes. Tente reparar os lembretes novamente.",
+        "fr": "Le compte des rappels n’a pas pu être vérifié. Réessayez de réparer les rappels.",
+        "de": "Das Konto für Erinnerungen konnte nicht verifiziert werden. Versuche erneut, die Erinnerungen zu reparieren.",
+        "ar": "تعذّر التحقق من حساب التذكيرات. أعد المحاولة لإصلاح التذكيرات.",
+        "ja": "リマインダーのアカウントを確認できませんでした。リマインダーの修復を再試行してください。",
+        "ko": "알림 계정을 확인하지 못했습니다. 알림 복구를 다시 시도해 주세요.",
+        "zh-Hans": "无法验证提醒账户。请重试修复提醒。"
+      }
+    },
+    {
+      "source": "Reminder settings could not be loaded. Existing reminders were kept.",
+      "translations": {
+        "hi": "स्मरण की सेटिंग्स लोड नहीं की जा सकीं। मौजूदा स्मरण बनाए रखे गए हैं।",
+        "es": "No se pudo cargar la configuración de los recordatorios. Se conservaron los recordatorios existentes.",
+        "pt": "Não foi possível carregar as configurações dos lembretes. Os lembretes existentes foram mantidos.",
+        "fr": "Impossible de charger les paramètres des rappels. Les rappels existants ont été conservés.",
+        "de": "Die Erinnerungseinstellungen konnten nicht geladen werden. Bestehende Erinnerungen wurden beibehalten.",
+        "ar": "تعذّر تحميل إعدادات التذكيرات. تم الاحتفاظ بالتذكيرات الحالية.",
+        "ja": "リマインダーの設定を読み込めませんでした。既存のリマインダーは維持されています。",
+        "ko": "알림 설정을 불러오지 못했습니다. 기존 알림은 유지됩니다.",
+        "zh-Hans": "无法加载提醒设置。现有提醒已保留。"
+      }
+    },
+    {
+      "source": "Saved reminder choices could not be read. Existing reminders were kept. Retry to reload saved choices.",
+      "translations": {
+        "hi": "स्मरण के सहेजे गए विकल्प पढ़े नहीं जा सके। मौजूदा स्मरण बनाए रखे गए हैं। सहेजे गए विकल्प फिर से लोड करने का प्रयास करें।",
+        "es": "No se pudieron leer las opciones guardadas de los recordatorios. Se conservaron los recordatorios existentes. Vuelve a intentar cargar las opciones guardadas.",
+        "pt": "Não foi possível ler as opções salvas dos lembretes. Os lembretes existentes foram mantidos. Tente carregar as opções salvas novamente.",
+        "fr": "Impossible de lire les choix de rappels enregistrés. Les rappels existants ont été conservés. Réessayez de charger les choix enregistrés.",
+        "de": "Die gespeicherten Erinnerungseinstellungen konnten nicht gelesen werden. Bestehende Erinnerungen wurden beibehalten. Versuche erneut, die gespeicherten Einstellungen zu laden.",
+        "ar": "تعذّرت قراءة خيارات التذكيرات المحفوظة. تم الاحتفاظ بالتذكيرات الحالية. أعد محاولة تحميل الخيارات المحفوظة.",
+        "ja": "保存済みのリマインダー設定を読み取れませんでした。既存のリマインダーは維持されています。保存済みの設定の読み込みを再試行してください。",
+        "ko": "저장된 알림 설정을 읽지 못했습니다. 기존 알림은 유지됩니다. 저장된 설정을 다시 불러와 주세요.",
+        "zh-Hans": "无法读取已保存的提醒选项。现有提醒已保留。请重试加载已保存的选项。"
+      }
+    },
+    {
+      "source": "Saved recovery data must be read again before new writes. Retry loading your saved choices.",
+      "translations": {
+        "hi": "नए बदलाव सहेजने से पहले सहेजा गया रिकवरी डेटा दोबारा पढ़ना ज़रूरी है। अपने सहेजे गए विकल्प फिर से लोड करने का प्रयास करें।",
+        "es": "Es necesario volver a leer los datos de recuperación guardados antes de guardar nuevos cambios. Vuelve a intentar cargar tus opciones guardadas.",
+        "pt": "Os dados de recuperação salvos precisam ser lidos novamente antes de salvar novas alterações. Tente carregar suas opções salvas novamente.",
+        "fr": "Les données de rétablissement enregistrées doivent être relues avant d’enregistrer de nouvelles modifications. Réessayez de charger vos choix enregistrés.",
+        "de": "Gespeicherte Erholungsdaten müssen erneut gelesen werden, bevor neue Änderungen gespeichert werden können. Versuche erneut, deine gespeicherten Einstellungen zu laden.",
+        "ar": "يجب قراءة بيانات التعافي المحفوظة مجددًا قبل حفظ تغييرات جديدة. أعد محاولة تحميل خياراتك المحفوظة.",
+        "ja": "新しい変更を保存する前に、保存済みの回復データを再度読み取る必要があります。保存済みの設定の読み込みを再試行してください。",
+        "ko": "새 변경 사항을 저장하기 전에 저장된 회복 데이터를 다시 읽어야 합니다. 저장된 설정을 다시 불러와 주세요.",
+        "zh-Hans": "保存新更改之前，必须重新读取已保存的恢复数据。请重试加载已保存的选项。"
+      }
+    },
+    {
+      "source": "The recovery owner changed. This read was stopped.",
+      "translations": {
+        "hi": "रिकवरी डेटा का स्वामी बदल गया है। डेटा पढ़ना रोक दिया गया है।",
+        "es": "La cuenta propietaria de los datos de recuperación ha cambiado. Se detuvo la lectura.",
+        "pt": "A conta proprietária dos dados de recuperação mudou. Esta leitura foi interrompida.",
+        "fr": "Le compte propriétaire des données de rétablissement a changé. Cette lecture a été arrêtée.",
+        "de": "Das Konto, dem die Erholungsdaten gehören, hat sich geändert. Dieser Lesevorgang wurde gestoppt.",
+        "ar": "تغيّر الحساب الذي يملك بيانات التعافي. تم إيقاف هذه القراءة.",
+        "ja": "回復データの所有者が変わりました。読み取りを停止しました。",
+        "ko": "회복 데이터의 소유자가 변경되었습니다. 읽기를 중단했습니다.",
+        "zh-Hans": "恢复数据的所有者已更改。此次读取已停止。"
+      }
+    },
+    {
+      "source": "An interrupted backup restore or cleanup needs recovery before saved choices can be read.",
+      "translations": {
+        "hi": "सहेजे गए विकल्प पढ़ने से पहले बीच में रुकी बैकअप बहाली या सफ़ाई से जुड़ी समस्या को ठीक करना ज़रूरी है।",
+        "es": "Es necesario resolver una restauración de copia de seguridad o una limpieza interrumpida antes de leer las opciones guardadas.",
+        "pt": "É necessário resolver uma restauração de backup ou limpeza interrompida antes de ler as opções salvas.",
+        "fr": "Une restauration de sauvegarde ou un nettoyage interrompu doit être résolu avant de pouvoir lire les choix enregistrés.",
+        "de": "Ein unterbrochener Vorgang zur Wiederherstellung aus einem Backup oder zur Bereinigung muss zuerst repariert werden, bevor die gespeicherten Einstellungen gelesen werden können.",
+        "ar": "يجب معالجة استعادة نسخة احتياطية أو عملية تنظيف توقفت قبل التمكن من قراءة الخيارات المحفوظة.",
+        "ja": "保存済みの設定を読み取る前に、中断されたバックアップの復元またはクリーンアップを復旧する必要があります。",
+        "ko": "저장된 설정을 읽으려면 중단된 백업 복원 또는 정리 작업을 먼저 복구해야 합니다.",
+        "zh-Hans": "读取已保存的选项前，需要先恢复中断的备份还原或清理操作。"
+      }
+    },
+    {
+      "source": "Safari Content Blocker encoded rules exceed the publication limit.",
+      "translations": {
+        "hi": "Safari कॉन्टेंट ब्लॉकर के एन्कोड किए गए नियम प्रकाशन की सीमा पार कर रहे हैं।",
+        "es": "Las reglas codificadas del bloqueador de contenido de Safari superan el límite de publicación.",
+        "pt": "As regras codificadas do bloqueador de conteúdo do Safari excedem o limite de publicação.",
+        "fr": "Les règles encodées du bloqueur de contenu Safari dépassent la limite de publication.",
+        "de": "Die kodierten Regeln des Safari-Inhaltsblockers überschreiten das Veröffentlichungslimit.",
+        "ar": "تتجاوز القواعد المُرمّزة لحاجب المحتوى في Safari حد النشر.",
+        "ja": "Safariのコンテンツブロッカーのエンコード済みルールが公開上限を超えています。",
+        "ko": "Safari 콘텐츠 차단기의 인코딩된 규칙이 게시 한도를 초과합니다.",
+        "zh-Hans": "Safari 内容拦截器的编码规则超出了发布上限。"
+      }
+    },
+    {
+      "source": "Safari Content Blocker metadata or payload exceeds its safety bounds.",
+      "translations": {
+        "hi": "Safari कॉन्टेंट ब्लॉकर का मेटाडेटा या पेलोड सुरक्षा की सीमाओं से बाहर है।",
+        "es": "Los metadatos o la carga útil del bloqueador de contenido de Safari superan sus límites de seguridad.",
+        "pt": "Os metadados ou a carga útil do bloqueador de conteúdo do Safari excedem seus limites de segurança.",
+        "fr": "Les métadonnées ou la charge utile du bloqueur de contenu Safari dépassent les limites de sécurité.",
+        "de": "Die Metadaten oder Nutzdaten des Safari-Inhaltsblockers überschreiten die Sicherheitsgrenzen.",
+        "ar": "تتجاوز البيانات الوصفية أو حمولة البيانات لحاجب المحتوى في Safari حدود الأمان.",
+        "ja": "Safariのコンテンツブロッカーのメタデータまたはペイロードが安全上の制限を超えています。",
+        "ko": "Safari 콘텐츠 차단기의 메타데이터 또는 페이로드가 안전 한도를 초과합니다.",
+        "zh-Hans": "Safari 内容拦截器的元数据或负载超出了安全范围。"
+      }
+    }
+  ]
+}

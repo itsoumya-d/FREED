@@ -1,0 +1,113 @@
+{
+  "schema": "freed-android-release-build-report-v1",
+  "artifactType": "aab",
+  "generatedAt": "2026-10-02T01:01:45.520Z",
+  "sanitized": true,
+  "requested": {
+    "arch": "arm64-v8a",
+    "artifact": "aab",
+    "buildIdleTimeoutMs": 600000,
+    "buildTimeoutMs": 2700000,
+    "cmakeVersion": "3.31.0",
+    "engine": "auto",
+    "envFileLoaded": false,
+    "gradleMaxWorkers": 1,
+    "newArchEnabled": true,
+    "nativeBuildJobs": 1,
+    "ndkVersion": "28.2.13676358",
+    "requireUploadSigning": true,
+    "skipCopy": true
+  },
+  "adMob": {
+    "androidAppIdConfigured": true,
+    "androidAppIdSource": "EXPO_PUBLIC_ADMOB_APP_ID_ANDROID",
+    "mode": "production",
+    "productionReady": true,
+    "runtimeManifestAppIdConfigured": true,
+    "runtimeManifestAppIdMode": "production",
+    "runtimeManifestAppIdSource": "EXPO_PUBLIC_ADMOB_APP_ID_ANDROID",
+    "sampleAppIdUsed": false
+  },
+  "environment": {
+    "releaseEnvFileLoaded": false,
+    "releaseEnvFileSource": "",
+    "releaseEnvSecretValuesOmitted": true,
+    "javaHome": "/opt/homebrew/Cellar/openjdk@17/17.0.19/libexec/openjdk.jdk/Contents/Home",
+    "gradleUserHome": "~/.gradle",
+    "gradleMaxWorkers": 1,
+    "newArchEnabled": true,
+    "nativeBuildJobs": 1,
+    "ndkVersion": "28.2.13676358",
+    "cmakeVersion": "3.31.0",
+    "gradleProperties": "~/.gradle/gradle.properties",
+    "foojayResolver": "already-compatible"
+  },
+  "hermesProbe": {
+    "ok": true,
+    "reason": "hermesc responded within 5s"
+  },
+  "selectedEngine": "hermes",
+  "signing": {
+    "missingInputs": [],
+    "mode": "upload-signing",
+    "playConsoleReady": true,
+    "required": true,
+    "storeFileConfigured": true,
+    "storeFileExists": true,
+    "uploadKeystore": {
+      "certificateDn": "CN=FREED Upload, OU=Release, O=FREED, L=Kolkata, ST=West Bengal, C=IN",
+      "certificateSha256Digest": "b75a9c887e138db8c4d5568149d5009d078fee481ec37537349abb36c9cd6a11",
+      "checked": true,
+      "debugSigned": false
+    }
+  },
+  "gradleCommand": [
+    "./gradlew",
+    ":app:bundleRelease",
+    "--no-daemon",
+    "--console=plain",
+    "--max-workers=1",
+    "-Dorg.gradle.parallel=false",
+    "-Pandroid.native.build.maxJobs=1",
+    "-PnewArchEnabled=true",
+    "-PreactNativeArchitectures=arm64-v8a",
+    "-PhermesEnabled=true",
+    "-Pfreed.androidNdkVersion=28.2.13676358",
+    "-Pfreed.androidCmakeVersion=3.31.0"
+  ],
+  "buildResult": "failed-during-gradle",
+  "result": "fail",
+  "failedStage": "gradle-build",
+  "diagnostics": {
+    "cmakeConfigureFailed": false,
+    "cmakeExit137": false,
+    "failedTask": "",
+    "hostMemoryConstrainedLikely": false,
+    "hostTotalMemoryMb": 8192,
+    "newArchDisabledUnsupported": false,
+    "reactNativeNewArchForced": false
+  },
+  "summary": {
+    "passCount": 0,
+    "failCount": 1
+  },
+  "results": [
+    {
+      "id": "android-aab-build",
+      "status": "FAIL",
+      "detail": "./gradlew :app:bundleRelease --no-daemon --console=plain --max-workers=1 -Dorg.gradle.parallel=false -Pandroid.native.build.maxJobs=1 -PnewArchEnabled=true -PreactNativeArchitectures=arm64-v8a -PhermesEnabled=true -Pfreed.androidNdkVersion=28.2.13676358 -Pfreed.androidCmakeVersion=3.31.0 timed out after 2700000ms"
+    }
+  ],
+  "releaseBoundary": {
+    "gradleInvoked": true,
+    "releaseEnvFileLoaded": false,
+    "releaseEnvFileSource": "",
+    "releaseEnvSecretValuesOmitted": true,
+    "uploadSignedBuildProduced": false,
+    "playUploadReady": false,
+    "localInstallArtifactProduced": false,
+    "reason": "./gradlew :app:bundleRelease --no-daemon --console=plain --max-workers=1 -Dorg.gradle.parallel=false -Pandroid.native.build.maxJobs=1 -PnewArchEnabled=true -PreactNativeArchitectures=arm64-v8a -PhermesEnabled=true -Pfreed.androidNdkVersion=28.2.13676358 -Pfreed.androidCmakeVersion=3.31.0 timed out after 2700000ms"
+  },
+  "apk": null,
+  "aab": null
+}

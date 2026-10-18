@@ -78,7 +78,7 @@ assert.match(appSurface, /Confirm Account & Data Deletion/);
 assert.match(appSurface, /accessibilityLabel="Delete Account & Data"/);
 assert.match(appSurface, /requestAccountDeletion/);
 assert.match(appSurface, /await deleteLocalRecoveryData\(\)/);
-assert.match(appSurface, /https:\/\/freedrecovery\.app\/account-deletion/);
+assert.match(appSurface, /https:\/\/freed-landing\.web\.app\/account-deletion/);
 assert.doesNotMatch(appSurface, /label="Server Deletion"/);
 assert.match(appSurface, /firebaseEmailLinkReadiness\.callbackUrl/);
 assert.doesNotMatch(appSurface, /isFirebaseEmailLinkCallbackUrl/);

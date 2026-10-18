@@ -12,7 +12,28 @@
           "package_name": "app.freed.recovery"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "5477978760-75hn9c6ompaogopfeve3ajgfp8sta071.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.freed.recovery",
+            "certificate_hash": "91ed17e4dfcf864fcd5b989a4c86f5fb4272fe24"
+          }
+        },
+        {
+          "client_id": "5477978760-rrids81o3c1fdbaklahqe9g9ivmp4uqm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.freed.recovery",
+            "certificate_hash": "484eb02b5b81e83556fb7b57ae05997f2ffb3247"
+          }
+        },
+        {
+          "client_id": "5477978760-ussf6lsalc0h97ra505g8hfe6h7h5ns8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAbOmGUgDrMnXfNysmQLn20OvNCdNf16TY"
@@ -20,7 +41,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "5477978760-ussf6lsalc0h97ra505g8hfe6h7h5ns8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "5477978760-mqacbd3saauk1roatvf9rpujvpkv8i7b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.freed.recovery"
+              }
+            }
+          ]
         }
       }
     }

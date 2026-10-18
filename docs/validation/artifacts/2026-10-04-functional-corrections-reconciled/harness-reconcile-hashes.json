@@ -1,0 +1,30 @@
+{
+  "tests/core.test.ts": {
+    "baseline": "e5c6819ceb555b8b19c98a42c2090eff4e8f862ed9af1c5aa5df66c3a9e26b70",
+    "result": "45fcbf69a37d47c0e7e1f9c5f0c948f5c9316fa9bb72bc02044abfde2ac08734"
+  },
+  "tests/ui/localization-runtime.test.tsx": {
+    "baseline": "0e2ed8f09cb7bd127ef8496bbe91da24fafb91c63821dade7faac2045638347e",
+    "result": "f49d16a95b66f9eb0d3b885c9234e671ab31d1f0600fc1f9926101bea77416f1"
+  },
+  "scripts/runtime-data-integrity-audit.js": {
+    "baseline": "666a990b1a8facd786b8718850aaeeb432c5f2600bad926ebfd8d5a3ba1efb76",
+    "result": "0c8fdda144d1feab736c636e50a764a3a836ad5806ed68651f002350dbb8825e"
+  },
+  "scripts/privacy-safety-audit.js": {
+    "baseline": "90b6ca89c6f08f626c630594e8f4983bdd4af15314f50fc2407d3eaf18d5c811",
+    "result": "466b8f8fd5060994925d4e634af73c6b9cbca959997de2f9be42d167d230703d"
+  },
+  "scripts/release-readiness.ts": {
+    "baseline": "4a47147a2e7f3fdcefda69e212cb785fe42953a05e33675bde4d0d8f30e97663",
+    "result": "bd2cae9c564b4fdba19a9eccc00bb245b9ebc64d33f3d920dbbfad09e37005ea"
+  },
+  "scripts/lib/cleanup-source-contract.js": {
+    "baseline": "4fdba1184f91dad41ba7f4c3caa1c3ec6e6272fc2f1c4b11ef8b1272118a77ed",
+    "result": "a37936f5f456662b880057500070b043c3d4fd50406123b21c0a66e174e3886d"
+  },
+  "tests/cleanup-source-contract.test.js": {
+    "baseline": "3458ad7bb9312a7a04a5cdaba4ca256ee7d1a4b0219c7cb5b0052fb22e669a9b",
+    "result": "c9c5ec2a8b46affc91306cdaaa2a60c64e231524d0bbf16cfff7e841e85ece82"
+  }
+}

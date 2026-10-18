@@ -1,0 +1,30 @@
+appId: app.freed.recovery
+name: root-navigation
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///today"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-today"
+    timeout: 15000
+- tapOn: "Protect"
+- assertVisible:
+    id: "screen-main-shield"
+- tapOn: "Progress"
+- assertVisible:
+    id: "screen-main-progress"
+- tapOn: "Profile"
+- assertVisible:
+    id: "screen-main-profile"
+- tapOn: "Today"
+- assertVisible:
+    id: "screen-main-today"
+- takeScreenshot: "root-navigation"

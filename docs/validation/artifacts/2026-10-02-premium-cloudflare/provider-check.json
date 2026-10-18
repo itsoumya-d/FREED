@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-10-03T13:25:47.834Z",
+  "provider": "https://family.cloudflare-dns.com/dns-query",
+  "scope": "Public resolver check only. This does not prove mobile routing or physical-device enforcement.",
+  "accountSetupRequired": false,
+  "results": [
+    {
+      "domain": "nudity.testcategory.com",
+      "expectedBlocked": true,
+      "purpose": "published adult-filter test",
+      "dnsStatus": 0,
+      "blocked": true,
+      "ordinaryResolved": false,
+      "passed": true
+    },
+    {
+      "domain": "malware.testcategory.com",
+      "expectedBlocked": true,
+      "purpose": "published malware-filter test",
+      "dnsStatus": 0,
+      "blocked": true,
+      "ordinaryResolved": false,
+      "passed": true
+    },
+    {
+      "domain": "example.com",
+      "expectedBlocked": false,
+      "purpose": "ordinary-domain control",
+      "dnsStatus": 0,
+      "blocked": false,
+      "ordinaryResolved": true,
+      "passed": true
+    }
+  ]
+}

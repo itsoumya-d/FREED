@@ -1,0 +1,153 @@
+{
+  "tests": 13,
+  "passed": 13,
+  "failed": 0,
+  "cases": [
+    {
+      "case": "dry-run",
+      "passed": true,
+      "exitCode": 0,
+      "guard": {
+        "sdkLoads": 0,
+        "currentCredentialCalls": 0,
+        "networkCalls": 0,
+        "privateCredentialReads": 0
+      }
+    },
+    {
+      "case": "no-receipt",
+      "passed": true,
+      "exitCode": 2,
+      "guard": {
+        "sdkLoads": 0,
+        "currentCredentialCalls": 0,
+        "networkCalls": 0,
+        "privateCredentialReads": 0
+      }
+    },
+    {
+      "case": "not-approved",
+      "passed": true,
+      "exitCode": 2,
+      "guard": {
+        "sdkLoads": 0,
+        "currentCredentialCalls": 0,
+        "networkCalls": 0,
+        "privateCredentialReads": 0
+      }
+    },
+    {
+      "case": "wrong-owner",
+      "passed": true,
+      "exitCode": 2,
+      "guard": {
+        "sdkLoads": 0,
+        "currentCredentialCalls": 0,
+        "networkCalls": 0,
+        "privateCredentialReads": 0
+      }
+    },
+    {
+      "case": "wrong-email",
+      "passed": true,
+      "exitCode": 2,
+      "guard": {
+        "sdkLoads": 0,
+        "currentCredentialCalls": 0,
+        "networkCalls": 0,
+        "privateCredentialReads": 0
+      }
+    },
+    {
+      "case": "wrong-plan-hash",
+      "passed": true,
+      "exitCode": 2,
+      "guard": {
+        "sdkLoads": 0,
+        "currentCredentialCalls": 0,
+        "networkCalls": 0,
+        "privateCredentialReads": 0
+      }
+    },
+    {
+      "case": "wrong-creator-hash",
+      "passed": true,
+      "exitCode": 2,
+      "guard": {
+        "sdkLoads": 0,
+        "currentCredentialCalls": 0,
+        "networkCalls": 0,
+        "privateCredentialReads": 0
+      }
+    },
+    {
+      "case": "overlong-review",
+      "passed": true,
+      "exitCode": 2,
+      "guard": {
+        "sdkLoads": 0,
+        "currentCredentialCalls": 0,
+        "networkCalls": 0,
+        "privateCredentialReads": 0
+      }
+    },
+    {
+      "case": "wrong-sharing-destination",
+      "passed": true,
+      "exitCode": 2,
+      "guard": {
+        "sdkLoads": 0,
+        "currentCredentialCalls": 0,
+        "networkCalls": 0,
+        "privateCredentialReads": 0
+      }
+    },
+    {
+      "case": "missing-owner-email-delivery-approval",
+      "passed": true,
+      "exitCode": 2,
+      "guard": {
+        "sdkLoads": 0,
+        "currentCredentialCalls": 0,
+        "networkCalls": 0,
+        "privateCredentialReads": 0
+      }
+    },
+    {
+      "case": "missing-native-password-proof-approval",
+      "passed": true,
+      "exitCode": 2,
+      "guard": {
+        "sdkLoads": 0,
+        "currentCredentialCalls": 0,
+        "networkCalls": 0,
+        "privateCredentialReads": 0
+      }
+    },
+    {
+      "case": "stale",
+      "passed": true,
+      "exitCode": 2,
+      "guard": {
+        "sdkLoads": 0,
+        "currentCredentialCalls": 0,
+        "networkCalls": 0,
+        "privateCredentialReads": 0
+      }
+    },
+    {
+      "case": "unknown-field",
+      "passed": true,
+      "exitCode": 2,
+      "guard": {
+        "sdkLoads": 0,
+        "currentCredentialCalls": 0,
+        "networkCalls": 0,
+        "privateCredentialReads": 0
+      }
+    }
+  ],
+  "privatePasswordRead": false,
+  "sdkOrCurrentCredentialsOrNetworkAccess": false,
+  "temporarySyntheticApprovalFixturesRemoved": true
+}

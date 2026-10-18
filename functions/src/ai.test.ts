@@ -361,9 +361,20 @@ test("provider failures and invalid envelopes collapse to fixed local fallbacks"
   }
 });
 
-test("the hard timeout aborts the one provider request and returns a fixed fallback", async () => {
+test("the hard timeout aborts the one provider request and returns a fixed fallback", async (context) => {
+  context.mock.timers.enable({ apis: ["setTimeout"] });
   const harness = serviceHarness({ response: "timeout", timeoutMs: 5 });
-  const result = await harness.service.generateClara("uid-safe", claraRequest);
+  const pending = harness.service.generateClara("uid-safe", claraRequest);
+  await new Promise<void>((resolve) => setImmediate(resolve));
+  assert.equal(harness.fetchCalls.length, 1);
+  const signal = harness.fetchCalls[0].init.signal;
+  assert.equal(signal?.aborted, false);
+  context.mock.timers.tick(4);
+  await Promise.resolve();
+  assert.equal(signal?.aborted, false, "the configured deadline must not fire early");
+  context.mock.timers.tick(1);
+  const result = await pending;
+  assert.equal(signal?.aborted, true);
   assert.equal(result.provider, "fallback");
   if (result.provider !== "fallback") assert.fail("Timeout must use the local fallback.");
   assert.equal(result.reason, "provider-unavailable");

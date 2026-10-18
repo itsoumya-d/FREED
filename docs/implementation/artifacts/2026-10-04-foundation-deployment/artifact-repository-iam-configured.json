@@ -1,0 +1,15 @@
+{
+  "httpStatus": 200,
+  "body": {
+    "version": 1,
+    "etag": "BwZdAJIaBmw=",
+    "bindings": [
+      {
+        "role": "roles/artifactregistry.writer",
+        "members": [
+          "serviceAccount:5477978760-compute@developer.gserviceaccount.com"
+        ]
+      }
+    ]
+  }
+}

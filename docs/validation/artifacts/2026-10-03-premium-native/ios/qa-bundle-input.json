@@ -1,0 +1,52 @@
+{
+  "kind": "SIMULATOR_DEBUG",
+  "nativeAppPath": "ios/build/Build/Products/Debug-iphonesimulator/FREED.app",
+  "stagingAppPath": "/tmp/freed-premium-qa-ios/FREED.app",
+  "nativeBuildSucceeded": true,
+  "freshNativeCompile": false,
+  "bundleDev": false,
+  "minify": false,
+  "maxWorkers": 1,
+  "publicEnv": {
+    "EXPO_PUBLIC_FIREBASE_USE_EMULATORS": "true",
+    "EXPO_PUBLIC_MONETIZATION_MODE": "mock",
+    "EXPO_PUBLIC_AI_COACH_MODE": "local",
+    "EXPO_PUBLIC_AI_CHALLENGE_MODE": "local",
+    "EXPO_PUBLIC_ADULT_DOMAIN_FEED_ENDPOINT": "",
+    "EXPO_PUBLIC_BACKEND_PROVIDER": "firebase"
+  },
+  "dotenvDisabled": true,
+  "removedInheritedPublicVars": true,
+  "sourceHashes": {
+    "app/_layout.tsx": "e29d71542bcfe2078e00a5dcce695bc356749ca9dbb294d271a1a27350f7a767",
+    "src/features/freed-app.tsx": "d2a0df125706f645802c4f7d028fa4923f323616d2b2246fabe1f74a19bf5404",
+    "src/lib/firebase-native.ts": "55672dae7b1b9c8813ceac0cc589bb4edd42b68b94058729dab6c2916fab9d87",
+    "src/lib/firebase-emulator-routing.ts": "a18bc10828d3338d8fb3965786f9d1be29a4553cba6f3065b109989b8af4ecf4",
+    "src/lib/monetization.ts": "663f66ffe1c38e7faf5acec4402f6f5a217078b78cf92dca3c05f51a35b724a6",
+    "src/components/PreferencesScreen.tsx": "d9cd942f980fa7b60262a868b75621c768a836c9e03d8f22a0f3c024425ffc23",
+    "src/lib/recovery-drafts.ts": "77286739bd8f0648a9fc31fc26a5ce39e7535c03f5dff4f355562062c24492fc",
+    "src/hooks/use-recovery-draft.ts": "b67d849060ea0504c34acfcfa3d536731689abfe52ab6b7bf9e7548ff5d22efb"
+  },
+  "command": [
+    "~/.hermes/node/bin/node",
+    "node_modules/expo/bin/cli",
+    "export:embed",
+    "--platform",
+    "ios",
+    "--dev",
+    "false",
+    "--minify",
+    "false",
+    "--max-workers",
+    "1",
+    "--entry-file",
+    "node_modules/expo-router/entry.js",
+    "--bundle-output",
+    "/tmp/freed-premium-qa-ios/FREED.app/main.jsbundle",
+    "--assets-dest",
+    "/tmp/freed-premium-qa-ios/FREED.app"
+  ],
+  "nativeDebugSignal": "Expo Constants.debugMode compiled with native DEBUG; JS __DEV__ false",
+  "releaseProof": false,
+  "cachedReexportReason": "Final native Debug mock Premium gate follows guarded monetization config, not JS __DEV__."
+}

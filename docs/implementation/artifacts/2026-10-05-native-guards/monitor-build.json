@@ -1,0 +1,15 @@
+{
+  "kind": "actual Release iphoneos DeviceActivity extension build",
+  "passed": true,
+  "reviewedNativeInputsMatch": true,
+  "sourceHashes": {
+    "ios/FREEDDeviceActivityMonitor/DeviceActivityMonitorExtension.swift": "b953035b65edb5c371d2d9965b6929e6a8364730107307fc7beeac1533e18990",
+    "modules/freed-protection/ios/FreedAppGuardPolicy.swift": "0b1235eacdadbf3aa2010a4ac0b66b090299050766cbf596bedcb418bbe4936f"
+  },
+  "generatedSnapshotProjectSha256": "123a9b33995908476aa65159d842a2f7cadd3d8e7cd2c82b2e3f2698fb98fc75",
+  "projectIntegration": "CocoaPods regenerated paths in isolated snapshot",
+  "logSha256": "d850f8e49bad39686e1afd9997c20d65958c0e6c5c58e9fcc15ab7151a8d51a9",
+  "signed": false,
+  "appBinary": false,
+  "physicalEvidence": false
+}

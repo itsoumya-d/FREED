@@ -4,6 +4,7 @@ const assert = require("node:assert/strict");
 const { spawnSync } = require("node:child_process");
 const { existsSync, readFileSync } = require("node:fs");
 const path = require("node:path");
+const { evaluateInterceptionReleaseGate } = require('./lib/interception-release-gate');
 
 const ROOT = path.resolve(__dirname, "..");
 const APPROVAL_ENV = "FREED_STORE_PRODUCTION_SUBMIT_APPROVED";
@@ -101,6 +102,16 @@ function riskyIosSubmitKeys(iosSubmit) {
   return RISKY_IOS_SUBMIT_KEYS.filter((key) => truthy(iosSubmit[key]));
 }
 
+function currentDeclaredCoverageRequest() {
+  return {
+    audience: 'public',
+    contractVersion: 3,
+    candidates: { ios: { platform: 'ios' }, android: { platform: 'android' } },
+    claims: [],
+    evidence: []
+  };
+}
+
 function validateSubmitProfile(eas, profile, env = process.env) {
   const issues = [];
   const submitProfile = eas?.submit?.[profile];
@@ -123,6 +134,13 @@ function validateSubmitProfile(eas, profile, env = process.env) {
     androidSubmit.track && androidSubmit.track !== SAFE_ANDROID_TRACK ||
     androidSubmit.releaseStatus && androidSubmit.releaseStatus !== SAFE_ANDROID_RELEASE_STATUS;
   const iosReviewKeys = riskyIosSubmitKeys(iosSubmit);
+  // Approval authorizes submission; it cannot establish missing API/device capability.
+  if (liveAndroidSubmit || iosReviewKeys.length > 0) {
+    const gate = evaluateInterceptionReleaseGate(currentDeclaredCoverageRequest());
+    if (!gate.publicReleaseAllowed) {
+      issues.push('Minimum declared recovery coverage gate blocked: Safari/iOS and Chrome/Android recovery plus complete app-limit journeys on both platforms lack reviewed source capability and exact source/binary/device/OS/artifact evidence.');
+    }
+  }
 
   if (profile === "internal") {
     if (androidSubmit.track && androidSubmit.track !== SAFE_ANDROID_TRACK) {
@@ -171,7 +189,7 @@ function safeSummary(validation, args) {
     schemaVersion: "freed-eas-submit-guard-v1",
     result: validation.issues.length === 0 ? "pass" : "fail",
     profile: validation.profile,
-    approvedForLiveSubmit: validation.approved,
+    approvedForLiveSubmit: validation.approved && validation.issues.length === 0,
     liveAndroidSubmit: validation.liveAndroidSubmit,
     riskyIosSubmitKeys: validation.riskyIosSubmitKeys,
     command: ["eas", ...args].join(" "),
@@ -208,10 +226,7 @@ function runSelfTest() {
     validateSubmitProfile(liveConfig, "production").issues.join("\n"),
     /submitForReview/
   );
-  assert.deepEqual(
-    validateSubmitProfile(liveConfig, "production", { [APPROVAL_ENV]: APPROVAL_TOKEN }).issues,
-    []
-  );
+  assert.match(validateSubmitProfile(liveConfig, "production", { [APPROVAL_ENV]: APPROVAL_TOKEN }).issues.join('\n'), /Minimum declared recovery coverage gate blocked/);
   assert.match(validateSubmitProfile({ cli: {}, build: {}, submit: {} }, "production").issues.join("\n"), /appVersionSource/);
   assert.deepEqual(easSubmitArgs("production", ["--platform", "android"]), [
     "submit",

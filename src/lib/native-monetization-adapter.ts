@@ -1,25 +1,37 @@
+import { setRewardedProviderDiagnostic, rewardedNativeCode } from './rewarded-ad-diagnostics';
+import type { RewardedDiagnosticReceipt } from './rewarded-ad-diagnostics';
 import {
   MonetizationConfig,
   NativeMonetizationProvider,
   PremiumPlan,
   PurchaseResult,
   RewardedResetResult,
+  RewardedPresentationLifecycle,
   RewardedResetSession
 } from "@/lib/monetization";
+import type { StoreProductPrice } from "@/lib/store-pricing";
+import type { VerifiedPremiumEntitlement } from "@/lib/premium-entitlement";
 
 export type NativeEntitlementInfo = {
   activeEntitlementIds: string[];
+  purchaseStatus?: "purchased" | "pending" | "cancelled" | "failed" | "unavailable";
+  message?: string;
+  verifiedEntitlement?: VerifiedPremiumEntitlement;
   raw?: unknown;
 };
 
 export type NativeStoreAdapter = {
+  dispose?: () => void;
+  fetchStorePrices?: (config: MonetizationConfig) => Promise<StoreProductPrice[]>;
   purchaseProduct: (productId: string, config: MonetizationConfig) => Promise<NativeEntitlementInfo>;
   restorePurchases: (config: MonetizationConfig) => Promise<NativeEntitlementInfo>;
 };
 
 export type NativeRewardedAdAdapter = {
+  getAdPrivacyOptionsRequired?: () => Promise<boolean | null>;
+  showAdPrivacyOptions?: (isCurrent?: () => boolean) => Promise<boolean>;
   createSession: (config: MonetizationConfig) => RewardedResetSession | null;
-  completeSession: (session: RewardedResetSession, config: MonetizationConfig) => Promise<RewardedResetResult>;
+  completeSession: (session: RewardedResetSession, config: MonetizationConfig, isEligible?: () => boolean, lifecycle?: RewardedPresentationLifecycle) => Promise<RewardedResetResult>;
 };
 
 export type NativeMonetizationAdapters = {
@@ -34,13 +46,17 @@ export type RevenueCatLikeSdk = {
 };
 
 export type AdMobRewardedBridge = {
+  getAdPrivacyOptionsRequired?: () => Promise<boolean | null>;
+  showAdPrivacyOptions?: (isCurrent?: () => boolean) => Promise<boolean>;
   createRewardedAd: (adUnitId: string, config: MonetizationConfig) => unknown;
-  loadRewardedAd?: (ad: unknown, config: MonetizationConfig) => void;
+  loadRewardedAd?: (ad: unknown, config: MonetizationConfig, isEligible?: () => boolean) => void;
   showRewardedAd: (
     ad: unknown,
     session: RewardedResetSession,
-    config: MonetizationConfig
-  ) => Promise<boolean | { rewardGranted: boolean; message?: string }>;
+    config: MonetizationConfig,
+    isEligible?: () => boolean,
+    lifecycle?: RewardedPresentationLifecycle
+  ) => Promise<boolean | { rewardGranted: boolean; message?: string; diagnostic?: RewardedDiagnosticReceipt }>;
   disposeRewardedAd?: (ad: unknown, session: RewardedResetSession, config: MonetizationConfig) => void;
 };
 
@@ -97,7 +113,7 @@ export function createRevenueCatStoreAdapter(sdk: RevenueCatLikeSdk): NativeStor
 }
 
 export function hasPremiumEntitlement(info: NativeEntitlementInfo, config: MonetizationConfig) {
-  return info.activeEntitlementIds.includes(config.revenueCatEntitlementId);
+  return (!info.purchaseStatus || info.purchaseStatus === "purchased") && info.activeEntitlementIds.includes(config.revenueCatEntitlementId);
 }
 
 function collectProductIds(value: unknown, depth = 0): string[] {
@@ -132,32 +148,36 @@ function restoredPlanId(plans: PremiumPlan[], info: NativeEntitlementInfo) {
 }
 
 function purchasedResult(plan: PremiumPlan, config: MonetizationConfig, info: NativeEntitlementInfo): PurchaseResult {
-  if (!hasPremiumEntitlement(info, config)) {
+  if (!hasPremiumEntitlement(info, config) || (info.purchaseStatus && info.purchaseStatus !== "purchased")) {
     return {
-      status: "failed",
+      status: info.purchaseStatus === "cancelled" ? "cancelled" : info.purchaseStatus === "pending" || info.purchaseStatus === "unavailable" ? "unavailable" : "failed",
+      purchaseStatus: info.purchaseStatus ?? "failed",
       premium: false,
       provider: "native",
-      message: "Purchase completed, but the premium entitlement was not active.",
+      message: info.message ?? (info.purchaseStatus === "pending" ? "The store purchase is pending. Premium activates after confirmation." : info.purchaseStatus === "cancelled" ? "Purchase cancelled." : "Premium could not be verified. Restore purchases or try again."),
       planId: plan.id
     };
   }
 
   return {
     status: "purchased",
+    purchaseStatus: "purchased",
     premium: true,
     provider: "native",
-    message: `${plan.label} premium is active.`,
-    planId: plan.id
+    message: info.message ?? `${plan.label} premium is active.`,
+    planId: plan.id,
+    verifiedEntitlement: info.verifiedEntitlement
   };
 }
 
 function restoredResult(plans: PremiumPlan[], config: MonetizationConfig, info: NativeEntitlementInfo): PurchaseResult {
-  if (!hasPremiumEntitlement(info, config)) {
+  if (!hasPremiumEntitlement(info, config) || (info.purchaseStatus && info.purchaseStatus !== "purchased")) {
     return {
-      status: "unavailable",
+      status: info.purchaseStatus === "cancelled" ? "cancelled" : info.purchaseStatus === "failed" ? "failed" : "unavailable",
+      purchaseStatus: info.purchaseStatus ?? "unavailable",
       premium: false,
       provider: "native",
-      message: "No active FREED premium entitlement was found.",
+      message: info.message ?? "No active FREED premium entitlement was found.",
       planId: null
     };
   }
@@ -175,15 +195,20 @@ function restoredResult(plans: PremiumPlan[], config: MonetizationConfig, info: 
 
   return {
     status: "purchased",
+    purchaseStatus: "purchased",
     premium: true,
     provider: "native",
     message: "Premium entitlement restored.",
-    planId
+    planId,
+    verifiedEntitlement: info.verifiedEntitlement
   };
 }
 
 export function createNativeMonetizationAdapter(adapters: NativeMonetizationAdapters): NativeMonetizationProvider {
   return {
+    fetchStorePrices: adapters.store?.fetchStorePrices,
+    getAdPrivacyOptionsRequired: adapters.rewardedAds?.getAdPrivacyOptionsRequired,
+    showAdPrivacyOptions: adapters.rewardedAds?.showAdPrivacyOptions,
     purchasePremiumPlan: adapters.store
       ? async (plan, config) => purchasedResult(plan, config, await adapters.store!.purchaseProduct(plan.productId, config))
       : undefined,
@@ -194,15 +219,15 @@ export function createNativeMonetizationAdapter(adapters: NativeMonetizationAdap
       ? (config) => adapters.rewardedAds?.createSession(config) ?? null
       : undefined,
     completeRewardedResetSession: adapters.rewardedAds
-      ? async (session, config) => {
+      ? async (session, config, isEligible, lifecycle) => {
           try {
-            return await adapters.rewardedAds!.completeSession(session, config);
+            return await adapters.rewardedAds!.completeSession(session, config, isEligible, lifecycle);
           } catch {
             return {
               status: "fallback",
-              rewardGranted: true,
+              rewardGranted: false,
               provider: "fallback",
-              message: "Rewarded ad provider failed. Recovery challenge unlocked without an ad."
+              message: "Rewarded ads are unavailable. Retry later or open Basic help."
             };
           }
         }
@@ -214,11 +239,14 @@ export function createAdMobRewardedAdapter(bridge: AdMobRewardedBridge): NativeR
   const activeAds = new Map<string, unknown>();
 
   return {
+    getAdPrivacyOptionsRequired: bridge.getAdPrivacyOptionsRequired,
+    showAdPrivacyOptions: bridge.showAdPrivacyOptions,
     createSession: (config) => {
       const adUnitId = config.rewardedResetPlacementId;
       if (!adUnitId) return null;
 
       try {
+        setRewardedProviderDiagnostic(null);
         const ad = bridge.createRewardedAd(adUnitId, config);
         const id = `admob-reset-${Date.now()}-${Math.random().toString(36).slice(2)}`;
         const session: RewardedResetSession = {
@@ -235,27 +263,29 @@ export function createAdMobRewardedAdapter(bridge: AdMobRewardedBridge): NativeR
           }
         };
         activeAds.set(id, ad);
-        bridge.loadRewardedAd?.(ad, config);
         return session;
-      } catch {
+      } catch (error) {
+        setRewardedProviderDiagnostic({ stage: 'factory', failure: 'native-error', nativeCode: rewardedNativeCode(error) });
         return null;
       }
     },
-    completeSession: async (session, config) => {
+    completeSession: async (session, config, isEligible, lifecycle) => {
       const ad = activeAds.get(session.id);
       if (!ad) {
         return {
           status: "fallback",
-          rewardGranted: true,
+          rewardGranted: false,
           provider: "fallback",
-          message: "Rewarded ad session was unavailable. Recovery challenge unlocked without an ad."
+          message: "Rewarded ads are unavailable. Retry later or open Basic help."
         };
       }
 
       try {
-        const result = await bridge.showRewardedAd(ad, session, config);
+        bridge.loadRewardedAd?.(ad, config, isEligible);
+        const result = await bridge.showRewardedAd(ad, session, config, isEligible, lifecycle);
         const rewardGranted = typeof result === "boolean" ? result : result.rewardGranted;
         return {
+          diagnostic: typeof result === "object" ? result.diagnostic : undefined,
           status: rewardGranted ? "completed" : "failed",
           rewardGranted,
           provider: "native",

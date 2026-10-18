@@ -1,0 +1,4 @@
+/** Scripted native boundary for existing adapter contract tests. This is not JSI/device evidence. */
+export const fixtureActionScope='["owner",1,"22222222-2222-4222-8222-222222222222"]';
+export function withNativeAccountFixture(native:unknown){return {FreedAccountBindingSession:class{release(){}},prepareAccountBindingV2:()=>({ticket:'11111111-1111-4111-8111-111111111111',admissionRevision:0}),commitAccountBindingV2:()=>({version:2,accepted:true,bindingHandle:'22222222-2222-4222-8222-222222222222',actionScope:fixtureActionScope,generation:1,scopeEpoch:2,admissionRevision:0}),...(native as object)};}
+export async function acknowledgeNativeFixture(api:any){if(!api.createNativeAccountSession)return api;const driver=api.createNativeAccountSession(()=>true);if(!driver)return api;const prepared=await driver.prepare('owner','33333333-3333-4333-8333-333333333333',1);await driver.commit(prepared.ticket);return api;}

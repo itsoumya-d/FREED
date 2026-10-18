@@ -1,0 +1,18 @@
+{
+  "stage": "intermediate-reviewed-functional-source-before-localization",
+  "sourceFingerprint": "e2de509f84ff1b65ffd1a9e50b948958f7ab54d254bc10a38addd7870552dd34",
+  "inputCount": 952,
+  "uiTasks": "1-4 and Task1fix4 approved",
+  "nativeInputNote": "current native source included; native owner binds its independent receipts",
+  "verification": {
+    "journeyModel": 19,
+    "accountUI": 37,
+    "guidedNode": 55,
+    "guidedUI": 69,
+    "typescript": "passed",
+    "nativeSDKStorePhysicalMotion": "not promoted"
+  },
+  "excluded": "private signing material, .env values, build outputs, backend function deployment state",
+  "copyPolicy": "verify every source hash before and after atomic isolated copy; UI writer quiescent until confirmed",
+  "finalRelease": "not approved; localization/full final review/service/device/store evidence pending"
+}

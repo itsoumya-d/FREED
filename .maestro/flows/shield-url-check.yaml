@@ -1,0 +1,31 @@
+appId: app.freed.recovery
+name: shield-url-check
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///shield/diagnostics"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-shield-diagnostics"
+    timeout: 15000
+- tapOn: "Show advanced diagnostics"
+- scrollUntilVisible:
+    element:
+      text: "Google"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Google"
+- tapOn: "Check"
+- assertVisible: "Allowed: normal browsing"
+- tapOn: "YouTube"
+- tapOn: "Check"
+- assertVisible:
+    id: "screen-main-shield-diagnostics"
+- takeScreenshot: "shield-url-check"

@@ -1,0 +1,20 @@
+{
+  "generatedAt": "2026-10-02T11:32:37.894252+00:00",
+  "sanitized": true,
+  "checks": [
+    {
+      "check": "ios-release-simulator",
+      "status": "passed",
+      "artifact": "ios-release-simulator.log",
+      "sha256": "7b4973a2afefcfd786600c4c4442ddfe7f487c5a6c9af2c401172c13639b128a",
+      "scope": "Native compilation/resources; does not establish signed store builds or physical enforcement."
+    },
+    {
+      "check": "android-release-resources",
+      "status": "passed",
+      "artifact": "android-release-resources.log",
+      "sha256": "3a285a78946b431bd945b075967d3ae8c98c4b0775d1969f9ef68747fef7ddec",
+      "scope": "Native compilation/resources; does not establish signed store builds or physical enforcement."
+    }
+  ]
+}

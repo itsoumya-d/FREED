@@ -58,7 +58,11 @@ test("push token and deletion callable contracts are minimal", () => {
     clientEventId: "evt_abcdefgh",
     title: "arbitrary copy"
   }), /unsupported/i);
-  assert.deepEqual(parseDeletionRequest({ clientEventId: "evt_abcdefgh" }), { clientEventId: "evt_abcdefgh" });
+  assert.deepEqual(parseDeletionRequest({ clientEventId: "evt_abcdefgh", expectedAccountUid: "owner_12345678" }), { clientEventId: "evt_abcdefgh", expectedAccountUid: "owner_12345678" });
+  for (const expectedAccountUid of [undefined, "", "a".repeat(201), "https://other.example/account", 123]) {
+    assert.throws(() => parseDeletionRequest({ clientEventId: "evt_abcdefgh", expectedAccountUid }));
+  }
+  assert.throws(() => parseDeletionRequest({ clientEventId: "evt_abcdefgh" }));
 });
 
 test("server document schemas reject forbidden fields on every collection family", () => {

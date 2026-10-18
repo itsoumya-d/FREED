@@ -1,0 +1,35 @@
+appId: app.freed.recovery
+name: profile-reminders
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///profile"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-profile"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Reminders"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Reminders"
+- scrollUntilVisible:
+    element:
+      text: ".*Reminder.*|.*reminder.*"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Morning.*"
+- assertVisible: "Evening.*"
+- swipe:
+    direction: UP
+- assertVisible:
+    id: "screen-main-profile"
+- takeScreenshot: "profile-reminders"

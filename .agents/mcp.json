@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "appllama": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://mcp.appllama.io/mcp"]
+    }
+  }
+}

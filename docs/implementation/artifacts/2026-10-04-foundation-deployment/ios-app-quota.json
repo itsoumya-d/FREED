@@ -1,0 +1,15 @@
+{
+  "httpStatus": 200,
+  "body": {
+    "name": "projects/freed-7d5ee/iosApps/1:5477978760:ios:006aeb00c496c4b4b3c53d",
+    "appId": "1:5477978760:ios:006aeb00c496c4b4b3c53d",
+    "displayName": "FREED iOS",
+    "projectId": "freed-7d5ee",
+    "bundleId": "app.freed.recovery",
+    "teamId": "R5RX8WP8ZC",
+    "apiKeyId": "ce3fc868-816f-4954-ac6e-f402dca6d1c7",
+    "state": "ACTIVE",
+    "expireTime": "1970-01-01T00:00:00Z",
+    "etag": "1_3e02932a-8f48-4318-9e5f-c9b05789921a"
+  }
+}

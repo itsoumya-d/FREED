@@ -6,6 +6,8 @@ export const COLLECTIONS = {
   backupMetadata: "backup_metadata",
   purchaseClaims: "purchase_claims",
   purchaseAudits: "purchase_audits",
+  purchaseNotificationReceipts: "purchase_notification_receipts",
+  purchaseAccountFences: "purchase_account_fences",
   redactedAiEvents: "redacted_ai_events",
   backendJobs: "backend_jobs",
   rateLimits: "rate_limits",
@@ -14,18 +16,55 @@ export const COLLECTIONS = {
   notificationJobs: "notification_jobs",
   deletionTombstones: "deletion_tombstones",
   adultFeedMetadata: "adult_feed_metadata",
+  // Admin-only DNS metadata has separate strict controller schemas. Device
+  // consent survives account detachment; these paths join bounded TTL cleanup.
+  recoveryDnsInstallations: "recoveryDnsInstallations",
+  recoveryDnsOwners: "recoveryDnsOwners",
+  recoveryDnsPilot: "recoveryDnsPilot",
+  recoveryDnsRequests: "recoveryDnsRequests",
   idempotency: "idempotency"
 } as const;
 
-export type AggregateAnalyticsInput = { day: string; checkIns: number; completedChallenges: number; clientEventId: string };
+export const ANALYTICS_SNAPSHOT_SCHEMA_VERSION = "aggregate-snapshot-v1";
+export type AggregateAnalyticsDay = { day: string; checkIns: number; completedChallenges: number };
+export type AggregateAnalyticsSnapshotInput = {
+  schemaVersion: typeof ANALYTICS_SNAPSHOT_SCHEMA_VERSION; lineageId: string; baseRevision: number; snapshotId: string;
+  days: AggregateAnalyticsDay[]; consentVersion: "analytics-consent-v1"; userOptedInAt: string; dataRetentionDays: 14;
+};
+export type AggregateAnalyticsInput = { day: string; checkIns: number; completedChallenges: number; clientEventId: string } | AggregateAnalyticsSnapshotInput;
 export type BackupMetadataInput = { backupId: string; encryptedBytes: number; ciphertextSha256: string; clientEventId: string };
 export type BackupIdentifierInput = { backupId: string };
 export type BackupMutationInput = BackupIdentifierInput & { clientEventId: string };
 export type PushTokenInput = { installationId: string; token: string; clientEventId: string };
-export type DeletionRequestInput = { clientEventId: string };
+export type DeletionRequestInput = { clientEventId: string; expectedAccountUid: string };
+export const REVIEW_ACCESS_VERSION = 1 as const;
+export type ReviewAccessState = { reviewAccessVersion: typeof REVIEW_ACCESS_VERSION; ownerUid: string } & (
+  | { access: "none"; expiresAt: null; capabilities: [] }
+  | { access: "review"; expiresAt: string; capabilities: ["ad-free", "premium-features"] }
+);
+export type ReviewAccessDocument = {
+  uid: string; kind: "review-access-v1"; status: "active" | "revoked"; createdAt: unknown; expiresAt: unknown;
+};
+
+export const JOURNEY_OFFER_VERSION = 1 as const;
+export type JourneyOfferState = { offerVersion: typeof JOURNEY_OFFER_VERSION; acknowledged: boolean };
+export type JourneyOfferAcknowledgementInput = {
+  offerVersion: typeof JOURNEY_OFFER_VERSION;
+  decision: "free" | "purchased";
+  eventId: string;
+};
+export type JourneyOfferAcknowledgementDocument = {
+  uid: string;
+  kind: "journey-offer-v1";
+  status: JourneyOfferAcknowledgementInput["decision"];
+  createdAt: unknown;
+};
 
 /** These document shapes are server-only; direct mobile Firestore access is denied. */
-export type AggregateAnalyticsDocument = { day: string; checkIns: number; completedChallenges: number; updatedAt: unknown; expiresAt: unknown };
+export type AggregateAnalyticsDocument =
+  | { day: string; checkIns: number; completedChallenges: number; updatedAt: unknown; expiresAt: unknown }
+  | { uid: string; schemaVersion: typeof ANALYTICS_SNAPSHOT_SCHEMA_VERSION; lineageId: string; revision: number; snapshotId: string; updatedAt: unknown; expiresAt: unknown }
+  | { uid: string; schemaVersion: typeof ANALYTICS_SNAPSHOT_SCHEMA_VERSION; lineageId: string; day: string; checkIns: number; completedChallenges: number; updatedAt: unknown; expiresAt: unknown };
 export type BackupMetadataDocument = {
   uid: string;
   backupId: string;
@@ -49,6 +88,7 @@ export type PurchaseClaimDocument = {
   status: string;
   storeReferenceHash: string;
   orderReferenceHash?: string;
+  storeAccountTokenHash?: string;
   verifiedAt: unknown;
   entitlementExpiresAt?: unknown;
 };
@@ -99,18 +139,20 @@ export type AdultFeedMetadataDocument = {
 };
 
 const SERVER_DOCUMENT_FIELDS: Record<string, readonly string[]> = {
-  [COLLECTIONS.aggregateAnalytics]: ["day", "checkIns", "completedChallenges", "updatedAt", "expiresAt"],
+  [COLLECTIONS.aggregateAnalytics]: ["uid", "day", "checkIns", "completedChallenges", "schemaVersion", "lineageId", "revision", "snapshotId", "updatedAt", "expiresAt"],
   [COLLECTIONS.backupMetadata]: [
     "uid", "backupId", "expectedBytes", "verifiedBytes", "ciphertextSha256", "objectPath", "status",
     "uploadSessionId", "sentinelGeneration", "objectGeneration",
     "createdAt", "updatedAt", "verifiedAt", "expiresAt"
   ],
   [COLLECTIONS.purchaseClaims]: [
-    "uid", "provider", "productId", "status", "storeReferenceHash", "orderReferenceHash", "verifiedAt", "entitlementExpiresAt"
+    "uid", "provider", "productId", "status", "storeReferenceHash", "orderReferenceHash", "storeAccountTokenHash", "verifiedAt", "entitlementExpiresAt"
   ],
   [COLLECTIONS.purchaseAudits]: [
-    "uid", "provider", "productId", "status", "storeReferenceHash", "orderReferenceHash", "verifiedAt", "entitlementExpiresAt", "expiresAt"
+    "uid", "provider", "productId", "status", "storeReferenceHash", "orderReferenceHash", "storeAccountTokenHash", "verifiedAt", "entitlementExpiresAt", "expiresAt"
   ],
+  [COLLECTIONS.purchaseNotificationReceipts]: ["eventIdHash", "provider", "processedAt", "expiresAt"],
+  [COLLECTIONS.purchaseAccountFences]: ["uid", "status", "createdAt", "updatedAt"],
   [COLLECTIONS.redactedAiEvents]: [
     "uid", "eventType", "outcome", "provider", "model", "crisisFallback", "inputCharacterCount",
     "outputCharacterCount", "generatedItemCount", "createdAt", "expiresAt"
@@ -125,7 +167,7 @@ const SERVER_DOCUMENT_FIELDS: Record<string, readonly string[]> = {
   ],
   [COLLECTIONS.deletionTombstones]: ["uid", "requestedAt", "status", "expiresAt"],
   [COLLECTIONS.adultFeedMetadata]: ["version", "checksum", "source", "generatedAt", "publishedAt", "domainCount", "objectKey"],
-  [COLLECTIONS.idempotency]: ["createdAt", "expiresAt"]
+  [COLLECTIONS.idempotency]: ["createdAt", "expiresAt", "schemaVersion", "lineageId", "snapshotId", "acceptedRevision"]
 };
 
 const DISALLOWED_KEYS = /(?:url|uri|host|domain|recovery|seed|mnemonic|receipt|note|accessibility|envelope|ciphertext|content|text|message|body|screenshot)/i;
@@ -147,6 +189,13 @@ export function validateServerDocument(collection: string, value: unknown): Reco
     throw new Error("Sensitive or unsupported server document.");
   }
   const document = value as Record<string, unknown>;
+  if (collection === COLLECTIONS.aggregateAnalytics && "uid" in document &&
+      (document.schemaVersion !== ANALYTICS_SNAPSHOT_SCHEMA_VERSION || typeof document.lineageId !== "string" || !/^lin_[a-f0-9]{32}$/.test(document.lineageId))) {
+    throw new Error("Sensitive or unsupported server document.");
+  }
+  if ("storeAccountTokenHash" in document && (typeof document.storeAccountTokenHash !== "string" || !/^[a-f0-9]{64}$/.test(document.storeAccountTokenHash))) {
+    throw new Error("Sensitive or unsupported server document.");
+  }
   for (const key of Object.keys(document)) {
     if (!SERVER_DOCUMENT_FIELDS[collection].includes(key) || (DISALLOWED_KEYS.test(key) && !allowedSensitiveNamedIdentifier(collection, key))) {
       throw new Error("Sensitive or unsupported server document.");
@@ -157,10 +206,12 @@ export function validateServerDocument(collection: string, value: unknown): Reco
 
 function allowedSensitiveNamedIdentifier(collection: string, key: string): boolean {
   return key === "ciphertextSha256" ||
+    ((collection === COLLECTIONS.purchaseClaims || collection === COLLECTIONS.purchaseAudits) && key === "storeAccountTokenHash") ||
     (collection === COLLECTIONS.adultFeedMetadata && (key === "domainCount" || key === "objectKey"));
 }
 
 export function parseAggregateAnalytics(value: unknown): AggregateAnalyticsInput {
+  if (value && typeof value === "object" && "schemaVersion" in value) return parseAggregateAnalyticsSnapshot(value);
   const record = strictRecord(value, ["day", "checkIns", "completedChallenges", "clientEventId"]);
   const day = requiredString(record, "day");
   const checkIns = requiredInteger(record, "checkIns", 0, 100);
@@ -168,6 +219,29 @@ export function parseAggregateAnalytics(value: unknown): AggregateAnalyticsInput
   const clientEventId = requiredIdentifier(record, "clientEventId");
   if (!DAY.test(day)) throw new Error("Unsupported aggregate analytics day.");
   return { day, checkIns, completedChallenges, clientEventId };
+}
+
+export function parseAggregateAnalyticsSnapshot(value: unknown): AggregateAnalyticsSnapshotInput {
+  const record = strictRecord(value, ["schemaVersion", "lineageId", "baseRevision", "snapshotId", "days", "consentVersion", "userOptedInAt", "dataRetentionDays"]);
+  if (record.schemaVersion !== ANALYTICS_SNAPSHOT_SCHEMA_VERSION || record.consentVersion !== "analytics-consent-v1" || record.dataRetentionDays !== 14) throw new Error("Unsupported aggregate snapshot schema or consent.");
+  const lineageId = requiredIdentifier(record, "lineageId");
+  const snapshotId = requiredIdentifier(record, "snapshotId");
+  if (!/^lin_[a-f0-9]{32}$/.test(lineageId) || !/^snap_[a-f0-9]{64}$/.test(snapshotId)) throw new Error("Unsupported aggregate snapshot identity.");
+  const baseRevision = requiredInteger(record, "baseRevision", 0, Number.MAX_SAFE_INTEGER - 1);
+  const userOptedInAt = requiredString(record, "userOptedInAt");
+  if (!Number.isFinite(Date.parse(userOptedInAt))) throw new Error("Explicit analytics consent is required.");
+  if (!Array.isArray(record.days) || record.days.length !== 14) throw new Error("Aggregate snapshot must contain 14 UTC days.");
+  const days = record.days.map((value, index): AggregateAnalyticsDay => {
+    const bucket = strictRecord(value, ["day", "checkIns", "completedChallenges"]);
+    const day = requiredString(bucket, "day");
+    const timestamp = Date.parse(`${day}T00:00:00.000Z`);
+    if (!DAY.test(day) || !Number.isFinite(timestamp) || new Date(timestamp).toISOString().slice(0, 10) !== day ||
+        (index > 0 && timestamp - Date.parse(`${(record.days as Array<{day: string}>)[index - 1].day}T00:00:00.000Z`) !== 86_400_000)) throw new Error("Unsupported aggregate snapshot UTC day.");
+    return { day, checkIns: requiredInteger(bucket, "checkIns", 0, Number.MAX_SAFE_INTEGER),
+      completedChallenges: requiredInteger(bucket, "completedChallenges", 0, Number.MAX_SAFE_INTEGER) };
+  });
+  return { schemaVersion: ANALYTICS_SNAPSHOT_SCHEMA_VERSION, lineageId, baseRevision, snapshotId, days,
+    consentVersion: "analytics-consent-v1", userOptedInAt, dataRetentionDays: 14 };
 }
 
 export function parseBackupMetadataHandshake(value: unknown): BackupMetadataInput {
@@ -208,8 +282,31 @@ export function parsePushTokenRegistration(value: unknown): PushTokenInput {
 }
 
 export function parseDeletionRequest(value: unknown): DeletionRequestInput {
-  const record = strictRecord(value, ["clientEventId"]);
-  return { clientEventId: requiredIdentifier(record, "clientEventId") };
+  const record = strictRecord(value, ["clientEventId", "expectedAccountUid"]);
+  return {
+    clientEventId: requiredIdentifier(record, "clientEventId"),
+    expectedAccountUid: requiredIdentifier(record, "expectedAccountUid")
+  };
+}
+
+/** Offer metadata accepts no owner identity, recovery answers, or authority fields. */
+export function parseJourneyOfferAcknowledgement(value: unknown): JourneyOfferAcknowledgementInput {
+  const record = strictRecord(value, ["offerVersion", "decision", "eventId"]);
+  if (record.offerVersion !== JOURNEY_OFFER_VERSION || (record.decision !== "free" && record.decision !== "purchased")) {
+    throw new Error("Unsupported journey offer acknowledgement.");
+  }
+  const eventId = requiredIdentifier(record, "eventId");
+  if (!/^journey_[a-f0-9]{32}$/.test(eventId)) throw new Error("Unsupported journey offer event identifier.");
+  return { offerVersion: JOURNEY_OFFER_VERSION, decision: record.decision, eventId };
+}
+
+/** Review authority cannot be selected, provisioned or renewed by a caller payload. */
+export function parseReviewAccessRequest(value: unknown): void {
+  if (value !== undefined && value !== null) throw new Error("No review access payload is permitted.");
+}
+
+export function parseJourneyOfferStateRequest(value: unknown): void {
+  if (value !== undefined && value !== null) throw new Error("No journey offer selection payload is permitted.");
 }
 
 function parseBackupMutation(value: unknown): BackupMutationInput {

@@ -1,0 +1,410 @@
+{
+  "entries": [
+    {
+      "source": "Adult-domain feed {{value1}} synced to native protection.",
+      "translations": {
+        "hi": "वयस्क डोमेन फ़ीड {{value1}} नेटिव सुरक्षा से सिंक हुई।",
+        "es": "La lista de dominios para adultos {{value1}} se sincronizó con la protección nativa.",
+        "pt": "A lista de domínios adultos {{value1}} foi sincronizada com a proteção nativa.",
+        "fr": "La liste de domaines pour adultes {{value1}} a été synchronisée avec la protection native.",
+        "de": "Die Liste mit Erwachsenendomains {{value1}} wurde mit dem nativen Schutz synchronisiert.",
+        "ar": "تمت مزامنة قائمة نطاقات محتوى البالغين {{value1}} مع الحماية الأصلية.",
+        "ja": "成人向けドメインフィード {{value1}} をネイティブ保護と同期しました。",
+        "zh-Hans": "成人内容域名列表 {{value1}} 已同步至原生保护。",
+        "ko": "성인 도메인 피드 {{value1}}가 기본 보호와 동기화되었습니다."
+      }
+    },
+    {
+      "source": "Adult-domain filtering is paused for network sign-in. Finish sign-in, then test protection again.",
+      "translations": {
+        "hi": "नेटवर्क साइन-इन के लिए वयस्क डोमेन फ़िल्टरिंग रुकी है। साइन-इन पूरा करें, फिर सुरक्षा जाँचें।",
+        "es": "El filtrado de dominios para adultos está pausado para iniciar sesión en la red. Termina de iniciar sesión y vuelve a probar la protección.",
+        "pt": "A filtragem de domínios adultos está pausada para entrar na rede. Conclua o login e teste a proteção novamente.",
+        "fr": "Le filtrage des domaines pour adultes est suspendu pour la connexion au réseau. Terminez la connexion, puis testez à nouveau la protection.",
+        "de": "Der Filter für Erwachsenendomains ist für die Netzwerkanmeldung pausiert. Schließe die Anmeldung ab und teste den Schutz erneut.",
+        "ar": "تصفية نطاقات محتوى البالغين متوقفة مؤقتًا لتسجيل الدخول إلى الشبكة. أكمل تسجيل الدخول، ثم اختبر الحماية مجددًا.",
+        "ja": "ネットワークへのログインのため、成人向けドメインのフィルタリングを一時停止しています。ログイン後、保護を再テストしてください。",
+        "zh-Hans": "成人内容域名过滤已暂停，以便登录网络。完成登录后，请再次测试保护。",
+        "ko": "네트워크 로그인을 위해 성인 도메인 필터링이 일시 중지되었습니다. 로그인을 완료한 후 보호를 다시 테스트하세요."
+      }
+    },
+    {
+      "source": "Always-allow list saved with {{count}} domain.",
+      "translations": {
+        "hi": "हमेशा अनुमति सूची {{count}} डोमेन के साथ सहेजी गई।",
+        "es": "Lista de permitidos guardada con {{count}} dominio.",
+        "pt": "Lista de permissões salva com {{count}} domínio.",
+        "fr": "Liste des domaines toujours autorisés enregistrée avec {{count}} domaine.",
+        "de": "Liste immer erlaubter Domains mit {{count}} Domain gespeichert.",
+        "ar": "حُفظت قائمة السماح الدائم مع {{count}} نطاق.",
+        "ja": "常に許可するリストに {{count}} 件のドメインを保存しました。",
+        "zh-Hans": "已保存始终允许列表，其中有 {{count}} 个域名。",
+        "ko": "{{count}} 도메인과 함께 저장된 항상 허용 목록입니다."
+      }
+    },
+    {
+      "source": "Always-allow list saved with {{count}} domains.",
+      "translations": {
+        "hi": "हमेशा अनुमति सूची {{count}} डोमेन के साथ सहेजी गई।",
+        "es": "Lista de permitidos guardada con {{count}} dominios.",
+        "pt": "Lista de permissões salva com {{count}} domínios.",
+        "fr": "Liste des domaines toujours autorisés enregistrée avec {{count}} domaines.",
+        "de": "Liste immer erlaubter Domains mit {{count}} Domains gespeichert.",
+        "ar": "حُفظت قائمة السماح الدائم مع {{count}} نطاقات.",
+        "ja": "常に許可するリストに {{count}} 件のドメインを保存しました。",
+        "zh-Hans": "已保存始终允许列表，其中有 {{count}} 个域名。",
+        "ko": "{{count}} 도메인과 함께 저장된 항상 허용 목록입니다."
+      }
+    },
+    {
+      "source": "Android native activation diagnostics need attention.",
+      "translations": {
+        "hi": "Android नेटिव सक्रियण जाँचों पर ध्यान देना होगा।",
+        "es": "Los diagnósticos de activación nativa de Android necesitan atención.",
+        "pt": "Os diagnósticos de ativação nativa do Android precisam de atenção.",
+        "fr": "Les diagnostics d’activation native Android nécessitent votre attention.",
+        "de": "Die nativen Android-Aktivierungsprüfungen benötigen Aufmerksamkeit.",
+        "ar": "تحتاج فحوص التفعيل الأصلية في Android إلى مراجعة.",
+        "ja": "Android のネイティブ有効化診断に対応が必要です。",
+        "zh-Hans": "Android 原生激活诊断需要处理。",
+        "ko": "Android 기본 활성화 진단에 주의가 필요합니다."
+      }
+    },
+    {
+      "source": "Android native activation diagnostics passed for DNS Guard, Accessibility, Usage Access, selected app timers, and domain classification.",
+      "translations": {
+        "hi": "Android नेटिव सक्रियण जाँचें DNS Guard, सुलभता, उपयोग पहुँच, चुने ऐप टाइमर और डोमेन वर्गीकरण के लिए सफल रहीं।",
+        "es": "Se superaron los diagnósticos de activación nativa de Android para DNS Guard, Accesibilidad, acceso de uso, temporizadores de apps seleccionadas y clasificación de dominios.",
+        "pt": "Os diagnósticos de ativação nativa do Android passaram para DNS Guard, Acessibilidade, acesso ao uso, temporizadores dos apps selecionados e classificação de domínios.",
+        "fr": "Les diagnostics d’activation native Android ont réussi pour DNS Guard, l’accessibilité, l’accès aux données d’utilisation, les minuteurs d’apps sélectionnées et la classification des domaines.",
+        "de": "Die nativen Android-Aktivierungsprüfungen für DNS Guard, Bedienungshilfen, Nutzungszugriff, gewählte App-Timer und Domainklassifizierung waren erfolgreich.",
+        "ar": "نجحت فحوص التفعيل الأصلية في Android لكل من DNS Guard وإمكانية الوصول والوصول إلى الاستخدام ومؤقتات التطبيقات المحددة وتصنيف النطاقات.",
+        "ja": "DNS Guard、ユーザー補助、使用状況へのアクセス、選択したアプリのタイマー、ドメイン分類の Android ネイティブ有効化診断に合格しました。",
+        "zh-Hans": "DNS Guard、无障碍、使用情况访问、所选应用计时器和域名分类的 Android 原生激活诊断已通过。",
+        "ko": "DNS Guard, 접근성, 사용 액세스, 선택한 앱 타이머 및 도메인 분류에 대해 Android 기본 활성화 진단이 통과되었습니다."
+      }
+    },
+    {
+      "source": "Approve Screen Time authorization before applying the web filter.",
+      "translations": {
+        "hi": "वेब फ़िल्टर लागू करने से पहले स्क्रीन टाइम अनुमति दें।",
+        "es": "Autoriza Tiempo de uso antes de aplicar el filtro web.",
+        "pt": "Autorize o Tempo de Uso antes de aplicar o filtro da web.",
+        "fr": "Autorisez Temps d’écran avant d’appliquer le filtre web.",
+        "de": "Erlaube Bildschirmzeit, bevor du den Webfilter anwendest.",
+        "ar": "وافق على إذن مدة استخدام الجهاز قبل تطبيق فلتر الويب.",
+        "ja": "Web フィルターを適用する前にスクリーンタイムを許可してください。",
+        "zh-Hans": "应用网页过滤器前，请授权屏幕使用时间。",
+        "ko": "웹 필터를 적용하기 전에 Screen Time 인증을 승인하세요."
+      }
+    },
+    {
+      "source": "Approve Screen Time authorization before choosing protected apps.",
+      "translations": {
+        "hi": "सुरक्षित ऐप चुनने से पहले स्क्रीन टाइम अनुमति दें।",
+        "es": "Autoriza Tiempo de uso antes de elegir las apps protegidas.",
+        "pt": "Autorize o Tempo de Uso antes de escolher os apps protegidos.",
+        "fr": "Autorisez Temps d’écran avant de choisir les apps protégées.",
+        "de": "Erlaube Bildschirmzeit, bevor du geschützte Apps auswählst.",
+        "ar": "وافق على إذن مدة استخدام الجهاز قبل اختيار التطبيقات المحمية.",
+        "ja": "保護するアプリを選ぶ前にスクリーンタイムを許可してください。",
+        "zh-Hans": "选择受保护应用前，请授权屏幕使用时间。",
+        "ko": "보호된 앱을 선택하기 전에 Screen Time 인증을 승인하세요."
+      }
+    },
+    {
+      "source": "Approve Screen Time authorization before scheduling Night Guard.",
+      "translations": {
+        "hi": "Night Guard शेड्यूल करने से पहले स्क्रीन टाइम अनुमति दें।",
+        "es": "Autoriza Tiempo de uso antes de programar Night Guard.",
+        "pt": "Autorize o Tempo de Uso antes de agendar o Night Guard.",
+        "fr": "Autorisez Temps d’écran avant de programmer Night Guard.",
+        "de": "Erlaube Bildschirmzeit, bevor du Night Guard planst.",
+        "ar": "وافق على إذن مدة استخدام الجهاز قبل جدولة Night Guard.",
+        "ja": "Night Guard を設定する前にスクリーンタイムを許可してください。",
+        "zh-Hans": "设置 Night Guard 计划前，请授权屏幕使用时间。",
+        "ko": "Night Guard를 예약하기 전에 Screen Time 인증을 승인하세요."
+      }
+    },
+    {
+      "source": "Approve Screen Time authorization before scheduling selected app limits.",
+      "translations": {
+        "hi": "चुने ऐप की सीमाएँ शेड्यूल करने से पहले स्क्रीन टाइम अनुमति दें।",
+        "es": "Autoriza Tiempo de uso antes de programar límites para las apps seleccionadas.",
+        "pt": "Autorize o Tempo de Uso antes de agendar os limites dos apps selecionados.",
+        "fr": "Autorisez Temps d’écran avant de programmer les limites des apps sélectionnées.",
+        "de": "Erlaube Bildschirmzeit, bevor du Limits für gewählte Apps planst.",
+        "ar": "وافق على إذن مدة استخدام الجهاز قبل جدولة حدود التطبيقات المحددة.",
+        "ja": "選択したアプリの制限を設定する前にスクリーンタイムを許可してください。",
+        "zh-Hans": "设置所选应用限制前，请授权屏幕使用时间。",
+        "ko": "선택한 앱 제한을 예약하기 전에 Screen Time 인증을 승인하세요."
+      }
+    },
+    {
+      "source": "Category-wide recovery is active for the challenged category. Other categories, targets, and adult web filtering stay active.",
+      "translations": {
+        "hi": "चुनौती वाली श्रेणी के लिए पूरी श्रेणी की रिकवरी चालू है। अन्य श्रेणियों, लक्ष्यों और वयस्क वेब फ़िल्टर की सुरक्षा जारी है।",
+        "es": "La recuperación de toda la categoría está activa para la categoría del reto. Las demás categorías, objetivos y el filtrado web para adultos siguen activos.",
+        "pt": "A recuperação de toda a categoria está ativa para a categoria do desafio. As outras categorias, alvos e a filtragem de conteúdo adulto continuam ativos.",
+        "fr": "Le rétablissement de toute la catégorie est actif pour la catégorie du défi. Les autres catégories, cibles et le filtrage web pour adultes restent actifs.",
+        "de": "Die Erholung für die gesamte Kategorie der Herausforderung ist aktiv. Andere Kategorien, Ziele und der Erwachsenen-Webfilter bleiben aktiv.",
+        "ar": "التعافي على مستوى الفئة نشط لفئة التحدي. تبقى الفئات والأهداف الأخرى وتصفية محتوى البالغين على الويب نشطة.",
+        "ja": "チャレンジ対象のカテゴリ全体で回復アクセスが有効です。他のカテゴリ、対象、成人向け Web フィルターは引き続き有効です。",
+        "zh-Hans": "挑战所在类别的整类恢复已启用。其他类别、目标以及成人网页过滤仍保持有效。",
+        "ko": "문제가 있는 카테고리에 대해 카테고리 전체 복구가 활성화됩니다. 기타 카테고리, 대상 및 성인 웹 필터링은 활성 상태로 유지됩니다."
+      }
+    },
+    {
+      "source": "Choose a valid Night Guard start and end time.",
+      "translations": {
+        "hi": "Night Guard का वैध शुरू और समाप्ति समय चुनें।",
+        "es": "Elige horas válidas de inicio y fin para Night Guard.",
+        "pt": "Escolha horários válidos de início e fim para Night Guard.",
+        "fr": "Choisissez des heures de début et de fin valides pour Night Guard.",
+        "de": "Wähle gültige Start- und Endzeiten für Night Guard.",
+        "ar": "اختر وقت بداية ونهاية صالحين لـ Night Guard.",
+        "ja": "Night Guard の有効な開始時刻と終了時刻を選んでください。",
+        "zh-Hans": "请选择有效的 Night Guard 开始和结束时间。",
+        "ko": "유효한 Night Guard 시작 및 종료 시간을 선택하세요."
+      }
+    },
+    {
+      "source": "Choose Screen Time apps, categories, or domains before scheduling selected app limits.",
+      "translations": {
+        "hi": "चुने ऐप की सीमाएँ शेड्यूल करने से पहले स्क्रीन टाइम ऐप, श्रेणियाँ या डोमेन चुनें।",
+        "es": "Elige apps, categorías o dominios de Tiempo de uso antes de programar límites de apps seleccionadas.",
+        "pt": "Escolha apps, categorias ou domínios do Tempo de Uso antes de agendar limites para os apps selecionados.",
+        "fr": "Choisissez des apps, catégories ou domaines dans Temps d’écran avant de programmer les limites des apps sélectionnées.",
+        "de": "Wähle Bildschirmzeit-Apps, Kategorien oder Domains, bevor du Limits für gewählte Apps planst.",
+        "ar": "اختر تطبيقات أو فئات أو نطاقات مدة استخدام الجهاز قبل جدولة حدود التطبيقات المحددة.",
+        "ja": "選択したアプリの制限を設定する前に、スクリーンタイムのアプリ、カテゴリ、ドメインを選んでください。",
+        "zh-Hans": "设置所选应用限制前，请选择屏幕使用时间中的应用、类别或域名。",
+        "ko": "선택한 앱 제한을 예약하기 전에 Screen Time 앱, 카테고리 또는 도메인을 선택하세요."
+      }
+    },
+    {
+      "source": "Configured app blocking is off.",
+      "translations": {
+        "hi": "कॉन्फ़िगर किए ऐप का अवरोध बंद है।",
+        "es": "El bloqueo de apps configuradas está desactivado.",
+        "pt": "O bloqueio dos apps configurados está desativado.",
+        "fr": "Le blocage des apps configurées est désactivé.",
+        "de": "Das Blockieren konfigurierter Apps ist ausgeschaltet.",
+        "ar": "حظر التطبيقات المُعدّة متوقف.",
+        "ja": "設定したアプリのブロックはオフです。",
+        "zh-Hans": "已配置的应用拦截已关闭。",
+        "ko": "구성된 앱 차단이 꺼져 있습니다."
+      }
+    },
+    {
+      "source": "Configured app blocking is ready for {{count}} app.",
+      "translations": {
+        "hi": "कॉन्फ़िगर किया अवरोध {{count}} ऐप के लिए तैयार है।",
+        "es": "El bloqueo configurado está listo para {{count}} app.",
+        "pt": "O bloqueio configurado está pronto para {{count}} app.",
+        "fr": "Le blocage configuré est prêt pour {{count}} app.",
+        "de": "Das konfigurierte Blockieren ist für {{count}} App bereit.",
+        "ar": "الحظر المُعدّ جاهز لـ {{count}} تطبيق.",
+        "ja": "設定したブロックは {{count}} 個のアプリに対応する準備ができています。",
+        "zh-Hans": "已配置的拦截已准备好保护 {{count}} 个应用。",
+        "ko": "{{count}} 앱에 대해 구성된 앱 차단이 준비되었습니다."
+      }
+    },
+    {
+      "source": "Configured app blocking is ready for {{count}} apps.",
+      "translations": {
+        "hi": "कॉन्फ़िगर किया अवरोध {{count}} ऐप के लिए तैयार है।",
+        "es": "El bloqueo configurado está listo para {{count}} apps.",
+        "pt": "O bloqueio configurado está pronto para {{count}} apps.",
+        "fr": "Le blocage configuré est prêt pour {{count}} apps.",
+        "de": "Das konfigurierte Blockieren ist für {{count}} Apps bereit.",
+        "ar": "الحظر المُعدّ جاهز لـ {{count}} تطبيقات.",
+        "ja": "設定したブロックは {{count}} 個のアプリに対応する準備ができています。",
+        "zh-Hans": "已配置的拦截已准备好保护 {{count}} 个应用。",
+        "ko": "{{count}} 앱에 대해 구성된 앱 차단이 준비되었습니다."
+      }
+    },
+    {
+      "source": "DeviceActivity scheduling is unavailable in this build.",
+      "translations": {
+        "hi": "इस बिल्ड में DeviceActivity शेड्यूलिंग उपलब्ध नहीं है।",
+        "es": "La programación de DeviceActivity no está disponible en esta versión.",
+        "pt": "O agendamento de DeviceActivity não está disponível nesta versão.",
+        "fr": "La programmation DeviceActivity n’est pas disponible dans cette version.",
+        "de": "DeviceActivity-Zeitplanung ist in dieser Version nicht verfügbar.",
+        "ar": "جدولة DeviceActivity غير متاحة في هذا الإصدار.",
+        "ja": "このビルドでは DeviceActivity のスケジュール設定を利用できません。",
+        "zh-Hans": "此构建无法使用 DeviceActivity 计划功能。",
+        "ko": "이 빌드에서는 DeviceActivity 예약을 사용할 수 없습니다."
+      }
+    },
+    {
+      "source": "DeviceActivity selected app limits are unavailable in this build.",
+      "translations": {
+        "hi": "इस बिल्ड में DeviceActivity की चुने ऐप सीमाएँ उपलब्ध नहीं हैं।",
+        "es": "Los límites de apps seleccionadas de DeviceActivity no están disponibles en esta versión.",
+        "pt": "Os limites de apps selecionados do DeviceActivity não estão disponíveis nesta versão.",
+        "fr": "Les limites d’apps sélectionnées de DeviceActivity ne sont pas disponibles dans cette version.",
+        "de": "DeviceActivity-Limits für gewählte Apps sind in dieser Version nicht verfügbar.",
+        "ar": "حدود التطبيقات المحددة في DeviceActivity غير متاحة في هذا الإصدار.",
+        "ja": "このビルドでは DeviceActivity による選択アプリの制限を利用できません。",
+        "zh-Hans": "此构建无法使用 DeviceActivity 的所选应用限制。",
+        "ko": "이 빌드에서는 DeviceActivity 선택 앱 제한을 사용할 수 없습니다."
+      }
+    },
+    {
+      "source": "Direct Safari extension settings are unavailable on this iOS version.",
+      "translations": {
+        "hi": "इस iOS संस्करण में Safari एक्सटेंशन की सीधी सेटिंग्स उपलब्ध नहीं हैं।",
+        "es": "Los ajustes directos de extensiones de Safari no están disponibles en esta versión de iOS.",
+        "pt": "Os ajustes diretos de extensões do Safari não estão disponíveis nesta versão do iOS.",
+        "fr": "L’accès direct aux réglages des extensions Safari n’est pas disponible sur cette version d’iOS.",
+        "de": "Der direkte Zugriff auf Safari-Erweiterungseinstellungen ist in dieser iOS-Version nicht verfügbar.",
+        "ar": "إعدادات إضافات Safari المباشرة غير متاحة في إصدار iOS هذا.",
+        "ja": "この iOS バージョンでは Safari 拡張機能の設定を直接開けません。",
+        "zh-Hans": "此 iOS 版本无法直接打开 Safari 扩展设置。",
+        "ko": "이 iOS 버전에서는 직접 Safari 확장 설정을 사용할 수 없습니다."
+      }
+    },
+    {
+      "source": "Earned unlock cleared. FREED protection is active again.",
+      "translations": {
+        "hi": "अर्जित अनलॉक हटा दिया गया। FREED सुरक्षा फिर सक्रिय है।",
+        "es": "Se eliminó el desbloqueo ganado. La protección de FREED vuelve a estar activa.",
+        "pt": "O desbloqueio conquistado foi removido. A proteção do FREED está ativa novamente.",
+        "fr": "Le déverrouillage gagné a été supprimé. La protection FREED est de nouveau active.",
+        "de": "Die verdiente Freigabe wurde entfernt. Der FREED-Schutz ist wieder aktiv.",
+        "ar": "أُزيل الفتح المكتسب. حماية FREED نشطة مجددًا.",
+        "ja": "獲得したロック解除を取り消しました。FREED の保護が再び有効です。",
+        "zh-Hans": "已清除获得的解锁。FREED 保护已恢复。",
+        "ko": "획득한 잠금 해제가 삭제되었습니다. FREED 보호가 다시 활성화됩니다."
+      }
+    },
+    {
+      "source": "Earned unlock cleared. FREED shields are active again.",
+      "translations": {
+        "hi": "अर्जित अनलॉक हटा दिया गया। FREED शील्ड फिर सक्रिय हैं।",
+        "es": "Se eliminó el desbloqueo ganado. Los escudos de FREED vuelven a estar activos.",
+        "pt": "O desbloqueio conquistado foi removido. Os escudos do FREED estão ativos novamente.",
+        "fr": "Le déverrouillage gagné a été supprimé. Les boucliers FREED sont de nouveau actifs.",
+        "de": "Die verdiente Freigabe wurde entfernt. Die FREED-Sperren sind wieder aktiv.",
+        "ar": "أُزيل الفتح المكتسب. دروع FREED نشطة مجددًا.",
+        "ja": "獲得したロック解除を取り消しました。FREED のシールドが再び有効です。",
+        "zh-Hans": "已清除获得的解锁。FREED 屏蔽已恢复。",
+        "ko": "획득한 잠금 해제가 삭제되었습니다. FREED 쉴드가 다시 활성화됩니다."
+      }
+    },
+    {
+      "source": "Earned unlock expired. FREED protection is active again.",
+      "translations": {
+        "hi": "अर्जित अनलॉक की अवधि समाप्त हुई। FREED सुरक्षा फिर सक्रिय है।",
+        "es": "El desbloqueo ganado caducó. La protección de FREED vuelve a estar activa.",
+        "pt": "O desbloqueio conquistado expirou. A proteção do FREED está ativa novamente.",
+        "fr": "Le déverrouillage gagné a expiré. La protection FREED est de nouveau active.",
+        "de": "Die verdiente Freigabe ist abgelaufen. Der FREED-Schutz ist wieder aktiv.",
+        "ar": "انتهت مدة الفتح المكتسب. حماية FREED نشطة مجددًا.",
+        "ja": "獲得したロック解除の期限が切れました。FREED の保護が再び有効です。",
+        "zh-Hans": "获得的解锁已到期。FREED 保护已恢复。",
+        "ko": "획득한 잠금 해제가 만료되었습니다. FREED 보호가 다시 활성화됩니다."
+      }
+    },
+    {
+      "source": "Earned unlock expired. FREED shields are active again.",
+      "translations": {
+        "hi": "अर्जित अनलॉक की अवधि समाप्त हुई। FREED शील्ड फिर सक्रिय हैं।",
+        "es": "El desbloqueo ganado caducó. Los escudos de FREED vuelven a estar activos.",
+        "pt": "O desbloqueio conquistado expirou. Os escudos do FREED estão ativos novamente.",
+        "fr": "Le déverrouillage gagné a expiré. Les boucliers FREED sont de nouveau actifs.",
+        "de": "Die verdiente Freigabe ist abgelaufen. Die FREED-Sperren sind wieder aktiv.",
+        "ar": "انتهت مدة الفتح المكتسب. دروع FREED نشطة مجددًا.",
+        "ja": "獲得したロック解除の期限が切れました。FREED のシールドが再び有効です。",
+        "zh-Hans": "获得的解锁已到期。FREED 屏蔽已恢复。",
+        "ko": "획득한 잠금 해제가 만료되었습니다. FREED 쉴드가 다시 활성화됩니다."
+      }
+    },
+    {
+      "source": "Earned unlock source is not a supported app. FREED kept app shields active and adult-domain filtering protected.",
+      "translations": {
+        "hi": "अर्जित अनलॉक का स्रोत समर्थित ऐप नहीं है। FREED ने ऐप शील्ड और वयस्क डोमेन फ़िल्टरिंग सुरक्षित रखी।",
+        "es": "El origen del desbloqueo ganado no es una app compatible. FREED mantuvo activos los escudos de apps y protegido el filtrado de dominios para adultos.",
+        "pt": "A origem do desbloqueio conquistado não é um app compatível. FREED manteve os escudos dos apps ativos e a filtragem de domínios adultos protegida.",
+        "fr": "La source du déverrouillage gagné n’est pas une app prise en charge. FREED a maintenu les boucliers d’apps actifs et le filtrage des domaines pour adultes protégé.",
+        "de": "Die Quelle der verdienten Freigabe ist keine unterstützte App. FREED ließ App-Sperren aktiv und den Filter für Erwachsenendomains geschützt.",
+        "ar": "مصدر الفتح المكتسب ليس تطبيقًا مدعومًا. أبقى FREED دروع التطبيقات نشطة وتصفية نطاقات محتوى البالغين محمية.",
+        "ja": "獲得したロック解除の対象は対応アプリではありません。FREED はアプリのシールドと成人向けドメインの保護を維持しました。",
+        "zh-Hans": "获得的解锁来源不是受支持的应用。FREED 保持应用屏蔽启用，并保护成人内容域名过滤。",
+        "ko": "획득한 잠금 해제 소스는 지원되는 앱이 아닙니다. FREED는 앱 쉴드를 활성화하고 성인 도메인 필터링을 보호했습니다."
+      }
+    },
+    {
+      "source": "Earned unlock window is active. Adult-domain filtering stays protected.",
+      "translations": {
+        "hi": "अर्जित अनलॉक अवधि सक्रिय है। वयस्क डोमेन फ़िल्टरिंग सुरक्षित रहती है।",
+        "es": "La ventana de desbloqueo ganado está activa. El filtrado de dominios para adultos permanece protegido.",
+        "pt": "A janela de desbloqueio conquistado está ativa. A filtragem de domínios adultos continua protegida.",
+        "fr": "La période de déverrouillage gagné est active. Le filtrage des domaines pour adultes reste protégé.",
+        "de": "Das verdiente Freigabefenster ist aktiv. Der Filter für Erwachsenendomains bleibt geschützt.",
+        "ar": "فترة الفتح المكتسب نشطة. تظل تصفية نطاقات محتوى البالغين محمية.",
+        "ja": "獲得したロック解除期間が有効です。成人向けドメインの保護は維持されます。",
+        "zh-Hans": "获得的解锁时段已启用。成人内容域名过滤仍受保护。",
+        "ko": "획득한 잠금 해제 창이 활성화되었습니다. 성인 도메인 필터링은 보호된 상태로 유지됩니다."
+      }
+    },
+    {
+      "source": "Enable FREED Protection in Android Accessibility settings.",
+      "translations": {
+        "hi": "Android सुलभता सेटिंग्स में FREED Protection चालू करें।",
+        "es": "Activa FREED Protection en los ajustes de Accesibilidad de Android.",
+        "pt": "Ative FREED Protection nos ajustes de Acessibilidade do Android.",
+        "fr": "Activez FREED Protection dans les paramètres d’accessibilité Android.",
+        "de": "Aktiviere FREED Protection in den Android-Bedienungshilfen.",
+        "ar": "فعّل FREED Protection في إعدادات إمكانية الوصول في Android.",
+        "ja": "Android のユーザー補助設定で FREED Protection を有効にしてください。",
+        "zh-Hans": "请在 Android 无障碍设置中启用 FREED Protection。",
+        "ko": "Android 접근성 설정에서 FREED Protection를 활성화합니다."
+      }
+    },
+    {
+      "source": "FamilyActivityPicker requires iOS 16+ and the FamilyControls framework.",
+      "translations": {
+        "hi": "FamilyActivityPicker के लिए iOS 16+ और FamilyControls फ़्रेमवर्क आवश्यक है।",
+        "es": "FamilyActivityPicker requiere iOS 16 o posterior y el framework FamilyControls.",
+        "pt": "FamilyActivityPicker requer iOS 16 ou posterior e o framework FamilyControls.",
+        "fr": "FamilyActivityPicker nécessite iOS 16 ou ultérieur et le framework FamilyControls.",
+        "de": "FamilyActivityPicker benötigt iOS 16 oder neuer und das FamilyControls-Framework.",
+        "ar": "يتطلب FamilyActivityPicker نظام iOS 16 أو أحدث وإطار FamilyControls.",
+        "ja": "FamilyActivityPicker には iOS 16 以降と FamilyControls フレームワークが必要です。",
+        "zh-Hans": "FamilyActivityPicker 需要 iOS 16 或更高版本及 FamilyControls 框架。",
+        "ko": "FamilyActivityPicker에는 iOS 16+ 및 FamilyControls 프레임워크가 필요합니다."
+      }
+    },
+    {
+      "source": "FamilyControls authorization error: {{error}}",
+      "translations": {
+        "hi": "FamilyControls अनुमति त्रुटि: {{error}}",
+        "es": "Error de autorización de FamilyControls: {{error}}",
+        "pt": "Erro de autorização do FamilyControls: {{error}}",
+        "fr": "Erreur d’autorisation FamilyControls : {{error}}",
+        "de": "FamilyControls-Autorisierungsfehler: {{error}}",
+        "ar": "خطأ في تفويض FamilyControls: {{error}}",
+        "ja": "FamilyControls の認証エラー: {{error}}",
+        "zh-Hans": "FamilyControls 授权错误：{{error}}",
+        "ko": "FamilyControls 인증 오류: {{error}}"
+      }
+    },
+    {
+      "source": "FamilyControls requires iOS 16+ and the Apple entitlement.",
+      "translations": {
+        "hi": "FamilyControls के लिए iOS 16+ और Apple की अनुमति आवश्यक है।",
+        "es": "FamilyControls requiere iOS 16 o posterior y la autorización de Apple.",
+        "pt": "FamilyControls requer iOS 16 ou posterior e a autorização da Apple.",
+        "fr": "FamilyControls nécessite iOS 16 ou ultérieur et l’autorisation Apple.",
+        "de": "FamilyControls benötigt iOS 16 oder neuer und die Apple-Berechtigung.",
+        "ar": "يتطلب FamilyControls نظام iOS 16 أو أحدث واستحقاق Apple.",
+        "ja": "FamilyControls には iOS 16 以降と Apple のエンタイトルメントが必要です。",
+        "zh-Hans": "FamilyControls 需要 iOS 16 或更高版本及 Apple 授权。",
+        "ko": "FamilyControls에는 iOS 16+ 및 Apple 자격이 필요합니다."
+      }
+    }
+  ]
+}

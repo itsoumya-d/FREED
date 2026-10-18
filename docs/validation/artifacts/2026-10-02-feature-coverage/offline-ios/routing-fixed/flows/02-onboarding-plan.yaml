@@ -1,0 +1,24 @@
+appId: app.freed.recovery
+name: onboarding-plan
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///onboarding/planCalculation"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-planCalculation"
+    timeout: 15000
+- extendedWaitUntil:
+    visible: "Protect My Apps & Proceed"
+    timeout: 15000
+- tapOn: "Protect My Apps & Proceed"
+- assertVisible:
+    id: "screen-appSelection"
+- takeScreenshot: "onboarding-plan"

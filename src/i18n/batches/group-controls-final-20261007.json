@@ -1,0 +1,88 @@
+{
+  "entries": [
+    {
+      "source": "{{nativeDailyLimit}} minutes",
+      "translations": {
+        "hi": "{{nativeDailyLimit}} मिनट",
+        "es": "{{nativeDailyLimit}} minutos",
+        "pt": "{{nativeDailyLimit}} minutos",
+        "fr": "{{nativeDailyLimit}} min",
+        "de": "{{nativeDailyLimit}} Minuten",
+        "ar": "{{nativeDailyLimit}} دقيقة",
+        "ja": "{{nativeDailyLimit}}分",
+        "ko": "{{nativeDailyLimit}}분",
+        "zh-Hans": "{{nativeDailyLimit}} 分钟"
+      }
+    },
+    {
+      "source": "{{targetCount}} selected apps",
+      "translations": {
+        "hi": "चुने ऐप: {{targetCount}}",
+        "es": "{{targetCount}} apps seleccionadas",
+        "pt": "{{targetCount}} apps selecionados",
+        "fr": "{{targetCount}} applications sélectionnées",
+        "de": "{{targetCount}} ausgewählte Apps",
+        "ar": "التطبيقات المحددة: {{targetCount}}",
+        "ja": "選択したアプリ：{{targetCount}}個",
+        "ko": "선택한 앱: {{targetCount}}개",
+        "zh-Hans": "所选应用：{{targetCount}} 个"
+      }
+    },
+    {
+      "source": "{{targetCount}} selected targets",
+      "translations": {
+        "hi": "चुने लक्ष्य: {{targetCount}}",
+        "es": "{{targetCount}} objetivos seleccionados",
+        "pt": "{{targetCount}} alvos selecionados",
+        "fr": "{{targetCount}} cibles sélectionnées",
+        "de": "{{targetCount}} ausgewählte Ziele",
+        "ar": "الأهداف المحددة: {{targetCount}}",
+        "ja": "選択した対象：{{targetCount}}件",
+        "ko": "선택한 대상: {{targetCount}}개",
+        "zh-Hans": "所选目标：{{targetCount}} 个"
+      }
+    },
+    {
+      "source": "Allow usage access",
+      "translations": {
+        "hi": "उपयोग पहुँच की अनुमति दें",
+        "es": "Permitir acceso de uso",
+        "pt": "Permitir acesso de uso",
+        "fr": "Autoriser l’accès aux données d’utilisation",
+        "de": "Nutzungszugriff erlauben",
+        "ar": "السماح بالوصول إلى الاستخدام",
+        "ja": "使用状況へのアクセスを許可",
+        "ko": "사용 액세스 허용",
+        "zh-Hans": "允许使用情况访问权限"
+      }
+    },
+    {
+      "source": "Enable FREED",
+      "translations": {
+        "hi": "FREED चालू करें",
+        "es": "Activar FREED",
+        "pt": "Ativar FREED",
+        "fr": "Activer FREED",
+        "de": "FREED aktivieren",
+        "ar": "تفعيل FREED",
+        "ja": "FREEDを有効にする",
+        "ko": "FREED 활성화",
+        "zh-Hans": "启用 FREED"
+      }
+    },
+    {
+      "source": "Usage access",
+      "translations": {
+        "hi": "उपयोग पहुँच",
+        "es": "Acceso de uso",
+        "pt": "Acesso de uso",
+        "fr": "Accès aux données d’utilisation",
+        "de": "Nutzungszugriff",
+        "ar": "الوصول إلى الاستخدام",
+        "ja": "使用状況へのアクセス",
+        "ko": "사용 액세스",
+        "zh-Hans": "使用情况访问权限"
+      }
+    }
+  ]
+}

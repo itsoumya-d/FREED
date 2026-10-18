@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="FREED-Premium-Disposable - iOS 26.5 - EA53F394-3E1F-44A7-84EF-716A26BE9879" tests="1" failures="0" time="22.706" timestamp="2026-10-03T07:48:52">
+    <testcase id="onboarding-quiz" name="onboarding-quiz" classname="onboarding-quiz" file=".maestro/flows/onboarding-quiz.yaml" time="22.691" timestamp="2026-10-03T07:48:52" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+    </testcase>
+  </testsuite>
+</testsuites>

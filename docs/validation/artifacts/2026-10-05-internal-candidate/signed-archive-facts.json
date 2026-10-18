@@ -1,0 +1,74 @@
+{
+  "signedBundles": [
+    {
+      "bundleId": "app.freed.recovery",
+      "version": "1.0",
+      "build": "3",
+      "appAttest": "production",
+      "networkExtensions": [
+        "dns-settings"
+      ],
+      "familyControls": true,
+      "dataProtection": "NSFileProtectionComplete",
+      "group": true,
+      "getTaskAllow": false
+    },
+    {
+      "bundleId": "app.freed.recovery.device-activity-monitor",
+      "version": "1.0",
+      "build": "3",
+      "appAttest": null,
+      "networkExtensions": [],
+      "familyControls": true,
+      "dataProtection": "NSFileProtectionComplete",
+      "group": true,
+      "getTaskAllow": false
+    },
+    {
+      "bundleId": "app.freed.recovery.safari-content-blocker",
+      "version": "1.0",
+      "build": "3",
+      "appAttest": null,
+      "networkExtensions": [],
+      "familyControls": false,
+      "dataProtection": "NSFileProtectionComplete",
+      "group": true,
+      "getTaskAllow": false
+    },
+    {
+      "bundleId": "app.freed.recovery.safari-focus-shield",
+      "version": "1.0",
+      "build": "3",
+      "appAttest": null,
+      "networkExtensions": [],
+      "familyControls": false,
+      "dataProtection": "NSFileProtectionComplete",
+      "group": true,
+      "getTaskAllow": false
+    },
+    {
+      "bundleId": "app.freed.recovery.shield-action",
+      "version": "1.0",
+      "build": "3",
+      "appAttest": null,
+      "networkExtensions": [],
+      "familyControls": true,
+      "dataProtection": "NSFileProtectionComplete",
+      "group": true,
+      "getTaskAllow": false
+    },
+    {
+      "bundleId": "app.freed.recovery.shield-configuration",
+      "version": "1.0",
+      "build": "3",
+      "appAttest": null,
+      "networkExtensions": [],
+      "familyControls": true,
+      "dataProtection": "NSFileProtectionComplete",
+      "group": true,
+      "getTaskAllow": false
+    }
+  ],
+  "adMobAppIdMatchesConfiguredRealId": true,
+  "microphoneDescriptionPresent": false
+}

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const { iosAdMobBuildSetting } = require("./lib/ios-admob-build-config");
 
 const assert = require("node:assert/strict");
 const crypto = require("node:crypto");
@@ -7,6 +8,7 @@ const os = require("node:os");
 const path = require("node:path");
 const { spawn, spawnSync } = require("node:child_process");
 const { sanitizeLocalHomePaths } = require("./lib/local-path-privacy");
+const { inspectExtensionPrincipalClass } = require("./lib/ios-extension-principal-class");
 const { assertSafeReportPath } = require("./lib/report-path-safety");
 const {
   SAFARI_FOCUS_HOST_PERMISSIONS,
@@ -381,10 +383,17 @@ function archiveArgs(options) {
     "COMPILER_INDEX_STORE_ENABLE=NO",
   );
   if (options.teamId) args.push(`DEVELOPMENT_TEAM=${options.teamId}`);
-  if (options.codeSignIdentity) args.push(`CODE_SIGN_IDENTITY=${options.codeSignIdentity}`);
+  // Automatic signing resolves the identity per target. Pinning one globally also
+  // applies it to every Pods target, which sign automatically for development and
+  // then fail with "conflicting provisioning settings". Only pin an identity for
+  // an explicit manual-signing run, where the caller owns the profile mapping.
+  if (options.codeSignIdentity && options.codeSignStyle === "Manual") {
+    args.push(`CODE_SIGN_IDENTITY=${options.codeSignIdentity}`);
+  }
   if (options.provisioningProfileSpecifier) {
     args.push(`PROVISIONING_PROFILE_SPECIFIER=${options.provisioningProfileSpecifier}`);
   }
+  args.push(iosAdMobBuildSetting(options.sdk, { EXPO_PUBLIC_ADMOB_APP_ID_IOS: options.adMobAppId ?? process.env.EXPO_PUBLIC_ADMOB_APP_ID_IOS ?? process.env.EXPO_PUBLIC_ADMOB_APP_ID }));
   args.push(...options.buildSettings, "archive");
   return args;
 }
@@ -617,9 +626,13 @@ function inspectBundle(bundlePath, expected, appGroupId) {
   const bundleId = info.CFBundleIdentifier || "";
   const extensionPoint = extension.NSExtensionPointIdentifier || "";
   const principalClass = extension.NSExtensionPrincipalClass || "";
+  const principalClassRuntime = expected?.principalClass
+    ? inspectExtensionPrincipalClass(path.join(bundlePath, info.CFBundleExecutable || ""), principalClass)
+    : { available: true, compatible: true, reason: null };
 
   return {
     appGroupPresent: entitlementsArrayIncludes(entitlements.text, "com.apple.security.application-groups", appGroupId),
+    appAttestEnvironment: entitlementsString(entitlements.text, "com.apple.developer.devicecheck.appattest-environment"),
     appleDistributionSigned: codesign.appleDistributionSigned,
     bundleId,
     bundleName: path.basename(bundlePath),
@@ -642,7 +655,8 @@ function inspectBundle(bundlePath, expected, appGroupId) {
     ]),
     packetTunnelProviderEntitled: entitlementsNetworkExtensionIncludes(entitlements.text, ["packet-tunnel-provider"]),
     principalClass,
-    principalClassMatches: expected?.principalClass ? principalClass === expected.principalClass : true,
+    principalClassMatches: expected?.principalClass ? principalClass === expected.principalClass && principalClassRuntime.compatible === true : true,
+    principalClassRuntime,
     requiresFamilyControls: Boolean(expected?.requiresFamilyControls),
     teamIdentifier: codesign.teamIdentifier,
   };
@@ -670,6 +684,7 @@ function missingExtension(expected) {
     packetTunnelProviderEntitled: false,
     principalClass: "",
     principalClassMatches: false,
+    principalClassRuntime: { available: false, compatible: false, reason: "principal-extension-missing" },
     requiresFamilyControls: Boolean(expected.requiresFamilyControls),
     teamIdentifier: "",
   };
@@ -743,7 +758,7 @@ function inspectSafariFocusShieldResources(extensionPath) {
   const nativeHandlerBinary = executablePath && fs.existsSync(executablePath)
     ? fs.readFileSync(executablePath).toString("latin1")
     : "";
-  const contract = inspectSafariFocusShieldContract({ manifest, info, background, content, nativeHandlerBinary });
+  const contract = inspectSafariFocusShieldContract({ manifest, info, background, content, nativeHandlerBinary, extensionPath });
   return {
     backgroundAvailable: Boolean(background),
     contentAvailable: Boolean(content),
@@ -788,6 +803,7 @@ function inspectArchive(options) {
   const safariFocusShield = extensions.find((entry) => entry.bundleName === "FREEDSafariFocusShield.appex");
   return {
     appBundleIdentifier: app.bundleId,
+    appAttestEnvironment: app.appAttestEnvironment,
     appGroupEntitledBundleIds: allBundles.filter((entry) => entry.appGroupPresent).map((entry) => entry.bundleId).filter(Boolean),
     appleDistributionSignedBundleIds: allBundles.filter((entry) => entry.appleDistributionSigned).map((entry) => entry.bundleId).filter(Boolean),
     archivePath: repoPath(options.archivePath),
@@ -956,6 +972,7 @@ function fallbackFailureOptions(argv) {
 function emptyArchiveProof(options) {
   return {
     appBundleIdentifier: "",
+    appAttestEnvironment: "",
     appGroupEntitledBundleIds: [],
     appleDistributionSignedBundleIds: [],
     archivePath: "",
@@ -1118,12 +1135,13 @@ function buildReport(options, exportOptions, archive, ipa, durations) {
         allRequiredFamilyControlsPresent &&
         allRequiredAppGroupsPresent &&
         allRequiredDataProtectionPresent &&
+        archive.appAttestEnvironment === "production" &&
         archive.packetInspectionEntitled === false &&
         archive.packetTunnelProviderEntitled === false
           ? "PASS"
           : "FAIL",
       detail:
-        "Signed app and extensions include Family Controls where required, shared app group, Complete Data Protection, and no packet tunnel/inspection entitlements.",
+        "Signed app uses production App Attest; app and extensions include required Family Controls, shared app group, Complete Data Protection, and no packet tunnel/inspection entitlements.",
     },
     {
       id: "ios-release-embedded-extensions",
@@ -1247,10 +1265,25 @@ function runSelfTest() {
     "--build-setting",
     "OTHER_CODE_SIGN_FLAGS=--timestamp",
   ]);
+  options.adMobAppId = "ca-app-pub-1234567890123456~1234567890";
   assert.equal(options.teamId, "ABCDE12345");
   assert.equal(options.requireReleaseSigning, true);
   assert.ok(archiveArgs(options).includes("DEVELOPMENT_TEAM=ABCDE12345"));
   assert.ok(archiveArgs(options).includes("CODE_SIGN_STYLE=Automatic"));
+  // Automatic signing must resolve the identity per target. Pinning one globally
+  // would also land on every Pods target and break their automatic development
+  // signing, so an automatic run must never emit CODE_SIGN_IDENTITY.
+  assert.ok(!archiveArgs(options).some((arg) => arg.startsWith("CODE_SIGN_IDENTITY=")));
+  const manualOptions = parseArgs([
+    "--team-id",
+    "ABCDE12345",
+    "--code-sign-style",
+    "Manual",
+    "--code-sign-identity",
+    "Apple Distribution",
+  ]);
+  manualOptions.adMobAppId = options.adMobAppId;
+  assert.ok(archiveArgs(manualOptions).includes("CODE_SIGN_IDENTITY=Apple Distribution"));
   assert.ok(archiveArgs(options).includes("OTHER_CODE_SIGN_FLAGS=--timestamp"));
   assert.throws(() => parseArgs(["--require-release-signing", "--team-id", "bad-team"]), /10-character Apple team ID/);
   assert.throws(() => parseArgs(["--code-sign-style", "AdHoc"]), /Automatic or Manual/);
@@ -1278,6 +1311,7 @@ function runSelfTest() {
   );
   const sampleArchive = {
     appBundleIdentifier: DEFAULT_BUNDLE_ID,
+    appAttestEnvironment: "production",
     appGroupEntitledBundleIds: [DEFAULT_BUNDLE_ID, ...EXPECTED_EXTENSIONS.map((entry) => entry.bundleId)],
     appleDistributionSignedBundleIds: [DEFAULT_BUNDLE_ID, ...EXPECTED_EXTENSIONS.map((entry) => entry.bundleId)],
     archivePath: "ios/build/FREED-release.xcarchive",

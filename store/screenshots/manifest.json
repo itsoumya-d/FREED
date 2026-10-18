@@ -1,50 +1,39 @@
 {
   "schemaVersion": "freed-store-screenshots-v1",
-  "generatedAt": "2026-06-07T00:00:00.000Z",
-  "source": "ref2 paywall reference captures copied into store review asset paths",
+  "generatedAt": "2026-10-02T04:29:40.960068+00:00",
+  "source": "FREED Release iOS Simulator captures, iPhone 17 Pro / iOS 26.5; source JS bundle SHA-256 5182f828b6a65d84491188b12930f0e197561c631bef4d54268cd7179b77a5b6",
   "assets": [
     {
       "id": "paywall-monthly",
       "path": "store/screenshots/paywall-monthly.png",
-      "sourcePath": "ref2/paywall_0.png",
+      "sourcePath": "docs/validation/artifacts/2026-10-02-release-prep/paywall-final-monthly.png",
       "purpose": "App Store Connect monthly IAP review screenshot",
       "productId": "freed_premium_monthly",
       "planId": "monthly",
-      "width": 1180,
-      "height": 2676,
-      "sha256": "723643d6c62c4a0b494a8f95369aa210acbb2e53fc659a17fe294330988a469a"
+      "width": 1206,
+      "height": 2622,
+      "sha256": "537a1c083534d8361480646a5ace6fe075d265d6bafb93b34543783c056802ed"
     },
     {
       "id": "paywall-yearly",
       "path": "store/screenshots/paywall-yearly.png",
-      "sourcePath": "ref2/paywall_1.png",
+      "sourcePath": "docs/validation/artifacts/2026-10-02-release-prep/paywall-final-annual.png",
       "purpose": "App Store Connect yearly IAP review screenshot",
       "productId": "freed_premium_yearly",
       "planId": "yearly",
-      "width": 1180,
-      "height": 2676,
-      "sha256": "27960938520f9ad47fb34c64b3c24d98e06fec616bfacc29a94a0df4ced6388a"
-    },
-    {
-      "id": "paywall-lifetime",
-      "path": "store/screenshots/paywall-lifetime.png",
-      "sourcePath": "ref2/paywall_2.png",
-      "purpose": "App Store Connect lifetime IAP review screenshot",
-      "productId": "freed_premium_lifetime",
-      "planId": "lifetime",
-      "width": 1180,
-      "height": 2676,
-      "sha256": "3cb40dfb16d70ccf56fff2cf56fda1e0ef18241ea72eda177a0db79f73c9b83c"
+      "width": 1206,
+      "height": 2622,
+      "sha256": "754556442ba165fed1aec277db96164ee7598f02b15ff93d07d2d8bd291a5007"
     }
   ],
   "reviewBoundary": {
-    "core3Only": true,
     "futureProductsHidden": [
       "freed_family_yearly",
       "freed_accountability_monthly",
       "freed_ai_coach_monthly"
     ],
     "requiresFreshStoreSandboxScreenshotsBeforeProduction": true,
-    "notes": "These are checked-in IAP review assets for console setup. Before production submission, replace or validate them with fresh simulator/device screenshots from the exact build used for App Store and Play review."
+    "notes": "Prepared monthly/annual review assets captured from the tested FREED Release Simulator build. These are not store sandbox purchase or physical protection evidence. Retake or validate against the exact signed review build before production submission.",
+    "twoPlanLaunchOnly": true
   }
 }

@@ -1,0 +1,66 @@
+{
+  "capturedAt": "2026-10-03T02:11:06.047856+00:00",
+  "result": "pass-compile-and-static-inspection",
+  "snapshotStatus": "previous-qa-snapshot; further app development is in progress",
+  "currentRelease": false,
+  "apk": {
+    "path": "/private/tmp/freed-premium-android-qa-20261003/FREED-premium-debug-arm64-2026-10-03.apk",
+    "sha256": "9357940f087324a66093be1ca2f88886cfc47e232dfce50dfbb73d905a08e1d6",
+    "sizeBytes": 133450336,
+    "signature": "verified-v2-android-debug",
+    "uploadReady": false,
+    "installed": false
+  },
+  "nativeSourceHash": "f4c3515b445aca4c130c836601c4d4097473e2e8e1c5b8d1ffe0b878de769dbc",
+  "javascriptSourceHash": "ca1900a6d95b3ebb945b9f2281a69863d7146defb753947a34b47d22e39a96f0",
+  "bundleSha256": "58738be36d2f6446b690741e3759bed9e074f9b63fe347b2ba137e7af8ef6a3e",
+  "bundleDev": true,
+  "nativeSourceUnchanged": true,
+  "javascriptInputsStableDuringFinalExport": true,
+  "packagedLocales": [
+    "en",
+    "hi",
+    "bn",
+    "es",
+    "pt",
+    "fr",
+    "de",
+    "ar",
+    "ja",
+    "zh-Hans"
+  ],
+  "supportsRtl": true,
+  "encryptedDnsCapability": {
+    "release": false,
+    "preview": false,
+    "metadata": "absent; native getBoolean(..., false) defaults apply"
+  },
+  "kotlinDnsHarness": "pass",
+  "fullNativeBuild": {
+    "exitCode": 0,
+    "duration": "30m14s",
+    "tasks": 608,
+    "log": "assemble-debug.log"
+  },
+  "finalQaRepackage": {
+    "exitCode": 0,
+    "duration": "35s",
+    "tasks": 608,
+    "log": "assemble-qa-debug.log"
+  },
+  "nativeSourceFixes": [],
+  "qaArtifactHookFixes": "Included-build scoping and early asset registration, verified by actual packaged bundle equality",
+  "warnings": [
+    "Initial full build: ASM instrumentation could not resolve some Expo classes on its instrumentation classpath; final DEX defines Expo AppContext. Runtime was not verified.",
+    "Deprecated Android/Gradle APIs remain; no source build errors."
+  ],
+  "runtime": {
+    "result": "blocked",
+    "reason": "Disposable AVD failed before Android with HVF error: HV_DENIED; requested acceleration-off boot failed the same way",
+    "ownerDevicesTouched": false,
+    "fixtureRemoved": true,
+    "vpnOrPrivateDnsChanged": false,
+    "enforcementObserved": false
+  },
+  "backendFixtureLimit": "Native project label is production; a demo-ID Functions emulator may reject the project path. No Auth/Functions requests were made by this run."
+}

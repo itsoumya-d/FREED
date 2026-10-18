@@ -1,0 +1,1530 @@
+{
+  "preparedAt": "2026-10-03T13:46:52.906274+00:00",
+  "url": "https://developer.apple.com/contact/request/family-controls-distribution",
+  "status": "submitted-awaiting-apple-review",
+  "submitted": true,
+  "action": "Get Entitlement",
+  "teamId": "R5RX8WP8ZC",
+  "teamName": "OTAI TECHNOLOGIES",
+  "purpose": "Individual device usage management, focus timers and recovery task support",
+  "termsSummary": [
+    "Apple Developer License Agreement applies",
+    "Primary purpose must be eligible personal device management or parental supervision",
+    "Framework device/usage data stays with the individual and their device; no advertising or data-broker use",
+    "No ad blocking, organizational device management or control of another adult device"
+  ],
+  "exportBlockedBundleIds": [
+    "app.freed.recovery",
+    "app.freed.recovery.shield-action",
+    "app.freed.recovery.shield-configuration",
+    "app.freed.recovery.device-activity-monitor"
+  ],
+  "sourceCheck": {
+    "scope": "Source privacy boundaries; not live service/device release proof",
+    "isolatedPrivacyTests": 5,
+    "isolatedCoachTests": 2,
+    "failures": 0,
+    "callerExportStateForwarding": "observed",
+    "ownMoodDerivation": "projected check-in for selected day, steady default",
+    "files": {
+      "src/lib/recovery-signal-privacy.ts": "fa794f59191d07bb8cf76319e54aeb077dde55ec576ac2f60bb517b0bc698f8e",
+      "src/lib/challenge-generator.ts": "11b885e1bf4be0957111951da38783e1dcf8d442e03f22c85e1a7d23d04cfec2",
+      "src/lib/ai-coach.ts": "d7942a1154034cdd95558f3c8574c7bce6ba91f67934e4b4d8923c5b44109b62",
+      "src/lib/recovery-backup.ts": "70a41e90c51b9d9cb8160cff1bd53371c2c948c52279717eae8304d6d29aa895",
+      "src/lib/recovery-analytics.ts": "a8549f261d42cb7f3c56902b2aa644167a499130ec7a9930e4cbcdd16ec4693b",
+      "src/lib/accountability.ts": "01966d8478257c08f8f7ec043c434abdffcb9c617f48ca542875807ecaf8d386",
+      "src/lib/retention-orchestrator.ts": "4bd51eaaf00655f2a1aadb9f13ecfa6890b4d2a15dc41c3af104c6e733e0e272",
+      "tests/off-device-recovery-privacy.test.ts": "b3b8ad7c3b352b538addc0107fa3d9b10021cd2831a4cde1ed3fc04f569e4e8e"
+    }
+  },
+  "snapshot": {
+    "url": "https://developer.apple.com/contact/request/family-controls-distribution",
+    "title": "Family Controls Framework Entitlement Request - Contact Us - Apple Developer",
+    "tree": [
+      {
+        "role": "navigation",
+        "name": "Global",
+        "children": [
+          {
+            "role": "list",
+            "children": [
+              {
+                "role": "link",
+                "name": "Apple Developer",
+                "ref": "@e1"
+              },
+              {
+                "role": "listitem",
+                "children": [
+                  {
+                    "role": "list",
+                    "children": [
+                      {
+                        "role": "link",
+                        "name": "Get Started",
+                        "ref": "@e2",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Get Started"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "button",
+                        "name": "Get Started menu",
+                        "ref": "@e3",
+                        "children": [
+                          {
+                            "role": "image"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "list",
+                    "children": [
+                      {
+                        "role": "link",
+                        "name": "Platforms",
+                        "ref": "@e4",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Platforms"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "button",
+                        "name": "Platforms menu",
+                        "ref": "@e5",
+                        "children": [
+                          {
+                            "role": "image"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "list",
+                    "children": [
+                      {
+                        "role": "link",
+                        "name": "Technologies",
+                        "ref": "@e6",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Technologies"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "button",
+                        "name": "Technologies menu",
+                        "ref": "@e7",
+                        "children": [
+                          {
+                            "role": "image"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "list",
+                    "children": [
+                      {
+                        "role": "link",
+                        "name": "Community",
+                        "ref": "@e8",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Community"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "button",
+                        "name": "Community menu",
+                        "ref": "@e9",
+                        "children": [
+                          {
+                            "role": "image"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "list",
+                    "children": [
+                      {
+                        "role": "link",
+                        "name": "Documentation",
+                        "ref": "@e10",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Documentation"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "button",
+                        "name": "Documentation menu",
+                        "ref": "@e11",
+                        "children": [
+                          {
+                            "role": "image"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "list",
+                    "children": [
+                      {
+                        "role": "link",
+                        "name": "Downloads",
+                        "ref": "@e12",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Downloads"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "button",
+                        "name": "Downloads menu",
+                        "ref": "@e13",
+                        "children": [
+                          {
+                            "role": "image"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "list",
+                    "children": [
+                      {
+                        "role": "link",
+                        "name": "Support",
+                        "ref": "@e14",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Support"
+                          }
+                        ]
+                      },
+                      {
+                        "role": "button",
+                        "name": "Support menu",
+                        "ref": "@e15",
+                        "children": [
+                          {
+                            "role": "image"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "button",
+                "name": "Search",
+                "ref": "@e16",
+                "children": [
+                  {
+                    "role": "image"
+                  }
+                ]
+              },
+              {
+                "role": "link",
+                "name": "Account",
+                "ref": "@e17"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "main",
+        "children": [
+          {
+            "role": "navigation",
+            "children": [
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Soumya Debnath"
+                  },
+                  {
+                    "role": "link",
+                    "name": "Sign Out",
+                    "ref": "@e18",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Sign Out"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "form",
+            "children": [
+              {
+                "role": "heading",
+                "name": "Get the Family Controls Framework Entitlement",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Get the Family Controls Framework Entitlement"
+                  }
+                ]
+              },
+              {
+                "role": "StaticText",
+                "name": "This entitlement is for apps with the primary purpose of parental supervision of children's device usage, or personal productivity and device management. Once assigned to your developer account, you can build apps that use the capabilities of the Family Controls Framework."
+              },
+              {
+                "role": "group",
+                "children": [
+                  {
+                    "role": "LabelText",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Name"
+                      },
+                      {
+                        "role": "textbox",
+                        "name": "Name",
+                        "value": "Soumya Debnath",
+                        "ref": "@e19",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "Soumya Debnath"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "LabelText",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Email"
+                      },
+                      {
+                        "role": "textbox",
+                        "name": "Email",
+                        "value": "soumyadebnath1661@gmail.com",
+                        "ref": "@e20",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "soumyadebnath1661@gmail.com"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "role": "LabelText",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Team ID"
+                      },
+                      {
+                        "role": "textbox",
+                        "value": "OTAI TECHNOLOGIES - R5RX8WP8ZC",
+                        "ref": "@e21",
+                        "children": [
+                          {
+                            "role": "StaticText",
+                            "name": "OTAI TECHNOLOGIES - R5RX8WP8ZC"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "heading",
+                "name": "Terms and Conditions",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Terms and Conditions"
+                  }
+                ]
+              },
+              {
+                "role": "paragraph",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "You acknowledge your use of the "
+                  },
+                  {
+                    "role": "link",
+                    "name": "Family Controls Framework",
+                    "ref": "@e22",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Family Controls Framework"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": " is subject to the "
+                  },
+                  {
+                    "role": "link",
+                    "name": "Apple Developer License Agreement",
+                    "ref": "@e23",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Apple Developer License Agreement"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "."
+                  }
+                ]
+              },
+              {
+                "role": "StaticText",
+                "name": "You also acknowledge that to use the Family Controls Framework, your app must have a primary purpose of"
+              },
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "listitem",
+                    "children": [
+                      {
+                        "role": "ListMarker",
+                        "name": "1. "
+                      },
+                      {
+                        "role": "StaticText",
+                        "name": "offering family controls for parents and guardians, through Family Sharing, to supervise their children’s app usage; or"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "listitem",
+                    "children": [
+                      {
+                        "role": "ListMarker",
+                        "name": "2. "
+                      },
+                      {
+                        "role": "StaticText",
+                        "name": "offering individuals the ability to manage their devices to enable focus and productivity through focus controls, timers and task management, or personal device usage management."
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "StaticText",
+                "name": "The Family Controls Framework may not be used for other purposes, such as ad blocking, in organizational settings, or for managing the device of another adult individual."
+              },
+              {
+                "role": "StaticText",
+                "name": "Device or usage data received through the Family Controls Framework may only be used for providing family controls, or individual device management. You and your app may not share such device or usage data received through the Family Controls Framework or otherwise, beyond the family controls you provide, or the individual and their device, respectively. You may not use or share such device or usage data for purposes of advertising or advertising measurements, or share device or usage data with a data broker."
+              },
+              {
+                "role": "group",
+                "children": [
+                  {
+                    "role": "button",
+                    "name": "Get Entitlement",
+                    "ref": "@e24",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Get Entitlement"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "contentinfo",
+        "name": "Developer Footer",
+        "children": [
+          {
+            "role": "heading",
+            "name": "Developer Footer",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Developer Footer"
+              }
+            ]
+          },
+          {
+            "role": "navigation",
+            "name": "Breadcrumbs",
+            "children": [
+              {
+                "role": "link",
+                "name": "Apple",
+                "ref": "@e25",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Apple"
+                  }
+                ]
+              },
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Developer",
+                    "ref": "@e26",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Developer"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Contact",
+                    "ref": "@e27",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Contact"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "StaticText",
+                    "name": "Family Controls Framework Entitlement Request"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "navigation",
+            "name": "Apple Developer Directory",
+            "children": [
+              {
+                "role": "heading",
+                "name": "Platforms",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Platforms"
+                  }
+                ]
+              },
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "iOS",
+                    "ref": "@e28",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "iOS"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "iPadOS",
+                    "ref": "@e29",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "iPadOS"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "macOS",
+                    "ref": "@e30",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "macOS"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "tvOS",
+                    "ref": "@e31",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "tvOS"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "visionOS",
+                    "ref": "@e32",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "visionOS"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "watchOS",
+                    "ref": "@e33",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "watchOS"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "App Store",
+                    "ref": "@e34",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "App Store"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "heading",
+                "name": "Tools",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Tools"
+                  }
+                ]
+              },
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Swift",
+                    "ref": "@e35",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Swift"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "SwiftUI",
+                    "ref": "@e36",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "SwiftUI"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Swift Playground",
+                    "ref": "@e37",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Swift Playground"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "TestFlight",
+                    "ref": "@e38",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "TestFlight"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Xcode",
+                    "ref": "@e39",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Xcode"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Xcode Cloud",
+                    "ref": "@e40",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Xcode Cloud"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Icon Composer",
+                    "ref": "@e41",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Icon Composer"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "SF Symbols",
+                    "ref": "@e42",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "SF Symbols"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "heading",
+                "name": "Technologies",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Technologies"
+                  }
+                ]
+              },
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Accessibility",
+                    "ref": "@e43",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Accessibility"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Accessories",
+                    "ref": "@e44",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Accessories"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "AI & Machine Learning",
+                    "ref": "@e45",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "AI & Machine Learning"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Apple In-App Purchase",
+                    "ref": "@e46",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Apple In-App Purchase"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Apple Intelligence",
+                    "ref": "@e47",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Apple Intelligence"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Audio & Video",
+                    "ref": "@e48",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Audio & Video"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Augmented Reality",
+                    "ref": "@e49",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Augmented Reality"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Business",
+                    "ref": "@e50",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Business"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Design",
+                    "ref": "@e51",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Design"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Distribution",
+                    "ref": "@e52",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Distribution"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Education",
+                    "ref": "@e53",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Education"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Games",
+                    "ref": "@e54",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Games"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Health & Fitness",
+                    "ref": "@e55",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Health & Fitness"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Localization",
+                    "ref": "@e56",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Localization"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Maps & Location",
+                    "ref": "@e57",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Maps & Location"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Security",
+                    "ref": "@e58",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Security"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Safari & Web",
+                    "ref": "@e59",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Safari & Web"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "heading",
+                "name": "Resources",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Resources"
+                  }
+                ]
+              },
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Documentation",
+                    "ref": "@e60",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Documentation"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Downloads",
+                    "ref": "@e61",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Downloads"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Sample Code",
+                    "ref": "@e62",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Sample Code"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Videos",
+                    "ref": "@e63",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Videos"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Documentation Archive",
+                    "ref": "@e64",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Documentation Archive"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "heading",
+                "name": "Support",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Support"
+                  }
+                ]
+              },
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Help Guides & Articles",
+                    "ref": "@e65",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Help Guides & Articles"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Contact Us",
+                    "ref": "@e66",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Contact Us"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Forums",
+                    "ref": "@e67",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Forums"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Feedback & Bug Reporting",
+                    "ref": "@e68",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Feedback & Bug Reporting"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "System Status",
+                    "ref": "@e69",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "System Status"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "heading",
+                "name": "Account",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Account"
+                  }
+                ]
+              },
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Apple Developer",
+                    "ref": "@e70",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Apple Developer"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "App Store Connect",
+                    "ref": "@e71",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "App Store Connect"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Certificates, IDs, & Profiles",
+                    "ref": "@e72",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Certificates, IDs, & Profiles"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Feedback Assistant",
+                    "ref": "@e73",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Feedback Assistant"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "heading",
+                "name": "Programs",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Programs"
+                  }
+                ]
+              },
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Apple Developer Program",
+                    "ref": "@e74",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Apple Developer Program"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Apple Developer Enterprise Program",
+                    "ref": "@e75",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Apple Developer Enterprise Program"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "App Store Small Business Program",
+                    "ref": "@e76",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "App Store Small Business Program"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "MFi Program",
+                    "ref": "@e77",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "MFi Program"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Mini Apps Partner Program",
+                    "ref": "@e78",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Mini Apps Partner Program"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "News Partner Program",
+                    "ref": "@e79",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "News Partner Program"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Video Partner Program",
+                    "ref": "@e80",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Video Partner Program"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Security Bounty Program",
+                    "ref": "@e81",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Security Bounty Program"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Security Research Device Program",
+                    "ref": "@e82",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Security Research Device Program"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "role": "heading",
+                "name": "Events",
+                "children": [
+                  {
+                    "role": "StaticText",
+                    "name": "Events"
+                  }
+                ]
+              },
+              {
+                "role": "list",
+                "children": [
+                  {
+                    "role": "link",
+                    "name": "Meet with Apple",
+                    "ref": "@e83",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Meet with Apple"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Apple Developer Centers",
+                    "ref": "@e84",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Apple Developer Centers"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "App Store Awards",
+                    "ref": "@e85",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "App Store Awards"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Apple Design Awards",
+                    "ref": "@e86",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Apple Design Awards"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "Apple Developer Academies",
+                    "ref": "@e87",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "Apple Developer Academies"
+                      }
+                    ]
+                  },
+                  {
+                    "role": "link",
+                    "name": "WWDC",
+                    "ref": "@e88",
+                    "children": [
+                      {
+                        "role": "StaticText",
+                        "name": "WWDC"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "Read the "
+          },
+          {
+            "role": "link",
+            "name": "latest news",
+            "ref": "@e89",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "latest news"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "."
+          },
+          {
+            "role": "StaticText",
+            "name": "Get the "
+          },
+          {
+            "role": "link",
+            "name": "Apple Developer app",
+            "ref": "@e90",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Apple Developer app"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "."
+          },
+          {
+            "role": "StaticText",
+            "name": " Follow us on "
+          },
+          {
+            "role": "link",
+            "name": "bilibili",
+            "ref": "@e91",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "bilibili"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": ", "
+          },
+          {
+            "role": "link",
+            "name": "LinkedIn",
+            "ref": "@e92",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "LinkedIn"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": ", "
+          },
+          {
+            "role": "link",
+            "name": "WeChat",
+            "ref": "@e93",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "WeChat"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": ", and "
+          },
+          {
+            "role": "link",
+            "name": "YouTube",
+            "ref": "@e94",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "YouTube"
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": "."
+          },
+          {
+            "role": "StaticText",
+            "name": "Copyright © 2026 "
+          },
+          {
+            "role": "link",
+            "name": "Apple Inc.",
+            "ref": "@e95",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Apple Inc."
+              }
+            ]
+          },
+          {
+            "role": "StaticText",
+            "name": " All rights reserved."
+          },
+          {
+            "role": "link",
+            "name": "Terms of Use",
+            "ref": "@e96",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Terms of Use"
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "Privacy Policy",
+            "ref": "@e97",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Privacy Policy"
+              }
+            ]
+          },
+          {
+            "role": "link",
+            "name": "Agreements and Guidelines",
+            "ref": "@e98",
+            "children": [
+              {
+                "role": "StaticText",
+                "name": "Agreements and Guidelines"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "role": "banner",
+        "children": [
+          {
+            "role": "link",
+            "name": "SimplyCodes",
+            "ref": "@e99",
+            "children": [
+              {
+                "role": "image",
+                "name": "SimplyCodes"
+              }
+            ]
+          },
+          {
+            "role": "button",
+            "name": "Close",
+            "ref": "@e100"
+          }
+        ]
+      },
+      {
+        "role": "image"
+      }
+    ]
+  },
+  "submittedConfirmationAt": "2026-10-04T03:38:29.683113+00:00",
+  "ownerTermsApproved": true,
+  "submissionReceipt": "../2026-10-04-momentum/apple-family-controls-submission.json"
+}

@@ -1,0 +1,34 @@
+appId: app.freed.recovery
+name: paywall-plans
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///flow/paywall"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-paywall"
+    timeout: 15000
+- tapOn:
+    id: "paywall-plan-monthly"
+- tapOn:
+    id: "paywall-plan-yearly"
+- scrollUntilVisible:
+    element:
+      text: "Restore Purchases|Restore purchases"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Restore Purchases|Restore purchases"
+- scrollUntilVisible:
+    element:
+      text: "Continue with Free"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Continue with Free"
+- takeScreenshot: "paywall-plans"

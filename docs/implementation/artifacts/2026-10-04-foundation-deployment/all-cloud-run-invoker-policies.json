@@ -1,0 +1,308 @@
+[
+  {
+    "function": "startEncryptedBackupUpload",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/startencryptedbackupupload",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKZvIVk=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "Public HTTP transport with callable Auth/AppCheck or Apple signature verification"
+  },
+  {
+    "function": "appleSubscriptionNotifications",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/applesubscriptionnotifications",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKZ/nNQ=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "Public HTTP transport with callable Auth/AppCheck or Apple signature verification"
+  },
+  {
+    "function": "refreshReviewedAdultDomainFeed",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/refreshreviewedadultdomainfeed",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKaBrxQ=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "serviceAccount:5477978760-compute@developer.gserviceaccount.com"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "IAM-protected scheduler"
+  },
+  {
+    "function": "cleanupExpiredServerRecords",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/cleanupexpiredserverrecords",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKX+tYo=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "serviceAccount:5477978760-compute@developer.gserviceaccount.com"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "IAM-protected scheduler"
+  },
+  {
+    "function": "appleSubscriptionNotificationsSandbox",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/applesubscriptionnotificationssandbox",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKcZA40=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "Public HTTP transport with callable Auth/AppCheck or Apple signature verification"
+  },
+  {
+    "function": "getLatestEncryptedBackupDownload",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/getlatestencryptedbackupdownload",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKZvwI0=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "Public HTTP transport with callable Auth/AppCheck or Apple signature verification"
+  },
+  {
+    "function": "backendReadiness",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/backendreadiness",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKbInHI=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "Public HTTP transport with callable Auth/AppCheck or Apple signature verification"
+  },
+  {
+    "function": "deleteEncryptedBackup",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/deleteencryptedbackup",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKcVrTk=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "Public HTTP transport with callable Auth/AppCheck or Apple signature verification"
+  },
+  {
+    "function": "dispatchReviewedNotifications",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/dispatchreviewednotifications",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKaEC/4=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "serviceAccount:5477978760-compute@developer.gserviceaccount.com"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "IAM-protected scheduler"
+  },
+  {
+    "function": "fencePurchaseAccountLink",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/fencepurchaseaccountlink",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKcgSzk=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "Public HTTP transport with callable Auth/AppCheck or Apple signature verification"
+  },
+  {
+    "function": "getReviewedAdultDomainFeed",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/getreviewedadultdomainfeed",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKXroo4=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "Public HTTP transport with callable Auth/AppCheck or Apple signature verification"
+  },
+  {
+    "function": "requestAccountDeletion",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/requestaccountdeletion",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKZ5L5M=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "Public HTTP transport with callable Auth/AppCheck or Apple signature verification"
+  },
+  {
+    "function": "finalizeEncryptedBackupUpload",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/finalizeencryptedbackupupload",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKZ52cc=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "Public HTTP transport with callable Auth/AppCheck or Apple signature verification"
+  },
+  {
+    "function": "registerPushToken",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/registerpushtoken",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKaCXgc=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "Public HTTP transport with callable Auth/AppCheck or Apple signature verification"
+  },
+  {
+    "function": "ingestAggregateAnalytics",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/ingestaggregateanalytics",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKZ+UcQ=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "Public HTTP transport with callable Auth/AppCheck or Apple signature verification"
+  },
+  {
+    "function": "getEncryptedBackupDownload",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/getencryptedbackupdownload",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKcgpIg=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "Public HTTP transport with callable Auth/AppCheck or Apple signature verification"
+  },
+  {
+    "function": "retryPendingAccountDeletions",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/retrypendingaccountdeletions",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKaL77M=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "serviceAccount:5477978760-compute@developer.gserviceaccount.com"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "IAM-protected scheduler"
+  },
+  {
+    "function": "getPremiumEntitlement",
+    "service": "projects/freed-7d5ee/locations/asia-south1/services/getpremiumentitlement",
+    "policy": {
+      "version": 1,
+      "etag": "BwZdAKZ5Ouk=",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ]
+    },
+    "expectedBoundary": "Public HTTP transport with callable Auth/AppCheck or Apple signature verification"
+  }
+]

@@ -4,10 +4,13 @@ const { dirname, isAbsolute, relative, resolve } = require("node:path");
 const { loadEnvFile } = require("./lib/env-file-loader");
 const { productionBlockerGroups } = require("./lib/release-blocker-groups");
 const { isPathInsideOrSame } = require("./lib/workspace-path-safety");
+const { getBackendProvider, getPreflightCheckIds, getProductionBlockerGroups, firebaseRuntimeEvidenceIssues, getLegalUrls, FIREBASE_PREFLIGHT_IDS } = require("./release-env-preflight");
 
 const releaseScripts = [
   "preflight:release-env",
   "typecheck",
+  "audit:localization",
+  "test:ui",
   "test:core",
   "audit:smoke-harnesses",
   "export:web",
@@ -121,8 +124,7 @@ const reportArtifactSchemas = {
   },
   "smoke:ai-backend": {
     field: "schemaVersion",
-    value: "ai-backend-smoke-v1",
-    proofField: "contractProof"
+    value: "ai-backend-smoke-v2"
   },
   "smoke:purchase-verification": {
     field: "schemaVersion",
@@ -193,18 +195,12 @@ const reportArtifactRequiredResultIds = {
     "remote-notification-supported-kind-rejection",
     "remote-notification-sensitive-rejection"
   ],
-  "smoke:ai-backend": [
-    "configured-ai-model",
-    "clara-remote-endpoint",
-    "challenge-remote-endpoint",
-    "challenge-personalization-profiles"
-  ],
+  "smoke:ai-backend": require("./lib/google-clara-release-evidence").REQUIRED_RESULT_IDS,
   "smoke:purchase-verification": [
     "purchase-verification-endpoint",
     "purchase-unknown-product-fails-closed",
     "purchase-fake-known-yearly-token-fails-closed",
     "purchase-fake-known-monthly-token-fails-closed",
-    "purchase-fake-known-lifetime-token-fails-closed",
     "purchase-malformed-json-fails-closed"
   ]
 };
@@ -219,16 +215,14 @@ const hostedLegalRequiredCheckIds = hostedLegalRouteIds.flatMap((routeId) => [
   `hosted-indexing-${routeId}`
 ]);
 
-const launchPremiumPlanIds = ["yearly", "monthly", "lifetime"];
+const launchPremiumPlanIds = ["yearly", "monthly"];
 const defaultLaunchProductIds = {
   yearly: "freed_premium_yearly",
-  monthly: "freed_premium_monthly",
-  lifetime: "freed_premium_lifetime"
+  monthly: "freed_premium_monthly"
 };
 const launchProductEnvKeys = {
   yearly: ["EXPO_PUBLIC_IAP_PRODUCT_YEARLY", "IAP_PRODUCT_YEARLY"],
-  monthly: ["EXPO_PUBLIC_IAP_PRODUCT_MONTHLY", "IAP_PRODUCT_MONTHLY"],
-  lifetime: ["EXPO_PUBLIC_IAP_PRODUCT_LIFETIME", "IAP_PRODUCT_LIFETIME"]
+  monthly: ["EXPO_PUBLIC_IAP_PRODUCT_MONTHLY", "IAP_PRODUCT_MONTHLY"]
 };
 const androidProtectionFlowOrder = [
   "android-native-adult-domain-feed",
@@ -243,7 +237,7 @@ const androidProtectionFlowDetails = [
   "android-native-adult-domain-feed: sync the reviewed adult-domain feed in FREED before OS permission prompts",
   "android-dns-guard: request Android VpnService consent for DNS-only adult-domain blocking",
   "android-usage-access: open Android Usage Access settings for aggregate selected-app timers",
-  "android-accessibility: open the FREED Accessibility service details screen for browser and selected-app interruption",
+  "android-accessibility: open Android Accessibility services and enable FREED Protection for browser and selected-app interruption",
   "android-doomscroll-apps: choose at least one supported app package and sync blocked-app config",
   "activation-test: verify adult-domain blocking, normal browsing allow behavior, and fresh native readiness before saving activation"
 ];
@@ -535,35 +529,7 @@ const reportArtifactRequiredProofValues = {
     { path: "contractProof.responseBoundary.secretValuesOmitted", equals: true },
     { path: "contractProof.responseBoundary.serverSecretKeyNamesChecked", includesAll: ["REMOTE_NOTIFICATION_DISPATCH_SECRET", "FCM_SERVER_KEY"] }
   ],
-  "smoke:ai-backend": [
-    { path: "sanitized", equals: true },
-    { path: "contractProof.endpointPathRequirements.coach", equals: "/api/clara" },
-    { path: "contractProof.endpointPathRequirements.challenge", equals: "/api/challenges" },
-    { path: "contractProof.endpointPathRequirements.retention", equals: "/api/retention" },
-    { path: "contractProof.requestTimeoutMs.coach", numberBetween: [1_000, 12_000] },
-    { path: "contractProof.requestTimeoutMs.challenge", numberBetween: [1_000, 12_000] },
-    { path: "contractProof.configuredModelProof.configuredModelChecked", equals: true },
-    { path: "contractProof.configuredModelProof.concreteProviderModelRequired", equals: true },
-    { path: "contractProof.configuredModelProof.placeholderModelRejected", equals: true },
-    { path: "contractProof.endpointProofs.claraEndpointChecked", equals: true },
-    { path: "contractProof.endpointProofs.challengeEndpointChecked", equals: true },
-    { path: "contractProof.endpointProofs.productionHttpsOnly", equals: true },
-    { path: "contractProof.endpointProofs.endpointQueryStringsOmitted", equals: true },
-    { path: "contractProof.personalizationProofs.challengePersonalizationProfilesChecked", equals: true },
-    { path: "contractProof.personalizationProofs.contextSignalsChecked", equals: true },
-    { path: "contractProof.personalizationProofs.aggregateRiskForecastChecked", equals: true },
-    { path: "contractProof.personalizationProofs.sessionDurationBucketChecked", equals: true },
-    { path: "contractProof.personalizationProofs.recentFailureCountChecked", equals: true },
-    { path: "contractProof.personalizationProofs.noRawRiskDriversStored", equals: true },
-    { path: "contractProof.privacyProofs.noSensitiveEchoChecked", equals: true },
-    { path: "contractProof.privacyProofs.noCoordinateFieldsChecked", equals: true },
-    { path: "contractProof.privacyProofs.rawPromptsOmitted", equals: true },
-    { path: "contractProof.privacyProofs.unredactedModelResponsesOmitted", equals: true },
-    { path: "contractProof.responseBoundary.privateEchoPatternsChecked", numberBetween: [1, 100] },
-    { path: "contractProof.responseBoundary.secretValuesOmitted", equals: true },
-    { path: "contractProof.responseBoundary.serverSecretKeyNamesChecked", includesAll: ["OPENAI_API_KEY", "GEMINI_API_KEY"] },
-    { path: "contractProof.responseBoundary.redactedSensitiveFields", includesAll: ["urls", "domains", "privateNotes", "coordinateFields"] }
-  ],
+  "smoke:ai-backend": [{ path: "sanitized", equals: true }],
   "smoke:purchase-verification": [
     { path: "sanitized", equals: true },
     { path: "verificationBoundary.usesSyntheticPurchasePayloads", equals: true },
@@ -571,7 +537,6 @@ const reportArtifactRequiredProofValues = {
     { path: "verificationBoundary.fakeKnownTokenRejectionChecked", equals: true },
     { path: "verificationBoundary.fakeKnownTokenRejectionCheckedByPlan.yearly", equals: true },
     { path: "verificationBoundary.fakeKnownTokenRejectionCheckedByPlan.monthly", equals: true },
-    { path: "verificationBoundary.fakeKnownTokenRejectionCheckedByPlan.lifetime", equals: true },
     { path: "verificationBoundary.malformedJsonRejectionChecked", equals: true },
     { path: "contractProof.endpointPathRequired", equals: "/api/purchases/verify" },
     { path: "contractProof.endpointValidated", equals: true },
@@ -581,7 +546,6 @@ const reportArtifactRequiredProofValues = {
     { path: "contractProof.rejectionProofs.fakeKnownTokenRejected", equals: true },
     { path: "contractProof.rejectionProofs.fakeKnownTokenRejectedByPlan.yearly", equals: true },
     { path: "contractProof.rejectionProofs.fakeKnownTokenRejectedByPlan.monthly", equals: true },
-    { path: "contractProof.rejectionProofs.fakeKnownTokenRejectedByPlan.lifetime", equals: true },
     { path: "contractProof.rejectionProofs.malformedJsonRejected", equals: true },
     { path: "contractProof.responseBoundary.rawTokenEchoRejected", equals: true },
     { path: "contractProof.responseBoundary.rawReceiptEchoRejected", equals: true },
@@ -643,6 +607,22 @@ const expectedReleaseReadinessGateIds = [
   "store-ad-sandbox-validation",
   "ai-backend-smoke-validation"
 ];
+
+const firebaseExcludedReadinessIds = new Set(["backend-architecture-contract", "production-backend-infrastructure", "production-analytics-ingestion", "production-notification-backend", "production-adult-domain-feed", "server-ai-routes", "backend-readiness-smoke-harness", "supabase-schema-smoke-harness", "adult-domain-feed-smoke-harness", "analytics-ingestion-smoke-harness", "remote-notification-smoke-harness", "ai-backend-smoke-harness", "purchase-verification-smoke-harness"]);
+function getExpectedReleaseReadinessGateIds(provider = getBackendProvider()) {
+  if (provider !== "firebase") return [...expectedReleaseReadinessGateIds];
+  const ids = expectedReleaseReadinessGateIds.filter(id => !firebaseExcludedReadinessIds.has(id));
+  ids.splice(ids.indexOf("production-android-signing"), 0, ...FIREBASE_PREFLIGHT_IDS, "firebase-functions-contracts");
+  return ids;
+}
+
+function getReleaseScripts(env = process.env) {
+  if (getBackendProvider(env) !== "firebase") return [...releaseScripts];
+  const obsolete = new Set(["audit:smoke-harnesses", "smoke:backend-readiness", "smoke:supabase-schema", "smoke:adult-domain-feed", "smoke:analytics-ingestion", "smoke:remote-notifications", "smoke:ai-backend", "smoke:purchase-verification", "audit:backend"]);
+  const selected = releaseScripts.filter(script => !obsolete.has(script));
+  selected.splice(selected.indexOf("eval:ai-safety"), 0, "firebase:functions-build", "firebase:functions-tests", "firebase:functions-emulator", "test:firebase-functions", "test:firebase-native", "test:firebase-runtime", "firebase:feature-contracts", "firebase:release-gate-contracts");
+  return selected;
+}
 
 const secretShapedReportPatterns = [
   {
@@ -840,6 +820,9 @@ function removeExistingReportArtifact(script, artifactDir) {
 }
 
 function scriptArgs(script, envFile, artifactDir) {
+  if (script === "firebase:functions-build") return ["--prefix", "functions", "run", "build"];
+  if (script === "firebase:functions-tests") return ["--prefix", "functions", "test"];
+  if (script === "firebase:functions-emulator") return ["--prefix", "functions", "run", "test:emulator"];
   const appArgs = [];
   if (envFileAwareScripts.has(script) && envFile) appArgs.push("--env-file", envFile);
   const reportPath = reportPathForScript(script, artifactDir);
@@ -848,6 +831,8 @@ function scriptArgs(script, envFile, artifactDir) {
 }
 
 function commandLabel(script, envFile, artifactDir) {
+  if (script === "firebase:feature-contracts") return "node scripts/run-ts-entry.js tests/firebase-feature-runtime.test.ts";
+  if (script === "firebase:release-gate-contracts") return "node tests/firebase-release-gates.test.js";
   return `npm ${scriptArgs(script, envFile, artifactDir).join(" ")}`;
 }
 
@@ -918,30 +903,12 @@ function launchProductIdsFromEnv(env) {
   );
 }
 
-function aiRetentionSmokeRequired(payload, env) {
-  return hasConfiguredEnvValue(env, "EXPO_PUBLIC_RETENTION_ENDPOINT") || typeof valueAtReportPath(payload, "endpoints.retention") === "string";
-}
-
 function conditionalRequiredResultIds(payload, script, env) {
-  if (script === "smoke:ai-backend" && aiRetentionSmokeRequired(payload, env)) {
-    return ["retention-remote-endpoint"];
-  }
+  // Recovery selection/retention stay local even when legacy endpoint options exist.
   return [];
 }
 
 function conditionalRequiredProofValues(payload, script, env) {
-  if (script === "smoke:ai-backend" && aiRetentionSmokeRequired(payload, env)) {
-    return [
-      { path: "endpoints.retention", nonEmptyString: true },
-      { path: "aiBoundary.retentionEndpointConfigured", equals: true },
-      { path: "aiBoundary.retentionEndpointChecked", equals: true },
-      { path: "aiBoundary.retentionAggregateOnlyChecked", equals: true },
-      { path: "contractProof.requestTimeoutMs.retention", numberBetween: [1_000, 12_000] },
-      { path: "contractProof.endpointProofs.retentionEndpointConfigured", equals: true },
-      { path: "contractProof.endpointProofs.retentionEndpointChecked", equals: true },
-      { path: "contractProof.privacyProofs.retentionAggregateOnlyChecked", equals: true }
-    ];
-  }
   if (script === "smoke:purchase-verification") {
     const launchProductIds = launchProductIdsFromEnv(env);
     return launchPremiumPlanIds.flatMap((planId) => [
@@ -1002,8 +969,11 @@ function assertStringArrayMatches(actual, expected, label, reportPath) {
   }
 }
 
-function assertPreflightBlockerGroups(payload, reportPath) {
-  const expectedGroups = productionBlockerGroups(dirname(reportPath));
+function assertPreflightBlockerGroups(payload, reportPath, env = process.env) {
+  const backendProvider = getBackendProvider(env);
+  if ((payload.backendProvider ?? "legacy") !== backendProvider) throw new Error("Release preflight backend provider does not match the selected release environment.");
+  const expectedGroups = getProductionBlockerGroups(dirname(reportPath), backendProvider);
+  const expectedPreflightReportCheckIds = getPreflightCheckIds(backendProvider);
   const groups = payload.blockerGroups;
   if (!Array.isArray(groups) || groups.length === 0) {
     throw new Error(`preflight:release-env report artifact must include non-empty blockerGroups: ${reportPath}`);
@@ -1029,6 +999,10 @@ function assertPreflightBlockerGroups(payload, reportPath) {
   }
   if (payload.failCount !== computedFailCount || payload.passCount !== computedPassCount) {
     throw new Error(`preflight:release-env report artifact pass/fail counts must match checks: ${reportPath}`);
+  }
+  if (backendProvider === "firebase") {
+    const evidenceIssues = firebaseRuntimeEvidenceIssues(env);
+    if (evidenceIssues.length) throw new Error(`Firebase preflight cannot substitute file/configuration assertions for production runtime evidence: ${evidenceIssues.join("; ")}`);
   }
   const expectedPreflightCheckIdSet = new Set(expectedPreflightReportCheckIds);
   for (const expectedCheckId of expectedPreflightReportCheckIds) {
@@ -1181,7 +1155,9 @@ function assertPreflightBlockerGroups(payload, reportPath) {
   }
 }
 
-function assertHostedLegalReport(payload, reportPath) {
+function assertHostedLegalReport(payload, reportPath, env = process.env) {
+  const legalUrls = getLegalUrls(env);
+  if (reportSecretShapeIssue(JSON.stringify(payload))) throw new Error("Hosted legal report must remain sanitized and free of secret-shaped values.");
   if (payload.result !== "pass") {
     throw new Error(`audit:store-legal-hosted report artifact result must be pass: ${reportPath}`);
   }
@@ -1225,20 +1201,33 @@ function assertHostedLegalReport(payload, reportPath) {
   }
   for (const routeId of hostedLegalRouteIds) {
     const publicUrl = publicUrls[routeId];
-    if (typeof publicUrl !== "string" || !publicUrl.startsWith("https://freedrecovery.app/")) {
+    if (typeof publicUrl !== "string" || publicUrl !== legalUrls[routeId]) {
       throw new Error(`audit:store-legal-hosted report artifact publicUrls.${routeId} must be a FREED HTTPS URL: ${reportPath}`);
     }
     const route = routeResults.find((entry) => entry && typeof entry === "object" && entry.id === routeId);
-    if (!route || typeof route.status !== "number" || route.status < 200 || route.status >= 300) {
-      throw new Error(`audit:store-legal-hosted report artifact routeResults.${routeId} must include a 2xx route result: ${reportPath}`);
+    if (!route || route.status !== 200) {
+      throw new Error(`audit:store-legal-hosted report artifact routeResults.${routeId} must include an HTTP 200 page result: ${reportPath}`);
     }
-    if (typeof route.finalUrl !== "string" || !route.finalUrl.startsWith(publicUrl)) {
-      throw new Error(`audit:store-legal-hosted report artifact routeResults.${routeId}.finalUrl must stay on the public legal URL: ${reportPath}`);
+    let finalMatches = false;
+    try {
+      const expected = new URL(publicUrl);
+      const final = new URL(route.finalUrl);
+      finalMatches = final.origin === expected.origin && final.pathname.replace(/\/+$/, "") === expected.pathname.replace(/\/+$/, "") && !final.search && !final.hash && !final.username && !final.password;
+    } catch {}
+    if (!finalMatches) {
+      throw new Error(`audit:store-legal-hosted report artifact routeResults.${routeId}.finalUrl must match the configured legal URL: ${reportPath}`);
     }
   }
 }
 
-function assertReleaseReadinessReport(payload, reportPath) {
+function assertReleaseReadinessReport(payload, reportPath, env = process.env) {
+  const backendProvider = getBackendProvider(env);
+  if ((payload.backendProvider ?? "legacy") !== backendProvider) throw new Error("Release readiness backend provider does not match the selected release environment.");
+  const expectedReleaseReadinessGateIds = getExpectedReleaseReadinessGateIds(backendProvider);
+  if (backendProvider === "firebase") {
+    const issues = firebaseRuntimeEvidenceIssues(env);
+    if (issues.length) throw new Error(`Missing Firebase production runtime evidence or production captures: ${issues.join("; ")}`);
+  }
   const summary = reportSummary(payload);
   if (payload.strict !== true) {
     throw new Error(`audit:release:strict report artifact must be strict: ${reportPath}`);
@@ -1320,7 +1309,7 @@ function assertPassFailResults(payload, script, reportPath, env = process.env) {
     if (resultsById.has(entry.id)) {
       throw new Error(`${script} report artifact results must not repeat ${entry.id}: ${reportPath}`);
     }
-    if (typeof entry.detail !== "string" || !entry.detail.trim()) {
+    if (script !== "smoke:ai-backend" && (typeof entry.detail !== "string" || !entry.detail.trim())) {
       throw new Error(`${script} report artifact results.${entry.id} must include detail: ${reportPath}`);
     }
     resultsById.set(entry.id, entry);
@@ -1403,13 +1392,13 @@ function assertReportArtifact(script, artifactDir, env = process.env, options = 
     }
   }
   if (script === "preflight:release-env") {
-    assertPreflightBlockerGroups(payload, reportPath);
+    assertPreflightBlockerGroups(payload, reportPath, env);
   }
   if (script === "audit:store-legal-hosted") {
-    assertHostedLegalReport(payload, reportPath);
+    assertHostedLegalReport(payload, reportPath, env);
   }
   if (script === "audit:release:strict") {
-    assertReleaseReadinessReport(payload, reportPath);
+    assertReleaseReadinessReport(payload, reportPath, env);
   }
   if (!schema.rowsField && script !== "audit:release:strict") {
     assertPassFailResults(payload, script, reportPath, env);
@@ -1419,6 +1408,13 @@ function assertReportArtifact(script, artifactDir, env = process.env, options = 
   if (secretIssue) {
     throw new Error(`${script} report artifact must not contain secret-shaped ${secretIssue} values: ${reportPath}`);
   }
+  if (script === "smoke:ai-backend") assertGoogleClaraReport(payload);
+
+}
+
+function assertGoogleClaraReport(payload, root = process.cwd()) {
+  const issues = require("./lib/google-clara-release-evidence").reportIssues(payload, root);
+  if (issues.length) throw new Error(`Current Google CLARA evidence rejected: ${issues.join("; ")}`);
 }
 
 function writeJson(path, payload) {
@@ -1509,15 +1505,11 @@ function sampleReportPayload(script, reportPath = null) {
       result: "pass",
       passCount: hostedLegalRequiredCheckIds.length,
       failCount: 0,
-      publicUrls: {
-        privacy: "https://freedrecovery.app/privacy",
-        support: "https://freedrecovery.app/support",
-        "account-deletion": "https://freedrecovery.app/account-deletion"
-      },
+      publicUrls: getLegalUrls(process.env),
       routeResults: hostedLegalRouteIds.map((id) => ({
         id,
         status: 200,
-        finalUrl: id === "account-deletion" ? "https://freedrecovery.app/account-deletion" : `https://freedrecovery.app/${id}`,
+        finalUrl: getLegalUrls(process.env)[id],
         contentType: "text/html; charset=utf-8",
         sizeBytes: 4096
       })),
@@ -1592,6 +1584,8 @@ function assertThrows(fn, pattern) {
 }
 
 function runSelfTest() {
+  const priorProvider = process.env.EXPO_PUBLIC_BACKEND_PROVIDER;
+  process.env.EXPO_PUBLIC_BACKEND_PROVIDER = "legacy";
   const artifactDir = `docs/validation/artifacts/release-verifier-self-test-${Date.now()}`;
   const absoluteArtifactDir = resolve(process.cwd(), artifactDir);
 
@@ -1599,7 +1593,8 @@ function runSelfTest() {
     for (const script of Object.keys(reportArtifactNames)) {
       const reportPath = reportPathForScript(script, artifactDir);
       writeJson(resolve(process.cwd(), reportPath), sampleReportPayload(script, reportPath));
-      assertReportArtifact(script, artifactDir);
+      if (script === "smoke:ai-backend") assertThrows(() => assertReportArtifact(script, artifactDir), /production-native/);
+      else assertReportArtifact(script, artifactDir);
     }
 
     assertThrows(
@@ -1621,7 +1616,7 @@ function runSelfTest() {
       ...sampleReportPayload("smoke:ai-backend"),
       schemaVersion: "wrong-schema"
     });
-    assertThrows(() => assertReportArtifact("smoke:ai-backend", artifactDir), /schema must be ai-backend-smoke-v1/);
+    assertThrows(() => assertReportArtifact("smoke:ai-backend", artifactDir), /schema must be ai-backend-smoke-v2/);
 
     const missingGeneratedAtPayload = sampleReportPayload("smoke:backend-readiness");
     delete missingGeneratedAtPayload.generatedAt;
@@ -1660,14 +1655,11 @@ function runSelfTest() {
     removeExistingReportArtifact("smoke:remote-notifications", artifactDir);
 
     const missingProofPayload = sampleReportPayload("smoke:ai-backend");
-    delete missingProofPayload.contractProof;
     writeJson(aiReportPath, missingProofPayload);
-    assertThrows(() => assertReportArtifact("smoke:ai-backend", artifactDir), /contractProof/);
-
-    const weakProofPayload = sampleReportPayload("smoke:ai-backend");
-    weakProofPayload.contractProof.endpointProofs.claraEndpointChecked = false;
-    writeJson(aiReportPath, weakProofPayload);
-    assertThrows(() => assertReportArtifact("smoke:ai-backend", artifactDir), /endpointProofs\.claraEndpointChecked/);
+    assertThrows(() => assertReportArtifact("smoke:ai-backend", artifactDir), /production-native/);
+    const legacyProofPayload = {...sampleReportPayload("smoke:ai-backend"), schemaVersion: "ai-backend-smoke-v1"};
+    writeJson(aiReportPath, legacyProofPayload);
+    assertThrows(() => assertReportArtifact("smoke:ai-backend", artifactDir), /schema must be ai-backend-smoke-v2/);
 
     const weakSecretProofPayload = sampleReportPayload("smoke:purchase-verification");
     weakSecretProofPayload.contractProof.responseBoundary.serverSecretKeyNamesChecked = [];
@@ -1854,32 +1846,13 @@ function runSelfTest() {
     assertThrows(() => assertReportArtifact("build:ios-archive:release", artifactDir), /safariFocusShield\.serviceWorker/);
 
     writeJson(aiReportPath, sampleReportPayload("smoke:ai-backend"));
-    assertThrows(
-      () => assertReportArtifact("smoke:ai-backend", artifactDir, { EXPO_PUBLIC_RETENTION_ENDPOINT: "https://api.freedrecovery.app/api/retention" }),
-      /endpoints\.retention/
-    );
-
-    const retentionMissingResultPayload = sampleReportPayload("smoke:ai-backend");
-    setReportPathValue(retentionMissingResultPayload, "endpoints.retention", "https://api.freedrecovery.app/api/retention");
-    setReportPathValue(retentionMissingResultPayload, "aiBoundary.retentionEndpointConfigured", true);
-    setReportPathValue(retentionMissingResultPayload, "aiBoundary.retentionEndpointChecked", true);
-    setReportPathValue(retentionMissingResultPayload, "aiBoundary.retentionAggregateOnlyChecked", true);
-    setReportPathValue(retentionMissingResultPayload, "contractProof.requestTimeoutMs.retention", 8_000);
-    setReportPathValue(retentionMissingResultPayload, "contractProof.endpointProofs.retentionEndpointConfigured", true);
-    setReportPathValue(retentionMissingResultPayload, "contractProof.endpointProofs.retentionEndpointChecked", true);
-    setReportPathValue(retentionMissingResultPayload, "contractProof.privacyProofs.retentionAggregateOnlyChecked", true);
-    writeJson(aiReportPath, retentionMissingResultPayload);
-    assertThrows(
-      () => assertReportArtifact("smoke:ai-backend", artifactDir, { EXPO_PUBLIC_RETENTION_ENDPOINT: "https://api.freedrecovery.app/api/retention" }),
-      /required result retention-remote-endpoint/
-    );
-
+    assertThrows(() => assertReportArtifact("smoke:ai-backend", artifactDir, { EXPO_PUBLIC_RETENTION_ENDPOINT: "https://api.freedrecovery.app/api/retention" }), /production-native/);
     writeJson(aiReportPath, {
       ...sampleReportPayload("smoke:ai-backend"),
       summary: { passCount: reportArtifactRequiredResultIds["smoke:ai-backend"].length - 1, failCount: 0 },
-      results: sampleReportPayload("smoke:ai-backend").results.filter((result) => result.id !== "challenge-remote-endpoint")
+      results: sampleReportPayload("smoke:ai-backend").results.filter(result => result.id !== "local-recovery")
     });
-    assertThrows(() => assertReportArtifact("smoke:ai-backend", artifactDir), /required result challenge-remote-endpoint/);
+    assertThrows(() => assertReportArtifact("smoke:ai-backend", artifactDir), /required result local-recovery/);
 
     writeJson(aiReportPath, {
       ...sampleReportPayload("smoke:ai-backend"),
@@ -2008,7 +1981,7 @@ function runSelfTest() {
     writeJson(
       preflightReportPath,
       preflightPayloadWithGroup("production-ai-backend", (group) => {
-        group.failedPreflightChecks = [{ id: "server-ai-key" }];
+        group.failedPreflightChecks = [{ id: "server-secret-public-leakage" }];
       })
     );
     assertThrows(() => assertReportArtifact("preflight:release-env", artifactDir), /failedPreflightChecks must match failed checks/);
@@ -2170,9 +2143,12 @@ function runSelfTest() {
     console.log("release-verify self-test: pass");
   } finally {
     rmSync(absoluteArtifactDir, { recursive: true, force: true });
+    if (priorProvider === undefined) delete process.env.EXPO_PUBLIC_BACKEND_PROVIDER;
+    else process.env.EXPO_PUBLIC_BACKEND_PROVIDER = priorProvider;
   }
 }
 
+function main() {
 let args;
 let releaseEnv;
 try {
@@ -2192,11 +2168,11 @@ if (args.list) {
   console.log("# FREED release verification command order");
   console.log(`Environment: ${releaseEnv.sourceLabel}`);
   if (args.artifactDir) console.log(`Artifact reports: ${args.artifactDir}`);
-  for (const script of releaseScripts) console.log(commandLabel(script, releaseEnv.envFile, args.artifactDir));
+  for (const script of getReleaseScripts(releaseEnv.env)) console.log(commandLabel(script, releaseEnv.envFile, args.artifactDir));
   process.exit(0);
 }
 
-for (const script of releaseScripts) {
+for (const script of getReleaseScripts(releaseEnv.env)) {
   console.log(`\n# ${commandLabel(script, releaseEnv.envFile, args.artifactDir)}`);
   try {
     removeExistingReportArtifact(script, args.artifactDir);
@@ -2206,7 +2182,8 @@ for (const script of releaseScripts) {
     break;
   }
   const commandStartedAtMs = Date.now();
-  const result = spawnSync("npm", scriptArgs(script, releaseEnv.envFile, args.artifactDir), {
+  const directNodeArgs = script === "firebase:feature-contracts" ? ["scripts/run-ts-entry.js", "tests/firebase-feature-runtime.test.ts"] : script === "firebase:release-gate-contracts" ? ["tests/firebase-release-gates.test.js"] : null;
+  const result = spawnSync(directNodeArgs ? process.execPath : "npm", directNodeArgs ?? scriptArgs(script, releaseEnv.envFile, args.artifactDir), {
     cwd: process.cwd(),
     env: releaseEnv.env,
     stdio: "inherit"
@@ -2238,4 +2215,10 @@ for (const script of releaseScripts) {
 
 if (!process.exitCode) {
   console.log("\nFREED release verification passed all gates.");
+}
+}
+
+module.exports = { assertReportArtifact, assertGoogleClaraReport, getExpectedReleaseReadinessGateIds, getReleaseScripts, getPreflightCheckIds, assertPreflightBlockerGroups, assertReleaseReadinessReport, assertHostedLegalReport };
+if (require.main === module) {
+  try { main(); } catch (error) { console.error(error instanceof Error ? error.message : "Release verifier failed."); process.exitCode = 1; }
 }

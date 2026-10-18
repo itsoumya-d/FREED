@@ -1,0 +1,15 @@
+# FREED internal TestFlight — version 1.0 (4)
+
+Build4 is VALID, unexpired and IN_BETA_TESTING for the existing Internal group. Build ID a71298b5-b36a-43c8-8224-30ce1e3a4132; expiration January3,2027. Select FREED1.0(4) in TestFlight. Existing all-build access and auto-notify remain enabled; no public App Store submission or manual tester message was sent. Physical installation is not yet evidenced.
+
+IPA SHA256 74dc5817308b0ef6c6dfcd87fd7ec6bca6c9f3b66283f6ef2970846870eb0e22 (39,208,337bytes), bound to929publicinputs snapshot21b27cad69029ef374b8165e3914671467909c69e60aab7e3b2ef88fd3853601 and separately recorded public environment/generated native/signing inputs. The current Swift photo pipeline, operation gate and target matching helpers compiled in the actual signed archive. Main app andfiveextensions carry1.0/build4. Strict code signature verification andeightrelease-artifact gates pass; threephaseaudiofilesincluded; diagnosticbundle/trace/markerexcluded.
+
+This build includes the latest preferences/navigation fixes, public legal-page exits, local photo cancellation/cleanup/admission controls and current comfort/privacy wording. The current full UI run passes528tests/51suites. The original UI518pass/10fail result was an outdated namespace expectation; its one-word expected-list addition was independently reviewed, andactualtenlocalecontent/interpolationassertions remain. Verification-script changes after the app freeze are bound separately; source checks do not establish device coverage.
+
+Internal test notes identify supported whole-app protection and website filtering, sample rewarded ads, Basic Help/SOS, realaccount/store flows and interrupted-reset behavior. Native iOS Shorts/Reels interception is unsupported. DNS does not redirect HTTPS into FREED. Adult-domain protection never lifts after a reset or ad. Photo targets remain NONE until provider/device held-out accuracy evaluation passes. Cloud CLARA rollout remains gated; built-in guidance remains available.
+
+Public release remains blocked by mandatory real-device protection, signed account/App Check/service delivery, store sandbox lifecycle/ownership, photo accuracy/cleanup, backup/deletion, navigation/accessibility/localization matrices and measuredreleaseperformance. Earlier unexplained simulator transitions remain preserved; a bounded separateQAtrace verified several public returns butdidnotestablish universalstability. Do not treat passing tests or signed compilation as100%launchreadiness.
+
+Sanitized milestone facts andApple readback summary are in docs/validation/artifacts/2026-10-06-internal-candidate. The complete private build/source/attempt logs remain preserved in the task workspace.
+
+Following independent review, the current full CORE suite passes279/279; source performance29/29, privacy31/31 andruntime13/13 audits pass. Historical May AIv1 captures remain incompatible and are tested as rejection cases. These source/offline results are separate from code coverage percentages and physical release evidence.

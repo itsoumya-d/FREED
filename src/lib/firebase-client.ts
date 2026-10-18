@@ -1,9 +1,13 @@
+import { parseReviewAccessSnapshot, type ReviewAccessSnapshot } from "./review-access";
+import { getPublicClientEnvironment } from "@/lib/public-client-env";
+import { getAuthIdentityFailureMessage, type AuthIdentityFailureReason } from "./social-auth-flow";
+
 type Env = Record<string, string | undefined>;
 
 export type FirebaseEnvironment = "production" | "staging";
 export type FirebaseAppCheckPlatform = "android" | "ios";
 export type FirebaseAppCheckProvider = "playIntegrity" | "appAttestWithDeviceCheckFallback" | "debug";
-export type FirebaseAuthProvider = "apple" | "google";
+export type FirebaseAuthProvider = "apple" | "google" | "email";
 
 export type FirebaseClientReadiness = {
   ready: boolean;
@@ -30,13 +34,18 @@ export type FirebaseEmailLinkReadiness = {
 
 export type FirebaseAuthActionResult = {
   ok: boolean;
-  status: "sent" | "authenticated" | "invalid" | "error" | "unconfigured";
+  status: "sent" | "authenticated" | "linked" | "cancelled" | "invalid" | "error" | "unconfigured";
+  code?: AuthIdentityFailureReason;
   reason?: string;
   uid?: string;
 };
 
 export type FirebaseNativeUser = {
   uid: string;
+  isAnonymous?: boolean;
+  email?: string | null;
+  emailVerified?: boolean;
+  providerData?: readonly { providerId: string }[];
   getIdToken: (forceRefresh?: boolean) => Promise<string>;
 };
 
@@ -46,7 +55,16 @@ export type FirebaseAuthNativeApi = {
   signInWithEmailLink: (email: string, link: string) => Promise<{ user: FirebaseNativeUser }>;
   createGoogleCredential: (idToken: string, accessToken?: string) => unknown;
   createAppleCredential: (identityToken: string, nonce?: string) => unknown;
+  createEmailCredential?: (email: string, password: string) => unknown;
+  createEmailLinkCredential?: (email: string, emailLink: string) => unknown;
   signInWithCredential: (credential: unknown) => Promise<{ user: FirebaseNativeUser }>;
+  linkWithCredential?: (credential: unknown) => Promise<{ user: FirebaseNativeUser }>;
+  reauthenticateWithCredential?: (credential: unknown) => Promise<{ user: FirebaseNativeUser }>;
+  createEmailAccount?: (email: string, password: string) => Promise<{ user: FirebaseNativeUser }>;
+  sendPasswordResetEmail?: (email: string) => Promise<void>;
+  sendEmailVerification?: (user: FirebaseNativeUser) => Promise<void>;
+  reloadCurrentUser?: (user: FirebaseNativeUser) => Promise<{ user: FirebaseNativeUser }>;
+  signInWithAppleProvider?: (options: { linkExisting: boolean }) => Promise<{ user: FirebaseNativeUser }>;
   currentUser: () => FirebaseNativeUser | null;
 };
 
@@ -68,7 +86,21 @@ export type FirebaseProviderCredentialInput = {
   accessToken?: string;
   identityToken?: string;
   nonce?: string;
+  email?: string;
+  password?: string;
+  emailLink?: string;
 };
+
+export type FirebaseAccountSummary = { signedIn: boolean; anonymous: boolean; email: string | null; providers: string[]; emailVerified?: boolean };
+
+export function summarizeFirebaseAccount(user: FirebaseNativeUser | null): FirebaseAccountSummary {
+  if (!user || !isFirebaseAuthUid(user.uid)) return { signedIn: false, anonymous: false, email: null, providers: [] };
+  const providers = new Set<string>();
+  for (const entry of user.providerData ?? []) {
+    if (entry && typeof entry.providerId === "string" && /^[A-Za-z0-9.-]{1,100}$/.test(entry.providerId)) providers.add(entry.providerId);
+  }
+  return { signedIn: true, anonymous: user.isAnonymous === true, email: typeof user.email === "string" ? sanitizeEmail(user.email) : null, providers: [...providers].sort(), ...(typeof user.emailVerified === "boolean" ? { emailVerified: user.emailVerified } : {}) };
+}
 
 export type FirebaseMessagingRegistration = {
   installationId: string;
@@ -78,6 +110,8 @@ export type FirebaseMessagingRegistration = {
 
 export type FirebaseCallableOptions = Readonly<{
   limitedUseAppCheckToken?: true;
+  /** Local dispatch fence only; never serialized into callable data. */
+  operationIsCurrent?: ()=>boolean;
 }>;
 
 export type FirebaseCallableName =
@@ -86,14 +120,33 @@ export type FirebaseCallableName =
   | "finalizeEncryptedBackupUpload"
   | "getEncryptedBackupDownload"
   | "deleteEncryptedBackup"
+  | "enrollRecoveryDns"
+  | "revokeRecoveryDns"
   | "registerPushToken"
   | "requestAccountDeletion"
+  | "getReviewAccess"
   | "getReviewedAdultDomainFeed"
   | "generateClaraReply"
+  | "generateGoogleClaraReply"
   | "generateChallenges"
   | "generateRetentionPlan"
   | "verifyStorePurchase"
+  | "getPurchaseCheckoutContext"
+  | "verifyAppleStorePurchase"
+  | "getApplePurchaseCheckoutContext"
+  | "fencePurchaseAccountLink"
+  | "getPremiumEntitlement"
+  | "getJourneyOfferState"
+  | "acknowledgeJourneyOffer"
+  | "getLatestEncryptedBackupDownload"
   | "backendReadiness";
+
+export type FirebaseJourneyOfferState = { offerVersion: 1; acknowledged: boolean };
+export type FirebaseJourneyOfferRequest = { offerVersion: 1; decision: 'free' | 'purchased'; eventId: string };
+function parseJourneyOfferState(value: unknown): FirebaseJourneyOfferState {
+  if (!isExactRecord(value, ['offerVersion', 'acknowledged'] as const) || value.offerVersion !== 1 || typeof value.acknowledged !== 'boolean') throw new Error('Invalid journey offer response.');
+  return { offerVersion: 1, acknowledged: value.acknowledged };
+}
 
 export type FirebaseCoreProductId =
   | "freed_premium_monthly"
@@ -105,6 +158,7 @@ export type FirebaseVerifyStorePurchaseRequest =
       platform: "ios";
       productId: FirebaseCoreProductId;
       transactionId: string;
+      signedTransactionInfo?: string;
       clientEventId: string;
       restore: boolean;
     }
@@ -132,7 +186,7 @@ export type FirebasePushRegistrationResult = {
 
 export type FirebaseAccountDeletionResult = {
   ok: true;
-  status: "deleting";
+  status: "deleting" | "processing" | "completed";
 };
 
 export type FirebaseAiFallbackReason =
@@ -171,6 +225,7 @@ export type FirebaseRecoveryRiskDriverSignal =
   | "no-elevated-risk";
 
 export type FirebaseClaraRequest = {
+  locale?: 'en' | 'hi' | 'ko' | 'es' | 'pt' | 'fr' | 'de' | 'ar' | 'ja' | 'zh-Hans';
   clientEventId: string;
   input: string;
   context: {
@@ -350,12 +405,23 @@ export type FirebaseCallableResult = {
 export type FirebaseCallableTransport = {
   call: (name: FirebaseCallableName, data: unknown, options?: FirebaseCallableOptions) => Promise<unknown>;
 };
-export type FirebaseAggregateAnalyticsPayload = {
+export type FirebaseLegacyAggregateAnalyticsPayload = {
   day: string;
   checkIns: number;
   completedChallenges: number;
   clientEventId: string;
 };
+export type FirebaseAggregateAnalyticsSnapshotPayload = {
+  schemaVersion: "aggregate-snapshot-v1";
+  lineageId: string;
+  baseRevision: number;
+  snapshotId: string;
+  days: Array<{ day: string; checkIns: number; completedChallenges: number }>;
+  consentVersion: "analytics-consent-v1";
+  userOptedInAt: string;
+  dataRetentionDays: number;
+};
+export type FirebaseAggregateAnalyticsPayload = FirebaseLegacyAggregateAnalyticsPayload | FirebaseAggregateAnalyticsSnapshotPayload;
 export type FirebaseBackupMetadataPayload = {
   backupId: string;
   encryptedBytes: number;
@@ -364,7 +430,7 @@ export type FirebaseBackupMetadataPayload = {
 };
 export type FirebaseBackupMutationPayload = { backupId: string; clientEventId: string };
 export type FirebaseBackupDownloadPayload = { backupId: string };
-export type FirebaseDeletionRequestPayload = { clientEventId: string };
+export type FirebaseDeletionRequestPayload = { clientEventId: string; expectedAccountUid: string };
 
 const REVIEWED_FEED_SOURCE = Object.freeze({
   id: "oisd-nsfw-small",
@@ -506,6 +572,7 @@ export function parseFirebaseReviewedAdultDomainFeed(value: unknown): FirebaseRe
     previous = domain;
   }
   return {
+
     version: value.version,
     generatedAt: value.generatedAt,
     publishedAt: value.publishedAt,
@@ -515,7 +582,7 @@ export function parseFirebaseReviewedAdultDomainFeed(value: unknown): FirebaseRe
   };
 }
 
-export function getFirebaseClientReadiness(env: Env = process.env): FirebaseClientReadiness {
+export function getFirebaseClientReadiness(env: Env = getPublicClientEnvironment()): FirebaseClientReadiness {
   const requestedEnvironment = readEnv(env, "EXPO_PUBLIC_FIREBASE_ENV") ?? "production";
   const environment = isFirebaseEnvironment(requestedEnvironment) ? requestedEnvironment : null;
   const debugProviderEnabled = readEnv(env, APP_CHECK_DEBUG_PROVIDER_ENV) === "enabled";
@@ -553,7 +620,7 @@ export function getFirebaseClientReadiness(env: Env = process.env): FirebaseClie
  * still unsafe. The public marker is only set after the generated Hosting
  * associations are deployed and verified against signed native builds.
  */
-export function getFirebaseEmailLinkReadiness(env: Env = process.env): FirebaseEmailLinkReadiness {
+export function getFirebaseEmailLinkReadiness(env: Env = getPublicClientEnvironment()): FirebaseEmailLinkReadiness {
   const requestedEnvironment = readEnv(env, "EXPO_PUBLIC_FIREBASE_ENV") ?? "production";
   const configuredCallbackUrl = readEnv(env, "EXPO_PUBLIC_FIREBASE_AUTH_CONTINUE_URL");
   const configuredLinkDomain = readEnv(env, EMAIL_LINK_DOMAIN_ENV);
@@ -619,7 +686,107 @@ export function createFirebaseAuthAdapter(
 ) {
   const emailLinkReady = options.emailLinkReady === true;
   const emailLinkDomain = options.emailLinkDomain;
+  async function prepareCredential(provider: FirebaseAuthProvider, input: FirebaseProviderCredentialInput): Promise<{ credential: unknown } | { failure: FirebaseAuthActionResult }> {
+    if (provider === "email") {
+      const email = typeof input.email === "string" ? sanitizeEmail(input.email) : null;
+      if (!email || (input.password !== undefined && input.emailLink !== undefined)) return { failure: invalidResult("A single valid email credential is required.") };
+      if (input.emailLink !== undefined) {
+        if (!emailLinkReady) return { failure: emailLinkUnconfiguredResult() };
+        if (!isUsableEmailLink(input.emailLink) || !isSupportedEmailCredentialLink(input.emailLink, emailLinkDomain) ||
+            !(await nativeAuth.isSignInWithEmailLink(input.emailLink))) return { failure: invalidResult("This is not a valid Firebase email sign-in link.") };
+        if (!nativeAuth.createEmailLinkCredential) return { failure: authFailureResult("unavailable") };
+        return { credential: nativeAuth.createEmailLinkCredential(email, input.emailLink) };
+      }
+      if (typeof input.password !== "string" || input.password.length < 6 || input.password.length > 1024) return { failure: invalidResult("A valid account email and password are required.") };
+      if (!nativeAuth.createEmailCredential) return { failure: authFailureResult("unavailable") };
+      return { credential: nativeAuth.createEmailCredential(email, input.password) };
+    }
+    const credential = providerCredential(nativeAuth, provider, input);
+    return credential ? { credential } : { failure: invalidResult(`A valid ${provider} identity credential is required.`) };
+  }
   return {
+    async reauthenticateProviderCredential(provider: FirebaseAuthProvider, input: FirebaseProviderCredentialInput): Promise<FirebaseAuthActionResult> {
+      const current = nativeAuth.currentUser();
+      if (!current || current.isAnonymous) return authFailureResult("sign-in-required");
+      if (!nativeAuth.reauthenticateWithCredential) return authFailureResult("unavailable");
+      const originalUid = current.uid;
+      try {
+        const prepared = await prepareCredential(provider, input);
+        if ("failure" in prepared) return prepared.failure;
+        if (nativeAuth.currentUser()?.uid !== originalUid) return authFailureResult("user-changed");
+        const { user } = await nativeAuth.reauthenticateWithCredential(prepared.credential);
+        if (user.uid !== originalUid || nativeAuth.currentUser()?.uid !== originalUid) return authFailureResult("user-changed");
+        return authenticatedResult(user);
+      } catch (error) { return authErrorResult(error, "Account confirmation could not be completed. Try again."); }
+    },
+
+    async createEmailAccount(input: { email: string; password: string }, options: { linkExisting?: boolean } = {}): Promise<FirebaseAuthActionResult> {
+      const email = sanitizeEmail(input.email);
+      if (!email) return invalidResult("Enter a valid email address.");
+      if (typeof input.password !== "string" || input.password.length < 8 || input.password.length > 1024) return invalidResult("Use a password with at least 8 characters.");
+      if (options.linkExisting) return this.linkProviderCredential("email", { email, password: input.password });
+      if (nativeAuth.currentUser()?.isAnonymous === false) return authFailureResult("sign-out-required");
+      if (!nativeAuth.createEmailAccount) return authFailureResult("unavailable");
+      try {
+        const current = nativeAuth.currentUser();
+        const { user } = await nativeAuth.createEmailAccount(email, input.password);
+        if (current && user.uid !== current.uid) return authFailureResult("user-changed");
+        return authenticatedResult(user);
+      } catch (error) { return authErrorResult(error, "Your email account could not be created. Try again."); }
+    },
+
+    async signInWithEmailPassword(input: { email: string; password: string }, options: { linkExisting?: boolean } = {}): Promise<FirebaseAuthActionResult> {
+      return options.linkExisting ? this.linkProviderCredential("email", input) : this.exchangeProviderCredential("email", input);
+    },
+
+    async requestPasswordReset(email: string): Promise<FirebaseAuthActionResult> {
+      const normalizedEmail = sanitizeEmail(email);
+      if (!normalizedEmail) return invalidResult("Enter a valid email address.");
+      if (!nativeAuth.sendPasswordResetEmail) return authFailureResult("unavailable");
+      try {
+        await nativeAuth.sendPasswordResetEmail(normalizedEmail);
+        return { ok: true, status: "sent" };
+      } catch (error) {
+        const code = isRecord(error) ? error.code : null;
+        if (code === "auth/user-not-found") return { ok: true, status: "sent" };
+        return authErrorResult(error, "The reset email could not be sent. Try again.");
+      }
+    },
+
+    async sendEmailVerification(): Promise<FirebaseAuthActionResult> {
+      const user = nativeAuth.currentUser();
+      if (!user || user.isAnonymous) return authFailureResult("sign-in-required");
+      if (!user.email) return invalidResult("Connect an email address before requesting verification.");
+      if (!nativeAuth.sendEmailVerification) return authFailureResult("unavailable");
+      try {
+        await nativeAuth.sendEmailVerification(user);
+        if (nativeAuth.currentUser()?.uid !== user.uid) return authFailureResult("user-changed");
+        return { ok: true, status: "sent" };
+      } catch (error) { return authErrorResult(error, "The verification email could not be sent. Try again."); }
+    },
+
+    async reloadAccount(): Promise<FirebaseAuthActionResult> {
+      const current = nativeAuth.currentUser();
+      if (!current || current.isAnonymous) return authFailureResult("sign-in-required");
+      if (!nativeAuth.reloadCurrentUser) return authFailureResult("unavailable");
+      try {
+        const { user } = await nativeAuth.reloadCurrentUser(current);
+        if (user.uid !== current.uid || nativeAuth.currentUser()?.uid !== current.uid) return authFailureResult("user-changed");
+        return authenticatedResult(user);
+      } catch (error) { return authErrorResult(error, "Your account could not be refreshed. Try again."); }
+    },
+
+    async signInWithAppleProvider(options: { linkExisting?: boolean } = {}): Promise<FirebaseAuthActionResult> {
+      if (!nativeAuth.signInWithAppleProvider) return authFailureResult("unavailable");
+      try {
+        const current = nativeAuth.currentUser();
+        if (current?.isAnonymous === false && !options.linkExisting) return authFailureResult("sign-out-required");
+        const { user } = await nativeAuth.signInWithAppleProvider({ linkExisting: options.linkExisting === true });
+        if (current && user.uid !== current.uid) return authFailureResult("user-changed");
+        return { ...authenticatedResult(user), ...(options.linkExisting ? { status: "linked" as const } : {}) };
+      } catch (error) { return authErrorResult(error, "Apple sign-in could not be completed. Try again."); }
+    },
+
     async requestEmailLink(
       email: string,
       options: { continueUrl: string }
@@ -652,10 +819,11 @@ export function createFirebaseAuthAdapter(
       }
 
       try {
+        if (nativeAuth.currentUser()?.isAnonymous === false) return authFailureResult("sign-out-required");
         const result = await nativeAuth.signInWithEmailLink(normalizedEmail, input.emailLink.trim());
         return authenticatedResult(result.user);
-      } catch {
-        return { ok: false, status: "error", reason: "Firebase email link could not be completed." };
+      } catch (error) {
+        return authErrorResult(error, "Firebase email link could not be completed.");
       }
     },
 
@@ -663,15 +831,36 @@ export function createFirebaseAuthAdapter(
       provider: FirebaseAuthProvider,
       input: FirebaseProviderCredentialInput
     ): Promise<FirebaseAuthActionResult> {
-      const credential = providerCredential(nativeAuth, provider, input);
-      if (!credential) return invalidResult(`A valid ${provider} identity credential is required.`);
-
       try {
-        return authenticatedResult((await nativeAuth.signInWithCredential(credential)).user);
-      } catch {
-        return { ok: false, status: "error", reason: `Firebase ${provider} sign-in could not be completed.` };
+        const current = nativeAuth.currentUser();
+        if (current?.isAnonymous === false) return authFailureResult("sign-out-required");
+        const prepared = await prepareCredential(provider, input);
+        if ("failure" in prepared) return prepared.failure;
+        const { user } = await nativeAuth.signInWithCredential(prepared.credential);
+        if (current?.isAnonymous === true && user.uid !== current.uid) return authFailureResult("user-changed");
+        return authenticatedResult(user);
+      } catch (error) {
+        return authErrorResult(error, `Firebase ${provider} sign-in could not be completed.`);
       }
     },
+
+    async linkProviderCredential(provider: FirebaseAuthProvider, input: FirebaseProviderCredentialInput): Promise<FirebaseAuthActionResult> {
+      try {
+        const current = nativeAuth.currentUser();
+        if (!current) return authFailureResult("sign-in-required");
+        if (!nativeAuth.linkWithCredential) return authFailureResult("link-unavailable");
+        const originalUid = current.uid;
+        const prepared = await prepareCredential(provider, input);
+        if ("failure" in prepared) return prepared.failure;
+        if (nativeAuth.currentUser()?.uid !== originalUid) return authFailureResult("user-changed");
+        const { user } = await nativeAuth.linkWithCredential(prepared.credential);
+        if (user.uid !== originalUid || nativeAuth.currentUser()?.uid !== originalUid) return authFailureResult("user-changed");
+        const authenticated = authenticatedResult(user);
+        return authenticated.ok ? { ...authenticated, status: "linked" } : authenticated;
+      } catch (error) { return authErrorResult(error, `Firebase ${provider} linking could not be completed.`); }
+    },
+
+    getAccountSummary(): FirebaseAccountSummary { return summarizeFirebaseAccount(nativeAuth.currentUser()); },
 
     async getCurrentIdToken(forceRefresh = false): Promise<string | null> {
       const user = nativeAuth.currentUser();
@@ -717,11 +906,121 @@ export function createFirebaseClientEventId(
  * Mobile-side boundary for Firebase Functions. It intentionally exposes only
  * bounded aggregates and encrypted-backup metadata, never recovery content.
  */
+export type FirebaseRecoveryDnsEnrollment = {
+  credentialHash: string; installationId: string; audience: string; clientEventId: string;
+  consentVersion: '2026-10-18'; dnsConsent: true; websiteAlertConsent: boolean; retentionAcknowledged: true;
+};
+export type FirebaseRecoveryDnsReceipt = {
+  status: 'enrolled'; installationId: string; ownerGeneration: string; audience: string;
+  endpointHost: 'freedrecovery.web.app'; credentialHash: string;
+};
+export type FirebaseRecoveryDnsAuthority = { installationId: string; credentialHash: string; ownerGeneration: string };
+export type FirebaseRecoveryDnsRevocation = { status: 'revoked'; installationId: string; ownerGeneration: string };
+export type FirebaseRecoveryDnsOptions = FirebaseCallableOptions & { operationIsCurrent: () => boolean };
+const DNS_CLIENT_HASH = /^[a-f0-9]{64}$/;
+const DNS_CLIENT_AUDIENCE = /^[a-f0-9]{32}$/;
+const DNS_CLIENT_FID = /^[cdef][A-Za-z0-9_-]{21}$/;
+const DNS_CLIENT_UUID = /^[a-f0-9]{8}-[a-f0-9]{4}-[1-8][a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/;
+const dnsMatches = (pattern: RegExp, value: unknown): value is string => typeof value === 'string' && pattern.test(value);
+export function assertFirebaseRecoveryDnsEnrollment(value: unknown): asserts value is FirebaseRecoveryDnsEnrollment {
+  if (!isExactRecord(value, ['credentialHash', 'installationId', 'audience', 'clientEventId', 'consentVersion', 'dnsConsent', 'websiteAlertConsent', 'retentionAcknowledged']) ||
+    !dnsMatches(DNS_CLIENT_HASH, value.credentialHash) || !dnsMatches(DNS_CLIENT_FID, value.installationId) || !dnsMatches(DNS_CLIENT_AUDIENCE, value.audience) || !dnsMatches(DNS_CLIENT_UUID, value.clientEventId) ||
+    value.consentVersion !== '2026-10-18' || value.dnsConsent !== true || typeof value.websiteAlertConsent !== 'boolean' || value.retentionAcknowledged !== true) throw new Error('Invalid recovery DNS enrollment metadata.');
+}
+export function parseFirebaseRecoveryDnsReceipt(value: unknown): FirebaseRecoveryDnsReceipt {
+  if (!isExactRecord(value, ['status', 'installationId', 'ownerGeneration', 'audience', 'endpointHost', 'credentialHash']) || value.status !== 'enrolled' || value.endpointHost !== 'freedrecovery.web.app' ||
+    !dnsMatches(DNS_CLIENT_FID, value.installationId) || !dnsMatches(DNS_CLIENT_UUID, value.ownerGeneration) || !dnsMatches(DNS_CLIENT_AUDIENCE, value.audience) || !dnsMatches(DNS_CLIENT_HASH, value.credentialHash)) throw new Error('Invalid recovery DNS enrollment receipt.');
+  return { status: 'enrolled', installationId: value.installationId, ownerGeneration: value.ownerGeneration, audience: value.audience, endpointHost: 'freedrecovery.web.app', credentialHash: value.credentialHash };
+}
+function assertDnsAuthority(value: unknown): asserts value is FirebaseRecoveryDnsAuthority {
+  if (!isExactRecord(value, ['installationId', 'credentialHash', 'ownerGeneration']) || !dnsMatches(DNS_CLIENT_FID, value.installationId) || !dnsMatches(DNS_CLIENT_HASH, value.credentialHash) || !dnsMatches(DNS_CLIENT_UUID, value.ownerGeneration)) throw new Error('Invalid recovery DNS revocation metadata.');
+}
+function assertDnsOperation(options: FirebaseRecoveryDnsOptions) {
+  if (!options || typeof options.operationIsCurrent !== 'function' || !options.operationIsCurrent()) throw new Error('Recovery DNS account changed.');
+}
+
 export function createFirebaseCallableContracts(transport: FirebaseCallableTransport) {
   return {
+    enrollRecoveryDns: async (payload: FirebaseRecoveryDnsEnrollment, options: FirebaseRecoveryDnsOptions): Promise<FirebaseRecoveryDnsReceipt> => {
+      assertFirebaseRecoveryDnsEnrollment(payload); assertDnsOperation(options);
+      const value = await transport.call('enrollRecoveryDns', { ...payload }, { limitedUseAppCheckToken: true, operationIsCurrent: options.operationIsCurrent });
+      assertDnsOperation(options);
+      const receipt = parseFirebaseRecoveryDnsReceipt(value);
+      if (receipt.installationId !== payload.installationId || receipt.credentialHash !== payload.credentialHash || receipt.audience !== payload.audience) throw new Error('Recovery DNS enrollment receipt does not match.');
+      return receipt;
+    },
+    revokeRecoveryDns: async (payload: FirebaseRecoveryDnsAuthority, options: FirebaseRecoveryDnsOptions): Promise<FirebaseRecoveryDnsRevocation> => {
+      assertDnsAuthority(payload); assertDnsOperation(options);
+      const value = await transport.call('revokeRecoveryDns', { ...payload }, { limitedUseAppCheckToken: true, operationIsCurrent: options.operationIsCurrent });
+      assertDnsOperation(options);
+      if (!isExactRecord(value, ['status', 'installationId', 'ownerGeneration']) || value.status !== 'revoked' || value.installationId !== payload.installationId || value.ownerGeneration !== payload.ownerGeneration) throw new Error('Invalid recovery DNS revocation receipt.');
+      return { status: 'revoked', installationId: payload.installationId, ownerGeneration: payload.ownerGeneration };
+    },
+    getJourneyOfferState: async (input?: null): Promise<FirebaseJourneyOfferState> => {
+      if (input !== undefined && input !== null) throw new Error('Journey read accepts no payload.');
+      return parseJourneyOfferState(await transport.call('getJourneyOfferState', input));
+    },
+    acknowledgeJourneyOffer: async (input: FirebaseJourneyOfferRequest): Promise<FirebaseJourneyOfferState> => {
+      if (!isExactRecord(input, ['offerVersion', 'decision', 'eventId'] as const) || input.offerVersion !== 1 ||
+        (input.decision !== 'free' && input.decision !== 'purchased') || typeof input.eventId !== 'string' || !/^journey_[0-9a-f]{32}$/.test(input.eventId)) throw new Error('Invalid journey offer decision.');
+      return parseJourneyOfferState(await transport.call('acknowledgeJourneyOffer', { offerVersion: 1, decision: input.decision, eventId: input.eventId }));
+    },
+    fencePurchaseAccountLink: async (): Promise<{ ok: true }> => {
+      const result = await transport.call("fencePurchaseAccountLink", undefined);
+      if (!isRecord(result) || Object.keys(result).length !== 1 || result.ok !== true) throw new Error("Account linking safety check is unavailable.");
+      return { ok: true };
+    },
+    getCheckoutContext: async (options: {platform?: 'ios'|'android'} = {}): Promise<{ appAccountToken: string; obfuscatedAccountId: string }> => {
+      const value = await transport.call(options.platform === 'ios' ? 'getApplePurchaseCheckoutContext' : "getPurchaseCheckoutContext", undefined);
+      if (!isRecord(value) || typeof value.appAccountToken !== "string" ||
+        !/^[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value.appAccountToken) ||
+        typeof value.obfuscatedAccountId !== "string" || !/^[0-9a-f]{64}$/.test(value.obfuscatedAccountId)) {
+        throw new Error("Invalid purchase identity response.");
+      }
+      return { appAccountToken: value.appAccountToken, obfuscatedAccountId: value.obfuscatedAccountId };
+    },
+    getPremiumEntitlement: async () => {
+      const value = await transport.call("getPremiumEntitlement", undefined);
+      if (!isExactRecord(value, ["entitlement"] as const)) throw new Error("Invalid membership response.");
+      if (value.entitlement === null) return { entitlement: null };
+      const proof = value.entitlement;
+      if (!isExactRecord(proof, ["productId", "platform", "expiresAt", "verifiedAt", "status"] as const) ||
+        !isEnum(proof.productId, FIREBASE_CORE_PRODUCT_IDS) || !isEnum(proof.platform, ["ios", "android"]) ||
+        !isEnum(proof.status, ["verified", "inactive", "revoked"]) ||
+        typeof proof.verifiedAt !== "string" || !Number.isFinite(Date.parse(proof.verifiedAt)) ||
+        (proof.expiresAt !== null && (typeof proof.expiresAt !== "string" || !Number.isFinite(Date.parse(proof.expiresAt)))) ||
+        (proof.status === "verified" && proof.expiresAt === null && proof.productId !== "freed_premium_lifetime")) {
+        throw new Error("Invalid membership response.");
+      }
+      return { entitlement: { productId: proof.productId, platform: proof.platform, expiresAt: proof.expiresAt,
+        verifiedAt: proof.verifiedAt, status: proof.status } };
+    },
+    getLatestBackupDownload: () => transport.call("getLatestEncryptedBackupDownload", undefined),
     ingestAggregateAnalytics: async (payload: FirebaseAggregateAnalyticsPayload) => {
-      assertCallablePayload(payload, ["day", "checkIns", "completedChallenges", "clientEventId"]);
-      return transport.call("ingestAggregateAnalytics", payload);
+      if (!("schemaVersion" in payload)) {
+        assertCallablePayload(payload, ["day", "checkIns", "completedChallenges", "clientEventId"]);
+        return transport.call("ingestAggregateAnalytics", payload);
+      }
+      assertCallablePayload(payload, ["schemaVersion", "lineageId", "baseRevision", "snapshotId", "days", "consentVersion", "userOptedInAt", "dataRetentionDays"]);
+      if (payload.schemaVersion !== "aggregate-snapshot-v1" || !/^lin_[a-f0-9]{32}$/.test(payload.lineageId) ||
+          !/^snap_[a-f0-9]{64}$/.test(payload.snapshotId) || !Number.isSafeInteger(payload.baseRevision) || payload.baseRevision < 0 ||
+          payload.consentVersion !== "analytics-consent-v1" || typeof payload.userOptedInAt !== "string" || !Number.isFinite(Date.parse(payload.userOptedInAt)) ||
+          payload.dataRetentionDays !== 14 || !Array.isArray(payload.days) || payload.days.length !== 14) throw new Error("Invalid aggregate analytics snapshot.");
+      for (const [index, bucket] of payload.days.entries()) {
+        assertCallablePayload(bucket, ["day", "checkIns", "completedChallenges"]);
+        const timestamp = Date.parse(`${bucket.day}T00:00:00.000Z`);
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(bucket.day) || !Number.isFinite(timestamp) || new Date(timestamp).toISOString().slice(0, 10) !== bucket.day ||
+            !Number.isSafeInteger(bucket.checkIns) || bucket.checkIns < 0 || !Number.isSafeInteger(bucket.completedChallenges) || bucket.completedChallenges < 0 ||
+            (index > 0 && timestamp - Date.parse(`${payload.days[index - 1].day}T00:00:00.000Z`) !== 86_400_000)) throw new Error("Invalid aggregate analytics day counts.");
+      }
+      const response = await transport.call("ingestAggregateAnalytics", payload);
+      if (isExactRecord(response, ["ok", "schemaVersion", "lineageId", "baseRevision", "snapshotId", "recovery"]) && response.ok === false &&
+          response.schemaVersion === payload.schemaVersion && response.lineageId === payload.lineageId && response.snapshotId === payload.snapshotId &&
+          response.baseRevision === payload.baseRevision && (response.recovery === "refresh-window" || response.recovery === "new-lineage")) return response;
+      if (!isExactRecord(response, ["ok", "schemaVersion", "lineageId", "snapshotId", "acceptedRevision", "duplicate"]) || response.ok !== true ||
+          response.schemaVersion !== payload.schemaVersion || response.lineageId !== payload.lineageId || response.snapshotId !== payload.snapshotId ||
+          response.acceptedRevision !== payload.baseRevision + 1 || typeof response.duplicate !== "boolean") throw new Error("Firebase has not acknowledged this aggregate snapshot schema and revision.");
+      return response;
     },
     startBackupUpload: async (payload: FirebaseBackupMetadataPayload) => {
       assertCallablePayload(payload, ["backupId", "encryptedBytes", "ciphertextSha256", "clientEventId"]);
@@ -749,7 +1048,8 @@ export function createFirebaseCallableContracts(transport: FirebaseCallableTrans
       }));
     },
     requestAccountDeletion: async (payload: FirebaseDeletionRequestPayload): Promise<FirebaseAccountDeletionResult> => {
-      assertCallablePayload(payload, ["clientEventId"]);
+      assertCallablePayload(payload, ["clientEventId", "expectedAccountUid"]);
+      if (!isFirebaseAuthUid(payload.expectedAccountUid)) throw new Error("Confirm the current account before deleting hosted data.");
       return parseFirebaseAccountDeletionResult(await transport.call(
         "requestAccountDeletion",
         payload,
@@ -759,16 +1059,25 @@ export function createFirebaseCallableContracts(transport: FirebaseCallableTrans
     verifyStorePurchase: async (payload: FirebaseVerifyStorePurchaseRequest): Promise<FirebaseVerifyStorePurchaseResult> => {
       assertFirebaseVerifyStorePurchaseRequest(payload);
       return parseFirebaseVerifyStorePurchaseResult(await transport.call(
-        "verifyStorePurchase",
+        payload.platform === 'ios' ? 'verifyAppleStorePurchase' : "verifyStorePurchase",
         payload,
         { limitedUseAppCheckToken: true }
       ));
+    },
+    getReviewAccess: async (payload?: null): Promise<ReviewAccessSnapshot> => {
+      if (payload !== undefined && payload !== null) throw new Error("Review access accepts no payload.");
+      return parseReviewAccessSnapshot(await transport.call("getReviewAccess", payload));
     },
     getReviewedAdultDomainFeed: async (): Promise<FirebaseReviewedAdultDomainFeed> =>
       parseFirebaseReviewedAdultDomainFeed(await transport.call("getReviewedAdultDomainFeed", undefined)),
     generateClaraReply: async (payload: FirebaseClaraRequest): Promise<FirebaseClaraResult> => {
       assertFirebaseClaraRequest(payload);
       return parseFirebaseClaraResult(await transport.call("generateClaraReply", payload));
+    },
+    generateGoogleClaraReply: async (payload:ClaraCloudPayload,operationIsCurrent:()=>boolean) => {
+      if(!operationIsCurrent())throw new Error('Cloud-chat operation changed.');
+      if(Object.keys(payload).sort().join(',')!=='clientEventId,consentVersion,conversation,input,locale' || payload.consentVersion!=='clara-cloud-v1')throw new Error('Invalid cloud-chat request.');
+      return parseClaraCloudResult(await transport.call('generateGoogleClaraReply',payload,{limitedUseAppCheckToken:true,operationIsCurrent}));
     },
     generateChallenges: async (payload: FirebaseChallengeRequest): Promise<FirebaseChallengeResult> => {
       assertFirebaseChallengeRequest(payload);
@@ -790,10 +1099,10 @@ export function parseFirebasePushRegistrationResult(value: unknown): FirebasePus
 }
 
 export function parseFirebaseAccountDeletionResult(value: unknown): FirebaseAccountDeletionResult {
-  if (!isExactRecord(value, ["ok", "status"] as const) || value.ok !== true || value.status !== "deleting") {
+  if (!isExactRecord(value, ["ok", "status"] as const) || value.ok !== true || !isEnum(value.status, ["deleting", "processing", "completed"] as const)) {
     throw new Error("Invalid Firebase account deletion response.");
   }
-  return { ok: true, status: "deleting" };
+  return { ok: true, status: value.status };
 }
 
 export function parseFirebaseVerifyStorePurchaseResult(value: unknown): FirebaseVerifyStorePurchaseResult {
@@ -883,7 +1192,8 @@ export function parseFirebaseRetentionResult(value: unknown): FirebaseRetentionR
 }
 
 function assertFirebaseClaraRequest(value: FirebaseClaraRequest): void {
-  const valid = isExactRecord(value, ["clientEventId", "input", "context"] as const) &&
+  const valid = isExactRecord(value, (value.locale === undefined ? ["clientEventId", "input", "context"] : ["clientEventId", "input", "context", "locale"]) as readonly string[]) &&
+    (value.locale === undefined || ['en','hi','es','pt','fr','de','ar','ja','ko','zh-Hans'].includes(value.locale)) &&
     isAiEventId(value.clientEventId) && isBoundedString(value.input, 1, 1_200) &&
     isExactRecord(value.context, ["streakDays", "attemptsToday", "premium", "slipsThisWeek", "slipWindow", "slipTrigger"] as const) &&
     isNullableInteger(value.context.streakDays, 0, 10_000) &&
@@ -898,14 +1208,20 @@ function assertFirebaseClaraRequest(value: FirebaseClaraRequest): void {
 
 function assertFirebaseVerifyStorePurchaseRequest(value: FirebaseVerifyStorePurchaseRequest): void {
   const common = isRecord(value) && isEnum(value.productId, FIREBASE_CORE_PRODUCT_IDS) &&
-    isAiEventId(value.clientEventId) && typeof value.restore === "boolean" && purchasePayloadBytes(value) <= 16 * 1024;
+    isAiEventId(value.clientEventId) && typeof value.restore === "boolean";
   if (value.platform === "ios") {
-    if (!common || !isExactRecord(value, ["platform", "productId", "transactionId", "clientEventId", "restore"] as const) ||
+    const keys = value.signedTransactionInfo === undefined
+      ? ["platform", "productId", "transactionId", "clientEventId", "restore"] as const
+      : ["platform", "productId", "transactionId", "clientEventId", "restore", "signedTransactionInfo"] as const;
+    const proofValid = value.signedTransactionInfo === undefined ||
+      (typeof value.signedTransactionInfo === "string" && value.signedTransactionInfo.length <= 64 * 1024 &&
+        /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(value.signedTransactionInfo));
+    if (!common || !isExactRecord(value, keys) || !proofValid || purchasePayloadBytes(value) > 72 * 1024 ||
       typeof value.transactionId !== "string" || !/^\d{8,32}$/.test(value.transactionId)) invalidPurchaseRequest();
     return;
   }
   if (value.platform === "android") {
-    if (!common || !isExactRecord(value, ["platform", "productId", "purchaseToken", "clientEventId", "restore"] as const) ||
+    if (!common || purchasePayloadBytes(value) > 16 * 1024 || !isExactRecord(value, ["platform", "productId", "purchaseToken", "clientEventId", "restore"] as const) ||
       typeof value.purchaseToken !== "string" || value.purchaseToken.length < 16 || value.purchaseToken.length > 4096 ||
       !/^[\x21-\x7E]+$/.test(value.purchaseToken) || value.purchaseToken.includes("://")) invalidPurchaseRequest();
     return;
@@ -1201,7 +1517,48 @@ function providerCredential(
 }
 
 function authenticatedResult(user: FirebaseNativeUser): FirebaseAuthActionResult {
-  return isToken(user.uid) ? { ok: true, status: "authenticated", uid: user.uid } : { ok: false, status: "error", reason: "Firebase did not return a user identity." };
+  return isFirebaseAuthUid(user.uid) ? { ok: true, status: "authenticated", uid: user.uid } : { ok: false, status: "error", reason: "Firebase did not return a user identity." };
+}
+
+function isFirebaseAuthUid(value: unknown): value is string { return typeof value === "string" && value.trim().length >= 1 && value.length <= 128; }
+
+function authFailureResult(code: AuthIdentityFailureReason): FirebaseAuthActionResult {
+  return { ok: false, status: "error", code, reason: getAuthIdentityFailureMessage(code) };
+}
+
+function isSupportedEmailCredentialLink(link: string, domain: string | undefined): boolean {
+  if (!isFirebaseEmailLinkDomain(domain)) return false;
+  try {
+    const parsed = new URL(link);
+    return parsed.protocol === "https:" && parsed.hostname === domain && parsed.username === "" && parsed.password === "" &&
+      parsed.port === "" && parsed.hash === "" && [FIREBASE_EMAIL_LINK_PATH, "/__/auth/action"].includes(parsed.pathname);
+  } catch { return false; }
+}
+
+function authErrorResult(error: unknown, fallback: string): FirebaseAuthActionResult {
+  const code = error && typeof error === "object" && "code" in error ? error.code : null;
+  const codes: Record<string, AuthIdentityFailureReason> = {
+    "auth/credential-already-in-use": "account-conflict", "auth/account-exists-with-different-credential": "account-conflict",
+    "auth/email-already-in-use": "account-conflict", "auth/user-mismatch": "account-conflict",
+    "auth/provider-already-linked": "provider-already-linked", "account-conflict": "account-conflict",
+    "provider-already-linked": "provider-already-linked", "user-changed": "user-changed", "sign-in-required": "sign-in-required",
+    "sign-out-required": "sign-out-required", "link-unavailable": "link-unavailable", unavailable: "unavailable"
+  };
+  if (["auth/web-context-cancelled", "auth/web-context-canceled", "auth/user-cancelled"].includes(String(code))) return { ok: false, status: "cancelled", reason: "Sign-in was cancelled." };
+  const messages: Record<string, string> = {
+    "auth/invalid-credential": "The email or password is incorrect. Try again or reset your password.",
+    "auth/wrong-password": "The email or password is incorrect. Try again or reset your password.",
+    "auth/user-not-found": "The email or password is incorrect. Try again or reset your password.",
+    "auth/invalid-email": "Enter a valid email address.",
+    "auth/weak-password": "Choose a stronger password with at least 8 characters.",
+    "auth/too-many-requests": "Too many attempts. Wait a little before trying again.",
+    "auth/network-request-failed": "Check your connection and try again.",
+    "auth/operation-not-allowed": "This sign-in method is unavailable right now. Try another method.",
+    "auth/user-disabled": "This account is unavailable. Contact FREED support."
+  };
+  if (typeof code === "string" && Object.prototype.hasOwnProperty.call(messages, code)) return { ok: false, status: "error", reason: messages[code] };
+  return typeof code === "string" && Object.prototype.hasOwnProperty.call(codes, code) ? authFailureResult(codes[code])
+    : { ok: false, status: "error", reason: fallback };
 }
 
 function invalidResult(reason: string): FirebaseAuthActionResult {
@@ -1267,3 +1624,4 @@ function fillSecureRandom(bytes: Uint8Array): Uint8Array {
   globalThis.crypto.getRandomValues(bytes);
   return bytes;
 }
+import {parseClaraCloudResult,type ClaraCloudPayload} from './clara-conversation';

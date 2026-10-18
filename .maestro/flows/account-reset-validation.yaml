@@ -1,0 +1,39 @@
+appId: app.freed.recovery
+name: account-reset-validation
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///flow/account"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-account"
+    timeout: 15000
+- tapOn: "Sign in with email"
+- runFlow:
+    when:
+      visible: "Sign in to an existing account"
+    commands:
+      - tapOn: "Switch to an existing account"
+- extendedWaitUntil:
+    visible: "Welcome back"
+    timeout: 15000
+- assertVisible: "Welcome back|Sign in to an existing account"
+- assertVisible: "Forgot password\\?"
+- tapOn: "Forgot password\\?"
+- assertVisible: "Reset your password"
+- tapOn: "Email address"
+- inputText: "not-an-email"
+- hideKeyboard
+- tapOn: "Send reset email"
+- extendedWaitUntil:
+    visible: "Enter a valid email address.*|.*email.*invalid.*|.*valid email.*"
+    timeout: 15000
+- tapOn: "Back to account options"
+- takeScreenshot: "account-reset-validation"

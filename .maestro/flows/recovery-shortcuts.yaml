@@ -1,0 +1,57 @@
+appId: app.freed.recovery
+name: recovery-shortcuts
+tags:
+  - smoke
+  - local-write
+---
+# Requires an English disposable fixture with no pending breathing completion receipt.
+# Exercise both the stable Today shortcut and the Library tool through their actual controls.
+# The current breathing close callback returns to Today, including when opened from Library.
+# Closing may retain disposable breathing progress; no completion is recorded.
+- openLink: "freed:///today"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "screen-main-today" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "home-tool-breathe" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "home-tool-breathe" }
+- extendedWaitUntil:
+    visible: { id: "screen-breathing" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { text: "Close breathing exercise" }
+    direction: UP
+    timeout: 10000
+- tapOn: "Close breathing exercise"
+- extendedWaitUntil:
+    visible: { id: "screen-main-today" }
+    timeout: 15000
+- openLink: "freed:///today/library"
+- extendedWaitUntil:
+    visible: { id: "screen-library" }
+    timeout: 15000
+- assertVisible: "Recovery Tools"
+- scrollUntilVisible:
+    element: { id: "library-tool-breathe" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "library-tool-breathe" }
+- extendedWaitUntil:
+    visible: { id: "screen-breathing" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { text: "Close breathing exercise" }
+    direction: UP
+    timeout: 10000
+- tapOn: "Close breathing exercise"
+- extendedWaitUntil:
+    visible: { id: "screen-main-today" }
+    timeout: 15000
+- takeScreenshot: "recovery-shortcuts"

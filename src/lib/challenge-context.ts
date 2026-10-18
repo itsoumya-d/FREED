@@ -3,9 +3,9 @@ import { readBoundedResponseJson } from "@/lib/bounded-response-json";
 import { getProductionEndpointIssues } from "@/lib/endpoint-safety";
 
 type CheckInContext = {
-  mood: "low" | "steady" | "energized" | "stressed";
-  urgeLevel: number;
-  sleepQuality: number;
+  mood: "low" | "steady" | "energized" | "stressed" | null;
+  urgeLevel: number | null;
+  sleepQuality: number | null;
 };
 
 type WeatherPayload = {
@@ -80,9 +80,9 @@ export function getChallengeWeatherContextConfig(env: Record<string, string | un
 }
 
 export function deriveChallengeEnergyLevel(checkIn: CheckInContext | null): ChallengeContextSignal["energyLevel"] {
-  if (!checkIn) return null;
-  if (checkIn.sleepQuality <= 2 || checkIn.mood === "low") return "low";
-  if (checkIn.sleepQuality >= 4 && checkIn.urgeLevel <= 2 && checkIn.mood === "energized") return "high";
+  if (!checkIn || (checkIn.mood === null && checkIn.urgeLevel === null && checkIn.sleepQuality === null)) return null;
+  if ((checkIn.sleepQuality !== null && checkIn.sleepQuality <= 2) || checkIn.mood === "low") return "low";
+  if (checkIn.sleepQuality !== null && checkIn.sleepQuality >= 4 && checkIn.urgeLevel !== null && checkIn.urgeLevel <= 2 && checkIn.mood === "energized") return "high";
   return "steady";
 }
 

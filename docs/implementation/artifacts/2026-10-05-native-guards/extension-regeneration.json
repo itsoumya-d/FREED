@@ -1,0 +1,29 @@
+{
+  "fixture": "/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-ios-extension-regeneration-a2e059nc",
+  "isolated": true,
+  "sharedSourceMutated": false,
+  "idempotent": true,
+  "sourceReferences": {
+    "FREEDShieldConfiguration": [
+      "ShieldConfigurationExtension.swift"
+    ],
+    "FREEDShieldAction": [
+      "ShieldActionExtension.swift",
+      "../modules/freed-protection/ios/FreedProtectionConfigurationLock.swift"
+    ],
+    "FREEDDeviceActivityMonitor": [
+      "DeviceActivityMonitorExtension.swift",
+      "../modules/freed-protection/ios/FreedProtectionConfigurationLock.swift",
+      "../modules/freed-protection/ios/FreedAppGuardPolicy.swift"
+    ],
+    "FREEDSafariContentBlocker": [
+      "ContentBlockerRequestHandler.swift",
+      "../modules/freed-protection/ios/FreedProtectionConfigurationLock.swift"
+    ],
+    "FREEDSafariFocusShield": [
+      "SafariWebExtensionHandler.swift",
+      "../modules/freed-protection/ios/FreedProtectionConfigurationLock.swift"
+    ]
+  },
+  "scriptSha256": "79ac62fcc405ed9c22669058b03a456a5a83064c1c427edaf209bac96928298c"
+}

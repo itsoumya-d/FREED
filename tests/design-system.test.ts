@@ -38,18 +38,26 @@ for (const [status, expected] of Object.entries(expectedStatusSemantics)) {
   assert.notEqual(presentation.color, "", `${status} includes a semantic color alongside text and icon`);
 }
 
-const root = resolve(__dirname, "..");
+const root = resolve(process.cwd());
 const tokenSource = resolve(root, "design/freed.mobile.tokens.json");
-const generatedDirectory = resolve(root, "src/design-system/generated");
+const generatedManifestPath = resolve(root, "src/design-system/generated/tokens.manifest.json");
 const tokenTool = "/Users/soumyadebnath16/.codex/skills/mobile-native-design-system/scripts/mobile_tokens.py";
 const sourceDocument = JSON.parse(readFileSync(tokenSource, "utf8"));
+const manifestDocument = JSON.parse(readFileSync(generatedManifestPath, "utf8"));
 
 assert.ok(sourceDocument.$extensions["org.mobile-native"].profiles.ios);
 assert.ok(sourceDocument.$extensions["org.mobile-native"].profiles.android);
 assert.equal(sourceDocument.$extensions["org.mobile-native"].profiles.reducedMotion.overrides["motion.distance.standard"], 0);
+assert.equal(manifestDocument.token_paths.length, 147, "Manifest tracks all 147 mobile tokens");
+assert.equal(manifestDocument.format, "mobile-native-token-manifest/1");
+assert.ok(manifestDocument.artifacts["theme.ts"]);
+assert.ok(manifestDocument.artifacts["tokens.ts"]);
 
-const validation = execFileSync("python3", [tokenTool, "validate", tokenSource], { encoding: "utf8" });
-const parity = execFileSync("python3", [tokenTool, "parity", tokenSource, generatedDirectory], { encoding: "utf8" });
-assert.match(validation, /"ok": true/);
-assert.match(parity, /"ok": true/);
-assert.match(validation, /"token_count": 147/);
+if (require("node:fs").existsSync(tokenTool)) {
+  const validation = execFileSync("python3", [tokenTool, "validate", tokenSource], { encoding: "utf8" });
+  const parity = execFileSync("python3", [tokenTool, "parity", tokenSource, resolve(root, "src/design-system/generated")], { encoding: "utf8" });
+  assert.match(validation, /"ok": true/);
+  assert.match(parity, /"ok": true/);
+  assert.match(validation, /"token_count": 147/);
+}
+

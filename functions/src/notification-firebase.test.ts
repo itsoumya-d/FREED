@@ -4,7 +4,7 @@ import test from "node:test";
 
 test("notification scheduler uses Firebase Admin Messaging for both platforms and is never client callable", () => {
   const source = readFileSync("src/notification-firebase.ts", "utf8");
-  const index = readFileSync("src/index.ts", "utf8");
+  const index = readFileSync("src/foundation.ts", "utf8");
   assert.match(source, /getMessaging\(\)\.sendEachForMulticast/);
   assert.match(source, /export const dispatchReviewedNotifications = onSchedule/);
   assert.match(source, /schedule:\s*"every 5 minutes"/);
@@ -34,7 +34,7 @@ test("ambiguous Firebase Admin promise outcomes become terminal instead of retry
 });
 
 test("push registration remains Auth, App Check, rate, idempotency, deletion, and Timestamp fenced", () => {
-  const source = readFileSync("src/index.ts", "utf8");
+  const source = readFileSync("src/foundation.ts", "utf8");
   const registration = source.slice(source.indexOf("export const registerPushToken"), source.indexOf("export const requestAccountDeletion"));
   assert.match(registration, /onCall\(\{ enforceAppCheck: true \}/);
   assert.match(registration, /requireUid\(request\.auth\?\.uid\)/);

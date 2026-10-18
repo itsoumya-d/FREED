@@ -1,0 +1,30 @@
+{
+  "style": "FREED original outlined sky-blue kite; ImageGen reference18 poses,5 transparent backdrop scenes; live/static SVG geometry follows reference",
+  "generation": "Built-in ImageGen, identity reference momentum-kite-active-master.png",
+  "assets": {
+    "scene-protection-privacy.png": {
+      "path": "assets/artwork/companion/scene-protection-privacy.png",
+      "sha256": "e73eb5f8665bdc2ae1f4bb0831c359ce133c145d9acb269f22308071bfa7a61a"
+    },
+    "scene-reflection-desk.png": {
+      "path": "assets/artwork/companion/scene-reflection-desk.png",
+      "sha256": "c6c7c75dc17965ac1ef8b391e652823407e60672d073656102f6c99c1fd64e49"
+    },
+    "scene-movement-ground.png": {
+      "path": "assets/artwork/companion/scene-movement-ground.png",
+      "sha256": "03cf114ee4ed6a65cb8197854086db9341e85d7f22713c96187146bc33df61c8"
+    },
+    "scene-cloud-path.png": {
+      "path": "assets/artwork/companion/scene-cloud-path.png",
+      "sha256": "d09acc58f94ee01b54b16eea76a4407191d837d34175d2f2cbde65d131af0f72"
+    },
+    "scene-calm-circle.png": {
+      "path": "assets/artwork/companion/scene-calm-circle.png",
+      "sha256": "5daae3b439cef616c06035183ef047ba3e8afe4430f9f75ee0d08f483c612382"
+    },
+    "pose-reference-18.png": {
+      "path": "assets/artwork/companion/pose-reference-18.png",
+      "sha256": "53fae463de4974ec03eca27541bcf0542c6a8cc56a6b8d546ca4af6e11203dfd"
+    }
+  }
+}

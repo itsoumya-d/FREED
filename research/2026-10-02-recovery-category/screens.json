@@ -1,0 +1,5235 @@
+{
+  "672904239": {
+    "pages": [
+      {
+        "app": {
+          "app_id": "672904239",
+          "name": "I Am Sober"
+        },
+        "screens": [
+          {
+            "screen_id": "oth_io3ih",
+            "name": "Summary Achievements",
+            "flow": "Summary Carousel",
+            "section": "other-tabs",
+            "position": 1,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2EzYzBiYzk4MWQ2MDQwMmU2MzZlYTZmNmNmZDkyYjkyODhmOGFjM2Iud2VicCIsImV4cCI6MTc5MDkzODA1OH36fUIRq3FtcXjq9DnYrLVzzF7mMau5MV8.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#204F65",
+            "colors": [
+              "#204F65",
+              "#FFFFFF",
+              "#698AA1",
+              "#49BDF0",
+              "#7F84D5"
+            ],
+            "ui_elements": [
+              "Top Tab Navigation",
+              "Layered Stat Ribbons",
+              "Carousel Page Dots",
+              "Sober Setup Card",
+              "Five-Item Tab Bar"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_nns6w",
+            "name": "Sober Time Summary",
+            "flow": "Summary Carousel",
+            "section": "other-tabs",
+            "position": 2,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzE5OGU4NzI5YzQ3OTBiNDkwMDEyZGNmYWQ3MzVmMmU3M2UwMWIxMDcud2VicCIsImV4cCI6MTc5MDkzODA1OH0Nv4bFeba13P39xxZfoHm8qeteu8pgB0w.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#204F65",
+            "colors": [
+              "#204F65",
+              "#FFFFFF",
+              "#A6B8C1",
+              "#49BDF0"
+            ],
+            "ui_elements": [
+              "Top Tab Navigation",
+              "Large Day Counter",
+              "Carousel Page Dots",
+              "Sober Setup Card",
+              "Five-Item Tab Bar"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_uohls",
+            "name": "Sobriety Date Summary",
+            "flow": "Summary Carousel",
+            "section": "other-tabs",
+            "position": 3,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2Q3NTdmYWI1NmRiNmMwNzUzZjAwODA5YjM4MWZkMTAzODk4MTQ2MGIud2VicCIsImV4cCI6MTc5MDkzODA1OH14aCgpN2WipHw4nV757VnaoHnd2RDJNk4.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#204F65",
+            "colors": [
+              "#204F65",
+              "#FFFFFF",
+              "#A1B4BD",
+              "#49BDF0"
+            ],
+            "ui_elements": [
+              "Top Tab Navigation",
+              "Centered Date Display",
+              "Carousel Page Dots",
+              "Sober Setup Card",
+              "Five-Item Tab Bar"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_0bycn",
+            "name": "Progress Settings",
+            "flow": "Progress Settings",
+            "section": "other-tabs",
+            "position": 4,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzlmYzViY2RkNmI1ZjdjMWRiOWY2NmUwYjZhZGYyOTVlMTNkMGEwYjgud2VicCIsImV4cCI6MTc5MDkzODA1OH0tFDua3TEfF9oTeMHpFmBC2gnoZ1567yU.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F8F8F8",
+              "#1E4B5F",
+              "#E6EAEC",
+              "#49BDF0"
+            ],
+            "ui_elements": [
+              "Top Tab Navigation",
+              "Sectioned Setup Cards",
+              "Milestone Progress Bar",
+              "Inline Text Links",
+              "Vertical Scroll View"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_mdyau",
+            "name": "Settings Details",
+            "flow": "Progress Settings",
+            "section": "other-tabs",
+            "position": 5,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2Q0NWRhZDRkMWZiZjVlOTI5NzVjNzdkOGYwOTdhOWM3NjcwY2ZmN2Eud2VicCIsImV4cCI6MTc5MDkzODA1OH0pw_hiaqHKT8FuI3tIhYJP37vzJvcFMAo.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F8F8F8",
+              "#1E4B60",
+              "#C5CFD4",
+              "#49BDF0"
+            ],
+            "ui_elements": [
+              "Top Tab Navigation",
+              "Savings Info Card",
+              "Reason Display Card",
+              "Overflow Menu Icon",
+              "Better Plus Banner"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_u95gc",
+            "name": "Wave Onboarding",
+            "flow": "Others",
+            "section": "other-tabs",
+            "position": 6,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzFiZmEzMTg0OTBmODg2ZjM0YmFlNGIyZjBjYTNmZWU5NTMwYmFmMjUud2VicCIsImV4cCI6MTc5MDkzODA1OH2pTaQMOkMGNbyDnKx2Rje8pmlwVGyrHbQ.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#37299F",
+            "colors": [
+              "#37299F",
+              "#2388B2",
+              "#74BCB3",
+              "#DEE1CF",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Full-Screen Wave Art",
+              "Centered Lesson Text",
+              "Progress Dot Indicator",
+              "Bottom Next Action",
+              "Top Close Icon"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_5p5ku",
+            "name": "Urge Education",
+            "flow": "Others",
+            "section": "other-tabs",
+            "position": 7,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzg3MDM1NDI4NGVlNDczMDAwZmU5ZDkxMTlhOThiMjBmMzRhNDIzODYud2VicCIsImV4cCI6MTc5MDkzODA1OH3jUPwsG8uUZtLQyTGISUAaaYFTTW8SkGQ.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#2F4A73",
+            "colors": [
+              "#2F4A73",
+              "#3B497F",
+              "#7C68BC",
+              "#67D6E2",
+              "#C74DD6"
+            ],
+            "ui_elements": [
+              "Illustrated Hero Panel",
+              "Gradient Content Card",
+              "Emoji Bullet List",
+              "Progress Dot Indicator",
+              "Scrollable Lesson Copy"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_k4cde",
+            "name": "Savings Empty State",
+            "flow": "Savings Tracking",
+            "section": "other-tabs",
+            "position": 8,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzU1OTdlYWVlMzM2ZWUzZGMyNTBlNTg5YWU5MmVlNmY5OGRhYWE3ZGMud2VicCIsImV4cCI6MTc5MDkzODA1OH3L0SOr9M9xtV3mY4F55afASIWPkj1vVAQ.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#1E4B60",
+              "#F4F4F4",
+              "#BDC8CE",
+              "#49BDF0"
+            ],
+            "ui_elements": [
+              "Top Tab Navigation",
+              "Empty-State Copy",
+              "Inline Setup Link",
+              "Five-Item Tab Bar"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_ckvv3",
+            "name": "Tracking Metrics Setup",
+            "flow": "Savings Setup",
+            "section": "other-tabs",
+            "position": 9,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2ViYmY5NzRkMDc4N2EwMmM0ZjViZjMxOWRhMmFhNzcwNThmOTU4ZjIud2VicCIsImV4cCI6MTc5MDkzODA1OH3I-0AgDaih0KLx_DHvlLyATu1avUmc0EA.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F4F4F4",
+              "#39BFF2",
+              "#8E969A",
+              "#D6DCDF"
+            ],
+            "ui_elements": [
+              "Back Navigation Bar",
+              "Grouped Toggle Rows",
+              "Blue Active Switch",
+              "Gray Inactive Switches",
+              "Section Dividers"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_9acun",
+            "name": "Money Value Input",
+            "flow": "Savings Setup",
+            "section": "other-tabs",
+            "position": 10,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzE2NTBlMWFlMzE2NWY4OWQzN2E1NzRhZTQyMmJiOWY4OThlNGFjMTMud2VicCIsImV4cCI6MTc5MDkzODA1OH2a2bX19C0eGhvAgloQqdvlxDe-Wm_HnBE.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#E4E4E4",
+              "#F8F8F8",
+              "#3F3F3F",
+              "#AABAC0"
+            ],
+            "ui_elements": [
+              "Back Navigation Bar",
+              "Large Currency Display",
+              "Custom Numeric Keypad",
+              "Disabled Save Bar",
+              "Backspace Key"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          }
+        ],
+        "total": 29,
+        "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2FwcF9zY3JlZW5zIiwicSI6IjJiNTg0YThlNjJhYjk3ODE3NDJhYzNiMCIsIm8iOjEwLCJodyI6MjAsImV4cCI6MTc5MDkzODA1OH0.VyPdPb-fUdgiyelhXzFLBlXoM_8",
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1462
+        }
+      },
+      {
+        "app": {
+          "app_id": "672904239",
+          "name": "I Am Sober"
+        },
+        "screens": [
+          {
+            "screen_id": "oth_ak761",
+            "name": "Time Value Input",
+            "flow": "Savings Setup",
+            "section": "other-tabs",
+            "position": 11,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2U0NTJlOWZlZDdlYTg3ZTdmMTY2Y2QwNzg0NzIyNGQ2N2IzOGExMWYud2VicCIsImV4cCI6MTc5MDkzODA5OH2qJthu-7jP3soGHmNc6YNVfYNLX3Y39AY.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#2A8EBD",
+              "#F4F4F4",
+              "#3F3F3F",
+              "#BFD0D8"
+            ],
+            "ui_elements": [
+              "Back Navigation Bar",
+              "Hours Minutes Display",
+              "Custom Numeric Keypad",
+              "Full-Width Save Bar",
+              "Backspace Key"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_72mqu",
+            "name": "Tracking Metrics Setup",
+            "flow": "Savings Setup",
+            "section": "other-tabs",
+            "position": 12,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzZiNGMyNTA5ZmI4YmU3MGEyYjQ5ZjJjMjVlNWEwODBlNzc1OTUzM2Yud2VicCIsImV4cCI6MTc5MDkzODA5OH0GLKFC5NyZepSfXxrRsiSblAaeC_0V2kM.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F4F4F4",
+              "#39BFF2",
+              "#8899A1",
+              "#D7E0E5"
+            ],
+            "ui_elements": [
+              "Back Navigation Bar",
+              "Grouped Toggle Rows",
+              "Dual Active Switches",
+              "Gray Inactive Switches",
+              "Section Dividers"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_ryc5o",
+            "name": "Savings Overview",
+            "flow": "Savings Tracking",
+            "section": "other-tabs",
+            "position": 13,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2FmYzkwZTU2NmFlNDdiYmQyMjUyN2ZkNmQ5YTQ0MDMzOWNlYzM1MmMud2VicCIsImV4cCI6MTc5MDkzODA5OH1npYX3anQfenYZWPmVQAffdPXSa0OonMQ.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#1E4B60",
+              "#DCE4E6",
+              "#5E7E8C",
+              "#49BDF0"
+            ],
+            "ui_elements": [
+              "Top Tab Navigation",
+              "Year Time Segments",
+              "Large Savings Total",
+              "Projected Savings Rows",
+              "Five-Item Tab Bar"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_x7ykp",
+            "name": "Sobriety Calendar",
+            "flow": "Progress Tracking",
+            "section": "other-tabs",
+            "position": 14,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2ZkMjBjMzIxNjc1ZGMwMTcwOTI2ZDRhNjI3Yzg0MzAxZTQxNDdiNjQud2VicCIsImV4cCI6MTc5MDkzODA5OH3Qbeg5SWmRKolQDQ_-xpDkcbOdpM7RoBc.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#1E4B60",
+              "#FAFAFA",
+              "#A2B6C0",
+              "#49BDF0"
+            ],
+            "ui_elements": [
+              "Top Tab Navigation",
+              "Monthly Calendar Grid",
+              "Selected Date Circle",
+              "Weekday Header Row",
+              "Five-Item Tab Bar"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_vgmbm",
+            "name": "Streak Badges",
+            "flow": "Achievements",
+            "section": "other-tabs",
+            "position": 15,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2M4ZmMwODE2ZWI0YjdiYzc0MDVjMGNjZGFiNzIwMWVkNjE5YzRlNTkud2VicCIsImV4cCI6MTc5MDkzODA5OH22H5LE7CavUX3yb1_Ak9iY4HE6AQvqONk.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F4F4F4",
+              "#2A9FCC",
+              "#B3C1C7",
+              "#4C4C4C"
+            ],
+            "ui_elements": [
+              "Back Navigation Bar",
+              "Streaks Pins Segments",
+              "Active Blue Segment",
+              "Streak Summary List",
+              "Sparse White Layout"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_ifll6",
+            "name": "Pin Badges",
+            "flow": "Achievements",
+            "section": "other-tabs",
+            "position": 16,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzYzZWVhM2Y4Zjc4ZjkwZWY5NjRlYmVlNDI0ZjYyNTk0MTczYzE0ZjUud2VicCIsImV4cCI6MTc5MDkzODA5OH1I8LTPhH43kJAbDTJkZ2nsV0QMECnE1zQ.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F4F4F4",
+              "#2A9FCC",
+              "#B3C1C7",
+              "#4C4C4C"
+            ],
+            "ui_elements": [
+              "Back Navigation Bar",
+              "Streaks Pins Segments",
+              "Active Blue Segment",
+              "Informational Text Rows",
+              "Sparse White Layout"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_l244m",
+            "name": "Urge Plus Paywall",
+            "flow": "Subscription",
+            "section": "other-tabs",
+            "position": 17,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzgwMTIxNTc0M2I1M2U5M2M1NzdhMWE5YjI5ZTg1YzkyZDk1ODk5OGUud2VicCIsImV4cCI6MTc5MDkzODA5OH1gWAxffLuAYg2eloRE8z5DRpWlpw9LfSE.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#204F65",
+              "#22B05D",
+              "#16BDE9",
+              "#6B3BC4"
+            ],
+            "ui_elements": [
+              "Top Tab Navigation",
+              "Rounded Wave Artwork",
+              "Feature Icon Bullets",
+              "Green Trial CTA",
+              "Five-Item Tab Bar"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_yu39g",
+            "name": "Sobriety Settings",
+            "flow": "Progress Settings",
+            "section": "other-tabs",
+            "position": 18,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2UxNDRmZjY3OGFkMTM1ODY4NzhiNDI0NWM0YmE2MDMwOGY4MWYzYmYud2VicCIsImV4cCI6MTc5MDkzODA5OH20ak2DZkl9ioceKGqTdU_eaDj84fAbzhc.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#1E4B60",
+              "#E9ECED",
+              "#396071",
+              "#49BDF0"
+            ],
+            "ui_elements": [
+              "Top Tab Navigation",
+              "Sectioned Setting Rows",
+              "Chevron List Items",
+              "Start Date Section",
+              "Five-Item Tab Bar"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_4xkz8",
+            "name": "Milestone Detail",
+            "flow": "Milestones",
+            "section": "other-tabs",
+            "position": 19,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzEzNTljNzdlNTczN2I5M2VmZWFjNjU4NzU2OTc3NzI4MmU5ZWI0ZTQud2VicCIsImV4cCI6MTc5MDkzODA5OH0UXNHXxP60CG57W6GvAIqz0O2UMXkHfhs.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#294353",
+              "#1C495B",
+              "#8ABED8",
+              "#F4F4F4"
+            ],
+            "ui_elements": [
+              "Back Navigation Bar",
+              "Milestone Badge Header",
+              "Shareable Badge Card",
+              "Horizontal Card Carousel",
+              "Five-Item Tab Bar"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_t0z2n",
+            "name": "Milestone List",
+            "flow": "Milestones",
+            "section": "other-tabs",
+            "position": 20,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2E3MmZkNzQwYmM3MWI0NDRhZmFlYWExMjkyNmMzMzRiODdmMDI2ODcud2VicCIsImV4cCI6MTc5MDkzODA5OH1byFGeiJGqnhHC9ezxq1h6ogAUG8VKtj0.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F8F8F8",
+            "colors": [
+              "#F8F8F8",
+              "#FFFFFF",
+              "#D4E6EC",
+              "#D4D7D9",
+              "#49BDF0"
+            ],
+            "ui_elements": [
+              "Back Navigation Bar",
+              "Current Milestone Row",
+              "Upcoming Milestone List",
+              "Progress Line Indicators",
+              "Five-Item Tab Bar"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          }
+        ],
+        "total": 29,
+        "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2FwcF9zY3JlZW5zIiwicSI6IjJiNTg0YThlNjJhYjk3ODE3NDJhYzNiMCIsIm8iOjIwLCJodyI6MzAsImV4cCI6MTc5MDkzODA5OH0._ycK2FTsUuUQfxtuMKPc3b4FEuE",
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1457
+        }
+      },
+      {
+        "app": {
+          "app_id": "672904239",
+          "name": "I Am Sober"
+        },
+        "screens": [
+          {
+            "screen_id": "oth_ymjex",
+            "name": "Today Dashboard",
+            "flow": "Daily Pledge",
+            "section": "other-tabs",
+            "position": 21,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2ZlZWY4MGQ3NjJmNDlhMTMwZWQ4MjNkMTM1YjJlMDEzODUyZjQwYTAud2VicCIsImV4cCI6MTc5MDkzODExNX1vXb8j-TuXpUQRjko4CtrApt3uzcmXO2k.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F4F5F5",
+              "#7F87BE",
+              "#DCE1E7",
+              "#49BDF0"
+            ],
+            "ui_elements": [
+              "Date Header",
+              "Large Pledge CTA",
+              "Challenge Info Card",
+              "Workbook Card Stack",
+              "Five-Item Tab Bar"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_p4rkz",
+            "name": "Daily Pledge",
+            "flow": "Daily Pledge",
+            "section": "other-tabs",
+            "position": 22,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzI3MGNmNDVkZmY1ODU1MjEyMTZlMDY1ODlmMWJmNGVlNzJjNWY1MzYud2VicCIsImV4cCI6MTc5MDkzODExNX2WoDeWW3dXP3U1M3CVgU0h_23oOVhkQUY.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#2A8EBD",
+              "#F8F8F8",
+              "#4D4D4D",
+              "#95A9B2"
+            ],
+            "ui_elements": [
+              "Dismissible Sheet",
+              "Dark Pledge Header",
+              "Reason Display Card",
+              "Inline Add Reason Link",
+              "Bottom Confirmation CTA"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_qwhed",
+            "name": "Community Stories",
+            "flow": "Others",
+            "section": "other-tabs",
+            "position": 23,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2I3YmI2NjdjNjYwMmMzMzgxY2MxNjgxYjg2MDQzMWRmMjNhZGVjNWMud2VicCIsImV4cCI6MTc5MDkzODExNX3kA5a9dcntDPs6LBPMTrvuj0LughQ3gzE.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F4F4F4",
+              "#93ACB7",
+              "#31B9F0",
+              "#4C4C4C"
+            ],
+            "ui_elements": [
+              "Top Category Tabs",
+              "Filter Chip Row",
+              "Scrollable Post Feed",
+              "Post Action Icons",
+              "Floating Add Button"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_sfzp5",
+            "name": "Motivation History",
+            "flow": "Others",
+            "section": "other-tabs",
+            "position": 24,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2I2MWM1MjgxY2ZhZDE0YzA4MjJjZTA0YjE1MTBlZDk5ZjEyMWZlZmYud2VicCIsImV4cCI6MTc5MDkzODExNX36rls5rdUs8635FwmKH2l8YayBs1VFy8U.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#464142",
+              "#252F2D",
+              "#857F75",
+              "#31B9F0"
+            ],
+            "ui_elements": [
+              "Hero Quote Image",
+              "Previous Days List",
+              "Checklist Rows",
+              "Top Category Tabs",
+              "Five-Item Tab Bar"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_6uk11",
+            "name": "Profile Therapy Card",
+            "flow": "Therapy Referral",
+            "section": "other-tabs",
+            "position": 25,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2VhOTg0ZjU0NGUwYjhhMzRjMzdjNGQxMTVlNDFmNjNkNTY1ZWU1MjMud2VicCIsImV4cCI6MTc5MDkzODExNX31LKyIJTxsez5-YcOI-GTxdDiyTY-9ids.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#87B0CA",
+              "#3E4986",
+              "#D0E9E8",
+              "#F4F4F4"
+            ],
+            "ui_elements": [
+              "Large Therapy Artwork",
+              "Rounded Feature Card",
+              "Profile Tab Selection",
+              "Five-Item Tab Bar",
+              "Minimal White Layout"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_gku6f",
+            "name": "BetterHelp Referral",
+            "flow": "Therapy Referral",
+            "section": "other-tabs",
+            "position": 26,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2MwNGUwYTAwOGE2MzZhYzY0YmQzMWE1NDAxYTJkZGI3ODZhY2E4Njcud2VicCIsImV4cCI6MTc5MDkzODExNX0G6XyPDESWdUW4Nr0HZN868IarBpqwCHs.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#204F65",
+            "colors": [
+              "#204F65",
+              "#FFFFFF",
+              "#559FBD",
+              "#4CAF50",
+              "#F0F1F1"
+            ],
+            "ui_elements": [
+              "Back Navigation Bar",
+              "Therapy Hero Art",
+              "BetterHelp Logo Card",
+              "Feature Benefit Panel",
+              "Full-Width Get Started"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_v3f8a",
+            "name": "Account Settings",
+            "flow": "Account Settings",
+            "section": "other-tabs",
+            "position": 27,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzMwOTNiZThlMDY2ZGM5ZTJmZmFmNThjYTQyMDVlMGRmMmQzM2VhNjAud2VicCIsImV4cCI6MTc5MDkzODExNX0ReUF2KbeoYcO-eX2gyiiF1Qfb97CK-TI.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F4F4F4",
+              "#C5C6C8",
+              "#55C8F2",
+              "#7B72D3"
+            ],
+            "ui_elements": [
+              "Back Navigation Bar",
+              "Account Avatar Row",
+              "Sectioned Setting Rows",
+              "Notification Status Row",
+              "Chevron List Items"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_1qie8",
+            "name": "Support Privacy Settings",
+            "flow": "Account Settings",
+            "section": "other-tabs",
+            "position": 28,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzlhMTViOGU4NTdiMmI2YzVkYTZjYWI5NTMzMzQxMjE5NmUxYzFjODAud2VicCIsImV4cCI6MTc5MDkzODExNX30G0O1mm4luF2O-TCHgDyvsMc1FUsuvlI.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F4F4F4",
+              "#A4A4A5",
+              "#4B4B4B",
+              "#B5C8D1"
+            ],
+            "ui_elements": [
+              "Back Navigation Bar",
+              "Feedback Section",
+              "Privacy Section",
+              "Chevron List Items",
+              "Visible Scroll Indicator"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          },
+          {
+            "screen_id": "oth_481fo",
+            "name": "Plan Selection Paywall",
+            "flow": "Subscription",
+            "section": "other-tabs",
+            "position": 29,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2U0MzEzYWI3MmQxNmU2YjA0NzJkNDJjNTFhNzc0MmI5NDhhOWY2YmIud2VicCIsImV4cCI6MTc5MDkzODExNX32vCQ9rlvNzdyIItAI6_WJxUo-P_Zkpok.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#204F65",
+            "colors": [
+              "#204F65",
+              "#0E222B",
+              "#FDFDFD",
+              "#1FAE5B",
+              "#2A9CCB"
+            ],
+            "ui_elements": [
+              "Dimmed Background",
+              "Plan Selection Card",
+              "Feature Icon Pair",
+              "Green Trial CTA",
+              "Five-Item Tab Bar"
+            ],
+            "app": {
+              "app_id": "672904239",
+              "name": "I Am Sober"
+            }
+          }
+        ],
+        "total": 29,
+        "next_cursor": null,
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1449
+        }
+      }
+    ],
+    "cursor": null
+  },
+  "1497465230": {
+    "pages": [
+      {
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        },
+        "screens": [
+          {
+            "screen_id": "oth_20piz",
+            "name": "Focus Gem Congrats",
+            "flow": "Others",
+            "section": "other-tabs",
+            "position": 1,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzc4MThhNzQxOTFjNjRkYzM2OTk1MDk2ZDUzYjQyM2NkYjExYmJjN2Uud2VicCIsImV4cCI6MTc5MDkzODA1OH3aNehVmwA6ZpXFwNEXZlULffyTK3Yv9vo.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#101613",
+              "#26362E",
+              "#A8C8A9",
+              "#F1F3ED"
+            ],
+            "ui_elements": [
+              "Close Icon Button",
+              "Cave Gem Artwork",
+              "Centered Title Copy",
+              "Tiny Progress Text",
+              "Rounded CTA Button",
+              "Floating Tab Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_zydn7",
+            "name": "Gem Unlock Offer",
+            "flow": "Others",
+            "section": "other-tabs",
+            "position": 2,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzNmY2Q3MjA2NTlkZjNhNWE5MzdhNDg2MDk0ZWRkYjE1Zjk5YWU2Zjkud2VicCIsImV4cCI6MTc5MDkzODA1OH1GPndwN1DvsaxDysbS0W1Eu_bebbgctG8.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#111719",
+              "#18282A",
+              "#DCE8E7",
+              "#87999A"
+            ],
+            "ui_elements": [
+              "Close Icon Button",
+              "Cave Gem Artwork",
+              "Reward Progress Text",
+              "Locked CTA Bar",
+              "Floating Tab Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_jsci1",
+            "name": "Score Analysis Home",
+            "flow": "Dashboard",
+            "section": "other-tabs",
+            "position": 3,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2QzYTMzYWFkOTM4YjM4YjQ0YWFkMzRlNTlmMTU2ODhiMjQxODhiM2Iud2VicCIsImV4cCI6MTc5MDkzODA1OH1gl7SyVYaZ_yrwVqg658DCplvzPagvXwU.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#101816",
+              "#1F2B26",
+              "#83C7B2",
+              "#E9F2E6"
+            ],
+            "ui_elements": [
+              "Opal Wordmark",
+              "Glowing Gem Hero",
+              "Score Pill Metrics",
+              "App Blocking Card",
+              "Floating Tab Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_gbmxf",
+            "name": "Today Dashboard",
+            "flow": "Dashboard",
+            "section": "other-tabs",
+            "position": 4,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2U4ZjQyMmUwOGJmYWNiMWIwYWViZDVlODlhMzNlNDk4M2E5NTJhZDAud2VicCIsImV4cCI6MTc5MDkzODA1OH1NNGWhGR_zA6CzUwapVSE9LTaH98cvfh0.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#101512",
+              "#202B22",
+              "#9BD87A",
+              "#F0B34B"
+            ],
+            "ui_elements": [
+              "Top App Tabs",
+              "Status Summary Card",
+              "Checklist Cards",
+              "Flame Reward Card",
+              "Floating Tab Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_313tk",
+            "name": "Apps Rules",
+            "flow": "App Management",
+            "section": "other-tabs",
+            "position": 5,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzBjZTY2YjM1NzkyNjBlNDQ0ZjkzMTYzODljNjNiMjIxZGE2NTBkMWUud2VicCIsImV4cCI6MTc5MDkzODA1OH2OxpxTuz8UcrF5E6qJFVnJHs3DYNIE1hQ.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#111111",
+              "#1F1F1F",
+              "#F2F2F2",
+              "#A8E68C"
+            ],
+            "ui_elements": [
+              "Page Title Header",
+              "Blocked Apps Card",
+              "Rule Picker Chips",
+              "App Icon Grid",
+              "Floating Tab Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_90b92",
+            "name": "Distracting Apps",
+            "flow": "App Management",
+            "section": "other-tabs",
+            "position": 6,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2MxODQ0NDVlOWNjNjRjZjc5MzY2ZjE1NTkyMDgyZDU4NmQ3ZTQ3YjAud2VicCIsImV4cCI6MTc5MDkzODA1OH3leHi5JdWMrhZzcVncWOINOLqcNs3bvhM.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#101715",
+              "#1B2A28",
+              "#E9F4E9",
+              "#FFFC00"
+            ],
+            "ui_elements": [
+              "Back Icon Button",
+              "Gradient Info Card",
+              "App List Rows",
+              "Remove Icon Chips",
+              "Add App Row",
+              "Floating Tab Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_rzvsw",
+            "name": "Attributes Settings",
+            "flow": "App Management",
+            "section": "other-tabs",
+            "position": 7,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzI2YzU1MmFhYzc0Nzc5YzM1OTEzODFiYTE0ZTI3ODBjZWJhMWU3YjUud2VicCIsImV4cCI6MTc5MDkzODA1OH1dQIFYroFVFpG0erJBQRVGyAdYftQjv6E.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#101010",
+              "#202020",
+              "#F1F1F1",
+              "#B8F28C"
+            ],
+            "ui_elements": [
+              "Back Icon Button",
+              "Frequency Card",
+              "Intervention Cards",
+              "Pill Toggle Switch",
+              "App Group Rows"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_og7u1",
+            "name": "Timer Start Home",
+            "flow": "Focus Timer",
+            "section": "other-tabs",
+            "position": 8,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzIyYWY5OGQzZGM0ZDQ5MWJlYTM5YjJiYzBhYTUwM2FmODc4ZjZkOWIud2VicCIsImV4cCI6MTc5MDkzODA1OH3pF986ICdLGYM_f-_DAFxRqwniP-Kdeys.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#122019",
+              "#283229",
+              "#7F9B7E",
+              "#DCE8D4"
+            ],
+            "ui_elements": [
+              "Seven-Seg Timer",
+              "Duration Stepper",
+              "Rounded Start Button",
+              "Blocked Apps Pill",
+              "Theme Card Carousel",
+              "Floating Tab Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_f6knh",
+            "name": "Theme Browse",
+            "flow": "Focus Timer",
+            "section": "other-tabs",
+            "position": 9,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzBjZjhjOGE1ZjFhMmQ4OWJiNTEwZGVjMDI3ZmViNjQxZWQzNDdiZDQud2VicCIsImV4cCI6MTc5MDkzODA1OH17_ShvCiQ4hnbzRBZ1lLVLNf5YBtHm_xs.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#131818",
+              "#204B08",
+              "#94B36B",
+              "#C7E6F5"
+            ],
+            "ui_elements": [
+              "Page Title Header",
+              "Large Story Cards",
+              "Digital Detox Grid",
+              "Play Icon Overlays",
+              "Floating Tab Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_48sex",
+            "name": "Mix Selection",
+            "flow": "Focus Timer",
+            "section": "other-tabs",
+            "position": 10,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzM3M2YzNjA2YTEyNTlmYWRkMDg0OGM1OTg1Y2JiYjA0NGZlMGZhZDAud2VicCIsImV4cCI6MTc5MDkzODA1OH2Xz0OPF6AaGxMetlj8rxDu9oiSS65tHGo.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#101010",
+              "#284E73",
+              "#D8585D",
+              "#A3D3F7"
+            ],
+            "ui_elements": [
+              "Page Title Header",
+              "Round Mix Icons",
+              "Story Card Stack",
+              "Play Icon Buttons",
+              "Floating Tab Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          }
+        ],
+        "total": 26,
+        "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2FwcF9zY3JlZW5zIiwicSI6IjEzYTk3M2U5ZmIwMTk2Zjg1YTQ1MTMzNyIsIm8iOjEwLCJodyI6MjAsImV4cCI6MTc5MDkzODA1OH0.rjlXjAYqYWevHNf-rEj7w43sd8M",
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1460
+        }
+      },
+      {
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        },
+        "screens": [
+          {
+            "screen_id": "oth_kescp",
+            "name": "Running Timer",
+            "flow": "Focus Timer",
+            "section": "other-tabs",
+            "position": 11,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzRhYzk5ODEzYTE5NTQ0ZDMwZjAzYWM1Y2Q2MWQxZGNhZTRlMjIxZGUud2VicCIsImV4cCI6MTc5MDkzODA5OH0UlPIN0aOooe62DzkSKFck2zCv6kZJG_8.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#111813",
+              "#25332C",
+              "#82947F",
+              "#DAE9D5"
+            ],
+            "ui_elements": [
+              "Close Icon Button",
+              "Storm Background",
+              "Large LCD Timer",
+              "Full Bleed Artwork"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_bxcas",
+            "name": "Leave Early Modal",
+            "flow": "Focus Timer",
+            "section": "other-tabs",
+            "position": 12,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzRiYWUwMGRjNWZjOWM3NWRmMzViYWI3MTU1MzI3Zjg5MjExNjc0Yzgud2VicCIsImV4cCI6MTc5MDkzODA5OH2e1DXbsBwOzA2_8XRGRai8Xp83CZXA7eY.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#111813",
+              "#2A2A2A",
+              "#7A3945",
+              "#E56270"
+            ],
+            "ui_elements": [
+              "Close Icon Button",
+              "Large LCD Timer",
+              "Glass Warning Sheet",
+              "Hold To Leave Bar",
+              "Never Mind Text"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_81yhu",
+            "name": "Timer Setup Sheet",
+            "flow": "Focus Timer",
+            "section": "other-tabs",
+            "position": 13,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzllYjI0MDFmMzBiMjk5OTRkMjlkYzI5ZTIxNzMzMmFjZjkzZWVlODcud2VicCIsImV4cCI6MTc5MDkzODA5OH2dycv8up6VuMYjKylMrm2oUgTegVeUBjQ.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#202927",
+              "#3B5044",
+              "#91A987",
+              "#F1F4E9"
+            ],
+            "ui_elements": [
+              "Glass Setup Panel",
+              "Selected Theme Art",
+              "Duration Stepper",
+              "Hard Mode Toggle",
+              "Hold To Start Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_zekjp",
+            "name": "Selected Apps List",
+            "flow": "App Management",
+            "section": "other-tabs",
+            "position": 14,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzZkMjIwOWE0NGQ0YzIzYzg2ZjFlZjc4OWQ4NzI4Mjc4ODQyNDU3ZDMud2VicCIsImV4cCI6MTc5MDkzODA5OH06y8Cms7FC6HDbdTiUYB7ztzeHAjYvdmE.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#101010",
+              "#1F1F1F",
+              "#F2F2F2",
+              "#E4405F"
+            ],
+            "ui_elements": [
+              "Back Icon Button",
+              "Confirm Check Button",
+              "Segmented App Tabs",
+              "Add App Row",
+              "App List Rows"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_7sj6g",
+            "name": "Timer Setup Sheet",
+            "flow": "Focus Timer",
+            "section": "other-tabs",
+            "position": 15,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzg5Yzg2YTNkZTc0ZTYwMTY2YjA5ZWIyMWUwMTdmOTQyZDgyYzVhNmEud2VicCIsImV4cCI6MTc5MDkzODA5OH3Qu-_nV4GB2El6FJQfDDY_WFplqQ6W22s.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#202927",
+              "#3B5044",
+              "#91A987",
+              "#F04C56"
+            ],
+            "ui_elements": [
+              "Glass Setup Panel",
+              "Selected Theme Art",
+              "Blocked Apps Row",
+              "Hard Mode Toggle",
+              "Hold To Start Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_7bdfy",
+            "name": "Block Interstitial",
+            "flow": "App Management",
+            "section": "other-tabs",
+            "position": 16,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2QzMDE3ZTk3NGMxYzMyYzgyMjBjZWZkZGE5MjQ4ZTY2MjAyZjY3ZTAud2VicCIsImV4cCI6MTc5MDkzODA5OH3cl9Hegi5i5xkbPpavE8mLcuN_zK-MVYs.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#111111",
+              "#2B2B2B",
+              "#9A9A9A",
+              "#F4F4F4"
+            ],
+            "ui_elements": [
+              "Centered Opal Logo",
+              "Blocked App Message",
+              "Help Copy Block",
+              "Rounded Dismiss CTA",
+              "Home Indicator"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_hmfqx",
+            "name": "Bird Song Setup",
+            "flow": "Focus Timer",
+            "section": "other-tabs",
+            "position": 17,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2Y1NzJlODY1N2U2MzZkMzliYzRlODZjMDBhMWM0MjQ0OGI2ZmU1MDgud2VicCIsImV4cCI6MTc5MDkzODA5OH19IHtpXI37MfJHlbF3ucimXCjI1h5vZeA.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#202927",
+              "#37524D",
+              "#D63D3E",
+              "#F2F2F2"
+            ],
+            "ui_elements": [
+              "Glass Setup Panel",
+              "Bird Theme Artwork",
+              "Duration Stepper",
+              "Blocked Apps Row",
+              "Hold To Start Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_p2341",
+            "name": "Active Bird Timer",
+            "flow": "Focus Timer",
+            "section": "other-tabs",
+            "position": 18,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzViMGEyZGM1NTA2MWExNTY4ODlkNjZiNDcyYjM1ODFmZmY1ODUwOTUud2VicCIsImV4cCI6MTc5MDkzODA5OH04GEDqGeRssJIddrGz91lgnDKjR-4lIso.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#D83A3A",
+            "colors": [
+              "#D83A3A",
+              "#934A8D",
+              "#57A89E",
+              "#2D2D32",
+              "#F2F2F2"
+            ],
+            "ui_elements": [
+              "Red Gradient Artwork",
+              "Close Icon Button",
+              "Add Icon Button",
+              "Centered Time Readout",
+              "Pause Control Button",
+              "Edit Rule Button"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_9chg9",
+            "name": "Active Mix Timer",
+            "flow": "Focus Timer",
+            "section": "other-tabs",
+            "position": 19,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzJmNDAyNmU0MzEwY2EzYTdmNjBhN2I2N2FmY2FiZDA5YmQzMGFhOTYud2VicCIsImV4cCI6MTc5MDkzODA5OH1Ef_N7O4u-HRtgitOYR5eYjvVizBDs2G8.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#D83A3A",
+            "colors": [
+              "#D83A3A",
+              "#5F395B",
+              "#2D2D32",
+              "#50A092",
+              "#F2F2F2"
+            ],
+            "ui_elements": [
+              "Red Gradient Artwork",
+              "Close Icon Button",
+              "Add Icon Button",
+              "Vertical Volume Slider",
+              "Story App Chips"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_8nru0",
+            "name": "Create Mix",
+            "flow": "Focus Timer",
+            "section": "other-tabs",
+            "position": 20,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2Q3NzY0ZDYzMDgwZGVkZjc5NGI3MDdjYmJhMDliZDgwNmIzZmZhMjgud2VicCIsImV4cCI6MTc5MDkzODA5OH3vGWDqI2-mhD8BLsqXt7W65v6VSceJlew.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#111111",
+              "#2D2D2D",
+              "#D34B43",
+              "#6B5DA7"
+            ],
+            "ui_elements": [
+              "Close Icon Button",
+              "Segmented Tab Pills",
+              "Story Card Grid",
+              "Play Icon Buttons",
+              "Add Icon Buttons"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          }
+        ],
+        "total": 26,
+        "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2FwcF9zY3JlZW5zIiwicSI6IjEzYTk3M2U5ZmIwMTk2Zjg1YTQ1MTMzNyIsIm8iOjIwLCJodyI6MzAsImV4cCI6MTc5MDkzODA5OH0.nKmoFxRZnizPtTN-RtcX8yVwsYo",
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1456
+        }
+      },
+      {
+        "app": {
+          "app_id": "1497465230",
+          "name": "Opal: Screen Time Control"
+        },
+        "screens": [
+          {
+            "screen_id": "oth_29jv8",
+            "name": "Dual Story Timer",
+            "flow": "Focus Timer",
+            "section": "other-tabs",
+            "position": 21,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzU1MTU0NTE4NTU4YjBhYWIwYjk4NTUzNTVjZmY1ZjVjMTkwMzQ3NWUud2VicCIsImV4cCI6MTc5MDkzODExNX3LkEloe7SLr21BvkvTBKdOl3TxhMcM-5g.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#D83A3A",
+            "colors": [
+              "#D83A3A",
+              "#6C4D75",
+              "#3A3545",
+              "#4EA093",
+              "#F2F2F2"
+            ],
+            "ui_elements": [
+              "Red Gradient Artwork",
+              "Dual Volume Sliders",
+              "Story App Chips",
+              "Add Story Chip",
+              "Close Icon Button"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_fftm0",
+            "name": "Community Profile",
+            "flow": "Dashboard",
+            "section": "other-tabs",
+            "position": 22,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2MwYTJlZWFjNTYwYTk3ZWU4NDZlOGIyNTRiMjQzYjFiODYwODQ0MmQud2VicCIsImV4cCI6MTc5MDkzODExNX0ZD9fVgPBPMTfhXCJKG3xZMwZp7FNB2I8.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#111A17",
+              "#2E3532",
+              "#E6F7DD",
+              "#D8F15B"
+            ],
+            "ui_elements": [
+              "Back Icon Button",
+              "Settings Icon Button",
+              "Radial Stat Gauge",
+              "Gem Stat Tiles",
+              "Gemstone Row",
+              "Floating Tab Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_ostgu",
+            "name": "Rewards Dashboard",
+            "flow": "Dashboard",
+            "section": "other-tabs",
+            "position": 23,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzJhMTJmY2E5Nzk3MjkxZjEwOGUwN2MyMmVmZTMzYTM3ZWNhYjI5MmEud2VicCIsImV4cCI6MTc5MDkzODExNX3b9fd9Ao3hZ2U8OdK8PCdKtB4UkuUvQNc.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#111615",
+              "#D8E5C7",
+              "#98D982",
+              "#F7F7F7"
+            ],
+            "ui_elements": [
+              "Back Icon Button",
+              "Settings Icon Button",
+              "Progress Line Chart",
+              "Reward Pass Card",
+              "Rounded Rewards CTA",
+              "Floating Tab Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_j0o5i",
+            "name": "Settings Overview",
+            "flow": "Settings",
+            "section": "other-tabs",
+            "position": 24,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2JiOGI2YjYzYWJkYjZkYTYwZTljN2UyYmJmNTA3YmQ5Y2YwNTU0OGUud2VicCIsImV4cCI6MTc5MDkzODExNX0NL94d-ASMO2X54Cz238y3JQw3O60Z2EI.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#111111",
+              "#202020",
+              "#F2F2F2",
+              "#BCE6A2"
+            ],
+            "ui_elements": [
+              "Back Icon Button",
+              "Free Plan Card",
+              "Rounded Upgrade CTA",
+              "Account Row Card",
+              "Personalize Rows",
+              "Floating Tab Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_2xgb8",
+            "name": "Settings Permissions",
+            "flow": "Settings",
+            "section": "other-tabs",
+            "position": 25,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2M2MmQxZWFiODlmMDc1MzkyMTFhMGQ4NzE1MDIwMGRlZGZlMGUzMzIud2VicCIsImV4cCI6MTc5MDkzODExNX34WAYKFFEKCtPp74Jzx_r4bfjvbVRFt-0.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#111111",
+              "#202020",
+              "#F2F2F2",
+              "#A0A0A0"
+            ],
+            "ui_elements": [
+              "Back Icon Button",
+              "Settings Row Cards",
+              "Support Row Group",
+              "Permission Cards",
+              "Toggle Switch Row",
+              "Floating Tab Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_oyh2z",
+            "name": "Settings Links",
+            "flow": "Settings",
+            "section": "other-tabs",
+            "position": 26,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzBlNmIxMTkxYmQyNmZkZDY1ODZmOWVmODRiZjk5OWY4YjFkMzdiY2Uud2VicCIsImV4cCI6MTc5MDkzODExNX0YjW74GtRfNOyECv3IsiiaFE5IYa9u8wA.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#000000",
+            "colors": [
+              "#000000",
+              "#111111",
+              "#202020",
+              "#F2F2F2",
+              "#A0A0A0"
+            ],
+            "ui_elements": [
+              "Back Icon Button",
+              "Share Opal Row",
+              "Referral Code Row",
+              "Community Link Rows",
+              "Social Link Rows",
+              "Floating Tab Bar"
+            ],
+            "app": {
+              "app_id": "1497465230",
+              "name": "Opal: Screen Time Control"
+            }
+          }
+        ],
+        "total": 26,
+        "next_cursor": null,
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1451
+        }
+      }
+    ],
+    "cursor": null
+  },
+  "1532875441": {
+    "pages": [
+      {
+        "app": {
+          "app_id": "1532875441",
+          "name": "one sec | screen time + focus"
+        },
+        "screens": [
+          {
+            "screen_id": "oth_nayza",
+            "name": "Overview Home",
+            "flow": "Dashboard",
+            "section": "other-tabs",
+            "position": 1,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzZkY2YwZTU1OTNjZTcyYmY1MTIyYjBjMmFlNDAxNzMxN2JlYThlNzIud2VicCIsImV4cCI6MTc5MDkzODA1OH2dihP2fY5V9cP0R8x4Z6i9L4GmCh34d8Q.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F2F2F6",
+              "#C1DEEC",
+              "#74889B",
+              "#6C6FC4"
+            ],
+            "ui_elements": [
+              "Help Pill",
+              "Circular Add Icon",
+              "Gradient Summary Card",
+              "App Add Card",
+              "Tip Callout Banner",
+              "Recommendation Card",
+              "Floating Bottom Nav"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_9a0z7",
+            "name": "Recommendations",
+            "flow": "Dashboard",
+            "section": "other-tabs",
+            "position": 2,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2I4Y2Q4ZGI0NzRmYjNmYjNmYzVjZTVjNWYzODA0Njk0MDVlNzMzNjMud2VicCIsImV4cCI6MTc5MDkzODA1OH0GgtU3--_WSsF5gInx-BLeHsvMwV8LNwM.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F2F2F6",
+            "colors": [
+              "#F2F2F6",
+              "#FFFFFF",
+              "#E0E3E4",
+              "#5C6480",
+              "#6C70CC"
+            ],
+            "ui_elements": [
+              "Overview Header",
+              "Hide Overview Control",
+              "Circular Add Icon",
+              "Research Promo Card",
+              "Primary Learn More CTA",
+              "Feature Matrix",
+              "Floating Bottom Nav"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_m3svb",
+            "name": "Usage Summary",
+            "flow": "Dashboard",
+            "section": "other-tabs",
+            "position": 3,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2U2MWZkOGEzNDlmMjc3MDJmZTExZDU5ZmEzYTQwODQzZTc3Y2Y0OGIud2VicCIsImV4cCI6MTc5MDkzODA1OH2DbK_IL-k6T9zSwueAcf8te_C2Ie7c4Bw.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F2F2F6",
+            "colors": [
+              "#F2F2F6",
+              "#FFFFFF",
+              "#EBEBEF",
+              "#5D5E62"
+            ],
+            "ui_elements": [
+              "Back Circle Button",
+              "Summary Header",
+              "Time Range Row",
+              "Usage Metric Card",
+              "App Count Metric",
+              "Time Saved Metric"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_jbat6",
+            "name": "Add Intervention",
+            "flow": "Intervention Setup",
+            "section": "other-tabs",
+            "position": 4,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzczYjNhODExZDlhZjEzZjkyZmFjODRmYzkyOWY0YWYwYzgzNTIyZDIud2VicCIsImV4cCI6MTc5MDkzODA1OH2yN1SnLpLELyu3ifuGbC8eF70543X9mAo.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#C1C1C5",
+            "colors": [
+              "#C1C1C5",
+              "#CCCECF",
+              "#96B9CF",
+              "#C8B8BD",
+              "#35394B"
+            ],
+            "ui_elements": [
+              "Dimmed App Backdrop",
+              "Add Intervention Sheet",
+              "Sheet Drag Handle",
+              "Cancel Text Action",
+              "App Gradient Tile",
+              "Website Gradient Tile"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_ve2lc",
+            "name": "Immediate Timing",
+            "flow": "Intervention Setup",
+            "section": "other-tabs",
+            "position": 5,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzVkZWQ5M2NhYzQ4OWQ5ZDJlNWRlM2Q3OTg1MmE4NGU5YWFjZTc2ZjUud2VicCIsImV4cCI6MTc5MDkzODA1OH1Qo59JIgYVQnjShk-N-jBRnAVAryQaZV0.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F2F2F6",
+            "colors": [
+              "#F2F2F6",
+              "#FFFFFF",
+              "#6871C6",
+              "#8D97BE",
+              "#B6C7D0"
+            ],
+            "ui_elements": [
+              "Back Circle Button",
+              "Setup Title Bar",
+              "Cancel Text Action",
+              "Timing Option Chips",
+              "Immediate Active Chip",
+              "Preview Diagram Card",
+              "Rounded Continue CTA"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_4df2m",
+            "name": "Delayed Timing",
+            "flow": "Intervention Setup",
+            "section": "other-tabs",
+            "position": 6,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2I5YzIyNjc0MDBjNWM5N2UzYjRhZmRjNzhhYWFlNGNiODE5MTAxOGQud2VicCIsImV4cCI6MTc5MDkzODA1OH0CX_l3Ba0C1eMGqTsjJEps22jBIk3byc4.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F2F2F6",
+            "colors": [
+              "#F2F2F6",
+              "#FFFFFF",
+              "#6A73C3",
+              "#97A6BE",
+              "#D3D9DE"
+            ],
+            "ui_elements": [
+              "Back Circle Button",
+              "Setup Title Bar",
+              "Cancel Text Action",
+              "Timing Option Chips",
+              "Delayed Active Chip",
+              "Duration Stepper",
+              "Preview Diagram Card",
+              "Rounded Continue CTA"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_a8bm0",
+            "name": "Always Ask Timing",
+            "flow": "Intervention Setup",
+            "section": "other-tabs",
+            "position": 7,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzkwYzNjY2EzMGY4OGU5OGQ1M2IxNTgyNWI1Zjk4ZmIxZmMwMTQzOWQud2VicCIsImV4cCI6MTc5MDkzODA1OH1YCb6IXLZrZOemc6XGlWbdaULqHLP7_Qw.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F2F2F6",
+            "colors": [
+              "#F2F2F6",
+              "#FFFFFF",
+              "#828EC3",
+              "#EFEFF2",
+              "#CCD4DC"
+            ],
+            "ui_elements": [
+              "Back Circle Button",
+              "Setup Title Bar",
+              "Cancel Text Action",
+              "Timing Option Chips",
+              "Always Ask Active Chip",
+              "Multi-Step Preview",
+              "Rounded Continue CTA"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_5dnmg",
+            "name": "Tutorial Introduction",
+            "flow": "Safari Setup Tutorial",
+            "section": "other-tabs",
+            "position": 8,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzQzNTM4YjM3Y2ViZGVhZmM4N2Y4YWExZWI4MTY5MmViZTkxZmQzMzQud2VicCIsImV4cCI6MTc5MDkzODA1OH3G5OcoFYfrkK_kwY-uMjmy-cy1TTl2ECk.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F2F2F6",
+              "#B0BBC0",
+              "#74634E",
+              "#6C70CD"
+            ],
+            "ui_elements": [
+              "Back Circle Button",
+              "Setup Header Bar",
+              "Skip Pill Button",
+              "Email Input Field",
+              "Send Link Action",
+              "Video Thumbnail Card",
+              "Tutorial Text Block"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_dyac4",
+            "name": "Tutorial Steps 1-2",
+            "flow": "Safari Setup Tutorial",
+            "section": "other-tabs",
+            "position": 9,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2U2NjBjMGYwYTk1OTYwOTNmNDVlMTY1NTQyZjRiMzdlNjNlZWQyMTIud2VicCIsImV4cCI6MTc5MDkzODA1OH1C5go3Oj4iWI_m5NYiZoKaC9Z6UHtFeQg.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F2F2F6",
+              "#CBD1D5",
+              "#646370",
+              "#E8685A"
+            ],
+            "ui_elements": [
+              "Setup Header Bar",
+              "Numbered Step Cards",
+              "Tab Selector",
+              "App Icon Row",
+              "Red Outline Callouts",
+              "Instruction Text"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_dqynl",
+            "name": "Tutorial Steps 3-5",
+            "flow": "Safari Setup Tutorial",
+            "section": "other-tabs",
+            "position": 10,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2M3NTA2MWUyYzYwNzU1MDA4YjExMTQwYWJiOGIzZmJhOWY4MzQ4NDIud2VicCIsImV4cCI6MTc5MDkzODA1OH0QiGXz2z6DItkQMPomXYAzPn3TpCkpQ4o.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F2F2F6",
+              "#A6ACB3",
+              "#4D3332",
+              "#E8685A"
+            ],
+            "ui_elements": [
+              "Setup Header Bar",
+              "Numbered Step Cards",
+              "Annotated Screenshots",
+              "Red Number Badges",
+              "Red Outline Callouts",
+              "Blue Text Links"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          }
+        ],
+        "total": 27,
+        "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2FwcF9zY3JlZW5zIiwicSI6ImRkMjhhYTlhMDAwNWM5YzViNzIyMmIyYSIsIm8iOjEwLCJodyI6MjAsImV4cCI6MTc5MDkzODA1OH0.zBa1_MvkM8CDQaAGsUyGdk3hmnM",
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1461
+        }
+      },
+      {
+        "app": {
+          "app_id": "1532875441",
+          "name": "one sec | screen time + focus"
+        },
+        "screens": [
+          {
+            "screen_id": "oth_a7y3o",
+            "name": "Tutorial Steps 5-7",
+            "flow": "Safari Setup Tutorial",
+            "section": "other-tabs",
+            "position": 11,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2Q0OWUwY2NlNzhhODViYjk4OGNmMTQwMmE4YmI4Yjc5M2M1ZjM1NTUud2VicCIsImV4cCI6MTc5MDkzODA5OH0n54zskMGUDTkX_p-m2eSNIi8Kdpe5YsU.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F2F2F6",
+              "#D4D8DE",
+              "#6E6781",
+              "#E8685A"
+            ],
+            "ui_elements": [
+              "Setup Header Bar",
+              "Numbered Step Cards",
+              "Annotated Screenshots",
+              "Red Number Badges",
+              "Red Outline Callouts",
+              "Rounded Done CTA"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_y1tj5",
+            "name": "Safari Tutorial Start",
+            "flow": "Safari Setup Tutorial",
+            "section": "other-tabs",
+            "position": 12,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2QxMDNjZDUyNzUxNDEyZDcyZGY1NDY0MzQ3YWE2NDZmYmI0YTk5NGQud2VicCIsImV4cCI6MTc5MDkzODA5OH1K3aF79XjWlxp88MKhnLwTKDC3wYcP0jU.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F2F2F6",
+            "colors": [
+              "#F2F2F6",
+              "#1B1B1D",
+              "#FFFFFF",
+              "#CED9DC",
+              "#4F4D54"
+            ],
+            "ui_elements": [
+              "Tutorial Header Bar",
+              "Numbered Step Cards",
+              "Settings Screenshot",
+              "Red Outline Callouts",
+              "Instruction Text",
+              "Dark System Panel"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_frsc7",
+            "name": "Tutorial Final Steps",
+            "flow": "Safari Setup Tutorial",
+            "section": "other-tabs",
+            "position": 13,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzFmODc2ZmM5MmQ0MWFkOTc4NzdiMzQ2ZWYxZWI5YWM2YmEyNjI0Yzcud2VicCIsImV4cCI6MTc5MDkzODA5OH073MNkAov4hlk45oJzOq3EayniKk3wXyg.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F2F2F6",
+            "colors": [
+              "#F2F2F6",
+              "#1B1B1D",
+              "#2C2B2D",
+              "#757BB4",
+              "#B5C2CB"
+            ],
+            "ui_elements": [
+              "Tutorial Header Bar",
+              "Numbered Step Cards",
+              "Dark System Screenshots",
+              "Red Outline Callouts",
+              "Rounded Done CTA",
+              "Instruction Text"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_uxsqe",
+            "name": "Block Empty State",
+            "flow": "Blocking",
+            "section": "other-tabs",
+            "position": 14,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2E1ZDNlNDc3MTY1YTVhNTQwY2M4NDc5Yzc2MDhjYjg5ZTU4MmE1ZGIud2VicCIsImV4cCI6MTc5MDkzODA5OH2py3g5YNzm2tkRtX_a5DZunPWpg3c2Yxc.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#5F689A",
+              "#B0D297",
+              "#6D6BD4",
+              "#0B0B0C"
+            ],
+            "ui_elements": [
+              "Circular Add Icon",
+              "Centered Rest Figure",
+              "Create Block CTA",
+              "Floating Bottom Nav",
+              "Minimal White Canvas"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_hc9y3",
+            "name": "Create Block Sheet",
+            "flow": "Blocking",
+            "section": "other-tabs",
+            "position": 15,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzBhZDQ1MTMwMTczODBlMjgyNmY2NWExYjM2Mzk2NTVlZGYwNWM1NWUud2VicCIsImV4cCI6MTc5MDkzODA5OH2xkwpy8Ssr4P4PBFELzmgMtr1UoUP6sE8.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#CCCCCC",
+            "colors": [
+              "#CCCCCC",
+              "#ECECEC",
+              "#4A505E",
+              "#D0D0D5",
+              "#6E78CC"
+            ],
+            "ui_elements": [
+              "Dimmed Block Backdrop",
+              "New Block Bottom Sheet",
+              "Subscribe Text Action",
+              "Duration Chip Row",
+              "Schedule Settings Row",
+              "Strict Block Toggle",
+              "Start Block CTA"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_eml06",
+            "name": "Block List Selection",
+            "flow": "Blocking",
+            "section": "other-tabs",
+            "position": 16,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2FkNDAyOGY2YWM0Y2YyM2MwZGU5NGU3YmRhYTc2YzA5NTEzODAxODMud2VicCIsImV4cCI6MTc5MDkzODA5OH3Ce8zLeJIWjjfjzdKrCGFjXACw4HIGRJ8.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F2F2F6",
+            "colors": [
+              "#F2F2F6",
+              "#FFFFFF",
+              "#CECECF",
+              "#EAEAEF",
+              "#070707"
+            ],
+            "ui_elements": [
+              "Sheet Header Bar",
+              "Add Circle Button",
+              "Done Pill Button",
+              "Segmented Mode Control",
+              "Category Add Rows",
+              "App Add Rows",
+              "Website Add Row",
+              "Info Helper Text"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_oi13r",
+            "name": "Block All Exceptions",
+            "flow": "Blocking",
+            "section": "other-tabs",
+            "position": 17,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2M0MmZlNDBlMGVhMzgwODU4YWE4MmVlMTk5ZmMyNzY4OWFiMDJjYTYud2VicCIsImV4cCI6MTc5MDkzODA5OH3pW1PDv0gpLI6sC9yYjZ-mRXbs9vypIyU.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F2F2F6",
+            "colors": [
+              "#F2F2F6",
+              "#FFFFFF",
+              "#CCCCCC",
+              "#000000",
+              "#88888E"
+            ],
+            "ui_elements": [
+              "Sheet Header Bar",
+              "Done Pill Button",
+              "Segmented Mode Control",
+              "Exception Add Rows",
+              "Helper Text Blocks"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_mm3lq",
+            "name": "Tips Feed",
+            "flow": "Tips",
+            "section": "other-tabs",
+            "position": 18,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzAwNDQxZWM3NTE3NWQwMDFiMWJhY2I2ZmRlOTllZDBjZjc4MzM4Zjcud2VicCIsImV4cCI6MTc5MDkzODA5OH2Is2NQJu0fBGj4eVmTEtUkaN1WWQ89UGs.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#ABF2DC",
+            "colors": [
+              "#ABF2DC",
+              "#FFFFFF",
+              "#F2F2F6",
+              "#1E2128",
+              "#A5B2B9"
+            ],
+            "ui_elements": [
+              "Topic Filter Pills",
+              "Latest Section Header",
+              "Mint Article Card",
+              "Card Illustration",
+              "Category Tag Badge",
+              "Floating Bottom Nav",
+              "Stacked Content Cards"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_ox1bd",
+            "name": "Tips Feed Scrolled",
+            "flow": "Tips",
+            "section": "other-tabs",
+            "position": 19,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzdmODI3YzM0NDdiZWZkZmI5M2U2MWM5MWY2YTI2YTM1Mjc4NDQ5MDQud2VicCIsImV4cCI6MTc5MDkzODA5OH0VX_SeUczj07jqDDMaODuGsYane8BkBEM.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F2F2F6",
+            "colors": [
+              "#F2F2F6",
+              "#2A2E3A",
+              "#EB7E56",
+              "#FFFFFF",
+              "#1C1F26"
+            ],
+            "ui_elements": [
+              "Topic Filter Pills",
+              "Dark Article Card",
+              "Light Article Card",
+              "Orange Article Card",
+              "Category Tag Badges",
+              "Floating Bottom Nav"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_or8yi",
+            "name": "Tips Categories",
+            "flow": "Tips",
+            "section": "other-tabs",
+            "position": 20,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzg0YThlOTQ4OGE5NzhmM2E1NWU0ZTE1OTI5NzA1ZDlkYTZjNTJkM2Mud2VicCIsImV4cCI6MTc5MDkzODA5OH1Yd4vdwTd1tNeRohnVLWgjZsop8cVCutk.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F2F2F6",
+            "colors": [
+              "#F2F2F6",
+              "#EA7F58",
+              "#FFFFFF",
+              "#EEEAEC",
+              "#5A392D"
+            ],
+            "ui_elements": [
+              "Topic Filter Pills",
+              "Orange Article Cards",
+              "Light Article Card",
+              "Categories List Card",
+              "Chevron List Rows",
+              "Floating Bottom Nav"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          }
+        ],
+        "total": 27,
+        "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2FwcF9zY3JlZW5zIiwicSI6ImRkMjhhYTlhMDAwNWM5YzViNzIyMmIyYSIsIm8iOjIwLCJodyI6MzAsImV4cCI6MTc5MDkzODA5OH0.qy7zv4huMx5Ww_KZdCkseorf8yc",
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1455
+        }
+      },
+      {
+        "app": {
+          "app_id": "1532875441",
+          "name": "one sec | screen time + focus"
+        },
+        "screens": [
+          {
+            "screen_id": "oth_hdbm6",
+            "name": "Article Detail",
+            "flow": "Tips",
+            "section": "other-tabs",
+            "position": 21,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzJiOWQyOTNkZDY2NjQzOTMyYzM1NzVkNTkxM2YyMDA0NzQwOWEzMjEud2VicCIsImV4cCI6MTc5MDkzODExNX2ZEu8UCWwZjryhJbksZRr79N5H9VelZfY.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#ABF2DC",
+            "colors": [
+              "#ABF2DC",
+              "#FFFFFF",
+              "#A8B4B9",
+              "#2F3449",
+              "#A5EAD5"
+            ],
+            "ui_elements": [
+              "Mint Hero Header",
+              "Back Circle Button",
+              "Share Circle Button",
+              "Hero Illustration",
+              "Category Tag Badge",
+              "Serif Article Headline",
+              "Article Body Text"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_btg9o",
+            "name": "Article Detail Scrolled",
+            "flow": "Tips",
+            "section": "other-tabs",
+            "position": 22,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzczMGY2M2VmMWYzNzdiODYwNWNiMTg4ZjgxYWNkMTJkMjJiOWQxYTEud2VicCIsImV4cCI6MTc5MDkzODExNX0SWc5H8wsFgjWiFSbWRSQACAz3_kDysAo.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#FBFCFC",
+              "#1E1F18",
+              "#877B6F",
+              "#DEE4E8"
+            ],
+            "ui_elements": [
+              "Compact Article Header",
+              "Back Circle Button",
+              "Share Icon Button",
+              "Body Text Columns",
+              "Embedded Media Image",
+              "Portrait Image"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_t2em0",
+            "name": "Customize Interventions",
+            "flow": "Settings",
+            "section": "other-tabs",
+            "position": 23,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzAzMmVhMDI0YzkyOTUyYzliOTZhNzk4ZGJhM2JkNmE4OTZhODEyZjgud2VicCIsImV4cCI6MTc5MDkzODExNX3i8qhtMJFzZ-_TxPIJAAunpdWwGPc2hQ8.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F2F2F6",
+              "#686982",
+              "#EBEBF0",
+              "#6C70CC"
+            ],
+            "ui_elements": [
+              "Three-Part Top Nav",
+              "Intervention Type Card",
+              "Add Type Tile",
+              "Active Type Tile",
+              "Recommended Setting Row",
+              "Module List Card",
+              "Floating Bottom Nav"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_ipwog",
+            "name": "Customize Settings",
+            "flow": "Settings",
+            "section": "other-tabs",
+            "position": 24,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2EyNWVmYWUxYWM5OWMzYjUyNTE3YmJkOTY0NWY4MjMzMmVjMTMwYmEud2VicCIsImV4cCI6MTc5MDkzODExNX3y5pFpj3BtBJf_tbiqrAtWFwyZZI1oyv0.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F2F2F6",
+              "#EAEAEF",
+              "#75787C",
+              "#636CCE"
+            ],
+            "ui_elements": [
+              "Three-Part Top Nav",
+              "Grouped Settings Cards",
+              "Colored Module Icons",
+              "Star Favorite Actions",
+              "Off State Labels",
+              "Chevron List Rows",
+              "Floating Bottom Nav"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_1wb39",
+            "name": "Customize Advanced",
+            "flow": "Settings",
+            "section": "other-tabs",
+            "position": 25,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzZmNGM0ZDcxNTBkNTM3MDI0OWE4N2YxMjc2MTE5N2E4OGMzMGU3NTYud2VicCIsImV4cCI6MTc5MDkzODExNX1BiRWtXbyXGIript7gaqipV6sRQmz3XPs.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F2F2F6",
+              "#EEEEF3",
+              "#8F8E99",
+              "#6C70CC"
+            ],
+            "ui_elements": [
+              "Three-Part Top Nav",
+              "Tutorial Link Rows",
+              "App Icon Setting Row",
+              "Dynamic Toggle Switch",
+              "Security Settings Card",
+              "Research Settings Row",
+              "Floating Bottom Nav"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_f20s6",
+            "name": "Customize More",
+            "flow": "Settings",
+            "section": "other-tabs",
+            "position": 26,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2Q1NmJlM2VkNmFlMjU3YjY1ZTY0MTViZTQ2YmE4MGVhOTkyOGQ3YzAud2VicCIsImV4cCI6MTc5MDkzODExNX3FVsGDqo_hlOLbseN7-AjBrpe7kvpgXO8.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F2F2F6",
+            "colors": [
+              "#F2F2F6",
+              "#FFFFFF",
+              "#EFEFF3",
+              "#9D97A2",
+              "#6C70CC"
+            ],
+            "ui_elements": [
+              "Three-Part Top Nav",
+              "Security Settings Card",
+              "Browser Settings Row",
+              "Research Section Rows",
+              "Advanced Settings Row",
+              "Social Icon Footer"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          },
+          {
+            "screen_id": "oth_g282k",
+            "name": "About",
+            "flow": "Settings",
+            "section": "other-tabs",
+            "position": 27,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2EzMTIzNjc1ZGY3NWJlODVmOGExYjE5NjM5YmY3ZGVjZThhZmRmNWMud2VicCIsImV4cCI6MTc5MDkzODExNX03CKgnw7QkbwXUQTFWP3hgfQwmbcD9L2Y.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F2F2F6",
+            "colors": [
+              "#F2F2F6",
+              "#FFFFFF",
+              "#E0E3E5",
+              "#787877",
+              "#EFEFF3"
+            ],
+            "ui_elements": [
+              "About Header Bar",
+              "Done Pill Button",
+              "Team Polaroid Stack",
+              "Centered Tagline",
+              "Research Link Row",
+              "Share App Row",
+              "Rate App Row",
+              "Help Link Row",
+              "Version Footer"
+            ],
+            "app": {
+              "app_id": "1532875441",
+              "name": "one sec | screen time + focus"
+            }
+          }
+        ],
+        "total": 27,
+        "next_cursor": null,
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1450
+        }
+      }
+    ],
+    "cursor": null
+  },
+  "1644737181": {
+    "pages": [
+      {
+        "app": {
+          "app_id": "1644737181",
+          "name": "BePresent: Screen Time Control"
+        },
+        "screens": [
+          {
+            "screen_id": "oth_gzckc",
+            "name": "Streak Celebration",
+            "flow": "App Intention",
+            "section": "other-tabs",
+            "position": 1,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzA4NDA3MTVhMzRkZWNiMGE3MGE2MTZhNzE2NGU1MjMxM2M4OThiY2Yud2VicCIsImV4cCI6MTc5MDkzODA1OH2jMu6s7LfK3Vy5k9wOchlscl8HDgANudo.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#E3F4FF",
+            "colors": [
+              "#E3F4FF",
+              "#B3E0FE",
+              "#FE7B0F",
+              "#FFFFFF",
+              "#000000"
+            ],
+            "ui_elements": [
+              "Pale Blue Gradient",
+              "Orange Flame Mark",
+              "Large Streak Counter",
+              "App Intention Card",
+              "Black Pill CTA"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_b5td4",
+            "name": "Home Dashboard",
+            "flow": "Home",
+            "section": "other-tabs",
+            "position": 2,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzI4YjlkMWZmMTY4OWMxMDc2NzRmYTgzZTYyMzJiODA2OTRjOWY0YzIud2VicCIsImV4cCI6MTc5MDkzODA1OH08XZen3aOsGS0XWIUTTlys-ygfn4k4fJA.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#003BFF",
+            "colors": [
+              "#003BFF",
+              "#4CB2FF",
+              "#F9F9F9",
+              "#FFFFFF",
+              "#000000"
+            ],
+            "ui_elements": [
+              "Blue Header Band",
+              "Streak XP Badges",
+              "Time Counter Card",
+              "Blue Block Now CTA",
+              "App Intentions Card",
+              "Five Tab Nav Bar"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_48xsx",
+            "name": "Home Quests",
+            "flow": "Home",
+            "section": "other-tabs",
+            "position": 3,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2RkZDUxYWI1Njk2NTcwM2JiNDYwZmRiOTUzMzAwMTE5N2ZmYjJmODEud2VicCIsImV4cCI6MTc5MDkzODA1OH3mO9_Sejnv0rD5o1wKNKFz86aTR4ckpyg.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#003BFF",
+            "colors": [
+              "#003BFF",
+              "#FFFFFF",
+              "#F9F9F9",
+              "#E6E6E6",
+              "#000000"
+            ],
+            "ui_elements": [
+              "Blue Header Band",
+              "App Intentions Card",
+              "Add Intention Control",
+              "Daily Quest List",
+              "Progress Bar",
+              "Five Tab Nav Bar"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_jcgx7",
+            "name": "Block Mode Allow List",
+            "flow": "Focus Session",
+            "section": "other-tabs",
+            "position": 4,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2ZiNWYyOWM0OWQyNGRhNGM2M2Y1YTEwY2IwM2Y4OTMwY2FjODIxZDQud2VicCIsImV4cCI6MTc5MDkzODA1OH3r3wgjqpiAjbGZmUZpXG_Qz_oGV_jBvgI.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#C7C7C7",
+              "#003BFF",
+              "#4CB2FF",
+              "#000000"
+            ],
+            "ui_elements": [
+              "Dimmed Home Backdrop",
+              "Rounded Bottom Sheet",
+              "Block Mode Segments",
+              "Allowed Apps Row",
+              "Blue Set Mode CTA"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_teel1",
+            "name": "Block Mode Block List",
+            "flow": "Focus Session",
+            "section": "other-tabs",
+            "position": 5,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzY1OTI3MWZkNGRiN2FlZmE5YjllYWFjN2IzZDcyNTdjNjMwNzNhNmYud2VicCIsImV4cCI6MTc5MDkzODA1OH0q4MGvUkX5aOCf91Wvvz1SAJ_MkhSCTEM.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#C7C7C7",
+              "#003BFF",
+              "#4CB2FF",
+              "#000000"
+            ],
+            "ui_elements": [
+              "Dimmed Home Backdrop",
+              "Rounded Bottom Sheet",
+              "Block Mode Segments",
+              "Blocked Apps Row",
+              "Blue Set Mode CTA"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_jcuvd",
+            "name": "Allowed Apps",
+            "flow": "App Lists",
+            "section": "other-tabs",
+            "position": 6,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzFmYTRhM2VhZjRmMTMwMDY0NDYzMDZkNjZmMmU4NTg2MmMyMTBlZjUud2VicCIsImV4cCI6MTc5MDkzODA1OH0B8P7H0UbNiJIbcPmzxZLUmqXSYgiEVM4.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F6F6F6",
+            "colors": [
+              "#F6F6F6",
+              "#FFFFFF",
+              "#003BFF",
+              "#000000",
+              "#25D366"
+            ],
+            "ui_elements": [
+              "Rounded White Sheet",
+              "Allowed Apps Header",
+              "Add Remove Chip",
+              "Allowed App Row",
+              "Dashed Add App Box",
+              "Blue Done CTA"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_olv1y",
+            "name": "Blocked Apps",
+            "flow": "App Lists",
+            "section": "other-tabs",
+            "position": 7,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzIwNThmOWYyNDMxZWIwOWYxZDEwMDVhYTJjZjkwMzkyNmE2ZDUyNGYud2VicCIsImV4cCI6MTc5MDkzODA1OH0y6ZYcbjjzY_Re27soxusFjkdZsggPiHs.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F6F6F6",
+            "colors": [
+              "#F6F6F6",
+              "#FFFFFF",
+              "#003BFF",
+              "#000000",
+              "#E1306C"
+            ],
+            "ui_elements": [
+              "Rounded White Sheet",
+              "Blocked Apps Header",
+              "Add Remove Chip",
+              "Blocked App Row",
+              "Dashed Add App Box",
+              "Blue Done CTA"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_pmj7g",
+            "name": "Active Focus Session",
+            "flow": "Focus Session",
+            "section": "other-tabs",
+            "position": 8,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzRlYmI5OGY2NWE4NDcxMzNhNWFlNTQ1NWM1Mjg5MzAxNDg0MjQ4YTQud2VicCIsImV4cCI6MTc5MDkzODA1OH1xbdW1sbg3TRZoIk8GRajg-P5PE7QsIpQ.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#4CB2FF",
+            "colors": [
+              "#4CB2FF",
+              "#FFFFFF",
+              "#FF0447",
+              "#003BFF",
+              "#000000"
+            ],
+            "ui_elements": [
+              "Sky Session Artwork",
+              "Centered App Tile",
+              "Session Timer",
+              "XP Progress Bar",
+              "Gray Break CTA",
+              "Red Give Up CTA",
+              "Five Tab Nav Bar"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_c24fd",
+            "name": "Break Duration",
+            "flow": "Focus Session",
+            "section": "other-tabs",
+            "position": 9,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2UyNDQxY2IxYWNlNDQyMWU5YzMyN2JkYzExNTQ4OTYxOTNjY2NiOGIud2VicCIsImV4cCI6MTc5MDkzODA1OH1N84LgGGwqjE3ACGxheLk87yMwhFX8llQ.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#9EBACC",
+              "#003BFF",
+              "#E6E6E6",
+              "#000000"
+            ],
+            "ui_elements": [
+              "Dimmed Session Backdrop",
+              "Rounded Bottom Sheet",
+              "Break Length Label",
+              "Duration Slider",
+              "Blue Start Break CTA"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_jhl03",
+            "name": "Active Break",
+            "flow": "Focus Session",
+            "section": "other-tabs",
+            "position": 10,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzE0ODIzZDY0YTgxMDIxNjg3YWQ4N2FhNDkwZjkxODhjMDg2NmU1YmMud2VicCIsImV4cCI6MTc5MDkzODA1OH0o4wgj_DbZ6AxJYe35WAl4uH7Js-oHaJU.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#4CB2FF",
+            "colors": [
+              "#4CB2FF",
+              "#FFFFFF",
+              "#E6E6E6",
+              "#003BFF",
+              "#000000"
+            ],
+            "ui_elements": [
+              "Sky Break Artwork",
+              "Break Status Pill",
+              "Large Break Timer",
+              "Blue Progress Bar",
+              "Gray End Break CTA",
+              "Five Tab Nav Bar"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          }
+        ],
+        "total": 27,
+        "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2FwcF9zY3JlZW5zIiwicSI6IjM0YzYzM2JjMzUxYjg0ZTQ2ZmRjZGIxZiIsIm8iOjEwLCJodyI6MjAsImV4cCI6MTc5MDkzODA1OH0.jDY2Zia4YghWYPfg7p-mfWJUB44",
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1459
+        }
+      },
+      {
+        "app": {
+          "app_id": "1644737181",
+          "name": "BePresent: Screen Time Control"
+        },
+        "screens": [
+          {
+            "screen_id": "oth_3ozuv",
+            "name": "Set App Intention",
+            "flow": "App Intention",
+            "section": "other-tabs",
+            "position": 11,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzBjNzJiODVhMTNjMWY5YzY2ZTU1ZDY0ZjM3Njk3ZTYyNmFlOTk1YmUud2VicCIsImV4cCI6MTc5MDkzODA5OH1J7BAyx_xVU370SKSbPCwyif8pGlWngdQ.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#C4C2BF",
+            "colors": [
+              "#C4C2BF",
+              "#FFFFFF",
+              "#003BFF",
+              "#4CB2FF",
+              "#CC0138"
+            ],
+            "ui_elements": [
+              "Dimmed Session Backdrop",
+              "Rounded Bottom Sheet",
+              "App Picker Link",
+              "Limit Stepper Fields",
+              "Weekday Chips",
+              "Blue Set Intention CTA"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_yx0d5",
+            "name": "Tip of the Day",
+            "flow": "Others",
+            "section": "other-tabs",
+            "position": 12,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2IwY2VjOTYxMmQ5NDRlNDllM2RjYWYyZjBmY2VhYzc4MTBiZDIyMzIud2VicCIsImV4cCI6MTc5MDkzODA5OH0p5yNcC1PDpSfbuLr0W2Gw9WrxELvsyL0.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#000000",
+              "#003BFF",
+              "#FFE79B"
+            ],
+            "ui_elements": [
+              "Rounded White Sheet",
+              "Lightbulb Title Icon",
+              "Bold Tip Headline",
+              "Multi Paragraph Copy",
+              "Blue Got It CTA"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_w1rw4",
+            "name": "Home Daily Quests",
+            "flow": "Home",
+            "section": "other-tabs",
+            "position": 13,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzYxM2ZlZTQ3YjcxZjNkNTZkYzlkMzQ4NjMyNjg5ZTdkMjJkNTg0NTUud2VicCIsImV4cCI6MTc5MDkzODA5OH0DjLsTZnv1yXROX_si8qYZZuqih4aimuw.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F9F9F9",
+            "colors": [
+              "#F9F9F9",
+              "#FFFFFF",
+              "#003BFF",
+              "#ECFAE5",
+              "#57C92E"
+            ],
+            "ui_elements": [
+              "Blue Header Band",
+              "App Intentions Card",
+              "Daily Quest List",
+              "Quest Check Circles",
+              "Quest Progress Bar",
+              "Five Tab Nav Bar"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_426gi",
+            "name": "Rewards Shop",
+            "flow": "Rewards",
+            "section": "other-tabs",
+            "position": 14,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2NiYTcyMWRiZjcwZmUyY2RjNWM0MzNiODg5NWU3OWU1MjQwY2MzZTEud2VicCIsImV4cCI6MTc5MDkzODA5OH07lqYSDLYJUzljjkhV8w6bhKNnSElSEaY.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#EF7622",
+              "#FCD009",
+              "#EFF9F0",
+              "#000000"
+            ],
+            "ui_elements": [
+              "Rewards Title Bar",
+              "Shop Unlock Tabs",
+              "Reward Offer Cards",
+              "Brand Logo Tiles",
+              "Coin Cost Badges"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_3rg8a",
+            "name": "Scheduled Sessions Overview",
+            "flow": "Scheduled Sessions",
+            "section": "other-tabs",
+            "position": 15,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2M0MWY4NjA5OWU3ZTNkZDA4OTFmMDY3NjFjNmZiNmM2MmJjNzdhMGYud2VicCIsImV4cCI6MTc5MDkzODA5OH2Qpz_1pLOxvhU3LYZuX3FgWS1x0f9iWPE.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#003BFF",
+            "colors": [
+              "#003BFF",
+              "#FFFFFF",
+              "#F9F9F9",
+              "#E6E6E6",
+              "#FCD009"
+            ],
+            "ui_elements": [
+              "Blue Page Header",
+              "Active Session Card",
+              "New Session CTA",
+              "Ideas Session List",
+              "Blue Add Icon Pills",
+              "Five Tab Nav Bar"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_6p5np",
+            "name": "Scheduled Session Ideas",
+            "flow": "Scheduled Sessions",
+            "section": "other-tabs",
+            "position": 16,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzgyNDJjOGI5MzNkNzdkOWY0NWE0NTVhZGJiNzZmZDM0MjU3YTg3N2Uud2VicCIsImV4cCI6MTc5MDkzODA5OH3vUCpexH3XBuNfBo0gwBLH41zqYSaoOUU.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#003BFF",
+            "colors": [
+              "#003BFF",
+              "#FFFFFF",
+              "#F9F9F9",
+              "#E6E6E6",
+              "#FCD009"
+            ],
+            "ui_elements": [
+              "Blue Page Header",
+              "Ideas Session List",
+              "Session Icon Tiles",
+              "XP Reward Labels",
+              "Blue Add Icon Pills",
+              "Five Tab Nav Bar"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_1v56k",
+            "name": "Edit Scheduled Session",
+            "flow": "Scheduled Sessions",
+            "section": "other-tabs",
+            "position": 17,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2UxNzY1MjQ0NGZjOTUwOTE5MGMzYWU5ZDYxZTRkN2U4YzM5NGI1MTYud2VicCIsImV4cCI6MTc5MDkzODA5OH2u7YJgkubUvgDa-f0jPY4dytfJs6c4xzg.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#003BFF",
+            "colors": [
+              "#003BFF",
+              "#FFFFFF",
+              "#F6F6F6",
+              "#EF2324",
+              "#4CB2FF"
+            ],
+            "ui_elements": [
+              "Blue Page Header",
+              "Session Detail Card",
+              "Time Range Rows",
+              "Block Type Selector",
+              "Weekday Chips",
+              "Blue Save CTA",
+              "Red Remove CTA"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_irbex",
+            "name": "Blocked Apps Settings",
+            "flow": "App Lists",
+            "section": "other-tabs",
+            "position": 18,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzY5NGY5NTEyMjFmZDE0ODM0ZWE2N2IzZGIyNjgzMWMzNTZhNmE2YWIud2VicCIsImV4cCI6MTc5MDkzODA5OH0R-D-IvKXVvcvmFwsRn1U75KDhf10S848.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F9F9F9",
+              "#003BFF",
+              "#000000",
+              "#25D366"
+            ],
+            "ui_elements": [
+              "Rounded White Sheet",
+              "Block List Section",
+              "Allow List Section",
+              "App Picker Rows",
+              "Blue Done CTA"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_mx4b2",
+            "name": "Scheduled Session Details",
+            "flow": "Scheduled Sessions",
+            "section": "other-tabs",
+            "position": 19,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzgyZGZjOTNlZDAyNmQwMzBmZjk0MDc5NDQzY2RmMTcxOGFlODlhODYud2VicCIsImV4cCI6MTc5MDkzODA5OH0x2vtQklLRfTYvIacYreRx9V4rOhT5us8.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#003BFF",
+            "colors": [
+              "#003BFF",
+              "#FFFFFF",
+              "#F6F6F6",
+              "#4CB2FF",
+              "#FCD009"
+            ],
+            "ui_elements": [
+              "Blue Page Header",
+              "New Session CTA",
+              "Session Detail Card",
+              "Time Range Rows",
+              "Block Type Selector",
+              "Weekday Chips",
+              "Blue Save CTA"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_m06it",
+            "name": "League Leaderboard",
+            "flow": "Rewards",
+            "section": "other-tabs",
+            "position": 20,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzI2ZmQ2YzE5MzFiNzg4NDE1MzE2MmE1MTJlYjM3NDM0MjUxZTBmOTkud2VicCIsImV4cCI6MTc5MDkzODA5OH3RaW8nDy4nESE6DhxNsllut1_AQVtkslw.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F8A550",
+            "colors": [
+              "#F8A550",
+              "#FFFFFF",
+              "#E0ECF3",
+              "#FCD009",
+              "#000000"
+            ],
+            "ui_elements": [
+              "Orange Gradient Header",
+              "Trophy League Card",
+              "League Progress Trophies",
+              "Ranked User List",
+              "Colored Avatar Circles",
+              "Five Tab Nav Bar"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          }
+        ],
+        "total": 27,
+        "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2FwcF9zY3JlZW5zIiwicSI6IjM0YzYzM2JjMzUxYjg0ZTQ2ZmRjZGIxZiIsIm8iOjIwLCJodyI6MzAsImV4cCI6MTc5MDkzODA5OH0.J6cOQhSdUVXKXtoBA1GvBQsR-co",
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1458
+        }
+      },
+      {
+        "app": {
+          "app_id": "1644737181",
+          "name": "BePresent: Screen Time Control"
+        },
+        "screens": [
+          {
+            "screen_id": "oth_s0kn0",
+            "name": "Today's Screen Time",
+            "flow": "Screen Time",
+            "section": "other-tabs",
+            "position": 21,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2ZkOTg3NjM1ZDc4YzUxOWQ5ODIzNmY5ZDY5ZmExYmRmZmRiZjBmOTIud2VicCIsImV4cCI6MTc5MDkzODExNX0B7-fWd93D75B-gPZpW18zOaaOstKXVxw.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#003BFF",
+            "colors": [
+              "#003BFF",
+              "#FFFFFF",
+              "#F9F9F9",
+              "#3AC70A",
+              "#000000"
+            ],
+            "ui_elements": [
+              "Blue Page Header",
+              "Circular Usage Gauge",
+              "Goal Summary Text",
+              "App Usage Cards",
+              "Mini Usage Bars",
+              "Five Tab Nav Bar"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_8isjy",
+            "name": "Screen Time Settings",
+            "flow": "Screen Time",
+            "section": "other-tabs",
+            "position": 22,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzAxODI0ZDhlMTU0YjU4NmI2ODU1ZDZjNThhOThmYTFmMzg0OTA0YmEud2VicCIsImV4cCI6MTc5MDkzODExNX341vOuZoHK6rVEHAj6kKGqjzNrEAGs5fk.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#000000",
+              "#F4F4F4",
+              "#0030CC",
+              "#E5E8EC"
+            ],
+            "ui_elements": [
+              "Rounded White Sheet",
+              "Large Settings Title",
+              "Daily Goal Field",
+              "Excluded Apps Field",
+              "Inline Edit Links",
+              "Dismiss Link"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_ze3qy",
+            "name": "Social Hub",
+            "flow": "Social",
+            "section": "other-tabs",
+            "position": 23,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzc1NzYwYzg4MTZhYTY0NzExNzkyODMzNGIzYTJiYWQ2ZDg2YzViN2Eud2VicCIsImV4cCI6MTc5MDkzODExNX0KQOJ56JudSW4OE67T5CP56YsaJY2vEWY.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#003BFF",
+            "colors": [
+              "#003BFF",
+              "#FFFFFF",
+              "#F9F9F9",
+              "#ADF2ED",
+              "#FFD9AD"
+            ],
+            "ui_elements": [
+              "Blue Page Header",
+              "Partner Add Card",
+              "Dashed Add Partner Box",
+              "Group Leaderboards Card",
+              "Suggested Group Tiles",
+              "Add Group Control",
+              "Five Tab Nav Bar"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_6v3wb",
+            "name": "Add Accountability Partner",
+            "flow": "Social",
+            "section": "other-tabs",
+            "position": 24,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzAwZDAwNmRkMjhhMjJkNjE4OTNhOWUxOTY2NDA0MDE0N2Q3OTRmOWEud2VicCIsImV4cCI6MTc5MDkzODExNX3ACFyD2AqAp4z970RaXQ7X9u6jFOT9QIA.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#EEFAFF",
+              "#003BFF",
+              "#000000",
+              "#F6F6F6"
+            ],
+            "ui_elements": [
+              "White Modal Screen",
+              "Pale Blue Info Card",
+              "Partner Icon",
+              "Permission Needed Title",
+              "Contact Search Field",
+              "Blue Done CTA"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_mlvuj",
+            "name": "Create Group Leaderboard",
+            "flow": "Social",
+            "section": "other-tabs",
+            "position": 25,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2FkOWFmMDcwMDkwYWEyZjlhMGQ0NDM0N2RkMjYyMTI1ZDQ2ZWUxYWYud2VicCIsImV4cCI6MTc5MDkzODExNX0gvSLlClqPEm3hevQzrGCrcMgMYTU3qfk.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#C8C8C7",
+            "colors": [
+              "#C8C8C7",
+              "#FFFFFF",
+              "#003BFF",
+              "#000000",
+              "#F9F9F9"
+            ],
+            "ui_elements": [
+              "Dimmed Social Backdrop",
+              "Rounded Bottom Sheet",
+              "Group Name Field",
+              "Description Text Area",
+              "Blue Create Group CTA"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_ie84j",
+            "name": "Profile Settings",
+            "flow": "Profile Settings",
+            "section": "other-tabs",
+            "position": 26,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzQ0MTcwMjQ0N2FmNWU0NjQ0YjZmMzJhZjFlNzMyOTI3MWJmNzZiMGYud2VicCIsImV4cCI6MTc5MDkzODExNX1amjafnYbwHyv6i38Aj6KZZlnwR-QQRPs.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F5F5F5",
+            "colors": [
+              "#F5F5F5",
+              "#FFFFFF",
+              "#0030CC",
+              "#2B9CFA",
+              "#C56EDF"
+            ],
+            "ui_elements": [
+              "Rounded White Sheet",
+              "Close Circle Control",
+              "Profile Identity Card",
+              "Gradient Pro Banner",
+              "Settings Group Cards",
+              "Chevron Setting Rows"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          },
+          {
+            "screen_id": "oth_jsete",
+            "name": "Profile Account Settings",
+            "flow": "Profile Settings",
+            "section": "other-tabs",
+            "position": 27,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzIxNjM2MTMzYjNkOWJkOTc1ZmExYzhiNzJjNzExMzQ4MjU3ZjYzOWQud2VicCIsImV4cCI6MTc5MDkzODExNX1uIzG-XlaefM87BTym4yj5kFvdBw9KXpE.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#FFFFFF",
+            "colors": [
+              "#FFFFFF",
+              "#F5F5F5",
+              "#0030CC",
+              "#000000",
+              "#E5E5E5"
+            ],
+            "ui_elements": [
+              "Rounded White Sheet",
+              "Close Circle Control",
+              "Account Action List",
+              "Destructive Delete Row",
+              "Legal Links Group",
+              "Version Footer"
+            ],
+            "app": {
+              "app_id": "1644737181",
+              "name": "BePresent: Screen Time Control"
+            }
+          }
+        ],
+        "total": 27,
+        "next_cursor": null,
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1452
+        }
+      }
+    ],
+    "cursor": null
+  },
+  "6532588521": {
+    "pages": [
+      {
+        "app": {
+          "app_id": "6532588521",
+          "name": "QUITTR - Break Free Now"
+        },
+        "screens": [
+          {
+            "screen_id": "onb_a08z8",
+            "name": null,
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 1,
+            "kind": "video",
+            "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxL2MxNzhhYzgzY2M4N2I4N2VhNGViNDYzZTA1NTE2MWVlZDBkYTFlYmYubXA0IiwiZXhwIjoxNzkwOTM4MDU4fUQU7ltUu-nGBxJlWOWYexWhE7FuWYaxhw.mp4",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#0B132B",
+            "colors": [
+              "#0B132B",
+              "#FFFFFF",
+              "#8B5CF6",
+              "#D9383A",
+              "#34D399"
+            ],
+            "ui_elements": [
+              "Pill Action Button",
+              "Gradient Profile Card",
+              "Circular Progress Bar",
+              "Dual Bar Chart",
+              "Multi-select List",
+              "Pagination Dots",
+              "Line Graph",
+              "Plan Picker Cards",
+              "Testimonial Cards"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_x3no4",
+            "name": "Quiz Intro",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 2,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzhiODgzMmJiYmQ1YTUzNmJhNmUzM2IxODU0NjQ4YTk0OTBlYjgxM2Yud2VicCIsImV4cCI6MTc5MDkzODA1OH2ApjdCeUA8ZS_pSkiCvDinD4mRYrHQGhE.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011432",
+            "colors": [
+              "#011432",
+              "#041B3A",
+              "#2F6BFF",
+              "#FF5A12",
+              "#35CBEF"
+            ],
+            "ui_elements": [
+              "Starry Navy Backdrop",
+              "Back Circle Icon",
+              "Large Card Preview",
+              "Sparkle Accent",
+              "Primary Blue CTA"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_ewxms",
+            "name": "Gender Question",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 3,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzMzNTVjNTAwMjY3NGI1MWIyNWQyNDAyN2I2MmFkZDBlODAzNzZmM2Yud2VicCIsImV4cCI6MTc5MDkzODA1OH2iLJ5UCTouFxy_H57C6SpsKHF0yu9naOc.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011432",
+            "colors": [
+              "#011432",
+              "#021635",
+              "#1B2A44",
+              "#25D4F5",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Gradient Progress Bar",
+              "Numbered Option Pills",
+              "Starry Navy Backdrop",
+              "Bottom Step Counter",
+              "Back Arrow Icon"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_nij60",
+            "name": "Quiz Question 2",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 4,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2IwNjIyY2JhNzIxNzJkOWIxMGYwZjAwZWVjNzJhZjJiNTZiNTJhNjkud2VicCIsImV4cCI6MTc5MDkzODA1OH18-jJP414nt4UD8lLHlyzpZwxU0NjCgSg.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011432",
+            "colors": [
+              "#011432",
+              "#021635",
+              "#1B2A44",
+              "#25D4F5",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Gradient Progress Bar",
+              "Numbered Option Pills",
+              "Starry Navy Backdrop",
+              "Bottom Step Counter",
+              "Back Arrow Icon"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_3pdqb",
+            "name": "Usage Frequency Question",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 5,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2NkOTk0OTQxMTk0MjI0N2I0OGE2ZTkwMTdkNDNmNjUwNTYwMDBjOGMud2VicCIsImV4cCI6MTc5MDkzODA1OH0ek5u9j0z7UVKAML2jECe47SmkroP0-iI.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011432",
+            "colors": [
+              "#011432",
+              "#021635",
+              "#1B2A44",
+              "#8647E8",
+              "#25D4F5"
+            ],
+            "ui_elements": [
+              "Gradient Progress Bar",
+              "Purple Selected Pill",
+              "Numbered Option Pills",
+              "Starry Navy Backdrop",
+              "Bottom Step Counter"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_kcttj",
+            "name": "Source Question",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 6,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzRlMjdmN2M0NmRhZTdjMjMyYTU5MWVjM2RmYTYyMDNjM2MxY2IxMWEud2VicCIsImV4cCI6MTc5MDkzODA1OH0vkShI18ZhDy-MQ8lW7Er5Bkp8vez6ddY.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011432",
+            "colors": [
+              "#011432",
+              "#021635",
+              "#1B2A44",
+              "#25D4F5",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Gradient Progress Bar",
+              "Icon Option Pills",
+              "Social Media Icons",
+              "Starry Navy Backdrop",
+              "Bottom Step Counter"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_ci3z3",
+            "name": "Awareness Question",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 7,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2FjNTBjNTNlMTFlMDhkNTM0MGUyODA5ZTU3Y2NhZGI5OWEyOGU3ZDIud2VicCIsImV4cCI6MTc5MDkzODA1OH1TuI9RGCLWsb7Tr05nqHkrGvLoi2Hxjw0.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011432",
+            "colors": [
+              "#011432",
+              "#021635",
+              "#1B2A44",
+              "#25D4F5",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Gradient Progress Bar",
+              "Numbered Option Pills",
+              "Starry Navy Backdrop",
+              "Bottom Step Counter",
+              "Back Arrow Icon"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_jigun",
+            "name": "Age Question",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 8,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzA0Y2JlNGVhNWNlNjViMDc3MThhM2IwNzM3NmJiNGE2ZmFkYWJkYTQud2VicCIsImV4cCI6MTc5MDkzODA1OH3LwEAXh0ZSZWc5KlrAe6Cej-oDDs_Jc2k.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011432",
+            "colors": [
+              "#011432",
+              "#021635",
+              "#1B2A44",
+              "#25D4F5",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Gradient Progress Bar",
+              "Numbered Option Pills",
+              "Starry Navy Backdrop",
+              "Bottom Step Counter",
+              "Back Arrow Icon"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_3lphq",
+            "name": "Habit Frequency Question",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 9,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzE5ZmNiNDE5MTFlODk0NmYzMDAyMDNmMWYzNzlkYWY2MmZkMGZkNTAud2VicCIsImV4cCI6MTc5MDkzODA1OH1GMLtCky1rvZD4h-YbrJVkPpM_jdYxTOg.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011432",
+            "colors": [
+              "#011432",
+              "#021635",
+              "#1B2A44",
+              "#8647E8",
+              "#25D4F5"
+            ],
+            "ui_elements": [
+              "Gradient Progress Bar",
+              "Purple Selected Pill",
+              "Numbered Option Pills",
+              "Starry Navy Backdrop",
+              "Bottom Step Counter"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_4ldig",
+            "name": "Self Control Question",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 10,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzk1NTQxYzAyZDY2MDg4NDEyNDQ0NTI3Y2M4OGQzZTZkZTlkMzlhODEud2VicCIsImV4cCI6MTc5MDkzODA1OH18V8Pn28A_CCAUH0OsrCuUkML-8ccGDcc.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011432",
+            "colors": [
+              "#011432",
+              "#021635",
+              "#1B2A44",
+              "#25D4F5",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Gradient Progress Bar",
+              "Numbered Option Pills",
+              "Starry Navy Backdrop",
+              "Bottom Step Counter",
+              "Back Arrow Icon"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          }
+        ],
+        "total": 41,
+        "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2FwcF9zY3JlZW5zIiwicSI6ImY4MDFhNzIzMjJmM2FlODgzNjYwMTcxOSIsIm8iOjEwLCJodyI6MjAsImV4cCI6MTc5MDkzODA1OH0.3AXg4d3Gm40dWsMBOdDblrvKlaU",
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1463
+        }
+      },
+      {
+        "app": {
+          "app_id": "6532588521",
+          "name": "QUITTR - Break Free Now"
+        },
+        "screens": [
+          {
+            "screen_id": "onb_l87tg",
+            "name": "Gambling Question",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 11,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzEyODg2MGY5NTdmYmJkNTM5MTk1MzE0MTQ2OGY1MWMwM2RhYmM4Mjgud2VicCIsImV4cCI6MTc5MDkzODA5OX20rcc2xVvh6VXH-Ic2YpnzqUL3eAAC1PY.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011432",
+            "colors": [
+              "#011432",
+              "#021635",
+              "#1B2A44",
+              "#25D4F5",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Gradient Progress Bar",
+              "Numbered Option Pills",
+              "Starry Navy Backdrop",
+              "Bottom Step Counter",
+              "Back Arrow Icon"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_wid1r",
+            "name": "Preference Question",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 12,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzg0ZTYyNjI3MTQ0ZWJjNDZiZTY1MWE2MDc4YTRhNDVlYzA1OTE4ZmYud2VicCIsImV4cCI6MTc5MDkzODA5OX3zErzqdGyMmWUlakDbrGdx34LMin-PAug.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011432",
+            "colors": [
+              "#011432",
+              "#021635",
+              "#1B2A44",
+              "#25D4F5",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Gradient Progress Bar",
+              "Numbered Option Pills",
+              "Starry Navy Backdrop",
+              "Bottom Step Counter",
+              "Back Arrow Icon"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_4p9x8",
+            "name": "Final Quiz Question",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 13,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzc4NjQxNzExYzYwZTcxZGIyNzg2OTcxNTkxN2MwZTU5NDk0NGVhZTEud2VicCIsImV4cCI6MTc5MDkzODA5OX3fKm3-jNlVMhr-vmOYEbOPVwSsu2UzQ-Y.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011432",
+            "colors": [
+              "#011432",
+              "#021635",
+              "#1B2A44",
+              "#25D4F5",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Gradient Progress Bar",
+              "Numbered Option Pills",
+              "Starry Navy Backdrop",
+              "Bottom Step Counter",
+              "Back Arrow Icon"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_ff06s",
+            "name": "Profile Form",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 14,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2RjYmFhNmJmMTg0NmU0NjE2OWE4Mzg1NDBmNmRiNWJhMjQ3MDQ1MmEud2VicCIsImV4cCI6MTc5MDkzODA5OX0kL5YHRQgti2PATSKj1ALx75c4REOyTcY.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011432",
+            "colors": [
+              "#011432",
+              "#021635",
+              "#1B2A44",
+              "#5B36BE",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Gradient Progress Bar",
+              "Rounded Text Fields",
+              "Purple Form CTA",
+              "Starry Navy Backdrop",
+              "Final Step Header"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_81l3o",
+            "name": "Progress Calculation",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 15,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzlkZWZhMjFlNzI5YzBiZWE3N2M4NWNhNmIzNWMzODgzMTdhZmYyYzUud2VicCIsImV4cCI6MTc5MDkzODA5OX1_QU1L_TYEt_kougJDIm70Qv_GAdPigos.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011432",
+            "colors": [
+              "#011432",
+              "#021635",
+              "#35D6B8",
+              "#48D365",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Circular Progress Ring",
+              "Large Percent Text",
+              "Calculating Label",
+              "Starry Navy Backdrop"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_vrxsb",
+            "name": "Analysis Result",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 16,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2YxYjViNGVhYzQ5OWQzZWZkNjIyZGU0OWZjNDI5Nzc4NjY3ZjYyM2Yud2VicCIsImV4cCI6MTc5MDkzODA5OX1KjgBM1cTvNARYXeNPoX9DQDn-6z5rHkI.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011432",
+            "colors": [
+              "#011432",
+              "#001023",
+              "#006DFF",
+              "#E00013",
+              "#289566"
+            ],
+            "ui_elements": [
+              "Analysis Complete Mark",
+              "Vertical Bar Chart",
+              "Primary Blue CTA",
+              "Starry Navy Backdrop",
+              "Back Circle Icon"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_y53m9",
+            "name": "Diagnosis Checklist",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 17,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2VhNTI1NWU3N2VkNjhmOGZiOGExMTJkYzE5OGY4MjVhNWY4MDExZTEud2VicCIsImV4cCI6MTc5MDkzODA5OX0wSKhNAx1p6UAaqD6UCwkp11HRAyOT4SQ.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#02122D",
+            "colors": [
+              "#02122D",
+              "#0B102D",
+              "#FF4B24",
+              "#833026",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Orange Alert Banner",
+              "Checklist Radio Rows",
+              "Orange Primary CTA",
+              "Starry Navy Backdrop",
+              "Back Circle Icon"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_ocnwo",
+            "name": "Drug Education Slide",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 18,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzZkNzkyNzY3NWFjZWY2YmZmNmM5M2IyMDE1ZDEwNjQ4Mjk0ZWE3ODkud2VicCIsImV4cCI6MTc5MDkzODA5OX1aXeLKu_DtIR2YSscqyiaeaQYy4ljZY_U.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#D50624",
+            "colors": [
+              "#D50624",
+              "#F96F91",
+              "#FFFFFF",
+              "#1F7F9D",
+              "#000000"
+            ],
+            "ui_elements": [
+              "Flat Red Background",
+              "Centered QUTTR Logo",
+              "Brain Illustration",
+              "Page Dot Indicator",
+              "White Pill Next CTA"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_7st9t",
+            "name": "Relationship Slide",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 19,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2Q1MjM2MmUyYzk2OTVhYWExZjJmOWJlMGNkYzY1MWI5NjEzMTNiMzEud2VicCIsImV4cCI6MTc5MDkzODA5OX14CURua5Zh8deqeFFNYKW0-jXjAI8B6eo.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#D50624",
+            "colors": [
+              "#D50624",
+              "#DADADA",
+              "#FFFFFF",
+              "#1F7F9D",
+              "#000000"
+            ],
+            "ui_elements": [
+              "Flat Red Background",
+              "Centered QUTTR Logo",
+              "Heart Illustration",
+              "Page Dot Indicator",
+              "White Pill Next CTA"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_s7ufq",
+            "name": "Sex Drive Slide",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 20,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzgzNjRiMzExMDE2YzEzNTdjMjU0OWY4MmUwNTc1MDZhZmU4YzdlZWYud2VicCIsImV4cCI6MTc5MDkzODA5OX3GmzDy_DhRsJ87Jo9OCjv1RrolmK3l8ZU.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#D50624",
+            "colors": [
+              "#D50624",
+              "#FFFFFF",
+              "#58BDE8",
+              "#F5B7C2",
+              "#1F7F9D"
+            ],
+            "ui_elements": [
+              "Flat Red Background",
+              "Centered QUTTR Logo",
+              "Gender Icon Graphic",
+              "Page Dot Indicator",
+              "White Pill Next CTA"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          }
+        ],
+        "total": 41,
+        "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2FwcF9zY3JlZW5zIiwicSI6ImY4MDFhNzIzMjJmM2FlODgzNjYwMTcxOSIsIm8iOjIwLCJodyI6MzAsImV4cCI6MTc5MDkzODA5OX0.slf0Xrf6k_6wxcnYTGnLZJLL5Is",
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1454
+        }
+      },
+      {
+        "app": {
+          "app_id": "6532588521",
+          "name": "QUITTR - Break Free Now"
+        },
+        "screens": [
+          {
+            "screen_id": "onb_yvx6f",
+            "name": "Mood Education Slide",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 21,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2E3MzUwMWRiOGY2NjFkODhlNmZjMDY1ODUzMDEyMTZiNTUyOWRmZGQud2VicCIsImV4cCI6MTc5MDkzODExNX21WIJ_nLjhue_sOc3m5Uq65IX4CPeWjXw.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#D50624",
+            "colors": [
+              "#D50624",
+              "#59B7E8",
+              "#FFFFFF",
+              "#1F7F9D",
+              "#8D2840"
+            ],
+            "ui_elements": [
+              "Flat Red Background",
+              "Centered QUTTR Logo",
+              "Character Illustration",
+              "Page Dot Indicator",
+              "White Pill Next CTA"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_zk4fn",
+            "name": "Recovery Path Slide",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 22,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2NiODZkM2I5NjYxMTNhZGE3ZGQ1ODA0NjdlNzg4ZGZjNTdiNTQxNGUud2VicCIsImV4cCI6MTc5MDkzODExNX1GqG2LQF-z-_NSEdLgvekrnBdeu50bDkk.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#13387E",
+            "colors": [
+              "#13387E",
+              "#FFFFFF",
+              "#37B43A",
+              "#654523",
+              "#8CA0BD"
+            ],
+            "ui_elements": [
+              "Flat Blue Background",
+              "Centered QUTTR Logo",
+              "Sprout Illustration",
+              "Page Dot Indicator",
+              "White Pill Next CTA"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_n83xd",
+            "name": "Recovery Path Slide",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 23,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzU0MzRkZjgwYmY3NmU0MzkxNzYwMDJhNDI0ZGVhNzIyNzAyMmExZjIud2VicCIsImV4cCI6MTc5MDkzODExNX2Gt4w76ePStGs5LpXen7IB7bT_t6fw104.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#02367F",
+            "colors": [
+              "#02367F",
+              "#FFFFFF",
+              "#37B43A",
+              "#654523",
+              "#8CA0BD"
+            ],
+            "ui_elements": [
+              "Flat Blue Background",
+              "Centered QUTTR Logo",
+              "Sprout Illustration",
+              "Page Dot Indicator",
+              "Disabled Grey CTA"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_xultg",
+            "name": "Welcome Feature Slide",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 24,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzVjZjJlODY4NTBiMTg1Y2FhOTk5ZDAzNmRmNDYzM2U3MmFiNzJjMjEud2VicCIsImV4cCI6MTc5MDkzODExNX1dp0l4eADMmK16YVp4jNVsJPZOxFEEup8.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#12131C",
+            "colors": [
+              "#12131C",
+              "#2C485C",
+              "#35CBEF",
+              "#FFFFFF",
+              "#E9B13C"
+            ],
+            "ui_elements": [
+              "Gradient Hero Backdrop",
+              "Centered QUTTR Logo",
+              "Hero Illustration",
+              "Press Logo Strip",
+              "White Pill Next CTA"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_nugfm",
+            "name": "Motivation Feature Slide",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 25,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2MwOGMxMGZlOWY5MWMzZTNkNzlkMTlkZTM0NWQ4YjRiM2I5ZmM3YTEud2VicCIsImV4cCI6MTc5MDkzODExNX3CBxBpFHFVuq-ip9-rdsvK1xAJBbT8li8.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#12131C",
+            "colors": [
+              "#12131C",
+              "#324F6B",
+              "#7ED1DB",
+              "#FFFFFF",
+              "#E9B13C"
+            ],
+            "ui_elements": [
+              "Gradient Hero Backdrop",
+              "Centered QUTTR Logo",
+              "Hero Illustration",
+              "Press Logo Strip",
+              "Page Dot Indicator"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_1bd3p",
+            "name": "Setbacks Feature Slide",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 26,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2I3NmRiZjg5YzIwODIwNWY4YjAzNTI5OGI5NWQwMjQ0NzYxMjE1ZGMud2VicCIsImV4cCI6MTc5MDkzODExNX1LzMnf0YiU7ZLtgGHPqWAJ_TapKQN8Hd0.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#101019",
+            "colors": [
+              "#101019",
+              "#4D82A4",
+              "#72D6F0",
+              "#F6532A",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Gradient Hero Backdrop",
+              "Centered QUTTR Logo",
+              "Calendar Illustration",
+              "Press Logo Strip",
+              "White Pill Next CTA"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_cr39s",
+            "name": "Self Mastery Slide",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 27,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2YyNjk4ODZjZmZhZWJmZTRjNDI5MGI5ZTc2ZmQzMDE1ZTBiMGJkZjEud2VicCIsImV4cCI6MTc5MDkzODExNX35asTL0LNRU-EWs3LaAAkxAyaU_cly_VI.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#111119",
+            "colors": [
+              "#111119",
+              "#2A4457",
+              "#6ACEEB",
+              "#FFFFFF",
+              "#F6A7A1"
+            ],
+            "ui_elements": [
+              "Gradient Hero Backdrop",
+              "Centered QUTTR Logo",
+              "Portrait Illustration",
+              "Press Logo Strip",
+              "White Pill Next CTA"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_yhs5v",
+            "name": "Level Up Feature Slide",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 28,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzNkOTQ5MGQ4NDZmNzVhMzU4OTZkZDJjNmNjYWY1YzM5ODM2NDAxYWEud2VicCIsImV4cCI6MTc5MDkzODExNX29SSwVY_bTffz5_YlC1PrQIrYZzkHJAAk.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#12141F",
+            "colors": [
+              "#12141F",
+              "#3A5771",
+              "#33BCDD",
+              "#FFFFFF",
+              "#F15B72"
+            ],
+            "ui_elements": [
+              "Gradient Hero Backdrop",
+              "Centered QUTTR Logo",
+              "Laurel Hero Graphic",
+              "Press Logo Strip",
+              "Disabled Grey CTA"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_cwutd",
+            "name": "Benefits Testimonials",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 29,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzkwOTE4YTM1N2E3YTJhZmM4ZDFjOGRjYmViNzFkYTg2ZWExYTE0MDMud2VicCIsImV4cCI6MTc5MDkzODExNX18UA0hjl6LpExeMN3NC7Ec6aBCmAKskI0.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#032855",
+            "colors": [
+              "#032855",
+              "#011430",
+              "#1A67A7",
+              "#8C959E",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Back Circle Icon",
+              "Testimonial Cards",
+              "Avatar Row",
+              "Grey Continue CTA",
+              "Starry Navy Backdrop"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_aetsh",
+            "name": "Rewiring Benefits Chart",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 30,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzZhYWZlZTdlNDczZjNjZTQ1NzExM2QyYWZmZjBhM2U2Mzc1YTRlMjQud2VicCIsImV4cCI6MTc5MDkzODExNX1aZrmR055UYdXahdSdvLVITdFTvm6gIAI.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#01132E",
+            "colors": [
+              "#01132E",
+              "#0F1722",
+              "#38A354",
+              "#D80E16",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Back Circle Icon",
+              "Benefit Chart Card",
+              "Green Growth Line",
+              "Red Risk Area",
+              "White Continue CTA"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          }
+        ],
+        "total": 41,
+        "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2FwcF9zY3JlZW5zIiwicSI6ImY4MDFhNzIzMjJmM2FlODgzNjYwMTcxOSIsIm8iOjMwLCJodyI6NDAsImV4cCI6MTc5MDkzODExNX0.n4IeUxksQso0FVG45ulEm2OIoZc",
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1453
+        }
+      },
+      {
+        "app": {
+          "app_id": "6532588521",
+          "name": "QUITTR - Break Free Now"
+        },
+        "screens": [
+          {
+            "screen_id": "onb_hq2uu",
+            "name": "Rewiring Benefits Chart",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 31,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2U5YWY3YjRmNzdmMGFjMjRhYmZkN2E3ODVlOGNlNzFhMDUwYWYwMjkud2VicCIsImV4cCI6MTc5MDkzODE3NH21k_JH6C25iD61b_ixZ_DQnhL5Q_dFan8.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#01132E",
+            "colors": [
+              "#01132E",
+              "#0F1722",
+              "#38A354",
+              "#D80E16",
+              "#8C95A3"
+            ],
+            "ui_elements": [
+              "Back Circle Icon",
+              "Benefit Chart Card",
+              "Green Growth Line",
+              "Red Risk Area",
+              "Disabled Grey CTA"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_69q6i",
+            "name": "Goal Selection",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 32,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzI5NDA5OGNmYjEwNWQwZGRiM2VkMTBhOTUwMmJmYjRiMWVlNmU3NDEud2VicCIsImV4cCI6MTc5MDkzODE3NH3SFvg4BWFVvpNRRkXdHxt-Tb72gm4Vwqo.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#01132F",
+            "colors": [
+              "#01132F",
+              "#45274A",
+              "#0C7DCA",
+              "#E34557",
+              "#F4CA1C"
+            ],
+            "ui_elements": [
+              "Back Circle Icon",
+              "Multicolor Goal Rows",
+              "Round Select Icons",
+              "Starry Navy Backdrop",
+              "White Bottom CTA"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_m6vi4",
+            "name": "Referral Code Form",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 33,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzUzN2Q3MTE3MjJiZGE5MmQ0MzhhYzdhNTgzNTMwNDM1MjQxMzUzZWMud2VicCIsImV4cCI6MTc5MDkzODE3NH3IYr4seRjdlUoDSkeE_3AnIZRGK35L9bo.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#021432",
+            "colors": [
+              "#021432",
+              "#021534",
+              "#1B2A44",
+              "#99A1AB",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Back Circle Icon",
+              "Referral Input Pill",
+              "White Bottom CTA",
+              "Starry Navy Backdrop"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_gz4c1",
+            "name": "Rating Request",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 34,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzAxZWY2NzNjNTNjODkyYzU5M2UzYTVjOGJjZDc4ZGYwMjViNjQ0Mjkud2VicCIsImV4cCI6MTc5MDkzODE3NH3qxHswiAua4zR-mP2IAqjGJSpN23Qihyk.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#0A102F",
+            "colors": [
+              "#0A102F",
+              "#021430",
+              "#FFC22B",
+              "#2A1E3A",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Back Circle Icon",
+              "Star Rating Header",
+              "Laurel Award Badges",
+              "Review List Cards",
+              "White Bottom CTA"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_tj72p",
+            "name": "Welcome Loading",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 35,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzQ1MWJjOTllY2Q0OGYxN2U3OGEzNjI4MTliODMwZjdmMWM0YzNmNTcud2VicCIsImV4cCI6MTc5MDkzODE3NH2HT4uLDohs5Tbgv5Iuh_lpINvysaKOlmk.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#011635",
+            "colors": [
+              "#011635",
+              "#021330",
+              "#FFFFFF",
+              "#3C4C5B",
+              "#001022"
+            ],
+            "ui_elements": [
+              "Centered Headline",
+              "Centered Spinner",
+              "Starry Navy Backdrop",
+              "Minimal Loader Layout"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_uqs0k",
+            "name": "Plan Built Loading",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 36,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzlmMmI1YzM4MDk0MzIxNmZhN2ZkYWU0ODYwYjRkZGExMjBiYWNlYTIud2VicCIsImV4cCI6MTc5MDkzODE3NH3txizDGRlyO7732d8e4-4Qaa02D4s2RKM.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#061936",
+            "colors": [
+              "#061936",
+              "#FF5A12",
+              "#35CBEF",
+              "#26252B",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Centered Headline",
+              "Large Card Preview",
+              "Centered Spinner",
+              "Starry Navy Backdrop",
+              "Plan Message Header"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_9dyf9",
+            "name": "Purpose Loading",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 37,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzY5OTlhNjI3MmJmNzYxYTYyNGVkMDhhNTA5NzcxNDViMTljN2I0MTQud2VicCIsImV4cCI6MTc5MDkzODE3NH1rZZKENfaZVYvNm8g-hyx-Id6yNg29LaY.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#061936",
+            "colors": [
+              "#061936",
+              "#FF5A12",
+              "#35CBEF",
+              "#26252B",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Centered Headline",
+              "Large Card Preview",
+              "Centered Spinner",
+              "Starry Navy Backdrop"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_xswvh",
+            "name": "Investment Loading",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 38,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2QwODkyNzBhZjM3MjA1NjdhZmJhZTI4NjE4NTk0NDNjZTE5YTFlODkud2VicCIsImV4cCI6MTc5MDkzODE3NH10BEexQzGrKwTwCPKQ_UL90OdiMD5IQTQ.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#051935",
+            "colors": [
+              "#051935",
+              "#FF5A12",
+              "#35CBEF",
+              "#26252B",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Centered Headline",
+              "Large Card Preview",
+              "Centered Spinner",
+              "Starry Navy Backdrop"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_mmw0b",
+            "name": "Subscription Permission",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 39,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2Q0ZGFmNTZjNmZmNDcwZjFiODlhMzY0Zjk2MWQ5MjZkOGM3Mjk3NWIud2VicCIsImV4cCI6MTc5MDkzODE3NH1Jkc_dH7Rvcj-Yw8A1MWML_H4KUj2vSbs.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#151322",
+            "colors": [
+              "#151322",
+              "#4D778D",
+              "#BBC0C5",
+              "#2EBF75",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Permission Alert",
+              "Gradient Hero Backdrop",
+              "Benefit Tag Chips",
+              "Grey Paywall CTA",
+              "Check Badge Icon"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "onb_v8173",
+            "name": "Subscription Offer",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 40,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2JlZGJlYzg2OWRjMzI5YjI3Zjc3NGI3YTg1YzFmNmEyMGRjN2QwZDgud2VicCIsImV4cCI6MTc5MDkzODE3NH1h1n76YozmHkT-PLazONNwjZJmurKkidI.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#10121B",
+            "colors": [
+              "#10121B",
+              "#335365",
+              "#A2E9F8",
+              "#FFFFFF",
+              "#F6B52A"
+            ],
+            "ui_elements": [
+              "Gradient Hero Backdrop",
+              "Star Rating Header",
+              "Benefit Tag Chips",
+              "White Paywall CTA",
+              "Check Badge Icon"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          }
+        ],
+        "total": 41,
+        "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJsaXN0X2FwcF9zY3JlZW5zIiwicSI6ImY4MDFhNzIzMjJmM2FlODgzNjYwMTcxOSIsIm8iOjQwLCJodyI6NTAsImV4cCI6MTc5MDkzODE3NH0.u0hgpgaYwu7ktrzDhJDKLMBw6kM",
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1448
+        }
+      },
+      {
+        "app": {
+          "app_id": "6532588521",
+          "name": "QUITTR - Break Free Now"
+        },
+        "screens": [
+          {
+            "screen_id": "onb_nsmij",
+            "name": "Feature Overview",
+            "flow": "Onboarding",
+            "section": "onboarding",
+            "position": 41,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzgzM2Q5NDU3MjIzZGU4MTEwM2FiMWIzMmIxYjUzMzMxYTViOGQ3NGYud2VicCIsImV4cCI6MTc5MDkzODIxMX2VtTxveBYQ1-hWVP1ErQN6aNQu5vHUepc.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#0D101A",
+            "colors": [
+              "#0D101A",
+              "#1B143F",
+              "#7E2ADF",
+              "#FE9A00",
+              "#FFFFFF"
+            ],
+            "ui_elements": [
+              "Centered QUTTR Logo",
+              "Phone Mockup Preview",
+              "Partner Logo Row",
+              "White Continue CTA",
+              "Dark Feature Backdrop"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          }
+        ],
+        "total": 41,
+        "next_cursor": null,
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1447
+        }
+      },
+      {
+        "app": {
+          "app_id": "6532588521",
+          "name": "QUITTR - Break Free Now"
+        },
+        "screens": [
+          {
+            "screen_id": "spl_dz552",
+            "name": null,
+            "flow": "Welcome Screen",
+            "section": "welcome-screen",
+            "position": 1,
+            "kind": "video",
+            "media_url": "https://mcp.appllama.io/media/AE17ImsiOiJvcmlnL3YxLzJmMGZlMTIzZjU0MDg3NjU2NzhmODA0YjI3NzhhZWM3NGU1ODM1YjkubXA0IiwiZXhwIjoxNzkwOTM4MjExfQIdzI-rnWSost6V8IbWw_40sGaEjOHgyw.mp4",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#0A0612",
+            "colors": [
+              "#0A0612",
+              "#FFFFFF",
+              "#3D258C",
+              "#A19EAB",
+              "#FFB800"
+            ],
+            "ui_elements": [
+              "Animated Text Logo",
+              "Gradient Background",
+              "Bottom Sheet Card",
+              "Pill Button with Icon",
+              "Star Rating Graphic"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "spl_bxjx6",
+            "name": "Splash Loading",
+            "flow": "Welcome Screen",
+            "section": "welcome-screen",
+            "position": 2,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2YyMmQ0OGM2NjU3Njc0MzdmYTBmZGY5NjNjMDAxMWQwNTY0Zjg5OTkud2VicCIsImV4cCI6MTc5MDkzODIxMX2Ar0-hKZ95xE27ZESTU2Cz5sMYkdok8hc.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#080315",
+            "colors": [
+              "#080315",
+              "#1E0A4E",
+              "#56389C",
+              "#463373",
+              "#F9F8F9"
+            ],
+            "ui_elements": [
+              "Centered Logo Mark",
+              "Purple Blur Backdrop",
+              "Centered Tagline Text"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "spl_9z3u5",
+            "name": "Splash Tagline",
+            "flow": "Welcome Screen",
+            "section": "welcome-screen",
+            "position": 3,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2I1ZWY1N2FhZTFhZDZlNmY3ZDVjNTkyNTdlOGU5YWNlYzg2ZTJlZWMud2VicCIsImV4cCI6MTc5MDkzODIxMX3RbZdHc4ygSrp8nnrEf4wbDr7o2Q4dnVE.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#1E0B4C",
+            "colors": [
+              "#1E0B4C",
+              "#13072C",
+              "#55379B",
+              "#564971",
+              "#F8F7F8"
+            ],
+            "ui_elements": [
+              "Centered Logo Mark",
+              "Purple Blur Backdrop",
+              "Centered Tagline Text"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "spl_rpgu4",
+            "name": "Intro Splash",
+            "flow": "Welcome Screen",
+            "section": "welcome-screen",
+            "position": 4,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2NhYzRhZmY1MDFlNDc3YTlhYzIxNTMyM2M2YjViODJhNjMxNTBlNDUud2VicCIsImV4cCI6MTc5MDkzODIxMX28aGwNb7D4iLBLW5-e9pvJ5K7cUhuP8to.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#29145D",
+            "colors": [
+              "#29145D",
+              "#533797",
+              "#664FA0",
+              "#8976B4",
+              "#F7F4F8"
+            ],
+            "ui_elements": [
+              "Centered Logo Mark",
+              "Purple Blur Backdrop",
+              "Dual-Line Tagline",
+              "Laurel Star Rating"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          },
+          {
+            "screen_id": "spl_nhd2g",
+            "name": "Quiz Welcome",
+            "flow": "Welcome Screen",
+            "section": "welcome-screen",
+            "position": 5,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzJmMTRkNmNjZDZkY2RmOTQ5NDAzYTIzY2NhYzM5MWRmZGJlNjI4MDAud2VicCIsImV4cCI6MTc5MDkzODIxMX1eDHtk9AnApXfyyO8eg_Z_H22GtyWqRAo.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#101427",
+            "colors": [
+              "#101427",
+              "#1D234E",
+              "#F6F6F7",
+              "#9798A1",
+              "#E0A050"
+            ],
+            "ui_elements": [
+              "Top Center Logo",
+              "Starry Navy Backdrop",
+              "Welcome Heading",
+              "Intro Body Text",
+              "Laurel Star Rating",
+              "Rounded Quiz CTA",
+              "Bottom Login Pill"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          }
+        ],
+        "total": 5,
+        "next_cursor": null,
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1445
+        }
+      },
+      {
+        "app": {
+          "app_id": "6532588521",
+          "name": "QUITTR - Break Free Now"
+        },
+        "screens": [
+          {
+            "screen_id": "pay_0gu2e",
+            "name": "Subscription Offer",
+            "flow": "Paywall",
+            "section": "paywall",
+            "position": 1,
+            "kind": "image",
+            "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzBmMmFkMzYxNWM0Mjg4OWFiMjdjOWUwNGM5MjU1MTU0ODY1YzFmODIud2VicCIsImV4cCI6MTc5MDkzODIxMX2nrMiM5Mn_LrvkFmr-T6cUM6ghnuQ5dHE.webp",
+            "width": null,
+            "height": null,
+            "duration_ms": null,
+            "dominant_color": "#F8F8F8",
+            "colors": [
+              "#F8F8F8",
+              "#08081A",
+              "#141428",
+              "#F0F0F8",
+              "#6B42E8"
+            ],
+            "ui_elements": [
+              "Creator Header Text",
+              "Testimonial Cards",
+              "Rounded Bottom Sheet",
+              "Centered Plan Title",
+              "Sale Banner Pill",
+              "Sparkle Gradient Icon",
+              "Remaining Spots Text",
+              "Selectable Plan Cards",
+              "Selected Radio Control",
+              "Struck Price Labels",
+              "Trust Badge Row",
+              "Gradient Primary CTA",
+              "Annual Billing Note"
+            ],
+            "app": {
+              "app_id": "6532588521",
+              "name": "QUITTR - Break Free Now"
+            }
+          }
+        ],
+        "total": 1,
+        "next_cursor": null,
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1443
+        }
+      },
+      {
+        "app": {
+          "app_id": "6532588521",
+          "name": "QUITTR - Break Free Now"
+        },
+        "screens": [],
+        "total": 0,
+        "next_cursor": null,
+        "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+        "credits": {
+          "spent": 1,
+          "remaining_this_month": 1444
+        }
+      }
+    ],
+    "cursor": null
+  }
+}

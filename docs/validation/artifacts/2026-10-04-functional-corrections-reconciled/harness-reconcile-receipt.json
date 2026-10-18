@@ -1,0 +1,84 @@
+{
+  "snapshot": "/private/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-corrections-verify-5mcu171d/snapshot",
+  "scope": "Harness and audit reconciliation only; no application/native/config files edited and no shared-source writes.",
+  "patch": "harness-reconcile.patch",
+  "patchSha256": "3be54b590852e539936ac135f6a06319eeab0966a39affd1f356109ef73d0b5e",
+  "fileHashes": "harness-reconcile-hashes.json",
+  "verification": {
+    "cleanup-source-contract": {
+      "exitCode": 0,
+      "testsPassed": 7,
+      "log": "harness-contract-final.log",
+      "logSha256": "bb10ad7fde355b32757b0172ba2b61c7e8322cf5a3c4102ed7ac6e628bd80314"
+    },
+    "ui-localization-ad-choice-native-picker": {
+      "exitCode": 0,
+      "testsPassed": 49,
+      "suitesPassed": 3,
+      "log": "harness-ui.log",
+      "logSha256": "1e33bd6e9bf03b49b42efbcb8d807ec618b2cbbfa985d20f24f3ac40e33fc803"
+    },
+    "localization-catalog": {
+      "exitCode": 0,
+      "testsPassed": 16,
+      "log": "harness-localization-catalog.log",
+      "logSha256": "62b32aacc38a6cd2714297269025aa78f3cb794535e9a5fb42d1ae9ac61d1e8d"
+    },
+    "release-audit-repair": {
+      "exitCode": 0,
+      "log": "harness-release-repair.log",
+      "logSha256": "1c2c1c4eecdb0d9cbfcc05c8216ef60cbeb74e39841f2bfc54513373e1d37ca1"
+    },
+    "ios-shield-unlock-production-fixtures": {
+      "exitCode": 0,
+      "log": "harness-ios-shield-unlock.log",
+      "logSha256": "be4fbc4d7220c447c5da2019e494261578bc87643c45d537c613ffd58c2a6a65"
+    },
+    "runtime-data-integrity-audit": {
+      "exitCode": 0,
+      "pass": 13,
+      "fail": 0,
+      "log": "harness-runtime-final.log",
+      "logSha256": "24c0bc854f1bbaac221e6506d79590c56356a415ae7f225ae64cfc5a0147f126"
+    },
+    "privacy-safety-audit": {
+      "exitCode": 0,
+      "pass": 31,
+      "fail": 0,
+      "log": "harness-privacy-final.log",
+      "logSha256": "cb5014064b997a1ab9db55edaa0a84841bd432d5548b01663dd7c6bda47fecd1"
+    },
+    "release-readiness": {
+      "exitCode": 0,
+      "pass": 23,
+      "warn": 0,
+      "fail": 14,
+      "log": "harness-release-final.log",
+      "remainingFailureGates": [
+        "prototype-design-files",
+        "store-legal-hosted-url-validation",
+        "firebase-server-secret-configuration",
+        "firebase-production-runtime-evidence",
+        "production-android-signing",
+        "dependency-security",
+        "production-monetization",
+        "production-ai-backend",
+        "ios-physical-device-validation",
+        "android-real-browser-validation",
+        "normal-browsing-corpus-validation",
+        "performance-validation",
+        "store-ad-sandbox-validation",
+        "ai-backend-smoke-validation"
+      ],
+      "logSha256": "2d999a905b3973ff0fe64f766cbe2fe50fbc49ebba43beeda85917949ee145cc"
+    },
+    "full-core-current": {
+      "status": "complete",
+      "exitCode": 0,
+      "testsPassed": 279,
+      "failures": [],
+      "log": "harness-core-complete.log",
+      "logSha256": "740028067303f666fbdef0e51217800203656829bb17834c27a91bb861b2889f"
+    }
+  }
+}

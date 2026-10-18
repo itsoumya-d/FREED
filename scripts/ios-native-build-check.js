@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const { iosAdMobBuildSetting } = require("./lib/ios-admob-build-config");
 
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -37,6 +38,7 @@ function timestampLabel() {
 
 function parseArgs(argv) {
   const options = {
+    jobs: 2,
     buildSettings: [],
     codeSigningAllowed: false,
     configuration: process.env.FREED_IOS_NATIVE_BUILD_CONFIGURATION || DEFAULT_CONFIGURATION,
@@ -73,7 +75,10 @@ function parseArgs(argv) {
       return argv[index];
     };
 
-    if (arg === "--build-setting") {
+    if (arg === "--jobs") {
+      options.jobs = parsePositiveInteger(next(), "--jobs");
+      if (options.jobs > 8) throw new Error("--jobs must be at most 8 to bound native compiler memory.");
+    } else if (arg === "--build-setting") {
       options.buildSettings.push(next());
     } else if (arg === "--code-signing-allowed") {
       options.codeSigningAllowed = parseBoolean(next(), "--code-signing-allowed");
@@ -136,6 +141,8 @@ function parseArgs(argv) {
 
 function xcodebuildArgs(options, destination = options.destination) {
   return [
+    "-jobs",
+    String(options.jobs),
     "-workspace",
     options.workspace,
     "-scheme",
@@ -151,6 +158,7 @@ function xcodebuildArgs(options, destination = options.destination) {
     `CODE_SIGNING_ALLOWED=${options.codeSigningAllowed ? "YES" : "NO"}`,
     "COMPILER_INDEX_STORE_ENABLE=NO",
     `FREED_NODE_BINARY=${options.nodeBinary}`,
+    iosAdMobBuildSetting(options.sdk),
     ...options.buildSettings,
     "build",
   ];
@@ -440,6 +448,11 @@ function runSelfTest() {
     "--node-binary",
     process.execPath,
   ]);
+  assert.equal(options.jobs, 2);
+  assert.equal(parseArgs(["--jobs", "1"]).jobs, 1);
+  assert.throws(() => parseArgs(["--jobs", "0"]), /positive integer/);
+  assert.throws(() => parseArgs(["--jobs", "9"]), /at most 8/);
+  assert.deepEqual(xcodebuildArgs(options).slice(0, 2), ["-jobs", "2"]);
   assert.equal(options.scheme, "FREEDDeviceActivityMonitor");
   assert.equal(options.timeoutMs, 60000);
   assert.equal(options.idleTimeoutMs, 5000);

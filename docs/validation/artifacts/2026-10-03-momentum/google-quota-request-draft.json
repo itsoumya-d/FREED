@@ -1,0 +1,14 @@
+{
+  "status": "submitted-awaiting-google-review",
+  "account": "project-owner-selected",
+  "projectId": "freed-7d5ee",
+  "billingAccountSuffix": "0ECFDB",
+  "currentAssociatedProjects": 5,
+  "requestedTotal": 6,
+  "description": "Please increase the associated-project quota for billing account 0193F1-FE1EDB-0ECFDB to 6 projects. It currently has 5 associated projects. Linking the existing Firebase project freed-7d5ee fails with FAILED_PRECONDITION: Cloud billing quota exceeded. We need one additional project to deploy Firebase Cloud Functions and Secret Manager for FREED server-verified subscriptions and app services in asia-south1. This is a quota increase request; no existing projects should be moved, disconnected, or disabled.",
+  "billingAccountField": "0193F1-FE1EDB-0ECFDB",
+  "ownerApprovedSubmission": true,
+  "approvalReceivedAt": "2026-10-03T13:18:37.198Z",
+  "submittedAt": "2026-10-03T13:34:02.884913+00:00",
+  "confirmationArtifact": "google-quota-request-confirmation.json"
+}

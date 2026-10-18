@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="FREED Automated QA 2026-10-02 - iOS 26.5 - CB401DE2-5B73-4017-95B3-E2D609FB88DA" tests="1" failures="1" time="35.669" timestamp="2026-10-02T16:05:59">
+    <testcase id="root-navigation" name="root-navigation" classname="root-navigation" file=".maestro/flows/root-navigation.yaml" time="35.589" timestamp="2026-10-02T16:05:59" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: id: screen-main-today is visible</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,253 @@
+{
+  "schemaVersion": "freed-router-source-bound-reruns-v1",
+  "generatedAt": "2026-10-02T11:32:45.940Z",
+  "sanitized": true,
+  "suites": {
+    "tests/native-router-dispatch.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T11:32:41.069Z",
+      "durationMs": 1471,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/router-destination-refresh/native-router-dispatch.test.ts.log",
+      "logSha256": "4524084aee2386c922c2be1d7c6b500644d7d6a5fd8e4d19728fbd2b8958ce21",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/native-router-dispatch.test.ts"
+      ],
+      "executionSourceSnapshot": {
+        "capturedAt": "2026-10-02T11:32:42.554Z",
+        "beforeSha256": {
+          "tests/native-router-dispatch.test.ts": "4cc76870811190dffb01c550ca6e28277de4957dafea3b97c0989f2cf1b5e9b5",
+          "src/features/freed-app.tsx": "660aca960db5e8a80da5243dccad1daecf6f15efbc414f6020a18f2171e3acb4",
+          "src/lib/native-navigation.ts": "dee249d9da63746bd3479999a61902fa4abe4230e181a1adda2bd1f5af2fb692",
+          "src/lib/deep-link-routing.ts": "1e53567b993e349e8723eca847d16b5cdd82ba6a8c6b8a4fb746237d8475dd64",
+          "src/features/use-freed-navigation.ts": "41005290f371895700a594ef7cc57390943469b943ddca5ad5384eed6873bcea",
+          "app/_layout.tsx": "42a22a507077cefa6abb2632830da7964bd79a956d86c4d8fb1338152a34006d",
+          "app/flow/[destination].tsx": "07d5d47e1b36d6ab85424039a6aebba65ada2acd5380ea450dc21515fc8a73c5",
+          "app/onboarding/[destination].tsx": "ee130795cc4a9241f4b641e88d444a50d2432acb4d4d5154cdad87cb7b2e9339",
+          "app/(tabs)/_layout.tsx": "d450fc5a895b2c88a0a0c40b1a926da1fa3f590a8b141f02b059ac0b522e7870",
+          "scripts/accessibility-safety-audit.js": "a81645ebd071339b16cd587603d27e85823710a058a7d2a9a348ad8fd7641027",
+          "node_modules/expo-router/build/global-state/routing.js": "df4597a436d5950ee80d504b6d8a7ecefdc96dafa1ba0eaa57d7714cde81b025"
+        },
+        "afterSha256": {
+          "tests/native-router-dispatch.test.ts": "4cc76870811190dffb01c550ca6e28277de4957dafea3b97c0989f2cf1b5e9b5",
+          "src/features/freed-app.tsx": "660aca960db5e8a80da5243dccad1daecf6f15efbc414f6020a18f2171e3acb4",
+          "src/lib/native-navigation.ts": "dee249d9da63746bd3479999a61902fa4abe4230e181a1adda2bd1f5af2fb692",
+          "src/lib/deep-link-routing.ts": "1e53567b993e349e8723eca847d16b5cdd82ba6a8c6b8a4fb746237d8475dd64",
+          "src/features/use-freed-navigation.ts": "41005290f371895700a594ef7cc57390943469b943ddca5ad5384eed6873bcea",
+          "app/_layout.tsx": "42a22a507077cefa6abb2632830da7964bd79a956d86c4d8fb1338152a34006d",
+          "app/flow/[destination].tsx": "07d5d47e1b36d6ab85424039a6aebba65ada2acd5380ea450dc21515fc8a73c5",
+          "app/onboarding/[destination].tsx": "ee130795cc4a9241f4b641e88d444a50d2432acb4d4d5154cdad87cb7b2e9339",
+          "app/(tabs)/_layout.tsx": "d450fc5a895b2c88a0a0c40b1a926da1fa3f590a8b141f02b059ac0b522e7870",
+          "scripts/accessibility-safety-audit.js": "a81645ebd071339b16cd587603d27e85823710a058a7d2a9a348ad8fd7641027",
+          "node_modules/expo-router/build/global-state/routing.js": "df4597a436d5950ee80d504b6d8a7ecefdc96dafa1ba0eaa57d7714cde81b025"
+        },
+        "stableDuringExecution": true
+      }
+    },
+    "tests/native-navigation.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T11:32:42.557Z",
+      "durationMs": 84,
+      "counts": {
+        "passed": 9,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/router-destination-refresh/native-navigation.test.ts.log",
+      "logSha256": "cb4f105dc3c82443ec43d22044eb4c0596500753c3521fa1f492d26ce4431f1d",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/native-navigation.test.ts"
+      ],
+      "executionSourceSnapshot": {
+        "capturedAt": "2026-10-02T11:32:42.641Z",
+        "beforeSha256": {
+          "tests/native-navigation.test.ts": "f4fbdafefe5a24236a732271e8879d6de26bc8696b802a8a67f8920b26a291e6",
+          "src/features/freed-app.tsx": "660aca960db5e8a80da5243dccad1daecf6f15efbc414f6020a18f2171e3acb4",
+          "src/lib/native-navigation.ts": "dee249d9da63746bd3479999a61902fa4abe4230e181a1adda2bd1f5af2fb692",
+          "src/lib/deep-link-routing.ts": "1e53567b993e349e8723eca847d16b5cdd82ba6a8c6b8a4fb746237d8475dd64",
+          "src/features/use-freed-navigation.ts": "41005290f371895700a594ef7cc57390943469b943ddca5ad5384eed6873bcea",
+          "app/_layout.tsx": "42a22a507077cefa6abb2632830da7964bd79a956d86c4d8fb1338152a34006d",
+          "app/flow/[destination].tsx": "07d5d47e1b36d6ab85424039a6aebba65ada2acd5380ea450dc21515fc8a73c5",
+          "app/onboarding/[destination].tsx": "ee130795cc4a9241f4b641e88d444a50d2432acb4d4d5154cdad87cb7b2e9339",
+          "app/(tabs)/_layout.tsx": "d450fc5a895b2c88a0a0c40b1a926da1fa3f590a8b141f02b059ac0b522e7870",
+          "scripts/accessibility-safety-audit.js": "a81645ebd071339b16cd587603d27e85823710a058a7d2a9a348ad8fd7641027",
+          "node_modules/expo-router/build/global-state/routing.js": "df4597a436d5950ee80d504b6d8a7ecefdc96dafa1ba0eaa57d7714cde81b025"
+        },
+        "afterSha256": {
+          "tests/native-navigation.test.ts": "f4fbdafefe5a24236a732271e8879d6de26bc8696b802a8a67f8920b26a291e6",
+          "src/features/freed-app.tsx": "660aca960db5e8a80da5243dccad1daecf6f15efbc414f6020a18f2171e3acb4",
+          "src/lib/native-navigation.ts": "dee249d9da63746bd3479999a61902fa4abe4230e181a1adda2bd1f5af2fb692",
+          "src/lib/deep-link-routing.ts": "1e53567b993e349e8723eca847d16b5cdd82ba6a8c6b8a4fb746237d8475dd64",
+          "src/features/use-freed-navigation.ts": "41005290f371895700a594ef7cc57390943469b943ddca5ad5384eed6873bcea",
+          "app/_layout.tsx": "42a22a507077cefa6abb2632830da7964bd79a956d86c4d8fb1338152a34006d",
+          "app/flow/[destination].tsx": "07d5d47e1b36d6ab85424039a6aebba65ada2acd5380ea450dc21515fc8a73c5",
+          "app/onboarding/[destination].tsx": "ee130795cc4a9241f4b641e88d444a50d2432acb4d4d5154cdad87cb7b2e9339",
+          "app/(tabs)/_layout.tsx": "d450fc5a895b2c88a0a0c40b1a926da1fa3f590a8b141f02b059ac0b522e7870",
+          "scripts/accessibility-safety-audit.js": "a81645ebd071339b16cd587603d27e85823710a058a7d2a9a348ad8fd7641027",
+          "node_modules/expo-router/build/global-state/routing.js": "df4597a436d5950ee80d504b6d8a7ecefdc96dafa1ba0eaa57d7714cde81b025"
+        },
+        "stableDuringExecution": true
+      }
+    },
+    "tests/native-feature-links.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T11:32:42.643Z",
+      "durationMs": 99,
+      "counts": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/router-destination-refresh/native-feature-links.test.ts.log",
+      "logSha256": "4e42c0e4ec554ac5f00c4f224c528807541fdd74771606eeea9da48ba7ace21b",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/native-feature-links.test.ts"
+      ],
+      "executionSourceSnapshot": {
+        "capturedAt": "2026-10-02T11:32:42.744Z",
+        "beforeSha256": {
+          "tests/native-feature-links.test.ts": "7a8ba4a52d635936bba44838a3a0915e1b7dd0348deca9e7b3c113e464973aff",
+          "src/features/freed-app.tsx": "660aca960db5e8a80da5243dccad1daecf6f15efbc414f6020a18f2171e3acb4",
+          "src/lib/native-navigation.ts": "dee249d9da63746bd3479999a61902fa4abe4230e181a1adda2bd1f5af2fb692",
+          "src/lib/deep-link-routing.ts": "1e53567b993e349e8723eca847d16b5cdd82ba6a8c6b8a4fb746237d8475dd64",
+          "src/features/use-freed-navigation.ts": "41005290f371895700a594ef7cc57390943469b943ddca5ad5384eed6873bcea",
+          "app/_layout.tsx": "42a22a507077cefa6abb2632830da7964bd79a956d86c4d8fb1338152a34006d",
+          "app/flow/[destination].tsx": "07d5d47e1b36d6ab85424039a6aebba65ada2acd5380ea450dc21515fc8a73c5",
+          "app/onboarding/[destination].tsx": "ee130795cc4a9241f4b641e88d444a50d2432acb4d4d5154cdad87cb7b2e9339",
+          "app/(tabs)/_layout.tsx": "d450fc5a895b2c88a0a0c40b1a926da1fa3f590a8b141f02b059ac0b522e7870",
+          "scripts/accessibility-safety-audit.js": "a81645ebd071339b16cd587603d27e85823710a058a7d2a9a348ad8fd7641027",
+          "node_modules/expo-router/build/global-state/routing.js": "df4597a436d5950ee80d504b6d8a7ecefdc96dafa1ba0eaa57d7714cde81b025"
+        },
+        "afterSha256": {
+          "tests/native-feature-links.test.ts": "7a8ba4a52d635936bba44838a3a0915e1b7dd0348deca9e7b3c113e464973aff",
+          "src/features/freed-app.tsx": "660aca960db5e8a80da5243dccad1daecf6f15efbc414f6020a18f2171e3acb4",
+          "src/lib/native-navigation.ts": "dee249d9da63746bd3479999a61902fa4abe4230e181a1adda2bd1f5af2fb692",
+          "src/lib/deep-link-routing.ts": "1e53567b993e349e8723eca847d16b5cdd82ba6a8c6b8a4fb746237d8475dd64",
+          "src/features/use-freed-navigation.ts": "41005290f371895700a594ef7cc57390943469b943ddca5ad5384eed6873bcea",
+          "app/_layout.tsx": "42a22a507077cefa6abb2632830da7964bd79a956d86c4d8fb1338152a34006d",
+          "app/flow/[destination].tsx": "07d5d47e1b36d6ab85424039a6aebba65ada2acd5380ea450dc21515fc8a73c5",
+          "app/onboarding/[destination].tsx": "ee130795cc4a9241f4b641e88d444a50d2432acb4d4d5154cdad87cb7b2e9339",
+          "app/(tabs)/_layout.tsx": "d450fc5a895b2c88a0a0c40b1a926da1fa3f590a8b141f02b059ac0b522e7870",
+          "scripts/accessibility-safety-audit.js": "a81645ebd071339b16cd587603d27e85823710a058a7d2a9a348ad8fd7641027",
+          "node_modules/expo-router/build/global-state/routing.js": "df4597a436d5950ee80d504b6d8a7ecefdc96dafa1ba0eaa57d7714cde81b025"
+        },
+        "stableDuringExecution": true
+      }
+    },
+    "tests/app-shell.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T11:32:42.747Z",
+      "durationMs": 1928,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/router-destination-refresh/app-shell.test.ts.log",
+      "logSha256": "c3e143f3146fd36ef8bfd4e012520d25ef0f57b25823c69c65430b9d1dbf238d",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/app-shell.test.ts"
+      ],
+      "executionSourceSnapshot": {
+        "capturedAt": "2026-10-02T11:32:44.689Z",
+        "beforeSha256": {
+          "tests/app-shell.test.ts": "632103eb9f1e46d61c659a34a5ce34bbad6159ed1abe9d24be7bdff020487b81",
+          "src/features/freed-app.tsx": "660aca960db5e8a80da5243dccad1daecf6f15efbc414f6020a18f2171e3acb4",
+          "src/lib/native-navigation.ts": "dee249d9da63746bd3479999a61902fa4abe4230e181a1adda2bd1f5af2fb692",
+          "src/lib/deep-link-routing.ts": "1e53567b993e349e8723eca847d16b5cdd82ba6a8c6b8a4fb746237d8475dd64",
+          "src/features/use-freed-navigation.ts": "41005290f371895700a594ef7cc57390943469b943ddca5ad5384eed6873bcea",
+          "app/_layout.tsx": "42a22a507077cefa6abb2632830da7964bd79a956d86c4d8fb1338152a34006d",
+          "app/flow/[destination].tsx": "07d5d47e1b36d6ab85424039a6aebba65ada2acd5380ea450dc21515fc8a73c5",
+          "app/onboarding/[destination].tsx": "ee130795cc4a9241f4b641e88d444a50d2432acb4d4d5154cdad87cb7b2e9339",
+          "app/(tabs)/_layout.tsx": "d450fc5a895b2c88a0a0c40b1a926da1fa3f590a8b141f02b059ac0b522e7870",
+          "scripts/accessibility-safety-audit.js": "a81645ebd071339b16cd587603d27e85823710a058a7d2a9a348ad8fd7641027",
+          "node_modules/expo-router/build/global-state/routing.js": "df4597a436d5950ee80d504b6d8a7ecefdc96dafa1ba0eaa57d7714cde81b025"
+        },
+        "afterSha256": {
+          "tests/app-shell.test.ts": "632103eb9f1e46d61c659a34a5ce34bbad6159ed1abe9d24be7bdff020487b81",
+          "src/features/freed-app.tsx": "660aca960db5e8a80da5243dccad1daecf6f15efbc414f6020a18f2171e3acb4",
+          "src/lib/native-navigation.ts": "dee249d9da63746bd3479999a61902fa4abe4230e181a1adda2bd1f5af2fb692",
+          "src/lib/deep-link-routing.ts": "1e53567b993e349e8723eca847d16b5cdd82ba6a8c6b8a4fb746237d8475dd64",
+          "src/features/use-freed-navigation.ts": "41005290f371895700a594ef7cc57390943469b943ddca5ad5384eed6873bcea",
+          "app/_layout.tsx": "42a22a507077cefa6abb2632830da7964bd79a956d86c4d8fb1338152a34006d",
+          "app/flow/[destination].tsx": "07d5d47e1b36d6ab85424039a6aebba65ada2acd5380ea450dc21515fc8a73c5",
+          "app/onboarding/[destination].tsx": "ee130795cc4a9241f4b641e88d444a50d2432acb4d4d5154cdad87cb7b2e9339",
+          "app/(tabs)/_layout.tsx": "d450fc5a895b2c88a0a0c40b1a926da1fa3f590a8b141f02b059ac0b522e7870",
+          "scripts/accessibility-safety-audit.js": "a81645ebd071339b16cd587603d27e85823710a058a7d2a9a348ad8fd7641027",
+          "node_modules/expo-router/build/global-state/routing.js": "df4597a436d5950ee80d504b6d8a7ecefdc96dafa1ba0eaa57d7714cde81b025"
+        },
+        "stableDuringExecution": true
+      }
+    },
+    "tests/quiz-accessibility-source.test.js": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T11:32:44.693Z",
+      "durationMs": 1241,
+      "counts": {
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/router-destination-refresh/quiz-accessibility-source.test.js.log",
+      "logSha256": "72fd2c03cacc429cbbaddc0ea5b828b0fa8334950161f5c57ef70723537e3109",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/quiz-accessibility-source.test.js"
+      ],
+      "executionSourceSnapshot": {
+        "capturedAt": "2026-10-02T11:32:45.938Z",
+        "beforeSha256": {
+          "tests/quiz-accessibility-source.test.js": "38fc6d237923b4363931533272006fbd661b564936b67049dd645233ce49baba",
+          "src/features/freed-app.tsx": "660aca960db5e8a80da5243dccad1daecf6f15efbc414f6020a18f2171e3acb4",
+          "src/lib/native-navigation.ts": "dee249d9da63746bd3479999a61902fa4abe4230e181a1adda2bd1f5af2fb692",
+          "src/lib/deep-link-routing.ts": "1e53567b993e349e8723eca847d16b5cdd82ba6a8c6b8a4fb746237d8475dd64",
+          "src/features/use-freed-navigation.ts": "41005290f371895700a594ef7cc57390943469b943ddca5ad5384eed6873bcea",
+          "app/_layout.tsx": "42a22a507077cefa6abb2632830da7964bd79a956d86c4d8fb1338152a34006d",
+          "app/flow/[destination].tsx": "07d5d47e1b36d6ab85424039a6aebba65ada2acd5380ea450dc21515fc8a73c5",
+          "app/onboarding/[destination].tsx": "ee130795cc4a9241f4b641e88d444a50d2432acb4d4d5154cdad87cb7b2e9339",
+          "app/(tabs)/_layout.tsx": "d450fc5a895b2c88a0a0c40b1a926da1fa3f590a8b141f02b059ac0b522e7870",
+          "scripts/accessibility-safety-audit.js": "a81645ebd071339b16cd587603d27e85823710a058a7d2a9a348ad8fd7641027",
+          "node_modules/expo-router/build/global-state/routing.js": "df4597a436d5950ee80d504b6d8a7ecefdc96dafa1ba0eaa57d7714cde81b025"
+        },
+        "afterSha256": {
+          "tests/quiz-accessibility-source.test.js": "38fc6d237923b4363931533272006fbd661b564936b67049dd645233ce49baba",
+          "src/features/freed-app.tsx": "660aca960db5e8a80da5243dccad1daecf6f15efbc414f6020a18f2171e3acb4",
+          "src/lib/native-navigation.ts": "dee249d9da63746bd3479999a61902fa4abe4230e181a1adda2bd1f5af2fb692",
+          "src/lib/deep-link-routing.ts": "1e53567b993e349e8723eca847d16b5cdd82ba6a8c6b8a4fb746237d8475dd64",
+          "src/features/use-freed-navigation.ts": "41005290f371895700a594ef7cc57390943469b943ddca5ad5384eed6873bcea",
+          "app/_layout.tsx": "42a22a507077cefa6abb2632830da7964bd79a956d86c4d8fb1338152a34006d",
+          "app/flow/[destination].tsx": "07d5d47e1b36d6ab85424039a6aebba65ada2acd5380ea450dc21515fc8a73c5",
+          "app/onboarding/[destination].tsx": "ee130795cc4a9241f4b641e88d444a50d2432acb4d4d5154cdad87cb7b2e9339",
+          "app/(tabs)/_layout.tsx": "d450fc5a895b2c88a0a0c40b1a926da1fa3f590a8b141f02b059ac0b522e7870",
+          "scripts/accessibility-safety-audit.js": "a81645ebd071339b16cd587603d27e85823710a058a7d2a9a348ad8fd7641027",
+          "node_modules/expo-router/build/global-state/routing.js": "df4597a436d5950ee80d504b6d8a7ecefdc96dafa1ba0eaa57d7714cde81b025"
+        },
+        "stableDuringExecution": true
+      }
+    }
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "entries": [
+    {
+      "source": "Google sign-in is unavailable in this build. You can continue with local progress and try again after updating FREED.",
+      "translations": {
+        "hi": "इस संस्करण में Google से साइन-इन उपलब्ध नहीं है। स्थानीय प्रगति जारी रखें और FREED अपडेट करने के बाद फिर कोशिश करें।",
+        "es": "El inicio de sesión con Google no está disponible en esta versión. Puedes seguir con tu progreso local y volver a intentarlo tras actualizar FREED.",
+        "pt": "O login com Google não está disponível nesta versão. Continue com seu progresso local e tente novamente após atualizar o FREED.",
+        "fr": "La connexion Google est indisponible dans cette version. Vous pouvez garder votre progression locale et réessayer après la mise à jour de FREED.",
+        "de": "Die Google-Anmeldung ist in dieser Version nicht verfügbar. Du kannst lokal weitermachen und es nach einem FREED-Update erneut versuchen.",
+        "ar": "تسجيل الدخول عبر Google غير متاح في هذا الإصدار. يمكنك متابعة تقدمك المحلي والمحاولة مجددًا بعد تحديث FREED.",
+        "ja": "このバージョンではGoogleログインを利用できません。端末内の記録で続け、FREEDの更新後にもう一度お試しください。",
+        "ko": "이 버전에서는 Google 로그인을 사용할 수 없어요. 기기 내 기록으로 계속하고 FREED 업데이트 후 다시 시도해 주세요.",
+        "zh-Hans": "此版本暂时无法使用 Google 登录。你可以继续使用本地记录，更新 FREED 后再试。"
+      }
+    },
+    {
+      "source": "Tools to pause an urge, protect your focus, and build healthier habits.",
+      "translations": {
+        "hi": "इच्छा आने पर ठहरने, अपना ध्यान सुरक्षित रखने और बेहतर आदतें बनाने के साधन।",
+        "es": "Herramientas para pausar un impulso, proteger tu concentración y crear hábitos más saludables.",
+        "pt": "Ferramentas para pausar um impulso, proteger seu foco e criar hábitos mais saudáveis.",
+        "fr": "Des outils pour faire une pause face à une envie, préserver votre concentration et adopter des habitudes plus saines.",
+        "de": "Werkzeuge, um bei einem Impuls innezuhalten, deine Konzentration zu schützen und gesündere Gewohnheiten zu entwickeln.",
+        "ar": "أدوات للتوقف عند الرغبة، وحماية تركيزك، وبناء عادات صحية أكثر.",
+        "ja": "衝動にひと呼吸置き、集中力を守り、よりよい習慣を育てるためのツール。",
+        "ko": "충동이 생길 때 잠시 멈추고, 집중력을 보호하며, 더 건강한 습관을 기르는 도구입니다.",
+        "zh-Hans": "帮助你在冲动来临时停一停、保护专注力并培养更健康习惯的工具。"
+      }
+    },
+    {
+      "source": "Block adult websites, pause urges, and build healthier habits.",
+      "translations": {
+        "hi": "वयस्क वेबसाइटें रोकें, इच्छा आने पर ठहरें और बेहतर आदतें बनाएँ।",
+        "es": "Bloquea sitios para adultos, pausa los impulsos y crea hábitos más saludables.",
+        "pt": "Bloqueie sites adultos, pause os impulsos e crie hábitos mais saudáveis.",
+        "fr": "Bloquez les sites pour adultes, faites une pause et adoptez des habitudes plus saines.",
+        "de": "Blockiere Erwachsenen-Websites, halte bei Impulsen inne und entwickle gesündere Gewohnheiten.",
+        "ar": "احظر مواقع البالغين، وتوقف عند الرغبة، وابنِ عادات صحية أكثر.",
+        "ja": "成人向けサイトをブロックし、衝動にひと呼吸置いて、よりよい習慣を育てましょう。",
+        "ko": "성인 사이트를 차단하고, 충동을 잠시 멈추며, 더 건강한 습관을 만들어 보세요.",
+        "zh-Hans": "屏蔽成人网站，在冲动来临时停一停，培养更健康的习惯。"
+      }
+    },
+    {
+      "source": "Start free. No account needed.",
+      "translations": {
+        "hi": "मुफ़्त शुरू करें। खाते की ज़रूरत नहीं।",
+        "es": "Empieza gratis. Sin cuenta.",
+        "pt": "Comece grátis. Sem conta.",
+        "fr": "Commencez gratuitement. Sans compte.",
+        "de": "Kostenlos starten. Kein Konto nötig.",
+        "ar": "ابدأ مجانًا. لا حاجة إلى حساب.",
+        "ja": "無料で開始。アカウントは不要です。",
+        "ko": "무료로 시작하세요. 계정은 필요 없어요.",
+        "zh-Hans": "免费开始，无需账户。"
+      }
+    }
+  ],
+  "semantic": {
+    "en": {
+      "title": "Break free.\nMake room for you.",
+      "purpose": "Block adult websites, pause urges, and build healthier habits.",
+      "start": "Start using FREED",
+      "personalize": "Personalize my suggestions",
+      "access": "Start free. No account needed."
+    },
+    "hi": {
+      "title": "आज़ाद हों।\nअपने लिए जगह बनाएँ।",
+      "purpose": "वयस्क वेबसाइटें रोकें, इच्छा आने पर ठहरें और बेहतर आदतें बनाएँ।",
+      "start": "FREED का उपयोग शुरू करें",
+      "personalize": "मेरे सुझाव व्यक्तिगत बनाएँ",
+      "access": "मुफ़्त शुरू करें। खाते की ज़रूरत नहीं।"
+    },
+    "es": {
+      "title": "Libérate.\nHaz espacio para ti.",
+      "purpose": "Bloquea sitios para adultos, pausa los impulsos y crea hábitos más saludables.",
+      "start": "Empieza a usar FREED",
+      "personalize": "Personalizar mis sugerencias",
+      "access": "Empieza gratis. Sin cuenta."
+    },
+    "pt": {
+      "title": "Liberte-se.\nAbra espaço para você.",
+      "purpose": "Bloqueie sites adultos, pause os impulsos e crie hábitos mais saudáveis.",
+      "start": "Começar a usar FREED",
+      "personalize": "Personalizar minhas sugestões",
+      "access": "Comece grátis. Sem conta."
+    },
+    "fr": {
+      "title": "Libérez-vous.\nPlace à vous.",
+      "purpose": "Bloquez les sites pour adultes, faites une pause et adoptez des habitudes plus saines.",
+      "start": "Commencer avec FREED",
+      "personalize": "Personnaliser mes suggestions",
+      "access": "Commencez gratuitement. Sans compte."
+    },
+    "de": {
+      "title": "Werde frei.\nRaum für dich.",
+      "purpose": "Blockiere Erwachsenen-Websites, halte bei Impulsen inne und entwickle gesündere Gewohnheiten.",
+      "start": "FREED nutzen",
+      "personalize": "Meine Vorschläge anpassen",
+      "access": "Kostenlos starten. Kein Konto nötig."
+    },
+    "ar": {
+      "title": "تحرر.\nافسح المجال لنفسك.",
+      "purpose": "احظر مواقع البالغين، وتوقف عند الرغبة، وابنِ عادات صحية أكثر.",
+      "start": "ابدأ استخدام FREED",
+      "personalize": "خصّص اقتراحاتي",
+      "access": "ابدأ مجانًا. لا حاجة إلى حساب."
+    },
+    "ja": {
+      "title": "自由に。\n自分の時間を。",
+      "purpose": "成人向けサイトをブロックし、衝動にひと呼吸置いて、よりよい習慣を育てましょう。",
+      "start": "FREEDを始める",
+      "personalize": "提案を自分に合わせる",
+      "access": "無料で開始。アカウントは不要です。"
+    },
+    "ko": {
+      "title": "자유로워져요.\n나를 위한 여유.",
+      "purpose": "성인 사이트를 차단하고, 충동을 잠시 멈추며, 더 건강한 습관을 만들어 보세요.",
+      "start": "FREED 시작하기",
+      "personalize": "내게 맞는 제안 받기",
+      "access": "무료로 시작하세요. 계정은 필요 없어요."
+    },
+    "zh-Hans": {
+      "title": "重获自由。\n为自己留些空间。",
+      "purpose": "屏蔽成人网站，在冲动来临时停一停，培养更健康的习惯。",
+      "start": "开始使用 FREED",
+      "personalize": "个性化我的建议",
+      "access": "免费开始，无需账户。"
+    }
+  }
+}

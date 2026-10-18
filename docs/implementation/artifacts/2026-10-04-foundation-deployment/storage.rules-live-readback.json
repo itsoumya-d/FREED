@@ -1,0 +1,18 @@
+{
+  "release": {
+    "name": "projects/freed-7d5ee/releases/firebase.storage/freed-7d5ee.firebasestorage.app",
+    "rulesetName": "projects/freed-7d5ee/rulesets/ff425a82-4013-4623-9934-48b099a4453e",
+    "createTime": "2026-10-04T09:24:55.133031Z",
+    "updateTime": "2026-10-04T09:24:55.133031Z"
+  },
+  "sha256": "406073581b1053786192e821c91eb32d8f770061b14cb03b223dcd8670ad703f",
+  "matchesVerifiedLocalSource": true,
+  "source": {
+    "files": [
+      {
+        "content": "rules_version = '2';\nservice firebase.storage {\n  match /b/{bucket}/o {\n    // Client uploads are disabled. Future backend paths require privacy review.\n    match /{allPaths=**} {\n      allow read, write: if false;\n    }\n  }\n}\n",
+        "name": "storage.rules"
+      }
+    ]
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "entries": [],
+  "semantic": {
+    "en": {
+      "earnedProof.motionNeeded": "Allow motion access to count steps. Resume the reset when you’re ready.",
+      "earnedProof.motionDenied": "Motion access is denied. Allow it in FREED’s app settings, or choose another reset. Your guided session is kept.",
+      "earnedProof.motionUnavailable": "Step counting is unavailable on this device. Choose another reset; your guided session is kept.",
+      "earnedProof.cameraNeeded": "Allow camera access to photograph the requested targets.",
+      "earnedProof.cameraDenied": "Camera access is denied. Allow it in FREED’s app settings, or choose another reset. Your guided session is kept.",
+      "earnedProof.cameraUnavailable": "Camera permission could not be checked. Retry or choose another reset; your guided session is kept.",
+      "earnedProof.openSettings": "Open app settings",
+      "earnedProof.allowMotion": "Allow motion access",
+      "earnedProof.allowCamera": "Allow camera access"
+    },
+    "hi": {
+      "earnedProof.motionNeeded": "कदम गिनने के लिए गतिविधि की अनुमति दें। तैयार होने पर अभ्यास फिर शुरू करें।",
+      "earnedProof.motionDenied": "गतिविधि की अनुमति नहीं है। FREED की ऐप सेटिंग्स में अनुमति दें या दूसरा अभ्यास चुनें। आपका निर्देशित सत्र बना हुआ है।",
+      "earnedProof.motionUnavailable": "इस डिवाइस पर कदम गिनना उपलब्ध नहीं है। दूसरा अभ्यास चुनें; आपका निर्देशित सत्र बना हुआ है।",
+      "earnedProof.cameraNeeded": "माँगे गए लक्ष्यों की फ़ोटो लेने के लिए कैमरे की अनुमति दें।",
+      "earnedProof.cameraDenied": "कैमरे की अनुमति नहीं है। FREED की ऐप सेटिंग्स में अनुमति दें या दूसरा अभ्यास चुनें। आपका निर्देशित सत्र बना हुआ है।",
+      "earnedProof.cameraUnavailable": "कैमरे की अनुमति नहीं जाँची जा सकी। फिर कोशिश करें या दूसरा अभ्यास चुनें; आपका निर्देशित सत्र बना हुआ है।",
+      "earnedProof.openSettings": "ऐप सेटिंग्स खोलें",
+      "earnedProof.allowMotion": "गतिविधि की अनुमति दें",
+      "earnedProof.allowCamera": "कैमरे की अनुमति दें"
+    },
+    "es": {
+      "earnedProof.motionNeeded": "Permite el acceso al movimiento para contar pasos. Reanuda el ejercicio cuando quieras.",
+      "earnedProof.motionDenied": "El acceso al movimiento está denegado. Permítelo en los ajustes de FREED o elige otro ejercicio. Conservas tu sesión guiada.",
+      "earnedProof.motionUnavailable": "El conteo de pasos no está disponible en este dispositivo. Elige otro ejercicio; conservas tu sesión guiada.",
+      "earnedProof.cameraNeeded": "Permite el acceso a la cámara para fotografiar los objetivos solicitados.",
+      "earnedProof.cameraDenied": "El acceso a la cámara está denegado. Permítelo en los ajustes de FREED o elige otro ejercicio. Conservas tu sesión guiada.",
+      "earnedProof.cameraUnavailable": "No se pudo comprobar el permiso de cámara. Reinténtalo o elige otro ejercicio; conservas tu sesión guiada.",
+      "earnedProof.openSettings": "Abrir ajustes de la app",
+      "earnedProof.allowMotion": "Permitir acceso al movimiento",
+      "earnedProof.allowCamera": "Permitir acceso a la cámara"
+    },
+    "pt": {
+      "earnedProof.motionNeeded": "Permita o acesso ao movimento para contar passos. Retome o exercício quando estiver pronto.",
+      "earnedProof.motionDenied": "O acesso ao movimento foi negado. Permita-o nos ajustes do FREED ou escolha outro exercício. Sua sessão guiada está mantida.",
+      "earnedProof.motionUnavailable": "A contagem de passos está indisponível neste dispositivo. Escolha outro exercício; sua sessão guiada está mantida.",
+      "earnedProof.cameraNeeded": "Permita o acesso à câmera para fotografar os alvos solicitados.",
+      "earnedProof.cameraDenied": "O acesso à câmera foi negado. Permita-o nos ajustes do FREED ou escolha outro exercício. Sua sessão guiada está mantida.",
+      "earnedProof.cameraUnavailable": "Não foi possível verificar a permissão da câmera. Tente novamente ou escolha outro exercício; sua sessão guiada está mantida.",
+      "earnedProof.openSettings": "Abrir ajustes do app",
+      "earnedProof.allowMotion": "Permitir acesso ao movimento",
+      "earnedProof.allowCamera": "Permitir acesso à câmera"
+    },
+    "fr": {
+      "earnedProof.motionNeeded": "Autorisez l’accès aux mouvements pour compter les pas. Reprenez l’exercice quand vous le souhaitez.",
+      "earnedProof.motionDenied": "L’accès aux mouvements est refusé. Autorisez-le dans les réglages de FREED ou choisissez un autre exercice. Votre séance guidée est conservée.",
+      "earnedProof.motionUnavailable": "Le comptage des pas est indisponible sur cet appareil. Choisissez un autre exercice ; votre séance guidée est conservée.",
+      "earnedProof.cameraNeeded": "Autorisez l’accès à l’appareil photo pour photographier les cibles demandées.",
+      "earnedProof.cameraDenied": "L’accès à l’appareil photo est refusé. Autorisez-le dans les réglages de FREED ou choisissez un autre exercice. Votre séance guidée est conservée.",
+      "earnedProof.cameraUnavailable": "L’autorisation de l’appareil photo n’a pas pu être vérifiée. Réessayez ou choisissez un autre exercice ; votre séance guidée est conservée.",
+      "earnedProof.openSettings": "Ouvrir les réglages de l’app",
+      "earnedProof.allowMotion": "Autoriser les mouvements",
+      "earnedProof.allowCamera": "Autoriser l’appareil photo"
+    },
+    "de": {
+      "earnedProof.motionNeeded": "Erlaube den Zugriff auf Bewegung, um Schritte zu zählen. Setze die Übung fort, wenn du bereit bist.",
+      "earnedProof.motionDenied": "Der Bewegungszugriff wurde verweigert. Erlaube ihn in den FREED-App-Einstellungen oder wähle eine andere Übung. Deine angeleitete Sitzung bleibt erhalten.",
+      "earnedProof.motionUnavailable": "Das Schrittezählen ist auf diesem Gerät nicht verfügbar. Wähle eine andere Übung; deine angeleitete Sitzung bleibt erhalten.",
+      "earnedProof.cameraNeeded": "Erlaube den Kamerazugriff, um die angeforderten Ziele zu fotografieren.",
+      "earnedProof.cameraDenied": "Der Kamerazugriff wurde verweigert. Erlaube ihn in den FREED-App-Einstellungen oder wähle eine andere Übung. Deine angeleitete Sitzung bleibt erhalten.",
+      "earnedProof.cameraUnavailable": "Die Kameraberechtigung konnte nicht geprüft werden. Versuche es erneut oder wähle eine andere Übung; deine angeleitete Sitzung bleibt erhalten.",
+      "earnedProof.openSettings": "App-Einstellungen öffnen",
+      "earnedProof.allowMotion": "Bewegungszugriff erlauben",
+      "earnedProof.allowCamera": "Kamerazugriff erlauben"
+    },
+    "ar": {
+      "earnedProof.motionNeeded": "اسمح بالوصول إلى الحركة لعدّ الخطوات. استأنف التمرين عندما تكون مستعدًا.",
+      "earnedProof.motionDenied": "الوصول إلى الحركة مرفوض. اسمح به في إعدادات تطبيق FREED أو اختر تمرينًا آخر. جلستك الموجّهة محفوظة.",
+      "earnedProof.motionUnavailable": "عدّ الخطوات غير متاح على هذا الجهاز. اختر تمرينًا آخر؛ جلستك الموجّهة محفوظة.",
+      "earnedProof.cameraNeeded": "اسمح بالوصول إلى الكاميرا لتصوير الأهداف المطلوبة.",
+      "earnedProof.cameraDenied": "الوصول إلى الكاميرا مرفوض. اسمح به في إعدادات تطبيق FREED أو اختر تمرينًا آخر. جلستك الموجّهة محفوظة.",
+      "earnedProof.cameraUnavailable": "تعذّر التحقق من إذن الكاميرا. أعد المحاولة أو اختر تمرينًا آخر؛ جلستك الموجّهة محفوظة.",
+      "earnedProof.openSettings": "فتح إعدادات التطبيق",
+      "earnedProof.allowMotion": "السماح بالوصول إلى الحركة",
+      "earnedProof.allowCamera": "السماح بالوصول إلى الكاميرا"
+    },
+    "ja": {
+      "earnedProof.motionNeeded": "歩数を数えるためにモーションへのアクセスを許可してください。準備ができたら練習を再開してください。",
+      "earnedProof.motionDenied": "モーションへのアクセスが拒否されています。FREEDのアプリ設定で許可するか、別の練習を選んでください。ガイド付きセッションは保持されています。",
+      "earnedProof.motionUnavailable": "この端末では歩数を数えられません。別の練習を選んでください。ガイド付きセッションは保持されています。",
+      "earnedProof.cameraNeeded": "指定された対象を撮影するためにカメラへのアクセスを許可してください。",
+      "earnedProof.cameraDenied": "カメラへのアクセスが拒否されています。FREEDのアプリ設定で許可するか、別の練習を選んでください。ガイド付きセッションは保持されています。",
+      "earnedProof.cameraUnavailable": "カメラの権限を確認できませんでした。再試行するか、別の練習を選んでください。ガイド付きセッションは保持されています。",
+      "earnedProof.openSettings": "アプリ設定を開く",
+      "earnedProof.allowMotion": "モーションを許可",
+      "earnedProof.allowCamera": "カメラを許可"
+    },
+    "ko": {
+      "earnedProof.motionNeeded": "걸음을 세려면 동작 접근을 허용하세요. 준비되면 활동을 재개하세요.",
+      "earnedProof.motionDenied": "동작 접근이 거부되었습니다. FREED 앱 설정에서 허용하거나 다른 활동을 선택하세요. 안내 세션은 유지됩니다.",
+      "earnedProof.motionUnavailable": "이 기기에서는 걸음을 셀 수 없습니다. 다른 활동을 선택하세요. 안내 세션은 유지됩니다.",
+      "earnedProof.cameraNeeded": "요청된 대상을 촬영하려면 카메라 접근을 허용하세요.",
+      "earnedProof.cameraDenied": "카메라 접근이 거부되었습니다. FREED 앱 설정에서 허용하거나 다른 활동을 선택하세요. 안내 세션은 유지됩니다.",
+      "earnedProof.cameraUnavailable": "카메라 권한을 확인할 수 없습니다. 다시 시도하거나 다른 활동을 선택하세요. 안내 세션은 유지됩니다.",
+      "earnedProof.openSettings": "앱 설정 열기",
+      "earnedProof.allowMotion": "동작 접근 허용",
+      "earnedProof.allowCamera": "카메라 접근 허용"
+    },
+    "zh-Hans": {
+      "earnedProof.motionNeeded": "请允许访问运动数据以计算步数。准备好后请继续练习。",
+      "earnedProof.motionDenied": "运动数据访问被拒绝。请在 FREED 应用设置中允许访问，或选择其他练习。你的引导式练习仍然保留。",
+      "earnedProof.motionUnavailable": "本设备无法计算步数。请选择其他练习；你的引导式练习仍然保留。",
+      "earnedProof.cameraNeeded": "请允许访问相机，以拍摄指定目标。",
+      "earnedProof.cameraDenied": "相机访问被拒绝。请在 FREED 应用设置中允许访问，或选择其他练习。你的引导式练习仍然保留。",
+      "earnedProof.cameraUnavailable": "无法检查相机权限。请重试或选择其他练习；你的引导式练习仍然保留。",
+      "earnedProof.openSettings": "打开应用设置",
+      "earnedProof.allowMotion": "允许访问运动数据",
+      "earnedProof.allowCamera": "允许访问相机"
+    }
+  },
+  "revision": "2026-10-11-explicit-native-challenge-permissions"
+}

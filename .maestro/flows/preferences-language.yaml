@@ -1,0 +1,86 @@
+appId: app.freed.recovery
+name: preferences-language
+tags:
+  - smoke
+  - local-write
+---
+# Unexecuted smoke scenario. Requires an isolated disposable English/LTR fixture.
+# Full scenario and physical-device receipts remain separate obligations.
+- openLink: "freed:///preferences"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-preferences"
+    timeout: 15000
+# Both platforms expose accessible radio rows. Full locale and OS-dialog reviews remain separate.
+- scrollUntilVisible:
+    element: { id: "language-en" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "language-en" }
+- assertVisible: { id: "language-en", checked: true }
+- scrollUntilVisible:
+    element: { id: "language-hi" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "language-hi" }
+- assertVisible: { id: "language-hi", checked: true }
+- scrollUntilVisible:
+    element: { id: "language-es" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "language-es" }
+- assertVisible: { id: "language-es", checked: true }
+- scrollUntilVisible:
+    element: { id: "language-pt" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "language-pt" }
+- assertVisible: { id: "language-pt", checked: true }
+- scrollUntilVisible:
+    element: { id: "language-fr" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "language-fr" }
+- assertVisible: { id: "language-fr", checked: true }
+- scrollUntilVisible:
+    element: { id: "language-de" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "language-de" }
+- assertVisible: { id: "language-de", checked: true }
+- scrollUntilVisible:
+    element: { id: "language-ar" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "language-ar" }
+- assertVisible: { id: "language-ar", checked: true }
+- scrollUntilVisible:
+    element: { id: "language-ja" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "language-ja" }
+- assertVisible: { id: "language-ja", checked: true }
+- scrollUntilVisible:
+    element: { id: "language-ko" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "language-ko" }
+- assertVisible: { id: "language-ko", checked: true }
+- scrollUntilVisible:
+    element: { id: "language-zh-Hans" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "language-zh-Hans" }
+- assertVisible: { id: "language-zh-Hans", checked: true }
+- scrollUntilVisible:
+    element: { id: "language-en" }
+    direction: UP
+    timeout: 10000
+- tapOn: { id: "language-en" }
+- assertVisible: { id: "language-en", checked: true }
+- takeScreenshot: "preferences-language"

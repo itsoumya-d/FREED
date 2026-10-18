@@ -1,0 +1,1016 @@
+[
+  {
+    "app_id": "6532588521",
+    "name": "QUITTR - Break Free Now",
+    "subtitle": "Become your best self again",
+    "publisher": "Quittr, LLC",
+    "categories": [
+      "Health & Fitness",
+      "Lifestyle"
+    ],
+    "rating": {
+      "average": 4.72,
+      "count": 33631
+    },
+    "revenue": {
+      "display": "$20K",
+      "monthly_usd": 20000,
+      "as_of": "2026-09-01"
+    },
+    "downloads": {
+      "display": "1K",
+      "value": 1000
+    },
+    "in_app_purchases": [
+      {
+        "title": "Unlimited (1 Year)",
+        "duration": "Annual",
+        "price": "$19.99"
+      },
+      {
+        "title": "Unlimited (1 Year)",
+        "duration": "Annual",
+        "price": "$29.99"
+      },
+      {
+        "title": "Unlimited (1 Month)",
+        "duration": "Monthly",
+        "price": "$9.99"
+      },
+      {
+        "title": "Yearly",
+        "duration": "Annual",
+        "price": "$19.99"
+      },
+      {
+        "title": "Unlimited (1 Month)",
+        "duration": "Monthly",
+        "price": "$14.99"
+      },
+      {
+        "title": "Unlimited (1 Month)",
+        "duration": "Monthly",
+        "price": "$9.99"
+      },
+      {
+        "title": "Unlimited (1 Year)",
+        "duration": "Annual",
+        "price": "$19.99"
+      },
+      {
+        "title": "Lifetime Subscription",
+        "duration": "Unknown",
+        "price": "$49.99"
+      },
+      {
+        "title": "Unlimited (1 Year)",
+        "duration": "Annual",
+        "price": "$29.99"
+      },
+      {
+        "title": "Get Lifetime Access",
+        "duration": "Unknown",
+        "price": "$49.99"
+      }
+    ],
+    "launched": "2024-07-23",
+    "last_updated": "2026-06-23",
+    "screens_count": 47,
+    "videos_count": 2,
+    "flows": [
+      {
+        "name": "Welcome Screen",
+        "screens": 5
+      },
+      {
+        "name": "Onboarding",
+        "screens": 41
+      },
+      {
+        "name": "Paywall",
+        "screens": 1
+      }
+    ],
+    "description": "Join over 2,000,000 users! Break free from adult content and regain control of your life. QUITTR is the #1 recovery app, designed to help you regain control and live with purpose. Whether you’re looking to cut down or quit entirely, QUITTR’s neuroscience-backed system helps you reshape your relationship with adult content, dopamine and more.\n\nWith real-time progress tracking, an encouraging community, and a full suite of tools—including meditations, interactive challenges, and more—you have everything you need to take charge of your habits. Reset your brain. Reset your life.**WHY MILLIONS TRUST QUITTR**REWIRE YOUR MINDBuilt on extensive research in addiction science, our innovative brain-rewiring system guides you step by step to regain control. Transform your mind into your greatest asset.MAKE EVERY DAY COUNTEngaging daily exercises help replace temptation with motivation and a fresh perspective. Stop craving, start thriving.TRACK YOUR PROGRESSMonitor your improvements in relationships, mental clarity, and overall well-being with our real-time progress tracker. Don’t just notice the difference—measure it.WATCH YOUR LIFE TREE GROWYour personal “Life Tree” evolves with you. Every positive choice you make nurtures it, helping it flourish over time. See your growth reflected back at you.A COMMUNITY THAT CARESQUITTR is home to a thriving self-improvement network. Share success stories, stay accountable, and compete in healthy challenges alongside like-minded individuals.ACHIEVE TRUE SATISFACTIONWhether you’re on day one or year one, every milestone strengthens your self-control and discipline. Unlock your full potential.POWERFUL RECOVERY TOOLSAdvanced filtering technology, AI-powered temptation blockers, and an arsenal of self-improvement tools—all designed to help you break free and build a better life.LEVEL UP YOUR FUTURERebooting your brain unlocks significant mental and physical benefits. Begin today and transform your life permanently.**REAL STORIES FROM THE QUITTR",
+    "current_version": "219",
+    "publisher_country": "US",
+    "category_rank": {
+      "rank": null,
+      "category": null,
+      "country": "United States",
+      "as_of": "Today"
+    },
+    "ratings_breakdown": {
+      "1": 1249,
+      "2": 202,
+      "3": 686,
+      "4": 2401,
+      "5": 29093
+    },
+    "top_countries": [
+      "United States",
+      "United Kingdom",
+      "Canada"
+    ],
+    "languages": [
+      "English",
+      "Spanish"
+    ],
+    "sections": [
+      {
+        "section": "welcome-screen",
+        "label": "Welcome Screen"
+      },
+      {
+        "section": "onboarding",
+        "label": "Onboarding"
+      },
+      {
+        "section": "paywall",
+        "label": "Paywall"
+      },
+      {
+        "section": "other-tabs",
+        "label": "Other Tabs"
+      }
+    ],
+    "hint": "Call list_app_screens with this app_id to walk every screen in order.",
+    "credits": {
+      "spent": 1,
+      "remaining_this_month": 1446
+    }
+  },
+  {
+    "app_id": "726780077",
+    "name": "Brainbuddy: Quit PMO",
+    "subtitle": "Site Blocker Addiction Tracker",
+    "publisher": "AppStudio Australia Pty Ltd",
+    "categories": [
+      "Health & Fitness",
+      "Lifestyle"
+    ],
+    "rating": {
+      "average": 4.68,
+      "count": 25972
+    },
+    "revenue": {
+      "display": "$40K",
+      "monthly_usd": 40000,
+      "as_of": "2026-09-01"
+    },
+    "downloads": {
+      "display": "1K",
+      "value": 1000
+    },
+    "in_app_purchases": [
+      {
+        "title": "Brainbuddy Full Access (Monthly)",
+        "duration": "Monthly",
+        "price": "$12.99"
+      },
+      {
+        "title": "Brainbuddy Full Access (Weekly)",
+        "duration": "Weekly",
+        "price": "$2.99"
+      },
+      {
+        "title": "Brainbuddy Full Access (Quarterly)",
+        "duration": "Quarterly",
+        "price": "$37.99"
+      },
+      {
+        "title": "Brainbuddy Full Access (Monthly)",
+        "duration": "Monthly",
+        "price": "$12.99"
+      },
+      {
+        "title": "Brainbuddy Full Access (Monthly)",
+        "duration": "Monthly",
+        "price": "$12.99"
+      },
+      {
+        "title": "Brainbuddy Full Access (Annual)",
+        "duration": "Annual",
+        "price": "$99.99"
+      },
+      {
+        "title": "Brainbuddy Full Access (6 Month)",
+        "duration": "Semiannual",
+        "price": "$59.99"
+      },
+      {
+        "title": "Course selfcontrol",
+        "duration": "Unknown",
+        "price": "$7.99"
+      },
+      {
+        "title": "Course anxiety",
+        "duration": "Unknown",
+        "price": "$7.99"
+      },
+      {
+        "title": "Course confidence",
+        "duration": "Unknown",
+        "price": "$7.99"
+      }
+    ],
+    "launched": "2013-11-11",
+    "last_updated": "2026-03-19",
+    "screens_count": 49,
+    "videos_count": 2,
+    "flows": [
+      {
+        "name": "Welcome Screen",
+        "screens": 5
+      },
+      {
+        "name": "Onboarding",
+        "screens": 43
+      },
+      {
+        "name": "Paywall",
+        "screens": 1
+      }
+    ],
+    "description": "Brainbuddy is the #1 dopamine detox and habit rewiring app, built to help you crave less and live more. Whether your goal is to cut back or quit unwanted digital habits entirely, Brainbuddy’s neuroscience approach can help you change your relationship with screen time, intimacy, and dopamine.\n\nWith a 100-day evidence-based education program, progress tracking, supportive community, and science-based recovery tools, Brainbuddy helps you rewire your brain and regain self-control. Reboot your life. (Note: All features require a paid Brainbuddy Premium subscription after onboarding).WHY MILLIONS CHOOSE BRAINBUDDY PREMIUMREWIRE YOUR BRAINBased on 12 years of research, our state-of-the-art rewiring program teaches you how to conquer your impulses, one step at a time. Turn your brain into an ally.MAKE EVERY DAY A GOOD DAYOur fun, daily exercises are specifically designed to replace temptation with motivation and a positive outlook. Stop craving, start living.PROGRESS YOU CAN SEEYour daily checkup tracks in real-time the positive changes you are making to your relationships, mental clarity, and health. Don’t just feel the change, track it.GROW YOUR LIFE TREEYour own personal “Life Tree” grows with you. With every positive choice you make, your tree becomes a little more beautiful. Watch as it grows each day because of you.THE BEST COMMUNITYBrainbuddy has one of the most vibrant and friendly self-improvement communities. Stay motivated with stories from others, and work with your team to win healthy accountability challenges.EXPERIENCE PERSONAL SATISFACTIONFrom one day to one year, build up your self-control and willpower one challenge at a time. You’ll be amazed at what you are capable of.TOOLS TO LIVE BETTERThe most powerful content blocker and web filter on the planet. Master impulse control with machine learning. Brainbuddy has everything you need to live a focused, distraction-free life.LEVEL UP YOUR LIFERebooting your habits has immense psychological and physical benef",
+    "current_version": "11.4.6",
+    "publisher_country": "Australia",
+    "category_rank": {
+      "rank": null,
+      "category": null,
+      "country": "United States",
+      "as_of": "Today"
+    },
+    "ratings_breakdown": {
+      "1": 1140,
+      "2": 211,
+      "3": 517,
+      "4": 2011,
+      "5": 22093
+    },
+    "top_countries": [
+      "United States",
+      "United Kingdom",
+      "China"
+    ],
+    "languages": [
+      "English"
+    ],
+    "sections": [
+      {
+        "section": "welcome-screen",
+        "label": "Welcome Screen"
+      },
+      {
+        "section": "onboarding",
+        "label": "Onboarding"
+      },
+      {
+        "section": "paywall",
+        "label": "Paywall"
+      },
+      {
+        "section": "other-tabs",
+        "label": "Other Tabs"
+      }
+    ],
+    "hint": "Call list_app_screens with this app_id to walk every screen in order.",
+    "credits": {
+      "spent": 1,
+      "remaining_this_month": 1442
+    }
+  },
+  {
+    "app_id": "672904239",
+    "name": "I Am Sober",
+    "subtitle": "Sobriety tracker for recovery",
+    "publisher": "I Am Sober LLC",
+    "categories": [
+      "Lifestyle",
+      "Health & Fitness"
+    ],
+    "rating": {
+      "average": 4.88,
+      "count": 187899
+    },
+    "revenue": {
+      "display": "$200K",
+      "monthly_usd": 200000,
+      "as_of": "2026-09-01"
+    },
+    "downloads": {
+      "display": "200K",
+      "value": 200000
+    },
+    "in_app_purchases": [
+      {
+        "title": "12 Months",
+        "duration": "Annual",
+        "price": "$39.99"
+      },
+      {
+        "title": "1 Month",
+        "duration": "Monthly",
+        "price": "$9.99"
+      },
+      {
+        "title": "1 Month",
+        "duration": "Monthly",
+        "price": "$9.99"
+      },
+      {
+        "title": "6 Months",
+        "duration": "Semiannual",
+        "price": "$27.49"
+      },
+      {
+        "title": "12 Months",
+        "duration": "Annual",
+        "price": "$29.99"
+      },
+      {
+        "title": "6 Months",
+        "duration": "Semiannual",
+        "price": "$27.49"
+      },
+      {
+        "title": "12 Months",
+        "duration": "Annual",
+        "price": "$39.99"
+      },
+      {
+        "title": "I Am Worthy",
+        "duration": "Unknown",
+        "price": "$0.99"
+      },
+      {
+        "title": "I Am Letting Go",
+        "duration": "Unknown",
+        "price": "$0.99"
+      },
+      {
+        "title": "I Am Killing It",
+        "duration": "Unknown",
+        "price": "$0.99"
+      }
+    ],
+    "launched": "2013-07-19",
+    "last_updated": "2026-09-28",
+    "screens_count": 57,
+    "videos_count": 2,
+    "flows": [
+      {
+        "name": "Welcome Screen",
+        "screens": 5
+      },
+      {
+        "name": "Onboarding",
+        "screens": 21
+      },
+      {
+        "name": "Paywall",
+        "screens": 2
+      },
+      {
+        "name": "Others",
+        "screens": 4
+      },
+      {
+        "name": "Savings Setup",
+        "screens": 4
+      },
+      {
+        "name": "Progress Settings",
+        "screens": 3
+      },
+      {
+        "name": "Summary Carousel",
+        "screens": 3
+      },
+      {
+        "name": "Account Settings",
+        "screens": 2
+      },
+      {
+        "name": "Achievements",
+        "screens": 2
+      },
+      {
+        "name": "Daily Pledge",
+        "screens": 2
+      },
+      {
+        "name": "Milestones",
+        "screens": 2
+      },
+      {
+        "name": "Savings Tracking",
+        "screens": 2
+      },
+      {
+        "name": "Subscription",
+        "screens": 2
+      },
+      {
+        "name": "Therapy Referral",
+        "screens": 2
+      },
+      {
+        "name": "Progress Tracking",
+        "screens": 1
+      }
+    ],
+    "description": "I Am Sober is more than just a free sobriety counter app.\n\nAlong with tracking your sober days, it helps you build new habits and provides ongoing motivation by connecting you to a wide network of people all striving for the same goal: staying sober one day at a time.\n\nThrough our growing sober community you can learn from others and contribute by sharing insights and tactics that have worked for you.**The I Am Sober app features:**\n• Sober day trackerTo visualize how long you’ve been sober.\n• Remember why you quitAdd reasons and photos to help you remember why you want to quit your addiction and stay sober.\n• Daily pledge trackerTake a pledge every day. Sobriety is a 24-hour struggle, so start your day off by making a pledge to stay sober. Then you can review how your day went and log notes at the end of the day.\n• Sobriety calculatorView how much money & time you’ve saved by being sober.\n• Analyze triggersRecap each day and find patterns that made your day easier or more challenging than the last.\n• Share your storyEither with others or for yourself, take photos and journal your progress directly in the app. Then choose to share it or save it as a reminder for yourself.\n• Milestone trackerTrack and celebrate your milestones from 1 day, to 1 week, to 1 month and beyond. Compare experiences with others on their sober journey. Read how they felt at this milestone and what you can expect. If you’re struggling, share your story and invite others to offer help or advice.\n• Withdrawal timelineWhen you create an account and declare your addiction, you can instantly see a withdrawal timeline to get an idea of what to expect for your next few days (and weeks). What’s more, you can contribute to it. See how many others saw an increase in their restfulness vs those that saw an increase in anxiety. Prepare yourself for what’s to come in recovery.\n• Customize your experienceYou set the time, your sober birthday, the category of motivation you need, the addictions you’re trying ",
+    "current_version": "8.8.2",
+    "publisher_country": "US",
+    "category_rank": {
+      "rank": 50,
+      "category": "Lifestyle",
+      "country": "United States",
+      "as_of": "Today"
+    },
+    "ratings_breakdown": {
+      "1": 963,
+      "2": 458,
+      "3": 2500,
+      "4": 12257,
+      "5": 171721
+    },
+    "top_countries": [
+      "United States",
+      "United Kingdom",
+      "Canada"
+    ],
+    "languages": [
+      "Arabic",
+      "Czech",
+      "Danish",
+      "Dutch",
+      "English",
+      "Finnish",
+      "French",
+      "German",
+      "Greek",
+      "Hebrew",
+      "Hungarian",
+      "Indonesian",
+      "Italian",
+      "Japanese",
+      "Korean",
+      "Norwegian Bokmål",
+      "Polish",
+      "Portuguese",
+      "Romanian",
+      "Russian",
+      "Spanish",
+      "Swedish",
+      "Turkish",
+      "Ukrainian"
+    ],
+    "sections": [
+      {
+        "section": "welcome-screen",
+        "label": "Welcome Screen"
+      },
+      {
+        "section": "onboarding",
+        "label": "Onboarding"
+      },
+      {
+        "section": "paywall",
+        "label": "Paywall"
+      },
+      {
+        "section": "other-tabs",
+        "label": "Other Tabs"
+      }
+    ],
+    "hint": "Call list_app_screens with this app_id to walk every screen in order.",
+    "credits": {
+      "spent": 1,
+      "remaining_this_month": 1437
+    }
+  },
+  {
+    "app_id": "1497465230",
+    "name": "Opal: Screen Time Control",
+    "subtitle": "Focus, App Blocker & Timer",
+    "publisher": "Opal OS",
+    "categories": [
+      "Productivity",
+      "Health & Fitness"
+    ],
+    "rating": {
+      "average": 4.72,
+      "count": 88859
+    },
+    "revenue": {
+      "display": "$500K",
+      "monthly_usd": 500000,
+      "as_of": "2026-09-01"
+    },
+    "downloads": {
+      "display": "200K",
+      "value": 200000
+    },
+    "in_app_purchases": [
+      {
+        "title": "Yearly Plan",
+        "duration": "Annual",
+        "price": "$99.99"
+      },
+      {
+        "title": "Weekly Plan",
+        "duration": "Weekly",
+        "price": "$4.99"
+      },
+      {
+        "title": "Monthly Plan",
+        "duration": "Monthly",
+        "price": "$19.99"
+      },
+      {
+        "title": "Monthly Plan",
+        "duration": "Monthly",
+        "price": "$19.99"
+      },
+      {
+        "title": "Monthly Plan",
+        "duration": "Monthly",
+        "price": "$19.99"
+      },
+      {
+        "title": "Opal Student Weekly",
+        "duration": "Weekly",
+        "price": "$9.99"
+      },
+      {
+        "title": "Yearly Plan",
+        "duration": "Annual",
+        "price": "$99.99"
+      },
+      {
+        "title": "Opal Pro Subscription (Annual)",
+        "duration": "Annual",
+        "price": "$49.99"
+      },
+      {
+        "title": "Yearly Plan",
+        "duration": "Annual",
+        "price": "$99.99"
+      },
+      {
+        "title": "Weekly Plan",
+        "duration": "Weekly",
+        "price": "$9.99"
+      }
+    ],
+    "launched": "2020-12-15",
+    "last_updated": "2026-09-26",
+    "screens_count": 60,
+    "videos_count": 2,
+    "flows": [
+      {
+        "name": "Welcome Screen",
+        "screens": 3
+      },
+      {
+        "name": "Onboarding",
+        "screens": 29
+      },
+      {
+        "name": "Paywall",
+        "screens": 2
+      },
+      {
+        "name": "Focus Timer",
+        "screens": 12
+      },
+      {
+        "name": "App Management",
+        "screens": 5
+      },
+      {
+        "name": "Dashboard",
+        "screens": 4
+      },
+      {
+        "name": "Settings",
+        "screens": 3
+      },
+      {
+        "name": "Others",
+        "screens": 2
+      }
+    ],
+    "description": "Achieve screen time control with the world’s most-loved screen time app! Opal is the fun, free Screen Time app to improve your focus and make the most out of every day.5 to 6 hours. That’s the average time you’ll spend looking at your phone today, often without realizing it. It's time to fight back. With a combination of screen time control, app limits, app blockers, real time data, leaderboards and rewards, you will focus better and accomplish your dreams, just like Opal’s members.**As of August 2026, Opal has saved humanity 500 Million hours of screen time. **Many of the world's top teams and companies trust Opal to help protect their focus. You can too.**Opal cut my screen time by 2 hours per day – Marketing at Google ****You need this app. When I first got opal my daily screen-time was about 8 1/2 hours a day. Now it's 1 hour. ****Opal has become an indispensable tool in my quest for productivity and mindful technology usage ****Get Opal! - Ali Abdaal, productivity expert**BENEFITSSave 1 hour and 23 minutes per DAY from less screen time, on average.94% of Opal members are less distracted93% are more productive thanks to the app90% report improved well-beingAdded benefits:\n- Better screen time control- Better productivity at work- Reduce stress, be more mindful- Supports focus challenges, including ADHD- Set daily work hours, sleep, and routines- Block apps to unplug and detox- Stay in focus when you need it most- You're happy and in control of your screen timeFEATURES- #1 Screen Time Control: the most loved app for screen time control with 4.8/5.- #1 App Blocker: Instantly Block apps and websites you choose at a specific time of day throughout the week to organize your time.- Focus Difficulty: Make it hard, or make it a bit easier. Deep Focus won't let you cancel or bypass at all.- App Limits: Set daily usage limits on apps and websites to automatically block them and prevent overuse.- Mindful Block Screens: Discover quotes, puns and more every time you try to o",
+    "current_version": "4.17",
+    "publisher_country": null,
+    "category_rank": {
+      "rank": 71,
+      "category": "Productivity",
+      "country": "United States",
+      "as_of": "Today"
+    },
+    "ratings_breakdown": {
+      "1": 3136,
+      "2": 1052,
+      "3": 1809,
+      "4": 5687,
+      "5": 77175
+    },
+    "top_countries": [
+      "United States",
+      "United Kingdom",
+      "France"
+    ],
+    "languages": [
+      "English",
+      "French",
+      "German",
+      "Italian",
+      "Japanese",
+      "Polish",
+      "Portuguese",
+      "Romanian",
+      "Chinese",
+      "Spanish"
+    ],
+    "sections": [
+      {
+        "section": "welcome-screen",
+        "label": "Welcome Screen"
+      },
+      {
+        "section": "onboarding",
+        "label": "Onboarding"
+      },
+      {
+        "section": "paywall",
+        "label": "Paywall"
+      },
+      {
+        "section": "other-tabs",
+        "label": "Other Tabs"
+      }
+    ],
+    "hint": "Call list_app_screens with this app_id to walk every screen in order.",
+    "credits": {
+      "spent": 1,
+      "remaining_this_month": 1440
+    }
+  },
+  {
+    "app_id": "1644737181",
+    "name": "BePresent: Screen Time Control",
+    "subtitle": "Block apps, focus & rewards",
+    "publisher": "Screen Detox Inc",
+    "categories": [
+      "Productivity",
+      "Health & Fitness"
+    ],
+    "rating": {
+      "average": 4.84,
+      "count": 65262
+    },
+    "revenue": {
+      "display": "$400K",
+      "monthly_usd": 400000,
+      "as_of": "2026-09-01"
+    },
+    "downloads": {
+      "display": "200K",
+      "value": 200000
+    },
+    "in_app_purchases": [
+      {
+        "title": "Annual (1-Week Free Trial)",
+        "duration": "Annual",
+        "price": "$59.99"
+      },
+      {
+        "title": "Annual (2-week Free Trial)",
+        "duration": "Annual",
+        "price": "$59.99"
+      },
+      {
+        "title": "Annual (30-day Trial)",
+        "duration": "Annual",
+        "price": "$59.99"
+      },
+      {
+        "title": "Monthly",
+        "duration": "Monthly",
+        "price": "$3.99"
+      },
+      {
+        "title": "BePresent Pro (Annual)",
+        "duration": "Annual",
+        "price": "$24.99"
+      },
+      {
+        "title": "BePresent Pro (Annual)",
+        "duration": "Annual",
+        "price": "$29.99"
+      },
+      {
+        "title": "BePresent Pro Family (iCloud) (Annual)",
+        "duration": "Annual",
+        "price": "$99.99"
+      },
+      {
+        "title": "Annual (1-Week Free Trial)",
+        "duration": "Annual",
+        "price": "$24.99"
+      },
+      {
+        "title": "Monthly (1-Week Free Trial)",
+        "duration": "Monthly",
+        "price": "$14.99"
+      },
+      {
+        "title": "BePresent Family (Annual)",
+        "duration": "Annual",
+        "price": "$59.99"
+      }
+    ],
+    "launched": "2022-09-29",
+    "last_updated": "2026-09-27",
+    "screens_count": 74,
+    "videos_count": 2,
+    "flows": [
+      {
+        "name": "Welcome Screen",
+        "screens": 3
+      },
+      {
+        "name": "Onboarding",
+        "screens": 42
+      },
+      {
+        "name": "Paywall",
+        "screens": 2
+      },
+      {
+        "name": "Focus Session",
+        "screens": 5
+      },
+      {
+        "name": "Scheduled Sessions",
+        "screens": 4
+      },
+      {
+        "name": "App Lists",
+        "screens": 3
+      },
+      {
+        "name": "Home",
+        "screens": 3
+      },
+      {
+        "name": "Social",
+        "screens": 3
+      },
+      {
+        "name": "App Intention",
+        "screens": 2
+      },
+      {
+        "name": "Profile Settings",
+        "screens": 2
+      },
+      {
+        "name": "Rewards",
+        "screens": 2
+      },
+      {
+        "name": "Screen Time",
+        "screens": 2
+      },
+      {
+        "name": "Others",
+        "screens": 1
+      }
+    ],
+    "description": "BePresent is the #1 app to control your screen time and supercharge your productivity, mental health, and quality of life. Experience life beyond the screen as you reclaim Your Time and earn rewards that improve your life with BePresent!25 years. That’s the average time you will spend on your phone. With a combination of app blocking, gamification, social competition with friends, and real-life rewards, you will reclaim YEARS of your life like thousands of BePresent members already have.\n\nWe know you’ve tried to solve this problem before. But we’re not like other screen time apps.▶ WHAT USERS ARE CELEBRATING ◀\n• “I was able to go from 7+ hours per day to less than 2 hours! 10/10 would recommend” - Andrew M.\n• “FINALLY an app that actually curbs my screen addiction instead of time limits that I just ignore!” - Gina V.\n• “I’ve tried everything but nothing has worked. I almost gave up before I used BePresent! Thank god I tried it as I’ve reduced my screen time by over 3 hours a day!” - Jack W.\n\nDownload now to experience life to the fullest.\n\nInstead of annoying app blockers or time limits, BePresent makes it fun and easy to stay off your phone.▶ FEATURES ◀[ BePresent App Blocking Sessions - Individual, Group, & BEAST MODE ]\n• Dive into Present Sessions! Dedicate breaks from screens, whether it's a focused study session or a no-phone night out. Team up with friends for Group Sessions and joint tech time-outs. Share updates, cheer, and keep one another accountable—all from within the app. Need a stringent break? Enter BEAST MODE, ensuring unwavering commitment[ Set Daily Goals and Build Your Streak ]\n• Choose your digital boundaries. Maintain your streak by sticking to set screen time limits. Back your commitment with a monetary stake — overshoot, and that stake's gone. Customize reminders and design your journey to digital well-being.[ Compete on Weekly Leaderboards and Challenge Your Friends]\n• Show off your productivity prowess by competing against others on weekly l",
+    "current_version": "0.18.103",
+    "publisher_country": null,
+    "category_rank": {
+      "rank": 34,
+      "category": "Productivity",
+      "country": "United States",
+      "as_of": "Today"
+    },
+    "ratings_breakdown": {
+      "1": 1099,
+      "2": 285,
+      "3": 900,
+      "4": 3478,
+      "5": 59500
+    },
+    "top_countries": [
+      "United States",
+      "United Kingdom",
+      "Canada"
+    ],
+    "languages": [
+      "English",
+      "Spanish"
+    ],
+    "sections": [
+      {
+        "section": "welcome-screen",
+        "label": "Welcome Screen"
+      },
+      {
+        "section": "onboarding",
+        "label": "Onboarding"
+      },
+      {
+        "section": "paywall",
+        "label": "Paywall"
+      },
+      {
+        "section": "other-tabs",
+        "label": "Other Tabs"
+      }
+    ],
+    "hint": "Call list_app_screens with this app_id to walk every screen in order.",
+    "credits": {
+      "spent": 1,
+      "remaining_this_month": 1438
+    }
+  },
+  {
+    "app_id": "1532875441",
+    "name": "one sec | screen time + focus",
+    "subtitle": "App & Website Limit, Blocker",
+    "publisher": "riedel.wtf apps S.L.",
+    "categories": [
+      "Productivity",
+      "Health & Fitness"
+    ],
+    "rating": {
+      "average": 4.83,
+      "count": 23630
+    },
+    "revenue": {
+      "display": "$80K",
+      "monthly_usd": 80000,
+      "as_of": "2026-09-01"
+    },
+    "downloads": {
+      "display": "40K",
+      "value": 40000
+    },
+    "in_app_purchases": [
+      {
+        "title": "one sec pro (1 Year)",
+        "duration": "Annual",
+        "price": "$19.99"
+      },
+      {
+        "title": "one sec pro | Family Plan (1 Month)",
+        "duration": "Monthly",
+        "price": "$9.99"
+      },
+      {
+        "title": "one sec pro | Family Plan (1 Year)",
+        "duration": "Annual",
+        "price": "$29.99"
+      },
+      {
+        "title": "one sec pro | Family Lifetime",
+        "duration": "Unknown",
+        "price": "$149.00"
+      },
+      {
+        "title": "one sec pro (1 Month)",
+        "duration": "Monthly",
+        "price": "$6.99"
+      },
+      {
+        "title": "one sec pro | Lifetime",
+        "duration": "Unknown",
+        "price": "$99.99"
+      }
+    ],
+    "launched": "2020-09-29",
+    "last_updated": "2026-09-29",
+    "screens_count": 36,
+    "videos_count": 2,
+    "flows": [
+      {
+        "name": "Welcome Screen",
+        "screens": 3
+      },
+      {
+        "name": "Onboarding",
+        "screens": 3
+      },
+      {
+        "name": "Paywall",
+        "screens": 3
+      },
+      {
+        "name": "Safari Setup Tutorial",
+        "screens": 6
+      },
+      {
+        "name": "Settings",
+        "screens": 5
+      },
+      {
+        "name": "Tips",
+        "screens": 5
+      },
+      {
+        "name": "Blocking",
+        "screens": 4
+      },
+      {
+        "name": "Intervention Setup",
+        "screens": 4
+      },
+      {
+        "name": "Dashboard",
+        "screens": 3
+      }
+    ],
+    "description": "Willpower is not enough against social media algorithms!\n\nThat’s why I made one sec:one sec adds friction to distracting apps to make them less appealing…long-term!\n\nThis principle works really well: we have gained scientific evidence in numerous research studies with the Max-Planck Institute, with the German and Danish government, and in dozens more scientific collaborations:one sec has incredible effects on your screen time: app usage drops by 57% on average!…just read our App Store reviews or try it for yourself if you don’t believe me (…you should really try it)!\n\nHow is one sec different from Screen Time limits or app blockers?- one sec DELAYS access to distracting apps instead of blocking apps completely – that’s an important difference psychologically.- This way, we solve the screen time problem at its roots: long-term & sustainably!- one sec is always on, and makes using social media just slightly more annoying…so you’ll end up using it only when you actually have a reason!\n\nWhich apps can I use with one sec?- You can set up one sec with any app you’d like to use less / more intentional.- Most popular use-cases are: social media, games, video streaming, dating, stock/coin trading, adult content.- Using one sec with one app of your choice if completely free, for more you’ll need to purchase one sec pro (we also need to finance development of our app!).\n\nWhat if I get stuck scrolling?- No worries, one sec offers a Doom Scroll Emergency Brake: We call it Re-Intervention.- After a set time (e.g. 5 minutes) you’ll be kicked out of social media, and you’ll have to go through an intervention again to unlock more time.\n\nWhere can I learn more about the scientific background of one sec?→ https://one-sec.app/researchCan I use one sec to interrupt access to websites as well?→ Yes, one sec offers a free Safari extension as well.\n\nHow does one sec work technically?- one sec uses Shortcuts Automation to toggle a deep breath animation whenever you open one of the configure",
+    "current_version": "6.0.2",
+    "publisher_country": "Germany",
+    "category_rank": {
+      "rank": null,
+      "category": null,
+      "country": "United States",
+      "as_of": "Today"
+    },
+    "ratings_breakdown": {
+      "1": 431,
+      "2": 163,
+      "3": 361,
+      "4": 1129,
+      "5": 21546
+    },
+    "top_countries": [
+      "United States",
+      "Germany",
+      "United Kingdom"
+    ],
+    "languages": [
+      "Arabic",
+      "Bosnian",
+      "Catalan",
+      "Czech",
+      "Danish",
+      "Dutch",
+      "English",
+      "Finnish",
+      "French",
+      "German",
+      "Hebrew",
+      "Hindi",
+      "Indonesian",
+      "Italian",
+      "Japanese",
+      "Korean",
+      "Norwegian Bokmål",
+      "Polish",
+      "Portuguese",
+      "Romanian",
+      "Russian",
+      "Serbian",
+      "Chinese",
+      "Slovenian",
+      "Spanish",
+      "Swedish",
+      "Turkish",
+      "Ukrainian",
+      "Vietnamese"
+    ],
+    "sections": [
+      {
+        "section": "welcome-screen",
+        "label": "Welcome Screen"
+      },
+      {
+        "section": "onboarding",
+        "label": "Onboarding"
+      },
+      {
+        "section": "paywall",
+        "label": "Paywall"
+      },
+      {
+        "section": "other-tabs",
+        "label": "Other Tabs"
+      }
+    ],
+    "hint": "Call list_app_screens with this app_id to walk every screen in order.",
+    "credits": {
+      "spent": 1,
+      "remaining_this_month": 1439
+    }
+  }
+]

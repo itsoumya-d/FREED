@@ -1,9 +1,9 @@
 {
   "schemaVersion": "freed-store-launch-catalog-audit-v1",
-  "generatedAt": "2026-07-22T02:46:08.908Z",
+  "generatedAt": "2026-10-05T13:01:41.647Z",
   "sanitized": true,
   "result": "pass",
-  "passCount": 29,
+  "passCount": 25,
   "failCount": 0,
   "releaseBoundary": "Local catalog precheck only. This does not prove App Store Connect or Google Play Console products exist, are reviewed, or have passed sandbox purchases.",
   "checks": [
@@ -28,7 +28,7 @@
     {
       "id": "launch-product-order",
       "status": "pass",
-      "detail": "Launch products are yearly, monthly, lifetime in order.",
+      "detail": "Launch products are yearly, monthly in order.",
       "next": ""
     },
     {
@@ -92,39 +92,15 @@
       "next": ""
     },
     {
-      "id": "lifetime-catalog-product",
-      "status": "pass",
-      "detail": "lifetime catalog product matches product ID and price.",
-      "next": ""
-    },
-    {
-      "id": "lifetime-app-store-row",
-      "status": "pass",
-      "detail": "lifetime App Store CSV row matches product, price, and entitlement.",
-      "next": ""
-    },
-    {
-      "id": "lifetime-play-store-row",
-      "status": "pass",
-      "detail": "lifetime Play CSV row matches product, price, and entitlement.",
-      "next": ""
-    },
-    {
-      "id": "lifetime-screenshot-manifest",
-      "status": "pass",
-      "detail": "lifetime screenshot manifest row exists.",
-      "next": ""
-    },
-    {
       "id": "apple-product-types",
       "status": "pass",
-      "detail": "App Store product types are subscription/subscription/non-consumable.",
+      "detail": "App Store product types are subscription/subscription.",
       "next": ""
     },
     {
       "id": "google-product-types",
       "status": "pass",
-      "detail": "Play product types are subscription/subscription/one-time non-consumable.",
+      "detail": "Play product types are subscription/subscription.",
       "next": ""
     },
     {
@@ -206,19 +182,19 @@
   "sourceArtifacts": {
     "storeProductsCatalog": {
       "path": "store/store-products.json",
-      "sha256": "sha256-66323a77ec71bc6aae51dd3c62e6d8393686123804f9987e5f86cac1e8fe8b84"
+      "sha256": "sha256-d67d971b0e4cd900159d4496fdda645a72325418d31071acf4639f8dfd46827e"
     },
     "appStoreConnectCsv": {
       "path": "store/app-store/in-app-purchases.csv",
-      "sha256": "sha256-ad7ea81b6ec9240b1ca4f8e5e248464ed78ec792e7f4233ce50ee2a2e226f6b9"
+      "sha256": "sha256-a324c34e100361c22cd08e2472529822f0681f8389c63e550ac472b8606a990f"
     },
     "googlePlayProductsCsv": {
       "path": "store/play-store/products.csv",
-      "sha256": "sha256-b33dd03139588b3562c92d58cf34747a1d3a5e5cf5a11381bec16774d728923b"
+      "sha256": "sha256-e5091506ca851196b9ceed88f1da6328860f22efd5a0c57b8b3b2ff1b7359c5b"
     },
     "screenshotManifest": {
       "path": "store/screenshots/manifest.json",
-      "sha256": "sha256-86a0362d0e6a5e887e0d9fc732b91971816c9278b85dd9381c6c3af29dc4ab99"
+      "sha256": "sha256-c139b709c8d43f6e6408425cc81ee0001f99e1070fd2d5c049e47792a6fe8237"
     },
     "listingScreenshotPlan": {
       "path": "store/screenshots/listing-screenshot-plan.md",
@@ -231,8 +207,7 @@
   },
   "launchProductIds": {
     "yearly": "freed_premium_yearly",
-    "monthly": "freed_premium_monthly",
-    "lifetime": "freed_premium_lifetime"
+    "monthly": "freed_premium_monthly"
   },
   "futureProductsDisabledForV1": [
     "freed_family_yearly",

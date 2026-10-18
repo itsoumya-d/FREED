@@ -1,0 +1,738 @@
+{
+  "schemaVersion": "freed-momentum-final-local-receipt-v1",
+  "generatedAt": "2026-10-04T03:03:03.235760+00:00",
+  "sanitized": true,
+  "runnerExitCode": 0,
+  "report": "feature-local.json",
+  "reportSha256": "260250be1b14962f2a926d2d115c69e77c5b8bd85b303f91456398da3dd27b5c",
+  "sourceManifest": "source-inputs.json",
+  "sourceManifestSha256": "558fe3e12dd300c33bffa906c74c4347b5aab43b162df293a04a90b2ef835ce9",
+  "sourceFingerprint": "a60fc33ed0574516e4da21d7afe4136ae72800f12d7b666fdfd773a564796778",
+  "comparedInputCount": 1158,
+  "sourceMismatches": 0,
+  "uiFreezeFingerprint": "281daff847cb6006b58f4d701bc804ee9c976bc8d8dcd4417e87a1bb634e38c3",
+  "uiFreezeFiles": 120,
+  "uiFreezeMismatches": 0,
+  "testSuiteSummary": {
+    "total": 164,
+    "passed": 164,
+    "failed": 0,
+    "blocked": 0,
+    "notRun": 0,
+    "passedPercent": 100,
+    "complete": true
+  },
+  "localAssertions": {
+    "passed": 1012,
+    "failed": 0,
+    "skipped": 0
+  },
+  "requestedLocalRequirements": {
+    "total": 109,
+    "passed": 109,
+    "failed": 0,
+    "blocked": 0,
+    "notRun": 0,
+    "passedPercent": 100,
+    "complete": true
+  },
+  "allRequiredChecks": {
+    "total": 579,
+    "passed": 109,
+    "failed": 0,
+    "blocked": 0,
+    "notRun": 470,
+    "passedPercent": 18.83,
+    "complete": false
+  },
+  "fullFeatureSummary": {
+    "total": 109,
+    "passed": 0,
+    "failed": 0,
+    "blocked": 0,
+    "notRun": 109,
+    "passedPercent": 0,
+    "complete": false
+  },
+  "typecheck": {
+    "command": "tsc --noEmit",
+    "exitCode": 0,
+    "outputBytes": 0
+  },
+  "codeCoverage": {
+    "lineCoverageMeasured": false,
+    "note": "Passing assertions and feature contract percentages are not line/branch coverage."
+  },
+  "limitations": [
+    "No installed native binary is bound to this local report.",
+    "No physical protection, lifecycle, sensors, camera or release-performance evidence is promoted.",
+    "No store sandbox or production service delivery evidence is promoted.",
+    "The 2,600 platform/locale/theme review cells remain uncompleted."
+  ],
+  "artifacts": [
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/feature-local.json",
+      "sha256": "260250be1b14962f2a926d2d115c69e77c5b8bd85b303f91456398da3dd27b5c"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/feature-local.md",
+      "sha256": "917077ed739bc996f4a3247b380833de42d23d28390929f96908ad6b84982d87"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/account-access-auth.test.ts.log",
+      "sha256": "abe22e6cc2fea60625bffbdbc00ec7689b83471c682db32f4f522af11f936c73"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/account-access-flow.test.ts.log",
+      "sha256": "267da25c949fec6678b3e45c421bda0d69e1c0424b3c758c9a7562072b56ae69"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/account-identity-text.test.tsx.log",
+      "sha256": "4ff4440654f5a7f70ef49b13dd5c9293ccb7edf7131d8a09778fc4f5e23a7500"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/account-operation.test.ts.log",
+      "sha256": "05bb66e6a6c8e996ba79d6675542ade27b813f871a0179ade190bafe155cc6c3"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/ad-consent.test.ts.log",
+      "sha256": "74ccccaa8c44a7f920c01168eda1f4f0f6502d99d9336a23cdf88d1e763c17af"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/adult-allowlist-safety.test.ts.log",
+      "sha256": "90adaf3fc1285037a672c754b491bac0e3632bf0f3ef7dc5ab86afcb589e3784"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/analytics-reconciliation.test.ts.log",
+      "sha256": "c89315ecc9417a7a84e6706b5db89b0e9d8739f7b36bd946a6cdee02ef473f82"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/android-build-progress.test.js.log",
+      "sha256": "088005f8a889a45b014e455b22255606d24df39bcc5a749cf5ea5df5818f5a8b"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/android-bytecode-inspection.test.js.log",
+      "sha256": "380cff8f5b7ce75e849b18bd81055c9fe0666059cc6d811f303d370087b339c1"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/android-presentation-localization.test.js.log",
+      "sha256": "c8fde1fa5424a4352a4de69b93bb0681e8d057d3d50d56c617f87b5f311ab6ad"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/app-preferences.test.ts.log",
+      "sha256": "96934ed85925df5b7778fab15218173bcda81c32825eb2fe70838ab80d0b2919"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/app-schedule-native-policy.test.js.log",
+      "sha256": "c010bc2c63d5d0f77c60559a7757ce8d8c6c72c4508c00f29e55c124f01fc244"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/app-schedule-native-wiring.test.js.log",
+      "sha256": "6e5835d53358938a8c859989ed5331234acad9d81460fec61d4e85524dce838f"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/app-shell.test.ts.log",
+      "sha256": "c3e143f3146fd36ef8bfd4e012520d25ef0f57b25823c69c65430b9d1dbf238d"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/app-theme.test.ts.log",
+      "sha256": "b128880cae1e9aae2b418584099f942d591c97b6fb08099bef59c0d9f3d7c632"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/automatic-backup.test.ts.log",
+      "sha256": "c36a4b955ef02617d364381dea6ece373a2d23fb7c73584855831118d5c3e65a"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/backup-crypto.test.ts.log",
+      "sha256": "4ad5461947d290de8b63af328c32ac39d1c944271bcdd7f938afb4eda08ef2aa"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/breathing-artwork.test.ts.log",
+      "sha256": "26c61cf94c0b03f2c13e08a5fe883a4533713dd12c5ebc77d616ecb165e8e149"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/breathing-cadence.test.ts.log",
+      "sha256": "de3b9d09d8567bfe62a3eb8a37ceaea28ec3b982a71e1831603b9cd2051a39fa"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/breathing-session.test.ts.log",
+      "sha256": "4c4392b1c0c464d17bc2ac97854e6be2543c5f324ddfc232e2104217aac01a38"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/challenge-capability.test.ts.log",
+      "sha256": "aa14f2fe6888e2ce101ade856fd314063d8bcfa4a5f062b69bf31db9645ae9c9"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/challenge-completion-receipt.test.ts.log",
+      "sha256": "80e7f7474d7efe8ffc4d99b925328cb5b85048ee2556ddca1ee3933a05976f17"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/challenge-selection-key.test.ts.log",
+      "sha256": "0b55dc2e35a047a0ab39894f364756307b55dc6c86dcbadc6c32db4960f27962"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/challenge-session.test.ts.log",
+      "sha256": "9caa6e3f59adc4de755e1c56da8365c74c3854c1b41ce4eb5ad561bceb63c047"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/challenge-verification-runtime.test.ts.log",
+      "sha256": "9522ddb232f6b57fb53094b8f3287ee3ab1aecd34b636206585dbe49a953f1b2"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/challenge-verification-safety.test.ts.log",
+      "sha256": "efa38f13abe405a2115448674ad24b340448908c5b61988adbfebb436ea9ef25"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/checkin-retained-draft.test.ts.log",
+      "sha256": "60dec42ba3e64ffe5edd7790cb5b54471e19d35e032a0908de1e94462f1cfb5e"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/cleanup-source-contract.test.js.log",
+      "sha256": "c9433b83ef96df846f0b0bd8fcdbab5612e8386c75d192efb5c1873ef66cd4f4"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/coach-locale.test.ts.log",
+      "sha256": "80bba2c9a693350cd03d1eedfafbefb3edb5673095cae7ee991d4d394328f1b1"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/companion-calendar-practices.test.tsx.log",
+      "sha256": "29cca763bc0ae362f52d8794d0f9d7511ca79802fc20e336300a42f931451908"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/companion-policy.test.ts.log",
+      "sha256": "79b510fe2b7c9f8b8a4987c1762917af8dbc01444ef92783f35676325e11990f"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/companion-viewport.test.ts.log",
+      "sha256": "f3a27b54f3461a1d714450d258b85c5d6d2b89ea7fa8ff7dde88029c0b5bda2e"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/companion.test.tsx.log",
+      "sha256": "73873743089740dec8df047a7a45e93b323c3dc7ea4628f7ca1afbf4ffb0de6f"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/composed-localization.test.tsx.log",
+      "sha256": "90ef01c608121bc1a227882ee60c37a3a3b39c696c6951afc97b6c1a64ab6a18"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/confirmed-cleanup.test.ts.log",
+      "sha256": "866e694965111b24ed9fc51da13da976ab2e028c3d56caca4b0c24d9a01e9a1a"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/content-blocker-localizations.test.js.log",
+      "sha256": "b47df94aa8f1fbd55794ab81b1bd4cfd74f6f092d691c75203e97753dc3f8b46"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/core.test.ts.log",
+      "sha256": "740028067303f666fbdef0e51217800203656829bb17834c27a91bb861b2889f"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/design-system.test.ts.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/dns-auto-start-consent.test.ts.log",
+      "sha256": "f06ad67c89f9ff138e77e981cc063c57f7ba83bc3413aa9ccf8cff8204b13f4c"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/dns-guard-health.test.ts.log",
+      "sha256": "73a09c6a532b90f08edf20d525ee44055d1a01635f53f95a80c0c9821a1f3667"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/dns-race.test.tsx.log",
+      "sha256": "5fdbac82f3628c3d0a8b1794c8921fc494c57fada44efce3f413997efb93484a"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/dns-runtime-ownership-native.test.js.log",
+      "sha256": "c79e5ff650dc40234a045c16ca397481d343322fb7195b30d9572f6b60ffe58b"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/durable-state-cell.test.ts.log",
+      "sha256": "06562bb4856d6bc6171ddd4bf0bf0f5ce1f7e40b6a9b4c832271b1a63ae02b17"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/encrypted-dns-section.test.tsx.log",
+      "sha256": "5200d265e325bd6e3540ca510ebb2b4eb6935fe0c68da5b63035a74ce555acd7"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/encrypted-dns.test.ts.log",
+      "sha256": "3235c7c9679999521ff5ebed58912ec999ba4da37c24fdf2a3edd45dfc1b30fe"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/feature-emulator-startup.test.js.log",
+      "sha256": "9f70dcf8f9f8c22554cab8d7e31cac613bcb8d98d66418eda68ce7f0f2ef6859"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/feature-test-manifest.test.js.log",
+      "sha256": "9bfdd01f611d8c16d82da13c66de95dbb1b14b00325d6fa04e1e51466c1459b7"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-auth-linking.test.ts.log",
+      "sha256": "07d4ae5ce55c0a0abde8887489af762bfef97a3e329a6642c082cc291e7d1570"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-config-audit.test.ts.log",
+      "sha256": "646423b0e6e1694ac217f9fbac05b2365c388bf217f4fe2d7d67a14a0f5798e0"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-email-link-delivery-audit.test.ts.log",
+      "sha256": "db5e3057e7898a25dcd5684897bbe0799dcb0f854b528587f49c0cd9a9da7a71"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-emulator-routing.test.ts.log",
+      "sha256": "05972add918fe60064f0d9c5b633a912f0cca94ffd823e0e06ef57185f061442"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-export-source.test.js.log",
+      "sha256": "ecebc60fa81f98ee3929b0d8b8014d5c2c1d06674e1f1a9c08920e3ae687104e"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-feature-runtime.test.ts.log",
+      "sha256": "8d90c6dee622acbb4d49ad4072e023b2a1b86d6538039063f8813ce24c68114f"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-foundation.test.ts.log",
+      "sha256": "be282a47af3f27d9e12238df4537e54925effdee180ae47436e3ff96cf1a4337"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-functions-contract.test.ts.log",
+      "sha256": "615539d0111a03114903dcee4967d91f5f0b26db8e3eaf07475516cad9c453ac"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-hosting-associations.test.ts.log",
+      "sha256": "36f965382e96ce3a020fc10ab65e60042828a74831b2c2318ee0dda1d5c7997a"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-migration-plan.test.ts.log",
+      "sha256": "110e1e3cbcf5b5faedb698681d13ee15124c313c7cc389fa000b99d15e7f357e"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-native-integration.test.ts.log",
+      "sha256": "a3b00b591bc1d50d0c568149cc5f586be9badccc16014376b8ad14528a6bb714"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-native-runtime.test.ts.log",
+      "sha256": "4d6c88296af828aca315ce5c1155e7c9df56a7cfc60d102b7effc6bbc8cad33e"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-notification-flow.test.ts.log",
+      "sha256": "4fd78bf797f0cbd2d2f97e396d55d92cd10b0b25c319fa6d5763275b3d29d091"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-privacy-audit.test.ts.log",
+      "sha256": "fe9b432e037f6f87c4b4d2d75f865dcb57d47437afb53a90ec94da4b4fbfa4fe"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-release-gates.test.js.log",
+      "sha256": "f953d4df6d738f6c20542a86315e90f03e56dc56d4efd9ecb28f82631dd9c54f"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/firebase-repository-config.test.ts.log",
+      "sha256": "92701b233dc687430fa3ff08822e16350c84b21d48f84b8e59037604002c564e"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/flow-presentation.test.ts.log",
+      "sha256": "d39fc15649a8305a4322925d0cfda902cbea502806b869271a0bc3568808db72"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/focus-shield-build-gate.test.js.log",
+      "sha256": "ea014e212a6b120c46681c06417aab94e9a44f7d23567eff05e90f7c4541a197"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/focus-shield-native-policy.test.js.log",
+      "sha256": "c661afd37864f0bd548f05881e7343a0ffa8db65587b320585f2e2336136df01"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/focus-shield-rollout.test.ts.log",
+      "sha256": "d1e5a79f944531720a35f77542e9837ee72286eb48d6989a67946411a31bc9e8"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/initial-route-focus.test.tsx.log",
+      "sha256": "f3f47f157ac6b6055df5898c51f035f35f2146f416b63bd33baf3df3a8538b2d"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/ios-admob-build-config.test.js.log",
+      "sha256": "64570365d53a96251fa28007002781baae24d5ce0f8e7b6077d9257a23ae3110"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/latest-serial-job.test.ts.log",
+      "sha256": "2c57d44d7c2123dfe7cdf2351aed327fcadf9c800bbcad19e77eb057e89b05af"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/launch-entitlement-contract.test.ts.log",
+      "sha256": "a800b8ea24015e90d8c0ec3589e34363ae4ecee5eae56c1526466248ddf79ab1"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/launch-foundation.test.ts.log",
+      "sha256": "076f4dcf46c95d761d5bb91508ad1c61de8005a00fac485bc5f0c4142e896ff3"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/launch-purchases.test.ts.log",
+      "sha256": "b29dc6d600082c9d221ae756d60d402a13f3381e6597e1571f9db7ad43c53faa"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/library-screen.test.tsx.log",
+      "sha256": "61f43337c37eb8c66b5e6fe74b5e8faba3c1955a68358c20e29da2237cc3df67"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/localization-catalog.test.js.log",
+      "sha256": "35a3bc5cf143ebd49da6603ab36373ad119e45fa883a4ebf4540b467613b37e1"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/localization-runtime.test.tsx.log",
+      "sha256": "719035ba46c5e282a35620e504285d4be256dc2967421be1bd8af4317c75a1fe"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/localized-input.test.ts.log",
+      "sha256": "8412f38f99812d34294a0de02242e2f23bce56ecb27febdd22ad4f53d6b26a04"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/membership-summary.test.ts.log",
+      "sha256": "6fee3e773251868a5e5d7aa1c32b34e2f8908b1a304fda9bf3f4e231abcb881e"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/momentum-breathing-clock.test.tsx.log",
+      "sha256": "de28346398b85ce2c34afa4efb83e687adf93d8af02324209e2cf442d4e955e0"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/momentum-contrast.test.ts.log",
+      "sha256": "1c7cf6a931aeb773b763377ddbe49af53dd5edefdf7c65265a1a57c52a70b331"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/momentum-day-boundaries.test.tsx.log",
+      "sha256": "6896d02d2243ff2c4d063d0050bf87f17a768853f36be39eabe1a4d9706cea97"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/momentum-review-plan.test.js.log",
+      "sha256": "29a03233d9898e8fbbc097c17faef457e7141f530d1d575c9f02037928a95394"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/momentum-sections.test.tsx.log",
+      "sha256": "458c89ee446fcb6b829060b43527677118189f9eb09b19670d04b9473e3b1d03"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/momentum-today.test.tsx.log",
+      "sha256": "7e631d978557b7f9855324de154b4484e4bec636b9b2537412a3d26c1654d1ae"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/momentum-token-generation.test.js.log",
+      "sha256": "c1e0e8f75aaa61cf2f52337debc766cdc257bc7700fbf521b53dd7b6291ab1fd"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/monetization-env-inline.test.js.log",
+      "sha256": "7b804d67618d1ebd822faa8f18d41134e40784f780dcacaec862eb929c2c2530"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/motion-policy.test.ts.log",
+      "sha256": "7913cf186dabad38f28dbf870ba70df2012151a57288c9421be54f5c459d8030"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-app-schedules.test.ts.log",
+      "sha256": "4c54975ecde289bf2147b3eb7ad09a164226d157df7ca83aef971551300e840e"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-checkout-readiness.test.ts.log",
+      "sha256": "a5d2434b4be9c2a7beec4fe5a887ffbd2d8bcee947bdaf696ed659e62fb4c163"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-companion.test.js.log",
+      "sha256": "6f8e987ba9b5cb87af426e946c4bac086ae46998eedde8f855d76f3b268667bd"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-debug-fixture.test.ts.log",
+      "sha256": "5397822311c9c06e9127e082e164e6608f6a583fa8dc8a1ad71de9b40e257014"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-feature-links.test.ts.log",
+      "sha256": "5efc25b88822f8c9b8762c0d0497e528f264bed6264015b5ac81253199a33d89"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-iap-lifecycle.test.ts.log",
+      "sha256": "3fe173f6c887744aa468a5114792b583f2bf9b705763d7f9c44404d8ec40234e"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-intervention-authority.test.ts.log",
+      "sha256": "6eda99e8f8507835ca4035af4145c973eb8423b2bfc53a4d2915885247ba4b6c"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-intervention-links.test.ts.log",
+      "sha256": "8ab68f7995257fbef38e7251e9bb0e8a76ef4a910443295c5de45d1974c7d840"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-localizations.test.js.log",
+      "sha256": "21c558a43876f417104365823fc4fb2525050b60178d10693d39fd9e63524922"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-navigation.test.ts.log",
+      "sha256": "e3002379d7133e69bfea738c88105346e4a3dfbacc9c7f18f31940fb004f803b"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-preference-sync.test.tsx.log",
+      "sha256": "4083d3467f3f88e638c7d1486c7e139217cef96afcc681c29527f6d51fe4d36b"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-protection-reset-bridge.test.ts.log",
+      "sha256": "31920042ac36134d828a162f5bb5c8f502da5870bc87a6546791409eae35c1b5"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-router-dispatch.test.ts.log",
+      "sha256": "4524084aee2386c922c2be1d7c6b500644d7d6a5fd8e4d19728fbd2b8958ce21"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-time-input.test.tsx.log",
+      "sha256": "1eed96d9ffe44a4dfc6c3513aafe1673f01dd67c985f7c9f8b119a5895b65e69"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-unlock-bridge.test.ts.log",
+      "sha256": "c269621e804a368b6deb297e2b3af15381c4c17a51e3c49b526260a688ac2220"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-unlock-confirmation.test.ts.log",
+      "sha256": "fcd6ebd74d9c173ed029b271ea0322f2d40ff54be60d9e4ac848de39200bf387"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-unlock-policy.test.js.log",
+      "sha256": "6ede28e80d022e1575a8c34b9591501dbdc478c512ff794e9c150046f72efb48"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/native-unlock-safety-contract.test.js.log",
+      "sha256": "ba1d6bc94de4b1b1b0c2b546172b6ae62739b5bfe10f121de8da5ad339cfeb41"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/off-device-recovery-privacy.test.ts.log",
+      "sha256": "03d9511ca31121b9a90d7d2aa23a8fa5c66af0520b7739bb734df98d3ec8ea0a"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/paywall-navigation.test.ts.log",
+      "sha256": "066c4829564c653d342d6e6cfb303c160175d3b833476d56b6ff93934720185f"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/paywall-presenter.test.ts.log",
+      "sha256": "cc13c1a9eb57e407c688eb610ae2e85b327ce0f2423988c192cc4d7f9ea5b409"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/paywall-reader-audit.test.js.log",
+      "sha256": "b6fc68657c50ca4372564d51f9e819ae4632b58c7822fe9c9386d74507d00c4f"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/personal-daily-plan.test.ts.log",
+      "sha256": "5f34ba938566fd721afc5c0d542183a931c7c0f05e8e182ba7c3803aabb4a407"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/preferences-deep-link.test.ts.log",
+      "sha256": "296386c251ac4a1c8e8bf800c0bf273fc79a4af9064c97db71513ecc1cbbcc4e"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/preferences-native-picker.test.tsx.log",
+      "sha256": "92d0ed2687a8620c73b2b26aa0508d68f5315e64161721d4dcf4a36c155559d0"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/preferences-screen.test.tsx.log",
+      "sha256": "43241f5d6b4fa3337d2bf1cd23f8ebc79ada859191b2b6ea54be561a5f201493"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/preferences-web-provider.test.tsx.log",
+      "sha256": "0855cf785affecf693c78f9aee5dc44dbf477f68373194cb81f2585aa69b170a"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/premium-entitlement.test.ts.log",
+      "sha256": "e69ef233d0e396a37a555fda88ee0cef734a56824d96c27c1195c65d04eddf79"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/premium-offer.test.tsx.log",
+      "sha256": "0e5322f53c01b8bef97237f03b1fdc654e56e8e4c4710e1d709b644739ea3b3f"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/premium-server-refresh.test.ts.log",
+      "sha256": "51a02263f382a51cdf429b494bfa1be81c355862b28b261a481040e5257a87c6"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/private-challenge-presentation.test.tsx.log",
+      "sha256": "350aa94ec5b0a2c5ba45f6db7d1847b406af7db2f6f8595ea89ec188e857f01c"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/private-dns-setup-recovery.test.ts.log",
+      "sha256": "45b4dbb4fa04be8ab86edc5a69a21a8ce7acead4c3f06343d11a8c7b0719aec4"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/protection-android-routing.test.js.log",
+      "sha256": "28cc2e3c2ea077ba219236b4f16c0e7d55a58e6476b915f6c30c61e33b438ee2"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/protection-dns-safety.test.js.log",
+      "sha256": "3f791cff70692a5bb44b22a4baea47733c0a3baec13b8617d8d9fec6cc79e17e"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/protection-intent-storage.test.ts.log",
+      "sha256": "de8bcad7c41c7a12d4d4c577415ac8eab22ebbd42fca1b064439d88e220e9700"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/protection-intent.test.ts.log",
+      "sha256": "83f8835071829660f3eacce16fb6fdff534b45eefa0a8876ccafed1f162f7a51"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/protection-layers.test.ts.log",
+      "sha256": "511991a44f5c0e6a43e9e6617c9738b912c4305a5f00295ad89c6a28bdfb2970"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/protection-limited-exit.test.tsx.log",
+      "sha256": "6e13081b9bcb7dc7c2e934b2cf75c68c922160308198a2831f3c515706338d2f"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/protection-permission-native.test.ts.log",
+      "sha256": "c7a990354648d3113c7eb5d474563d52328eaeffef6f427fed5943c217f5690d"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/protection-reactivation.test.ts.log",
+      "sha256": "08fe22ac21bdc65159c4822155d1148b03433d211363abd7a24c1f2660caae8b"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/protection-reactivation.test.tsx.log",
+      "sha256": "b93d575e69c33f1078e92a64e6d0b21b503f6edc89d7a7a3e68342c8e5ec97ff"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/protection-reset-ios.test.js.log",
+      "sha256": "a37e452bb056c17a0f8136879f8a136286f09781005c21b7cfeed95a7342d064"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/protection-reset-native-policy.test.js.log",
+      "sha256": "c33e09b58403426b09ef0afb50400ad8e0867fd9115b9107cd31dfa3d086247b"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/protection-reset-native-wiring.test.js.log",
+      "sha256": "3a108f2e98142e6863f4b590eb701779abda088edc9f1df2aaf4c0f5e7eabd85"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/protection-safari-routing.test.js.log",
+      "sha256": "6ec6dc3e88daabb70e371f1efacf6995afe6484910d7146b36a699e9c913b480"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/protection-setup-completion.test.ts.log",
+      "sha256": "a8356071f80bdc7d32cb9d710df7980661840231d55eb9a754fb291fdc8b38b5"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/protection-setup-flow.test.ts.log",
+      "sha256": "12f15ed956c1e75fbc1fcf3d0d72053f11c004c8f2878c4073aa0d5752fcd16c"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/public-client-env.test.js.log",
+      "sha256": "dbf95e3790b1e854eed460f9e9eaeb38c44eca2add2e303405d31fa220da2561"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/purpose-checkin-journal.test.ts.log",
+      "sha256": "e06b9d5a5124cb31e16435b5baa843cb207ca3ea40fa000370113e813021df2d"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/purpose-protection-purchase.test.tsx.log",
+      "sha256": "5d22131a854532c6e67075ea939d64775c115d539a2adb9623a3ac06c22d5600"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/purpose-tools.test.tsx.log",
+      "sha256": "91434bfe7422fee676c85d6b92786a8b7c4e915c5758e4605d1bfbc4ac7a10e4"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/quiz-accessibility-source.test.js.log",
+      "sha256": "357e80f27d0e7dae6ad1e056892d9c92ac1a71de9ac2ec684131a447fb9302a0"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/recovery-analytics-snapshot.test.ts.log",
+      "sha256": "9f4a697f7b5dda534c2624aa3b8c4fc22c2a8372ce4264968dd10d2659c62734"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/recovery-companion-cue.test.ts.log",
+      "sha256": "acde61b72aa1e1b2493ca8ef01266ef8607476154866faa6f34d2fbdfdb44147"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/recovery-data-accuracy.test.ts.log",
+      "sha256": "53d4c8143ad11fe1eae554939212a12fc1aa53415e7a56795ef7b61f52f5e9ee"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/recovery-day-snapshot.test.ts.log",
+      "sha256": "6198f671d3a89955925781787643afb9685bace1d19dc188609adf4f6f4c6d12"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/recovery-day-write.test.ts.log",
+      "sha256": "0d8f931b02d0222b2828a7b51672925953e8dd2877c272a693499bc85f9ec433"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/recovery-draft.test.tsx.log",
+      "sha256": "dbfd0ef17bc3d863f2007b43d0b62b6f5437a22a486b918015756cea483e3132"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/recovery-drafts.test.ts.log",
+      "sha256": "d9dfa993131aa79b3f583c146e42ffb1f22cb8733e7700a3519da586312f973e"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/recovery-hero-a11y.test.tsx.log",
+      "sha256": "efe9943592280630abf08f6431a13478b962ab252c213d248acb7efb3ac8f34f"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/recovery-path-localization.test.tsx.log",
+      "sha256": "bdb387032b75c6e6bb9513dfd2f007b57dfc9fb6fe90a4f51bd96f3452ff3974"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/recovery-time.test.ts.log",
+      "sha256": "8acfe0df0fc72435e878d7b61ddfab4c04d78e4764a68786e459e2efb92c76f3"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/release-audit-repair.test.ts.log",
+      "sha256": "1c2c1c4eecdb0d9cbfcc05c8216ef60cbeb74e39841f2bfc54513373e1d37ca1"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/router-query-compat.test.mjs.log",
+      "sha256": "3ebcb8e915f6ff1a59605c75fd2f3583fe285539ebef7e8a4cc007e480a39669"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/rtl-preference.test.tsx.log",
+      "sha256": "5409f8f22a992f5c82970aa9500bab546c441fffe58eb92687ca30632ed8ddc9"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/safety-audit-contract.test.js.log",
+      "sha256": "20f7c4a5bdab0cfea5cb933f2b61a6d47d88bd7b30d42ffe535868935838fdd9"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/shield-action-localizations.test.js.log",
+      "sha256": "a41be50c388adf7c56de1ed39ccb050e6d4d5039bf970d00a1dc3b15018a76e0"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/shield-detail-routes.test.ts.log",
+      "sha256": "3f798e57c1c2cbf1c5c0a597bc01e4688e1bc1639120c21215cfb74bfc5da43a"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/shield-localizations.test.js.log",
+      "sha256": "c5893543dae659224e2bacec42cfbd7c9012f3146907cf57933dbf6277ed98ff"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/social-auth-flow.test.ts.log",
+      "sha256": "301881c427b48b70b2aaba8a36446509825158b04e7fbbe6ec80472b6fa7c078"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/social-login-presenter.test.ts.log",
+      "sha256": "cdd920ae8fd1dbc4bfb0b7a1591482ba0c68307ce045299840f6e582220d374a"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/source-translation.test.ts.log",
+      "sha256": "6d8b0c725b840eb6b833deb5a115f50f28eb824dc76e4f61cf9bce81888881af"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/store-legal-product-scope.test.js.log",
+      "sha256": "2959f7ce1431dea5117d40f1b0fb30e614c222fd28ddf87c58f16d750e1e322e"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/store-localizations.test.js.log",
+      "sha256": "c36104ce2bafd5007c5289b2d83fd4afab0a6f0d6f976a7bf8b5bceef9920bb9"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/store-pricing.test.ts.log",
+      "sha256": "31c34d02ae7d5eed5a5dd565cd4f2e4961ae3005627061e4b2284e429d555cb0"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/svg-companion-transform.test.ts.log",
+      "sha256": "2530d17f8fea91ee0726e9276d40353f7649d49797ff8db4dc82755fd5dfd7f8"
+    },
+    {
+      "path": "docs/validation/artifacts/2026-10-04-momentum-final-local-complete/logs/tool-completion.test.ts.log",
+      "sha256": "dbf51eb72a44702999d72f760fe99af8374aed4073477c94ce74904cad6f2b52"
+    }
+  ]
+}

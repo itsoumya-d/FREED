@@ -1,0 +1,564 @@
+{
+  "entries": [
+    {
+      "source": "Review patterns from your local check-ins.",
+      "translations": {
+        "hi": "स्थानीय चेक-इन के पैटर्न देखें।",
+        "es": "Revisa patrones de tus registros locales.",
+        "pt": "Revise padrões dos seus registros locais.",
+        "fr": "Consultez les tendances de vos bilans locaux.",
+        "de": "Sieh dir Muster deiner lokalen Check-ins an.",
+        "ar": "راجع أنماط متابعاتك المحلية.",
+        "ja": "ローカルのチェックインから傾向を確認します。",
+        "ko": "로컬 체크인 기록의 패턴을 확인하세요.",
+        "zh-Hans": "查看本地状态记录中的规律。"
+      }
+    },
+    {
+      "source": "Review recorded risk windows and helpful resets.",
+      "translations": {
+        "hi": "दर्ज जोखिम के समय और मददगार विराम देखें।",
+        "es": "Revisa los momentos de riesgo registrados y los ejercicios útiles.",
+        "pt": "Revise períodos de risco registrados e exercícios úteis.",
+        "fr": "Consultez les périodes de risque enregistrées et les exercices utiles.",
+        "de": "Sieh dir erfasste Risikozeiten und hilfreiche Übungen an.",
+        "ar": "راجع أوقات الخطر المسجّلة والتمارين المفيدة.",
+        "ja": "記録された注意が必要な時間と、役立ったリセットを確認します。",
+        "ko": "기록된 위험 시간대와 도움이 된 활동을 확인하세요.",
+        "zh-Hans": "查看记录的风险时段和有帮助的调整活动。"
+      }
+    },
+    {
+      "source": "Review the last week of recorded activity.",
+      "translations": {
+        "hi": "पिछले सप्ताह की दर्ज गतिविधि देखें।",
+        "es": "Revisa la actividad registrada de la última semana.",
+        "pt": "Revise a atividade registrada da última semana.",
+        "fr": "Consultez les activités enregistrées de la semaine passée.",
+        "de": "Sieh dir die erfassten Aktivitäten der letzten Woche an.",
+        "ar": "راجع النشاط المسجّل خلال الأسبوع الماضي.",
+        "ja": "過去1週間に記録した活動を確認します。",
+        "ko": "지난주에 기록된 활동을 확인하세요.",
+        "zh-Hans": "查看过去一周记录的活动。"
+      }
+    },
+    {
+      "source": "Review the monthly report from your recorded activity.",
+      "translations": {
+        "hi": "अपनी दर्ज गतिविधि की मासिक रिपोर्ट देखें।",
+        "es": "Revisa el informe mensual de tus actividades registradas.",
+        "pt": "Revise o relatório mensal das suas atividades registradas.",
+        "fr": "Consultez le rapport mensuel de vos activités enregistrées.",
+        "de": "Sieh dir den Monatsbericht deiner erfassten Aktivitäten an.",
+        "ar": "راجع التقرير الشهري لنشاطك المسجّل.",
+        "ja": "記録した活動の月次レポートを確認します。",
+        "ko": "기록된 활동의 월간 보고서를 확인하세요.",
+        "zh-Hans": "查看已记录活动的月度报告。"
+      }
+    },
+    {
+      "source": "Review verified access and membership options.",
+      "translations": {
+        "hi": "पुष्टि की गई पहुँच और सदस्यता विकल्प देखें।",
+        "es": "Revisa el acceso verificado y las opciones de suscripción.",
+        "pt": "Revise o acesso verificado e as opções de assinatura.",
+        "fr": "Consultez l’accès vérifié et les options d’abonnement.",
+        "de": "Prüfe deinen bestätigten Zugriff und Mitgliedschaftsoptionen.",
+        "ar": "راجع الوصول المؤكّد وخيارات الاشتراك.",
+        "ja": "確認済みのアクセスとメンバーシップの選択肢を確認します。",
+        "ko": "확인된 접근 권한과 멤버십 옵션을 확인하세요.",
+        "zh-Hans": "查看已验证的访问权限和会员选项。"
+      }
+    },
+    {
+      "source": "Review website filtering and its independent coverage.",
+      "translations": {
+        "hi": "वेबसाइट फ़िल्टर और उसका अलग दायरा देखें।",
+        "es": "Revisa el filtro de sitios y su cobertura independiente.",
+        "pt": "Revise a filtragem de sites e sua cobertura independente.",
+        "fr": "Consultez le filtrage des sites et sa couverture indépendante.",
+        "de": "Prüfe den Websitefilter und seine unabhängige Abdeckung.",
+        "ar": "راجع تصفية المواقع ونطاقها المستقل.",
+        "ja": "ウェブサイトのフィルタと、その独立した適用範囲を確認します。",
+        "ko": "웹사이트 필터와 독립적인 적용 범위를 확인하세요.",
+        "zh-Hans": "查看网站过滤及其独立覆盖范围。"
+      }
+    },
+    {
+      "source": "Review your suggested retention plan.",
+      "translations": {
+        "hi": "सुझाई गई नियमितता योजना देखें।",
+        "es": "Revisa tu plan sugerido de continuidad.",
+        "pt": "Revise seu plano sugerido de continuidade.",
+        "fr": "Consultez le plan de continuité qui vous est proposé.",
+        "de": "Sieh dir deinen vorgeschlagenen Plan zum Dranbleiben an.",
+        "ar": "راجع خطة الاستمرار المقترحة لك.",
+        "ja": "提案された継続プランを確認します。",
+        "ko": "제안된 지속 계획을 확인하세요.",
+        "zh-Hans": "查看建议的持续计划。"
+      }
+    },
+    {
+      "source": "Rising tone: breathe in. Falling tone: breathe out. Short tone: hold.",
+      "translations": {
+        "hi": "ऊँचा होता स्वर: साँस लें। नीचे होता स्वर: साँस छोड़ें। छोटा स्वर: रोकें।",
+        "es": "Tono ascendente: inspira. Tono descendente: espira. Tono corto: mantén.",
+        "pt": "Tom crescente: inspire. Tom decrescente: expire. Tom curto: segure.",
+        "fr": "Son montant : inspirez. Son descendant : expirez. Son bref : retenez.",
+        "de": "Steigender Ton: einatmen. Fallender Ton: ausatmen. Kurzer Ton: halten.",
+        "ar": "نغمة صاعدة: شهيق. نغمة هابطة: زفير. نغمة قصيرة: ثبات.",
+        "ja": "上がる音：吸う。下がる音：吐く。短い音：止める。",
+        "ko": "올라가는 소리: 들이쉬기. 내려가는 소리: 내쉬기. 짧은 소리: 멈추기.",
+        "zh-Hans": "上升音调：吸气。下降音调：呼气。短音：停留。"
+      }
+    },
+    {
+      "source": "risk",
+      "translations": {
+        "hi": "जोखिम",
+        "es": "riesgo",
+        "pt": "risco",
+        "fr": "risque",
+        "de": "Risiko",
+        "ar": "خطر",
+        "ja": "リスク",
+        "ko": "위험",
+        "zh-Hans": "风险"
+      }
+    },
+    {
+      "source": "routine",
+      "translations": {
+        "hi": "दिनचर्या",
+        "es": "rutina",
+        "pt": "rotina",
+        "fr": "habitudes",
+        "de": "Routineplan",
+        "ar": "روتين",
+        "ja": "習慣",
+        "ko": "일상",
+        "zh-Hans": "日常习惯"
+      }
+    },
+    {
+      "source": "Save completed reset",
+      "translations": {
+        "hi": "पूरा विराम सहेजें",
+        "es": "Guardar ejercicio completado",
+        "pt": "Salvar exercício concluído",
+        "fr": "Enregistrer l’exercice terminé",
+        "de": "Abgeschlossene Übung speichern",
+        "ar": "حفظ التمرين المكتمل",
+        "ja": "完了したリセットを保存",
+        "ko": "완료한 활동 저장",
+        "zh-Hans": "保存已完成的活动"
+      }
+    },
+    {
+      "source": "Save guard mode",
+      "translations": {
+        "hi": "सुरक्षा मोड सहेजें",
+        "es": "Guardar modo de protección",
+        "pt": "Salvar modo de proteção",
+        "fr": "Enregistrer le mode de protection",
+        "de": "Schutzmodus speichern",
+        "ar": "حفظ وضع الحماية",
+        "ja": "保護モードを保存",
+        "ko": "보호 모드 저장",
+        "zh-Hans": "保存保护模式"
+      }
+    },
+    {
+      "source": "Save the completed reset before starting another.",
+      "translations": {
+        "hi": "नया विराम शुरू करने से पहले पूरा विराम सहेजें।",
+        "es": "Guarda el ejercicio completado antes de empezar otro.",
+        "pt": "Salve o exercício concluído antes de iniciar outro.",
+        "fr": "Enregistrez l’exercice terminé avant d’en commencer un autre.",
+        "de": "Speichere die abgeschlossene Übung, bevor du eine weitere startest.",
+        "ar": "احفظ التمرين المكتمل قبل بدء تمرين آخر.",
+        "ja": "別のリセットを始める前に、完了したリセットを保存してください。",
+        "ko": "다른 활동을 시작하기 전에 완료한 활동을 저장하세요.",
+        "zh-Hans": "开始另一项活动前，请保存已完成的活动。"
+      }
+    },
+    {
+      "source": "Save this draft before opening another entry.",
+      "translations": {
+        "hi": "दूसरी प्रविष्टि खोलने से पहले यह मसौदा सहेजें।",
+        "es": "Guarda este borrador antes de abrir otra entrada.",
+        "pt": "Salve este rascunho antes de abrir outra entrada.",
+        "fr": "Enregistrez ce brouillon avant d’ouvrir une autre entrée.",
+        "de": "Speichere diesen Entwurf, bevor du einen anderen Eintrag öffnest.",
+        "ar": "احفظ هذه المسوّدة قبل فتح إدخال آخر.",
+        "ja": "別の記録を開く前に、この下書きを保存してください。",
+        "ko": "다른 기록을 열기 전에 이 초안을 저장하세요.",
+        "zh-Hans": "打开其他记录前，请保存此草稿。"
+      }
+    },
+    {
+      "source": "Save your reflection in Journal, then review your daily record.",
+      "translations": {
+        "hi": "चिंतन डायरी में सहेजें, फिर अपना दैनिक रिकॉर्ड देखें।",
+        "es": "Guarda tu reflexión en el diario y luego revisa tu registro diario.",
+        "pt": "Salve sua reflexão no diário e depois revise o registro do dia.",
+        "fr": "Enregistrez votre réflexion dans le journal, puis consultez votre bilan quotidien.",
+        "de": "Speichere deine Gedanken im Tagebuch und sieh dir dann deinen Tageseintrag an.",
+        "ar": "احفظ تأملك في اليوميات، ثم راجع سجلك اليومي.",
+        "ja": "振り返りを日記に保存してから、その日の記録を確認しましょう。",
+        "ko": "일기에 생각을 저장한 뒤 일일 기록을 확인하세요.",
+        "zh-Hans": "在日记中保存反思，再查看当天记录。"
+      }
+    },
+    {
+      "source": "Saved app guard",
+      "translations": {
+        "hi": "सहेजी गई ऐप सुरक्षा",
+        "es": "Protección de aplicaciones guardada",
+        "pt": "Proteção de aplicativos salva",
+        "fr": "Protection des applications enregistrée",
+        "de": "Gespeicherter App-Schutz",
+        "ar": "حماية التطبيقات المحفوظة",
+        "ja": "保存済みのアプリ保護",
+        "ko": "저장된 앱 보호",
+        "zh-Hans": "已保存的应用保护"
+      }
+    },
+    {
+      "source": "Saved mode",
+      "translations": {
+        "hi": "सहेजा गया मोड",
+        "es": "Modo guardado",
+        "pt": "Modo salvo",
+        "fr": "Mode enregistré",
+        "de": "Gespeicherter Modus",
+        "ar": "الوضع المحفوظ",
+        "ja": "保存済みモード",
+        "ko": "저장된 모드",
+        "zh-Hans": "已保存的模式"
+      }
+    },
+    {
+      "source": "Saved mode: {{label}}. Waiting for native acknowledgment.",
+      "translations": {
+        "hi": "सहेजा मोड: {{label}}। डिवाइस की पुष्टि का इंतज़ार है।",
+        "es": "Modo guardado: {{label}}. Esperando confirmación del dispositivo.",
+        "pt": "Modo salvo: {{label}}. Aguardando confirmação do dispositivo.",
+        "fr": "Mode enregistré : {{label}}. En attente de confirmation de l’appareil.",
+        "de": "Gespeicherter Modus: {{label}}. Gerätebestätigung steht aus.",
+        "ar": "الوضع المحفوظ: {{label}}. بانتظار تأكيد الجهاز.",
+        "ja": "保存済みモード：{{label}}。端末の確認を待っています。",
+        "ko": "저장된 모드: {{label}}. 기기의 확인을 기다리고 있어요.",
+        "zh-Hans": "已保存的模式：{{label}}。正在等待设备确认。"
+      }
+    },
+    {
+      "source": "saved on",
+      "translations": {
+        "hi": "चालू सहेजा गया",
+        "es": "guardado como activado",
+        "pt": "salvo como ativado",
+        "fr": "enregistré comme activé",
+        "de": "als eingeschaltet gespeichert",
+        "ar": "محفوظ كمفعّل",
+        "ja": "オンとして保存済み",
+        "ko": "켜짐으로 저장됨",
+        "zh-Hans": "已保存为开启"
+      }
+    },
+    {
+      "source": "Saved progress could not be removed. Retry discarding it before starting another guided reset.",
+      "translations": {
+        "hi": "सहेजी प्रगति हटाई नहीं जा सकी। नया निर्देशित विराम शुरू करने से पहले इसे छोड़ने की फिर कोशिश करें।",
+        "es": "No se pudo eliminar el progreso guardado. Reintenta descartarlo antes de empezar otro ejercicio guiado.",
+        "pt": "Não foi possível remover o progresso salvo. Tente descartá-lo novamente antes de iniciar outro exercício guiado.",
+        "fr": "La progression enregistrée n’a pas pu être supprimée. Réessayez de l’abandonner avant de commencer un autre exercice guidé.",
+        "de": "Der gespeicherte Fortschritt konnte nicht entfernt werden. Verwirf ihn erneut, bevor du eine weitere geführte Übung startest.",
+        "ar": "تعذّر إزالة التقدّم المحفوظ. أعد محاولة إلغائه قبل بدء تمرين موجّه آخر.",
+        "ja": "保存した進捗を削除できませんでした。新しいガイド付きリセットの前に、破棄を再試行してください。",
+        "ko": "저장된 진행 상황을 삭제하지 못했어요. 새 안내 활동을 시작하기 전에 삭제를 다시 시도하세요.",
+        "zh-Hans": "无法删除已保存的进度。开始另一项引导活动前，请重试放弃当前活动。"
+      }
+    },
+    {
+      "source": "Saved. Native status confirms whether the mode is ready.",
+      "translations": {
+        "hi": "सहेजा गया। डिवाइस की स्थिति बताती है कि मोड तैयार है या नहीं।",
+        "es": "Guardado. El estado del dispositivo confirma si el modo está listo.",
+        "pt": "Salvo. O estado do dispositivo confirma se o modo está pronto.",
+        "fr": "Enregistré. L’état de l’appareil confirme si le mode est prêt.",
+        "de": "Gespeichert. Der Gerätestatus bestätigt, ob der Modus bereit ist.",
+        "ar": "تم الحفظ. تؤكّد حالة الجهاز ما إذا كان الوضع جاهزًا.",
+        "ja": "保存しました。モードが使えるかどうかは端末の状態で確認できます。",
+        "ko": "저장되었어요. 기기 상태에서 모드가 준비되었는지 확인하세요.",
+        "zh-Hans": "已保存。设备状态会确认该模式是否就绪。"
+      }
+    },
+    {
+      "source": "schedule",
+      "translations": {
+        "hi": "समय-सारणी",
+        "es": "horario",
+        "pt": "programação",
+        "fr": "horaire",
+        "de": "Zeitplan",
+        "ar": "جدول",
+        "ja": "スケジュール",
+        "ko": "일정",
+        "zh-Hans": "时间安排"
+      }
+    },
+    {
+      "source": "Scheduled",
+      "translations": {
+        "hi": "निर्धारित समय",
+        "es": "Programado",
+        "pt": "Programado",
+        "fr": "Programmé",
+        "de": "Geplant",
+        "ar": "مجدول",
+        "ja": "時間指定",
+        "ko": "예약됨",
+        "zh-Hans": "按计划"
+      }
+    },
+    {
+      "source": "Scheduled mode uses registered local time windows. iOS covers only selected individual applications; Android windows cover supported distracting packages.",
+      "translations": {
+        "hi": "निर्धारित मोड दर्ज स्थानीय समय अंतराल इस्तेमाल करता है। iOS में केवल चुने गए अलग-अलग ऐप, और Android में समर्थित ध्यान भटकाने वाले पैकेज शामिल हैं।",
+        "es": "El modo programado usa horarios locales registrados. iOS cubre solo aplicaciones individuales seleccionadas; Android cubre paquetes de distracción compatibles.",
+        "pt": "O modo programado usa horários locais registrados. O iOS cobre apenas aplicativos individuais selecionados; o Android cobre pacotes de distração compatíveis.",
+        "fr": "Le mode programmé utilise des créneaux locaux enregistrés. iOS couvre uniquement les applications individuelles choisies ; Android couvre les paquets distrayants pris en charge.",
+        "de": "Der geplante Modus nutzt registrierte lokale Zeitfenster. iOS umfasst nur ausgewählte einzelne Apps; Android umfasst unterstützte ablenkende Pakete.",
+        "ar": "يستخدم الوضع المجدول فترات محلية مسجّلة. يشمل iOS التطبيقات الفردية المختارة فقط، وتشمل فترات Android الحزم المشتّتة المدعومة.",
+        "ja": "時間指定モードは、登録した端末の現地時刻の時間帯を使います。iOSは選択した個別のアプリ、Androidは対応する気が散るアプリのパッケージが対象です。",
+        "ko": "예약 모드는 등록된 기기 현지 시간대를 사용해요. iOS는 선택한 개별 앱만, Android는 지원되는 주의 분산 앱 패키지를 보호해요.",
+        "zh-Hans": "计划模式使用已注册的本地时间段。iOS 仅覆盖所选独立应用，Android 时间段覆盖受支持的干扰应用软件包。"
+      }
+    },
+    {
+      "source": "Schedules",
+      "translations": {
+        "hi": "समय-सारणियाँ",
+        "es": "Horarios",
+        "pt": "Programações",
+        "fr": "Horaires",
+        "de": "Zeitpläne",
+        "ar": "الجداول",
+        "ja": "スケジュール一覧",
+        "ko": "일정 목록",
+        "zh-Hans": "时间安排"
+      }
+    },
+    {
+      "source": "score",
+      "translations": {
+        "hi": "स्कोर",
+        "es": "puntuación",
+        "pt": "pontuação",
+        "fr": "score de suivi",
+        "de": "Punktestand",
+        "ar": "درجة",
+        "ja": "スコア",
+        "ko": "점수",
+        "zh-Hans": "分数"
+      }
+    },
+    {
+      "source": "screen time",
+      "translations": {
+        "hi": "स्क्रीन समय",
+        "es": "tiempo de pantalla",
+        "pt": "tempo de tela",
+        "fr": "temps d’écran",
+        "de": "Bildschirmzeit",
+        "ar": "وقت الشاشة",
+        "ja": "スクリーンタイム",
+        "ko": "스크린 타임",
+        "zh-Hans": "屏幕使用时间"
+      }
+    },
+    {
+      "source": "Screen Time targets saved and the selected app guard installed.",
+      "translations": {
+        "hi": "Screen Time लक्ष्य सहेजे गए और चुनी ऐप सुरक्षा इंस्टॉल हुई।",
+        "es": "Se guardaron los objetivos de Tiempo de uso y se instaló la protección seleccionada.",
+        "pt": "Os alvos do Tempo de Uso foram salvos e a proteção selecionada foi instalada.",
+        "fr": "Les éléments Temps d’écran sont enregistrés et la protection choisie est installée.",
+        "de": "Bildschirmzeit-Ziele wurden gespeichert und der ausgewählte App-Schutz eingerichtet.",
+        "ar": "حُفظت عناصر مدة استخدام الجهاز وثُبّتت حماية التطبيق المختارة.",
+        "ja": "スクリーンタイムの対象を保存し、選んだアプリ保護を設定しました。",
+        "ko": "스크린 타임 대상이 저장되고 선택한 앱 보호가 설치되었어요.",
+        "zh-Hans": "已保存屏幕使用时间目标并安装所选应用保护。"
+      }
+    },
+    {
+      "source": "Screen Time targets saved. Native app guard readiness needs attention before activation.",
+      "translations": {
+        "hi": "Screen Time लक्ष्य सहेजे गए। सक्रिय करने से पहले ऐप सुरक्षा की तैयारी जाँचनी होगी।",
+        "es": "Se guardaron los objetivos de Tiempo de uso. La protección del dispositivo necesita atención antes de activarse.",
+        "pt": "Os alvos do Tempo de Uso foram salvos. A preparação da proteção precisa de atenção antes da ativação.",
+        "fr": "Les éléments Temps d’écran sont enregistrés. La protection de l’appareil nécessite une vérification avant l’activation.",
+        "de": "Bildschirmzeit-Ziele wurden gespeichert. Die Bereitschaft des App-Schutzes muss vor der Aktivierung geprüft werden.",
+        "ar": "حُفظت عناصر مدة استخدام الجهاز. تحتاج جاهزية حماية التطبيق إلى المراجعة قبل التفعيل.",
+        "ja": "スクリーンタイムの対象を保存しました。有効化する前に、端末のアプリ保護の準備状態を確認してください。",
+        "ko": "스크린 타임 대상이 저장되었어요. 활성화 전에 앱 보호 준비 상태를 확인해야 해요.",
+        "zh-Hans": "已保存屏幕使用时间目标。启用前，需要检查设备应用保护的就绪状态。"
+      }
+    },
+    {
+      "source": "Search all features",
+      "translations": {
+        "hi": "सभी सुविधाएँ खोजें",
+        "es": "Buscar todas las funciones",
+        "pt": "Buscar todos os recursos",
+        "fr": "Rechercher toutes les fonctionnalités",
+        "de": "Alle Funktionen durchsuchen",
+        "ar": "البحث في كل الميزات",
+        "ja": "すべての機能を検索",
+        "ko": "전체 기능 검색",
+        "zh-Hans": "搜索全部功能"
+      }
+    },
+    {
+      "source": "Seated movement break",
+      "translations": {
+        "hi": "बैठकर गतिविधि का विराम",
+        "es": "Pausa de movimiento sentado",
+        "pt": "Pausa de movimento sentado",
+        "fr": "Pause de mouvement assis",
+        "de": "Bewegungspause im Sitzen",
+        "ar": "استراحة حركة أثناء الجلوس",
+        "ja": "座ったままの運動休憩",
+        "ko": "앉아서 움직이는 휴식",
+        "zh-Hans": "坐姿活动休息"
+      }
+    },
+    {
+      "source": "See milestones based on recorded activity.",
+      "translations": {
+        "hi": "दर्ज गतिविधि पर आधारित उपलब्धियाँ देखें।",
+        "es": "Mira los logros basados en la actividad registrada.",
+        "pt": "Veja conquistas baseadas na atividade registrada.",
+        "fr": "Consultez les étapes fondées sur les activités enregistrées.",
+        "de": "Sieh dir Meilensteine auf Basis erfasster Aktivitäten an.",
+        "ar": "شاهد الإنجازات المبنية على النشاط المسجّل.",
+        "ja": "記録した活動に基づく節目を確認します。",
+        "ko": "기록된 활동에 따른 이정표를 확인하세요.",
+        "zh-Hans": "查看基于已记录活动的里程碑。"
+      }
+    },
+    {
+      "source": "Selected app guard needs attention: {{error}}",
+      "translations": {
+        "hi": "चुनी ऐप सुरक्षा जाँचें: {{error}}",
+        "es": "La protección seleccionada necesita atención: {{error}}",
+        "pt": "A proteção selecionada precisa de atenção: {{error}}",
+        "fr": "La protection choisie nécessite une vérification : {{error}}",
+        "de": "Ausgewählter App-Schutz braucht Aufmerksamkeit: {{error}}",
+        "ar": "حماية التطبيق المختار تحتاج للمراجعة: {{error}}",
+        "ja": "選択したアプリ保護の確認が必要です：{{error}}",
+        "ko": "선택한 앱 보호를 확인해야 해요: {{error}}",
+        "zh-Hans": "所选应用保护需要检查：{{error}}"
+      }
+    },
+    {
+      "source": "Selected app guard settings saved. Review native readiness before relying on protection.",
+      "translations": {
+        "hi": "चुनी ऐप सुरक्षा सेटिंग सहेजी गई। सुरक्षा पर भरोसा करने से पहले डिवाइस की तैयारी जाँचें।",
+        "es": "Se guardaron los ajustes de protección seleccionados. Revisa la preparación del dispositivo antes de confiar en la protección.",
+        "pt": "Os ajustes da proteção selecionada foram salvos. Revise a preparação do dispositivo antes de confiar na proteção.",
+        "fr": "Les réglages de protection choisis sont enregistrés. Vérifiez l’état de l’appareil avant de compter sur cette protection.",
+        "de": "Die ausgewählten App-Schutzeinstellungen wurden gespeichert. Prüfe den Gerätestatus, bevor du dich auf den Schutz verlässt.",
+        "ar": "حُفظت إعدادات حماية التطبيق المختار. راجع جاهزية الجهاز قبل الاعتماد على الحماية.",
+        "ja": "選択したアプリ保護の設定を保存しました。保護を頼りにする前に、端末の準備状態を確認してください。",
+        "ko": "선택한 앱 보호 설정이 저장되었어요. 보호 기능에 의존하기 전에 기기 준비 상태를 확인하세요.",
+        "zh-Hans": "已保存所选应用保护设置。依赖保护功能前，请检查设备就绪状态。"
+      }
+    },
+    {
+      "source": "Selected applications pause immediately once the saved mode, authorization and native guard are ready.",
+      "translations": {
+        "hi": "मोड, अनुमति और डिवाइस सुरक्षा तैयार होने पर चुने ऐप तुरंत रुकते हैं।",
+        "es": "Las aplicaciones seleccionadas se pausan inmediatamente cuando el modo guardado, la autorización y la protección del dispositivo están listos.",
+        "pt": "Os aplicativos selecionados pausam imediatamente quando o modo salvo, a autorização e a proteção do dispositivo estão prontos.",
+        "fr": "Les applications choisies se mettent immédiatement en pause quand le mode enregistré, l’autorisation et la protection de l’appareil sont prêts.",
+        "de": "Ausgewählte Apps pausieren sofort, sobald gespeicherter Modus, Berechtigung und Geräteschutz bereit sind.",
+        "ar": "تتوقف التطبيقات المختارة فورًا عندما يصبح الوضع المحفوظ والتفويض وحماية الجهاز جاهزة.",
+        "ja": "保存したモード、許可、端末の保護が準備できると、選択したアプリはすぐに一時停止されます。",
+        "ko": "저장된 모드, 권한, 기기 보호가 준비되면 선택한 앱이 즉시 일시 중지돼요.",
+        "zh-Hans": "保存的模式、授权和设备保护就绪后，所选应用会立即暂停。"
+      }
+    },
+    {
+      "source": "Selected individual applications",
+      "translations": {
+        "hi": "चुने गए अलग-अलग ऐप",
+        "es": "Aplicaciones individuales seleccionadas",
+        "pt": "Aplicativos individuais selecionados",
+        "fr": "Applications individuelles choisies",
+        "de": "Ausgewählte einzelne Apps",
+        "ar": "التطبيقات الفردية المختارة",
+        "ja": "選択した個別のアプリ",
+        "ko": "선택한 개별 앱",
+        "zh-Hans": "所选独立应用"
+      }
+    },
+    {
+      "source": "Selected package IDs and native guard state only.",
+      "translations": {
+        "hi": "केवल चुने पैकेज आईडी और डिवाइस की सुरक्षा स्थिति।",
+        "es": "Solo los identificadores de paquetes seleccionados y el estado de protección del dispositivo.",
+        "pt": "Somente IDs de pacotes selecionados e estado de proteção do dispositivo.",
+        "fr": "Uniquement les identifiants des paquets choisis et l’état de protection de l’appareil.",
+        "de": "Nur ausgewählte Paket-IDs und der Schutzstatus des Geräts.",
+        "ar": "معرّفات الحزم المختارة وحالة حماية الجهاز فقط.",
+        "ja": "選択したパッケージIDと、端末の保護状態のみです。",
+        "ko": "선택한 패키지 ID와 기기 보호 상태만 사용해요.",
+        "zh-Hans": "仅限所选软件包 ID 和设备保护状态。"
+      }
+    },
+    {
+      "source": "Selected-app DeviceActivity scheduling is unavailable in this build.",
+      "translations": {
+        "hi": "इस संस्करण में चुनिंदा ऐप के DeviceActivity समय नियम उपलब्ध नहीं हैं।",
+        "es": "La programación DeviceActivity para aplicaciones seleccionadas no está disponible en esta versión.",
+        "pt": "A programação DeviceActivity para aplicativos selecionados não está disponível nesta versão.",
+        "fr": "La programmation DeviceActivity des applications choisies n’est pas disponible dans cette version.",
+        "de": "DeviceActivity-Zeitpläne für ausgewählte Apps sind in dieser Version nicht verfügbar.",
+        "ar": "جدولة DeviceActivity للتطبيقات المختارة غير متاحة في هذه النسخة.",
+        "ja": "このバージョンでは、選択したアプリのDeviceActivityスケジュールを利用できません。",
+        "ko": "이 버전에서는 선택한 앱의 DeviceActivity 일정을 사용할 수 없어요.",
+        "zh-Hans": "此版本不支持所选应用的 DeviceActivity 计划。"
+      }
+    },
+    {
+      "source": "Selected-app schedule configuration could not be encoded.",
+      "translations": {
+        "hi": "चुनिंदा ऐप की समय सेटिंग एन्कोड नहीं हो सकी।",
+        "es": "No se pudo codificar la configuración de horarios de las aplicaciones seleccionadas.",
+        "pt": "Não foi possível codificar a configuração de horários dos aplicativos selecionados.",
+        "fr": "La configuration des horaires des applications choisies n’a pas pu être encodée.",
+        "de": "Die Zeitplankonfiguration für ausgewählte Apps konnte nicht kodiert werden.",
+        "ar": "تعذّر ترميز إعداد جدول التطبيقات المختارة.",
+        "ja": "選択したアプリのスケジュール設定をエンコードできませんでした。",
+        "ko": "선택한 앱의 일정 설정을 인코딩하지 못했어요.",
+        "zh-Hans": "无法编码所选应用的计划配置。"
+      }
+    },
+    {
+      "source": "Selected-app schedule configuration saved. Native registrations determine readiness.",
+      "translations": {
+        "hi": "चुनिंदा ऐप की समय सेटिंग सहेजी गई। तैयारी डिवाइस पर दर्ज नियमों से तय होती है।",
+        "es": "Se guardaron los horarios de las aplicaciones seleccionadas. Los registros del dispositivo determinan si están listos.",
+        "pt": "Os horários dos aplicativos selecionados foram salvos. Os registros do dispositivo determinam a preparação.",
+        "fr": "Les horaires des applications choisies sont enregistrés. Les enregistrements de l’appareil déterminent leur disponibilité.",
+        "de": "Der Zeitplan für ausgewählte Apps wurde gespeichert. Die Registrierungen auf dem Gerät bestimmen die Bereitschaft.",
+        "ar": "حُفظ إعداد جدول التطبيقات المختارة. تحدّد التسجيلات على الجهاز الجاهزية.",
+        "ja": "選択したアプリのスケジュールを保存しました。使えるかどうかは、端末に登録されたルールで決まります。",
+        "ko": "선택한 앱의 일정 설정이 저장되었어요. 기기에 등록된 규칙에 따라 준비 상태가 결정돼요.",
+        "zh-Hans": "已保存所选应用的计划配置。是否就绪取决于设备上的注册规则。"
+      }
+    }
+  ]
+}

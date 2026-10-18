@@ -1,0 +1,55 @@
+{
+  "planVersion": 1,
+  "status": "offline-planned-not-approved-not-created",
+  "project": "freed-7d5ee",
+  "ownerUidSha256": "3f8ee2749a843657586ae2ee698024b5abde5d41dc6f28defa1bd7358bd680a8",
+  "email": "soumyadebnath1661+freedappreview@gmail.com",
+  "displayName": "FREEDAppReview",
+  "authProvider": "password",
+  "disabled": false,
+  "emailVerified": false,
+  "mfaEnrollment": false,
+  "customClaims": false,
+  "adminAuthority": false,
+  "initialRecoveryHistory": "empty",
+  "copyOtherUserData": false,
+  "linkExistingNativeActor": false,
+  "sendEmail": false,
+  "emailDeliverabilityClaimed": false,
+  "credentialReuse": "Normal native Firebase password sign-in; no OTP enrollment or source bypass. Dedicated reviewer workflow completes real owner email verification before store sharing.",
+  "reviewAccess": {
+    "kind": "review-access-v1",
+    "lifetimeDays": 14,
+    "capabilities": [
+      "ad-free",
+      "premium-features"
+    ],
+    "paidPurchaseAuthority": false,
+    "renewal": "New explicit human admin approval; no client renewal."
+  },
+  "credentialSharingDestinations": [
+    "apple-app-review:6816637268",
+    "google-play-app-review:app.freed.recovery"
+  ],
+  "automaticCredentialSharing": false,
+  "approvalRequiredActions": [
+    "create-password-account",
+    "deliver-firebase-verification-email-to-owned-alias",
+    "complete-owner-email-verification",
+    "prove-normal-native-password-sign-in",
+    "grant-14-day-review-access",
+    "share-to-scoped-app-review-destinations"
+  ],
+  "freshApprovalMaxAgeMinutes": 60,
+  "privateCredentialFile": "/Users/soumyadebnath16/.config/freed/secrets/review-account/2026-10-05-b5ab657b/planned-credentials.json",
+  "privateCredentialFileSha256": "f69c8fad7769df3578b3587d13edd8f6a135251f069b5deb0c1760f30ebc1cb7",
+  "createdAt": "2026-10-05T00:40:14.631155+00:00",
+  "hostingDomainEvidence": "Revised to the owner-controlled support Gmail alias explicitly authorized by the human session. No verification email has been sent; actual inbox verification is a future approved step.",
+  "futureProvisionScript": "/Users/soumyadebnath16/.config/freed/admin/review-access-v1-2026-10-05.mjs",
+  "futureCreationScript": "/Users/soumyadebnath16/.config/freed/admin/create-reviewer-account-2026-10-05-b5ab657b.mjs",
+  "verificationEmailDeliveryRequiredBeforeReviewerSharing": true,
+  "ownerInboxCompletionRequiredBeforeReviewerSharing": true,
+  "adminForgedEmailVerification": false,
+  "sendEmailBeforeApproval": false,
+  "creationRecovery": "One durable intent and one create attempt; all existing intents block retry. SDK acknowledgment is unconfirmed and post-attempt failures are indeterminate; manual exact-identity/creation-time/native-password/Root reconciliation is required. Never adopt, delete or rotate an ambiguous identity."
+}

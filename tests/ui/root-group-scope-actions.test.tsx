@@ -1,0 +1,30 @@
+import {task86ScopeDependencies} from '../helpers/task86-native-account-fixture';
+import React from 'react';
+import { act,render } from '@testing-library/react-native';
+import { Text,View,AppState } from 'react-native';
+import { readFileSync } from 'node:fs';
+import { transpileModule,ModuleKind,JsxEmit } from 'typescript';
+import { getJourneyOwner } from '@/lib/user-journey';
+import { unavailableAppGroupsSnapshot } from '@/lib/app-groups-controller';
+import { presentNativeAppBreak } from '@/lib/live-earned-app-time';
+import { isAppGroupBindingConfirmed } from '../../modules/freed-protection/src/app-group-binding';
+const acceptedBinding = { version: 1 as const, operationId: 'c0c660e3-55bf-4930-a729-a1728ec2fc1f', supported: true, accepted: true, bindingCurrent: true, ownerVerified: true, stage: 'complete' as const, reason: null, generation: 1, scopeEpoch: 1, errorCode: null, errorDomain: null };
+
+test('actual Root unknown getter suspends, resumes only confirmed owner, and refuses stale Add apps intents',async()=>{
+ const s=readFileSync('src/features/freed-app.tsx','utf8'),start=s.indexOf('  const appGroupsMemorySuspended ='),end=s.indexOf('  const protectionHostAlive =',start);const code=transpileModule(`return function Probe(){ const [unlockClockMs,setUnlockClockMs]=React.useState(Date.now); ${s.slice(start,end)} capture({nativeAppBreak,getProtectionActionScope,openAppGroups,addAppGroup,openAdvancedProtection,initialAppGroupId,visibleAppGroups,hasPendingAppsAddIntent:typeof hasPendingAppsAddIntent==='function'?hasPendingAppsAddIntent:()=>false,consumePendingAppsAddIntent:typeof consumePendingAppsAddIntent==='function'?consumePendingAppsAddIntent:()=>{}});return <View><Text>{knownProtectionScope??'unknown'}</Text></View>;}`,{compilerOptions:{module:ModuleKind.CommonJS,jsx:JsxEmit.React}}).outputText;
+ let auth:any={status:'hydrating',signedIn:false,anonymous:false,ownerUid:null,email:null},sdk:string|null=null,c:any,createResolve:any;const suspend=jest.fn(async()=>true),bind=jest.fn(async()=>acceptedBinding),push=jest.fn(),create=jest.fn(()=>new Promise(r=>{createResolve=r;}));
+ const snapshot={...unavailableAppGroupsSnapshot(),supported:true,platform:'ios' as const};const groups={status:snapshot,refresh:jest.fn(async()=>snapshot),create};
+ const leases=new Map<string,{ownerUid:string;isCurrent:()=>boolean}>();
+ const readOwnerLease=()=>{const owner=getJourneyOwner(auth);if(!owner||owner!==sdk)return null;if(!leases.has(owner))leases.set(owner,{ownerUid:owner,isCurrent:()=>getJourneyOwner(auth)===owner&&sdk===owner});return leases.get(owner)!;};
+ const deps:any={React,View,Text,AppState,presentNativeAppBreak,screen:'main',tab:'shield',Platform:{OS:'ios'},getFirebaseAuthSnapshot:()=>auth,getFirebaseAccountScope:()=>sdk,getJourneyOwner,protectionHostAlive:{current:true},privateLockedRef:{current:false},accountHostGeneration:{current:4},suspendAppGroupOperations:suspend,setAppGroupActionScope:bind,isAppGroupBindingConfirmed,useAppGroups:()=>groups,protectionCapability:{appGroups:true},setProtectionIntent:jest.fn(),setScreen:jest.fn(),enterAccountFlow:jest.fn(),router:{push},freedShieldSectionPath:(v:string)=>`/shield/${v}`,guidedRouteParams:{create:'1'},translateSource:(v:string)=>v,capture:(v:any)=>{c=v;}};
+ Object.assign(deps,task86ScopeDependencies(()=>auth,()=>sdk));
+ Object.defineProperty(deps,'journeyOwner',{enumerable:true,get:()=>getJourneyOwner(auth)});
+ Object.defineProperty(deps,'ownerLease',{enumerable:true,get:readOwnerLease});
+ const Probe=()=>{const args={...deps};return new Function(...Object.keys(args),code)(...Object.values(args))();};
+ const view=render(<Probe/>);await act(async()=>{});expect(suspend).not.toHaveBeenCalled();expect(bind).not.toHaveBeenCalled();expect(c.getProtectionActionScope()).toBeNull();expect(create).not.toHaveBeenCalled();expect(c.hasPendingAppsAddIntent()).toBe(false);expect(c.nativeAppBreak).toBeNull();
+ auth={status:'ready',signedIn:true,anonymous:false,ownerUid:'scope-a',email:null};sdk='scope-a';view.rerender(<Probe/>);await act(async()=>{});expect(bind).toHaveBeenCalledWith('["scope-a",4,"22222222-2222-4222-8222-222222222222"]');expect(c.visibleAppGroups).toBe(snapshot);expect(c.initialAppGroupId).toBeUndefined();expect(create).not.toHaveBeenCalled();
+ c.openAdvancedProtection();expect(push).toHaveBeenCalledWith('/shield/advanced');c.openAppGroups();expect(push).toHaveBeenCalledWith('/shield/apps');
+ c.addAppGroup();c.addAppGroup();expect(create).not.toHaveBeenCalled();expect(c.hasPendingAppsAddIntent()).toBe(true);expect(push.mock.calls.filter(([v])=>v==='/shield/apps')).toHaveLength(2);auth={...auth,ownerUid:'scope-b'};sdk='scope-b';expect(c.hasPendingAppsAddIntent()).toBe(false);expect(push.mock.calls.some(([v])=>typeof v==='object'&&v.params?.groupId)).toBe(false);
+ auth={...auth,ownerUid:'scope-a'};sdk='scope-a';view.rerender(<Probe/>);await act(async()=>{});c.addAppGroup();expect(c.hasPendingAppsAddIntent()).toBe(true);c.consumePendingAppsAddIntent();expect(c.hasPendingAppsAddIntent()).toBe(false);c.addAppGroup();const clock=jest.spyOn(Date,'now');const issued=Date.now();clock.mockReturnValue(issued+120001);expect(c.hasPendingAppsAddIntent()).toBe(false);clock.mockRestore();c.consumePendingAppsAddIntent();
+ auth={status:'ready',signedIn:false,anonymous:false,ownerUid:null,email:null};sdk=null;view.rerender(<Probe/>);await act(async()=>{});expect(bind).not.toHaveBeenCalledWith('[null,4]');expect(c.visibleAppGroups).toBeNull();expect(c.nativeAppBreak).toBeNull();
+});

@@ -1,13 +1,20 @@
+import { readClientEnvironmentValue } from "@/lib/public-client-env";
 import { BlockingAttempt } from "@/lib/blocking-engine";
 import { getProductionEndpointIssues } from "@/lib/endpoint-safety";
 import { generateCoachReply, isCrisisSupportInput } from "@/lib/recovery-engine";
-import { coarseRecoveryTriggerLabel } from "@/lib/recovery-signal-privacy";
+import { coarseRecoveryTriggerLabel, projectRecoveryStateForOffDevice } from "@/lib/recovery-signal-privacy";
+import { countRecoveryRiskMomentsForDay, type RecoveryState } from "@/lib/recovery-state";
 import { fetchRemoteProviderJson } from "@/lib/remote-provider-timeout";
+import type { SupportedLanguage } from './app-preferences';
 
 export type CoachMode = "local" | "remote";
 export type CoachProvider = "local" | "remote" | "fallback";
 
 export type CoachContext = {
+  /** Read only by the remote builder; never serialized into the request. */
+  exportState?: RecoveryState;
+  exportDay?: Date | string;
+  locale?: SupportedLanguage;
   attempts: BlockingAttempt[];
   streakDays?: number;
   attemptsToday?: number;
@@ -18,6 +25,7 @@ export type CoachContext = {
 };
 
 export type CoachRequest = {
+  locale?: SupportedLanguage;
   input: string;
   context: {
     streakDays: number | null;
@@ -38,6 +46,59 @@ export type CoachResponse = {
   status: "ok" | "fallback";
 };
 
+/** Synchronous request fence plus retained reply receipt. React render timing
+ * cannot duplicate a send; a storage retry never needs another provider call.
+ */
+export function createCoachSendController(options: {
+  reply: (input: string, isCurrent:()=>boolean) => Promise<CoachResponse>;
+  onUser: (input: string) => void;
+  onReply: (reply: CoachResponse) => void;
+  onPending: (pending: boolean) => void;
+  onError: (code: 'save-failed' | 'service-failed' | null) => void;
+  isCurrent: () => boolean;
+  /** Only explicit retryReply may refresh an admitted, durably saved fallback.
+   * Ordinary retry preserves the retained request for persistence repair. */
+  canRetryReply?: (reply: CoachResponse) => boolean;
+}) {
+  let pending=false,disposed=false,generation=0;
+  let last: {input:string;userSaved:boolean;reply?:CoachResponse;replySaved:boolean}|null=null;
+  const current=()=>!disposed && options.isCurrent();
+  const run=async()=>{
+    if(pending || !current() || !last)return false;
+    pending=true;options.onPending(true);options.onError(null);
+    const request=last;
+    const token=generation;
+    const active=()=>current() && token===generation;
+    try {
+      if(!request.userSaved){options.onUser(request.input);request.userSaved=true;}
+      if(!active())return false;
+      if(!request.reply){
+        try {request.reply=await options.reply(request.input,active);}
+        catch {if(active())options.onError('service-failed');return false;}
+      }
+      if(!active() || request!==last)return false;
+      if(!request.replySaved){options.onReply(request.reply);request.replySaved=true;}
+      return true;
+    } catch {if(active())options.onError('save-failed');return false;}
+    finally {if(token===generation){pending=false;if(current())options.onPending(false);}}
+  };
+  return {
+    send(input:string){
+      if(pending || !current() || !input.trim())return Promise.resolve(false);
+      last={input,userSaved:false,replySaved:false};return run();
+    },
+    retry(){return run();},
+    retryReply(){
+      if(pending || !current() || !last?.replySaved || !last.reply || !options.canRetryReply?.(last.reply))return Promise.resolve(false);
+      last.reply=undefined;last.replySaved=false;
+      return run();
+    },
+    cancel(){generation++;pending=false;last=null;if(current())options.onPending(false);},
+    activate(){disposed=false;},
+    dispose(){generation++;pending=false;disposed=true;last=null;},
+  };
+}
+
 export type RemoteCoachProvider = (request: CoachRequest) => Promise<CoachResponse>;
 
 export type CoachConfig = {
@@ -53,15 +114,17 @@ export function configureRemoteCoachProvider(provider: RemoteCoachProvider | nul
 }
 
 function readEnv(key: string): string | null {
-  const value = process.env[key];
+  const value = readClientEnvironmentValue(key);
   if (!value || !value.trim()) return null;
   return value.trim();
 }
 
 export function getCoachConfig(options: { mode?: CoachMode } = {}): CoachConfig {
   const timeoutValue = Number.parseInt(readEnv("EXPO_PUBLIC_AI_COACH_TIMEOUT_MS") ?? "", 10);
+  const requestedMode = readEnv('EXPO_PUBLIC_AI_COACH_MODE');
   return {
-    mode: options.mode ?? (readEnv("EXPO_PUBLIC_AI_COACH_MODE") === "remote" ? "remote" : "local"),
+    // Registering transport is not permission to transmit personal recovery context.
+    mode: options.mode ?? (requestedMode === 'remote' ? 'remote' : 'local'),
     endpointUrl: readEnv("EXPO_PUBLIC_AI_COACH_ENDPOINT"),
     timeoutMs: Number.isFinite(timeoutValue) && timeoutValue >= 1_000 ? Math.min(timeoutValue, 12_000) : 8_000
   };
@@ -73,7 +136,7 @@ export function getCoachReadiness(options: { mode?: CoachMode } = {}) {
   if (config.mode === "remote" && !remoteProvider && !config.endpointUrl) {
     missing.push("remote coach provider or endpoint");
   }
-  if (config.mode === "remote" && config.endpointUrl) {
+  if (config.mode === "remote" && !remoteProvider && config.endpointUrl) {
     missing.push(...getProductionEndpointIssues(config.endpointUrl, "remote coach endpoint").map((issue) => issue.issue));
   }
 
@@ -108,17 +171,20 @@ function coachSignalText(value: string | null | undefined): string | null {
 }
 
 export function buildCoachRequest(input: string, context: CoachContext): CoachRequest {
-  const recentAttempts = context.attempts
+  const own = context.exportState ? projectRecoveryStateForOffDevice(context.exportState)
+    : projectRecoveryStateForOffDevice({ attempts: context.attempts });
+  const recentAttempts = own.attempts
     .filter((attempt) => attempt.result.verdict === "block")
     .slice(0, 5);
   const slipsThisWeek = coachSignalCount(context.slipsThisWeek);
   const includeSlipSignals = (slipsThisWeek ?? 0) > 0;
 
   return {
+    ...(context.locale ? { locale: context.locale } : {}),
     input: redactCoachText(input),
     context: {
       streakDays: context.streakDays ?? null,
-      attemptsToday: context.attemptsToday ?? null,
+      attemptsToday: context.exportState ? countRecoveryRiskMomentsForDay(own, context.exportDay) : null,
       premium: context.premium ?? null,
       slipsThisWeek,
       slipWindow: includeSlipSignals ? coachSignalText(context.slipWindow) : null,
@@ -201,8 +267,8 @@ export async function replyWithCoach(
       if (!safeText) return localReply();
       return {
         text: safeText,
-        provider: "remote",
-        status: "ok"
+        provider: result.provider === "fallback" ? "fallback" : "remote",
+        status: result.status === "fallback" || result.provider === "fallback" ? "fallback" : "ok"
       };
     }
 

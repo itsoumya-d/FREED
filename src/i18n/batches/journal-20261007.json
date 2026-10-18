@@ -1,0 +1,718 @@
+{
+  "entries": [
+    {
+      "source": "A place for your thoughts",
+      "translations": {
+        "hi": "आपके विचारों के लिए एक जगह",
+        "es": "Un espacio para tus pensamientos",
+        "pt": "Um espaço para seus pensamentos",
+        "fr": "Un espace pour vos pensées",
+        "de": "Ein Ort für deine Gedanken",
+        "ar": "مساحة لأفكارك",
+        "ja": "あなたの思いをつづる場所",
+        "ko": "생각을 담는 공간",
+        "zh-Hans": "记录心事的地方"
+      }
+    },
+    {
+      "source": "Add a title",
+      "translations": {
+        "hi": "शीर्षक जोड़ें",
+        "es": "Añadir un título",
+        "pt": "Adicionar um título",
+        "fr": "Ajouter un titre",
+        "de": "Titel hinzufügen",
+        "ar": "إضافة عنوان",
+        "ja": "タイトルを追加",
+        "ko": "제목 추가",
+        "zh-Hans": "添加标题"
+      }
+    },
+    {
+      "source": "All dates",
+      "translations": {
+        "hi": "सभी तारीखें",
+        "es": "Todas las fechas",
+        "pt": "Todas as datas",
+        "fr": "Toutes les dates",
+        "de": "Alle Tage",
+        "ar": "كل التواريخ",
+        "ja": "すべての日付",
+        "ko": "모든 날짜",
+        "zh-Hans": "所有日期"
+      }
+    },
+    {
+      "source": "Back to journal",
+      "translations": {
+        "hi": "डायरी पर वापस जाएँ",
+        "es": "Volver al diario",
+        "pt": "Voltar ao diário",
+        "fr": "Retour au journal",
+        "de": "Zurück zum Tagebuch",
+        "ar": "العودة إلى اليوميات",
+        "ja": "日記に戻る",
+        "ko": "일기로 돌아가기",
+        "zh-Hans": "返回日记"
+      }
+    },
+    {
+      "source": "Camera",
+      "translations": {
+        "hi": "कैमरा",
+        "es": "Cámara",
+        "pt": "Câmera",
+        "fr": "Appareil photo",
+        "de": "Kamera",
+        "ar": "الكاميرا",
+        "ja": "カメラ",
+        "ko": "카메라",
+        "zh-Hans": "相机"
+      }
+    },
+    {
+      "source": "Choose a prompt",
+      "translations": {
+        "hi": "लिखने का सवाल चुनें",
+        "es": "Elegir una pregunta",
+        "pt": "Escolher uma pergunta",
+        "fr": "Choisir une question",
+        "de": "Eine Schreibfrage wählen",
+        "ar": "اختيار سؤال للكتابة",
+        "ja": "書き出しの問いを選択",
+        "ko": "글쓰기 질문 선택",
+        "zh-Hans": "选择写作提示"
+      }
+    },
+    {
+      "source": "Clear date filter",
+      "translations": {
+        "hi": "तारीख का फ़िल्टर हटाएँ",
+        "es": "Quitar filtro de fecha",
+        "pt": "Remover filtro de data",
+        "fr": "Effacer le filtre de date",
+        "de": "Datumsfilter löschen",
+        "ar": "إزالة فلتر التاريخ",
+        "ja": "日付の絞り込みを解除",
+        "ko": "날짜 필터 해제",
+        "zh-Hans": "清除日期筛选"
+      }
+    },
+    {
+      "source": "Delete entry",
+      "translations": {
+        "hi": "प्रविष्टि हटाएँ",
+        "es": "Eliminar entrada",
+        "pt": "Excluir entrada",
+        "fr": "Supprimer l’entrée",
+        "de": "Eintrag löschen",
+        "ar": "حذف التدوينة",
+        "ja": "日記を削除",
+        "ko": "일기 삭제",
+        "zh-Hans": "删除日记"
+      }
+    },
+    {
+      "source": "Delete entry?",
+      "translations": {
+        "hi": "यह प्रविष्टि हटाएँ?",
+        "es": "¿Eliminar la entrada?",
+        "pt": "Excluir esta entrada?",
+        "fr": "Supprimer cette entrée ?",
+        "de": "Eintrag löschen?",
+        "ar": "هل تريد حذف التدوينة؟",
+        "ja": "この日記を削除しますか？",
+        "ko": "이 일기를 삭제할까요?",
+        "zh-Hans": "删除这篇日记？"
+      }
+    },
+    {
+      "source": "Discard draft",
+      "translations": {
+        "hi": "मसौदा हटाएँ",
+        "es": "Descartar borrador",
+        "pt": "Descartar rascunho",
+        "fr": "Supprimer le brouillon",
+        "de": "Entwurf verwerfen",
+        "ar": "حذف المسودة",
+        "ja": "下書きを破棄",
+        "ko": "초안 버리기",
+        "zh-Hans": "丢弃草稿"
+      }
+    },
+    {
+      "source": "Discard draft?",
+      "translations": {
+        "hi": "यह मसौदा हटाएँ?",
+        "es": "¿Descartar el borrador?",
+        "pt": "Descartar este rascunho?",
+        "fr": "Supprimer ce brouillon ?",
+        "de": "Entwurf verwerfen?",
+        "ar": "هل تريد حذف المسودة؟",
+        "ja": "下書きを破棄しますか？",
+        "ko": "초안을 버릴까요?",
+        "zh-Hans": "丢弃这份草稿？"
+      }
+    },
+    {
+      "source": "Draft",
+      "translations": {
+        "hi": "मसौदा",
+        "es": "Borrador",
+        "pt": "Rascunho",
+        "fr": "Brouillon",
+        "de": "Entwurf",
+        "ar": "مسودة",
+        "ja": "下書き",
+        "ko": "초안",
+        "zh-Hans": "草稿"
+      }
+    },
+    {
+      "source": "Each entry can hold up to six photos.",
+      "translations": {
+        "hi": "हर प्रविष्टि में अधिकतम छह तस्वीरें जोड़ सकते हैं।",
+        "es": "Cada entrada admite hasta seis fotos.",
+        "pt": "Cada entrada pode ter até seis fotos.",
+        "fr": "Chaque entrée peut contenir jusqu’à six photos.",
+        "de": "Jeder Eintrag kann bis zu sechs Fotos enthalten.",
+        "ar": "يمكن إضافة ست صور كحد أقصى لكل تدوينة.",
+        "ja": "1件の日記に追加できる写真は6枚までです。",
+        "ko": "일기 한 편에 사진을 최대 6장 넣을 수 있어요.",
+        "zh-Hans": "每篇日记最多可添加六张照片。"
+      }
+    },
+    {
+      "source": "Encrypted manual backup",
+      "translations": {
+        "hi": "एन्क्रिप्ट किया गया मैन्युअल बैकअप",
+        "es": "Copia manual cifrada",
+        "pt": "Backup manual criptografado",
+        "fr": "Sauvegarde manuelle chiffrée",
+        "de": "Verschlüsseltes manuelles Backup",
+        "ar": "نسخة احتياطية يدوية مشفّرة",
+        "ja": "暗号化した手動バックアップ",
+        "ko": "암호화 수동 백업",
+        "zh-Hans": "加密手动备份"
+      }
+    },
+    {
+      "source": "Entry deleted.",
+      "translations": {
+        "hi": "प्रविष्टि हट गई।",
+        "es": "Entrada eliminada.",
+        "pt": "Entrada excluída.",
+        "fr": "Entrée supprimée.",
+        "de": "Eintrag gelöscht.",
+        "ar": "تم حذف التدوينة.",
+        "ja": "日記を削除しました。",
+        "ko": "일기를 삭제했어요.",
+        "zh-Hans": "日记已删除。"
+      }
+    },
+    {
+      "source": "Entry saved.",
+      "translations": {
+        "hi": "प्रविष्टि सहेज ली गई।",
+        "es": "Entrada guardada.",
+        "pt": "Entrada salva.",
+        "fr": "Entrée enregistrée.",
+        "de": "Eintrag gespeichert.",
+        "ar": "تم حفظ التدوينة.",
+        "ja": "日記を保存しました。",
+        "ko": "일기를 저장했어요.",
+        "zh-Hans": "日记已保存。"
+      }
+    },
+    {
+      "source": "Journal photo",
+      "translations": {
+        "hi": "डायरी की तस्वीर",
+        "es": "Foto del diario",
+        "pt": "Foto do diário",
+        "fr": "Photo du journal",
+        "de": "Tagebuchfoto",
+        "ar": "صورة في اليوميات",
+        "ja": "日記の写真",
+        "ko": "일기 사진",
+        "zh-Hans": "日记照片"
+      }
+    },
+    {
+      "source": "Journal photos need a native build with private photo storage.",
+      "translations": {
+        "hi": "डायरी की तस्वीरों के लिए निजी तस्वीर संग्रह वाला डिवाइस ऐप चाहिए।",
+        "es": "Las fotos del diario requieren la app nativa con almacenamiento privado de fotos.",
+        "pt": "As fotos do diário exigem o aplicativo nativo com armazenamento privado de fotos.",
+        "fr": "Les photos du journal nécessitent l’application native avec un stockage privé des photos.",
+        "de": "Tagebuchfotos benötigen die native App mit privatem Fotospeicher.",
+        "ar": "تحتاج صور اليوميات إلى تطبيق أصلي يدعم تخزين الصور بشكل خاص.",
+        "ja": "日記の写真には、非公開の写真保存に対応したネイティブアプリが必要です。",
+        "ko": "일기 사진을 쓰려면 비공개 사진 저장을 지원하는 기기용 앱이 필요해요.",
+        "zh-Hans": "日记照片需要支持私密照片存储的原生应用。"
+      }
+    },
+    {
+      "source": "New entry",
+      "translations": {
+        "hi": "नई प्रविष्टि",
+        "es": "Nueva entrada",
+        "pt": "Nova entrada",
+        "fr": "Nouvelle entrée",
+        "de": "Neuer Eintrag",
+        "ar": "تدوينة جديدة",
+        "ja": "新しい日記",
+        "ko": "새 일기",
+        "zh-Hans": "新建日记"
+      }
+    },
+    {
+      "source": "No matching entries",
+      "translations": {
+        "hi": "कोई मिलती हुई प्रविष्टि नहीं",
+        "es": "No hay entradas coincidentes",
+        "pt": "Nenhuma entrada encontrada",
+        "fr": "Aucune entrée correspondante",
+        "de": "Keine passenden Einträge",
+        "ar": "لا توجد تدوينات مطابقة",
+        "ja": "一致する日記はありません",
+        "ko": "일치하는 일기가 없어요",
+        "zh-Hans": "没有匹配的日记"
+      }
+    },
+    {
+      "source": "Open your journal from your account or guest profile.",
+      "translations": {
+        "hi": "अपनी डायरी खाते या अतिथि प्रोफ़ाइल से खोलें।",
+        "es": "Abre tu diario desde tu cuenta o perfil de invitado.",
+        "pt": "Abra seu diário pela sua conta ou pelo perfil de convidado.",
+        "fr": "Ouvrez votre journal depuis votre compte ou votre profil invité.",
+        "de": "Öffne dein Tagebuch über dein Konto oder dein Gastprofil.",
+        "ar": "افتح يومياتك من حسابك أو ملف الضيف.",
+        "ja": "アカウントまたはゲストプロフィールから日記を開いてください。",
+        "ko": "계정이나 게스트 프로필에서 일기를 열어 주세요.",
+        "zh-Hans": "请从你的账户或访客资料打开日记。"
+      }
+    },
+    {
+      "source": "Photo",
+      "translations": {
+        "hi": "तस्वीर",
+        "es": "Foto",
+        "pt": "Foto",
+        "fr": "Photographie",
+        "de": "Foto",
+        "ar": "صورة",
+        "ja": "写真",
+        "ko": "사진",
+        "zh-Hans": "照片"
+      }
+    },
+    {
+      "source": "Photo added.",
+      "translations": {
+        "hi": "तस्वीर जोड़ दी गई।",
+        "es": "Foto añadida.",
+        "pt": "Foto adicionada.",
+        "fr": "Photo ajoutée.",
+        "de": "Foto hinzugefügt.",
+        "ar": "تمت إضافة الصورة.",
+        "ja": "写真を追加しました。",
+        "ko": "사진을 추가했어요.",
+        "zh-Hans": "照片已添加。"
+      }
+    },
+    {
+      "source": "Photo added. FREED can only access the photos you selected.",
+      "translations": {
+        "hi": "तस्वीर जोड़ दी गई। FREED सिर्फ़ आपकी चुनी हुई तस्वीरों तक पहुँच सकता है।",
+        "es": "Foto añadida. FREED solo puede acceder a las fotos que seleccionaste.",
+        "pt": "Foto adicionada. O FREED só pode acessar as fotos que você selecionou.",
+        "fr": "Photo ajoutée. FREED peut accéder uniquement aux photos que vous avez sélectionnées.",
+        "de": "Foto hinzugefügt. FREED kann nur auf die von dir ausgewählten Fotos zugreifen.",
+        "ar": "تمت إضافة الصورة. يمكن لـ FREED الوصول فقط إلى الصور التي اخترتها.",
+        "ja": "写真を追加しました。FREEDがアクセスできるのは選択した写真のみです。",
+        "ko": "사진을 추가했어요. FREED는 선택한 사진에만 접근할 수 있어요.",
+        "zh-Hans": "照片已添加。FREED 只能访问你选择的照片。"
+      }
+    },
+    {
+      "source": "Photo capture is unavailable on this device.",
+      "translations": {
+        "hi": "इस डिवाइस पर तस्वीर लेना उपलब्ध नहीं है।",
+        "es": "No se pueden hacer fotos en este dispositivo.",
+        "pt": "A captura de fotos não está disponível neste dispositivo.",
+        "fr": "La prise de photos n’est pas disponible sur cet appareil.",
+        "de": "Auf diesem Gerät können keine Fotos aufgenommen werden.",
+        "ar": "التقاط الصور غير متاح على هذا الجهاز.",
+        "ja": "この端末では写真を撮影できません。",
+        "ko": "이 기기에서는 사진을 촬영할 수 없어요.",
+        "zh-Hans": "此设备无法拍照。"
+      }
+    },
+    {
+      "source": "Photo cleanup could not finish. Retry to remove unused files.",
+      "translations": {
+        "hi": "तस्वीरों की सफ़ाई पूरी नहीं हुई। बेकार फ़ाइलें हटाने के लिए फिर कोशिश करें।",
+        "es": "No se pudo terminar la limpieza de fotos. Reintenta para eliminar los archivos sin usar.",
+        "pt": "A limpeza de fotos não foi concluída. Tente novamente para remover os arquivos não usados.",
+        "fr": "Le nettoyage des photos n’a pas pu se terminer. Réessayez pour supprimer les fichiers inutilisés.",
+        "de": "Die Fotobereinigung konnte nicht abgeschlossen werden. Versuche es erneut, um ungenutzte Dateien zu entfernen.",
+        "ar": "لم يكتمل تنظيف الصور. أعد المحاولة لحذف الملفات غير المستخدمة.",
+        "ja": "写真の整理を完了できませんでした。再試行すると未使用のファイルを削除します。",
+        "ko": "사진 정리를 마치지 못했어요. 다시 시도해 사용하지 않는 파일을 삭제해 주세요.",
+        "zh-Hans": "照片清理未完成。请重试以删除未使用的文件。"
+      }
+    },
+    {
+      "source": "Photo permission is off. Allow access in system settings, then try again.",
+      "translations": {
+        "hi": "तस्वीरों की अनुमति बंद है। सिस्टम सेटिंग में पहुँच की अनुमति दें और फिर कोशिश करें।",
+        "es": "El permiso para fotos está desactivado. Permite el acceso en los ajustes del sistema y reintenta.",
+        "pt": "A permissão para fotos está desativada. Permita o acesso nas configurações do sistema e tente novamente.",
+        "fr": "L’accès aux photos est désactivé. Autorisez-le dans les réglages système, puis réessayez.",
+        "de": "Die Fotoberechtigung ist deaktiviert. Erlaube den Zugriff in den Systemeinstellungen und versuche es erneut.",
+        "ar": "إذن الصور غير مفعّل. اسمح بالوصول في إعدادات النظام ثم أعد المحاولة.",
+        "ja": "写真へのアクセスが許可されていません。システム設定で許可してから再試行してください。",
+        "ko": "사진 권한이 꺼져 있어요. 시스템 설정에서 접근을 허용한 뒤 다시 시도해 주세요.",
+        "zh-Hans": "照片权限已关闭。请在系统设置中允许访问，然后重试。"
+      }
+    },
+    {
+      "source": "Photos stay on this device. Automatic cloud backup contains text only. Use an encrypted manual backup to include photos.",
+      "translations": {
+        "hi": "तस्वीरें इसी डिवाइस पर रहती हैं। अपने-आप होने वाले क्लाउड बैकअप में केवल टेक्स्ट होता है। तस्वीरों के लिए एन्क्रिप्ट किया गया मैन्युअल बैकअप लें।",
+        "es": "Las fotos se quedan en este dispositivo. La copia automática en la nube solo incluye texto. Usa una copia manual cifrada para incluir fotos.",
+        "pt": "As fotos ficam neste dispositivo. O backup automático na nuvem contém apenas texto. Use um backup manual criptografado para incluir fotos.",
+        "fr": "Les photos restent sur cet appareil. La sauvegarde automatique dans le cloud contient uniquement du texte. Utilisez une sauvegarde manuelle chiffrée pour inclure les photos.",
+        "de": "Fotos bleiben auf diesem Gerät. Das automatische Cloud-Backup enthält nur Text. Verwende ein verschlüsseltes manuelles Backup, um Fotos einzuschließen.",
+        "ar": "تبقى الصور على هذا الجهاز. تحتوي النسخة الاحتياطية السحابية التلقائية على النصوص فقط. استخدم نسخة احتياطية يدوية مشفّرة لتضمين الصور.",
+        "ja": "写真はこの端末に保存されます。自動クラウドバックアップには文章のみが含まれます。写真も保存するには暗号化した手動バックアップを使用してください。",
+        "ko": "사진은 이 기기에 보관돼요. 자동 클라우드 백업에는 글만 포함돼요. 사진을 포함하려면 암호화 수동 백업을 사용해 주세요.",
+        "zh-Hans": "照片保存在此设备上。自动云备份只包含文字。如需包含照片，请使用加密手动备份。"
+      }
+    },
+    {
+      "source": "Preparing photo…",
+      "translations": {
+        "hi": "तस्वीर तैयार हो रही है…",
+        "es": "Preparando foto…",
+        "pt": "Preparando foto…",
+        "fr": "Préparation de la photo…",
+        "de": "Foto wird vorbereitet…",
+        "ar": "جارٍ تجهيز الصورة…",
+        "ja": "写真を準備中…",
+        "ko": "사진 준비 중…",
+        "zh-Hans": "正在处理照片…"
+      }
+    },
+    {
+      "source": "Private journal entry",
+      "translations": {
+        "hi": "निजी डायरी की प्रविष्टि",
+        "es": "Entrada privada del diario",
+        "pt": "Entrada privada do diário",
+        "fr": "Entrée privée du journal",
+        "de": "Privater Tagebucheintrag",
+        "ar": "تدوينة خاصة",
+        "ja": "非公開の日記",
+        "ko": "비공개 일기",
+        "zh-Hans": "私密日记"
+      }
+    },
+    {
+      "source": "Prompts",
+      "translations": {
+        "hi": "लिखने के सवाल",
+        "es": "Preguntas",
+        "pt": "Perguntas",
+        "fr": "Questions",
+        "de": "Schreibfragen",
+        "ar": "أسئلة للكتابة",
+        "ja": "書き出しの問い",
+        "ko": "글쓰기 질문",
+        "zh-Hans": "写作提示"
+      }
+    },
+    {
+      "source": "Remove photo",
+      "translations": {
+        "hi": "तस्वीर हटाएँ",
+        "es": "Quitar foto",
+        "pt": "Remover foto",
+        "fr": "Retirer la photo",
+        "de": "Foto entfernen",
+        "ar": "إزالة الصورة",
+        "ja": "写真を削除",
+        "ko": "사진 제거",
+        "zh-Hans": "移除照片"
+      }
+    },
+    {
+      "source": "Retry photo cleanup",
+      "translations": {
+        "hi": "तस्वीरों की सफ़ाई फिर करें",
+        "es": "Reintentar limpieza de fotos",
+        "pt": "Tentar a limpeza de fotos novamente",
+        "fr": "Réessayer le nettoyage des photos",
+        "de": "Fotobereinigung erneut versuchen",
+        "ar": "إعادة محاولة تنظيف الصور",
+        "ja": "写真の整理を再試行",
+        "ko": "사진 정리 다시 시도",
+        "zh-Hans": "重试照片清理"
+      }
+    },
+    {
+      "source": "Search entries",
+      "translations": {
+        "hi": "प्रविष्टियाँ खोजें",
+        "es": "Buscar entradas",
+        "pt": "Buscar entradas",
+        "fr": "Rechercher des entrées",
+        "de": "Einträge suchen",
+        "ar": "البحث في التدوينات",
+        "ja": "日記を検索",
+        "ko": "일기 검색",
+        "zh-Hans": "搜索日记"
+      }
+    },
+    {
+      "source": "Start with a few words or a photo. You can write more than one entry each day.",
+      "translations": {
+        "hi": "कुछ शब्दों या एक तस्वीर से शुरू करें। हर दिन एक से ज़्यादा प्रविष्टियाँ लिख सकते हैं।",
+        "es": "Empieza con unas palabras o una foto. Puedes escribir varias entradas al día.",
+        "pt": "Comece com algumas palavras ou uma foto. Você pode escrever mais de uma entrada por dia.",
+        "fr": "Commencez par quelques mots ou une photo. Vous pouvez écrire plusieurs entrées par jour.",
+        "de": "Beginne mit ein paar Worten oder einem Foto. Du kannst jeden Tag mehrere Einträge schreiben.",
+        "ar": "ابدأ ببضع كلمات أو صورة. يمكنك كتابة أكثر من تدوينة في اليوم.",
+        "ja": "短い文章や写真から始めましょう。1日に何件でも日記を書けます。",
+        "ko": "짧은 글이나 사진으로 시작해 보세요. 하루에 여러 편의 일기를 쓸 수 있어요.",
+        "zh-Hans": "从几句话或一张照片开始。每天可以写多篇日记。"
+      }
+    },
+    {
+      "source": "Start writing…",
+      "translations": {
+        "hi": "लिखना शुरू करें…",
+        "es": "Empieza a escribir…",
+        "pt": "Comece a escrever…",
+        "fr": "Commencez à écrire…",
+        "de": "Beginne zu schreiben…",
+        "ar": "ابدأ الكتابة…",
+        "ja": "書き始めましょう…",
+        "ko": "글을 써 보세요…",
+        "zh-Hans": "开始写作…"
+      }
+    },
+    {
+      "source": "The original photo is unavailable. Download it to your device and try again.",
+      "translations": {
+        "hi": "मूल तस्वीर उपलब्ध नहीं है। इसे डिवाइस पर डाउनलोड करें और फिर कोशिश करें।",
+        "es": "La foto original no está disponible. Descárgala en tu dispositivo y reintenta.",
+        "pt": "A foto original não está disponível. Baixe-a no dispositivo e tente novamente.",
+        "fr": "La photo originale n’est pas disponible. Téléchargez-la sur votre appareil, puis réessayez.",
+        "de": "Das Originalfoto ist nicht verfügbar. Lade es auf dein Gerät herunter und versuche es erneut.",
+        "ar": "الصورة الأصلية غير متاحة. نزّلها على جهازك ثم أعد المحاولة.",
+        "ja": "元の写真を取得できません。端末にダウンロードしてから再試行してください。",
+        "ko": "원본 사진을 사용할 수 없어요. 기기에 다운로드한 뒤 다시 시도해 주세요.",
+        "zh-Hans": "原始照片不可用。请先下载到设备，然后重试。"
+      }
+    },
+    {
+      "source": "The photo could not be saved. Free device storage and try again.",
+      "translations": {
+        "hi": "तस्वीर सहेजी नहीं गई। डिवाइस में जगह खाली करें और फिर कोशिश करें।",
+        "es": "No se pudo guardar la foto. Libera espacio en el dispositivo y reintenta.",
+        "pt": "Não foi possível salvar a foto. Libere espaço no dispositivo e tente novamente.",
+        "fr": "La photo n’a pas pu être enregistrée. Libérez de l’espace sur l’appareil, puis réessayez.",
+        "de": "Das Foto konnte nicht gespeichert werden. Gib Speicherplatz frei und versuche es erneut.",
+        "ar": "تعذّر حفظ الصورة. أفرغ مساحة على الجهاز ثم أعد المحاولة.",
+        "ja": "写真を保存できませんでした。端末の空き容量を増やして再試行してください。",
+        "ko": "사진을 저장하지 못했어요. 기기 저장 공간을 확보한 뒤 다시 시도해 주세요.",
+        "zh-Hans": "照片无法保存。请释放设备存储空间，然后重试。"
+      }
+    },
+    {
+      "source": "This entry changed elsewhere. Your draft is kept. Reopen the saved entry before editing again.",
+      "translations": {
+        "hi": "यह प्रविष्टि कहीं और बदली गई है। आपका मसौदा सुरक्षित है। फिर संपादन करने से पहले सहेजी हुई प्रविष्टि दोबारा खोलें।",
+        "es": "Esta entrada cambió en otro lugar. Tu borrador se conserva. Vuelve a abrir la entrada guardada antes de editarla otra vez.",
+        "pt": "Esta entrada foi alterada em outro lugar. Seu rascunho foi mantido. Reabra a entrada salva antes de editar novamente.",
+        "fr": "Cette entrée a été modifiée ailleurs. Votre brouillon est conservé. Rouvrez l’entrée enregistrée avant de la modifier à nouveau.",
+        "de": "Dieser Eintrag wurde an anderer Stelle geändert. Dein Entwurf bleibt erhalten. Öffne den gespeicherten Eintrag erneut, bevor du ihn weiter bearbeitest.",
+        "ar": "عُدّلت هذه التدوينة في مكان آخر. تم الاحتفاظ بمسودتك. أعد فتح التدوينة المحفوظة قبل تعديلها مجددًا.",
+        "ja": "この日記は別の場所で変更されました。下書きは保持されています。保存済みの日記を開き直してから編集してください。",
+        "ko": "다른 곳에서 이 일기가 변경되었어요. 초안은 보관돼 있어요. 저장된 일기를 다시 열고 편집해 주세요.",
+        "zh-Hans": "这篇日记已在其他地方更改。你的草稿已保留。请重新打开已保存的日记后再编辑。"
+      }
+    },
+    {
+      "source": "This photo could not be prepared safely. Try a different photo or update the app.",
+      "translations": {
+        "hi": "यह तस्वीर सुरक्षित रूप से तैयार नहीं हो सकी। दूसरी तस्वीर आज़माएँ या ऐप अपडेट करें।",
+        "es": "No se pudo preparar esta foto de forma segura. Prueba otra foto o actualiza la app.",
+        "pt": "Esta foto não pôde ser preparada com segurança. Tente outra foto ou atualize o aplicativo.",
+        "fr": "Cette photo n’a pas pu être préparée de façon sûre. Essayez une autre photo ou mettez l’application à jour.",
+        "de": "Dieses Foto konnte nicht sicher vorbereitet werden. Versuche ein anderes Foto oder aktualisiere die App.",
+        "ar": "تعذّر تجهيز هذه الصورة بشكل آمن. جرّب صورة أخرى أو حدّث التطبيق.",
+        "ja": "この写真を安全に処理できませんでした。別の写真を試すか、アプリを更新してください。",
+        "ko": "이 사진을 안전하게 처리하지 못했어요. 다른 사진을 사용하거나 앱을 업데이트해 주세요.",
+        "zh-Hans": "无法安全处理这张照片。请尝试其他照片或更新应用。"
+      }
+    },
+    {
+      "source": "This removes this draft and its unused photos from this device.",
+      "translations": {
+        "hi": "इससे यह मसौदा और इसकी इस्तेमाल न होने वाली तस्वीरें इस डिवाइस से हट जाएँगी।",
+        "es": "Se eliminarán de este dispositivo el borrador y sus fotos sin usar.",
+        "pt": "Isso remove deste dispositivo o rascunho e suas fotos não usadas.",
+        "fr": "Cela supprime ce brouillon et ses photos inutilisées de cet appareil.",
+        "de": "Dadurch werden dieser Entwurf und seine ungenutzten Fotos von diesem Gerät entfernt.",
+        "ar": "سيؤدي هذا إلى حذف المسودة وصورها غير المستخدمة من هذا الجهاز.",
+        "ja": "この下書きと、使用されていない添付写真をこの端末から削除します。",
+        "ko": "이 기기에서 초안과 사용하지 않는 첨부 사진을 삭제해요.",
+        "zh-Hans": "这会从此设备删除这份草稿及其未使用的照片。"
+      }
+    },
+    {
+      "source": "This removes this entry and its unused photos from this device. Copies in older backups remain.",
+      "translations": {
+        "hi": "इससे यह प्रविष्टि और इसकी इस्तेमाल न होने वाली तस्वीरें इस डिवाइस से हट जाएँगी। पुराने बैकअप की प्रतियाँ रहेंगी।",
+        "es": "Se eliminarán de este dispositivo la entrada y sus fotos sin usar. Las copias en backups anteriores se conservan.",
+        "pt": "Isso remove deste dispositivo a entrada e suas fotos não usadas. As cópias em backups anteriores permanecem.",
+        "fr": "Cela supprime cette entrée et ses photos inutilisées de cet appareil. Les copies dans les anciennes sauvegardes restent.",
+        "de": "Dadurch werden dieser Eintrag und seine ungenutzten Fotos von diesem Gerät entfernt. Kopien in älteren Backups bleiben erhalten.",
+        "ar": "سيؤدي هذا إلى حذف التدوينة وصورها غير المستخدمة من هذا الجهاز. ستبقى النسخ في النسخ الاحتياطية القديمة.",
+        "ja": "この日記と未使用の添付写真をこの端末から削除します。以前のバックアップ内のコピーは残ります。",
+        "ko": "이 기기에서 일기와 사용하지 않는 첨부 사진을 삭제해요. 이전 백업의 사본은 남아 있어요.",
+        "zh-Hans": "这会从此设备删除这篇日记及其未使用的照片。旧备份中的副本仍会保留。"
+      }
+    },
+    {
+      "source": "Title (optional)",
+      "translations": {
+        "hi": "शीर्षक (वैकल्पिक)",
+        "es": "Título (opcional)",
+        "pt": "Título (opcional)",
+        "fr": "Titre (facultatif)",
+        "de": "Titel (optional)",
+        "ar": "العنوان (اختياري)",
+        "ja": "タイトル（任意）",
+        "ko": "제목(선택)",
+        "zh-Hans": "标题（选填）"
+      }
+    },
+    {
+      "source": "Try another search or date.",
+      "translations": {
+        "hi": "कोई दूसरा शब्द या तारीख आज़माएँ।",
+        "es": "Prueba otra búsqueda o fecha.",
+        "pt": "Tente outra busca ou data.",
+        "fr": "Essayez une autre recherche ou une autre date.",
+        "de": "Versuche einen anderen Suchbegriff oder Tag.",
+        "ar": "جرّب بحثًا أو تاريخًا آخر.",
+        "ja": "別の言葉や日付で探してください。",
+        "ko": "다른 검색어나 날짜를 선택해 보세요.",
+        "zh-Hans": "请尝试其他搜索词或日期。"
+      }
+    },
+    {
+      "source": "What do you need next?",
+      "translations": {
+        "hi": "अब आपको किस चीज़ की ज़रूरत है?",
+        "es": "¿Qué necesitas ahora?",
+        "pt": "Do que você precisa agora?",
+        "fr": "De quoi avez-vous besoin maintenant ?",
+        "de": "Was brauchst du als Nächstes?",
+        "ar": "ما الذي تحتاجه الآن؟",
+        "ja": "次に何が必要ですか？",
+        "ko": "지금 무엇이 필요한가요?",
+        "zh-Hans": "接下来你需要什么？"
+      }
+    },
+    {
+      "source": "What helped today?",
+      "translations": {
+        "hi": "आज किस चीज़ से मदद मिली?",
+        "es": "¿Qué te ayudó hoy?",
+        "pt": "O que ajudou hoje?",
+        "fr": "Qu’est-ce qui vous a aidé aujourd’hui ?",
+        "de": "Was hat dir heute geholfen?",
+        "ar": "ما الذي ساعدك اليوم؟",
+        "ja": "今日は何が助けになりましたか？",
+        "ko": "오늘 무엇이 도움이 되었나요?",
+        "zh-Hans": "今天什么帮助了你？"
+      }
+    },
+    {
+      "source": "What is on your mind?",
+      "translations": {
+        "hi": "आपके मन में क्या चल रहा है?",
+        "es": "¿Qué tienes en mente?",
+        "pt": "O que está na sua mente?",
+        "fr": "Qu’avez-vous en tête ?",
+        "de": "Was beschäftigt dich?",
+        "ar": "ما الذي يشغل بالك؟",
+        "ja": "今、どんなことを考えていますか？",
+        "ko": "무슨 생각을 하고 있나요?",
+        "zh-Hans": "你在想什么？"
+      }
+    },
+    {
+      "source": "Your draft is kept on this device. Save adds it to your journal.",
+      "translations": {
+        "hi": "आपका मसौदा इसी डिवाइस पर रखा जाता है। सहेजने पर यह आपकी डायरी में जुड़ता है।",
+        "es": "Tu borrador se guarda en este dispositivo. Al guardar, se añade a tu diario.",
+        "pt": "Seu rascunho fica neste dispositivo. Ao salvar, ele é adicionado ao diário.",
+        "fr": "Votre brouillon est conservé sur cet appareil. Enregistrer l’ajoute à votre journal.",
+        "de": "Dein Entwurf bleibt auf diesem Gerät. Mit Speichern wird er deinem Tagebuch hinzugefügt.",
+        "ar": "تُحفظ مسودتك على هذا الجهاز. يضيفها الحفظ إلى يومياتك.",
+        "ja": "下書きはこの端末に保存されます。「保存」で日記に追加します。",
+        "ko": "초안은 이 기기에 보관돼요. 저장하면 일기에 추가돼요.",
+        "zh-Hans": "草稿保存在此设备上。点击保存后会加入日记。"
+      }
+    },
+    {
+      "source": "Your journal could not be read. Its saved data has been kept. Try again or restore a backup.",
+      "translations": {
+        "hi": "आपकी डायरी पढ़ी नहीं जा सकी। सहेजा हुआ डेटा रखा गया है। फिर कोशिश करें या बैकअप बहाल करें।",
+        "es": "No se pudo leer tu diario. Los datos guardados se conservan. Reintenta o restaura una copia de seguridad.",
+        "pt": "Não foi possível ler seu diário. Os dados salvos foram mantidos. Tente novamente ou restaure um backup.",
+        "fr": "Votre journal n’a pas pu être lu. Les données enregistrées ont été conservées. Réessayez ou restaurez une sauvegarde.",
+        "de": "Dein Tagebuch konnte nicht gelesen werden. Die gespeicherten Daten bleiben erhalten. Versuche es erneut oder stelle ein Backup wieder her.",
+        "ar": "تعذّرت قراءة يومياتك. تم الاحتفاظ بالبيانات المحفوظة. أعد المحاولة أو استعد نسخة احتياطية.",
+        "ja": "日記を読み込めませんでした。保存データは保持されています。再試行するか、バックアップを復元してください。",
+        "ko": "일기를 읽지 못했어요. 저장된 데이터는 보관돼 있어요. 다시 시도하거나 백업을 복원해 주세요.",
+        "zh-Hans": "无法读取日记。已保存的数据已保留。请重试或恢复备份。"
+      }
+    },
+    {
+      "source": "Your journal could not be saved. Your changes are still here. Check device storage and retry.",
+      "translations": {
+        "hi": "आपकी डायरी सहेजी नहीं जा सकी। बदलाव अभी यहाँ हैं। डिवाइस में जगह जाँचें और फिर कोशिश करें।",
+        "es": "No se pudo guardar tu diario. Tus cambios siguen aquí. Comprueba el almacenamiento del dispositivo y reintenta.",
+        "pt": "Não foi possível salvar seu diário. Suas alterações continuam aqui. Verifique o armazenamento do dispositivo e tente novamente.",
+        "fr": "Votre journal n’a pas pu être enregistré. Vos modifications sont toujours ici. Vérifiez l’espace de stockage de l’appareil, puis réessayez.",
+        "de": "Dein Tagebuch konnte nicht gespeichert werden. Deine Änderungen sind noch da. Prüfe den Gerätespeicher und versuche es erneut.",
+        "ar": "تعذّر حفظ يومياتك. تغييراتك ما زالت هنا. تحقق من مساحة تخزين الجهاز ثم أعد المحاولة.",
+        "ja": "日記を保存できませんでした。変更内容はここに残っています。端末の空き容量を確認して再試行してください。",
+        "ko": "일기를 저장하지 못했어요. 변경한 내용은 남아 있어요. 기기 저장 공간을 확인하고 다시 시도해 주세요.",
+        "zh-Hans": "无法保存日记。你的更改仍在这里。请检查设备存储空间，然后重试。"
+      }
+    },
+    {
+      "source": "Photos:",
+      "translations": {
+        "hi": "तस्वीरें:",
+        "es": "Fotos:",
+        "pt": "Fotos:",
+        "fr": "Photos :",
+        "de": "Fotos:",
+        "ar": "الصور:",
+        "ja": "写真：",
+        "ko": "사진:",
+        "zh-Hans": "照片："
+      }
+    }
+  ]
+}

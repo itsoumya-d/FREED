@@ -1,0 +1,151 @@
+{
+  "schema": "freed-web-walkthrough-v1",
+  "generatedAt": "2026-09-26T00:41:31.390Z",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "note": "QA capture only; not release evidence. Web preview platform, so native permission surfaces are not exercised.",
+  "steps": [
+    {
+      "step": "launch",
+      "text": "FREED\nCLINICALLY BACKED RECOVERY\nBreak free.\nProtect your streak.\nZero-Latency DNS Filter\n"
+    },
+    {
+      "step": "welcome-to-quiz",
+      "clicked": true,
+      "expect": "RECOVERY ASSESSMENT",
+      "passed": true,
+      "text": "1/5 RECOVERY ASSESSMENT What is your main reason for changing? 1 Mental clarity & focus 2 Confidence & energy "
+    },
+    {
+      "step": "quiz-1",
+      "clicked": true,
+      "expect": "How long has this cycle",
+      "passed": true,
+      "text": "2/5 RECOVERY ASSESSMENT How long has this cycle been a struggle? 1 Under 1 year 2 1–3 years 3 4–7 years 4 8+ y"
+    },
+    {
+      "step": "quiz-2",
+      "clicked": true,
+      "expect": "When are urges most likely",
+      "passed": true,
+      "text": "3/5 RECOVERY ASSESSMENT When are urges most likely to strike? 1 Late night in bed 2 High stress & pressure 3 B"
+    },
+    {
+      "step": "quiz-3",
+      "clicked": true,
+      "expect": "What symptoms affect",
+      "passed": true,
+      "text": "4/5 RECOVERY ASSESSMENT What symptoms affect your daily life most? 1 Brain fog & low drive 2 Procrastination &"
+    },
+    {
+      "step": "quiz-4",
+      "clicked": true,
+      "expect": "What helps you reset",
+      "passed": true,
+      "text": "5/5 RECOVERY ASSESSMENT What helps you reset and ground fastest? 1 Exercise & movement 2 Parasympathetic breat"
+    },
+    {
+      "step": "quiz-5-to-plan",
+      "clicked": true,
+      "expect": "PROJECTION",
+      "passed": true,
+      "text": "NEUROLOGICAL PROJECTION Calibrating Your Baseline Synthesizing dopamine D2 receptor re-sensitization timeline."
+    },
+    {
+      "step": "plan-projection",
+      "clicked": null,
+      "expect": "Reboot Plan is ready",
+      "passed": true,
+      "text": "NEUROLOGICAL PROJECTION Personalized Recovery Plan Your personalized 90-Day Reboot Plan is ready! 100% SYNCHRO"
+    },
+    {
+      "step": "plan-to-apps",
+      "clicked": true,
+      "expect": "APP SELECTION",
+      "passed": true,
+      "text": "APP SELECTION 3 selected Choose the apps FREED can interrupt. These choices become Android app timers and shor"
+    },
+    {
+      "step": "apps-to-paywall",
+      "clicked": true,
+      "expect": "Unlock Full Recovery",
+      "passed": true,
+      "text": "Unlock Full Recovery Uncapped on-device protection, unlimited Clara AI coaching, and deep neurochemical progre"
+    },
+    {
+      "step": "paywall-downsell",
+      "clicked": true,
+      "expect": "Protect Your First 72 Hours",
+      "passed": true,
+      "text": "Unlock Full Recovery Uncapped on-device protection, unlimited Clara AI coaching, and deep neurochemical progre"
+    },
+    {
+      "step": "downsell-to-account",
+      "clicked": true,
+      "expect": "ACCOUNT",
+      "passed": true,
+      "text": "Back up your progress An account keeps your streak, challenges, and protection settings safe if you change pho"
+    },
+    {
+      "step": "account-to-setup",
+      "clicked": true,
+      "expect": "protection",
+      "passed": true,
+      "text": "Turn on real protection To protect you from explicit content and doomscroll loops, FREED needs these permissio"
+    },
+    {
+      "step": "setup-to-today",
+      "clicked": true,
+      "expect": "SUMMARY",
+      "passed": true,
+      "text": "FREED 0 S M T W T F S Today's Progress View All 0% Complete Day Streak 0 Habits Done 0/6 Days to 90 90 Take To"
+    },
+    {
+      "step": "tab-shield",
+      "clicked": true,
+      "text": "Shield\nProtection health\nProtection unsupported here\nNative protection is available in an "
+    },
+    {
+      "step": "tab-progress",
+      "clicked": true,
+      "text": "Analytics\nNo signals yet\nCheck-ins, challenges, and protected moments will build your reco"
+    },
+    {
+      "step": "tab-profile",
+      "clicked": true,
+      "text": "Profile\nFREED Member\n0 DAY STREAK · BEST 0\nRecovery account\nRecovery data, backup, reminde"
+    },
+    {
+      "step": "tab-today",
+      "clicked": true,
+      "text": "FREED\n0\nS\nM\nT\nW\nT\nF\nS\nToday's Progress\nView All\n0%\nComplete\nDay Streak\n0\nHabits Done\n0/6\nD"
+    },
+    {
+      "step": "extra-library",
+      "clicked": true,
+      "text": "Library\nBreathe\nCalm a craving\nChallenge\nGenerate reset\nCustom\nPremium builder\nCLARA\nTalk "
+    },
+    {
+      "step": "extra-library-breathe",
+      "clicked": true,
+      "text": "4-7-8 Relax\nBox (4-4-4-4)\nPhysio Sigh\n4-7-8 Relaxing Breath\nActivates parasympathetic vaga"
+    },
+    {
+      "step": "extra-library-challenge",
+      "clicked": false
+    },
+    {
+      "step": "extra-library-clara",
+      "clicked": false
+    },
+    {
+      "step": "extra-panic",
+      "clicked": false
+    }
+  ],
+  "consoleErrors": [
+    "log: Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ]
+}

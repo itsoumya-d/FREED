@@ -1,0 +1,5 @@
+"NSFaceIDUsageDescription" = "يستخدم FREED مصادقة الجهاز لحماية إعدادات التعافي.";
+"NSCameraUsageDescription" = "يستخدم FREED الكاميرا فقط عندما تختار تحدي صور يحتاج إلى التحقق من صورة واقعية.";
+"NSLocationWhenInUseUsageDescription" = "يستخدم FREED الموقع مؤقتًا أثناء الاستخدام فقط للتحقق من تحديات التعافي الخارجية.";
+"NSMotionUsageDescription" = "يستخدم FREED بيانات الحركة أثناء التحديات النشطة فقط للتحقق من الحركة الفعلية.";
+"NSUserNotificationsUsageDescription" = "يرسل FREED رسائل دعم للتعافي وتذكيرات عاجلة لحماية سلسلة تقدمك.";

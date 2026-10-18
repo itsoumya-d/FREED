@@ -1,0 +1,39 @@
+appId: app.freed.recovery
+name: account-verification
+env:
+  TEST_EMAIL: freed-disposable-ui@example.invalid
+  TEST_PASSWORD: Disposable-UI-Fixture-2026
+tags:
+  - smoke
+  - local-write
+  - external-service
+  - auth-emulator
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+# Firebase Auth MUST target the isolated emulator; no real mailbox delivery.
+- openLink: "freed:///flow/account"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-account"
+    timeout: 15000
+- tapOn: "Create account with email"
+- tapOn: "Email address"
+- inputText: "${TEST_EMAIL}"
+- tapOn: "Password"
+- inputText: "${TEST_PASSWORD}"
+- tapOn: "Confirm password"
+- inputText: "${TEST_PASSWORD}"
+- hideKeyboard
+- tapOn: "Create account"
+- extendedWaitUntil:
+    visible: "Verify your email"
+    timeout: 15000
+- assertVisible: "I've verified my email"
+- assertVisible: "Resend verification email"
+- tapOn: "Continue and verify later"
+- takeScreenshot: "account-verification"

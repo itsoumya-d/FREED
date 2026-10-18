@@ -1,0 +1,302 @@
+--- a/tests/core.test.ts
++++ b/tests/core.test.ts
+@@ -1638,7 +1638,9 @@
+   assert.match(appSurface, /removeFocusShieldRule/);
+   assert.equal((appSurface.match(/<FocusShieldSection/g) ?? []).length >= 2, true);
+   assert.match(appSurface, /consumePendingInterventionOnce/);
+-  assert.match(appSurface, /shouldBypassRewardedAdForAttempt\(activeAttempt\)/);
++  assert.match(appSurface, /onContinue=\{startChallenge\}/);
++  assert.match(appSurface, /onSponsoredReset=\{\(\) => \{\s*if \(premiumCapabilities\.noAds \|\| activeAttempt\.source === "panic-button"\) startChallenge\(\);\s*else setScreen\("ad"\);/);
++  assert.match(appSurface, /<RewardedAdScreen premium=\{premiumCapabilities\.noAds\} emergency=\{activeAttempt\?\.source === "panic-button"\}/);
+   assert.match(appSurface, /getProtectionChallengeCompletionDecision\(activeAttempt, outcome\)/);
+   assert.match(appSurface, /completionDecision\.grantEarnedUnlock/);
+   assert.match(appSurface, /completionDecision\.applyFocusShieldScope/);
+@@ -1759,8 +1761,12 @@
+   );
+   const identityMatchIndex = applyUnlock.indexOf("consumePendingEarnedUnlockEnvelope(sanitizedExpectedInterventionId)");
+   const expiryIndex = applyUnlock.indexOf("parseIsoDate(expiresAt)");
+-  assert.ok(identityMatchIndex >= 0 && identityMatchIndex < expiryIndex);
+-  const mismatchBranch = applyUnlock.slice(0, expiryIndex);
++  assert.ok(expiryIndex >= 0 && expiryIndex < identityMatchIndex);
++  const invalidExpiryBranch = applyUnlock.slice(expiryIndex, identityMatchIndex);
++  assert.match(invalidExpiryBranch, /expiry > now/);
++  assert.match(invalidExpiryBranch, /payload\["nativeUnlockGrantAccepted"\] = false/);
++  assert.doesNotMatch(invalidExpiryBranch, /clearEarnedUnlockState|clearSelectedShields|removeObject/);
++  const mismatchBranch = applyUnlock.slice(0, identityMatchIndex);
+   assert.doesNotMatch(mismatchBranch, /removeObject\(forKey: self\.pendingEarnedUnlockScopeKey\)/);
+   assert.doesNotMatch(applyUnlock, /removeObject\(forKey: self\.pendingEarnedUnlockScopeKey\)/);
+ });
+@@ -7165,7 +7171,9 @@
+   assert.match(deviceActivityExtension, /private func clearEarnedUnlockState\(\)/);
+   assert.match(deviceActivityExtension, /store\.shield\.applications = .*selection\.applicationTokens/);
+   assert.match(deviceActivityExtension, /store\.shield\.webDomains = .*selection\.webDomainTokens/);
+-  assert.match(shieldActionExtension, /UserDefaults\(suiteName: appGroupIdentifier\)/);
++  assert.match(shieldActionExtension, /FreedProtectionConfigurationLock\.withExclusiveAccess/);
++  assert.match(shieldActionExtension, /guard FreedProtectionConfigurationLock\.permitsPublication\(defaults\) else \{ return nil \}/);
++  assert.match(shieldActionExtension, /defaults\.synchronize\(\),[\s\S]*defaults\.data\(forKey: pendingInterventionRecordKey\) == encodedRecord/);
+   assert.match(shieldActionExtension, /recordPendingIntervention/);
+   assert.match(shieldActionExtension, /ios-screen-time-shield/);
+   assert.match(shieldActionExtension, /screen-time-shield\.freed\.local/);
+@@ -7287,12 +7295,12 @@
+   assert.match(appSurface, /freshReadiness\.activationReady/);
+   assert.match(appSurface, /Activation test refreshed the reviewed adult-domain feed before checking native readiness/);
+   assert.match(appSurface, /Activation test could not refresh native permission\/feed status/);
+-  assert.match(appSurface, /activationTestPassed\s*\?\s*"Activation test passed/);
++  assert.match(appSurface, /activationTestPassed\s*\?\s*"Configuration check passed\.[^"\n]*This does not verify real browser or network blocking\./);
+   assert.match(appSurface, /buildProtectionActivationSignature/);
+   assert.match(appSurface, /statusSignature/);
+   assert.match(appSurface, /activationTestMatchesCurrentStatus/);
+-  assert.match(appSurface, /Protection status changed since the last activation test/);
+-  assert.match(appSurface, /Native domain checks passed, but current readiness changed/);
++  assert.match(appSurface, /Protection status changed since the last configuration check/);
++  assert.match(appSurface, /Local classification checks passed, but current readiness changed/);
+   assert.match(appSurface, /activationTest\?\.adultBlocked &&[\s\S]*activationTest\.normalAllowed &&[\s\S]*activationTest\.nativeReady &&[\s\S]*activationReady &&[\s\S]*activationTestMatchesCurrentStatus/);
+   assert.match(appSurface, /const activationComplete = activationReady && activationTestPassed/);
+   assert.match(appSurface, /Platform\.OS === "ios"/);
+@@ -7317,7 +7325,7 @@
+   assert.match(appSurface, /Android VPN permission is approved\. Starting DNS Guard now\./);
+   assert.match(appSurface, /decideSetupAdvance\(\{ pending, steps: permissionPlan/);
+   assert.match(appSurface, /runStepAction\(advance\.step\)/);
+-  assert.match(appSurface, /All required setup rows are ready\. Running the activation test now\./);
++  assert.match(appSurface, /All required setup rows are ready\. Running the local configuration check now\./);
+   assert.match(protectionSetupPresenter, /next && next\.id !== previous\.id/);
+   assert.match(appSurface, /presentProtectionSetup\(\{/);
+   assert.match(appSurface, /runFeedSync/);
+@@ -7387,7 +7395,8 @@
+   assert.match(appSurface, /classifyUrl\(`https:\/\/\$\{adultSmokeHost\}`, smokeOptions\)/);
+   assert.match(appSurface, /classifyUrl\(`https:\/\/\$\{normalSmokeHost\}`, smokeOptions\)/);
+   assert.match(appSurface, /without saving a blocked attempt/);
+-  assert.match(protectionSetupPresenter, /adult websites are blocked and normal websites are allowed/);
++  assert.match(protectionSetupPresenter, /Your required permissions and local configuration checks passed on this device\./);
++  assert.match(protectionSetupPresenter, /This check does not open websites or verify real browser or network blocking\./);
+   assert.match(appSurface, /complete: activationComplete/);
+   assert.match(appSurface, /step: androidWizardStep/);
+   assert.match(protectionSetupPresenter, /context\.platform === "preview"/);
+@@ -7782,9 +7791,15 @@
+   assert.match(shieldAction, /JSONEncoder\(\)\.encode\(record\)/);
+   assert.match(shieldAction, /defaults\.set\(encodedRecord, forKey: pendingInterventionRecordKey\)/);
+   assert.match(shieldAction, /scopeForApplication|scopeForWebDomain|scopeForCategory/);
+-  assert.match(shieldAction, /UNUserNotificationCenter\.current\(\)\.add\(request\)/);
++  assert.match(shieldAction, /let center = UNUserNotificationCenter\.current\(\)/);
++  assert.match(shieldAction, /center\.add\(request\) \{ \[weak self\] error in/);
++  assert.match(shieldAction, /afterSuccessfulPersistence:[\s\S]*submitPendingInterventionNotification/);
++  assert.match(shieldAction, /if !current \{[\s\S]*removePendingNotificationRequests[\s\S]*removeDeliveredNotifications/);
+   assert.match(shieldAction, /content\.userInfo = \["kind": "freed-pending-intervention"\]/);
+-  assert.match(shieldAction, /case \.primaryButtonPressed:[\s\S]*return \.close/);
++  assert.match(shieldAction, /case \.primaryButtonPressed:[\s\S]*return recordPendingIntervention/);
++  assert.match(shieldAction, /guard let publication else \{ return \.close \}/);
++  assert.match(shieldAction, /if #available\(iOS 26\.5, \*\) \{\s*return ShieldDecision\(response: \.openParentalControlsApp, notification: nil\)/);
++  assert.match(shieldAction, /return ShieldDecision\(response: \.close, notification: pendingInterventionNotification/);
+   assert.doesNotMatch(shieldAction, /return \.defer/);
+   assert.doesNotMatch(shieldAction, /UIApplication\.shared|openURL|originalURL|rewarded|advert/i);
+ 
+--- a/tests/ui/localization-runtime.test.tsx
++++ b/tests/ui/localization-runtime.test.tsx
+@@ -14,7 +14,7 @@
+   const reference = leaves(localeResources.en);
+   const actual = leaves(localeResources[language]);
+   expect(Object.keys(actual).sort()).toEqual(Object.keys(reference).sort());
+-  expect(Object.keys(localeResources[language]).sort()).toEqual(['common', 'companion', 'dns', 'momentum', 'native', 'preferences', 'purpose', 'source']);
++  expect(Object.keys(localeResources[language]).sort()).toEqual(['common', 'companion', 'dns', 'momentum', 'native', 'preferences', 'purpose', 'source', 'welcome']);
+   for (const [key, value] of Object.entries(actual)) {
+     expect(typeof value).toBe('string');
+     expect(value.trim().length).toBeGreaterThan(0);
+--- a/scripts/runtime-data-integrity-audit.js
++++ b/scripts/runtime-data-integrity-audit.js
+@@ -2,7 +2,7 @@
+ 
+ const { readFileSync } = require("node:fs");
+ const { execFileSync } = require("node:child_process");
+-const { syntheticQaIsDevOnlyOrRemoved } = require('./lib/cleanup-source-contract');
++const { syntheticQaIsDevOnlyOrRemoved, inspectNativeMonetizationDefaults, inspectRewardedResetChoice } = require('./lib/cleanup-source-contract');
+ 
+ function read(path) {
+   return readFileSync(path, "utf8");
+@@ -62,11 +62,15 @@
+   ),
+   check(
+     "monetization-defaults-native",
+-    monetization.includes('EXPO_PUBLIC_MONETIZATION_MODE === "mock" ? "mock" : "native"') &&
+-      monetization.includes('if (requestedMode === "mock" && isProductionRuntime()) return "native";') &&
+-      !monetization.includes('EXPO_PUBLIC_MONETIZATION_MODE === "native" ? "native" : "mock"'),
++    inspectNativeMonetizationDefaults(monetization),
+     "Monetization defaults to native fail-closed mode, and production runtime ignores mock purchase mode.",
+     "Default monetization to native and force production bundles back to native even if a mock env flag is present."
++  ),
++  check(
++    "rewarded-reset-explicit-choice",
++    inspectRewardedResetChoice(appSurface),
++    "Every rewarded SDK request follows an explicit optional-ad choice; free reset remains immediate, Premium/SOS are ineligible, native completion requires a real reward, and no fabricated countdown runs.",
++    "Restore explicit free/optional-ad actions, live eligibility checks, native reward validation, and zero automatic ad requests."
+   ),
+   check(
+     "manual-check-source",
+--- a/scripts/privacy-safety-audit.js
++++ b/scripts/privacy-safety-audit.js
+@@ -1,5 +1,5 @@
+ const { existsSync, readFileSync } = require("node:fs");
+-const { inspectConfirmedNativeCleanup } = require('./lib/cleanup-source-contract');
++const { inspectConfirmedNativeCleanup, inspectSetupConfigurationCheck } = require('./lib/cleanup-source-contract');
+ const { join } = require("node:path");
+ 
+ const root = process.cwd();
+@@ -740,7 +740,7 @@
+       appSurface.includes("Boolean(status.vpnConsentRequired && !status.adultFilterActive)") &&
+       appSurface.includes("protectionStatus?.vpnConsentRequired === false") &&
+       appSurface.includes("Android VPN permission is approved. Starting DNS Guard now.") &&
+-      appSurface.includes("All required setup rows are ready. Running the activation test now.") &&
++      inspectSetupConfigurationCheck(appSurface) &&
+       protectionSetupPresenter.includes("next && next.id !== previous.id") &&
+       appSurface.includes('case "apply-adult-filter":') &&
+       appSurface.includes('runAction("adult", applyAdultContentFilter)') &&
+--- a/scripts/release-readiness.ts
++++ b/scripts/release-readiness.ts
+@@ -23,7 +23,7 @@
+ const { getExpectedReleaseReadinessGateIds, assertHostedLegalReport } = require("./release-verify");
+ const { readEncryptedDnsSafetySources, inspectIosEncryptedDnsSafety } = require("./lib/encrypted-dns-safety-contract");
+ const { inspectNativeUnlockWiring } = require('./lib/native-unlock-safety-contract');
+-const { inspectConfirmedNativeCleanup, inspectRevocationRecovery } = require('./lib/cleanup-source-contract');
++const { inspectConfirmedNativeCleanup, inspectRevocationRecovery, inspectNativeMonetizationDefaults, inspectSetupConfigurationCheck, inspectRewardedResetChoice } = require('./lib/cleanup-source-contract');
+ const releaseBackendProvider = getBackendProvider(process.env);
+ const firebaseSelected = releaseBackendProvider === "firebase";
+ 
+@@ -1214,6 +1214,8 @@
+     smokeHarnessAudit.includes("runtime data integrity audit"),
+     script.includes("premium-entitlement-no-ui-toggle"),
+     script.includes("monetization-defaults-native"),
++    script.includes("rewarded-reset-explicit-choice"),
++    inspectRewardedResetChoice(appSurface),
+     script.includes("manual-check-source"),
+     script.includes("legacy-test-lab-normalized"),
+     script.includes("analytics-no-test-lab-metric"),
+@@ -1241,7 +1243,7 @@
+     recoveryState.includes("closedAt: opened"),
+     !appSurface.includes("setPremium(!premium)"),
+     monetization.includes('EXPO_PUBLIC_MONETIZATION_MODE === "mock" ? "mock" : "native"'),
+-    monetization.includes('if (requestedMode === "mock" && isProductionRuntime()) return "native";'),
++    inspectNativeMonetizationDefaults(monetization),
+     analytics.includes("manualCheckInterceptions"),
+     analytics.includes("appInterceptions"),
+     analytics.includes("productionMetrics"),
+@@ -1522,7 +1524,7 @@
+     iosModule.includes('"dailyLimitMinutes": configuredDailyLimitMinutes()'),
+     iosModule.includes("startMinute: Int, endMinute: Int"),
+     iosModule.includes("DateComponents(hour: startHour, minute: startMinute)"),
+-    iosModule.includes("Screen Time unlock identity does not match the claimed intervention. FREED shields remain active."),
++    iosModule.includes("Screen Time unlock identity does not match the claimed intervention. Existing Screen Time protection remains in effect."),
+     iosModule.includes("isScreenTimeUnlockSource"),
+     iosModule.includes("self.isScreenTimeUnlockSource(sourceAttemptHost),"),
+     iosModule.includes("consumePendingEarnedUnlockEnvelope(sanitizedExpectedInterventionId)"),
+@@ -5741,7 +5743,7 @@
+       appSurfaceSource.includes("Continuing setup: ${advance.step.title}.") &&
+       appSurfaceSource.includes("runStepAction(advance.step)") &&
+       appSurfaceSource.includes("can be finished later. Continuing setup:") &&
+-      appSurfaceSource.includes("All required setup rows are ready. Running the activation test now.") &&
++      inspectSetupConfigurationCheck(appSurfaceSource) &&
+       appSurfaceSource.includes("activationRecoveryStep") &&
+       appSurfaceSource.includes("getProtectionActivationRecoveryStep(permissionPlan, activationTest?.nativeDiagnostics)") &&
+       appSurfaceSource.includes("if (activationRecoveryStep && !activationTestPassed)") &&
+--- a/scripts/lib/cleanup-source-contract.js
++++ b/scripts/lib/cleanup-source-contract.js
+@@ -60,4 +60,48 @@
+     return refreshed && !calls.some(c => callName(c) === 'setScreen');
+   });
+ }
+-module.exports = { inspectConfirmedNativeCleanup, syntheticQaIsDevOnlyOrRemoved, inspectRevocationRecovery };
++function inspectNativeMonetizationDefaults(source) {
++  const ast = parse(source);
++  const fn = ast.statements.find(n => ts.isFunctionDeclaration(n) && n.name?.text === 'resolveMode');
++  const [declaration, guard, finish] = fn?.body?.statements ?? [];
++  const compact = n => n?.getText(ast).replace(/\s/g, '');
++  return !ast.parseDiagnostics.length && fn?.body?.statements.length === 3 &&
++    compact(declaration) === 'constrequestedMode=mode??(process.env.EXPO_PUBLIC_MONETIZATION_MODE==="mock"?"mock":"native");' &&
++    ts.isIfStatement(guard) && compact(guard.expression) === 'requestedMode==="mock"&&(isProductionRuntime()||["production","internal-testflight"].includes(readEnv("EXPO_PUBLIC_BUILD_CHANNEL")??""))' &&
++    ts.isReturnStatement(guard.thenStatement) && compact(guard.thenStatement.expression) === '"native"' &&
++    ts.isReturnStatement(finish) && compact(finish.expression) === 'requestedMode';
++}
++function inspectSetupConfigurationCheck(source) {
++  const ast = parse(source);
++  const branch = nodes(ast, n => ts.isIfStatement(n) && n.expression.getText(ast).replace(/\s/g, '') === 'advance.action==="test"');
++  if (ast.parseDiagnostics.length || branch.length !== 1 || !ts.isBlock(branch[0].thenStatement)) return false;
++  const body = branch[0].thenStatement;
++  const calls = nodes(body, ts.isCallExpression);
++  return calls.some(c => callName(c) === 'runActivationTest' && c.arguments.length === 0) &&
++    calls.some(c => callName(c) === 'setNotice' && c.arguments.length === 1 && ts.isStringLiteral(c.arguments[0]) && c.arguments[0].text === 'All required setup rows are ready. Running the local configuration check now.') &&
++    !calls.some(c => ['recordBlockingAttempt', 'recordEarnedUnlock', 'markProtectionActivated'].includes(callName(c))) &&
++    body.statements.some(n => ts.isExpressionStatement(n) && n.expression.getText(ast).replace(/\s/g, '') === 'setupAutoAdvanceRef.current={fromStepId:completedStep.id,testTriggered:true}') &&
++    ts.isReturnStatement(body.statements.at(-1));
++}
++function inspectRewardedResetChoice(source) {
++  const ast = parse(source);
++  const screen = ast.statements.find(n => ts.isFunctionDeclaration(n) && n.name?.text === 'RewardedAdScreen');
++  if (ast.parseDiagnostics.length || !screen?.body || !trustedImport(ast, 'createRewardedResetSession', '@/lib/monetization') || !trustedImport(ast, 'completeRewardedResetSession', '@/lib/monetization')) return false;
++  const watch = nodes(screen.body, n => ts.isVariableDeclaration(n) && n.name.getText(ast) === 'watchAd')[0]?.initializer;
++  if (!watch || !ts.isArrowFunction(watch) || !ts.isBlock(watch.body)) return false;
++  const compact = n => n?.getText(ast).replace(/\s/g, '');
++  const guard = watch.body.statements[0];
++  if (!ts.isIfStatement(guard) || compact(guard.expression) !== 'busy.current||finished.current||!mounted.current||eligibility.current.premium||eligibility.current.emergency||AppState.currentState!=="active"' || !ts.isReturnStatement(guard.thenStatement)) return false;
++  const eligibility = nodes(watch.body, n => ts.isVariableDeclaration(n) && n.name.getText(ast) === 'isEligible')[0]?.initializer;
++  if (!eligibility || !ts.isArrowFunction(eligibility) || compact(eligibility.body) !== 'mounted.current&&!finished.current&&request.current===activeRequest&&!eligibility.current.premium&&!eligibility.current.emergency&&AppState.currentState==="active"' || !nodes(watch.body, ts.isIfStatement).some(n => compact(n.expression) === '!isEligible()' && ts.isReturnStatement(n.thenStatement))) return false;
++  const sdkCalls = nodes(screen.body, n => ts.isCallExpression(n) && ['createRewardedResetSession', 'completeRewardedResetSession'].includes(callName(n)));
++  if (sdkCalls.length !== 2 || !sdkCalls.every(call => call.pos >= watch.body.pos && call.end <= watch.body.end)) return false;
++  if (nodes(screen.body, n => ts.isCallExpression(n) && ['setInterval', 'setTimeout'].includes(callName(n))).length) return false;
++  const attributes = nodes(screen.body, ts.isJsxAttributes);
++  const hasButton = (handler, label) => attributes.some(attrs => attrs.properties.some(a => ts.isJsxAttribute(a) && a.name.text === 'onPress' && ts.isJsxExpression(a.initializer) && a.initializer.expression?.getText(ast) === handler) && attrs.properties.some(a => ts.isJsxAttribute(a) && a.name.text === 'label' && a.initializer && label(a.initializer.getText(ast))));
++  return hasButton('startFreeReset', value => value === '"Start free reset"') &&
++    hasButton('watchAd', value => value.includes('Watch a test ad') && value.includes('Watch an optional ad')) &&
++    nodes(watch.body, ts.isIfStatement).some(n => compact(n.expression) === 'result.status==="completed"&&result.rewardGranted' && compact(n.thenStatement) === 'startFreeReset();') &&
++    nodes(watch.body, ts.isIfStatement).some(n => compact(n.expression) === 'session.provider!=="native"||session.status!=="ready"' && ts.isBlock(n.thenStatement) && ts.isReturnStatement(n.thenStatement.statements.at(-1)));
++}
++module.exports = { inspectConfirmedNativeCleanup, syntheticQaIsDevOnlyOrRemoved, inspectRevocationRecovery, inspectNativeMonetizationDefaults, inspectSetupConfigurationCheck, inspectRewardedResetChoice };
+--- a/tests/cleanup-source-contract.test.js
++++ b/tests/cleanup-source-contract.test.js
+@@ -45,3 +45,49 @@
+     assert.equal(inspectRevocationRecovery(controller.replace(before, after)), false);
+   }
+ });
++test('native monetization guard rejects mock mode in production and internal distribution', () => {
++  const { inspectNativeMonetizationDefaults } = require('../scripts/lib/cleanup-source-contract');
++  const source = readFileSync('src/lib/monetization.ts', 'utf8');
++  assert.equal(inspectNativeMonetizationDefaults(source), true);
++  for (const [before, after] of [
++    ['isProductionRuntime() ||', 'isProductionRuntime() &&'],
++    ['isProductionRuntime() ||', 'false ||'],
++    ['["production", "internal-testflight"]', '["production"]'],
++    ['? "mock" : "native"', '? "native" : "mock"'],
++    ['return "native";', 'return "mock";'],
++  ]) {
++    assert.ok(source.includes(before), before);
++    assert.equal(inspectNativeMonetizationDefaults(source.replace(before, after)), false, before);
++  }
++});
++test('setup local configuration check runs the guarded action without fabricating activation', () => {
++  const { inspectSetupConfigurationCheck } = require('../scripts/lib/cleanup-source-contract');
++  assert.equal(inspectSetupConfigurationCheck(controller), true);
++  for (const [before, after] of [
++    ['if (advance.action === "test")', 'if (true)'],
++    ['Running the local configuration check now.', 'Physical-device protection verified.'],
++    ['runActivationTest();\n      return;', 'markProtectionActivated();\n      return;'],
++    ['testTriggered: true', 'testTriggered: false'],
++  ]) {
++    assert.ok(controller.includes(before), before);
++    assert.equal(inspectSetupConfigurationCheck(controller.replace(before, after)), false, before);
++  }
++});
++test('optional rewarded reset rejects automatic requests, countdowns and reward or eligibility bypass', () => {
++  const { inspectRewardedResetChoice } = require('../scripts/lib/cleanup-source-contract');
++  assert.equal(inspectRewardedResetChoice(controller), true);
++  for (const [before, after] of [
++    ['const listener = AppState.addEventListener("change", state => {', 'createRewardedResetSession({}); const listener = AppState.addEventListener("change", state => {'],
++    ['eligibility.current.premium || eligibility.current.emergency || AppState.currentState', 'false || false || AppState.currentState'],
++    ['result.status === "completed" && result.rewardGranted', 'result.status === "completed"'],
++    ['request.current === activeRequest', 'true'],
++    ['if (!isEligible()) return;', 'if (false) return;'],
++    ['from "@/lib/monetization"', 'from "./fake-monetization"'],
++    ['session.provider !== "native" || session.status !== "ready"', 'false'],
++    ['label="Start free reset" onPress={startFreeReset}', 'label="Start free reset" onPress={watchAd}'],
++    ['const [phase, setPhase]', 'setInterval(() => onDone(), 5000); const [phase, setPhase]'],
++  ]) {
++    assert.ok(controller.includes(before), before);
++    assert.equal(inspectRewardedResetChoice(controller.replace(before, after)), false, before);
++  }
++});

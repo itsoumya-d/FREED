@@ -1,0 +1,8 @@
+{
+  "name": "freed-backup-crypto",
+  "version": "0.1.0",
+  "description": "Native v1 encrypted recovery backup cryptography for FREED.",
+  "license": "UNLICENSED",
+  "private": true,
+  "peerDependencies": { "expo": "*" }
+}

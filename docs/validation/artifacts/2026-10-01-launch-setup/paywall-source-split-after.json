@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "freed-paywall-launch-source-audit-v1",
+  "generatedAt": "2026-10-01T11:37:41.806Z",
+  "sanitized": true,
+  "result": "pass",
+  "passCount": 17,
+  "failCount": 0,
+  "releaseBoundary": "Local paywall source precheck only. This does not prove the submitted native build, store products, rewarded ads, server receipt verification, or sandbox purchases passed.",
+  "checks": [
+    {
+      "id": "source-files-readable",
+      "status": "pass",
+      "detail": "Paywall controller, offer view, price presenter, and monetization sources are readable.",
+      "next": ""
+    },
+    {
+      "id": "launch-plan-ids-core3",
+      "status": "pass",
+      "detail": "LAUNCH_PREMIUM_PLAN_IDS is yearly, monthly in launch order.",
+      "next": ""
+    },
+    {
+      "id": "launch-product-ids-present",
+      "status": "pass",
+      "detail": "Core 3 product IDs are present in monetization config.",
+      "next": ""
+    },
+    {
+      "id": "launch-plan-api-filters-core3",
+      "status": "pass",
+      "detail": "getLaunchPremiumPlans filters products through isLaunchPremiumPlanId.",
+      "next": ""
+    },
+    {
+      "id": "purchase-api-launch-only",
+      "status": "pass",
+      "detail": "purchasePremiumPlan resolves only launch products and rejects future plans.",
+      "next": ""
+    },
+    {
+      "id": "restore-api-launch-only",
+      "status": "pass",
+      "detail": "restorePremiumPurchases passes only launch plans to native restore and rejects future products.",
+      "next": ""
+    },
+    {
+      "id": "paywall-uses-launch-plan-api",
+      "status": "pass",
+      "detail": "PaywallScreen gets plans from getLaunchPremiumPlans.",
+      "next": ""
+    },
+    {
+      "id": "paywall-renders-launch-plans",
+      "status": "pass",
+      "detail": "PaywallScreen passes launch product presentations to PremiumOffer, which displays each actual billed amount and cadence.",
+      "next": ""
+    },
+    {
+      "id": "paywall-defaults-yearly-value-anchor",
+      "status": "pass",
+      "detail": "PaywallScreen defaults the selected plan to yearly.",
+      "next": ""
+    },
+    {
+      "id": "paywall-purchases-selected-plan",
+      "status": "pass",
+      "detail": "The selected launch plan reaches checkout only after the current store price is verified as purchasable and no purchase is busy.",
+      "next": ""
+    },
+    {
+      "id": "paywall-restore-visible",
+      "status": "pass",
+      "detail": "PaywallScreen passes restore through to the visible offer action.",
+      "next": ""
+    },
+    {
+      "id": "paywall-premium-no-ad-copy-visible",
+      "status": "pass",
+      "detail": "PremiumOffer describes ad-free recovery value without fabricated introductory offers.",
+      "next": ""
+    },
+    {
+      "id": "paywall-server-verification-gates-premium",
+      "status": "pass",
+      "detail": "The native checkout runtime uses authenticated store verification and Premium state follows the verified purchase/restore result.",
+      "next": ""
+    },
+    {
+      "id": "paywall-future-products-hidden",
+      "status": "pass",
+      "detail": "The paywall controller and offer view omit family/accountability/AI-coach future SKUs and labels.",
+      "next": "Remove future product IDs or future plan labels from PaywallScreen until v1 evidence passes."
+    },
+    {
+      "id": "paywall-close-is-direct",
+      "status": "pass",
+      "detail": "The offer closes directly to the caller's free path, with no retention modal, except while checkout is busy.",
+      "next": ""
+    },
+    {
+      "id": "paywall-prices-fail-closed",
+      "status": "pass",
+      "detail": "Unavailable or loading prices disable checkout and expose a retry instead of using fallback prices for native purchases.",
+      "next": ""
+    },
+    {
+      "id": "paywall-no-client-premium-bypass",
+      "status": "pass",
+      "detail": "Premium state is set after purchase/restore result.premium, not from a visible client toggle.",
+      "next": ""
+    }
+  ],
+  "launchPlanIds": [
+    "yearly",
+    "monthly"
+  ],
+  "launchProductIds": {
+    "yearly": "freed_premium_yearly",
+    "monthly": "freed_premium_monthly",
+    "lifetime": "freed_premium_lifetime"
+  },
+  "futurePlanIdsDisabledForV1": [
+    "family",
+    "accountability",
+    "ai-coach"
+  ],
+  "futureProductIdsDisabledForV1": [
+    "freed_family_yearly",
+    "freed_accountability_monthly",
+    "freed_ai_coach_monthly"
+  ],
+  "sourceArtifacts": {
+    "paywall": {
+      "path": "src/features/freed-app.tsx",
+      "sha256": "sha256-2c42651c27fe8999782bdb4454ef6d61de2fa4c42384a48b6e70d49ea8a1ef42"
+    },
+    "offer": {
+      "path": "src/components/PremiumOffer.tsx",
+      "sha256": "sha256-d2444db9eb21f7ec3ee61b0946fe07a8acc4cf50c5e06dbdf9e65b4df38b7cdf"
+    },
+    "presenter": {
+      "path": "src/lib/paywall-presenter.ts",
+      "sha256": "sha256-ae8ab5f97c59304afa63441d6d4aa5e224a03f964c0191f8707f6cb1db5977a7"
+    },
+    "monetization": {
+      "path": "src/lib/monetization.ts",
+      "sha256": "sha256-f8ac526600247fdf7714617d38ca3c484f9f5b9b0c832b04be3e97434af51fe6"
+    }
+  }
+}

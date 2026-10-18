@@ -179,6 +179,14 @@ internal object FreedFocusShieldCalibrationBridge {
 
   fun get(): Map<String, Any> = latestResult.toPayload()
 
+  fun resetConfigurationResult() {
+    synchronized(serviceReferenceLock) {
+      focusShieldCalibrationAttachmentEpoch += 1
+      serviceReference.get()?.updateFocusShieldCalibrationOwner(focusShieldCalibrationAttachmentEpoch)
+      latestResult = FreedFocusShieldCalibrationResult("idle", "Focus Shield calibration is not running.")
+    }
+  }
+
   fun isCurrentOwner(service: FreedAccessibilityService, ownerEpoch: Long): Boolean {
     return synchronized(serviceReferenceLock) {
       serviceReference.get() === service &&
@@ -394,7 +402,7 @@ internal class FreedFocusShieldCalibrationSession(
     }
 
     val status = TextView(service).apply {
-      text = "Tap the surface to calibrate. Only its stable view fingerprint stays on this device."
+      text = FreedNativeCopy.text(service, R.string.freed_calibration_instruction)
       setTextColor(Color.WHITE)
       textSize = 14f
       setPadding(dp(16), dp(12), dp(16), dp(12))
@@ -417,13 +425,13 @@ internal class FreedFocusShieldCalibrationSession(
       background = roundedBackground(Color.rgb(15, 23, 42), dp(14).toFloat())
     }
     val cancelButton = Button(service).apply {
-      text = "Cancel"
+      text = FreedNativeCopy.text(service, R.string.freed_cancel)
       setOnClickListener {
         finish("cancelled", "Focus Shield calibration was cancelled. No selector was stored.")
       }
     }
     val confirm = Button(service).apply {
-      text = "Confirm"
+      text = FreedNativeCopy.text(service, R.string.freed_confirm)
       isEnabled = false
       setOnClickListener { confirmCandidate() }
     }
@@ -487,7 +495,7 @@ internal class FreedFocusShieldCalibrationSession(
     candidate = selected
     showHighlight(selected.bounds)
     confirmButton?.isEnabled = true
-    statusView?.text = "Stable local selector found. Confirm to save it, or cancel to discard it."
+    statusView?.text = FreedNativeCopy.text(service, R.string.freed_calibration_ready)
     onFinished(
       this,
       FreedFocusShieldCalibrationResult(

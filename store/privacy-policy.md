@@ -2,7 +2,7 @@
 
 Effective date: June 6, 2026
 
-FREED is a recovery and digital self-control app for blocking explicit adult-domain access, interrupting selected app loops, and guiding users into recovery challenges. This policy is mirrored in the public `/privacy` Expo route at https://freedrecovery.app/privacy for App Store Connect and Google Play Console.
+FREED is a recovery and digital self-control app for blocking explicit adult-domain access, interrupting selected app loops, and guiding users into recovery challenges. This policy is mirrored in the public `/privacy` Expo route at https://freed-landing.web.app/privacy for App Store Connect and Google Play Console.
 
 ## Data FREED Uses On Device
 
@@ -34,12 +34,15 @@ FREED requests sensitive permissions only when needed:
 
 ## Retention And Deletion
 
-Local recovery data stays on the device unless the user enables an optional remote feature. Server-side purchase audit, analytics, AI event, notification, and encrypted backup records must follow the retention windows documented in the backend schema and release evidence. Users can use the in-app support/deletion controls or the public account deletion route at https://freedrecovery.app/account-deletion.
+Local recovery data stays on the device unless the user enables an optional remote feature. Server-side purchase audit, analytics, AI event, notification, and encrypted backup records must follow the retention windows documented in the backend schema and release evidence. Users can use the in-app support/deletion controls or the public account deletion route at https://freed-landing.web.app/account-deletion.
 
 ## Contact
 
-Privacy contact: support@freedrecovery.app
+Privacy contact: soumyadebnath1661@gmail.com
 
-Public support URL: https://freedrecovery.app/support
+Public support URL: https://freed-landing.web.app/support
 
-Public account deletion URL: https://freedrecovery.app/account-deletion
+Public account deletion URL: https://freed-landing.web.app/account-deletion
+
+
+Firebase launch configuration (2026-10-01): Google, Apple, email and anonymous Auth use Firebase-managed identities. Purchases are verified server-side. Optional analytics sends only absolute UTC-day check-in/challenge counts, tied to the authenticated Firebase UID for idempotent snapshots; this is data linked to the user and is retained for 14 days. No reflections, browsing URLs/hosts, contacts or private notes are sent in those snapshots. Encrypted backup includes private recovery content, is opt-in, and is encrypted on the device before upload; the server does not have the passphrase. Push registration is opt-in and includes UID, installation ID and FCM token. Declare the production services actually enabled and verify these answers against the signed build before submission.

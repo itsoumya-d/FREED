@@ -1,3 +1,5 @@
+Current daily-usability integration (2026-10-05): Firebase is the active architecture. Optional CLARA uses attached Google runtime credentials and consent-versioned deliberate text, with separate opt-in prior user messages. Photos, challenge generation and retention suggestions stay local. Legacy Supabase/Redis/OpenAI rows below describe retained inactive adapters and do not establish active collection. The current server/device evidence is recorded in docs/implementation/2026-10-05-capped-google-clara.md; signed-build/store declarations remain mandatory release gates.
+
 # FREED Privacy Data Map
 
 This document maps sensitive recovery data to the current implementation so release review does not rely on assumptions.
@@ -55,3 +57,6 @@ This document maps sensitive recovery data to the current implementation so rele
 - `npm run audit:privacy`
 - `npm run audit:performance`
 - `npm run audit:release`
+
+
+Firebase launch configuration (2026-10-01): Google, Apple, email and anonymous Auth use Firebase-managed identities. Purchases are verified server-side. Optional analytics sends only absolute UTC-day check-in/challenge counts, tied to the authenticated Firebase UID for idempotent snapshots; this is data linked to the user and is retained for 14 days. No reflections, browsing URLs/hosts, contacts or private notes are sent in those snapshots. Encrypted backup includes private recovery content, is opt-in, and is encrypted on the device before upload; the server does not have the passphrase. Push registration is opt-in and includes UID, installation ID and FCM token. Declare the production services actually enabled and verify these answers against the signed build before submission.

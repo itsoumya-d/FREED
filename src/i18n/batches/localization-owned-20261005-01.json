@@ -1,0 +1,564 @@
+{
+  "entries": [
+    {
+      "source": "A comfortable breathing pause",
+      "translations": {
+        "hi": "आराम से साँस लेने का विराम",
+        "es": "Una pausa para respirar con comodidad",
+        "pt": "Uma pausa para respirar com conforto",
+        "fr": "Une pause pour respirer à l’aise",
+        "de": "Eine angenehme Atempause",
+        "ar": "استراحة تنفّس مريحة",
+        "ja": "心地よく呼吸する休憩",
+        "ko": "편안한 호흡 휴식",
+        "zh-Hans": "舒适的呼吸休息"
+      }
+    },
+    {
+      "source": "A comfortable movement pause",
+      "translations": {
+        "hi": "आराम से हिलने-डुलने का विराम",
+        "es": "Una pausa de movimiento cómodo",
+        "pt": "Uma pausa de movimento confortável",
+        "fr": "Une pause de mouvement en douceur",
+        "de": "Eine angenehme Bewegungspause",
+        "ar": "استراحة حركة مريحة",
+        "ja": "心地よく体を動かす休憩",
+        "ko": "편안한 움직임 휴식",
+        "zh-Hans": "舒适的活动休息"
+      }
+    },
+    {
+      "source": "A gentle exhale pause",
+      "translations": {
+        "hi": "धीरे साँस छोड़ने का विराम",
+        "es": "Una pausa de exhalación suave",
+        "pt": "Uma pausa para expirar suavemente",
+        "fr": "Une pause d’expiration douce",
+        "de": "Eine sanfte Ausatempause",
+        "ar": "استراحة زفير لطيف",
+        "ja": "ゆっくり息を吐く休憩",
+        "ko": "부드러운 날숨 휴식",
+        "zh-Hans": "轻缓呼气休息"
+      }
+    },
+    {
+      "source": "About {{seconds}} seconds",
+      "translations": {
+        "hi": "लगभग {{seconds}} सेकंड",
+        "es": "Unos {{seconds}} segundos",
+        "pt": "Cerca de {{seconds}} segundos",
+        "fr": "Environ {{seconds}} secondes",
+        "de": "Etwa {{seconds}} Sekunden",
+        "ar": "حوالي {{seconds}} ثانية",
+        "ja": "約{{seconds}}秒",
+        "ko": "약 {{seconds}}초",
+        "zh-Hans": "约 {{seconds}} 秒"
+      }
+    },
+    {
+      "source": "Activity recorded",
+      "translations": {
+        "hi": "गतिविधि दर्ज की गई",
+        "es": "Actividad registrada",
+        "pt": "Atividade registrada",
+        "fr": "Activité enregistrée",
+        "de": "Aktivität erfasst",
+        "ar": "تم تسجيل النشاط",
+        "ja": "活動を記録しました",
+        "ko": "활동이 기록되었어요",
+        "zh-Hans": "活动已记录"
+      }
+    },
+    {
+      "source": "Breathe gently at your own pace.",
+      "translations": {
+        "hi": "अपनी गति से सहज साँस लें।",
+        "es": "Respira suavemente a tu ritmo.",
+        "pt": "Respire suavemente no seu ritmo.",
+        "fr": "Respirez doucement à votre rythme.",
+        "de": "Atme sanft in deinem eigenen Tempo.",
+        "ar": "تنفّس بلطف بالوتيرة التي تناسبك.",
+        "ja": "自分のペースでやさしく呼吸しましょう。",
+        "ko": "자신의 속도에 맞춰 부드럽게 호흡하세요.",
+        "zh-Hans": "按自己的节奏轻缓呼吸。"
+      }
+    },
+    {
+      "source": "Carry the phone to count steps during this reset.",
+      "translations": {
+        "hi": "इस विराम में कदम गिनने के लिए फ़ोन साथ रखें।",
+        "es": "Lleva el teléfono para contar pasos durante este ejercicio.",
+        "pt": "Leve o celular para contar os passos durante este exercício.",
+        "fr": "Gardez le téléphone avec vous pour compter les pas pendant cet exercice.",
+        "de": "Trage dein Handy bei dir, damit es während dieser Übung Schritte zählen kann.",
+        "ar": "احمل هاتفك لعدّ الخطوات أثناء هذا التمرين.",
+        "ja": "このリセット中に歩数を数えるため、スマートフォンを持ち歩いてください。",
+        "ko": "이 활동 중 걸음 수를 세려면 휴대폰을 가지고 이동하세요.",
+        "zh-Hans": "进行这次调整活动时，请携带手机以记录步数。"
+      }
+    },
+    {
+      "source": "Carry your phone while you take a few steps.",
+      "translations": {
+        "hi": "कुछ कदम चलते समय फ़ोन साथ रखें।",
+        "es": "Lleva el teléfono mientras das unos pasos.",
+        "pt": "Leve o celular enquanto dá alguns passos.",
+        "fr": "Gardez votre téléphone avec vous en faisant quelques pas.",
+        "de": "Nimm dein Handy mit, während du ein paar Schritte gehst.",
+        "ar": "احمل هاتفك وأنت تمشي بضع خطوات.",
+        "ja": "スマートフォンを持って、少し歩いてみましょう。",
+        "ko": "몇 걸음 걸을 때 휴대폰을 가지고 이동하세요.",
+        "zh-Hans": "走几步时，请带上手机。"
+      }
+    },
+    {
+      "source": "Center the object in a fresh camera photo.",
+      "translations": {
+        "hi": "नई कैमरा फ़ोटो में वस्तु को बीच में रखें।",
+        "es": "Centra el objeto en una foto nueva tomada con la cámara.",
+        "pt": "Centralize o objeto em uma nova foto tirada com a câmera.",
+        "fr": "Placez l’objet au centre d’une nouvelle photo prise avec l’appareil.",
+        "de": "Platziere den Gegenstand mittig in einem neu aufgenommenen Kamerafoto.",
+        "ar": "ضع الجسم في وسط صورة جديدة تلتقطها بالكاميرا.",
+        "ja": "カメラで新しく撮る写真の中央に、対象物を入れてください。",
+        "ko": "카메라로 새 사진을 찍을 때 물체를 가운데에 놓으세요.",
+        "zh-Hans": "拍摄新照片时，将物体置于画面中央。"
+      }
+    },
+    {
+      "source": "Choose a circle, square or triangle.",
+      "translations": {
+        "hi": "वृत्त, वर्ग या त्रिकोण चुनें।",
+        "es": "Elige un círculo, un cuadrado o un triángulo.",
+        "pt": "Escolha um círculo, quadrado ou triângulo.",
+        "fr": "Choisissez un cercle, un carré ou un triangle.",
+        "de": "Wähle einen Kreis, ein Quadrat oder ein Dreieck.",
+        "ar": "اختر دائرة أو مربعًا أو مثلثًا.",
+        "ja": "丸、四角、三角のいずれかを選びましょう。",
+        "ko": "원, 사각형, 삼각형 중 하나를 고르세요.",
+        "zh-Hans": "选择圆形、正方形或三角形。"
+      }
+    },
+    {
+      "source": "Choose a clear, safe place to walk.",
+      "translations": {
+        "hi": "चलने के लिए साफ़ और सुरक्षित जगह चुनें।",
+        "es": "Elige un lugar despejado y seguro para caminar.",
+        "pt": "Escolha um lugar livre e seguro para caminhar.",
+        "fr": "Choisissez un endroit dégagé et sûr pour marcher.",
+        "de": "Wähle einen freien, sicheren Platz zum Gehen.",
+        "ar": "اختر مكانًا خاليًا وآمنًا للمشي.",
+        "ja": "障害物のない、安全に歩ける場所を選んでください。",
+        "ko": "장애물이 없고 안전한 곳을 골라 걸으세요.",
+        "zh-Hans": "选择开阔、安全的地方行走。"
+      }
+    },
+    {
+      "source": "Choose a different reset",
+      "translations": {
+        "hi": "दूसरा विराम चुनें",
+        "es": "Elige otro ejercicio",
+        "pt": "Escolha outro exercício",
+        "fr": "Choisir un autre exercice",
+        "de": "Andere Übung wählen",
+        "ar": "اختر تمرينًا آخر",
+        "ja": "別のリセットを選ぶ",
+        "ko": "다른 활동 선택",
+        "zh-Hans": "选择另一项调整活动"
+      }
+    },
+    {
+      "source": "Choose a new reset with a supported verification rule.",
+      "translations": {
+        "hi": "समर्थित जाँच नियम वाला नया विराम चुनें।",
+        "es": "Elige un ejercicio nuevo con un método de verificación compatible.",
+        "pt": "Escolha um novo exercício com um método de verificação compatível.",
+        "fr": "Choisissez un nouvel exercice avec une méthode de vérification prise en charge.",
+        "de": "Wähle eine neue Übung mit einer unterstützten Prüfregel.",
+        "ar": "اختر تمرينًا جديدًا بطريقة تحقق مدعومة.",
+        "ja": "対応している確認方法を使う、新しいリセットを選んでください。",
+        "ko": "지원되는 확인 방법이 있는 새 활동을 선택하세요.",
+        "zh-Hans": "请选择采用受支持验证方式的新活动。"
+      }
+    },
+    {
+      "source": "Choose a seated or standing position.",
+      "translations": {
+        "hi": "बैठने या खड़े होने की मुद्रा चुनें।",
+        "es": "Elige sentarte o ponerte de pie.",
+        "pt": "Escolha ficar sentado ou em pé.",
+        "fr": "Choisissez de vous asseoir ou de rester debout.",
+        "de": "Wähle eine sitzende oder stehende Position.",
+        "ar": "اختر وضعية الجلوس أو الوقوف.",
+        "ja": "座るか立つか、姿勢を選びましょう。",
+        "ko": "앉거나 서 있는 자세를 선택하세요.",
+        "zh-Hans": "选择坐姿或站姿。"
+      }
+    },
+    {
+      "source": "Choose one detail that you had not noticed before.",
+      "translations": {
+        "hi": "एक ऐसी बात चुनें जो पहले ध्यान में नहीं आई थी।",
+        "es": "Elige un detalle que no habías notado antes.",
+        "pt": "Escolha um detalhe que você ainda não tinha notado.",
+        "fr": "Choisissez un détail que vous n’aviez pas encore remarqué.",
+        "de": "Wähle ein Detail, das dir bisher nicht aufgefallen war.",
+        "ar": "اختر تفصيلًا لم تنتبه إليه من قبل.",
+        "ja": "今まで気づかなかった細部を一つ見つけましょう。",
+        "ko": "이전에 알아차리지 못했던 특징 하나를 골라보세요.",
+        "zh-Hans": "找出一个以前没有注意到的细节。"
+      }
+    },
+    {
+      "source": "Comfortable breathing",
+      "translations": {
+        "hi": "आरामदायक श्वास",
+        "es": "Respiración cómoda",
+        "pt": "Respiração confortável",
+        "fr": "Respiration confortable",
+        "de": "Angenehmes Atmen",
+        "ar": "تنفّس مريح",
+        "ja": "心地よい呼吸",
+        "ko": "편안한 호흡",
+        "zh-Hans": "舒适呼吸"
+      }
+    },
+    {
+      "source": "Confirm the connection action when you return.",
+      "translations": {
+        "hi": "लौटने पर संपर्क की पुष्टि करें।",
+        "es": "Confirma la acción de contacto cuando vuelvas.",
+        "pt": "Confirme a ação de contato ao voltar.",
+        "fr": "Confirmez l’action de contact à votre retour.",
+        "de": "Bestätige nach deiner Rückkehr, dass du Kontakt aufgenommen hast.",
+        "ar": "أكّد خطوة التواصل عند عودتك.",
+        "ja": "戻ったら、連絡したことを確認してください。",
+        "ko": "돌아오면 연락 활동을 확인하세요.",
+        "zh-Hans": "返回后，请确认联系活动。"
+      }
+    },
+    {
+      "source": "Connection action confirmed",
+      "translations": {
+        "hi": "संपर्क की पुष्टि हुई",
+        "es": "Acción de contacto confirmada",
+        "pt": "Ação de contato confirmada",
+        "fr": "Action de contact confirmée",
+        "de": "Kontaktaufnahme bestätigt",
+        "ar": "تم تأكيد خطوة التواصل",
+        "ja": "連絡を確認しました",
+        "ko": "연락 활동이 확인되었어요",
+        "zh-Hans": "联系活动已确认"
+      }
+    },
+    {
+      "source": "Device movement observed",
+      "translations": {
+        "hi": "फ़ोन की गति देखी गई",
+        "es": "Movimiento del dispositivo observado",
+        "pt": "Movimento do dispositivo observado",
+        "fr": "Mouvement de l’appareil observé",
+        "de": "Gerätebewegung erfasst",
+        "ar": "تم رصد حركة الجهاز",
+        "ja": "端末の動きを検出しました",
+        "ko": "기기 움직임이 감지되었어요",
+        "zh-Hans": "已检测到设备移动"
+      }
+    },
+    {
+      "source": "Discard this guided reset",
+      "translations": {
+        "hi": "यह निर्देशित विराम छोड़ें",
+        "es": "Descartar este ejercicio guiado",
+        "pt": "Descartar este exercício guiado",
+        "fr": "Abandonner cet exercice guidé",
+        "de": "Diese geführte Übung verwerfen",
+        "ar": "إلغاء هذا التمرين الموجّه",
+        "ja": "このガイド付きリセットを破棄する",
+        "ko": "이 안내 활동 삭제",
+        "zh-Hans": "放弃这次引导活动"
+      }
+    },
+    {
+      "source": "DNS",
+      "translations": {
+        "hi": "डीएनएस",
+        "es": "Servicio DNS",
+        "pt": "Serviço DNS",
+        "fr": "Service DNS",
+        "de": "DNS-Dienst",
+        "ar": "نظام أسماء النطاقات",
+        "ja": "DNS設定",
+        "ko": "DNS 설정",
+        "zh-Hans": "DNS 设置"
+      }
+    },
+    {
+      "source": "DNS & health",
+      "translations": {
+        "hi": "डीएनएस और स्थिति",
+        "es": "DNS y estado",
+        "pt": "DNS e estado",
+        "fr": "DNS et état",
+        "de": "DNS und Status",
+        "ar": "DNS وحالته",
+        "ja": "DNSと状態",
+        "ko": "DNS 및 상태",
+        "zh-Hans": "DNS 与状态"
+      }
+    },
+    {
+      "source": "Each selected package uses its daily foreground duration.",
+      "translations": {
+        "hi": "हर चुने गए पैकेज के लिए रोज़ाना फ़ोरग्राउंड उपयोग की अवधि लागू होती है।",
+        "es": "Cada paquete seleccionado usa su duración diaria en primer plano.",
+        "pt": "Cada pacote selecionado usa sua duração diária em primeiro plano.",
+        "fr": "Chaque paquet sélectionné utilise sa durée quotidienne au premier plan.",
+        "de": "Für jedes ausgewählte Paket gilt seine tägliche Nutzungsdauer im Vordergrund.",
+        "ar": "يستخدم كل حزمة مختارة مدة استخدامها اليومية في الواجهة.",
+        "ja": "選択したパッケージごとに、1日の前面での利用時間を使います。",
+        "ko": "선택한 각 패키지에 하루 동안 화면에 표시된 사용 시간이 적용돼요.",
+        "zh-Hans": "每个选定的软件包分别使用其每日前台使用时长。"
+      }
+    },
+    {
+      "source": "Edit selected applications and guard mode",
+      "translations": {
+        "hi": "चुने गए ऐप और सुरक्षा मोड बदलें",
+        "es": "Editar aplicaciones seleccionadas y modo de protección",
+        "pt": "Editar aplicativos selecionados e modo de proteção",
+        "fr": "Modifier les applications choisies et le mode de protection",
+        "de": "Ausgewählte Apps und Schutzmodus bearbeiten",
+        "ar": "تعديل التطبيقات المختارة ووضع الحماية",
+        "ja": "選択したアプリと保護モードを編集",
+        "ko": "선택한 앱과 보호 모드 수정",
+        "zh-Hans": "编辑所选应用和保护模式"
+      }
+    },
+    {
+      "source": "Editing {{date}}",
+      "translations": {
+        "hi": "{{date}} की प्रविष्टि बदल रहे हैं",
+        "es": "Editando {{date}}",
+        "pt": "Editando {{date}}",
+        "fr": "Modification du {{date}}",
+        "de": "Eintrag vom {{date}} bearbeiten",
+        "ar": "تعديل إدخال {{date}}",
+        "ja": "{{date}}の記録を編集中",
+        "ko": "{{date}} 기록 수정 중",
+        "zh-Hans": "正在编辑 {{date}} 的记录"
+      }
+    },
+    {
+      "source": "Exercise could not be saved. Your choice is still here. Try again.",
+      "translations": {
+        "hi": "व्यायाम सहेजा नहीं जा सका। आपका चयन यहाँ है। फिर कोशिश करें।",
+        "es": "No se pudo guardar el ejercicio. Tu elección sigue aquí. Inténtalo de nuevo.",
+        "pt": "Não foi possível salvar o exercício. Sua escolha continua aqui. Tente novamente.",
+        "fr": "L’exercice n’a pas pu être enregistré. Votre choix est conservé. Réessayez.",
+        "de": "Die Bewegung konnte nicht gespeichert werden. Deine Auswahl ist noch da. Versuche es erneut.",
+        "ar": "تعذّر حفظ التمرين. ما زال اختيارك محفوظًا هنا. حاول مجددًا.",
+        "ja": "運動を保存できませんでした。選択内容は残っています。もう一度お試しください。",
+        "ko": "운동을 저장하지 못했어요. 선택 내용은 남아 있어요. 다시 시도하세요.",
+        "zh-Hans": "无法保存运动记录。您的选择仍保留在此处，请重试。"
+      }
+    },
+    {
+      "source": "Exercise recorded for today.",
+      "translations": {
+        "hi": "आज का व्यायाम दर्ज हुआ।",
+        "es": "Ejercicio registrado para hoy.",
+        "pt": "Exercício registrado para hoje.",
+        "fr": "Exercice enregistré pour aujourd’hui.",
+        "de": "Bewegung für heute erfasst.",
+        "ar": "تم تسجيل تمرين اليوم.",
+        "ja": "今日の運動を記録しました。",
+        "ko": "오늘의 운동이 기록되었어요.",
+        "zh-Hans": "已记录今天的运动。"
+      }
+    },
+    {
+      "source": "export",
+      "translations": {
+        "hi": "निर्यात",
+        "es": "exportar",
+        "pt": "exportar",
+        "fr": "exporter",
+        "de": "exportieren",
+        "ar": "تصدير",
+        "ja": "書き出し",
+        "ko": "내보내기",
+        "zh-Hans": "导出"
+      }
+    },
+    {
+      "source": "Export, restore and configure optional encrypted sync.",
+      "translations": {
+        "hi": "निर्यात, पुनर्स्थापना और वैकल्पिक एन्क्रिप्टेड सिंक सेट करें।",
+        "es": "Exporta, restaura y configura la sincronización cifrada opcional.",
+        "pt": "Exporte, restaure e configure a sincronização criptografada opcional.",
+        "fr": "Exportez, restaurez et configurez la synchronisation chiffrée facultative.",
+        "de": "Exportiere, stelle Daten wieder her und richte die optionale verschlüsselte Synchronisierung ein.",
+        "ar": "صدّر البيانات واستعدها واضبط المزامنة المشفّرة الاختيارية.",
+        "ja": "書き出し、復元、任意の暗号化同期を設定します。",
+        "ko": "내보내기, 복원, 선택적 암호화 동기화를 설정하세요.",
+        "zh-Hans": "导出、恢复并配置可选的加密同步。"
+      }
+    },
+    {
+      "source": "family",
+      "translations": {
+        "hi": "परिवार",
+        "es": "familia",
+        "pt": "família",
+        "fr": "famille",
+        "de": "Familie",
+        "ar": "العائلة",
+        "ja": "家族",
+        "ko": "가족",
+        "zh-Hans": "家庭"
+      }
+    },
+    {
+      "source": "Find a {{targetId}}",
+      "translations": {
+        "hi": "ढूँढें: {{targetId}}",
+        "es": "Busca: {{targetId}}",
+        "pt": "Encontre: {{targetId}}",
+        "fr": "Trouvez : {{targetId}}",
+        "de": "Finde: {{targetId}}",
+        "ar": "ابحث عن: {{targetId}}",
+        "ja": "見つけましょう：{{targetId}}",
+        "ko": "찾아보세요: {{targetId}}",
+        "zh-Hans": "寻找：{{targetId}}"
+      }
+    },
+    {
+      "source": "Find a {{targetId}} nearby.",
+      "translations": {
+        "hi": "आसपास ढूँढें: {{targetId}}।",
+        "es": "Busca cerca: {{targetId}}.",
+        "pt": "Encontre por perto: {{targetId}}.",
+        "fr": "Trouvez à proximité : {{targetId}}.",
+        "de": "Finde in deiner Nähe: {{targetId}}.",
+        "ar": "ابحث بالقرب منك عن: {{targetId}}.",
+        "ja": "近くで見つけましょう：{{targetId}}。",
+        "ko": "주변에서 찾아보세요: {{targetId}}.",
+        "zh-Hans": "在附近寻找：{{targetId}}。"
+      }
+    },
+    {
+      "source": "Find a familiar shape",
+      "translations": {
+        "hi": "जानी-पहचानी आकृति ढूँढें",
+        "es": "Encuentra una forma familiar",
+        "pt": "Encontre uma forma familiar",
+        "fr": "Trouver une forme familière",
+        "de": "Eine vertraute Form finden",
+        "ar": "ابحث عن شكل مألوف",
+        "ja": "身近な形を見つける",
+        "ko": "익숙한 모양 찾기",
+        "zh-Hans": "寻找熟悉的形状"
+      }
+    },
+    {
+      "source": "Find a quiet minute",
+      "translations": {
+        "hi": "एक शांत मिनट निकालें",
+        "es": "Busca un minuto de calma",
+        "pt": "Encontre um minuto de calma",
+        "fr": "Trouver une minute de calme",
+        "de": "Eine ruhige Minute finden",
+        "ar": "خذ دقيقة هادئة",
+        "ja": "静かな1分をつくる",
+        "ko": "차분한 1분 갖기",
+        "zh-Hans": "留出安静的一分钟"
+      }
+    },
+    {
+      "source": "Find a quiet moment and open your private Journal.",
+      "translations": {
+        "hi": "एक शांत पल निकालें और अपनी निजी डायरी खोलें।",
+        "es": "Busca un momento tranquilo y abre tu diario privado.",
+        "pt": "Encontre um momento tranquilo e abra seu diário privado.",
+        "fr": "Prenez un moment calme et ouvrez votre journal privé.",
+        "de": "Nimm dir einen ruhigen Moment und öffne dein privates Tagebuch.",
+        "ar": "اختر لحظة هادئة وافتح يومياتك الخاصة.",
+        "ja": "静かな時間をつくり、非公開の日記を開きましょう。",
+        "ko": "조용한 시간을 내어 개인 일기를 여세요.",
+        "zh-Hans": "找一个安静的时刻，打开您的私人日记。"
+      }
+    },
+    {
+      "source": "Find something",
+      "translations": {
+        "hi": "कुछ ढूँढें",
+        "es": "Encuentra algo",
+        "pt": "Encontre algo",
+        "fr": "Trouver un objet",
+        "de": "Etwas finden",
+        "ar": "ابحث عن شيء",
+        "ja": "何かを見つける",
+        "ko": "무언가 찾기",
+        "zh-Hans": "寻找物品"
+      }
+    },
+    {
+      "source": "Finish your chosen protection",
+      "translations": {
+        "hi": "चुनी गई सुरक्षा पूरी करें",
+        "es": "Completa la protección elegida",
+        "pt": "Conclua a proteção escolhida",
+        "fr": "Terminer la protection choisie",
+        "de": "Gewählten Schutz fertig einrichten",
+        "ar": "أكمل الحماية التي اخترتها",
+        "ja": "選んだ保護の設定を完了する",
+        "ko": "선택한 보호 설정 완료",
+        "zh-Hans": "完成所选保护设置"
+      }
+    },
+    {
+      "source": "Firebase account service is not configured.",
+      "translations": {
+        "hi": "Firebase खाता सेवा सेट नहीं है।",
+        "es": "El servicio de cuentas de Firebase no está configurado.",
+        "pt": "O serviço de contas do Firebase não está configurado.",
+        "fr": "Le service de compte Firebase n’est pas configuré.",
+        "de": "Der Firebase-Kontodienst ist nicht eingerichtet.",
+        "ar": "خدمة حساب Firebase غير مهيّأة.",
+        "ja": "Firebaseのアカウントサービスが設定されていません。",
+        "ko": "Firebase 계정 서비스가 설정되지 않았어요.",
+        "zh-Hans": "Firebase 账户服务尚未配置。"
+      }
+    },
+    {
+      "source": "Fix app protection",
+      "translations": {
+        "hi": "ऐप सुरक्षा ठीक करें",
+        "es": "Reparar protección de aplicaciones",
+        "pt": "Corrigir proteção de aplicativos",
+        "fr": "Réparer la protection des applications",
+        "de": "App-Schutz reparieren",
+        "ar": "إصلاح حماية التطبيقات",
+        "ja": "アプリ保護を修復",
+        "ko": "앱 보호 복구",
+        "zh-Hans": "修复应用保护"
+      }
+    },
+    {
+      "source": "Focus Shield matched a configured surface rule.",
+      "translations": {
+        "hi": "Focus Shield ने सेट किया हुआ सतह नियम पहचाना।",
+        "es": "Focus Shield coincidió con una regla de superficie configurada.",
+        "pt": "O Focus Shield encontrou uma regra de superfície configurada.",
+        "fr": "Focus Shield a détecté une règle de surface configurée.",
+        "de": "Focus Shield hat eine konfigurierte Oberflächenregel erkannt.",
+        "ar": "طابق Focus Shield قاعدة واجهة مضبوطة.",
+        "ja": "Focus Shieldが設定済みの画面ルールに一致しました。",
+        "ko": "Focus Shield가 설정된 화면 규칙과 일치했어요.",
+        "zh-Hans": "Focus Shield 匹配了已配置的界面规则。"
+      }
+    }
+  ]
+}

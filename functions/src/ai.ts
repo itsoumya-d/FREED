@@ -9,7 +9,7 @@ export const CRISIS_REPLY =
 
 export type AiRoute = "clara" | "challenges" | "retention";
 export type AiFeatureGate = "enabled" | "disabled" | "unavailable";
-export type AiAuthorization = "allowed" | "duplicate" | "rate-limited" | "account-deleting";
+export type AiAuthorization = "allowed" | "duplicate" | "rate-limited" | "account-deleting" | "daily-quota-exhausted";
 export type AiFallbackReason =
   | "provider-disabled"
   | "configuration-unavailable"
@@ -46,6 +46,7 @@ export type RecoveryRiskDriverSignal =
   | "no-elevated-risk";
 
 export type ClaraInput = {
+  locale?: 'en' | 'hi' | 'ko' | 'es' | 'pt' | 'fr' | 'de' | 'ar' | 'ja' | 'zh-Hans';
   clientEventId: string;
   input: string;
   context: {
@@ -210,7 +211,7 @@ export type AiServiceDependencies = {
   now: () => number;
   getFeatureGate: (route: AiRoute) => Promise<AiFeatureGate>;
   getApiKey: () => string;
-  authorize: (input: { uid: string; route: AiRoute; clientEventId: string; perMinute: number }) => Promise<AiAuthorization>;
+  authorize: (input: { uid: string; route: AiRoute; clientEventId: string; perMinute: number; consumeDailyQuota?: boolean }) => Promise<AiAuthorization>;
   persistEvent: (event: AiAuditEvent) => Promise<void>;
   /** Test-only dependency override; production always uses the 11-second bound. */
   timeoutMs?: number;
@@ -223,7 +224,7 @@ export class AiAccessError extends Error {
   }
 }
 
-const CLARA_KEYS = ["clientEventId", "input", "context"] as const;
+const CLARA_KEYS = ["clientEventId", "input", "context", "locale"] as const;
 const CLARA_CONTEXT_KEYS = ["streakDays", "attemptsToday", "premium", "slipsThisWeek", "slipWindow", "slipTrigger"] as const;
 const CHALLENGE_KEYS = ["clientEventId", "profile", "recentChallengeHistory"] as const;
 const CHALLENGE_PROFILE_KEYS = [
@@ -343,9 +344,10 @@ const RAW_LINK = /https?:\/\/|\b(?:[a-z0-9-]+\.)+[a-z]{2,63}(?:\/\S*)?/i;
 const CRISIS_PATTERN = /\b(?:kill myself|end my life|ending it all|suicide|suicidal|hurt myself|harm myself|self[- ]harm|going to die|want to die|immediate danger|(?:do not|don't) want to live|no reason to live|(?:cannot|can't) stay safe)\b/i;
 
 export function parseClaraRequest(value: unknown): ClaraInput {
-  const input = exactRecord(value, CLARA_KEYS);
+  const input = exactRecord(value, value && typeof value === 'object' && 'locale' in value ? CLARA_KEYS : ['clientEventId', 'input', 'context'] as const);
   const context = exactRecord(input.context, CLARA_CONTEXT_KEYS);
   const parsed: ClaraInput = {
+    ...(input.locale === undefined ? {} : { locale: enumValue(input.locale, ['en','hi','es','pt','fr','de','ar','ja','ko','zh-Hans'] as const) }),
     clientEventId: eventId(input.clientEventId),
     input: userText(input.input, 1_200),
     context: {
@@ -450,10 +452,11 @@ export function createAiService(dependencies: AiServiceDependencies) {
       if (CRISIS_PATTERN.test(input.input)) {
         return claraFallback(dependencies, uid, input, "crisis-support", true);
       }
-      const authorization = await authorize(dependencies, uid, "clara", input.clientEventId, 30);
-      if (authorization === "duplicate") return claraFallback(dependencies, uid, input, "duplicate-request");
       const gateReason = await featureGateReason(dependencies, "clara");
+      const authorization = await authorize(dependencies, uid, "clara", input.clientEventId, 30, gateReason === null);
+      if (authorization === "duplicate") return claraFallback(dependencies, uid, input, "duplicate-request");
       if (gateReason) return claraFallback(dependencies, uid, input, gateReason);
+      if (authorization === "daily-quota-exhausted") return claraFallback(dependencies, uid, input, "provider-unavailable");
       try {
         const remote = await callOpenAi(dependencies, "clara", claraProviderInput(input), CLARA_SCHEMA, "freed_clara");
         const output = parseClaraOutput(remote);
@@ -499,8 +502,11 @@ export function createAiService(dependencies: AiServiceDependencies) {
   };
 }
 
-async function authorize(deps: AiServiceDependencies, uid: string, route: AiRoute, clientEventId: string, perMinute: number) {
-  const result = await deps.authorize({ uid, route, clientEventId, perMinute });
+async function authorize(
+  deps: AiServiceDependencies, uid: string, route: AiRoute, clientEventId: string, perMinute: number,
+  consumeDailyQuota?: boolean
+) {
+  const result = await deps.authorize({ uid, route, clientEventId, perMinute, ...(consumeDailyQuota === undefined ? {} : { consumeDailyQuota }) });
   if (result === "rate-limited" || result === "account-deleting") throw new AiAccessError(result);
   return result;
 }
@@ -516,7 +522,7 @@ async function featureGateReason(deps: AiServiceDependencies, route: AiRoute): P
 }
 
 function claraProviderInput(input: ClaraInput) {
-  return { input: redactText(input.input, 1_200), context: input.context };
+  return { input: redactText(input.input, 1_200), context: input.context, locale: input.locale ?? 'en' };
 }
 
 function challengeProviderInput(input: ChallengeInput) {

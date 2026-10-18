@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "freed-apple-family-controls-submission-v1",
+  "capturedAt": "2026-10-04T03:38:29.683113+00:00",
+  "sanitized": true,
+  "url": "https://developer.apple.com/contact/request/family-controls-distribution",
+  "teamId": "R5RX8WP8ZC",
+  "teamName": "OTAI TECHNOLOGIES",
+  "formScope": "developer-team entitlement request",
+  "ownerAuthorization": "Explicit user reply: Approve Apple terms and submit.",
+  "action": "Get Entitlement",
+  "submitted": true,
+  "status": "submitted-awaiting-apple-review",
+  "observedConfirmation": "Thank you for your submission.",
+  "reviewPending": true,
+  "entitlementGranted": false,
+  "intendedBundleIds": [
+    "app.freed.recovery",
+    "app.freed.recovery.shield-action",
+    "app.freed.recovery.shield-configuration",
+    "app.freed.recovery.device-activity-monitor"
+  ],
+  "meaning": "Apple accepted the request for review. This confirmation does not establish distribution profile availability or a granted entitlement."
+}

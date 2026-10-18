@@ -1,0 +1,33 @@
+appId: app.freed.recovery
+name: backup-hosted
+tags:
+  - smoke
+  - read-only
+  - external-service
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///profile"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-profile"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Encrypted Backup"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Encrypted Backup"
+- scrollUntilVisible:
+    element:
+      text: "Encrypted Backup"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Encrypted Backup"
+- assertVisible:
+    id: "screen-main-profile"
+- takeScreenshot: "backup-hosted"

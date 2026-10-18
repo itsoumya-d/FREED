@@ -1,0 +1,2104 @@
+{
+  "entries": [
+    {
+      "source": "Opening Safari settings. Turn on FREED Safari Blocker, then return here.",
+      "translations": {
+        "hi": "Safari सेटिंग्स खोल रहे हैं। FREED Safari Blocker चालू करके यहाँ लौटें।",
+        "es": "Abriendo ajustes de Safari. Activa FREED Safari Blocker y vuelve aquí.",
+        "pt": "Abrindo configurações do Safari. Ative FREED Safari Blocker e volte aqui.",
+        "fr": "Ouverture des réglages Safari. Activez FREED Safari Blocker, puis revenez ici.",
+        "de": "Safari-Einstellungen werden geöffnet. Aktiviere FREED Safari Blocker und kehre zurück.",
+        "ar": "يجري فتح إعدادات Safari. فعّل FREED Safari Blocker ثم عُد هنا.",
+        "ja": "Safariの設定を開きます。FREED Safari Blockerを有効にして、ここに戻ってください。",
+        "zh-Hans": "正在打开 Safari 设置。启用 FREED Safari Blocker 后返回此处。",
+        "ko": "Safari 설정을 여는 중입니다. FREED Safari 차단기를 켠 다음 여기로 돌아오세요."
+      }
+    },
+    {
+      "source": "Opens the full-screen native protection setup route.",
+      "translations": {
+        "hi": "पूर्ण स्क्रीन का नेटिव सुरक्षा सेटअप खोलता है।",
+        "es": "Abre la configuración nativa de protección a pantalla completa.",
+        "pt": "Abre a configuração nativa de proteção em tela cheia.",
+        "fr": "Ouvre la configuration native de protection en plein écran.",
+        "de": "Öffnet die native Schutzeinrichtung im Vollbild.",
+        "ar": "يفتح إعداد الحماية الأصلي بملء الشاشة.",
+        "ja": "全画面のネイティブ保護設定を開きます。",
+        "zh-Hans": "打开全屏原生保护设置。",
+        "ko": "전체 화면 기본 보호 설정 경로를 엽니다."
+      }
+    },
+    {
+      "source": "Optional encrypted backup needs a passphrase. Create a backup before uploading or restoring.",
+      "translations": {
+        "hi": "वैकल्पिक एन्क्रिप्टेड बैकअप को पासफ़्रेज़ चाहिए। अपलोड या बहाल करने से पहले बैकअप बनाएँ।",
+        "es": "La copia cifrada opcional necesita una frase de contraseña. Crea una copia antes de subir o restaurar.",
+        "pt": "O backup criptografado opcional precisa de uma frase secreta. Crie um backup antes de enviar ou restaurar.",
+        "fr": "La sauvegarde chiffrée facultative nécessite une phrase secrète. Créez une sauvegarde avant l’envoi ou la restauration.",
+        "de": "Die optionale verschlüsselte Sicherung braucht eine Passphrase. Erstelle vor Upload oder Wiederherstellung eine Sicherung.",
+        "ar": "تحتاج النسخة المشفّرة الاختيارية عبارة مرور. أنشئ نسخة قبل الرفع أو الاستعادة.",
+        "ja": "任意の暗号化バックアップにはパスフレーズが必要です。アップロードや復元の前にバックアップを作成してください。",
+        "zh-Hans": "可选加密备份需要口令。上传或恢复前，请先创建备份。",
+        "ko": "선택적 암호화 백업에는 암호가 필요합니다. 업로드하거나 복원하기 전에 백업을 만드세요."
+      }
+    },
+    {
+      "source": "Outdoor",
+      "translations": {
+        "hi": "बाहर",
+        "es": "Al aire libre",
+        "pt": "Ao ar livre",
+        "fr": "En extérieur",
+        "de": "Draußen",
+        "ar": "في الخارج",
+        "ja": "屋外",
+        "zh-Hans": "户外",
+        "ko": "야외"
+      }
+    },
+    {
+      "source": "Parasympathetic breathing",
+      "translations": {
+        "hi": "पैरासिम्पेथेटिक श्वास",
+        "es": "Respiración parasimpática",
+        "pt": "Respiração parassimpática",
+        "fr": "Respiration parasympathique",
+        "de": "Parasympathische Atmung",
+        "ar": "تنفس نظير الودي",
+        "ja": "副交感神経の呼吸",
+        "zh-Hans": "副交感神经呼吸",
+        "ko": "부교감 호흡"
+      }
+    },
+    {
+      "source": "Partner name",
+      "translations": {
+        "hi": "साथी का नाम",
+        "es": "Nombre del compañero",
+        "pt": "Nome do parceiro",
+        "fr": "Nom du partenaire",
+        "de": "Name des Partners",
+        "ar": "اسم الشريك",
+        "ja": "パートナーの名前",
+        "zh-Hans": "伙伴姓名",
+        "ko": "파트너 이름"
+      }
+    },
+    {
+      "source": "Passphrase",
+      "translations": {
+        "hi": "पासफ़्रेज़",
+        "es": "Frase de contraseña",
+        "pt": "Frase secreta",
+        "fr": "Phrase secrète",
+        "de": "Sicherungs-Passphrase",
+        "ar": "عبارة المرور",
+        "ja": "パスフレーズ",
+        "zh-Hans": "口令",
+        "ko": "암호"
+      }
+    },
+    {
+      "source": "Pause complete",
+      "translations": {
+        "hi": "विराम पूरा",
+        "es": "Pausa completada",
+        "pt": "Pausa concluída",
+        "fr": "Pause terminée",
+        "de": "Pause abgeschlossen",
+        "ar": "اكتملت الوقفة",
+        "ja": "休憩完了",
+        "zh-Hans": "暂停完成",
+        "ko": "일시중지 완료"
+      }
+    },
+    {
+      "source": "Pause Exercise",
+      "translations": {
+        "hi": "अभ्यास को विराम दें",
+        "es": "Pausar ejercicio",
+        "pt": "Pausar exercício",
+        "fr": "Mettre l’exercice en pause",
+        "de": "Übung pausieren",
+        "ar": "إيقاف التمرين مؤقتًا",
+        "ja": "練習を一時停止",
+        "zh-Hans": "暂停练习",
+        "ko": "운동 일시 정지"
+      }
+    },
+    {
+      "source": "Pause. Breathe.",
+      "translations": {
+        "hi": "रुकें। साँस लें।",
+        "es": "Pausa. Respira.",
+        "pt": "Pare. Respire.",
+        "fr": "Pause. Respirez.",
+        "de": "Pause. Atme.",
+        "ar": "توقف. تنفّس.",
+        "ja": "立ち止まって、呼吸しよう。",
+        "zh-Hans": "停一下，呼吸。",
+        "ko": "일시 중지합니다. 숨 쉬다."
+      }
+    },
+    {
+      "source": "Peak risk",
+      "translations": {
+        "hi": "सर्वाधिक जोखिम",
+        "es": "Riesgo máximo",
+        "pt": "Risco máximo",
+        "fr": "Risque maximal",
+        "de": "Höchstes Risiko",
+        "ar": "ذروة الخطر",
+        "ja": "リスクのピーク",
+        "zh-Hans": "风险高峰",
+        "ko": "최고 위험"
+      }
+    },
+    {
+      "source": "permission is denied",
+      "translations": {
+        "hi": "अनुमति अस्वीकार है",
+        "es": "permiso denegado",
+        "pt": "permissão negada",
+        "fr": "autorisation refusée",
+        "de": "Berechtigung verweigert",
+        "ar": "الإذن مرفوض",
+        "ja": "権限が拒否されています",
+        "zh-Hans": "权限被拒绝",
+        "ko": "허가가 거부되었습니다"
+      }
+    },
+    {
+      "source": "permission is unavailable",
+      "translations": {
+        "hi": "अनुमति उपलब्ध नहीं है",
+        "es": "permiso no disponible",
+        "pt": "permissão indisponível",
+        "fr": "autorisation indisponible",
+        "de": "Berechtigung nicht verfügbar",
+        "ar": "الإذن غير متاح",
+        "ja": "権限を利用できません",
+        "zh-Hans": "权限不可用",
+        "ko": "권한을 사용할 수 없습니다"
+      }
+    },
+    {
+      "source": "PERSONAL INSIGHT",
+      "translations": {
+        "hi": "व्यक्तिगत अंतर्दृष्टि",
+        "es": "PERCEPCIÓN PERSONAL",
+        "pt": "PERCEPÇÃO PESSOAL",
+        "fr": "APERÇU PERSONNEL",
+        "de": "PERSÖNLICHE EINSICHT",
+        "ar": "رؤية شخصية",
+        "ja": "自分への気づき",
+        "zh-Hans": "个人洞察",
+        "ko": "개인적인 통찰력"
+      }
+    },
+    {
+      "source": "Phone number",
+      "translations": {
+        "hi": "फ़ोन नंबर",
+        "es": "Número de teléfono",
+        "pt": "Número de telefone",
+        "fr": "Numéro de téléphone",
+        "de": "Telefonnummer",
+        "ar": "رقم الهاتف",
+        "ja": "電話番号",
+        "zh-Hans": "电话号码",
+        "ko": "전화번호"
+      }
+    },
+    {
+      "source": "Photo Verified",
+      "translations": {
+        "hi": "फ़ोटो सत्यापित",
+        "es": "Foto verificada",
+        "pt": "Foto verificada",
+        "fr": "Photo vérifiée",
+        "de": "Foto geprüft",
+        "ar": "تم التحقق من الصورة",
+        "ja": "写真確認済み",
+        "zh-Hans": "照片已验证",
+        "ko": "사진 인증됨"
+      }
+    },
+    {
+      "source": "Physical effort quickly changes state and burns off restless energy.",
+      "translations": {
+        "hi": "शारीरिक मेहनत स्थिति जल्दी बदलती है और बेचैन ऊर्जा निकालती है।",
+        "es": "El esfuerzo físico cambia rápido el estado y quema energía inquieta.",
+        "pt": "O esforço físico muda o estado rapidamente e libera energia inquieta.",
+        "fr": "L’effort physique change vite l’état et dissipe l’énergie agitée.",
+        "de": "Körperliche Anstrengung verändert schnell deinen Zustand und baut unruhige Energie ab.",
+        "ar": "الجهد البدني يغيّر الحالة سريعًا ويستهلك الطاقة المضطربة.",
+        "ja": "体を動かすと状態がすぐ変わり、落ち着かないエネルギーを発散できます。",
+        "zh-Hans": "身体运动能快速改变状态，释放躁动能量。",
+        "ko": "육체적 노력은 상태를 빠르게 변화시키고 불안한 에너지를 태워버립니다."
+      }
+    },
+    {
+      "source": "Physical reset",
+      "translations": {
+        "hi": "शारीरिक रीसेट",
+        "es": "Reinicio físico",
+        "pt": "Recomeço físico",
+        "fr": "Pause physique",
+        "de": "Körperlicher Neustart",
+        "ar": "إعادة ضبط بدنية",
+        "ja": "体のリセット",
+        "zh-Hans": "身体重置",
+        "ko": "물리적 재설정"
+      }
+    },
+    {
+      "source": "Physio Sigh",
+      "translations": {
+        "hi": "शारीरिक गहरी साँस",
+        "es": "Suspiro fisiológico",
+        "pt": "Suspiro fisiológico",
+        "fr": "Soupir physio",
+        "de": "Physio-Seufzer",
+        "ar": "تنهيدة فسيولوجية",
+        "ja": "生理的ため息",
+        "zh-Hans": "生理叹息",
+        "ko": "물리치료사 한숨"
+      }
+    },
+    {
+      "source": "Physiological pause",
+      "translations": {
+        "hi": "शारीरिक विराम",
+        "es": "Pausa fisiológica",
+        "pt": "Pausa fisiológica",
+        "fr": "Pause physiologique",
+        "de": "Physiologische Pause",
+        "ar": "وقفة فسيولوجية",
+        "ja": "生理的な休憩",
+        "zh-Hans": "生理暂停",
+        "ko": "생리적 일시 정지"
+      }
+    },
+    {
+      "source": "Physiological Sigh",
+      "translations": {
+        "hi": "शारीरिक लंबी साँस",
+        "es": "Suspiro fisiológico guiado",
+        "pt": "Suspiro fisiológico guiado",
+        "fr": "Soupir physiologique",
+        "de": "Physiologischer Seufzer",
+        "ar": "التنهيدة الفسيولوجية",
+        "ja": "生理的なため息",
+        "zh-Hans": "生理性叹息",
+        "ko": "생리적 한숨"
+      }
+    },
+    {
+      "source": "Pick one reset.",
+      "translations": {
+        "hi": "एक रीसेट चुनें।",
+        "es": "Elige un reinicio.",
+        "pt": "Escolha um recomeço.",
+        "fr": "Choisissez une pause.",
+        "de": "Wähle einen Neustart.",
+        "ar": "اختر إعادة ضبط واحدة.",
+        "ja": "リセットを一つ選びましょう。",
+        "zh-Hans": "选择一个重置。",
+        "ko": "재설정을 하나 선택하세요."
+      }
+    },
+    {
+      "source": "Pick your trusted person.",
+      "translations": {
+        "hi": "अपना भरोसेमंद व्यक्ति चुनें।",
+        "es": "Elige a tu persona de confianza.",
+        "pt": "Escolha sua pessoa de confiança.",
+        "fr": "Choisissez votre personne de confiance.",
+        "de": "Wähle deine Vertrauensperson.",
+        "ar": "اختر الشخص الذي تثق به.",
+        "ja": "信頼できる人を選びましょう。",
+        "zh-Hans": "选择值得信任的人。",
+        "ko": "믿을 수 있는 사람을 선택하세요."
+      }
+    },
+    {
+      "source": "Plan",
+      "translations": {
+        "hi": "योजना",
+        "es": "Plan personal",
+        "pt": "Plano",
+        "fr": "Programme",
+        "de": "Planung",
+        "ar": "الخطة",
+        "ja": "プラン",
+        "zh-Hans": "计划",
+        "ko": "계획"
+      }
+    },
+    {
+      "source": "Plan progress {{value1}} percent.",
+      "translations": {
+        "hi": "योजना की प्रगति {{value1}} प्रतिशत।",
+        "es": "Progreso del plan: {{value1}} por ciento.",
+        "pt": "Progresso do plano: {{value1}} por cento.",
+        "fr": "Progression du programme : {{value1}} pour cent.",
+        "de": "Planfortschritt: {{value1}} Prozent.",
+        "ar": "تقدم الخطة {{value1}} بالمئة.",
+        "ja": "プランの進捗{{value1}}パーセント。",
+        "zh-Hans": "计划进度 {{value1}}%。",
+        "ko": "계획 진행률 {{value1}}퍼센트."
+      }
+    },
+    {
+      "source": "Plant your hands.",
+      "translations": {
+        "hi": "हाथ टिकाएँ।",
+        "es": "Apoya las manos.",
+        "pt": "Apoie as mãos.",
+        "fr": "Posez les mains.",
+        "de": "Hände fest aufsetzen.",
+        "ar": "ثبّت يديك.",
+        "ja": "手をしっかり置きます。",
+        "zh-Hans": "双手撑稳。",
+        "ko": "손을 심으세요."
+      }
+    },
+    {
+      "source": "Preferred reset",
+      "translations": {
+        "hi": "पसंदीदा रीसेट",
+        "es": "Reinicio preferido",
+        "pt": "Recomeço preferido",
+        "fr": "Pause préférée",
+        "de": "Bevorzugter Neustart",
+        "ar": "إعادة الضبط المفضلة",
+        "ja": "好みのリセット",
+        "zh-Hans": "偏好重置",
+        "ko": "기본 재설정"
+      }
+    },
+    {
+      "source": "Premium builder",
+      "translations": {
+        "hi": "Premium निर्माता",
+        "es": "Creador Premium",
+        "pt": "Criador Premium",
+        "fr": "Créateur Premium",
+        "de": "Premium-Ersteller",
+        "ar": "منشئ Premium",
+        "ja": "Premium作成ツール",
+        "zh-Hans": "Premium 创建器",
+        "ko": "프리미엄 빌더"
+      }
+    },
+    {
+      "source": "Preparing the sponsored reset. Your reward unlocks the recovery challenge.",
+      "translations": {
+        "hi": "प्रायोजित रीसेट तैयार हो रहा है। आपका पुरस्कार रिकवरी चुनौती अनलॉक करता है।",
+        "es": "Preparando el reinicio patrocinado. Tu recompensa desbloquea el reto de recuperación.",
+        "pt": "Preparando o recomeço patrocinado. Sua recompensa libera o desafio de recuperação.",
+        "fr": "Préparation de la pause sponsorisée. Votre récompense déverrouille le défi de rétablissement.",
+        "de": "Gesponserter Neustart wird vorbereitet. Deine Belohnung schaltet die Erholungsaufgabe frei.",
+        "ar": "يجري تجهيز إعادة الضبط المموّلة. مكافأتك تفتح تحدي التعافي.",
+        "ja": "スポンサー付きリセットを準備しています。報酬で回復チャレンジが解除されます。",
+        "zh-Hans": "正在准备赞助重置。奖励将解锁恢复挑战。",
+        "ko": "후원 재설정을 준비 중입니다. 보상으로 회복 챌린지를 잠금 해제할 수 있습니다."
+      }
+    },
+    {
+      "source": "Preset On",
+      "translations": {
+        "hi": "प्रीसेट चालू",
+        "es": "Preajuste activado",
+        "pt": "Predefinição ativa",
+        "fr": "Préréglage activé",
+        "de": "Vorlage aktiv",
+        "ar": "الإعداد المسبق مفعّل",
+        "ja": "プリセットはオン",
+        "zh-Hans": "预设已开启",
+        "ko": "프리셋 켜짐"
+      }
+    },
+    {
+      "source": "Press & hold while you pause and breathe",
+      "translations": {
+        "hi": "रुककर साँस लेते समय दबाकर रखें",
+        "es": "Mantén pulsado mientras pausas y respiras",
+        "pt": "Pressione e segure enquanto para e respira",
+        "fr": "Maintenez appuyé pendant la pause et la respiration",
+        "de": "Gedrückt halten, während du pausierst und atmest",
+        "ar": "اضغط مطولًا وأنت تتوقف وتتنفس",
+        "ja": "立ち止まり呼吸する間、長押し",
+        "zh-Hans": "暂停呼吸时按住",
+        "ko": "잠시 멈추고 숨을 쉬는 동안 길게 누르세요."
+      }
+    },
+    {
+      "source": "Privacy & support",
+      "translations": {
+        "hi": "गोपनीयता और सहायता",
+        "es": "Privacidad y ayuda",
+        "pt": "Privacidade e suporte",
+        "fr": "Confidentialité et assistance",
+        "de": "Datenschutz und Hilfe",
+        "ar": "الخصوصية والدعم",
+        "ja": "プライバシーとサポート",
+        "zh-Hans": "隐私与支持",
+        "ko": "개인정보 보호 및 지원"
+      }
+    },
+    {
+      "source": "Privacy & Support",
+      "translations": {
+        "hi": "गोपनीयता और सहायता",
+        "es": "Privacidad y asistencia",
+        "pt": "Privacidade e assistência",
+        "fr": "Confidentialité et soutien",
+        "de": "Datenschutz und Unterstützung",
+        "ar": "الخصوصية والمساعدة",
+        "ja": "プライバシーとヘルプ",
+        "zh-Hans": "隐私与帮助",
+        "ko": "개인정보 보호 및 지원"
+      }
+    },
+    {
+      "source": "Privacy controls are ready.",
+      "translations": {
+        "hi": "गोपनीयता नियंत्रण तैयार हैं।",
+        "es": "Los controles de privacidad están listos.",
+        "pt": "Os controles de privacidade estão prontos.",
+        "fr": "Les contrôles de confidentialité sont prêts.",
+        "de": "Datenschutzeinstellungen sind bereit.",
+        "ar": "ضوابط الخصوصية جاهزة.",
+        "ja": "プライバシー設定は準備できています。",
+        "zh-Hans": "隐私控制已就绪。",
+        "ko": "개인정보 보호 설정이 준비되었습니다."
+      }
+    },
+    {
+      "source": "Privacy Policy",
+      "translations": {
+        "hi": "गोपनीयता नीति",
+        "es": "Política de privacidad",
+        "pt": "Política de privacidade",
+        "fr": "Politique de confidentialité",
+        "de": "Datenschutzerklärung",
+        "ar": "سياسة الخصوصية",
+        "ja": "プライバシーポリシー",
+        "zh-Hans": "隐私政策",
+        "ko": "개인 정보 보호 정책"
+      }
+    },
+    {
+      "source": "PRIVACY-SAFE SNAPSHOT",
+      "translations": {
+        "hi": "गोपनीयता सुरक्षित स्नैपशॉट",
+        "es": "INSTANTÁNEA SEGURA PARA LA PRIVACIDAD",
+        "pt": "RESUMO SEGURO PARA A PRIVACIDADE",
+        "fr": "INSTANTANÉ RESPECTUEUX DE LA VIE PRIVÉE",
+        "de": "DATENSCHUTZSICHERE MOMENTAUFNAHME",
+        "ar": "لقطة تحمي الخصوصية",
+        "ja": "プライバシーを守るスナップショット",
+        "zh-Hans": "保护隐私的快照",
+        "ko": "개인정보가 보호되는 스냅샷"
+      }
+    },
+    {
+      "source": "Private note",
+      "translations": {
+        "hi": "निजी नोट",
+        "es": "Nota privada",
+        "pt": "Nota privada",
+        "fr": "Note privée",
+        "de": "Private Notiz",
+        "ar": "ملاحظة خاصة",
+        "ja": "非公開メモ",
+        "zh-Hans": "私密笔记",
+        "ko": "비공개 메모"
+      }
+    },
+    {
+      "source": "Private notes, contacts, and browsing details stay out.",
+      "translations": {
+        "hi": "निजी नोट, संपर्क और ब्राउज़िंग विवरण बाहर रहते हैं।",
+        "es": "Se excluyen notas privadas, contactos y detalles de navegación.",
+        "pt": "Notas privadas, contatos e detalhes de navegação ficam de fora.",
+        "fr": "Les notes privées, contacts et détails de navigation sont exclus.",
+        "de": "Private Notizen, Kontakte und Surfdetails bleiben ausgeschlossen.",
+        "ar": "تُستبعد الملاحظات الخاصة وجهات الاتصال وتفاصيل التصفح.",
+        "ja": "非公開メモ、連絡先、閲覧の詳細は含めません。",
+        "zh-Hans": "不包含私密笔记、联系人和浏览详情。",
+        "ko": "개인 메모, 연락처, 검색 세부정보는 그대로 유지됩니다."
+      }
+    },
+    {
+      "source": "private pattern",
+      "translations": {
+        "hi": "निजी पैटर्न",
+        "es": "patrón privado",
+        "pt": "padrão privado",
+        "fr": "schéma privé",
+        "de": "privates Muster",
+        "ar": "نمط خاص",
+        "ja": "非公開のパターン",
+        "zh-Hans": "私密模式",
+        "ko": "개인 패턴"
+      }
+    },
+    {
+      "source": "Procrastination & fatigue",
+      "translations": {
+        "hi": "टालमटोल और थकान",
+        "es": "Procrastinación y cansancio",
+        "pt": "Procrastinação e fadiga",
+        "fr": "Procrastination et fatigue",
+        "de": "Aufschieben und Müdigkeit",
+        "ar": "التسويف والإرهاق",
+        "ja": "先延ばしと疲れ",
+        "zh-Hans": "拖延与疲劳",
+        "ko": "미루기와 피로"
+      }
+    },
+    {
+      "source": "Product id is not configured for FREED premium.",
+      "translations": {
+        "hi": "FREED Premium के लिए उत्पाद ID सेट नहीं है।",
+        "es": "El ID de producto no está configurado para FREED Premium.",
+        "pt": "O ID do produto não está configurado para FREED Premium.",
+        "fr": "L’identifiant du produit n’est pas configuré pour FREED Premium.",
+        "de": "Die Produkt-ID für FREED Premium ist nicht eingerichtet.",
+        "ar": "معرّف المنتج غير مضبوط لـFREED Premium.",
+        "ja": "FREED Premiumの製品IDが設定されていません。",
+        "zh-Hans": "尚未配置 FREED Premium 产品 ID。",
+        "ko": "FREED 프리미엄에는 제품 ID가 구성되지 않았습니다."
+      }
+    },
+    {
+      "source": "Protect {{label}}",
+      "translations": {
+        "hi": "{{label}} सुरक्षित करें",
+        "es": "Proteger {{label}}",
+        "pt": "Proteger {{label}}",
+        "fr": "Protéger {{label}}",
+        "de": "{{label}} schützen",
+        "ar": "حماية {{label}}",
+        "ja": "{{label}}を保護",
+        "zh-Hans": "保护 {{label}}",
+        "ko": "{{label}} 보호"
+      }
+    },
+    {
+      "source": "Protect My Apps & Proceed",
+      "translations": {
+        "hi": "मेरे ऐप सुरक्षित करें और आगे बढ़ें",
+        "es": "Proteger mis apps y continuar",
+        "pt": "Proteger meus apps e continuar",
+        "fr": "Protéger mes apps et continuer",
+        "de": "Meine Apps schützen und weiter",
+        "ar": "حماية تطبيقاتي والمتابعة",
+        "ja": "アプリを保護して進む",
+        "zh-Hans": "保护我的应用并继续",
+        "ko": "내 앱을 보호하고 계속하세요"
+      }
+    },
+    {
+      "source": "Protected",
+      "translations": {
+        "hi": "सुरक्षित",
+        "es": "Protegido",
+        "pt": "Protegido",
+        "fr": "Protégé",
+        "de": "Geschützt",
+        "ar": "محمي",
+        "ja": "保護済み",
+        "zh-Hans": "已保护",
+        "ko": "보호됨"
+      }
+    },
+    {
+      "source": "PROTECTION ENGAGED",
+      "translations": {
+        "hi": "सुरक्षा लागू",
+        "es": "PROTECCIÓN ACTIVADA",
+        "pt": "PROTEÇÃO ATIVADA",
+        "fr": "PROTECTION ACTIVÉE",
+        "de": "SCHUTZ AKTIV",
+        "ar": "الحماية مفعّلة",
+        "ja": "保護が作動",
+        "zh-Hans": "保护已启用",
+        "ko": "보호 활동 중"
+      }
+    },
+    {
+      "source": "Protection health",
+      "translations": {
+        "hi": "सुरक्षा की स्थिति",
+        "es": "Estado de protección",
+        "pt": "Estado da proteção",
+        "fr": "État de la protection",
+        "de": "Schutzzustand",
+        "ar": "حالة الحماية",
+        "ja": "保護の状態",
+        "zh-Hans": "保护状态",
+        "ko": "보호 상태"
+      }
+    },
+    {
+      "source": "Protection is active",
+      "translations": {
+        "hi": "सुरक्षा सक्रिय है",
+        "es": "La protección está activa",
+        "pt": "A proteção está ativa",
+        "fr": "La protection est active",
+        "de": "Der Schutz ist aktiv",
+        "ar": "الحماية نشطة",
+        "ja": "保護は有効です",
+        "zh-Hans": "保护已生效",
+        "ko": "보호가 활성화되었습니다."
+      }
+    },
+    {
+      "source": "Protection needs attention",
+      "translations": {
+        "hi": "सुरक्षा में ध्यान दें",
+        "es": "La protección requiere atención",
+        "pt": "A proteção precisa de atenção",
+        "fr": "La protection nécessite votre attention",
+        "de": "Schutz braucht Aufmerksamkeit",
+        "ar": "الحماية تحتاج مراجعة",
+        "ja": "保護の確認が必要",
+        "zh-Hans": "保护需要处理",
+        "ko": "보호에는 주의가 필요합니다"
+      }
+    },
+    {
+      "source": "Protection permission action completed.",
+      "translations": {
+        "hi": "सुरक्षा अनुमति की कार्रवाई पूरी हुई।",
+        "es": "Acción de permiso de protección completada.",
+        "pt": "Ação de permissão de proteção concluída.",
+        "fr": "Action d’autorisation de protection terminée.",
+        "de": "Schutzberechtigungsaktion abgeschlossen.",
+        "ar": "اكتمل إجراء إذن الحماية.",
+        "ja": "保護権限の操作が完了しました。",
+        "zh-Hans": "保护权限操作已完成。",
+        "ko": "보호 권한 조치가 완료되었습니다."
+      }
+    },
+    {
+      "source": "Protection permission could not be completed.",
+      "translations": {
+        "hi": "सुरक्षा अनुमति पूरी नहीं हो सकी।",
+        "es": "No se pudo completar el permiso de protección.",
+        "pt": "Não foi possível concluir a permissão de proteção.",
+        "fr": "L’autorisation de protection n’a pas pu aboutir.",
+        "de": "Die Schutzberechtigung konnte nicht abgeschlossen werden.",
+        "ar": "تعذّر إكمال إذن الحماية.",
+        "ja": "保護権限を完了できませんでした。",
+        "zh-Hans": "无法完成保护权限。",
+        "ko": "보호 권한을 완료할 수 없습니다."
+      }
+    },
+    {
+      "source": "Protection status changed since the last activation test. Run Test Protection again before activation can finish.",
+      "translations": {
+        "hi": "पिछले सक्रियण परीक्षण के बाद सुरक्षा स्थिति बदली है। सक्रियण पूरा करने से पहले सुरक्षा परीक्षण फिर चलाएँ।",
+        "es": "La protección cambió desde la última prueba. Ejecuta Probar protección de nuevo antes de completar la activación.",
+        "pt": "O estado da proteção mudou desde o último teste. Execute Testar proteção novamente antes de concluir a ativação.",
+        "fr": "L’état a changé depuis le dernier test. Relancez Tester la protection avant de terminer l’activation.",
+        "de": "Der Schutzstatus hat sich seit dem letzten Test geändert. Starte „Schutz testen“ vor Abschluss der Aktivierung erneut.",
+        "ar": "تغيّرت حالة الحماية منذ آخر اختبار. أعد اختبار الحماية قبل إكمال التفعيل.",
+        "ja": "前回の有効化テスト後に保護状態が変わりました。有効化を完了する前に「保護をテスト」を再実行してください。",
+        "zh-Hans": "上次激活测试后，保护状态已变化。完成激活前，请再次运行保护测试。",
+        "ko": "마지막 활성화 테스트 이후 보호 상태가 변경되었습니다. 활성화가 완료되기 전에 테스트 보호를 다시 실행하세요."
+      }
+    },
+    {
+      "source": "Protection status is unavailable. Refresh setup before relying on it.",
+      "translations": {
+        "hi": "सुरक्षा स्थिति उपलब्ध नहीं है। इस पर निर्भर होने से पहले सेटअप अपडेट करें।",
+        "es": "El estado de protección no está disponible. Actualiza la configuración antes de confiar en ella.",
+        "pt": "O estado da proteção está indisponível. Atualize a configuração antes de depender dela.",
+        "fr": "L’état de protection est indisponible. Actualisez la configuration avant de vous y fier.",
+        "de": "Schutzstatus nicht verfügbar. Aktualisiere die Einrichtung, bevor du dich darauf verlässt.",
+        "ar": "حالة الحماية غير متاحة. حدّث الإعداد قبل الاعتماد عليها.",
+        "ja": "保護状態を利用できません。保護に頼る前に設定を更新してください。",
+        "zh-Hans": "保护状态不可用。依赖保护前，请刷新设置。",
+        "ko": "보호 상태를 사용할 수 없습니다. 의존하기 전에 설정을 새로 고치십시오."
+      }
+    },
+    {
+      "source": "Protection temporarily unlocked",
+      "translations": {
+        "hi": "सुरक्षा अस्थायी रूप से अनलॉक",
+        "es": "Protección desbloqueada temporalmente",
+        "pt": "Proteção liberada temporariamente",
+        "fr": "Protection temporairement déverrouillée",
+        "de": "Schutz vorübergehend freigegeben",
+        "ar": "الحماية مفتوحة مؤقتًا",
+        "ja": "保護を一時解除中",
+        "zh-Hans": "保护已临时解锁",
+        "ko": "보호가 일시적으로 잠금 해제되었습니다."
+      }
+    },
+    {
+      "source": "Protection unsupported here",
+      "translations": {
+        "hi": "यहाँ सुरक्षा समर्थित नहीं",
+        "es": "Protección no compatible aquí",
+        "pt": "Proteção não suportada aqui",
+        "fr": "Protection non prise en charge ici",
+        "de": "Schutz hier nicht unterstützt",
+        "ar": "الحماية غير مدعومة هنا",
+        "ja": "ここでは保護に非対応",
+        "zh-Hans": "此处不支持保护",
+        "ko": "여기서는 보호가 지원되지 않습니다."
+      }
+    },
+    {
+      "source": "Protection was turned off or changed in system settings. Re-run setup to reactivate on this device.",
+      "translations": {
+        "hi": "सिस्टम सेटिंग्स में सुरक्षा बंद या बदली गई। इस डिवाइस पर फिर चालू करने के लिए सेटअप दोहराएँ।",
+        "es": "La protección se desactivó o cambió en los ajustes del sistema. Repite la configuración para reactivarla.",
+        "pt": "A proteção foi desligada ou alterada nas configurações do sistema. Repita a configuração para reativá-la neste dispositivo.",
+        "fr": "La protection a été désactivée ou modifiée dans les réglages système. Relancez la configuration pour la réactiver.",
+        "de": "Der Schutz wurde in den Systemeinstellungen deaktiviert oder geändert. Führe die Einrichtung zur Reaktivierung erneut aus.",
+        "ar": "أُوقفت الحماية أو تغيّرت في إعدادات النظام. أعد الإعداد لتفعيلها على هذا الجهاز.",
+        "ja": "システム設定で保護が無効化または変更されました。この端末で再度有効にするには設定をやり直してください。",
+        "zh-Hans": "系统设置中的保护已关闭或更改。重新设置以在此设备恢复启用。",
+        "ko": "시스템 설정에서 보호 기능이 꺼졌거나 변경되었습니다. 이 장치에서 다시 활성화하려면 설정을 다시 실행하세요."
+      }
+    },
+    {
+      "source": "Purchase verification failed.",
+      "translations": {
+        "hi": "खरीद सत्यापन असफल हुआ।",
+        "es": "Falló la verificación de compra.",
+        "pt": "A verificação de compra falhou.",
+        "fr": "La vérification d’achat a échoué.",
+        "de": "Kaufprüfung fehlgeschlagen.",
+        "ar": "فشل التحقق من الشراء.",
+        "ja": "購入確認に失敗しました。",
+        "zh-Hans": "购买验证失败。",
+        "ko": "구매 확인에 실패했습니다."
+      }
+    },
+    {
+      "source": "Put the phone face-down, take two deep physiological sighs, and walk to a different room.",
+      "translations": {
+        "hi": "फ़ोन उल्टा रखें, दो गहरी शारीरिक साँसें लें और दूसरे कमरे में जाएँ।",
+        "es": "Pon el teléfono boca abajo, haz dos suspiros fisiológicos profundos y cambia de habitación.",
+        "pt": "Coloque o telefone virado para baixo, faça dois suspiros fisiológicos profundos e vá a outro cômodo.",
+        "fr": "Posez le téléphone face contre table, faites deux soupirs physiologiques profonds et changez de pièce.",
+        "de": "Lege das Handy mit dem Display nach unten, mache zwei tiefe physiologische Seufzer und gehe in einen anderen Raum.",
+        "ar": "ضع الهاتف ووجهه لأسفل، وخذ تنهيدتين فسيولوجيتين عميقتين، ثم انتقل لغرفة أخرى.",
+        "ja": "スマートフォンを伏せ、深い生理的ため息を2回行い、別の部屋へ移動しましょう。",
+        "zh-Hans": "把手机屏幕朝下，做两次深深的生理叹息，再走到另一个房间。",
+        "ko": "전화기를 뒤집어 놓고 두 번 깊은 생리학적 한숨을 쉬고 다른 방으로 걸어가십시오."
+      }
+    },
+    {
+      "source": "Reach out another way",
+      "translations": {
+        "hi": "दूसरे तरीके से संपर्क करें",
+        "es": "Contactar de otra forma",
+        "pt": "Entrar em contato de outra forma",
+        "fr": "Prendre contact autrement",
+        "de": "Anders Kontakt aufnehmen",
+        "ar": "تواصل بطريقة أخرى",
+        "ja": "別の方法で連絡する",
+        "zh-Hans": "换种方式联系",
+        "ko": "다른 방법으로 연락하기"
+      }
+    },
+    {
+      "source": "Ready - last sent {{value1}}",
+      "translations": {
+        "hi": "तैयार - आखिरी बार भेजा {{value1}}",
+        "es": "Listo - último envío {{value1}}",
+        "pt": "Pronto - último envio {{value1}}",
+        "fr": "Prêt - dernier envoi {{value1}}",
+        "de": "Bereit - zuletzt gesendet {{value1}}",
+        "ar": "جاهز - آخر إرسال {{value1}}",
+        "ja": "準備完了 - 最終送信{{value1}}",
+        "zh-Hans": "已就绪 - 上次发送 {{value1}}",
+        "ko": "준비됨 - 마지막으로 전송됨 {{value1}}"
+      }
+    },
+    {
+      "source": "Ready to send",
+      "translations": {
+        "hi": "भेजने के लिए तैयार",
+        "es": "Listo para enviar",
+        "pt": "Pronto para enviar",
+        "fr": "Prêt à envoyer",
+        "de": "Sendebereit",
+        "ar": "جاهز للإرسال",
+        "ja": "送信準備完了",
+        "zh-Hans": "可以发送",
+        "ko": "보낼 준비가 되었습니다."
+      }
+    },
+    {
+      "source": "RECLAIM YOUR FOCUS & CLARITY",
+      "translations": {
+        "hi": "अपना ध्यान और स्पष्टता वापस पाएँ",
+        "es": "RECUPERA TU ENFOQUE Y CLARIDAD",
+        "pt": "RECUPERE SEU FOCO E CLAREZA",
+        "fr": "RETROUVEZ CONCENTRATION ET CLARTÉ",
+        "de": "HOL DIR FOKUS UND KLARHEIT ZURÜCK",
+        "ar": "استعد تركيزك وصفاءك",
+        "ja": "集中と明瞭さを取り戻す",
+        "zh-Hans": "重新找回专注与清晰",
+        "ko": "집중력과 명확성을 되찾으세요"
+      }
+    },
+    {
+      "source": "Record check-ins and resets to build your monthly report.",
+      "translations": {
+        "hi": "मासिक रिपोर्ट बनाने के लिए चेक-इन और रीसेट दर्ज करें।",
+        "es": "Registra estados y reinicios para crear tu informe mensual.",
+        "pt": "Registre estados e recomeços para criar seu relatório mensal.",
+        "fr": "Notez vos bilans et pauses pour construire votre rapport mensuel.",
+        "de": "Erfasse Check-ins und Neustarts für deinen Monatsbericht.",
+        "ar": "سجّل الحالة وإعادة الضبط لبناء تقريرك الشهري.",
+        "ja": "月間レポートを作るため、チェックインとリセットを記録しましょう。",
+        "zh-Hans": "记录状态和重置，生成月度报告。",
+        "ko": "체크인 및 재설정을 기록하여 월별 보고서를 작성하세요."
+      }
+    },
+    {
+      "source": "Records your confirmation. FREED cannot confirm message delivery.",
+      "translations": {
+        "hi": "आपकी पुष्टि दर्ज करता है। FREED संदेश पहुँचने की पुष्टि नहीं कर सकता।",
+        "es": "Registra tu confirmación. FREED no puede confirmar la entrega del mensaje.",
+        "pt": "Registra sua confirmação. O FREED não pode confirmar a entrega da mensagem.",
+        "fr": "Enregistre votre confirmation. FREED ne peut pas confirmer la livraison du message.",
+        "de": "Erfasst deine Bestätigung. FREED kann die Nachrichtenzustellung nicht bestätigen.",
+        "ar": "يسجّل تأكيدك. لا يستطيع FREED تأكيد وصول الرسالة.",
+        "ja": "確認内容を記録します。FREEDはメッセージの配信を確認できません。",
+        "zh-Hans": "记录你的确认。FREED 无法确认消息是否送达。",
+        "ko": "확인 내용을 기록합니다. FREED는 메시지 전달을 확인할 수 없습니다."
+      }
+    },
+    {
+      "source": "Recovery backup restored. Membership and device permissions keep their current verified state.",
+      "translations": {
+        "hi": "रिकवरी बैकअप बहाल हुआ। सदस्यता और डिवाइस अनुमतियाँ अपनी वर्तमान सत्यापित स्थिति रखती हैं।",
+        "es": "Copia de recuperación restaurada. La membresía y los permisos conservan su estado verificado actual.",
+        "pt": "Backup de recuperação restaurado. A associação e as permissões mantêm seu estado verificado atual.",
+        "fr": "Sauvegarde de rétablissement restaurée. L’adhésion et les permissions gardent leur état vérifié actuel.",
+        "de": "Erholungssicherung wiederhergestellt. Mitgliedschaft und Geräteberechtigungen behalten ihren aktuell geprüften Status.",
+        "ar": "استُعيدت نسخة التعافي. تحتفظ العضوية وأذونات الجهاز بحالتها الموثّقة الحالية.",
+        "ja": "回復バックアップを復元しました。メンバーシップと端末権限は現在の確認済み状態を維持します。",
+        "zh-Hans": "恢复备份已还原。会员资格和设备权限保持当前已验证状态。",
+        "ko": "복구 백업이 복원되었습니다. 멤버십 및 장치 권한은 현재 확인된 상태를 유지합니다."
+      }
+    },
+    {
+      "source": "Recovery history",
+      "translations": {
+        "hi": "रिकवरी इतिहास",
+        "es": "Historial de recuperación",
+        "pt": "Histórico de recuperação",
+        "fr": "Historique de rétablissement",
+        "de": "Erholungsverlauf",
+        "ar": "سجل التعافي",
+        "ja": "回復履歴",
+        "zh-Hans": "恢复历史",
+        "ko": "복구 내역"
+      }
+    },
+    {
+      "source": "Recovery Reminders",
+      "translations": {
+        "hi": "रिकवरी के स्मरण",
+        "es": "Recordatorios de recuperación",
+        "pt": "Lembretes de recuperação",
+        "fr": "Rappels de rétablissement",
+        "de": "Erholungserinnerungen",
+        "ar": "تذكيرات التعافي",
+        "ja": "回復リマインダー",
+        "zh-Hans": "恢复提醒",
+        "ko": "회복 알림"
+      }
+    },
+    {
+      "source": "Recovery reminders could not be scheduled.",
+      "translations": {
+        "hi": "रिकवरी स्मरण तय नहीं किए जा सके।",
+        "es": "No se pudieron programar los recordatorios.",
+        "pt": "Não foi possível agendar os lembretes.",
+        "fr": "Les rappels n’ont pas pu être programmés.",
+        "de": "Erholungserinnerungen konnten nicht geplant werden.",
+        "ar": "تعذّر جدولة تذكيرات التعافي.",
+        "ja": "回復リマインダーを設定できませんでした。",
+        "zh-Hans": "无法安排恢复提醒。",
+        "ko": "복구 알림을 예약할 수 없습니다."
+      }
+    },
+    {
+      "source": "RECOVERY RESET",
+      "translations": {
+        "hi": "रिकवरी रीसेट",
+        "es": "REINICIO DE RECUPERACIÓN",
+        "pt": "RECOMEÇO DE RECUPERAÇÃO",
+        "fr": "PAUSE DE RÉTABLISSEMENT",
+        "de": "ERHOLUNGSNEUSTART",
+        "ar": "إعادة ضبط للتعافي",
+        "ja": "回復リセット",
+        "zh-Hans": "恢复重置",
+        "ko": "복구 재설정"
+      }
+    },
+    {
+      "source": "Reflection",
+      "translations": {
+        "hi": "मनन",
+        "es": "Reflexión",
+        "pt": "Reflexão",
+        "fr": "Réflexion",
+        "de": "Reflexion üben",
+        "ar": "التأمل",
+        "ja": "振り返り",
+        "zh-Hans": "反思",
+        "ko": "반사"
+      }
+    },
+    {
+      "source": "Refresh protection status",
+      "translations": {
+        "hi": "सुरक्षा स्थिति अपडेट करें",
+        "es": "Actualizar estado de protección",
+        "pt": "Atualizar estado da proteção",
+        "fr": "Actualiser l’état de protection",
+        "de": "Schutzstatus aktualisieren",
+        "ar": "تحديث حالة الحماية",
+        "ja": "保護状態を更新",
+        "zh-Hans": "刷新保护状态",
+        "ko": "보호 상태 새로 고침"
+      }
+    },
+    {
+      "source": "Reminders",
+      "translations": {
+        "hi": "स्मरण",
+        "es": "Recordatorios",
+        "pt": "Lembretes",
+        "fr": "Rappels",
+        "de": "Erinnerungen",
+        "ar": "التذكيرات",
+        "ja": "リマインダー",
+        "zh-Hans": "提醒",
+        "ko": "알림"
+      }
+    },
+    {
+      "source": "REMOTE ANALYTICS",
+      "translations": {
+        "hi": "दूरस्थ एनालिटिक्स",
+        "es": "ANÁLISIS REMOTOS",
+        "pt": "ANÁLISES REMOTAS",
+        "fr": "ANALYSES DISTANTES",
+        "de": "EXTERNE ANALYSEN",
+        "ar": "تحليلات بعيدة",
+        "ja": "リモート分析",
+        "zh-Hans": "远程分析",
+        "ko": "원격 분석"
+      }
+    },
+    {
+      "source": "Remote analytics sharing is off.",
+      "translations": {
+        "hi": "दूरस्थ आँकड़े साझा करना बंद है।",
+        "es": "El intercambio de análisis remotos está desactivado.",
+        "pt": "O compartilhamento de análises remotas está desativado.",
+        "fr": "Le partage des analyses distantes est désactivé.",
+        "de": "Das Teilen externer Analysen ist deaktiviert.",
+        "ar": "مشاركة التحليلات البعيدة متوقفة.",
+        "ja": "リモート分析の共有はオフです。",
+        "zh-Hans": "远程分析共享已关闭。",
+        "ko": "원격 분석 공유가 꺼져 있습니다."
+      }
+    },
+    {
+      "source": "remote challenge endpoint",
+      "translations": {
+        "hi": "दूरस्थ चुनौती एंडपॉइंट",
+        "es": "punto remoto de retos",
+        "pt": "endpoint remoto de desafios",
+        "fr": "point distant de défis",
+        "de": "externer Aufgaben-Endpunkt",
+        "ar": "نقطة اتصال التحديات البعيدة",
+        "ja": "リモートチャレンジの接続先",
+        "zh-Hans": "远程挑战端点",
+        "ko": "원격 챌린지 엔드포인트"
+      }
+    },
+    {
+      "source": "Remote challenge endpoint is not configured.",
+      "translations": {
+        "hi": "दूरस्थ चुनौती एंडपॉइंट सेट नहीं है।",
+        "es": "El punto remoto de retos no está configurado.",
+        "pt": "O endpoint remoto de desafios não está configurado.",
+        "fr": "Le point distant de défis n’est pas configuré.",
+        "de": "Der externe Aufgaben-Endpunkt ist nicht eingerichtet.",
+        "ar": "نقطة اتصال التحديات البعيدة غير مضبوطة.",
+        "ja": "リモートチャレンジの接続先が設定されていません。",
+        "zh-Hans": "尚未配置远程挑战端点。",
+        "ko": "원격 챌린지 엔드포인트가 구성되지 않았습니다."
+      }
+    },
+    {
+      "source": "Remote challenge generator request",
+      "translations": {
+        "hi": "दूरस्थ चुनौती निर्माण अनुरोध",
+        "es": "Solicitud de generador remoto de retos",
+        "pt": "Solicitação de gerador remoto de desafios",
+        "fr": "Demande de générateur distant de défis",
+        "de": "Anfrage für externe Aufgabenerzeugung",
+        "ar": "طلب مولّد التحديات البعيد",
+        "ja": "リモートチャレンジ生成要求",
+        "zh-Hans": "远程挑战生成请求",
+        "ko": "원격 챌린지 생성기 요청"
+      }
+    },
+    {
+      "source": "remote challenge provider or endpoint",
+      "translations": {
+        "hi": "दूरस्थ चुनौती प्रदाता या एंडपॉइंट",
+        "es": "proveedor o punto remoto de retos",
+        "pt": "provedor ou endpoint remoto de desafios",
+        "fr": "fournisseur ou point distant de défis",
+        "de": "externer Aufgabenanbieter oder Endpunkt",
+        "ar": "مزود التحديات البعيد أو نقطة الاتصال",
+        "ja": "リモートチャレンジのプロバイダーまたは接続先",
+        "zh-Hans": "远程挑战服务或端点",
+        "ko": "원격 챌린지 제공자 또는 엔드포인트"
+      }
+    },
+    {
+      "source": "remote coach endpoint",
+      "translations": {
+        "hi": "दूरस्थ कोच एंडपॉइंट",
+        "es": "punto remoto de asesor",
+        "pt": "endpoint remoto de orientador",
+        "fr": "point distant de coach",
+        "de": "externer Coach-Endpunkt",
+        "ar": "نقطة اتصال المدرب البعيد",
+        "ja": "リモートコーチの接続先",
+        "zh-Hans": "远程教练端点",
+        "ko": "원격 코치 엔드포인트"
+      }
+    },
+    {
+      "source": "Remote coach endpoint is not configured.",
+      "translations": {
+        "hi": "दूरस्थ कोच एंडपॉइंट सेट नहीं है।",
+        "es": "El punto remoto de asesor no está configurado.",
+        "pt": "O endpoint remoto do orientador não está configurado.",
+        "fr": "Le point distant de coach n’est pas configuré.",
+        "de": "Der externe Coach-Endpunkt ist nicht eingerichtet.",
+        "ar": "نقطة اتصال المدرب البعيد غير مضبوطة.",
+        "ja": "リモートコーチの接続先が設定されていません。",
+        "zh-Hans": "尚未配置远程教练端点。",
+        "ko": "원격 Coach 엔드포인트가 구성되지 않았습니다."
+      }
+    },
+    {
+      "source": "remote coach provider or endpoint",
+      "translations": {
+        "hi": "दूरस्थ कोच प्रदाता या एंडपॉइंट",
+        "es": "proveedor o punto remoto de asesor",
+        "pt": "provedor ou endpoint remoto do orientador",
+        "fr": "fournisseur ou point distant de coach",
+        "de": "externer Coach-Anbieter oder Endpunkt",
+        "ar": "مزود المدرب البعيد أو نقطة الاتصال",
+        "ja": "リモートコーチのプロバイダーまたは接続先",
+        "zh-Hans": "远程教练服务或端点",
+        "ko": "원격 코치 제공자 또는 엔드포인트"
+      }
+    },
+    {
+      "source": "Remote coach request",
+      "translations": {
+        "hi": "दूरस्थ कोच अनुरोध",
+        "es": "Solicitud de asesor remoto",
+        "pt": "Solicitação de orientador remoto",
+        "fr": "Demande de coach distant",
+        "de": "Externe Coach-Anfrage",
+        "ar": "طلب المدرب البعيد",
+        "ja": "リモートコーチ要求",
+        "zh-Hans": "远程教练请求",
+        "ko": "원격 코치 요청"
+      }
+    },
+    {
+      "source": "Remote coach returned an empty reply.",
+      "translations": {
+        "hi": "दूरस्थ कोच ने खाली उत्तर लौटाया।",
+        "es": "El asesor remoto devolvió una respuesta vacía.",
+        "pt": "O orientador remoto retornou uma resposta vazia.",
+        "fr": "Le coach distant a renvoyé une réponse vide.",
+        "de": "Der externe Coach gab eine leere Antwort zurück.",
+        "ar": "أعاد المدرب البعيد ردًا فارغًا.",
+        "ja": "リモートコーチから空の応答が返されました。",
+        "zh-Hans": "远程教练返回了空回复。",
+        "ko": "원격 코치가 빈 답장을 보냈습니다."
+      }
+    },
+    {
+      "source": "remote feed unavailable",
+      "translations": {
+        "hi": "दूरस्थ सूची उपलब्ध नहीं",
+        "es": "lista remota no disponible",
+        "pt": "lista remota indisponível",
+        "fr": "liste distante indisponible",
+        "de": "externe Liste nicht verfügbar",
+        "ar": "القائمة البعيدة غير متاحة",
+        "ja": "リモート一覧を利用できません",
+        "zh-Hans": "远程列表不可用",
+        "ko": "원격 피드를 사용할 수 없습니다."
+      }
+    },
+    {
+      "source": "remote replies per day. This is not therapy or emergency care.",
+      "translations": {
+        "hi": "दूरस्थ उत्तर प्रतिदिन। यह थेरेपी या आपातकालीन देखभाल नहीं है।",
+        "es": "respuestas remotas al día. No es terapia ni atención de emergencia.",
+        "pt": "respostas remotas por dia. Não é terapia nem atendimento de emergência.",
+        "fr": "réponses distantes par jour. Ce n’est ni une thérapie ni un service d’urgence.",
+        "de": "externe Antworten pro Tag. Dies ist keine Therapie oder Notfallversorgung.",
+        "ar": "ردود بعيدة يوميًا. ليست علاجًا نفسيًا أو رعاية طارئة.",
+        "ja": "件のリモート返信/日。治療や緊急支援ではありません。",
+        "zh-Hans": "次远程回复/天。这不是心理治疗或紧急护理。",
+        "ko": "하루에 원격 답장을 보내세요. 이것은 치료나 응급 치료가 아닙니다."
+      }
+    },
+    {
+      "source": "Remove",
+      "translations": {
+        "hi": "हटाएँ",
+        "es": "Eliminar",
+        "pt": "Remover",
+        "fr": "Retirer",
+        "de": "Entfernen",
+        "ar": "إزالة",
+        "ja": "削除",
+        "zh-Hans": "移除",
+        "ko": "제거"
+      }
+    },
+    {
+      "source": "Remove {{displayLabel}}",
+      "translations": {
+        "hi": "{{displayLabel}} हटाएँ",
+        "es": "Eliminar {{displayLabel}}",
+        "pt": "Remover {{displayLabel}}",
+        "fr": "Retirer {{displayLabel}}",
+        "de": "{{displayLabel}} entfernen",
+        "ar": "إزالة {{displayLabel}}",
+        "ja": "{{displayLabel}}を削除",
+        "zh-Hans": "移除 {{displayLabel}}",
+        "ko": "{{displayLabel}} 제거"
+      }
+    },
+    {
+      "source": "Remove {{domain}} from always allow",
+      "translations": {
+        "hi": "{{domain}} को हमेशा अनुमति से हटाएँ",
+        "es": "Quitar {{domain}} de permitir siempre",
+        "pt": "Remover {{domain}} de sempre permitir",
+        "fr": "Retirer {{domain}} de toujours autoriser",
+        "de": "{{domain}} aus Immer erlauben entfernen",
+        "ar": "إزالة {{domain}} من السماح دائمًا",
+        "ja": "{{domain}}を常に許可から削除",
+        "zh-Hans": "从始终允许中移除 {{domain}}",
+        "ko": "항상 허용에서 {{domain}}를 제거합니다."
+      }
+    },
+    {
+      "source": "Repeat three cycles.",
+      "translations": {
+        "hi": "तीन चक्र दोहराएँ।",
+        "es": "Repite tres ciclos.",
+        "pt": "Repita três ciclos.",
+        "fr": "Répétez trois cycles.",
+        "de": "Drei Durchgänge wiederholen.",
+        "ar": "كرّر ثلاث دورات.",
+        "ja": "3回繰り返しましょう。",
+        "zh-Hans": "重复三个周期。",
+        "ko": "3주기를 반복합니다."
+      }
+    },
+    {
+      "source": "Report this block as a mistake",
+      "translations": {
+        "hi": "इस ब्लॉक को गलती के रूप में रिपोर्ट करें",
+        "es": "Informar de este bloqueo como error",
+        "pt": "Informar este bloqueio como erro",
+        "fr": "Signaler ce blocage comme une erreur",
+        "de": "Diese Sperre als Fehler melden",
+        "ar": "الإبلاغ عن هذا الحظر كخطأ",
+        "ja": "誤ったブロックとして報告",
+        "zh-Hans": "报告此拦截为误判",
+        "ko": "이 블록을 실수로 신고하세요"
+      }
+    },
+    {
+      "source": "Requires Firebase sign-in and a second confirmation. Cloud deletion must start before local data is cleared.",
+      "translations": {
+        "hi": "Firebase साइन-इन और दूसरी पुष्टि ज़रूरी है। स्थानीय डेटा साफ़ करने से पहले क्लाउड हटाना शुरू होना चाहिए।",
+        "es": "Requiere acceso a Firebase y una segunda confirmación. La eliminación en la nube debe empezar antes de borrar datos locales.",
+        "pt": "Exige login no Firebase e segunda confirmação. A exclusão na nuvem deve começar antes de limpar dados locais.",
+        "fr": "Nécessite une connexion Firebase et une seconde confirmation. La suppression cloud doit démarrer avant l’effacement local.",
+        "de": "Erfordert Firebase-Anmeldung und eine zweite Bestätigung. Die Cloud-Löschung muss vor dem Leeren lokaler Daten beginnen.",
+        "ar": "يتطلب تسجيل دخول Firebase وتأكيدًا ثانيًا. يجب أن يبدأ الحذف السحابي قبل مسح البيانات المحلية.",
+        "ja": "Firebaseへのログインと2回目の確認が必要です。端末内データを消去する前に、クラウド上の削除を開始する必要があります。",
+        "zh-Hans": "需要 Firebase 登录和第二次确认。清除本地数据前必须先开始云端删除。",
+        "ko": "Firebase 로그인과 두 번째 확인이 필요합니다. 로컬 데이터가 삭제되기 전에 클라우드 삭제를 시작해야 합니다."
+      }
+    },
+    {
+      "source": "Reset",
+      "translations": {
+        "hi": "रीसेट",
+        "es": "Reinicio",
+        "pt": "Recomeço",
+        "fr": "Recentrage",
+        "de": "Neustart",
+        "ar": "إعادة ضبط",
+        "ja": "リセット",
+        "zh-Hans": "重置",
+        "ko": "재설정"
+      }
+    },
+    {
+      "source": "Reset after slip",
+      "translations": {
+        "hi": "चूक के बाद रीसेट",
+        "es": "Reinicio tras un desliz",
+        "pt": "Recomeço após deslize",
+        "fr": "Pause après un écart",
+        "de": "Neustart nach Ausrutscher",
+        "ar": "إعادة ضبط بعد زلة",
+        "ja": "つまずき後のリセット",
+        "zh-Hans": "失误后重置",
+        "ko": "슬립 후 재설정"
+      }
+    },
+    {
+      "source": "Reset complete. Choose your next action.",
+      "translations": {
+        "hi": "रीसेट पूरा। अगला कदम चुनें।",
+        "es": "Reinicio completado. Elige tu próxima acción.",
+        "pt": "Recomeço concluído. Escolha sua próxima ação.",
+        "fr": "Pause terminée. Choisissez votre prochaine action.",
+        "de": "Neustart abgeschlossen. Wähle deinen nächsten Schritt.",
+        "ar": "اكتملت إعادة الضبط. اختر خطوتك التالية.",
+        "ja": "リセット完了。次の行動を選びましょう。",
+        "zh-Hans": "重置完成。选择下一步行动。",
+        "ko": "재설정이 완료되었습니다. 다음 작업을 선택하세요."
+      }
+    },
+    {
+      "source": "Reset could not be saved. Try saving again; your completion receipt is kept.",
+      "translations": {
+        "hi": "रीसेट सेव नहीं हुआ। फिर सेव करें; आपका पूरा करने का रिकॉर्ड रखा गया है।",
+        "es": "No se guardó el reinicio. Reinténtalo; tu comprobante de finalización se conserva.",
+        "pt": "O recomeço não foi salvo. Tente novamente; seu comprovante de conclusão foi mantido.",
+        "fr": "La pause n’a pas été enregistrée. Réessayez ; votre preuve d’achèvement est conservée.",
+        "de": "Neustart konnte nicht gespeichert werden. Versuche es erneut; dein Abschlussnachweis bleibt erhalten.",
+        "ar": "تعذّر حفظ إعادة الضبط. أعد الحفظ؛ تم الاحتفاظ بإثبات الإتمام.",
+        "ja": "リセットを保存できませんでした。再試行してください。完了記録は保持されています。",
+        "zh-Hans": "无法保存重置。请再次保存；完成记录已保留。",
+        "ko": "재설정을 저장할 수 없습니다. 다시 저장해 보세요. 완료 영수증은 보관됩니다."
+      }
+    },
+    {
+      "source": "Reset Moment",
+      "translations": {
+        "hi": "रीसेट का पल",
+        "es": "Momento de reinicio",
+        "pt": "Momento de recomeço",
+        "fr": "Moment de pause",
+        "de": "Neustartmoment",
+        "ar": "لحظة إعادة ضبط",
+        "ja": "リセットの時間",
+        "zh-Hans": "重置时刻",
+        "ko": "순간 재설정"
+      }
+    },
+    {
+      "source": "Reset name",
+      "translations": {
+        "hi": "रीसेट का नाम",
+        "es": "Nombre del reinicio",
+        "pt": "Nome do recomeço",
+        "fr": "Nom de la pause",
+        "de": "Neustartname",
+        "ar": "اسم إعادة الضبط",
+        "ja": "リセット名",
+        "zh-Hans": "重置名称",
+        "ko": "이름 재설정"
+      }
+    },
+    {
+      "source": "Reset rate",
+      "translations": {
+        "hi": "रीसेट की दर",
+        "es": "Tasa de reinicios",
+        "pt": "Taxa de recomeços",
+        "fr": "Taux de pauses",
+        "de": "Neustartrate",
+        "ar": "معدل إعادة الضبط",
+        "ja": "リセット率",
+        "zh-Hans": "重置率",
+        "ko": "재설정 속도"
+      }
+    },
+    {
+      "source": "Resets",
+      "translations": {
+        "hi": "रीसेट अभ्यास",
+        "es": "Reinicios",
+        "pt": "Recomeços",
+        "fr": "Pauses",
+        "de": "Neustarts",
+        "ar": "تمارين إعادة الضبط",
+        "ja": "リセット一覧",
+        "zh-Hans": "重置练习",
+        "ko": "재설정"
+      }
+    },
+    {
+      "source": "Restless sleep quality",
+      "translations": {
+        "hi": "बेचैन नींद की गुणवत्ता",
+        "es": "Calidad de sueño inquieto",
+        "pt": "Qualidade do sono inquieto",
+        "fr": "Qualité du sommeil agité",
+        "de": "Qualität unruhigen Schlafs",
+        "ar": "جودة النوم المضطرب",
+        "ja": "落ち着かない睡眠の質",
+        "zh-Hans": "不安稳的睡眠质量",
+        "ko": "불안한 수면의 질"
+      }
+    },
+    {
+      "source": "Restore",
+      "translations": {
+        "hi": "बहाल करें",
+        "es": "Restaurar",
+        "pt": "Restaurar",
+        "fr": "Restaurer",
+        "de": "Wiederherstellen",
+        "ar": "استعادة",
+        "ja": "復元",
+        "zh-Hans": "恢复",
+        "ko": "복원"
+      }
+    },
+    {
+      "source": "Restore backup",
+      "translations": {
+        "hi": "बैकअप बहाल करें",
+        "es": "Restaurar copia",
+        "pt": "Restaurar backup",
+        "fr": "Restaurer la sauvegarde",
+        "de": "Sicherung wiederherstellen",
+        "ar": "استعادة النسخة الاحتياطية",
+        "ja": "バックアップを復元",
+        "zh-Hans": "恢复备份",
+        "ko": "백업 복원"
+      }
+    },
+    {
+      "source": "Restore recovery history?",
+      "translations": {
+        "hi": "रिकवरी इतिहास बहाल करें?",
+        "es": "¿Restaurar historial de recuperación?",
+        "pt": "Restaurar histórico de recuperação?",
+        "fr": "Restaurer l’historique de rétablissement ?",
+        "de": "Erholungsverlauf wiederherstellen?",
+        "ar": "استعادة سجل التعافي؟",
+        "ja": "回復履歴を復元しますか？",
+        "zh-Hans": "还原恢复历史？",
+        "ko": "복구 기록을 복원하시겠습니까?"
+      }
+    },
+    {
+      "source": "Resume reset",
+      "translations": {
+        "hi": "रीसेट फिर शुरू करें",
+        "es": "Reanudar reinicio",
+        "pt": "Retomar recomeço",
+        "fr": "Reprendre la pause",
+        "de": "Neustart fortsetzen",
+        "ar": "استئناف إعادة الضبط",
+        "ja": "リセットを再開",
+        "zh-Hans": "继续重置",
+        "ko": "재개 재설정"
+      }
+    },
+    {
+      "source": "Retry saving reset",
+      "translations": {
+        "hi": "रीसेट फिर सेव करें",
+        "es": "Reintentar guardar reinicio",
+        "pt": "Tentar salvar recomeço novamente",
+        "fr": "Réessayer d’enregistrer la pause",
+        "de": "Neustart erneut speichern",
+        "ar": "إعادة محاولة حفظ إعادة الضبط",
+        "ja": "リセットの保存を再試行",
+        "zh-Hans": "重试保存重置",
+        "ko": "저장 재설정을 다시 시도하세요."
+      }
+    },
+    {
+      "source": "Return to FREED.",
+      "translations": {
+        "hi": "FREED पर लौटें।",
+        "es": "Vuelve a FREED.",
+        "pt": "Volte ao FREED.",
+        "fr": "Revenez à FREED.",
+        "de": "Kehre zu FREED zurück.",
+        "ar": "عُد إلى FREED.",
+        "ja": "FREEDに戻ってください。",
+        "zh-Hans": "返回 FREED。",
+        "ko": "FREED로 돌아갑니다."
+      }
+    },
+    {
+      "source": "Returned from Android settings. Refreshing protection setup now.",
+      "translations": {
+        "hi": "Android सेटिंग्स से लौटे। अब सुरक्षा सेटअप अपडेट हो रहा है।",
+        "es": "De vuelta de los ajustes de Android. Actualizando la protección.",
+        "pt": "Retorno das configurações do Android. Atualizando a proteção.",
+        "fr": "Retour des réglages Android. Actualisation de la protection.",
+        "de": "Zurück aus Android-Einstellungen. Schutzeinrichtung wird aktualisiert.",
+        "ar": "عدت من إعدادات Android. يجري تحديث إعداد الحماية.",
+        "ja": "Androidの設定から戻りました。保護設定を更新しています。",
+        "zh-Hans": "已从 Android 设置返回。正在刷新保护设置。",
+        "ko": "Android 설정에서 반환되었습니다. 지금 보호 설정을 새로 고치고 있습니다."
+      }
+    },
+    {
+      "source": "Returns to the challenge list.",
+      "translations": {
+        "hi": "चुनौती सूची पर लौटता है।",
+        "es": "Vuelve a la lista de retos.",
+        "pt": "Retorna à lista de desafios.",
+        "fr": "Revient à la liste des défis.",
+        "de": "Kehrt zur Aufgabenliste zurück.",
+        "ar": "يعود إلى قائمة التحديات.",
+        "ja": "チャレンジ一覧に戻ります。",
+        "zh-Hans": "返回挑战列表。",
+        "ko": "챌린지 목록으로 돌아갑니다."
+      }
+    },
+    {
+      "source": "Returns to the Library.",
+      "translations": {
+        "hi": "लाइब्रेरी पर लौटता है।",
+        "es": "Vuelve a la biblioteca.",
+        "pt": "Retorna à biblioteca.",
+        "fr": "Revient à la bibliothèque.",
+        "de": "Kehrt zur Bibliothek zurück.",
+        "ar": "يعود إلى المكتبة.",
+        "ja": "ライブラリに戻ります。",
+        "zh-Hans": "返回资料库。",
+        "ko": "도서관으로 돌아갑니다."
+      }
+    },
+    {
+      "source": "Returns to the previous onboarding step.",
+      "translations": {
+        "hi": "पिछले शुरुआती चरण पर लौटता है।",
+        "es": "Vuelve al paso inicial anterior.",
+        "pt": "Retorna à etapa inicial anterior.",
+        "fr": "Revient à l’étape d’accueil précédente.",
+        "de": "Kehrt zum vorherigen Einführungsschritt zurück.",
+        "ar": "يعود إلى خطوة البداية السابقة.",
+        "ja": "前のオンボーディング手順に戻ります。",
+        "zh-Hans": "返回上一个入门步骤。",
+        "ko": "이전 온보딩 단계로 돌아갑니다."
+      }
+    },
+    {
+      "source": "Returns to the previous screen.",
+      "translations": {
+        "hi": "पिछली स्क्रीन पर लौटता है।",
+        "es": "Vuelve a la pantalla anterior.",
+        "pt": "Retorna à tela anterior.",
+        "fr": "Revient à l’écran précédent.",
+        "de": "Kehrt zum vorherigen Bildschirm zurück.",
+        "ar": "يعود إلى الشاشة السابقة.",
+        "ja": "前の画面に戻ります。",
+        "zh-Hans": "返回上一界面。",
+        "ko": "이전 화면으로 돌아갑니다."
+      }
+    },
+    {
+      "source": "Returns without saving.",
+      "translations": {
+        "hi": "बिना सेव किए लौटता है।",
+        "es": "Vuelve sin guardar.",
+        "pt": "Retorna sem salvar.",
+        "fr": "Revient sans enregistrer.",
+        "de": "Kehrt ohne Speichern zurück.",
+        "ar": "يعود دون حفظ.",
+        "ja": "保存せずに戻ります。",
+        "zh-Hans": "不保存并返回。",
+        "ko": "저장하지 않고 돌아옵니다."
+      }
+    },
+    {
+      "source": "Reviewed adult-domain feed synced to native protection.",
+      "translations": {
+        "hi": "समीक्षित वयस्क-डोमेन सूची नेटिव सुरक्षा से सिंक हुई।",
+        "es": "Lista revisada de dominios adultos sincronizada con la protección nativa.",
+        "pt": "Lista revisada de domínios adultos sincronizada com a proteção nativa.",
+        "fr": "Liste vérifiée de domaines adultes synchronisée avec la protection native.",
+        "de": "Geprüfte Erwachsenendomainliste mit nativem Schutz synchronisiert.",
+        "ar": "تمت مزامنة قائمة نطاقات البالغين المراجَعة مع الحماية الأصلية.",
+        "ja": "確認済みの成人向けドメイン一覧をネイティブ保護と同期しました。",
+        "zh-Hans": "已审核成人内容域名列表已同步到原生保护。",
+        "ko": "기본 보호와 동기화된 성인 도메인 피드를 검토했습니다."
+      }
+    },
+    {
+      "source": "Reviewed adult-domain feed was unchanged and native protection kept the cached feed.",
+      "translations": {
+        "hi": "समीक्षित वयस्क-डोमेन सूची नहीं बदली और नेटिव सुरक्षा ने कैश की सूची रखी।",
+        "es": "La lista revisada no cambió y la protección nativa mantuvo la copia en caché.",
+        "pt": "A lista revisada não mudou e a proteção nativa manteve a cópia em cache.",
+        "fr": "La liste vérifiée n’a pas changé et la protection native a conservé le cache.",
+        "de": "Die geprüfte Liste blieb unverändert; der native Schutz behielt den Cache.",
+        "ar": "لم تتغير القائمة المراجَعة واحتفظت الحماية الأصلية بالنسخة المؤقتة.",
+        "ja": "確認済み一覧は変わらず、ネイティブ保護はキャッシュを保持しました。",
+        "zh-Hans": "已审核列表未变，原生保护保留了缓存列表。",
+        "ko": "검토된 성인 도메인 피드는 변경되지 않았으며 기본 보호는 캐시된 피드를 유지했습니다."
+      }
+    },
+    {
+      "source": "REWARD EARNED",
+      "translations": {
+        "hi": "पुरस्कार मिला",
+        "es": "RECOMPENSA GANADA",
+        "pt": "RECOMPENSA CONQUISTADA",
+        "fr": "RÉCOMPENSE GAGNÉE",
+        "de": "BELOHNUNG VERDIENT",
+        "ar": "تم كسب المكافأة",
+        "ja": "報酬を獲得",
+        "zh-Hans": "已获得奖励",
+        "ko": "보상 획득"
+      }
+    },
+    {
+      "source": "Risk window",
+      "translations": {
+        "hi": "जोखिम अवधि",
+        "es": "Ventana de riesgo",
+        "pt": "Janela de risco",
+        "fr": "Créneau à risque",
+        "de": "Risikofenster",
+        "ar": "فترة الخطر",
+        "ja": "リスクの時間帯",
+        "zh-Hans": "风险时段",
+        "ko": "위험 창구"
+      }
+    },
+    {
+      "source": "Risks",
+      "translations": {
+        "hi": "जोखिम",
+        "es": "Riesgos",
+        "pt": "Riscos",
+        "fr": "Risques",
+        "de": "Risiken",
+        "ar": "المخاطر",
+        "ja": "リスク",
+        "zh-Hans": "风险",
+        "ko": "위험"
+      }
+    },
+    {
+      "source": "Run cold water.",
+      "translations": {
+        "hi": "ठंडा पानी चलाएँ।",
+        "es": "Abre el agua fría.",
+        "pt": "Abra a água fria.",
+        "fr": "Faites couler de l’eau froide.",
+        "de": "Kaltes Wasser laufen lassen.",
+        "ar": "افتح الماء البارد.",
+        "ja": "冷水を出しましょう。",
+        "zh-Hans": "打开冷水。",
+        "ko": "찬물을 흐르게 하세요."
+      }
+    },
+    {
+      "source": "Runtime details appear while DNS Guard runs on this device.",
+      "translations": {
+        "hi": "इस डिवाइस पर DNS Guard चलने पर रनटाइम विवरण दिखते हैं।",
+        "es": "Los detalles aparecen mientras DNS Guard funciona en este dispositivo.",
+        "pt": "Os detalhes aparecem enquanto o DNS Guard roda neste dispositivo.",
+        "fr": "Les détails d’exécution apparaissent quand DNS Guard fonctionne sur cet appareil.",
+        "de": "Laufzeitdetails erscheinen, während DNS Guard auf diesem Gerät läuft.",
+        "ar": "تظهر تفاصيل التشغيل أثناء عمل DNS Guard على هذا الجهاز.",
+        "ja": "この端末でDNS Guardが実行中のとき、実行状況が表示されます。",
+        "zh-Hans": "DNS Guard 在此设备运行时会显示运行详情。",
+        "ko": "DNS Guard가 이 장치에서 실행되는 동안 런타임 세부정보가 표시됩니다."
+      }
+    },
+    {
+      "source": "Safari Content Blocker state needs device verification: {{safariContentBlockerStateError}}",
+      "translations": {
+        "hi": "Safari सामग्री ब्लॉकर की स्थिति को डिवाइस सत्यापन चाहिए: {{safariContentBlockerStateError}}",
+        "es": "El estado del bloqueador Safari necesita verificación en dispositivo: {{safariContentBlockerStateError}}",
+        "pt": "O estado do bloqueador Safari precisa de verificação no dispositivo: {{safariContentBlockerStateError}}",
+        "fr": "L’état du bloqueur Safari nécessite une vérification sur appareil : {{safariContentBlockerStateError}}",
+        "de": "Safari-Inhaltsblocker benötigt Geräteprüfung: {{safariContentBlockerStateError}}",
+        "ar": "حالة مانع محتوى Safari تحتاج تحققًا على الجهاز: {{safariContentBlockerStateError}}",
+        "ja": "Safariコンテンツブロッカーの状態は端末確認が必要です：{{safariContentBlockerStateError}}",
+        "zh-Hans": "Safari 内容拦截器状态需要设备验证：{{safariContentBlockerStateError}}",
+        "ko": "Safari 콘텐츠 차단기 상태에 장치 확인이 필요함: {{safariContentBlockerStateError}}"
+      }
+    },
+    {
+      "source": "Safari has embedded fallback rules; production activation is waiting for reviewed Safari feed provenance.",
+      "translations": {
+        "hi": "Safari में अंतर्निहित विकल्प नियम हैं; उत्पादन सक्रियण समीक्षित Safari सूची के स्रोत की पुष्टि का इंतज़ार कर रहा है।",
+        "es": "Safari tiene reglas de respaldo integradas; la activación de producción espera la procedencia revisada de su lista.",
+        "pt": "O Safari tem regras alternativas incorporadas; a ativação de produção aguarda a procedência revisada da lista.",
+        "fr": "Safari dispose de règles de secours intégrées ; l’activation en production attend une provenance vérifiée de la liste.",
+        "de": "Safari hat integrierte Ersatzregeln. Die Produktionsaktivierung wartet auf die geprüfte Herkunft der Safari-Liste.",
+        "ar": "لدى Safari قواعد بديلة مضمّنة؛ ينتظر تفعيل الإنتاج مصدرًا مراجعًا لقائمة Safari.",
+        "ja": "Safariには内蔵の代替ルールがあります。本番の有効化は確認済みSafari一覧の出所確認を待っています。",
+        "zh-Hans": "Safari 有内置备用规则；生产启用正在等待已审核 Safari 列表来源。",
+        "ko": "Safari에는 대체 규칙이 내장되어 있습니다. 생산 활성화가 검토된 Safari 피드 출처를 기다리고 있습니다."
+      }
+    },
+    {
+      "source": "Safari rules are loaded, but FREED Safari Blocker is disabled. Enable it in iOS Settings > Safari > Extensions, then return and run Test Protection.",
+      "translations": {
+        "hi": "Safari नियम लोड हैं, लेकिन FREED Safari Blocker बंद है। iOS सेटिंग्स > Safari > एक्सटेंशन में चालू करें, फिर लौटकर सुरक्षा परीक्षण चलाएँ।",
+        "es": "Las reglas Safari están cargadas, pero FREED Safari Blocker está desactivado. Actívalo en Ajustes > Safari > Extensiones y vuelve a probar la protección.",
+        "pt": "As regras Safari estão carregadas, mas FREED Safari Blocker está desativado. Ative em Ajustes > Safari > Extensões e volte para testar a proteção.",
+        "fr": "Les règles Safari sont chargées, mais FREED Safari Blocker est désactivé. Activez-le dans Réglages > Safari > Extensions, puis testez la protection.",
+        "de": "Safari-Regeln sind geladen, aber FREED Safari Blocker ist deaktiviert. Aktiviere ihn unter iOS-Einstellungen > Safari > Erweiterungen und teste erneut.",
+        "ar": "قواعد Safari محمّلة لكن FREED Safari Blocker معطّل. فعّله من إعدادات iOS > Safari > الإضافات، ثم عُد واختبر الحماية.",
+        "ja": "Safariのルールは読み込み済みですが、FREED Safari Blockerは無効です。iOSの設定 > Safari > 拡張機能で有効にし、戻って保護をテストしてください。",
+        "zh-Hans": "Safari 规则已加载，但 FREED Safari Blocker 已关闭。在 iOS 设置 > Safari > 扩展中启用，然后返回测试保护。",
+        "ko": "Safari 규칙이 로드되었지만 FREED Safari 차단기가 비활성화되었습니다. iOS 설정 > Safari > 확장에서 활성화한 다음 돌아가서 보호 테스트를 실행하세요."
+      }
+    },
+    {
+      "source": "Safari settings could not open directly. Open Settings, choose Apps → Safari → Extensions, and enable FREED Safari Blocker.",
+      "translations": {
+        "hi": "Safari सेटिंग्स सीधे नहीं खुलीं। सेटिंग्स खोलें, ऐप → Safari → एक्सटेंशन चुनें और FREED Safari Blocker चालू करें।",
+        "es": "No se abrieron los ajustes Safari directamente. Abre Ajustes, elige Apps → Safari → Extensiones y activa FREED Safari Blocker.",
+        "pt": "Os ajustes Safari não abriram diretamente. Abra Ajustes, escolha Apps → Safari → Extensões e ative FREED Safari Blocker.",
+        "fr": "Les réglages Safari ne s’ouvrent pas directement. Ouvrez Réglages, puis Apps → Safari → Extensions et activez FREED Safari Blocker.",
+        "de": "Safari-Einstellungen konnten nicht direkt geöffnet werden. Öffne Einstellungen, dann Apps → Safari → Erweiterungen und aktiviere FREED Safari Blocker.",
+        "ar": "تعذّر فتح إعدادات Safari مباشرة. افتح الإعدادات ثم التطبيقات ← Safari ← الإضافات وفعّل FREED Safari Blocker.",
+        "ja": "Safariの設定を直接開けませんでした。設定を開き、アプリ → Safari → 拡張機能を選び、FREED Safari Blockerを有効にしてください。",
+        "zh-Hans": "无法直接打开 Safari 设置。打开设置，选择应用 → Safari → 扩展，并启用 FREED Safari Blocker。",
+        "ko": "Safari 설정을 직접 열 수 없습니다. 설정을 열고 앱 → Safari → 확장 프로그램을 선택한 다음 FREED Safari 차단기를 활성화합니다."
+      }
+    },
+    {
+      "source": "Save and Start",
+      "translations": {
+        "hi": "सेव करें और शुरू करें",
+        "es": "Guardar y empezar",
+        "pt": "Salvar e iniciar",
+        "fr": "Enregistrer et commencer",
+        "de": "Speichern und starten",
+        "ar": "حفظ وبدء",
+        "ja": "保存して開始",
+        "zh-Hans": "保存并开始",
+        "ko": "저장하고 시작하기"
+      }
+    },
+    {
+      "source": "Save and Start Again",
+      "translations": {
+        "hi": "सेव करें और फिर शुरू करें",
+        "es": "Guardar y volver a empezar",
+        "pt": "Salvar e iniciar novamente",
+        "fr": "Enregistrer et recommencer",
+        "de": "Speichern und erneut starten",
+        "ar": "حفظ وبدء مجددًا",
+        "ja": "保存して再開始",
+        "zh-Hans": "保存并重新开始",
+        "ko": "저장하고 다시 시작"
+      }
+    },
+    {
+      "source": "Save Check-In",
+      "translations": {
+        "hi": "चेक-इन सेव करें",
+        "es": "Guardar registro",
+        "pt": "Salvar registro",
+        "fr": "Enregistrer le bilan",
+        "de": "Check-in speichern",
+        "ar": "حفظ تسجيل الحالة",
+        "ja": "チェックインを保存",
+        "zh-Hans": "保存状态记录",
+        "ko": "체크인 저장"
+      }
+    },
+    {
+      "source": "Save the completed reset before starting another. Your receipt was kept.",
+      "translations": {
+        "hi": "दूसरा शुरू करने से पहले पूरा रीसेट सेव करें। आपका रिकॉर्ड रखा गया है।",
+        "es": "Guarda el reinicio completado antes de empezar otro. Tu comprobante se conserva.",
+        "pt": "Salve o recomeço concluído antes de iniciar outro. Seu comprovante foi mantido.",
+        "fr": "Enregistrez la pause terminée avant d’en commencer une autre. Votre preuve est conservée.",
+        "de": "Speichere den abgeschlossenen Neustart, bevor du einen weiteren beginnst. Dein Nachweis bleibt erhalten.",
+        "ar": "احفظ إعادة الضبط المكتملة قبل بدء أخرى. تم الاحتفاظ بالإثبات.",
+        "ja": "別のリセットを始める前に完了したリセットを保存してください。記録は保持されています。",
+        "zh-Hans": "开始另一项前，请保存已完成的重置。完成记录已保留。",
+        "ko": "다른 재설정을 시작하기 전에 완료된 재설정을 저장하십시오. 영수증이 보관되었습니다."
+      }
+    },
+    {
+      "source": "Saved exercise progress could not be erased. Check device storage and try again; recovery history was kept.",
+      "translations": {
+        "hi": "अभ्यास की सेव की गई प्रगति मिट नहीं सकी। डिवाइस स्टोरेज जाँचकर फिर कोशिश करें; रिकवरी इतिहास रखा गया है।",
+        "es": "No se pudo borrar el progreso guardado. Revisa el almacenamiento y reinténtalo; el historial se conserva.",
+        "pt": "Não foi possível apagar o progresso salvo. Verifique o armazenamento e tente novamente; o histórico foi mantido.",
+        "fr": "La progression enregistrée n’a pas pu être effacée. Vérifiez le stockage et réessayez ; l’historique est conservé.",
+        "de": "Gespeicherter Übungsfortschritt konnte nicht gelöscht werden. Prüfe den Gerätespeicher und versuche es erneut; der Verlauf blieb erhalten.",
+        "ar": "تعذّر محو تقدم التمرين المحفوظ. تحقّق من التخزين وأعد المحاولة؛ تم الاحتفاظ بالسجل.",
+        "ja": "練習の保存済み進捗を消去できませんでした。端末のストレージを確認し再試行してください。回復履歴は保持されています。",
+        "zh-Hans": "无法清除已保存练习进度。检查设备存储后重试；恢复历史已保留。",
+        "ko": "저장된 운동 진행 상황을 삭제할 수 없습니다. 장치 저장 공간을 확인하고 다시 시도하십시오. 복구 내역이 보관되었습니다."
+      }
+    },
+    {
+      "source": "Saved Resets",
+      "translations": {
+        "hi": "सेव किए रीसेट",
+        "es": "Reinicios guardados",
+        "pt": "Recomeços salvos",
+        "fr": "Pauses enregistrées",
+        "de": "Gespeicherte Neustarts",
+        "ar": "تمارين محفوظة",
+        "ja": "保存したリセット",
+        "zh-Hans": "已保存重置",
+        "ko": "저장된 재설정"
+      }
+    },
+    {
+      "source": "Say: this is an urge.",
+      "translations": {
+        "hi": "कहें: यह एक इच्छा है।",
+        "es": "Di: esto es un impulso.",
+        "pt": "Diga: isto é uma vontade.",
+        "fr": "Dites : c’est une envie.",
+        "de": "Sage: Das ist ein Drang.",
+        "ar": "قل: هذه رغبة.",
+        "ja": "「これは衝動だ」と言いましょう。",
+        "zh-Hans": "说：这是一次冲动。",
+        "ko": "말해보세요: 이것은 충동입니다."
+      }
+    },
+    {
+      "source": "Screen Time access wasn't approved. Try again, or open Help for other options.",
+      "translations": {
+        "hi": "स्क्रीन टाइम अनुमति नहीं मिली। फिर कोशिश करें या दूसरे विकल्पों के लिए मदद खोलें।",
+        "es": "No se aprobó Tiempo de uso. Reinténtalo o abre Ayuda para otras opciones.",
+        "pt": "O acesso ao Tempo de Uso não foi aprovado. Tente novamente ou abra Ajuda para outras opções.",
+        "fr": "L’accès Temps d’écran n’a pas été accordé. Réessayez ou ouvrez l’aide pour d’autres options.",
+        "de": "Bildschirmzeit-Zugriff wurde nicht genehmigt. Versuche es erneut oder öffne Hilfe für andere Möglichkeiten.",
+        "ar": "لم يُوافق على وصول مدة استخدام الجهاز. أعد المحاولة أو افتح المساعدة لخيارات أخرى.",
+        "ja": "スクリーンタイムのアクセスが許可されませんでした。再試行するか、ヘルプで他の方法を確認してください。",
+        "zh-Hans": "屏幕使用时间访问未获批准。请重试，或打开帮助查看其他选项。",
+        "ko": "Screen Time 액세스가 승인되지 않았습니다. 다시 시도하거나 도움말을 열어 다른 옵션을 확인하세요."
+      }
+    },
+    {
+      "source": "Screen Time target chosen during setup",
+      "translations": {
+        "hi": "सेटअप के दौरान चुना स्क्रीन टाइम लक्ष्य",
+        "es": "Objetivo de Tiempo de uso elegido al configurar",
+        "pt": "Alvo do Tempo de Uso escolhido na configuração",
+        "fr": "Cible Temps d’écran choisie pendant la configuration",
+        "de": "Bei Einrichtung gewähltes Bildschirmzeitziel",
+        "ar": "هدف مدة الاستخدام المختار أثناء الإعداد",
+        "ja": "設定時に選んだスクリーンタイム対象",
+        "zh-Hans": "设置时选择的屏幕使用时间对象",
+        "ko": "설정 중에 선택된 Screen Time 대상"
+      }
+    },
+    {
+      "source": "Secure checkout is unavailable. Try again later.",
+      "translations": {
+        "hi": "सुरक्षित खरीद प्रक्रिया उपलब्ध नहीं है। बाद में फिर कोशिश करें।",
+        "es": "El pago seguro no está disponible. Reinténtalo más tarde.",
+        "pt": "O pagamento seguro está indisponível. Tente novamente mais tarde.",
+        "fr": "Le paiement sécurisé est indisponible. Réessayez plus tard.",
+        "de": "Sicherer Kaufabschluss nicht verfügbar. Versuche es später erneut.",
+        "ar": "الدفع الآمن غير متاح. أعد المحاولة لاحقًا.",
+        "ja": "安全な購入手続きは利用できません。後でもう一度試してください。",
+        "zh-Hans": "安全结账不可用。请稍后重试。",
+        "ko": "보안 결제를 사용할 수 없습니다. 나중에 다시 시도하세요."
+      }
+    },
+    {
+      "source": "Secure local backup storage is unavailable.",
+      "translations": {
+        "hi": "सुरक्षित स्थानीय बैकअप स्टोरेज उपलब्ध नहीं है।",
+        "es": "El almacenamiento local seguro de copias no está disponible.",
+        "pt": "O armazenamento local seguro de backup está indisponível.",
+        "fr": "Le stockage local sécurisé des sauvegardes est indisponible.",
+        "de": "Sicherer lokaler Sicherungsspeicher ist nicht verfügbar.",
+        "ar": "التخزين المحلي الآمن للنسخ غير متاح.",
+        "ja": "安全な端末内バックアップストレージを利用できません。",
+        "zh-Hans": "安全本地备份存储不可用。",
+        "ko": "안전한 로컬 백업 저장소를 사용할 수 없습니다."
+      }
+    },
+    {
+      "source": "See all {{totalHabits}} practices",
+      "translations": {
+        "hi": "सभी {{totalHabits}} अभ्यास देखें",
+        "es": "Ver las {{totalHabits}} prácticas",
+        "pt": "Ver todas as {{totalHabits}} práticas",
+        "fr": "Voir les {{totalHabits}} pratiques",
+        "de": "Alle {{totalHabits}} Übungen anzeigen",
+        "ar": "عرض كل {{totalHabits}} الممارسات",
+        "ja": "{{totalHabits}}件の練習をすべて見る",
+        "zh-Hans": "查看全部 {{totalHabits}} 项练习",
+        "ko": "{{totalHabits}} 사례 모두 보기"
+      }
+    },
+    {
+      "source": "See my starting point",
+      "translations": {
+        "hi": "मेरा शुरुआती बिंदु देखें",
+        "es": "Ver mi punto de partida",
+        "pt": "Ver meu ponto de partida",
+        "fr": "Voir mon point de départ",
+        "de": "Meinen Ausgangspunkt sehen",
+        "ar": "عرض نقطة بدايتي",
+        "ja": "自分の出発点を見る",
+        "zh-Hans": "查看我的起点",
+        "ko": "나의 출발점 보기"
+      }
+    },
+    {
+      "source": "Select At Least 1 App",
+      "translations": {
+        "hi": "कम से कम 1 ऐप चुनें",
+        "es": "Selecciona al menos 1 app",
+        "pt": "Selecione ao menos 1 app",
+        "fr": "Sélectionnez au moins 1 app",
+        "de": "Mindestens 1 App wählen",
+        "ar": "اختر تطبيقًا واحدًا على الأقل",
+        "ja": "アプリを1つ以上選択",
+        "zh-Hans": "至少选择 1 个应用",
+        "ko": "앱을 1개 이상 선택하세요."
+      }
+    },
+    {
+      "source": "Select at least one Android app timer to finish protection setup.",
+      "translations": {
+        "hi": "सुरक्षा सेटअप पूरा करने के लिए कम से कम एक Android ऐप टाइमर चुनें।",
+        "es": "Selecciona al menos un temporizador Android para terminar la protección.",
+        "pt": "Selecione ao menos um temporizador Android para concluir a proteção.",
+        "fr": "Sélectionnez au moins un minuteur Android pour terminer la protection.",
+        "de": "Wähle mindestens einen Android-App-Timer für die Schutzeinrichtung.",
+        "ar": "اختر مؤقت تطبيق Android واحدًا على الأقل لإكمال الحماية.",
+        "ja": "保護設定を完了するにはAndroidアプリのタイマーを一つ以上選んでください。",
+        "zh-Hans": "至少选择一个 Android 应用计时器以完成保护设置。",
+        "ko": "보호 설정을 완료하려면 Android 앱 타이머를 하나 이상 선택하세요."
+      }
+    },
+    {
+      "source": "Selected app timers are unavailable in this build. Install a signed Android build, then return to setup.",
+      "translations": {
+        "hi": "इस बिल्ड में चुने ऐप टाइमर उपलब्ध नहीं हैं। साइन किया Android बिल्ड इंस्टॉल करके सेटअप पर लौटें।",
+        "es": "Los temporizadores elegidos no están disponibles. Instala una versión Android firmada y vuelve a configurar.",
+        "pt": "Os temporizadores escolhidos estão indisponíveis. Instale uma versão Android assinada e volte à configuração.",
+        "fr": "Les minuteurs choisis sont indisponibles. Installez une version Android signée, puis revenez à la configuration.",
+        "de": "Gewählte App-Timer sind in diesem Build nicht verfügbar. Installiere einen signierten Android-Build und kehre zurück.",
+        "ar": "مؤقتات التطبيقات المختارة غير متاحة. ثبّت نسخة Android موقّعة ثم عُد للإعداد.",
+        "ja": "このビルドでは選択したタイマーを利用できません。署名済みAndroidビルドをインストールして設定に戻ってください。",
+        "zh-Hans": "此版本不支持所选应用计时器。安装已签名的 Android 版本后返回设置。",
+        "ko": "이 빌드에서는 선택한 앱 타이머를 사용할 수 없습니다. 서명된 Android 빌드를 설치한 다음 설정으로 돌아갑니다."
+      }
+    },
+    {
+      "source": "Selected app timers could not sync to native protection.",
+      "translations": {
+        "hi": "चुने ऐप टाइमर नेटिव सुरक्षा से सिंक नहीं हुए।",
+        "es": "No se sincronizaron los temporizadores con la protección nativa.",
+        "pt": "Os temporizadores não sincronizaram com a proteção nativa.",
+        "fr": "Les minuteurs n’ont pas été synchronisés avec la protection native.",
+        "de": "Gewählte App-Timer konnten nicht mit nativem Schutz synchronisiert werden.",
+        "ar": "تعذّرت مزامنة المؤقتات مع الحماية الأصلية.",
+        "ja": "選択したアプリタイマーをネイティブ保護と同期できませんでした。",
+        "zh-Hans": "所选应用计时器无法同步到原生保护。",
+        "ko": "선택한 앱 타이머를 기본 보호와 동기화할 수 없습니다."
+      }
+    },
+    {
+      "source": "Selected app timers synced to native protection.",
+      "translations": {
+        "hi": "चुने ऐप टाइमर नेटिव सुरक्षा से सिंक हुए।",
+        "es": "Temporizadores sincronizados con la protección nativa.",
+        "pt": "Temporizadores sincronizados com a proteção nativa.",
+        "fr": "Minuteurs synchronisés avec la protection native.",
+        "de": "Gewählte App-Timer mit nativem Schutz synchronisiert.",
+        "ar": "تمت مزامنة المؤقتات مع الحماية الأصلية.",
+        "ja": "選択したアプリタイマーをネイティブ保護と同期しました。",
+        "zh-Hans": "所选应用计时器已同步到原生保护。",
+        "ko": "선택한 앱 타이머가 기본 보호와 동기화되었습니다."
+      }
+    },
+    {
+      "source": "Selected apps are already synced. Continuing protection setup automatically.",
+      "translations": {
+        "hi": "चुने ऐप पहले से सिंक हैं। सुरक्षा सेटअप अपने-आप आगे बढ़ रहा है।",
+        "es": "Las apps elegidas ya están sincronizadas. La configuración continúa automáticamente.",
+        "pt": "Os apps escolhidos já estão sincronizados. A configuração continua automaticamente.",
+        "fr": "Les apps choisies sont déjà synchronisées. La configuration continue automatiquement.",
+        "de": "Gewählte Apps sind schon synchronisiert. Die Schutzeinrichtung wird automatisch fortgesetzt.",
+        "ar": "التطبيقات المختارة متزامنة بالفعل. يستمر إعداد الحماية تلقائيًا.",
+        "ja": "選択したアプリは同期済みです。保護設定を自動で続行します。",
+        "zh-Hans": "所选应用已同步。正在自动继续保护设置。",
+        "ko": "선택한 앱이 이미 동기화되었습니다. 자동으로 보호 설정을 계속합니다."
+      }
+    },
+    {
+      "source": "Selected apps are saved. Syncing app timers to native protection now.",
+      "translations": {
+        "hi": "चुने ऐप सेव हैं। अब ऐप टाइमर नेटिव सुरक्षा से सिंक हो रहे हैं।",
+        "es": "Apps elegidas guardadas. Sincronizando temporizadores con la protección nativa.",
+        "pt": "Apps escolhidos salvos. Sincronizando temporizadores com a proteção nativa.",
+        "fr": "Apps choisies enregistrées. Synchronisation des minuteurs avec la protection native.",
+        "de": "Gewählte Apps gespeichert. App-Timer werden mit nativem Schutz synchronisiert.",
+        "ar": "حُفظت التطبيقات المختارة. تجري مزامنة المؤقتات مع الحماية الأصلية.",
+        "ja": "選択したアプリを保存しました。アプリタイマーをネイティブ保護と同期しています。",
+        "zh-Hans": "所选应用已保存。正在将应用计时器同步到原生保护。",
+        "ko": "선택한 앱이 저장됩니다. 이제 앱 타이머를 기본 보호와 동기화합니다."
+      }
+    },
+    {
+      "source": "self harm",
+      "translations": {
+        "hi": "खुद को चोट",
+        "es": "autolesión",
+        "pt": "automutilação",
+        "fr": "automutilation",
+        "de": "Selbstverletzung",
+        "ar": "إيذاء النفس",
+        "ja": "自傷",
+        "zh-Hans": "自伤",
+        "ko": "자해"
+      }
+    },
+    {
+      "source": "Send",
+      "translations": {
+        "hi": "भेजें",
+        "es": "Enviar",
+        "pt": "Enviar",
+        "fr": "Envoyer",
+        "de": "Senden",
+        "ar": "إرسال",
+        "ja": "送信",
+        "zh-Hans": "发送",
+        "ko": "보내기"
+      }
+    },
+    {
+      "source": "Send message",
+      "translations": {
+        "hi": "संदेश भेजें",
+        "es": "Enviar mensaje",
+        "pt": "Enviar mensagem",
+        "fr": "Envoyer un message",
+        "de": "Nachricht senden",
+        "ar": "إرسال رسالة",
+        "ja": "メッセージを送信",
+        "zh-Hans": "发送消息",
+        "ko": "메시지 보내기"
+      }
+    },
+    {
+      "source": "Send Report",
+      "translations": {
+        "hi": "रिपोर्ट भेजें",
+        "es": "Enviar informe",
+        "pt": "Enviar relatório",
+        "fr": "Envoyer le rapport",
+        "de": "Bericht senden",
+        "ar": "إرسال التقرير",
+        "ja": "レポートを送信",
+        "zh-Hans": "发送报告",
+        "ko": "보고서 보내기"
+      }
+    },
+    {
+      "source": "Send Snapshot",
+      "translations": {
+        "hi": "स्नैपशॉट भेजें",
+        "es": "Enviar instantánea",
+        "pt": "Enviar resumo",
+        "fr": "Envoyer l’instantané",
+        "de": "Momentaufnahme senden",
+        "ar": "إرسال اللقطة",
+        "ja": "スナップショットを送信",
+        "zh-Hans": "发送快照",
+        "ko": "스냅샷 보내기"
+      }
+    },
+    {
+      "source": "Send: I need a reset.",
+      "translations": {
+        "hi": "भेजें: मुझे रीसेट चाहिए।",
+        "es": "Enviar: necesito un reinicio.",
+        "pt": "Enviar: preciso de um recomeço.",
+        "fr": "Envoyer : j’ai besoin d’une pause.",
+        "de": "Senden: Ich brauche einen Neustart.",
+        "ar": "أرسل: أحتاج إعادة ضبط.",
+        "ja": "送信：リセットが必要です。",
+        "zh-Hans": "发送：我需要重置。",
+        "ko": "보내기: 재설정이 필요합니다."
+      }
+    },
+    {
+      "source": "Sending aggregate snapshot…",
+      "translations": {
+        "hi": "समेकित स्नैपशॉट भेज रहे हैं…",
+        "es": "Enviando instantánea agregada…",
+        "pt": "Enviando resumo agregado…",
+        "fr": "Envoi de l’instantané agrégé…",
+        "de": "Zusammengefasste Momentaufnahme wird gesendet…",
+        "ar": "جارٍ إرسال اللقطة المجمّعة…",
+        "ja": "集計スナップショットを送信中…",
+        "zh-Hans": "正在发送汇总快照…",
+        "ko": "집계 스냅샷을 보내는 중…"
+      }
+    },
+    {
+      "source": "Server Deletion help remains available on the hosted account-deletion page and through support if you cannot sign in.",
+      "translations": {
+        "hi": "साइन-इन न कर पाने पर भी सर्वर हटाने की मदद होस्टेड खाता-हटाने के पृष्ठ और सहायता से उपलब्ध है।",
+        "es": "Si no puedes acceder, la ayuda de eliminación del servidor sigue disponible en la página alojada y mediante soporte.",
+        "pt": "Se não conseguir entrar, a ajuda para exclusão no servidor continua disponível na página hospedada e pelo suporte.",
+        "fr": "Si vous ne pouvez pas vous connecter, l’aide à la suppression serveur reste disponible sur la page hébergée et auprès du support.",
+        "de": "Falls du dich nicht anmelden kannst, findest du Hilfe zur Serverlöschung auf der gehosteten Kontolöschseite und beim Support.",
+        "ar": "تبقى مساعدة الحذف من الخادم متاحة في صفحة حذف الحساب المستضافة وعبر الدعم إن تعذّر تسجيل الدخول.",
+        "ja": "ログインできない場合も、ホストされたアカウント削除ページとサポートからサーバー削除のヘルプを利用できます。",
+        "zh-Hans": "无法登录时，仍可在托管账户删除页面及支持渠道获得服务器删除帮助。",
+        "ko": "서버 삭제 도움말은 호스팅된 계정 삭제 페이지와 로그인할 수 없는 경우 지원을 통해 계속 이용할 수 있습니다."
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+appId: app.freed.recovery
+name: native-permission-locales
+tags: [smoke, read-only]
+---
+# Smoke only. Actual OS dialogs in all languages require the separate device obligations.
+- openLink: "freed:///preferences"
+- extendedWaitUntil:
+    visible: { id: "screen-preferences" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "language-en" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: { id: "language-en" }
+- takeScreenshot: "native-language-controls"

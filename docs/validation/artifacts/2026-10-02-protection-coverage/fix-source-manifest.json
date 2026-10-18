@@ -1,0 +1,293 @@
+{
+  "capturedAt": "2026-10-02T10:09:08.982459+00:00",
+  "gitHead": "2ad799359196aa7d7c31244326c15e47cfd35308",
+  "dirtyWorkspace": true,
+  "scope": "Authorized bounded protection fixes; no physical-device proof",
+  "files": [
+    {
+      "path": "ios/FREED/FREED.entitlements",
+      "sha256": "2f4a01ce965d501dd703ccd10bb9afe84dea1b8b1f63fc7a4b2cc63a35490f35",
+      "bytes": 731
+    },
+    {
+      "path": "ios/FREEDDeviceActivityMonitor/DeviceActivityMonitorExtension.swift",
+      "sha256": "502425032d095f706c3cd3c901d156f23baac617a0df9365da1690c80fdc628f",
+      "bytes": 10409
+    },
+    {
+      "path": "ios/FREEDDeviceActivityMonitor/FREEDDeviceActivityMonitor.entitlements",
+      "sha256": "9a836d901940cfc13707451bf703a5e304ab4bd339af14a96f890763b29942e4",
+      "bytes": 457
+    },
+    {
+      "path": "ios/FREEDDeviceActivityMonitor/Info.plist",
+      "sha256": "673c9c9fb166de0d50fc7419c12e4135efdc1471822d8b1e9fa9b3cfbd316e39",
+      "bytes": 1113
+    },
+    {
+      "path": "ios/FREEDSafariContentBlocker/ContentBlockerRequestHandler.swift",
+      "sha256": "9cfd2058ec2f1f40eb174b60a32b0293cd4b19e4a905b5df98ef91fe071da417",
+      "bytes": 2301
+    },
+    {
+      "path": "ios/FREEDSafariContentBlocker/FREEDSafariContentBlocker.entitlements",
+      "sha256": "dd1783438bb5fe5f64277ef9577467d2d1ff1d84598f642f97f3ace4f14a4f52",
+      "bytes": 400
+    },
+    {
+      "path": "ios/FREEDSafariContentBlocker/Info.plist",
+      "sha256": "5c4b50cd9901791abc59932ae36f4fa167b41e06c14114733409a037b9df44c7",
+      "bytes": 1099
+    },
+    {
+      "path": "ios/FREEDSafariContentBlocker/blockerList.json",
+      "sha256": "52a97e2f9315111577c4b991f36eaa53e037e6154cb9ee9c1cafd02d56f4a37d",
+      "bytes": 4858
+    },
+    {
+      "path": "ios/FREEDSafariFocusShield/FREEDSafariFocusShield.entitlements",
+      "sha256": "d6d6cb7d87937b8918bd1e1df6cb9d10dc1b20f9449b5319c63834b5dc06b1dd",
+      "bytes": 407
+    },
+    {
+      "path": "ios/FREEDSafariFocusShield/Info.plist",
+      "sha256": "ba400cf9289f156d1fccbde7cb50f384db89045ce3391482309bcbb31fdebbe6",
+      "bytes": 1473
+    },
+    {
+      "path": "ios/FREEDSafariFocusShield/SafariWebExtensionHandler.swift",
+      "sha256": "c4d27c718f2d80a600babc4b59af307754e4a444e151855d9607ceab7df5aebb",
+      "bytes": 2509
+    },
+    {
+      "path": "ios/FREEDSafariFocusShield/background.js",
+      "sha256": "75713cba6412cc5a37d42dcaeb8057fc92d393a316c02328a2e98f4668d8034b",
+      "bytes": 936
+    },
+    {
+      "path": "ios/FREEDSafariFocusShield/content.js",
+      "sha256": "579e74adb2d219fbdb3e427f4c11ce3852315f04c7b77711a03d80f293692dd1",
+      "bytes": 5224
+    },
+    {
+      "path": "ios/FREEDSafariFocusShield/manifest.json",
+      "sha256": "ef75eebb496fb9ad7b3b3e41b796491fb57a5334368c63e3562a37f2355d4f49",
+      "bytes": 888
+    },
+    {
+      "path": "ios/FREEDShieldAction/FREEDShieldAction.entitlements",
+      "sha256": "9a836d901940cfc13707451bf703a5e304ab4bd339af14a96f890763b29942e4",
+      "bytes": 457
+    },
+    {
+      "path": "ios/FREEDShieldAction/Info.plist",
+      "sha256": "40d1b83132864c7df3e92bab1fd3bf9ee4595a616fb6f01c843ffadee6116d8a",
+      "bytes": 1106
+    },
+    {
+      "path": "ios/FREEDShieldAction/ShieldActionExtension.swift",
+      "sha256": "2c0fefe48316b00383196906e231f02ad5e0abc80f9f9f8a25e07d3675f0af6f",
+      "bytes": 4031
+    },
+    {
+      "path": "ios/FREEDShieldConfiguration/FREEDShieldConfiguration.entitlements",
+      "sha256": "9a836d901940cfc13707451bf703a5e304ab4bd339af14a96f890763b29942e4",
+      "bytes": 457
+    },
+    {
+      "path": "ios/FREEDShieldConfiguration/Info.plist",
+      "sha256": "5d192f87a98c383f866fa4e6da0a2ed681585b0bb0d491da67f340afb7a3ca01",
+      "bytes": 1115
+    },
+    {
+      "path": "ios/FREEDShieldConfiguration/ShieldConfigurationExtension.swift",
+      "sha256": "287a33eeae79cb61f5b5077fa2c72eaff0103b892af9763e8c5c92c5c1ee241f",
+      "bytes": 1815
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/AndroidManifest.xml",
+      "sha256": "8ebe371cc715715d7be194350ee5bcc63d86d3707f96df72d8652cb8de2df81b",
+      "bytes": 2920
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+      "sha256": "5681437dfa7e07fea51e6a20e234364969679a20177651cf26dda6d51719740b",
+      "bytes": 53246
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAdultDomainFeed.kt",
+      "sha256": "697276b40a5ceb0459a49a95d31f298fc02b3d774af186ace77acffbb57d8fd4",
+      "bytes": 4947
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedDnsGuardPolicy.kt",
+      "sha256": "6d6f5debab513221bb55d1d94f306226475ca6b016678764f184c378d6dac8fc",
+      "bytes": 1450
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedDoomscrollApps.kt",
+      "sha256": "0ab4718f3cd08dab4b6ea4b51b46bd264f3af425d45133fae300650caa9c9430",
+      "bytes": 1933
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+      "sha256": "f919a74c2d378490760b2a5bc929e8e2403e3b6810019f4913fd863436c9e0ee",
+      "bytes": 21764
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldRules.kt",
+      "sha256": "7cbc315a9d92e21e8931c68da00951f5c8e0d643a87997eb537f5a2a5364dec5",
+      "bytes": 17844
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedInterventionActivity.kt",
+      "sha256": "ea68a582e2fbdc1dd9627123e807ab43fda3dc0935c213d6cdc8b4db9f0729dd",
+      "bytes": 5576
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedNetworkDnsState.kt",
+      "sha256": "6ef8474a8abde04decceb47a719c5fa9b8eed811323a8fa29417de0849e676a7",
+      "bytes": 2419
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+      "sha256": "ed9c0998d0b9bff0e5682f43254fe41de1d41a77706d8b52d78727e523c836db",
+      "bytes": 102917
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedUrlClassifier.kt",
+      "sha256": "6e6e2b2a713f9c26761efa6062d29839e1411d1c906f4385062927fc15b6ef86",
+      "bytes": 18670
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedUsageAccessConfigActivity.kt",
+      "sha256": "ca9f6eb6daab7dd124d9c328f177dc2b8d383b5fd4241b2b2fc51e63ad0c4961",
+      "bytes": 5676
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedVpnAutostartReceiver.kt",
+      "sha256": "504cc30bc42601c59b0ff19cdca4b5ffec7c324a191d4d0774bf6a666d77fc38",
+      "bytes": 453
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedVpnService.kt",
+      "sha256": "a231cfe127ab7ab7eef71c7183838e6c6e8f9736be807c480c033786178ad8ca",
+      "bytes": 49914
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/res/xml/freed_accessibility_service.xml",
+      "sha256": "61e7f938c06f61c48493a22e08f35b08a265e1e3af7a6974799772a194eca9f9",
+      "bytes": 578
+    },
+    {
+      "path": "modules/freed-protection/android/src/test/java/app/freed/protection/FreedDnsGuardPolicyCases.kt",
+      "sha256": "855e770191c4e95314762f860a747d1c9cfb5ff51c6f258acb15ec1bfbd7f147",
+      "bytes": 1388
+    },
+    {
+      "path": "modules/freed-protection/ios/FreedProtectionModule.swift",
+      "sha256": "2b3e6fff60f69d42a9f31ae75c1e39b6a5fd6cac2d8da94e96dda96ac420c2e5",
+      "bytes": 79592
+    },
+    {
+      "path": "modules/freed-protection/src/index.ts",
+      "sha256": "e7467f72239532968ad05016d5722d7d0188931d1b6a9e3d2fa17f99c224190d",
+      "bytes": 28173
+    },
+    {
+      "path": "scripts/android-classifier-parity-audit.ts",
+      "sha256": "1a46a316dfd1a2608c27fd68b96c937164a17f21344a2b774a8e2e74e7c6c09c",
+      "bytes": 7254
+    },
+    {
+      "path": "scripts/classifier-safety-audit.ts",
+      "sha256": "ac29edd432371cb5810ec54ea5fd507466bf95bc05e0fa00b98a5c9650a56d68",
+      "bytes": 1106
+    },
+    {
+      "path": "scripts/classifier-safety-corpus.ts",
+      "sha256": "d12abd0c5721e265db23fce23a4521b7ea5294fe5c83282386a46a45280e1a92",
+      "bytes": 6437
+    },
+    {
+      "path": "scripts/lib/ios-safari-focus-shield-contract.js",
+      "sha256": "af7ff88b646d9b9982b0179fd844f4e89d9b8d7b62fbe5339196fe2d891ab1a9",
+      "bytes": 11234
+    },
+    {
+      "path": "src/lib/adult-domain-feed-provenance.ts",
+      "sha256": "e1e7feb89d123f1a18d113b11d5282bf4e757acf140539663ce09ac1184a55c2",
+      "bytes": 1893
+    },
+    {
+      "path": "src/lib/adult-domain-feed-sync.ts",
+      "sha256": "24336f3280707f052df2bd59c04315a8ce58743c9df4f13afa5d521f87541aa0",
+      "bytes": 13189
+    },
+    {
+      "path": "src/lib/blocking-engine.ts",
+      "sha256": "830ab9db5cf641f575bdbd89d256583dcc9bf1414ec489c7c52be8a72dbb7526",
+      "bytes": 22820
+    },
+    {
+      "path": "src/lib/focus-shield.ts",
+      "sha256": "6e79cc7c845fc847ca21c704b3f2365467aa56978e90eb36cc2461a8c4431806",
+      "bytes": 13054
+    },
+    {
+      "path": "src/lib/native-intervention.ts",
+      "sha256": "706aacb894b5df4129a6ad9a3e93d6e239ad8ddcf30063b1b387d9c58ed19bd8",
+      "bytes": 14780
+    },
+    {
+      "path": "src/lib/protection-capabilities.ts",
+      "sha256": "145be3d1d23ecf238e03dd498580a7cb7677485a13810f2773a92aeab95925aa",
+      "bytes": 7291
+    },
+    {
+      "path": "src/lib/protection-permissions.ts",
+      "sha256": "d202a3d45867fb5e1de8481f81fbe1e6a8c7787d2bdc27338919d14b716aa358",
+      "bytes": 20912
+    },
+    {
+      "path": "src/lib/protection-readiness.ts",
+      "sha256": "96792076197a3fd7d2e5671c82613e02a513919221a304808d186feb7e6bc656",
+      "bytes": 3606
+    },
+    {
+      "path": "tests/native-intervention-links.test.ts",
+      "sha256": "850601c9e9bdf7620639e12b000fbc9a6f8f145539e6242ab6324b87d5a50daf",
+      "bytes": 11552
+    },
+    {
+      "path": "tests/protection-android-routing.test.js",
+      "sha256": "4b81d2f2018e968fabfb68a9b7ec4115014d0ba01a2dbee12e0a545a2ec71943",
+      "bytes": 2579
+    },
+    {
+      "path": "tests/protection-dns-safety.test.js",
+      "sha256": "e137e559d186754a4425f0de7de42bb6911db59db27d3b1980b859b5c3b67c47",
+      "bytes": 3125
+    },
+    {
+      "path": "tests/protection-permission-native.test.ts",
+      "sha256": "8a55ae0474b5781cc1ff857fd0eab86a15ff00ba1ecef8d3ccfad9e7a16f8af0",
+      "bytes": 4543
+    },
+    {
+      "path": "tests/protection-safari-routing.swift",
+      "sha256": "8881ed46b4704c7f6aad4f823b97c53ee7e2e5cea97ae665c48042e656bfaab4",
+      "bytes": 2574
+    },
+    {
+      "path": "tests/protection-safari-routing.test.js",
+      "sha256": "b1eb630411e6b0a202705704f09386e142f7f5ebb1ca4faa2ab1d5bc9e0e6e52",
+      "bytes": 5049
+    },
+    {
+      "path": "tests/protection-setup-flow.test.ts",
+      "sha256": "ad0501fe6b167ade065ebdf6a3c6120f5c7b95b4b0e351d41c2109594ae68f93",
+      "bytes": 4296
+    }
+  ]
+}

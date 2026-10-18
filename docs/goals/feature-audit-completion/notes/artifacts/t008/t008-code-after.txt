@@ -1,0 +1,116 @@
+# Source excerpts AFTER the T008 fix (copied from the working tree, with line numbers).
+# NOTE: the repo worktree was already dirty before this slice, so a plain git diff would
+# mix unrelated pre-existing edits with these four changes; excerpts are used instead.
+
+## src/lib/recovery-state.ts 1206-1232 (new shared calendar helpers)
+     1	export function localDateKeyToUtcMs(dateKey: string) {
+     2	  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateKey);
+     3	  if (!match) return Number.NaN;
+     4	  const year = Number(match[1]);
+     5	  const month = Number(match[2]);
+     6	  const day = Number(match[3]);
+     7	  if (month < 1 || month > 12 || day < 1 || day > 31) return Number.NaN;
+     8	  const date = new Date(Date.UTC(year, month - 1, day));
+     9	  // Reject impossible keys such as 2026-02-30, which Date.UTC would otherwise roll forward.
+    10	  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) {
+    11	    return Number.NaN;
+    12	  }
+    13	  return date.getTime();
+    14	}
+    15	
+    16	/**
+    17	 * Whole calendar days between two local date keys. UTC arithmetic has no DST transitions, so a
+    18	 * local day that runs 23 or 25 hours still counts as exactly one day.
+    19	 */
+    20	export function localDateKeyDiffDays(fromKey: string, toKey: string) {
+    21	  const fromMs = localDateKeyToUtcMs(fromKey);
+    22	  const toMs = localDateKeyToUtcMs(toKey);
+    23	  if (!Number.isFinite(fromMs) || !Number.isFinite(toMs)) return 0;
+    24	  return Math.round((toMs - fromMs) / 86_400_000);
+    25	}
+    26	
+    27	function clockMinutes(value: string) {
+
+## src/lib/recovery-state.ts 1287-1295 (calculateStreakDaysFrom)
+1295:export function calculateStreakDaysFrom(startedAt: string | null, day: Date | string = new Date()) {
+1296-  if (!startedAt) return 0;
+1297-  const startedKey = getLocalDateKey(startedAt);
+1298-  const dayKey = getLocalDateKey(day);
+1299-  if (!startedKey || !dayKey) return 0;
+1300-
+1301-  const elapsedDays = localDateKeyDiffDays(startedKey, dayKey);
+1302-  return elapsedDays > 0 ? elapsedDays : 0;
+1303-}
+1304-
+
+## src/lib/recovery-state.ts touchRecoveryState (clock-rollback guard)
+1989:export function touchRecoveryState(state: RecoveryState, openedAt = new Date().toISOString()): RecoveryState {
+1990-  const openedMs = Date.parse(openedAt);
+1991-  const lastOpenedMs = state.lastOpenedAt ? Date.parse(state.lastOpenedAt) : Number.NaN;
+1992-  const clockMovedBackward =
+1993-    Number.isFinite(openedMs) && Number.isFinite(lastOpenedMs) && openedMs < lastOpenedMs;
+1994-  const derivedStreak = state.recoveryStartedAt ? calculateStreakDaysFrom(state.recoveryStartedAt, openedAt) : state.streakDays;
+1995-  // A device clock that jumped backwards (travel, bad auto-time) must never silently zero a
+1996-  // persisted streak; the corrected value still climbs, and the open watermark never moves back.
+1997-  const currentStreak = Math.max(0, clockMovedBackward ? Math.max(state.streakDays, derivedStreak) : derivedStreak);
+1998-  return hydrateRecoveryState({
+1999-    ...state,
+2000-    streakDays: currentStreak,
+2001-    bestStreakDays: Math.max(state.bestStreakDays, currentStreak),
+2002-    lastOpenedAt: clockMovedBackward && state.lastOpenedAt ? state.lastOpenedAt : openedAt
+2003-  });
+2004-}
+2005-
+
+## src/lib/recovery-analytics.ts localDateKeyToDate / dateKeysForRange / dayDifference
+239:function localDateKeyToDate(dateKey: string) {
+240-  const utcMs = localDateKeyToUtcMs(dateKey);
+241-  if (!Number.isFinite(utcMs)) return null;
+242-  const parts = new Date(utcMs);
+243-  return new Date(parts.getUTCFullYear(), parts.getUTCMonth(), parts.getUTCDate());
+244-}
+245-
+246-function dateKeysForRange(startKey: string, endKey: string) {
+247-  const start = localDateKeyToDate(startKey);
+248-  const end = localDateKeyToDate(endKey);
+249-  if (!start || !end || end.getTime() < start.getTime()) return [];
+250-
+251-  // Step with setDate, never with a fixed 86,400,000 ms day: a local day is 23, 24 or 25 hours
+252-  // around a DST transition, and fixed stepping duplicates one label and drops the last day.
+253-  const keys: string[] = [];
+254-  const cursor = new Date(start.getTime());
+255-  while (getLocalDateKey(cursor) <= endKey && keys.length < 36_600) {
+256-    keys.push(getLocalDateKey(cursor));
+257-    cursor.setDate(cursor.getDate() + 1);
+258-  }
+259-  return keys;
+260-}
+261-
+262-function dayDifference(leftDateKey: string, rightDateKey: string) {
+263-  return localDateKeyDiffDays(leftDateKey, rightDateKey);
+
+## src/lib/recovery-analytics.ts daysSinceLastRelapse tail
+360:function daysSinceLastRelapse(records: RecoveryState["relapseRecords"], targetDate: Date) {
+361-  const targetTime = targetDate.getTime();
+362-  if (!Number.isFinite(targetTime)) return null;
+363-
+364-  const latestRelapseTime = records.reduce<number | null>((latest, record) => {
+365-    const occurredAt = Date.parse(record.occurredAt);
+366-    if (Number.isNaN(occurredAt) || occurredAt > targetTime) return latest;
+367-    return latest === null || occurredAt > latest ? occurredAt : latest;
+368-  }, null);
+369-
+370-  if (latestRelapseTime === null) return null;
+371-
+372-  return Math.max(
+373-    0,
+374-    localDateKeyDiffDays(getLocalDateKey(new Date(latestRelapseTime)), getLocalDateKey(new Date(targetTime)))
+375-  );
+376-}
+377-
+378-function challengeSuccessByCategory(challenges: RecoveryState["challengeHistory"]): ChallengeCategorySuccess[] {
+379-  return CHALLENGE_CATEGORIES.map((category) => {
+380-    const categoryChallenges = challenges.filter((challenge) => challenge.category === category);
+
+## package.json new script
+47:    "test:recovery-time": "node -- scripts/run-ts-entry.js tests/recovery-time.test.ts",

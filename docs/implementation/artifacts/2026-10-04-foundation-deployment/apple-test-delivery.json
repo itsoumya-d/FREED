@@ -1,0 +1,81 @@
+{
+  "project": "freed-7d5ee",
+  "bundleId": "app.freed.recovery",
+  "appAppleId": "6816637268",
+  "sourceScope": "Only signed Apple TEST notifications; no purchases or user notification jobs.",
+  "tokensAndSignedPayloadsOmitted": true,
+  "testTokensHeldOnlyInMemoryOrPrivate0600TemporaryFile": true,
+  "environments": [
+    {
+      "environment": "Production",
+      "expectedDestination": "https://asia-south1-freed-7d5ee.cloudfunctions.net/appleSubscriptionNotifications",
+      "requestedAt": "2026-10-04T09:59:00.422Z",
+      "apiHttpCalls": [
+        {
+          "operation": "requestTestNotification",
+          "httpStatusCode": 401,
+          "at": "2026-10-04T09:59:01.885Z"
+        },
+        {
+          "operation": "requestTestNotification",
+          "httpStatusCode": 401,
+          "at": "2026-10-04T10:04:07.075Z"
+        }
+      ],
+      "deliveryAttempts": [],
+      "purchaseLifecycleProven": false,
+      "initialRequestError": {
+        "httpStatusCode": 401,
+        "apiErrorCode": null,
+        "classification": "request-or-verification-failed"
+      },
+      "finalBoundedRetryAt": "2026-10-04T10:04:05.617Z",
+      "error": {
+        "httpStatusCode": 401,
+        "apiErrorCode": null,
+        "classification": "request-or-verification-failed"
+      }
+    },
+    {
+      "environment": "Sandbox",
+      "expectedDestination": "https://asia-south1-freed-7d5ee.cloudfunctions.net/appleSubscriptionNotificationsSandbox",
+      "requestedAt": "2026-10-04T09:59:00.461Z",
+      "apiHttpCalls": [
+        {
+          "operation": "requestTestNotification",
+          "httpStatusCode": 200,
+          "at": "2026-10-04T09:59:01.894Z"
+        },
+        {
+          "operation": "getTestNotificationStatus",
+          "httpStatusCode": 404,
+          "at": "2026-10-04T09:59:02.210Z"
+        },
+        {
+          "operation": "getTestNotificationStatus",
+          "httpStatusCode": 200,
+          "at": "2026-10-04T10:01:22.765Z"
+        }
+      ],
+      "deliveryAttempts": [
+        {
+          "at": "2026-10-04T09:59:01.773Z",
+          "sendAttemptResult": "SUCCESS"
+        }
+      ],
+      "purchaseLifecycleProven": false,
+      "testTokenSha256": "b7afe1216a21ef5685ff35bf244c5d7f817fb737013ec9fb83d046ced5998698",
+      "requestAccepted": true,
+      "previousLookupError": {
+        "httpStatusCode": 404,
+        "apiErrorCode": 4040008,
+        "classification": "request-or-verification-failed"
+      },
+      "resumedPollAt": "2026-10-04T10:01:21.582Z",
+      "lastPolledAt": "2026-10-04T10:01:22.766Z",
+      "actualDecoderAuthenticatedTestAndReturnedNull": true,
+      "deliverySucceeded": true
+    }
+  ],
+  "finishedAt": "2026-10-04T10:04:07.076Z"
+}

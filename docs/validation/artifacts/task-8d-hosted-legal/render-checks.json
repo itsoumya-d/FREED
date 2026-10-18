@@ -1,0 +1,174 @@
+{
+  "result": "pass",
+  "scope": "Fresh headless localhost task browser only; existing tabs untouched; no hosted or device proof.",
+  "checks": [
+    {
+      "id": "privacy",
+      "layout": "mobile",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "documentWidth": 375,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 6,
+      "screenshot": "privacy-mobile.png",
+      "htmlSha256": "9a62d364fcf89b316c0d073cdae736cb2b8c193f4213cee4b0d8fd691841cf22",
+      "screenshotSha256": "029658da32661328441d1e102eb64b07d4470c82b75ea4758748be4d97ab65b5",
+      "consoleErrors": []
+    },
+    {
+      "id": "support",
+      "layout": "mobile",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "documentWidth": 375,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 4,
+      "screenshot": "support-mobile.png",
+      "htmlSha256": "26ad4eaa4b32fea274b9b3f1c5b0a35d4d082fdc3dd83385c5f180fb5f543657",
+      "screenshotSha256": "c104ae8227cc9a3153df540dfdc56f1ec6e71dfaf5f65940886c0fc3b2b001f8",
+      "consoleErrors": []
+    },
+    {
+      "id": "account-deletion",
+      "layout": "mobile",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "documentWidth": 375,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 4,
+      "screenshot": "account-deletion-mobile.png",
+      "htmlSha256": "964c8d8eeaf08980d7ba0994b2e72ad6dc6eeb3f2a1c4b2857f54146fd4fcd5e",
+      "screenshotSha256": "b32631fd190ba705832ab9dca196e76b6c32f7cdbb48700e84e6354089995025",
+      "consoleErrors": []
+    },
+    {
+      "id": "terms",
+      "layout": "mobile",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "documentWidth": 375,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 7,
+      "screenshot": "terms-mobile.png",
+      "htmlSha256": "732cb5bdf3a0f53f1972b0868bbcb7b0cb9e0b66dd1ff61da0fcb60822ef6f30",
+      "screenshotSha256": "da64b9405efb169922a42d49f222005fcbd4b02446929d4c9b34d8972500aefb",
+      "consoleErrors": []
+    },
+    {
+      "id": "privacy",
+      "layout": "desktop",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "documentWidth": 1440,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 6,
+      "screenshot": "privacy-desktop.png",
+      "htmlSha256": "9a62d364fcf89b316c0d073cdae736cb2b8c193f4213cee4b0d8fd691841cf22",
+      "screenshotSha256": "509ade579067e14a447cd932f187daf40bb0aeef09eeb59d988f9ec0f2e8cd81",
+      "consoleErrors": []
+    },
+    {
+      "id": "support",
+      "layout": "desktop",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "documentWidth": 1440,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 4,
+      "screenshot": "support-desktop.png",
+      "htmlSha256": "26ad4eaa4b32fea274b9b3f1c5b0a35d4d082fdc3dd83385c5f180fb5f543657",
+      "screenshotSha256": "6527a146c9da2786b157412755132730a915ecef5704c161ab183549eaef5922",
+      "consoleErrors": []
+    },
+    {
+      "id": "account-deletion",
+      "layout": "desktop",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "documentWidth": 1440,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 4,
+      "screenshot": "account-deletion-desktop.png",
+      "htmlSha256": "964c8d8eeaf08980d7ba0994b2e72ad6dc6eeb3f2a1c4b2857f54146fd4fcd5e",
+      "screenshotSha256": "c18403de62feb83e2f2a377facd7df44d46231507a87f3de7f24671160bf1d78",
+      "consoleErrors": []
+    },
+    {
+      "id": "terms",
+      "layout": "desktop",
+      "result": "pass",
+      "responseStatus": 200,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "documentWidth": 1440,
+      "clipped": [],
+      "fontSize": "16.5px",
+      "lineHeight": "27.225px",
+      "contactReachable": true,
+      "routesReachable": true,
+      "sectionCount": 7,
+      "screenshot": "terms-desktop.png",
+      "htmlSha256": "732cb5bdf3a0f53f1972b0868bbcb7b0cb9e0b66dd1ff61da0fcb60822ef6f30",
+      "screenshotSha256": "b03cc47c9397b092c84ed0cb323f8ec9831de2d8b174a170f0aef6c0fd5c9b0b",
+      "consoleErrors": []
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from the audited authored-source catalogs. -->
+<resources>
+  <string name="freed_accessibility_description" formatted="false">يرصد فتح التطبيقات المختارة لتطبيق الحماية على التطبيق كله. أنت تختار فتح دعم FREED. فحص Shorts وReels داخل التطبيقات تجريبي وخارج الإصدار العام.</string>
+  <string name="freed_usage_access_config_label" formatted="false">وصول الاستخدام FREED</string>
+  <string name="freed_usage_access_reason" formatted="false">يستخدم FREED الوصول إلى الاستخدام فقط لقراءة الوقت الأمامي الإجمالي لحزم التطبيقات المحددة حتى تتمكن مؤقتات التطبيق من إثارة تحديات الاسترداد. ولا يقرأ محتويات الشاشة أو الرسائل أو ضغطات المفاتيح أو سجل التصفح أو أحداث الاستخدام الأولية.</string>
+  <string name="freed_protection_label" formatted="false">FREED Protection</string>
+  <string name="freed_dns_notification_title" formatted="false">FREED DNS Guard</string>
+  <string name="freed_dns_channel_description" formatted="false">يظهر عندما يكون مرشح مجال DNS المخصص للبالغين فقط الخاص بـ FREED نشطًا.</string>
+  <string name="freed_dns_paused_notification" formatted="false">تم إيقاف التصفية مؤقتًا لصفحة تسجيل الدخول لهذه الشبكة. التصفح العادي يبقى مباشرا.</string>
+  <string name="freed_dns_active_notification" formatted="false">تصفية DNS لمجال البالغين نشطة. التصفح العادي يبقى مباشرا.</string>
+  <string name="freed_recovery_channel" formatted="false">تدخلات استرداد FREED</string>
+  <string name="freed_browser_notification_title" formatted="false">إشعار حماية FREED</string>
+  <string name="freed_app_notification_title" formatted="false">أوقف FREED تطبيقًا مختارًا</string>
+  <string name="freed_browser_channel_description" formatted="false">يعرض إشعارات حماية للحظر المدعوم. يفتح دعم FREED فقط عندما تختار ذلك.</string>
+  <string name="freed_accessibility_notification" formatted="false">افتح FREED لإكمال تحدي الاسترداد. لا يتم استخدام أي تراكبات أو لقطات شاشة أو التعرف الضوئي على الحروف.</string>
+  <string name="freed_source_label" formatted="false">المصدر: {{host}}</string>
+  <string name="freed_dns_intervention_channel_description" formatted="false">يعرض إشعارًا عند حظر FREED طلب DNS لنطاق بالغين. يفتح الدعم فقط عندما تختار ذلك.</string>
+  <string name="freed_dns_intervention_notification" formatted="false">افتح FREED لإكمال تحدي الاسترداد. التصفح العادي يبقى مباشرا.</string>
+  <string name="freed_dns_intervention_title" formatted="false">انتظر - خطك يستحق الحماية</string>
+  <string name="freed_blocked_host_label" formatted="false">المضيف المحظور: {{host}}</string>
+  <string name="freed_intervention_eyebrow" formatted="false">حماية FREED</string>
+  <string name="freed_intervention_title" formatted="false">يتمسك. أنت لا تزال في السيطرة.</string>
+  <string name="freed_intervention_subtitle" formatted="false">حدّ التطبيق فعّال. اختر «ابدأ عملية الاسترداد» للحصول على الدعم.</string>
+  <string name="freed_intervention_breathe" formatted="false">تنفس للداخل. ازفر.</string>
+  <string name="freed_start_recovery" formatted="false">ابدأ عملية الاسترداد</string>
+  <string name="freed_usage_eyebrow" formatted="false">الوصول إلى الاستخدام FREED</string>
+  <string name="freed_usage_title" formatted="false">يظل الوصول إلى الاستخدام مقتصراً على مؤقتات التطبيق.</string>
+  <string name="freed_usage_note" formatted="false">يتم التحكم في الوصول إلى الاستخدام من خلال إعدادات Android. بعد تمكين FREED، قم بالعودة إلى الإعداد حتى يتمكن اختبار التنشيط من التحقق من الحماية.</string>
+  <string name="freed_usage_return" formatted="false">ارجع إلى إعداد FREED</string>
+  <string name="freed_usage_back" formatted="false">العودة إلى إعدادات Android</string>
+  <string name="freed_calibration_instruction" formatted="false">اضغط على السطح للمعايرة. تبقى بصمة العرض الثابتة فقط على هذا الجهاز.</string>
+  <string name="freed_calibration_ready" formatted="false">تم العثور على محدد محلي ثابت. أكد لحفظه، أو قم بالإلغاء لتجاهله.</string>
+  <string name="freed_cancel" formatted="false">إلغاء</string>
+  <string name="freed_confirm" formatted="false">يتأكد</string>
+  <string name="freed_companion_label" formatted="false">رفيق FREED</string>
+  <string name="freed_companion_hint" formatted="false">انقر لتحية رفيقك.</string>
+  <string name="freed_companion_hello" formatted="false">خطوة واحدة في كل مرة. أنت تفسح المجال ليوم أفضل.</string>
+</resources>

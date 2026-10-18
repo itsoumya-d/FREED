@@ -1,0 +1,32 @@
+{
+  "entries": [
+    {
+      "source": "Invalid cloud-chat request.",
+      "translations": {
+        "hi": "क्लाउड बातचीत का अनुरोध अमान्य है।",
+        "es": "La solicitud de chat en la nube no es válida.",
+        "pt": "A solicitação de conversa na nuvem é inválida.",
+        "fr": "La demande de discussion dans le cloud est invalide.",
+        "de": "Die Cloud-Chat-Anfrage ist ungültig.",
+        "ar": "طلب المحادثة السحابية غير صالح.",
+        "ja": "クラウドチャットのリクエストが無効です。",
+        "ko": "클라우드 채팅 요청이 올바르지 않아요.",
+        "zh-Hans": "云端聊天请求无效。"
+      }
+    },
+    {
+      "source": "Cloud-chat operation changed.",
+      "translations": {
+        "hi": "क्लाउड बातचीत की प्रक्रिया बदल गई।",
+        "es": "La operación de chat en la nube cambió.",
+        "pt": "A operação de conversa na nuvem mudou.",
+        "fr": "L’opération de chat dans le cloud a changé.",
+        "de": "Der Cloud-Chat-Vorgang hat sich geändert.",
+        "ar": "تغيّرت عملية المحادثة السحابية.",
+        "ja": "クラウドチャットの処理が変更されました。",
+        "ko": "클라우드 채팅 작업이 변경되었어요.",
+        "zh-Hans": "云端聊天操作已更改。"
+      }
+    }
+  ]
+}

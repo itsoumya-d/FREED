@@ -1,0 +1,31 @@
+{
+  "changedFlowCount": 24,
+  "sharedOwnership": "only the 24 authorized .maestro/flows YAML files",
+  "yamlParser": {
+    "module": "yaml",
+    "ownedFlowsParsed": 24,
+    "totalFlowsParsed": 58,
+    "exitCode": 0
+  },
+  "isolatedChecks": {
+    "cwd": "/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-core-reconcile-1a2ypkkh/snapshot",
+    "manifest": {
+      "command": "node --test tests/feature-test-manifest.test.js",
+      "exitCode": 0,
+      "tests": 16,
+      "pass": 16,
+      "fail": 0
+    },
+    "reviewPlan": {
+      "command": "node --test tests/momentum-review-plan.test.js",
+      "exitCode": 1,
+      "tests": 14,
+      "pass": 13,
+      "fail": 1,
+      "failure": "tests/momentum-review-plan.test.js:69 still requires retired language-bn to exist in the independently repaired preferences-language flow"
+    }
+  },
+  "nativeExecution": "not-run",
+  "commits": 0,
+  "communications": 0
+}

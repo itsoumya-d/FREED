@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "freed-local-feature-validation-v1",
+  "generatedAt": "2026-10-02T06:37:05.047042+00:00",
+  "sanitized": true,
+  "scope": "local behavioral/contract tests; no emulator/device/live-service claim",
+  "runs": [
+    {
+      "suite": "tests/protection-setup-flow.test.ts",
+      "exitCode": 0,
+      "summary": [
+        "\u2139 tests 8",
+        "\u2139 pass 8",
+        "\u2139 fail 0"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/local-protection-setup-flow.test.log"
+    },
+    {
+      "suite": "tests/protection-permission-native.test.ts",
+      "exitCode": 0,
+      "summary": [
+        "\u2139 tests 5",
+        "\u2139 pass 5",
+        "\u2139 fail 0"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/local-protection-permission-native.test.log"
+    },
+    {
+      "suite": "tests/native-intervention-links.test.ts",
+      "exitCode": 0,
+      "summary": [
+        "\u2139 tests 6",
+        "\u2139 pass 6",
+        "\u2139 fail 0"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/local-native-intervention-links.test.log"
+    },
+    {
+      "suite": "tests/paywall-presenter.test.ts",
+      "exitCode": 0,
+      "summary": [
+        "paywall presenter tests passed"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/local-paywall-presenter.test.log"
+    },
+    {
+      "suite": "tests/paywall-navigation.test.ts",
+      "exitCode": 0,
+      "summary": [
+        "\u2139 tests 5",
+        "\u2139 pass 5",
+        "\u2139 fail 0"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/local-paywall-navigation.test.log"
+    },
+    {
+      "suite": "tests/launch-purchases.test.ts",
+      "exitCode": 0,
+      "summary": [
+        "launch purchase and localized checkout tests passed"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/local-launch-purchases.test.log"
+    },
+    {
+      "suite": "tests/native-checkout-readiness.test.ts",
+      "exitCode": 0,
+      "summary": [
+        "\u2139 tests 5",
+        "\u2139 pass 5",
+        "\u2139 fail 0"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/local-native-checkout-readiness.test.log"
+    },
+    {
+      "suite": "tests/premium-entitlement.test.ts",
+      "exitCode": 0,
+      "summary": [
+        "premium expiry, offline bound, revocation and saved-state migration tests passed",
+        "Account-bound offline Premium cache tests passed"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/local-premium-entitlement.test.log"
+    },
+    {
+      "suite": "tests/backup-crypto.test.ts",
+      "exitCode": 0,
+      "summary": [
+        "\u2139 tests 9",
+        "\u2139 pass 9",
+        "\u2139 fail 0"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/local-backup-crypto.test.log"
+    },
+    {
+      "suite": "tests/automatic-backup.test.ts",
+      "exitCode": 0,
+      "summary": [
+        "\u2139 tests 26",
+        "\u2139 pass 26",
+        "\u2139 fail 0"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/local-automatic-backup.test.log"
+    },
+    {
+      "suite": "tests/firebase-notification-flow.test.ts",
+      "exitCode": 0,
+      "summary": [
+        "\u2139 tests 11",
+        "\u2139 pass 11",
+        "\u2139 fail 0"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/local-firebase-notification-flow.test.log"
+    },
+    {
+      "suite": "tests/firebase-feature-runtime.test.ts",
+      "exitCode": 0,
+      "summary": [
+        "Firebase feature runtime tests passed"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/local-firebase-feature-runtime.test.log"
+    },
+    {
+      "suite": "tests/native-iap-lifecycle.test.ts",
+      "exitCode": 0,
+      "summary": [
+        "\u2139 tests 9",
+        "\u2139 pass 9",
+        "\u2139 fail 0"
+      ],
+      "log": "docs/validation/artifacts/2026-10-02-native-ui-testflight/local-native-iap-lifecycle.test.log"
+    }
+  ]
+}

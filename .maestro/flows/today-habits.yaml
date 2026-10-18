@@ -1,0 +1,201 @@
+appId: app.freed.recovery
+name: today-habits
+tags:
+  - smoke
+  - local-write
+---
+# Requires an English disposable current-day fixture with all six practices initially unrecorded.
+# The tools sheet opens PracticeDetail; only chosen plan rows have direct habit checkboxes.
+# Each current-day practice is recorded once and explicitly undone before continuing.
+# No historical date, guided verification or private owner record is changed.
+- openLink: "freed:///today"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "screen-main-today" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "home-all-practices" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "home-all-practices" }
+- scrollUntilVisible:
+    element: { text: "No adult content" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "No adult content"
+- tapOn: "No adult content"
+- extendedWaitUntil:
+    visible: { id: "practice-detail-modal" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "practice-mark-done" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Mark as done"
+- tapOn: { id: "practice-mark-done" }
+- assertVisible: "Mark as not done"
+- takeScreenshot: "habit-adult-content-toggled"
+- tapOn: { id: "practice-mark-done" }
+- assertVisible: "Mark as done"
+- scrollUntilVisible:
+    element: { id: "practice-detail-close" }
+    direction: UP
+    timeout: 10000
+- tapOn: { id: "practice-detail-close" }
+- assertNotVisible: { id: "practice-detail-modal" }
+- assertVisible: { id: "screen-main-today" }
+- scrollUntilVisible:
+    element: { id: "home-all-practices" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "home-all-practices" }
+- scrollUntilVisible:
+    element: { text: "Cold shower" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Cold shower"
+- tapOn: "Cold shower"
+- extendedWaitUntil:
+    visible: { id: "practice-detail-modal" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "practice-mark-done" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Mark as done"
+- tapOn: { id: "practice-mark-done" }
+- assertVisible: "Mark as not done"
+- tapOn: { id: "practice-mark-done" }
+- assertVisible: "Mark as done"
+- scrollUntilVisible:
+    element: { id: "practice-detail-close" }
+    direction: UP
+    timeout: 10000
+- tapOn: { id: "practice-detail-close" }
+- assertNotVisible: { id: "practice-detail-modal" }
+- assertVisible: { id: "screen-main-today" }
+- scrollUntilVisible:
+    element: { id: "home-all-practices" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "home-all-practices" }
+- scrollUntilVisible:
+    element: { text: "Exercise" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Exercise"
+- tapOn: "Exercise"
+- extendedWaitUntil:
+    visible: { id: "practice-detail-modal" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "practice-mark-done" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Mark as done"
+- tapOn: { id: "practice-mark-done" }
+- assertVisible: "Mark as not done"
+- tapOn: { id: "practice-mark-done" }
+- assertVisible: "Mark as done"
+- scrollUntilVisible:
+    element: { id: "practice-detail-close" }
+    direction: UP
+    timeout: 10000
+- tapOn: { id: "practice-detail-close" }
+- assertNotVisible: { id: "practice-detail-modal" }
+- assertVisible: { id: "screen-main-today" }
+- scrollUntilVisible:
+    element: { id: "home-all-practices" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "home-all-practices" }
+- scrollUntilVisible:
+    element: { text: "Meditation" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Meditation"
+- tapOn: "Meditation"
+- extendedWaitUntil:
+    visible: { id: "practice-detail-modal" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "practice-mark-done" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Mark as done"
+- tapOn: { id: "practice-mark-done" }
+- assertVisible: "Mark as not done"
+- tapOn: { id: "practice-mark-done" }
+- assertVisible: "Mark as done"
+- scrollUntilVisible:
+    element: { id: "practice-detail-close" }
+    direction: UP
+    timeout: 10000
+- tapOn: { id: "practice-detail-close" }
+- assertNotVisible: { id: "practice-detail-modal" }
+- assertVisible: { id: "screen-main-today" }
+- scrollUntilVisible:
+    element: { id: "home-all-practices" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "home-all-practices" }
+- scrollUntilVisible:
+    element: { text: "Journal" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Journal"
+- tapOn: "Journal"
+- extendedWaitUntil:
+    visible: { id: "practice-detail-modal" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "practice-mark-done" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Mark as done"
+- tapOn: { id: "practice-mark-done" }
+- assertVisible: "Mark as not done"
+- tapOn: { id: "practice-mark-done" }
+- assertVisible: "Mark as done"
+- scrollUntilVisible:
+    element: { id: "practice-detail-close" }
+    direction: UP
+    timeout: 10000
+- tapOn: { id: "practice-detail-close" }
+- assertNotVisible: { id: "practice-detail-modal" }
+- assertVisible: { id: "screen-main-today" }
+- scrollUntilVisible:
+    element: { id: "home-all-practices" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "home-all-practices" }
+- scrollUntilVisible:
+    element: { text: "No social media" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "No social media"
+- tapOn: "No social media"
+- extendedWaitUntil:
+    visible: { id: "practice-detail-modal" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "practice-mark-done" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Mark as done"
+- tapOn: { id: "practice-mark-done" }
+- assertVisible: "Mark as not done"
+- tapOn: { id: "practice-mark-done" }
+- assertVisible: "Mark as done"
+- scrollUntilVisible:
+    element: { id: "practice-detail-close" }
+    direction: UP
+    timeout: 10000
+- tapOn: { id: "practice-detail-close" }
+- assertNotVisible: { id: "practice-detail-modal" }
+- assertVisible: { id: "screen-main-today" }
+- takeScreenshot: "today-habits"

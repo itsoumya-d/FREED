@@ -4,6 +4,23 @@
     "appVersionSource": "remote"
   },
   "build": {
+    "testflight": {
+      "extends": "production",
+      "distribution": "store",
+      "channel": "testflight",
+      "autoIncrement": true,
+      "ios": {
+        "resourceClass": "m-medium",
+        "simulator": false
+      },
+      "environment": "production",
+      "env": {
+        "EXPO_PUBLIC_BUILD_CHANNEL": "internal-testflight",
+        "EXPO_PUBLIC_MONETIZATION_MODE": "native",
+        "EXPO_PUBLIC_ADMOB_USE_TEST_ADS": "true",
+        "FREED_ENCRYPTED_DNS_RELEASE_ENABLED": "true"
+      }
+    },
     "development": {
       "developmentClient": true,
       "distribution": "internal",
@@ -13,6 +30,13 @@
       },
       "ios": {
         "simulator": true
+      },
+      "environment": "development",
+      "env": {
+        "EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID": "5477978760-ussf6lsalc0h97ra505g8hfe6h7h5ns8.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID": "5477978760-mqacbd3saauk1roatvf9rpujvpkv8i7b.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME": "com.googleusercontent.apps.5477978760-mqacbd3saauk1roatvf9rpujvpkv8i7b",
+        "EXPO_PUBLIC_BUILD_CHANNEL": "development"
       }
     },
     "internal": {
@@ -23,6 +47,13 @@
       },
       "ios": {
         "resourceClass": "m-medium"
+      },
+      "environment": "preview",
+      "env": {
+        "EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID": "5477978760-ussf6lsalc0h97ra505g8hfe6h7h5ns8.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID": "5477978760-mqacbd3saauk1roatvf9rpujvpkv8i7b.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME": "com.googleusercontent.apps.5477978760-mqacbd3saauk1roatvf9rpujvpkv8i7b",
+        "EXPO_PUBLIC_BUILD_CHANNEL": "internal"
       }
     },
     "production": {
@@ -30,14 +61,22 @@
       "channel": "production",
       "env": {
         "EXPO_PUBLIC_FIREBASE_ENV": "production",
-        "EXPO_PUBLIC_FIREBASE_EMAIL_LINK_DOMAIN": "freed-7d5ee.firebaseapp.com"
+        "EXPO_PUBLIC_FIREBASE_EMAIL_LINK_DOMAIN": "freed-7d5ee.firebaseapp.com",
+        "EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID": "5477978760-ussf6lsalc0h97ra505g8hfe6h7h5ns8.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_IOS_CLIENT_ID": "5477978760-mqacbd3saauk1roatvf9rpujvpkv8i7b.apps.googleusercontent.com",
+        "EXPO_PUBLIC_GOOGLE_IOS_URL_SCHEME": "com.googleusercontent.apps.5477978760-mqacbd3saauk1roatvf9rpujvpkv8i7b",
+        "EXPO_PUBLIC_BUILD_CHANNEL": "production",
+        "EXPO_PUBLIC_MONETIZATION_MODE": "native",
+        "EXPO_PUBLIC_ADMOB_USE_TEST_ADS": "false",
+        "FREED_ENCRYPTED_DNS_RELEASE_ENABLED": "false"
       },
       "android": {
         "buildType": "app-bundle"
       },
       "ios": {
         "resourceClass": "m-medium"
-      }
+      },
+      "environment": "production"
     },
     "staging": {
       "distribution": "internal",
@@ -51,6 +90,12 @@
     }
   },
   "submit": {
+    "testflight": {
+      "ios": {
+        "ascAppId": "6816637268",
+        "appleTeamId": "R5RX8WP8ZC"
+      }
+    },
     "internal": {
       "android": {
         "track": "internal",

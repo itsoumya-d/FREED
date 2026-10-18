@@ -1,6 +1,6 @@
 {
   "schemaVersion": "freed-static-legal-hosting-bundle-v1",
-  "generatedAt": "2026-07-22T02:46:10.370Z",
+  "generatedAt": "2026-10-01T02:32:58.767Z",
   "sanitized": true,
   "publicUrls": {
     "account-deletion": "https://freedrecovery.app/account-deletion",
@@ -14,21 +14,21 @@
       "publicUrl": "https://freedrecovery.app/privacy",
       "requiredCleanUrl": "/privacy",
       "requiredMapping": "/privacy -> /privacy.html",
-      "sha256": "sha256-009b086671a37b3bee3e9e28bb54677f688d94e49e2cbd4ae27cf67236de430d"
+      "sha256": "sha256-510694909d3250aa2e7aed5c189963a1b5a82eb5dab7a927101ac010442f3788"
     },
     {
       "htmlArtifact": "dist/support.html",
       "publicUrl": "https://freedrecovery.app/support",
       "requiredCleanUrl": "/support",
       "requiredMapping": "/support -> /support.html",
-      "sha256": "sha256-0e98e4c0bb4cd639ace95dba0a1c4f5ce83f6fa273be1a04aeffd631ed049b9d"
+      "sha256": "sha256-c8aa3864bf36f961de920ca7bda156f194c28a81ac2faec0e2c6211a6bc022e0"
     },
     {
       "htmlArtifact": "dist/account-deletion.html",
       "publicUrl": "https://freedrecovery.app/account-deletion",
       "requiredCleanUrl": "/account-deletion",
       "requiredMapping": "/account-deletion -> /account-deletion.html",
-      "sha256": "sha256-65562cdd19c3325cd7796865d5f76abb114d4bb627a370d59dc33e60b8091e6b"
+      "sha256": "sha256-dea1a60b04b5597ffb7c143fa15d47e7178af3617849103bfaf6ae7a55844685"
     }
   ],
   "routeConfigFiles": [
@@ -65,23 +65,23 @@
   ],
   "includedFiles": [
     {
-      "bytes": 26133,
+      "bytes": 26666,
       "kind": "legal-route-html",
-      "sha256": "sha256-009b086671a37b3bee3e9e28bb54677f688d94e49e2cbd4ae27cf67236de430d",
+      "sha256": "sha256-510694909d3250aa2e7aed5c189963a1b5a82eb5dab7a927101ac010442f3788",
       "source": "dist/privacy.html",
       "target": "privacy.html"
     },
     {
-      "bytes": 24300,
+      "bytes": 24844,
       "kind": "legal-route-html",
-      "sha256": "sha256-0e98e4c0bb4cd639ace95dba0a1c4f5ce83f6fa273be1a04aeffd631ed049b9d",
+      "sha256": "sha256-c8aa3864bf36f961de920ca7bda156f194c28a81ac2faec0e2c6211a6bc022e0",
       "source": "dist/support.html",
       "target": "support.html"
     },
     {
-      "bytes": 24067,
+      "bytes": 24445,
       "kind": "legal-route-html",
-      "sha256": "sha256-65562cdd19c3325cd7796865d5f76abb114d4bb627a370d59dc33e60b8091e6b",
+      "sha256": "sha256-dea1a60b04b5597ffb7c143fa15d47e7178af3617849103bfaf6ae7a55844685",
       "source": "dist/account-deletion.html",
       "target": "account-deletion.html"
     },

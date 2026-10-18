@@ -1,0 +1,3 @@
+{
+  "text": "Error executing tool search_screens: 1 validation error for search_screensArguments\nquery\n  Field required [type=missing, input_value={'mode': 'keyword', 'scre...', 'flow': 'Onboarding'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.12/v/missing"
+}

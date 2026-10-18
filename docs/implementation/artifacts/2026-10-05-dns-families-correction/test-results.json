@@ -1,0 +1,55 @@
+[
+  {
+    "label": "green",
+    "command": [
+      "node",
+      "--test",
+      "tests/dns-upstream-routing-native.test.js"
+    ],
+    "exitCode": 0
+  },
+  {
+    "label": "dns-safety",
+    "command": [
+      "node",
+      "--test",
+      "tests/protection-dns-safety.test.js"
+    ],
+    "exitCode": 0
+  },
+  {
+    "label": "dns-health",
+    "command": [
+      "node",
+      "--",
+      "scripts/run-ts-entry.js",
+      "tests/dns-guard-health.test.ts"
+    ],
+    "exitCode": 0
+  },
+  {
+    "label": "encrypted-dns",
+    "command": [
+      "node",
+      "modules/freed-protection/tests/run-encrypted-dns-tests.js"
+    ],
+    "exitCode": 0
+  },
+  {
+    "label": "runtime-ownership",
+    "command": [
+      "node",
+      "--test",
+      "tests/dns-runtime-ownership-native.test.js"
+    ],
+    "exitCode": 0
+  },
+  {
+    "label": "requested-handoff",
+    "command": [
+      "node",
+      "modules/freed-protection/tests/run-dns-requested-handoff-tests.js"
+    ],
+    "exitCode": 0
+  }
+]

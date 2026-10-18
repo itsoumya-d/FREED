@@ -132,8 +132,9 @@ internal object FreedFocusShieldRules {
   private val allowedViewIds = presets.associate { it.packageName to setOf(it.viewId) }
 
   @Synchronized
-  fun configure(context: Context, value: Map<String, Any?>): FreedFocusShieldRule? {
-    val rule = sanitizeRule(value) ?: return null
+  fun configure(context: Context, value: Map<String, Any?>): FreedFocusShieldRule? = synchronized(FreedNativeUnlockStore.lock) {
+    if (!FreedProtectionConfiguration.interceptionEnabled(context)) return@synchronized null
+    val rule = sanitizeRule(value) ?: return@synchronized null
     val current = snapshot(context).rules
       .filterNot { it.id == rule.id }
       .take(MAX_RULES - 1)
@@ -141,20 +142,21 @@ internal object FreedFocusShieldRules {
       .sortedBy { it.id }
     write(context, current)
     if (!rule.enabled) clearSurfaceUnlockIfRule(context, rule.id)
-    return rule
+    rule
   }
 
   fun list(context: Context): List<FreedFocusShieldRule> = snapshot(context).rules
 
   @Synchronized
-  fun remove(context: Context, rawRuleId: String): Boolean {
-    val ruleId = sanitizeRuleId(rawRuleId) ?: return false
+  fun remove(context: Context, rawRuleId: String): Boolean = synchronized(FreedNativeUnlockStore.lock) {
+    if (FreedProtectionConfiguration.resetInProgress) return@synchronized false
+    val ruleId = sanitizeRuleId(rawRuleId) ?: return@synchronized false
     val existing = snapshot(context).rules
     val remaining = existing.filterNot { it.id == ruleId }
-    if (remaining.size == existing.size) return false
+    if (remaining.size == existing.size) return@synchronized false
     write(context, remaining)
     clearSurfaceUnlockIfRule(context, ruleId)
-    return true
+    true
   }
 
   fun snapshot(context: Context): FreedFocusShieldRuleSnapshot {
@@ -269,7 +271,8 @@ internal object FreedFocusShieldRules {
             expiresAt == null ||
             expiryMs == null ||
             expiryMs <= nowMs ||
-            !validRules.contains(ruleId to packageName)
+            !validRules.contains(ruleId to packageName) ||
+            FreedNativeUnlockStore.activeSurfaceInterventionId(context, packageName, ruleId, expiryMs) == null
           ) {
             rejected += 1
           } else if (none { unlock -> unlock.ruleId == ruleId && unlock.packageName == packageName }) {
@@ -297,10 +300,11 @@ internal object FreedFocusShieldRules {
     writeSurfaceUnlocks(context, activeSurfaceUnlocks(context).filterNot { unlock -> unlock.ruleId == ruleId })
   }
 
-  private fun writeSurfaceUnlocks(context: Context, unlocks: List<FreedFocusShieldUnlock>) {
+  private fun writeSurfaceUnlocks(context: Context, unlocks: List<FreedFocusShieldUnlock>): Unit = synchronized(FreedNativeUnlockStore.lock) {
+    if (unlocks.isNotEmpty() && !FreedProtectionConfiguration.interceptionEnabled(context)) return@synchronized
     if (unlocks.isEmpty()) {
       prefs(context).edit().remove(FOCUS_SHIELD_UNLOCKS).apply()
-      return
+      return@synchronized
     }
     val array = JSONArray()
     unlocks

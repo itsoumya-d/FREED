@@ -1,0 +1,28 @@
+import React from 'react';
+import {act,renderHook,render,fireEvent} from '@testing-library/react-native';
+import {useEarnedTimeOffer} from '@/hooks/useEarnedTimeOffer';
+import {GuidedResetOffer} from '@/components/GuidedResetOffer';
+import {EarnedTimeOfferPicker} from '@/components/EarnedTimeOfferPicker';
+import {prepareEarnedAppTimeOffer} from 'freed-protection';
+jest.mock('@/components/MomentumPageHeader',()=>({MomentumPageHeader:()=>null}));
+jest.mock('@/design-system/use-app-theme',()=>({useAppTheme:()=>({colors:{text:'#111',text2:'#444',accent:'#137A60',onAccent:'#fff',surface:'#fff',surface2:'#eee',bg:'#fff'},typography:{bold:'700'}})}));
+jest.mock('freed-protection',()=>({isEarnedAppTimeAvailable:()=>true,setAppGroupActionScope:jest.fn(async()=>({version:1,operationId:'12345678-1234-4123-8123-123456789abc',supported:true,accepted:true,bindingCurrent:true,ownerVerified:true,stage:'complete',reason:null,generation:3,scopeEpoch:4,errorCode:null,errorDomain:null})),prepareEarnedAppTimeOffer:jest.fn(async request=>({version:2,policyVersion:2,supported:true,accepted:true,reason:null,offer:{offerId:'32345678-1234-4123-8123-123456789abc',nativeInterventionId:request.nativeInterventionId,groupId:request.groupId,groupRevision:request.groupRevision,configurationGeneration:request.configurationGeneration,scopeEpoch:request.scopeEpoch,kind:request.kind,requestedSeconds:request.requestedSeconds,budgetDay:'day',budgetRevision:0,validUntil:new Date(Date.now()+1200000).toISOString(),requiredActiveSeconds:request.requestedSeconds===300?60:120,requiredSteps:request.requestedSeconds===300?30:60,requiredDistinctPhotoTargets:request.requestedSeconds===300?1:2,availableMethods:['timer']},budget:{version:2,configuredCapMinutes:20,effectiveCapMinutes:20,spentSeconds:0,remainingSeconds:1200,dayKey:'day',nextResetAt:new Date(Date.now()+86400000).toISOString(),pendingCapMinutes:null,pendingEffectiveAt:null,revision:0,clockState:'verified'}}))}));
+const lease={ownerUid:'owner',isCurrent:()=>true};const context:any={ownerUid:'owner',ownerLease:lease,actionScope:'["owner",1]',storageReady:true,attempt:{source:'app',nativeInterventionId:'12345678-1234-4123-8123-123456789abc',scope:{kind:'ios-app-group',tokenType:'application',groupId:'20202020-2020-4020-8020-202020202020',groupRevision:2,configurationGeneration:3,scopeEpoch:4}}};
+const flush=async()=>{await act(async()=>{for(let i=0;i<10;i++)await Promise.resolve()})};
+test('origin-bound saved20 preference initializes a native offer once and explicit alternative remains chosen',async()=>{
+ const hook=renderHook(()=>useEarnedTimeOffer(context,{preferredBreakSeconds:1200,supportedBreakSeconds:[300,600,1200],initializeDefault:true}));await flush();expect(hook.result.current.seconds).toBe(1200);expect(hook.result.current.current()?.receipt.offer?.requestedSeconds).toBe(1200);
+ await act(async()=>{await hook.result.current.select(300)});await flush();expect(hook.result.current.seconds).toBe(300);expect(prepareEarnedAppTimeOffer).toHaveBeenCalledTimes(2);hook.unmount();
+});
+test('older capability cannot request20 and keeps supported5/10 native offers',async()=>{
+ const hook=renderHook(()=>useEarnedTimeOffer(context,{preferredBreakSeconds:1200,initializeDefault:true}));await flush();expect(hook.result.current.seconds).toBe(300);await act(async()=>{await hook.result.current.select(1200)});expect(prepareEarnedAppTimeOffer).toHaveBeenCalledTimes(1);expect(hook.result.current.current()).toBeNull();hook.unmount();
+});
+test('a refused preferred offer does not silently fall back or authorize an ad',async()=>{
+ jest.mocked(prepareEarnedAppTimeOffer).mockResolvedValueOnce({version:2,policyVersion:2,supported:true,accepted:false,reason:'cap-exhausted',offer:null,budget:null});
+ const hook=renderHook(()=>useEarnedTimeOffer(context,{preferredBreakSeconds:1200,supportedBreakSeconds:[300,600,1200],initializeDefault:true}));await flush();expect(hook.result.current.current()).toBeNull();expect(hook.result.current.status).toBe('unavailable');expect(prepareEarnedAppTimeOffer).toHaveBeenCalledTimes(1);hook.unmount();
+});
+test.each(['cap-off','overlapping-rule'])('refused preferred20 %s blocks Watch until an explicit supported shorter choice is accepted',async reason=>{
+ jest.mocked(prepareEarnedAppTimeOffer).mockResolvedValueOnce({version:2,policyVersion:2,supported:true,accepted:false,reason,offer:null,budget:null});
+ const watch=jest.fn();const challenge:any={id:'preview',title:'Breathe comfortably',category:'breathing',durationSec:120,intensity:'calm',premium:false,icon:'Waves',why:'One comfortable pause.',steps:['Sit comfortably.','Breathe gently.'],verification:{version:1,kind:'timer'}};
+ function Screen(){const value=useEarnedTimeOffer(context,{preferredBreakSeconds:1200,supportedBreakSeconds:[300,600,1200],initializeDefault:true});return <GuidedResetOffer tier="free" protectionOrigin challenge={challenge} busy={value.status==='loading'} notice={null} repairNeeded={false} resumable={false} accessBlocked={!value.current()} earnedTimeOffer={<EarnedTimeOfferPicker offer={value} busy={false} onChoose={seconds=>{void value.select(seconds)}}/>} onStart={()=>{}} onWatch={watch} onRepair={()=>{}} onRetry={()=>{}} onPro={()=>{}} onSafety={()=>{}} onHelp={()=>{}}/>}
+ const screen=render(<Screen/>);await flush();expect(screen.queryByRole('button',{name:/Watch one ad/})).toBeNull();expect(prepareEarnedAppTimeOffer).toHaveBeenCalledTimes(1);expect(watch).not.toHaveBeenCalled();fireEvent.press(screen.getByTestId('earned-time-300'));await flush();expect(prepareEarnedAppTimeOffer).toHaveBeenCalledTimes(2);expect(screen.getByRole('button',{name:/Watch one ad/})).toBeTruthy();expect(watch).not.toHaveBeenCalled();screen.unmount();
+});

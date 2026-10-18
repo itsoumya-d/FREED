@@ -1,0 +1,340 @@
+{
+  "entries": [
+    {
+      "source": "Automated guidance · not therapy or emergency care. Cloud chat is optional and uses a daily allowance.",
+      "translations": {
+        "hi": "स्वचालित मार्गदर्शन · यह थेरेपी या आपातकालीन देखभाल नहीं है। क्लाउड बातचीत वैकल्पिक है और इसकी दैनिक सीमा है।",
+        "es": "Orientación automatizada · no es terapia ni atención de emergencia. El chat en la nube es opcional y tiene un límite diario.",
+        "pt": "Orientação automatizada · não é terapia nem atendimento de emergência. A conversa na nuvem é opcional e tem um limite diário.",
+        "fr": "Conseils automatisés · ce n’est ni une thérapie ni un service d’urgence. Le chat dans le cloud est facultatif et limité chaque jour.",
+        "de": "Automatische Orientierung · keine Therapie oder Notfallversorgung. Cloud-Chat ist optional und hat ein Tageslimit.",
+        "ar": "إرشاد آلي · ليس علاجًا أو رعاية طارئة. المحادثة السحابية اختيارية ولها حد يومي.",
+        "ja": "自動ガイダンス · 治療や緊急のケアではありません。クラウドチャットは任意で、1日の利用枠があります。",
+        "ko": "자동 안내 · 치료나 응급 진료가 아니에요. 클라우드 채팅은 선택 사항이며 일일 이용 한도가 있어요.",
+        "zh-Hans": "自动化指导 · 不属于治疗或紧急护理。云端聊天为可选功能，有每日使用限额。"
+      }
+    },
+    {
+      "source": "Basic support is available without cloud chat.",
+      "translations": {
+        "hi": "क्लाउड बातचीत के बिना भी बुनियादी मदद उपलब्ध है।",
+        "es": "El apoyo básico está disponible sin chat en la nube.",
+        "pt": "O apoio básico está disponível sem conversa na nuvem.",
+        "fr": "L’aide de base reste disponible sans chat dans le cloud.",
+        "de": "Grundlegende Unterstützung ist auch ohne Cloud-Chat verfügbar.",
+        "ar": "الدعم الأساسي متاح دون محادثة سحابية.",
+        "ja": "クラウドチャットを使わなくても、基本的なサポートは利用できます。",
+        "ko": "클라우드 채팅 없이도 기본 지원을 이용할 수 있어요.",
+        "zh-Hans": "无需云端聊天也可使用基础支持。"
+      }
+    },
+    {
+      "source": "BUILT-IN AND OPTIONAL CLOUD GUIDANCE",
+      "translations": {
+        "hi": "डिवाइस का मार्गदर्शन और वैकल्पिक क्लाउड मदद",
+        "es": "ORIENTACIÓN INTEGRADA Y EN LA NUBE OPCIONAL",
+        "pt": "ORIENTAÇÃO INTEGRADA E NA NUVEM OPCIONAL",
+        "fr": "CONSEILS INTÉGRÉS ET CLOUD FACULTATIF",
+        "de": "INTEGRIERTE UND OPTIONALE CLOUD-ORIENTIERUNG",
+        "ar": "إرشاد مدمج وسحابي اختياري",
+        "ja": "内蔵ガイダンスと任意のクラウドサポート",
+        "ko": "기본 안내 및 선택적 클라우드 지원",
+        "zh-Hans": "内置指导及可选云端支持"
+      }
+    },
+    {
+      "source": "Built-in guidance stays on this device.",
+      "translations": {
+        "hi": "अंतर्निहित मार्गदर्शन इसी डिवाइस पर रहता है।",
+        "es": "La orientación integrada permanece en este dispositivo.",
+        "pt": "A orientação integrada fica neste dispositivo.",
+        "fr": "Les conseils intégrés restent sur cet appareil.",
+        "de": "Die integrierte Orientierung bleibt auf diesem Gerät.",
+        "ar": "يبقى الإرشاد المدمج على هذا الجهاز.",
+        "ja": "内蔵ガイダンスはこの端末内で行われます。",
+        "ko": "기본 안내는 이 기기 안에서 제공돼요.",
+        "zh-Hans": "内置指导仅在本设备上进行。"
+      }
+    },
+    {
+      "source": "Cloud chat",
+      "translations": {
+        "hi": "क्लाउड बातचीत",
+        "es": "Chat en la nube",
+        "pt": "Conversa na nuvem",
+        "fr": "Chat dans le cloud",
+        "de": "Cloud-Chat",
+        "ar": "محادثة سحابية",
+        "ja": "クラウドチャット",
+        "ko": "클라우드 채팅",
+        "zh-Hans": "云端聊天"
+      }
+    },
+    {
+      "source": "Cloud chat has reached its testing allowance. Built-in guidance remains available.",
+      "translations": {
+        "hi": "क्लाउड बातचीत की परीक्षण सीमा पूरी हो गई है। अंतर्निहित मार्गदर्शन उपलब्ध है।",
+        "es": "El chat en la nube alcanzó su límite de pruebas. La orientación integrada sigue disponible.",
+        "pt": "A conversa na nuvem atingiu o limite de testes. A orientação integrada continua disponível.",
+        "fr": "Le chat dans le cloud a atteint son quota de test. Les conseils intégrés restent disponibles.",
+        "de": "Cloud-Chat hat sein Testkontingent erreicht. Die integrierte Orientierung bleibt verfügbar.",
+        "ar": "بلغت المحادثة السحابية حدّ الاختبار. يظل الإرشاد المدمج متاحًا.",
+        "ja": "クラウドチャットがテスト用の利用枠に達しました。内蔵ガイダンスは引き続き利用できます。",
+        "ko": "클라우드 채팅의 테스트 이용 한도에 도달했어요. 기본 안내는 계속 이용할 수 있어요.",
+        "zh-Hans": "云端聊天已达到测试额度，内置指导仍然可用。"
+      }
+    },
+    {
+      "source": "Cloud chat is off while this account is being deleted.",
+      "translations": {
+        "hi": "खाता मिटाते समय क्लाउड बातचीत बंद है।",
+        "es": "El chat en la nube está desactivado mientras se elimina esta cuenta.",
+        "pt": "A conversa na nuvem fica desativada enquanto esta conta é excluída.",
+        "fr": "Le chat dans le cloud est désactivé pendant la suppression de ce compte.",
+        "de": "Während dieses Konto gelöscht wird, ist Cloud-Chat ausgeschaltet.",
+        "ar": "المحادثة السحابية متوقفة أثناء حذف هذا الحساب.",
+        "ja": "このアカウントを削除している間、クラウドチャットはオフになります。",
+        "ko": "이 계정을 삭제하는 동안 클라우드 채팅은 꺼져 있어요.",
+        "zh-Hans": "删除此账户期间，云端聊天已关闭。"
+      }
+    },
+    {
+      "source": "Cloud chat is unavailable. Built-in guidance remains available.",
+      "translations": {
+        "hi": "क्लाउड बातचीत उपलब्ध नहीं है। अंतर्निहित मार्गदर्शन उपलब्ध है।",
+        "es": "El chat en la nube no está disponible. La orientación integrada sigue disponible.",
+        "pt": "A conversa na nuvem está indisponível. A orientação integrada continua disponível.",
+        "fr": "Le chat dans le cloud est indisponible. Les conseils intégrés restent disponibles.",
+        "de": "Cloud-Chat ist nicht verfügbar. Die integrierte Orientierung bleibt verfügbar.",
+        "ar": "المحادثة السحابية غير متاحة. يظل الإرشاد المدمج متاحًا.",
+        "ja": "クラウドチャットは利用できません。内蔵ガイダンスは引き続き利用できます。",
+        "ko": "클라우드 채팅을 사용할 수 없어요. 기본 안내는 계속 이용할 수 있어요.",
+        "zh-Hans": "云端聊天不可用，内置指导仍然可用。"
+      }
+    },
+    {
+      "source": "Cloud replies left today: {{remaining}} of {{limit}}",
+      "translations": {
+        "hi": "आज बाकी क्लाउड उत्तर: {{limit}} में से {{remaining}}",
+        "es": "Respuestas en la nube restantes hoy: {{remaining}} de {{limit}}",
+        "pt": "Respostas na nuvem restantes hoje: {{remaining}} de {{limit}}",
+        "fr": "Réponses cloud restantes aujourd’hui : {{remaining}} sur {{limit}}",
+        "de": "Cloud-Antworten heute übrig: {{remaining}} von {{limit}}",
+        "ar": "الردود السحابية المتبقية اليوم: {{remaining}} من {{limit}}",
+        "ja": "今日のクラウド返信の残り：{{limit}}件中{{remaining}}件",
+        "ko": "오늘 남은 클라우드 답변: {{limit}}회 중 {{remaining}}회",
+        "zh-Hans": "今日剩余云端回复：{{remaining}} / {{limit}}"
+      }
+    },
+    {
+      "source": "Cloud reply received",
+      "translations": {
+        "hi": "क्लाउड उत्तर मिला",
+        "es": "Respuesta en la nube recibida",
+        "pt": "Resposta na nuvem recebida",
+        "fr": "Réponse cloud reçue",
+        "de": "Cloud-Antwort erhalten",
+        "ar": "تم استلام رد سحابي",
+        "ja": "クラウド返信を受信しました",
+        "ko": "클라우드 답변을 받았어요",
+        "zh-Hans": "已收到云端回复"
+      }
+    },
+    {
+      "source": "Enable cloud chat",
+      "translations": {
+        "hi": "क्लाउड बातचीत चालू करें",
+        "es": "Activar chat en la nube",
+        "pt": "Ativar conversa na nuvem",
+        "fr": "Activer le chat dans le cloud",
+        "de": "Cloud-Chat aktivieren",
+        "ar": "تفعيل المحادثة السحابية",
+        "ja": "クラウドチャットを有効にする",
+        "ko": "클라우드 채팅 켜기",
+        "zh-Hans": "启用云端聊天"
+      }
+    },
+    {
+      "source": "Enable cloud chat? Messages you send are processed by Google through FREED. Browsing activity, journal entries, photos and Screen Time data are not attached. Processing may happen outside your country. Google applies its service processing and retention terms.",
+      "translations": {
+        "hi": "क्लाउड बातचीत चालू करें? आपके भेजे संदेश FREED के माध्यम से Google द्वारा संसाधित होते हैं। ब्राउज़िंग गतिविधि, डायरी प्रविष्टियाँ, फ़ोटो और Screen Time डेटा साथ नहीं भेजे जाते। प्रक्रिया आपके देश के बाहर हो सकती है। Google की सेवा-प्रसंस्करण और डेटा-रखाव शर्तें लागू होती हैं।",
+        "es": "¿Activar el chat en la nube? Google procesa los mensajes que envías a través de FREED. No se adjuntan actividad de navegación, diarios, fotos ni datos de Tiempo de uso. El procesamiento puede ocurrir fuera de tu país. Se aplican las condiciones de procesamiento y retención de Google.",
+        "pt": "Ativar a conversa na nuvem? As mensagens enviadas são processadas pelo Google através do FREED. Atividade de navegação, diário, fotos e dados do Tempo de Uso não são anexados. O processamento pode ocorrer fora do seu país. Aplicam-se os termos de processamento e retenção do Google.",
+        "fr": "Activer le chat dans le cloud ? Google traite vos messages via FREED. L’activité de navigation, les entrées de journal, les photos et les données Temps d’écran ne sont pas jointes. Le traitement peut avoir lieu hors de votre pays. Les conditions de traitement et de conservation de Google s’appliquent.",
+        "de": "Cloud-Chat aktivieren? Google verarbeitet deine gesendeten Nachrichten über FREED. Surfaktivität, Tagebucheinträge, Fotos und Bildschirmzeitdaten werden nicht angehängt. Die Verarbeitung kann außerhalb deines Landes erfolgen. Googles Bedingungen zur Verarbeitung und Aufbewahrung gelten.",
+        "ar": "تفعيل المحادثة السحابية؟ يعالج Google رسائلك المرسلة عبر FREED. لا يُرفق نشاط التصفح أو اليوميات أو الصور أو بيانات مدة استخدام الجهاز. قد تتم المعالجة خارج بلدك. تنطبق شروط Google لمعالجة الخدمة والاحتفاظ بالبيانات.",
+        "ja": "クラウドチャットを有効にしますか？送信したメッセージはFREEDを通じてGoogleが処理します。閲覧履歴、日記、写真、スクリーンタイムのデータは添付されません。処理は国外で行われる場合があります。Googleのサービス処理と保存期間に関する条件が適用されます。",
+        "ko": "클라우드 채팅을 켤까요? 보낸 메시지는 FREED를 통해 Google이 처리해요. 검색·브라우징 활동, 일기, 사진, 스크린 타임 데이터는 첨부되지 않아요. 처리는 국외에서 이루어질 수 있으며 Google의 서비스 처리 및 보관 조건이 적용돼요.",
+        "zh-Hans": "启用云端聊天？您发送的消息将通过 FREED 由 Google 处理。不会附加浏览活动、日记、照片或屏幕使用时间数据。处理可能在您的国家或地区之外进行，并适用 Google 的服务处理及数据保留条款。"
+      }
+    },
+    {
+      "source": "Keep built-in guidance",
+      "translations": {
+        "hi": "अंतर्निहित मार्गदर्शन रखें",
+        "es": "Mantener orientación integrada",
+        "pt": "Manter orientação integrada",
+        "fr": "Garder les conseils intégrés",
+        "de": "Integrierte Orientierung behalten",
+        "ar": "الإبقاء على الإرشاد المدمج",
+        "ja": "内蔵ガイダンスを使う",
+        "ko": "기본 안내 유지",
+        "zh-Hans": "继续使用内置指导"
+      }
+    },
+    {
+      "source": "Messages you send can use Google-hosted CLARA.",
+      "translations": {
+        "hi": "आपके भेजे संदेश Google पर होस्ट की गई CLARA इस्तेमाल कर सकते हैं।",
+        "es": "Los mensajes que envías pueden usar CLARA alojada en Google.",
+        "pt": "As mensagens enviadas podem usar a CLARA hospedada pelo Google.",
+        "fr": "Vos messages peuvent utiliser CLARA hébergée par Google.",
+        "de": "Deine gesendeten Nachrichten können die von Google gehostete CLARA nutzen.",
+        "ar": "يمكن أن تستخدم رسائلك المرسلة CLARA المستضافة لدى Google.",
+        "ja": "送信したメッセージは、GoogleがホストするCLARAで処理できます。",
+        "ko": "보낸 메시지는 Google에서 호스팅하는 CLARA를 이용할 수 있어요.",
+        "zh-Hans": "您发送的消息可使用由 Google 托管的 CLARA。"
+      }
+    },
+    {
+      "source": "Open breathing",
+      "translations": {
+        "hi": "श्वास अभ्यास खोलें",
+        "es": "Abrir respiración",
+        "pt": "Abrir respiração",
+        "fr": "Ouvrir la respiration",
+        "de": "Atmen öffnen",
+        "ar": "فتح التنفّس",
+        "ja": "呼吸を開く",
+        "ko": "호흡 열기",
+        "zh-Hans": "打开呼吸活动"
+      }
+    },
+    {
+      "source": "Open journal",
+      "translations": {
+        "hi": "डायरी खोलें",
+        "es": "Abrir el diario",
+        "pt": "Abrir o diário",
+        "fr": "Ouvrir le journal privé",
+        "de": "Tagebuch aufrufen",
+        "ar": "فتح اليوميات الخاصة",
+        "ja": "日記を開く",
+        "ko": "일기 열기",
+        "zh-Hans": "打开日记"
+      }
+    },
+    {
+      "source": "Please wait a moment before sending another cloud message.",
+      "translations": {
+        "hi": "दूसरा क्लाउड संदेश भेजने से पहले थोड़ा रुकें।",
+        "es": "Espera un momento antes de enviar otro mensaje en la nube.",
+        "pt": "Espere um momento antes de enviar outra mensagem na nuvem.",
+        "fr": "Attendez un instant avant d’envoyer un autre message dans le cloud.",
+        "de": "Warte kurz, bevor du eine weitere Cloud-Nachricht sendest.",
+        "ar": "انتظر قليلًا قبل إرسال رسالة سحابية أخرى.",
+        "ja": "次のクラウドメッセージを送る前に、少しお待ちください。",
+        "ko": "다른 클라우드 메시지를 보내기 전에 잠시 기다리세요.",
+        "zh-Hans": "发送下一条云端消息前，请稍等片刻。"
+      }
+    },
+    {
+      "source": "Review my routine",
+      "translations": {
+        "hi": "मेरी दिनचर्या देखें",
+        "es": "Revisar mi rutina",
+        "pt": "Revisar minha rotina",
+        "fr": "Consulter ma routine",
+        "de": "Meine Routine prüfen",
+        "ar": "مراجعة روتيني",
+        "ja": "自分の習慣を確認",
+        "ko": "내 일상 확인",
+        "zh-Hans": "查看我的日常习惯"
+      }
+    },
+    {
+      "source": "Share my recent messages for conversation context",
+      "translations": {
+        "hi": "बातचीत के संदर्भ के लिए मेरे हाल के संदेश साझा करें",
+        "es": "Compartir mis mensajes recientes como contexto",
+        "pt": "Compartilhar minhas mensagens recentes como contexto",
+        "fr": "Partager mes messages récents pour le contexte",
+        "de": "Meine letzten Nachrichten als Gesprächskontext teilen",
+        "ar": "مشاركة رسائلي الأخيرة كسياق للمحادثة",
+        "ja": "会話の文脈として最近の自分のメッセージを共有",
+        "ko": "대화 맥락을 위해 최근 메시지 공유",
+        "zh-Hans": "分享我最近的消息作为对话上下文"
+      }
+    },
+    {
+      "source": "Stop waiting",
+      "translations": {
+        "hi": "इंतज़ार रोकें",
+        "es": "Dejar de esperar",
+        "pt": "Parar de esperar",
+        "fr": "Arrêter d’attendre",
+        "de": "Warten beenden",
+        "ar": "إيقاف الانتظار",
+        "ja": "待機を終了",
+        "ko": "기다리기 중지",
+        "zh-Hans": "停止等待"
+      }
+    },
+    {
+      "source": "This request already reached the service. Send a new message to continue.",
+      "translations": {
+        "hi": "यह अनुरोध सेवा तक पहुँच चुका है। जारी रखने के लिए नया संदेश भेजें।",
+        "es": "Esta solicitud ya llegó al servicio. Envía un mensaje nuevo para continuar.",
+        "pt": "Esta solicitação já chegou ao serviço. Envie uma nova mensagem para continuar.",
+        "fr": "Cette demande a déjà atteint le service. Envoyez un nouveau message pour continuer.",
+        "de": "Diese Anfrage hat den Dienst bereits erreicht. Sende eine neue Nachricht, um fortzufahren.",
+        "ar": "وصل هذا الطلب إلى الخدمة بالفعل. أرسل رسالة جديدة للمتابعة.",
+        "ja": "このリクエストは既にサービスへ届いています。続けるには新しいメッセージを送ってください。",
+        "ko": "이 요청은 이미 서비스에 전달되었어요. 계속하려면 새 메시지를 보내세요.",
+        "zh-Hans": "此请求已到达服务。请发送新消息以继续。"
+      }
+    },
+    {
+      "source": "Turning this off stops future messages. A request already sent may finish. Built-in guidance remains available.",
+      "translations": {
+        "hi": "इसे बंद करने से आगे के संदेश रुकते हैं। भेजा जा चुका अनुरोध पूरा हो सकता है। अंतर्निहित मार्गदर्शन उपलब्ध है।",
+        "es": "Desactivarlo detiene los mensajes futuros. Una solicitud ya enviada puede terminar. La orientación integrada sigue disponible.",
+        "pt": "Desativar interrompe mensagens futuras. Uma solicitação já enviada pode terminar. A orientação integrada continua disponível.",
+        "fr": "Désactiver ceci arrête les futurs messages. Une demande déjà envoyée peut se terminer. Les conseils intégrés restent disponibles.",
+        "de": "Das Ausschalten stoppt künftige Nachrichten. Eine bereits gesendete Anfrage kann noch abgeschlossen werden. Die integrierte Orientierung bleibt verfügbar.",
+        "ar": "إيقاف هذا يمنع الرسائل القادمة. قد يكتمل طلب سبق إرساله. يظل الإرشاد المدمج متاحًا.",
+        "ja": "オフにすると、今後のメッセージ送信が止まります。送信済みのリクエストは完了する場合があります。内蔵ガイダンスは引き続き利用できます。",
+        "ko": "끄면 이후 메시지 전송이 중단돼요. 이미 보낸 요청은 완료될 수 있어요. 기본 안내는 계속 이용할 수 있어요.",
+        "zh-Hans": "关闭后将停止未来消息发送，已发送的请求可能仍会完成。内置指导仍然可用。"
+      }
+    },
+    {
+      "source": "Your cloud chat preference could not be saved. Cloud chat stays off until it is saved.",
+      "translations": {
+        "hi": "क्लाउड बातचीत की पसंद सहेजी नहीं गई। सहेजे जाने तक यह बंद रहेगी।",
+        "es": "No se pudo guardar tu preferencia. El chat en la nube permanece desactivado hasta guardarla.",
+        "pt": "Não foi possível salvar sua preferência. A conversa na nuvem fica desativada até ela ser salva.",
+        "fr": "Votre préférence n’a pas pu être enregistrée. Le chat dans le cloud reste désactivé jusqu’à son enregistrement.",
+        "de": "Deine Cloud-Chat-Einstellung konnte nicht gespeichert werden. Cloud-Chat bleibt bis zum Speichern aus.",
+        "ar": "تعذّر حفظ تفضيلك للمحادثة السحابية. تظل متوقفة حتى يُحفظ.",
+        "ja": "クラウドチャットの設定を保存できませんでした。保存されるまでオフのままです。",
+        "ko": "클라우드 채팅 설정을 저장하지 못했어요. 저장될 때까지 꺼진 상태로 유지돼요.",
+        "zh-Hans": "无法保存云端聊天偏好。保存之前，云端聊天将保持关闭。"
+      }
+    },
+    {
+      "source": "Your daily cloud reply allowance is used. Built-in guidance remains available.",
+      "translations": {
+        "hi": "आज की क्लाउड उत्तर सीमा पूरी हो गई है। अंतर्निहित मार्गदर्शन उपलब्ध है।",
+        "es": "Usaste tu límite diario de respuestas en la nube. La orientación integrada sigue disponible.",
+        "pt": "Você usou o limite diário de respostas na nuvem. A orientação integrada continua disponível.",
+        "fr": "Votre quota quotidien de réponses cloud est épuisé. Les conseils intégrés restent disponibles.",
+        "de": "Dein tägliches Cloud-Antwortkontingent ist aufgebraucht. Die integrierte Orientierung bleibt verfügbar.",
+        "ar": "استهلكت حد الردود السحابية اليومي. يظل الإرشاد المدمج متاحًا.",
+        "ja": "今日のクラウド返信の利用枠を使い切りました。内蔵ガイダンスは引き続き利用できます。",
+        "ko": "오늘의 클라우드 답변 한도를 사용했어요. 기본 안내는 계속 이용할 수 있어요.",
+        "zh-Hans": "您已用完每日云端回复额度，内置指导仍然可用。"
+      }
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "recordedAt": "2026-10-04T01:19:24.266513+00:00",
+  "scope": "source/native compile and isolated fixtures only",
+  "android": {
+    "frozenSourceHashes": {
+      "FreedProtectionModule.kt": "0e601bf90a140e8d1d235f3589b45aa69d06578a16b1a4f240fd9ece9722b2e6",
+      "FreedProtectionConfiguration.kt": "cba6e8e69046213a7d0ee63feaf7a27f687e3c679b61789f77595f2dcd5d16d3",
+      "FreedProtectionResetPolicy.kt": "a5e6b99afd6bc8685b0afba0acc4e5643b142c74dcadedd5b0ce2a5ee4a7484b",
+      "FreedDnsRuntimeOwnership.kt": "8b2810f78266155b5df809595ed85f01d280a669861cf582f051c0691e798480",
+      "FreedVpnService.kt": "21a11fbd03df21bca8723ba8e828f9b2f914e804533fb8179e5cdade6491c7b6",
+      "FreedAccessibilityService.kt": "f6467e6b5d73ebe908ef92e3729637833c3913b63de513db3ff8fe98ada14d08",
+      "FreedInterventionActivity.kt": "29699007aa947b093ca7a742bd8acb381836b8507e50112d710f657f5906b335"
+    },
+    "kotlinCompile": "BUILD SUCCESSFUL, 21s, worker-confirmed",
+    "criticalTests": {
+      "passed": 19,
+      "failed": 0
+    },
+    "finalSubset": {
+      "passed": 10,
+      "failed": 0
+    },
+    "realUdpFixture": "localhost blocked receive closed before acknowledgment",
+    "physicalDeviceTested": false
+  },
+  "ios": {
+    "bindingReceipt": "ios-reset-bound-build-receipt.json",
+    "isolatedResetSuite": "passed, Swift/cross-process/native Focus/WebKit/JS cases",
+    "physicalDeviceTested": false
+  },
+  "review": "five reset findings closed; no remaining P1/P2 within reviewed scope",
+  "ui": {
+    "freeze": "docs/implementation/purpose-ui-freeze.json",
+    "surfaces": 65,
+    "languages": 10,
+    "uiTestsPassed": 221,
+    "typecheck": "passed per UI owner",
+    "nativeReviewCells": 2600,
+    "nativeCellsPassed": 0
+  },
+  "releaseReady": false,
+  "unresolved": [
+    "Family Controls legal approval/distribution profiles",
+    "signed final store builds",
+    "physical protection/network/reboot/unlock expiry evidence",
+    "all-platform all-language all-theme native review and measured performance",
+    "Google Play verifier credential",
+    "production Functions/App Check/delivery proof",
+    "real store sandbox lifecycle evidence",
+    "native-speaker quality review"
+  ]
+}

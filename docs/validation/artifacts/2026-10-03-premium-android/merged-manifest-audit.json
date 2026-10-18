@@ -1,0 +1,40 @@
+{
+  "capturedAt": "2026-10-03T01:28:31.187739+00:00",
+  "manifest": "android/app/build/intermediates/merged_manifests/debug/processDebugManifest/AndroidManifest.xml",
+  "manifestSha256": "b136e7ff4b71d590cdc453a488710660d34add46f1e887b8325a8173a6046197",
+  "applicationId": "app.freed.recovery",
+  "supportsRtl": "true",
+  "localeConfig": "@xml/locales_config",
+  "declaredLocales": [
+    "en",
+    "hi",
+    "bn",
+    "es",
+    "pt",
+    "fr",
+    "de",
+    "ar",
+    "ja",
+    "zh-Hans"
+  ],
+  "encryptedDnsReleaseFlag": null,
+  "encryptedDnsPreviewFlag": null,
+  "effectiveEncryptedDnsFlags": "false/false: native capability getBoolean(..., false) defaults off for missing metadata",
+  "vpnServices": [
+    {
+      "name": "app.freed.protection.FreedVpnService",
+      "exported": "false",
+      "permission": "android.permission.BIND_VPN_SERVICE"
+    }
+  ],
+  "firebaseCollectionMetadata": {
+    "app_data_collection_default_enabled": "false",
+    "firebase_analytics_collection_enabled": "false",
+    "firebase_analytics_collection_deactivated": "true",
+    "firebase_crashlytics_collection_enabled": "false",
+    "firebase_performance_collection_enabled": "false",
+    "firebase_performance_collection_deactivated": "true",
+    "firebase_messaging_auto_init_enabled": "false",
+    "firebase_messaging_notification_delegation_enabled": "false"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "project": "freed-7d5ee",
+  "site": "freed-landing",
+  "releaseName": "sites/freed-landing/releases/1791199506832000",
+  "newVersion": "sites/freed-landing/versions/d13d066f5dbc08d7",
+  "previousVersion": "sites/freed-landing/versions/0f1e93f844a911e1",
+  "other11FilesAndConfigPreserved": true,
+  "results": [
+    {
+      "url": "https://freed-landing.web.app/privacy",
+      "status": 200,
+      "plainSha256": "6acd197d88837d533413fc57608fd867f1e54b6a2a83647ac1f3257b5b2cd548",
+      "matchesReviewedPage": true,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 10964
+    },
+    {
+      "url": "https://freed-landing.web.app/support",
+      "status": 200,
+      "plainSha256": "c490273d80d4cf144f3ac43f52c54e10ad0788f81c6beb25e785974e21b1ca9c",
+      "matchesReviewedPage": true,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 7556
+    },
+    {
+      "url": "https://freed-landing.web.app/account-deletion",
+      "status": 200,
+      "plainSha256": "964c8d8eeaf08980d7ba0994b2e72ad6dc6eeb3f2a1c4b2857f54146fd4fcd5e",
+      "matchesReviewedPage": true,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 6411
+    },
+    {
+      "url": "https://freed-landing.web.app/terms",
+      "status": 200,
+      "plainSha256": "80f2d2fd786e15507eef8abe4deb959c721568060b1e87e956a0e770474160b5",
+      "matchesReviewedPage": true,
+      "contentType": "text/html; charset=utf-8",
+      "bytes": 9252
+    }
+  ],
+  "allReviewedHttpsPagesMatch": true,
+  "appReleaseReadiness": false
+}

@@ -1,0 +1,29 @@
+appId: app.freed.recovery
+name: shield-preferences
+tags:
+  - smoke
+  - local-write
+---
+# Requires an English disposable fixture with daily limit 30 minutes, allowing increase then undo.
+# No state or Keychain reset; changes belong only to the disposable settings.
+- openLink: "freed:///shield/apps"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-shield-apps"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Daily limit"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Daily limit"
+- assertVisible: "Unlock"
+- assertVisible: "Shorts guard"
+- tapOn: "Increase Daily limit"
+- tapOn: "Decrease Daily limit"
+- takeScreenshot: "shield-preferences"

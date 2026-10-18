@@ -1,0 +1,62 @@
+{
+  "package": "app.freed.recovery",
+  "versionCode": "3",
+  "versionName": "1.0",
+  "minSdk": "24",
+  "targetSdk": "36",
+  "debuggable": "false",
+  "actualWavFiles": {
+    "res/QU.wav": "6a0fe70d7303df30070bc42e6806ad45d949183dbddc10c6221d32c9522cb4b1",
+    "res/S6.wav": "ae6aea0d80ec4264b32a0ef645662ebe658bb544c39e547df68fc4f27881fb3a",
+    "res/uB.wav": "55f77f39893f0e533caa9c75920518b5788a2ec29f4f1c4c80a446fe77848267"
+  },
+  "hasArm64NativeLibraries": true,
+  "hasReactNativeBundle": true,
+  "artifactSha256": "e1665c07eb37e82f8906ae5b2a60f9810fc2986703cbbcf0da99a6b295d8e460",
+  "sizeBytes": 82347683,
+  "signatureVerified": true,
+  "signer": "existing Android test certificate",
+  "googleOAuthTestSignerMatch": true,
+  "framework": "Expo55 / ReactNative0.83.6",
+  "sourceSnapshot": "daily-usability-v6-comfort",
+  "testAds": true,
+  "playUploadReady": false,
+  "actualPhoneInstallationVerified": false,
+  "publicSigningGates": [
+    {
+      "id": "android-apk-build",
+      "status": "PASS",
+      "detail": "Release APK built successfully."
+    },
+    {
+      "id": "android-apk-upload-signing",
+      "status": "FAIL",
+      "detail": "Release APK used debug-key fallback; missing FREED_ANDROID_UPLOAD_STORE_FILE, FREED_ANDROID_UPLOAD_STORE_PASSWORD, FREED_ANDROID_UPLOAD_KEY_ALIAS, FREED_ANDROID_UPLOAD_KEY_PASSWORD."
+    },
+    {
+      "id": "android-apk-admob-app-id",
+      "status": "PASS",
+      "detail": "Android AdMob application id is production-formatted and non-sample."
+    },
+    {
+      "id": "android-apk-admob-runtime-manifest",
+      "status": "PASS",
+      "detail": "Merged Android manifest contains a production-formatted Google Mobile Ads application id."
+    },
+    {
+      "id": "android-apk-signature",
+      "status": "FAIL",
+      "detail": "APK signature verifies with the Android Debug certificate; this is allowed only for local QA artifacts."
+    },
+    {
+      "id": "android-apk-react-native-bundle",
+      "status": "PASS",
+      "detail": "React Native release bundle is packaged in the APK."
+    },
+    {
+      "id": "android-apk-abi",
+      "status": "PASS",
+      "detail": "Packaged native ABIs: arm64-v8a."
+    }
+  ]
+}

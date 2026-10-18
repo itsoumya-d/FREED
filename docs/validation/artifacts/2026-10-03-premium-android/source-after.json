@@ -1,0 +1,244 @@
+{
+  "capturedAt": "2026-10-03T01:54:58.693128+00:00",
+  "sourceHash": "f4c3515b445aca4c130c836601c4d4097473e2e8e1c5b8d1ffe0b878de769dbc",
+  "matchesBefore": true,
+  "files": [
+    {
+      "path": "android/.gitignore",
+      "sha256": "03263c9a1436e264a87c6e0547007488dc980efb2326724b5a85c0835bac34a7"
+    },
+    {
+      "path": "android/app/build.gradle",
+      "sha256": "d5375bf7d7e27cc85651d82f3b35a40aacaf7da5f713096542e9d30e285e879f"
+    },
+    {
+      "path": "android/app/google-services.json",
+      "sha256": "993f8f3e63d7706465dc692fc1ac81742d907484d6beb9ac42d5cadb8fc444f1"
+    },
+    {
+      "path": "android/app/proguard-rules.pro",
+      "sha256": "8bd4d7b69a1d78e8322b459b5e8d48234adce7481df04da34c0140d52ffb367a"
+    },
+    {
+      "path": "android/app/src/debug/AndroidManifest.xml",
+      "sha256": "1f386523d2a91b70e7fe8f0f5b5f4cd8e81e98ca13e1795930a3f5c2a8a4acea"
+    },
+    {
+      "path": "android/app/src/debugOptimized/AndroidManifest.xml",
+      "sha256": "1f386523d2a91b70e7fe8f0f5b5f4cd8e81e98ca13e1795930a3f5c2a8a4acea"
+    },
+    {
+      "path": "android/app/src/main/AndroidManifest.xml",
+      "sha256": "d055f39bf8e0e43bb50f6bd9fb6cb5fb9157f844db159e8f6b73f505ea5cae5e"
+    },
+    {
+      "path": "android/app/src/main/java/app/freed/recovery/MainActivity.kt",
+      "sha256": "5e72e28ebf8d8a0d63bbea5c699399ee06bb67a6c86fbf3572dbea3dcb795965"
+    },
+    {
+      "path": "android/app/src/main/java/app/freed/recovery/MainApplication.kt",
+      "sha256": "8ad53cf64729747ece8b55e01ccc56b3b98829029c7a7055bd27c2bf5fed481a"
+    },
+    {
+      "path": "android/app/src/main/res/drawable/ic_launcher_background.xml",
+      "sha256": "51fca95679d075ddbe2b9fe7ad2efb5ef545c5770a9ad6cafe8bf610c18c67be"
+    },
+    {
+      "path": "android/app/src/main/res/drawable/rn_edit_text_material.xml",
+      "sha256": "738e3aaad53180caba1419a6d5db8465a0742662fe59a4bbaf05f1061cbc3390"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "sha256": "2be94107f609842c51c52d50399d922a922a178f085e25207121d54e16bdc58e"
+    },
+    {
+      "path": "android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+      "sha256": "2be94107f609842c51c52d50399d922a922a178f085e25207121d54e16bdc58e"
+    },
+    {
+      "path": "android/app/src/main/res/raw/keep.xml",
+      "sha256": "28476d40c6b8c211beff9724f1c558586599b9ad7240eb829a9a2c8de57953ed"
+    },
+    {
+      "path": "android/app/src/main/res/values/colors.xml",
+      "sha256": "cfd6b2710d87049e4836f493f4499ea6e95d03c5c651332ff4d877160049aac0"
+    },
+    {
+      "path": "android/app/src/main/res/values/strings.xml",
+      "sha256": "ba49ba88fb91cfa90d086d36ad8260957b356072a72c849bd4808119981e7b3e"
+    },
+    {
+      "path": "android/app/src/main/res/values/styles.xml",
+      "sha256": "b49f11b528f21d1690a07f9b582289b42cc1d55698c4eb00c252ec98e466e051"
+    },
+    {
+      "path": "android/app/src/main/res/values-night/colors.xml",
+      "sha256": "c30a9f37e6b34372e1db8c812d64a18719acf7c52c11ff2f7e5e5ed5e05c2072"
+    },
+    {
+      "path": "android/app/src/main/res/xml/freed_data_extraction_rules.xml",
+      "sha256": "b20fc840bd65b64b6b46f1f36fed8367cca5cef4140050b40308d7f3fada04a7"
+    },
+    {
+      "path": "android/app/src/main/res/xml/locales_config.xml",
+      "sha256": "0528e5d7e9a1fd7b175fd6fe6ce01769617b460b023f57abfb050512050d9222"
+    },
+    {
+      "path": "android/build.gradle",
+      "sha256": "a47901620b9537390b89b87a90a1fedc6e1944e6b654b0f66b42c9b77d912133"
+    },
+    {
+      "path": "android/gradle/wrapper/gradle-wrapper.jar",
+      "sha256": "76805e32c009c0cf0dd5d206bddc9fb22ea42e84db904b764f3047de095493f3"
+    },
+    {
+      "path": "android/gradle/wrapper/gradle-wrapper.properties",
+      "sha256": "3e402c9f5eea1b468cf81ffe552757b0190d0a3ade2ee723e65b643109e9d987"
+    },
+    {
+      "path": "android/gradle.properties",
+      "sha256": "3fcf70e0b331ebaa9751630e7ba8db8f2971d74f6ae8005396b97f4314a1c63a"
+    },
+    {
+      "path": "android/gradlew",
+      "sha256": "4e6a9107407b4b6b24300366dc9e2fbc7b0828bab9383d73ab513d0547bfaced"
+    },
+    {
+      "path": "android/gradlew.bat",
+      "sha256": "1d297e00bd21de3ace22b4d7f2de1f9dfa858883d66bbf7c1ccbecccec8f4f3b"
+    },
+    {
+      "path": "android/qa-webview-fixture/build.gradle",
+      "sha256": "8f081f31f22bff0d4f94382777439866b7455d2ed9d7b71f86f583c9e94db16d"
+    },
+    {
+      "path": "android/qa-webview-fixture/src/main/AndroidManifest.xml",
+      "sha256": "43ba473dbad8aa75c6887abd49532b106af13f470ef27cf0228b302d98f15ed5"
+    },
+    {
+      "path": "android/qa-webview-fixture/src/main/java/app/freed/qawebview/WebViewFixtureActivity.java",
+      "sha256": "6a16e7e118aad1ceb1cc8e413f6f9dee3d8f1c94bdfd3d565c12b3cfe418ba0e"
+    },
+    {
+      "path": "android/qa-webview-fixture/src/main/res/values/styles.xml",
+      "sha256": "e23f93ecdd67b3248e76d954151002c7de4673c1c58f0a652a7ec66a563356db"
+    },
+    {
+      "path": "android/settings.gradle",
+      "sha256": "3c6077a84214a9fe65ee002b658da80e1e013f2bdee882017ab728b1ed1ba596"
+    },
+    {
+      "path": "modules/freed-protection/android/build.gradle",
+      "sha256": "5e1371d25bcd2fe289ab6823a08c652e0db72b46e200e4930c4cba291cbacafa"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/AndroidManifest.xml",
+      "sha256": "8ebe371cc715715d7be194350ee5bcc63d86d3707f96df72d8652cb8de2df81b"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAccessibilityService.kt",
+      "sha256": "5681437dfa7e07fea51e6a20e234364969679a20177651cf26dda6d51719740b"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedAdultDomainFeed.kt",
+      "sha256": "697276b40a5ceb0459a49a95d31f298fc02b3d774af186ace77acffbb57d8fd4"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedDnsGuardPolicy.kt",
+      "sha256": "6d6f5debab513221bb55d1d94f306226475ca6b016678764f184c378d6dac8fc"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedDohPolicy.kt",
+      "sha256": "19bcc75a373b7628d6eec647a7635d1a26692e3f4fc067e2ca39ed3b715873af"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedDoomscrollApps.kt",
+      "sha256": "0ab4718f3cd08dab4b6ea4b51b46bd264f3af425d45133fae300650caa9c9430"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedEncryptedDnsConfig.kt",
+      "sha256": "8ee268ffa70975c264b3c48cb5e8ad3ced6d1b650609dffd25f5b53b70c38a47"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedEncryptedDnsPolicy.kt",
+      "sha256": "92234c9781c159fb7dbfde1b9ba62143c50383f5f9f8bab49e4b2bbd003fcfb4"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedEncryptedDnsUpstream.kt",
+      "sha256": "4f2fcf7e17494ce9694fb5d68dac66ced0c4e1839609195428780b246866db63"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldCalibration.kt",
+      "sha256": "f919a74c2d378490760b2a5bc929e8e2403e3b6810019f4913fd863436c9e0ee"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFocusShieldRules.kt",
+      "sha256": "7cbc315a9d92e21e8931c68da00951f5c8e0d643a87997eb537f5a2a5364dec5"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedInterventionActivity.kt",
+      "sha256": "ea68a582e2fbdc1dd9627123e807ab43fda3dc0935c213d6cdc8b4db9f0729dd"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedNetworkDnsState.kt",
+      "sha256": "6ef8474a8abde04decceb47a719c5fa9b8eed811323a8fa29417de0849e676a7"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectedSocketFactory.kt",
+      "sha256": "b13cfb08d1ac27ca4c5009c59207bd51e9357c10a39fbd91b0d9af3869adb7fd"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt",
+      "sha256": "6433405a660060c7599c91930a3573b0f6648e659903378d8f5e1f57d8d8c788"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedUrlClassifier.kt",
+      "sha256": "953c460bdbe470f1e77d9f9127e8573fd3bcf92b77b49dae983d153e004a173c"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedUsageAccessConfigActivity.kt",
+      "sha256": "ca9f6eb6daab7dd124d9c328f177dc2b8d383b5fd4241b2b2fc51e63ad0c4961"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedVpnAutostartReceiver.kt",
+      "sha256": "504cc30bc42601c59b0ff19cdca4b5ffec7c324a191d4d0774bf6a666d77fc38"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedVpnService.kt",
+      "sha256": "424c2d49366e0debc7efe66cd3f980043baab7b306bf6db7d5cab5d67ad7c3b0"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/res/values/strings.xml",
+      "sha256": "d847193e9112ba1ff6afc245e8e3c5db65021e9feb122aa0e6924a3b1627ccd7"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/res/values/styles.xml",
+      "sha256": "cb070d8b43f733bb2948bd11568c478d913c60ce32abad99b2082272b074e19d"
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/res/xml/freed_accessibility_service.xml",
+      "sha256": "61e7f938c06f61c48493a22e08f35b08a265e1e3af7a6974799772a194eca9f9"
+    },
+    {
+      "path": "modules/freed-protection/android/src/test/java/app/freed/protection/FreedDnsGuardPolicyCases.kt",
+      "sha256": "855e770191c4e95314762f860a747d1c9cfb5ff51c6f258acb15ec1bfbd7f147"
+    },
+    {
+      "path": "modules/freed-protection/android/src/test/java/app/freed/protection/FreedEncryptedDnsCases.kt",
+      "sha256": "f6fce2aa3ad27f44ea284ea2a65e6019e106df090fc267e3a6b0c608aeae46e4"
+    },
+    {
+      "path": "package.json",
+      "sha256": "2cc660d7810d584909217a61b0865846475a5be1c103b99c0ad72b9ff41658d2"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "ac6faf724850951ec619ee358d411a7ab437dcd989c2c573d947d27fcc062037"
+    },
+    {
+      "path": "app.config.js",
+      "sha256": "112b38110a7053f7fd208101b5852fbaaafd48ea14cd6003356737c4d826d593"
+    }
+  ],
+  "scope": "Android native source/configuration and dependency/app manifests; bundled JS and binary assets excluded"
+}

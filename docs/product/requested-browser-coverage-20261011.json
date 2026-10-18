@@ -1,0 +1,1356 @@
+{
+  "schemaVersion": 2,
+  "recordedDate": "2026-10-12",
+  "source": "User-supplied requested coverage list; platform labels are requests, not verified distribution availability. Some names may identify proxies, products without mobile releases, discontinued apps or development targets. Do not invent package/bundle IDs.",
+  "requiredPublicPromise": "Block adult requests before content and open FREED automatically OR provide one clear Open FREED action in every existing/newly installed browser.",
+  "publicReleaseState": "blocked",
+  "capabilityRegistry": "src/lib/interception-capabilities.ts",
+  "capabilityAssessment": "docs/product/interception-capabilities.md",
+  "platformRules": {
+    "ios": "Current DNS and URL-filter APIs provide no universal FREED execution/app-open callback. Safari extension redirects are Safari-only; system shield action is a user tap.",
+    "android": "DNS/VPN can detect covered queries but cannot inspect arbitrary encrypted/cloud request paths. Background launch restrictions apply; notification handoff is tap-based.",
+    "other": "No unsupported platform is implied by an Android/iOS implementation. Verify actual available target, OS and network stack first."
+  },
+  "casesPerAvailablePlatform": [
+    "allowed-domain",
+    "safe-blocked-category",
+    "private-browsing",
+    "custom-encrypted-dns",
+    "other-vpn-or-proxy",
+    "wifi",
+    "cellular",
+    "network-change",
+    "permission-loss",
+    "restart",
+    "post-protection-new-browser-install",
+    "pre-content-ordering",
+    "attempt-detection",
+    "automatic-app-opening",
+    "premium-recovery",
+    "explicit-sample-rewarded-access",
+    "unknown-membership-basic-help",
+    "accepted-recovery-entry-with-separate-os-confirmation"
+  ],
+  "browserRows": [
+    {
+      "id": "google-chrome",
+      "requestedName": "Google Chrome",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "mainstream",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "apple-safari",
+      "requestedName": "Apple Safari",
+      "requestedPlatforms": [
+        "ios",
+        "ipados"
+      ],
+      "category": "mainstream",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "samsung-internet",
+      "requestedName": "Samsung Internet",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "mainstream",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "microsoft-edge",
+      "requestedName": "Microsoft Edge",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "mainstream",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "mozilla-firefox",
+      "requestedName": "Mozilla Firefox",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "mainstream",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "amazon-silk",
+      "requestedName": "Amazon Silk",
+      "requestedPlatforms": [
+        "fire-os",
+        "android"
+      ],
+      "category": "mainstream",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "xiaomi-mi-browser",
+      "requestedName": "Xiaomi Mi Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "mainstream",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "mint-browser",
+      "requestedName": "Mint Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "mainstream",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "vivo-browser",
+      "requestedName": "Vivo Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "mainstream",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "oppo-heytap-browser",
+      "requestedName": "OPPO HeyTap Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "mainstream",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "huawei-browser",
+      "requestedName": "Huawei Browser",
+      "requestedPlatforms": [
+        "harmonyos",
+        "android"
+      ],
+      "category": "mainstream",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "brave-browser",
+      "requestedName": "Brave Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "duckduckgo-private-browser",
+      "requestedName": "DuckDuckGo Private Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "tor-browser",
+      "requestedName": "Tor Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "orbot",
+      "requestedName": "Orbot",
+      "requestedPlatforms": [
+        "ios"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "onion-browser",
+      "requestedName": "Onion Browser",
+      "requestedPlatforms": [
+        "ios"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "firefox-focus",
+      "requestedName": "Firefox Focus",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "firefox-klar",
+      "requestedName": "Firefox Klar",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "mull",
+      "requestedName": "Mull",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "bromite",
+      "requestedName": "Bromite",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "cromite",
+      "requestedName": "Cromite",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "vanadium",
+      "requestedName": "Vanadium",
+      "requestedPlatforms": [
+        "grapheneos"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "librewolf-mobile",
+      "requestedName": "LibreWolf Mobile",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "fennec-f-droid",
+      "requestedName": "Fennec F-Droid",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "ghostery-dawn-privacy-browser",
+      "requestedName": "Ghostery Dawn Privacy Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "startpage-private-browser",
+      "requestedName": "Startpage Private Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "aloha-browser",
+      "requestedName": "Aloha Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "avast-secure-browser",
+      "requestedName": "Avast Secure Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "avg-secure-browser",
+      "requestedName": "AVG Secure Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "privacy",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "opera",
+      "requestedName": "Opera",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "feature-rich",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "opera-gx-mobile",
+      "requestedName": "Opera GX Mobile",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "feature-rich",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "opera-touch",
+      "requestedName": "Opera Touch",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "feature-rich",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "opera-air",
+      "requestedName": "Opera Air",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "feature-rich",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "vivaldi",
+      "requestedName": "Vivaldi",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "feature-rich",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "arc-search",
+      "requestedName": "Arc Search",
+      "requestedPlatforms": [
+        "ios",
+        "android"
+      ],
+      "category": "feature-rich",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "dia-browser",
+      "requestedName": "Dia Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "feature-rich",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "perplexity",
+      "requestedName": "Perplexity",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "feature-rich",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "sigmaos",
+      "requestedName": "SigmaOS",
+      "requestedPlatforms": [
+        "ios"
+      ],
+      "category": "feature-rich",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "puffin-web-browser",
+      "requestedName": "Puffin Web Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "feature-rich",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "dolphin-browser",
+      "requestedName": "Dolphin Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "feature-rich",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "sleipnir-mobile",
+      "requestedName": "Sleipnir Mobile",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "feature-rich",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "kiwi-browser",
+      "requestedName": "Kiwi Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "extensions",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "yandex-browser",
+      "requestedName": "Yandex Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "extensions",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "lemur-browser",
+      "requestedName": "Lemur Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "extensions",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "iceraven",
+      "requestedName": "Iceraven",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "extensions",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "waterfox-mobile",
+      "requestedName": "Waterfox Mobile",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "extensions",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "opera-mini",
+      "requestedName": "Opera Mini",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "lightweight",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "uc-browser",
+      "requestedName": "UC Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "lightweight",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "uc-mini",
+      "requestedName": "UC Mini",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "lightweight",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "hermit",
+      "requestedName": "Hermit",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "lightweight",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "foss-browser",
+      "requestedName": "FOSS Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "lightweight",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "via-browser",
+      "requestedName": "Via Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "lightweight",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "monument-browser",
+      "requestedName": "Monument Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "lightweight",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "lightning-browser",
+      "requestedName": "Lightning Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "lightweight",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "smart-cookie-web",
+      "requestedName": "Smart Cookie Web",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "lightweight",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "phoenix-browser",
+      "requestedName": "Phoenix Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "lightweight",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "xbrowser",
+      "requestedName": "XBrowser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "lightweight",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "ecosia-browser",
+      "requestedName": "Ecosia Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "alternative",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "oceanhero-browser",
+      "requestedName": "OceanHero Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "alternative",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "naver-whale",
+      "requestedName": "Naver Whale",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "alternative",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "jiopages",
+      "requestedName": "JioPages",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "alternative",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "soul-browser",
+      "requestedName": "Soul Browser",
+      "requestedPlatforms": [
+        "android"
+      ],
+      "category": "alternative",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "cake-browser",
+      "requestedName": "Cake Browser",
+      "requestedPlatforms": [
+        "android",
+        "ios"
+      ],
+      "category": "alternative",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "meta-quest-browser",
+      "requestedName": "Meta Quest Browser",
+      "requestedPlatforms": [
+        "android-xr"
+      ],
+      "category": "alternative",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "flow-browser",
+      "requestedName": "Flow Browser",
+      "requestedPlatforms": [
+        "linux",
+        "embedded",
+        "mobile"
+      ],
+      "category": "alternative",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    },
+    {
+      "id": "ladybird",
+      "requestedName": "Ladybird",
+      "requestedPlatforms": [
+        "mobile-development-target"
+      ],
+      "category": "alternative",
+      "availability": "unverified",
+      "installedInventory": "unexecuted",
+      "blockingEvidence": "unexecuted",
+      "attemptDetectionEvidence": "unexecuted",
+      "foregroundEntryEvidence": "unexecuted",
+      "automaticEntryEvidence": "unexecuted",
+      "newlyInstalledEvidence": "unexecuted",
+      "privateBrowsingEvidence": "unexecuted",
+      "encryptedDnsOrTunnelEvidence": "unexecuted",
+      "sourceBinaryDeviceBinding": null,
+      "artifact": null
+    }
+  ],
+  "evidenceRules": "Bind each executed case to frozen source SHA, signed binary SHA, exact device/OS/browser version, native observed state, network, outcome and artifact hash. Opening a link is not a pass. Do not install browsers/runtimes merely to fill cells without authorized device/storage constraints.",
+  "recoveryContractVersion": 2,
+  "historicalAutomaticOnlyPromise": {
+    "schemaVersion": 1,
+    "recordedDate": "2026-10-11",
+    "requiredPublicPromise": "Block covered adult requests before content and automatically open FREED in every existing/newly installed browser.",
+    "meaning": "Preserve automaticEntryEvidence as automatic-only historical observations; never backfill version 2 passes."
+  },
+  "acceptedRecoveryEntry": {
+    "methods": [
+      "automatic",
+      "shield-primary-tap",
+      "notification-tap",
+      "extension-open-freed-action"
+    ],
+    "productActionCount": "0 for automatic, exactly 1 Open FREED CTA for direct handoff",
+    "osConfirmationCount": "Recorded separately as 0 or 1; never call two physical taps one tap",
+    "requires": [
+      "actual foreground FREED",
+      "recovery entered",
+      "matching reviewed API scope",
+      "source/binary/device-bound evidence"
+    ],
+    "insufficient": [
+      "browser error",
+      "rendered page alone",
+      "manual app-icon opening",
+      "attempted launch without foreground proof"
+    ]
+  }
+}

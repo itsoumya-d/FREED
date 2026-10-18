@@ -1,0 +1,17 @@
+# extracted from /tmp/t007-ios-build.log (full log stays outside the repo; 1.1 MB of xcodebuild chatter)
+
+## the error and the failing commands:
+5818:error: The file “RCTAppDependencyProvider.h” couldn’t be opened because there is no such file. (in target 'ReactAppDependencyProvider' from project 'Pods')
+
+warning: Run script build phase 'Create Symlinks to Header Folders' will be run during every build because it does not specify any outputs. To address this issue, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase. (in target 'React-utils' from project 'Pods')
+** BUILD FAILED **
+
+
+The following build commands failed:
+	CpHeader /Users/soumyadebnath16/Developer/live/FREED/ios/build/Build/Products/Debug-iphonesimulator/ReactAppDependencyProvider/ReactAppDependencyProvider.framework/Headers/RCTAppDependencyProvider.h /Users/soumyadebnath16/Developer/live/FREED/ios/build/generated/ios/ReactAppDependencyProvider/RCTAppDependencyProvider.h (in target 'ReactAppDependencyProvider' from project 'Pods')
+	Building workspace FREED with scheme FREED and configuration Debug
+(2 failures)
+
+## Pods tree state (local, gitignored):
+ios/.gitignore:30 -> /Pods/ ; git ls-files ios/Pods | wc -l = 0
+find ios/Pods -name 'RCTAppDependencyProvider*' -> (no results)

@@ -1,0 +1,89 @@
+{
+  "source": "https://nsfw-small.oisd.nl/",
+  "sourceSha256": "6185c8b90efad4c92a5ff207e3bbf03c298822d133b8a74c3b7ca8c93125b1cb",
+  "sourceBytes": 358308,
+  "rejectedRuleCount": 8,
+  "rejectedPublicRules": [
+    {
+      "lineNumber": 638,
+      "exactPublicUpstreamRule": "||adult^",
+      "category": "public-or-private-suffix-wide-rule",
+      "publicSuffix": "adult",
+      "isPrivate": false,
+      "isIcann": true,
+      "registrableDomain": null,
+      "reason": "Invalid reviewed feed rule."
+    },
+    {
+      "lineNumber": 3606,
+      "exactPublicUpstreamRule": "||co.cz^",
+      "category": "public-or-private-suffix-wide-rule",
+      "publicSuffix": "co.cz",
+      "isPrivate": true,
+      "isIcann": false,
+      "registrableDomain": null,
+      "reason": "Invalid reviewed feed rule."
+    },
+    {
+      "lineNumber": 3728,
+      "exactPublicUpstreamRule": "||cpanel.site^",
+      "category": "public-or-private-suffix-wide-rule",
+      "publicSuffix": "cpanel.site",
+      "isPrivate": true,
+      "isIcann": false,
+      "registrableDomain": null,
+      "reason": "Invalid reviewed feed rule."
+    },
+    {
+      "lineNumber": 8183,
+      "exactPublicUpstreamRule": "||in.net^",
+      "category": "public-or-private-suffix-wide-rule",
+      "publicSuffix": "in.net",
+      "isPrivate": true,
+      "isIcann": false,
+      "registrableDomain": null,
+      "reason": "Invalid reviewed feed rule."
+    },
+    {
+      "lineNumber": 10564,
+      "exactPublicUpstreamRule": "||mex.com^",
+      "category": "public-or-private-suffix-wide-rule",
+      "publicSuffix": "mex.com",
+      "isPrivate": true,
+      "isIcann": false,
+      "registrableDomain": null,
+      "reason": "Invalid reviewed feed rule."
+    },
+    {
+      "lineNumber": 12611,
+      "exactPublicUpstreamRule": "||porn^",
+      "category": "public-or-private-suffix-wide-rule",
+      "publicSuffix": "porn",
+      "isPrivate": false,
+      "isIcann": true,
+      "registrableDomain": null,
+      "reason": "Invalid reviewed feed rule."
+    },
+    {
+      "lineNumber": 14754,
+      "exactPublicUpstreamRule": "||sex^",
+      "category": "public-or-private-suffix-wide-rule",
+      "publicSuffix": "sex",
+      "isPrivate": false,
+      "isIcann": true,
+      "registrableDomain": null,
+      "reason": "Invalid reviewed feed rule."
+    },
+    {
+      "lineNumber": 19421,
+      "exactPublicUpstreamRule": "||xxx^",
+      "category": "public-or-private-suffix-wide-rule",
+      "publicSuffix": "xxx",
+      "isPrivate": false,
+      "isIcann": true,
+      "registrableDomain": null,
+      "reason": "Invalid reviewed feed rule."
+    }
+  ],
+  "productionSourceUnmodified": true
+}

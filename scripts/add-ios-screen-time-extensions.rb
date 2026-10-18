@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 require "xcodeproj"
+require "json"
+require "fileutils"
 
 PROJECT_PATH = "ios/FREED.xcodeproj"
 APP_TARGET = "FREED"
@@ -15,7 +17,7 @@ EXTENSIONS = [
     source_dir: "FREEDShieldConfiguration",
     swift_file: "ShieldConfigurationExtension.swift",
     entitlements: "FREEDShieldConfiguration.entitlements",
-    frameworks: ["ManagedSettings", "ManagedSettingsUI"],
+    frameworks: ["ManagedSettings", "ManagedSettingsUI", "CryptoKit"],
     resources: [],
     family_controls: true
   },
@@ -25,7 +27,7 @@ EXTENSIONS = [
     source_dir: "FREEDShieldAction",
     swift_file: "ShieldActionExtension.swift",
     entitlements: "FREEDShieldAction.entitlements",
-    frameworks: ["ManagedSettings"],
+    frameworks: ["ManagedSettings", "DeviceActivity", "FamilyControls", "CryptoKit"],
     resources: [],
     family_controls: true
   },
@@ -55,12 +57,37 @@ EXTENSIONS = [
     source_dir: "FREEDSafariFocusShield",
     swift_file: "SafariWebExtensionHandler.swift",
     entitlements: "FREEDSafariFocusShield.entitlements",
-    frameworks: ["SafariServices"],
+    frameworks: ["SafariServices", "CryptoKit", "Security"],
     resources: ["manifest.json", "background.js", "content.js"],
+    resource_folders: ["icons", "recovery-probe", "adult-recovery", "safari-observation"],
     family_controls: false,
     deployment_target: "15.4"
   }
 ].freeze
+
+def ensure_safari_focus_icons
+  # Rasterize the approved original kite; keep manifest paths relative to the
+  # copied icons folder so Xcode does not flatten the PNG resource names.
+  root = File.expand_path("..", __dir__)
+  directory = File.join(root, "ios/FREEDSafariFocusShield")
+  manifest_path = File.join(directory, "manifest.json")
+  manifest = JSON.parse(File.read(manifest_path))
+  manifest["icons"] = [16, 32, 48, 128].to_h { |size| [size.to_s, "icons/icon-#{size}.png"] }
+  FileUtils.mkdir_p(File.join(directory, "icons"))
+  node = <<~JS
+    const sharp = require('sharp');
+    const path = require('node:path');
+    const root = process.argv[1], directory = process.argv[2];
+    (async () => {
+      for (const size of [16, 32, 48, 128]) {
+        await sharp(path.join(root, 'assets/brand/freed-symbol.svg'))
+          .resize(size, size).png().toFile(path.join(directory, 'icons', `icon-${size}.png`));
+      }
+    })().catch(error => { console.error(error.message); process.exitCode = 1; });
+  JS
+  abort "Safari Focus Shield icon generation failed" unless system("node", "-e", node, root, directory)
+  File.write(manifest_path, JSON.pretty_generate(manifest) + "\n")
+end
 
 def ensure_extension_entitlements(path, family_controls:)
   entitlements = File.exist?(path) ? Xcodeproj::Plist.read_from_path(path) : {}
@@ -75,9 +102,15 @@ def ensure_extension_entitlements(path, family_controls:)
   Xcodeproj::Plist.write_to_path(entitlements, path)
 end
 
+# Default-off fixture experiment. Fail before changing the Xcode project if
+# someone requests it outside an explicitly internal build.
+abort "Safari recovery probe configuration failed" unless system("node", "scripts/configure-safari-recovery-probe.js")
+
 project = Xcodeproj::Project.open(PROJECT_PATH)
 app_target = project.targets.find { |target| target.name == APP_TARGET }
 abort "Missing #{APP_TARGET} target" unless app_target
+
+ensure_safari_focus_icons
 
 ensure_extension_entitlements(APP_ENTITLEMENTS_PATH, family_controls: true)
 
@@ -129,11 +162,42 @@ EXTENSIONS.each do |extension|
   swift_ref = group.files.find { |file| file.path == extension[:swift_file] }
   target.add_file_references([swift_ref]) if target.source_build_phase.files_references.none? { |ref| ref.path == swift_ref.path }
 
+  # App and extension must compile the same locking/scheduling policy. Keep
+  # these references when regenerating the project, without copying its source.
+  shared_sources = extension[:name] == "FREEDShieldConfiguration" ? [] : ["FreedProtectionConfigurationLock.swift", "FreedRetainedAdultProtection.swift"]
+  shared_sources << "FreedSafariRecoveryObservation.swift" if extension[:name] == "FREEDSafariFocusShield"
+  shared_sources << "FreedAppGuardPolicy.swift" if extension[:name] == "FREEDDeviceActivityMonitor"
+  shared_sources += ["FreedAppGroupsPolicy.swift", "FreedEarnedAppTimePolicy.swift", "FreedEarnedAppTimeTrustedClock.swift", "FreedChallengeEvidencePolicy.swift", "FreedChallengeStepObserver.swift", "FreedAccountProtectionCleanup.swift", "FreedAccountBindingSession.swift", "FreedAppGroupsRuntime.swift"] if ["FREEDDeviceActivityMonitor", "FREEDShieldAction"].include?(extension[:name])
+  shared_sources << "FreedWebsiteRecoveryProbe.swift" if extension[:name] == "FREEDShieldAction"
+  shared_sources << "FreedWebsiteProbeCopy.swift" if extension[:name] == "FREEDShieldConfiguration"
+  shared_sources << "FreedShieldRuntimeDiagnostics.swift" if ["FREEDShieldAction", "FREEDShieldConfiguration"].include?(extension[:name])
+  if ["FREEDShieldAction", "FREEDShieldConfiguration"].include?(extension[:name])
+    # App and both shield extensions must use the same bundled internal gate.
+    app_info = Xcodeproj::Plist.read_from_path("ios/FREED/Info.plist")
+    extension_info_path = "ios/#{extension[:source_dir]}/Info.plist"
+    extension_info = Xcodeproj::Plist.read_from_path(extension_info_path)
+    extension_info["FREEDWebsiteRecoveryProbeEnabled"] = app_info["FREEDWebsiteRecoveryProbeEnabled"] == true
+    extension_info["FREEDWebsiteRecoveryProbeChannel"] = app_info["FREEDWebsiteRecoveryProbeChannel"] || "production"
+    extension_info["FREEDWebsiteRecoveryProbeInternalTestflight"] = app_info["FREEDWebsiteRecoveryProbeInternalTestflight"] == true
+    Xcodeproj::Plist.write_to_path(extension_info, extension_info_path)
+  end
+  shared_sources.each do |source|
+    source_path = "../modules/freed-protection/ios/#{source}"
+    source_ref = project.files.find { |file| file.path == source_path } || project.main_group.new_file(source_path, :project)
+    target.add_file_references([source_ref]) unless target.source_build_phase.files_references.include?(source_ref)
+  end
+
   Array(extension[:resources]).each do |file_name|
     file_ref = group.files.find { |file| file.path == file_name }
     next unless file_ref
 
     target.resources_build_phase.add_file_reference(file_ref) unless target.resources_build_phase.files_references.any? { |ref| ref.path == file_ref.path }
+  end
+
+  Array(extension[:resource_folders]).each do |folder|
+    file_ref = group.files.find { |file| file.path == folder } || group.new_file(folder)
+    file_ref.last_known_file_type = "folder"
+    target.resources_build_phase.add_file_reference(file_ref) unless target.resources_build_phase.files_references.any? { |ref| ref.path == folder }
   end
 
   extension[:frameworks].each do |framework|

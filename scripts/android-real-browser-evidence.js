@@ -1622,7 +1622,7 @@ function androidPermissionWizardProof(options) {
     check: "permissionSetupWizard",
     flowOrder: PERMISSION_WIZARD_FLOW_ORDER,
     manualExpectation:
-      "Record the full release setup wizard on Android hardware: recovery goals, app selection, paywall, protection explanation, guided DNS Guard VPN consent, Usage Access, and targeted FREED Accessibility details setup, Test Protection, and Activation Complete.",
+      "Record the full release setup wizard on Android hardware: recovery goals, app selection, paywall, protection explanation, guided DNS Guard VPN consent, Usage Access, and public Accessibility settings with the user enabling FREED, Test Protection, and Activation Complete.",
     releaseFields: [
       "android.permissionWizardRunId",
       "android.permissionWizardArtifact",
@@ -2794,11 +2794,11 @@ async function capturePermissionProof(serial, outputDir, options, accessibility)
     appPackage: options.appPackage,
     accessibilityServiceEnabled: accessibility.serviceEnabled,
     accessibilityServiceComponent: accessibility.serviceComponent,
-    androidSettingsRouteOpened: "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
-    androidSettingsRouteComponent: `${options.appPackage}/app.freed.protection.FreedAccessibilityService`,
-    androidSettingsRouteOpenedAt: settingsRouteOpenedAt,
+    androidSettingsRouteOpened: "",
+    androidSettingsRouteComponent: "",
+    androidSettingsRouteOpenedAt: "",
     androidSettingsRoutes: [
-      "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
+      "android.settings.VPN_SETTINGS",
       "android.settings.APP_NOTIFICATION_SETTINGS",
       "android.settings.PRIVATE_DNS_SETTINGS",
       "android.settings.ACCESSIBILITY_SETTINGS",
@@ -2809,7 +2809,7 @@ async function capturePermissionProof(serial, outputDir, options, accessibility)
     ],
     checks: {
       explicitUserPermissionConfirmed: false,
-      accessibilityServiceDetailsRouteCaptured: true,
+      accessibilityPublicSettingsRouteCaptured: false,
       accessibilitySettingsCaptured: diagnostics.some((entry) => entry.label === "accessibility-enabled" && entry.ok),
       enabledServicesCaptured: diagnostics.some((entry) => entry.label === "enabled-accessibility-services" && entry.ok),
       serviceComponentMatchesFreed: Boolean(accessibility.serviceComponent && accessibility.serviceComponent.includes(options.appPackage)),
@@ -2821,7 +2821,7 @@ async function capturePermissionProof(serial, outputDir, options, accessibility)
       noPacketInspection: true,
     },
     manualCompletionRequired:
-      "Set explicitUserPermissionConfirmed and noHiddenMonitoring true only after the release permission-flow recording proves the user enabled FREED's AccessibilityService through Android Settings with the in-app disclosure shown.",
+      "Fill the actual android.settings.ACCESSIBILITY_SETTINGS route and native return timestamp, then set accessibilityPublicSettingsRouteCaptured, explicitUserPermissionConfirmed and noHiddenMonitoring true only after the release recording proves the user enabled FREED's AccessibilityService with the in-app disclosure shown. Opening Settings alone does not grant the permission.",
     supportingArtifacts: {
       permissionTextArtifact: repoRelative(proofPath),
     },
@@ -2839,7 +2839,7 @@ async function capturePermissionProof(serial, outputDir, options, accessibility)
     dnsGuardNoSilentStartWithoutConsent: false,
     dnsGuardDeniedConsentNoPromptLoop: false,
     androidSettingsRoutes: [
-      "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
+      "android.settings.VPN_SETTINGS",
       "android.settings.APP_NOTIFICATION_SETTINGS",
       "android.settings.PRIVATE_DNS_SETTINGS",
       "android.settings.ACCESSIBILITY_SETTINGS",
@@ -2914,10 +2914,10 @@ async function capturePermissionProof(serial, outputDir, options, accessibility)
     reportKind: "usage-access-permission",
     appPackage: options.appPackage,
     usageStatsAuthorized,
-    androidSettingsRouteOpened: ANDROID_USAGE_ACCESS_SETTINGS_ROUTE,
-    androidSettingsRouteOpenedAt: settingsRouteOpenedAt,
+    androidSettingsRouteOpened: "",
+    androidSettingsRouteOpenedAt: "",
     androidSettingsRoutes: [
-      "android.settings.ACCESSIBILITY_DETAILS_SETTINGS",
+      "android.settings.VPN_SETTINGS",
       "android.settings.APP_NOTIFICATION_SETTINGS",
       "android.settings.PRIVATE_DNS_SETTINGS",
       "android.settings.ACCESSIBILITY_SETTINGS",
@@ -2935,7 +2935,7 @@ async function capturePermissionProof(serial, outputDir, options, accessibility)
     },
     checks: {
       explicitUserPermissionConfirmed: false,
-      usageAccessSettingsRouteCaptured: true,
+      usageAccessSettingsRouteCaptured: false,
       usageAccessManualTogglePathCaptured: true,
       usageAccessRequiresExplicitUserToggle: true,
       noSilentUsageAccessGrant: true,
@@ -2952,7 +2952,7 @@ async function capturePermissionProof(serial, outputDir, options, accessibility)
       noPacketInspection: true,
     },
     manualCompletionRequired:
-      `Fill the metrics and set the false checks true only after the release recording shows the user toggled FREED at ${ANDROID_USAGE_ACCESS_MANUAL_TOGGLE_PATH} and FREED Profile > Native Protection shows usageStatsAuthorized=true plus aggregate selected-app package names and same-day minute totals.`,
+      `Fill the actual ${ANDROID_USAGE_ACCESS_SETTINGS_ROUTE} route, native return timestamp and metrics, then set the false checks true only after the release recording shows the user toggled FREED at ${ANDROID_USAGE_ACCESS_MANUAL_TOGGLE_PATH} and FREED Profile > Native Protection shows usageStatsAuthorized=true plus aggregate selected-app package names and same-day minute totals. App info and the explanation screen cannot grant Usage Access.`,
     supportingArtifacts: {
       permissionTextArtifact: repoRelative(proofPath),
     },

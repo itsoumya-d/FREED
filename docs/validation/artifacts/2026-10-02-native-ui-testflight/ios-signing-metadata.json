@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "freed-ios-signing-metadata-v1",
+  "generatedAt": "2026-10-02T06:31:02.211779+00:00",
+  "sanitized": true,
+  "privateKeysExported": false,
+  "source": "read-only local Keychain identity labels and decoded cached provisioning profile metadata",
+  "appleDistributionIdentityPresentForExpectedTeam": true,
+  "freedCachedProfiles": [
+    {
+      "bundleId": "app.freed.recovery.safari-content-blocker",
+      "teamMatchesExpected": true,
+      "expiresAt": "2027-09-28 03:46:49",
+      "getTaskAllow": true,
+      "hasProvisionedDevices": true,
+      "familyControls": false,
+      "appGroups": [
+        "group.app.freed.recovery"
+      ],
+      "apsEnvironment": null,
+      "appleSignIn": null,
+      "associatedDomainsEntitled": false
+    },
+    {
+      "bundleId": "app.freed.recovery",
+      "teamMatchesExpected": true,
+      "expiresAt": "2027-09-28 03:46:55",
+      "getTaskAllow": true,
+      "hasProvisionedDevices": true,
+      "familyControls": true,
+      "appGroups": [
+        "group.app.freed.recovery"
+      ],
+      "apsEnvironment": "development",
+      "appleSignIn": [
+        "Default"
+      ],
+      "associatedDomainsEntitled": true
+    },
+    {
+      "bundleId": "app.freed.recovery.safari-focus-shield",
+      "teamMatchesExpected": true,
+      "expiresAt": "2027-09-28 03:47:03",
+      "getTaskAllow": true,
+      "hasProvisionedDevices": true,
+      "familyControls": false,
+      "appGroups": [
+        "group.app.freed.recovery"
+      ],
+      "apsEnvironment": null,
+      "appleSignIn": null,
+      "associatedDomainsEntitled": false
+    },
+    {
+      "bundleId": "app.freed.recovery.shield-action",
+      "teamMatchesExpected": true,
+      "expiresAt": "2027-09-28 03:46:58",
+      "getTaskAllow": true,
+      "hasProvisionedDevices": true,
+      "familyControls": true,
+      "appGroups": [
+        "group.app.freed.recovery"
+      ],
+      "apsEnvironment": null,
+      "appleSignIn": null,
+      "associatedDomainsEntitled": false
+    },
+    {
+      "bundleId": "app.freed.recovery.shield-configuration",
+      "teamMatchesExpected": true,
+      "expiresAt": "2027-09-28 03:47:00",
+      "getTaskAllow": true,
+      "hasProvisionedDevices": true,
+      "familyControls": true,
+      "appGroups": [
+        "group.app.freed.recovery"
+      ],
+      "apsEnvironment": null,
+      "appleSignIn": null,
+      "associatedDomainsEntitled": false
+    },
+    {
+      "bundleId": "app.freed.recovery.device-activity-monitor",
+      "teamMatchesExpected": true,
+      "expiresAt": "2027-09-28 03:46:52",
+      "getTaskAllow": true,
+      "hasProvisionedDevices": true,
+      "familyControls": true,
+      "appGroups": [
+        "group.app.freed.recovery"
+      ],
+      "apsEnvironment": null,
+      "appleSignIn": null,
+      "associatedDomainsEntitled": false
+    }
+  ],
+  "freedAppStoreDistributionProfilesFound": 0,
+  "sourceEntitlements": {
+    "FREEDShieldAction": {
+      "com.apple.developer.family-controls": true,
+      "com.apple.developer.default-data-protection": "NSFileProtectionComplete",
+      "com.apple.security.application-groups": [
+        "group.app.freed.recovery"
+      ]
+    },
+    "FREEDDeviceActivityMonitor": {
+      "com.apple.developer.family-controls": true,
+      "com.apple.developer.default-data-protection": "NSFileProtectionComplete",
+      "com.apple.security.application-groups": [
+        "group.app.freed.recovery"
+      ]
+    },
+    "FREED": {
+      "aps-environment": "development",
+      "com.apple.developer.associated-domains": [
+        "applinks:freed-7d5ee.firebaseapp.com"
+      ],
+      "com.apple.developer.applesignin": [
+        "Default"
+      ],
+      "com.apple.developer.family-controls": true,
+      "com.apple.developer.default-data-protection": "NSFileProtectionComplete",
+      "com.apple.security.application-groups": [
+        "group.app.freed.recovery"
+      ]
+    },
+    "FREEDShieldConfiguration": {
+      "com.apple.developer.family-controls": true,
+      "com.apple.developer.default-data-protection": "NSFileProtectionComplete",
+      "com.apple.security.application-groups": [
+        "group.app.freed.recovery"
+      ]
+    },
+    "FREEDSafariFocusShield": {
+      "com.apple.developer.default-data-protection": "NSFileProtectionComplete",
+      "com.apple.security.application-groups": [
+        "group.app.freed.recovery"
+      ]
+    },
+    "FREEDSafariContentBlocker": {
+      "com.apple.developer.default-data-protection": "NSFileProtectionComplete",
+      "com.apple.security.application-groups": [
+        "group.app.freed.recovery"
+      ]
+    }
+  },
+  "testFlightReady": false,
+  "limitations": [
+    "Distribution identity is metadata only; no signed archive/export/upload is proved.",
+    "All cached FREED profiles are development profiles; App Store distribution profiles/approved Family Controls distribution capabilities are not evidenced locally.",
+    "Source main aps-environment is development; final distribution profile and signed app entitlement must be inspected for production APNs.",
+    "Signed app and all five extension embedded profiles/entitlements must be checked together."
+  ]
+}

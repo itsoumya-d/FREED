@@ -1,19 +1,24 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import * as ts from "typescript";
+const { collectExportedFunctionSources } = require("../scripts/lib/firebase-function-source");
 
 const aliases = JSON.parse(readFileSync(".firebaserc", "utf8"));
 const config = JSON.parse(readFileSync("firebase.json", "utf8"));
 const firestoreIndexes = JSON.parse(readFileSync("firestore.indexes.json", "utf8"));
 const firestoreRules = readFileSync("firestore.rules", "utf8");
 const storageRules = readFileSync("storage.rules", "utf8");
-const functionSource = readFileSync("functions/src/index.ts", "utf8");
+const functionSurface = collectExportedFunctionSources(process.cwd());
 const functionsPackageJson = JSON.parse(readFileSync("functions/package.json", "utf8"));
 const remoteConfig = JSON.parse(readFileSync("remoteconfig.template.json", "utf8"));
 const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
 const environmentExample = readFileSync(".env.example", "utf8");
 const productionEnvironmentExample = readFileSync(".env.production.example", "utf8");
 const onCallImport = `import { onCall } from "firebase-functions/v2/https";`;
+assert.throws(() => extractDeploymentCallables(collectExportedFunctionSources('/fixture', 'functions/src/index.ts', (file: string) => {
+  if (file === 'functions/src/index.ts') return 'export * from "./foundation.js";';
+  return `${onCallImport} function requireUid(uid: string | undefined) { return uid; } export const unsafe = onCall({ enforceAppCheck: true }, async request => { requireUid(request.auth?.uid); });`;
+})), /auth gate.*unauthenticated|unauthenticated.*auth gate/i);
 
 assert.equal(aliases.projects.production, "freed-7d5ee");
 assert.equal(aliases.projects.staging, "freed-staging-7d5ee");
@@ -53,13 +58,20 @@ assert.match(storageRules, /allow read, write: if false/);
 assert.equal(functionsPackageJson.main, "lib/index.js");
 assert.equal(functionsPackageJson.engines.node, "22");
 assert.ok(config.functions.some((entry: { source: string; runtime: string }) => entry.source === "functions" && entry.runtime === "nodejs22"));
-assert.match(functionSource, /function requireUid\(uid: string \| undefined\)/);
-assert.match(functionSource, /A Firebase Auth session is required/);
-assertCallablePolicies(extractExportedOnCalls(functionSource));
+const deployedCallables = extractDeploymentCallables(functionSurface);
+const clientCallableNames = callableNamesFromClient(readFileSync("src/lib/firebase-client.ts", "utf8"));
+assert.deepEqual(deployedCallables.map(handler => handler.name).sort(), clientCallableNames.sort(), "Every client callable must actually be exported by the deployment entry; no callable may disappear behind a re-export.");
+assertCallablePolicies(deployedCallables);
+for (const module of functionSurface.modules) {
+  if (extractExportedOnCalls(module.source).length) assert.match(module.source, /A Firebase Auth session is required/);
+}
 assert.throws(
   () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const unsafe = onCall({}, async (request) => { requireUid(request.auth?.uid); });`)),
   /unsafe.*enforceAppCheck/i
 );
+assert.throws(() => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const verifyStorePurchase = onCall({ enforceAppCheck: true }, async request => { requirePurchaseUid(request.auth?.uid); });`)), /verifyStorePurchase.*limited-use/i);
+assert.doesNotThrow(() => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const verifyStorePurchase = onCall({ enforceAppCheck: true, consumeAppCheckToken: true }, async request => { requirePurchaseUid(request.auth?.uid); });`)));
+assert.throws(() => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const disguised = onCall({ enforceAppCheck: true }, async request => { const requireUid = () => "fake"; requireUid(request.auth?.uid); });`)), /UID auth gate/i);
 assert.throws(
   () => assertCallablePolicies(extractExportedOnCalls(`${onCallImport} export const unsafe = onCall({ enforceAppCheck: true }, async () => {});`)),
   /unsafe.*UID auth gate/i
@@ -175,6 +187,33 @@ console.log("firebase repository configuration tests passed");
 
 type ExportedOnCall = { name: string; options: ts.ObjectLiteralExpression | null; body: ts.Block | null };
 
+function extractDeploymentCallables(surface: { modules: Array<{ path: string; source: string }>; exports: Array<{ path: string; localName: string; exportName: string }> }): ExportedOnCall[] {
+  for (const module of surface.modules) assertAuthenticationGateDefinitions(module.source, module.path);
+  const localHandlers = new Map(surface.modules.map(module => [module.path, extractExportedOnCalls(module.source)]));
+  return surface.exports.flatMap(binding => {
+    const handler = localHandlers.get(binding.path)?.find(candidate => candidate.name === binding.localName);
+    return handler ? [{ ...handler, name: binding.exportName }] : [];
+  });
+}
+
+function assertAuthenticationGateDefinitions(source: string, file: string) {
+  const ast = ts.createSourceFile(file, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  for (const statement of ast.statements) {
+    if (!ts.isFunctionDeclaration(statement) || !statement.name || !["requireUid", "requirePurchaseUid", "requireAuthenticatedUid"].includes(statement.name.text)) continue;
+    const first = statement.body?.statements[0];
+    const last = statement.body?.statements[statement.body.statements.length - 1];
+    const validDenial = first && ts.isIfStatement(first) && ts.isPrefixUnaryExpression(first.expression) && first.expression.operator === ts.SyntaxKind.ExclamationToken && ts.isIdentifier(first.expression.operand) && first.expression.operand.text === "uid" && ts.isThrowStatement(first.thenStatement) && first.thenStatement.expression && ts.isNewExpression(first.thenStatement.expression) && ts.isIdentifier(first.thenStatement.expression.expression) && first.thenStatement.expression.expression.text === "HttpsError" && first.thenStatement.expression.arguments?.[0] && ts.isStringLiteral(first.thenStatement.expression.arguments[0]) && first.thenStatement.expression.arguments[0].text === "unauthenticated";
+    assert.ok(validDenial && last && ts.isReturnStatement(last) && last.expression && ts.isIdentifier(last.expression) && last.expression.text === "uid", `${file} ${statement.name.text} auth gate must throw unauthenticated before returning UID.`);
+  }
+}
+
+function callableNamesFromClient(source: string): string[] {
+  const ast = ts.createSourceFile("firebase-client.ts", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const declaration = ast.statements.find((statement): statement is ts.TypeAliasDeclaration => ts.isTypeAliasDeclaration(statement) && statement.name.text === "FirebaseCallableName");
+  assert.ok(declaration && ts.isUnionTypeNode(declaration.type), "Client callable union is required.");
+  return declaration.type.types.map(type => { assert.ok(ts.isLiteralTypeNode(type) && ts.isStringLiteral(type.literal)); return type.literal.text; });
+}
+
 /**
  * Enumerates only actual top-level values created by the locally imported v2
  * onCall binding, then resolves direct and named exports. Unsupported syntax is
@@ -218,11 +257,11 @@ function assertCallablePolicies(handlers: ExportedOnCall[]) {
       throw new Error(`${handler.name} must use the shared UID auth gate.`);
     }
     const consumeAppCheckToken = effectiveOption(handler.options, "consumeAppCheckToken");
-    if (handler.name === "requestAccountDeletion" && consumeAppCheckToken.state !== "true") {
-      throw new Error("requestAccountDeletion must consume a limited-use App Check token.");
+    if (["requestAccountDeletion", "verifyStorePurchase"].includes(handler.name) && consumeAppCheckToken.state !== "true") {
+      throw new Error(`${handler.name} must consume a limited-use App Check token.`);
     }
-    if (handler.name !== "requestAccountDeletion" && consumeAppCheckToken.state !== "not-true") {
-      throw new Error("Only requestAccountDeletion may consume a limited-use App Check token.");
+    if (!["requestAccountDeletion", "verifyStorePurchase"].includes(handler.name) && consumeAppCheckToken.state !== "not-true") {
+      throw new Error("Only requestAccountDeletion or verifyStorePurchase may consume a limited-use App Check token.");
     }
   }
 }
@@ -304,6 +343,9 @@ function propertyName(name: ts.PropertyName): string | null {
 }
 
 function usesSharedUidGate(body: ts.Block) {
+  const gateNames = new Set(["requireUid", "requirePurchaseUid", "requireAuthenticatedUid"]);
+  // A callback-local fake/shadowed gate must not satisfy authentication.
+  if (body.statements.some(statement => ts.isFunctionDeclaration(statement) && statement.name && gateNames.has(statement.name.text) || ts.isVariableStatement(statement) && statement.declarationList.declarations.some(declaration => ts.isIdentifier(declaration.name) && gateNames.has(declaration.name.text)))) return false;
   return body.statements.some((statement) => {
     if (ts.isExpressionStatement(statement)) return isSharedUidCall(statement.expression);
     if (!ts.isVariableStatement(statement)) return false;
@@ -313,7 +355,7 @@ function usesSharedUidGate(body: ts.Block) {
 
 function isSharedUidCall(expression: ts.Expression) {
   const node = unwrapExpression(expression);
-  if (!ts.isCallExpression(node) || !ts.isIdentifier(node.expression) || node.expression.text !== "requireUid") return false;
+  if (!ts.isCallExpression(node) || !ts.isIdentifier(node.expression) || !["requireUid", "requirePurchaseUid", "requireAuthenticatedUid"].includes(node.expression.text)) return false;
   const [argument] = node.arguments;
   return Boolean(argument && isRequestAuthUid(argument));
 }

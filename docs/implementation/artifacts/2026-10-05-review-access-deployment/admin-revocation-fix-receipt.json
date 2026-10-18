@@ -1,0 +1,214 @@
+{
+  "scriptPath": "/Users/soumyadebnath16/.config/freed/admin/review-access-v1-2026-10-05.mjs",
+  "scriptSha256": "3e0ed7b00fbeb0631f30a8fb731a255423b54dafc5df3b8e31be4904484860ed",
+  "permissions": "0o600",
+  "fix": "Enabled/connected Auth eligibility applies to provision only; revoke validates approved UID and exact owned marker then updates status alone without reading Auth.",
+  "red": {
+    "tests": 19,
+    "passed": 9,
+    "failed": 10
+  },
+  "green": {
+    "tests": 19,
+    "passed": 19,
+    "failed": 0,
+    "cases": [
+      {
+        "case": "disabled-revoke",
+        "passed": true,
+        "exitCode": 0,
+        "authReads": 0,
+        "credentialReadsMockOnly": 1,
+        "writesMockOnly": [
+          {
+            "method": "update",
+            "path": "backend_jobs/reviewOfflineFixture_review-access-v1",
+            "fields": {
+              "status": "revoked"
+            }
+          }
+        ]
+      },
+      {
+        "case": "disabled-provision",
+        "passed": true,
+        "exitCode": 2,
+        "authReads": 1,
+        "credentialReadsMockOnly": 1,
+        "writesMockOnly": []
+      },
+      {
+        "case": "provider-removed-revoke",
+        "passed": true,
+        "exitCode": 0,
+        "authReads": 0,
+        "credentialReadsMockOnly": 1,
+        "writesMockOnly": [
+          {
+            "method": "update",
+            "path": "backend_jobs/reviewOfflineFixture_review-access-v1",
+            "fields": {
+              "status": "revoked"
+            }
+          }
+        ]
+      },
+      {
+        "case": "provider-removed-provision",
+        "passed": true,
+        "exitCode": 2,
+        "authReads": 1,
+        "credentialReadsMockOnly": 1,
+        "writesMockOnly": []
+      },
+      {
+        "case": "missing-revoke",
+        "passed": true,
+        "exitCode": 0,
+        "authReads": 0,
+        "credentialReadsMockOnly": 1,
+        "writesMockOnly": [
+          {
+            "method": "update",
+            "path": "backend_jobs/reviewOfflineFixture_review-access-v1",
+            "fields": {
+              "status": "revoked"
+            }
+          }
+        ]
+      },
+      {
+        "case": "missing-provision",
+        "passed": true,
+        "exitCode": 2,
+        "authReads": 1,
+        "credentialReadsMockOnly": 1,
+        "writesMockOnly": []
+      },
+      {
+        "case": "already-revoked-missing-user",
+        "passed": true,
+        "exitCode": 0,
+        "authReads": 0,
+        "credentialReadsMockOnly": 1,
+        "writesMockOnly": []
+      },
+      {
+        "case": "wrong-owner-revoke",
+        "passed": true,
+        "exitCode": 2,
+        "authReads": 0,
+        "credentialReadsMockOnly": 1,
+        "writesMockOnly": []
+      },
+      {
+        "case": "wrong-kind-revoke",
+        "passed": true,
+        "exitCode": 2,
+        "authReads": 0,
+        "credentialReadsMockOnly": 1,
+        "writesMockOnly": []
+      },
+      {
+        "case": "extra-capabilities-revoke",
+        "passed": true,
+        "exitCode": 2,
+        "authReads": 0,
+        "credentialReadsMockOnly": 1,
+        "writesMockOnly": []
+      },
+      {
+        "case": "missing-marker-revoke",
+        "passed": true,
+        "exitCode": 2,
+        "authReads": 0,
+        "credentialReadsMockOnly": 1,
+        "writesMockOnly": []
+      },
+      {
+        "case": "overlong-marker-revoke",
+        "passed": true,
+        "exitCode": 2,
+        "authReads": 0,
+        "credentialReadsMockOnly": 1,
+        "writesMockOnly": []
+      },
+      {
+        "case": "deletion-fence-revoke",
+        "passed": true,
+        "exitCode": 2,
+        "authReads": 0,
+        "credentialReadsMockOnly": 1,
+        "writesMockOnly": []
+      },
+      {
+        "case": "connected-provision",
+        "passed": true,
+        "exitCode": 0,
+        "authReads": 1,
+        "credentialReadsMockOnly": 2,
+        "writesMockOnly": [
+          {
+            "method": "create",
+            "path": "backend_jobs/reviewOfflineFixture_review-access-v1",
+            "fields": [
+              "createdAt",
+              "expiresAt",
+              "kind",
+              "status",
+              "uid"
+            ],
+            "lifetimeMs": 1209600000
+          }
+        ]
+      },
+      {
+        "case": "no-overwrite-or-renew-provision",
+        "passed": true,
+        "exitCode": 2,
+        "authReads": 1,
+        "credentialReadsMockOnly": 2,
+        "writesMockOnly": []
+      },
+      {
+        "case": "approval-wrong-owner",
+        "passed": true,
+        "exitCode": 2,
+        "authReads": 0,
+        "credentialReadsMockOnly": 0,
+        "writesMockOnly": []
+      },
+      {
+        "case": "approval-wrong-action",
+        "passed": true,
+        "exitCode": 2,
+        "authReads": 0,
+        "credentialReadsMockOnly": 0,
+        "writesMockOnly": []
+      },
+      {
+        "case": "approval-stale",
+        "passed": true,
+        "exitCode": 2,
+        "authReads": 0,
+        "credentialReadsMockOnly": 0,
+        "writesMockOnly": []
+      },
+      {
+        "case": "approval-missing",
+        "passed": true,
+        "exitCode": 2,
+        "authReads": 0,
+        "credentialReadsMockOnly": 0,
+        "writesMockOnly": []
+      }
+    ],
+    "networkForbidden": true,
+    "realCredentialsUsed": false,
+    "realOperationsExecuted": false,
+    "syntheticApprovalFixturesRemoved": true
+  },
+  "actualProvisionOrRevokeExecuted": false,
+  "actualHumanApprovalReceiptCreated": false,
+  "realCredentialsUsed": false
+}

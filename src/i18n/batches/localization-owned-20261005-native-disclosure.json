@@ -1,0 +1,88 @@
+{
+  "entries": [
+    {
+      "source": "Detect openings of selected apps to apply your whole-app guards. You choose whether to open FREED recovery. Native Shorts and Reels inspection is experimental and outside the public release.",
+      "translations": {
+        "hi": "चुने गए ऐप खुलने पर पूरे ऐप की सुरक्षा लागू करें। FREED की मदद खोलना आपका निर्णय है। ऐप के भीतर Shorts और Reels की जाँच प्रयोगात्मक है और सार्वजनिक रिलीज़ में शामिल नहीं है।",
+        "es": "Detecta la apertura de aplicaciones seleccionadas para aplicar protección a toda la aplicación. Tú eliges si abrir la ayuda de FREED. La inspección de Shorts y Reels dentro de aplicaciones es experimental y está fuera de la versión pública.",
+        "pt": "Detecta a abertura de aplicativos selecionados para aplicar proteção ao aplicativo inteiro. Você escolhe se deseja abrir a ajuda do FREED. A inspeção de Shorts e Reels dentro de aplicativos é experimental e não faz parte da versão pública.",
+        "fr": "Détecte l’ouverture des applications choisies pour appliquer une protection à toute l’application. Vous choisissez d’ouvrir ou non l’aide FREED. L’inspection des Shorts et Reels dans les applications est expérimentale et exclue de la version publique.",
+        "de": "Erkennt das Öffnen ausgewählter Apps, um Regeln für die gesamte App anzuwenden. Du entscheidest, ob du FREED-Unterstützung öffnest. Die Prüfung von Shorts und Reels in nativen Apps ist experimentell und nicht Teil der öffentlichen Version.",
+        "ar": "يرصد فتح التطبيقات المختارة لتطبيق الحماية على التطبيق كله. أنت تختار فتح دعم FREED. فحص Shorts وReels داخل التطبيقات تجريبي وخارج الإصدار العام.",
+        "ja": "選択したアプリの起動を検出し、アプリ全体の保護を適用します。FREEDのサポートを開くかどうかは自分で選びます。ネイティブアプリ内のShortsとReelsの検査は実験的で、公開版には含まれません。",
+        "ko": "선택한 앱의 실행을 감지해 앱 전체 보호를 적용해요. FREED 지원을 열지는 사용자가 선택해요. 앱 내부 Shorts 및 Reels 검사는 실험 단계이며 공개 버전에 포함되지 않아요.",
+        "zh-Hans": "检测所选应用的打开行为，以执行整个应用的保护。是否打开 FREED 支持由您决定。原生应用内的 Shorts 和 Reels 检测属于实验功能，不包含在公开版本中。"
+      }
+    },
+    {
+      "source": "FREED paused a selected app",
+      "translations": {
+        "hi": "FREED ने चुना गया ऐप रोका",
+        "es": "FREED pausó una aplicación seleccionada",
+        "pt": "O FREED pausou um aplicativo selecionado",
+        "fr": "FREED a mis en pause une application choisie",
+        "de": "FREED hat eine ausgewählte App pausiert",
+        "ar": "أوقف FREED تطبيقًا مختارًا",
+        "ja": "FREEDが選択したアプリを一時停止しました",
+        "ko": "FREED가 선택한 앱을 일시 중지했어요",
+        "zh-Hans": "FREED 已暂停所选应用"
+      }
+    },
+    {
+      "source": "FREED protection notice",
+      "translations": {
+        "hi": "FREED सुरक्षा सूचना",
+        "es": "Aviso de protección de FREED",
+        "pt": "Aviso de proteção do FREED",
+        "fr": "Avis de protection FREED",
+        "de": "FREED-Schutzhinweis",
+        "ar": "إشعار حماية FREED",
+        "ja": "FREEDの保護通知",
+        "ko": "FREED 보호 알림",
+        "zh-Hans": "FREED 保护通知"
+      }
+    },
+    {
+      "source": "Shows protection notices for supported blocks. FREED recovery opens only when you choose.",
+      "translations": {
+        "hi": "समर्थित रोक के लिए सुरक्षा सूचना दिखाता है। FREED की मदद तभी खुलती है जब आप चुनते हैं।",
+        "es": "Muestra avisos de protección para bloqueos compatibles. La ayuda de FREED se abre solo cuando tú eliges.",
+        "pt": "Mostra avisos de proteção para bloqueios compatíveis. A ajuda do FREED só abre quando você escolhe.",
+        "fr": "Affiche des avis pour les blocages pris en charge. L’aide FREED s’ouvre uniquement lorsque vous le choisissez.",
+        "de": "Zeigt Hinweise für unterstützte Sperren. FREED-Unterstützung öffnet sich nur auf deinen Wunsch.",
+        "ar": "يعرض إشعارات حماية للحظر المدعوم. يفتح دعم FREED فقط عندما تختار ذلك.",
+        "ja": "対応するブロックの保護通知を表示します。FREEDのサポートは、自分で選んだ場合だけ開きます。",
+        "ko": "지원되는 차단에 대한 보호 알림을 표시해요. FREED 지원은 사용자가 선택할 때만 열려요.",
+        "zh-Hans": "显示受支持拦截的保护通知。仅在您选择时打开 FREED 支持。"
+      }
+    },
+    {
+      "source": "Shows when FREED blocks an adult-domain DNS request. Recovery opens only when you choose.",
+      "translations": {
+        "hi": "FREED द्वारा वयस्क डोमेन का DNS अनुरोध रोके जाने पर सूचना दिखाता है। मदद तभी खुलती है जब आप चुनते हैं।",
+        "es": "Muestra un aviso cuando FREED bloquea una solicitud DNS de un dominio para adultos. La ayuda se abre solo cuando tú eliges.",
+        "pt": "Mostra um aviso quando o FREED bloqueia uma solicitação DNS de domínio adulto. A ajuda só abre quando você escolhe.",
+        "fr": "Affiche un avis lorsque FREED bloque une requête DNS vers un domaine pour adultes. L’aide s’ouvre uniquement à votre choix.",
+        "de": "Zeigt an, wenn FREED eine DNS-Anfrage an eine Erwachsenen-Domain blockiert. Unterstützung öffnet sich nur auf deinen Wunsch.",
+        "ar": "يعرض إشعارًا عند حظر FREED طلب DNS لنطاق بالغين. يفتح الدعم فقط عندما تختار ذلك.",
+        "ja": "FREEDが成人向けドメインのDNSリクエストをブロックしたときに通知します。サポートは自分で選んだ場合だけ開きます。",
+        "ko": "FREED가 성인 도메인의 DNS 요청을 차단하면 알려줘요. 지원은 사용자가 선택할 때만 열려요.",
+        "zh-Hans": "当 FREED 拦截成人域名的 DNS 请求时显示通知。仅在您选择时打开支持。"
+      }
+    },
+    {
+      "source": "Your app boundary is active. Choose Start recovery to get support.",
+      "translations": {
+        "hi": "आपकी ऐप सीमा सक्रिय है। मदद के लिए «पुनर्प्राप्ति प्रारंभ करें» चुनें।",
+        "es": "El límite de tu aplicación está activo. Elige «Iniciar recuperación» para recibir apoyo.",
+        "pt": "O limite do aplicativo está ativo. Escolha «Iniciar recuperação» para receber apoio.",
+        "fr": "La limite de votre application est active. Choisissez «Démarrer la récupération» pour obtenir du soutien.",
+        "de": "Deine App-Grenze ist aktiv. Wähle «Starten Sie die Wiederherstellung», um Unterstützung zu erhalten.",
+        "ar": "حدّ التطبيق فعّال. اختر «ابدأ عملية الاسترداد» للحصول على الدعم.",
+        "ja": "アプリの境界は有効です。サポートが必要な場合は「リカバリの開始」を選んでください。",
+        "ko": "앱 경계가 작동 중이에요. 도움을 받으려면 «복구 시작»을 선택하세요.",
+        "zh-Hans": "应用边界正在生效。请选择“开始恢复”以获得支持。"
+      }
+    }
+  ]
+}

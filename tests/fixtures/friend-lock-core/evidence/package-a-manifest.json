@@ -1,0 +1,182 @@
+{
+  "recordedAt": "2026-10-12T09:50:58.099Z",
+  "scope": "Task40 Package A new files only; not full shared checkout or signed binary",
+  "head": "2ad799359196aa7d7c31244326c15e47cfd35308",
+  "host": {
+    "platform": "darwin",
+    "architecture": "arm64",
+    "kernel": "25.5.0",
+    "macOS": "26.5.1",
+    "node": "v26.7.0"
+  },
+  "files": [
+    {
+      "path": "modules/freed-protection/ios/FreedFriendLockCore.swift",
+      "sha256": "9d3bc7aab66ea12d3a8717ca3ed18425f0816db23d13a1cc5b7b5ac7dde7958b",
+      "bytes": 19719,
+      "lines": 283
+    },
+    {
+      "path": "modules/freed-protection/ios/FreedFriendLockRecordStore.swift",
+      "sha256": "2c75d4c775fba03ae385d52fd0b2c26e7f6d5f7f938d578e95a26b9818404618",
+      "bytes": 6743,
+      "lines": 109
+    },
+    {
+      "path": "modules/freed-protection/ios/FreedFriendLockKeychain.swift",
+      "sha256": "5c25f2c5d66c268c8aee795fd8db3f4d29f793df0d410ca60334730348e4e132",
+      "bytes": 7610,
+      "lines": 123
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockCore.kt",
+      "sha256": "804b9138077411303a1ff34ff16ee79e936d7f8e059216b75039ea9c2bf8c35a",
+      "bytes": 19618,
+      "lines": 248
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockRecordStore.kt",
+      "sha256": "05b620b1a9532b6ed13d82bae2636e43746beb0512c635d2ff3a36fdbded6756",
+      "bytes": 10554,
+      "lines": 153
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockEncryptedRecord.kt",
+      "sha256": "33c594ee50407bc3a47ecfbb46eab1559b7bf15920737fe5d5ee98c403acebe3",
+      "bytes": 3471,
+      "lines": 63
+    },
+    {
+      "path": "modules/freed-protection/android/src/main/java/app/freed/protection/FreedFriendLockKeystore.kt",
+      "sha256": "766ad025d9a22e8213209e0d05baf97889b86aedaa5b091a1b262812eaa857c2",
+      "bytes": 5148,
+      "lines": 91
+    },
+    {
+      "path": "src/lib/friend-lock-contract.ts",
+      "sha256": "cd830e1e3d4de3ebc18203ba8fe7de243e690ee298a49be5480c9e5c1abbe307",
+      "bytes": 1865,
+      "lines": 42
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/FriendLockCoreCases.swift",
+      "sha256": "912352dc7345b4742a3edb0fb416fb0dc1d260b0471401c92a65f13409b8e995",
+      "bytes": 18278,
+      "lines": 210
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/FriendLockAdapterCases.swift",
+      "sha256": "c6cebe4d447c5fc0c45e11a18a98f1d447acd69a59ef4473dbec295eb63cb060",
+      "bytes": 1865,
+      "lines": 34
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/FriendLockCoreCases.kt",
+      "sha256": "b3cee8ecabcc279582649d69c6778859d66b7bfff0f790c3e4362e6975efa264",
+      "bytes": 12987,
+      "lines": 180
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/FriendLockAdapterCases.kt",
+      "sha256": "dd3acb0ed630d27c0ee91922cac3012d0e90eafb2e2a3ada619417445cd819e6",
+      "bytes": 3601,
+      "lines": 61
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/run-native.mjs",
+      "sha256": "c78a501e07a80237471b88d9c205624355cb6c84421a3fc8a929cc7025cbfb32",
+      "bytes": 5420,
+      "lines": 83
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/README.md",
+      "sha256": "bb3f92b7fcb82ba7dbea8997debce38b228be8b9d9c335b3fcc9443fb79f284b",
+      "bytes": 11618,
+      "lines": 48
+    }
+  ],
+  "patch": {
+    "path": "tests/fixtures/friend-lock-core/evidence/package-a.patch",
+    "sha256": "695db415798c0f6b8b48290dc45616ee83d8217e76610712352084b62e4fd4d0"
+  },
+  "logs": [
+    {
+      "path": "tests/fixtures/friend-lock-core/evidence/kotlin-green-attempt1.log",
+      "sha256": "b1118005e372ec243db6de040333c9c1974b727b0b3b9cbda19e17a1a4af431e"
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/evidence/kotlin-green-final.log",
+      "sha256": "740d7a3c786d2724c65b9acd5d2b265077e54d50d8fe49c0fa8b36a45f682008"
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/evidence/kotlin-public-types-final.log",
+      "sha256": "90a9f69f3dac61d478807b92fb2101acb80cfc5d871e2015a95233587fdd55fc"
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/evidence/kotlin-red-attempt1.log",
+      "sha256": "51d1c492733b8f9d304bcbbb9bdee3f17be6c0f8432f6ff72c9948b3bfbaa90d"
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/evidence/kotlin-red-final.log",
+      "sha256": "4912a64338ea421fc8466493fa4f36f2c194a9b183947c45affa34957a547b11"
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/evidence/runner-syntax-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/evidence/swift-green-attempt1.log",
+      "sha256": "f964fe4201daa8951a30e8f09f633b01877e1d37a771dd0ad0e2a6e0dae4acbc"
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/evidence/swift-green-final.log",
+      "sha256": "72a57078c77cd2fb92afb4b84643cedef23a54dfda0c95b7ce29c9c7e721930d"
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/evidence/swift-green-final2.log",
+      "sha256": "08622e212cdd801c9582e7e4e4829b09d5a1cdd44b23493d279cbc03e5d2b8a7"
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/evidence/swift-red-final.log",
+      "sha256": "ead13cb5eef53e9d22635ed2c46ca59c42ea77e6723ba48ec3139129b319f132"
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/evidence/swift-red.log",
+      "sha256": "730595a349781a5f393a618410dc351825a2d76529a45c6790fd827690602687"
+    },
+    {
+      "path": "tests/fixtures/friend-lock-core/evidence/typescript-contract-final.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "fixtureBinaries": [
+    {
+      "log": "tests/fixtures/friend-lock-core/evidence/swift-green-final2.log",
+      "path": "/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-friend-lock-core-4HtH3S/cases",
+      "sha256": "7c1fedeb3e8f568753c118f2752eea636218f4313e3ee93973f3338aec84933e"
+    },
+    {
+      "log": "tests/fixtures/friend-lock-core/evidence/swift-red-final.log",
+      "path": "/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-friend-lock-core-QEWF1Z/cases",
+      "sha256": "e556e40127e90cc0124a7a16c72393b9d723abee6591736934796c381ac68fa6"
+    },
+    {
+      "log": "tests/fixtures/friend-lock-core/evidence/kotlin-green-final.log",
+      "path": "/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-friend-lock-core-nOFDqS/cases.jar",
+      "sha256": "db32ef5e87d90dc1c99db27150470efd269e86494b6c7d601880a84d92e23707"
+    },
+    {
+      "log": "tests/fixtures/friend-lock-core/evidence/kotlin-red-final.log",
+      "path": "/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-friend-lock-core-dnL5LD/cases.jar",
+      "sha256": "2a64e8953443a0b95f4b3cce54d0bdb38c0c45bd1d9126002b4d610bc8c89eb4"
+    }
+  ],
+  "notExecuted": [
+    "real Mac Keychain writes",
+    "device Keychain/Android Keystore durability and kill/reboot",
+    "slow-device KDF latency",
+    "native mutation/service/extension/account integration",
+    "signed binary/device enforcement",
+    "app-break authority and universal browser recovery"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "appliedAt": "2026-10-04T01:36:33.390082+00:00",
+  "scope": "test fixtures and strengthened source guards only",
+  "sharedCoreMatchesIsolatedGreenSource": true,
+  "coreSha256": "e5c6819ceb555b8b19c98a42c2090eff4e8f862ed9af1c5aa5df66c3a9e26b70",
+  "corePassed": 279,
+  "coreFailed": 0,
+  "privacyPassed": 31,
+  "runtimePassed": 12,
+  "cleanupMutationPassed": 3,
+  "verification": {
+    "initial": {
+      "exitCode": 1,
+      "pass": 262,
+      "fail": 17,
+      "total": 279
+    },
+    "final": {
+      "exitCode": 0,
+      "pass": 279,
+      "fail": 0
+    },
+    "runtimeAudit": {
+      "exitCode": 0,
+      "pass": 12,
+      "fail": 0
+    },
+    "privacyAudit": {
+      "exitCode": 0,
+      "pass": 31,
+      "fail": 0
+    },
+    "cleanupMutationTests": {
+      "exitCode": 0,
+      "pass": 3,
+      "fail": 0
+    },
+    "implementationChangesByWorker": [],
+    "sharedCoreUnchanged": true,
+    "patch": "/private/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-core-reconcile-1a2ypkkh/core-fixture-reconciliation.patch",
+    "receipt": "/private/var/folders/nw/9gn1c32d2xsg8x_gkzxk82l00000gn/T/freed-core-reconcile-1a2ypkkh/core-reconciliation-receipt.md"
+  },
+  "releaseEvidenceInferred": false
+}

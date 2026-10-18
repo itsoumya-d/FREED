@@ -1,0 +1,5 @@
+"NSFaceIDUsageDescription" = "O FREED usa a autenticação do dispositivo para proteger as configurações de recuperação.";
+"NSCameraUsageDescription" = "O FREED usa a câmera apenas quando você escolhe um desafio com foto que exige verificação de uma imagem real.";
+"NSLocationWhenInUseUsageDescription" = "O FREED usa localização temporária em primeiro plano apenas para verificar desafios de recuperação ao ar livre.";
+"NSMotionUsageDescription" = "O FREED usa dados de movimento apenas durante desafios ativos para verificar movimentos reais.";
+"NSUserNotificationsUsageDescription" = "O FREED envia mensagens de apoio à recuperação e lembretes urgentes para proteger sua sequência.";

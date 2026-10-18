@@ -1,0 +1,343 @@
+{
+  "schemaVersion": "freed-native-flow-authoring-receipt-v1",
+  "generatedAt": "2026-10-02T10:10:07.903Z",
+  "sanitized": true,
+  "flowCount": 47,
+  "featureCount": 99,
+  "scenarioCount": 297,
+  "requirementCount": 527,
+  "syntaxPassed": 47,
+  "nativeExecuted": 0,
+  "reason": "No native flow executed; a fresh isolated fixture and exclusive simulator coordination are not yet established. Final native route allowlist and testIDs are coordinated with root.",
+  "flows": [
+    {
+      "flow": "onboarding-welcome",
+      "commands": 6,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "550fb68d323a93f3616e8c7c2daca5365d5e8cf5904f1a4fca11272ae33c486f"
+    },
+    {
+      "flow": "onboarding-quiz",
+      "commands": 14,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "4f9a9a01900b6fa699837be93e50019b5b9f8fd9969e89246e78813ec482ce64"
+    },
+    {
+      "flow": "onboarding-plan",
+      "commands": 6,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "f0e07136de37ead29ad0299e77666e8cbc6364e5f9b307ceed470026c84bf1db"
+    },
+    {
+      "flow": "onboarding-app-selection",
+      "commands": 7,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "1587c3cee3157f64f5af1586399fb69f731e48e0c5e6982a12026870ca13fcad"
+    },
+    {
+      "flow": "account-options",
+      "commands": 11,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "06f925ee9d7b1f8c3a77ecdf997eaa7ab6c71ec3e43c35113ac4379e6a803e1f"
+    },
+    {
+      "flow": "protection-setup",
+      "commands": 7,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "615e65ac56063aac6b9c81248e87dd7d362bd12bb58b9aa7365aa210322f2c95"
+    },
+    {
+      "flow": "shield-diagnostics",
+      "commands": 7,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "7a1e37294321a9e5b5d68081327b6263f6bcc4f07d1f95f2342ef6b3232d9932"
+    },
+    {
+      "flow": "shield-health",
+      "commands": 7,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "62eb490eab8c02008d688572f226881eebaef9b4e9cc85117df9256f2bcd9891"
+    },
+    {
+      "flow": "shield-preferences",
+      "commands": 9,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "0c3d3f139dd181caf6ede9b1cdfb46a29e89a600996da171cb5e9124b348a119"
+    },
+    {
+      "flow": "platform-limits",
+      "commands": 7,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "c905200619ec0e8299421d832527f4165d02b7ccd3600ae39580b455b8180eac"
+    },
+    {
+      "flow": "shield-allowlist",
+      "commands": 11,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "7c77308d80e90d2c34577918ebbc33c9a12b30efff9cece86151103865446a77"
+    },
+    {
+      "flow": "shield-url-check",
+      "commands": 11,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "0fe1d319752aff2864faaa631196015ddc3119603e47f0c75cd542ac721db293"
+    },
+    {
+      "flow": "shield-schedules",
+      "commands": 8,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "1c7fa126a6fb581892b084f7ece3550e7ba1aecf0788c8874c63e28530bc840b"
+    },
+    {
+      "flow": "challenge-list",
+      "commands": 5,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "403e89483f90ddc80f2ced3ae7c339e0558f9dab91b529be38ff44b6ba072894"
+    },
+    {
+      "flow": "root-navigation",
+      "commands": 11,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "22348cb6a18909455e229f80a99f1893733fdaae1cb50b1a35140847c1de1036"
+    },
+    {
+      "flow": "urgent-support",
+      "commands": 8,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "1998c6821b22e7eaef0e879d34c3d659897ecd4540bec29afbadc7eb34a404ce"
+    },
+    {
+      "flow": "today-pledge",
+      "commands": 8,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "cebcf625783a32813996ec55c58313ddc225d4a8f26d905c42b26698807e2662"
+    },
+    {
+      "flow": "today-habits",
+      "commands": 25,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "e5f5a5bf732676a9f0f91ff71dacf3a5d557270e98dfda6d9eb9356257712338"
+    },
+    {
+      "flow": "today-metrics",
+      "commands": 8,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "fdd6a5528b10440948f8721a79371a303a2d1973e60071f17c70138d929f366f"
+    },
+    {
+      "flow": "recovery-shortcuts",
+      "commands": 10,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "32c0c54a94e32d103eb37f960b532bf1cc9604cae0bfddac97b44eff0692122e"
+    },
+    {
+      "flow": "intercept",
+      "commands": 9,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "840bddd1974e2346d1419b3747552c8a8adead37367734487a55d28403f1c6fe"
+    },
+    {
+      "flow": "rewarded-reset",
+      "commands": 6,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "283d768fd87730abfff99646fe85dd7b42fea186474c4e2d31316fe4160d1aa3"
+    },
+    {
+      "flow": "custom-reset",
+      "commands": 9,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "b14a4622cc70f0857726eaf9bd711e52e79b29dc80f9f42f457ced7893ef4085"
+    },
+    {
+      "flow": "breathing",
+      "commands": 12,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "70b7a28c0f1465e94dd90218f3a5d5efc04819e6eb0459c63272b1fc8b3fe578"
+    },
+    {
+      "flow": "checkin-save",
+      "commands": 14,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "ec533f9ae9c7af45c37a570eafdad249149a8fa085d876da82aae20026ae5a67"
+    },
+    {
+      "flow": "slip-save",
+      "commands": 12,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "fedef6cda9ed50a8a0233ee4b089df4e4fe68ea1216739256a3d6e00c77a5bea"
+    },
+    {
+      "flow": "clara-local",
+      "commands": 10,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "792aa47cd7cbf8b6bcdd51aa1637e73e80cc9290050b39007d2b13c4326b25f2"
+    },
+    {
+      "flow": "profile-plan",
+      "commands": 5,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "333bce8897a2127324df54bea33cde1de4d1eff159f38b9fba07e1eaf44972ce"
+    },
+    {
+      "flow": "library-articles",
+      "commands": 23,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "a8e5fffeab62ec42d122aa3e9c935a62c35e4f797325e6a6e6d54f0b7113e74d"
+    },
+    {
+      "flow": "progress-zero",
+      "commands": 5,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "7ceb2a82a3b81c3e6750269a1b590ffb6b193cfe8ae7b8b11a7474381dc2f922"
+    },
+    {
+      "flow": "progress-reports",
+      "commands": 8,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "996b69258869b119a3af3ac563d647b9021e84503804d1eefb3d96d9e997b3de"
+    },
+    {
+      "flow": "analytics-consent",
+      "commands": 6,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "09d56f1f29743bcdb6b503f19e163b841acc9b4f6c1b3f1c752d97eaf543c605"
+    },
+    {
+      "flow": "paywall-plans",
+      "commands": 9,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "7e984789240e356252954246b37150d49b1eaeb1bb71362578fc63417bf10e46"
+    },
+    {
+      "flow": "profile-history",
+      "commands": 10,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "bf8078605a4bc60f0ff5c5fdc8edb1ddacd3340017d8f2b1826b86eaadb47ed0"
+    },
+    {
+      "flow": "profile-reminders",
+      "commands": 8,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "fb2e8d6197117447210f6a38f1a201ead3ad509ec3c868ad19d76ce40cc6a6a2"
+    },
+    {
+      "flow": "backup-local",
+      "commands": 19,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "0c518ed07cce0148275ad6ea205b0f9c1cc50da1a0b177b202cde455cf41c50f"
+    },
+    {
+      "flow": "backup-hosted",
+      "commands": 6,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "0f4176d014bd624c0403f1e8022fa33897bd924a7fdce7a503930ddccaa814b4"
+    },
+    {
+      "flow": "profile-accountability",
+      "commands": 7,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "328a85dbec64af4666a4f511b76267483f4b8cce893b47a90c5d964cc0ad2d54"
+    },
+    {
+      "flow": "privacy-support",
+      "commands": 7,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "d4e9a9a4a858fad6255d61b8ccd93c3bd7b140e823dd5d1bf0cc94d8b27fff09"
+    },
+    {
+      "flow": "deletion-local",
+      "commands": 7,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "11bbd621e2d97522486cb96f03f9e70dffa725ad2a41eaca6982eb7466ba9e53"
+    },
+    {
+      "flow": "deletion-account",
+      "commands": 6,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "3dc64016feb2d9e8d678e92c83bb799cef74bfa616df18b62870f53c3099e497"
+    },
+    {
+      "flow": "profile-shield",
+      "commands": 6,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "f7479505ec74c20953101dd59d13b979fa9bc6a3b27fe27ef6cdd51f642f2a38"
+    },
+    {
+      "flow": "paywall-free-exit",
+      "commands": 8,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "6d6d114783550a63397dc1005e794c141a8742198287cf44f53217347180e961"
+    },
+    {
+      "flow": "paywall-legal",
+      "commands": 8,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "bf0f324586f65f243a80a0cb60174042eb38fed0f33bcca3c1a16cffa21f2063"
+    },
+    {
+      "flow": "account-validation",
+      "commands": 18,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "ac3a9eade12bc930013d42b8e7e7b261d7cdb58f69aa389e93dfb41857b26ed6"
+    },
+    {
+      "flow": "account-verification",
+      "commands": 16,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "a750c75dff24655e52193e1a339e5d684bcdc1445548638cbf389f8fad1e53b5"
+    },
+    {
+      "flow": "account-reset-validation",
+      "commands": 16,
+      "syntax": "passed",
+      "execution": "not-run",
+      "sha256": "e7b7fc0893cd151c063b936d287d679e3406813d3a6b130ca66393fc05b33c12"
+    }
+  ]
+}

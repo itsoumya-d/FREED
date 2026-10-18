@@ -1,0 +1,74 @@
+{
+  "entries": [
+    {
+      "source": "A selected app group rule is active.",
+      "translations": {
+        "hi": "चुने गए ऐप समूह का नियम सक्रिय है।",
+        "es": "Una regla del grupo de apps seleccionado está activa.",
+        "pt": "Uma regra do grupo de apps selecionado está ativa.",
+        "fr": "Une règle du groupe d’apps sélectionné est active.",
+        "de": "Eine Regel der ausgewählten App-Gruppe ist aktiv.",
+        "ar": "إحدى قواعد مجموعة التطبيقات المحددة نشطة.",
+        "ja": "選択したアプリグループのルールが有効です。",
+        "ko": "선택한 앱 그룹의 규칙이 활성화되어 있습니다.",
+        "zh-Hans": "所选应用组的一项规则已生效。"
+      }
+    },
+    {
+      "source": "App selection was rejected because a package is invalid, unavailable or part of a critical system pathway.",
+      "translations": {
+        "hi": "ऐप चयन स्वीकार नहीं हुआ क्योंकि कोई ऐप अमान्य, अनुपलब्ध या आवश्यक सिस्टम सुविधा का हिस्सा है।",
+        "es": "La selección se rechazó porque una app no es válida, no está disponible o forma parte de una función esencial del sistema.",
+        "pt": "A seleção foi rejeitada porque um app é inválido, está indisponível ou faz parte de uma função essencial do sistema.",
+        "fr": "La sélection a été refusée car une app est invalide, indisponible ou liée à une fonction essentielle du système.",
+        "de": "Die Auswahl wurde abgelehnt, weil eine App ungültig, nicht verfügbar oder Teil einer wesentlichen Systemfunktion ist.",
+        "ar": "رُفض اختيار التطبيقات لأن أحدها غير صالح أو غير متاح أو مرتبط بوظيفة أساسية للنظام.",
+        "ja": "無効、利用できない、またはシステムの重要な機能に関わるアプリが含まれるため、選択が拒否されました。",
+        "ko": "유효하지 않거나 사용할 수 없거나 필수 시스템 기능에 해당하는 앱이 포함되어 선택이 거부되었습니다.",
+        "zh-Hans": "应用选择被拒绝，因为其中有应用无效、不可用或属于关键系统功能。"
+      }
+    },
+    {
+      "source": "App selection was rejected; the prior acknowledged native policy is retained.",
+      "translations": {
+        "hi": "ऐप चयन स्वीकार नहीं हुआ; पहले पुष्टि की गई डिवाइस नीति बनी हुई है।",
+        "es": "La selección se rechazó; se conserva la política del dispositivo confirmada anteriormente.",
+        "pt": "A seleção foi rejeitada; a política do dispositivo confirmada anteriormente foi mantida.",
+        "fr": "La sélection a été refusée ; la politique de l’appareil précédemment confirmée est conservée.",
+        "de": "Die Auswahl wurde abgelehnt; die zuvor bestätigte Geräterichtlinie bleibt bestehen.",
+        "ar": "رُفض اختيار التطبيقات؛ وتظل سياسة الجهاز التي تم تأكيدها سابقًا سارية.",
+        "ja": "アプリの選択が拒否されました。以前に確認されたデバイスの保護ルールは維持されています。",
+        "ko": "앱 선택이 거부되었습니다. 이전에 확인된 기기 보호 정책은 유지됩니다.",
+        "zh-Hans": "应用选择被拒绝；此前已确认的设备保护规则仍保留。"
+      }
+    },
+    {
+      "source": "Native group break accepted for the claimed target.",
+      "translations": {
+        "hi": "सत्यापित लक्ष्य के लिए डिवाइस ने समूह से अस्थायी विराम स्वीकार किया।",
+        "es": "El dispositivo aceptó una pausa del grupo para el destino verificado.",
+        "pt": "O dispositivo aceitou uma pausa do grupo para o alvo verificado.",
+        "fr": "L’appareil a accepté une pause du groupe pour la cible vérifiée.",
+        "de": "Das Gerät hat eine Gruppenpause für das verifizierte Ziel bestätigt.",
+        "ar": "وافق الجهاز على استراحة من المجموعة للهدف الذي تم التحقق منه.",
+        "ja": "確認済みの対象について、デバイスがグループの一時休止を受け付けました。",
+        "ko": "확인된 대상에 대해 기기가 그룹의 일시 해제를 승인했습니다.",
+        "zh-Hans": "设备已接受对已验证目标的应用组临时休息。"
+      }
+    },
+    {
+      "source": "Native group break cancellation could not be confirmed; check current group protection status.",
+      "translations": {
+        "hi": "डिवाइस पर समूह का अस्थायी विराम रद्द होने की पुष्टि नहीं हुई; समूह की वर्तमान सुरक्षा स्थिति जाँचें।",
+        "es": "No se pudo confirmar la cancelación de la pausa del grupo; comprueba su estado de protección actual.",
+        "pt": "Não foi possível confirmar o cancelamento da pausa do grupo; verifique o estado atual da proteção do grupo.",
+        "fr": "L’annulation de la pause du groupe n’a pas pu être confirmée ; vérifiez son état de protection actuel.",
+        "de": "Die Aufhebung der Gruppenpause konnte nicht bestätigt werden; prüfe den aktuellen Schutzstatus der Gruppe.",
+        "ar": "تعذّر تأكيد إلغاء استراحة المجموعة؛ تحقق من حالة حماية المجموعة الحالية.",
+        "ja": "グループの一時休止の取り消しを確認できませんでした。現在のグループ保護状態を確認してください。",
+        "ko": "그룹 일시 해제의 취소를 확인할 수 없습니다. 현재 그룹 보호 상태를 확인해 주세요.",
+        "zh-Hans": "无法确认应用组临时休息已取消；请检查该组当前的保护状态。"
+      }
+    }
+  ]
+}

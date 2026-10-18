@@ -1,6 +1,6 @@
 {
   "schemaVersion": "freed-store-legal-web-deploy-packet-v1",
-  "generatedAt": "2026-07-22T02:46:10.365Z",
+  "generatedAt": "2026-10-01T02:32:58.632Z",
   "sanitized": true,
   "result": "static-export-ready-deploy-blocked",
   "runId": "store-legal-web-deploy-current",
@@ -28,7 +28,7 @@
       "newerSourceReports": [
         {
           "artifact": "docs/validation/artifacts/store-legal-web-current/store-legal-web-export-audit.json",
-          "generatedAt": "2026-07-22T02:46:09.941Z",
+          "generatedAt": "2026-10-01T02:32:55.767Z",
           "id": "web-export-report"
         }
       ],
@@ -36,7 +36,7 @@
         {
           "artifact": "docs/validation/artifacts/store-legal-web-current/store-legal-web-export-audit.json",
           "exists": true,
-          "generatedAt": "2026-07-22T02:46:09.941Z",
+          "generatedAt": "2026-10-01T02:32:55.767Z",
           "id": "web-export-report"
         },
         {
@@ -81,21 +81,21 @@
         "publicUrl": "https://freedrecovery.app/privacy",
         "requiredCleanUrl": "/privacy",
         "requiredMapping": "/privacy -> /privacy.html",
-        "sha256": "sha256-009b086671a37b3bee3e9e28bb54677f688d94e49e2cbd4ae27cf67236de430d"
+        "sha256": "sha256-510694909d3250aa2e7aed5c189963a1b5a82eb5dab7a927101ac010442f3788"
       },
       {
         "htmlArtifact": "dist/support.html",
         "publicUrl": "https://freedrecovery.app/support",
         "requiredCleanUrl": "/support",
         "requiredMapping": "/support -> /support.html",
-        "sha256": "sha256-0e98e4c0bb4cd639ace95dba0a1c4f5ce83f6fa273be1a04aeffd631ed049b9d"
+        "sha256": "sha256-c8aa3864bf36f961de920ca7bda156f194c28a81ac2faec0e2c6211a6bc022e0"
       },
       {
         "htmlArtifact": "dist/account-deletion.html",
         "publicUrl": "https://freedrecovery.app/account-deletion",
         "requiredCleanUrl": "/account-deletion",
         "requiredMapping": "/account-deletion -> /account-deletion.html",
-        "sha256": "sha256-65562cdd19c3325cd7796865d5f76abb114d4bb627a370d59dc33e60b8091e6b"
+        "sha256": "sha256-dea1a60b04b5597ffb7c143fa15d47e7178af3617849103bfaf6ae7a55844685"
       }
     ],
     "routeConfigFiles": [
@@ -163,29 +163,29 @@
     "archiveArtifact": "docs/validation/artifacts/store-legal-web-deploy-current/freed-store-legal-web-static-bundle.zip",
     "archiveCreated": true,
     "archiveError": "",
-    "archiveSha256": "sha256-e3429564e5d015cb0d0c37ed0dc5db8bb5c70610675ab6e3394052b4bd6a8330",
+    "archiveSha256": "sha256-9cde1e98e2113879ed7ac6e07e44f62c6ca24b2ed0de945e07c8c9b03d5411af",
     "bundleDir": "docs/validation/artifacts/store-legal-web-deploy-current/static-hosting-bundle",
     "fileCount": 8,
     "generated": true,
     "includedFiles": [
       {
-        "bytes": 26133,
+        "bytes": 26666,
         "kind": "legal-route-html",
-        "sha256": "sha256-009b086671a37b3bee3e9e28bb54677f688d94e49e2cbd4ae27cf67236de430d",
+        "sha256": "sha256-510694909d3250aa2e7aed5c189963a1b5a82eb5dab7a927101ac010442f3788",
         "source": "dist/privacy.html",
         "target": "privacy.html"
       },
       {
-        "bytes": 24300,
+        "bytes": 24844,
         "kind": "legal-route-html",
-        "sha256": "sha256-0e98e4c0bb4cd639ace95dba0a1c4f5ce83f6fa273be1a04aeffd631ed049b9d",
+        "sha256": "sha256-c8aa3864bf36f961de920ca7bda156f194c28a81ac2faec0e2c6211a6bc022e0",
         "source": "dist/support.html",
         "target": "support.html"
       },
       {
-        "bytes": 24067,
+        "bytes": 24445,
         "kind": "legal-route-html",
-        "sha256": "sha256-65562cdd19c3325cd7796865d5f76abb114d4bb627a370d59dc33e60b8091e6b",
+        "sha256": "sha256-dea1a60b04b5597ffb7c143fa15d47e7178af3617849103bfaf6ae7a55844685",
         "source": "dist/account-deletion.html",
         "target": "account-deletion.html"
       },
@@ -213,7 +213,7 @@
       {
         "bytes": 5280,
         "kind": "bundle-manifest",
-        "sha256": "sha256-77323eb122ae54e95cbd13a2b745f90441247d064edf6e49308ac108f223c531",
+        "sha256": "sha256-54f6f2a3a128d89edc36adda302cd6082635a9655236e1d73b22a22b74b2227a",
         "source": "",
         "target": "static-hosting-manifest.json"
       },
@@ -226,9 +226,9 @@
       }
     ],
     "manifestArtifact": "docs/validation/artifacts/store-legal-web-deploy-current/static-hosting-bundle/static-hosting-manifest.json",
-    "manifestSha256": "sha256-77323eb122ae54e95cbd13a2b745f90441247d064edf6e49308ac108f223c531",
+    "manifestSha256": "sha256-54f6f2a3a128d89edc36adda302cd6082635a9655236e1d73b22a22b74b2227a",
     "reason": "",
-    "totalBytes": 82282
+    "totalBytes": 83737
   },
   "routeExports": [
     {
@@ -240,8 +240,8 @@
       "id": "privacy",
       "publicUrl": "https://freedrecovery.app/privacy",
       "routePath": "/privacy",
-      "sha256": "sha256-009b086671a37b3bee3e9e28bb54677f688d94e49e2cbd4ae27cf67236de430d",
-      "sizeBytes": 26133
+      "sha256": "sha256-510694909d3250aa2e7aed5c189963a1b5a82eb5dab7a927101ac010442f3788",
+      "sizeBytes": 26666
     },
     {
       "contentReady": true,
@@ -252,8 +252,8 @@
       "id": "support",
       "publicUrl": "https://freedrecovery.app/support",
       "routePath": "/support",
-      "sha256": "sha256-0e98e4c0bb4cd639ace95dba0a1c4f5ce83f6fa273be1a04aeffd631ed049b9d",
-      "sizeBytes": 24300
+      "sha256": "sha256-c8aa3864bf36f961de920ca7bda156f194c28a81ac2faec0e2c6211a6bc022e0",
+      "sizeBytes": 24844
     },
     {
       "contentReady": true,
@@ -264,8 +264,8 @@
       "id": "account-deletion",
       "publicUrl": "https://freedrecovery.app/account-deletion",
       "routePath": "/account-deletion",
-      "sha256": "sha256-65562cdd19c3325cd7796865d5f76abb114d4bb627a370d59dc33e60b8091e6b",
-      "sizeBytes": 24067
+      "sha256": "sha256-dea1a60b04b5597ffb7c143fa15d47e7178af3617849103bfaf6ae7a55844685",
+      "sizeBytes": 24445
     }
   ],
   "sourceReports": {

@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<testsuites>
+  <testsuite name="Test Suite" device="FREED Automated QA 2026-10-02 - iOS 26.5 - CB401DE2-5B73-4017-95B3-E2D609FB88DA" tests="12" failures="4" time="295.908" timestamp="2026-10-02T17:04:41">
+    <testcase id="onboarding-plan" name="onboarding-plan" classname="onboarding-plan" file="docs/validation/artifacts/2026-10-02-feature-coverage/offline-ios/routing-fixed/flows/02-onboarding-plan.yaml" time="21.35" timestamp="2026-10-02T17:04:41" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: "Protect My Apps &amp; Proceed" is visible</failure>
+    </testcase>
+    <testcase id="root-navigation" name="root-navigation" classname="root-navigation" file="docs/validation/artifacts/2026-10-02-feature-coverage/offline-ios/routing-fixed/flows/03-root-navigation.yaml" time="23.485" timestamp="2026-10-02T17:05:03" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="clara-local" name="clara-local" classname="clara-local" file="docs/validation/artifacts/2026-10-02-feature-coverage/offline-ios/routing-fixed/flows/09-clara-local.yaml" time="44.247" timestamp="2026-10-02T17:05:26" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+    </testcase>
+    <testcase id="breathing" name="breathing" classname="breathing" file="docs/validation/artifacts/2026-10-02-feature-coverage/offline-ios/routing-fixed/flows/04-breathing.yaml" time="34.561" timestamp="2026-10-02T17:06:10" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: "Pause Exercise" is visible</failure>
+    </testcase>
+    <testcase id="profile-plan" name="profile-plan" classname="profile-plan" file="docs/validation/artifacts/2026-10-02-feature-coverage/offline-ios/routing-fixed/flows/06-profile-plan.yaml" time="11.814" timestamp="2026-10-02T17:06:45" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="account-options" name="account-options" classname="account-options" file="docs/validation/artifacts/2026-10-02-feature-coverage/offline-ios/routing-fixed/flows/05-account-options.yaml" time="17.389" timestamp="2026-10-02T17:06:57" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="privacy-support" name="privacy-support" classname="privacy-support" file="docs/validation/artifacts/2026-10-02-feature-coverage/offline-ios/routing-fixed/flows/07-privacy-support.yaml" time="23.035" timestamp="2026-10-02T17:07:14" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="challenge-list" name="challenge-list" classname="challenge-list" file="docs/validation/artifacts/2026-10-02-feature-coverage/offline-ios/routing-fixed/flows/08-challenge-list.yaml" time="8.807" timestamp="2026-10-02T17:07:37" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+    <testcase id="onboarding-quiz" name="onboarding-quiz" classname="onboarding-quiz" file="docs/validation/artifacts/2026-10-02-feature-coverage/offline-ios/routing-fixed/flows/01-onboarding-quiz.yaml" time="20.349" timestamp="2026-10-02T17:07:46" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, local-write"/>
+      </properties>
+    </testcase>
+    <testcase id="urgent-support" name="urgent-support" classname="urgent-support" file="docs/validation/artifacts/2026-10-02-feature-coverage/offline-ios/routing-fixed/flows/11-urgent-support.yaml" time="29.719" timestamp="2026-10-02T17:08:07" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Assertion is false: id: screen-main-today is visible</failure>
+    </testcase>
+    <testcase id="library-articles" name="library-articles" classname="library-articles" file="docs/validation/artifacts/2026-10-02-feature-coverage/offline-ios/routing-fixed/flows/10-library-articles.yaml" time="50.009" timestamp="2026-10-02T17:08:36" status="ERROR">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+      <failure>Element not found: Text matching regex: Back to Today</failure>
+    </testcase>
+    <testcase id="onboarding-welcome" name="onboarding-welcome" classname="onboarding-welcome" file="docs/validation/artifacts/2026-10-02-feature-coverage/offline-ios/routing-fixed/flows/00-onboarding-welcome.yaml" time="10.761" timestamp="2026-10-02T17:09:26" status="SUCCESS">
+      <properties>
+        <property name="tags" value="smoke, read-only"/>
+      </properties>
+    </testcase>
+  </testsuite>
+</testsuites>

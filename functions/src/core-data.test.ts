@@ -273,9 +273,11 @@ test("account deletion removes every user-linked record and identity but preserv
     "leases",
     "idempotency",
     "purchase_claims",
-    "purchase_audits"
+    "purchase_audits",
+    "purchase_account_fences",
+    "aggregate_analytics"
   ]);
-  assert.equal(api.USER_LINKED_RECORD_SCOPES.includes("aggregate_analytics"), false);
+  assert.equal(api.USER_LINKED_RECORD_SCOPES.includes("aggregate_analytics"), true);
   assert.equal(api.USER_LINKED_RECORD_SCOPES.includes("deletion_tombstones"), false);
 
   const records = new Map(api.USER_LINKED_RECORD_SCOPES.map((scope) => [scope, new Set(["firebaseUid123", "otherUid"])]));
@@ -350,7 +352,7 @@ test("deletion cooldown is retained until its safe expiry and only then removed"
 });
 
 test("callable integration uses anonymous daily increments and the complete backup workflow", () => {
-  const source = readFileSync("src/index.ts", "utf8");
+  const source = readFileSync("src/foundation.ts", "utf8");
   for (const callable of [
     "startEncryptedBackupUpload",
     "finalizeEncryptedBackupUpload",
@@ -376,7 +378,7 @@ test("callable integration uses anonymous daily increments and the complete back
 });
 
 test("callable integration binds Storage and verification to immutable generations", () => {
-  const source = readFileSync("src/index.ts", "utf8");
+  const source = readFileSync("src/foundation.ts", "utf8");
   assert.match(source, /createUploadSentinel\(/);
   assert.match(source, /status: "preparing"/);
   assert.match(source, /uploadSessionId/);
@@ -393,12 +395,13 @@ test("callable integration binds Storage and verification to immutable generatio
 });
 
 test("account deletion integration reports a fence, retries deleting records, and only expires cooldown", () => {
-  const source = readFileSync("src/index.ts", "utf8");
+  const source = readFileSync("src/foundation.ts", "utf8");
   const deletionHandler = source.slice(
     source.indexOf("export const requestAccountDeletion"),
     source.indexOf("export const cleanupExpiredServerRecords")
   );
-  assert.doesNotMatch(deletionHandler, /status:\s*"completed"/);
+  assert.match(deletionHandler, /await sweepFirebaseAccountDeletion[\s\S]*await transitionDeletionToCooldown[\s\S]*return \{ ok: true, status: "completed" \}/);
+  assert.doesNotMatch(deletionHandler.slice(0, deletionHandler.indexOf('await sweepFirebaseAccountDeletion')), /status:\s*"completed"/);
   assert.match(deletionHandler, /status:\s*"deleting"/);
   const initialFenceWrite = deletionHandler.slice(
     deletionHandler.indexOf("await mutate(uid, \"deletion\""),

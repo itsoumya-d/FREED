@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "freed-emulator-verification-summary-v1",
+  "generatedAt": "2026-10-03T00:36:23.239Z",
+  "sanitized": true,
+  "projectId": "demo-freed-feature-verification",
+  "nodeVersion": "v22.23.1",
+  "firebaseCliVersion": "14.7.0",
+  "startupRegression": {
+    "passed": 19,
+    "failed": 0,
+    "skipped": 0
+  },
+  "unit": {
+    "passed": 203,
+    "failed": 0,
+    "skipped": 5
+  },
+  "emulator": {
+    "passed": 208,
+    "failed": 0,
+    "skipped": 0
+  },
+  "baselineFeatureCount": 99,
+  "additionalFeatureCount": 7,
+  "totalCatalogFeatures": 106,
+  "requestedFeatureRequirements": {
+    "total": 31,
+    "passed": 0,
+    "failed": 0,
+    "blocked": 31,
+    "notRun": 0,
+    "passedPercent": 0,
+    "complete": false
+  },
+  "completeFeatureCoverage": {
+    "total": 106,
+    "passed": 0,
+    "failed": 0,
+    "blocked": 31,
+    "notRun": 75,
+    "passedPercent": 0,
+    "complete": false
+  },
+  "canonicalExitCode": 2,
+  "sourceStable": true,
+  "cleanupClear": true,
+  "initialInvocationFailures": [
+    "all AI callables bind Auth, App Check, region, and the Secret Manager key",
+    "callable integration uses anonymous daily increments and the complete backup workflow",
+    "callable integration binds Storage and verification to immutable generations",
+    "account deletion integration reports a fence, retries deleting records, and only expires cooldown",
+    "notification scheduler uses Firebase Admin Messaging for both platforms and is never client callable",
+    "production adapter persists Firestore timestamps and rechecks a deletion fence before provider invocation",
+    "ambiguous Firebase Admin promise outcomes become terminal instead of retryable",
+    "push registration remains Auth, App Check, rate, idempotency, deletion, and Timestamp fenced",
+    "functions/lib/purchase-checkout-readiness.test.js",
+    "purchase callable binds region, Auth, App Check limited-use tokens, and every server secret"
+  ],
+  "limitations": [
+    "Feature-specific emulator scenario receipts absent: 31 requirements blocked.",
+    "Pub/Sub emulator not selected; subscription notification and scheduled triggers ignored.",
+    "Storage emulator accepts stale generation preconditions; production GCS proof absent.",
+    "Native/live/store sandbox/physical/accessibility/motion evidence is not supplied by this backend execution."
+  ],
+  "artifacts": [
+    {
+      "path": "README.md",
+      "sha256": "b8277cb463ba2dd927dcb0de3d09c871aa3f639a244aebf98f475d9bb21564d4"
+    },
+    {
+      "path": "cleanup.json",
+      "sha256": "d986c9ad1508e0508b4ead08f4b599308fbf134d4085d61aa2073dfe2645c6f9"
+    },
+    {
+      "path": "emulator.json",
+      "sha256": "6d4327c1ea26c591cb68485d469272ad7fea737caaee3f0d1864b8359b72cedf"
+    },
+    {
+      "path": "emulator.md",
+      "sha256": "1fb9fe4179a9ac7bec80cbaaa42506391ef57b07da4c45204cccd1e88dff447c"
+    },
+    {
+      "path": "execution-source.json",
+      "sha256": "b32dd3dc2d14233b1238509acaba8c8cafb87ec0d4c5e7a3a4b78106819afdfa"
+    },
+    {
+      "path": "functions-unit-initial-root-cwd.json",
+      "sha256": "d6e24f6d31a5012789523b17f2645dd812cd25bb4c96afbd8964eeaecf9e0e14"
+    },
+    {
+      "path": "functions-unit.json",
+      "sha256": "65f2129adbc11dc9872f0c2542a924d6f81776d56ab2238f8a9df6712a183d6c"
+    },
+    {
+      "path": "startup-regression-green.json",
+      "sha256": "56b683385e4c94d124b0ef33bf63c6fd53f42e49bd626e27b5f3c27a760250bb"
+    },
+    {
+      "path": "startup-regression-red.json",
+      "sha256": "06922abaeaa6e40c2cfdf3ebb44f83a83b02ee47063e997aa150abb565abc347"
+    }
+  ]
+}

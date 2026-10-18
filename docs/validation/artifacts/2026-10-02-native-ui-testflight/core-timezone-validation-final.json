@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "freed-core-timezone-validation-v1",
+  "generatedAt": "2026-10-02T06:57:16.592827+00:00",
+  "sanitized": true,
+  "status": "pending-auth-and-root-integration-before-full-cross-zone-run",
+  "historicalPassCount": 278,
+  "initialFailures": "core-timezone-validation.json",
+  "currentKnownFixtureRepairs": [
+    "local clock discipline windows",
+    "local slip risk window",
+    "same-local-day aggregate snapshot"
+  ],
+  "auditRepair": "accessibility-detector-validation.json",
+  "scope": "source/local tests; no native/device assertion"
+}

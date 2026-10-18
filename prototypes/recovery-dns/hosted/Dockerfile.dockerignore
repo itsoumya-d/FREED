@@ -1,0 +1,12 @@
+**
+!functions/
+!functions/src/
+!functions/src/**
+functions/src/**/*.test.ts
+!prototypes/
+!prototypes/recovery-dns/
+!prototypes/recovery-dns/hosted/
+!prototypes/recovery-dns/hosted/package.json
+!prototypes/recovery-dns/hosted/package-lock.json
+!prototypes/recovery-dns/hosted/src/
+!prototypes/recovery-dns/hosted/src/**

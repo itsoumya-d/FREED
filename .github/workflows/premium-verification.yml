@@ -1,0 +1,60 @@
+name: Premium verification
+
+on:
+  pull_request:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: premium-verification-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  native-shield-policy:
+    runs-on: macos-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Compile native language policy and UIKit shield
+        run: node scripts/verify-shield-native-policy.js
+  local-contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CI: "1"
+      EXPO_NO_TELEMETRY: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Verify canonical Momentum tokens
+        run: node scripts/generate-design-tokens.js --check && node scripts/generate-momentum-palette.js --check && node --test tests/momentum-token-generation.test.js
+      - name: Check runtime TypeScript
+        run: npm run typecheck
+      - name: Require complete authored translations
+        run: npm run audit:localization
+      - name: Check catalog and evidence boundaries
+        run: node --test tests/feature-test-manifest.test.js
+      - name: Run focused pure and React Native UI contracts
+        run: node scripts/run-feature-verification.js --mode local --catalog premium --report docs/validation/artifacts/premium-ci/local.json
+      - name: Preserve all unexecuted native and physical obligations
+        if: always()
+        run: node scripts/run-feature-verification.js --mode all --catalog premium --plan --report docs/validation/artifacts/premium-ci/obligations.json
+      - name: Upload sanitized verification reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: premium-verification-${{ github.run_id }}
+          path: docs/validation/artifacts/premium-ci/
+          if-no-files-found: error
+          retention-days: 14

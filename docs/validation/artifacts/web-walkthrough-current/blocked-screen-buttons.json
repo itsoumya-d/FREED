@@ -1,0 +1,47 @@
+{
+  "failedStep": "setup-to-today",
+  "dump": [
+    {
+      "label": "Enable Adult Block",
+      "role": "button",
+      "ariaDisabled": null,
+      "pointerEvents": "auto",
+      "y": 1421
+    },
+    {
+      "label": "Enable App Timer Permission",
+      "role": "button",
+      "ariaDisabled": null,
+      "pointerEvents": "auto",
+      "y": 1755
+    },
+    {
+      "label": "Enable Usage Access",
+      "role": "button",
+      "ariaDisabled": null,
+      "pointerEvents": "auto",
+      "y": 1817
+    },
+    {
+      "label": "Run Activation Test",
+      "role": "button",
+      "ariaDisabled": null,
+      "pointerEvents": "auto",
+      "y": 2046
+    },
+    {
+      "label": "Open: Native protection build",
+      "role": "button",
+      "ariaDisabled": null,
+      "pointerEvents": "auto",
+      "y": 2133
+    },
+    {
+      "label": "Continue: Native protection build",
+      "role": "button",
+      "ariaDisabled": null,
+      "pointerEvents": "auto",
+      "y": 2133
+    }
+  ]
+}

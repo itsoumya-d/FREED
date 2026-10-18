@@ -1,9 +1,6 @@
 {
-  "artifacts": {
-    "theme.ts": "f27bd6826e5766751f19ec89440b043666d345dcbbc94a90d0323f7c2e02de79",
-    "tokens.ts": "f23d8e6564b74ea1cbb27df517f5f583522b23cabc78807a2a5c431da7b83cac"
-  },
   "format": "mobile-native-token-manifest/1",
+  "source_hash": "28390e344d3aca08d0d13f160a351f8ca3422dd228da3ab3a89415926091d112",
   "profiles": [
     "android",
     "base",
@@ -13,7 +10,6 @@
     "light",
     "reducedMotion"
   ],
-  "source_hash": "5f6011c1ca3d5071f832dd8857c6e7d77d53ffd2a50d3af9358a41d37e8d9202",
   "token_paths": [
     "color.action.onPrimary",
     "color.action.onSecondary",
@@ -162,5 +158,9 @@
     "zIndex.overlay",
     "zIndex.sticky",
     "zIndex.toast"
-  ]
+  ],
+  "artifacts": {
+    "tokens.ts": "490b2951c97ace18ed027c29fcf4f880c2f5ad14eec7a4dd5aeb077341087a6f",
+    "theme.ts": "eb621003950056fcd5e2bd7ff0bf92d456d02c0ff39456303bf325038380ba34"
+  }
 }

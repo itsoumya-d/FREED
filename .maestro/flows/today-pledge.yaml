@@ -1,0 +1,54 @@
+appId: app.freed.recovery
+name: today-pledge
+tags:
+  - smoke
+  - local-write
+---
+# Requires an English disposable writable current-day fixture with no pledge recorded today.
+# Always choose a real mood and urge before saving; sleep remains optional.
+# The pledge lives in the tools sheet and records a pledge without launching a reset.
+- openLink: "freed:///today"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "screen-main-today" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "plan-checkin" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "plan-checkin" }
+- extendedWaitUntil:
+    visible: { id: "screen-checkin" }
+    timeout: 15000
+- tapOn: { id: "checkin-mood-steady" }
+- tapOn: { id: "checkin-urge-2" }
+- scrollUntilVisible:
+    element: { text: "Save Check-In" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Save Check-In"
+- extendedWaitUntil:
+    visible: { id: "screen-main-today" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { id: "home-all-practices" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: { id: "home-all-practices" }
+- scrollUntilVisible:
+    element: { text: "Take today's pledge" }
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Take today's pledge"
+- assertVisible: "Pledge recorded"
+- scrollUntilVisible:
+    element: { text: "Close" }
+    direction: UP
+    timeout: 10000
+- tapOn: "Close"
+- assertVisible: { id: "screen-main-today" }
+- takeScreenshot: "today-pledge"

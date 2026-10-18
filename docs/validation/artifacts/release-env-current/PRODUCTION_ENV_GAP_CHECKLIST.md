@@ -1,6 +1,6 @@
 # FREED Production Env Gap Checklist
 
-Generated: 2026-06-10T23:01:10.720Z
+Generated: 2026-09-28T01:34:42.860Z
 Source preflight report: `docs/validation/artifacts/release-env-current/release-env-preflight-report.json`
 Source preflight sha256: `sha256-d9a738ed0afa6bce269fe5bd05e4b3005b450a235ed6154e7302d62ff557d16a`
 Source env snapshot: `process.env`

@@ -1,0 +1,23 @@
+SDK header: /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk/System/Library/Frameworks/NetworkExtension.framework/Headers/NEDNSSettingsManager.h
+SHA256: 12d33e5a264b730c6985f32689d1748fd651be281b8a523a3a7cd19ca6d3024a
+14:  * @discussion This file declares the NEDNSSettingsManager API. The NEDNSSettingsManager API is used to directly configure DNS settings on the system.
+43: } API_AVAILABLE(macos(11.0), ios(14.0)) API_UNAVAILABLE(watchos, tvos);
+46: NEDNSSETTINGS_EXPORT NSString * const NEDNSSettingsErrorDomain API_AVAILABLE(macos(11.0), ios(14.0)) API_UNAVAILABLE(watchos, tvos);
+49: NEDNSSETTINGS_EXPORT NSString * const NEDNSSettingsConfigurationDidChangeNotification API_AVAILABLE(macos(11.0), ios(14.0)) API_UNAVAILABLE(watchos, tvos);
+53:  * @discussion The NEDNSSettingsManager class declares the programmatic interface for an object that manages DNS settings configurations.
+59: API_AVAILABLE(macos(11.0), ios(14.0)) API_UNAVAILABLE(watchos, tvos)
+66: + (NEDNSSettingsManager *)sharedManager API_AVAILABLE(macos(11.0), ios(14.0)) API_UNAVAILABLE(watchos, tvos);
+70:  * @discussion This function loads the current DNS settings configuration from the caller's DNS settings preferences.
+73: - (void)loadFromPreferencesWithCompletionHandler:(void (^)(NSError * __nullable error))completionHandler API_AVAILABLE(macos(11.0), ios(14.0)) API_UNAVAILABLE(watchos, tvos);
+77:  * @discussion This function removes the DNS settings configuration from the caller's DNS settings preferences. If the DNS settings are enabled, the DNS settings becomes disabled.
+80: - (void)removeFromPreferencesWithCompletionHandler:(void (^)(NSError * __nullable error))completionHandler API_AVAILABLE(macos(11.0), ios(14.0)) API_UNAVAILABLE(watchos, tvos);
+84:  * @discussion This function saves the DNS settingsconfiguration in the caller's DNS settings preferences. If the DNS settings are enabled, they will become active.
+87: - (void)saveToPreferencesWithCompletionHandler:(void (^)(NSError * __nullable error))completionHandler API_AVAILABLE(macos(11.0), ios(14.0)) API_UNAVAILABLE(watchos, tvos);
+91:  * @discussion A string containing a description of the DNS settings.
+93: @property (copy, nullable) NSString *localizedDescription API_AVAILABLE(macos(11.0), ios(14.0)) API_UNAVAILABLE(watchos, tvos);
+97:  * @discussion An NEDNSSettings object containing the DNS resolver configuration to apply to the system.
+99: @property (strong, nullable) NEDNSSettings *dnsSettings API_AVAILABLE(macos(11.0), ios(14.0)) API_UNAVAILABLE(watchos, tvos);
+103:  * @discussion An array of NEOnDemandRule objects. If nil, the associated DNS settings will always apply. If non-nil, the array describes the networks on which the DNS configuration should take effect or not.
+105: @property (copy, nullable) NSArray<NEOnDemandRule *> *onDemandRules API_AVAILABLE(macos(11.0), ios(14.0)) API_UNAVAILABLE(watchos, tvos);
+109:  * @discussion Checks the enabled status of the DNS settings. DNS settings must be enabled by the user in Settings or System Preferences.
+111: @property (readonly, getter=isEnabled) BOOL enabled API_AVAILABLE(macos(11.0), ios(14.0)) API_UNAVAILABLE(watchos, tvos);

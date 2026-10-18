@@ -1,0 +1,41 @@
+{
+  "data": {
+    "type": "ageRatingDeclarations",
+    "id": "74c0ca28-717f-495f-9a63-2e9ea6b72026",
+    "attributes": {
+      "advertising": true,
+      "gambling": false,
+      "healthOrWellnessTopics": true,
+      "lootBox": false,
+      "messagingAndChat": false,
+      "parentalControls": false,
+      "ageAssurance": false,
+      "socialMedia": false,
+      "socialMediaAgeRestricted": false,
+      "unrestrictedWebAccess": false,
+      "userGeneratedContent": false,
+      "alcoholTobaccoOrDrugUseOrReferences": "NONE",
+      "contests": "NONE",
+      "gamblingSimulated": "NONE",
+      "gunsOrOtherWeapons": "NONE",
+      "medicalOrTreatmentInformation": "NONE",
+      "profanityOrCrudeHumor": "NONE",
+      "sexualContentGraphicAndNudity": "NONE",
+      "sexualContentOrNudity": "NONE",
+      "horrorOrFearThemes": "NONE",
+      "matureOrSuggestiveThemes": "NONE",
+      "violenceCartoonOrFantasy": "NONE",
+      "violenceRealistic": "NONE",
+      "violenceRealisticProlongedGraphicOrSadistic": "NONE",
+      "ageRatingOverride": "NONE",
+      "ageRatingOverrideV2": "NONE",
+      "koreaAgeRatingOverride": "NONE"
+    },
+    "links": {
+      "self": "https://api.appstoreconnect.apple.com/v1/ageRatingDeclarations/74c0ca28-717f-495f-9a63-2e9ea6b72026"
+    }
+  },
+  "links": {
+    "self": "https://api.appstoreconnect.apple.com/v1/appInfos/74c0ca28-717f-495f-9a63-2e9ea6b72026/ageRatingDeclaration"
+  }
+}

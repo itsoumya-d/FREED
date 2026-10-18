@@ -1,0 +1,27 @@
+appId: app.freed.recovery
+name: breathing
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///flow/breathing"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-breathing"
+    timeout: 15000
+- assertVisible: "4-7-8 Relax"
+- tapOn: "Box \\(4-4-4-4\\)"
+- tapOn: "Physio Sigh"
+- tapOn: "4-7-8 Relax"
+- tapOn: "Begin Breathing"
+- assertVisible: "Pause Exercise"
+- tapOn: "Pause Exercise"
+- assertVisible: "Begin Breathing"
+- tapOn: "Back"
+- takeScreenshot: "breathing"

@@ -1,0 +1,906 @@
+[
+  {
+    "screen_id": "oth_ju1g3",
+    "name": "Settings",
+    "flow": "Navigation",
+    "section": "other-tabs",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2Y1NGYyMjlhMWNjYWFmN2E1ZmZmNTQ5NjJlM2QwYWQwM2EyODU1NTcud2VicCIsImV4cCI6MTc5MDkyNTk1Mn3QHG6xCzMYWBcFMjFSHleZ5MnTSgU2hw0.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#F7FAFB",
+    "similarity": 0.4191,
+    "app": {
+      "app_id": "485971733",
+      "name": "C25K\u00ae 5K Running Coach & Map"
+    }
+  },
+  {
+    "screen_id": "oth_3f86c",
+    "name": "Profile Settings",
+    "flow": "Profile Settings",
+    "section": "other-tabs",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzE5YTY0ZDZmZDc4MjQ0MzQ1NDI3M2MxNjFhNGY0ODRmYzc4M2NiY2Eud2VicCIsImV4cCI6MTc5MDkyNTk1Mn3yUEKZfwyvWZGrBN-wbcKosB7j6mxYeNY.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#FEFEFE",
+    "similarity": 0.4041,
+    "app": {
+      "app_id": "1531594277",
+      "name": "Color Widgets"
+    }
+  },
+  {
+    "screen_id": "oth_lg18l",
+    "name": "Settings Home",
+    "flow": "Settings",
+    "section": "other-tabs",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2UzNTA0ZWE5Y2ZiYTA0YTg2MjE0OWEwMjExNWQwMDYwM2U4ZGU5YjMud2VicCIsImV4cCI6MTc5MDkyNTk1Mn3ykmYbK-A_7sk4t-ZdOz-vmAFIHCMMJak.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#F8F8F8",
+    "similarity": 0.3992,
+    "app": {
+      "app_id": "6744124873",
+      "name": "Bible Mode: Reduce Screen Time"
+    }
+  },
+  {
+    "screen_id": "oth_huwrm",
+    "name": "Customization",
+    "flow": "Settings",
+    "section": "other-tabs",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzcwNzliMzExY2FkNWFmOGFhZGE2ZTU4OGFkNzBhYjkwZWUzMzdkNGIud2VicCIsImV4cCI6MTc5MDkyNTk1Mn22X0_t4_91cDeZ0xOPPJNV0G4NYG9GfZg.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#F1EFFF",
+    "similarity": 0.3871,
+    "app": {
+      "app_id": "1545223887",
+      "name": "Lungy: Breathing Exercises"
+    }
+  },
+  {
+    "screen_id": "oth_p4j2y",
+    "name": "Settings Preferences",
+    "flow": "Settings",
+    "section": "other-tabs",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2NmZTMzNDYxMjk2MWNmZTY4NGM2MmE5OTk1ODk4MTVkMTM2MjIyZmEud2VicCIsImV4cCI6MTc5MDkyNTk1Mn3RLIgwY4bZTc7Jz8-afyqfh2eOweDXM78.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#252E3B",
+    "similarity": 0.387,
+    "app": {
+      "app_id": "1048454034",
+      "name": "Gymverse: Gym Workout Planner"
+    }
+  },
+  {
+    "screen_id": "oth_d7aef",
+    "name": "Settings Menu",
+    "flow": "Settings",
+    "section": "other-tabs",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzcyYTQxZDMzNTczZTQwZjAwNzkwN2I5ZGIxOTRmNzdlYTE1Mzc1MTYud2VicCIsImV4cCI6MTc5MDkyNTk1Mn0xWLh5lDR2svEn2YcIknMv0V26bdeGWBE.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#F3F3F3",
+    "similarity": 0.3844,
+    "app": {
+      "app_id": "359917414",
+      "name": "Solitaire"
+    }
+  },
+  {
+    "screen_id": "oth_50q34",
+    "name": "Settings Overview",
+    "flow": "Settings",
+    "section": "other-tabs",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzg3NjhhMzllZTJlMDY5MWFjNmNmOTQ3YjBjMzFhY2NjMTM0MDhkOTYud2VicCIsImV4cCI6MTc5MDkyNTk1Mn3UPJ0oqiE89ywvShZvffKZKpJg0odYTus.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#FFFFFF",
+    "similarity": 0.3836,
+    "app": {
+      "app_id": "1480220328",
+      "name": "Tiimo: To-Do List Planner"
+    }
+  },
+  {
+    "screen_id": "oth_h1qmj",
+    "name": "More Settings Menu",
+    "flow": "Settings",
+    "section": "other-tabs",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzc0YmQ3ODc4YzIwMWQwOGMxYzYwOGFhYTBjMjY2NDY2ZmExOGQ4MTkud2VicCIsImV4cCI6MTc5MDkyNTk1Mn0ePw9wv8VryieJHXHOLQbwe1G1ePvunVM.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#FFFFFF",
+    "similarity": 0.3827,
+    "app": {
+      "app_id": "1194023242",
+      "name": "Daylio Journal - Mood Tracker"
+    }
+  },
+  {
+    "screen_id": "oth_i6g22",
+    "name": "Account Settings",
+    "flow": "Settings",
+    "section": "other-tabs",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2M4MDQyMjY5MmE5YTNlMzVjNGMxYTk4NDg4YmFkYWU0ZDcxOWJmZjIud2VicCIsImV4cCI6MTc5MDkyNTk1Mn0A7H6VGp8Yf5JcO1DD622ypaIZ4hEsgCo.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#FFFFFF",
+    "similarity": 0.3821,
+    "app": {
+      "app_id": "600446812",
+      "name": "Pacer Pedometer Step Counter"
+    }
+  },
+  {
+    "screen_id": "onb_lz4fm",
+    "name": "Potential Stats",
+    "flow": "Onboarding",
+    "section": "onboarding",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzU1MGYwNzMyMjhhZDhlZjM5MjFkZmIxYWQ5ODgyOTlhNDI1Yzk0MWQud2VicCIsImV4cCI6MTc5MDkyNTk1Mn3kmgRjbA4Fn9PrUJ6ITvr2pEpWOYbC8dE.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#131C29",
+    "similarity": 0.3859,
+    "app": {
+      "app_id": "6743036247",
+      "name": "Arise: Level Up Workout Game"
+    }
+  },
+  {
+    "screen_id": "oth_bdpow",
+    "name": "Check-In Results",
+    "flow": "Mood Check-In",
+    "section": "other-tabs",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzVlYWU4MDFlODkzNmM1M2JjYjJhYzU4OWYyOGRhYTRjMDgyOTZlZTAud2VicCIsImV4cCI6MTc5MDkyNTk1Mn0JtHQ3jn_e9EgqEEH5JzXRcofkefdqcYE.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#FFFFFF",
+    "similarity": 0.4502,
+    "app": {
+      "app_id": "1190294015",
+      "name": "Meditopia: Sleep, Meditation"
+    }
+  },
+  {
+    "screen_id": "oth_cbl29",
+    "name": "Discover",
+    "flow": "Discover",
+    "section": "other-tabs",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2U1YjNhNDE2NDk5OGE3ZGJmYmQyMTZmNDhmMmI4ZmYzMDU2NzNhYjYud2VicCIsImV4cCI6MTc5MDkyNTk1Mn3SkoHinYYjoa3MDbX9coYZzgOB_RHG9VE.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#FFFFFF",
+    "similarity": 0.405,
+    "app": {
+      "app_id": "1669192315",
+      "name": "Gabby - Coaching & Meditation"
+    }
+  },
+  {
+    "screen_id": "oth_shqg0",
+    "name": "Breathing Exercises",
+    "flow": "Discover",
+    "section": "other-tabs",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2M3NjMwNTE2NTM2ZmNlYmY4NDFiN2M3MjRjYzRlNGMwZWY0ZDc1Y2Qud2VicCIsImV4cCI6MTc5MDkyNTk1Mn37lXnWYsqNNxWf06GJqMUGlwX3Y5xxXxg.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#F0F0F0",
+    "similarity": 0.3981,
+    "app": {
+      "app_id": "1010391170",
+      "name": "Clarity: CBT Self Help Journal"
+    }
+  },
+  {
+    "screen_id": "oth_2drtz",
+    "name": "Rewriting Lesson",
+    "flow": "Daily Plan",
+    "section": "other-tabs",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2FhZWUzNzQ0ZjcyOTI3YzNiMjcyOTlmNWU0MDA4MjllOGQ2MmZiYjcud2VicCIsImV4cCI6MTc5MDkyNTk1Mn0FIaDlTbYefq1EPQleK158x3VNp3EuFZc.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#FFFFFF",
+    "similarity": 0.3971,
+    "app": {
+      "app_id": "1669192315",
+      "name": "Gabby - Coaching & Meditation"
+    }
+  },
+  {
+    "screen_id": "oth_fbqzx",
+    "name": "Meditation Browse",
+    "flow": "Meditation",
+    "section": "other-tabs",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzVjN2EzNDI5YmIzMDA1ZjAzYTRkNzUxNTFmNmQwZDRmNjhmMWFkMzUud2VicCIsImV4cCI6MTc5MDkyNTk1Mn0h6oTyX0iQ_ZoA-pYTFsmUA2SjzqETM6I.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#FFFFFF",
+    "similarity": 0.3817,
+    "app": {
+      "app_id": "1077776989",
+      "name": "TIDE: Sleep, Focus, Meditation"
+    }
+  },
+  {
+    "screen_id": "onb_0a465",
+    "name": "Practices Selected",
+    "flow": "Onboarding",
+    "section": "onboarding",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzA0ODkyNzA2NTc1YzFkZmM1ZmJhMDgyNDQ5ODkxZTc2MTZkYTk3YTQud2VicCIsImV4cCI6MTc5MDkyNTk1Mn3-W_36Grql5ZsmOe4cQ3DUNOlTa7QSm4I.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#EFEFEF",
+    "similarity": 0.3905,
+    "app": {
+      "app_id": "6451135127",
+      "name": "Rosebud: AI Journal & Diary"
+    }
+  },
+  {
+    "screen_id": "onb_bah42",
+    "name": "Practice Interest Grid",
+    "flow": "Onboarding",
+    "section": "onboarding",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzA4ZDVmYTY2ODk4ZTIxYjhhMTU2YzQxNDU4OGVkNWMwYjMxMWU2MDQud2VicCIsImV4cCI6MTc5MDkyNTk1Mn0KK4hLU4pvVHjRism-83Q5dbIMfNKQ1z4.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#FBF8F0",
+    "similarity": 0.3803,
+    "app": {
+      "app_id": "6445948886",
+      "name": "Quabble: Daily Mental Health"
+    }
+  },
+  {
+    "screen_id": "onb_svjgu",
+    "name": "Regular Practices",
+    "flow": "Onboarding",
+    "section": "onboarding",
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzIyNWYzNTM0ODFlZTU3MTNkMTM1MmEzYTY1Mzk1ZGZiZDQ3N2Y2Nzkud2VicCIsImV4cCI6MTc5MDkyNTk1Mn2R1iveXUzm9Hnfwo0ZoW0zV8NndxoxuO0.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#EFEFEF",
+    "similarity": 0.3783,
+    "app": {
+      "app_id": "6451135127",
+      "name": "Rosebud: AI Journal & Diary"
+    }
+  },
+  {
+    "screen_id": "oth_313tk",
+    "name": "Apps Rules",
+    "flow": "App Management",
+    "section": "other-tabs",
+    "position": 5,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzBjZTY2YjM1NzkyNjBlNDQ0ZjkzMTYzODljNjNiMjIxZGE2NTBkMWUud2VicCIsImV4cCI6MTc5MDkyNjA4Mn1zxwJSlwF6JuYQ1qvGgYXnwnwbuL6OpMg.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#000000",
+    "colors": [
+      "#000000",
+      "#111111",
+      "#1F1F1F",
+      "#F2F2F2",
+      "#A8E68C"
+    ],
+    "ui_elements": [
+      "Page Title Header",
+      "Blocked Apps Card",
+      "Rule Picker Chips",
+      "App Icon Grid",
+      "Floating Tab Bar"
+    ],
+    "app": {
+      "app_id": "1497465230",
+      "name": "Opal: Screen Time Control"
+    }
+  },
+  {
+    "screen_id": "oth_90b92",
+    "name": "Distracting Apps",
+    "flow": "App Management",
+    "section": "other-tabs",
+    "position": 6,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2MxODQ0NDVlOWNjNjRjZjc5MzY2ZjE1NTkyMDgyZDU4NmQ3ZTQ3YjAud2VicCIsImV4cCI6MTc5MDkyNjA4Mn2sDupI-OXQkY9uwosgrEN8k5QZVeUoi8c.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#000000",
+    "colors": [
+      "#000000",
+      "#101715",
+      "#1B2A28",
+      "#E9F4E9",
+      "#FFFC00"
+    ],
+    "ui_elements": [
+      "Back Icon Button",
+      "Gradient Info Card",
+      "App List Rows",
+      "Remove Icon Chips",
+      "Add App Row",
+      "Floating Tab Bar"
+    ],
+    "app": {
+      "app_id": "1497465230",
+      "name": "Opal: Screen Time Control"
+    }
+  },
+  {
+    "screen_id": "oth_rzvsw",
+    "name": "Attributes Settings",
+    "flow": "App Management",
+    "section": "other-tabs",
+    "position": 7,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzI2YzU1MmFhYzc0Nzc5YzM1OTEzODFiYTE0ZTI3ODBjZWJhMWU3YjUud2VicCIsImV4cCI6MTc5MDkyNjA4Mn3LaeQjK7w03m6XlMLI4BwkAIaPRmNo5xU.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#000000",
+    "colors": [
+      "#000000",
+      "#101010",
+      "#202020",
+      "#F1F1F1",
+      "#B8F28C"
+    ],
+    "ui_elements": [
+      "Back Icon Button",
+      "Frequency Card",
+      "Intervention Cards",
+      "Pill Toggle Switch",
+      "App Group Rows"
+    ],
+    "app": {
+      "app_id": "1497465230",
+      "name": "Opal: Screen Time Control"
+    }
+  },
+  {
+    "screen_id": "oth_zekjp",
+    "name": "Selected Apps List",
+    "flow": "App Management",
+    "section": "other-tabs",
+    "position": 14,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzZkMjIwOWE0NGQ0YzIzYzg2ZjFlZjc4OWQ4NzI4Mjc4ODQyNDU3ZDMud2VicCIsImV4cCI6MTc5MDkyNjA4Mn0ljq4lc521yBytC5uWLyVNNmwtkyWJqtA.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#000000",
+    "colors": [
+      "#000000",
+      "#101010",
+      "#1F1F1F",
+      "#F2F2F2",
+      "#E4405F"
+    ],
+    "ui_elements": [
+      "Back Icon Button",
+      "Confirm Check Button",
+      "Segmented App Tabs",
+      "Add App Row",
+      "App List Rows"
+    ],
+    "app": {
+      "app_id": "1497465230",
+      "name": "Opal: Screen Time Control"
+    }
+  },
+  {
+    "screen_id": "oth_7bdfy",
+    "name": "Block Interstitial",
+    "flow": "App Management",
+    "section": "other-tabs",
+    "position": 16,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2QzMDE3ZTk3NGMxYzMyYzgyMjBjZWZkZGE5MjQ4ZTY2MjAyZjY3ZTAud2VicCIsImV4cCI6MTc5MDkyNjA4Mn0BF0fsPqR7IU6Z2WnsIGu8JKEOD6e39eM.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#000000",
+    "colors": [
+      "#000000",
+      "#111111",
+      "#2B2B2B",
+      "#9A9A9A",
+      "#F4F4F4"
+    ],
+    "ui_elements": [
+      "Centered Opal Logo",
+      "Blocked App Message",
+      "Help Copy Block",
+      "Rounded Dismiss CTA",
+      "Home Indicator"
+    ],
+    "app": {
+      "app_id": "1497465230",
+      "name": "Opal: Screen Time Control"
+    }
+  },
+  {
+    "screen_id": "oth_jsci1",
+    "name": "Score Analysis Home",
+    "flow": "Dashboard",
+    "section": "other-tabs",
+    "position": 3,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2QzYTMzYWFkOTM4YjM4YjQ0YWFkMzRlNTlmMTU2ODhiMjQxODhiM2Iud2VicCIsImV4cCI6MTc5MDkyNjA4Mn3scylLuRhIeA5Pma_VCZNMxoQMhSJo5eM.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#000000",
+    "colors": [
+      "#000000",
+      "#101816",
+      "#1F2B26",
+      "#83C7B2",
+      "#E9F2E6"
+    ],
+    "ui_elements": [
+      "Opal Wordmark",
+      "Glowing Gem Hero",
+      "Score Pill Metrics",
+      "App Blocking Card",
+      "Floating Tab Bar"
+    ],
+    "app": {
+      "app_id": "1497465230",
+      "name": "Opal: Screen Time Control"
+    }
+  },
+  {
+    "screen_id": "oth_gbmxf",
+    "name": "Today Dashboard",
+    "flow": "Dashboard",
+    "section": "other-tabs",
+    "position": 4,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2U4ZjQyMmUwOGJmYWNiMWIwYWViZDVlODlhMzNlNDk4M2E5NTJhZDAud2VicCIsImV4cCI6MTc5MDkyNjA4Mn1VDaWcPRpZ0b0_MwazPGY2dn7Sv7bGUeQ.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#000000",
+    "colors": [
+      "#000000",
+      "#101512",
+      "#202B22",
+      "#9BD87A",
+      "#F0B34B"
+    ],
+    "ui_elements": [
+      "Top App Tabs",
+      "Status Summary Card",
+      "Checklist Cards",
+      "Flame Reward Card",
+      "Floating Tab Bar"
+    ],
+    "app": {
+      "app_id": "1497465230",
+      "name": "Opal: Screen Time Control"
+    }
+  },
+  {
+    "screen_id": "oth_fftm0",
+    "name": "Community Profile",
+    "flow": "Dashboard",
+    "section": "other-tabs",
+    "position": 22,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2MwYTJlZWFjNTYwYTk3ZWU4NDZlOGIyNTRiMjQzYjFiODYwODQ0MmQud2VicCIsImV4cCI6MTc5MDkyNjA4Mn2blDHB_3S1BBK4yccrTI-6U_lOTa3AqCU.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#000000",
+    "colors": [
+      "#000000",
+      "#111A17",
+      "#2E3532",
+      "#E6F7DD",
+      "#D8F15B"
+    ],
+    "ui_elements": [
+      "Back Icon Button",
+      "Settings Icon Button",
+      "Radial Stat Gauge",
+      "Gem Stat Tiles",
+      "Gemstone Row",
+      "Floating Tab Bar"
+    ],
+    "app": {
+      "app_id": "1497465230",
+      "name": "Opal: Screen Time Control"
+    }
+  },
+  {
+    "screen_id": "oth_ostgu",
+    "name": "Rewards Dashboard",
+    "flow": "Dashboard",
+    "section": "other-tabs",
+    "position": 23,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzJhMTJmY2E5Nzk3MjkxZjEwOGUwN2MyMmVmZTMzYTM3ZWNhYjI5MmEud2VicCIsImV4cCI6MTc5MDkyNjA4Mn3v7B-518yhz0XnsdGv-we_stBCco2V_hA.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#000000",
+    "colors": [
+      "#000000",
+      "#111615",
+      "#D8E5C7",
+      "#98D982",
+      "#F7F7F7"
+    ],
+    "ui_elements": [
+      "Back Icon Button",
+      "Settings Icon Button",
+      "Progress Line Chart",
+      "Reward Pass Card",
+      "Rounded Rewards CTA",
+      "Floating Tab Bar"
+    ],
+    "app": {
+      "app_id": "1497465230",
+      "name": "Opal: Screen Time Control"
+    }
+  },
+  {
+    "screen_id": "oth_q4grq",
+    "name": "Home Daily Plan",
+    "flow": "Home",
+    "section": "other-tabs",
+    "position": 1,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzE2MDE3NjQyNmVkZTM3NzUyMDA4YjBhOTA3NjdmODQwYjU0MzY1Zjgud2VicCIsImV4cCI6MTc5MDkyNjA4Mn17N3PdFObboGqPqhCfBxjrLW7HDQfUEz4.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#F0F0F0",
+    "colors": [
+      "#F0F0F0",
+      "#FFFFFF",
+      "#C3CFDA",
+      "#90B1D1",
+      "#226EA7"
+    ],
+    "ui_elements": [
+      "Centered Home Header",
+      "Day Progress Dots",
+      "Vertical Plan Timeline",
+      "Rounded Plan Cards",
+      "Blue Check-In CTA",
+      "Bottom Tab Navigation"
+    ],
+    "app": {
+      "app_id": "1010391170",
+      "name": "Clarity: CBT Self Help Journal"
+    }
+  },
+  {
+    "screen_id": "oth_c0lp9",
+    "name": "Home Browse",
+    "flow": "Home",
+    "section": "other-tabs",
+    "position": 2,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzIxZWRiMWQzY2U0ZGQ5Y2RjMjUyNDljNTQxYjU1NjZiNjk4N2U4NmUud2VicCIsImV4cCI6MTc5MDkyNjA4Mn0LLqIIUGuz5XItpJiPUMg4Tbw62JEJX0E.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#F0F0F0",
+    "colors": [
+      "#F0F0F0",
+      "#FFFFFF",
+      "#D8D9DE",
+      "#B8B6C9",
+      "#8DA3BC"
+    ],
+    "ui_elements": [
+      "Centered Home Header",
+      "Vertical Plan Timeline",
+      "Rounded Content Cards",
+      "Pastel Activity Thumbs",
+      "Content Category Tiles",
+      "Bottom Tab Navigation"
+    ],
+    "app": {
+      "app_id": "1010391170",
+      "name": "Clarity: CBT Self Help Journal"
+    }
+  },
+  {
+    "screen_id": "oth_d7rbk",
+    "name": "Home Explore Hub",
+    "flow": "Home",
+    "section": "other-tabs",
+    "position": 3,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2NjMjdmNDUwMTA2OGY5OGJlZjhiZTU4NDUzNDRlODZmZmQyNWQ4ZDUud2VicCIsImV4cCI6MTc5MDkyNjA4Mn1lsQP3iRlYJ31JTZkDvkAiPkf08ArNKQU.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#F0F0F0",
+    "colors": [
+      "#F0F0F0",
+      "#97B3CF",
+      "#D8D8D8",
+      "#206EA8",
+      "#A3BCD5"
+    ],
+    "ui_elements": [
+      "Centered Home Header",
+      "Pastel Category Grid",
+      "Rocket Hero Illustration",
+      "Rounded Blue CTA",
+      "Bottom Tab Navigation"
+    ],
+    "app": {
+      "app_id": "1010391170",
+      "name": "Clarity: CBT Self Help Journal"
+    }
+  },
+  {
+    "screen_id": "oth_ldl0d",
+    "name": "Mood Check-In",
+    "flow": "Daily Check-In",
+    "section": "other-tabs",
+    "position": 4,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2VlMDdlMjc0YmJiZjU2YTU5YTEyZjZiZmZlNGQyMTk5MTZiMTA5ZjAud2VicCIsImV4cCI6MTc5MDkyNjA4Mn1WSd9gWjVhjku6p2koMvDnyzrqmBX6pfk.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#F6F7F2",
+    "colors": [
+      "#F6F7F2",
+      "#738254",
+      "#CBD1C4",
+      "#C9C3D9",
+      "#EED8AF"
+    ],
+    "ui_elements": [
+      "Back Icon Button",
+      "Overflow Icon Button",
+      "Centered Mood Prompt",
+      "Five-Face Mood Scale",
+      "Olive Primary CTA",
+      "Warm Off-White Canvas"
+    ],
+    "app": {
+      "app_id": "1010391170",
+      "name": "Clarity: CBT Self Help Journal"
+    }
+  },
+  {
+    "screen_id": "oth_lphe4",
+    "name": "Emotion Selection",
+    "flow": "Daily Check-In",
+    "section": "other-tabs",
+    "position": 5,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2RiYWUwY2RiOGYzNjYxZTIzMGIxY2U1YjIyYTFlMjE1YjA4ZTk1NjIud2VicCIsImV4cCI6MTc5MDkyNjA4Mn1cBfqYccdRhHbJXWvbzF6uPMFQVwh2n40.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#F6F7F2",
+    "colors": [
+      "#F6F7F2",
+      "#FFFFFF",
+      "#7D8965",
+      "#D9DDD1",
+      "#1F1F1F"
+    ],
+    "ui_elements": [
+      "Back Icon Button",
+      "Overflow Icon Button",
+      "Emotion Card Grid",
+      "Line Face Icons",
+      "Pagination Dots",
+      "Olive Primary CTA"
+    ],
+    "app": {
+      "app_id": "1010391170",
+      "name": "Clarity: CBT Self Help Journal"
+    }
+  },
+  {
+    "screen_id": "oth_caejg",
+    "name": "Check-In Context",
+    "flow": "Daily Check-In",
+    "section": "other-tabs",
+    "position": 6,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzJhMzc4MTA3Zjg3ZDhhOTcxM2VlZWNiZjA3NmZkY2ZhY2JhZWM3NmUud2VicCIsImV4cCI6MTc5MDkyNjA4Mn0zfpmIlGFNu3hk4YAxE5-nc8XZTEeMqcM.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#F6F7F2",
+    "colors": [
+      "#F6F7F2",
+      "#FFFFFF",
+      "#798561",
+      "#D9DBD4",
+      "#1F1F1F"
+    ],
+    "ui_elements": [
+      "Back Icon Button",
+      "Overflow Icon Button",
+      "Grouped Choice Chips",
+      "Add Option Buttons",
+      "Olive Primary CTA",
+      "Warm Off-White Canvas"
+    ],
+    "app": {
+      "app_id": "1010391170",
+      "name": "Clarity: CBT Self Help Journal"
+    }
+  },
+  {
+    "screen_id": "oth_1wwco",
+    "name": "Context Selected",
+    "flow": "Daily Check-In",
+    "section": "other-tabs",
+    "position": 7,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzY1NjBkOGU0M2VkOTI1NjM2M2VkZDkwYzFmNWIyMTgzNzI1ZTcyMzYud2VicCIsImV4cCI6MTc5MDkyNjA4Mn2zD1X7IWgH1VmTcbml8rkD7xaEH0I4zi8.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#F6F7F2",
+    "colors": [
+      "#F6F7F2",
+      "#FFFFFF",
+      "#7C8765",
+      "#D6D9CF",
+      "#1F1F1F"
+    ],
+    "ui_elements": [
+      "Back Icon Button",
+      "Overflow Icon Button",
+      "Grouped Choice Chips",
+      "Outlined Selected Chips",
+      "Olive Primary CTA",
+      "Warm Off-White Canvas"
+    ],
+    "app": {
+      "app_id": "1010391170",
+      "name": "Clarity: CBT Self Help Journal"
+    }
+  },
+  {
+    "screen_id": "oth_3zza6",
+    "name": "Check-In Results",
+    "flow": "Daily Check-In",
+    "section": "other-tabs",
+    "position": 8,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2U1MGQ2MzIxOWM5OWEzNGNmNTRjNTYwOWRhM2ZmZDE4N2M0ZDE0ZjYud2VicCIsImV4cCI6MTc5MDkyNjA4Mn2wdc8dwxUXcK8L06xez-6rqN3nSJrvBDc.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#F6F7F2",
+    "colors": [
+      "#F6F7F2",
+      "#E5E8E4",
+      "#ADB5A2",
+      "#AFC6D8",
+      "#F5EFE5"
+    ],
+    "ui_elements": [
+      "Skip Text Action",
+      "Result Summary Header",
+      "Featured Insight Card",
+      "Horizontal Card Rails",
+      "Olive Primary CTA"
+    ],
+    "app": {
+      "app_id": "1010391170",
+      "name": "Clarity: CBT Self Help Journal"
+    }
+  },
+  {
+    "screen_id": "oth_lxmvx",
+    "name": "Reflection Prompt",
+    "flow": "Daily Check-In",
+    "section": "other-tabs",
+    "position": 9,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzllZGI2ZDk1YjhiNTI0MDg3N2M5MDNmYzgyOWNjMmM4MjU0OGFjZjYud2VicCIsImV4cCI6MTc5MDkyNjA4Mn2hbLya15fGuaHerm0J2yxHiRdCy7B7pxQ.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#F6F7F2",
+    "colors": [
+      "#F6F7F2",
+      "#536C35",
+      "#D0D7C7",
+      "#E9EBE3",
+      "#1F1F1F"
+    ],
+    "ui_elements": [
+      "Overflow Icon Button",
+      "Guided Reflection Text",
+      "Highlighted Prompt Text",
+      "Inline Feedback Icons",
+      "Warm Off-White Canvas"
+    ],
+    "app": {
+      "app_id": "1010391170",
+      "name": "Clarity: CBT Self Help Journal"
+    }
+  },
+  {
+    "screen_id": "oth_dielr",
+    "name": "AI Reflection Result",
+    "flow": "Daily Check-In",
+    "section": "other-tabs",
+    "position": 10,
+    "kind": "image",
+    "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzQxNzlmYzA5YWZhMzJmNTkyOTkxYjhlNTVhZTVkM2UwMzNmZDQwOGQud2VicCIsImV4cCI6MTc5MDkyNjA4Mn0nJejoiesnhsfCLZcEXSpv5crLjQdas6M.webp",
+    "width": null,
+    "height": null,
+    "duration_ms": null,
+    "dominant_color": "#F6F7F2",
+    "colors": [
+      "#F6F7F2",
+      "#7B8762",
+      "#F2F3EF",
+      "#D1D3C9",
+      "#1F1F1F"
+    ],
+    "ui_elements": [
+      "Overflow Icon Button",
+      "Long-Form Insight Text",
+      "Outlined Response Box",
+      "Thumb Feedback Icons",
+      "Olive Save CTA"
+    ],
+    "app": {
+      "app_id": "1010391170",
+      "name": "Clarity: CBT Self Help Journal"
+    }
+  }
+]

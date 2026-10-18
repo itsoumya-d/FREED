@@ -1,0 +1,67 @@
+{
+  "recordedAt": "2026-10-05T01:34:52.891103+00:00",
+  "files": [
+    {
+      "path": "app.config.js",
+      "sha256": "ccc1301e24aae8912804c65cde5a0bb2d7cbcac6fa2bd1e24685f42406150517"
+    },
+    {
+      "path": "plugins/with-freed-firebase-app-check.js",
+      "sha256": "2b6a5e404d73e25a642b410b1ddcd017cb8a0e8bc6b2f75d808aa58d00e0d5d3"
+    },
+    {
+      "path": "ios/FREED/AppDelegate.swift",
+      "sha256": "7242dd3b3bf24602562531972beeae319d9b93f6483c624e0ce9cd380f59a803"
+    },
+    {
+      "path": "ios/FREED/FREED-Bridging-Header.h",
+      "sha256": "1fc9b485cefa4dd6720f03f273faea901ab055b8ba48fdab9102c9497d52e2a2"
+    },
+    {
+      "path": "ios/FREED/FREED.entitlements",
+      "sha256": "074ffbf4182fab092d2eccfc1054d650a8d73094f24ebaaf8ab9ea95b8d1386f"
+    },
+    {
+      "path": "tests/firebase-app-check-native-config.test.js",
+      "sha256": "23859a6c817bd551d2fee373c92b84dd7104cbf4609b80f745df9c9f673d5328"
+    },
+    {
+      "path": "scripts/build-ios-release-archive.js",
+      "sha256": "48c225e7b5f4dcbc7719268061cc32b6376d69e71b531e696223627bfed1863c"
+    },
+    {
+      "path": "tests/ios-app-check-archive-gate.test.js",
+      "sha256": "01414b9bdd8719df2785473d29888952a753def45805057385a66b41d69c48e3"
+    }
+  ],
+  "nativeConfigTests": {
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "isolatedActualCleanExpoPrebuild": true,
+    "actualCurrentDelegateRegeneration": true,
+    "idempotent": true
+  },
+  "archiveContractTests": {
+    "red": "Absent app AppAttest environment was incorrectly PASS before gate extension.",
+    "greenPassed": 3,
+    "selfTest": "pass",
+    "signedBinaryEvidence": false
+  },
+  "nativeSwiftWholeAppCompile": false,
+  "signedPositiveClientEvidence": false,
+  "serverAppCheckWeakened": false,
+  "privateKeyOrDebugTokenAdded": false,
+  "workerStopped": "Account usage limit after source implementation; Root ran all5 final config tests and completed receipt.",
+  "independentReview": "approved: native startup and restored archive gate; reviewer reran3 gate tests, hash48c225e7 stable",
+  "profileReceipt": "../2026-10-05-console-closure/apple-app-attest-profile.json",
+  "verificationCorrection": {
+    "initialReceiptArchiveHash": "c196803e (superseded)",
+    "issue": "Archive source lacked App Attest extraction/gate when independently reopened; reviewer2pass1fail supersedes earlier3-green report for that hash.",
+    "correctedArchiveSha256": "48c225e7b5f4dcbc7719268061cc32b6376d69e71b531e696223627bfed1863c",
+    "finalGateTestsPassed": 3,
+    "finalNativeConfigTestsPassed": 5,
+    "hashStableAcrossGateSelftestAndIsolatedPrebuild": true,
+    "overwriteCause": "unresolved; coordination requested; no unrelated source reverted"
+  }
+}

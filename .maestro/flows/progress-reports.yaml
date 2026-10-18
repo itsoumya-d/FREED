@@ -1,0 +1,25 @@
+appId: app.freed.recovery
+name: progress-reports
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///progress"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-progress"
+    timeout: 15000
+- assertVisible: "Current"
+- assertVisible: "Best"
+- assertVisible: "Attempts"
+- swipe:
+    direction: UP
+- assertVisible:
+    id: "screen-main-progress"
+- takeScreenshot: "progress-reports"

@@ -1,0 +1,26 @@
+appId: app.freed.recovery
+name: account-options
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///flow/account"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-account"
+    timeout: 15000
+- assertVisible: "Connect your account|Connect another sign-in|Sign in to your account"
+- assertVisible: "Create account with email|Connect email|Sign in with email"
+- tapOn: "Create account with email|Connect email"
+- assertVisible: "Email address"
+- assertVisible: "Password"
+- assertVisible: "Confirm password"
+- tapOn: "Back to account options"
+- assertVisible: "Skip for now|Cancel"
+- takeScreenshot: "account-options"

@@ -13,24 +13,24 @@ const DEFAULT_REPORT = "docs/validation/artifacts/store-legal-web-current/store-
 const ROUTES = [
   {
     id: "privacy",
-    publicUrl: "https://freedrecovery.app/privacy",
+    publicUrl: "https://freed-landing.web.app/privacy",
     routePath: "/privacy",
     sourceFile: "app/privacy.tsx",
     expectedComponent: "PrivacyPolicyPage",
     candidates: ["privacy.html", "privacy/index.html"],
     requiredText: [
       "FREED Privacy Policy",
-      "Effective date: June 6, 2026",
-      "Android Accessibility",
+      "Effective date: October 5, 2026",
+      require("../src/i18n/native-android-catalog.json").freed_accessibility_description,
       "DNS-only VPN",
       "Family Controls",
       "Purchase verification",
-      "support@freedrecovery.app",
+      "soumyadebnath1661@gmail.com",
     ],
   },
   {
     id: "support",
-    publicUrl: "https://freedrecovery.app/support",
+    publicUrl: "https://freed-landing.web.app/support",
     routePath: "/support",
     sourceFile: "app/support.tsx",
     expectedComponent: "SupportPage",
@@ -40,12 +40,12 @@ const ROUTES = [
       "Protection setup help",
       "Google Play",
       "App Store",
-      "support@freedrecovery.app",
+      "soumyadebnath1661@gmail.com",
     ],
   },
   {
     id: "account-deletion",
-    publicUrl: "https://freedrecovery.app/account-deletion",
+    publicUrl: "https://freed-landing.web.app/account-deletion",
     routePath: "/account-deletion",
     sourceFile: "app/account-deletion.tsx",
     expectedComponent: "AccountDeletionPage",
@@ -54,11 +54,89 @@ const ROUTES = [
       "FREED Account Deletion",
       "Delete local app data",
       "Request hosted data deletion",
-      "https://freedrecovery.app/account-deletion",
-      "support@freedrecovery.app",
+      "https://freed-landing.web.app/account-deletion",
+      "soumyadebnath1661@gmail.com",
     ],
   },
 ];
+
+// Website mode audits the scoped public pages, without requiring an Expo runtime.
+const WEBSITE_REQUIRED = {
+  privacy: ["FREED Privacy Policy", "adults 18+", "account is required", "opaque", "Apple Vision", "bundled ML Kit", "operational SDK metrics", "up to six recent user-authored messages", "not automatically attached", "outside your country", "processing and retention terms", "retention planning run locally", "aggregate", "encrypted backup", "baseline adult-domain protection", "native protection barrier are ad-free"],
+  support: ["FREED Support", "Protection setup help", "account ownership verification", "verified paid expiry", "Restore purchases", "Manage subscription", "freed_premium_yearly", "freed_premium_monthly", "retry", "Google Play", "App Store"],
+  "account-deletion": ["FREED Account Deletion", "Delete local app data", "Request hosted data deletion", "native acknowledgment", "Recovery records are preserved", "Delete Account &amp; Data", "deletion is in progress", "does not cancel", "instantaneous provider", "https://freed-landing.web.app/account-deletion"],
+  terms: ["FREED Terms of Service", "adults 18+", "voluntary personal use", "account is required", "same features", "auto-renewing", "not a medical device", "Strenuous exercise is not required", "never turn off baseline adult-domain protection"],
+};
+const WEBSITE_FORBIDDEN = ["June 6, 2026", "at least 13", "optional) account", "optional accounts", "lifetime", "remote challenge generation", "selected short-form surfaces", "bounded scroll events", "free users may see rewarded ads before some recovery challenges"];
+
+function inspectDisclosureClaims(id, html) {
+  const text = html.replace(/&#39;/g, "'").replace(/&amp;/g, "&").replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
+  const checks = [];
+  const requireClaim = (name, pattern) => checks.push({ id: name, passed: pattern.test(text) });
+  const excludeClaim = (name, pattern) => checks.push({ id: name, passed: !pattern.test(text) });
+  if (['privacy', 'support', 'terms'].includes(id)) {
+    requireClaim('free-basic-help', /Basic Help\/SOS is included with free access and requires neither a paid subscription nor a rewarded ad\./);
+    requireClaim('optional-single-session-reward', /Free users may explicitly choose a rewarded ad for access to one guided recovery session where available\./);
+    requireClaim('baseline-never-released', /An ad or challenge never releases baseline adult-domain protection\./);
+    excludeClaim('no-basic-help-ad-dependency', /Basic Help(?:\/SOS)? (?:requires (?:watching|completing) (?:an?|a rewarded) ad|depends on (?:an?|a rewarded) ad)/i);
+    excludeClaim('no-basic-help-paid-dependency', /Basic Help(?:\/SOS)? requires a paid subscription/i);
+    excludeClaim('no-ad-or-challenge-domain-unlock', /(?:rewarded ad|challenge) (?:releases|unlocks|turns off) (?:baseline )?adult-domain protection/i);
+    checks.push({ id: 'google-processing-link', passed: html.includes('href="https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention"') });
+    excludeClaim('no-google-zero-retention-promise', /Google (?:retains nothing|has zero retention|never retains (?:messages|prompts))/i);
+    excludeClaim('no-fixed-google-retention-promise', /Google (?:retains|stores) (?:messages|prompts|content) for (?:exactly )?(?:7|seven|14|fourteen) days/i);
+  }
+  if (id === 'privacy') {
+    requireClaim('explicit-cloud-consent', /With your explicit cloud-chat consent, messages you deliberately send to CLARA/);
+    excludeClaim('no-cloud-consent-contradiction', /Cloud chat[^.]*without (?:explicit )?consent/i);
+    requireClaim('separate-context-choice', /If you also choose to share conversation context, the request can include up to six recent user-authored messages\./);
+    excludeClaim('no-automatic-conversation-context', /Conversation context is included automatically/i);
+    requireClaim('no-photo-upload', /Photos are not uploaded\./);
+    excludeClaim('no-photo-upload-contradiction', /Photos (?:are|may be|will be) uploaded/i);
+    requireClaim('analytics-opt-in', /If you opt into analytics sharing, FREED sends/);
+    excludeClaim('no-analytics-consent-contradiction', /Analytics sharing[^.]*without (?:explicit )?consent/i);
+    requireClaim('actual-day-counts', /absolute UTC-day counts of check-ins and completed challenges for a 14-day window\./);
+    requireClaim('analytics-consent-lineage-metadata', /The snapshot also includes schema and consent versions, opt-in time, and lineage, revision and snapshot identifiers\./);
+    requireClaim('authenticated-account-linkage', /These records are linked to your authenticated account UID\./);
+    excludeClaim('no-anonymous-analytics-claim', /Shared analytics are anonymous|analytics (?:are|is) not linked to your account/i);
+    requireClaim('local-derived-values-excluded', /Locally derived rates, streak summaries and challenge categories are not part of this uploaded snapshot\./);
+    requireClaim('configured-analytics-expiry', /Analytics records have a configured 14-day expiry\./);
+    requireClaim('honest-ttl-timing', /Expiry makes records eligible for TTL deletion; physical deletion may occur later/);
+    excludeClaim('no-instant-analytics-erasure', /Analytics records are erased immediately at expiry/i);
+    requireClaim('owner-linked-quota-dedupe', /account-linked quota and request deduplication metadata/);
+    requireClaim('configured-dedupe-expiry', /Request deduplication records have a configured 7-day expiry\./);
+    requireClaim('google-retention-separate', /These service controls do not set Google's content retention\./);
+  }
+  return checks;
+}
+
+function inspectWebsiteContent(id, html) {
+  const nativeCopy = require("../src/i18n/native-android-catalog.json");
+  const required = ["Effective date: October 5, 2026", "soumyadebnath1661@gmail.com", ...WEBSITE_REQUIRED[id]];
+  if (["privacy", "support", "terms"].includes(id)) required.push(nativeCopy.freed_accessibility_description);
+  const text = html.replace(/&#39;/g, "'").replace(/&amp;/g, "&");
+  return {
+    contentChecks: required.map(value => ({ text: value, present: text.includes(value.replace(/&amp;/g, "&")) })),
+    obsoleteChecks: WEBSITE_FORBIDDEN.map(value => ({ text: value, absent: !text.toLowerCase().includes(value.toLowerCase()) })),
+    disclosureChecks: inspectDisclosureClaims(id, html),
+  };
+}
+
+function buildWebsiteReport(options) {
+  const checks = [];
+  const routes = Object.keys(WEBSITE_REQUIRED).map(id => {
+    const absolute = path.resolve(process.cwd(), options.exportDir, `${id}.html`);
+    const exists = fs.existsSync(absolute) && fs.statSync(absolute).isFile();
+    const html = exists ? fs.readFileSync(absolute, "utf8") : "";
+    const content = inspectWebsiteContent(id, html);
+    pushCheck(checks, `website-content-${id}`, exists && content.contentChecks.every(row => row.present) && content.obsoleteChecks.every(row => row.absent) && content.disclosureChecks.every(row => row.passed), `${id} has current disclosure and excludes obsolete scope.`);
+    const canonical = `https://freed-landing.web.app/${id}`;
+    const links = ["/privacy", "/support", "/account-deletion", "/terms"].every(href => html.includes(`href="${href}"`));
+    pushCheck(checks, `website-navigation-${id}`, links && html.includes(`href="${canonical}"`) && html.includes('href="mailto:soumyadebnath1661@gmail.com'), `${id} retains canonical URL, legal navigation and contact.`);
+    return { id, exists, htmlArtifact: repoRelative(absolute), publicUrl: canonical, ...content, ...(exists ? { sha256: `sha256-${fileSha256(absolute)}`, sizeBytes: fs.statSync(absolute).size } : {}) };
+  });
+  const failCount = checks.filter(row => row.status === "fail").length;
+  return { schemaVersion: SCHEMA_VERSION, generatedAt: new Date().toISOString(), sanitized: true, mode: "website", result: failCount ? "fail" : "pass", passCount: checks.length - failCount, failCount, exportDir: options.exportDir, routeExports: routes, checks, releaseBoundary: "Local four-page content proof only. Browser rendering, publication/readback, legal review, and actual device/store/provider proof are separate gates." };
+}
 
 const HOSTING_ROUTE_CONFIGS = [
   {
@@ -115,6 +193,7 @@ Options:
   --export-dir <path>  Static Expo web export directory. Default: ${DEFAULT_EXPORT_DIR}
   --report <path>      Sanitized JSON report under docs/validation/artifacts.
                        Default: ${DEFAULT_REPORT}
+  --website            Audit four prepared website legal pages (default directory: website).
   --self-test          Run offline parser checks.
 `);
 }
@@ -124,6 +203,7 @@ function parseArgs(argv) {
     exportDir: DEFAULT_EXPORT_DIR,
     reportPath: DEFAULT_REPORT,
     selfTest: false,
+    website: false,
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -136,6 +216,7 @@ function parseArgs(argv) {
 
     if (arg === "--export-dir") options.exportDir = next();
     else if (arg === "--report") options.reportPath = next();
+    else if (arg === "--website") options.website = true;
     else if (arg === "--self-test") options.selfTest = true;
     else if (arg === "--help" || arg === "-h") {
       printHelp();
@@ -145,6 +226,7 @@ function parseArgs(argv) {
     }
   }
 
+  if (options.website && !argv.includes("--export-dir")) options.exportDir = "website";
   options.exportDir = assertSafeWorkspaceDir(options.exportDir, "--export-dir");
   options.reportPath = assertSafeReportPath(options.reportPath, "--report");
   return options;
@@ -474,7 +556,7 @@ function main() {
     return;
   }
 
-  const report = buildReport(options);
+  const report = options.website ? buildWebsiteReport(options) : buildReport(options);
   writeReport(options.reportPath, report);
   console.log(
     JSON.stringify(
@@ -500,6 +582,8 @@ if (require.main === module) {
 
 module.exports = {
   buildReport,
+  buildWebsiteReport,
+  inspectWebsiteContent,
   HOSTING_ROUTE_CONFIGS,
   ROUTES,
 };

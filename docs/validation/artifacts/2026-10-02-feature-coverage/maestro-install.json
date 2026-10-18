@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "freed-maestro-install-receipt-v1",
+  "version": "2.11.0",
+  "officialDownload": "https://github.com/mobile-dev-inc/Maestro/releases/download/cli-2.11.0/maestro.zip",
+  "archiveSha256": "5384593cb4e7a106489e75a821d157dd43f4e438df6bc308b72e82c685e1283a",
+  "installPath": "~/.maestro",
+  "shellProfileChanged": false,
+  "simulatorControlled": false,
+  "installed": true,
+  "publishedArchiveSha256": "5384593cb4e7a106489e75a821d157dd43f4e438df6bc308b72e82c685e1283a",
+  "matchesPublishedArchiveSha256": true,
+  "versionCommand": {
+    "status": "passed",
+    "output": "2.11.0"
+  },
+  "testHelpCommand": {
+    "status": "passed",
+    "supportsDevice": true,
+    "supportsJUnit": true,
+    "supportsTestOutputDir": true
+  },
+  "initialParallelStartup": "helper unpacking collision; sequential version retry passed without app/device control"
+}

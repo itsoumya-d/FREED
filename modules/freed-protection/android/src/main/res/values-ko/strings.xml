@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from the audited authored-source catalogs. -->
+<resources>
+  <string name="freed_accessibility_description" formatted="false">선택한 앱의 실행을 감지해 앱 전체 보호를 적용해요. FREED 지원을 열지는 사용자가 선택해요. 앱 내부 Shorts 및 Reels 검사는 실험 단계이며 공개 버전에 포함되지 않아요.</string>
+  <string name="freed_usage_access_config_label" formatted="false">FREED 사용 액세스</string>
+  <string name="freed_usage_access_reason" formatted="false">FREED는 선택한 앱 패키지의 집계 포그라운드 시간을 읽는 데만 사용 액세스를 사용하므로 앱 타이머가 복구 문제를 트리거할 수 있습니다. 화면 내용, 메시지, 키 입력, 검색 기록 또는 원시 사용 이벤트는 읽지 않습니다.</string>
+  <string name="freed_protection_label" formatted="false">FREED Protection</string>
+  <string name="freed_dns_notification_title" formatted="false">FREED DNS Guard</string>
+  <string name="freed_dns_channel_description" formatted="false">FREED의 DNS 전용 성인 도메인 필터가 활성화되면 표시됩니다.</string>
+  <string name="freed_dns_paused_notification" formatted="false">이 네트워크의 로그인 페이지 필터링이 일시중지되었습니다. 일반적인 탐색은 직접적으로 유지됩니다.</string>
+  <string name="freed_dns_active_notification" formatted="false">성인 도메인 DNS 필터링이 활성화되었습니다. 일반적인 탐색은 직접적으로 유지됩니다.</string>
+  <string name="freed_recovery_channel" formatted="false">FREED 복구 개입</string>
+  <string name="freed_browser_notification_title" formatted="false">FREED 보호 알림</string>
+  <string name="freed_app_notification_title" formatted="false">FREED가 선택한 앱을 일시 중지했어요</string>
+  <string name="freed_browser_channel_description" formatted="false">지원되는 차단에 대한 보호 알림을 표시해요. FREED 지원은 사용자가 선택할 때만 열려요.</string>
+  <string name="freed_accessibility_notification" formatted="false">FREED를 열어 복구 과제를 완료하세요. 오버레이, 스크린샷 또는 OCR은 사용되지 않습니다.</string>
+  <string name="freed_source_label" formatted="false">출처: {{host}}</string>
+  <string name="freed_dns_intervention_channel_description" formatted="false">FREED가 성인 도메인의 DNS 요청을 차단하면 알려줘요. 지원은 사용자가 선택할 때만 열려요.</string>
+  <string name="freed_dns_intervention_notification" formatted="false">FREED를 열어 복구 과제를 완료하세요. 일반적인 탐색은 직접적으로 유지됩니다.</string>
+  <string name="freed_dns_intervention_title" formatted="false">잠깐만요 - 연속 기록은 보호할 가치가 있습니다</string>
+  <string name="freed_blocked_host_label" formatted="false">차단된 호스트: {{host}}</string>
+  <string name="freed_intervention_eyebrow" formatted="false">FREED 보호</string>
+  <string name="freed_intervention_title" formatted="false">잠깐만요. 당신은 여전히 ​​​​통제권을 가지고 있습니다.</string>
+  <string name="freed_intervention_subtitle" formatted="false">앱 경계가 작동 중이에요. 도움을 받으려면 «복구 시작»을 선택하세요.</string>
+  <string name="freed_intervention_breathe" formatted="false">숨을들이 쉬십시오. 숨을 내쉬십시오.</string>
+  <string name="freed_start_recovery" formatted="false">복구 시작</string>
+  <string name="freed_usage_eyebrow" formatted="false">FREED 사용 액세스</string>
+  <string name="freed_usage_title" formatted="false">사용 액세스는 앱 타이머로 제한됩니다.</string>
+  <string name="freed_usage_note" formatted="false">사용 액세스는 Android 설정에 의해 제어됩니다. FREED를 활성화한 후 활성화 테스트를 통해 보호를 확인할 수 있도록 설정으로 돌아갑니다.</string>
+  <string name="freed_usage_return" formatted="false">FREED 설정으로 돌아가기</string>
+  <string name="freed_usage_back" formatted="false">Android 설정으로 돌아가기</string>
+  <string name="freed_calibration_instruction" formatted="false">보정할 표면을 탭하세요. 안정적인 보기 지문만 이 장치에 유지됩니다.</string>
+  <string name="freed_calibration_ready" formatted="false">안정적인 로컬 선택기를 찾았습니다. 저장하려면 확인하고, 삭제하려면 취소하세요.</string>
+  <string name="freed_cancel" formatted="false">취소</string>
+  <string name="freed_confirm" formatted="false">확인하다</string>
+  <string name="freed_companion_label" formatted="false">FREED 컴패니언</string>
+  <string name="freed_companion_hint" formatted="false">탭하여 동반자에게 인사하세요.</string>
+  <string name="freed_companion_hello" formatted="false">한 번에 한 단계씩. 당신은 더 나은 하루를 위한 공간을 마련하고 있습니다.</string>
+</resources>

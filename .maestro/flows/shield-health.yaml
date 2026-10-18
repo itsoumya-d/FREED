@@ -1,0 +1,23 @@
+appId: app.freed.recovery
+name: shield-health
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///shield/dns"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-shield-dns"
+    timeout: 15000
+- assertVisible: "Protection health"
+- assertVisible: "Review website protection"
+- tapOn: "Review website protection"
+- assertVisible:
+    id: "screen-protectionSetup"
+- takeScreenshot: "shield-health"

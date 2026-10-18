@@ -1,0 +1,33 @@
+appId: app.freed.recovery
+name: deletion-account
+tags:
+  - smoke
+  - read-only
+  - external-service
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///profile"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-profile"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Privacy & support"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Privacy & support"
+- scrollUntilVisible:
+    element:
+      text: "Delete Account & Data"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "Delete Account & Data"
+- assertVisible:
+    id: "screen-main-profile"
+- takeScreenshot: "deletion-account"

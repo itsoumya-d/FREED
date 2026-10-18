@@ -1,0 +1,17 @@
+{
+  "httpStatus": 200,
+  "body": {
+    "version": 1,
+    "etag": "BwZdAKbInHI=",
+    "bindings": [
+      {
+        "role": "roles/run.invoker",
+        "members": [
+          "allUsers"
+        ]
+      }
+    ]
+  },
+  "scope": "projects/freed-7d5ee/locations/asia-south1/services/backendreadiness",
+  "purpose": "Public callable transport; Auth and App Check remain enforced by verified function source."
+}

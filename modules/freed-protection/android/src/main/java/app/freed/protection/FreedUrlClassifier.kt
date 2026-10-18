@@ -112,6 +112,22 @@ object FreedUrlClassifier {
     "xxx"
   )
 
+  // Developer-hosting platforms where the project label sits three labels deep.
+  // Token matching extends one label further on these hosts only; user-content
+  // platforms are deliberately excluded (adult content is common there).
+  private val multiPartDevHostingSuffixes = setOf(
+    "github.io",
+    "gitlab.io",
+    "pages.dev",
+    "netlify.app",
+    "vercel.app",
+    "herokuapp.com",
+    "web.app",
+    "firebaseapp.com",
+    "repl.co",
+    "glitch.me"
+  )
+
   private val explicitSearchTerms = setOf(
     "porn",
     "pornography",
@@ -207,8 +223,68 @@ object FreedUrlClassifier {
     "cams"
   )
 
-  fun classifyFocusedInput(input: String, adultDomainFeed: Set<String> = emptySet()): FreedClassification {
-    val urlResult = classify(input, adultDomainFeed)
+  private val consumptionNegationWords = setOf(
+    "stop", "stopped", "stopping", "quit", "quitting", "no", "never",
+    "avoid", "avoiding", "block", "blocked", "blocking", "less",
+    "overcome", "overcoming", "fight", "fighting", "end", "ending", "ended"
+  )
+
+  private val neutralHelpMarkerWords = setOf(
+    "is", "are", "am", "was", "were", "be", "been",
+    "does", "do", "did", "can", "cannot", "cant", "could",
+    "why", "how", "what", "which", "who", "should", "would", "will",
+    "meaning", "mean", "means", "define", "definition",
+    "bad", "good", "wrong", "harm", "harmful", "healthy", "unhealthy",
+    "sin", "sinful", "say", "says", "bible", "quran", "biblical",
+    "morality", "moral", "ethics", "ethical", "legal", "illegal", "law", "laws",
+    "age", "history", "statistics", "study", "studies", "research",
+    "science", "scientific", "brain", "dopamine", "psychology", "psychological",
+    "religion", "religious", "facts", "evidence"
+  )
+
+  private fun splitSearchWords(searchText: String): List<String> {
+    return searchText.split(Regex("[^a-z0-9']+")).filter { it.isNotBlank() }
+  }
+
+  private fun isConsumptionIntentNegated(searchText: String): Boolean {
+    val words = splitSearchWords(searchText)
+    if (words.isEmpty()) return false
+
+    return consumptionIntentSearchTerms.any { term ->
+      val termWords = term.split(" ")
+      val wordIndex: Int
+      if (termWords.size > 1) {
+        val phraseIndex = searchText.indexOf(term)
+        if (phraseIndex < 0) return@any false
+        val before = searchText.substring(0, phraseIndex).trim()
+        wordIndex = if (before.isBlank()) 0 else splitSearchWords(before).size
+      } else {
+        wordIndex = words.indexOfFirst { word -> word.contains(term) }
+        if (wordIndex < 0) return@any false
+      }
+      val windowStart = (wordIndex - 3).coerceAtLeast(0)
+      words.subList(windowStart, wordIndex).any { word -> consumptionNegationWords.contains(word) }
+    }
+  }
+
+  private fun hasNeutralHelpContext(searchText: String, explicitTerm: String): Boolean {
+    val explicitTokens = explicitTerm.split(" ").toSet()
+    return splitSearchWords(searchText).any { word ->
+      !explicitTokens.contains(word) && neutralHelpMarkerWords.contains(word)
+    }
+  }
+
+  private fun effectiveConsumptionIntent(searchText: String): Boolean {
+    val rawConsumption = consumptionIntentSearchTerms.any { searchTextContains(searchText, it) }
+    return rawConsumption && !isConsumptionIntentNegated(searchText)
+  }
+
+  fun classifyFocusedInput(
+    input: String,
+    adultDomainFeed: Set<String> = emptySet(),
+    userAllowedDomains: Set<String> = emptySet()
+  ): FreedClassification {
+    val urlResult = classify(input, adultDomainFeed, userAllowedDomains)
     if (urlResult.shouldBlock || shouldTreatAsUrlCandidate(input) || (urlResult.matchedRule != "default-allow" && urlResult.matchedRule != "empty-input")) {
       return urlResult
     }
@@ -219,7 +295,7 @@ object FreedUrlClassifier {
     val explicitSearch = explicitFocusedSearchSignal(searchText)
     if (explicitSearch != null) {
       val educationIntent = recoveryEducationSearchTerms.any { searchTextContains(searchText, it) }
-      val consumptionIntent = consumptionIntentSearchTerms.any { searchTextContains(searchText, it) }
+      val consumptionIntent = effectiveConsumptionIntent(searchText)
 
       if (educationIntent && !consumptionIntent) {
         return FreedClassification(
@@ -227,6 +303,15 @@ object FreedUrlClassifier {
           host = FOCUSED_SEARCH_HOST,
           reason = "Focused browser search text appears in recovery, health, or education context.",
           matchedRule = "focused-search-education:$explicitSearch"
+        )
+      }
+
+      if (!consumptionIntent && hasNeutralHelpContext(searchText, explicitSearch)) {
+        return FreedClassification(
+          shouldBlock = false,
+          host = FOCUSED_SEARCH_HOST,
+          reason = "Focused browser search text mentions adult terms as a question or help-seeking, not consumption.",
+          matchedRule = "focused-search-neutral:$explicitSearch"
         )
       }
 
@@ -241,7 +326,11 @@ object FreedUrlClassifier {
     return urlResult
   }
 
-  fun classify(input: String, adultDomainFeed: Set<String> = emptySet()): FreedClassification {
+  fun classify(
+    input: String,
+    adultDomainFeed: Set<String> = emptySet(),
+    userAllowedDomains: Set<String> = emptySet()
+  ): FreedClassification {
     val normalized = normalizeInput(input)
     val host = normalizeHost(normalized)
 
@@ -251,14 +340,25 @@ object FreedUrlClassifier {
 
     val searchText = extractSearchText(normalized)
 
+    // Ordinary-site exceptions never bypass adult domains or consumption queries.
     val normalAllowlisted = allowedNormalDomains.any { hostMatches(host, it) }
     val knownSearchEngine = isKnownSearchEngineHost(host)
+    val requestedException = !normalAllowlisted && !knownSearchEngine && userAllowedDomains.any { hostMatches(host, it) }
+    val knownAdultDomain = requestedException && (adultDomainFeed.any { hostMatches(host, it) } || adultDomains.any { hostMatches(host, it) })
+    if (requestedException && !knownAdultDomain) {
+      return FreedClassification(
+        shouldBlock = false,
+        host = host,
+        reason = "User asked FREED to always allow this site.",
+        matchedRule = "user-allowlist"
+      )
+    }
 
     if (normalAllowlisted || knownSearchEngine) {
       val explicitSearch = explicitSearchTerms.firstOrNull { searchText.contains(it) }
       if (explicitSearch != null) {
         val educationIntent = recoveryEducationSearchTerms.any { searchText.contains(it) }
-        val consumptionIntent = consumptionIntentSearchTerms.any { searchText.contains(it) }
+        val consumptionIntent = effectiveConsumptionIntent(searchText)
 
         if (educationIntent && !consumptionIntent) {
           return FreedClassification(
@@ -266,6 +366,15 @@ object FreedUrlClassifier {
             host = host,
             reason = "Adult term appears in recovery, health, or education context.",
             matchedRule = "safe-site-education:$explicitSearch"
+          )
+        }
+
+        if (!consumptionIntent && hasNeutralHelpContext(searchText, explicitSearch)) {
+          return FreedClassification(
+            shouldBlock = false,
+            host = host,
+            reason = "Adult term appears as a question or help-seeking query without consumption intent.",
+            matchedRule = "safe-site-neutral-query:$explicitSearch"
           )
         }
 
@@ -299,9 +408,23 @@ object FreedUrlClassifier {
       )
     }
 
-    val token = explicitDomainTokens.firstOrNull { signal ->
-      host.split(".").any { part -> part == signal || part.startsWith("$signal-") || part.endsWith("-$signal") }
+    // Registrable-domain boundary: last two labels, extended by one extra label
+    // on known developer-hosting platforms. Parity with blocking-engine.ts.
+    val tokenParts = host.split(".")
+    var tokenMinIndex = (tokenParts.size - 2).coerceAtLeast(0)
+    if (multiPartDevHostingSuffixes.any { suffix -> hostMatches(host, suffix) }) {
+      tokenMinIndex = (tokenParts.size - 3).coerceAtLeast(0)
     }
+    fun tokenInScope(signal: String): Boolean =
+      tokenParts.withIndex().any { (index, part) ->
+        index >= tokenMinIndex && (part == signal || part.startsWith("$signal-") || part.endsWith("-$signal"))
+      }
+    fun tokenOnlyInSubdomain(signal: String): Boolean =
+      tokenParts.withIndex().any { (index, part) ->
+        index < tokenMinIndex && (part == signal || part.startsWith("$signal-") || part.endsWith("-$signal"))
+      }
+
+    val token = explicitDomainTokens.firstOrNull(::tokenInScope)
     if (token != null) {
       val recoveryContext = hasHostContext(host, recoveryDomainContextTerms)
       val consumptionContext = hasHostContext(host, consumptionDomainContextTerms)
@@ -320,6 +443,36 @@ object FreedUrlClassifier {
         host = host,
         reason = "High-confidence adult-content hostname token.",
         matchedRule = "explicit-domain-token:$token"
+      )
+    }
+
+    // A token appearing only inside a deeper subdomain of an otherwise benign
+    // registrable domain is allowed unless the host carries consumption signals.
+    val subdomainToken = explicitDomainTokens.firstOrNull(::tokenOnlyInSubdomain)
+    if (subdomainToken != null) {
+      val subRecoveryContext = hasHostContext(host, recoveryDomainContextTerms)
+      val subConsumptionContext = hasHostContext(host, consumptionDomainContextTerms)
+      if (subRecoveryContext && !subConsumptionContext) {
+        return FreedClassification(
+          shouldBlock = false,
+          host = host,
+          reason = "Adult-looking hostname token appears in recovery, health, or filtering context.",
+          matchedRule = "explicit-domain-token-recovery-context:$subdomainToken"
+        )
+      }
+      if (!subConsumptionContext) {
+        return FreedClassification(
+          shouldBlock = false,
+          host = host,
+          reason = "Adult-looking token appears in a subdomain without any consumption signal.",
+          matchedRule = "explicit-domain-token-subdomain-benign:$subdomainToken"
+        )
+      }
+      return FreedClassification(
+        shouldBlock = true,
+        host = host,
+        reason = "Hostname combines an adult-content token with consumption signals.",
+        matchedRule = "explicit-domain-token:$subdomainToken"
       )
     }
 

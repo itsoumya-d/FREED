@@ -57,6 +57,12 @@ export type AdultDomainFeedResolveOptions = {
 
 type FetchLikeResponse = Pick<Response, "ok" | "json" | "status"> & Partial<Pick<Response, "body" | "headers" | "text">>;
 type FetchLike = (input: string, init?: RequestInit) => Promise<FetchLikeResponse>;
+export type RemoteAdultDomainFeedProvider = () => Promise<AdultDomainFeed>;
+let remoteFeedProvider: RemoteAdultDomainFeedProvider | null = null;
+
+export function configureRemoteAdultDomainFeedProvider(provider: RemoteAdultDomainFeedProvider | null) {
+  remoteFeedProvider = provider;
+}
 
 const DEFAULT_ADULT_DOMAIN_FEED_SYNC_TIMEOUT_MS = 8_000;
 const MIN_ADULT_DOMAIN_FEED_SYNC_TIMEOUT_MS = 50;
@@ -75,7 +81,7 @@ export async function resolveAdultDomainFeed(
 ): Promise<AdultDomainFeedResolveResult> {
   const endpointConfigured = Boolean(endpoint?.trim());
   const safeEndpoint = sanitizeRemoteFeedEndpoint(endpoint);
-  if (!safeEndpoint) {
+  if (!safeEndpoint && !remoteFeedProvider) {
     return {
       feed: getEmbeddedAdultDomainFeed(),
       provider: "embedded",
@@ -86,6 +92,18 @@ export async function resolveAdultDomainFeed(
 
   try {
     const normalizedChecksum = normalizeFeedChecksum(currentChecksum);
+    if (remoteFeedProvider) {
+      const feed = await remoteFeedProvider();
+      const readiness = getAdultDomainFeedReadiness(feed);
+      if (!readiness.ready) throw new Error(readiness.issues.join("; "));
+      const freshnessIssue = remoteFeedFreshnessIssue(feed.generatedAt);
+      if (freshnessIssue) throw new Error(freshnessIssue);
+      if (normalizedChecksum === feed.checksum) {
+        return { feed: null, provider: "remote-cache", warning: null, notModified: true, checksum: feed.checksum };
+      }
+      return { feed, provider: "remote", warning: null, notModified: false };
+    }
+    if (!safeEndpoint) throw new Error("Adult domain feed endpoint is unavailable.");
     const { response, payload } = await fetchRemoteFeedPayload(
       fetcher,
       safeEndpoint,

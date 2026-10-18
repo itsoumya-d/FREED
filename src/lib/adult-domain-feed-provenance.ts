@@ -3,8 +3,7 @@ import type { ProtectionStatus } from "freed-protection";
 const EMBEDDED_ADULT_DOMAIN_FEED_VERSION_PREFIX = "freed-embedded-";
 
 export function isReviewedAdultDomainFeedRequired(): boolean {
-  if (readBooleanEnv("EXPO_PUBLIC_REQUIRE_REVIEWED_ADULT_DOMAIN_FEED")) return true;
-  return isProductionRuntime();
+  return readBooleanEnv("EXPO_PUBLIC_REQUIRE_REVIEWED_ADULT_DOMAIN_FEED");
 }
 
 export function hasReviewedNativeAdultDomainFeed(status: ProtectionStatus | null): boolean {

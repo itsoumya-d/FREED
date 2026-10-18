@@ -1,0 +1,23 @@
+{
+  "source": {
+    "id": "oisd-nsfw-small",
+    "label": "OISD NSFW Small",
+    "url": "https://nsfw-small.oisd.nl/"
+  },
+  "sourceBytes": 358308,
+  "sourceTextSha256": "6185c8b90efad4c92a5ff207e3bbf03c298822d133b8a74c3b7ca8c93125b1cb",
+  "domainCount": 20376,
+  "omittedSuffixWideRules": [
+    "||adult^",
+    "||co.cz^",
+    "||cpanel.site^",
+    "||in.net^",
+    "||mex.com^",
+    "||porn^",
+    "||sex^",
+    "||xxx^"
+  ],
+  "omissionCount": 8,
+  "domainPayloadSha256": "765c579402614895acf4c1eb69023f0e58d1ee6cdb80d43b87082d1631975468",
+  "allExistingCanonicalAndProtectedSiteGuardsPassed": true
+}

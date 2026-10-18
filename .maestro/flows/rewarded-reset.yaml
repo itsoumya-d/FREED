@@ -1,0 +1,25 @@
+appId: app.freed.recovery
+name: rewarded-reset
+tags:
+  - smoke
+  - read-only
+  - external-service
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///flow/ad"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-ad"
+    timeout: 15000
+- assertVisible:
+    id: "screen-ad"
+- extendedWaitUntil:
+    visible: "Continue without ad|Watch again"
+    timeout: 15000
+- assertVisible: "Continue without ad|Watch again"
+- takeScreenshot: "rewarded-reset"

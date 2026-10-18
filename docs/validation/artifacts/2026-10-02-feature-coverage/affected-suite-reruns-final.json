@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "freed-affected-suite-reruns-v1",
+  "generatedAt": "2026-10-02T10:53:39.258Z",
+  "sanitized": true,
+  "suites": {
+    "tests/quiz-accessibility-source.test.js": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T10:52:03.720Z",
+      "durationMs": 488,
+      "counts": {
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/reruns/final/quiz-accessibility-source.test.js.log",
+      "logSha256": "b9b86c6cbb87d26a5cbe99e6039d59a4090ac3c069d9664fe4e4ce1097c0a43f",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/quiz-accessibility-source.test.js"
+      ]
+    },
+    "tests/core.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T10:52:04.216Z",
+      "durationMs": 95038,
+      "counts": {
+        "passed": 279,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/reruns/final/core.test.ts.log",
+      "logSha256": "6789aae29dd4037f2e520017bb5f8a0bd0ac776e04c354c6d3201d6d6b585736",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/core.test.ts"
+      ]
+    }
+  }
+}

@@ -1,0 +1,494 @@
+{
+  "entries": [
+    {
+      "source": "Opening iOS Settings.",
+      "translations": {
+        "hi": "iOS सेटिंग्स खुल रही हैं।",
+        "es": "Abriendo los ajustes de iOS.",
+        "pt": "Abrindo os ajustes do iOS.",
+        "fr": "Ouverture des réglages iOS.",
+        "de": "iOS-Einstellungen werden geöffnet.",
+        "ar": "جارٍ فتح إعدادات iOS.",
+        "ja": "iOS の設定を開いています。",
+        "zh-Hans": "正在打开 iOS 设置。",
+        "ko": "iOS 설정을 여는 중입니다."
+      }
+    },
+    {
+      "source": "Photo target verified on device.",
+      "translations": {
+        "hi": "फ़ोटो का लक्ष्य डिवाइस पर सत्यापित हुआ।",
+        "es": "Objetivo de la foto verificado en el dispositivo.",
+        "pt": "Alvo da foto verificado no dispositivo.",
+        "fr": "Cible de la photo vérifiée sur l’appareil.",
+        "de": "Fotoziel auf dem Gerät bestätigt.",
+        "ar": "تم التحقق من هدف الصورة على الجهاز.",
+        "ja": "写真の対象をデバイス上で確認しました。",
+        "zh-Hans": "已在设备上验证照片目标。",
+        "ko": "기기에서 사진 대상이 확인되었습니다."
+      }
+    },
+    {
+      "source": "React context is unavailable.",
+      "translations": {
+        "hi": "React संदर्भ उपलब्ध नहीं है।",
+        "es": "El contexto de React no está disponible.",
+        "pt": "O contexto do React não está disponível.",
+        "fr": "Le contexte React n’est pas disponible.",
+        "de": "Der React-Kontext ist nicht verfügbar.",
+        "ar": "سياق React غير متاح.",
+        "ja": "React コンテキストを利用できません。",
+        "zh-Hans": "React 上下文不可用。",
+        "ko": "반응 컨텍스트를 사용할 수 없습니다."
+      }
+    },
+    {
+      "source": "Return to FREED before opening Safari settings.",
+      "translations": {
+        "hi": "Safari सेटिंग्स खोलने से पहले FREED में वापस आएँ।",
+        "es": "Vuelve a FREED antes de abrir los ajustes de Safari.",
+        "pt": "Volte ao FREED antes de abrir os ajustes do Safari.",
+        "fr": "Revenez dans FREED avant d’ouvrir les réglages Safari.",
+        "de": "Kehre zu FREED zurück, bevor du die Safari-Einstellungen öffnest.",
+        "ar": "عُد إلى FREED قبل فتح إعدادات Safari.",
+        "ja": "Safari の設定を開く前に FREED に戻ってください。",
+        "zh-Hans": "打开 Safari 设置前，请返回 FREED。",
+        "ko": "Safari 설정을 열기 전에 FREED로 돌아가세요."
+      }
+    },
+    {
+      "source": "Safari Content Blocker requires at least one adult-domain rule.",
+      "translations": {
+        "hi": "Safari Content Blocker के लिए कम से कम एक वयस्क डोमेन नियम आवश्यक है।",
+        "es": "Safari Content Blocker requiere al menos una regla de dominio para adultos.",
+        "pt": "Safari Content Blocker requer pelo menos uma regra de domínio adulto.",
+        "fr": "Safari Content Blocker nécessite au moins une règle de domaine pour adultes.",
+        "de": "Safari Content Blocker benötigt mindestens eine Regel für Erwachsenendomains.",
+        "ar": "يتطلب Safari Content Blocker قاعدة واحدة على الأقل لنطاقات محتوى البالغين.",
+        "ja": "Safari Content Blocker には成人向けドメインのルールが少なくとも一つ必要です。",
+        "zh-Hans": "Safari Content Blocker 需要至少一条成人内容域名规则。",
+        "ko": "Safari 콘텐츠 차단기에는 성인 도메인 규칙이 하나 이상 필요합니다."
+      }
+    },
+    {
+      "source": "Safari Content Blocker rule {{value1}} is missing a url-filter.",
+      "translations": {
+        "hi": "Safari Content Blocker नियम {{value1}} में url-filter नहीं है।",
+        "es": "La regla {{value1}} de Safari Content Blocker no tiene url-filter.",
+        "pt": "A regra {{value1}} do Safari Content Blocker não tem url-filter.",
+        "fr": "La règle {{value1}} de Safari Content Blocker ne contient pas de url-filter.",
+        "de": "Der Safari-Content-Blocker-Regel {{value1}} fehlt ein url-filter.",
+        "ar": "تفتقر قاعدة Safari Content Blocker رقم {{value1}} إلى url-filter.",
+        "ja": "Safari Content Blocker のルール {{value1}} に url-filter がありません。",
+        "zh-Hans": "Safari Content Blocker 规则 {{value1}} 缺少 url-filter。",
+        "ko": "Safari 콘텐츠 차단기 규칙 {{value1}}에 URL 필터가 없습니다."
+      }
+    },
+    {
+      "source": "Safari Content Blocker rule {{value1}} must be an object.",
+      "translations": {
+        "hi": "Safari Content Blocker नियम {{value1}} ऑब्जेक्ट होना चाहिए।",
+        "es": "La regla {{value1}} de Safari Content Blocker debe ser un objeto.",
+        "pt": "A regra {{value1}} do Safari Content Blocker deve ser um objeto.",
+        "fr": "La règle {{value1}} de Safari Content Blocker doit être un objet.",
+        "de": "Safari-Content-Blocker-Regel {{value1}} muss ein Objekt sein.",
+        "ar": "يجب أن تكون قاعدة Safari Content Blocker رقم {{value1}} كائنًا.",
+        "ja": "Safari Content Blocker のルール {{value1}} はオブジェクトである必要があります。",
+        "zh-Hans": "Safari Content Blocker 规则 {{value1}} 必须为对象。",
+        "ko": "Safari 콘텐츠 차단 규칙 {{value1}}는 객체여야 합니다."
+      }
+    },
+    {
+      "source": "Safari Content Blocker rule {{value1}} must use a block action.",
+      "translations": {
+        "hi": "Safari Content Blocker नियम {{value1}} में block कार्रवाई होनी चाहिए।",
+        "es": "La regla {{value1}} de Safari Content Blocker debe usar una acción block.",
+        "pt": "A regra {{value1}} do Safari Content Blocker deve usar uma ação block.",
+        "fr": "La règle {{value1}} de Safari Content Blocker doit utiliser une action block.",
+        "de": "Safari-Content-Blocker-Regel {{value1}} muss eine block-Aktion verwenden.",
+        "ar": "يجب أن تستخدم قاعدة Safari Content Blocker رقم {{value1}} إجراء block.",
+        "ja": "Safari Content Blocker のルール {{value1}} は block アクションを使用する必要があります。",
+        "zh-Hans": "Safari Content Blocker 规则 {{value1}} 必须使用 block 操作。",
+        "ko": "Safari 콘텐츠 차단 규칙 {{value1}}는 차단 작업을 사용해야 합니다."
+      }
+    },
+    {
+      "source": "Safari Content Blocker rules could not be synced: {{error}}",
+      "translations": {
+        "hi": "Safari Content Blocker नियम सिंक नहीं हो सके: {{error}}",
+        "es": "No se pudieron sincronizar las reglas de Safari Content Blocker: {{error}}",
+        "pt": "Não foi possível sincronizar as regras do Safari Content Blocker: {{error}}",
+        "fr": "Impossible de synchroniser les règles Safari Content Blocker : {{error}}",
+        "de": "Safari-Content-Blocker-Regeln konnten nicht synchronisiert werden: {{error}}",
+        "ar": "تعذّرت مزامنة قواعد Safari Content Blocker: {{error}}",
+        "ja": "Safari Content Blocker のルールを同期できませんでした: {{error}}",
+        "zh-Hans": "无法同步 Safari Content Blocker 规则：{{error}}",
+        "ko": "Safari 콘텐츠 차단기 규칙을 동기화할 수 없습니다: {{error}}"
+      }
+    },
+    {
+      "source": "Safari Content Blocker rules payload cannot be empty.",
+      "translations": {
+        "hi": "Safari Content Blocker नियमों का पेलोड खाली नहीं हो सकता।",
+        "es": "El contenido de reglas de Safari Content Blocker no puede estar vacío.",
+        "pt": "O conteúdo de regras do Safari Content Blocker não pode estar vazio.",
+        "fr": "Le contenu des règles Safari Content Blocker ne peut pas être vide.",
+        "de": "Die Safari-Content-Blocker-Regeldaten dürfen nicht leer sein.",
+        "ar": "لا يمكن أن تكون بيانات قواعد Safari Content Blocker فارغة.",
+        "ja": "Safari Content Blocker のルールデータは空にできません。",
+        "zh-Hans": "Safari Content Blocker 规则数据不能为空。",
+        "ko": "Safari 콘텐츠 차단기 규칙 페이로드는 비워둘 수 없습니다."
+      }
+    },
+    {
+      "source": "Safari Content Blocker rules payload exceeds the 50,000 rule safety limit.",
+      "translations": {
+        "hi": "Safari Content Blocker नियमों का पेलोड 50,000 नियमों की सुरक्षा सीमा से अधिक है।",
+        "es": "El contenido de reglas de Safari Content Blocker supera el límite de seguridad de 50,000 reglas.",
+        "pt": "O conteúdo de regras do Safari Content Blocker excede o limite de segurança de 50,000 regras.",
+        "fr": "Le contenu des règles Safari Content Blocker dépasse la limite de sécurité de 50,000 règles.",
+        "de": "Die Safari-Content-Blocker-Regeldaten überschreiten die Sicherheitsgrenze von 50,000 Regeln.",
+        "ar": "تتجاوز بيانات قواعد Safari Content Blocker حد الأمان البالغ 50,000 قاعدة.",
+        "ja": "Safari Content Blocker のルールデータが安全上限の 50,000 件を超えています。",
+        "zh-Hans": "Safari Content Blocker 规则数据超过了 50,000 条的安全上限。",
+        "ko": "Safari 콘텐츠 차단기 규칙 페이로드가 50,000개의 규칙 안전 한도를 초과합니다."
+      }
+    },
+    {
+      "source": "Safari Content Blocker rules payload is empty.",
+      "translations": {
+        "hi": "Safari Content Blocker नियमों का पेलोड खाली है।",
+        "es": "El contenido de reglas de Safari Content Blocker está vacío.",
+        "pt": "O conteúdo de regras do Safari Content Blocker está vazio.",
+        "fr": "Le contenu des règles Safari Content Blocker est vide.",
+        "de": "Die Safari-Content-Blocker-Regeldaten sind leer.",
+        "ar": "بيانات قواعد Safari Content Blocker فارغة.",
+        "ja": "Safari Content Blocker のルールデータが空です。",
+        "zh-Hans": "Safari Content Blocker 规则数据为空。",
+        "ko": "Safari 콘텐츠 차단기 규칙 페이로드가 비어 있습니다."
+      }
+    },
+    {
+      "source": "Safari Content Blocker rules payload must be a JSON array.",
+      "translations": {
+        "hi": "Safari Content Blocker नियमों का पेलोड JSON ऐरे होना चाहिए।",
+        "es": "El contenido de reglas de Safari Content Blocker debe ser un array JSON.",
+        "pt": "O conteúdo de regras do Safari Content Blocker deve ser um array JSON.",
+        "fr": "Le contenu des règles Safari Content Blocker doit être un tableau JSON.",
+        "de": "Die Safari-Content-Blocker-Regeldaten müssen ein JSON-Array sein.",
+        "ar": "يجب أن تكون بيانات قواعد Safari Content Blocker مصفوفة JSON.",
+        "ja": "Safari Content Blocker のルールデータは JSON 配列である必要があります。",
+        "zh-Hans": "Safari Content Blocker 规则数据必须为 JSON 数组。",
+        "ko": "Safari 콘텐츠 차단기 규칙 페이로드는 JSON 배열이어야 합니다."
+      }
+    },
+    {
+      "source": "Safari settings could not open. Return to FREED and try again.",
+      "translations": {
+        "hi": "Safari सेटिंग्स नहीं खुल सकीं। FREED में वापस आएँ और फिर कोशिश करें।",
+        "es": "No se pudieron abrir los ajustes de Safari. Vuelve a FREED e inténtalo de nuevo.",
+        "pt": "Não foi possível abrir os ajustes do Safari. Volte ao FREED e tente novamente.",
+        "fr": "Impossible d’ouvrir les réglages Safari. Revenez dans FREED et réessayez.",
+        "de": "Die Safari-Einstellungen konnten nicht geöffnet werden. Kehre zu FREED zurück und versuche es erneut.",
+        "ar": "تعذّر فتح إعدادات Safari. عُد إلى FREED وحاول مجددًا.",
+        "ja": "Safari の設定を開けませんでした。FREED に戻って再試行してください。",
+        "zh-Hans": "无法打开 Safari 设置。请返回 FREED 并重试。",
+        "ko": "Safari 설정을 열 수 없습니다. FREED로 돌아가서 다시 시도하십시오."
+      }
+    },
+    {
+      "source": "Screen Time adult-content web filter is active.",
+      "translations": {
+        "hi": "स्क्रीन टाइम वयस्क सामग्री वेब फ़िल्टर सक्रिय है।",
+        "es": "El filtro web de contenido para adultos de Tiempo de uso está activo.",
+        "pt": "O filtro de conteúdo adulto da web do Tempo de Uso está ativo.",
+        "fr": "Le filtre web de contenu pour adultes Temps d’écran est actif.",
+        "de": "Der Bildschirmzeit-Webfilter für Erwachseneninhalte ist aktiv.",
+        "ar": "تصفية محتوى البالغين على الويب في مدة استخدام الجهاز نشطة.",
+        "ja": "スクリーンタイムの成人向け Web フィルターが有効です。",
+        "zh-Hans": "屏幕使用时间的成人网页内容过滤已启用。",
+        "ko": "Screen Time 성인용 콘텐츠 웹 필터가 활성화되었습니다."
+      }
+    },
+    {
+      "source": "Screen Time authorization has not been granted.",
+      "translations": {
+        "hi": "स्क्रीन टाइम अनुमति नहीं मिली है।",
+        "es": "No se ha concedido la autorización de Tiempo de uso.",
+        "pt": "A autorização do Tempo de Uso não foi concedida.",
+        "fr": "L’autorisation Temps d’écran n’a pas été accordée.",
+        "de": "Die Bildschirmzeit-Berechtigung wurde nicht erteilt.",
+        "ar": "لم يُمنح إذن مدة استخدام الجهاز.",
+        "ja": "スクリーンタイムの許可が与えられていません。",
+        "zh-Hans": "尚未获得屏幕使用时间授权。",
+        "ko": "Screen Time 권한이 부여되지 않았습니다."
+      }
+    },
+    {
+      "source": "Screen Time authorization is available. Apply the adult-content web filter to activate protection.",
+      "translations": {
+        "hi": "स्क्रीन टाइम अनुमति उपलब्ध है। सुरक्षा सक्रिय करने के लिए वयस्क सामग्री वेब फ़िल्टर लागू करें।",
+        "es": "La autorización de Tiempo de uso está disponible. Aplica el filtro web de contenido para adultos para activar la protección.",
+        "pt": "A autorização do Tempo de Uso está disponível. Aplique o filtro de conteúdo adulto da web para ativar a proteção.",
+        "fr": "L’autorisation Temps d’écran est disponible. Appliquez le filtre web de contenu pour adultes pour activer la protection.",
+        "de": "Die Bildschirmzeit-Berechtigung ist verfügbar. Wende den Webfilter für Erwachseneninhalte an, um den Schutz zu aktivieren.",
+        "ar": "إذن مدة استخدام الجهاز متاح. طبّق تصفية محتوى البالغين على الويب لتفعيل الحماية.",
+        "ja": "スクリーンタイムの許可が利用可能です。保護を有効にするには成人向け Web フィルターを適用してください。",
+        "zh-Hans": "屏幕使用时间授权可用。请应用成人网页内容过滤以启用保护。",
+        "ko": "Screen Time 인증이 가능합니다. 보호를 활성화하려면 성인 콘텐츠 웹 필터를 적용하세요."
+      }
+    },
+    {
+      "source": "Screen Time authorization request completed.",
+      "translations": {
+        "hi": "स्क्रीन टाइम अनुमति अनुरोध पूरा हुआ।",
+        "es": "Se completó la solicitud de autorización de Tiempo de uso.",
+        "pt": "A solicitação de autorização do Tempo de Uso foi concluída.",
+        "fr": "La demande d’autorisation Temps d’écran est terminée.",
+        "de": "Die Bildschirmzeit-Berechtigungsanfrage ist abgeschlossen.",
+        "ar": "اكتمل طلب إذن مدة استخدام الجهاز.",
+        "ja": "スクリーンタイムの許可リクエストが完了しました。",
+        "zh-Hans": "屏幕使用时间授权请求已完成。",
+        "ko": "Screen Time 인증 요청이 완료되었습니다."
+      }
+    },
+    {
+      "source": "Screen Time authorization was not granted by the system.",
+      "translations": {
+        "hi": "सिस्टम ने स्क्रीन टाइम अनुमति नहीं दी।",
+        "es": "El sistema no concedió la autorización de Tiempo de uso.",
+        "pt": "O sistema não concedeu a autorização do Tempo de Uso.",
+        "fr": "Le système n’a pas accordé l’autorisation Temps d’écran.",
+        "de": "Das System hat die Bildschirmzeit-Berechtigung nicht erteilt.",
+        "ar": "لم يمنح النظام إذن مدة استخدام الجهاز.",
+        "ja": "システムからスクリーンタイムの許可が得られませんでした。",
+        "zh-Hans": "系统未授予屏幕使用时间权限。",
+        "ko": "시스템에서 Screen Time 권한을 부여하지 않았습니다."
+      }
+    },
+    {
+      "source": "Screen Time picker closed. Choose at least one app, category, or web domain before activation can finish.",
+      "translations": {
+        "hi": "स्क्रीन टाइम चयन बंद हुआ। सक्रियण पूरा करने से पहले कम से कम एक ऐप, श्रेणी या वेब डोमेन चुनें।",
+        "es": "Se cerró el selector de Tiempo de uso. Elige al menos una app, categoría o dominio web antes de completar la activación.",
+        "pt": "O seletor do Tempo de Uso foi fechado. Escolha pelo menos um app, categoria ou domínio da web antes de concluir a ativação.",
+        "fr": "Le sélecteur Temps d’écran est fermé. Choisissez au moins une app, catégorie ou domaine web pour terminer l’activation.",
+        "de": "Die Bildschirmzeit-Auswahl wurde geschlossen. Wähle mindestens eine App, Kategorie oder Webdomain, um die Aktivierung abzuschließen.",
+        "ar": "أُغلق منتقي مدة استخدام الجهاز. اختر تطبيقًا أو فئة أو نطاق ويب واحدًا على الأقل لإكمال التفعيل.",
+        "ja": "スクリーンタイムの選択画面を閉じました。有効化を完了するには、アプリ、カテゴリ、Web ドメインを少なくとも一つ選んでください。",
+        "zh-Hans": "屏幕使用时间选择器已关闭。完成激活前，请至少选择一个应用、类别或网页域名。",
+        "ko": "Screen Time 선택기가 닫혔습니다. 활성화가 완료되기 전에 하나 이상의 앱, 카테고리 또는 웹 도메인을 선택하세요."
+      }
+    },
+    {
+      "source": "Screen Time picker could not open. Return to FREED setup and try choosing protected apps again.",
+      "translations": {
+        "hi": "स्क्रीन टाइम चयन नहीं खुल सका। FREED सेटअप में वापस जाएँ और सुरक्षित ऐप फिर चुनें।",
+        "es": "No se pudo abrir el selector de Tiempo de uso. Vuelve a la configuración de FREED e intenta elegir las apps protegidas de nuevo.",
+        "pt": "Não foi possível abrir o seletor do Tempo de Uso. Volte à configuração do FREED e tente escolher os apps protegidos novamente.",
+        "fr": "Impossible d’ouvrir le sélecteur Temps d’écran. Revenez à la configuration FREED et réessayez de choisir les apps protégées.",
+        "de": "Die Bildschirmzeit-Auswahl konnte nicht geöffnet werden. Kehre zur FREED-Einrichtung zurück und wähle die geschützten Apps erneut.",
+        "ar": "تعذّر فتح منتقي مدة استخدام الجهاز. عُد إلى إعداد FREED وحاول اختيار التطبيقات المحمية مجددًا.",
+        "ja": "スクリーンタイムの選択画面を開けませんでした。FREED の設定に戻り、保護するアプリを再度選んでください。",
+        "zh-Hans": "无法打开屏幕使用时间选择器。请返回 FREED 设置，再次尝试选择受保护应用。",
+        "ko": "Screen Time 선택기를 열 수 없습니다. FREED 설정으로 돌아가 보호된 앱을 다시 선택해 보세요."
+      }
+    },
+    {
+      "source": "Screen Time targets saved and selected app limits scheduled.",
+      "translations": {
+        "hi": "स्क्रीन टाइम लक्ष्य सहेजे गए और चुने ऐप की सीमाएँ शेड्यूल हुईं।",
+        "es": "Se guardaron los objetivos de Tiempo de uso y se programaron los límites de apps seleccionadas.",
+        "pt": "Os alvos do Tempo de Uso foram salvos e os limites dos apps selecionados foram agendados.",
+        "fr": "Les cibles Temps d’écran sont enregistrées et les limites des apps sélectionnées sont programmées.",
+        "de": "Die Bildschirmzeit-Ziele wurden gespeichert und Limits für gewählte Apps geplant.",
+        "ar": "حُفظت أهداف مدة استخدام الجهاز وجُدولت حدود التطبيقات المحددة.",
+        "ja": "スクリーンタイムの対象を保存し、選択したアプリの制限を設定しました。",
+        "zh-Hans": "已保存屏幕使用时间目标，并设置所选应用限制计划。",
+        "ko": "Screen Time 대상이 저장되고 선택한 앱 제한이 예약되었습니다."
+      }
+    },
+    {
+      "source": "Screen Time targets saved. DeviceActivity scheduling needs device verification before activation.",
+      "translations": {
+        "hi": "स्क्रीन टाइम लक्ष्य सहेजे गए। सक्रियण से पहले DeviceActivity शेड्यूलिंग का डिवाइस सत्यापन ज़रूरी है।",
+        "es": "Se guardaron los objetivos de Tiempo de uso. La programación de DeviceActivity necesita verificarse en el dispositivo antes de la activación.",
+        "pt": "Os alvos do Tempo de Uso foram salvos. O agendamento do DeviceActivity precisa de verificação no dispositivo antes da ativação.",
+        "fr": "Les cibles Temps d’écran sont enregistrées. La programmation DeviceActivity doit être vérifiée sur l’appareil avant l’activation.",
+        "de": "Die Bildschirmzeit-Ziele wurden gespeichert. DeviceActivity-Zeitplanung muss vor der Aktivierung auf dem Gerät geprüft werden.",
+        "ar": "حُفظت أهداف مدة استخدام الجهاز. تحتاج جدولة DeviceActivity إلى تحقق على الجهاز قبل التفعيل.",
+        "ja": "スクリーンタイムの対象を保存しました。有効化の前に DeviceActivity のスケジュールを実機で検証する必要があります。",
+        "zh-Hans": "已保存屏幕使用时间目标。激活前需要在设备上验证 DeviceActivity 计划。",
+        "ko": "Screen Time 대상이 저장되었습니다. DeviceActivity 예약은 활성화하기 전에 장치 확인이 필요합니다."
+      }
+    },
+    {
+      "source": "Screen Time unlock identity does not match the claimed intervention. FREED shields remain active.",
+      "translations": {
+        "hi": "स्क्रीन टाइम अनलॉक पहचान दावा किए हस्तक्षेप से मेल नहीं खाती। FREED शील्ड सक्रिय रहती हैं।",
+        "es": "La identidad del desbloqueo de Tiempo de uso no coincide con la intervención solicitada. Los escudos de FREED siguen activos.",
+        "pt": "A identidade do desbloqueio do Tempo de Uso não corresponde à intervenção solicitada. Os escudos do FREED continuam ativos.",
+        "fr": "L’identité du déverrouillage Temps d’écran ne correspond pas à l’intervention demandée. Les boucliers FREED restent actifs.",
+        "de": "Die Bildschirmzeit-Freigabeidentität passt nicht zur angeforderten Intervention. Die FREED-Sperren bleiben aktiv.",
+        "ar": "هوية فتح مدة استخدام الجهاز لا تطابق التدخل المطلوب. تبقى دروع FREED نشطة.",
+        "ja": "スクリーンタイムのロック解除情報が申請された介入と一致しません。FREED のシールドは維持されます。",
+        "zh-Hans": "屏幕使用时间解锁身份与请求的干预不匹配。FREED 屏蔽保持启用。",
+        "ko": "Screen Time 잠금 해제 ID가 요청된 개입과 일치하지 않습니다. FREED 실드는 활성 상태로 유지됩니다."
+      }
+    },
+    {
+      "source": "Selected app limits could not be scheduled: {{error}}",
+      "translations": {
+        "hi": "चुने ऐप की सीमाएँ शेड्यूल नहीं हो सकीं: {{error}}",
+        "es": "No se pudieron programar los límites de apps seleccionadas: {{error}}",
+        "pt": "Não foi possível agendar os limites dos apps selecionados: {{error}}",
+        "fr": "Impossible de programmer les limites des apps sélectionnées : {{error}}",
+        "de": "Limits für gewählte Apps konnten nicht geplant werden: {{error}}",
+        "ar": "تعذّرت جدولة حدود التطبيقات المحددة: {{error}}",
+        "ja": "選択したアプリの制限を設定できませんでした: {{error}}",
+        "zh-Hans": "无法设置所选应用限制计划：{{error}}",
+        "ko": "선택한 앱 제한을 예약할 수 없습니다: {{error}}"
+      }
+    },
+    {
+      "source": "Selected app limits scheduled after {{limitMinutes}} minutes of Screen Time activity.",
+      "translations": {
+        "hi": "स्क्रीन टाइम गतिविधि के {{limitMinutes}} मिनट बाद चुने ऐप की सीमाएँ शेड्यूल हैं।",
+        "es": "Los límites de apps seleccionadas se programaron después de {{limitMinutes}} minutos de actividad de Tiempo de uso.",
+        "pt": "Os limites dos apps selecionados foram agendados após {{limitMinutes}} minutos de atividade do Tempo de Uso.",
+        "fr": "Les limites des apps sélectionnées sont programmées après {{limitMinutes}} minutes d’activité Temps d’écran.",
+        "de": "Limits für gewählte Apps sind nach {{limitMinutes}} Minuten Bildschirmzeit-Aktivität geplant.",
+        "ar": "جُدولت حدود التطبيقات المحددة بعد {{limitMinutes}} دقيقة من نشاط مدة استخدام الجهاز.",
+        "ja": "スクリーンタイムの使用が {{limitMinutes}} 分に達した後に、選択したアプリの制限を適用するよう設定しました。",
+        "zh-Hans": "已安排在屏幕使用时间活动达到 {{limitMinutes}} 分钟后应用所选应用限制。",
+        "ko": "Screen Time 활동의 {{limitMinutes}}분 후에 예약된 앱 제한을 선택했습니다."
+      }
+    },
+    {
+      "source": "Shared app-group storage is unavailable for Safari Content Blocker rules.",
+      "translations": {
+        "hi": "Safari Content Blocker नियमों के लिए साझा ऐप समूह स्टोरेज उपलब्ध नहीं है।",
+        "es": "El almacenamiento compartido del grupo de apps no está disponible para las reglas de Safari Content Blocker.",
+        "pt": "O armazenamento compartilhado do grupo de apps não está disponível para as regras do Safari Content Blocker.",
+        "fr": "Le stockage partagé du groupe d’apps n’est pas disponible pour les règles Safari Content Blocker.",
+        "de": "Der gemeinsame App-Gruppenspeicher ist für Safari-Content-Blocker-Regeln nicht verfügbar.",
+        "ar": "تخزين مجموعة التطبيقات المشترك غير متاح لقواعد Safari Content Blocker.",
+        "ja": "Safari Content Blocker のルール用の共有 App Group ストレージを利用できません。",
+        "zh-Hans": "Safari Content Blocker 规则无法使用共享应用组存储。",
+        "ko": "Safari 콘텐츠 차단기 규칙에는 공유 앱 그룹 저장소를 사용할 수 없습니다."
+      }
+    },
+    {
+      "source": "Shield and DeviceActivity extensions must be added as app targets before App Store release.",
+      "translations": {
+        "hi": "App Store रिलीज़ से पहले Shield और DeviceActivity एक्सटेंशन को ऐप लक्ष्य के रूप में जोड़ना होगा।",
+        "es": "Las extensiones Shield y DeviceActivity deben añadirse como objetivos de la app antes del lanzamiento en App Store.",
+        "pt": "As extensões Shield e DeviceActivity devem ser adicionadas como alvos do app antes do lançamento na App Store.",
+        "fr": "Les extensions Shield et DeviceActivity doivent être ajoutées comme cibles de l’app avant sa publication sur l’App Store.",
+        "de": "Shield- und DeviceActivity-Erweiterungen müssen vor der App-Store-Veröffentlichung als App-Targets hinzugefügt werden.",
+        "ar": "يجب إضافة امتدادات Shield وDeviceActivity كأهداف للتطبيق قبل إصداره في App Store.",
+        "ja": "App Store で公開する前に、Shield と DeviceActivity の拡張機能をアプリのターゲットとして追加する必要があります。",
+        "zh-Hans": "在 App Store 发布前，必须将 Shield 和 DeviceActivity 扩展添加为应用目标。",
+        "ko": "App Store 릴리스 전에 Shield 및 DeviceActivity 확장을 앱 대상으로 추가해야 합니다."
+      }
+    },
+    {
+      "source": "Starting FREED DNS Guard… The tunnel comes up in a moment.",
+      "translations": {
+        "hi": "FREED DNS Guard शुरू हो रहा है… टनल कुछ ही क्षण में तैयार होगी।",
+        "es": "Iniciando FREED DNS Guard… El túnel estará listo en un momento.",
+        "pt": "Iniciando FREED DNS Guard… O túnel ficará pronto em um instante.",
+        "fr": "Démarrage de FREED DNS Guard… Le tunnel sera prêt dans un instant.",
+        "de": "FREED DNS Guard wird gestartet… Der Tunnel ist gleich bereit.",
+        "ar": "جارٍ تشغيل FREED DNS Guard… سيصبح النفق جاهزًا بعد لحظات.",
+        "ja": "FREED DNS Guard を起動中… まもなくトンネルが利用可能になります。",
+        "zh-Hans": "正在启动 FREED DNS Guard… 通道即将就绪。",
+        "ko": "FREED 시작 DNS Guard… 잠시 후 터널이 나옵니다."
+      }
+    },
+    {
+      "source": "The challenged Screen Time target is unlocked. Unrelated shields and adult web filtering stay active.",
+      "translations": {
+        "hi": "चुनौती वाला स्क्रीन टाइम लक्ष्य अनलॉक है। अन्य शील्ड और वयस्क वेब फ़िल्टर सक्रिय हैं।",
+        "es": "El objetivo de Tiempo de uso del reto está desbloqueado. Los demás escudos y el filtrado web para adultos siguen activos.",
+        "pt": "O alvo do Tempo de Uso do desafio está desbloqueado. Os outros escudos e a filtragem de conteúdo adulto continuam ativos.",
+        "fr": "La cible Temps d’écran du défi est déverrouillée. Les autres boucliers et le filtrage web pour adultes restent actifs.",
+        "de": "Das Bildschirmzeit-Ziel der Herausforderung ist freigegeben. Andere Sperren und der Erwachsenen-Webfilter bleiben aktiv.",
+        "ar": "فُتح هدف مدة استخدام الجهاز الخاص بالتحدي. تبقى الدروع الأخرى وتصفية محتوى البالغين على الويب نشطة.",
+        "ja": "チャレンジ対象のスクリーンタイムの対象を解除しました。他のシールドと成人向け Web フィルターは維持されます。",
+        "zh-Hans": "挑战对应的屏幕使用时间目标已解锁。其他屏蔽和成人网页过滤仍保持启用。",
+        "ko": "챌린지된 Screen Time 대상이 잠금 해제되었습니다. 관련 없는 보호막과 성인용 웹 필터링은 계속 활성화됩니다."
+      }
+    },
+    {
+      "source": "The target label was too uncertain. Take a clearer photo with the target centered.",
+      "translations": {
+        "hi": "लक्ष्य का लेबल पर्याप्त निश्चित नहीं था। लक्ष्य को बीच में रखकर अधिक स्पष्ट फ़ोटो लें।",
+        "es": "La etiqueta del objetivo era demasiado incierta. Toma una foto más clara con el objetivo centrado.",
+        "pt": "O rótulo do alvo era muito incerto. Tire uma foto mais nítida com o alvo centralizado.",
+        "fr": "L’étiquette de la cible était trop incertaine. Prenez une photo plus nette avec la cible au centre.",
+        "de": "Das Ziellabel war zu unsicher. Nimm ein deutlicheres Foto auf, bei dem das Ziel mittig ist.",
+        "ar": "كانت تسمية الهدف غير مؤكدة بما يكفي. التقط صورة أوضح مع وضع الهدف في الوسط.",
+        "ja": "対象のラベルを十分な確信度で判断できませんでした。対象を中央に置き、より鮮明な写真を撮ってください。",
+        "zh-Hans": "目标标签的识别置信度不足。请将目标置于中央并拍摄更清晰的照片。",
+        "ko": "대상 라벨이 너무 불확실했습니다. 대상을 중앙에 두고 더욱 선명한 사진을 찍습니다."
+      }
+    },
+    {
+      "source": "This photo challenge has no verifiable target labels.",
+      "translations": {
+        "hi": "इस फ़ोटो चुनौती में सत्यापन योग्य लक्ष्य लेबल नहीं हैं।",
+        "es": "Este reto de foto no tiene etiquetas de objetivo verificables.",
+        "pt": "Este desafio de foto não tem rótulos de alvo verificáveis.",
+        "fr": "Ce défi photo n’a pas d’étiquettes de cible vérifiables.",
+        "de": "Diese Foto-Herausforderung hat keine überprüfbaren Ziellabels.",
+        "ar": "لا يحتوي تحدي الصور هذا على تسميات أهداف قابلة للتحقق.",
+        "ja": "この写真チャレンジには検証可能な対象ラベルがありません。",
+        "zh-Hans": "此拍照挑战没有可验证的目标标签。",
+        "ko": "이 사진 챌린지는 확인할 수 있는 대상 라벨이 없습니다."
+      }
+    },
+    {
+      "source": "Uses Apple FamilyControls authorization when entitlement is granted.",
+      "translations": {
+        "hi": "Apple की अनुमति मिलने पर FamilyControls प्राधिकरण का उपयोग करता है।",
+        "es": "Usa la autorización FamilyControls de Apple cuando se concede el permiso correspondiente.",
+        "pt": "Usa a autorização FamilyControls da Apple quando a permissão correspondente é concedida.",
+        "fr": "Utilise l’autorisation Apple FamilyControls lorsque le droit correspondant est accordé.",
+        "de": "Verwendet Apple-FamilyControls-Autorisierung, wenn die entsprechende Berechtigung erteilt wurde.",
+        "ar": "يستخدم تفويض Apple FamilyControls عند منح الاستحقاق.",
+        "ja": "エンタイトルメントが付与されると Apple FamilyControls の認証を使用します。",
+        "zh-Hans": "获得授权资格后，使用 Apple FamilyControls 授权。",
+        "ko": "자격이 부여되면 Apple FamilyControls 인증을 사용합니다."
+      }
+    },
+    {
+      "source": "Uses ManagedSettings web content policy for adult filtering.",
+      "translations": {
+        "hi": "वयस्क सामग्री फ़िल्टर करने के लिए ManagedSettings वेब सामग्री नीति का उपयोग करता है।",
+        "es": "Usa la política de contenido web de ManagedSettings para filtrar contenido para adultos.",
+        "pt": "Usa a política de conteúdo da web do ManagedSettings para filtrar conteúdo adulto.",
+        "fr": "Utilise la politique de contenu web ManagedSettings pour filtrer le contenu pour adultes.",
+        "de": "Verwendet die ManagedSettings-Webinhaltsrichtlinie zur Filterung von Erwachseneninhalten.",
+        "ar": "يستخدم سياسة محتوى الويب في ManagedSettings لتصفية محتوى البالغين.",
+        "ja": "成人向けコンテンツのフィルタリングに ManagedSettings の Web コンテンツポリシーを使用します。",
+        "zh-Hans": "使用 ManagedSettings 网页内容策略过滤成人内容。",
+        "ko": "성인 필터링을 위해 ManagedSettings 웹 콘텐츠 정책을 사용합니다."
+      }
+    },
+    {
+      "source": "Vision image classification is unavailable in this build.",
+      "translations": {
+        "hi": "इस बिल्ड में Vision छवि वर्गीकरण उपलब्ध नहीं है।",
+        "es": "La clasificación de imágenes de Vision no está disponible en esta versión.",
+        "pt": "A classificação de imagens do Vision não está disponível nesta versão.",
+        "fr": "La classification d’images Vision n’est pas disponible dans cette version.",
+        "de": "Vision-Bildklassifizierung ist in dieser Version nicht verfügbar.",
+        "ar": "تصنيف الصور عبر Vision غير متاح في هذا الإصدار.",
+        "ja": "このビルドでは Vision の画像分類を利用できません。",
+        "zh-Hans": "此构建无法使用 Vision 图片分类。",
+        "ko": "이 빌드에서는 Vision 이미지 분류를 사용할 수 없습니다."
+      }
+    }
+  ]
+}

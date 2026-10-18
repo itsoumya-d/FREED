@@ -1,0 +1,31 @@
+{
+  "recordedAt": "2026-10-05T01:01:38.831274+00:00",
+  "endpoint": "https://family.cloudflare-dns.com/dns-query",
+  "executionEnvironment": "development Mac; no phone/VPN/app involvement",
+  "tlsVerification": "default system CA and hostname verification",
+  "appEnforcementEvidence": false,
+  "resolverQueries": [
+    {
+      "host": "nudity.testcategory.com",
+      "httpStatus": 200,
+      "dnsRcode": 0,
+      "ipv4Answers": [
+        "0.0.0.0"
+      ],
+      "expected": "blocked",
+      "passed": true
+    },
+    {
+      "host": "example.com",
+      "httpStatus": 200,
+      "dnsRcode": 0,
+      "ipv4Answers": [
+        "172.66.147.243",
+        "104.20.23.154"
+      ],
+      "expected": "ordinary resolution",
+      "passed": true
+    }
+  ],
+  "passed": true
+}

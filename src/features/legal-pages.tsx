@@ -1,16 +1,21 @@
-import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { MomentumPageHeader, MomentumSection } from '@/components/MomentumPageHeader';
+import { translateSource } from '@/i18n/runtime';
+import { Pressable, Text, View } from '@/components/Localized';
+import { Linking, ScrollView, StyleSheet } from 'react-native';
 
-import { colors, typography } from "@/constants/design";
+import { radii, typography } from "@/constants/design";
+import { useAppTheme } from '@/design-system/use-app-theme';
+import nativeAndroidCopy from '@/i18n/native-android-catalog.json';
 
-const SUPPORT_EMAIL = "support@freedrecovery.app";
-const PRIVACY_URL = "https://freedrecovery.app/privacy";
-const SUPPORT_URL = "https://freedrecovery.app/support";
-const ACCOUNT_DELETION_URL = "https://freedrecovery.app/account-deletion";
+const SUPPORT_EMAIL = "soumyadebnath1661@gmail.com";
+const PRIVACY_URL = "https://freed-landing.web.app/privacy";
+const SUPPORT_URL = "https://freed-landing.web.app/support";
+const ACCOUNT_DELETION_URL = "https://freed-landing.web.app/account-deletion";
 
 type LegalSection = {
   title: string;
   body: string[];
-  accent?: string;
+  accent?: 'mint' | 'sky' | 'peach';
 };
 
 type Action = {
@@ -23,7 +28,7 @@ function openUrl(url: string) {
 }
 
 function mailto(subject: string) {
-  return `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(subject)}`;
+  return `mailto:${SUPPORT_EMAIL}?subject=${encodeURIComponent(translateSource(subject))}`;
 }
 
 function LegalPage({
@@ -39,13 +44,13 @@ function LegalPage({
   sections: LegalSection[];
   actions: Action[];
 }) {
+  const { colors } = useAppTheme();
+  const styles = createLegalStyles(colors);
   return (
-    <ScrollView style={styles.page} contentContainerStyle={styles.content}>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.page} contentContainerStyle={styles.content}>
       <View style={styles.shell}>
-        <View style={styles.header}>
+        <MomentumPageHeader pose="secure" context="legal" title={title} description={intro} category="commitment" variant="calm" compact restrained>
           <Text style={styles.eyebrow}>{eyebrow}</Text>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.intro}>{intro}</Text>
           <View style={styles.actions}>
             {actions.map((action) => (
               <Pressable
@@ -58,19 +63,17 @@ function LegalPage({
               </Pressable>
             ))}
           </View>
-        </View>
+        </MomentumPageHeader>
 
         <View style={styles.sectionList}>
           {sections.map((section) => (
-            <View key={section.title} style={styles.section}>
-              <View style={[styles.accent, { backgroundColor: section.accent ?? colors.sky }]} />
-              <Text style={styles.sectionTitle}>{section.title}</Text>
+            <MomentumSection key={section.title} title={section.title} category={section.accent === "mint" ? "commitment" : section.accent === "peach" ? "calm" : "reflection"}>
               {section.body.map((paragraph) => (
                 <Text key={paragraph} style={styles.paragraph}>
                   {paragraph}
                 </Text>
               ))}
-            </View>
+            </MomentumSection>
           ))}
         </View>
       </View>
@@ -81,7 +84,7 @@ function LegalPage({
 export function PrivacyPolicyPage() {
   return (
     <LegalPage
-      eyebrow="Effective date: June 6, 2026"
+      eyebrow="Effective date: October 5, 2026"
       title="FREED Privacy Policy"
       intro="FREED is a recovery and digital self-control app for blocking explicit adult-domain access, interrupting selected app loops, and guiding users into recovery challenges."
       actions={[
@@ -91,27 +94,30 @@ export function PrivacyPolicyPage() {
       sections={[
         {
           title: "Data FREED uses on device",
-          accent: colors.mint,
+          accent: 'mint',
           body: [
             "FREED stores protection setup status, selected Android app package IDs or opaque iOS Screen Time tokens, adult-domain feed version and checksum, challenge history, streak state, settings, reminders, and premium entitlement state on the device.",
-            "Android Accessibility is used only after user consent to detect supported browser URL or search fields, selected app launches, selected short-form surfaces, and bounded scroll events for recovery handoff.",
+            nativeAndroidCopy.freed_accessibility_description,
             "Android DNS-only VPN protection, called DNS Guard in the app, classifies DNS questions locally against the reviewed adult-domain feed. FREED does not full-tunnel traffic, inspect packet payloads beyond DNS questions, proxy normal browsing, decrypt HTTPS, or MITM connections.",
-            "On iOS, FREED uses Family Controls, ManagedSettings, DeviceActivity, FamilyActivityPicker, and Safari Content Blocker rules to apply Screen Time and Safari restrictions. FREED receives opaque selected target tokens and counts, not the user's full app or browsing history."
+            "On iOS, FREED uses Family Controls, ManagedSettings, DeviceActivity, FamilyActivityPicker, and Safari Content Blocker rules to apply Screen Time and Safari restrictions. FREED receives opaque selected target tokens and counts, not the user's full app or browsing history.",
+            "Photos are checked on your device with Apple Vision or bundled ML Kit. Photos are not uploaded. ML Kit may send operational SDK metrics."
           ]
         },
         {
           title: "Optional data sent to FREED servers",
-          accent: colors.sky,
+          accent: 'sky',
           body: [
             "Purchase verification sends store transaction metadata to FREED's server so Apple or Google can verify entitlement before premium is activated. FREED does not receive full payment card details.",
-            "If the user opts into analytics sharing, FREED sends aggregate recovery metrics only, such as counts, rates, streak summaries, and challenge completion categories. Raw URLs, search text, private notes, exact selected app tokens, and exact coordinates are not sent.",
-            "If AI coaching or remote challenge generation is enabled, FREED sends redacted recovery context. Raw URLs, raw domains, private notes, exact coordinates, raw receipts, and contact details are excluded.",
+            "With analytics consent, FREED sends absolute UTC-day counts of check-ins and completed challenges for a 14-day window, plus schema and consent versions, opt-in time, and lineage, revision and snapshot identifiers. Records link to your authenticated account UID. Derived rates, streak summaries and challenge categories stay local. Raw URLs, search text, private notes, exact selected app tokens and exact coordinates are excluded.",
+            "With cloud-chat consent, messages you deliberately send to CLARA are processed by Google Cloud's Gemini service through FREED. If you choose to share conversation context, up to six recent user-authored messages may be included. Browsing activity, journal entries, photos and Screen Time data are not automatically attached. Challenge selection and retention planning stay local. Processing may happen outside your country.",
+            "Google processing and retention follow the applicable service terms and configuration. FREED does not promise a fixed Google retention period or zero retention. Turning cloud chat off stops future messages; a request already sent may finish. Built-in guidance remains available.",
+            "FREED's backend does not persist chat prompts or full provider results. It keeps account-linked quota and request deduplication metadata. Deduplication records have a configured 7-day expiry; physical deletion may occur later. These controls do not set Google's content retention.",
             "If hosted encrypted backup sync is enabled, FREED sends encrypted backup envelopes only. FREED does not receive the user's passphrase."
           ]
         },
         {
           title: "Ads, payments, and permissions",
-          accent: colors.peach,
+          accent: 'peach',
           body: [
             "Free users may see rewarded ads before some recovery challenges. FREED does not include Android Advertising ID permission in the release manifest, and ad requests must use non-personalized request options where supported.",
             "Premium plans are processed by Apple App Store or Google Play billing. FREED activates premium only after server-side Purchase verification succeeds.",
@@ -120,10 +126,10 @@ export function PrivacyPolicyPage() {
         },
         {
           title: "Retention, deletion, and contact",
-          accent: colors.pink,
+          accent: 'peach',
           body: [
-            "Local recovery data stays on the device unless the user enables an optional remote feature. Users can delete local recovery data from Profile or request hosted/server deletion through support.",
-            "Server-side purchase audit, analytics, AI event, notification, and encrypted backup records follow the retention windows documented in FREED's backend schema and release evidence. Some purchase audit records may need to be retained when required for fraud prevention, tax, refund, chargeback, or legal compliance.",
+            "Analytics records have a configured 14-day expiry: day counters expire 14 days after their UTC-day boundary, and snapshot and receipt metadata 14 days after writing. Expiry makes records eligible for TTL deletion; physical deletion may occur later.",
+            "Use Delete Local Data in Profile for this device, or Delete Account & Data to request account and account-linked hosted data deletion. Store and Google records follow their own terms. Some purchase, fraud-prevention, security, tax, refund or chargeback records may require legal retention.",
             `Data deletion and privacy requests can be sent to ${SUPPORT_EMAIL}. Public pages: ${PRIVACY_URL}, ${SUPPORT_URL}, and ${ACCOUNT_DELETION_URL}.`
           ]
         }
@@ -146,7 +152,7 @@ export function SupportPage() {
       sections={[
         {
           title: "Contact",
-          accent: colors.sky,
+          accent: 'sky',
           body: [
             `Primary support email: ${SUPPORT_EMAIL}. Include the platform, app version, device model, and whether the issue is Android, iOS, Google Play, App Store, TestFlight, billing, or protection setup.`,
             "Do not send passwords, private recovery notes, raw receipts, purchase tokens, screenshots containing sensitive content, or full browsing history."
@@ -154,7 +160,7 @@ export function SupportPage() {
         },
         {
           title: "Protection setup help",
-          accent: colors.mint,
+          accent: 'mint',
           body: [
             "Android support covers DNS Guard/VpnService consent, Usage Access, AccessibilityService consent, selected app package configuration, activation tests, reboot behavior, and normal browsing allow cases.",
             "iOS support covers Family Controls authorization, ManagedSettings web filtering, FamilyActivityPicker target selection, DeviceActivity limits, Safari Content Blocker reload, shield actions, and activation tests.",
@@ -163,18 +169,18 @@ export function SupportPage() {
         },
         {
           title: "Billing and purchases",
-          accent: colors.peach,
+          accent: 'peach',
           body: [
-            "Launch products are yearly, monthly, and lifetime premium. Purchases and refunds are handled by Google Play or App Store billing, while FREED uses server-side purchase verification before granting premium.",
-            "For restore issues, include the platform and product ID if visible: freed_premium_yearly, freed_premium_monthly, or freed_premium_lifetime. Never send raw purchase tokens or full receipts by email."
+            "Launch products are yearly and monthly Premium, with the same features. Purchases and refunds are handled by Google Play or App Store billing. FREED verifies purchases before granting Premium.",
+            "For restore issues, include the platform and product ID if visible: freed_premium_yearly or freed_premium_monthly. Never send raw purchase tokens or full receipts by email."
           ]
         },
         {
           title: "Privacy and deletion",
-          accent: colors.pink,
+          accent: 'peach',
           body: [
-            "Account deletion requests can be started from the account deletion page or by emailing support. Users can also delete local recovery data in the app Profile.",
-            "Hosted sync deletion removes encrypted backup envelopes and related hosted records where available. Purchase audit records may be retained when required for fraud prevention, tax, refund, chargeback, or legal compliance."
+            "In Profile, choose Delete Account & Data and confirm the signed-in account, including any required recent sign-in or Apple confirmation. FREED requests server-side account and account-linked data deletion before clearing this device and signing out.",
+            "An accepted request means deletion is in progress, not that every server or provider copy is erased. If rejected or interrupted, retry or contact support. If accepted but device cleanup fails, return to Profile and use Delete Local Data."
           ]
         }
       ]}
@@ -187,7 +193,7 @@ export function AccountDeletionPage() {
     <LegalPage
       eyebrow="Data deletion"
       title="FREED Account Deletion"
-      intro="FREED is local-first. This page explains how to delete local recovery data and request deletion of hosted data tied to optional remote features."
+      intro="Choose a device reset or an account deletion request. Account deletion requests server removal before device cleanup and sign-out; acceptance means deletion is in progress."
       actions={[
         { label: "Email deletion request", url: mailto("FREED account deletion request") },
         { label: "Privacy policy", url: PRIVACY_URL },
@@ -196,33 +202,33 @@ export function AccountDeletionPage() {
       sections={[
         {
           title: "Delete local app data",
-          accent: colors.mint,
+          accent: 'mint',
           body: [
-            "In the app, open Profile, choose Delete Local Data, then confirm the second step. This resets local recovery state and asks native protection to stop DNS Guard, risk-window monitoring, blocked app configuration, and earned unlock windows.",
+            "In Profile, choose Delete Local Data and confirm. FREED first asks native protection to stop DNS Guard, risk-window monitoring, blocked app configuration and earned unlock windows. After native acknowledgment, it clears local recovery history, drafts, guided progress and cloud-chat consent, and disables automatic backup. If cleanup fails, follow the retry instructions. This device reset does not delete your account, hosted backups or exported copies. System permissions remain controlled by iOS or Android Settings.",
             "Deleting local data does not automatically cancel App Store or Google Play subscriptions. Manage subscription cancellation in the store account that purchased premium."
           ]
         },
         {
           title: "Request hosted data deletion",
-          accent: colors.sky,
+          accent: 'sky',
           body: [
-            `Send a deletion request to ${SUPPORT_EMAIL} from the email address used for hosted sync or support. Include the platform, approximate purchase or signup date, and whether hosted encrypted backup sync, remote analytics, AI coaching, notifications, or store purchases were used.`,
-            "FREED will delete hosted encrypted backup envelopes, account-linked sync rows, push tokens, optional analytics events, optional AI audit summaries, and backend job or idempotency rows tied to the verified request where available."
+            "In Profile, choose Delete Account & Data and confirm the signed-in account, including any required recent sign-in or Apple confirmation. FREED requests server-side account and account-linked data deletion before clearing this device and signing out.",
+            "An accepted request means deletion is in progress, not that every server or provider copy is erased. If rejected or interrupted, retry or contact support. If accepted but device cleanup fails, return to Profile and use Delete Local Data."
           ]
         },
         {
           title: "Records that may be retained",
-          accent: colors.peach,
+          accent: 'peach',
           body: [
             "Some purchase audit records, fraud-prevention records, tax records, refund or chargeback records, and security logs may need to be retained for legal retention or compliance. FREED does not retain raw receipts or raw purchase tokens in user-facing evidence.",
-            "If a record cannot be deleted immediately because of legal retention, support will explain the category and expected retention boundary."
+            "Account deletion covers associated hosted backups, optional analytics, push registrations, service records and purchase ownership data through the service deletion process. FREED does not promise instantaneous provider authorization revocation or complete erasure of retained copies. Store and Google records follow their own terms."
           ]
         },
         {
           title: "Public deletion URL",
-          accent: colors.pink,
+          accent: 'peach',
           body: [
-            `Use ${ACCOUNT_DELETION_URL} as the public account deletion URL in Google Play Console and App Store Connect until authenticated self-service account deletion is live.`,
+            `The public account deletion URL is ${ACCOUNT_DELETION_URL}. Contact support if you cannot access the app.`,
             `Privacy contact and deletion support: ${SUPPORT_EMAIL}.`
           ]
         }
@@ -231,14 +237,14 @@ export function AccountDeletionPage() {
   );
 }
 
-const styles = StyleSheet.create({
+const createLegalStyles = (colors: ReturnType<typeof useAppTheme>['colors']) => StyleSheet.create({
   page: {
     flex: 1,
     backgroundColor: colors.bgDeep
   },
   content: {
     minHeight: "100%",
-    paddingHorizontal: 20,
+    paddingHorizontal: 24,
     paddingVertical: 32
   },
   shell: {
@@ -280,16 +286,17 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 10,
-    marginTop: 22
+    gap: 8,
+    marginTop: 24
   },
   actionButton: {
     minHeight: 44,
     justifyContent: "center",
-    borderRadius: 8,
+    borderRadius: radii.md,
+    borderCurve: "continuous",
     paddingHorizontal: 16,
     borderWidth: 1,
-    borderColor: "rgba(255, 255, 255, 0.22)",
+    borderColor: colors.border,
     backgroundColor: colors.surface
   },
   pressed: {
@@ -298,16 +305,17 @@ const styles = StyleSheet.create({
   actionText: {
     color: colors.text,
     fontFamily: typography.familyFallback,
-    fontSize: 14,
+    fontSize: 17,
     fontWeight: typography.bold,
     letterSpacing: 0
   },
   sectionList: {
-    gap: 14,
-    paddingTop: 22
+    gap: 16,
+    paddingTop: 24
   },
   section: {
-    borderRadius: 8,
+    borderRadius: radii.lg,
+    borderCurve: "continuous",
     padding: 18,
     borderWidth: 1,
     borderColor: "rgba(255, 255, 255, 0.12)",
@@ -316,7 +324,8 @@ const styles = StyleSheet.create({
   accent: {
     width: 42,
     height: 4,
-    borderRadius: 4,
+    borderRadius: 2,
+    borderCurve: "continuous",
     marginBottom: 12
   },
   sectionTitle: {
@@ -331,8 +340,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: colors.text2,
     fontFamily: typography.familyFallback,
-    fontSize: 15,
-    lineHeight: 23,
+    fontSize: 17,
+    lineHeight: 24,
     fontWeight: typography.medium,
     letterSpacing: 0
   }

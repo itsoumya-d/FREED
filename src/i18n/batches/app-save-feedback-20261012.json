@@ -1,0 +1,88 @@
+{
+  "entries": [
+    {
+      "source": "The device could not register this rule. Wait a moment, then retry activation.",
+      "translations": {
+        "hi": "डिवाइस यह नियम दर्ज नहीं कर सका। कुछ देर रुकें, फिर सक्रिय करने का प्रयास करें।",
+        "es": "El dispositivo no pudo registrar esta regla. Espera un momento y vuelve a intentar activarla.",
+        "pt": "O dispositivo não conseguiu registrar esta regra. Aguarde um momento e tente ativá-la novamente.",
+        "fr": "L’appareil n’a pas pu enregistrer cette règle. Patientez un instant, puis réessayez de l’activer.",
+        "de": "Das Gerät konnte diese Regel nicht registrieren. Warte einen Moment und versuche die Aktivierung erneut.",
+        "ar": "تعذّر على الجهاز تسجيل هذه القاعدة. انتظر لحظة، ثم أعد محاولة التفعيل.",
+        "ja": "端末でこのルールを登録できませんでした。少し待ってから、もう一度有効にしてください。",
+        "ko": "기기에서 이 규칙을 등록하지 못했습니다. 잠시 기다린 후 다시 활성화해 주세요.",
+        "zh-Hans": "设备无法注册此规则。请稍等片刻，然后重试启用。"
+      }
+    },
+    {
+      "source": "The device did not confirm this rule. Reload its current settings, then retry activation.",
+      "translations": {
+        "hi": "डिवाइस ने इस नियम की पुष्टि नहीं की। मौजूदा सेटिंग फिर लोड करें, फिर सक्रिय करने का प्रयास करें।",
+        "es": "El dispositivo no confirmó esta regla. Vuelve a cargar sus ajustes actuales e intenta activarla de nuevo.",
+        "pt": "O dispositivo não confirmou esta regra. Recarregue as configurações atuais e tente ativá-la novamente.",
+        "fr": "L’appareil n’a pas confirmé cette règle. Rechargez ses réglages actuels, puis réessayez de l’activer.",
+        "de": "Das Gerät hat diese Regel nicht bestätigt. Lade die aktuellen Einstellungen neu und versuche die Aktivierung erneut.",
+        "ar": "لم يؤكد الجهاز هذه القاعدة. أعد تحميل إعداداتها الحالية، ثم أعد محاولة التفعيل.",
+        "ja": "端末でこのルールを確認できませんでした。現在の設定を再読み込みして、もう一度有効にしてください。",
+        "ko": "기기에서 이 규칙을 확인하지 못했습니다. 현재 설정을 다시 불러온 후 다시 활성화해 주세요.",
+        "zh-Hans": "设备未确认此规则。请重新加载当前设置，然后重试启用。"
+      }
+    },
+    {
+      "source": "Keep FREED open and retry activation. The device operation did not finish.",
+      "translations": {
+        "hi": "FREED खुला रखें और सक्रिय करने का फिर प्रयास करें। डिवाइस की प्रक्रिया पूरी नहीं हुई।",
+        "es": "Mantén FREED abierto e intenta activarla de nuevo. La operación del dispositivo no terminó.",
+        "pt": "Mantenha o FREED aberto e tente ativar novamente. A operação do dispositivo não terminou.",
+        "fr": "Gardez FREED ouvert et réessayez l’activation. L’opération de l’appareil n’est pas terminée.",
+        "de": "Lass FREED geöffnet und versuche die Aktivierung erneut. Der Vorgang auf dem Gerät wurde nicht abgeschlossen.",
+        "ar": "أبقِ FREED مفتوحًا وأعد محاولة التفعيل. لم تكتمل عملية الجهاز.",
+        "ja": "FREEDを開いたまま、もう一度有効にしてください。端末の処理が完了しませんでした。",
+        "ko": "FREED를 열어 둔 채 다시 활성화해 주세요. 기기 작업이 완료되지 않았습니다.",
+        "zh-Hans": "请保持 FREED 打开并重试启用。设备操作未完成。"
+      }
+    },
+    {
+      "source": "This change was not confirmed. Your draft is kept; retry activation.",
+      "translations": {
+        "hi": "इस बदलाव की पुष्टि नहीं हुई। आपका ड्राफ़्ट सुरक्षित है; सक्रिय करने का फिर प्रयास करें।",
+        "es": "Este cambio no se confirmó. Tu borrador se conserva; intenta activarlo de nuevo.",
+        "pt": "Esta alteração não foi confirmada. Seu rascunho foi mantido; tente ativar novamente.",
+        "fr": "Ce changement n’a pas été confirmé. Votre brouillon est conservé ; réessayez l’activation.",
+        "de": "Diese Änderung wurde nicht bestätigt. Dein Entwurf bleibt erhalten; versuche die Aktivierung erneut.",
+        "ar": "لم يُؤكَّد هذا التغيير. مسودتك محفوظة؛ أعد محاولة التفعيل.",
+        "ja": "この変更を確認できませんでした。下書きは保持されています。もう一度有効にしてください。",
+        "ko": "이 변경 사항을 확인하지 못했습니다. 초안은 유지됩니다. 다시 활성화해 주세요.",
+        "zh-Hans": "未确认此更改。草稿已保留，请重试启用。"
+      }
+    },
+    {
+      "source": "Show failure details",
+      "translations": {
+        "hi": "विफलता का विवरण दिखाएँ",
+        "es": "Mostrar detalles del fallo",
+        "pt": "Mostrar detalhes da falha",
+        "fr": "Afficher les détails de l’échec",
+        "de": "Fehlerdetails anzeigen",
+        "ar": "عرض تفاصيل الإخفاق",
+        "ja": "失敗の詳細を表示",
+        "ko": "실패 세부 정보 표시",
+        "zh-Hans": "显示失败详情"
+      }
+    },
+    {
+      "source": "Hide failure details",
+      "translations": {
+        "hi": "विफलता का विवरण छिपाएँ",
+        "es": "Ocultar detalles del fallo",
+        "pt": "Ocultar detalhes da falha",
+        "fr": "Masquer les détails de l’échec",
+        "de": "Fehlerdetails ausblenden",
+        "ar": "إخفاء تفاصيل الإخفاق",
+        "ja": "失敗の詳細を非表示",
+        "ko": "실패 세부 정보 숨기기",
+        "zh-Hans": "隐藏失败详情"
+      }
+    }
+  ]
+}

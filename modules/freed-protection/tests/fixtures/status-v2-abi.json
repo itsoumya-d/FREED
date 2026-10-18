@@ -1,0 +1,53 @@
+{
+  "binding" : {
+    "accepted" : true,
+    "actionScope" : "[\"A\",1,\"3f85a799-6f4b-4ca7-a9e5-0f9c76442308\"]",
+    "admissionRevision" : 0,
+    "bindingHandle" : "3f85a799-6f4b-4ca7-a9e5-0f9c76442308",
+    "generation" : 0,
+    "scopeEpoch" : 1,
+    "version" : 2
+  },
+  "legacy" : {
+    "accepted" : false,
+    "reason" : "binding-v2-transport-required"
+  },
+  "preparation" : {
+    "admissionRevision" : 0,
+    "ticket" : "5e8836b6-3c3b-482d-8f27-0da731e706f8"
+  },
+  "private" : {
+    "active" : true,
+    "adultWebPolicyConfigured" : true,
+    "authorized" : true,
+    "message" : "Screen Time protection status observed.",
+    "mode" : "screen-time",
+    "safariContentBlockerEnabled" : true,
+    "selectedApplications" : 4,
+    "statusBinding" : {
+      "actionScope" : "[\"A\",1,\"3f85a799-6f4b-4ca7-a9e5-0f9c76442308\"]",
+      "admissionRevision" : 0,
+      "bindingHandle" : "3f85a799-6f4b-4ca7-a9e5-0f9c76442308",
+      "generation" : 0,
+      "scopeEpoch" : 1
+    },
+    "statusReadAccepted" : true,
+    "statusVersion" : 2,
+    "statusVisibility" : "account"
+  },
+  "public" : {
+    "active" : true,
+    "adultFilterActive" : true,
+    "adultFilterRequested" : true,
+    "adultWebPolicyConfigured" : true,
+    "adultWebPolicyReason" : null,
+    "authorized" : true,
+    "message" : "Device website protection status observed.",
+    "mode" : "screen-time",
+    "safariContentBlockerEnabled" : true,
+    "safariExtensionSettingsAvailable" : true,
+    "statusReadAccepted" : true,
+    "statusVersion" : 2,
+    "statusVisibility" : "device"
+  }
+}

@@ -1,5 +1,7 @@
 const { spawnSync } = require("node:child_process");
-const { existsSync, mkdirSync, writeFileSync } = require("node:fs");
+const { existsSync, lstatSync, mkdirSync, readFileSync, writeFileSync } = require("node:fs");
+const { createHash } = require("node:crypto");
+const { isDeepStrictEqual } = require("node:util");
 const { dirname, isAbsolute, relative, resolve } = require("node:path");
 const { parseAdultDomainFeedSourceConfigWithIssues } = require("./lib/adult-domain-feed-source-contract");
 const { expandEnvFileHome, loadEnvFile } = require("./lib/env-file-loader");
@@ -32,11 +34,176 @@ const FORBIDDEN_PUBLIC_SERVER_SECRET_PREFIXES = [
   "EXPO_PUBLIC_GOOGLE_PLAY_ACCESS_TOKEN",
   "EXPO_PUBLIC_FCM_SERVER",
   "EXPO_PUBLIC_FCM_ACCESS_TOKEN",
-  "EXPO_PUBLIC_FIREBASE_PROJECT_ID",
+  "EXPO_PUBLIC_APPLE_STORE_PRIVATE_KEY",
+  "EXPO_PUBLIC_APPLE_STORE_ROOT_CAS",
   "EXPO_PUBLIC_FIREBASE_SERVICE_ACCOUNT",
   "EXPO_PUBLIC_REMOTE_NOTIFICATION_DISPATCH_SECRET",
   "EXPO_PUBLIC_APNS"
 ];
+const FIREBASE_PROJECT_ID = "freed-7d5ee";
+const FIREBASE_FUNCTIONS_REGION = "asia-south1";
+const FIREBASE_REQUIRED_SECRET_NAMES = ["APPLE_STORE_ISSUER_ID", "APPLE_STORE_KEY_ID", "APPLE_STORE_PRIVATE_KEY", "APPLE_STORE_APP_ID", "APPLE_STORE_ROOT_CAS_BASE64", "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON"];
+const FIREBASE_REQUIRED_CALLABLE_NAMES = ["backendReadiness", "verifyStorePurchase", "getPurchaseCheckoutContext", "getPremiumEntitlement", "fencePurchaseAccountLink", "getApplePurchaseCheckoutContext", "verifyAppleStorePurchase", "generateGoogleClaraReply", "getReviewedAdultDomainFeed", "ingestAggregateAnalytics", "startEncryptedBackupUpload", "finalizeEncryptedBackupUpload", "getEncryptedBackupDownload", "getLatestEncryptedBackupDownload", "deleteEncryptedBackup", "registerPushToken", "requestAccountDeletion"];
+const FIREBASE_PREFLIGHT_IDS = ["firebase-backend-config", "firebase-native-app-identifiers", "firebase-server-secret-configuration", "firebase-production-runtime-evidence"];
+const COMMON_PREFLIGHT_IDS = ["server-secret-public-leakage", "release-monetization-mode", "store-provider", "iap-product-ids", "android-release-signing", "revenuecat-fallback-keys", "admob-app-ids", "admob-rewarded-units", "admob-test-ads-disabled", "admob-request-country", "optional-challenge-weather-context"];
+const LEGACY_PREFLIGHT_IDS = ["server-secret-public-leakage", "release-monetization-mode", "store-provider", "iap-product-ids", "purchase-verify-endpoint", "app-store-environment", "app-store-verification-credentials", "google-play-verification-credentials", "android-release-signing", "revenuecat-fallback-keys", "admob-app-ids", "admob-rewarded-units", "admob-test-ads-disabled", "admob-request-country", "ai-coach-mode", "ai-coach-endpoint", "ai-challenge-mode", "ai-challenge-endpoint", "adult-domain-feed-endpoint", "adult-domain-feed-sources", "supabase-backend-credentials", "redis-backend-infrastructure", "backend-readiness-endpoint", "remote-notification-provider-credentials", "optional-challenge-weather-context", "analytics-ingestion-endpoint", "optional-recovery-backup-sync-endpoint", "optional-supabase-auth-client", "optional-retention-endpoint", "server-ai-key"];
+
+function getBackendProvider(env = process.env) {
+  const value = (readEnv(env, "EXPO_PUBLIC_BACKEND_PROVIDER") || "firebase").toLowerCase();
+  if (!["firebase", "legacy", "supabase"].includes(value)) throw new Error("EXPO_PUBLIC_BACKEND_PROVIDER must be firebase or legacy.");
+  return value === "supabase" ? "legacy" : value;
+}
+
+function getPreflightCheckIds(provider = getBackendProvider()) {
+  return provider === "firebase" ? [...COMMON_PREFLIGHT_IDS, ...FIREBASE_PREFLIGHT_IDS] : [...LEGACY_PREFLIGHT_IDS];
+}
+
+function firebaseLaunchProductIdIssues(env = process.env) {
+  return [["EXPO_PUBLIC_IAP_PRODUCT_YEARLY", "freed_premium_yearly"], ["EXPO_PUBLIC_IAP_PRODUCT_MONTHLY", "freed_premium_monthly"]]
+    .filter(([key, productId]) => (readEnv(env, key) || productId) !== productId)
+    .map(([key]) => `${key} must match the approved Firebase launch product identifier`);
+}
+
+function getLegalUrls(env = process.env) {
+  return Object.fromEntries(["privacy", "support", "account-deletion"].map(id => {
+    const url = readEnv(env, `FREED_LEGAL_${id.toUpperCase().replace(/-/g, "_")}_URL`) || `https://freed-landing.web.app/${id}`;
+    if (endpointIssues(url, "legal URL").length) throw new Error(`Invalid configured legal ${id} URL; use a production-safe HTTPS page.`);
+    return [id, url];
+  }));
+}
+
+function proofPathIsSafe(base, path, prefix) {
+  const absolute = resolve(base, path);
+  const relativePath = relative(base, absolute).replace(/\\/g, "/");
+  if (!relativePath.startsWith(prefix) || relativePath.includes("..")) return false;
+  let current = base;
+  for (const segment of relativePath.split("/")) {
+    current = resolve(current, segment);
+    if (lstatSync(current).isSymbolicLink()) return false;
+  }
+  return lstatSync(absolute).isFile();
+}
+
+function readNativeFirebaseIdentities(base = process.cwd()) {
+  const issues = [];
+  let android = null;
+  let ios = null;
+  try {
+    const data = JSON.parse(readFileSync(resolve(base, "android/app/google-services.json"), "utf8"));
+    const client = data.client?.find(entry => entry.client_info?.android_client_info?.package_name === "app.freed.recovery");
+    const appId = client?.client_info?.mobilesdk_app_id;
+    if (data.project_info?.project_id !== FIREBASE_PROJECT_ID || !/^1:\d+:android:[a-f0-9]{20,40}$/.test(appId || "")) throw new Error();
+    android = { appId, packageName: "app.freed.recovery" };
+  } catch { issues.push("Android Google services must identify freed-7d5ee and app.freed.recovery with a native Android app ID"); }
+  try {
+    const source = readFileSync(resolve(base, "ios/FREED/GoogleService-Info.plist"), "utf8");
+    const value = key => source.match(new RegExp(`<key>${key}</key>\\s*<string>([^<]+)</string>`))?.[1];
+    const appId = value("GOOGLE_APP_ID");
+    if (value("PROJECT_ID") !== FIREBASE_PROJECT_ID || value("BUNDLE_ID") !== "app.freed.recovery" || !/^1:\d+:ios:[a-f0-9]{20,40}$/.test(appId || "")) throw new Error();
+    ios = { appId, bundleId: "app.freed.recovery" };
+  } catch { issues.push("iOS Google services must identify freed-7d5ee and app.freed.recovery with a native iOS app ID"); }
+  if (android && ios && android.appId.split(":")[1] !== ios.appId.split(":")[1]) issues.push("Firebase native apps must share the production project number");
+  return { issues, android, ios };
+}
+
+function firebaseReportSecretIssue(text) {
+  return /-----BEGIN (?:EC |RSA )?PRIVATE KEY-----|\bsk-(?:proj-)?[A-Za-z0-9_-]{20,}\b|\bAIza[0-9A-Za-z_-]{30,}\b|\bya29\.[A-Za-z0-9._-]{20,}\b|\bBearer\s+(?!\[?redacted)[A-Za-z0-9._~:/+=-]{16,}|\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]{16,}\.[A-Za-z0-9_-]{8,}|"(?:purchaseToken|receipt|idToken|accessToken|private_key|client_email|passphrase|privateNotes|rawUrl|browsingHistory|contacts|latitude|longitude)"\s*:|https?:\/\/[^/\s"'<>:@]+:[^/\s"'<>@]+@/i.test(text);
+}
+
+function onlyKnownKeys(value, keys) {
+  return value && typeof value === "object" && !Array.isArray(value) && Object.keys(value).every(key => keys.includes(key));
+}
+
+function freshTimestamp(value, now = Date.now()) {
+  return typeof value === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/.test(value) &&
+    Number.isFinite(Date.parse(value)) && new Date(value).toISOString() === value && now - Date.parse(value) <= 24 * 60 * 60 * 1000 && Date.parse(value) <= now + 5 * 60 * 1000;
+}
+
+function firebaseRuntimeEvidenceIssues(env = process.env, base = process.cwd()) {
+  const path = readEnv(env, "FREED_FIREBASE_RUNTIME_EVIDENCE") || "docs/validation/evidence/firebase-production-runtime.json";
+  const issues = [];
+  let evidence;
+  try {
+    const absolute = resolve(base, path);
+    const relativePath = relative(base, absolute).replace(/\\/g, "/");
+    if (!proofPathIsSafe(base, path, "docs/validation/")) throw new Error();
+    const raw = readFileSync(absolute, "utf8");
+    if (raw.length > 2_000_000 || firebaseReportSecretIssue(raw)) return ["Firebase runtime evidence must be sanitized and must not contain raw credentials, receipts, or private recovery fields"];
+    evidence = JSON.parse(raw);
+  } catch { return ["Missing readable sanitized Firebase production runtime evidence (FREED_FIREBASE_RUNTIME_EVIDENCE)"]; }
+  if (evidence.schemaVersion !== "freed-firebase-production-runtime-v2" || evidence.sanitized !== true || evidence.result !== "pass") issues.push("Firebase runtime evidence needs the production schema, sanitized=true, and result=pass");
+  if (!onlyKnownKeys(evidence, ["schemaVersion", "generatedAt", "sanitized", "result", "source", "environment", "buildMode", "projectId", "functionsRegion", "nativeApps", "deployedCallables", "callableResults", "deployedSecretNames", "appCheck", "captureArtifacts", "claraEvidence"])) issues.push("Firebase runtime evidence contains unsupported fields rather than bounded sanitized capture metadata");
+  if (!freshTimestamp(evidence.generatedAt)) issues.push("Firebase runtime evidence is stale or has an invalid/future timestamp; capture fresh proof within 24 hours");
+  if (evidence.source !== "production-native" || evidence.environment !== "production" || evidence.buildMode !== "release") issues.push("Firebase runtime evidence must come from production-native release apps, not emulator, fixture, or configuration-only checks");
+  if (evidence.projectId !== FIREBASE_PROJECT_ID || evidence.functionsRegion !== FIREBASE_FUNCTIONS_REGION) issues.push("Firebase runtime evidence must target freed-7d5ee in asia-south1");
+  const identities = readNativeFirebaseIdentities(base);
+  if (identities.issues.length || !isDeepStrictEqual(evidence.nativeApps, { android: identities.android, ios: identities.ios })) issues.push("Runtime evidence native app IDs must match the actual production Google service files");
+  const deployed = Array.isArray(evidence.deployedCallables) ? evidence.deployedCallables : [];
+  if (FIREBASE_REQUIRED_CALLABLE_NAMES.some(name => !deployed.includes(name))) issues.push("Missing deployed Firebase callable inventory for launch services");
+  const smoke = Array.isArray(evidence.callableResults) ? evidence.callableResults : [];
+  if (smoke.some(entry => !onlyKnownKeys(entry, ["name", "status", "authenticated", "appCheckAccepted", "contractValidated", "remoteProviderConfirmed"]))) issues.push("Firebase callable smoke proof must omit tokens, prompts, transcripts, and raw response bodies");
+  if (FIREBASE_REQUIRED_CALLABLE_NAMES.some(name => !smoke.some(entry => entry.name === name && entry.status === "pass" && entry.authenticated === true && entry.appCheckAccepted === true && entry.contractValidated === true))) issues.push("Missing fresh authenticated, AppCheck-accepted Firebase callable smoke contract results");
+  const clara = evidence.claraEvidence;
+  try {
+    if (!onlyKnownKeys(clara, ["path", "sha256"]) || !/^[a-f0-9]{64}$/.test(clara.sha256 || "")) throw new Error();
+    const contract = require("./lib/google-clara-release-evidence");
+    const raw = readFileSync(contract.safeFile(base, clara.path), "utf8");
+    if (contract.sha(raw) !== clara.sha256) throw new Error();
+    issues.push(...contract.reportIssues(JSON.parse(raw), base));
+  } catch { issues.push("Missing checksummed current signed-client and attached Google CLARA runtime/provider proof"); }
+  if (new Set(smoke.map(entry => entry.name)).size !== smoke.length) issues.push("Duplicate Firebase callable result names");
+  if (!smoke.some(entry => entry.name === "generateGoogleClaraReply" && entry.remoteProviderConfirmed === true)) issues.push("Google CLARA requires genuine attached runtime remote provider success; fallback and owner-token smoke do not count");
+  const secrets = Array.isArray(evidence.deployedSecretNames) ? evidence.deployedSecretNames : [];
+  if (FIREBASE_REQUIRED_SECRET_NAMES.some(name => !secrets.includes(name))) issues.push("Missing deployed Firebase Secret Manager name inventory for Apple and Play credentials");
+  const appCheck = evidence.appCheck;
+  if (!onlyKnownKeys(appCheck, ["enforced", "debugTokensEnabled", "unauthenticatedRejected", "invalidAppCheckRejected", "iosProvider", "androidProvider"])) issues.push("AppCheck proof must contain sanitized enforcement metadata only");
+  if (!appCheck || appCheck.enforced !== true || appCheck.debugTokensEnabled !== false || appCheck.unauthenticatedRejected !== true || appCheck.invalidAppCheckRejected !== true || appCheck.iosProvider !== "appAttestWithDeviceCheckFallback" || appCheck.androidProvider !== "playIntegrity") issues.push("Missing production AppCheck enforcement and rejection proofs for iOS and Android");
+  for (const kind of ["nativeApps", "deployedCallables", "callableResults", "deployedSecretNames", "appCheck"]) {
+    const artifact = Array.isArray(evidence.captureArtifacts) ? evidence.captureArtifacts.find(entry => entry.kind === kind) : null;
+    try {
+      if (!onlyKnownKeys(artifact, ["kind", "path", "sha256"]) || typeof artifact.path !== "string" || !/^[a-f0-9]{64}$/.test(artifact.sha256 || "")) throw new Error();
+      const absolute = resolve(base, artifact.path);
+      const relativePath = relative(base, absolute).replace(/\\/g, "/");
+      if (!proofPathIsSafe(base, artifact.path, "docs/validation/artifacts/")) throw new Error();
+      const raw = readFileSync(absolute, "utf8");
+      if (raw.length > 2_000_000 || firebaseReportSecretIssue(raw) || createHash("sha256").update(raw).digest("hex") !== artifact.sha256) throw new Error();
+      const capture = JSON.parse(raw);
+      if (!onlyKnownKeys(capture, ["schemaVersion", "source", "sanitized", "generatedAt", "kind", "proof"]) || capture.schemaVersion !== "freed-firebase-native-capture-v1" || capture.source !== "production-native" || capture.sanitized !== true || !freshTimestamp(capture.generatedAt) || capture.kind !== kind || !isDeepStrictEqual(capture.proof, evidence[kind])) throw new Error();
+    } catch { issues.push(`Missing fresh sanitized checksummed production capture artifact for ${kind}`); }
+  }
+  return issues;
+}
+
+function getFirebasePreflightChecks(env = process.env, base = process.cwd()) {
+  const configIssues = [];
+  if (getBackendProvider(env) !== "firebase") configIssues.push("EXPO_PUBLIC_BACKEND_PROVIDER must select firebase");
+  if ((readEnv(env, "EXPO_PUBLIC_FIREBASE_ENV") || "production") !== "production") configIssues.push("EXPO_PUBLIC_FIREBASE_ENV must be production for release");
+  if (readEnv(env, "EXPO_PUBLIC_FIREBASE_PROJECT_ID") && readEnv(env, "EXPO_PUBLIC_FIREBASE_PROJECT_ID") !== FIREBASE_PROJECT_ID) configIssues.push("Firebase public project ID must match freed-7d5ee");
+  if (readEnv(env, "FREED_FIREBASE_FUNCTIONS_REGION") && readEnv(env, "FREED_FIREBASE_FUNCTIONS_REGION") !== FIREBASE_FUNCTIONS_REGION) configIssues.push("Firebase Functions region must be asia-south1");
+  if (readEnv(env, "EXPO_PUBLIC_FIREBASE_APP_CHECK_DEBUG_PROVIDER") || readEnv(env, "EXPO_PUBLIC_FIREBASE_APP_CHECK_DEBUG_TOKEN")) configIssues.push("Firebase debug AppCheck is forbidden in production release configuration");
+  try { if (JSON.parse(readFileSync(resolve(base, ".firebaserc"), "utf8")).projects?.default !== FIREBASE_PROJECT_ID) throw new Error(); }
+  catch { configIssues.push(".firebaserc must select the actual freed-7d5ee production project"); }
+  const identities = readNativeFirebaseIdentities(base);
+  const missingSecrets = FIREBASE_REQUIRED_SECRET_NAMES.filter(name => !hasUsable(env, name));
+  const malformed = [];
+  if (hasUsable(env, "APPLE_STORE_ISSUER_ID") && !isAppleIssuerId(readEnv(env, "APPLE_STORE_ISSUER_ID"))) malformed.push("APPLE_STORE_ISSUER_ID");
+  if (hasUsable(env, "APPLE_STORE_KEY_ID") && !isAppleKeyId(readEnv(env, "APPLE_STORE_KEY_ID"))) malformed.push("APPLE_STORE_KEY_ID");
+  if (hasUsable(env, "APPLE_STORE_PRIVATE_KEY") && !isPrivateKeyPem(readEnv(env, "APPLE_STORE_PRIVATE_KEY").replace(/\\n/g, "\n"))) malformed.push("APPLE_STORE_PRIVATE_KEY");
+  if (hasUsable(env, "APPLE_STORE_APP_ID") && !/^\d{6,20}$/.test(readEnv(env, "APPLE_STORE_APP_ID"))) malformed.push("APPLE_STORE_APP_ID");
+  if (hasUsable(env, "APPLE_STORE_ROOT_CAS_BASE64")) {
+    try { const roots = JSON.parse(readEnv(env, "APPLE_STORE_ROOT_CAS_BASE64")); if (!Array.isArray(roots) || roots.length < 1 || roots.length > 10 || roots.some(value => typeof value !== "string" || !/^[A-Za-z0-9+/]+={0,2}$/.test(value))) throw new Error(); }
+    catch { malformed.push("APPLE_STORE_ROOT_CAS_BASE64"); }
+  }
+  if (hasUsable(env, "GOOGLE_PLAY_SERVICE_ACCOUNT_JSON")) { const account = readGoogleServiceAccount(env); if (!account || !isGoogleServiceAccountEmail(account.client_email) || !isPrivateKeyPem(account.private_key)) malformed.push("GOOGLE_PLAY_SERVICE_ACCOUNT_JSON"); }
+  const evidenceIssues = firebaseRuntimeEvidenceIssues(env, base);
+  const secretIssues = evidenceIssues.length === 0 ? [] : [...missingSecrets.map(name => `${name} is not configured in the server release environment`), ...malformed.map(name => `${name} is malformed`)];
+  return [
+    check("firebase-backend-config", configIssues.length === 0, configIssues.join("; ") || "Firebase production configuration selects freed-7d5ee / asia-south1; deployment is checked separately.", "Fix the Firebase production project, region, and AppCheck configuration."),
+    check("firebase-native-app-identifiers", identities.issues.length === 0, identities.issues.join("; ") || "Native Google services identify the production iOS and Android apps; runtime proof is checked separately.", "Configure matching native Google service files for app.freed.recovery."),
+    check("firebase-server-secret-configuration", secretIssues.length === 0, secretIssues.join("; ") || (evidenceIssues.length === 0 ? "Fresh production runtime evidence includes the deployed server-only Secret Manager inventory." : "Server secret names and local value shapes are configured; this does not prove deployed Secret Manager access."), `Configure server-only ${FIREBASE_REQUIRED_SECRET_NAMES.join(", ")}; never expose their values in reports or EXPO_PUBLIC variables.`),
+    check("firebase-production-runtime-evidence", evidenceIssues.length === 0, evidenceIssues.join("; ") || "Fresh native runtime captures prove deployed callables, attached secret-name inventory, and production AppCheck enforcement.", "Capture sanitized production-native Firebase runtime evidence with checksummed native app, callable inventory/smoke, secret-name inventory, and AppCheck proof artifacts; set FREED_FIREBASE_RUNTIME_EVIDENCE.")
+  ];
+}
 const ISO_3166_ALPHA2_COUNTRY_CODES = new Set(
   [
     "AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ",
@@ -285,7 +452,9 @@ function androidReleaseSigningIssues(env) {
 function forbiddenPublicServerSecretIssues(env) {
   return Object.keys(env)
     .filter((key) => readEnv(env, key))
-    .filter((key) => FORBIDDEN_PUBLIC_SERVER_SECRET_PREFIXES.some((prefix) => key.startsWith(prefix)))
+    .filter((key) => FORBIDDEN_PUBLIC_SERVER_SECRET_PREFIXES.some((prefix) => key.startsWith(prefix)) ||
+      /^EXPO_PUBLIC_[A-Z0-9_]*(?:SERVICE_ACCOUNT|PRIVATE_KEY|SERVER_KEY|ACCESS_TOKEN|SECRET|ADMIN|CREDENTIAL|PASSWORD|ROOT_CAS)[A-Z0-9_]*$/i.test(key) ||
+      FIREBASE_REQUIRED_SECRET_NAMES.some(name => key === `EXPO_PUBLIC_${name}`))
     .sort()
     .map((key) => `${key} must not be exposed in the client environment`);
 }
@@ -842,9 +1011,29 @@ function artifactRootForReport(reportPath) {
   return absoluteRoot;
 }
 
-function buildPreflightBlockerGroups(checks, artifactRoot) {
+function getProductionBlockerGroups(artifactRoot, provider = getBackendProvider()) {
+  const groups = productionBlockerGroups(artifactRoot, undefined, provider);
+  if (provider !== "firebase") return groups;
+  return groups.map(group => {
+    if (group.category === "production-env" && group.id !== "production-android-signing") {
+      return { ...group, requiredEnv: ["EXPO_PUBLIC_BACKEND_PROVIDER=firebase", "EXPO_PUBLIC_FIREBASE_ENV=production", ...FIREBASE_REQUIRED_SECRET_NAMES],
+        requiredReports: [`${artifactRoot}/release-env-preflight-report.json`],
+        preflightCheckIds: group.id === "production-monetization"
+          ? COMMON_PREFLIGHT_IDS.filter(id => id !== "optional-challenge-weather-context").concat(FIREBASE_PREFLIGHT_IDS)
+          : FIREBASE_PREFLIGHT_IDS,
+        next: "Configure the selected Firebase native backend and server secret names, then capture fresh production-native callable, Secrets, and AppCheck evidence. Files alone do not prove deployment." };
+    }
+    if (group.category === "deployed-evidence") {
+      return { ...group, requiredReports: [`${artifactRoot}/release-env-preflight-report.json`],
+        next: group.next.replace(/Core 3-only/g, "monthly/yearly-only").replace(/deployed CLARA\/challenge smoke reports/g, "production-native Firebase CLARA/challenge capture reports") };
+    }
+    return { ...group, next: group.next.replace(/Core 3-only/g, "monthly/yearly-only") };
+  });
+}
+
+function buildPreflightBlockerGroups(checks, artifactRoot, provider = getBackendProvider()) {
   const checksById = new Map(checks.map((entry) => [entry.id, entry]));
-  return productionBlockerGroups(artifactRoot).map((group) => {
+  return getProductionBlockerGroups(artifactRoot, provider).map((group) => {
     const preflightCheckIds = Array.isArray(group.preflightCheckIds) ? group.preflightCheckIds : [];
     const matchedChecks = preflightCheckIds.map((id) => checksById.get(id)).filter(Boolean);
     const failedChecks = matchedChecks.filter((entry) => entry.status === "fail");
@@ -899,10 +1088,11 @@ function buildReport(sourceLabel, checks, options = {}) {
     result: failed.length === 0 ? "pass" : "fail",
     sanitized: true,
     schema: "freed-release-env-preflight-report-v1",
+    backendProvider: options.backendProvider ?? getBackendProvider(),
     source: sanitizeReportText(sourceLabel),
   };
   if (options.includeBlockerGroups) {
-    report.blockerGroups = buildPreflightBlockerGroups(sanitizedChecks, options.artifactRoot);
+    report.blockerGroups = buildPreflightBlockerGroups(sanitizedChecks, options.artifactRoot, report.backendProvider);
   }
   return report;
 }
@@ -971,6 +1161,13 @@ function runPreflight(env, sourceLabel, reportPath) {
     ...boundedIntegerEnvIssues(env, "FREED_PURCHASE_VERIFY_PROVIDER_RESPONSE_MAX_BYTES", 1_024, 2_000_000)
   ];
 
+  const releaseMonetizationIssues = [
+    ...(readEnv(env, "EXPO_PUBLIC_MONETIZATION_MODE") === "native" ? [] : ["EXPO_PUBLIC_MONETIZATION_MODE is not native."]),
+    ...(readEnv(env, "EXPO_PUBLIC_BUILD_CHANNEL") === "internal-testflight"
+      ? ["The internal-testflight build channel cannot pass production release verification."]
+      : [])
+  ];
+
   const revenueCatSelected = storeProvider === "revenuecat";
   const appleIssuerTripletReady =
     isAppleIssuerId(readEnv(env, "APP_STORE_ISSUER_ID")) &&
@@ -994,11 +1191,11 @@ function runPreflight(env, sourceLabel, reportPath) {
     ),
     check(
       "release-monetization-mode",
-      readEnv(env, "EXPO_PUBLIC_MONETIZATION_MODE") === "native",
-      readEnv(env, "EXPO_PUBLIC_MONETIZATION_MODE") === "native"
+      releaseMonetizationIssues.length === 0,
+      releaseMonetizationIssues.length === 0
         ? "Native monetization mode is enabled."
-        : "EXPO_PUBLIC_MONETIZATION_MODE is not native.",
-      "Set EXPO_PUBLIC_MONETIZATION_MODE=native for signed release verification."
+        : releaseMonetizationIssues.join(" "),
+      "Set EXPO_PUBLIC_MONETIZATION_MODE=native and remove the internal-testflight build channel for signed production release verification."
     ),
     check(
       "store-provider",
@@ -1010,11 +1207,10 @@ function runPreflight(env, sourceLabel, reportPath) {
       "iap-product-ids",
       [
         "EXPO_PUBLIC_IAP_PRODUCT_YEARLY",
-        "EXPO_PUBLIC_IAP_PRODUCT_MONTHLY",
-        "EXPO_PUBLIC_IAP_PRODUCT_LIFETIME"
+        "EXPO_PUBLIC_IAP_PRODUCT_MONTHLY"
       ].every((key) => hasUsable(env, key)),
-      "Launch Core 3 product identifiers are checked for non-placeholder values.",
-      "Configure EXPO_PUBLIC_IAP_PRODUCT_YEARLY, EXPO_PUBLIC_IAP_PRODUCT_MONTHLY, and EXPO_PUBLIC_IAP_PRODUCT_LIFETIME with real App Store / Play product IDs."
+      "Launch monthly and yearly product identifiers are checked for non-placeholder values.",
+      "Configure EXPO_PUBLIC_IAP_PRODUCT_YEARLY and EXPO_PUBLIC_IAP_PRODUCT_MONTHLY with the launch App Store / Play product IDs."
     ),
     check(
       "purchase-verify-endpoint",
@@ -1239,7 +1435,15 @@ function runPreflight(env, sourceLabel, reportPath) {
     )
   ];
 
-  const report = buildReport(sourceLabel, checks, {
+  const backendProvider = getBackendProvider(env);
+  const productIssues = firebaseLaunchProductIdIssues(env);
+  const selectedChecks = backendProvider === "firebase"
+    ? COMMON_PREFLIGHT_IDS.map(id => id === "iap-product-ids"
+      ? check(id, productIssues.length === 0, productIssues.join("; ") || "Resolved launch identifiers use the actual freed_premium_yearly and freed_premium_monthly defaults; live store setup is verified separately.", "Use the approved monthly/yearly identifiers; no lifetime or trial product is part of launch.")
+      : checks.find(entry => entry.id === id)).concat(getFirebasePreflightChecks(env))
+    : checks;
+  const report = buildReport(sourceLabel, selectedChecks, {
+    backendProvider,
     artifactRoot: artifactRootForReport(reportPath),
     includeBlockerGroups: true
   });
@@ -1249,6 +1453,7 @@ function runPreflight(env, sourceLabel, reportPath) {
   if (report.failCount > 0) process.exitCode = 1;
 }
 
+function main() {
 let args;
 try {
   args = parseArgs(process.argv.slice(2));
@@ -1320,4 +1525,10 @@ if (args.envFile) {
   }
 } else {
   runPreflight(env, sourceLabel, args.report);
+}
+}
+
+module.exports = { getBackendProvider, getPreflightCheckIds, getFirebasePreflightChecks, firebaseRuntimeEvidenceIssues, firebaseLaunchProductIdIssues, getProductionBlockerGroups, getLegalUrls, FIREBASE_PREFLIGHT_IDS, COMMON_PREFLIGHT_IDS, FIREBASE_REQUIRED_CALLABLE_NAMES, FIREBASE_REQUIRED_SECRET_NAMES };
+if (require.main === module) {
+  try { main(); } catch (error) { console.error(sanitizeReportText(error instanceof Error ? error.message : "Release preflight failed.")); process.exitCode = 1; }
 }

@@ -1,4 +1,5 @@
 import { BlockingAttempt } from "@/lib/blocking-engine";
+import type { RecoveryState } from "@/lib/recovery-state";
 import {
   inferChallengeEngineFamilies,
   pickChallengeTemplates,
@@ -6,6 +7,7 @@ import {
   type TemplateContext
 } from "@/data/challenge-templates";
 import { surfaceForDoomscrollAppPackage } from "@/lib/doomscroll-apps";
+import { authoredVerificationRule, type ChallengeVerificationRule, type ChallengeChoiceGroup } from './challenge-rules';
 
 export type RecoveryChallenge = {
   id: string;
@@ -17,14 +19,19 @@ export type RecoveryChallenge = {
   icon: string;
   steps: string[];
   why: string;
+  verification?: ChallengeVerificationRule;
+  choiceGroup?: ChallengeChoiceGroup;
+  environment?: 'indoors' | 'outdoors' | 'either';
+  seatedAlternative?: boolean;
 };
 
 export type ChallengeOutcome = "helped" | "still-urging";
+export type ChallengeFeedbackOutcome = ChallengeOutcome | "unknown";
 
 export type ChallengeHistorySignal = {
   id: string;
   category: RecoveryChallenge["category"];
-  outcome: ChallengeOutcome;
+  outcome: ChallengeFeedbackOutcome;
   completedAt: string;
 };
 
@@ -73,6 +80,9 @@ export type CoachPatternSignal = {
 };
 
 export type RecoveryProfile = {
+  /** Remote export context only. Local ranking retains the original signals. */
+  exportState?: RecoveryState;
+  exportDay?: Date | string;
   streakDays: number;
   mood: "low" | "steady" | "energized" | "stressed";
   premium: boolean;
@@ -102,8 +112,8 @@ export const challengeLibrary: RecoveryChallenge[] = [
     intensity: "strong",
     premium: false,
     icon: "Dumbbell",
-    why: "Physical effort quickly changes state and burns off restless energy.",
-    steps: ["Plant your hands.", "Lower slowly.", "Exhale as you push.", "Stop at twenty honest reps."]
+    why: "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
+    steps: ["Plant your hands.", "Lower slowly.", "Exhale as you push.", "Use fewer repetitions if comfortable; stop or switch resets whenever needed."]
   },
   {
     id: "breathing-478",
@@ -113,8 +123,8 @@ export const challengeLibrary: RecoveryChallenge[] = [
     intensity: "calm",
     premium: false,
     icon: "Waves",
-    why: "Slow breathing lowers arousal and gives the urge time to pass.",
-    steps: ["Inhale for four.", "Hold for seven.", "Exhale for eight.", "Repeat three cycles."]
+    why: "Optional observation lets you notice an urge while you decide what to do next. No feeling or outcome is guaranteed.",
+    steps: ["Inhale for four.", "The 7-count hold is optional; skip it whenever needed.", "Exhale for eight.", "Keep breathing gently; skip holds or counting, or choose another reset."]
   },
   {
     id: "walk-outside",
@@ -124,7 +134,7 @@ export const challengeLibrary: RecoveryChallenge[] = [
     intensity: "medium",
     premium: false,
     icon: "Footprints",
-    why: "Changing environment breaks the cue loop before it becomes automatic.",
+    why: "An optional change of environment offers a pause from the current loop. Stay indoors or seated if preferred.",
     steps: ["Put the phone down.", "Step outside.", "Notice five things around you.", "Come back after five minutes."]
   },
   {
@@ -135,19 +145,19 @@ export const challengeLibrary: RecoveryChallenge[] = [
     intensity: "calm",
     premium: false,
     icon: "NotebookPen",
-    why: "Identity reminders reconnect the present urge to the person you are becoming.",
+    why: "An optional identity reflection makes space to write your reasons during an urge. You choose what to share.",
     steps: ["Open a note.", "Write why you started.", "Write who benefits.", "Read it out loud."]
   },
   {
     id: "cold-water",
-    title: "Cold water face reset",
+    title: "Seated device movement pause",
     category: "physical",
     durationSec: 45,
     intensity: "strong",
     premium: true,
     icon: "Snowflake",
-    why: "A sharp temperature shift interrupts autopilot and restores control.",
-    steps: ["Run cold water.", "Take one slow breath.", "Splash your face.", "Stand tall for ten seconds."]
+    why: "Optional seated device movement gives you a quiet pause. Move your device only if comfortable, or choose another reset. Motion evidence records device movement, not water exposure, shoulder exercise, form or repetitions.",
+    steps: ["Sit comfortably with your device, away from water.", "Gently move the device if comfortable.", "Pause or choose another reset if device movement is uncomfortable.", "Breathe gently at a comfortable pace."]
   },
   {
     id: "accountability-text",
@@ -157,7 +167,7 @@ export const challengeLibrary: RecoveryChallenge[] = [
     intensity: "medium",
     premium: true,
     icon: "MessageCircleHeart",
-    why: "Connection cuts secrecy, which is often where relapse gets stronger.",
+    why: "Optional contact with your accountability partner offers company during an urge. Ask for consent and accept no response.",
     steps: ["Pick your trusted person.", "Send: I need a reset.", "Wait before doing anything else.", "Return to FREED."]
   },
   {
@@ -168,10 +178,10 @@ export const challengeLibrary: RecoveryChallenge[] = [
     intensity: "calm",
     premium: true,
     icon: "Activity",
-    why: "Observing the craving without obeying it weakens the automatic response.",
-    steps: ["Say: this is an urge.", "Find where it sits in your body.", "Breathe into that spot.", "Watch it rise and fall."]
+    why: "Optional observation lets you notice an urge while you decide what to do next. No feeling or outcome is guaranteed.",
+    steps: ["Say: this is an urge.", "Find where it sits in your body.", "Breathe into that spot.", "Notice the urge without expecting it to fade on a schedule."]
   }
-];
+].map(challenge => ({ ...challenge, category: challenge.category as RecoveryChallenge["category"], intensity: challenge.intensity as RecoveryChallenge["intensity"], verification: authoredVerificationRule(challenge.category) }));
 
 function hostMatches(host: string, domain: string) {
   return host === domain || host.endsWith(`.${domain}`);
@@ -516,16 +526,32 @@ export function generateCoachReply(input: string, attempts: BlockingAttempt[], p
     return `A slip is data, not a verdict. The recent pattern points to ${signal || "a repeatable cue"}, so the next move is specific: create distance, do one two-minute reset, and change the environment before making another decision.`;
   }
 
-  if (text.includes("relapse") || text.includes("failed")) {
-    return "A slip is data, not a verdict. Take one clean action now: breathe, drink water, and write what happened before the urge. We will adjust the plan from that pattern.";
+  if (text.includes("relapse") || text.includes("failed") || text.includes("messed up") || text.includes("lost my streak")) {
+    return "A slip is data, not a verdict. Take one clean action now: breathe, drink water, and write what happened before the urge. We will adjust the plan from that pattern. Clean action right now restarts your recovery.";
   }
 
-  if (text.includes("urge") || text.includes("craving") || text.includes("tempted")) {
-    return "Good job naming it early. Set a two-minute timer, put both feet on the floor, and do one challenge before deciding anything else. The urge is loud, but it is temporary.";
+  if (text.includes("urge") || text.includes("craving") || text.includes("tempted") || text.includes("resist") || text.includes("want to watch")) {
+    return "Put your phone down. Choose one short reset. You can stop whenever you need.";
   }
 
-  if (text.includes("night") || text.includes("sleep")) {
-    return "Night urges usually need friction and calm, not motivation. Charge your phone away from bed, start 4-7-8 breathing, and make tomorrow morning easy for yourself.";
+  if (text.includes("night") || text.includes("sleep") || text.includes("bed") || text.includes("insomnia") || text.includes("late")) {
+    return "Keep your phone out of reach if possible. Choose a quiet reset and a comfortable breathing pace.";
+  }
+
+  if (text.includes("stress") || text.includes("anxious") || text.includes("anxiety") || text.includes("overwhelm") || text.includes("pressure")) {
+    return "Try a comfortable breath. You can stop whenever you need.";
+  }
+
+  if (text.includes("lonely") || text.includes("alone") || text.includes("bored") || text.includes("empty") || text.includes("nothing to do")) {
+    return "Choose one small action: notice something nearby, move gently, or contact someone you trust.";
+  }
+
+  if (text.includes("dopamine") || text.includes("brain") || text.includes("science") || text.includes("reboot") || text.includes("flatline") || text.includes("why")) {
+    return "FREED tracks your recorded actions. It cannot measure dopamine or predict how your brain changes.";
+  }
+
+  if (text.includes("breathe") || text.includes("breath") || text.includes("ground") || text.includes("calm")) {
+    return "Breathe gently at a comfortable pace. Avoid forcing or holding your breath. Choose another reset if this feels uncomfortable.";
   }
 
   if (latest) {

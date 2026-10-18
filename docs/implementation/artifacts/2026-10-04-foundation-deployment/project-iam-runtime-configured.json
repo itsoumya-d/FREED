@@ -1,0 +1,32 @@
+{
+  "httpStatus": 200,
+  "body": {
+    "version": 3,
+    "etag": "BwZdADwuTz0=",
+    "bindings": [
+      {
+        "role": "projects/freed-7d5ee/roles/freedFoundationRuntime",
+        "members": [
+          "serviceAccount:5477978760-compute@developer.gserviceaccount.com"
+        ]
+      },
+      {
+        "role": "roles/datastore.user",
+        "members": [
+          "serviceAccount:5477978760-compute@developer.gserviceaccount.com"
+        ],
+        "condition": {
+          "expression": "resource.name == \"projects/freed-7d5ee/databases/(default)\"",
+          "title": "FREED_default_database",
+          "description": "Restrict foundation runtime to FREED default Firestore database."
+        }
+      },
+      {
+        "role": "roles/firebaseappcheck.tokenVerifier",
+        "members": [
+          "serviceAccount:5477978760-compute@developer.gserviceaccount.com"
+        ]
+      }
+    ]
+  }
+}

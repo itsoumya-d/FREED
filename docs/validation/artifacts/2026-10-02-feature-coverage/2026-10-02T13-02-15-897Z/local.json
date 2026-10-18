@@ -1,0 +1,1412 @@
+{
+  "schemaVersion": "freed-feature-verification-report-v1",
+  "generatedAt": "2026-10-02T13:03:04.886Z",
+  "sanitized": true,
+  "mode": "local",
+  "catalog": "premium",
+  "planOnly": false,
+  "ledgerPath": "docs/validation/artifacts/2026-10-02-native-ui-testflight/feature-ledger.json",
+  "baselineFeatureCount": 99,
+  "additionalFeatureCount": 7,
+  "ledgerSha256": "44c2654bc4c8740eee2426cab0bc05de195015e71908270b6bfa6ed0b771a532",
+  "installedBuildSha256": null,
+  "meaning": "Passing local contracts or Maestro smoke does not prove all native, live, physical, visual or motion behavior. All required checks stay in the denominator.",
+  "requestedSummary": {
+    "total": 7,
+    "passed": 5,
+    "failed": 2,
+    "blocked": 0,
+    "notRun": 0,
+    "passedPercent": 71.43,
+    "complete": false
+  },
+  "allRequiredChecks": {
+    "total": 37,
+    "passed": 5,
+    "failed": 2,
+    "blocked": 0,
+    "notRun": 30,
+    "passedPercent": 13.51,
+    "complete": false
+  },
+  "fullFeatureSummary": {
+    "total": 7,
+    "passed": 0,
+    "failed": 2,
+    "blocked": 0,
+    "notRun": 5,
+    "passedPercent": 0,
+    "complete": false
+  },
+  "testSuiteSummary": {
+    "total": 13,
+    "passed": 12,
+    "failed": 1,
+    "blocked": 0,
+    "notRun": 0,
+    "passedPercent": 92.31,
+    "complete": false
+  },
+  "localTestCounts": {
+    "passed": 57,
+    "failed": 9,
+    "skipped": 0
+  },
+  "suites": {
+    "tests/app-preferences.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T13:02:15.906Z",
+      "durationMs": 128,
+      "counts": {
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/2026-10-02T13-02-15-897Z/logs/app-preferences.test.ts.log",
+      "logSha256": "23f7eaab45ecc77ab90d2a7b547105135799cbf5aeb0be09d8e9b94cc93a77be",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/app-preferences.test.ts"
+      ]
+    },
+    "tests/encrypted-dns.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T13:02:16.036Z",
+      "durationMs": 170,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/2026-10-02T13-02-15-897Z/logs/encrypted-dns.test.ts.log",
+      "logSha256": "3235c7c9679999521ff5ebed58912ec999ba4da37c24fdf2a3edd45dfc1b30fe",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/encrypted-dns.test.ts"
+      ]
+    },
+    "tests/launch-purchases.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T13:02:16.207Z",
+      "durationMs": 59,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/2026-10-02T13-02-15-897Z/logs/launch-purchases.test.ts.log",
+      "logSha256": "b29dc6d600082c9d221ae756d60d402a13f3381e6597e1571f9db7ad43c53faa",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/launch-purchases.test.ts"
+      ]
+    },
+    "tests/motion-policy.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T13:02:16.266Z",
+      "durationMs": 53,
+      "counts": {
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/2026-10-02T13-02-15-897Z/logs/motion-policy.test.ts.log",
+      "logSha256": "c735189efb42235e42971b075e6cd0b2019b328db84e70ff4ef726ed48e197a1",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/motion-policy.test.ts"
+      ]
+    },
+    "tests/native-router-dispatch.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T13:02:16.319Z",
+      "durationMs": 456,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/2026-10-02T13-02-15-897Z/logs/native-router-dispatch.test.ts.log",
+      "logSha256": "4524084aee2386c922c2be1d7c6b500644d7d6a5fd8e4d19728fbd2b8958ce21",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/native-router-dispatch.test.ts"
+      ]
+    },
+    "tests/paywall-presenter.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T13:02:16.775Z",
+      "durationMs": 54,
+      "counts": {
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/2026-10-02T13-02-15-897Z/logs/paywall-presenter.test.ts.log",
+      "logSha256": "cc13c1a9eb57e407c688eb610ae2e85b327ce0f2423988c192cc4d7f9ea5b409",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/paywall-presenter.test.ts"
+      ]
+    },
+    "tests/protection-dns-safety.test.js": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T13:02:16.829Z",
+      "durationMs": 280,
+      "counts": {
+        "passed": 4,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/2026-10-02T13-02-15-897Z/logs/protection-dns-safety.test.js.log",
+      "logSha256": "30b3fc67c7c9598cc86b20e24239a4c12bfb343371219851cb1cf12f692a526a",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "tests/protection-dns-safety.test.js"
+      ]
+    },
+    "tests/protection-permission-native.test.ts": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T13:02:17.109Z",
+      "durationMs": 104,
+      "counts": {
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/2026-10-02T13-02-15-897Z/logs/protection-permission-native.test.ts.log",
+      "logSha256": "f80671f726101ab9ceb4ccc0490cb4efd1e3af7923d8ef1a073bc85b62854d5c",
+      "command": [
+        "node",
+        "scripts/run-ts-entry.js",
+        "tests/protection-permission-native.test.ts"
+      ]
+    },
+    "tests/ui/encrypted-dns-section.test.tsx": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T13:02:17.214Z",
+      "durationMs": 12130,
+      "counts": {
+        "passed": 8,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/2026-10-02T13-02-15-897Z/logs/encrypted-dns-section.test.tsx.log",
+      "logSha256": "440880ad3700d718913f2e360b07ec8c563d69916db38671fb7689a7596ae684",
+      "command": [
+        "node",
+        "node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--watch=false",
+        "--runTestsByPath",
+        "tests/ui/encrypted-dns-section.test.tsx"
+      ]
+    },
+    "tests/ui/localization-runtime.test.tsx": {
+      "status": "failed",
+      "exitCode": 1,
+      "timedOut": false,
+      "startedAt": "2026-10-02T13:02:29.344Z",
+      "durationMs": 9820,
+      "counts": {
+        "passed": 16,
+        "failed": 9,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/2026-10-02T13-02-15-897Z/logs/localization-runtime.test.tsx.log",
+      "logSha256": "e27a31191b030453b116e7f6d976c14375572172cbf0b7375fe9b2046627cca6",
+      "command": [
+        "node",
+        "node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--watch=false",
+        "--runTestsByPath",
+        "tests/ui/localization-runtime.test.tsx"
+      ]
+    },
+    "tests/ui/preferences-native-picker.test.tsx": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T13:02:39.164Z",
+      "durationMs": 8645,
+      "counts": {
+        "passed": 2,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/2026-10-02T13-02-15-897Z/logs/preferences-native-picker.test.tsx.log",
+      "logSha256": "da9369b6c818ea4ca65954d73defe16a3cf76d31ca9410dd36e2afd7d6dbb85e",
+      "command": [
+        "node",
+        "node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--watch=false",
+        "--runTestsByPath",
+        "tests/ui/preferences-native-picker.test.tsx"
+      ]
+    },
+    "tests/ui/preferences-screen.test.tsx": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T13:02:47.810Z",
+      "durationMs": 8633,
+      "counts": {
+        "passed": 9,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/2026-10-02T13-02-15-897Z/logs/preferences-screen.test.tsx.log",
+      "logSha256": "b55dd4f14b81ce13dfebcb7a2a1b84f7328589802f15192728cf36b885f5c19b",
+      "command": [
+        "node",
+        "node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--watch=false",
+        "--runTestsByPath",
+        "tests/ui/preferences-screen.test.tsx"
+      ]
+    },
+    "tests/ui/premium-offer.test.tsx": {
+      "status": "passed",
+      "exitCode": 0,
+      "timedOut": false,
+      "startedAt": "2026-10-02T13:02:56.443Z",
+      "durationMs": 8441,
+      "counts": {
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "docs/validation/artifacts/2026-10-02-feature-coverage/2026-10-02T13-02-15-897Z/logs/premium-offer.test.tsx.log",
+      "logSha256": "8476570de23da67744f90e7fea26e41cd0f20facbce1540ee19296cb898963ad",
+      "command": [
+        "node",
+        "node_modules/jest/bin/jest.js",
+        "--runInBand",
+        "--watch=false",
+        "--runTestsByPath",
+        "tests/ui/premium-offer.test.tsx"
+      ]
+    }
+  },
+  "uiSmoke": {},
+  "features": [
+    {
+      "id": "feature-100",
+      "catalog": "premium-verification",
+      "category": "Preferences",
+      "feature": "System, light and dark appearance",
+      "controls": "Appearance choice, committed storage and device theme",
+      "nextVerification": "all three appearance choices, storage failure recovery, device changes and a cold restart",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "flow": "preferences-appearance",
+      "suites": [
+        "tests/app-preferences.test.ts",
+        "tests/ui/preferences-screen.test.tsx",
+        "tests/ui/preferences-native-picker.test.tsx",
+        "tests/motion-policy.test.ts",
+        "tests/native-router-dispatch.test.ts"
+      ],
+      "scenarios": [
+        {
+          "id": "feature-100:scenario-1",
+          "expected": "System follows actual device appearance while explicit light and dark remain fixed"
+        },
+        {
+          "id": "feature-100:scenario-2",
+          "expected": "all three choices persist after cold restart without changing recovery history"
+        },
+        {
+          "id": "feature-100:scenario-3",
+          "expected": "a failed storage write preserves the last committed selection and exposes a retryable error"
+        },
+        {
+          "id": "feature-100:scenario-4",
+          "expected": "large text and native accessible picker controls keep every option reachable"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "feature-100:local",
+          "mode": "local",
+          "suites": [
+            "tests/app-preferences.test.ts",
+            "tests/ui/preferences-screen.test.tsx",
+            "tests/ui/preferences-native-picker.test.tsx",
+            "tests/motion-policy.test.ts",
+            "tests/native-router-dispatch.test.ts"
+          ],
+          "assertions": [
+            "behavioral-suite:tests/app-preferences.test.ts",
+            "behavioral-suite:tests/ui/preferences-screen.test.tsx",
+            "behavioral-suite:tests/ui/preferences-native-picker.test.tsx",
+            "behavioral-suite:tests/motion-policy.test.ts",
+            "behavioral-suite:tests/native-router-dispatch.test.ts"
+          ],
+          "nextAction": "node scripts/run-feature-verification.js --mode local --feature feature-100",
+          "selected": true,
+          "status": "passed",
+          "reason": "Related local behavioral contracts passed. Native/live/device obligations remain separate."
+        },
+        {
+          "id": "feature-100:ios",
+          "mode": "ios",
+          "platform": "ios",
+          "flow": "preferences-appearance",
+          "assertions": [
+            "feature-100:scenario-1",
+            "feature-100:scenario-2",
+            "feature-100:scenario-3",
+            "feature-100:scenario-4"
+          ],
+          "nextAction": "Run --mode ios --feature feature-100 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-100:device:ios",
+          "mode": "device",
+          "platform": "ios",
+          "motion": true,
+          "assertions": [
+            "feature-100:scenario-1",
+            "feature-100:scenario-2",
+            "feature-100:scenario-3",
+            "feature-100:scenario-4",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical ios device and capture all three appearance choices, storage failure recovery, device changes and a cold restart, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-100:android",
+          "mode": "android",
+          "platform": "android",
+          "flow": "preferences-appearance",
+          "assertions": [
+            "feature-100:scenario-1",
+            "feature-100:scenario-2",
+            "feature-100:scenario-3",
+            "feature-100:scenario-4"
+          ],
+          "nextAction": "Run --mode android --feature feature-100 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-100:device:android",
+          "mode": "device",
+          "platform": "android",
+          "motion": true,
+          "assertions": [
+            "feature-100:scenario-1",
+            "feature-100:scenario-2",
+            "feature-100:scenario-3",
+            "feature-100:scenario-4",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical android device and capture all three appearance choices, storage failure recovery, device changes and a cold restart, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        }
+      ],
+      "requestedSummary": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "blocked": 0,
+        "notRun": 0,
+        "passedPercent": 100,
+        "complete": true
+      },
+      "status": "not-run"
+    },
+    {
+      "id": "feature-101",
+      "catalog": "premium-verification",
+      "category": "Localization",
+      "feature": "Ten-language resource and authored-string completeness",
+      "controls": "en, hi, bn, es, pt, fr, de, ar, ja and zh-Hans",
+      "nextVerification": "every supported language on all app routes, translated accessibility labels and parameterized numbers and dates",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "flow": "preferences-language",
+      "suites": [
+        "tests/app-preferences.test.ts",
+        "tests/ui/localization-runtime.test.tsx",
+        "tests/ui/preferences-screen.test.tsx",
+        "tests/ui/preferences-native-picker.test.tsx",
+        "tests/motion-policy.test.ts",
+        "tests/native-router-dispatch.test.ts"
+      ],
+      "scenarios": [
+        {
+          "id": "feature-101:scenario-1",
+          "expected": "all ten languages have non-empty common, preferences, DNS and authored-source keys"
+        },
+        {
+          "id": "feature-101:scenario-2",
+          "expected": "each language selection survives restart and all native accessible choices are reachable"
+        },
+        {
+          "id": "feature-101:scenario-3",
+          "expected": "known authored copy translates while URLs identifiers and private input values are preserved"
+        },
+        {
+          "id": "feature-101:scenario-4",
+          "expected": "dates numbers interpolated content and every app route render without missing keys or clipped text"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "feature-101:local",
+          "mode": "local",
+          "suites": [
+            "tests/app-preferences.test.ts",
+            "tests/ui/localization-runtime.test.tsx",
+            "tests/ui/preferences-screen.test.tsx",
+            "tests/ui/preferences-native-picker.test.tsx",
+            "tests/motion-policy.test.ts",
+            "tests/native-router-dispatch.test.ts"
+          ],
+          "assertions": [
+            "behavioral-suite:tests/app-preferences.test.ts",
+            "behavioral-suite:tests/ui/localization-runtime.test.tsx",
+            "behavioral-suite:tests/ui/preferences-screen.test.tsx",
+            "behavioral-suite:tests/ui/preferences-native-picker.test.tsx",
+            "behavioral-suite:tests/motion-policy.test.ts",
+            "behavioral-suite:tests/native-router-dispatch.test.ts"
+          ],
+          "nextAction": "node scripts/run-feature-verification.js --mode local --feature feature-101",
+          "selected": true,
+          "status": "failed",
+          "reason": "A required behavioral test suite failed."
+        },
+        {
+          "id": "feature-101:ios",
+          "mode": "ios",
+          "platform": "ios",
+          "flow": "preferences-language",
+          "assertions": [
+            "feature-101:scenario-1",
+            "feature-101:scenario-2",
+            "feature-101:scenario-3",
+            "feature-101:scenario-4"
+          ],
+          "nextAction": "Run --mode ios --feature feature-101 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-101:device:ios",
+          "mode": "device",
+          "platform": "ios",
+          "motion": true,
+          "assertions": [
+            "feature-101:scenario-1",
+            "feature-101:scenario-2",
+            "feature-101:scenario-3",
+            "feature-101:scenario-4",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical ios device and capture every supported language on all app routes, translated accessibility labels and parameterized numbers and dates, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-101:android",
+          "mode": "android",
+          "platform": "android",
+          "flow": "preferences-language",
+          "assertions": [
+            "feature-101:scenario-1",
+            "feature-101:scenario-2",
+            "feature-101:scenario-3",
+            "feature-101:scenario-4"
+          ],
+          "nextAction": "Run --mode android --feature feature-101 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-101:device:android",
+          "mode": "device",
+          "platform": "android",
+          "motion": true,
+          "assertions": [
+            "feature-101:scenario-1",
+            "feature-101:scenario-2",
+            "feature-101:scenario-3",
+            "feature-101:scenario-4",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical android device and capture every supported language on all app routes, translated accessibility labels and parameterized numbers and dates, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        }
+      ],
+      "requestedSummary": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1,
+        "blocked": 0,
+        "notRun": 0,
+        "passedPercent": 0,
+        "complete": false
+      },
+      "status": "failed"
+    },
+    {
+      "id": "feature-102",
+      "catalog": "premium-verification",
+      "category": "Localization",
+      "feature": "Arabic RTL and explicit layout restart",
+      "controls": "Saved language, resolved system locale, reading direction and restart action",
+      "nextVerification": "LTR to Arabic and Arabic to LTR or System with restart, restart failure, mirrored navigation and preserved input",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "flow": "localization-rtl-restart",
+      "suites": [
+        "tests/app-preferences.test.ts",
+        "tests/ui/preferences-screen.test.tsx",
+        "tests/ui/localization-runtime.test.tsx",
+        "tests/ui/preferences-native-picker.test.tsx",
+        "tests/motion-policy.test.ts",
+        "tests/native-router-dispatch.test.ts"
+      ],
+      "scenarios": [
+        {
+          "id": "feature-102:scenario-1",
+          "expected": "Arabic selection saves before offering an explicit RTL restart"
+        },
+        {
+          "id": "feature-102:scenario-2",
+          "expected": "LTR and System choices resolve the real device locale before deciding whether a direction restart is needed"
+        },
+        {
+          "id": "feature-102:scenario-3",
+          "expected": "successful restart applies mirrored native layout and preserves committed preferences and recovery data"
+        },
+        {
+          "id": "feature-102:scenario-4",
+          "expected": "restart failure keeps the saved preference and a reachable retry without fabricating applied layout"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "feature-102:local",
+          "mode": "local",
+          "suites": [
+            "tests/app-preferences.test.ts",
+            "tests/ui/preferences-screen.test.tsx",
+            "tests/ui/localization-runtime.test.tsx",
+            "tests/ui/preferences-native-picker.test.tsx",
+            "tests/motion-policy.test.ts",
+            "tests/native-router-dispatch.test.ts"
+          ],
+          "assertions": [
+            "behavioral-suite:tests/app-preferences.test.ts",
+            "behavioral-suite:tests/ui/preferences-screen.test.tsx",
+            "behavioral-suite:tests/ui/localization-runtime.test.tsx",
+            "behavioral-suite:tests/ui/preferences-native-picker.test.tsx",
+            "behavioral-suite:tests/motion-policy.test.ts",
+            "behavioral-suite:tests/native-router-dispatch.test.ts"
+          ],
+          "nextAction": "node scripts/run-feature-verification.js --mode local --feature feature-102",
+          "selected": true,
+          "status": "failed",
+          "reason": "A required behavioral test suite failed."
+        },
+        {
+          "id": "feature-102:ios",
+          "mode": "ios",
+          "platform": "ios",
+          "flow": "localization-rtl-restart",
+          "assertions": [
+            "feature-102:scenario-1",
+            "feature-102:scenario-2",
+            "feature-102:scenario-3",
+            "feature-102:scenario-4"
+          ],
+          "nextAction": "Run --mode ios --feature feature-102 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-102:device:ios",
+          "mode": "device",
+          "platform": "ios",
+          "motion": true,
+          "assertions": [
+            "feature-102:scenario-1",
+            "feature-102:scenario-2",
+            "feature-102:scenario-3",
+            "feature-102:scenario-4",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical ios device and capture LTR to Arabic and Arabic to LTR or System with restart, restart failure, mirrored navigation and preserved input, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-102:android",
+          "mode": "android",
+          "platform": "android",
+          "flow": "localization-rtl-restart",
+          "assertions": [
+            "feature-102:scenario-1",
+            "feature-102:scenario-2",
+            "feature-102:scenario-3",
+            "feature-102:scenario-4"
+          ],
+          "nextAction": "Run --mode android --feature feature-102 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-102:device:android",
+          "mode": "device",
+          "platform": "android",
+          "motion": true,
+          "assertions": [
+            "feature-102:scenario-1",
+            "feature-102:scenario-2",
+            "feature-102:scenario-3",
+            "feature-102:scenario-4",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical android device and capture LTR to Arabic and Arabic to LTR or System with restart, restart failure, mirrored navigation and preserved input, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        }
+      ],
+      "requestedSummary": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1,
+        "blocked": 0,
+        "notRun": 0,
+        "passedPercent": 0,
+        "complete": false
+      },
+      "status": "failed"
+    },
+    {
+      "id": "feature-103",
+      "catalog": "premium-verification",
+      "category": "Protection",
+      "feature": "Independent protection layer status",
+      "controls": "Website DNS, Android app intervention, iOS Screen Time and Safari",
+      "nextVerification": "permission granted denied revoked and restart for each supported layer independently",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "flow": "protection-layers",
+      "suites": [
+        "tests/protection-permission-native.test.ts",
+        "tests/protection-dns-safety.test.js",
+        "tests/encrypted-dns.test.ts",
+        "tests/motion-policy.test.ts",
+        "tests/native-router-dispatch.test.ts"
+      ],
+      "scenarios": [
+        {
+          "id": "feature-103:scenario-1",
+          "expected": "each supported protection layer displays its own actual authorization configuration and runtime health"
+        },
+        {
+          "id": "feature-103:scenario-2",
+          "expected": "one failed or denied layer never hides an active independent layer or claims total protection"
+        },
+        {
+          "id": "feature-103:scenario-3",
+          "expected": "permission revocation pause and restart refresh each native layer without inferred success"
+        },
+        {
+          "id": "feature-103:scenario-4",
+          "expected": "unsupported iOS packet inspection remains explicit while Safari Screen Time and local recovery remain reachable"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "feature-103:local",
+          "mode": "local",
+          "suites": [
+            "tests/protection-permission-native.test.ts",
+            "tests/protection-dns-safety.test.js",
+            "tests/encrypted-dns.test.ts",
+            "tests/motion-policy.test.ts",
+            "tests/native-router-dispatch.test.ts"
+          ],
+          "assertions": [
+            "behavioral-suite:tests/protection-permission-native.test.ts",
+            "behavioral-suite:tests/protection-dns-safety.test.js",
+            "behavioral-suite:tests/encrypted-dns.test.ts",
+            "behavioral-suite:tests/motion-policy.test.ts",
+            "behavioral-suite:tests/native-router-dispatch.test.ts"
+          ],
+          "nextAction": "node scripts/run-feature-verification.js --mode local --feature feature-103",
+          "selected": true,
+          "status": "passed",
+          "reason": "Related local behavioral contracts passed. Native/live/device obligations remain separate."
+        },
+        {
+          "id": "feature-103:ios",
+          "mode": "ios",
+          "platform": "ios",
+          "flow": "protection-layers",
+          "assertions": [
+            "feature-103:scenario-1",
+            "feature-103:scenario-2",
+            "feature-103:scenario-3",
+            "feature-103:scenario-4"
+          ],
+          "nextAction": "Run --mode ios --feature feature-103 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-103:device:ios",
+          "mode": "device",
+          "platform": "ios",
+          "motion": true,
+          "assertions": [
+            "feature-103:scenario-1",
+            "feature-103:scenario-2",
+            "feature-103:scenario-3",
+            "feature-103:scenario-4",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical ios device and capture permission granted denied revoked and restart for each supported layer independently, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-103:android",
+          "mode": "android",
+          "platform": "android",
+          "flow": "protection-layers",
+          "assertions": [
+            "feature-103:scenario-1",
+            "feature-103:scenario-2",
+            "feature-103:scenario-3",
+            "feature-103:scenario-4"
+          ],
+          "nextAction": "Run --mode android --feature feature-103 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-103:device:android",
+          "mode": "device",
+          "platform": "android",
+          "motion": true,
+          "assertions": [
+            "feature-103:scenario-1",
+            "feature-103:scenario-2",
+            "feature-103:scenario-3",
+            "feature-103:scenario-4",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical android device and capture permission granted denied revoked and restart for each supported layer independently, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        }
+      ],
+      "requestedSummary": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "blocked": 0,
+        "notRun": 0,
+        "passedPercent": 100,
+        "complete": true
+      },
+      "status": "not-run"
+    },
+    {
+      "id": "feature-104",
+      "catalog": "premium-verification",
+      "category": "Protection",
+      "feature": "Opt-in encrypted DNS consent and release gate",
+      "controls": "Explicit consent, reviewed provider, native capability and release configuration",
+      "nextVerification": "fresh no-consent fixture, decline, consent, gated build, provider policy and authorization denial",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "flow": "encrypted-dns-consent",
+      "suites": [
+        "tests/encrypted-dns.test.ts",
+        "tests/protection-dns-safety.test.js",
+        "tests/ui/encrypted-dns-section.test.tsx",
+        "tests/motion-policy.test.ts",
+        "tests/native-router-dispatch.test.ts"
+      ],
+      "scenarios": [
+        {
+          "id": "feature-104:scenario-1",
+          "expected": "fresh install does not start encrypted DNS before explicit informed consent"
+        },
+        {
+          "id": "feature-104:scenario-2",
+          "expected": "declining consent remains usable and release gate prevents activation even after consent"
+        },
+        {
+          "id": "feature-104:scenario-3",
+          "expected": "consent alone never reports native authorization or active encrypted DNS"
+        },
+        {
+          "id": "feature-104:scenario-4",
+          "expected": "missing module older binary invalid provider and revoked consent fail closed with truthful status"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "feature-104:local",
+          "mode": "local",
+          "suites": [
+            "tests/encrypted-dns.test.ts",
+            "tests/protection-dns-safety.test.js",
+            "tests/ui/encrypted-dns-section.test.tsx",
+            "tests/motion-policy.test.ts",
+            "tests/native-router-dispatch.test.ts"
+          ],
+          "assertions": [
+            "behavioral-suite:tests/encrypted-dns.test.ts",
+            "behavioral-suite:tests/protection-dns-safety.test.js",
+            "behavioral-suite:tests/ui/encrypted-dns-section.test.tsx",
+            "behavioral-suite:tests/motion-policy.test.ts",
+            "behavioral-suite:tests/native-router-dispatch.test.ts"
+          ],
+          "nextAction": "node scripts/run-feature-verification.js --mode local --feature feature-104",
+          "selected": true,
+          "status": "passed",
+          "reason": "Related local behavioral contracts passed. Native/live/device obligations remain separate."
+        },
+        {
+          "id": "feature-104:ios",
+          "mode": "ios",
+          "platform": "ios",
+          "flow": "encrypted-dns-consent",
+          "assertions": [
+            "feature-104:scenario-1",
+            "feature-104:scenario-2",
+            "feature-104:scenario-3",
+            "feature-104:scenario-4"
+          ],
+          "nextAction": "Run --mode ios --feature feature-104 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-104:device:ios",
+          "mode": "device",
+          "platform": "ios",
+          "motion": true,
+          "assertions": [
+            "feature-104:scenario-1",
+            "feature-104:scenario-2",
+            "feature-104:scenario-3",
+            "feature-104:scenario-4",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical ios device and capture fresh no-consent fixture, decline, consent, gated build, provider policy and authorization denial, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-104:android",
+          "mode": "android",
+          "platform": "android",
+          "flow": "encrypted-dns-consent",
+          "assertions": [
+            "feature-104:scenario-1",
+            "feature-104:scenario-2",
+            "feature-104:scenario-3",
+            "feature-104:scenario-4"
+          ],
+          "nextAction": "Run --mode android --feature feature-104 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-104:device:android",
+          "mode": "device",
+          "platform": "android",
+          "motion": true,
+          "assertions": [
+            "feature-104:scenario-1",
+            "feature-104:scenario-2",
+            "feature-104:scenario-3",
+            "feature-104:scenario-4",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical android device and capture fresh no-consent fixture, decline, consent, gated build, provider policy and authorization denial, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        }
+      ],
+      "requestedSummary": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "blocked": 0,
+        "notRun": 0,
+        "passedPercent": 100,
+        "complete": true
+      },
+      "status": "not-run"
+    },
+    {
+      "id": "feature-105",
+      "catalog": "premium-verification",
+      "category": "Protection",
+      "feature": "Encrypted DNS runtime health and failure behavior",
+      "controls": "Configured enabled active degraded captive portal VPN conflict and stopped states",
+      "nextVerification": "physical resolver success failure captive portal conflicting VPN background restart and stop with sanitized network traces",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "flow": "encrypted-dns-status",
+      "suites": [
+        "tests/encrypted-dns.test.ts",
+        "tests/protection-dns-safety.test.js",
+        "tests/ui/encrypted-dns-section.test.tsx",
+        "tests/motion-policy.test.ts",
+        "tests/native-router-dispatch.test.ts"
+      ],
+      "scenarios": [
+        {
+          "id": "feature-105:scenario-1",
+          "expected": "configured profile enabled setting and verified active runtime remain distinct states"
+        },
+        {
+          "id": "feature-105:scenario-2",
+          "expected": "captive portal VPN conflict timeout and malformed resolver reply never report active protection"
+        },
+        {
+          "id": "feature-105:scenario-3",
+          "expected": "disable revoke background restart and network change refresh the measured native state"
+        },
+        {
+          "id": "feature-105:scenario-4",
+          "expected": "physical normal browsing blocked adult domain and latency traces establish actual enforcement without silent plaintext downgrade"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "feature-105:local",
+          "mode": "local",
+          "suites": [
+            "tests/encrypted-dns.test.ts",
+            "tests/protection-dns-safety.test.js",
+            "tests/ui/encrypted-dns-section.test.tsx",
+            "tests/motion-policy.test.ts",
+            "tests/native-router-dispatch.test.ts"
+          ],
+          "assertions": [
+            "behavioral-suite:tests/encrypted-dns.test.ts",
+            "behavioral-suite:tests/protection-dns-safety.test.js",
+            "behavioral-suite:tests/ui/encrypted-dns-section.test.tsx",
+            "behavioral-suite:tests/motion-policy.test.ts",
+            "behavioral-suite:tests/native-router-dispatch.test.ts"
+          ],
+          "nextAction": "node scripts/run-feature-verification.js --mode local --feature feature-105",
+          "selected": true,
+          "status": "passed",
+          "reason": "Related local behavioral contracts passed. Native/live/device obligations remain separate."
+        },
+        {
+          "id": "feature-105:ios",
+          "mode": "ios",
+          "platform": "ios",
+          "flow": "encrypted-dns-status",
+          "assertions": [
+            "feature-105:scenario-1",
+            "feature-105:scenario-2",
+            "feature-105:scenario-3",
+            "feature-105:scenario-4"
+          ],
+          "nextAction": "Run --mode ios --feature feature-105 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-105:device:ios",
+          "mode": "device",
+          "platform": "ios",
+          "motion": true,
+          "assertions": [
+            "feature-105:scenario-1",
+            "feature-105:scenario-2",
+            "feature-105:scenario-3",
+            "feature-105:scenario-4",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical ios device and capture physical resolver success failure captive portal conflicting VPN background restart and stop with sanitized network traces, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-105:android",
+          "mode": "android",
+          "platform": "android",
+          "flow": "encrypted-dns-status",
+          "assertions": [
+            "feature-105:scenario-1",
+            "feature-105:scenario-2",
+            "feature-105:scenario-3",
+            "feature-105:scenario-4"
+          ],
+          "nextAction": "Run --mode android --feature feature-105 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-105:device:android",
+          "mode": "device",
+          "platform": "android",
+          "motion": true,
+          "assertions": [
+            "feature-105:scenario-1",
+            "feature-105:scenario-2",
+            "feature-105:scenario-3",
+            "feature-105:scenario-4",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical android device and capture physical resolver success failure captive portal conflicting VPN background restart and stop with sanitized network traces, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        }
+      ],
+      "requestedSummary": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "blocked": 0,
+        "notRun": 0,
+        "passedPercent": 100,
+        "complete": true
+      },
+      "status": "not-run"
+    },
+    {
+      "id": "feature-106",
+      "catalog": "premium-verification",
+      "category": "Premium",
+      "feature": "Unavailable, retry and store-localized pricing",
+      "controls": "Monthly yearly loading error store currency subscribe and free exit",
+      "nextVerification": "sandbox storefront currency, unavailable offering, retry success, cancellation and preserved plan selection",
+      "platforms": [
+        "ios",
+        "android"
+      ],
+      "flow": "paywall-price-recovery",
+      "suites": [
+        "tests/paywall-presenter.test.ts",
+        "tests/launch-purchases.test.ts",
+        "tests/ui/premium-offer.test.tsx",
+        "tests/motion-policy.test.ts",
+        "tests/native-router-dispatch.test.ts"
+      ],
+      "scenarios": [
+        {
+          "id": "feature-106:scenario-1",
+          "expected": "unavailable or loading store prices disable subscription and keep free continuation reachable"
+        },
+        {
+          "id": "feature-106:scenario-2",
+          "expected": "retry reloads actual store prices without fabricating a fallback amount or starting checkout"
+        },
+        {
+          "id": "feature-106:scenario-3",
+          "expected": "monthly and yearly show the exact store-localized currency amount and billing period with equal capabilities"
+        },
+        {
+          "id": "feature-106:scenario-4",
+          "expected": "busy failure cancellation and restore preserve plan ownership and truthful entitlement"
+        }
+      ],
+      "requirements": [
+        {
+          "id": "feature-106:local",
+          "mode": "local",
+          "suites": [
+            "tests/paywall-presenter.test.ts",
+            "tests/launch-purchases.test.ts",
+            "tests/ui/premium-offer.test.tsx",
+            "tests/motion-policy.test.ts",
+            "tests/native-router-dispatch.test.ts"
+          ],
+          "assertions": [
+            "behavioral-suite:tests/paywall-presenter.test.ts",
+            "behavioral-suite:tests/launch-purchases.test.ts",
+            "behavioral-suite:tests/ui/premium-offer.test.tsx",
+            "behavioral-suite:tests/motion-policy.test.ts",
+            "behavioral-suite:tests/native-router-dispatch.test.ts"
+          ],
+          "nextAction": "node scripts/run-feature-verification.js --mode local --feature feature-106",
+          "selected": true,
+          "status": "passed",
+          "reason": "Related local behavioral contracts passed. Native/live/device obligations remain separate."
+        },
+        {
+          "id": "feature-106:emulator",
+          "mode": "emulator",
+          "suites": [
+            "functions:emulator"
+          ],
+          "assertions": [
+            "feature-106:scenario-1",
+            "feature-106:scenario-2",
+            "feature-106:scenario-3",
+            "feature-106:scenario-4"
+          ],
+          "nextAction": "node scripts/run-feature-verification.js --mode emulator --feature feature-106 --evidence receipts.json",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-106:live",
+          "mode": "live",
+          "assertions": [
+            "feature-106:scenario-1",
+            "feature-106:scenario-2",
+            "feature-106:scenario-3",
+            "feature-106:scenario-4"
+          ],
+          "nextAction": "Use isolated staging/sandbox credentials and collect sandbox storefront currency, unavailable offering, retry success, cancellation and preserved plan selection; then --mode live --evidence <artifact-backed-receipts.json>.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-106:ios",
+          "mode": "ios",
+          "platform": "ios",
+          "flow": "paywall-price-recovery",
+          "assertions": [
+            "feature-106:scenario-1",
+            "feature-106:scenario-2",
+            "feature-106:scenario-3",
+            "feature-106:scenario-4"
+          ],
+          "nextAction": "Run --mode ios --feature feature-106 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-106:device:ios",
+          "mode": "device",
+          "platform": "ios",
+          "motion": true,
+          "assertions": [
+            "feature-106:scenario-1",
+            "feature-106:scenario-2",
+            "feature-106:scenario-3",
+            "feature-106:scenario-4",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical ios device and capture sandbox storefront currency, unavailable offering, retry success, cancellation and preserved plan selection, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-106:android",
+          "mode": "android",
+          "platform": "android",
+          "flow": "paywall-price-recovery",
+          "assertions": [
+            "feature-106:scenario-1",
+            "feature-106:scenario-2",
+            "feature-106:scenario-3",
+            "feature-106:scenario-4"
+          ],
+          "nextAction": "Run --mode android --feature feature-106 --run-ui --device <isolated-id> --isolation <fixture.json>; append full scenario receipts.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        },
+        {
+          "id": "feature-106:device:android",
+          "mode": "device",
+          "platform": "android",
+          "motion": true,
+          "assertions": [
+            "feature-106:scenario-1",
+            "feature-106:scenario-2",
+            "feature-106:scenario-3",
+            "feature-106:scenario-4",
+            "motion-normal",
+            "motion-reduced",
+            "large-text",
+            "keyboard-and-back",
+            "accessibility"
+          ],
+          "nextAction": "Use a disposable signed physical android device and capture sandbox storefront currency, unavailable offering, retry success, cancellation and preserved plan selection, frame timing, Reduce Motion, accessibility and large text.",
+          "receiptRequired": true,
+          "selected": false,
+          "status": "not-run",
+          "reason": "Not selected by local mode."
+        }
+      ],
+      "requestedSummary": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "blocked": 0,
+        "notRun": 0,
+        "passedPercent": 100,
+        "complete": true
+      },
+      "status": "not-run"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "revision": "2026-10-11-ad-privacy-options",
+  "entries": [
+    {
+      "source": "Ad privacy options",
+      "key": "momentum.profileSettings.adPrivacyOptions",
+      "translations": {
+        "hi": "विज्ञापन गोपनीयता विकल्प",
+        "es": "Opciones de privacidad de anuncios",
+        "pt": "Opções de privacidade de anúncios",
+        "fr": "Options de confidentialité publicitaire",
+        "de": "Datenschutzoptionen für Werbung",
+        "ar": "خيارات خصوصية الإعلانات",
+        "ja": "広告のプライバシー設定",
+        "ko": "광고 개인정보 보호 옵션",
+        "zh-Hans": "广告隐私选项"
+      }
+    },
+    {
+      "source": "Review advertising privacy choices",
+      "key": "momentum.profileSettings.adPrivacyDetail",
+      "translations": {
+        "hi": "विज्ञापन की गोपनीयता संबंधी विकल्प देखें",
+        "es": "Revisa tus opciones de privacidad publicitaria",
+        "pt": "Revise as opções de privacidade da publicidade",
+        "fr": "Consultez vos choix de confidentialité publicitaire",
+        "de": "Datenschutzentscheidungen für Werbung prüfen",
+        "ar": "راجع خيارات الخصوصية للإعلانات",
+        "ja": "広告に関するプライバシーの選択を確認",
+        "ko": "광고 개인정보 보호 설정 확인",
+        "zh-Hans": "查看广告隐私选择"
+      }
+    },
+    {
+      "source": "Ad privacy options could not open. Try again.",
+      "key": "momentum.profileSettings.adPrivacyUnavailable",
+      "translations": {
+        "hi": "विज्ञापन गोपनीयता विकल्प नहीं खुल सके। फिर से कोशिश करें।",
+        "es": "No se pudieron abrir las opciones de privacidad de anuncios. Inténtalo de nuevo.",
+        "pt": "Não foi possível abrir as opções de privacidade de anúncios. Tente novamente.",
+        "fr": "Impossible d’ouvrir les options de confidentialité publicitaire. Réessayez.",
+        "de": "Die Datenschutzoptionen für Werbung konnten nicht geöffnet werden. Versuche es erneut.",
+        "ar": "تعذر فتح خيارات خصوصية الإعلانات. حاول مجددًا.",
+        "ja": "広告のプライバシー設定を開けませんでした。もう一度お試しください。",
+        "ko": "광고 개인정보 보호 옵션을 열 수 없습니다. 다시 시도하세요.",
+        "zh-Hans": "无法打开广告隐私选项。请重试。"
+      }
+    },
+    {
+      "source": "Ad reference: {{reference}}",
+      "key": "momentum.profileSettings.adErrorReference",
+      "translations": {
+        "hi": "विज्ञापन संदर्भ: {{reference}}",
+        "es": "Referencia del anuncio: {{reference}}",
+        "pt": "Referência do anúncio: {{reference}}",
+        "fr": "Référence publicitaire : {{reference}}",
+        "de": "Anzeigenreferenz: {{reference}}",
+        "ar": "مرجع الإعلان: {{reference}}",
+        "ja": "広告の参照情報：{{reference}}",
+        "ko": "광고 참조: {{reference}}",
+        "zh-Hans": "广告参考：{{reference}}"
+      }
+    }
+  ]
+}

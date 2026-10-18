@@ -1,0 +1,18 @@
+{
+  "entries": [
+    {
+      "source": "Night Guard could not be updated. Retry saving its time window.",
+      "translations": {
+        "hi": "Night Guard अपडेट नहीं हो सका। इसकी समय अवधि फिर से सहेजें।",
+        "es": "No se pudo actualizar Guardia nocturna. Vuelve a guardar su horario.",
+        "pt": "Não foi possível atualizar a Proteção noturna. Tente salvar o horário novamente.",
+        "fr": "Impossible de mettre à jour la protection nocturne. Réessayez d’enregistrer sa plage horaire.",
+        "de": "Der Nachtschutz konnte nicht aktualisiert werden. Speichere sein Zeitfenster erneut.",
+        "ar": "تعذّر تحديث الحماية الليلية. أعد محاولة حفظ وقتها.",
+        "ja": "ナイトガードを更新できませんでした。時間帯をもう一度保存してください。",
+        "ko": "나이트 가드를 업데이트하지 못했습니다. 시간대를 다시 저장해 주세요.",
+        "zh-Hans": "夜间保护无法更新。请重新保存它的时间段。"
+      }
+    }
+  ]
+}

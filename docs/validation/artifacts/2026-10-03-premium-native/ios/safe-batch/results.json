@@ -1,0 +1,654 @@
+{
+  "kind": "SIMULATOR_DEBUG",
+  "appBuildSha256": "0587fabe588bdc54b4fdf63976130c88cde435a1aca4777809e8a000c16956d3",
+  "baselineThemeOnly": true,
+  "notFinalVisualValidation": true,
+  "flows": [
+    {
+      "flow": "native-permission-locales",
+      "status": "failed",
+      "durationSeconds": 21.778,
+      "reason": "Assertion is false: id: screen-preferences is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/native-permission-locales/screenshots/step-006-assertCondition-screen-preferences.png",
+          "sha256": "a810437f49f9e9f1752bb176fedd90135984b3ae1b26e2684b96a3e2fa191b46"
+        }
+      ]
+    },
+    {
+      "flow": "shield-health",
+      "status": "passed",
+      "durationSeconds": 18.303,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/shield-health/takeScreenshot/shield-health.png",
+          "sha256": "a374a9e105a16abd121c1b28f3c839215603bbe56dd0e2527ad62f8de5a045ca"
+        }
+      ]
+    },
+    {
+      "flow": "clara-local",
+      "status": "passed",
+      "durationSeconds": 25.894,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/clara-local/takeScreenshot/clara-local.png",
+          "sha256": "ad68f6e10469246106adcd286c7aa7e31be784c2e17158a024daae1a2cdb0763"
+        }
+      ]
+    },
+    {
+      "flow": "recovery-drafts",
+      "status": "failed",
+      "durationSeconds": 24.217,
+      "reason": "Assertion is false: id: checkin-reflection is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/recovery-drafts/screenshots/step-006-assertCondition-checkin-reflection.png",
+          "sha256": "7f555ecfaebec3669a66508fe7f049f8922df1b7ef52565408d9c063a2023184"
+        }
+      ]
+    },
+    {
+      "flow": "shield-allowlist",
+      "status": "failed",
+      "durationSeconds": 23.05,
+      "reason": "Element not found: Text matching regex: Show advanced diagnostics",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/shield-allowlist/screenshots/step-008-tapOnElement-Show_advanced_diagnostics.png",
+          "sha256": "de1752ee5183a49abc8ea04ee931cacf40dc8c7e1ff21410556f41cd66987d5c"
+        }
+      ]
+    },
+    {
+      "flow": "intercept",
+      "status": "failed",
+      "durationSeconds": 32.927,
+      "reason": "Assertion is false: \"Back to Safety\" is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/intercept/screenshots/step-010-assertCondition-Back_to_Safety.png",
+          "sha256": "ce1d88f028d232b2e327e0ac935a64e2154227d5b6c4e3043babc2f865865f2e"
+        }
+      ]
+    },
+    {
+      "flow": "challenge-list",
+      "status": "passed",
+      "durationSeconds": 13.119,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/challenge-list/takeScreenshot/challenge-list.png",
+          "sha256": "5523342b1b4320ffb8ea442a0f2a0be43227a245cab540da59f20776d165da83"
+        }
+      ]
+    },
+    {
+      "flow": "urgent-support",
+      "status": "failed",
+      "durationSeconds": 32.401,
+      "reason": "Assertion is false: \"Back to Safety\" is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/urgent-support/screenshots/step-010-assertCondition-Back_to_Safety.png",
+          "sha256": "9ad102ef348e27034de8c0d50568820cdeb97a8f983e3a8a9eb1fdd90ec03527"
+        }
+      ]
+    },
+    {
+      "flow": "onboarding-plan",
+      "status": "passed",
+      "durationSeconds": 14.038,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/onboarding-plan/takeScreenshot/onboarding-plan.png",
+          "sha256": "8adacfa6c472abe418488f05c0aa25a28fd838cdf408fbad8fedbfa78d27fc6f"
+        }
+      ]
+    },
+    {
+      "flow": "custom-reset",
+      "status": "passed",
+      "durationSeconds": 15.845,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/custom-reset/takeScreenshot/custom-reset.png",
+          "sha256": "37665b1db696820f5310d7d113f122e4c4ad4c79eeed3248ac7f0c551fc5d752"
+        }
+      ]
+    },
+    {
+      "flow": "encrypted-dns-status",
+      "status": "passed",
+      "durationSeconds": 21.302,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/encrypted-dns-status/takeScreenshot/encrypted-dns-status-after-refresh.png",
+          "sha256": "dacf16e85a1b381dd73c31b6555aa2195ed2129b2f4a85b8fb1b5475b0d5299a"
+        }
+      ]
+    },
+    {
+      "flow": "profile-shield",
+      "status": "passed",
+      "durationSeconds": 15.319,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/profile-shield/takeScreenshot/profile-shield.png",
+          "sha256": "0b0f936bc891e3d157d731e30a99fcf61fc8454920e3e9831fb14b53f9468b42"
+        }
+      ]
+    },
+    {
+      "flow": "paywall-free-exit",
+      "status": "passed",
+      "durationSeconds": 16.677,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/paywall-free-exit/takeScreenshot/paywall-free-exit.png",
+          "sha256": "b915512c94454421da87a04dd82b1233dbd59a5f0524cab0d2b3fdfdd96291d0"
+        }
+      ]
+    },
+    {
+      "flow": "root-navigation",
+      "status": "passed",
+      "durationSeconds": 25.592,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/root-navigation/takeScreenshot/root-navigation.png",
+          "sha256": "666e6ea0ed30ecdea40512a743007de717c5bbea29e3244c055ebf4c3ed11b69"
+        }
+      ]
+    },
+    {
+      "flow": "onboarding-quiz",
+      "status": "passed",
+      "durationSeconds": 24.303,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/onboarding-quiz/takeScreenshot/onboarding-quiz.png",
+          "sha256": "90ab492e17a625b752d0af3c94d31ce0d062443473f55e5238f3cec5f59c1df9"
+        }
+      ]
+    },
+    {
+      "flow": "preferences-appearance",
+      "status": "failed",
+      "durationSeconds": 21.134,
+      "reason": "Assertion is false: id: screen-preferences is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/preferences-appearance/screenshots/step-007-assertCondition-screen-preferences.png",
+          "sha256": "e8982c0bca70aeb7ccba4f2d4b6e4a039f0dbaaf6d7a6933c410f45ee5abcaac"
+        }
+      ]
+    },
+    {
+      "flow": "shield-schedules",
+      "status": "failed",
+      "durationSeconds": 27.626,
+      "reason": "No visible element found: \"Sleep mode.*\"",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/shield-schedules/screenshots/step-008-scrollUntilVisible-Sleep_mode.png",
+          "sha256": "2507aa8e8754d328ab9b587fc5eb51b3a2dd95df513472440539582cb96faa89"
+        }
+      ]
+    },
+    {
+      "flow": "profile-history",
+      "status": "failed",
+      "durationSeconds": 36.465,
+      "reason": "Assertion is false: \".*protected attempts.*\" is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/profile-history/screenshots/step-011-assertCondition-protected_attempts.png",
+          "sha256": "3a0643cf9ecffd49f5b57ff9ff238e814c9ed090a3fac47a6d33916bc7821db6"
+        }
+      ]
+    },
+    {
+      "flow": "library-articles",
+      "status": "failed",
+      "durationSeconds": 58.404,
+      "reason": "Assertion is false: id: screen-main-today is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/library-articles/screenshots/step-027-assertCondition-screen-main-today.png",
+          "sha256": "f3d9896f36d410cf064eed400b080f9bcad0d2087294911eb908a35305baea82"
+        }
+      ]
+    },
+    {
+      "flow": "profile-accountability",
+      "status": "failed",
+      "durationSeconds": 30.555,
+      "reason": "No visible element found: \".*Accountability.*|.*accountability.*\"",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/profile-accountability/screenshots/step-010-scrollUntilVisible-Accountability..accou.png",
+          "sha256": "ad8e88ad433c324a314b3f171f75f86984e556ed74edff9a32f3e8cf232c75e9"
+        }
+      ]
+    },
+    {
+      "flow": "shield-preferences",
+      "status": "failed",
+      "durationSeconds": 30.646,
+      "reason": "No visible element found: \"Daily limit\"",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/shield-preferences/screenshots/step-008-scrollUntilVisible-Daily_limit.png",
+          "sha256": "ae018869f7ba4731682b4a1f6b1eb3505942e94304ceb139eb181596626bbf5d"
+        }
+      ]
+    },
+    {
+      "flow": "progress-reports",
+      "status": "passed",
+      "durationSeconds": 22.235,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/progress-reports/takeScreenshot/progress-reports.png",
+          "sha256": "aa38d17978510a9c7bd78b70cfba37c6758a713e2b540a62d9b8d624de1a2357"
+        }
+      ]
+    },
+    {
+      "flow": "checkin-save",
+      "status": "passed",
+      "durationSeconds": 37.628,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/checkin-save/takeScreenshot/checkin-save.png",
+          "sha256": "8f5a43fe2cc07c475dc832444ef191e19466078cb5b3b80af01f1e6385ccdf35"
+        }
+      ]
+    },
+    {
+      "flow": "profile-reminders",
+      "status": "failed",
+      "durationSeconds": 39.898,
+      "reason": "Assertion is false: \"Evening.*\" is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/profile-reminders/screenshots/step-012-assertCondition-Evening.png",
+          "sha256": "5a213439aa3585f5bca4450e3ea22dca94c7fd7074a2a4d3ffd317439c14f5ad"
+        }
+      ]
+    },
+    {
+      "flow": "protection-layers",
+      "status": "passed",
+      "durationSeconds": 20.387,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/protection-layers/takeScreenshot/independent-dns-status.png",
+          "sha256": "a71ab264482a4385ea7e02680a0246210909eac1c56b69e95e71558697a70744"
+        }
+      ]
+    },
+    {
+      "flow": "platform-limits",
+      "status": "failed",
+      "durationSeconds": 25.333,
+      "reason": "Assertion is false: \"Web safety\" is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/platform-limits/screenshots/step-009-assertCondition-Web_safety.png",
+          "sha256": "457be290cbd4199875e3395670c50fe5fe16419de52212858fb1d189ba43c800"
+        }
+      ]
+    },
+    {
+      "flow": "encrypted-dns-release-gated",
+      "status": "passed",
+      "durationSeconds": 23.989,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/encrypted-dns-release-gated/takeScreenshot/encrypted-dns-release-gated.png",
+          "sha256": "f20d2d128ee1ebae7ff21c99157886c4e2befa83e3e8e8137c35eb27208d8561"
+        }
+      ]
+    },
+    {
+      "flow": "protection-setup",
+      "status": "failed",
+      "durationSeconds": 24.396,
+      "reason": "No visible element found: \"Check settings again\"",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/protection-setup/screenshots/step-009-scrollUntilVisible-Check_settings_again.png",
+          "sha256": "f437c3f2858f33b0e78e052dbbc009df1c7b4ae7e77788a65fe7a816abfaedc4"
+        }
+      ]
+    },
+    {
+      "flow": "backup-local",
+      "status": "failed",
+      "durationSeconds": 88.356,
+      "reason": "Couldn't hide the keyboard. This can happen if the app uses a custom input or doesn't expose a standard dismiss action.",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/backup-local/screenshots/step-022-hideKeyboard.png",
+          "sha256": "9d64ef23f4b2faa22a5a413afac3d16684afc8482c25582663a0b8a6421b0789"
+        }
+      ]
+    },
+    {
+      "flow": "preferences-language",
+      "status": "failed",
+      "durationSeconds": 28.33,
+      "reason": "Assertion is false: id: screen-preferences is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/preferences-language/screenshots/step-007-assertCondition-screen-preferences.png",
+          "sha256": "96d61c95d9b24fbb5734d5ce84f880c995d2a1368dd454f6ef95694e0e86a087"
+        }
+      ]
+    },
+    {
+      "flow": "today-habits",
+      "status": "passed",
+      "durationSeconds": 57.058,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/today-habits/takeScreenshot/habit-adult-content-toggled.png",
+          "sha256": "0a51973f8e30b6b2ba04afbf979e8c672aea4d9784147ac7a12e7ff99453522c"
+        },
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/today-habits/takeScreenshot/today-habits.png",
+          "sha256": "d03865f9bd8bae623e515dd82a5d8c5b2cd7124b57fe7cfd1a2e30549214012b"
+        }
+      ]
+    },
+    {
+      "flow": "today-metrics",
+      "status": "passed",
+      "durationSeconds": 36.466,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/today-metrics/takeScreenshot/today-metrics.png",
+          "sha256": "b06d1da6350381a598092bfa78823e4d5dc8498f1da6cc2746cdc0c42d658b0b"
+        }
+      ]
+    },
+    {
+      "flow": "account-validation",
+      "status": "failed",
+      "durationSeconds": 106.208,
+      "reason": "Assertion is false: \"The passwords do not match\\. Enter them again\\.\" is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/account-validation/screenshots/step-017-assertCondition-The_passwords_do_not_mat.png",
+          "sha256": "e7b2c6ea2808edeeae9a6143e5a950776bc869d320d65eeadf8e5ea493730d45"
+        }
+      ]
+    },
+    {
+      "flow": "privacy-support",
+      "status": "passed",
+      "durationSeconds": 34.491,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/privacy-support/takeScreenshot/privacy-support.png",
+          "sha256": "90a21196e7211a6e016cb94dbc52d0a5bdea71b086c6176fa947277d501a6f62"
+        }
+      ]
+    },
+    {
+      "flow": "deletion-local",
+      "status": "failed",
+      "durationSeconds": 35.157,
+      "reason": "No visible element found: \"Privacy & support\"",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/deletion-local/screenshots/step-008-scrollUntilVisible-Privacy_&_support.png",
+          "sha256": "16c2f9f4e20ed85d325b6512c84b724827f02d119cf02f503ab22ff066bd53ac"
+        }
+      ]
+    },
+    {
+      "flow": "encrypted-dns-consent",
+      "status": "failed",
+      "durationSeconds": 41.327,
+      "reason": "No visible element found: id: dns-consent-open",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/encrypted-dns-consent/screenshots/step-008-scrollUntilVisible-dns-consent-open.png",
+          "sha256": "059d73f4e3dfed5212846e49a3d4cfd6fb43edae455059f2531562b5d473d5ae"
+        }
+      ]
+    },
+    {
+      "flow": "today-pledge",
+      "status": "passed",
+      "durationSeconds": 31.22,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/today-pledge/takeScreenshot/today-pledge.png",
+          "sha256": "f5f98fda35d6b93830d0f41841ffce836e47f6fda6f12ed1bf33b093b2bf0433"
+        }
+      ]
+    },
+    {
+      "flow": "library-search",
+      "status": "passed",
+      "durationSeconds": 26.094,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/library-search/takeScreenshot/library-search.png",
+          "sha256": "dc89112b3574c54dff10acac2bb5a71a64a63993de571284c114856698a9bda7"
+        }
+      ]
+    },
+    {
+      "flow": "slip-save",
+      "status": "failed",
+      "durationSeconds": 3.006,
+      "reason": "An error was encountered processing the command (domain=NSPOSIXErrorDomain, code=3):\nSimulator device failed to launch app.freed.recovery.\nNo such process\nUnderlying error (domain=NSPOSIXErrorDomain, code=3):\n\tApplication launch for 'app.freed.recovery' did not return a process handle nor launch error.\n\tNo such process\n",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/slip-save/screenshots/step-004-launchApp-app.freed.recovery.png",
+          "sha256": "c9641e34a55b81b985abe7ecaf365d207102b977166e6d5283fbea794808154e"
+        }
+      ]
+    },
+    {
+      "flow": "shield-url-check",
+      "status": "failed",
+      "durationSeconds": 28.234,
+      "reason": "Element not found: Text matching regex: Show advanced diagnostics",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/shield-url-check/screenshots/step-008-tapOnElement-Show_advanced_diagnostics.png",
+          "sha256": "015a07ca81a04c123b4992888dac99d659d0a5d7e6980c5d0f98458473791b57"
+        }
+      ]
+    },
+    {
+      "flow": "breathing",
+      "status": "failed",
+      "durationSeconds": 21.943,
+      "reason": "Assertion is false: id: screen-breathing is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/breathing/screenshots/step-007-assertCondition-screen-breathing.png",
+          "sha256": "7f152138da0603282dacc4322278c6f286873916a3a63b5e087c468b73c6a5e7"
+        }
+      ]
+    },
+    {
+      "flow": "paywall-plans",
+      "status": "passed",
+      "durationSeconds": 16.96,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/paywall-plans/takeScreenshot/paywall-plans.png",
+          "sha256": "682a97af86b04ff20faa0bff9d0d41b7c068b63c08760b269b888b034e34b091"
+        }
+      ]
+    },
+    {
+      "flow": "recovery-shortcuts",
+      "status": "failed",
+      "durationSeconds": 50.93,
+      "reason": "Assertion is false: id: screen-breathing is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/recovery-shortcuts/screenshots/step-012-assertCondition-screen-breathing.png",
+          "sha256": "8ebc17bd8b4117388bd0b6135435f30afce8715f5047a4063c925963746b8de2"
+        }
+      ]
+    },
+    {
+      "flow": "onboarding-welcome",
+      "status": "passed",
+      "durationSeconds": 30.923,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/onboarding-welcome/takeScreenshot/onboarding-welcome.png",
+          "sha256": "6ef150237a002a3c6a6ae4470615daa14d472586b5bbb62942e1645e35019a3e"
+        }
+      ]
+    },
+    {
+      "flow": "progress-zero",
+      "status": "failed",
+      "durationSeconds": 43.225,
+      "reason": "Assertion is false: \"No signals yet\" is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/progress-zero/screenshots/step-008-assertCondition-No_signals_yet.png",
+          "sha256": "3b98b3cfb83c0ffff2d925c2ddb55337368e35851bce89180eca2ad5c82bed0f"
+        }
+      ]
+    },
+    {
+      "flow": "localization-rtl-restart",
+      "status": "failed",
+      "durationSeconds": 43.942,
+      "reason": "Assertion is false: id: screen-preferences is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/localization-rtl-restart/screenshots/step-007-assertCondition-screen-preferences.png",
+          "sha256": "a95bd8b66b08c48484847ecbebd1c91cb3b122d24e26179b32032b7211e6b6a9"
+        }
+      ]
+    },
+    {
+      "flow": "analytics-consent",
+      "status": "failed",
+      "durationSeconds": 34.009,
+      "reason": "No visible element found: \"Enable Sharing|Turn Off\"",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/analytics-consent/screenshots/step-008-scrollUntilVisible-Enable_SharingTurn_Of.png",
+          "sha256": "56a97b5cb4b505674a9ce4cca26d37372a50fdcaa4f0cfef163aced16c4b9592"
+        }
+      ]
+    },
+    {
+      "flow": "profile-plan",
+      "status": "failed",
+      "durationSeconds": 42.436,
+      "reason": "Assertion is false: id: screen-main-profile is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/profile-plan/screenshots/step-010-assertCondition-screen-main-profile.png",
+          "sha256": "a22ab31caf50a7105c80fb1e8daf1cef509b489c5cdccb1a49dec02f4e146634"
+        }
+      ]
+    },
+    {
+      "flow": "account-reset-validation",
+      "status": "passed",
+      "durationSeconds": 57.464,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/account-reset-validation/takeScreenshot/account-reset-validation.png",
+          "sha256": "2eaff009a8fd15b8d2ae9149fd08c5fc351b72c4477163185337f53f0d180173"
+        }
+      ]
+    },
+    {
+      "flow": "paywall-legal",
+      "status": "passed",
+      "durationSeconds": 17.763,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/paywall-legal/takeScreenshot/paywall-legal.png",
+          "sha256": "d6bd4f1266a520c190be0442e4f60541493eb2358b6ca364e623512e2625e255"
+        }
+      ]
+    },
+    {
+      "flow": "account-options",
+      "status": "passed",
+      "durationSeconds": 19.38,
+      "reason": null,
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/account-options/takeScreenshot/account-options.png",
+          "sha256": "e5ee1576457cee816f59867e492592b7aa1515cedfd4857e5699c7e8347243e6"
+        }
+      ]
+    },
+    {
+      "flow": "onboarding-app-selection",
+      "status": "failed",
+      "durationSeconds": 25.951,
+      "reason": "Assertion is false: \"Select At Least 1 App\" is visible",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/onboarding-app-selection/screenshots/step-009-assertCondition-Select_At_Least_1_App.png",
+          "sha256": "0d17c2b1fe9a7b9b48d9118cbdbd4904c19ba4be405b26373a3eb4b796375e9c"
+        }
+      ]
+    },
+    {
+      "flow": "shield-diagnostics",
+      "status": "failed",
+      "durationSeconds": 28.405,
+      "reason": "Element not found: Text matching regex: Show advanced diagnostics",
+      "images": [
+        {
+          "path": "safe-batch/maestro/2026-10-03_075519/shield-diagnostics/screenshots/step-008-tapOnElement-Show_advanced_diagnostics.png",
+          "sha256": "5e21868891a2c243e76e64fa57e9729c87521652b41a84d0a803f31fa87a6fc0"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "executed": 53,
+    "passed": 24,
+    "failed": 29
+  },
+  "meaning": "UI smoke execution, not full-scenario or physical-device evidence. Failures require classification; source/UI and harness expectations both contributed."
+}

@@ -56,8 +56,8 @@ test("expired or failed Remote Config reads never reuse stale enabled state", as
   assert.equal(calls, 2);
 });
 
-test("Remote Config retrieval has a hard timeout and returns unavailable", async () => {
-  const startedAt = Date.now();
+test("Remote Config retrieval has a hard timeout and returns unavailable", async (context) => {
+  context.mock.timers.enable({ apis: ["setTimeout"] });
   let providerCalls = 0;
   const reader = createAiFeatureGateReader(
     () => new Promise(() => undefined),
@@ -76,14 +76,18 @@ test("Remote Config retrieval has a hard timeout and returns unavailable", async
       return Response.json({});
     }
   });
-  const result = await service.generateClara("uid-safe", {
+  const pending = service.generateClara("uid-safe", {
     clientEventId: "evt_timeout123",
     input: "Help me reset.",
     context: { streakDays: 1, attemptsToday: 1, premium: false, slipsThisWeek: 0, slipWindow: null, slipTrigger: null }
   });
+  // Drain real microtasks before advancing the virtual provider deadline.
+  await new Promise<void>((resolve) => setImmediate(resolve));
+  context.mock.timers.tick(5);
+  const result = await pending;
   assert.equal(result.provider, "fallback");
   assert.equal(providerCalls, 0);
-  assert.ok(Date.now() - startedAt < 100, "Remote Config timeout must fail closed promptly in the test harness.");
+  assert.equal(result.status, "fallback");
 });
 
 test("all AI callables bind Auth, App Check, region, and the Secret Manager key", () => {
@@ -100,7 +104,7 @@ test("all AI callables bind Auth, App Check, region, and the Secret Manager key"
   assert.equal(source.match(/region: REGION, enforceAppCheck: true, secrets: \[OPENAI_API_KEY\]/g)?.length, 3);
   assert.match(source, /accountTombstonePath:\s*`\$\{COLLECTIONS\.deletionTombstones\}\/\$\{input\.uid\}`/);
   assert.match(source, /const tombstone = await transaction\.get\(tombstoneReference\);[\s\S]*?if \(tombstone\.exists\) return;[\s\S]*?transaction\.set\(eventReference/);
-  assert.match(coreSource, /authorize\(dependencies, uid, "clara", input\.clientEventId, 30\)/);
+  assert.match(coreSource, /authorize\(dependencies, uid, "clara", input\.clientEventId, 30, gateReason === null\)/);
   assert.match(coreSource, /authorize\(dependencies, uid, "challenges", input\.clientEventId, 20\)/);
   assert.match(coreSource, /authorize\(dependencies, uid, "retention", input\.clientEventId, 10\)/);
 });

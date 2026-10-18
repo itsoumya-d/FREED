@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="./popup.css" />
+</head>
+<body>
+  <main>
+    <header>
+      <img src="../icons/icon48.png" alt="" width="28" height="28" />
+      <div>
+        <strong>FREED Guard</strong>
+        <span id="status-line">Checking…</span>
+      </div>
+    </header>
+
+    <section id="pause-panel" hidden>
+      <p class="warn">Blocking is paused. It resumes automatically.</p>
+      <button type="button" id="resume-btn" class="primary">Resume now</button>
+    </section>
+
+    <section id="active-panel">
+      <button type="button" id="breather-btn" class="ghost">Emergency breather (5 min)</button>
+      <p class="hint">Used today: <span id="pause-count">0</span> · every pause is counted honestly.</p>
+    </section>
+
+    <footer>
+      <a href="#" id="options-link">Custom lists</a>
+      <span>·</span>
+      <a href="#" id="blocked-link">Blocked page preview</a>
+    </footer>
+  </main>
+  <script src="./popup.js"></script>
+</body>
+</html>

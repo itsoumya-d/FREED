@@ -1,0 +1,172 @@
+{
+  "recordedAt": "2026-10-02T07:28:54.696Z",
+  "project": "freed-7d5ee",
+  "entrypoint": "lib/foundation.js",
+  "declaredSecretParameterCount": 0,
+  "functions": [
+    {
+      "name": "getReviewedAdultDomainFeed",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 5,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": true
+    },
+    {
+      "name": "refreshReviewedAdultDomainFeed",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 1,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": false,
+      "scheduled": "every 24 hours"
+    },
+    {
+      "name": "getPremiumEntitlement",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 5,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": true
+    },
+    {
+      "name": "fencePurchaseAccountLink",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 5,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": true
+    },
+    {
+      "name": "dispatchReviewedNotifications",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 1,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": false,
+      "scheduled": "every 5 minutes"
+    },
+    {
+      "name": "backendReadiness",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 5,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": true
+    },
+    {
+      "name": "ingestAggregateAnalytics",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 5,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": true
+    },
+    {
+      "name": "startEncryptedBackupUpload",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 5,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": true
+    },
+    {
+      "name": "finalizeEncryptedBackupUpload",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 5,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": true
+    },
+    {
+      "name": "getEncryptedBackupDownload",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 5,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": true
+    },
+    {
+      "name": "getLatestEncryptedBackupDownload",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 5,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": true
+    },
+    {
+      "name": "deleteEncryptedBackup",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 5,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": true
+    },
+    {
+      "name": "registerPushToken",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 5,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": true
+    },
+    {
+      "name": "requestAccountDeletion",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 5,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": true
+    },
+    {
+      "name": "retryPendingAccountDeletions",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 5,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": false,
+      "scheduled": "every 15 minutes"
+    },
+    {
+      "name": "cleanupExpiredServerRecords",
+      "region": [
+        "asia-south1"
+      ],
+      "maxInstances": 5,
+      "minInstances": null,
+      "secretBindingCount": 0,
+      "callable": false,
+      "scheduled": "every 24 hours"
+    }
+  ]
+}

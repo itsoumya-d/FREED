@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 const { readFileSync } = require("node:fs");
+const { execFileSync } = require("node:child_process");
+const { syntheticQaIsDevOnlyOrRemoved, inspectNativeMonetizationDefaults, inspectRewardedResetChoice, inspectMembershipManagementRoute } = require('./lib/cleanup-source-contract');
 
 function read(path) {
   return readFileSync(path, "utf8");
@@ -15,6 +17,19 @@ function check(id, condition, detail, next) {
   };
 }
 
+function behavioralTestsPass(paths) {
+  try {
+    for (const path of paths) {
+      execFileSync(process.execPath, ["scripts/run-ts-entry.js", path], {
+        cwd: process.cwd(), encoding: "utf8", timeout: 60_000, maxBuffer: 2_000_000,
+      });
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 const appSurface = read("src/features/freed-app.tsx");
 const blockingEngine = read("src/lib/blocking-engine.ts");
 const androidClassifier = read("modules/freed-protection/android/src/main/java/app/freed/protection/FreedUrlClassifier.kt");
@@ -26,13 +41,20 @@ const monetization = read("src/lib/monetization.ts");
 const challengeTemplates = read("src/data/challenge-templates.ts");
 const releasePreflight = read("scripts/release-env-preflight.js");
 const storeAdEvidence = read("scripts/store-ad-sandbox-evidence.js");
+// These local tests exercise saved requests, replay, stale acknowledgements,
+// UTC rollover and failed writes. Source checks below only verify UI wiring.
+const analyticsBehaviorVerified = behavioralTestsPass([
+  "tests/durable-state-cell.test.ts",
+  "tests/recovery-analytics-snapshot.test.ts",
+  "tests/analytics-reconciliation.test.ts",
+]);
 
 const checks = [
   check(
     "premium-entitlement-no-ui-toggle",
       !appSurface.includes("setPremium(!premium)") &&
       !appSurface.includes("setPremium={(value)") &&
-      appSurface.includes("onManagePlan={() => setScreen(\"paywall\")}") &&
+      inspectMembershipManagementRoute(appSurface) &&
       appSurface.includes("is active from a verified purchase or restore.") &&
       appSurface.includes("getMembershipPlanLabel"),
     "Premium state is managed by purchase/restore flow, not by a visible local toggle.",
@@ -40,11 +62,19 @@ const checks = [
   ),
   check(
     "monetization-defaults-native",
-    monetization.includes('EXPO_PUBLIC_MONETIZATION_MODE === "mock" ? "mock" : "native"') &&
-      monetization.includes('if (requestedMode === "mock" && isProductionRuntime()) return "native";') &&
-      !monetization.includes('EXPO_PUBLIC_MONETIZATION_MODE === "native" ? "native" : "mock"'),
+    inspectNativeMonetizationDefaults(monetization),
     "Monetization defaults to native fail-closed mode, and production runtime ignores mock purchase mode.",
     "Default monetization to native and force production bundles back to native even if a mock env flag is present."
+  ),
+  check(
+    "rewarded-reset-explicit-choice",
+    inspectRewardedResetChoice(appSurface, {
+      offer: read("src/components/GuidedResetOffer.tsx"), hook: read("src/hooks/useGuidedResetAccess.ts"),
+      access: read("src/lib/guided-reset-access.ts"), monetization,
+      runtime: read("src/lib/native-monetization-runtime.ts"), adapter: read("src/lib/native-monetization-adapter.ts"),
+    }),
+    "Every rewarded SDK request follows an explicit optional-ad choice; paid/review/unknown cannot start ads, native completion requires a real reward and durable owner/session access, repair needs no second ad, and Help/safety remain immediate.",
+    "Restore explicit optional-ad choice, current owner/tier/foreground/context checks, consent and real SDK reward, persist-before-reveal, and immediate basic help."
   ),
   check(
     "manual-check-source",
@@ -79,7 +109,13 @@ const checks = [
       analytics.includes("ANALYTICS_CONSENT_VERSION") &&
       analytics.includes("configured-analytics-endpoint-missing") &&
       analytics.includes("analytics-endpoint-consent-stale") &&
-      appSurface.includes("sendGatedAnalyticsPayload(recoveryState, recoveryState.analyticsSharing)") &&
+      analyticsBehaviorVerified &&
+      appSurface.includes("persistRecoveryState(current => prepareAnalyticsSnapshotState(current))") &&
+      appSurface.includes("prepareAnalyticsPendingSnapshot(captured, captured.analyticsSharing)") &&
+      appSurface.includes("persistRecoveryState(current => stageAnalyticsPendingSnapshot(current, captured, pending))") &&
+      appSurface.includes("sendGatedAnalyticsPayload(staged, staged.analyticsSharing)") &&
+      appSurface.includes("persistRecoveryState(current => applyPendingAnalyticsSnapshotReceipt(current, staged, result!.snapshotReceipt!))") &&
+      appSurface.includes("persistRecoveryState(current => applyAnalyticsSnapshotRecovery(current, staged, result!.snapshotRecovery!))") &&
       appSurface.includes("Only aggregate counts and rates are sent after consent") &&
       appSurface.includes('AppState.currentState === "active"') &&
       appSurface.includes("recordAppSessionStart(current)") &&
@@ -87,8 +123,8 @@ const checks = [
       recoveryState.includes("updateAnalyticsSharingSettings") &&
       recoveryState.includes("closedAt: opened") &&
       !analytics.includes("testLabInterceptions"),
-    "Aggregate analytics exposes production metrics for manual/app interventions, app opens, foreground duration, blocked-attempt source breakdowns, unlock frequency, hourly urge patterns, category success rates, persisted opt-in sharing controls, and starts hydrated active sessions without a test-lab metric.",
-    "Keep user-facing aggregate metrics real, app-level interventions counted, hydrated active app opens tracked, and the analytics schema current."
+    "Aggregate analytics exposes real consent-gated production metrics without a test-lab metric; durable-state-cell, recovery-analytics-snapshot, and analytics-reconciliation behavioral tests verify saved request retry and exact receipt/recovery handling, with supplemental source checks for persisted UI wiring and hydrated app sessions.",
+    "Run tests/durable-state-cell.test.ts, tests/recovery-analytics-snapshot.test.ts, and tests/analytics-reconciliation.test.ts; keep real aggregate metrics and persisted snapshot/acknowledgement wiring current."
   ),
   check(
     "urge-forecast-real-local-signals",
@@ -108,10 +144,8 @@ const checks = [
   ),
   check(
     "qa-adult-attempt-dev-only",
-    appSurface.includes('const showQaControls = typeof __DEV__ !== "undefined" && __DEV__;') &&
-      appSurface.includes("{showQaControls ? (") &&
-      appSurface.includes("Simulate adult attempt (QA)"),
-    "The synthetic adult-attempt shortcut is guarded behind the React Native development flag.",
+    syntheticQaIsDevOnlyOrRemoved(appSurface),
+    "Synthetic adult-attempt controls are absent or structurally guarded by the React Native development flag.",
     "Keep synthetic QA controls out of release UI, or remove them entirely."
   ),
   check(
@@ -150,11 +184,9 @@ const checks = [
   ),
   check(
     "challenge-copy-no-fake-overclaim",
-    !challengeTemplates.includes("impossible to fake") &&
-      challengeTemplates.includes("real movement evidence") &&
-      challengeTemplates.includes("helps discharge the craving"),
-    "Challenge copy describes real-world evidence without overclaiming that sensor verification is impossible to bypass.",
-    "Replace challenge copy that promises impossible-to-fake completion with grounded sensor/action language."
+    behavioralTestsPass(["tests/challenge-comfort-safety.test.ts"]),
+    "Current assembled and retained legacy challenges use voluntary comfort, device-movement, time and alternative language without unsupported physiology or impossible-to-fake guarantees.",
+    "Keep actual catalog and legacy display instructions grounded; do not restore discharge-craving or real-movement overclaims to satisfy a source substring."
   ),
 ];
 

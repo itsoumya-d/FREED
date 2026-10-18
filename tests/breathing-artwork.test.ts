@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import { getBreathingArtworkProgress } from '../src/lib/breathing-artwork';
+assert.equal(getBreathingArtworkProgress('Inhale', 0), 0);
+assert.equal(getBreathingArtworkProgress('Inhale', 1), 200 / 950);
+assert.equal(getBreathingArtworkProgress('Hold', 0), 200 / 950);
+assert.equal(getBreathingArtworkProgress('Hold', 1), 550 / 950);
+assert.equal(getBreathingArtworkProgress('Exhale', 1), 1);
+assert.equal(getBreathingArtworkProgress('Hold Empty', .5), 1);
+assert.equal(getBreathingArtworkProgress('Deep Inhale', 1), getBreathingArtworkProgress('Top-Off Inhale', 0));
+assert.equal(getBreathingArtworkProgress('Long Exhale', 0), 550 / 950, 'sigh exhale skips the original hold segment');
+assert.equal(getBreathingArtworkProgress('Inhale', Number.NaN), 0);
+assert.equal(getBreathingArtworkProgress('Exhale', 2), 1);
+assert.equal(getBreathingArtworkProgress('unknown', .5), 0);
+console.log('Breathing artwork follows each real cadence phase with bounded frames.');

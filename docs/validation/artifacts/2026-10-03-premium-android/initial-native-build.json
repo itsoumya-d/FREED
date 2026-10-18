@@ -1,0 +1,16 @@
+{
+  "result": "pass",
+  "exitCode": 0,
+  "duration": "30m14s",
+  "tasks": {
+    "total": 608,
+    "executed": 424,
+    "upToDate": 184
+  },
+  "log": "assemble-debug.log",
+  "apkPath": "android/app/build/outputs/apk/debug/app-debug.apk",
+  "apkSha256": "08b510b235d284adfd9e1fed42f904097fdb09d4bd0d7ae79319b3fb21791627",
+  "apkSizeBytes": 109622181,
+  "installed": false,
+  "bundleScope": "Existing main asset bundle; not final current/safe QA JS artifact"
+}

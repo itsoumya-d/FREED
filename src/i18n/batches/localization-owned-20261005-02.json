@@ -1,0 +1,564 @@
+{
+  "entries": [
+    {
+      "source": "Focus Shield unavailable",
+      "translations": {
+        "hi": "Focus Shield उपलब्ध नहीं है",
+        "es": "Focus Shield no disponible",
+        "pt": "Focus Shield indisponível",
+        "fr": "Focus Shield indisponible",
+        "de": "Focus Shield nicht verfügbar",
+        "ar": "Focus Shield غير متاح",
+        "ja": "Focus Shieldは利用できません",
+        "ko": "Focus Shield를 사용할 수 없어요",
+        "zh-Hans": "Focus Shield 不可用"
+      }
+    },
+    {
+      "source": "Follow a comfortable pace without holding your breath.",
+      "translations": {
+        "hi": "बिना साँस रोके आरामदायक गति रखें।",
+        "es": "Sigue un ritmo cómodo sin contener la respiración.",
+        "pt": "Siga um ritmo confortável sem prender a respiração.",
+        "fr": "Suivez un rythme confortable sans retenir votre souffle.",
+        "de": "Atme in einem angenehmen Tempo, ohne die Luft anzuhalten.",
+        "ar": "اتبع وتيرة مريحة دون حبس أنفاسك.",
+        "ja": "息を止めず、楽なペースで続けてください。",
+        "ko": "숨을 참지 않고 편안한 속도로 진행하세요.",
+        "zh-Hans": "按舒适的节奏进行，不必屏住呼吸。"
+      }
+    },
+    {
+      "source": "forecast",
+      "translations": {
+        "hi": "पूर्वानुमान",
+        "es": "previsión",
+        "pt": "previsão",
+        "fr": "prévision",
+        "de": "Prognose",
+        "ar": "توقع",
+        "ja": "予測",
+        "ko": "예측",
+        "zh-Hans": "预测"
+      }
+    },
+    {
+      "source": "Foreground distance is checked without saving route history.",
+      "translations": {
+        "hi": "फ़ोरग्राउंड में दूरी जाँची जाती है; रास्ते का इतिहास नहीं सहेजा जाता।",
+        "es": "Se comprueba la distancia en primer plano sin guardar el historial de la ruta.",
+        "pt": "A distância em primeiro plano é verificada sem salvar o histórico do trajeto.",
+        "fr": "La distance est vérifiée au premier plan sans enregistrer l’itinéraire.",
+        "de": "Die Strecke wird im Vordergrund geprüft, ohne den Routenverlauf zu speichern.",
+        "ar": "تُقاس المسافة أثناء عرض التطبيق دون حفظ سجل المسار.",
+        "ja": "アプリを前面で使っている間の距離を確認し、移動経路は保存しません。",
+        "ko": "앱이 화면에 표시된 동안 거리를 확인하며 이동 경로는 저장하지 않아요.",
+        "zh-Hans": "在应用处于前台时检查距离，不保存路线历史。"
+      }
+    },
+    {
+      "source": "Free basic movement",
+      "translations": {
+        "hi": "निःशुल्क सरल गतिविधि",
+        "es": "Movimiento básico gratuito",
+        "pt": "Movimento básico gratuito",
+        "fr": "Mouvement simple gratuit",
+        "de": "Kostenlose einfache Bewegung",
+        "ar": "حركة بسيطة مجانية",
+        "ja": "無料の基本的な運動",
+        "ko": "무료 기본 움직임",
+        "zh-Hans": "免费基础活动"
+      }
+    },
+    {
+      "source": "FREED observes phone movement during this activity. It does not count or verify exercise repetitions.",
+      "translations": {
+        "hi": "FREED इस गतिविधि में फ़ोन की गति देखता है। यह व्यायाम के दोहराव गिनता या जाँचता नहीं है।",
+        "es": "FREED observa el movimiento del teléfono durante esta actividad. No cuenta ni verifica repeticiones de ejercicio.",
+        "pt": "O FREED observa o movimento do celular nesta atividade. Ele não conta nem verifica repetições de exercícios.",
+        "fr": "FREED observe les mouvements du téléphone pendant cette activité. Il ne compte ni ne vérifie les répétitions d’exercice.",
+        "de": "FREED erfasst bei dieser Aktivität die Bewegung des Handys. Übungswiederholungen werden weder gezählt noch überprüft.",
+        "ar": "يرصد FREED حركة الهاتف أثناء هذا النشاط. ولا يعدّ تكرارات التمرين أو يتحقق منها.",
+        "ja": "この活動ではFREEDがスマートフォンの動きを検出します。運動の回数を数えたり、確認したりするものではありません。",
+        "ko": "FREED는 이 활동 중 휴대폰의 움직임을 감지해요. 운동 반복 횟수를 세거나 검증하지는 않아요.",
+        "zh-Hans": "FREED 在这项活动中检测手机移动，不会统计或验证运动重复次数。"
+      }
+    },
+    {
+      "source": "Gentle (4-6)",
+      "translations": {
+        "hi": "सहज (4-6)",
+        "es": "Suave (4-6)",
+        "pt": "Suave (4-6)",
+        "fr": "Doux (4-6)",
+        "de": "Sanft (4-6)",
+        "ar": "لطيف (4-6)",
+        "ja": "やさしく（4-6）",
+        "ko": "부드럽게 (4-6)",
+        "zh-Hans": "轻缓（4-6）"
+      }
+    },
+    {
+      "source": "Gently move your shoulders or hands within a comfortable range.",
+      "translations": {
+        "hi": "कंधों या हाथों को आरामदायक सीमा में धीरे हिलाएँ।",
+        "es": "Mueve suavemente los hombros o las manos dentro de un rango cómodo.",
+        "pt": "Mova suavemente os ombros ou as mãos dentro de uma amplitude confortável.",
+        "fr": "Bougez doucement les épaules ou les mains dans une amplitude confortable.",
+        "de": "Bewege Schultern oder Hände sanft in einem angenehmen Bewegungsbereich.",
+        "ar": "حرّك كتفيك أو يديك بلطف ضمن مدى مريح.",
+        "ja": "肩や手を、無理のない範囲でゆっくり動かしましょう。",
+        "ko": "편안한 범위 안에서 어깨나 손을 부드럽게 움직이세요.",
+        "zh-Hans": "在舒适的范围内轻轻活动肩膀或双手。"
+      }
+    },
+    {
+      "source": "Get started",
+      "translations": {
+        "hi": "शुरू करें",
+        "es": "Comenzar",
+        "pt": "Começar",
+        "fr": "Commencer",
+        "de": "Loslegen",
+        "ar": "ابدأ",
+        "ja": "始める",
+        "ko": "시작하기",
+        "zh-Hans": "开始使用"
+      }
+    },
+    {
+      "source": "Go Pro — guided resets without ads",
+      "translations": {
+        "hi": "Pro लें — बिना विज्ञापनों के निर्देशित विराम",
+        "es": "Hazte Pro: ejercicios guiados sin anuncios",
+        "pt": "Seja Pro — exercícios guiados sem anúncios",
+        "fr": "Passez à Pro — exercices guidés sans publicité",
+        "de": "Hol dir Pro — geführte Übungen ohne Werbung",
+        "ar": "اشترك في Pro — تمارين موجّهة بلا إعلانات",
+        "ja": "Proに登録 — 広告なしのガイド付きリセット",
+        "ko": "Pro로 업그레이드 — 광고 없는 안내 활동",
+        "zh-Hans": "升级 Pro — 无广告引导活动"
+      }
+    },
+    {
+      "source": "goals",
+      "translations": {
+        "hi": "लक्ष्य",
+        "es": "objetivos",
+        "pt": "objetivos",
+        "fr": "objectifs",
+        "de": "Ziele",
+        "ar": "أهداف",
+        "ja": "目標",
+        "ko": "목표",
+        "zh-Hans": "目标"
+      }
+    },
+    {
+      "source": "Guard mode rejected",
+      "translations": {
+        "hi": "सुरक्षा मोड अस्वीकार हुआ",
+        "es": "Modo de protección rechazado",
+        "pt": "Modo de proteção rejeitado",
+        "fr": "Mode de protection refusé",
+        "de": "Schutzmodus abgelehnt",
+        "ar": "تم رفض وضع الحماية",
+        "ja": "保護モードが拒否されました",
+        "ko": "보호 모드가 거부되었어요",
+        "zh-Hans": "保护模式被拒绝"
+      }
+    },
+    {
+      "source": "Guided progress could not be erased. Try again.",
+      "translations": {
+        "hi": "निर्देशित गतिविधि की प्रगति मिटाई नहीं जा सकी। फिर कोशिश करें।",
+        "es": "No se pudo borrar el progreso guiado. Inténtalo de nuevo.",
+        "pt": "Não foi possível apagar o progresso guiado. Tente novamente.",
+        "fr": "La progression guidée n’a pas pu être effacée. Réessayez.",
+        "de": "Der Fortschritt der geführten Übung konnte nicht gelöscht werden. Versuche es erneut.",
+        "ar": "تعذّر مسح تقدّم التمرين الموجّه. حاول مجددًا.",
+        "ja": "ガイド付き活動の進捗を削除できませんでした。もう一度お試しください。",
+        "ko": "안내 활동 진행 상황을 지우지 못했어요. 다시 시도하세요.",
+        "zh-Hans": "无法删除引导活动进度，请重试。"
+      }
+    },
+    {
+      "source": "history",
+      "translations": {
+        "hi": "इतिहास",
+        "es": "historial",
+        "pt": "histórico",
+        "fr": "historique",
+        "de": "Verlauf",
+        "ar": "سجل",
+        "ja": "履歴",
+        "ko": "기록",
+        "zh-Hans": "历史"
+      }
+    },
+    {
+      "source": "I completed exercise today",
+      "translations": {
+        "hi": "मैंने आज व्यायाम किया",
+        "es": "He hecho ejercicio hoy",
+        "pt": "Fiz exercício hoje",
+        "fr": "J’ai fait de l’exercice aujourd’hui",
+        "de": "Ich habe mich heute bewegt",
+        "ar": "أكملت تمرينًا اليوم",
+        "ja": "今日は運動しました",
+        "ko": "오늘 운동을 했어요",
+        "zh-Hans": "我今天完成了运动"
+      }
+    },
+    {
+      "source": "I have an account",
+      "translations": {
+        "hi": "मेरा खाता है",
+        "es": "Ya tengo una cuenta",
+        "pt": "Já tenho uma conta",
+        "fr": "J’ai déjà un compte",
+        "de": "Ich habe ein Konto",
+        "ar": "لديّ حساب",
+        "ja": "アカウントを持っています",
+        "ko": "계정이 있어요",
+        "zh-Hans": "我已有账户"
+      }
+    },
+    {
+      "source": "insight",
+      "translations": {
+        "hi": "समझ",
+        "es": "perspectiva",
+        "pt": "percepção",
+        "fr": "éclairage",
+        "de": "Einblick",
+        "ar": "فهم",
+        "ja": "気づき",
+        "ko": "인사이트",
+        "zh-Hans": "洞察"
+      }
+    },
+    {
+      "source": "Invalid journey offer decision.",
+      "translations": {
+        "hi": "परिचय ऑफ़र का चयन अमान्य है।",
+        "es": "La decisión de la oferta inicial no es válida.",
+        "pt": "A decisão da oferta inicial é inválida.",
+        "fr": "La décision concernant l’offre de démarrage est invalide.",
+        "de": "Die Entscheidung zum Einstiegsangebot ist ungültig.",
+        "ar": "قرار عرض البداية غير صالح.",
+        "ja": "初回オファーの選択が無効です。",
+        "ko": "시작 혜택 선택이 올바르지 않아요.",
+        "zh-Hans": "初始优惠选择无效。"
+      }
+    },
+    {
+      "source": "Invalid journey offer response.",
+      "translations": {
+        "hi": "परिचय ऑफ़र का उत्तर अमान्य है।",
+        "es": "La respuesta de la oferta inicial no es válida.",
+        "pt": "A resposta da oferta inicial é inválida.",
+        "fr": "La réponse de l’offre de démarrage est invalide.",
+        "de": "Die Antwort zum Einstiegsangebot ist ungültig.",
+        "ar": "استجابة عرض البداية غير صالحة.",
+        "ja": "初回オファーの応答が無効です。",
+        "ko": "시작 혜택 응답이 올바르지 않아요.",
+        "zh-Hans": "初始优惠响应无效。"
+      }
+    },
+    {
+      "source": "Invalid review access response.",
+      "translations": {
+        "hi": "समीक्षा पहुँच का उत्तर अमान्य है।",
+        "es": "La respuesta de acceso de revisión no es válida.",
+        "pt": "A resposta de acesso para avaliação é inválida.",
+        "fr": "La réponse d’accès pour l’évaluation est invalide.",
+        "de": "Die Antwort zum Prüfzugang ist ungültig.",
+        "ar": "استجابة وصول المراجعة غير صالحة.",
+        "ja": "審査用アクセスの応答が無効です。",
+        "ko": "검토용 접근 응답이 올바르지 않아요.",
+        "zh-Hans": "审核访问响应无效。"
+      }
+    },
+    {
+      "source": "iOS reports a selected-target threshold event; it does not report independent per-app duration.",
+      "translations": {
+        "hi": "iOS चुने गए लक्ष्यों की सीमा पार होने की घटना बताता है; हर ऐप की अलग अवधि नहीं बताता।",
+        "es": "iOS informa de un evento de umbral para los objetivos seleccionados; no de una duración independiente por aplicación.",
+        "pt": "O iOS informa um evento de limite dos alvos selecionados; não informa a duração individual por aplicativo.",
+        "fr": "iOS signale un seuil atteint pour les éléments choisis ; il ne fournit pas une durée distincte par application.",
+        "de": "iOS meldet ein Schwellenereignis für die ausgewählten Ziele, keine getrennte Nutzungsdauer je App.",
+        "ar": "يبلغ iOS عن بلوغ حدّ للعناصر المختارة، ولا يبلغ عن مدة مستقلة لكل تطبيق.",
+        "ja": "iOSは選択した対象のしきい値到達を通知します。アプリごとの個別の利用時間は通知しません。",
+        "ko": "iOS는 선택한 대상의 한도 도달을 알리며 앱별 개별 사용 시간은 제공하지 않아요.",
+        "zh-Hans": "iOS 报告所选目标的阈值事件，不报告各应用的独立使用时长。"
+      }
+    },
+    {
+      "source": "Journal practice",
+      "translations": {
+        "hi": "डायरी अभ्यास",
+        "es": "Práctica de diario",
+        "pt": "Prática de diário",
+        "fr": "Pratique du journal",
+        "de": "Tagebuchübung",
+        "ar": "ممارسة كتابة اليوميات",
+        "ja": "日記の習慣",
+        "ko": "일기 습관",
+        "zh-Hans": "日记习惯"
+      }
+    },
+    {
+      "source": "Journey read accepts no payload.",
+      "translations": {
+        "hi": "परिचय स्थिति पढ़ने में कोई अतिरिक्त डेटा नहीं दिया जा सकता।",
+        "es": "La lectura del estado inicial no acepta datos de entrada.",
+        "pt": "A leitura do estado inicial não aceita dados de entrada.",
+        "fr": "La lecture de l’état de démarrage n’accepte aucune donnée d’entrée.",
+        "de": "Die Abfrage des Einstiegsstatus akzeptiert keine Eingabedaten.",
+        "ar": "قراءة حالة البداية لا تقبل بيانات مُرسلة.",
+        "ja": "初回状態の読み取りに入力データは指定できません。",
+        "ko": "시작 상태 조회에는 입력 데이터를 보낼 수 없어요.",
+        "zh-Hans": "读取初始状态时不接受输入数据。"
+      }
+    },
+    {
+      "source": "Keep the breath easy; there is no need to hold it.",
+      "translations": {
+        "hi": "साँस सहज रखें; उसे रोकना ज़रूरी नहीं है।",
+        "es": "Respira con comodidad; no hace falta contener el aire.",
+        "pt": "Mantenha a respiração confortável; não é preciso prendê-la.",
+        "fr": "Respirez aisément ; il n’est pas nécessaire de retenir votre souffle.",
+        "de": "Atme entspannt; du musst die Luft nicht anhalten.",
+        "ar": "تنفّس بسهولة؛ لا حاجة لحبس أنفاسك.",
+        "ja": "楽に呼吸しましょう。息を止める必要はありません。",
+        "ko": "편안하게 호흡하세요. 숨을 참을 필요는 없어요.",
+        "zh-Hans": "保持轻松呼吸，不需要屏住气息。"
+      }
+    },
+    {
+      "source": "learn",
+      "translations": {
+        "hi": "सीखें",
+        "es": "aprender",
+        "pt": "aprender",
+        "fr": "apprendre",
+        "de": "lernen",
+        "ar": "تعلّم",
+        "ja": "学ぶ",
+        "ko": "배우기",
+        "zh-Hans": "学习"
+      }
+    },
+    {
+      "source": "Leaves this guided reset.",
+      "translations": {
+        "hi": "यह निर्देशित विराम छोड़ता है।",
+        "es": "Sale de este ejercicio guiado.",
+        "pt": "Sai deste exercício guiado.",
+        "fr": "Quitte cet exercice guidé.",
+        "de": "Verlässt diese geführte Übung.",
+        "ar": "يغادر هذا التمرين الموجّه.",
+        "ja": "このガイド付きリセットを終了します。",
+        "ko": "이 안내 활동을 종료해요.",
+        "zh-Hans": "退出这次引导活动。"
+      }
+    },
+    {
+      "source": "Local export available · sync off",
+      "translations": {
+        "hi": "स्थानीय निर्यात उपलब्ध · सिंक बंद",
+        "es": "Exportación local disponible · sincronización desactivada",
+        "pt": "Exportação local disponível · sincronização desativada",
+        "fr": "Export local disponible · synchronisation désactivée",
+        "de": "Lokaler Export verfügbar · Synchronisierung aus",
+        "ar": "التصدير المحلي متاح · المزامنة متوقفة",
+        "ja": "ローカル書き出しが利用可能 · 同期はオフ",
+        "ko": "로컬 내보내기 가능 · 동기화 꺼짐",
+        "zh-Hans": "可本地导出 · 同步已关闭"
+      }
+    },
+    {
+      "source": "Local only · sharing off",
+      "translations": {
+        "hi": "केवल स्थानीय · साझाकरण बंद",
+        "es": "Solo local · compartir desactivado",
+        "pt": "Somente local · compartilhamento desativado",
+        "fr": "Local uniquement · partage désactivé",
+        "de": "Nur lokal · Teilen aus",
+        "ar": "محلي فقط · المشاركة متوقفة",
+        "ja": "ローカルのみ · 共有はオフ",
+        "ko": "로컬 전용 · 공유 꺼짐",
+        "zh-Hans": "仅本地 · 共享已关闭"
+      }
+    },
+    {
+      "source": "Local storage unavailable",
+      "translations": {
+        "hi": "स्थानीय स्टोरेज उपलब्ध नहीं है",
+        "es": "Almacenamiento local no disponible",
+        "pt": "Armazenamento local indisponível",
+        "fr": "Stockage local indisponible",
+        "de": "Lokaler Speicher nicht verfügbar",
+        "ar": "التخزين المحلي غير متاح",
+        "ja": "ローカル保存を利用できません",
+        "ko": "로컬 저장소를 사용할 수 없어요",
+        "zh-Hans": "本地存储不可用"
+      }
+    },
+    {
+      "source": "Look around from where you are.",
+      "translations": {
+        "hi": "जहाँ हैं, वहीं से आसपास देखें।",
+        "es": "Mira a tu alrededor desde donde estás.",
+        "pt": "Olhe ao redor de onde você está.",
+        "fr": "Regardez autour de vous, là où vous êtes.",
+        "de": "Schau dich dort um, wo du gerade bist.",
+        "ar": "انظر حولك من مكانك.",
+        "ja": "今いる場所から、周りを見渡しましょう。",
+        "ko": "지금 있는 자리에서 주변을 살펴보세요.",
+        "zh-Hans": "从您所在的位置看看四周。"
+      }
+    },
+    {
+      "source": "Look for that shape in objects around you.",
+      "translations": {
+        "hi": "आसपास की वस्तुओं में वह आकृति देखें।",
+        "es": "Busca esa forma en los objetos de tu alrededor.",
+        "pt": "Procure essa forma nos objetos ao seu redor.",
+        "fr": "Cherchez cette forme dans les objets autour de vous.",
+        "de": "Suche diese Form in Gegenständen um dich herum.",
+        "ar": "ابحث عن هذا الشكل في الأشياء من حولك.",
+        "ja": "周りの物の中から、その形を探しましょう。",
+        "ko": "주변 물건에서 그 모양을 찾아보세요.",
+        "zh-Hans": "在周围的物品中寻找这种形状。"
+      }
+    },
+    {
+      "source": "Make a few gentle movements that feel comfortable.",
+      "translations": {
+        "hi": "कुछ ऐसी हल्की गतिविधियाँ करें जिनमें आराम महसूस हो।",
+        "es": "Haz algunos movimientos suaves que te resulten cómodos.",
+        "pt": "Faça alguns movimentos suaves que sejam confortáveis.",
+        "fr": "Faites quelques mouvements doux qui vous sont confortables.",
+        "de": "Mache ein paar sanfte Bewegungen, die sich angenehm anfühlen.",
+        "ar": "قم ببعض الحركات اللطيفة التي تشعرك بالراحة.",
+        "ja": "心地よいと感じる範囲で、軽く体を動かしましょう。",
+        "ko": "편안하게 느껴지는 부드러운 동작을 몇 번 해보세요.",
+        "zh-Hans": "做几个让您感觉舒适的轻柔动作。"
+      }
+    },
+    {
+      "source": "Manage account providers and sign-out.",
+      "translations": {
+        "hi": "खाते के प्रदाता और साइन आउट प्रबंधित करें।",
+        "es": "Gestiona los proveedores de cuenta y el cierre de sesión.",
+        "pt": "Gerencie os provedores da conta e a saída.",
+        "fr": "Gérez les fournisseurs du compte et la déconnexion.",
+        "de": "Verwalte Kontoanbieter und Abmeldung.",
+        "ar": "إدارة مزوّدي الحساب وتسجيل الخروج.",
+        "ja": "アカウントのログイン方法とログアウトを管理します。",
+        "ko": "계정 로그인 방법과 로그아웃을 관리하세요.",
+        "zh-Hans": "管理账户登录方式和退出登录。"
+      }
+    },
+    {
+      "source": "Manage contacts and support-circle reports.",
+      "translations": {
+        "hi": "संपर्क और सहयोग मंडली की रिपोर्ट प्रबंधित करें।",
+        "es": "Gestiona contactos e informes de tu círculo de apoyo.",
+        "pt": "Gerencie contatos e relatórios do círculo de apoio.",
+        "fr": "Gérez les contacts et les rapports du cercle de soutien.",
+        "de": "Verwalte Kontakte und Berichte deines Unterstützerkreises.",
+        "ar": "إدارة جهات الاتصال وتقارير دائرة الدعم.",
+        "ja": "連絡先とサポートサークルのレポートを管理します。",
+        "ko": "연락처와 지원 모임 보고서를 관리하세요.",
+        "zh-Hans": "管理联系人和支持圈报告。"
+      }
+    },
+    {
+      "source": "media",
+      "translations": {
+        "hi": "मीडिया",
+        "es": "medios",
+        "pt": "mídia",
+        "fr": "médias",
+        "de": "Medien",
+        "ar": "وسائط",
+        "ja": "メディア",
+        "ko": "미디어",
+        "zh-Hans": "媒体"
+      }
+    },
+    {
+      "source": "Membership options available",
+      "translations": {
+        "hi": "सदस्यता विकल्प उपलब्ध",
+        "es": "Opciones de suscripción disponibles",
+        "pt": "Opções de assinatura disponíveis",
+        "fr": "Options d’abonnement disponibles",
+        "de": "Mitgliedschaftsoptionen verfügbar",
+        "ar": "خيارات الاشتراك متاحة",
+        "ja": "メンバーシップの選択肢が利用可能",
+        "ko": "멤버십 옵션 이용 가능",
+        "zh-Hans": "会员选项可用"
+      }
+    },
+    {
+      "source": "min ·",
+      "translations": {
+        "hi": "मिनट ·",
+        "es": "minutos ·",
+        "pt": "minutos ·",
+        "fr": "minutes ·",
+        "de": "Minuten ·",
+        "ar": "دقيقة ·",
+        "ja": "分 ·",
+        "ko": "분 ·",
+        "zh-Hans": "分钟 ·"
+      }
+    },
+    {
+      "source": "Mode options are unavailable in this installed build. Existing daily limits remain available.",
+      "translations": {
+        "hi": "इस इंस्टॉल किए गए संस्करण में मोड विकल्प उपलब्ध नहीं हैं। मौजूदा दैनिक सीमाएँ उपलब्ध रहती हैं।",
+        "es": "Las opciones de modo no están disponibles en esta versión instalada. Los límites diarios existentes siguen disponibles.",
+        "pt": "As opções de modo não estão disponíveis nesta versão instalada. Os limites diários existentes continuam disponíveis.",
+        "fr": "Les options de mode ne sont pas disponibles dans cette version installée. Les limites quotidiennes existantes restent disponibles.",
+        "de": "In dieser installierten Version sind keine Modusoptionen verfügbar. Bestehende Tageslimits bleiben verfügbar.",
+        "ar": "خيارات الوضع غير متاحة في هذه النسخة المثبّتة. تظل الحدود اليومية الحالية متاحة.",
+        "ja": "このインストール済みバージョンではモードを選べません。既存の1日の制限は引き続き利用できます。",
+        "ko": "현재 설치된 버전에서는 모드 옵션을 사용할 수 없어요. 기존 일일 한도는 계속 사용할 수 있어요.",
+        "zh-Hans": "此已安装版本不支持模式选项，现有每日限额仍可使用。"
+      }
+    },
+    {
+      "source": "month",
+      "translations": {
+        "hi": "महीना",
+        "es": "mes",
+        "pt": "mês",
+        "fr": "mois",
+        "de": "Monat",
+        "ar": "شهر",
+        "ja": "月",
+        "ko": "월",
+        "zh-Hans": "月度"
+      }
+    },
+    {
+      "source": "Move distracting apps out of reach during your protected time.",
+      "translations": {
+        "hi": "सुरक्षित समय में ध्यान भटकाने वाले ऐप दूर रखें।",
+        "es": "Aparta las aplicaciones que te distraen durante tu tiempo protegido.",
+        "pt": "Mantenha os aplicativos que distraem fora do alcance durante o período protegido.",
+        "fr": "Éloignez les applications distrayantes pendant votre temps protégé.",
+        "de": "Halte ablenkende Apps während deiner geschützten Zeit außer Reichweite.",
+        "ar": "أبعد التطبيقات المشتّتة خلال وقتك المحمي.",
+        "ja": "保護された時間は、気が散るアプリから距離を置きましょう。",
+        "ko": "보호 시간에는 주의를 분산시키는 앱을 멀리하세요.",
+        "zh-Hans": "在受保护的时间内远离容易分散注意力的应用。"
+      }
+    }
+  ]
+}

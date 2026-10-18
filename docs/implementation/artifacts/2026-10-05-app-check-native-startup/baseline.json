@@ -1,0 +1,21 @@
+{
+  "files": [
+    {
+      "path": "app.config.js",
+      "sha256": "15990f5ac1ae59b657784fb7aa0384a79787490d6c125753e9f4a641a54d74a0"
+    },
+    {
+      "path": "ios/FREED/AppDelegate.swift",
+      "sha256": "2c9bdb509a97a376534eb248908727098c8bfcc5e64af189d1ac83d1690ae2b9"
+    },
+    {
+      "path": "ios/FREED/FREED-Bridging-Header.h",
+      "sha256": "4a625b53abd4333ca454a4161ba62ab1b0cb44e8a4581326c0bcfe03dc26dd5c"
+    },
+    {
+      "path": "ios/FREED/FREED.entitlements",
+      "sha256": "2f4a01ce965d501dd703ccd10bb9afe84dea1b8b1f63fc7a4b2cc63a35490f35"
+    }
+  ],
+  "capturedAt": "2026-10-05T01:15:36.110177+00:00"
+}

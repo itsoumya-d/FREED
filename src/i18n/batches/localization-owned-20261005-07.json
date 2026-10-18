@@ -1,0 +1,480 @@
+{
+  "entries": [
+    {
+      "source": "The challenged application authority is no longer available.",
+      "translations": {
+        "hi": "चुनौती वाले ऐप की अनुमति अब उपलब्ध नहीं है।",
+        "es": "La autorización de la aplicación del desafío ya no está disponible.",
+        "pt": "A autorização do aplicativo do desafio não está mais disponível.",
+        "fr": "L’autorisation de l’application liée à l’exercice n’est plus disponible.",
+        "de": "Die Berechtigung für die App dieser Übung ist nicht mehr verfügbar.",
+        "ar": "لم يعد تفويض التطبيق المرتبط بالتحدي متاحًا.",
+        "ja": "このチャレンジに対応するアプリの許可を利用できなくなりました。",
+        "ko": "활동에 해당하는 앱의 권한을 더 이상 사용할 수 없어요.",
+        "zh-Hans": "本次活动对应应用的授权已不可用。"
+      }
+    },
+    {
+      "source": "The iOS DeviceActivity activity limit would be exceeded.",
+      "translations": {
+        "hi": "iOS DeviceActivity की गतिविधि सीमा पार हो जाएगी।",
+        "es": "Se superaría el límite de actividades de DeviceActivity en iOS.",
+        "pt": "O limite de atividades do DeviceActivity no iOS seria excedido.",
+        "fr": "La limite d’activités DeviceActivity d’iOS serait dépassée.",
+        "de": "Die Aktivitätsgrenze von iOS DeviceActivity würde überschritten.",
+        "ar": "سيُتجاوز حدّ أنشطة DeviceActivity في iOS.",
+        "ja": "iOSのDeviceActivityの活動数制限を超えてしまいます。",
+        "ko": "iOS DeviceActivity의 활동 한도를 초과하게 돼요.",
+        "zh-Hans": "将超过 iOS DeviceActivity 的活动数量限制。"
+      }
+    },
+    {
+      "source": "The local exception list is full (200 domains).",
+      "translations": {
+        "hi": "स्थानीय अपवाद सूची भर गई है (200 डोमेन)।",
+        "es": "La lista de excepciones locales está llena (200 dominios).",
+        "pt": "A lista de exceções locais está cheia (200 domínios).",
+        "fr": "La liste des exceptions locales est pleine (200 domaines).",
+        "de": "Die lokale Ausnahmeliste ist voll (200 Domains).",
+        "ar": "قائمة الاستثناءات المحلية ممتلئة (200 نطاق).",
+        "ja": "ローカル例外リストがいっぱいです（200ドメイン）。",
+        "ko": "로컬 예외 목록이 가득 찼어요(도메인 200개).",
+        "zh-Hans": "本地例外列表已满（200 个域名）。"
+      }
+    },
+    {
+      "source": "The native application break could not be persisted. Previous protection was retained.",
+      "translations": {
+        "hi": "डिवाइस का ऐप विराम सहेजा नहीं जा सका। पिछली सुरक्षा बनी रही।",
+        "es": "No se pudo guardar la pausa de la aplicación en el dispositivo. Se mantuvo la protección anterior.",
+        "pt": "Não foi possível salvar a pausa do aplicativo no dispositivo. A proteção anterior foi mantida.",
+        "fr": "La pause d’application n’a pas pu être enregistrée sur l’appareil. La protection précédente a été conservée.",
+        "de": "Die App-Pause konnte nicht auf dem Gerät gespeichert werden. Der vorherige Schutz blieb erhalten.",
+        "ar": "تعذّر حفظ استراحة التطبيق على الجهاز. حُفظت الحماية السابقة.",
+        "ja": "端末にアプリの休憩を保存できませんでした。以前の保護は維持されています。",
+        "ko": "기기에 앱 휴식을 저장하지 못했어요. 이전 보호 상태는 유지돼요.",
+        "zh-Hans": "无法在设备上保存应用休息，先前保护已保留。"
+      }
+    },
+    {
+      "source": "The photo is checked on this device, then deleted.",
+      "translations": {
+        "hi": "फ़ोटो इसी डिवाइस पर जाँची जाती है, फिर मिटा दी जाती है।",
+        "es": "La foto se comprueba en este dispositivo y después se elimina.",
+        "pt": "A foto é verificada neste dispositivo e depois apagada.",
+        "fr": "La photo est vérifiée sur cet appareil, puis supprimée.",
+        "de": "Das Foto wird auf diesem Gerät geprüft und anschließend gelöscht.",
+        "ar": "تُفحص الصورة على هذا الجهاز ثم تُحذف.",
+        "ja": "写真はこの端末で確認した後、削除されます。",
+        "ko": "사진은 이 기기에서 확인한 후 삭제돼요.",
+        "zh-Hans": "照片在本设备上验证后即被删除。"
+      }
+    },
+    {
+      "source": "These choices become Android app guard targets. On iOS, you will choose the actual apps and websites in Apple's Screen Time picker during setup.",
+      "translations": {
+        "hi": "ये विकल्प Android ऐप सुरक्षा के लक्ष्य बनते हैं। iOS में सेटअप के दौरान Apple के Screen Time चयन से असली ऐप और वेबसाइट चुनेंगे।",
+        "es": "Estas opciones se convierten en objetivos de protección en Android. En iOS elegirás las aplicaciones y sitios reales en el selector de Tiempo de uso de Apple durante la configuración.",
+        "pt": "Estas opções tornam-se alvos de proteção de aplicativos no Android. No iOS, você escolherá os aplicativos e sites reais no seletor Tempo de Uso da Apple durante a configuração.",
+        "fr": "Ces choix deviennent les cibles de protection d’Android. Sur iOS, vous choisirez les applications et sites réels dans le sélecteur Temps d’écran d’Apple pendant la configuration.",
+        "de": "Diese Auswahl wird zu Android-App-Schutzzielen. Unter iOS wählst du bei der Einrichtung die tatsächlichen Apps und Websites in Apples Bildschirmzeit-Auswahl.",
+        "ar": "تصبح هذه الاختيارات أهداف حماية التطبيقات في Android. في iOS ستختار التطبيقات والمواقع الفعلية من محدّد مدة استخدام الجهاز من Apple أثناء الإعداد.",
+        "ja": "この選択はAndroidのアプリ保護対象になります。iOSでは、設定中にAppleのスクリーンタイムの選択画面で実際のアプリとウェブサイトを選びます。",
+        "ko": "이 선택은 Android 앱 보호 대상이 돼요. iOS에서는 설정 중 Apple 스크린 타임 선택 화면에서 실제 앱과 웹사이트를 고르게 돼요.",
+        "zh-Hans": "这些选择将成为 Android 应用保护目标。iOS 用户将在设置时通过 Apple 屏幕使用时间选择器选择实际应用和网站。"
+      }
+    },
+    {
+      "source": "This installed build does not support the saved app guard mode.",
+      "translations": {
+        "hi": "इंस्टॉल किया गया यह संस्करण सहेजे गए ऐप सुरक्षा मोड का समर्थन नहीं करता।",
+        "es": "Esta versión instalada no admite el modo de protección guardado.",
+        "pt": "Esta versão instalada não oferece suporte ao modo de proteção salvo.",
+        "fr": "Cette version installée ne prend pas en charge le mode de protection enregistré.",
+        "de": "Diese installierte Version unterstützt den gespeicherten App-Schutzmodus nicht.",
+        "ar": "هذه النسخة المثبّتة لا تدعم وضع حماية التطبيقات المحفوظ.",
+        "ja": "このインストール済みバージョンは、保存したアプリ保護モードに対応していません。",
+        "ko": "현재 설치된 버전은 저장된 앱 보호 모드를 지원하지 않아요.",
+        "zh-Hans": "此已安装版本不支持已保存的应用保护模式。"
+      }
+    },
+    {
+      "source": "This is your own exercise record. It does not verify a guided session or unlock protected apps.",
+      "translations": {
+        "hi": "यह आपका स्वयं का व्यायाम रिकॉर्ड है। यह निर्देशित सत्र की जाँच या सुरक्षित ऐप खोलने की अनुमति नहीं देता।",
+        "es": "Este es tu propio registro de ejercicio. No verifica una sesión guiada ni desbloquea aplicaciones protegidas.",
+        "pt": "Este é seu próprio registro de exercício. Ele não verifica uma sessão guiada nem desbloqueia aplicativos protegidos.",
+        "fr": "Il s’agit de votre propre déclaration d’exercice. Elle ne vérifie pas une séance guidée et ne débloque pas d’applications protégées.",
+        "de": "Dies ist dein eigener Bewegungsnachweis. Er bestätigt keine geführte Sitzung und entsperrt keine geschützten Apps.",
+        "ar": "هذا تسجيلك الشخصي للتمرين. لا يتحقق من جلسة موجّهة ولا يفتح التطبيقات المحمية.",
+        "ja": "これは自分で申告する運動記録です。ガイド付きセッションの確認や、保護されたアプリの解除には使われません。",
+        "ko": "직접 기록하는 운동 기록이에요. 안내 세션을 검증하거나 보호된 앱을 열어주지는 않아요.",
+        "zh-Hans": "这是您自行记录的运动，不会验证引导会话或解锁受保护的应用。"
+      }
+    },
+    {
+      "source": "This photo target is still being validated. Choose a different reset.",
+      "translations": {
+        "hi": "इस फ़ोटो लक्ष्य की जाँच अभी जारी है। दूसरा विराम चुनें।",
+        "es": "Este objetivo fotográfico aún se está validando. Elige otro ejercicio.",
+        "pt": "Este alvo de foto ainda está em validação. Escolha outro exercício.",
+        "fr": "Cette cible photographique est encore en cours de validation. Choisissez un autre exercice.",
+        "de": "Dieses Fotoziel wird noch validiert. Wähle eine andere Übung.",
+        "ar": "ما زال هذا الهدف الفوتوغرافي قيد التحقق. اختر تمرينًا آخر.",
+        "ja": "この写真の対象はまだ検証中です。別のリセットを選んでください。",
+        "ko": "이 사진 대상은 아직 검증 중이에요. 다른 활동을 선택하세요.",
+        "zh-Hans": "此照片目标仍在验证中，请选择其他活动。"
+      }
+    },
+    {
+      "source": "This platform does not support local site exceptions. If an ordinary site is blocked, open Privacy & support for wrong-block help.",
+      "translations": {
+        "hi": "यह प्लेटफ़ॉर्म स्थानीय साइट अपवादों का समर्थन नहीं करता। सामान्य साइट रुके तो गलत रोक की मदद के लिए गोपनीयता और सहायता खोलें।",
+        "es": "Esta plataforma no admite excepciones locales de sitios. Si se bloquea un sitio ordinario, abre Privacidad y ayuda para obtener asistencia.",
+        "pt": "Esta plataforma não oferece exceções locais de sites. Se um site comum for bloqueado, abra Privacidade e suporte para obter ajuda.",
+        "fr": "Cette plateforme ne prend pas en charge les exceptions locales de sites. Si un site ordinaire est bloqué, ouvrez Confidentialité et assistance pour obtenir de l’aide.",
+        "de": "Diese Plattform unterstützt keine lokalen Website-Ausnahmen. Öffne Datenschutz und Hilfe, falls eine gewöhnliche Seite fälschlich gesperrt wird.",
+        "ar": "هذه المنصة لا تدعم استثناءات المواقع المحلية. إذا حُظر موقع عادي، افتح الخصوصية والدعم للمساعدة في الحظر الخاطئ.",
+        "ja": "このプラットフォームはローカルのサイト例外に対応していません。一般サイトがブロックされた場合は「プライバシーとサポート」でヘルプを確認してください。",
+        "ko": "이 플랫폼은 로컬 사이트 예외를 지원하지 않아요. 일반 사이트가 차단되면 개인정보 및 지원에서 도움을 확인하세요.",
+        "zh-Hans": "此平台不支持本地网站例外。如果普通网站被拦截，请打开“隐私与支持”获取错误拦截帮助。"
+      }
+    },
+    {
+      "source": "This saved reset needs a supported verification rule. Choose a new reset.",
+      "translations": {
+        "hi": "इस सहेजे गए विराम के लिए समर्थित जाँच नियम चाहिए। नया विराम चुनें।",
+        "es": "Este ejercicio guardado necesita un método de verificación compatible. Elige uno nuevo.",
+        "pt": "Este exercício salvo precisa de um método de verificação compatível. Escolha um novo.",
+        "fr": "Cet exercice enregistré nécessite une méthode de vérification prise en charge. Choisissez-en un nouveau.",
+        "de": "Diese gespeicherte Übung braucht eine unterstützte Prüfregel. Wähle eine neue Übung.",
+        "ar": "يحتاج هذا التمرين المحفوظ لطريقة تحقق مدعومة. اختر تمرينًا جديدًا.",
+        "ja": "この保存済みリセットには、対応する確認方法が必要です。新しいリセットを選んでください。",
+        "ko": "저장된 활동에 지원되는 확인 방법이 필요해요. 새 활동을 선택하세요.",
+        "zh-Hans": "此已保存活动需要受支持的验证方式，请选择新活动。"
+      }
+    },
+    {
+      "source": "time",
+      "translations": {
+        "hi": "समय",
+        "es": "tiempo",
+        "pt": "tempo",
+        "fr": "temps",
+        "de": "Zeit",
+        "ar": "وقت",
+        "ja": "時間",
+        "ko": "시간",
+        "zh-Hans": "时间"
+      }
+    },
+    {
+      "source": "Try comfortable movement and optionally record exercise yourself.",
+      "translations": {
+        "hi": "आरामदायक गतिविधि करें और चाहें तो अपना व्यायाम स्वयं दर्ज करें।",
+        "es": "Prueba movimientos cómodos y registra el ejercicio por tu cuenta si quieres.",
+        "pt": "Experimente movimentos confortáveis e registre seu exercício se quiser.",
+        "fr": "Essayez un mouvement confortable et déclarez votre exercice si vous le souhaitez.",
+        "de": "Probiere angenehme Bewegung und erfasse deine Aktivität bei Bedarf selbst.",
+        "ar": "جرّب حركة مريحة وسجّل تمرينك بنفسك إن أردت.",
+        "ja": "無理のない運動を試し、必要なら自分で運動を記録しましょう。",
+        "ko": "편안한 움직임을 해보고 원하면 직접 운동을 기록하세요.",
+        "zh-Hans": "尝试舒适的活动，并按需自行记录运动。"
+      }
+    },
+    {
+      "source": "Unavailable on this platform · wrong-block help available",
+      "translations": {
+        "hi": "इस प्लेटफ़ॉर्म पर उपलब्ध नहीं · गलत रोक की मदद उपलब्ध",
+        "es": "No disponible en esta plataforma · ayuda por bloqueo incorrecto disponible",
+        "pt": "Indisponível nesta plataforma · ajuda para bloqueios incorretos disponível",
+        "fr": "Indisponible sur cette plateforme · aide en cas de blocage incorrect",
+        "de": "Auf dieser Plattform nicht verfügbar · Hilfe bei falschen Sperren verfügbar",
+        "ar": "غير متاح على هذه المنصة · المساعدة للحظر الخاطئ متاحة",
+        "ja": "このプラットフォームでは利用不可 · 誤ったブロックのヘルプあり",
+        "ko": "이 플랫폼에서는 이용 불가 · 잘못된 차단 도움말 제공",
+        "zh-Hans": "此平台不可用 · 可获取错误拦截帮助"
+      }
+    },
+    {
+      "source": "Unsupported on iOS · wrong-block help available",
+      "translations": {
+        "hi": "iOS पर समर्थित नहीं · गलत रोक की मदद उपलब्ध",
+        "es": "No compatible con iOS · ayuda por bloqueo incorrecto disponible",
+        "pt": "Sem suporte no iOS · ajuda para bloqueios incorretos disponível",
+        "fr": "Non pris en charge sur iOS · aide en cas de blocage incorrect",
+        "de": "Unter iOS nicht unterstützt · Hilfe bei falschen Sperren verfügbar",
+        "ar": "غير مدعوم على iOS · المساعدة للحظر الخاطئ متاحة",
+        "ja": "iOSでは非対応 · 誤ったブロックのヘルプあり",
+        "ko": "iOS에서 지원 안 됨 · 잘못된 차단 도움말 제공",
+        "zh-Hans": "iOS 不支持 · 可获取错误拦截帮助"
+      }
+    },
+    {
+      "source": "URL",
+      "translations": {
+        "hi": "वेब पता",
+        "es": "dirección web",
+        "pt": "endereço web",
+        "fr": "adresse web",
+        "de": "Webadresse",
+        "ar": "عنوان رابط",
+        "ja": "ウェブアドレス",
+        "ko": "웹 주소",
+        "zh-Hans": "网址"
+      }
+    },
+    {
+      "source": "Use guided breathing if helpful, then record the time you took.",
+      "translations": {
+        "hi": "मदद मिले तो निर्देशित श्वास करें, फिर अपना समय दर्ज करें।",
+        "es": "Usa la respiración guiada si te ayuda y luego registra el tiempo que dedicaste.",
+        "pt": "Use a respiração guiada se ajudar e depois registre o tempo dedicado.",
+        "fr": "Utilisez la respiration guidée si elle vous aide, puis consignez le temps passé.",
+        "de": "Nutze geführtes Atmen, wenn es hilft, und erfasse danach deine aufgewendete Zeit.",
+        "ar": "استخدم التنفّس الموجّه إن كان مفيدًا ثم سجّل الوقت الذي قضيته.",
+        "ja": "役立つ場合はガイド付き呼吸を使い、かけた時間を記録しましょう。",
+        "ko": "도움이 된다면 호흡 안내를 사용한 뒤 소요 시간을 기록하세요.",
+        "zh-Hans": "如有帮助，可进行引导呼吸，再记录所花时间。"
+      }
+    },
+    {
+      "source": "Uses foreground app events to enforce the saved guard mode for selected packages.",
+      "translations": {
+        "hi": "चुने गए पैकेज पर सहेजा मोड लागू करने के लिए फ़ोरग्राउंड ऐप घटनाएँ इस्तेमाल होती हैं।",
+        "es": "Usa eventos de aplicaciones en primer plano para aplicar el modo guardado a los paquetes seleccionados.",
+        "pt": "Usa eventos de aplicativos em primeiro plano para aplicar o modo salvo aos pacotes selecionados.",
+        "fr": "Utilise les événements d’applications au premier plan pour appliquer le mode enregistré aux paquets choisis.",
+        "de": "Nutzt App-Ereignisse im Vordergrund, um den gespeicherten Modus für ausgewählte Pakete durchzusetzen.",
+        "ar": "يستخدم أحداث التطبيقات في الواجهة لتطبيق الوضع المحفوظ على الحزم المختارة.",
+        "ja": "前面のアプリのイベントを使い、選択したパッケージに保存済みモードを適用します。",
+        "ko": "화면에 표시된 앱의 이벤트로 선택한 패키지에 저장된 모드를 적용해요.",
+        "zh-Hans": "使用前台应用事件对所选软件包执行已保存模式。"
+      }
+    },
+    {
+      "source": "Verification required",
+      "translations": {
+        "hi": "जाँच आवश्यक",
+        "es": "Verificación necesaria",
+        "pt": "Verificação necessária",
+        "fr": "Vérification requise",
+        "de": "Überprüfung erforderlich",
+        "ar": "التحقق مطلوب",
+        "ja": "確認が必要",
+        "ko": "확인 필요",
+        "zh-Hans": "需要验证"
+      }
+    },
+    {
+      "source": "Verification unavailable",
+      "translations": {
+        "hi": "जाँच उपलब्ध नहीं",
+        "es": "Verificación no disponible",
+        "pt": "Verificação indisponível",
+        "fr": "Vérification indisponible",
+        "de": "Überprüfung nicht verfügbar",
+        "ar": "التحقق غير متاح",
+        "ja": "確認を利用できません",
+        "ko": "확인 불가",
+        "zh-Hans": "验证不可用"
+      }
+    },
+    {
+      "source": "Verify membership to open this report.",
+      "translations": {
+        "hi": "यह रिपोर्ट खोलने के लिए सदस्यता जाँचें।",
+        "es": "Verifica tu suscripción para abrir este informe.",
+        "pt": "Verifique sua assinatura para abrir este relatório.",
+        "fr": "Vérifiez votre abonnement pour ouvrir ce rapport.",
+        "de": "Bestätige deine Mitgliedschaft, um diesen Bericht zu öffnen.",
+        "ar": "تحقّق من الاشتراك لفتح هذا التقرير.",
+        "ja": "このレポートを開くには、メンバーシップを確認してください。",
+        "ko": "보고서를 열려면 멤버십을 확인하세요.",
+        "zh-Hans": "请验证会员资格以打开此报告。"
+      }
+    },
+    {
+      "source": "Watch one ad — start this guided challenge",
+      "translations": {
+        "hi": "एक विज्ञापन देखें — यह निर्देशित चुनौती शुरू करें",
+        "es": "Mira un anuncio: empieza este desafío guiado",
+        "pt": "Assista a um anúncio — inicie este desafio guiado",
+        "fr": "Regardez une publicité — commencez cet exercice guidé",
+        "de": "Eine Werbung ansehen — diese geführte Übung starten",
+        "ar": "شاهد إعلانًا واحدًا — ابدأ هذا التحدي الموجّه",
+        "ja": "広告を1回見る — このガイド付きチャレンジを開始",
+        "ko": "광고 한 편 보기 — 이 안내 활동 시작",
+        "zh-Hans": "观看一则广告 — 开始这次引导挑战"
+      }
+    },
+    {
+      "source": "websites",
+      "translations": {
+        "hi": "वेबसाइट",
+        "es": "sitios web",
+        "pt": "sites",
+        "fr": "sites web",
+        "de": "Websites schützen",
+        "ar": "مواقع",
+        "ja": "ウェブサイト",
+        "ko": "웹사이트",
+        "zh-Hans": "网站"
+      }
+    },
+    {
+      "source": "week",
+      "translations": {
+        "hi": "सप्ताह",
+        "es": "semana",
+        "pt": "semana",
+        "fr": "semaine",
+        "de": "Woche",
+        "ar": "أسبوع",
+        "ja": "週",
+        "ko": "주",
+        "zh-Hans": "周"
+      }
+    },
+    {
+      "source": "Windows use the local device clock. Overlapping guards stay independent. A ready schedule can be outside its active window.",
+      "translations": {
+        "hi": "समय अंतराल डिवाइस की स्थानीय घड़ी पर चलते हैं। एक साथ लागू सुरक्षा नियम अलग रहते हैं। तैयार समय-सारणी अभी सक्रिय अंतराल के बाहर भी हो सकती है।",
+        "es": "Los horarios usan el reloj local del dispositivo. Las protecciones que coinciden siguen siendo independientes. Un horario listo puede estar fuera de su periodo activo.",
+        "pt": "Os horários usam o relógio local do dispositivo. Proteções sobrepostas continuam independentes. Uma programação pronta pode estar fora do período ativo.",
+        "fr": "Les créneaux utilisent l’heure locale de l’appareil. Les protections qui se chevauchent restent indépendantes. Un programme prêt peut être hors de son créneau actif.",
+        "de": "Zeitfenster verwenden die lokale Gerätezeit. Überlappende Schutzregeln bleiben unabhängig. Ein bereiter Zeitplan kann außerhalb seines aktiven Fensters liegen.",
+        "ar": "تستخدم الفترات ساعة الجهاز المحلية. تبقى قواعد الحماية المتداخلة مستقلة. قد يكون الجدول الجاهز خارج فترته النشطة حاليًا.",
+        "ja": "時間帯は端末の現地時刻を使います。重なる保護は独立して維持されます。設定済みのスケジュールでも、現在は有効時間帯の外の場合があります。",
+        "ko": "시간대는 기기 현지 시계를 사용해요. 겹치는 보호 규칙은 독립적으로 유지돼요. 준비된 일정이어도 현재 활성 시간대가 아닐 수 있어요.",
+        "zh-Hans": "时间段使用设备本地时钟。重叠保护规则保持独立。已就绪的计划当前也可能处于生效时段之外。"
+      }
+    },
+    {
+      "source": "Write a private reflection directly.",
+      "translations": {
+        "hi": "सीधे निजी चिंतन लिखें।",
+        "es": "Escribe una reflexión privada directamente.",
+        "pt": "Escreva uma reflexão privada diretamente.",
+        "fr": "Écrivez directement une réflexion privée.",
+        "de": "Schreibe direkt private Gedanken auf.",
+        "ar": "اكتب تأملًا خاصًا مباشرةً.",
+        "ja": "非公開の振り返りを直接書きます。",
+        "ko": "개인적인 생각을 바로 적으세요.",
+        "zh-Hans": "直接写下私人反思。"
+      }
+    },
+    {
+      "source": "Write one honest reflection about what helped or felt difficult.",
+      "translations": {
+        "hi": "जो मददगार या मुश्किल लगा, उस पर एक ईमानदार चिंतन लिखें।",
+        "es": "Escribe una reflexión sincera sobre lo que ayudó o resultó difícil.",
+        "pt": "Escreva uma reflexão sincera sobre o que ajudou ou foi difícil.",
+        "fr": "Écrivez une réflexion sincère sur ce qui a aidé ou a été difficile.",
+        "de": "Schreibe ehrlich darüber, was geholfen hat oder schwierig war.",
+        "ar": "اكتب تأملًا صادقًا عمّا ساعدك أو كان صعبًا.",
+        "ja": "役立ったことや難しかったことを、率直に振り返って書きましょう。",
+        "ko": "도움이 되었거나 어려웠던 점에 대해 솔직하게 적어보세요.",
+        "zh-Hans": "诚实地写下哪些事有帮助，哪些事让您感到困难。"
+      }
+    },
+    {
+      "source": "Your app break was confirmed. Protection returns when it ends.",
+      "translations": {
+        "hi": "ऐप विराम की पुष्टि हुई। खत्म होने पर सुरक्षा लौटती है।",
+        "es": "Se confirmó la pausa de la aplicación. La protección vuelve al terminar.",
+        "pt": "A pausa do aplicativo foi confirmada. A proteção volta quando ela termina.",
+        "fr": "Votre pause d’application est confirmée. La protection revient à son terme.",
+        "de": "Deine App-Pause wurde bestätigt. Danach wird der Schutz wieder aktiv.",
+        "ar": "تأكّدت استراحة التطبيق. تعود الحماية عند انتهائها.",
+        "ja": "アプリの休憩が確認されました。終了すると保護が戻ります。",
+        "ko": "앱 휴식이 확인되었어요. 끝나면 보호가 다시 적용돼요.",
+        "zh-Hans": "应用休息已确认，结束后保护将恢复。"
+      }
+    },
+    {
+      "source": "Your choice works for this session, but could not be saved on this device. Retry saving before your next restart.",
+      "translations": {
+        "hi": "आपका चयन इस सत्र में लागू है, लेकिन डिवाइस पर सहेजा नहीं जा सका। अगले रीस्टार्ट से पहले फिर सहेजें।",
+        "es": "Tu elección funciona en esta sesión, pero no se pudo guardar en el dispositivo. Reintenta guardarla antes del próximo reinicio.",
+        "pt": "Sua escolha funciona nesta sessão, mas não pôde ser salva no dispositivo. Tente salvá-la antes de reiniciar.",
+        "fr": "Votre choix fonctionne pour cette session, mais n’a pas pu être enregistré sur l’appareil. Réessayez avant le prochain redémarrage.",
+        "de": "Deine Auswahl gilt für diese Sitzung, konnte aber nicht auf dem Gerät gespeichert werden. Speichere sie vor dem nächsten Neustart erneut.",
+        "ar": "يعمل اختيارك في هذه الجلسة لكن تعذّر حفظه على الجهاز. أعد الحفظ قبل إعادة التشغيل التالية.",
+        "ja": "今回のセッションでは選択が有効ですが、端末に保存できませんでした。次の再起動前に保存を再試行してください。",
+        "ko": "이번 세션에서는 선택이 적용되지만 기기에 저장하지 못했어요. 다음 재시작 전에 저장을 다시 시도하세요.",
+        "zh-Hans": "您的选择在本次会话中有效，但无法保存到设备。请在下次重启前重试保存。"
+      }
+    },
+    {
+      "source": "Your completed activity is saved. How you feel is optional.",
+      "translations": {
+        "hi": "पूर्ण गतिविधि सहेजी गई। अपनी भावना बताना वैकल्पिक है।",
+        "es": "Tu actividad completada está guardada. Contar cómo te sientes es opcional.",
+        "pt": "Sua atividade concluída foi salva. Dizer como se sente é opcional.",
+        "fr": "Votre activité terminée est enregistrée. Dire comment vous vous sentez est facultatif.",
+        "de": "Deine abgeschlossene Aktivität ist gespeichert. Wie du dich fühlst, kannst du freiwillig angeben.",
+        "ar": "نشاطك المكتمل محفوظ. مشاركة شعورك اختيارية.",
+        "ja": "完了した活動を保存しました。気持ちを伝えるかどうかは任意です。",
+        "ko": "완료한 활동이 저장되었어요. 기분을 공유하는 것은 선택 사항이에요.",
+        "zh-Hans": "已完成的活动已保存，是否分享感受由您选择。"
+      }
+    },
+    {
+      "source": "Your completed reset is ready to save.",
+      "translations": {
+        "hi": "पूरा विराम सहेजने के लिए तैयार है।",
+        "es": "Tu ejercicio completado está listo para guardarse.",
+        "pt": "Seu exercício concluído está pronto para salvar.",
+        "fr": "Votre exercice terminé est prêt à être enregistré.",
+        "de": "Deine abgeschlossene Übung ist bereit zum Speichern.",
+        "ar": "تمرينك المكتمل جاهز للحفظ.",
+        "ja": "完了したリセットを保存できます。",
+        "ko": "완료한 활동을 저장할 준비가 되었어요.",
+        "zh-Hans": "已完成的活动可以保存了。"
+      }
+    },
+    {
+      "source": "Your journal entries",
+      "translations": {
+        "hi": "आपकी डायरी प्रविष्टियाँ",
+        "es": "Tus entradas de diario",
+        "pt": "Suas entradas de diário",
+        "fr": "Vos entrées de journal",
+        "de": "Deine Tagebucheinträge",
+        "ar": "إدخالات يومياتك",
+        "ja": "日記の記録",
+        "ko": "내 일기 기록",
+        "zh-Hans": "您的日记条目"
+      }
+    },
+    {
+      "source": "Your progress stays on this device while you connect an account.",
+      "translations": {
+        "hi": "खाता जोड़ते समय आपकी प्रगति इसी डिवाइस पर रहती है।",
+        "es": "Tu progreso permanece en este dispositivo mientras conectas una cuenta.",
+        "pt": "Seu progresso fica neste dispositivo enquanto você conecta uma conta.",
+        "fr": "Votre progression reste sur cet appareil pendant que vous connectez un compte.",
+        "de": "Dein Fortschritt bleibt auf diesem Gerät, während du ein Konto verbindest.",
+        "ar": "يبقى تقدّمك على هذا الجهاز أثناء ربط حساب.",
+        "ja": "アカウントを接続している間も、進捗はこの端末に残ります。",
+        "ko": "계정을 연결하는 동안에도 진행 상황은 이 기기에 남아 있어요.",
+        "zh-Hans": "连接账户时，您的进度仍保留在此设备上。"
+      }
+    },
+    {
+      "source": "Your protection is still active. Choose how to start.",
+      "translations": {
+        "hi": "आपकी सुरक्षा अभी सक्रिय है। शुरू करने का तरीका चुनें।",
+        "es": "Tu protección sigue activa. Elige cómo empezar.",
+        "pt": "Sua proteção continua ativa. Escolha como começar.",
+        "fr": "Votre protection reste active. Choisissez comment commencer.",
+        "de": "Dein Schutz bleibt aktiv. Wähle, wie du starten möchtest.",
+        "ar": "ما زالت حمايتك فعّالة. اختر كيف تبدأ.",
+        "ja": "保護は有効なままです。始め方を選んでください。",
+        "ko": "보호는 계속 작동해요. 시작 방법을 선택하세요.",
+        "zh-Hans": "您的保护仍然有效。请选择开始方式。"
+      }
+    }
+  ]
+}

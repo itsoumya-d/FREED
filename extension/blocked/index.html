@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Held by FREED</title>
+  <link rel="stylesheet" href="./blocked.css" />
+</head>
+<body>
+  <main class="card">
+    <div class="shield" aria-hidden="true">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+        <line x1="9" y1="12" x2="15" y2="12"/>
+      </svg>
+    </div>
+
+    <h1>Hold on.<br />You are still in control.</h1>
+    <p class="sub" id="freed-reason">
+      FREED paused this adult domain before the page loaded. No shame, no lecture — this is the moment where your streak gets stronger.
+    </p>
+
+    <div class="breather" id="freed-breather" hidden>
+      <div class="circle" id="freed-breath-circle"><span id="freed-breath-label">Ready</span></div>
+      <button type="button" class="ghost" id="freed-breath-start">Start 4-7-8 breathing</button>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="primary" id="freed-back">Back to safety</button>
+      <button type="button" class="ghost" id="freed-toggle-breath">Take a breath instead</button>
+    </div>
+
+    <footer>
+      Blocked by FREED Guard · normal browsing stays open
+      <span id="freed-meta"></span>
+    </footer>
+  </main>
+  <script src="./blocked.js"></script>
+</body>
+</html>

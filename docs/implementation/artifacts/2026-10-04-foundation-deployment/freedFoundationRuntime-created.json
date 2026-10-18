@@ -1,0 +1,15 @@
+{
+  "httpStatus": 200,
+  "body": {
+    "name": "projects/freed-7d5ee/roles/freedFoundationRuntime",
+    "title": "FREED foundation runtime operations",
+    "description": "Only account deletion authentication lookup/deletion and reviewed notification transport.",
+    "includedPermissions": [
+      "cloudmessaging.messages.create",
+      "firebaseauth.users.delete",
+      "firebaseauth.users.get"
+    ],
+    "stage": "GA",
+    "etag": "BwZdADuWP/o="
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "httpStatus": 200,
+  "body": {
+    "kind": "storage#policy",
+    "resourceId": "projects/_/buckets/gcf-v2-sources-5477978760-asia-south1",
+    "version": 1,
+    "etag": "CAI=",
+    "bindings": [
+      {
+        "role": "roles/storage.legacyBucketOwner",
+        "members": [
+          "projectEditor:freed-7d5ee",
+          "projectOwner:freed-7d5ee"
+        ]
+      },
+      {
+        "role": "roles/storage.legacyBucketReader",
+        "members": [
+          "projectViewer:freed-7d5ee"
+        ]
+      },
+      {
+        "role": "roles/storage.legacyObjectOwner",
+        "members": [
+          "projectEditor:freed-7d5ee",
+          "projectOwner:freed-7d5ee"
+        ]
+      },
+      {
+        "role": "roles/storage.legacyObjectReader",
+        "members": [
+          "projectViewer:freed-7d5ee"
+        ]
+      },
+      {
+        "role": "roles/storage.objectViewer",
+        "members": [
+          "serviceAccount:5477978760-compute@developer.gserviceaccount.com"
+        ]
+      }
+    ]
+  }
+}

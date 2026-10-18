@@ -1,0 +1,41 @@
+appId: app.freed.recovery
+name: profile-history
+tags:
+  - smoke
+  - read-only
+---
+# Requires a disposable isolated fixture; no state or Keychain reset.
+- openLink: "freed:///profile"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-profile"
+    timeout: 15000
+- scrollUntilVisible:
+    element:
+      text: "Recovery history"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Recovery history"
+- scrollUntilVisible:
+    element:
+      text: "Recovery history"
+    direction: DOWN
+    timeout: 10000
+- assertVisible: ".*protected attempts.*"
+- tapOn: "Log Slip Safely"
+- assertVisible:
+    id: "screen-slip"
+- scrollUntilVisible:
+    element:
+      text: "Go Back"
+    direction: DOWN
+    timeout: 10000
+- tapOn: "Go Back"
+- assertVisible:
+    id: "screen-main-profile"
+- takeScreenshot: "profile-history"

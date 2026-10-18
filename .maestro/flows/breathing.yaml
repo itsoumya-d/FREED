@@ -1,0 +1,47 @@
+appId: app.freed.recovery
+name: breathing
+tags:
+  - smoke
+  - local-write
+---
+# Requires an English disposable fixture with no pending breathing completion receipt.
+# Begin/pause/close retains only disposable exercise progress; no session is marked completed.
+- openLink: "freed:///today"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible: { id: "screen-main-today" }
+    timeout: 15000
+- openLink: "freed:///flow/breathing"
+- extendedWaitUntil:
+    visible: { id: "screen-breathing" }
+    timeout: 15000
+- scrollUntilVisible:
+    element: { text: "4-7-8 Relax" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: "4-7-8 Relax"
+- tapOn: "Box \\(4-4-4-4\\)"
+- tapOn: "Physio Sigh"
+- tapOn: "4-7-8 Relax"
+- scrollUntilVisible:
+    element: { id: "breathing-toggle" }
+    direction: UP
+    timeout: 10000
+- assertVisible: "Begin Breathing"
+- tapOn: { id: "breathing-toggle" }
+- assertVisible: "Pause Exercise"
+- tapOn: { id: "breathing-toggle" }
+- assertVisible: "Begin Breathing"
+- scrollUntilVisible:
+    element: { text: "Close breathing exercise" }
+    direction: UP
+    timeout: 10000
+- tapOn: "Close breathing exercise"
+- extendedWaitUntil:
+    visible: { id: "screen-main-today" }
+    timeout: 15000
+- takeScreenshot: "breathing"

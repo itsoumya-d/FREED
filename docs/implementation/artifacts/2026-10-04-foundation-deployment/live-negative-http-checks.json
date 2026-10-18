@@ -1,0 +1,525 @@
+[
+  {
+    "function": "startEncryptedBackupUpload",
+    "scenario": "missing-auth-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "startEncryptedBackupUpload",
+    "scenario": "invalid-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "appleSubscriptionNotifications",
+    "scenario": "wrong-method",
+    "httpStatus": 405,
+    "expectedHttpStatus": 405,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "status": "rejected"
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "appleSubscriptionNotifications",
+    "scenario": "wrong-content-type",
+    "httpStatus": 415,
+    "expectedHttpStatus": 415,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "status": "rejected"
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "appleSubscriptionNotifications",
+    "scenario": "invalid-signed-payload",
+    "httpStatus": 400,
+    "expectedHttpStatus": 400,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "status": "rejected"
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "refreshReviewedAdultDomainFeed",
+    "scenario": "unauthorized-scheduler",
+    "httpStatus": 403,
+    "expectedHttpStatus": 403,
+    "contentType": "text/html; charset=UTF-8",
+    "body": {
+      "transportOnly": true,
+      "responseSha256": "c2aec7fd39fa6b95cac05e63a1b8d3ca05a385b68559e9e0655fd8042d146dbb"
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "cleanupExpiredServerRecords",
+    "scenario": "unauthorized-scheduler",
+    "httpStatus": 403,
+    "expectedHttpStatus": 403,
+    "contentType": "text/html; charset=UTF-8",
+    "body": {
+      "transportOnly": true,
+      "responseSha256": "c2aec7fd39fa6b95cac05e63a1b8d3ca05a385b68559e9e0655fd8042d146dbb"
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "appleSubscriptionNotificationsSandbox",
+    "scenario": "wrong-method",
+    "httpStatus": 405,
+    "expectedHttpStatus": 405,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "status": "rejected"
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "appleSubscriptionNotificationsSandbox",
+    "scenario": "wrong-content-type",
+    "httpStatus": 415,
+    "expectedHttpStatus": 415,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "status": "rejected"
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "appleSubscriptionNotificationsSandbox",
+    "scenario": "invalid-signed-payload",
+    "httpStatus": 400,
+    "expectedHttpStatus": 400,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "status": "rejected"
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "getLatestEncryptedBackupDownload",
+    "scenario": "missing-auth-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "getLatestEncryptedBackupDownload",
+    "scenario": "invalid-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "backendReadiness",
+    "scenario": "missing-auth-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "backendReadiness",
+    "scenario": "invalid-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "deleteEncryptedBackup",
+    "scenario": "missing-auth-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "deleteEncryptedBackup",
+    "scenario": "invalid-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "dispatchReviewedNotifications",
+    "scenario": "unauthorized-scheduler",
+    "httpStatus": 403,
+    "expectedHttpStatus": 403,
+    "contentType": "text/html; charset=UTF-8",
+    "body": {
+      "transportOnly": true,
+      "responseSha256": "c2aec7fd39fa6b95cac05e63a1b8d3ca05a385b68559e9e0655fd8042d146dbb"
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "fencePurchaseAccountLink",
+    "scenario": "missing-auth-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "fencePurchaseAccountLink",
+    "scenario": "invalid-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "getReviewedAdultDomainFeed",
+    "scenario": "missing-auth-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "getReviewedAdultDomainFeed",
+    "scenario": "invalid-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "requestAccountDeletion",
+    "scenario": "missing-auth-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "requestAccountDeletion",
+    "scenario": "invalid-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "finalizeEncryptedBackupUpload",
+    "scenario": "missing-auth-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "finalizeEncryptedBackupUpload",
+    "scenario": "invalid-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "registerPushToken",
+    "scenario": "missing-auth-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "registerPushToken",
+    "scenario": "invalid-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "ingestAggregateAnalytics",
+    "scenario": "missing-auth-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "ingestAggregateAnalytics",
+    "scenario": "invalid-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "getEncryptedBackupDownload",
+    "scenario": "missing-auth-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "getEncryptedBackupDownload",
+    "scenario": "invalid-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "retryPendingAccountDeletions",
+    "scenario": "unauthorized-scheduler",
+    "httpStatus": 403,
+    "expectedHttpStatus": 403,
+    "contentType": "text/html; charset=UTF-8",
+    "body": {
+      "transportOnly": true,
+      "responseSha256": "c2aec7fd39fa6b95cac05e63a1b8d3ca05a385b68559e9e0655fd8042d146dbb"
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "getPremiumEntitlement",
+    "scenario": "missing-auth-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "getPremiumEntitlement",
+    "scenario": "invalid-appcheck",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "contentType": "application/json; charset=utf-8",
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "backendReadiness",
+    "scenario": "firebase-public-function-url",
+    "url": "https://asia-south1-freed-7d5ee.cloudfunctions.net/backendReadiness",
+    "httpStatus": 401,
+    "expectedHttpStatus": 401,
+    "body": {
+      "error": {
+        "message": "Unauthenticated",
+        "status": "UNAUTHENTICATED"
+      }
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "appleSubscriptionNotifications",
+    "scenario": "firebase-public-function-url",
+    "url": "https://asia-south1-freed-7d5ee.cloudfunctions.net/appleSubscriptionNotifications",
+    "httpStatus": 405,
+    "expectedHttpStatus": 405,
+    "body": {
+      "status": "rejected"
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  },
+  {
+    "function": "appleSubscriptionNotificationsSandbox",
+    "scenario": "firebase-public-function-url",
+    "url": "https://asia-south1-freed-7d5ee.cloudfunctions.net/appleSubscriptionNotificationsSandbox",
+    "httpStatus": 405,
+    "expectedHttpStatus": 405,
+    "body": {
+      "status": "rejected"
+    },
+    "passed": true,
+    "authenticatedDeviceOrPurchaseProof": false
+  }
+]

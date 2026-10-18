@@ -11,8 +11,7 @@ const FLOW_ORDER =
 const DEFAULT_ANDROID_APP_PACKAGE = "app.freed.recovery";
 const ANDROID_VPN_CONSENT_SURFACE = "android.net.VpnService.prepare";
 const ANDROID_USAGE_ACCESS_SETTINGS_ROUTE = "android.settings.USAGE_ACCESS_SETTINGS";
-const ANDROID_ACCESSIBILITY_SETTINGS_ROUTE = "android.settings.ACCESSIBILITY_DETAILS_SETTINGS";
-const ANDROID_ACCESSIBILITY_SETTINGS_COMPONENT = `${DEFAULT_ANDROID_APP_PACKAGE}/app.freed.protection.FreedAccessibilityService`;
+const ANDROID_ACCESSIBILITY_SETTINGS_ROUTE = "android.settings.ACCESSIBILITY_SETTINGS";
 const DEFAULT_PERMISSION_EXPLANATION =
   "To protect you from explicit content and doomscroll loops, FREED needs these permissions to monitor only selected apps and sites through platform APIs, block known adult domains, and open a recovery challenge when a harmful site, search, or app-limit threshold is reached.";
 
@@ -45,7 +44,7 @@ const ANDROID_CHECKS = {
   androidUsageAccessExactSettingsRouteObserved: "--confirm-android-usage-exact-route",
   androidAccessibilitySettingsReturnRefreshed: "--confirm-android-accessibility-return-refresh",
   androidAccessibilityExactSettingsRouteObserved: "--confirm-android-accessibility-exact-route",
-  androidAccessibilityServiceDetailsTargetObserved: "--confirm-android-accessibility-target-component",
+  androidAccessibilityServiceEnabledObserved: "--confirm-android-accessibility-enabled",
   androidSystemSettingsReturnAutoAdvanceContinued: "--confirm-android-settings-auto-advance",
 };
 
@@ -104,7 +103,7 @@ Android-only required options:
   --confirm-android-usage-exact-route
   --confirm-android-accessibility-return-refresh
   --confirm-android-accessibility-exact-route
-  --confirm-android-accessibility-target-component
+  --confirm-android-accessibility-enabled
   --confirm-android-settings-auto-advance
 
 iOS-only required confirmation flags:
@@ -263,7 +262,7 @@ function buildReport(options) {
           androidDnsGuardVpnConsentSurface: ANDROID_VPN_CONSENT_SURFACE,
           androidUsageAccessSettingsRoute: ANDROID_USAGE_ACCESS_SETTINGS_ROUTE,
           androidAccessibilitySettingsRoute: ANDROID_ACCESSIBILITY_SETTINGS_ROUTE,
-          androidAccessibilitySettingsRouteComponent: ANDROID_ACCESSIBILITY_SETTINGS_COMPONENT,
+          androidAccessibilityServiceEnabled: true,
         }
       : {}),
     evidenceRecordPatch: {
@@ -286,7 +285,7 @@ function buildReport(options) {
             usageAccessSettingsRoute: ANDROID_USAGE_ACCESS_SETTINGS_ROUTE,
             accessibilitySettingsReturnRefreshed: true,
             accessibilitySettingsRoute: ANDROID_ACCESSIBILITY_SETTINGS_ROUTE,
-            accessibilitySettingsRouteComponent: ANDROID_ACCESSIBILITY_SETTINGS_COMPONENT,
+            accessibilityServiceEnabled: true,
             systemSettingsReturnAutoAdvanceContinued: true,
           }
         : options.platform === "ios"
@@ -340,18 +339,15 @@ function runSelfTest() {
     assert.equal(parsedAndroid.checks.androidUsageAccessExactSettingsRouteObserved, true);
     assert.equal(parsedAndroid.checks.androidAccessibilitySettingsReturnRefreshed, true);
     assert.equal(parsedAndroid.checks.androidAccessibilityExactSettingsRouteObserved, true);
-    assert.equal(parsedAndroid.checks.androidAccessibilityServiceDetailsTargetObserved, true);
+    assert.equal(parsedAndroid.checks.androidAccessibilityServiceEnabledObserved, true);
     assert.equal(parsedAndroid.checks.androidSystemSettingsReturnAutoAdvanceContinued, true);
     assert.equal(parsedAndroid.androidDnsGuardVpnConsentSurface, ANDROID_VPN_CONSENT_SURFACE);
     assert.equal(parsedAndroid.androidUsageAccessSettingsRoute, ANDROID_USAGE_ACCESS_SETTINGS_ROUTE);
     assert.equal(parsedAndroid.androidAccessibilitySettingsRoute, ANDROID_ACCESSIBILITY_SETTINGS_ROUTE);
-    assert.equal(parsedAndroid.androidAccessibilitySettingsRouteComponent, ANDROID_ACCESSIBILITY_SETTINGS_COMPONENT);
+    assert.equal(parsedAndroid.androidAccessibilityServiceEnabled, true);
     assert.equal(parsedAndroid.evidenceRecordPatch.appSelectionReturnSelectedAppCount, 2);
     assert.equal(parsedAndroid.evidenceRecordPatch.usageAccessSettingsRoute, ANDROID_USAGE_ACCESS_SETTINGS_ROUTE);
-    assert.equal(
-      parsedAndroid.evidenceRecordPatch.accessibilitySettingsRouteComponent,
-      ANDROID_ACCESSIBILITY_SETTINGS_COMPONENT
-    );
+    assert.equal(parsedAndroid.evidenceRecordPatch.accessibilityServiceEnabled, true);
     assert.equal(parsedAndroid.evidenceRecordPatch.systemSettingsReturnAutoAdvanceContinued, true);
 
     const iosReportPath = path.join(tempRoot, "ios-permission-wizard-report.json");

@@ -1,0 +1,35 @@
+{
+  "kind": "SIMULATOR_DEBUG",
+  "observedDefects": [
+    {
+      "id": "native-hidden-splash-redirect",
+      "status": "fixed-native-regression-passed",
+      "conditions": "English/System light; optimized embedded JS; retained root route during native quiz deep link",
+      "trigger": "First answer then quiz Continue",
+      "observed": "Navigated to paywall instead of second question.",
+      "evidence": [
+        "onboarding-quiz-report.json",
+        "maestro/onboarding-quiz/2026-10-03_072506/onboarding-quiz/screenshots/step-009-assertCondition-How_long_has_this_cycle.png"
+      ],
+      "rootCause": "Unfocused SplashScreen kept scheduling its onDone route redirect on provider rerenders. Parent owns focus guard regression.",
+      "greenEvidence": [
+        "quiz-focus-fixed/onboarding-quiz.xml",
+        "quiz-focus-fixed/maestro/onboarding-quiz/2026-10-03_074841/onboarding-quiz/takeScreenshot/onboarding-quiz.png"
+      ],
+      "greenAppTreeSha256": "0587fabe588bdc54b4fdf63976130c88cde435a1aca4777809e8a000c16956d3"
+    }
+  ],
+  "toolLimitations": [
+    {
+      "issue": "Compact Xcode rs/1 skips native Heading and generic radio roles",
+      "rawEvidence": "quiz-axe-before.json",
+      "actualAppAccessibility": "Question and all four radio labels, identifiers and frames exist in full native AX tree; no quiz wrapper change warranted."
+    },
+    {
+      "issue": "Xcode tool accepted fps60 start but failed save; underlying AXe record-video supports1..30fps",
+      "result": "No usable60fps AXe artifact. simctl H264 variable frame recording saved instead; not physical60fps proof."
+    }
+  ],
+  "video": "walkthrough-SIMULATOR-DEBUG.mp4",
+  "next": "Rebuild latest native Shield and focus fix, then rerun quiz and all reachable route inspection."
+}

@@ -1,0 +1,353 @@
+{
+  "kind": "SIMULATOR_DEBUG",
+  "appBuildSha256": "0587fabe588bdc54b4fdf63976130c88cde435a1aca4777809e8a000c16956d3",
+  "fixture": "fixture.json",
+  "nativeScope": "UI smoke only; individual full scenarios remain unverified",
+  "safeFlowDirectory": "/tmp/freed-premium-ios-safe-flows",
+  "flows": [
+    {
+      "flow": "account-options",
+      "path": ".maestro/flows/account-options.yaml",
+      "sourceSha256": "2586e755ea424b4478428d9fcceeccd802dcd928dc18361361790ef956ae9fcd",
+      "stagedSha256": "817de1a59389332d4ef2166fdcdd80b0283d97801d823d7828968405af5e3d72"
+    },
+    {
+      "flow": "account-reset-validation",
+      "path": ".maestro/flows/account-reset-validation.yaml",
+      "sourceSha256": "c7360a0b3850ddd43deb1555690abebbd8e73e990b8a0938847d039c9ae732e4",
+      "stagedSha256": "35bc0adef13d548c63ae41dd36d674f09cfd7070b13afae7af5503a20f8e116d"
+    },
+    {
+      "flow": "account-validation",
+      "path": ".maestro/flows/account-validation.yaml",
+      "sourceSha256": "25ed7e7abf659d876a82a96fb93e573a64199ef643ce4d338de572bad158187f",
+      "stagedSha256": "4b13afebc81439ef78d76101cdcf662529906083fa3d0367d825c6d5376dae5a"
+    },
+    {
+      "flow": "analytics-consent",
+      "path": ".maestro/flows/analytics-consent.yaml",
+      "sourceSha256": "b4c6043af36a9fe6dea129e9d4cfe5acb48585ac1c8079ef884e8a0378122993",
+      "stagedSha256": "3a7163debf99634432b4543b9fd50d6c24b1ba0b63120c71317393b75261421a"
+    },
+    {
+      "flow": "backup-local",
+      "path": ".maestro/flows/backup-local.yaml",
+      "sourceSha256": "0664c632ea51ac574a57c9230b46d744909e2153da1fa86f9475f60576d10541",
+      "stagedSha256": "e2ecec6b319decc353bf9b57458846b7cc845744a87804b9591d4aa3b833e59c"
+    },
+    {
+      "flow": "breathing",
+      "path": ".maestro/flows/breathing.yaml",
+      "sourceSha256": "3d241587a0e9efced8e8896fc36feaab6e43929e6c5e24080a5b7f326a6d5bdf",
+      "stagedSha256": "8ebee906ee122e7d672f195fe384484d78648936ab4cfb03286456a19c75182e"
+    },
+    {
+      "flow": "challenge-list",
+      "path": ".maestro/flows/challenge-list.yaml",
+      "sourceSha256": "fe8f1f24e210b19a13691f337d49e2f68bc7a2527dd861f3cd829c9bd3505220",
+      "stagedSha256": "d1e8d34844d4bc3dd241815705c9d3295f5a1b261fd90d76d99c2bf108ed6b4a"
+    },
+    {
+      "flow": "checkin-save",
+      "path": ".maestro/flows/checkin-save.yaml",
+      "sourceSha256": "bc5ac590f625fb6268d376073440b1df43da642de01b73d365d4e9d3343d7714",
+      "stagedSha256": "0f68e44561b94c9b0630bd96c0a2a722801bc6dbbc5a7fcaf7e6c9d2e8d6890e"
+    },
+    {
+      "flow": "clara-local",
+      "path": ".maestro/flows/clara-local.yaml",
+      "sourceSha256": "f2a61072af671fa1f615c322e94ea5b7ef8529572fb5c615ec272403db28c490",
+      "stagedSha256": "6a776327ffca7856332e3309ae7d78fba5eec5d02b3a7c21e6e6df75e0ac827d"
+    },
+    {
+      "flow": "custom-reset",
+      "path": ".maestro/flows/custom-reset.yaml",
+      "sourceSha256": "cb8a252cb833fca4e9851bb106edcab1beb7ae23382f28903ce62036ec3a254e",
+      "stagedSha256": "a9819b785f043170534ebff0af1423d851951ccea6f220bc4588d7b3ac14ba6d"
+    },
+    {
+      "flow": "deletion-local",
+      "path": ".maestro/flows/deletion-local.yaml",
+      "sourceSha256": "4dae249349aab9b9d387c430f0c981daff255db4210d8d427dc145fe578a8c87",
+      "stagedSha256": "c89dedb341acc9d2d6e53a1b66fd80d881930dbdd73209393f92f5c32d1b9e1d"
+    },
+    {
+      "flow": "encrypted-dns-consent",
+      "path": ".maestro/flows/encrypted-dns-consent.yaml",
+      "sourceSha256": "c6a080cb84637229da9ba73a16b108fbe192d679af5011845f7c0c039220e933",
+      "stagedSha256": "d1f03b035155609d71416c5208c82ecad4ad77df1238901a366a063736e24b05"
+    },
+    {
+      "flow": "encrypted-dns-release-gated",
+      "path": ".maestro/flows/encrypted-dns-release-gated.yaml",
+      "sourceSha256": "8643fedb9026a47f13785b29027a04db16c90bac3ab0c397207022c784943d0e",
+      "stagedSha256": "b8cbc7e1801ab3116cfe04ab5b0b3722e5c423729fd7539f5134e5835d6b0583"
+    },
+    {
+      "flow": "encrypted-dns-status",
+      "path": ".maestro/flows/encrypted-dns-status.yaml",
+      "sourceSha256": "f400760bc59833e51abae14bd4a6a4d53390a56ab388f50e8ff6df08f40b8183",
+      "stagedSha256": "18904a483312ade8f04f8959d4538b3208b521280f85dda8a4d29ca7e496167a"
+    },
+    {
+      "flow": "intercept",
+      "path": ".maestro/flows/intercept.yaml",
+      "sourceSha256": "5ba20c4c880c668fd6519f442335b190df33af0358b1363cdb84bcf732225883",
+      "stagedSha256": "fa1764ba64643ba6f2c14f596abb8eb421b47d7c72c247cb86fe217496776992"
+    },
+    {
+      "flow": "library-articles",
+      "path": ".maestro/flows/library-articles.yaml",
+      "sourceSha256": "fa1e155ed0fca35edc079789083d512ca02e1fe46682c256dab7fcb210285819",
+      "stagedSha256": "f4954790f1b9bfec1bcd6e36c714188bbfab85c9fd94a9da1b1b7a09a3958b55"
+    },
+    {
+      "flow": "library-search",
+      "path": ".maestro/flows/library-search.yaml",
+      "sourceSha256": "181be60cb8b8bfc1835ab862a840c9f6b2900b7b6c17e70d0b435ec3fd1dc0aa",
+      "stagedSha256": "57f25da0484015c4aca88f87e9fb173b5d99d359ff169561f58dc4142bb253f1"
+    },
+    {
+      "flow": "localization-rtl-restart",
+      "path": ".maestro/flows/localization-rtl-restart.yaml",
+      "sourceSha256": "524e31df74f54b3ad5eec018cd6bdb4b91aa1b48c3ccd77746cedae1bf3a4bcf",
+      "stagedSha256": "9c466ce4a57a9d0426d0ee9fd3ccf0ce1e78a7e8f22151d297ba49a61cbb11b3"
+    },
+    {
+      "flow": "native-permission-locales",
+      "path": ".maestro/flows/native-permission-locales.yaml",
+      "sourceSha256": "afd70a8dbf6d6e8f26136ef6a7d018f843c668822fa645011e76289250f21e5a",
+      "stagedSha256": "ce651afde081220ca6b306de4fad927fa017eecebfbd6784c1ffc38b8a330e8c"
+    },
+    {
+      "flow": "onboarding-app-selection",
+      "path": ".maestro/flows/onboarding-app-selection.yaml",
+      "sourceSha256": "1978961712a292b9a09ff3477dff942de52a8f3e01bb3180578bffef8eea68f9",
+      "stagedSha256": "d0c7463d0d3ab90be7d03efc8eb8d9f22deedc05fead7aaa3907abe1fc3e0642"
+    },
+    {
+      "flow": "onboarding-plan",
+      "path": ".maestro/flows/onboarding-plan.yaml",
+      "sourceSha256": "78d690ae7820ac02dcf68a10607d77ebdb5e7a5e63411b5b25f8d228e538d42d",
+      "stagedSha256": "e3b8a95e3207c89551b6718e5696dcb9bb53fc7031842566cdff6cbd8bf9b60f"
+    },
+    {
+      "flow": "onboarding-quiz",
+      "path": ".maestro/flows/onboarding-quiz.yaml",
+      "sourceSha256": "9d3c3ff3afb35d274d1cbe8bd6702c4980e0585767f04256c59a0d69f009b7e1",
+      "stagedSha256": "62aba052d136808b7acd675cd704536ca6d7c7e696fd12ff441e7029cfaf515a"
+    },
+    {
+      "flow": "onboarding-welcome",
+      "path": ".maestro/flows/onboarding-welcome.yaml",
+      "sourceSha256": "bb842bb4b7b72adef4e2056293425cbd3b42701bc9fde94fd52976a0581d0edc",
+      "stagedSha256": "1c551ba23e7ba6748802b026d29dee3d901d2d30d27efac312fd4e5fedf0d5b9"
+    },
+    {
+      "flow": "paywall-free-exit",
+      "path": ".maestro/flows/paywall-free-exit.yaml",
+      "sourceSha256": "ea48fa48f9cb727824394f9e7abdfcd976eca31dff96064e27c3939c698d960b",
+      "stagedSha256": "0383588aeb4d6b0703ee1768268d2717e31ea421c558f88ccaee3fc1ef696f16"
+    },
+    {
+      "flow": "paywall-legal",
+      "path": ".maestro/flows/paywall-legal.yaml",
+      "sourceSha256": "0d7f34ca8c2aa3a8790848e6695279d26f6f8c94d1babc2fb85d0461debbec48",
+      "stagedSha256": "dc685954e6fe8a66532563468a862a4a0998dc53b346787812774b235cfc65fe"
+    },
+    {
+      "flow": "paywall-plans",
+      "path": ".maestro/flows/paywall-plans.yaml",
+      "sourceSha256": "89482391ee29b10976eae6bb2e9620ba7f534ec7f24dcb99ebd388b0a6a63113",
+      "stagedSha256": "befc6e79bd1f5a6bcc76b5b3c0ba2a63146dd700aa9f21bc7adc42a373ffb86f"
+    },
+    {
+      "flow": "platform-limits",
+      "path": ".maestro/flows/platform-limits.yaml",
+      "sourceSha256": "8a208a9f4ef6a490abd92f160d78c34f3f7980d111e19e0b0a98cd6a1b5400be",
+      "stagedSha256": "d32efaec5a7dbcd88d5b019e833105d561a1202143d620b4ea9b7a7289b1c2f0"
+    },
+    {
+      "flow": "preferences-appearance",
+      "path": ".maestro/flows/preferences-appearance.yaml",
+      "sourceSha256": "9c30d21e86fa076084cf5c66a828075e3890b2c8855c92328c9ba09802a6fbfc",
+      "stagedSha256": "5689ab0e078bd07a6fbace98ec199f27d27d981b012123e1dbd89f35933a69b5"
+    },
+    {
+      "flow": "preferences-language",
+      "path": ".maestro/flows/preferences-language.yaml",
+      "sourceSha256": "a7ba82e832301eb1db9c67371ffca6af35b8aae11b7336e6a10a183ee1d9a3ca",
+      "stagedSha256": "4814dd1769c68d1f927e21b5d9c811377652c53c5dc7e1d57b1b7a7c6788c215"
+    },
+    {
+      "flow": "privacy-support",
+      "path": ".maestro/flows/privacy-support.yaml",
+      "sourceSha256": "45485ee6aee85da10123aa272b92dd5999504f5402942958dee5ba4e5970e8fc",
+      "stagedSha256": "9a92b7a4bfb654c952f9588157e21a43bedceb49277bf77d86984cd7f2734a86"
+    },
+    {
+      "flow": "profile-accountability",
+      "path": ".maestro/flows/profile-accountability.yaml",
+      "sourceSha256": "e5e0c2c126e8ae082624998ebe7b0d9cc7577e1b7185ebc57f7511b4f477e31f",
+      "stagedSha256": "676f5861b5d5410dd4009cb5d8d5d8a70950121063f302b0645d0e254493eee0"
+    },
+    {
+      "flow": "profile-history",
+      "path": ".maestro/flows/profile-history.yaml",
+      "sourceSha256": "62951238eb8c60553a554c3aba28921a9048b206e647d1aa73ce835de71601d3",
+      "stagedSha256": "0febe5cd01f90141890231398a9dc171d416dc74fcaba66efade261865452a8d"
+    },
+    {
+      "flow": "profile-plan",
+      "path": ".maestro/flows/profile-plan.yaml",
+      "sourceSha256": "035470cbda4c04766eeb398e5127a5d55f4d74183fe96887603ff7d99f7e7c33",
+      "stagedSha256": "6909b4000d10c7ce4a4436459c490434fea2e1a887ef335801bb66c01c06e251"
+    },
+    {
+      "flow": "profile-reminders",
+      "path": ".maestro/flows/profile-reminders.yaml",
+      "sourceSha256": "b41d61a9b1b1d7e3657b3761be1a0880e7a024aa89959942d0a6fa0b370d1b72",
+      "stagedSha256": "fed4789eaff4c92d7127549b10bab06005b0d35db0a3a93226e4a49ec22d6f98"
+    },
+    {
+      "flow": "profile-shield",
+      "path": ".maestro/flows/profile-shield.yaml",
+      "sourceSha256": "be408e0c8a72017741ef1489c7bf93f438c90df271173409dbf75cdc42233524",
+      "stagedSha256": "3508e3a25740c0a9b3d33c047161d6f4e2a2f4ba5f445b36a0c90fc5958ea779"
+    },
+    {
+      "flow": "progress-reports",
+      "path": ".maestro/flows/progress-reports.yaml",
+      "sourceSha256": "e006c5f941d9858aff5affac842f0836e7bac7e432f6cdf10279697952633ef2",
+      "stagedSha256": "cb0d52f191ae5fcc775ae3826f36a06f29c23c48437ae5b168bb566322579d0a"
+    },
+    {
+      "flow": "progress-zero",
+      "path": ".maestro/flows/progress-zero.yaml",
+      "sourceSha256": "c75731e4be0c9cd26a160586187b3a0fae6b27d55592b7fa778bcf1af08fae03",
+      "stagedSha256": "dedbf05c2d766bd3f8456b245f60ae0e23673136b785412db053e55c073ab717"
+    },
+    {
+      "flow": "protection-layers",
+      "path": ".maestro/flows/protection-layers.yaml",
+      "sourceSha256": "889efec83bfc19ca1455b0d230500cba77933791ca283e1d22b6715e89a69b0e",
+      "stagedSha256": "f4a4734ee3d7e9fd649c5a02c82ad1e023c62ccc577c5ad7115296912695c09a"
+    },
+    {
+      "flow": "protection-setup",
+      "path": ".maestro/flows/protection-setup.yaml",
+      "sourceSha256": "65b929ec1ff9800d8dd5255855a303e1c6f46d18bdc5f9c6c5e13b6362099dd1",
+      "stagedSha256": "64290eaf8ff667226f5e09901f37d06f213747f0699af07761c7cf2c4f8132cf"
+    },
+    {
+      "flow": "recovery-drafts",
+      "path": ".maestro/flows/recovery-drafts.yaml",
+      "sourceSha256": "136b49d5db541489de6a3b4aa848c1a08563c8a876385d718fb760d659c2b98e",
+      "stagedSha256": "8a82f447aa2aab9e4b0c4d8c816cc94e3b9cd0e147cc29d6307aa193bd010cae"
+    },
+    {
+      "flow": "recovery-shortcuts",
+      "path": ".maestro/flows/recovery-shortcuts.yaml",
+      "sourceSha256": "79bb3f137b883b49a9e776a2e0060164d9824458d44090c9abc9e142d9870dfe",
+      "stagedSha256": "da2411feb60a830b9907e5d07d7a7faeff4ebfe1dc3413590b0b194e0405fdca"
+    },
+    {
+      "flow": "root-navigation",
+      "path": ".maestro/flows/root-navigation.yaml",
+      "sourceSha256": "42b81efbc87cb6af693fc1af961f26184b403b26a3ae899a2e3577d0050d9dd1",
+      "stagedSha256": "ee5ef297b1e39589a3b6b65f7c146232c90c248ea571bfcf1faf2d6042e97cb5"
+    },
+    {
+      "flow": "shield-allowlist",
+      "path": ".maestro/flows/shield-allowlist.yaml",
+      "sourceSha256": "9eb44bb008b963d41631d9f2f17a3527dba9253389ec9b58129686f033e50b1c",
+      "stagedSha256": "98456a4ef9ffca72e0f2dde8f1a0cd52a181ea120bbff9d8592643c714e6d4e6"
+    },
+    {
+      "flow": "shield-diagnostics",
+      "path": ".maestro/flows/shield-diagnostics.yaml",
+      "sourceSha256": "0ca0746462a60aa09519e4c3e274eb01ed913e22e345aea7ee91033e6f0f6729",
+      "stagedSha256": "530b6f15dbd1f48e78f9a1893895d2e2f22680dd566b47ecafc713b9379a0554"
+    },
+    {
+      "flow": "shield-health",
+      "path": ".maestro/flows/shield-health.yaml",
+      "sourceSha256": "25d6be44a11fb024e570f488ad227b0e1c674fd77140b37581417a93c46769c1",
+      "stagedSha256": "6ba3301491ad06c93b9eda5b03b30a754e0387514b4d2bdb0e1f000636199c95"
+    },
+    {
+      "flow": "shield-preferences",
+      "path": ".maestro/flows/shield-preferences.yaml",
+      "sourceSha256": "dfb7970b6ac688f434dc8e7333c6d9eb142b717854fdfb4e3ccd1638d340e13b",
+      "stagedSha256": "4127a30f9a674e30e44391b96f4106fab486cbe67466ba898db04174bd5fadbb"
+    },
+    {
+      "flow": "shield-schedules",
+      "path": ".maestro/flows/shield-schedules.yaml",
+      "sourceSha256": "39a040b05d4ae1adb2dcf655dc88872ad43d5d21a7a0e584718aeff4527b229b",
+      "stagedSha256": "d6dfa83fcf009a03d10a13f4e9076c0835a37a376640a2612e2612de00c70b7c"
+    },
+    {
+      "flow": "shield-url-check",
+      "path": ".maestro/flows/shield-url-check.yaml",
+      "sourceSha256": "314a5bbfb7554c5d70e731b0687e4ed250cbdd7dc6acc7de58ccd7d58fcec98f",
+      "stagedSha256": "bc60c89b562b41d55f3b0fa94b15f4e1c13c395d695a7eca3928e31a83be440b"
+    },
+    {
+      "flow": "slip-save",
+      "path": ".maestro/flows/slip-save.yaml",
+      "sourceSha256": "801242800a416bae9063d5a1b0ca635e0196fe158260995e6cb8566ea05af662",
+      "stagedSha256": "924c152b571580de1e64c39e5ced56e08b2676883ccfe3120cf17d47e83252d4"
+    },
+    {
+      "flow": "today-habits",
+      "path": ".maestro/flows/today-habits.yaml",
+      "sourceSha256": "43aab7f6591d56763611f4cb3955c9e31cca15716c74c3685a46a88c72b17ed8",
+      "stagedSha256": "66fd90f58b4c563ebd57f952ad68a9fcec194fea6d8dc1a050748126db128e9c"
+    },
+    {
+      "flow": "today-metrics",
+      "path": ".maestro/flows/today-metrics.yaml",
+      "sourceSha256": "733e8b814fe16f8e260e9c05ceb079658da61833c0d746c91ee13c98b5ac86f5",
+      "stagedSha256": "19de97fed198ed7ad786700b874d920ca8dbf5ff96a68c689532acd49a8386b1"
+    },
+    {
+      "flow": "today-pledge",
+      "path": ".maestro/flows/today-pledge.yaml",
+      "sourceSha256": "564049f24ba0c93ea854eeadd02eb53d4ca471b73a6b69d2c10fb2364e34f1c9",
+      "stagedSha256": "68123a70e418cba1236b32b5a73bf77c105647d70a324bbd081b175fb4825939"
+    },
+    {
+      "flow": "urgent-support",
+      "path": ".maestro/flows/urgent-support.yaml",
+      "sourceSha256": "e6c690a937905905d66786df732736b77324fb157cde48b672d71f1b76523ebd",
+      "stagedSha256": "b22d063140be7ced1404625aed861805e805b8a5720ab342441ec51cdc4a5afa"
+    }
+  ],
+  "skipped": [
+    {
+      "flow": "account-verification",
+      "reason": "external-service not authorized in disabled fixture"
+    },
+    {
+      "flow": "backup-hosted",
+      "reason": "external-service not authorized in disabled fixture"
+    },
+    {
+      "flow": "deletion-account",
+      "reason": "external-service not authorized in disabled fixture"
+    },
+    {
+      "flow": "paywall-price-recovery",
+      "reason": "external-service not authorized in disabled fixture"
+    },
+    {
+      "flow": "rewarded-reset",
+      "reason": "external-service not authorized in disabled fixture"
+    }
+  ],
+  "maxHeapMB": 384,
+  "noReset": true,
+  "noRealCommunicationOrPurchase": true,
+  "precondition": "Each staged flow restarts only the disposable app process with stopApp + launchApp; Maestro default preserves app data and Keychain. This resets transient quiz index/disclosure state while retaining fixture history."
+}

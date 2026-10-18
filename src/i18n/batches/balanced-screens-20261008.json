@@ -1,0 +1,480 @@
+{
+  "entries": [
+    {
+      "source": "Try this reset again and record how it feels.",
+      "translations": {
+        "hi": "यह रीसेट फिर से आज़माएँ और दर्ज करें कि कैसा लगा।",
+        "es": "Prueba esta pausa de nuevo y registra cómo te sientes.",
+        "pt": "Experimente esta pausa novamente e registre como se sente.",
+        "fr": "Refaites cette pause et notez votre ressenti.",
+        "de": "Probiere diese Pause erneut und notiere, wie sie sich anfühlt.",
+        "ar": "جرّب هذا التمرين مجددًا وسجّل شعورك بعده.",
+        "ja": "このリセットをもう一度試し、感想を記録しましょう。",
+        "ko": "이 리셋을 다시 해 보고 어떻게 느꼈는지 기록하세요.",
+        "zh-Hans": "再试一次这个调整练习，并记录自己的感受。"
+      }
+    },
+    {
+      "source": "Try a familiar reset and record how it feels.",
+      "translations": {
+        "hi": "कोई जाना-पहचाना रीसेट आज़माएँ और दर्ज करें कि कैसा लगा।",
+        "es": "Prueba una pausa conocida y registra cómo te sientes.",
+        "pt": "Experimente uma pausa conhecida e registre como se sente.",
+        "fr": "Essayez une pause familière et notez votre ressenti.",
+        "de": "Probiere eine vertraute Pause und notiere, wie sie sich anfühlt.",
+        "ar": "جرّب تمرينًا مألوفًا وسجّل شعورك بعده.",
+        "ja": "慣れたリセットを試し、感想を記録しましょう。",
+        "ko": "익숙한 리셋을 해 보고 어떻게 느꼈는지 기록하세요.",
+        "zh-Hans": "试一次熟悉的调整练习，并记录自己的感受。"
+      }
+    },
+    {
+      "source": "Try another comfortable reset, or contact someone you trust.",
+      "translations": {
+        "hi": "कोई दूसरा आरामदायक रीसेट आज़माएँ या किसी भरोसेमंद व्यक्ति से बात करें।",
+        "es": "Prueba otra pausa que te resulte cómoda o contacta con alguien de confianza.",
+        "pt": "Experimente outra pausa confortável ou procure alguém de confiança.",
+        "fr": "Essayez une autre pause qui vous convient ou contactez une personne de confiance.",
+        "de": "Probiere eine andere angenehme Pause oder wende dich an eine vertraute Person.",
+        "ar": "جرّب تمرينًا آخر مريحًا أو تواصل مع شخص تثق به.",
+        "ja": "別の無理なくできるリセットを試すか、信頼できる人に相談しましょう。",
+        "ko": "편안하게 할 수 있는 다른 리셋을 시도하거나 믿는 사람에게 도움을 요청하세요.",
+        "zh-Hans": "尝试另一项舒适的调整练习，或联系你信任的人。"
+      }
+    },
+    {
+      "source": "Record whether your next reset helped.",
+      "translations": {
+        "hi": "अगले रीसेट के बाद दर्ज करें कि उससे मदद मिली या नहीं।",
+        "es": "Registra si tu próxima pausa te ayudó.",
+        "pt": "Registre se sua próxima pausa ajudou.",
+        "fr": "Notez si votre prochaine pause vous a aidé.",
+        "de": "Notiere, ob deine nächste Pause geholfen hat.",
+        "ar": "سجّل ما إذا كان تمرينك القادم قد ساعدك.",
+        "ja": "次のリセットが役に立ったか記録しましょう。",
+        "ko": "다음 리셋이 도움이 됐는지 기록하세요.",
+        "zh-Hans": "记录下一次调整练习是否有帮助。"
+      }
+    },
+    {
+      "source": "Check in again when you're ready.",
+      "translations": {
+        "hi": "जब आप तैयार हों, फिर से चेक-इन करें।",
+        "es": "Vuelve a registrar cómo estás cuando quieras.",
+        "pt": "Faça outro check-in quando estiver pronto.",
+        "fr": "Refaites un bilan quand vous le souhaitez.",
+        "de": "Mach wieder einen Check-in, wenn du bereit bist.",
+        "ar": "سجّل حالتك مجددًا عندما تكون مستعدًا.",
+        "ja": "準備ができたら、またチェックインしましょう。",
+        "ko": "준비가 되면 다시 체크인하세요.",
+        "zh-Hans": "准备好时，再做一次每日记录。"
+      }
+    },
+    {
+      "source": "Start with a check-in. Add reset feedback after a reset.",
+      "translations": {
+        "hi": "चेक-इन से शुरू करें। रीसेट के बाद अपनी राय जोड़ें।",
+        "es": "Empieza con un registro diario. Añade tu opinión después de una pausa.",
+        "pt": "Comece com um check-in. Registre sua avaliação depois de uma pausa.",
+        "fr": "Commencez par un bilan. Ajoutez votre ressenti après une pause.",
+        "de": "Beginne mit einem Check-in. Gib nach einer Pause Rückmeldung.",
+        "ar": "ابدأ بتسجيل حالتك اليومية. أضف رأيك بعد تمرين إعادة التركيز.",
+        "ja": "チェックインから始めましょう。リセット後に感想を追加できます。",
+        "ko": "체크인부터 시작하세요. 리셋 후 느낀 점을 추가하세요.",
+        "zh-Hans": "从每日记录开始。调整练习结束后，添加反馈。"
+      }
+    },
+    {
+      "source": "It helped",
+      "translations": {
+        "hi": "इससे मदद मिली",
+        "es": "Me ayudó",
+        "pt": "Ajudou",
+        "fr": "Cela m’a aidé",
+        "de": "Es hat geholfen",
+        "ar": "ساعدني",
+        "ja": "役に立った",
+        "ko": "도움이 됐음",
+        "zh-Hans": "有帮助"
+      }
+    },
+    {
+      "source": "Still needed support",
+      "translations": {
+        "hi": "फिर भी सहारे की ज़रूरत थी",
+        "es": "Aún necesitabas apoyo",
+        "pt": "Ainda precisava de apoio",
+        "fr": "Besoin de soutien persistant",
+        "de": "Weiterhin Unterstützung gebraucht",
+        "ar": "ظللت بحاجة إلى دعم",
+        "ja": "引き続きサポートが必要だった",
+        "ko": "여전히 도움이 필요했음",
+        "zh-Hans": "仍然需要支持"
+      }
+    },
+    {
+      "source": "No helpfulness feedback recorded",
+      "translations": {
+        "hi": "मदद मिली या नहीं, इसकी कोई राय दर्ज नहीं है",
+        "es": "Sin opinión sobre la utilidad registrada",
+        "pt": "Nenhuma avaliação sobre a utilidade registrada",
+        "fr": "Aucun retour sur l’utilité consigné",
+        "de": "Keine Rückmeldung zum Nutzen gespeichert",
+        "ar": "لم يُسجّل رأي حول الفائدة",
+        "ja": "役に立ったかどうかの記録なし",
+        "ko": "도움이 됐는지 기록하지 않음",
+        "zh-Hans": "未记录是否有帮助"
+      }
+    },
+    {
+      "source": "Check-in",
+      "translations": {
+        "hi": "चेक-इन",
+        "es": "Registro diario",
+        "pt": "Registro diário",
+        "fr": "Bilan",
+        "de": "Täglicher Check-in",
+        "ar": "تسجيل يومي",
+        "ja": "チェックイン",
+        "ko": "체크인",
+        "zh-Hans": "每日记录"
+      }
+    },
+    {
+      "source": "Journal entry",
+      "translations": {
+        "hi": "जर्नल प्रविष्टि",
+        "es": "Entrada del diario",
+        "pt": "Entrada do diário",
+        "fr": "Entrée du journal",
+        "de": "Tagebucheintrag",
+        "ar": "تدوينة يوميات",
+        "ja": "日記の記録",
+        "ko": "일기 기록",
+        "zh-Hans": "日记条目"
+      }
+    },
+    {
+      "source": "{{count}} saved photos",
+      "translations": {
+        "hi": "{{count}} सहेजी गई तस्वीरें",
+        "es": "{{count}} fotos guardadas",
+        "pt": "{{count}} fotos salvas",
+        "fr": "{{count}} photos enregistrées",
+        "de": "{{count}} gespeicherte Fotos",
+        "ar": "{{count}} صورة محفوظة",
+        "ja": "保存した写真：{{count}}枚",
+        "ko": "저장한 사진 {{count}}장",
+        "zh-Hans": "已保存 {{count}} 张照片"
+      }
+    },
+    {
+      "source": "Practice recorded",
+      "translations": {
+        "hi": "अभ्यास दर्ज किया गया",
+        "es": "Práctica registrada",
+        "pt": "Prática registrada",
+        "fr": "Pratique consignée",
+        "de": "Übung aufgezeichnet",
+        "ar": "تم تسجيل الممارسة",
+        "ja": "習慣の実践を記録済み",
+        "ko": "습관 실천 기록됨",
+        "zh-Hans": "已记录习惯练习"
+      }
+    },
+    {
+      "source": "Daily pledge recorded",
+      "translations": {
+        "hi": "दैनिक संकल्प दर्ज किया गया",
+        "es": "Compromiso diario registrado",
+        "pt": "Compromisso diário registrado",
+        "fr": "Engagement quotidien consigné",
+        "de": "Tägliches Versprechen aufgezeichnet",
+        "ar": "تم تسجيل الالتزام اليومي",
+        "ja": "今日の誓いを記録済み",
+        "ko": "오늘의 다짐 기록됨",
+        "zh-Hans": "已记录每日承诺"
+      }
+    },
+    {
+      "source": "Setback recorded",
+      "translations": {
+        "hi": "चूक दर्ज की गई",
+        "es": "Recaída registrada",
+        "pt": "Recaída registrada",
+        "fr": "Rechute consignée",
+        "de": "Rückschlag aufgezeichnet",
+        "ar": "تم تسجيل الانتكاسة",
+        "ja": "つまずきを記録済み",
+        "ko": "재발 기록됨",
+        "zh-Hans": "已记录复发"
+      }
+    },
+    {
+      "source": "Return to today",
+      "translations": {
+        "hi": "आज पर लौटें",
+        "es": "Volver a hoy",
+        "pt": "Voltar para hoje",
+        "fr": "Revenir à aujourd’hui",
+        "de": "Zum heutigen Tag zurück",
+        "ar": "العودة إلى اليوم",
+        "ja": "今日に戻る",
+        "ko": "오늘로 돌아가기",
+        "zh-Hans": "回到今天"
+      }
+    },
+    {
+      "source": "Repeat this reset",
+      "translations": {
+        "hi": "यह रीसेट फिर से करें",
+        "es": "Repetir esta pausa",
+        "pt": "Repetir esta pausa",
+        "fr": "Refaire cette pause",
+        "de": "Diese Pause wiederholen",
+        "ar": "تكرار هذا التمرين",
+        "ja": "このリセットをもう一度試す",
+        "ko": "이 리셋 다시 하기",
+        "zh-Hans": "再做一次这个练习"
+      }
+    },
+    {
+      "source": "Choose a reset",
+      "translations": {
+        "hi": "रीसेट चुनें",
+        "es": "Elegir una pausa",
+        "pt": "Escolher uma pausa",
+        "fr": "Choisir une pause",
+        "de": "Eine Pause auswählen",
+        "ar": "اختيار تمرين",
+        "ja": "リセットを選ぶ",
+        "ko": "리셋 선택",
+        "zh-Hans": "选择一个练习"
+      }
+    },
+    {
+      "source": "Start today's check-in",
+      "translations": {
+        "hi": "आज का चेक-इन शुरू करें",
+        "es": "Empezar el registro de hoy",
+        "pt": "Começar o check-in de hoje",
+        "fr": "Commencer le bilan d’aujourd’hui",
+        "de": "Heutigen Check-in starten",
+        "ar": "بدء التسجيل اليومي لهذا اليوم",
+        "ja": "今日のチェックインを始める",
+        "ko": "오늘의 체크인 시작",
+        "zh-Hans": "开始今天的每日记录"
+      }
+    },
+    {
+      "source": "Day",
+      "translations": {
+        "hi": "दिन",
+        "es": "Día",
+        "pt": "Dia",
+        "fr": "Jour",
+        "de": "Tag",
+        "ar": "يوم",
+        "ja": "日",
+        "ko": "일",
+        "zh-Hans": "日"
+      }
+    },
+    {
+      "source": "Week",
+      "translations": {
+        "hi": "हफ़्ता",
+        "es": "Semana",
+        "pt": "Semana",
+        "fr": "Semaine",
+        "de": "Woche",
+        "ar": "أسبوع",
+        "ja": "週",
+        "ko": "주",
+        "zh-Hans": "周"
+      }
+    },
+    {
+      "source": "Recorded activity",
+      "translations": {
+        "hi": "दर्ज गतिविधि",
+        "es": "Actividad registrada",
+        "pt": "Atividade registrada",
+        "fr": "Activité consignée",
+        "de": "Aufgezeichnete Aktivität",
+        "ar": "النشاط المسجّل",
+        "ja": "記録した活動",
+        "ko": "기록된 활동",
+        "zh-Hans": "已记录的活动"
+      }
+    },
+    {
+      "source": "Open recorded details",
+      "translations": {
+        "hi": "दर्ज विवरण खोलें",
+        "es": "Abrir los detalles registrados",
+        "pt": "Abrir os detalhes registrados",
+        "fr": "Ouvrir les détails consignés",
+        "de": "Aufgezeichnete Details öffnen",
+        "ar": "فتح التفاصيل المسجّلة",
+        "ja": "記録の詳細を開く",
+        "ko": "기록된 상세 내용 열기",
+        "zh-Hans": "打开已记录的详情"
+      }
+    },
+    {
+      "source": "Older reset details are no longer retained. Their recorded totals are preserved.",
+      "translations": {
+        "hi": "पुराने रीसेट के विवरण अब नहीं रखे गए हैं। उनके दर्ज कुल आँकड़े सुरक्षित हैं।",
+        "es": "Los detalles antiguos de las pausas ya no se conservan. Sus totales registrados se mantienen.",
+        "pt": "Os detalhes antigos das pausas não são mais mantidos. Seus totais registrados são preservados.",
+        "fr": "Les anciens détails des pauses ne sont plus conservés. Leurs totaux consignés sont préservés.",
+        "de": "Ältere Details zu Pausen werden nicht mehr aufbewahrt. Ihre aufgezeichneten Gesamtzahlen bleiben erhalten.",
+        "ar": "لم تعد تفاصيل التمارين القديمة محفوظة. أعدادها الإجمالية المسجّلة محفوظة.",
+        "ja": "古いリセットの詳細は保持されていません。記録した合計数は保持されています。",
+        "ko": "오래된 리셋 상세 기록은 더 이상 보관하지 않습니다. 기록된 합계는 유지됩니다.",
+        "zh-Hans": "较早的调整练习详情已不再保留，但记录的总数仍然保留。"
+      }
+    },
+    {
+      "source": "Next step",
+      "translations": {
+        "hi": "अगला कदम",
+        "es": "Siguiente paso",
+        "pt": "Próximo passo",
+        "fr": "Prochaine étape",
+        "de": "Nächster Schritt",
+        "ar": "الخطوة التالية",
+        "ja": "次のステップ",
+        "ko": "다음 단계",
+        "zh-Hans": "下一步"
+      }
+    },
+    {
+      "source": "Return to today to record your next check-in or reset.",
+      "translations": {
+        "hi": "अगला चेक-इन या रीसेट दर्ज करने के लिए आज पर लौटें।",
+        "es": "Vuelve a hoy para añadir tu próximo registro diario o tu próxima pausa.",
+        "pt": "Volte para hoje para registrar seu próximo check-in ou pausa.",
+        "fr": "Revenez à aujourd’hui pour consigner votre prochain bilan ou votre prochaine pause.",
+        "de": "Kehre zum heutigen Tag zurück, um deinen nächsten Check-in oder deine nächste Pause aufzuzeichnen.",
+        "ar": "عُد إلى اليوم لتسجيل حالتك أو تمرينك القادم.",
+        "ja": "今日に戻って、次のチェックインやリセットを記録しましょう。",
+        "ko": "오늘로 돌아가 다음 체크인이나 리셋을 기록하세요.",
+        "zh-Hans": "回到今天，记录下一次每日记录或调整练习。"
+      }
+    },
+    {
+      "source": "This is a saved record. Viewing it does not change it.",
+      "translations": {
+        "hi": "यह सहेजा गया रिकॉर्ड है। इसे देखने से यह बदलता नहीं है।",
+        "es": "Este es un registro guardado. Consultarlo no lo modifica.",
+        "pt": "Este é um registro salvo. Consultá-lo não o altera.",
+        "fr": "Il s’agit d’un enregistrement sauvegardé. Le consulter ne le modifie pas.",
+        "de": "Dies ist ein gespeicherter Eintrag. Das Ansehen verändert ihn nicht.",
+        "ar": "هذا سجل محفوظ. عرضه لا يغيّره.",
+        "ja": "これは保存された記録です。表示しても記録は変わりません。",
+        "ko": "저장된 기록입니다. 확인해도 기록이 변경되지 않습니다.",
+        "zh-Hans": "这是已保存的记录。查看不会更改记录。"
+      }
+    },
+    {
+      "source": "Not active",
+      "translations": {
+        "hi": "सक्रिय नहीं",
+        "es": "Sin activar",
+        "pt": "Não ativado",
+        "fr": "Non activé",
+        "de": "Nicht aktiv",
+        "ar": "غير مفعّل",
+        "ja": "無効",
+        "ko": "활성화되지 않음",
+        "zh-Hans": "未启用"
+      }
+    },
+    {
+      "source": "Changes not applied",
+      "translations": {
+        "hi": "बदलाव लागू नहीं हुए",
+        "es": "Cambios sin aplicar",
+        "pt": "Alterações não aplicadas",
+        "fr": "Modifications non appliquées",
+        "de": "Änderungen nicht angewendet",
+        "ar": "لم تُطبّق التغييرات",
+        "ja": "変更は未適用",
+        "ko": "변경 사항이 적용되지 않음",
+        "zh-Hans": "更改尚未应用"
+      }
+    },
+    {
+      "source": "Update protection",
+      "translations": {
+        "hi": "सुरक्षा अपडेट करें",
+        "es": "Actualizar protección",
+        "pt": "Atualizar proteção",
+        "fr": "Mettre à jour la protection",
+        "de": "Schutz aktualisieren",
+        "ar": "تحديث الحماية",
+        "ja": "保護を更新",
+        "ko": "보호 업데이트",
+        "zh-Hans": "更新防护"
+      }
+    },
+    {
+      "source": "Update group",
+      "translations": {
+        "hi": "समूह अपडेट करें",
+        "es": "Actualizar grupo",
+        "pt": "Atualizar grupo",
+        "fr": "Mettre à jour le groupe",
+        "de": "Gruppe aktualisieren",
+        "ar": "تحديث المجموعة",
+        "ja": "グループを更新",
+        "ko": "그룹 업데이트",
+        "zh-Hans": "更新分组"
+      }
+    },
+    {
+      "source": "Changes stay a draft until you update protection.",
+      "translations": {
+        "hi": "सुरक्षा अपडेट करने तक बदलाव मसौदे में ही रहेंगे।",
+        "es": "Los cambios quedan como borrador hasta que actualices la protección.",
+        "pt": "As alterações ficam como rascunho até você atualizar a proteção.",
+        "fr": "Les modifications restent à l’état de brouillon jusqu’à la mise à jour de la protection.",
+        "de": "Die Änderungen bleiben ein Entwurf, bis du den Schutz aktualisierst.",
+        "ar": "تظل التغييرات مسودة حتى تُحدّث الحماية.",
+        "ja": "保護を更新するまで、変更は下書きのままです。",
+        "ko": "보호를 업데이트할 때까지 변경 사항은 임시로만 저장됩니다.",
+        "zh-Hans": "更新防护之前，更改会保留为草稿。"
+      }
+    },
+    {
+      "source": "Existing protection stays active until you choose and update a group rule.",
+      "translations": {
+        "hi": "समूह का नियम चुनकर अपडेट करने तक मौजूदा सुरक्षा सक्रिय रहेगी।",
+        "es": "La protección actual sigue activa hasta que elijas y actualices una regla del grupo.",
+        "pt": "A proteção atual continua ativa até você escolher e atualizar uma regra do grupo.",
+        "fr": "La protection actuelle reste active jusqu’à ce que vous choisissiez et mettiez à jour une règle du groupe.",
+        "de": "Der bestehende Schutz bleibt aktiv, bis du eine Gruppenregel auswählst und aktualisierst.",
+        "ar": "تظل الحماية الحالية مفعّلة حتى تختار قاعدة للمجموعة وتُحدّثها.",
+        "ja": "グループのルールを選んで更新するまで、既存の保護は有効なままです。",
+        "ko": "그룹 규칙을 선택하고 업데이트할 때까지 기존 보호가 유지됩니다.",
+        "zh-Hans": "选择并更新分组规则之前，现有防护会保持启用。"
+      }
+    },
+    {
+      "source": "New groups start off with a 30-minute combined daily limit. Activate a group when its apps and rule are ready.",
+      "translations": {
+        "hi": "नए समूह शुरू में बंद रहते हैं और सभी ऐप के लिए कुल दैनिक सीमा 30 मिनट होती है। ऐप और नियम तैयार होने पर समूह सक्रिय करें।",
+        "es": "Los grupos nuevos empiezan desactivados, con un límite diario compartido de 30 minutos. Activa un grupo cuando sus apps y su regla estén listas.",
+        "pt": "Os novos grupos começam desativados, com um limite diário compartilhado de 30 minutos. Ative um grupo quando seus apps e sua regra estiverem prontos.",
+        "fr": "Les nouveaux groupes sont désactivés au départ, avec une limite quotidienne partagée de 30 minutes. Activez un groupe lorsque ses applications et sa règle sont prêtes.",
+        "de": "Neue Gruppen sind zunächst deaktiviert und haben ein gemeinsames Tageslimit von 30 Minuten. Aktiviere eine Gruppe, sobald ihre Apps und ihre Regel bereit sind.",
+        "ar": "تبدأ المجموعات الجديدة غير مفعّلة، بحد يومي مشترك قدره ٣٠ دقيقة. فعّل المجموعة عندما تصبح تطبيقاتها وقاعدتها جاهزة.",
+        "ja": "新しいグループは無効な状態で始まり、アプリ全体で1日30分の上限が設定されています。アプリとルールの準備ができたら、グループを有効にしてください。",
+        "ko": "새 그룹은 비활성 상태로 시작하며 모든 앱을 합쳐 하루 30분 제한이 설정됩니다. 앱과 규칙이 준비되면 그룹을 활성화하세요.",
+        "zh-Hans": "新分组最初处于关闭状态，所有应用共享每天 30 分钟的限额。应用和规则准备好后，再启用分组。"
+      }
+    }
+  ]
+}

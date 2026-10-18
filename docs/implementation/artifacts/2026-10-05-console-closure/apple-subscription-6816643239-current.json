@@ -1,0 +1,104 @@
+{
+  "data": {
+    "type": "subscriptions",
+    "id": "6816643239",
+    "attributes": {
+      "name": "FREED Premium Yearly",
+      "productId": "freed_premium_yearly",
+      "state": "MISSING_METADATA",
+      "subscriptionPeriod": "ONE_YEAR",
+      "reviewNote": "Monthly and yearly subscriptions provide the same Premium capabilities, with no free trial. FREED requires a real Google, Apple, or email account before checkout. The paywall uses store-supplied billed prices and renewal terms and includes Restore, Manage Subscription, and free continuation.\n\nCheckout remains unavailable unless valid store metadata and server verification readiness are present. Cancellation preserves access through the verified paid period; verified grace periods are respected. Account hold, expiry, refund, or revocation removes paid access while preserving recovery history and baseline protection. Eligible free guided sessions use optional rewarded ads. Basic Help and SOS do not show ads.\n\nAny separately provisioned App Review access is explicitly labeled Review access and does not fabricate a paid purchase or grant native app-unlock authority. Public native Shorts/Reels interception is disabled; supported whole-app shields and adult-domain protection are presented according to platform support. Domain filtering does not promise removal of every adult item inside mixed-content apps.",
+      "groupLevel": 1,
+      "marketSettings": [
+        "APP_STORE"
+      ],
+      "multiSeatStatus": "DISABLED"
+    },
+    "relationships": {
+      "subscriptionLocalizations": {
+        "links": {
+          "self": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/relationships/subscriptionLocalizations",
+          "related": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/subscriptionLocalizations"
+        }
+      },
+      "appStoreReviewScreenshot": {
+        "links": {
+          "self": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/relationships/appStoreReviewScreenshot",
+          "related": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/appStoreReviewScreenshot"
+        }
+      },
+      "introductoryOffers": {
+        "links": {
+          "self": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/relationships/introductoryOffers",
+          "related": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/introductoryOffers"
+        }
+      },
+      "promotionalOffers": {
+        "links": {
+          "self": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/relationships/promotionalOffers",
+          "related": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/promotionalOffers"
+        }
+      },
+      "offerCodes": {
+        "links": {
+          "self": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/relationships/offerCodes",
+          "related": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/offerCodes"
+        }
+      },
+      "prices": {
+        "links": {
+          "self": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/relationships/prices",
+          "related": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/prices"
+        }
+      },
+      "pricePoints": {
+        "links": {
+          "self": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/relationships/pricePoints",
+          "related": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/pricePoints"
+        }
+      },
+      "promotedPurchase": {
+        "links": {
+          "self": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/relationships/promotedPurchase",
+          "related": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/promotedPurchase"
+        }
+      },
+      "subscriptionAvailability": {
+        "links": {
+          "self": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/relationships/subscriptionAvailability",
+          "related": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/subscriptionAvailability"
+        }
+      },
+      "winBackOffers": {
+        "links": {
+          "self": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/relationships/winBackOffers",
+          "related": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/winBackOffers"
+        }
+      },
+      "images": {
+        "links": {
+          "self": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/relationships/images",
+          "related": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/images"
+        }
+      },
+      "planAvailabilities": {
+        "links": {
+          "self": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/relationships/planAvailabilities",
+          "related": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/planAvailabilities"
+        }
+      },
+      "versions": {
+        "links": {
+          "self": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/relationships/versions",
+          "related": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239/versions"
+        }
+      }
+    },
+    "links": {
+      "self": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239"
+    }
+  },
+  "links": {
+    "self": "https://api.appstoreconnect.apple.com/v1/subscriptions/6816643239"
+  }
+}

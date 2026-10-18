@@ -1,9 +1,12 @@
 import {
   generateWeeklyRecoveryReport,
+  getRecoveryAttemptSourceCounts,
+  getLocalDateKey,
   type AccountabilityPartner,
   type RecoveryState,
   type SupportCircleMember
 } from "@/lib/recovery-state";
+import { isFamilyControlsDerivedSignal, projectRecoveryStateForOffDevice } from "@/lib/recovery-signal-privacy";
 
 export type AccountabilityContext = {
   streakDays: number;
@@ -51,7 +54,7 @@ export function hasUsableSupportCircleMember(member: SupportCircleMember) {
 }
 
 export function buildAccountabilityMessage(partner: AccountabilityPartner, context: AccountabilityContext) {
-  const host = context.host?.trim() || "a risk moment";
+  const host = isFamilyControlsDerivedSignal({ host: context.host }) ? "a risk moment" : context.host?.trim() || "a risk moment";
   const challenge = context.challengeTitle?.trim() || "a reset challenge";
 
   return partner.messageTemplate
@@ -82,7 +85,11 @@ export function buildAccountabilityDeepLink(
 }
 
 export function buildSponsorReport(state: RecoveryState, day: Date | string = new Date()): SponsorReport {
+  state = projectRecoveryStateForOffDevice(state);
   const report = generateWeeklyRecoveryReport(state, day);
+  const end = typeof day === "string" ? new Date(day) : day;
+  const start = new Date(end); start.setDate(start.getDate() - 6);
+  const selfReportedUrges = getRecoveryAttemptSourceCounts(state, getLocalDateKey(start), getLocalDateKey(end))["panic-button"] ?? 0;
   const focus = redactReportText(report.nextFocus);
   const riskWindow = redactReportText(report.riskWindow, 48) || "No clear pattern yet";
   const body = [
@@ -90,13 +97,13 @@ export function buildSponsorReport(state: RecoveryState, day: Date | string = ne
     `Range: ${report.rangeLabel}`,
     `Current streak: ${Math.max(0, Math.round(state.streakDays))} days`,
     `Best streak: ${Math.max(0, Math.round(state.bestStreakDays))} days`,
-    `Protected moments interrupted: ${report.attempts}`,
+    `Self-reported urge moments: ${selfReportedUrges}`,
     `Recovery resets completed: ${report.completedChallenges}`,
     `Daily check-ins: ${report.checkIns}`,
     `Honest resets logged: ${report.slips}`,
     `Highest-risk window: ${riskWindow}`,
     `Focus: ${focus}`,
-    "Private notes, contacts, and browsing details are not included."
+    "Private notes, contacts, browsing details, and device protection history are not included."
   ].join("\n");
 
   return {
@@ -106,7 +113,7 @@ export function buildSponsorReport(state: RecoveryState, day: Date | string = ne
       rangeLabel: report.rangeLabel,
       streakDays: Math.max(0, Math.round(state.streakDays)),
       bestStreakDays: Math.max(0, Math.round(state.bestStreakDays)),
-      attempts: report.attempts,
+      attempts: selfReportedUrges,
       slips: report.slips,
       completedChallenges: report.completedChallenges,
       checkIns: report.checkIns,

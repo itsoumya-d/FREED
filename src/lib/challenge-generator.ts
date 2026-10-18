@@ -1,3 +1,4 @@
+import { readClientEnvironmentValue } from "@/lib/public-client-env";
 import {
   ChallengePreferenceSignal,
   ChallengeContextSignal,
@@ -9,8 +10,11 @@ import {
   generateChallengeSet
 } from "@/lib/recovery-engine";
 import { getProductionEndpointIssues } from "@/lib/endpoint-safety";
-import { coarseRecoveryTriggerLabel } from "@/lib/recovery-signal-privacy";
+import { coarseRecoveryTriggerLabel, projectRecoveryStateForOffDevice, offDeviceInterventionContext } from "@/lib/recovery-signal-privacy";
+import { countRecoveryRiskMomentsForDay, getDailyCheckInForDay } from "@/lib/recovery-state";
+import { buildLocalUrgeRiskForecast } from "@/lib/urge-risk-forecast";
 import { fetchRemoteProviderJson } from "@/lib/remote-provider-timeout";
+import { selectCapableChallengeSet, type ChallengeCapabilities } from "./challenge-capability";
 
 export type ChallengeInterventionContextRequest = {
   source: InterventionContextSignal["source"];
@@ -61,7 +65,7 @@ export function configureChallengeGenerationProvider(provider: ChallengeGenerati
 }
 
 function readEnv(key: string): string | null {
-  const value = process.env[key];
+  const value = readClientEnvironmentValue(key);
   if (!value || !value.trim()) return null;
   return value.trim();
 }
@@ -69,8 +73,8 @@ function readEnv(key: string): string | null {
 export function getChallengeGenerationConfig(options: { mode?: ChallengeGenerationMode } = {}): ChallengeGenerationConfig {
   const timeoutValue = Number.parseInt(readEnv("EXPO_PUBLIC_AI_CHALLENGE_TIMEOUT_MS") ?? "", 10);
   return {
-    mode: options.mode ?? (readEnv("EXPO_PUBLIC_AI_CHALLENGE_MODE") === "remote" ? "remote" : "local"),
-    endpointUrl: readEnv("EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT"),
+    mode: 'local',
+    endpointUrl: null,
     timeoutMs: Number.isFinite(timeoutValue) && timeoutValue >= 1_000 ? Math.min(timeoutValue, 12_000) : 8_000
   };
 }
@@ -81,7 +85,7 @@ export function getChallengeGenerationReadiness(options: { mode?: ChallengeGener
   if (config.mode === "remote" && !remoteChallengeProvider && !config.endpointUrl) {
     missing.push("remote challenge provider or endpoint");
   }
-  if (config.mode === "remote" && config.endpointUrl) {
+  if (config.mode === "remote" && !remoteChallengeProvider && config.endpointUrl) {
     missing.push(...getProductionEndpointIssues(config.endpointUrl, "remote challenge endpoint").map((issue) => issue.issue));
   }
 
@@ -241,6 +245,12 @@ function sanitizeRiskForecast(value: UrgeRiskForecastSignal | null | undefined):
 }
 
 export function buildChallengeGenerationRequest(profile: RecoveryProfile): ChallengeGenerationRequest {
+  if (!profile.exportState) throw new Error("Off-device export context is unavailable. Use local challenges.");
+  const own = projectRecoveryStateForOffDevice(profile.exportState);
+  const exportDay = profile.exportDay ?? new Date();
+  // Local ranking may infer stress from native interceptions; remote context
+  // uses only the person's answer for this day, or the neutral default.
+  const ownMood = getDailyCheckInForDay(own, exportDay)?.mood ?? "steady";
   const slipsThisWeek = profileSignalCount(profile.slipsThisWeek);
   const includeSlipSignals = (slipsThisWeek ?? 0) > 0;
   const hour = Math.max(0, Math.min(23, Math.round(profile.hour)));
@@ -257,8 +267,8 @@ export function buildChallengeGenerationRequest(profile: RecoveryProfile): Chall
     profile: {
       streakDays: Math.max(0, Math.round(profile.streakDays)),
       premium: profile.premium,
-      attemptsToday: Math.max(0, Math.round(profile.attemptsToday)),
-      mood: profile.mood,
+      attemptsToday: countRecoveryRiskMomentsForDay(own, exportDay),
+      mood: ownMood,
       hour,
       dayPart: dayPartFromHour(hour),
       isWeekend: dayOfWeek === null ? null : dayOfWeek === 0 || dayOfWeek === 6,
@@ -266,10 +276,10 @@ export function buildChallengeGenerationRequest(profile: RecoveryProfile): Chall
       slipsThisWeek,
       slipWindow: includeSlipSignals ? profileSignalText(profile.slipWindow) : null,
       slipTrigger: includeSlipSignals ? coarseRecoveryTriggerLabel(profile.slipTrigger) : null,
-      interventionContext: sanitizeInterventionContext(profile.interventionContext),
+      interventionContext: sanitizeInterventionContext(offDeviceInterventionContext(profile.interventionContext)),
       disciplinePreferences: sanitizeDisciplinePreferences(profile.disciplinePreferences),
       contextSignals: sanitizeContextSignals(profile.contextSignals),
-      riskForecast: sanitizeRiskForecast(profile.riskForecast),
+      riskForecast: sanitizeRiskForecast(buildLocalUrgeRiskForecast(own, exportDay)),
       recentFailureCount: profileSignalCount(profile.recentFailureCount) ?? 0,
       preferredCategories: profile.preferredCategories ?? []
     },
@@ -365,9 +375,11 @@ async function fetchRemoteChallenges(request: ChallengeGenerationRequest, config
 
 export async function generateAdaptiveChallengeSet(
   profile: RecoveryProfile,
-  options: { mode?: ChallengeGenerationMode } = {}
+  options: { mode?: ChallengeGenerationMode; capabilities?: ChallengeCapabilities } = {}
 ): Promise<RecoveryChallenge[]> {
-  const fallback = generateChallengeSet(profile);
+  const select = (candidates: RecoveryChallenge[]) => options.capabilities
+    ? selectCapableChallengeSet(candidates, options.capabilities, { premium: profile.premium }) : candidates;
+  const fallback = select(generateChallengeSet(profile));
   const config = getChallengeGenerationConfig(options);
   if (config.mode === "local") return fallback;
 
@@ -382,7 +394,7 @@ export async function generateAdaptiveChallengeSet(
       ...localCustom,
       ...normalized.filter((challenge) => !localCustom.some((custom) => custom.id === challenge.id))
     ].slice(0, 3);
-    return merged.length === 3 ? merged : fallback;
+    return select(merged.length === 3 ? merged : fallback);
   } catch {
     return fallback;
   }

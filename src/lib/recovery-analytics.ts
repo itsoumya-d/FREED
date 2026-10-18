@@ -2,17 +2,33 @@ import { getProductionEndpointIssues } from "@/lib/endpoint-safety";
 import { readBoundedResponseJson } from "@/lib/bounded-response-json";
 import { redactOperationalText } from "@/lib/operational-redaction";
 import { calculateRecoveryScore } from "@/lib/recovery-engine";
-import { coarseRecoveryTriggerLabel, redactRecoverySignalText } from "@/lib/recovery-signal-privacy";
+import { coarseRecoveryTriggerLabel, redactRecoverySignalText, projectRecoveryStateForOffDevice } from "@/lib/recovery-signal-privacy";
 import {
   calculateStreakDaysFrom,
+  countRecoveryRiskMomentsForDay,
+  getCurrentRecoveryStreakDays,
+  getProtectedAttemptCount,
+  getRecoveryAttemptSourceCounts,
+  getRecoveryChallengeCounts,
+  getRecoveryRiskHourCounts,
+  getRecoverySessionCounts,
+  getRecoveryUnlockCounts,
+  getRecoveryUtcAnalyticsDayCounts,
+  updateAnalyticsSharingSettings,
+  type AnalyticsUtcDayCounts,
+  type AnalyticsPendingSnapshot,
   generateWeeklyRecoveryReport,
   getLocalDateKey,
+  localDateKeyDiffDays,
+  localDateKeyToUtcMs,
   type RecoveryState
 } from "@/lib/recovery-state";
 
 export const REMOTE_ANALYTICS_ENABLED_DEFAULT = false;
 export const ANALYTICS_SCHEMA_VERSION = "aggregate-v5";
 export const ANALYTICS_CONSENT_VERSION = "analytics-consent-v1";
+export const ANALYTICS_SNAPSHOT_SCHEMA_VERSION = "aggregate-snapshot-v1";
+export const ANALYTICS_SNAPSHOT_RETENTION_DAYS = 14;
 const DEFAULT_ANALYTICS_SEND_TIMEOUT_MS = 5_000;
 const MIN_ANALYTICS_SEND_TIMEOUT_MS = 250;
 const MAX_ANALYTICS_SEND_TIMEOUT_MS = 15_000;
@@ -78,7 +94,176 @@ export type AnalyticsSendResult = {
   provider: string | null;
   responseStatus: number | null;
   reason: string | null;
+  snapshotReceipt?: AnalyticsSnapshotReceipt;
+  snapshotRecovery?: AnalyticsSnapshotRecovery;
 };
+
+export type AnalyticsSnapshotReceipt = {
+  schemaVersion: typeof ANALYTICS_SNAPSHOT_SCHEMA_VERSION;
+  lineageId: string;
+  baseRevision: number;
+  acceptedRevision: number;
+  snapshotId: string;
+  days: AnalyticsUtcDayCounts[];
+};
+
+export type AnalyticsSnapshotRecovery = {
+  ok: false;
+  schemaVersion: typeof ANALYTICS_SNAPSHOT_SCHEMA_VERSION;
+  lineageId: string;
+  baseRevision: number;
+  snapshotId: string;
+  recovery: "refresh-window" | "new-lineage";
+};
+
+/** Only a typed server response tied to the exact pending request can authorize recovery. */
+export function parseAnalyticsSnapshotRecovery(value: unknown, pending: AnalyticsPendingSnapshot): AnalyticsSnapshotRecovery | null {
+  if (!value || typeof value !== "object" || !("recovery" in value)) return null;
+  const response = value as Record<string, unknown>;
+  const fields = ["ok", "schemaVersion", "lineageId", "baseRevision", "snapshotId", "recovery"];
+  if (Object.keys(response).length !== fields.length || Object.keys(response).some(key => !fields.includes(key)) ||
+      response.ok !== false || response.schemaVersion !== ANALYTICS_SNAPSHOT_SCHEMA_VERSION ||
+      response.lineageId !== pending.lineageId || response.baseRevision !== pending.baseRevision || response.snapshotId !== pending.snapshotId ||
+      (response.recovery !== "refresh-window" && response.recovery !== "new-lineage")) {
+    throw new Error("Analytics recovery response does not match the saved request.");
+  }
+  return { ok: false, schemaVersion: ANALYTICS_SNAPSHOT_SCHEMA_VERSION, lineageId: pending.lineageId,
+    baseRevision: pending.baseRevision, snapshotId: pending.snapshotId, recovery: response.recovery };
+}
+
+/** Use inside strict persistence; local activity is preserved and stale responses cannot change its baseline. */
+export function applyAnalyticsSnapshotRecovery(current: RecoveryState, captured: RecoveryState, instruction: AnalyticsSnapshotRecovery): RecoveryState {
+  const pending = getPersistedAnalyticsPendingSnapshot(captured);
+  const validated = parseAnalyticsSnapshotRecovery(instruction, pending);
+  if (!validated) throw new Error("Analytics recovery instruction is unavailable.");
+  if (JSON.stringify(current.analyticsSharing.pendingSnapshot) !== JSON.stringify(captured.analyticsSharing.pendingSnapshot) ||
+      JSON.stringify(current.analyticsSharing.snapshotCheckpoint) !== JSON.stringify(captured.analyticsSharing.snapshotCheckpoint)) {
+    throw new Error("Analytics recovery conflicts with a changed local snapshot.");
+  }
+  const cleared = updateAnalyticsSharingSettings(current, { pendingSnapshot: null });
+  return validated.recovery === "refresh-window" ? cleared : prepareAnalyticsSnapshotState(updateAnalyticsSharingSettings(cleared, {
+    snapshotCheckpoint: { lineageId: null, revision: 0, snapshotId: null, days: [] }
+  }));
+}
+
+/** Persist this state before the first request so retries and backups retain the lineage. */
+export function prepareAnalyticsSnapshotState(state: RecoveryState): RecoveryState {
+  if (state.analyticsSharing.snapshotCheckpoint.lineageId) return state;
+  if (typeof globalThis.crypto?.getRandomValues !== "function") throw new Error("Secure analytics snapshot identity is unavailable.");
+  const bytes = globalThis.crypto.getRandomValues(new Uint8Array(16));
+  const lineageId = `lin_${Array.from(bytes, byte => byte.toString(16).padStart(2, "0")).join("")}`;
+  return updateAnalyticsSharingSettings(state, { snapshotCheckpoint: { lineageId, revision: 0, snapshotId: null, days: [] } });
+}
+
+export function buildRecoveryAggregateAnalyticsSnapshot(state: RecoveryState, controls: AnalyticsSharingControls, day: Date | string = new Date()) {
+  const checkpoint = state.analyticsSharing.snapshotCheckpoint;
+  if (!checkpoint.lineageId) throw new Error("Persist the analytics snapshot identity before sending.");
+  if (controls.consentVersion !== ANALYTICS_CONSENT_VERSION || !controls.userOptedInAt || !Number.isFinite(Date.parse(controls.userOptedInAt))) throw new Error("Explicit analytics consent is required.");
+  if (controls.dataRetentionDays !== ANALYTICS_SNAPSHOT_RETENTION_DAYS) throw new Error("Firebase aggregate analytics requires the 14-day sharing retention setting.");
+  return { schemaVersion: ANALYTICS_SNAPSHOT_SCHEMA_VERSION as typeof ANALYTICS_SNAPSHOT_SCHEMA_VERSION, lineageId: checkpoint.lineageId, baseRevision: checkpoint.revision,
+    days: getRecoveryUtcAnalyticsDayCounts(state, day), consentVersion: ANALYTICS_CONSENT_VERSION as typeof ANALYTICS_CONSENT_VERSION, userOptedInAt: controls.userOptedInAt,
+    dataRetentionDays: ANALYTICS_SNAPSHOT_RETENTION_DAYS };
+}
+
+/** Hash the captured counters once. An existing pending request always wins over newer activity. */
+export async function prepareAnalyticsPendingSnapshot(
+  captured: RecoveryState,
+  controls: AnalyticsSharingControls = captured.analyticsSharing,
+  day: Date | string = new Date()
+): Promise<AnalyticsPendingSnapshot> {
+  if (captured.analyticsSharing.pendingSnapshot) return cloneAnalyticsPendingSnapshot(captured.analyticsSharing.pendingSnapshot);
+  const snapshot = buildRecoveryAggregateAnalyticsSnapshot(captured, controls, day);
+  const serialized = JSON.stringify(snapshot);
+  let hash: string;
+  if (globalThis.crypto?.subtle) {
+    const digest = await globalThis.crypto.subtle.digest("SHA-256", new TextEncoder().encode(serialized));
+    hash = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("");
+  } else {
+    const crypto = await import("expo-crypto");
+    hash = await crypto.digestStringAsync(crypto.CryptoDigestAlgorithm.SHA256, serialized);
+  }
+  return cloneAnalyticsPendingSnapshot({ ...snapshot, dataRetentionDays: 14, snapshotId: `snap_${hash}` });
+}
+
+function cloneAnalyticsPendingSnapshot(snapshot: AnalyticsPendingSnapshot): AnalyticsPendingSnapshot {
+  return { schemaVersion: snapshot.schemaVersion, lineageId: snapshot.lineageId, baseRevision: snapshot.baseRevision,
+    snapshotId: snapshot.snapshotId, days: snapshot.days.map(day => ({ ...day })), consentVersion: snapshot.consentVersion,
+    userOptedInAt: snapshot.userOptedInAt, dataRetentionDays: snapshot.dataRetentionDays };
+}
+
+/** Strictly merge the request into the latest state, preserving actions added while hashing. */
+export function stageAnalyticsPendingSnapshot(current: RecoveryState, captured: RecoveryState, pending: AnalyticsPendingSnapshot): RecoveryState {
+  const baseline = captured.analyticsSharing.snapshotCheckpoint;
+  const checkpoint = current.analyticsSharing.snapshotCheckpoint;
+  if (JSON.stringify(checkpoint) !== JSON.stringify(baseline) || pending.lineageId !== baseline.lineageId || pending.baseRevision !== baseline.revision) {
+    throw new Error("Analytics snapshot baseline changed before it could be saved. Retry from the current recovery state.");
+  }
+  const existing = current.analyticsSharing.pendingSnapshot;
+  if (existing) {
+    if (JSON.stringify(existing) === JSON.stringify(pending)) return current;
+    throw new Error("A different analytics snapshot is awaiting acknowledgement. Retry that saved snapshot first.");
+  }
+  const lastDay = pending.days[pending.days.length - 1]?.day;
+  if (!lastDay || pending.days.length !== 14) throw new Error("Pending analytics snapshot is invalid.");
+  const expected = captured.analyticsSharing.pendingSnapshot?.days ?? getRecoveryUtcAnalyticsDayCounts(captured, `${lastDay}T12:00:00.000Z`);
+  if (JSON.stringify(expected) !== JSON.stringify(pending.days)) throw new Error("Pending analytics counters do not match the captured recovery snapshot.");
+  const currentDays = getRecoveryUtcAnalyticsDayCounts(current, `${lastDay}T12:00:00.000Z`);
+  if (currentDays.some((day, index) => day.checkIns < pending.days[index].checkIns || day.completedChallenges < pending.days[index].completedChallenges)) {
+    throw new Error("Recovery history changed while saving analytics. Choose the recovery backup to continue.");
+  }
+  return updateAnalyticsSharingSettings(current, { pendingSnapshot: cloneAnalyticsPendingSnapshot(pending) });
+}
+
+/** Send only the request already persisted in the captured state, including across UTC midnight. */
+export function getPersistedAnalyticsPendingSnapshot(state: RecoveryState): AnalyticsPendingSnapshot {
+  const pending = state.analyticsSharing.pendingSnapshot;
+  const checkpoint = state.analyticsSharing.snapshotCheckpoint;
+  if (!pending || pending.lineageId !== checkpoint.lineageId || pending.baseRevision !== checkpoint.revision) {
+    throw new Error("Save the exact pending analytics snapshot before sending.");
+  }
+  return cloneAnalyticsPendingSnapshot(pending);
+}
+
+/** Advances only the captured baseline; intervening local activity remains unsent. */
+export function applyAnalyticsSnapshotReceipt(current: RecoveryState, captured: RecoveryState, receipt: AnalyticsSnapshotReceipt): RecoveryState {
+  const before = captured.analyticsSharing.snapshotCheckpoint;
+  const checkpoint = current.analyticsSharing.snapshotCheckpoint;
+  if (receipt.schemaVersion !== ANALYTICS_SNAPSHOT_SCHEMA_VERSION || before.lineageId !== receipt.lineageId ||
+      checkpoint.lineageId !== receipt.lineageId || before.revision !== receipt.baseRevision ||
+      checkpoint.revision !== before.revision || checkpoint.snapshotId !== before.snapshotId ||
+      JSON.stringify(checkpoint.days) !== JSON.stringify(before.days) ||
+      receipt.acceptedRevision !== receipt.baseRevision + 1 || !/^snap_[a-f0-9]{64}$/.test(receipt.snapshotId) || receipt.days.length !== 14) return current;
+  const lastDay = receipt.days[receipt.days.length - 1].day;
+  const pending = captured.analyticsSharing.pendingSnapshot;
+  if (pending && (pending.snapshotId !== receipt.snapshotId || pending.lineageId !== receipt.lineageId || pending.baseRevision !== receipt.baseRevision ||
+      JSON.stringify(current.analyticsSharing.pendingSnapshot) !== JSON.stringify(pending))) return current;
+  const expected = pending?.days ?? getRecoveryUtcAnalyticsDayCounts(captured, `${lastDay}T12:00:00.000Z`);
+  if (JSON.stringify(expected) !== JSON.stringify(receipt.days)) return current;
+  const currentDays = getRecoveryUtcAnalyticsDayCounts(current, `${lastDay}T12:00:00.000Z`);
+  if (currentDays.some((day, index) => day.checkIns < expected[index].checkIns || day.completedChallenges < expected[index].completedChallenges)) return current;
+  return updateAnalyticsSharingSettings(current, { pendingSnapshot: null, snapshotCheckpoint: { lineageId: receipt.lineageId, revision: receipt.acceptedRevision,
+    snapshotId: receipt.snapshotId, days: receipt.days.map(day => ({ ...day })) } });
+}
+
+/** Use inside the strict storage seam so failed receipt persistence leaves the request retryable. */
+export function applyPendingAnalyticsSnapshotReceipt(current: RecoveryState, captured: RecoveryState, receipt: AnalyticsSnapshotReceipt): RecoveryState {
+  const next = applyAnalyticsSnapshotReceipt(current, captured, receipt);
+  if (next !== current) return next;
+  const checkpoint = current.analyticsSharing.snapshotCheckpoint;
+  if (checkpoint.lineageId === receipt.lineageId && checkpoint.revision === receipt.acceptedRevision && checkpoint.snapshotId === receipt.snapshotId && !current.analyticsSharing.pendingSnapshot) return current;
+  throw new Error("Analytics receipt conflicts with the current recovery snapshot. The pending request remains saved.");
+}
+
+export type RemoteAnalyticsProvider = {
+  endpointUrl: string;
+  requiredRetentionDays?: number;
+  send: (snapshot: OffDeviceRecoveryAnalyticsSnapshot, state: RecoveryState, controls: AnalyticsSharingControls, day: Date | string) => Promise<{ accepted: boolean; status: "ok" | "error"; provider: string; reason?: string; snapshotReceipt?: AnalyticsSnapshotReceipt; snapshotRecovery?: AnalyticsSnapshotRecovery }>;
+};
+let remoteAnalyticsProvider: RemoteAnalyticsProvider | null = null;
+
+export function configureRemoteAnalyticsProvider(provider: RemoteAnalyticsProvider | null) {
+  remoteAnalyticsProvider = provider;
+}
 
 export type RecoveryAnalyticsSnapshot = {
   schemaVersion: typeof ANALYTICS_SCHEMA_VERSION;
@@ -162,7 +347,7 @@ export function createDefaultAnalyticsSharingControls(): AnalyticsSharingControl
 }
 
 export function getConfiguredAnalyticsEndpoint() {
-  return normalizeAnalyticsEndpoint(process.env.EXPO_PUBLIC_ANALYTICS_ENDPOINT);
+  return normalizeAnalyticsEndpoint(remoteAnalyticsProvider?.endpointUrl ?? process.env.EXPO_PUBLIC_ANALYTICS_ENDPOINT);
 }
 
 function normalizeAnalyticsEndpoint(endpointUrl: string | null | undefined) {
@@ -203,7 +388,8 @@ export function getAnalyticsEndpointIssues(endpointUrl: string | null) {
   const issues = getProductionEndpointIssues(endpointUrl, "analytics endpoint").map((issue) => issue.issue);
   try {
     const pathname = new URL(endpointUrl).pathname.replace(/\/+$/, "");
-    if (pathname !== "/api/analytics" && !pathname.endsWith("/api/analytics")) {
+    if (pathname !== "/api/analytics" && !pathname.endsWith("/api/analytics") &&
+        !(remoteAnalyticsProvider && sameAnalyticsEndpoint(endpointUrl, remoteAnalyticsProvider.endpointUrl))) {
       issues.push("analytics endpoint must target the aggregate analytics API route (/api/analytics)");
     }
   } catch {
@@ -221,40 +407,36 @@ function percent(part: number, total: number) {
   return Math.max(0, Math.min(100, Math.round((part / total) * 100)));
 }
 
-const CHALLENGE_CATEGORIES: Array<RecoveryState["challengeHistory"][number]["category"]> = [
-  "physical",
-  "breathing",
-  "reflection",
-  "connection",
-  "reset"
-];
-
 function inDateRange(value: string, startKey: string, endKey: string) {
   const key = getLocalDateKey(value);
   return key >= startKey && key <= endKey;
 }
 
-function localDayStartMs(dateKey: string) {
-  return new Date(`${dateKey}T00:00:00`).getTime();
+function localDateKeyToDate(dateKey: string) {
+  const utcMs = localDateKeyToUtcMs(dateKey);
+  if (!Number.isFinite(utcMs)) return null;
+  const parts = new Date(utcMs);
+  return new Date(parts.getUTCFullYear(), parts.getUTCMonth(), parts.getUTCDate());
 }
 
 function dateKeysForRange(startKey: string, endKey: string) {
-  const startMs = localDayStartMs(startKey);
-  const endMs = localDayStartMs(endKey);
-  if (!Number.isFinite(startMs) || !Number.isFinite(endMs) || endMs < startMs) return [];
+  const start = localDateKeyToDate(startKey);
+  const end = localDateKeyToDate(endKey);
+  if (!start || !end || end.getTime() < start.getTime()) return [];
 
+  // Step with setDate, never with a fixed 86,400,000 ms day: a local day is 23, 24 or 25 hours
+  // around a DST transition, and fixed stepping duplicates one label and drops the last day.
   const keys: string[] = [];
-  for (let dayMs = startMs; dayMs <= endMs; dayMs += 86_400_000) {
-    keys.push(getLocalDateKey(new Date(dayMs)));
+  const cursor = new Date(start.getTime());
+  while (getLocalDateKey(cursor) <= endKey && keys.length < 36_600) {
+    keys.push(getLocalDateKey(cursor));
+    cursor.setDate(cursor.getDate() + 1);
   }
   return keys;
 }
 
 function dayDifference(leftDateKey: string, rightDateKey: string) {
-  const left = localDayStartMs(leftDateKey);
-  const right = localDayStartMs(rightDateKey);
-  if (!Number.isFinite(left) || !Number.isFinite(right)) return 0;
-  return Math.round((right - left) / 86_400_000);
+  return localDateKeyDiffDays(leftDateKey, rightDateKey);
 }
 
 function buildStreakHistory(
@@ -298,11 +480,11 @@ function buildStreakHistory(
 }
 
 function buildHourlyUrgePattern(
-  attempts: RecoveryState["attempts"],
+  attemptHours: HourlyUrgePatternBucket[],
   relapses: RecoveryState["relapseRecords"],
   checkIns: RecoveryState["dailyCheckIns"]
 ): HourlyUrgePatternBucket[] {
-  const buckets = Array.from({ length: 24 }, (_, hour) => ({ hour, count: 0 }));
+  const buckets = attemptHours.map(bucket => ({ ...bucket }));
 
   const increment = (value: string) => {
     const timestamp = Date.parse(value);
@@ -311,36 +493,15 @@ function buildHourlyUrgePattern(
     if (hour >= 0 && hour <= 23) buckets[hour].count += 1;
   };
 
-  for (const attempt of attempts) {
-    increment(attempt.detectedAt);
-  }
   for (const relapse of relapses) {
     increment(relapse.occurredAt);
   }
   for (const checkIn of checkIns) {
-    if (checkIn.urgeLevel < 4) continue;
+    if (checkIn.urgeLevel === null || checkIn.urgeLevel < 4) continue;
     increment(checkIn.createdAt);
   }
 
   return buckets;
-}
-
-function buildBlockedAttemptSourceBreakdown(
-  attempts: RecoveryState["attempts"]
-): BlockedAttemptSourceBreakdownBucket[] {
-  const counts = new Map<AnalyticsBlockedAttemptSource, number>(
-    ANALYTICS_BLOCKED_ATTEMPT_SOURCES.map((source) => [source, 0])
-  );
-
-  for (const attempt of attempts) {
-    if (!counts.has(attempt.source)) continue;
-    counts.set(attempt.source, (counts.get(attempt.source) ?? 0) + 1);
-  }
-
-  return ANALYTICS_BLOCKED_ATTEMPT_SOURCES.map((source) => ({
-    source,
-    count: counts.get(source) ?? 0
-  }));
 }
 
 function peakUrgeHour(buckets: HourlyUrgePatternBucket[]) {
@@ -363,24 +524,10 @@ function daysSinceLastRelapse(records: RecoveryState["relapseRecords"], targetDa
 
   if (latestRelapseTime === null) return null;
 
-  const targetDay = new Date(targetTime);
-  const relapseDay = new Date(latestRelapseTime);
-  const targetStart = new Date(targetDay.getFullYear(), targetDay.getMonth(), targetDay.getDate()).getTime();
-  const relapseStart = new Date(relapseDay.getFullYear(), relapseDay.getMonth(), relapseDay.getDate()).getTime();
-  return safeCount((targetStart - relapseStart) / 86_400_000);
-}
-
-function challengeSuccessByCategory(challenges: RecoveryState["challengeHistory"]): ChallengeCategorySuccess[] {
-  return CHALLENGE_CATEGORIES.map((category) => {
-    const categoryChallenges = challenges.filter((challenge) => challenge.category === category);
-    const helpful = categoryChallenges.filter((challenge) => challenge.outcome === "helped").length;
-    return {
-      category,
-      completed: categoryChallenges.length,
-      helpful,
-      successRate: percent(helpful, categoryChallenges.length)
-    };
-  });
+  return Math.max(
+    0,
+    localDateKeyDiffDays(getLocalDateKey(new Date(latestRelapseTime)), getLocalDateKey(new Date(targetTime)))
+  );
 }
 
 function safeAnalyticsNextFocus(report: ReturnType<typeof generateWeeklyRecoveryReport>) {
@@ -435,6 +582,8 @@ export function getAnalyticsSharingReadiness(
   if (!Number.isFinite(controls.dataRetentionDays) || controls.dataRetentionDays < 1 || controls.dataRetentionDays > 30) {
     gaps.push("data-retention-must-be-between-1-and-30-days");
   }
+  if (remoteAnalyticsProvider?.requiredRetentionDays && endpointUrl && sameAnalyticsEndpoint(endpointUrl, remoteAnalyticsProvider.endpointUrl) &&
+      controls.dataRetentionDays !== remoteAnalyticsProvider.requiredRetentionDays) gaps.push("firebase-analytics-requires-14-day-retention");
 
   return {
     ready: gaps.length === 0,
@@ -452,28 +601,25 @@ export function buildRecoveryAnalyticsSnapshot(
   const startKey = getLocalDateKey(start);
   const endKey = getLocalDateKey(targetDate);
   const report = generateWeeklyRecoveryReport(state, targetDate);
-  const attempts = state.attempts.filter(
-    (attempt) => attempt.result.verdict === "block" && inDateRange(attempt.detectedAt, startKey, endKey)
-  );
-  const challenges = state.challengeHistory.filter((challenge) => inDateRange(challenge.completedAt, startKey, endKey));
-  const helpfulChallenges = challenges.filter((challenge) => challenge.outcome === "helped").length;
-  const stillUrgingChallenges = challenges.filter((challenge) => challenge.outcome === "still-urging").length;
-  const appSessions = state.appSessions.filter((session) => inDateRange(session.openedAt, startKey, endKey));
-  const earnedUnlocks = state.earnedUnlocks.filter((unlock) => inDateRange(unlock.startedAt, startKey, endKey));
+  const attemptCounts = getRecoveryAttemptSourceCounts(state, startKey, endKey);
+  const protectedAttempts = getProtectedAttemptCount(attemptCounts);
+  const challenges = getRecoveryChallengeCounts(state, startKey, endKey);
+  const helpfulChallenges = challenges.helpful;
+  const stillUrgingChallenges = challenges.stillUrging;
+  const appSessions = getRecoverySessionCounts(state, startKey, endKey, targetDate);
+  const earnedUnlocks = getRecoveryUnlockCounts(state, startKey, endKey);
   const relapses = state.relapseRecords.filter((record) => inDateRange(record.occurredAt, startKey, endKey));
   const highUrgeCheckIns = state.dailyCheckIns.filter(
-    (checkIn) => checkIn.urgeLevel >= 4 && checkIn.dateKey >= startKey && checkIn.dateKey <= endKey
+    (checkIn) => checkIn.urgeLevel !== null && checkIn.urgeLevel >= 4 && checkIn.dateKey >= startKey && checkIn.dateKey <= endKey
   );
-  const hourlyUrgePattern = buildHourlyUrgePattern(attempts, relapses, highUrgeCheckIns);
+  const hourlyUrgePattern = buildHourlyUrgePattern(getRecoveryRiskHourCounts(state, startKey, endKey), relapses, highUrgeCheckIns);
   const peak = peakUrgeHour(hourlyUrgePattern);
-  const currentStreakDays = state.recoveryStartedAt
-    ? calculateStreakDaysFrom(state.recoveryStartedAt, targetDate)
-    : safeCount(state.streakDays);
+  const currentStreakDays = getCurrentRecoveryStreakDays(state, targetDate);
   const bestStreakDays = Math.max(safeCount(state.bestStreakDays), currentStreakDays);
-  const recoveryScore = calculateRecoveryScore(currentStreakDays, state.completedChallenges, attempts.length);
-  const challengeSuccessRate = percent(helpfulChallenges, challenges.length);
-  const challengeSuccessByCategoryMetrics = challengeSuccessByCategory(challenges);
-  const blockedAttemptSourceBreakdown = buildBlockedAttemptSourceBreakdown(attempts);
+  const recoveryScore = calculateRecoveryScore(currentStreakDays, state.completedChallenges, countRecoveryRiskMomentsForDay(state, targetDate));
+  const challengeSuccessRate = percent(helpfulChallenges, challenges.answered);
+  const challengeSuccessByCategoryMetrics = challenges.byCategory.map(category => ({ category: category.category, completed: category.completed, helpful: category.helpful, successRate: percent(category.helpful, category.answered) }));
+  const blockedAttemptSourceBreakdown = ANALYTICS_BLOCKED_ATTEMPT_SOURCES.map(source => ({ source, count: getProtectedAttemptCount({ [source]: attemptCounts[source] ?? 0 }) }));
   const streakHistory = buildStreakHistory(state, startKey, endKey);
 
   return {
@@ -487,12 +633,12 @@ export function buildRecoveryAnalyticsSnapshot(
       recoveryScore
     },
     behavior: {
-      protectedRiskMoments: attempts.length,
-      selfReportedUrges: attempts.filter((attempt) => attempt.source === "panic-button").length,
-      browserInterceptions: attempts.filter((attempt) => attempt.source === "browser").length,
-      appInterceptions: attempts.filter((attempt) => attempt.source === "app").length,
-      searchInterceptions: attempts.filter((attempt) => attempt.source === "search").length,
-      manualCheckInterceptions: attempts.filter((attempt) => attempt.source === "manual-check").length
+      protectedRiskMoments: protectedAttempts,
+      selfReportedUrges: attemptCounts["panic-button"] ?? 0,
+      browserInterceptions: attemptCounts.browser ?? 0,
+      appInterceptions: attemptCounts.app ?? 0,
+      searchInterceptions: attemptCounts.search ?? 0,
+      manualCheckInterceptions: attemptCounts["manual-check"] ?? 0
     },
     emotion: {
       checkIns: report.checkIns,
@@ -501,25 +647,25 @@ export function buildRecoveryAnalyticsSnapshot(
       steadyDays: report.steadyDays
     },
     interventions: {
-      completedChallenges: challenges.length,
+      completedChallenges: challenges.completed,
       helpfulChallenges,
       stillUrgingChallenges,
       challengeHelpRate: challengeSuccessRate
     },
     productionMetrics: {
-      appOpens: appSessions.length,
-      appForegroundMinutes: safeCount(appSessions.reduce((total, session) => total + session.durationSec, 0) / 60),
-      blockedAttempts: attempts.length,
+      appOpens: appSessions.opens,
+      appForegroundMinutes: safeCount(appSessions.foregroundSeconds / 60),
+      blockedAttempts: protectedAttempts,
       blockedAttemptSourceBreakdown,
-      challengeCompletions: challenges.length,
-      earnedUnlocks: earnedUnlocks.length,
-      unlockMinutesGranted: safeCount(earnedUnlocks.reduce((total, unlock) => total + unlock.durationMinutes, 0)),
-      unlockFrequencyPerWeek: earnedUnlocks.length,
+      challengeCompletions: challenges.completed,
+      earnedUnlocks: earnedUnlocks.count,
+      unlockMinutesGranted: safeCount(earnedUnlocks.seconds / 60),
+      unlockFrequencyPerWeek: earnedUnlocks.count,
       currentStreakDays,
       bestStreakDays,
       streakHistory,
       relapseResets: relapses.length,
-      relapseResetRate: percent(relapses.length, attempts.length + relapses.length),
+      relapseResetRate: percent(relapses.length, protectedAttempts + (attemptCounts["panic-button"] ?? 0) + relapses.length),
       daysSinceLastRelapse: daysSinceLastRelapse(state.relapseRecords, targetDate),
       peakUrgeHour: peak.hour,
       peakUrgeCount: peak.count,
@@ -544,6 +690,26 @@ export function buildRecoveryAnalyticsSnapshot(
   };
 }
 
+export const OFF_DEVICE_ANALYTICS_SCHEMA_VERSION = "freed-own-data-analytics-v1";
+export type OffDeviceRecoveryAnalyticsSnapshot = Omit<RecoveryAnalyticsSnapshot, "schemaVersion" | "behavior" | "productionMetrics" | "privacy"> & {
+  schemaVersion: typeof OFF_DEVICE_ANALYTICS_SCHEMA_VERSION;
+  behavior: Pick<RecoveryAnalyticsSnapshot["behavior"], "selfReportedUrges" | "manualCheckInterceptions">;
+  productionMetrics: Omit<RecoveryAnalyticsSnapshot["productionMetrics"], "blockedAttempts" | "blockedAttemptSourceBreakdown" | "earnedUnlocks" | "unlockMinutesGranted" | "unlockFrequencyPerWeek">;
+  privacy: RecoveryAnalyticsSnapshot["privacy"] & { dataset: "freed-user-recorded-actions"; excludesDeviceProtectionHistory: true };
+};
+
+/** An outbound dataset is distinct from the full local dashboard snapshot. */
+export function buildOffDeviceAnalyticsSnapshot(state: RecoveryState, day: Date | string = new Date()): OffDeviceRecoveryAnalyticsSnapshot {
+  const snapshot = buildRecoveryAnalyticsSnapshot(projectRecoveryStateForOffDevice(state), day);
+  const { blockedAttempts: _blocks, blockedAttemptSourceBreakdown: _sources, earnedUnlocks: _windows,
+    unlockMinutesGranted: _minutes, unlockFrequencyPerWeek: _frequency, ...ownMetrics } = snapshot.productionMetrics;
+  return { ...snapshot, schemaVersion: OFF_DEVICE_ANALYTICS_SCHEMA_VERSION,
+    behavior: { selfReportedUrges: snapshot.behavior.selfReportedUrges, manualCheckInterceptions: snapshot.behavior.manualCheckInterceptions },
+    productionMetrics: ownMetrics,
+    privacy: { ...snapshot.privacy, dataset: "freed-user-recorded-actions", excludesDeviceProtectionHistory: true }
+  };
+}
+
 export function buildGatedAnalyticsPayload(
   state: RecoveryState,
   controls: AnalyticsSharingControls = createDefaultAnalyticsSharingControls(),
@@ -552,7 +718,7 @@ export function buildGatedAnalyticsPayload(
   const readiness = getAnalyticsSharingReadiness(controls);
   return {
     readiness,
-    payload: readiness.ready ? buildRecoveryAnalyticsSnapshot(state, day) : null
+    payload: readiness.ready ? buildOffDeviceAnalyticsSnapshot(state, day) : null
   };
 }
 
@@ -589,6 +755,15 @@ export async function sendGatedAnalyticsPayload(
   }
 
   try {
+    if (remoteAnalyticsProvider && sameAnalyticsEndpoint(controls.endpointUrl, remoteAnalyticsProvider.endpointUrl)) {
+      const result = await remoteAnalyticsProvider.send(gated.payload, projectRecoveryStateForOffDevice(state), controls, day);
+      return {
+        readiness: gated.readiness, sent: true, accepted: result.accepted === true,
+        status: result.status, provider: cleanAnalyticsProvider(result.provider), responseStatus: null,
+        reason: sanitizeAnalyticsReason(result.reason), ...(result.snapshotReceipt ? { snapshotReceipt: result.snapshotReceipt } : {}),
+        ...(result.snapshotRecovery ? { snapshotRecovery: result.snapshotRecovery } : {})
+      };
+    }
     const { response, body } = await postAnalyticsWithTimeout(
       fetcher,
       controls.endpointUrl,

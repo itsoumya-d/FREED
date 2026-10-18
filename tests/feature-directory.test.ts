@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import { FEATURE_DEFINITIONS, FEATURE_DESTINATIONS, getFeatureStatus, searchFeatures } from '../src/lib/feature-catalogue';
+import { parseFreedRoute, planFreedNavigation } from '../src/lib/native-navigation';
+import { getPracticeDefinition } from '../src/lib/practice-definitions';
+const auth = { status: 'ready' as const, signedIn: true, anonymous: false, ownerUid: 'a', email: null };
+const context = { auth, membership: { ownerUid: 'a', status: 'free' as const }, websiteStatus: 'Off' as const, appStatus: 'On' as const, remindersEnabled: false, backupEnabled: false, analyticsEnabled: false };
+assert.equal(new Set(FEATURE_DEFINITIONS.map(f => f.id)).size, FEATURE_DEFINITIONS.length);
+assert.deepEqual([...new Set(FEATURE_DEFINITIONS.map(f => f.group))], ['Protect','Reset','Daily plan','Progress','Account/data']);
+for (const definition of FEATURE_DEFINITIONS) {
+  assert.ok(definition.purpose); assert.ok(definition.action); assert.ok(definition.keywords.length);
+  const destination = FEATURE_DESTINATIONS[definition.id]; assert.ok(destination);
+  if (destination.kind === 'screen') assert.notEqual(parseFreedRoute(destination.screen === 'library' ? '/today/library' : destination.screen === 'quiz' ? '/onboarding/quiz' : `/flow/${destination.screen}`).screen, 'splash');
+  if (destination.kind === 'focus') assert.equal(parseFreedRoute('/flow/feature').screen, 'feature');
+  assert.ok(getFeatureStatus(definition, context));
+}
+assert.equal(getFeatureStatus(FEATURE_DEFINITIONS.find(f => f.id === 'websites')!, context), 'Off');
+assert.equal(getFeatureStatus(FEATURE_DEFINITIONS.find(f => f.id === 'apps')!, context), 'On');
+const premium = FEATURE_DEFINITIONS.find(f => f.id === 'monthly-report')!;
+assert.equal(getFeatureStatus(premium, { ...context, membership: { ownerUid: 'a', status: 'verified-premium' } }), 'Premium available');
+assert.equal(getFeatureStatus(premium, { ...context, membership: { ownerUid: 'b', status: 'verified-premium' } }), 'Verification required');
+assert.equal(getFeatureStatus(premium, { ...context, membership: { ownerUid: 'a', status: 'checking' } }), 'Checking membership');
+assert.equal(searchFeatures('  WRITE ', value => value).some(f => f.id === 'journal'), true);
+assert.equal(searchFeatures('escribir', value => value === 'Write' ? 'Escribir' : value).some(f => f.id === 'journal'), true);
+assert.equal(searchFeatures('zz-no-results', value => value).length, 0);
+assert.equal(getPracticeDefinition('journal')?.action, 'journal');
+assert.equal(getPracticeDefinition('exercise')?.actionLabel, 'Open basic movement');
+assert.equal(parseFreedRoute('/flow/features').tab, null);
+assert.equal(parseFreedRoute('/flow/movement').screen, 'movement');
+assert.equal(planFreedNavigation('/flow/features', 'movement', 'today').action, 'push');
+console.log('Feature catalogue destination, owner/status, localized search and navigation assertions passed');
+assert.equal(FEATURE_DEFINITIONS.length, 41);
+assert.deepEqual(FEATURE_DESTINATIONS.journal,{kind:'screen',screen:'journal'});
+assert.deepEqual(FEATURE_DESTINATIONS.move,{kind:'screen',screen:'movement'});
+assert.deepEqual(FEATURE_DESTINATIONS['guided-reset'],{kind:'guided'});
+assert.equal(getFeatureStatus(premium,{...context,membership:{ownerUid:'a',status:'unavailable'}}),'Verification required');
+assert.equal(getFeatureStatus(premium,{...context,auth:{...auth,anonymous:true},membership:{ownerUid:'a',status:'verified-premium'}}),'Verification required');
+assert.equal(getFeatureStatus(premium,{...context,auth:{...auth,status:'hydrating'},membership:{ownerUid:'a',status:'verified-premium'}}),'Verification required');

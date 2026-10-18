@@ -1,0 +1,2006 @@
+{
+  "entries": [
+    {
+      "source": "Today",
+      "translations": {
+        "hi": "आज",
+        "es": "Hoy",
+        "pt": "Hoje",
+        "fr": "Aujourd’hui",
+        "de": "Heute",
+        "ar": "اليوم",
+        "ja": "今日",
+        "ko": "오늘",
+        "zh-Hans": "今天"
+      }
+    },
+    {
+      "source": "Today’s practices",
+      "translations": {
+        "hi": "आज की प्रथाएँ",
+        "es": "Las prácticas de hoy",
+        "pt": "Práticas de hoje",
+        "fr": "Les pratiques d’aujourd’hui",
+        "de": "Heutige Praktiken",
+        "ar": "ممارسات اليوم",
+        "ja": "今日の練習",
+        "ko": "오늘의 실천",
+        "zh-Hans": "今天的做法"
+      }
+    },
+    {
+      "source": "Recorded practices",
+      "translations": {
+        "hi": "रिकार्ड की गई प्रथाएँ",
+        "es": "Prácticas grabadas",
+        "pt": "Práticas gravadas",
+        "fr": "Pratiques enregistrées",
+        "de": "Aufgezeichnete Praktiken",
+        "ar": "الممارسات المسجلة",
+        "ja": "記録された実践",
+        "ko": "기록된 관행",
+        "zh-Hans": "记录的做法"
+      }
+    },
+    {
+      "source": "Your recorded streak",
+      "translations": {
+        "hi": "आपकी रिकॉर्ड की गई स्ट्रीक",
+        "es": "Tu racha registrada",
+        "pt": "Sua seqüência gravada",
+        "fr": "Votre séquence enregistrée",
+        "de": "Dein aufgezeichneter Streak",
+        "ar": "خطك المسجل",
+        "ja": "記録された連続記録",
+        "ko": "연속 기록",
+        "zh-Hans": "您记录的连胜记录"
+      }
+    },
+    {
+      "source": "{{count}} day",
+      "translations": {
+        "hi": "{{count}} दिन",
+        "es": "{{count}} día",
+        "pt": "{{count}} dia",
+        "fr": "{{count}} jour",
+        "de": "{{count}} Tag",
+        "ar": "يوم {{count}}",
+        "ja": "{{count}} 日",
+        "ko": "{{count}}일",
+        "zh-Hans": "{{count}} 天"
+      }
+    },
+    {
+      "source": "{{count}} days",
+      "translations": {
+        "hi": "{{count}} दिन",
+        "es": "{{count}} días",
+        "pt": "{{count}} dias",
+        "fr": "{{count}} jours",
+        "de": "{{count}} Tage",
+        "ar": "{{count}} أيام",
+        "ja": "{{count}}日",
+        "ko": "{{count}}일",
+        "zh-Hans": "{{count}} 天"
+      }
+    },
+    {
+      "source": "{{done}} of {{total}}",
+      "translations": {
+        "hi": "{{total}} का {{done}}",
+        "es": "{{done}} de {{total}}",
+        "pt": "{{done}} de {{total}}",
+        "fr": "{{done}} ou {{total}}",
+        "de": "{{done}} von {{total}}",
+        "ar": "{{done}} من {{total}}",
+        "ja": "{{done}}/{{total}}",
+        "ko": "{{total}}의 {{done}}",
+        "zh-Hans": "{{done}} 或 {{total}}"
+      }
+    },
+    {
+      "source": "Next milestone · {{count}} days",
+      "translations": {
+        "hi": "अगला मील का पत्थर · {{count}} दिन",
+        "es": "Próximo hito · {{count}} días",
+        "pt": "Próximo marco · {{count}} dias",
+        "fr": "Étape suivante · {{count}} jours",
+        "de": "Nächster Meilenstein · {{count}} Tage",
+        "ar": "المعلم التالي · {{count}} من الأيام",
+        "ja": "次のマイルストーン · {{count}} 日",
+        "ko": "다음 마일스톤 · {{count}}일",
+        "zh-Hans": "下一个里程碑·{{count}}天"
+      }
+    },
+    {
+      "source": "{{elapsed}} since your recorded restart",
+      "translations": {
+        "hi": "आपके दर्ज किए हुए पुनः आरंभ से {{elapsed}}",
+        "es": "{{elapsed}} desde tu reinicio registrado",
+        "pt": "{{elapsed}} desde o recomeço registrado",
+        "fr": "{{elapsed}} depuis votre reprise enregistrée",
+        "de": "{{elapsed}} seit deinem erfassten Neustart",
+        "ar": "{{elapsed}} منذ بدايتك الجديدة المسجّلة",
+        "ja": "記録した再スタートから{{elapsed}}",
+        "ko": "기록된 재시작 이후 {{elapsed}}",
+        "zh-Hans": "距已记录的重新开始 {{elapsed}}"
+      }
+    },
+    {
+      "source": "View all practices",
+      "translations": {
+        "hi": "सभी प्रथाएँ देखें",
+        "es": "Ver todas las prácticas",
+        "pt": "Veja todas as práticas",
+        "fr": "Voir toutes les pratiques",
+        "de": "Alle Praxen ansehen",
+        "ar": "عرض جميع الممارسات",
+        "ja": "すべての実践を見る",
+        "ko": "모든 사례 보기",
+        "zh-Hans": "查看所有实践"
+      }
+    },
+    {
+      "source": "Show fewer practices",
+      "translations": {
+        "hi": "कम अभ्यास दिखाएँ",
+        "es": "Mostrar menos prácticas",
+        "pt": "Mostrar menos práticas",
+        "fr": "Afficher moins de pratiques",
+        "de": "Weniger Übungen anzeigen",
+        "ar": "عرض ممارسات أقل",
+        "ja": "練習の表示を減らす",
+        "ko": "사례 간략히 보기",
+        "zh-Hans": "显示更少练习"
+      }
+    },
+    {
+      "source": "Past days are read-only. Return to today to record a practice.",
+      "translations": {
+        "hi": "पिछले दिन केवल पढ़ने के लिए हैं। अभ्यास रिकॉर्ड करने के लिए आज ही वापस आएं।",
+        "es": "Los días pasados ​​son de solo lectura. Regrese al día de hoy para registrar una práctica.",
+        "pt": "Os dias anteriores são somente leitura. Volte ao dia de hoje para registrar uma prática.",
+        "fr": "Les jours passés sont en lecture seule. Revenez à aujourd’hui pour enregistrer une pratique.",
+        "de": "Vergangene Tage sind schreibgeschützt. Kehren Sie zum heutigen Tag zurück, um eine Übung aufzuzeichnen.",
+        "ar": "الأيام الماضية للقراءة فقط. العودة إلى اليوم لتسجيل الممارسة.",
+        "ja": "過去の日は読み取り専用です。今日に戻って練習を記録します。",
+        "ko": "지난 날짜는 읽기 전용입니다. 오늘로 돌아가서 연습을 기록하세요.",
+        "zh-Hans": "过去的日子是只读的。回到今天来记录一下练习。"
+      }
+    },
+    {
+      "source": "Return to today",
+      "translations": {
+        "hi": "आज पर लौटें",
+        "es": "volver a hoy",
+        "pt": "Voltar para hoje",
+        "fr": "Retour à aujourd'hui",
+        "de": "Kehren Sie zum heutigen Tag zurück",
+        "ar": "العودة إلى اليوم",
+        "ja": "今日に戻る",
+        "ko": "오늘로 돌아가기",
+        "zh-Hans": "回到今天"
+      }
+    },
+    {
+      "source": "Your daily pledge",
+      "translations": {
+        "hi": "आपकी दैनिक प्रतिज्ञा",
+        "es": "Tu compromiso diario",
+        "pt": "Seu compromisso diário",
+        "fr": "Votre engagement quotidien",
+        "de": "Ihr tägliches Versprechen",
+        "ar": "تعهدك اليومي",
+        "ja": "あなたの毎日の誓い",
+        "ko": "당신의 일일 서약",
+        "zh-Hans": "您的每日承诺"
+      }
+    },
+    {
+      "source": "Pledge recorded",
+      "translations": {
+        "hi": "प्रतिज्ञा रिकार्ड की गई",
+        "es": "Compromiso registrado",
+        "pt": "Promessa registrada",
+        "fr": "Engagement enregistré",
+        "de": "Pfand vermerkt",
+        "ar": "تم تسجيل التعهد",
+        "ja": "誓約書が記録されました",
+        "ko": "약속이 기록되었습니다",
+        "zh-Hans": "承诺记录"
+      }
+    },
+    {
+      "source": "Make today’s commitment",
+      "translations": {
+        "hi": "आज की प्रतिबद्धता बनाएं",
+        "es": "Haz el compromiso de hoy",
+        "pt": "Assuma o compromisso de hoje",
+        "fr": "Prendre l’engagement d’aujourd’hui",
+        "de": "Gehen Sie die heutige Verpflichtung ein",
+        "ar": "قم بالتزام اليوم",
+        "ja": "今日の約束をする",
+        "ko": "오늘의 다짐을 해보세요",
+        "zh-Hans": "做出今天的承诺"
+      }
+    },
+    {
+      "source": "Finish protection setup",
+      "translations": {
+        "hi": "सुरक्षा सेटअप समाप्त करें",
+        "es": "Finalizar la configuración de protección",
+        "pt": "Concluir configuração de proteção",
+        "fr": "Terminer la configuration de la protection",
+        "de": "Schließen Sie die Schutzeinrichtung ab",
+        "ar": "إنهاء إعداد الحماية",
+        "ja": "保護設定を終了する",
+        "ko": "보호 설정 완료",
+        "zh-Hans": "完成保护设置"
+      }
+    },
+    {
+      "source": "Add your devices and preferences",
+      "translations": {
+        "hi": "अपने उपकरण और प्राथमिकताएँ जोड़ें",
+        "es": "Añade tus dispositivos y preferencias",
+        "pt": "Adicione seus dispositivos e preferências",
+        "fr": "Ajoutez vos appareils et préférences",
+        "de": "Fügen Sie Ihre Geräte und Einstellungen hinzu",
+        "ar": "أضف أجهزتك وتفضيلاتك",
+        "ja": "デバイスと設定を追加する",
+        "ko": "장치 및 환경설정을 추가하세요",
+        "zh-Hans": "添加您的设备和偏好设置"
+      }
+    },
+    {
+      "source": "Review your current protection coverage",
+      "translations": {
+        "hi": "अपने वर्तमान सुरक्षा कवरेज की समीक्षा करें",
+        "es": "Revisa tu cobertura de protección actual",
+        "pt": "Revise sua cobertura de proteção atual",
+        "fr": "Révisez votre couverture de protection actuelle",
+        "de": "Überprüfen Sie Ihren aktuellen Schutzumfang",
+        "ar": "قم بمراجعة تغطية الحماية الحالية الخاصة بك",
+        "ja": "現在の補償範囲を確認する",
+        "ko": "현재 보호 범위를 검토하세요",
+        "zh-Hans": "查看您当前的保障范围"
+      }
+    },
+    {
+      "source": "Breathing reset",
+      "translations": {
+        "hi": "श्वास रीसेट",
+        "es": "reinicio de la respiración",
+        "pt": "Reinicialização da respiração",
+        "fr": "Réinitialisation de la respiration",
+        "de": "Atmung zurückgesetzt",
+        "ar": "إعادة ضبط التنفس",
+        "ja": "呼吸リセット",
+        "ko": "호흡 재설정",
+        "zh-Hans": "呼吸重置"
+      }
+    },
+    {
+      "source": "Follow a comfortable pace.",
+      "translations": {
+        "hi": "आरामदायक गति का पालन करें.",
+        "es": "Sigue un ritmo cómodo.",
+        "pt": "Siga um ritmo confortável.",
+        "fr": "Suivez un rythme confortable.",
+        "de": "Folgen Sie einem angenehmen Tempo.",
+        "ar": "اتبع وتيرة مريحة.",
+        "ja": "快適なペースで進みましょう。",
+        "ko": "편안한 속도를 따르십시오.",
+        "zh-Hans": "遵循舒适的节奏。"
+      }
+    },
+    {
+      "source": "You can stop whenever you need",
+      "translations": {
+        "hi": "जब भी आपको आवश्यकता हो आप रुक सकते हैं",
+        "es": "Puedes parar cuando lo necesites",
+        "pt": "Você pode parar sempre que precisar",
+        "fr": "Vous pouvez vous arrêter quand vous en avez besoin",
+        "de": "Sie können jederzeit anhalten",
+        "ar": "يمكنك التوقف وقتما تشاء",
+        "ja": "必要なときにいつでも停止できます",
+        "ko": "필요할 때 언제든지 멈출 수 있습니다.",
+        "zh-Hans": "当你需要的时候你可以停下来"
+      }
+    },
+    {
+      "source": "Finish",
+      "translations": {
+        "hi": "ख़त्म करो",
+        "es": "Finalizar",
+        "pt": "Concluir",
+        "fr": "Terminer",
+        "de": "Fertig",
+        "ar": "ينهي",
+        "ja": "仕上げる",
+        "ko": "마침",
+        "zh-Hans": "结束"
+      }
+    },
+    {
+      "source": "{{count}} seconds",
+      "translations": {
+        "hi": "{{count}} सेकंड",
+        "es": "{{count}} segundos",
+        "pt": "{{count}} segundos",
+        "fr": "{{count}} secondes",
+        "de": "{{count}} Sekunden",
+        "ar": "{{count}} ثانية",
+        "ja": "{{count}} 秒",
+        "ko": "{{count}}초",
+        "zh-Hans": "{{count}} 秒"
+      }
+    },
+    {
+      "source": "{{count}} second",
+      "translations": {
+        "hi": "{{count}} दूसरा",
+        "es": "{{count}} segundo",
+        "pt": "{{count}} segundo",
+        "fr": "{{count}} seconde",
+        "de": "{{count}} Sekunde",
+        "ar": "{{count}} الثانية",
+        "ja": "{{count}}秒",
+        "ko": "{{count}}초",
+        "zh-Hans": "{{count}}第二"
+      }
+    },
+    {
+      "source": "Verified Premium access",
+      "translations": {
+        "hi": "सत्यापित प्रीमियम पहुंच",
+        "es": "Acceso Premium verificado",
+        "pt": "Acesso Premium verificado",
+        "fr": "Accès Premium vérifié",
+        "de": "Verifizierter Premium-Zugang",
+        "ar": "الوصول المميز الذي تم التحقق منه",
+        "ja": "プレミアムアクセスを確認しました",
+        "ko": "인증된 프리미엄 액세스",
+        "zh-Hans": "已验证的高级访问权限"
+      }
+    },
+    {
+      "source": "Verified access ended",
+      "translations": {
+        "hi": "सत्यापित पहुंच समाप्त हो गई",
+        "es": "El acceso verificado finalizó",
+        "pt": "Acesso verificado encerrado",
+        "fr": "Accès vérifié terminé",
+        "de": "Verifizierter Zugriff beendet",
+        "ar": "انتهى الوصول المعتمد",
+        "ja": "検証済みアクセスが終了しました",
+        "ko": "인증된 액세스가 종료되었습니다.",
+        "zh-Hans": "验证访问结束"
+      }
+    },
+    {
+      "source": "Premium access revoked",
+      "translations": {
+        "hi": "प्रीमियम पहुंच निरस्त कर दी गई",
+        "es": "Acceso premium revocado",
+        "pt": "Acesso premium revogado",
+        "fr": "Accès Premium révoqué",
+        "de": "Premium-Zugriff widerrufen",
+        "ar": "تم إلغاء الوصول المميز",
+        "ja": "プレミアムアクセスが取り消されました",
+        "ko": "프리미엄 액세스가 취소되었습니다.",
+        "zh-Hans": "高级访问权限被撤销"
+      }
+    },
+    {
+      "source": "Premium access inactive",
+      "translations": {
+        "hi": "प्रीमियम पहुंच निष्क्रिय",
+        "es": "Acceso premium inactivo",
+        "pt": "Acesso premium inativo",
+        "fr": "Accès Premium inactif",
+        "de": "Premium-Zugang inaktiv",
+        "ar": "الوصول المميز غير نشط",
+        "ja": "プレミアムアクセスは無効です",
+        "ko": "프리미엄 액세스가 비활성화되었습니다.",
+        "zh-Hans": "高级访问无效"
+      }
+    },
+    {
+      "source": "Connect the owning account to verify Premium",
+      "translations": {
+        "hi": "प्रीमियम सत्यापित करने के लिए स्वामित्व खाता कनेक्ट करें",
+        "es": "Conecte la cuenta propietaria para verificar Premium",
+        "pt": "Conecte a conta proprietária para verificar o Premium",
+        "fr": "Connectez le compte propriétaire pour vérifier Premium",
+        "de": "Verbinden Sie das besitzende Konto, um Premium zu verifizieren",
+        "ar": "قم بتوصيل الحساب الخاص بك للتحقق من Premium",
+        "ja": "所有アカウントを接続してプレミアムを確認してください",
+        "ko": "프리미엄을 확인하려면 소유 계정을 연결하세요.",
+        "zh-Hans": "连接所属账户以验证 Premium"
+      }
+    },
+    {
+      "source": "Monthly or yearly · same features",
+      "translations": {
+        "hi": "मासिक या वार्षिक · समान सुविधाएँ",
+        "es": "Mensual o anual · mismas características",
+        "pt": "Mensal ou anual · mesmas funcionalidades",
+        "fr": "Mensuel ou annuel · mêmes fonctionnalités",
+        "de": "Monatlich oder jährlich · gleiche Funktionen",
+        "ar": "شهرية أو سنوية · نفس الميزات",
+        "ja": "毎月または毎年・同じ機能",
+        "ko": "월별 또는 연간 · 동일한 기능",
+        "zh-Hans": "每月或每年 · 相同功能"
+      }
+    },
+    {
+      "source": "Access through {{date}}",
+      "translations": {
+        "hi": "{{date}} के माध्यम से प्रवेश",
+        "es": "Acceso a través de {{date}}",
+        "pt": "Acesso através do {{date}}",
+        "fr": "Accès via {{date}}",
+        "de": "Zugriff über {{date}}",
+        "ar": "الوصول من خلال {{date}}",
+        "ja": "{{date}} を介したアクセス",
+        "ko": "{{date}}를 통한 액세스",
+        "zh-Hans": "通过{{date}}访问"
+      }
+    },
+    {
+      "source": "Check your store for renewal and cancellation details.",
+      "translations": {
+        "hi": "नवीनीकरण और रद्दीकरण विवरण के लिए अपने स्टोर की जाँच करें।",
+        "es": "Consulta en tu tienda los detalles de renovación y cancelación.",
+        "pt": "Verifique sua loja para obter detalhes de renovação e cancelamento.",
+        "fr": "Vérifiez votre magasin pour les détails de renouvellement et d’annulation.",
+        "de": "Informationen zu Verlängerungs- und Kündigungsdetails finden Sie in Ihrem Shop.",
+        "ar": "تحقق من متجرك للحصول على تفاصيل التجديد والإلغاء.",
+        "ja": "更新とキャンセルの詳細についてはストアを確認してください。",
+        "ko": "갱신 및 취소 세부정보는 매장에서 확인하세요.",
+        "zh-Hans": "检查您的商店以了解续订和取消详细信息。"
+      }
+    },
+    {
+      "source": "{{title}}, {{count}} minutes",
+      "translations": {
+        "hi": "{{title}}, {{count}} मिनट",
+        "es": "{{title}}, {{count}} minutos",
+        "pt": "{{title}}, {{count}} minutos",
+        "fr": "{{title}}, durée : {{count}} minutes",
+        "de": "{{title}}, {{count}} Minuten",
+        "ar": "دقائق {{title}}، {{count}}",
+        "ja": "{{title}}、{{count}} 分",
+        "ko": "{{title}}, {{count}}분",
+        "zh-Hans": "{{title}}、{{count}} 分钟"
+      }
+    },
+    {
+      "source": "{{title}}, {{count}} minute",
+      "translations": {
+        "hi": "{{title}}, {{count}} मिनट",
+        "es": "{{title}}, {{count}} minuto",
+        "pt": "{{title}}, {{count}} minuto",
+        "fr": "{{title}}, durée : {{count}} minute",
+        "de": "{{title}}, {{count}} Minute",
+        "ar": "{{title}}، {{count}} دقيقة",
+        "ja": "{{title}}、{{count}}分",
+        "ko": "{{title}}, {{count}}분",
+        "zh-Hans": "{{title}}、{{count}} 分钟"
+      }
+    },
+    {
+      "source": "FREED companion",
+      "translations": {
+        "hi": "FREED साथी",
+        "es": "Compañero FREED",
+        "pt": "Companheiro FREED",
+        "fr": "Compagnon FREED",
+        "de": "FREED-Begleiter",
+        "ar": "رفيق FREED",
+        "ja": "FREED コンパニオン",
+        "ko": "FREED 컴패니언",
+        "zh-Hans": "FREED 伴侣"
+      }
+    },
+    {
+      "source": "Tap to greet your companion.",
+      "translations": {
+        "hi": "अपने साथी का स्वागत करने के लिए टैप करें.",
+        "es": "Toca para saludar a tu acompañante.",
+        "pt": "Toque para cumprimentar seu companheiro.",
+        "fr": "Appuyez pour saluer votre compagnon.",
+        "de": "Tippen Sie, um Ihren Begleiter zu begrüßen.",
+        "ar": "انقر لتحية رفيقك.",
+        "ja": "タップして仲間に挨拶します。",
+        "ko": "탭하여 동반자에게 인사하세요.",
+        "zh-Hans": "点击向您的同伴打招呼。"
+      }
+    },
+    {
+      "source": "One step at a time. You are making room for a better day.",
+      "translations": {
+        "hi": "एक समय में एक कदम. आप एक बेहतर दिन के लिए जगह बना रहे हैं।",
+        "es": "Un paso a la vez. Estás haciendo espacio para un día mejor.",
+        "pt": "Um passo de cada vez. Você está abrindo espaço para um dia melhor.",
+        "fr": "Un pas à la fois. Vous faites de la place pour une journée meilleure.",
+        "de": "Schritt für Schritt. Sie schaffen Platz für einen besseren Tag.",
+        "ar": "خطوة واحدة في كل مرة. أنت تفسح المجال ليوم أفضل.",
+        "ja": "一度に一歩ずつ。より良い一日を過ごすためのスペースを確保しています。",
+        "ko": "한 번에 한 단계씩. 당신은 더 나은 하루를 위한 공간을 마련하고 있습니다.",
+        "zh-Hans": "一次一步。您正在为更好的一天腾出空间。"
+      }
+    },
+    {
+      "source": "{{count}} hours",
+      "translations": {
+        "hi": "{{count}} घंटे",
+        "es": "{{count}} horas",
+        "pt": "{{count}} horas",
+        "fr": "{{count}} heures",
+        "de": "{{count}} Stunden",
+        "ar": "ساعات {{count}}",
+        "ja": "{{count}} 時間",
+        "ko": "{{count}}시간",
+        "zh-Hans": "{{count}} 小时"
+      }
+    },
+    {
+      "source": "{{count}} hour",
+      "translations": {
+        "hi": "{{count}} घंटा",
+        "es": "{{count}} hora",
+        "pt": "{{count}} hora",
+        "fr": "{{count}} heure",
+        "de": "{{count}} Stunde",
+        "ar": "ساعة {{count}}",
+        "ja": "{{count}} 時間",
+        "ko": "{{count}}시간",
+        "zh-Hans": "{{count}}小时"
+      }
+    },
+    {
+      "source": "{{count}} minutes",
+      "translations": {
+        "hi": "{{count}} मिनट",
+        "es": "{{count}} minutos",
+        "pt": "{{count}} minutos",
+        "fr": "{{count}} min",
+        "de": "{{count}} Minuten",
+        "ar": "دقيقة {{count}}",
+        "ja": "{{count}} 分",
+        "ko": "{{count}}분",
+        "zh-Hans": "{{count}} 分钟"
+      }
+    },
+    {
+      "source": "{{count}} minute",
+      "translations": {
+        "hi": "{{count}} मिनट",
+        "es": "{{count}} minuto",
+        "pt": "{{count}} minuto",
+        "fr": "{{count}} min",
+        "de": "{{count}} Minute",
+        "ar": "دقيقة {{count}}",
+        "ja": "{{count}}分",
+        "ko": "{{count}}분",
+        "zh-Hans": "{{count}} 分钟"
+      }
+    },
+    {
+      "source": "Next milestone · {{count}} day",
+      "translations": {
+        "hi": "अगला मील का पत्थर · {{count}} दिन",
+        "es": "Próximo hito · Día {{count}}",
+        "pt": "Próximo marco · Dia {{count}}",
+        "fr": "Étape suivante · Jour {{count}}",
+        "de": "Nächster Meilenstein · {{count}} Tag",
+        "ar": "المعلم التالي · يوم {{count}}",
+        "ja": "次のマイルストーン · {{count}} 日",
+        "ko": "다음 마일스톤 · {{count}}일",
+        "zh-Hans": "下一个里程碑·{{count}}日"
+      }
+    },
+    {
+      "source": "Limited",
+      "translations": {
+        "hi": "सीमित",
+        "es": "Limitado",
+        "pt": "Limitado",
+        "fr": "Limité",
+        "de": "Beschränkt",
+        "ar": "محدود",
+        "ja": "限定",
+        "ko": "제한된",
+        "zh-Hans": "有限的"
+      }
+    },
+    {
+      "source": "A refreshing reset",
+      "translations": {
+        "hi": "एक ताज़ा रीसेट",
+        "es": "Un reinicio refrescante",
+        "pt": "Uma reinicialização refrescante",
+        "fr": "Une réinitialisation rafraîchissante",
+        "de": "Ein erfrischender Reset",
+        "ar": "إعادة تعيين منعشة",
+        "ja": "爽やかなリセット",
+        "ko": "상쾌한 재설정",
+        "zh-Hans": "令人耳目一新的重置"
+      }
+    },
+    {
+      "source": "Advanced",
+      "translations": {
+        "hi": "उन्नत",
+        "es": "Avanzado",
+        "pt": "Avançado",
+        "fr": "Avancé",
+        "de": "Fortgeschritten",
+        "ar": "متقدم",
+        "ja": "高度な",
+        "ko": "고급",
+        "zh-Hans": "先进的"
+      }
+    },
+    {
+      "source": "Always allow ·",
+      "translations": {
+        "hi": "हमेशा अनुमति दें ·",
+        "es": "Permitir siempre ·",
+        "pt": "Sempre permita ·",
+        "fr": "Autorisez toujours ·",
+        "de": "Erlauben Sie immer ·",
+        "ar": "السماح دائمًا ·",
+        "ja": "常に許可する ·",
+        "ko": "항상 허용 ·",
+        "zh-Hans": "始终允许·"
+      }
+    },
+    {
+      "source": "Android's DNS settings need review before FREED can start web protection. App protection and recovery tools remain available.",
+      "translations": {
+        "hi": "FREED वेब सुरक्षा शुरू करने से पहले Android की DNS सेटिंग्स की समीक्षा की आवश्यकता है। ऐप सुरक्षा और पुनर्प्राप्ति उपकरण उपलब्ध रहते हैं।",
+        "es": "Es necesario revisar la configuración DNS de Android antes de que FREED pueda iniciar la protección web. Las herramientas de protección y recuperación de aplicaciones siguen estando disponibles.",
+        "pt": "As configurações de DNS do Android precisam ser revisadas antes que o FREED possa iniciar a proteção da web. As ferramentas de proteção e recuperação de aplicativos permanecem disponíveis.",
+        "fr": "Les paramètres DNS de Android doivent être révisés avant que FREED puisse démarrer la protection Web. Les outils de protection et de récupération des applications restent disponibles.",
+        "de": "Die DNS-Einstellungen von Android müssen überprüft werden, bevor FREED den Web-Schutz starten kann. App-Schutz- und Wiederherstellungstools bleiben weiterhin verfügbar.",
+        "ar": "تحتاج إعدادات DNS الخاصة بـ Android إلى المراجعة قبل أن يتمكن FREED من بدء حماية الويب. تظل أدوات حماية التطبيقات واستردادها متاحة.",
+        "ja": "FREED が Web 保護を開始するには、Android の DNS 設定を確認する必要があります。アプリの保護および回復ツールは引き続き利用可能です。",
+        "ko": "FREED가 웹 보호를 시작하려면 Android의 DNS 설정을 검토해야 합니다. 앱 보호 및 복구 도구는 계속 사용할 수 있습니다.",
+        "zh-Hans": "在 FREED 启动 Web 保护之前，需要检查 Android 的 DNS 设置。应用程序保护和恢复工具仍然可用。"
+      }
+    },
+    {
+      "source": "Be honest with yourself",
+      "translations": {
+        "hi": "अपने प्रति ईमानदार रहें",
+        "es": "Se honesto contigo mismo",
+        "pt": "Seja honesto consigo mesmo",
+        "fr": "Soyez honnête avec vous-même",
+        "de": "Sei ehrlich zu dir selbst",
+        "ar": "كن صادقا مع نفسك",
+        "ja": "自分自身に正直になりましょう",
+        "ko": "자신에게 솔직해지세요",
+        "zh-Hans": "对自己诚实"
+      }
+    },
+    {
+      "source": "Connection, privacy and protection health",
+      "translations": {
+        "hi": "कनेक्शन, गोपनीयता और सुरक्षा स्वास्थ्य",
+        "es": "Conexión, privacidad y protección de la salud.",
+        "pt": "Conexão, privacidade e proteção da saúde",
+        "fr": "Connexion, confidentialité et protection de la santé",
+        "de": "Verbindung, Privatsphäre und Gesundheitsschutz",
+        "ar": "الاتصال والخصوصية وحماية الصحة",
+        "ja": "接続、プライバシー、保護の健全性",
+        "ko": "연결, 개인 정보 보호 및 보호 상태",
+        "zh-Hans": "连接、隐私和保护健康"
+      }
+    },
+    {
+      "source": "Custom short-form rules",
+      "translations": {
+        "hi": "कस्टम लघु-रूप नियम",
+        "es": "Reglas personalizadas de formato corto",
+        "pt": "Regras personalizadas de formato abreviado",
+        "fr": "Règles abrégées personnalisées",
+        "de": "Benutzerdefinierte Kurzformregeln",
+        "ar": "قواعد قصيرة مخصصة",
+        "ja": "カスタムの短い形式のルール",
+        "ko": "사용자 정의 약어 규칙",
+        "zh-Hans": "自定义简式规则"
+      }
+    },
+    {
+      "source": "Daily limit ·",
+      "translations": {
+        "hi": "दैनिक सीमा ·",
+        "es": "Límite diario ·",
+        "pt": "Limite diário ·",
+        "fr": "Limite quotidienne ·",
+        "de": "Tageslimit ·",
+        "ar": "الحد اليومي ·",
+        "ja": "1日の制限・",
+        "ko": "일일 한도 ·",
+        "zh-Hans": "每日限额·"
+      }
+    },
+    {
+      "source": "Find a calmer you",
+      "translations": {
+        "hi": "अपने लिए एक शांत व्यक्ति खोजें",
+        "es": "Encuentra una persona más tranquila",
+        "pt": "Encontre um você mais calmo",
+        "fr": "Trouvez-vous plus calme",
+        "de": "Finden Sie ein ruhigeres Ich",
+        "ar": "ابحث عن شخص أكثر هدوءًا",
+        "ja": "もっと穏やかなあなたを見つけてください",
+        "ko": "좀 더 차분한 당신을 찾아보세요",
+        "zh-Hans": "寻找一个更平静的你"
+      }
+    },
+    {
+      "source": "Make room for focus",
+      "translations": {
+        "hi": "फोकस के लिए जगह बनाएं",
+        "es": "Haz espacio para concentrarte",
+        "pt": "Abra espaço para foco",
+        "fr": "Faites de la place à la concentration",
+        "de": "Schaffen Sie Raum für Konzentration",
+        "ar": "إفساح المجال للتركيز",
+        "ja": "集中できるスペースを確保する",
+        "ko": "집중할 수 있는 공간을 확보하세요",
+        "zh-Hans": "为焦点腾出空间"
+      }
+    },
+    {
+      "source": "Move your body",
+      "translations": {
+        "hi": "अपने शरीर को हिलाओ",
+        "es": "mueve tu cuerpo",
+        "pt": "Mova seu corpo",
+        "fr": "Bougez votre corps",
+        "de": "Bewege deinen Körper",
+        "ar": "حرك جسمك",
+        "ja": "体を動かす",
+        "ko": "몸을 움직여라",
+        "zh-Hans": "移动你的身体"
+      }
+    },
+    {
+      "source": "Review Private DNS settings, then return here and check protection again.",
+      "translations": {
+        "hi": "निजी DNS सेटिंग्स की समीक्षा करें, फिर यहां वापस आएं और सुरक्षा की फिर से जांच करें।",
+        "es": "Revise la configuración de DNS privado, luego regrese aquí y verifique la protección nuevamente.",
+        "pt": "Revise as configurações de DNS privado, retorne aqui e verifique a proteção novamente.",
+        "fr": "Vérifiez les paramètres DNS privés, puis revenez ici et vérifiez à nouveau la protection.",
+        "de": "Überprüfen Sie die privaten DNS-Einstellungen, kehren Sie dann hierher zurück und überprüfen Sie den Schutz erneut.",
+        "ar": "قم بمراجعة إعدادات DNS الخاصة، ثم قم بالعودة إلى هنا وتحقق من الحماية مرة أخرى.",
+        "ja": "プライベート DNS 設定を確認し、ここに戻って保護を再度確認します。",
+        "ko": "비공개 DNS 설정을 검토한 후 여기로 돌아와서 보호를 다시 확인하세요.",
+        "zh-Hans": "检查私有 DNS 设置，然后返回此处并再次检查保护。"
+      }
+    },
+    {
+      "source": "Sleep mode ·",
+      "translations": {
+        "hi": "स्लीप मोड ·",
+        "es": "Modo de suspensión ·",
+        "pt": "Modo de suspensão ·",
+        "fr": "Mode veille ·",
+        "de": "Schlafmodus ·",
+        "ar": "وضع السكون ·",
+        "ja": "スリープモード・",
+        "ko": "절전 모드 ·",
+        "zh-Hans": "睡眠模式·"
+      }
+    },
+    {
+      "source": "Your daily record",
+      "translations": {
+        "hi": "आपका दैनिक रिकॉर्ड",
+        "es": "Tu registro diario",
+        "pt": "Seu recorde diário",
+        "fr": "Votre relevé quotidien",
+        "de": "Ihre tägliche Aufzeichnung",
+        "ar": "السجل اليومي الخاص بك",
+        "ja": "あなたの毎日の記録",
+        "ko": "당신의 일일 기록",
+        "zh-Hans": "你的每日记录"
+      }
+    },
+    {
+      "source": "Close breathing exercise",
+      "translations": {
+        "hi": "साँस लेने का व्यायाम बंद करें",
+        "es": "Ejercicio de respiración cercano.",
+        "pt": "Exercício de respiração fechada",
+        "fr": "Exercice de respiration rapproché",
+        "de": "Enge Atemübung",
+        "ar": "تمرين التنفس الوثيق",
+        "ja": "密接な呼吸法",
+        "ko": "숨쉬기 운동",
+        "zh-Hans": "近距离呼吸练习"
+      }
+    },
+    {
+      "source": "Android selected surface inspection is release-gated pending policy and device validation.",
+      "translations": {
+        "hi": "Android चयनित सतह निरीक्षण रिलीज़-गेटेड लंबित नीति और डिवाइस सत्यापन है।",
+        "es": "Android La inspección de la superficie seleccionada está controlada por la política pendiente y la validación del dispositivo.",
+        "pt": "A inspeção de superfície selecionada do Android é liberada com política pendente e validação do dispositivo.",
+        "fr": "L'inspection de surface sélectionnée Android est limitée à la publication en attendant la validation de la politique et de l'appareil.",
+        "de": "Die ausgewählte Oberflächeninspektion Android ist bis zur Richtlinien- und Gerätevalidierung freigegeben.",
+        "ar": "Android يتم فحص السطح المحدد ببوابة التحرير في انتظار السياسة والتحقق من صحة الجهاز.",
+        "ja": "Android で選択された表面検査は、リリースゲートの保留中のポリシーとデバイスの検証です。",
+        "ko": "Android 선택된 표면 검사는 정책 및 장치 검증을 보류 중인 릴리스 게이트입니다.",
+        "zh-Hans": "Android 选定的表面检查处于发布门控状态，有待政策和设备验证。"
+      }
+    },
+    {
+      "source": "Focus Shield rollout status refreshed.",
+      "translations": {
+        "hi": "Focus Shield रोलआउट स्थिति ताज़ा की गई।",
+        "es": "Estado de implementación de Focus Shield actualizado.",
+        "pt": "Status de implementação do Focus Shield atualizado.",
+        "fr": "État de déploiement Focus Shield actualisé.",
+        "de": "Focus Shield-Rollout-Status aktualisiert.",
+        "ar": "تم تحديث حالة الطرح Focus Shield.",
+        "ja": "Focus Shield ロールアウト ステータスが更新されました。",
+        "ko": "Focus Shield 롤아웃 상태가 새로 고쳐졌습니다.",
+        "zh-Hans": "Focus Shield 推出状态已刷新。"
+      }
+    },
+    {
+      "source": "{{value1}} min unlock after saving a helpful reset",
+      "translations": {
+        "hi": "एक उपयोगी रीसेट सहेजने के बाद {{value1}} मिनट अनलॉक",
+        "es": "Desbloqueo mínimo de {{value1}} después de guardar un reinicio útil",
+        "pt": "{{value1}} desbloqueio mínimo após salvar uma redefinição útil",
+        "fr": "{{value1}} déverrouillage min après avoir enregistré une réinitialisation utile",
+        "de": "{{value1}} Min. Entsperrung nach dem Speichern eines hilfreichen Resets",
+        "ar": "يتم فتح {{value1}} min بعد حفظ عملية إعادة تعيين مفيدة",
+        "ja": "便利なリセットを保存した後、{{value1}} 分ロック解除します",
+        "ko": "{{value1}} 유용한 재설정을 저장한 후 최소 잠금 해제",
+        "zh-Hans": "保存有用的重置后 {{value1}} 分钟解锁"
+      }
+    },
+    {
+      "source": "Your reset is complete. Choose what helps next.",
+      "translations": {
+        "hi": "आपका रीसेट पूरा हो गया है. चुनें कि आगे क्या मदद मिलेगी.",
+        "es": "Su reinicio está completo. Elija lo que le ayude a continuación.",
+        "pt": "Sua redefinição foi concluída. Escolha o que ajuda a seguir.",
+        "fr": "Votre réinitialisation est terminée. Choisissez ce qui vous aidera ensuite.",
+        "de": "Ihr Reset ist abgeschlossen. Wählen Sie, was als nächstes hilft.",
+        "ar": "اكتملت عملية إعادة التعيين. اختر ما سيساعدك بعد ذلك.",
+        "ja": "リセットが完了しました。次に役立つものを選択してください。",
+        "ko": "재설정이 완료되었습니다. 다음에 도움이 되는 것을 선택하세요.",
+        "zh-Hans": "您的重置已完成。选择下一步有帮助的内容。"
+      }
+    },
+    {
+      "source": "Android Focus Shield interrupts selected native-app surfaces using local selector fingerprints. FREED never keeps screen text, screenshots, or raw accessibility trees in recovery state.",
+      "translations": {
+        "hi": "Android Focus Shield स्थानीय चयनकर्ता फ़िंगरप्रिंट का उपयोग करके चयनित मूल-ऐप सतहों को बाधित करता है। FREED कभी भी स्क्रीन टेक्स्ट, स्क्रीनशॉट या कच्चे एक्सेसिबिलिटी ट्री को पुनर्प्राप्ति स्थिति में नहीं रखता है।",
+        "es": "Android Focus Shield interrumpe las superficies de aplicaciones nativas seleccionadas utilizando huellas digitales del selector local. FREED nunca mantiene el texto de la pantalla, las capturas de pantalla o los árboles de accesibilidad sin formato en estado de recuperación.",
+        "pt": "Android Focus Shield interrompe superfícies de aplicativos nativos selecionadas usando impressões digitais do seletor local. O FREED nunca mantém o texto da tela, capturas de tela ou árvores de acessibilidade brutas em estado de recuperação.",
+        "fr": "Android Focus Shield interrompt les surfaces d'application native sélectionnées à l'aide des empreintes digitales du sélecteur local. FREED ne conserve jamais le texte de l'écran, les captures d'écran ou les arborescences d'accessibilité brutes en état de récupération.",
+        "de": "Android Focus Shield unterbricht ausgewählte native App-Oberflächen mithilfe lokaler Selektor-Fingerabdrücke. FREED behält Bildschirmtexte, Screenshots oder rohe Barrierefreiheitsbäume niemals im Wiederherstellungszustand.",
+        "ar": "يقاطع Android Focus Shield أسطح التطبيقات الأصلية المحددة باستخدام بصمات أصابع المحدد المحلية. لا يحتفظ FREED مطلقًا بنص الشاشة أو لقطات الشاشة أو أشجار إمكانية الوصول الأولية في حالة الاسترداد.",
+        "ja": "Android Focus Shield は、ローカル セレクター フィンガープリントを使用して、選択されたネイティブ アプリ サーフェスを中断します。 FREED は、画面テキスト、スクリーンショット、または生のアクセシビリティ ツリーを回復状態に保つことはありません。",
+        "ko": "Android Focus Shield는 로컬 선택기 지문을 사용하여 선택한 기본 앱 표면을 중단합니다. FREED는 화면 텍스트, 스크린샷 또는 원시 접근성 트리를 복구 상태로 유지하지 않습니다.",
+        "zh-Hans": "Android Focus Shield 使用本地选择器指纹中断选定的本机应用程序表面。 FREED 从不将屏幕文本、屏幕截图或原始可访问性树保留在恢复状态。"
+      }
+    },
+    {
+      "source": "Family Controls entitlement or ManagedSettings capability is missing from this iOS build.",
+      "translations": {
+        "hi": "इस iOS बिल्ड में पारिवारिक नियंत्रण पात्रता या प्रबंधितसेटिंग्स क्षमता गायब है।",
+        "es": "Faltan los derechos de Family Controls o la capacidad ManagedSettings en esta compilación iOS.",
+        "pt": "O direito Family Controls ou a capacidade ManagedSettings estão ausentes nesta compilação iOS.",
+        "fr": "Le droit Family Controls ou la fonctionnalité ManagedSettings est absent de cette version iOS.",
+        "de": "In diesem iOS-Build fehlt die Berechtigung „Family Controls“ oder die Funktion „ManagedSettings“.",
+        "ar": "استحقاق عناصر التحكم العائلية أو إمكانية ManagedSettings مفقود من إصدار iOS هذا.",
+        "ja": "この iOS ビルドには、ファミリー コントロールの権利または ManagedSettings 機能がありません。",
+        "ko": "이 iOS 빌드에는 가족 제어 권한 또는 ManagedSettings 기능이 없습니다.",
+        "zh-Hans": "此 iOS 版本中缺少 Family Controls 权利或 ManagedSettings 功能。"
+      }
+    },
+    {
+      "source": "Focus Shield native capabilities are unavailable in this preview build. Test calibration and rule enforcement in a signed Android or iOS device build.",
+      "translations": {
+        "hi": "इस पूर्वावलोकन बिल्ड में Focus Shield मूल क्षमताएं उपलब्ध नहीं हैं। हस्ताक्षरित Android या iOS डिवाइस बिल्ड में परीक्षण अंशांकन और नियम प्रवर्तन।",
+        "es": "Las capacidades nativas de Focus Shield no están disponibles en esta versión preliminar. Pruebe la calibración y la aplicación de reglas en una compilación de dispositivo Android o iOS firmada.",
+        "pt": "Os recursos nativos do Focus Shield não estão disponíveis nesta versão de visualização. Teste a calibração e a aplicação de regras em um dispositivo Android ou iOS assinado.",
+        "fr": "Les fonctionnalités natives de Focus Shield ne sont pas disponibles dans cette version préliminaire. Testez l’étalonnage et l’application des règles dans une version d’appareil Android ou iOS signée.",
+        "de": "Die nativen Funktionen von Focus Shield sind in diesem Vorschau-Build nicht verfügbar. Testen Sie die Kalibrierung und Regeldurchsetzung in einem signierten Android- oder iOS-Geräteaufbau.",
+        "ar": "لا تتوفر إمكانيات Focus Shield الأصلية في إصدار المعاينة هذا. اختبار المعايرة وإنفاذ القواعد في إصدار جهاز Android أو iOS مُوقع.",
+        "ja": "Focus Shield ネイティブ機能は、このプレビュー ビルドでは使用できません。署名された Android または iOS デバイス ビルドでのテスト キャリブレーションとルール適用。",
+        "ko": "이 미리보기 빌드에서는 Focus Shield 기본 기능을 사용할 수 없습니다. 서명된 Android 또는 iOS 장치 빌드에서 교정 및 규칙 적용을 테스트합니다.",
+        "zh-Hans": "Focus Shield 本机功能在此预览版本中不可用。在签名的 Android 或 iOS 设备版本中测试校准和规则实施。"
+      }
+    },
+    {
+      "source": "Focus Shield permission was revoked. Re-enable FREED Protection in Accessibility settings.",
+      "translations": {
+        "hi": "Focus Shield अनुमति रद्द कर दी गई। एक्सेसिबिलिटी सेटिंग्स में FREED Protection को पुनः सक्षम करें।",
+        "es": "Se revocó el permiso Focus Shield. Vuelva a habilitar FREED Protection en la configuración de Accesibilidad.",
+        "pt": "A permissão Focus Shield foi revogada. Reative o FREED Protection nas configurações de acessibilidade.",
+        "fr": "L'autorisation Focus Shield a été révoquée. Réactivez FREED Protection dans les paramètres d’accessibilité.",
+        "de": "Die Focus Shield-Berechtigung wurde widerrufen. Aktivieren Sie FREED Protection in den Barrierefreiheitseinstellungen erneut.",
+        "ar": "تم إبطال إذن Focus Shield. أعد تمكين FREED Protection في إعدادات إمكانية الوصول.",
+        "ja": "Focus Shield 権限が取り消されました。アクセシビリティ設定で FREED Protection を再度有効にします。",
+        "ko": "Focus Shield 권한이 취소되었습니다. 접근성 설정에서 FREED Protection를 다시 활성화합니다.",
+        "zh-Hans": "Focus Shield 权限已被撤销。在辅助功能设置中重新启用 FREED Protection。"
+      }
+    },
+    {
+      "source": "iOS cannot inspect native-app screens. Focus Shield uses Screen Time selections for apps and the Safari Focus Shield extension for supported short-form routes; Safari Content Blocker remains adult-domain-only.",
+      "translations": {
+        "hi": "iOS नेटिव-ऐप स्क्रीन का निरीक्षण नहीं कर सकता। Focus Shield ऐप्स के लिए Screen Time चयन और समर्थित शॉर्ट-फॉर्म मार्गों के लिए Safari Focus Shield एक्सटेंशन का उपयोग करता है; Safari सामग्री अवरोधक केवल वयस्क-डोमेन ही रहता है।",
+        "es": "iOS no puede inspeccionar las pantallas de aplicaciones nativas. Focus Shield usa selecciones Screen Time para aplicaciones y la extensión Safari Focus Shield para rutas de formato corto admitidas; Safari El bloqueador de contenido sigue siendo exclusivo para adultos.",
+        "pt": "O iOS não pode inspecionar telas de aplicativos nativos. Focus Shield usa seleções Screen Time para aplicativos e a extensão Safari Focus Shield para rotas curtas suportadas; O bloqueador de conteúdo Safari permanece apenas para domínios adultos.",
+        "fr": "iOS ne peut pas inspecter les écrans des applications natives. Focus Shield utilise les sélections Screen Time pour les applications et l'extension Safari Focus Shield pour les itinéraires abrégés pris en charge ; Le bloqueur de contenu Safari reste réservé aux domaines réservés aux adultes.",
+        "de": "iOS kann die Bildschirme nativer Apps nicht prüfen. Focus Shield verwendet die Screen Time-Auswahl für Apps und die Safari-Focus Shield-Erweiterung für unterstützte Kurzrouten; Der Inhaltsblocker Safari ist weiterhin nur für Erwachsene bestimmt.",
+        "ar": "لا يستطيع iOS فحص شاشات التطبيقات الأصلية. يستخدم Focus Shield تحديدات Screen Time للتطبيقات وامتداد Safari Focus Shield للمسارات القصيرة المدعومة؛ تظل أداة حظر المحتوى Safari مخصصة للبالغين فقط.",
+        "ja": "iOS はネイティブ アプリ画面を検査できません。 Focus Shield は、アプリに Screen Time 選択を使用し、サポートされている短い形式のルートに Safari Focus Shield 拡張を使用します。 Safari コンテンツ ブロッカーはアダルト ドメインのみのままです。",
+        "ko": "iOS는 네이티브 앱 화면을 검사할 수 없습니다. Focus Shield는 앱에 대해 Screen Time 선택을 사용하고 지원되는 단축 경로에 대해 Safari Focus Shield 확장을 사용합니다. Safari 콘텐츠 차단기는 성인 도메인 전용으로 유지됩니다.",
+        "zh-Hans": "iOS 无法检查本机应用程序屏幕。 Focus Shield 对应用程序使用 Screen Time 选择，对支持的短格式路由使用 Safari Focus Shield 扩展； Safari 内容拦截器仍然仅限成人域。"
+      }
+    },
+    {
+      "source": "iOS native-app limit: FREED cannot inspect native-app screens or calibrate individual in-app surfaces. Use opaque Screen Time app/category tokens instead.",
+      "translations": {
+        "hi": "iOS नेटिव-ऐप सीमा: FREED नेटिव-ऐप स्क्रीन का निरीक्षण नहीं कर सकता है या अलग-अलग इन-ऐप सतहों को कैलिब्रेट नहीं कर सकता है। इसके बजाय अपारदर्शी Screen Time ऐप/श्रेणी टोकन का उपयोग करें।",
+        "es": "Límite de aplicaciones nativas de iOS: FREED no puede inspeccionar pantallas de aplicaciones nativas ni calibrar superficies individuales dentro de la aplicación. Utilice tokens de categoría/aplicación Screen Time opacos en su lugar.",
+        "pt": "Limite de aplicativos nativos do iOS: o FREED não pode inspecionar telas de aplicativos nativos ou calibrar superfícies individuais no aplicativo. Em vez disso, use tokens de aplicativo/categoria opacos Screen Time.",
+        "fr": "Limite de l'application native iOS : FREED ne peut pas inspecter les écrans de l'application native ni calibrer les surfaces individuelles de l'application. Utilisez plutôt des jetons d’application/catégorie Screen Time opaques.",
+        "de": "iOS-Limit für native Apps: FREED kann keine nativen App-Bildschirme überprüfen oder einzelne In-App-Oberflächen kalibrieren. Verwenden Sie stattdessen undurchsichtige Screen Time-App-/Kategorie-Token.",
+        "ar": "حد التطبيق الأصلي iOS: لا يمكن لـ FREED فحص شاشات التطبيق الأصلي أو معايرة الأسطح الفردية داخل التطبيق. استخدم الرموز المميزة للتطبيق/الفئة غير الشفافة Screen Time بدلاً من ذلك.",
+        "ja": "iOS ネイティブ アプリの制限: FREED は、ネイティブ アプリの画面を検査したり、個々のアプリ内サーフェスを調整したりできません。代わりに、不透明な Screen Time アプリ/カテゴリ トークンを使用してください。",
+        "ko": "iOS 네이티브 앱 제한: FREED는 네이티브 앱 화면을 검사하거나 개별 앱 내 표면을 보정할 수 없습니다. 대신 불투명한 Screen Time 앱/카테고리 토큰을 사용하세요.",
+        "zh-Hans": "iOS 本机应用程序限制：FREED 无法检查本机应用程序屏幕或校准各个应用程序内表面。请改用不透明的 Screen Time 应用/类别令牌。"
+      }
+    },
+    {
+      "source": "min unlock after saving a helpful reset",
+      "translations": {
+        "hi": "एक उपयोगी रीसेट सहेजने के बाद न्यूनतम अनलॉक",
+        "es": "desbloqueo mínimo después de guardar un reinicio útil",
+        "pt": "min desbloquear depois de salvar uma redefinição útil",
+        "fr": "déverrouillage minimum après avoir enregistré une réinitialisation utile",
+        "de": "Min. Entsperrung nach dem Speichern eines hilfreichen Resets",
+        "ar": "الحد الأدنى لفتح القفل بعد حفظ عملية إعادة تعيين مفيدة",
+        "ja": "便利なリセットを保存した後の最小ロック解除",
+        "ko": "유용한 재설정을 저장한 후 최소 잠금 해제",
+        "zh-Hans": "保存有用的重置后最小解锁"
+      }
+    },
+    {
+      "source": "Native status reports {{focusShieldRuleCount}} local rule{{value2}}, but {{count}} loaded. Refresh stale rules before relying on them.",
+      "translations": {
+        "hi": "मूल स्थिति रिपोर्ट {{focusShieldRuleCount}} स्थानीय नियम{{value2}}, लेकिन {{count}} लोड किया गया। पुराने नियमों पर भरोसा करने से पहले उन्हें ताजा कर लें।",
+        "es": "El estado nativo informa la regla local {{focusShieldRuleCount}}{{value2}}, pero {{count}} está cargado. Actualice las reglas obsoletas antes de confiar en ellas.",
+        "pt": "O status nativo informa a regra local {{focusShieldRuleCount}}{{value2}}, mas {{count}} carregado. Atualize regras obsoletas antes de confiar nelas.",
+        "fr": "L'état natif signale la règle locale {{focusShieldRuleCount}} {{value2}}, mais {{count}} est chargé. Actualisez les règles obsolètes avant de vous y fier.",
+        "de": "Nativer Status meldet {{focusShieldRuleCount}}, lokale Regel {{value2}}, aber {{count}} geladen. Aktualisieren Sie veraltete Regeln, bevor Sie sich darauf verlassen.",
+        "ar": "تقارير الحالة الأصلية {{focusShieldRuleCount}} القاعدة المحلية{{value2}}، ولكن تم تحميل {{count}}. قم بتحديث القواعد القديمة قبل الاعتماد عليها.",
+        "ja": "ネイティブ ステータスは {{focusShieldRuleCount}} ローカル ルール {{value2}} を報告しますが、{{count}} がロードされています。古いルールに依存する前に更新してください。",
+        "ko": "기본 상태는 {{focusShieldRuleCount}} 로컬 규칙{{value2}}를 보고하지만 {{count}}는 로드되었습니다. 오래된 규칙을 사용하기 전에 새로 고치세요.",
+        "zh-Hans": "本机状态报告 {{focusShieldRuleCount}} 本地规则 {{value2}}，但已加载 {{count}}。在依赖过时的规则之前刷新它们。"
+      }
+    },
+    {
+      "source": "Preview builds can show Focus Shield setup copy, but they cannot inspect native app surfaces or enforce device shields.",
+      "translations": {
+        "hi": "पूर्वावलोकन बिल्ड Focus Shield सेटअप कॉपी दिखा सकते हैं, लेकिन वे मूल ऐप सतहों का निरीक्षण नहीं कर सकते हैं या डिवाइस शील्ड लागू नहीं कर सकते हैं।",
+        "es": "Las compilaciones de vista previa pueden mostrar una copia de configuración de Focus Shield, pero no pueden inspeccionar las superficies de las aplicaciones nativas ni aplicar protecciones de dispositivos.",
+        "pt": "As compilações de visualização podem mostrar a cópia de configuração do Focus Shield, mas não podem inspecionar superfícies de aplicativos nativos ou impor proteções de dispositivos.",
+        "fr": "Les versions d'aperçu peuvent afficher la copie de configuration Focus Shield, mais elles ne peuvent pas inspecter les surfaces des applications natives ni appliquer les protections des appareils.",
+        "de": "Vorschau-Builds können die Focus Shield-Setup-Kopie anzeigen, sie können jedoch keine nativen App-Oberflächen überprüfen oder Geräteschutzmaßnahmen erzwingen.",
+        "ar": "يمكن أن تعرض إصدارات المعاينة نسخة إعداد Focus Shield، لكن لا يمكنها فحص أسطح التطبيق الأصلية أو فرض دروع الجهاز.",
+        "ja": "プレビュー ビルドでは Focus Shield セットアップ コピーを表示できますが、ネイティブ アプリのサーフェスを検査したり、デバイス シールドを強制したりすることはできません。",
+        "ko": "미리보기 빌드는 Focus Shield 설정 사본을 표시할 수 있지만 기본 앱 표면을 검사하거나 장치 보호를 시행할 수는 없습니다.",
+        "zh-Hans": "预览版本可以显示 Focus Shield 设置副本，但无法检查本机应用程序表面或强制执行设备防护。"
+      }
+    },
+    {
+      "source": "Screen Time permission was revoked. Authorize Family Controls again to restore selected shields.",
+      "translations": {
+        "hi": "Screen Time अनुमति रद्द कर दी गई। चयनित शील्ड को पुनर्स्थापित करने के लिए पारिवारिक नियंत्रण को फिर से अधिकृत करें।",
+        "es": "Se revocó el permiso Screen Time. Autoriza Family Controls nuevamente para restaurar los escudos seleccionados.",
+        "pt": "A permissão Screen Time foi revogada. Autorize os Controles Familiares novamente para restaurar os escudos selecionados.",
+        "fr": "L'autorisation Screen Time a été révoquée. Autorisez à nouveau les contrôles familiaux pour restaurer les boucliers sélectionnés.",
+        "de": "Die Screen Time-Berechtigung wurde widerrufen. Autorisieren Sie Family Controls erneut, um ausgewählte Schilde wiederherzustellen.",
+        "ar": "تم إبطال إذن Screen Time. قم بتفويض عناصر التحكم العائلية مرة أخرى لاستعادة الدروع المحددة.",
+        "ja": "Screen Time 権限が取り消されました。ファミリーコントロールを再度承認して、選択したシールドを復元します。",
+        "ko": "Screen Time 권한이 취소되었습니다. 선택한 보호막을 복원하려면 가족 제어에 다시 권한을 부여하세요.",
+        "zh-Hans": "Screen Time 权限已被撤销。再次授权家庭控制以恢复选定的防护罩。"
+      }
+    },
+    {
+      "source": "The local Focus Shield rule store is degraded or stale. Remove and re-add affected rules.",
+      "translations": {
+        "hi": "स्थानीय Focus Shield नियम स्टोर ख़राब या पुराना है। प्रभावित नियमों को हटाएँ और पुनः जोड़ें।",
+        "es": "El almacén de reglas local Focus Shield está degradado o obsoleto. Elimine y vuelva a agregar las reglas afectadas.",
+        "pt": "O armazenamento de regras Focus Shield local está degradado ou obsoleto. Remova e adicione novamente as regras afetadas.",
+        "fr": "Le magasin de règles Focus Shield local est dégradé ou obsolète. Supprimez et rajoutez les règles concernées.",
+        "de": "Der lokale Focus Shield-Regelspeicher ist beeinträchtigt oder veraltet. Entfernen Sie betroffene Regeln und fügen Sie sie erneut hinzu.",
+        "ar": "مخزن قواعد Focus Shield المحلي متدهور أو قديم. إزالة وإعادة إضافة القواعد المتأثرة.",
+        "ja": "ローカル Focus Shield ルール ストアは機能が低下しているか、古いです。影響を受けるルールを削除して再度追加します。",
+        "ko": "로컬 Focus Shield 규칙 저장소의 성능이 저하되었거나 오래되었습니다. 영향을 받은 규칙을 제거하고 다시 추가합니다.",
+        "zh-Hans": "本地 Focus Shield 规则存储已降级或过时。删除并重新添加受影响的规则。"
+      }
+    },
+    {
+      "source": "The Safari Focus Shield extension is unavailable in this iOS build, so supported short-form web routes cannot hand off to recovery.",
+      "translations": {
+        "hi": "इस iOS बिल्ड में Safari Focus Shield एक्सटेंशन अनुपलब्ध है, इसलिए समर्थित शॉर्ट-फॉर्म वेब रूट पुनर्प्राप्ति के लिए उपलब्ध नहीं हो सकते हैं।",
+        "es": "La extensión Safari Focus Shield no está disponible en esta compilación iOS, por lo que las rutas web de formato corto admitidas no pueden pasarse a la recuperación.",
+        "pt": "A extensão Safari Focus Shield não está disponível nesta compilação iOS, portanto, as rotas da Web de formato curto suportadas não podem ser transferidas para recuperação.",
+        "fr": "L'extension Safari Focus Shield n'est pas disponible dans cette version iOS, donc les routes Web abrégées prises en charge ne peuvent pas être transférées vers la récupération.",
+        "de": "Die Erweiterung Safari Focus Shield ist in diesem iOS-Build nicht verfügbar, daher können unterstützte Kurzform-Webrouten nicht an die Wiederherstellung übergeben werden.",
+        "ar": "لا يتوفر ملحق Safari Focus Shield في إصدار iOS هذا، لذا لا يمكن لمسارات الويب القصيرة المدعومة تسليمها إلى الاسترداد.",
+        "ja": "Safari Focus Shield 拡張機能は、この iOS ビルドでは使用できないため、サポートされている短縮形式の Web ルートをリカバリに渡すことができません。",
+        "ko": "이 iOS 빌드에서는 Safari Focus Shield 확장을 사용할 수 없으므로 지원되는 짧은 형식 웹 경로를 복구에 전달할 수 없습니다.",
+        "zh-Hans": "Safari Focus Shield 扩展在此 iOS 版本中不可用，因此受支持的短格式 Web 路由无法移交给恢复。"
+      }
+    },
+    {
+      "source": "This Android build does not expose the Accessibility-backed Focus Shield capability.",
+      "translations": {
+        "hi": "यह Android बिल्ड एक्सेसिबिलिटी-समर्थित Focus Shield क्षमता को उजागर नहीं करता है।",
+        "es": "Esta compilación Android no expone la capacidad Focus Shield respaldada por accesibilidad.",
+        "pt": "Esta compilação Android não expõe o recurso Focus Shield apoiado por acessibilidade.",
+        "fr": "Cette version Android n'expose pas la fonctionnalité Focus Shield basée sur l'accessibilité.",
+        "de": "Dieser Android-Build stellt die durch Barrierefreiheit unterstützte Focus Shield-Funktion nicht zur Verfügung.",
+        "ar": "لا يكشف إصدار Android هذا عن إمكانية Focus Shield المدعومة بإمكانية الوصول.",
+        "ja": "この Android ビルドは、アクセシビリティをサポートする Focus Shield 機能を公開しません。",
+        "ko": "이 Android 빌드는 접근성 지원 Focus Shield 기능을 노출하지 않습니다.",
+        "zh-Hans": "此 Android 版本不公开可访问性支持的 Focus Shield 功能。"
+      }
+    },
+    {
+      "source": "Detect opted-in adult-site and doomscrolling risk moments from supported browser fields, selected app packages, and sustained short-form screens so FREED can open recovery challenges.",
+      "translations": {
+        "hi": "समर्थित ब्राउज़र फ़ील्ड, चयनित ऐप पैकेज और निरंतर शॉर्ट-फॉर्म स्क्रीन से ऑप्ट-इन वयस्क-साइट और डूमस्क्रॉलिंग जोखिम क्षणों का पता लगाएं ताकि FREED पुनर्प्राप्ति चुनौतियों को खोल सके।",
+        "es": "Detecte momentos de riesgo de sitios para adultos y de doomscrolling habilitados desde campos de navegador compatibles, paquetes de aplicaciones seleccionados y pantallas de formato corto sostenidas para que FREED pueda abrir desafíos de recuperación.",
+        "pt": "Detecte sites adultos e momentos de risco de rolagem do apocalipse em campos de navegador suportados, pacotes de aplicativos selecionados e telas curtas sustentadas para que o FREED possa abrir desafios de recuperação.",
+        "fr": "Détectez les sites à risque pour adultes et les sites pour adultes inscrits à partir des champs de navigateur pris en charge, des packages d'applications sélectionnés et des écrans abrégés soutenus afin que FREED puisse ouvrir des défis de récupération.",
+        "de": "Erkennen Sie aktivierte Adult-Site- und Doomscrolling-Risikomomente aus unterstützten Browserfeldern, ausgewählten App-Paketen und dauerhaften Kurzformbildschirmen, damit FREED Wiederherstellungsherausforderungen eröffnen kann.",
+        "ar": "اكتشف لحظات الخطر التي تم اشتراكها في مواقع البالغين والتمرير من حقول المتصفح المدعومة، وحزم التطبيقات المحددة، والشاشات القصيرة المستمرة حتى يتمكن FREED من فتح تحديات الاسترداد.",
+        "ja": "サポートされているブラウザーのフィールド、選択されたアプリ パッケージ、および継続的な短い形式の画面から、オプトインされたアダルト サイトとドゥームスクロールの危険な瞬間を検出して、FREED が回復の課題を解決できるようにします。",
+        "ko": "FREED가 복구 문제를 열 ​​수 있도록 지원되는 브라우저 필드, 선택된 앱 패키지 및 지속적인 짧은 형식 화면에서 선택된 성인 사이트 및 둠스크롤 위험 순간을 감지합니다.",
+        "zh-Hans": "从支持的浏览器字段、选定的应用程序包和持续的简短屏幕中检测选择加入的成人网站和末日滚动风险时刻，以便 FREED 可以应对恢复挑战。"
+      }
+    },
+    {
+      "source": "FREED Usage Access",
+      "translations": {
+        "hi": "FREED उपयोग पहुंच",
+        "es": "Acceso al uso de FREED",
+        "pt": "Acesso de uso FREED",
+        "fr": "Accès à l'utilisation FREED",
+        "de": "FREED-Nutzungszugriff",
+        "ar": "وصول الاستخدام FREED",
+        "ja": "FREED 使用状況アクセス",
+        "ko": "FREED 사용 액세스",
+        "zh-Hans": "FREED 使用访问"
+      }
+    },
+    {
+      "source": "FREED uses Usage Access only to read aggregate foreground time for selected app packages so your app timers can trigger recovery challenges. It does not read screen contents, messages, keystrokes, browsing history, or raw usage events.",
+      "translations": {
+        "hi": "FREED केवल चयनित ऐप पैकेजों के लिए समग्र अग्रभूमि समय को पढ़ने के लिए उपयोग पहुंच का उपयोग करता है ताकि आपके ऐप टाइमर पुनर्प्राप्ति चुनौतियों को ट्रिगर कर सकें। यह स्क्रीन सामग्री, संदेश, कीस्ट्रोक्स, ब्राउज़िंग इतिहास या कच्चे उपयोग की घटनाओं को नहीं पढ़ता है।",
+        "es": "FREED utiliza el acceso de uso solo para leer el tiempo agregado de primer plano para paquetes de aplicaciones seleccionados, de modo que los temporizadores de sus aplicaciones puedan desencadenar desafíos de recuperación. No lee el contenido de la pantalla, los mensajes, las pulsaciones de teclas, el historial de navegación ni los eventos de uso sin procesar.",
+        "pt": "O FREED usa o Usage Access apenas para ler o tempo agregado de primeiro plano para pacotes de aplicativos selecionados, para que os temporizadores do seu aplicativo possam acionar desafios de recuperação. Ele não lê o conteúdo da tela, mensagens, pressionamentos de teclas, histórico de navegação ou eventos de uso brutos.",
+        "fr": "FREED utilise Usage Access uniquement pour lire le temps de premier plan global pour les packages d'applications sélectionnés afin que les minuteries de votre application puissent déclencher des défis de récupération. Il ne lit pas le contenu de l'écran, les messages, les frappes au clavier, l'historique de navigation ou les événements d'utilisation bruts.",
+        "de": "FREED verwendet den Nutzungszugriff nur, um die aggregierte Vordergrundzeit für ausgewählte App-Pakete zu lesen, damit Ihre App-Timer Wiederherstellungsherausforderungen auslösen können. Bildschirminhalte, Nachrichten, Tastenanschläge, Browserverlauf oder Rohnutzungsereignisse werden nicht gelesen.",
+        "ar": "يستخدم FREED الوصول إلى الاستخدام فقط لقراءة الوقت الأمامي الإجمالي لحزم التطبيقات المحددة حتى تتمكن مؤقتات التطبيق من إثارة تحديات الاسترداد. ولا يقرأ محتويات الشاشة أو الرسائل أو ضغطات المفاتيح أو سجل التصفح أو أحداث الاستخدام الأولية.",
+        "ja": "FREED は、選択したアプリ パッケージの合計フォアグラウンド時間を読み取るためにのみ使用アクセスを使用するため、アプリ タイマーが回復チャレンジをトリガーできるようになります。画面の内容、メッセージ、キーストローク、閲覧履歴、または生の使用状況イベントは読み取られません。",
+        "ko": "FREED는 선택한 앱 패키지의 집계 포그라운드 시간을 읽는 데만 사용 액세스를 사용하므로 앱 타이머가 복구 문제를 트리거할 수 있습니다. 화면 내용, 메시지, 키 입력, 검색 기록 또는 원시 사용 이벤트는 읽지 않습니다.",
+        "zh-Hans": "FREED 仅使用使用访问来读取所选应用程序包的总前台时间，以便您的应用程序计时器可以触发恢复挑战。它不会读取屏幕内容、消息、击键、浏览历史记录或原始使用事件。"
+      }
+    },
+    {
+      "source": "FREED Protection",
+      "translations": {
+        "hi": "FREED Protection",
+        "es": "FREED Protection",
+        "pt": "FREED Protection",
+        "fr": "FREED Protection",
+        "de": "FREED Protection",
+        "ar": "FREED Protection",
+        "ja": "FREED Protection",
+        "ko": "FREED Protection",
+        "zh-Hans": "FREED Protection"
+      }
+    },
+    {
+      "source": "FREED DNS Guard",
+      "translations": {
+        "hi": "FREED DNS Guard",
+        "es": "FREED DNS Guard",
+        "pt": "FREED DNS Guard",
+        "fr": "FREED DNS Guard",
+        "de": "FREED DNS Guard",
+        "ar": "FREED DNS Guard",
+        "ja": "FREED DNS Guard",
+        "ko": "FREED DNS Guard",
+        "zh-Hans": "FREED DNS Guard"
+      }
+    },
+    {
+      "source": "Shows when FREED's DNS-only adult-domain filter is active.",
+      "translations": {
+        "hi": "दिखाता है कि FREED का DNS-केवल वयस्क-डोमेन फ़िल्टर कब सक्रिय है।",
+        "es": "Muestra cuando el filtro de dominio para adultos exclusivo de DNS de FREED está activo.",
+        "pt": "Mostra quando o filtro de domínio adulto somente DNS do FREED está ativo.",
+        "fr": "S'affiche lorsque le filtre de domaine DNS réservé aux adultes de FREED est actif.",
+        "de": "Wird angezeigt, wenn der DNS-Filter für erwachsene Domänen von FREED aktiv ist.",
+        "ar": "يظهر عندما يكون مرشح مجال DNS المخصص للبالغين فقط الخاص بـ FREED نشطًا.",
+        "ja": "FREED の DNS 専用のアダルト ドメイン フィルターがアクティブな場合を示します。",
+        "ko": "FREED의 DNS 전용 성인 도메인 필터가 활성화되면 표시됩니다.",
+        "zh-Hans": "显示 FREED 的仅 DNS 成人域过滤器何时处于活动状态。"
+      }
+    },
+    {
+      "source": "Filtering paused for this network's sign-in page. Normal browsing stays direct.",
+      "translations": {
+        "hi": "इस नेटवर्क के साइन-इन पृष्ठ के लिए फ़िल्टरिंग रोक दी गई है। सामान्य ब्राउज़िंग प्रत्यक्ष रहती है.",
+        "es": "Filtrado en pausa para la página de inicio de sesión de esta red. La navegación normal sigue siendo directa.",
+        "pt": "A filtragem foi pausada na página de login desta rede. A navegação normal permanece direta.",
+        "fr": "Filtrage suspendu pour la page de connexion de ce réseau. La navigation normale reste directe.",
+        "de": "Die Filterung für die Anmeldeseite dieses Netzwerks wurde angehalten. Das normale Surfen bleibt direkt.",
+        "ar": "تم إيقاف التصفية مؤقتًا لصفحة تسجيل الدخول لهذه الشبكة. التصفح العادي يبقى مباشرا.",
+        "ja": "このネットワークのサインイン ページのフィルタリングが一時停止されました。通常のブラウジングはダイレクトのままです。",
+        "ko": "이 네트워크의 로그인 페이지 필터링이 일시중지되었습니다. 일반적인 탐색은 직접적으로 유지됩니다.",
+        "zh-Hans": "已暂停对该网络登录页面的过滤。正常浏览保持直接。"
+      }
+    },
+    {
+      "source": "Adult-domain DNS filtering is active. Normal browsing stays direct.",
+      "translations": {
+        "hi": "वयस्क-डोमेन DNS फ़िल्टरिंग सक्रिय है. सामान्य ब्राउज़िंग प्रत्यक्ष रहती है.",
+        "es": "El filtrado DNS de dominio para adultos está activo. La navegación normal sigue siendo directa.",
+        "pt": "A filtragem DNS de domínio adulto está ativa. A navegação normal permanece direta.",
+        "fr": "Le filtrage DNS des domaines adultes est actif. La navigation normale reste directe.",
+        "de": "Die DNS-Filterung für nicht jugendfreie Domänen ist aktiv. Das normale Surfen bleibt direkt.",
+        "ar": "تصفية DNS لمجال البالغين نشطة. التصفح العادي يبقى مباشرا.",
+        "ja": "アダルト ドメインの DNS フィルタリングがアクティブになっています。通常のブラウジングはダイレクトのままです。",
+        "ko": "성인 도메인 DNS 필터링이 활성화되었습니다. 일반적인 탐색은 직접적으로 유지됩니다.",
+        "zh-Hans": "成人域 DNS 过滤处于活动状态。正常浏览保持直接。"
+      }
+    },
+    {
+      "source": "FREED recovery interventions",
+      "translations": {
+        "hi": "FREED पुनर्प्राप्ति हस्तक्षेप",
+        "es": "Intervenciones de recuperación FREED",
+        "pt": "Intervenções de recuperação FREED",
+        "fr": "Interventions de récupération FREED",
+        "de": "FREED-Wiederherstellungseingriffe",
+        "ar": "تدخلات استرداد FREED",
+        "ja": "FREED 回復介入",
+        "ko": "FREED 복구 개입",
+        "zh-Hans": "FREED 恢复干预"
+      }
+    },
+    {
+      "source": "FREED blocked a high-risk browser moment",
+      "translations": {
+        "hi": "FREED ने एक उच्च जोखिम वाले ब्राउज़र क्षण को अवरुद्ध कर दिया",
+        "es": "FREED bloqueó un momento de navegador de alto riesgo",
+        "pt": "FREED bloqueou um momento de navegador de alto risco",
+        "fr": "FREED a bloqué un moment de navigateur à haut risque",
+        "de": "FREED hat einen Browser-Moment mit hohem Risiko blockiert",
+        "ar": "قام FREED بحظر لحظة المتصفح عالية الخطورة",
+        "ja": "FREED はブラウザーの危険性の高い瞬間をブロックしました",
+        "ko": "FREED는 위험도가 높은 브라우저 순간을 차단했습니다.",
+        "zh-Hans": "FREED 阻止了高风险浏览器时刻"
+      }
+    },
+    {
+      "source": "FREED opened a recovery challenge",
+      "translations": {
+        "hi": "FREED ने एक पुनर्प्राप्ति चुनौती खोली",
+        "es": "FREED abrió un desafío de recuperación",
+        "pt": "FREED abriu um desafio de recuperação",
+        "fr": "FREED a ouvert un défi de récupération",
+        "de": "FREED hat eine Wiederherstellungsherausforderung geöffnet",
+        "ar": "فتح FREED تحديًا للاسترداد",
+        "ja": "FREED が回復チャレンジを開始しました",
+        "ko": "FREED가 복구 챌린지를 열었습니다.",
+        "zh-Hans": "FREED开启恢复挑战"
+      }
+    },
+    {
+      "source": "Shows when FREED redirects a supported browser, WebView, or selected app into a recovery challenge.",
+      "translations": {
+        "hi": "दिखाता है कि जब FREED किसी समर्थित ब्राउज़र, वेबव्यू, या चयनित ऐप को पुनर्प्राप्ति चुनौती में रीडायरेक्ट करता है।",
+        "es": "Muestra cuando FREED redirige un navegador compatible, WebView o una aplicación seleccionada a un desafío de recuperación.",
+        "pt": "Mostra quando o FREED redireciona um navegador compatível, WebView ou aplicativo selecionado para um desafio de recuperação.",
+        "fr": "S'affiche lorsque FREED redirige un navigateur, WebView ou une application sélectionnée pris en charge vers un défi de récupération.",
+        "de": "Wird angezeigt, wenn FREED einen unterstützten Browser, WebView oder eine ausgewählte App in eine Wiederherstellungsherausforderung umleitet.",
+        "ar": "يظهر عندما يقوم FREED بإعادة توجيه متصفح مدعوم أو WebView أو تطبيق محدد إلى تحدي الاسترداد.",
+        "ja": "FREED がサポートされているブラウザ、WebView、または選択したアプリをリカバリ チャレンジにリダイレクトするタイミングを示します。",
+        "ko": "FREED가 지원되는 브라우저, WebView 또는 선택한 앱을 복구 문제로 리디렉션하는 경우를 표시합니다.",
+        "zh-Hans": "显示 FREED 何时将受支持的浏览器、WebView 或选定的应用程序重定向到恢复挑战。"
+      }
+    },
+    {
+      "source": "Open FREED to complete a recovery challenge. No overlays, screenshots, or OCR are used.",
+      "translations": {
+        "hi": "पुनर्प्राप्ति चुनौती को पूरा करने के लिए FREED खोलें। कोई ओवरले, स्क्रीनशॉट या ओसीआर का उपयोग नहीं किया जाता है।",
+        "es": "Abra FREED para completar un desafío de recuperación. No se utilizan superposiciones, capturas de pantalla ni OCR.",
+        "pt": "Abra o FREED para completar um desafio de recuperação. Nenhuma sobreposição, captura de tela ou OCR é usada.",
+        "fr": "Ouvrez FREED pour relever un défi de récupération. Aucune superposition, capture d'écran ou OCR n'est utilisée.",
+        "de": "Öffnen Sie FREED, um eine Wiederherstellungsherausforderung abzuschließen. Es werden keine Overlays, Screenshots oder OCR verwendet.",
+        "ar": "افتح FREED لإكمال تحدي الاسترداد. لا يتم استخدام أي تراكبات أو لقطات شاشة أو التعرف الضوئي على الحروف.",
+        "ja": "FREED を開いて回復チャレンジを完了します。オーバーレイ、スクリーンショット、OCR は使用されません。",
+        "ko": "FREED를 열어 복구 과제를 완료하세요. 오버레이, 스크린샷 또는 OCR은 사용되지 않습니다.",
+        "zh-Hans": "打开 FREED 完成恢复挑战。不使用叠加、屏幕截图或 OCR。"
+      }
+    },
+    {
+      "source": "Source: {{host}}",
+      "translations": {
+        "hi": "स्रोत: {{host}}",
+        "es": "Fuente: {{host}}",
+        "pt": "Fonte: {{host}}",
+        "fr": "Source : {{host}}",
+        "de": "Quelle: {{host}}",
+        "ar": "المصدر: {{host}}",
+        "ja": "出典: {{host}}",
+        "ko": "출처: {{host}}",
+        "zh-Hans": "来源：{{host}}"
+      }
+    },
+    {
+      "source": "Shows when FREED blocks an adult-domain DNS request and a recovery challenge is ready.",
+      "translations": {
+        "hi": "दिखाता है कि जब FREED एक वयस्क-डोमेन DNS अनुरोध को ब्लॉक करता है और एक पुनर्प्राप्ति चुनौती तैयार होती है।",
+        "es": "Muestra cuando FREED bloquea una solicitud de DNS de dominio para adultos y un desafío de recuperación está listo.",
+        "pt": "Mostra quando o FREED bloqueia uma solicitação DNS de domínio adulto e um desafio de recuperação está pronto.",
+        "fr": "S'affiche lorsque FREED bloque une requête DNS de domaine adulte et qu'un défi de récupération est prêt.",
+        "de": "Wird angezeigt, wenn FREED eine DNS-Anfrage für eine Erwachsenendomäne blockiert und eine Wiederherstellungsherausforderung bereit ist.",
+        "ar": "يظهر عندما يقوم FREED بحظر طلب DNS الخاص بمجال البالغين ويكون تحدي الاسترداد جاهزًا.",
+        "ja": "FREED がアダルト ドメインの DNS 要求をブロックし、回復チャレンジの準備ができていることを示します。",
+        "ko": "FREED가 성인 도메인 DNS 요청을 차단하고 복구 챌린지가 준비되면 표시됩니다.",
+        "zh-Hans": "显示 FREED 何时阻止成人域 DNS 请求并且恢复质询已准备就绪。"
+      }
+    },
+    {
+      "source": "Open FREED to complete a recovery challenge. Normal browsing stays direct.",
+      "translations": {
+        "hi": "पुनर्प्राप्ति चुनौती को पूरा करने के लिए FREED खोलें। सामान्य ब्राउज़िंग प्रत्यक्ष रहती है.",
+        "es": "Abra FREED para completar un desafío de recuperación. La navegación normal sigue siendo directa.",
+        "pt": "Abra o FREED para completar um desafio de recuperação. A navegação normal permanece direta.",
+        "fr": "Ouvrez FREED pour relever un défi de récupération. La navigation normale reste directe.",
+        "de": "Öffnen Sie FREED, um eine Wiederherstellungsherausforderung abzuschließen. Das normale Surfen bleibt direkt.",
+        "ar": "افتح FREED لإكمال تحدي الاسترداد. التصفح العادي يبقى مباشرا.",
+        "ja": "FREED を開いて回復チャレンジを完了します。通常のブラウジングはダイレクトのままです。",
+        "ko": "FREED를 열어 복구 과제를 완료하세요. 일반적인 탐색은 직접적으로 유지됩니다.",
+        "zh-Hans": "打开 FREED 完成恢复挑战。正常浏览保持直接。"
+      }
+    },
+    {
+      "source": "Hold on — your streak is worth protecting",
+      "translations": {
+        "hi": "रुको - आपकी लकीर सुरक्षा के लायक है",
+        "es": "Espera, vale la pena proteger tu racha",
+        "pt": "Espere aí – vale a pena proteger sua sequência",
+        "fr": "Attendez, votre séquence mérite d'être protégée",
+        "de": "Halten Sie durch – Ihre Streak ist es wert, beschützt zu werden",
+        "ar": "انتظر - خطك يستحق الحماية",
+        "ja": "ちょっと待ってください – あなたの記録は守る価値があります",
+        "ko": "잠깐만요 - 연속 기록은 보호할 가치가 있습니다",
+        "zh-Hans": "坚持住——你的连胜值得保护"
+      }
+    },
+    {
+      "source": "Blocked host: {{host}}",
+      "translations": {
+        "hi": "अवरुद्ध होस्ट: {{host}}",
+        "es": "Host bloqueado: {{host}}",
+        "pt": "Host bloqueado: {{host}}",
+        "fr": "Hôte bloqué : {{host}}",
+        "de": "Blockierter Host: {{host}}",
+        "ar": "المضيف المحظور: {{host}}",
+        "ja": "ブロックされたホスト: {{host}}",
+        "ko": "차단된 호스트: {{host}}",
+        "zh-Hans": "被阻止的主机：{{host}}"
+      }
+    },
+    {
+      "source": "FREED PROTECTION",
+      "translations": {
+        "hi": "FREED सुरक्षा",
+        "es": "PROTECCIÓN FREED",
+        "pt": "PROTEÇÃO FREED",
+        "fr": "PROTECTION FREED",
+        "de": "FREED-SCHUTZ",
+        "ar": "حماية FREED",
+        "ja": "FREED 保護",
+        "ko": "FREED 보호",
+        "zh-Hans": "FREED 保护"
+      }
+    },
+    {
+      "source": "Hold on. You are still in control.",
+      "translations": {
+        "hi": "रुको. आप अभी भी नियंत्रण में हैं.",
+        "es": "Esperar. Todavía tienes el control.",
+        "pt": "Espere. Você ainda está no controle.",
+        "fr": "Attendez. Vous avez toujours le contrôle.",
+        "de": "Warte. Sie haben immer noch die Kontrolle.",
+        "ar": "يتمسك. أنت لا تزال في السيطرة.",
+        "ja": "持続する。あなたはまだコントロールできます。",
+        "ko": "잠깐만요. 당신은 여전히 ​​​​통제권을 가지고 있습니다.",
+        "zh-Hans": "坚持，稍等。您仍然掌控一切。"
+      }
+    },
+    {
+      "source": "FREED noticed a high-risk moment and is opening a recovery reset now.",
+      "translations": {
+        "hi": "FREED ने एक उच्च जोखिम वाला क्षण देखा और अब एक पुनर्प्राप्ति रीसेट खोल रहा है।",
+        "es": "FREED notó un momento de alto riesgo y ahora está abriendo un reinicio de recuperación.",
+        "pt": "FREED percebeu um momento de alto risco e está abrindo uma redefinição de recuperação agora.",
+        "fr": "FREED a remarqué un moment à haut risque et ouvre maintenant une réinitialisation de récupération.",
+        "de": "FREED hat einen Moment mit hohem Risiko bemerkt und leitet jetzt einen Wiederherstellungs-Reset ein.",
+        "ar": "لاحظ FREED لحظة عالية الخطورة ويفتح الآن عملية إعادة ضبط الاسترداد.",
+        "ja": "FREED は危険性の高い瞬間に気づき、現在回復リセットを開始しています。",
+        "ko": "FREED는 위험도가 높은 순간을 발견했으며 현재 복구 재설정을 시작 중입니다.",
+        "zh-Hans": "FREED 注意到一个高风险时刻，现在正在打开恢复重置。"
+      }
+    },
+    {
+      "source": "Breathe in. Breathe out.",
+      "translations": {
+        "hi": "साँस अंदर लें। साँस छोड़ें।",
+        "es": "Inhale. Exhale.",
+        "pt": "Inspire. Expire.",
+        "fr": "Inspirez. Expirez.",
+        "de": "Einatmen. Ausatmen.",
+        "ar": "تنفس للداخل. ازفر.",
+        "ja": "息を吸って、吐いてください。",
+        "ko": "숨을들이 쉬십시오. 숨을 내쉬십시오.",
+        "zh-Hans": "吸气。呼气。"
+      }
+    },
+    {
+      "source": "Start recovery",
+      "translations": {
+        "hi": "पुनर्प्राप्ति प्रारंभ करें",
+        "es": "Iniciar recuperación",
+        "pt": "Iniciar recuperação",
+        "fr": "Démarrer la récupération",
+        "de": "Starten Sie die Wiederherstellung",
+        "ar": "ابدأ عملية الاسترداد",
+        "ja": "リカバリの開始",
+        "ko": "복구 시작",
+        "zh-Hans": "开始恢复"
+      }
+    },
+    {
+      "source": "FREED USAGE ACCESS",
+      "translations": {
+        "hi": "FREED उपयोग पहुंच",
+        "es": "ACCESO USO FREED",
+        "pt": "ACESSO DE USO FREED",
+        "fr": "FREED ACCÈS À L'UTILISATION",
+        "de": "FREED NUTZUNGSZUGRIFF",
+        "ar": "الوصول إلى الاستخدام FREED",
+        "ja": "FREED 使用法アクセス",
+        "ko": "FREED 사용 액세스",
+        "zh-Hans": "FREED 使用访问"
+      }
+    },
+    {
+      "source": "Usage Access stays limited to app timers.",
+      "translations": {
+        "hi": "उपयोग की पहुंच ऐप टाइमर तक ही सीमित रहती है।",
+        "es": "El acceso al uso permanece limitado a los temporizadores de las aplicaciones.",
+        "pt": "O acesso de uso permanece limitado aos temporizadores do aplicativo.",
+        "fr": "L'accès à l'utilisation reste limité aux minuteries d'application.",
+        "de": "Der Nutzungszugriff bleibt auf App-Timer beschränkt.",
+        "ar": "يظل الوصول إلى الاستخدام مقتصراً على مؤقتات التطبيق.",
+        "ja": "使用状況へのアクセスはアプリのタイマーに限定されます。",
+        "ko": "사용 액세스는 앱 타이머로 제한됩니다.",
+        "zh-Hans": "使用访问权限仅限于应用程序计时器。"
+      }
+    },
+    {
+      "source": "Usage Access is controlled by Android Settings. After enabling FREED, return to setup so the activation test can verify protection.",
+      "translations": {
+        "hi": "उपयोग एक्सेस को Android सेटिंग्स द्वारा नियंत्रित किया जाता है। FREED को सक्षम करने के बाद, सेटअप पर वापस लौटें ताकि सक्रियण परीक्षण सुरक्षा को सत्यापित कर सके।",
+        "es": "El acceso al uso está controlado por la configuración de Android. Después de habilitar FREED, regrese a la configuración para que la prueba de activación pueda verificar la protección.",
+        "pt": "O acesso de uso é controlado pelas configurações do Android. Após habilitar o FREED, retorne ao setup para que o teste de ativação possa verificar a proteção.",
+        "fr": "L'accès à l'utilisation est contrôlé par les paramètres Android. Après avoir activé FREED, revenez à la configuration afin que le test d'activation puisse vérifier la protection.",
+        "de": "Der Nutzungszugriff wird durch die Android-Einstellungen gesteuert. Kehren Sie nach der Aktivierung von FREED zum Setup zurück, damit der Aktivierungstest den Schutz überprüfen kann.",
+        "ar": "يتم التحكم في الوصول إلى الاستخدام من خلال إعدادات Android. بعد تمكين FREED، قم بالعودة إلى الإعداد حتى يتمكن اختبار التنشيط من التحقق من الحماية.",
+        "ja": "使用法 アクセスは Android 設定によって制御されます。 FREED を有効にした後、セットアップに戻り、アクティベーション テストで保護を検証できるようにします。",
+        "ko": "사용 액세스는 Android 설정에 의해 제어됩니다. FREED를 활성화한 후 활성화 테스트를 통해 보호를 확인할 수 있도록 설정으로 돌아갑니다.",
+        "zh-Hans": "使用访问由 Android 设置控制。启用 FREED 后，返回设置，以便激活测试可以验证保护。"
+      }
+    },
+    {
+      "source": "Return to FREED setup",
+      "translations": {
+        "hi": "FREED सेटअप पर वापस लौटें",
+        "es": "Volver a la configuración de FREED",
+        "pt": "Retornar à configuração do FREED",
+        "fr": "Revenir à la configuration FREED",
+        "de": "Kehren Sie zum FREED-Setup zurück",
+        "ar": "ارجع إلى إعداد FREED",
+        "ja": "FREED セットアップに戻る",
+        "ko": "FREED 설정으로 돌아가기",
+        "zh-Hans": "返回 FREED 设置"
+      }
+    },
+    {
+      "source": "Back to Android Settings",
+      "translations": {
+        "hi": "Android सेटिंग्स पर वापस जाएँ",
+        "es": "Volver a la configuración de Android",
+        "pt": "Voltar para configurações do Android",
+        "fr": "Retour aux paramètres Android",
+        "de": "Zurück zu den Android-Einstellungen",
+        "ar": "العودة إلى إعدادات Android",
+        "ja": "Android 設定に戻る",
+        "ko": "Android 설정으로 돌아가기",
+        "zh-Hans": "返回 Android 设置"
+      }
+    },
+    {
+      "source": "Tap the surface to calibrate. Only its stable view fingerprint stays on this device.",
+      "translations": {
+        "hi": "अंशांकन करने के लिए सतह पर टैप करें। इस डिवाइस पर केवल इसका स्टेबल व्यू फिंगरप्रिंट ही रहता है।",
+        "es": "Toque la superficie para calibrar. Sólo su huella digital de vista estable permanece en este dispositivo.",
+        "pt": "Toque na superfície para calibrar. Apenas a impressão digital de visualização estável permanece neste dispositivo.",
+        "fr": "Appuyez sur la surface pour calibrer. Seule son empreinte digitale stable reste sur cet appareil.",
+        "de": "Tippen Sie zum Kalibrieren auf die Oberfläche. Auf diesem Gerät verbleibt lediglich der Stable-View-Fingerabdruck.",
+        "ar": "اضغط على السطح للمعايرة. تبقى بصمة العرض الثابتة فقط على هذا الجهاز.",
+        "ja": "表面をタップして調整します。このデバイスには、安定したビューのフィンガープリントのみが残ります。",
+        "ko": "보정할 표면을 탭하세요. 안정적인 보기 지문만 이 장치에 유지됩니다.",
+        "zh-Hans": "点击表面进行校准。该设备上仅保留其稳定的视图指纹。"
+      }
+    },
+    {
+      "source": "Stable local selector found. Confirm to save it, or cancel to discard it.",
+      "translations": {
+        "hi": "स्थिर स्थानीय चयनकर्ता मिला. इसे सहेजने की पुष्टि करें, या इसे त्यागने के लिए रद्द करें।",
+        "es": "Se encontró un selector local estable. Confirma para guardarlo o cancela para descartarlo.",
+        "pt": "Seletor local estável encontrado. Confirme para salvá-lo ou cancele para descartá-lo.",
+        "fr": "Sélecteur local stable trouvé. Confirmez pour l'enregistrer ou annulez pour le supprimer.",
+        "de": "Stabiler lokaler Selektor gefunden. Bestätigen Sie, um es zu speichern, oder brechen Sie ab, um es zu verwerfen.",
+        "ar": "تم العثور على محدد محلي ثابت. أكد لحفظه، أو قم بالإلغاء لتجاهله.",
+        "ja": "安定したローカル セレクターが見つかりました。確認して保存するか、キャンセルして破棄します。",
+        "ko": "안정적인 로컬 선택기를 찾았습니다. 저장하려면 확인하고, 삭제하려면 취소하세요.",
+        "zh-Hans": "找到稳定的本地选择器。确认保存它，或取消放弃它。"
+      }
+    },
+    {
+      "source": "Cancel",
+      "translations": {
+        "hi": "रद्द करें",
+        "es": "Cancelar",
+        "pt": "Cancelar",
+        "fr": "Annuler",
+        "de": "Abbrechen",
+        "ar": "إلغاء",
+        "ja": "キャンセル",
+        "ko": "취소",
+        "zh-Hans": "取消"
+      }
+    },
+    {
+      "source": "Confirm",
+      "translations": {
+        "hi": "पुष्टि करना",
+        "es": "Confirmar",
+        "pt": "Confirmar",
+        "fr": "Confirmer",
+        "de": "Bestätigen",
+        "ar": "يتأكد",
+        "ja": "確認する",
+        "ko": "확인하다",
+        "zh-Hans": "确认"
+      }
+    },
+    {
+      "source": "A stable selector is highlighted and waiting for explicit confirmation.",
+      "translations": {
+        "hi": "एक स्थिर चयनकर्ता हाइलाइट किया गया है और स्पष्ट पुष्टि की प्रतीक्षा कर रहा है।",
+        "es": "Se resalta un selector estable y se espera una confirmación explícita.",
+        "pt": "Um seletor estável é destacado e aguarda confirmação explícita.",
+        "fr": "Un sélecteur stable est mis en surbrillance et attend une confirmation explicite.",
+        "de": "Ein stabiler Selektor ist hervorgehoben und wartet auf eine explizite Bestätigung.",
+        "ar": "يتم تمييز محدد ثابت وينتظر تأكيدًا صريحًا.",
+        "ja": "安定したセレクターが強調表示され、明示的な確認を待機しています。",
+        "ko": "안정적인 선택기가 강조 표시되고 명시적인 확인을 기다리고 있습니다.",
+        "zh-Hans": "稳定的选择器会突出显示并等待明确的确认。"
+      }
+    },
+    {
+      "source": "Accessibility permission was revoked, so calibration stopped and no selector was stored.",
+      "translations": {
+        "hi": "अभिगम्यता अनुमति रद्द कर दी गई, इसलिए अंशांकन रुक गया और कोई चयनकर्ता संग्रहीत नहीं किया गया।",
+        "es": "Se revocó el permiso de accesibilidad, por lo que se detuvo la calibración y no se almacenó ningún selector.",
+        "pt": "A permissão de acessibilidade foi revogada, portanto a calibração foi interrompida e nenhum seletor foi armazenado.",
+        "fr": "L'autorisation d'accessibilité a été révoquée, le calibrage s'est donc arrêté et aucun sélecteur n'a été stocké.",
+        "de": "Die Zugriffsberechtigung wurde widerrufen, daher wurde die Kalibrierung gestoppt und kein Selektor gespeichert.",
+        "ar": "تم إبطال إذن الوصول، لذلك توقفت المعايرة ولم يتم تخزين أي محدد.",
+        "ja": "アクセシビリティ権限が取り消されたため、キャリブレーションは停止し、セレクターは保存されませんでした。",
+        "ko": "접근성 권한이 취소되어 보정이 중지되었으며 선택기가 저장되지 않았습니다.",
+        "zh-Hans": "辅助功能权限已被撤销，因此校准停止并且没有存储选择器。"
+      }
+    },
+    {
+      "source": "Accessibility service stopped, so calibration ended and no selector was stored.",
+      "translations": {
+        "hi": "अभिगम्यता सेवा बंद हो गई, इसलिए अंशांकन समाप्त हो गया और कोई चयनकर्ता संग्रहीत नहीं किया गया।",
+        "es": "El servicio de accesibilidad se detuvo, por lo que finalizó la calibración y no se almacenó ningún selector.",
+        "pt": "O serviço de acessibilidade foi interrompido, a calibração terminou e nenhum seletor foi armazenado.",
+        "fr": "Le service d'accessibilité s'est arrêté, donc l'étalonnage s'est terminé et aucun sélecteur n'a été stocké.",
+        "de": "Der Barrierefreiheitsdienst wurde gestoppt, daher wurde die Kalibrierung beendet und es wurde kein Selektor gespeichert.",
+        "ar": "توقفت خدمة إمكانية الوصول، وبالتالي انتهت المعايرة ولم يتم تخزين أي محدد.",
+        "ja": "ユーザー補助サービスが停止したため、調整は終了し、セレクターは保存されませんでした。",
+        "ko": "접근성 서비스가 중지되어 보정이 종료되었으며 선택기가 저장되지 않았습니다.",
+        "zh-Hans": "辅助功能服务停止，因此校准结束并且没有存储选择器。"
+      }
+    },
+    {
+      "source": "Accessibility service was interrupted, so calibration stopped and no selector was stored.",
+      "translations": {
+        "hi": "अभिगम्यता सेवा बाधित हो गई थी, इसलिए अंशांकन रुक गया और कोई चयनकर्ता संग्रहीत नहीं किया गया।",
+        "es": "El servicio de accesibilidad se interrumpió, por lo que la calibración se detuvo y no se almacenó ningún selector.",
+        "pt": "O serviço de acessibilidade foi interrompido, portanto a calibração foi interrompida e nenhum seletor foi armazenado.",
+        "fr": "Le service d'accessibilité a été interrompu, donc l'étalonnage s'est arrêté et aucun sélecteur n'a été stocké.",
+        "de": "Der Barrierefreiheitsdienst wurde unterbrochen, daher wurde die Kalibrierung gestoppt und kein Selektor gespeichert.",
+        "ar": "تمت مقاطعة خدمة الوصول، لذلك توقفت المعايرة ولم يتم تخزين أي محدد.",
+        "ja": "アクセシビリティ サービスが中断されたため、調整は停止し、セレクターは保存されませんでした。",
+        "ko": "접근성 서비스가 중단되어 보정이 중지되었으며 선택기가 저장되지 않았습니다.",
+        "zh-Hans": "辅助服务被中断，因此校准停止并且没有存储选择器。"
+      }
+    },
+    {
+      "source": "Calibrated surface",
+      "translations": {
+        "hi": "कैलिब्रेटेड सतह",
+        "es": "Superficie calibrada",
+        "pt": "Superfície calibrada",
+        "fr": "Surface calibrée",
+        "de": "Kalibrierte Oberfläche",
+        "ar": "سطح معايرة",
+        "ja": "校正された表面",
+        "ko": "교정된 표면",
+        "zh-Hans": "校准表面"
+      }
+    },
+    {
+      "source": "Calibration stopped because the selected app was left. No selector was stored.",
+      "translations": {
+        "hi": "चयनित ऐप छोड़ दिए जाने के कारण अंशांकन रुक गया। कोई चयनकर्ता संग्रहीत नहीं किया गया था.",
+        "es": "La calibración se detuvo porque se abandonó la aplicación seleccionada. No se almacenó ningún selector.",
+        "pt": "A calibração foi interrompida porque o aplicativo selecionado foi abandonado. Nenhum seletor foi armazenado.",
+        "fr": "L'étalonnage s'est arrêté car l'application sélectionnée a été quittée. Aucun sélecteur n'a été stocké.",
+        "de": "Die Kalibrierung wurde gestoppt, da die ausgewählte App verlassen wurde. Es wurde kein Selektor gespeichert.",
+        "ar": "توقفت المعايرة بسبب ترك التطبيق المحدد. لم يتم تخزين أي محدد.",
+        "ja": "選択したアプリが残っているため、キャリブレーションが停止しました。セレクターが保存されていませんでした。",
+        "ko": "선택한 앱이 남아있어 보정이 중지되었습니다. 저장된 선택기가 없습니다.",
+        "zh-Hans": "由于选定的应用程序已离开，校准停止。没有存储选择器。"
+      }
+    },
+    {
+      "source": "Calibration timed out after five minutes. No selector was stored; retry or choose a vetted preset.",
+      "translations": {
+        "hi": "पाँच मिनट के बाद अंशांकन का समय समाप्त हो गया। कोई चयनकर्ता संग्रहीत नहीं किया गया था; पुनः प्रयास करें या सत्यापित प्रीसेट चुनें।",
+        "es": "La calibración expiró después de cinco minutos. No se almacenó ningún selector; Vuelva a intentarlo o elija un ajuste preestablecido examinado.",
+        "pt": "A calibração expirou após cinco minutos. Nenhum seletor foi armazenado; tente novamente ou escolha uma predefinição verificada.",
+        "fr": "Le calibrage a expiré au bout de cinq minutes. Aucun sélecteur n'a été stocké ; réessayez ou choisissez un préréglage vérifié.",
+        "de": "Die Kalibrierung ist nach fünf Minuten abgelaufen. Es wurde kein Selektor gespeichert; Versuchen Sie es erneut oder wählen Sie eine überprüfte Voreinstellung.",
+        "ar": "انتهت مهلة المعايرة بعد خمس دقائق. لم يتم تخزين أي محدد؛ أعد المحاولة أو اختر إعدادًا مسبقًا تم فحصه.",
+        "ja": "キャリブレーションは 5 分後にタイムアウトしました。セレクターは保存されていませんでした。再試行するか、精査されたプリセットを選択してください。",
+        "ko": "5분 후에 교정 시간이 초과되었습니다. 선택기가 저장되지 않았습니다. 다시 시도하거나 검증된 사전 설정을 선택하세요.",
+        "zh-Hans": "五分钟后校准超时。没有存储选择器；重试或选择经过审查的预设。"
+      }
+    },
+    {
+      "source": "Configured app limit reached. FREED is opening an earned-reset challenge.",
+      "translations": {
+        "hi": "कॉन्फ़िगर की गई ऐप की सीमा पूरी हो गई. FREED एक अर्जित-रीसेट चुनौती खोल रहा है।",
+        "es": "Se alcanzó el límite de aplicaciones configuradas. FREED está abriendo un desafío de reinicio ganado.",
+        "pt": "Limite de aplicativos configurados atingido. FREED está abrindo um desafio de redefinição conquistada.",
+        "fr": "Limite d'application configurée atteinte. FREED ouvre un défi de réinitialisation méritée.",
+        "de": "Konfiguriertes App-Limit erreicht. FREED eröffnet eine Herausforderung zum verdienten Zurücksetzen.",
+        "ar": "تم الوصول إلى الحد الأقصى للتطبيق الذي تم تكوينه. يفتح FREED تحديًا لإعادة التعيين المكتسب.",
+        "ja": "設定されたアプリの制限に達しました。 FREED がアーンドリセットチャレンジを開始します。",
+        "ko": "구성된 앱 한도에 도달했습니다. FREED가 획득 재설정 챌린지를 시작합니다.",
+        "zh-Hans": "已达到配置的应用程序限制。 FREED 正在开启赢得重置挑战。"
+      }
+    },
+    {
+      "source": "Earned unlock expired. FREED is relocking the selected app.",
+      "translations": {
+        "hi": "अर्जित अनलॉक समाप्त हो गया. FREED चयनित ऐप को पुनः लॉक कर रहा है।",
+        "es": "El desbloqueo obtenido expiró. FREED está volviendo a bloquear la aplicación seleccionada.",
+        "pt": "O desbloqueio ganho expirou. FREED está bloqueando novamente o aplicativo selecionado.",
+        "fr": "Le déverrouillage gagné a expiré. FREED reverrouille l'application sélectionnée.",
+        "de": "Die verdiente Freischaltung ist abgelaufen. FREED sperrt die ausgewählte App erneut.",
+        "ar": "انتهت صلاحية فتح القفل المكتسب. يقوم FREED بإعادة تشغيل التطبيق المحدد.",
+        "ja": "獲得したロック解除の有効期限が切れました。 FREED は選択したアプリを再ロックしています。",
+        "ko": "획득한 잠금 해제가 만료되었습니다. FREED가 선택한 앱을 다시 잠그는 중입니다.",
+        "zh-Hans": "获得的解锁已过期。 FREED 正在重新锁定所选应用程序。"
+      }
+    },
+    {
+      "source": "Enable FREED Accessibility protection before starting calibration.",
+      "translations": {
+        "hi": "अंशांकन प्रारंभ करने से पहले FREED अभिगम्यता सुरक्षा सक्षम करें।",
+        "es": "Habilite la protección de accesibilidad FREED antes de iniciar la calibración.",
+        "pt": "Ative a proteção de acessibilidade do FREED antes de iniciar a calibração.",
+        "fr": "Activez la protection d’accessibilité FREED avant de commencer l’étalonnage.",
+        "de": "Aktivieren Sie den Barrierefreiheitsschutz FREED, bevor Sie mit der Kalibrierung beginnen.",
+        "ar": "قم بتمكين حماية إمكانية الوصول FREED قبل بدء المعايرة.",
+        "ja": "キャリブレーションを開始する前に、FREED アクセシビリティ保護を有効にします。",
+        "ko": "교정을 시작하기 전에 FREED 접근성 보호를 활성화하십시오.",
+        "zh-Hans": "开始校准之前启用 FREED 可访问性保护。"
+      }
+    },
+    {
+      "source": "Focus Shield calibration is not running.",
+      "translations": {
+        "hi": "Focus Shield अंशांकन नहीं चल रहा है।",
+        "es": "La calibración Focus Shield no se está ejecutando.",
+        "pt": "A calibração do Focus Shield não está em execução.",
+        "fr": "L'étalonnage Focus Shield n'est pas en cours d'exécution.",
+        "de": "Die Focus Shield-Kalibrierung läuft nicht.",
+        "ar": "معايرة Focus Shield لا تعمل.",
+        "ja": "Focus Shield キャリブレーションが実行されていません。",
+        "ko": "Focus Shield 교정이 실행되고 있지 않습니다.",
+        "zh-Hans": "Focus Shield 校准未运行。"
+      }
+    },
+    {
+      "source": "Focus Shield calibration needs a valid local rule ID and Android package.",
+      "translations": {
+        "hi": "Focus Shield अंशांकन के लिए एक वैध स्थानीय नियम आईडी और Android पैकेज की आवश्यकता होती है।",
+        "es": "La calibración Focus Shield necesita una ID de regla local válida y un paquete Android.",
+        "pt": "A calibração do Focus Shield precisa de um ID de regra local válido e de um pacote Android.",
+        "fr": "L’étalonnage Focus Shield nécessite un ID de règle locale valide et un package Android.",
+        "de": "Für die Focus Shield-Kalibrierung sind eine gültige lokale Regel-ID und ein Android-Paket erforderlich.",
+        "ar": "تحتاج معايرة Focus Shield إلى معرف قاعدة محلية صالحة وحزمة Android.",
+        "ja": "Focus Shield キャリブレーションには、有効なローカル ルール ID と Android パッケージが必要です。",
+        "ko": "Focus Shield 보정에는 유효한 로컬 규칙 ID와 Android 패키지가 필요합니다.",
+        "zh-Hans": "Focus Shield 校准需要有效的本地规则 ID 和 Android 包。"
+      }
+    },
+    {
+      "source": "Focus Shield calibration was cancelled.",
+      "translations": {
+        "hi": "Focus Shield अंशांकन रद्द कर दिया गया।",
+        "es": "Se canceló la calibración de Focus Shield.",
+        "pt": "A calibração do Focus Shield foi cancelada.",
+        "fr": "L'étalonnage Focus Shield a été annulé.",
+        "de": "Die Focus Shield-Kalibrierung wurde abgebrochen.",
+        "ar": "تم إلغاء معايرة Focus Shield.",
+        "ja": "Focus Shield キャリブレーションがキャンセルされました。",
+        "ko": "Focus Shield 보정이 취소되었습니다.",
+        "zh-Hans": "Focus Shield 校准已取消。"
+      }
+    },
+    {
+      "source": "Focus Shield calibration was cancelled. No selector was stored.",
+      "translations": {
+        "hi": "Focus Shield अंशांकन रद्द कर दिया गया। कोई चयनकर्ता संग्रहीत नहीं किया गया था.",
+        "es": "Se canceló la calibración de Focus Shield. No se almacenó ningún selector.",
+        "pt": "A calibração do Focus Shield foi cancelada. Nenhum seletor foi armazenado.",
+        "fr": "L'étalonnage Focus Shield a été annulé. Aucun sélecteur n'a été stocké.",
+        "de": "Die Focus Shield-Kalibrierung wurde abgebrochen. Es wurde kein Selektor gespeichert.",
+        "ar": "تم إلغاء معايرة Focus Shield. لم يتم تخزين أي محدد.",
+        "ja": "Focus Shield キャリブレーションがキャンセルされました。セレクターが保存されていませんでした。",
+        "ko": "Focus Shield 보정이 취소되었습니다. 저장된 선택기가 없습니다.",
+        "zh-Hans": "Focus Shield 校准已取消。没有存储选择器。"
+      }
+    },
+    {
+      "source": "Focus Shield matched a configured surface rule. FREED is opening an earned-reset challenge.",
+      "translations": {
+        "hi": "Focus Shield एक कॉन्फ़िगर सतह नियम से मेल खाता है। FREED एक अर्जित-रीसेट चुनौती खोल रहा है।",
+        "es": "Focus Shield coincidió con una regla de superficie configurada. FREED está abriendo un desafío de reinicio ganado.",
+        "pt": "Focus Shield correspondeu a uma regra de superfície configurada. FREED está abrindo um desafio de redefinição conquistada.",
+        "fr": "Focus Shield correspond à une règle de surface configurée. FREED ouvre un défi de réinitialisation gagnée.",
+        "de": "Focus Shield stimmte mit einer konfigurierten Oberflächenregel überein. FREED eröffnet eine Herausforderung zum verdienten Zurücksetzen.",
+        "ar": "تطابق Focus Shield مع قاعدة سطحية تم تكوينها. يفتح FREED تحديًا لإعادة التعيين المكتسب.",
+        "ja": "Focus Shield は、設定されたサーフェス ルールと一致しました。 FREED はアーンド リセット チャレンジを開始しています。",
+        "ko": "Focus Shield가 구성된 표면 규칙과 일치했습니다. FREED 획득 재설정 챌린지를 시작합니다.",
+        "zh-Hans": "Focus Shield 与配置的表面规则匹配。 FREED 正在开启赢得重置挑战。"
+      }
+    },
+    {
+      "source": "Open the selected app, then tap the temporary FREED edge handle.",
+      "translations": {
+        "hi": "चयनित ऐप खोलें, फिर अस्थायी FREED एज हैंडल पर टैप करें।",
+        "es": "Abra la aplicación seleccionada, luego toque el controlador de borde temporal FREED.",
+        "pt": "Abra o aplicativo selecionado e toque na alça de borda temporária do FREED.",
+        "fr": "Ouvrez l'application sélectionnée, puis appuyez sur la poignée de bord temporaire FREED.",
+        "de": "Öffnen Sie die ausgewählte App und tippen Sie dann auf den temporären Randgriff FREED.",
+        "ar": "افتح التطبيق المحدد، ثم اضغط على مقبض الحافة المؤقت FREED.",
+        "ja": "選択したアプリを開き、一時的な FREED エッジ ハンドルをタップします。",
+        "ko": "선택한 앱을 연 다음 임시 FREED 엣지 핸들을 탭하세요.",
+        "zh-Hans": "打开选定的应用程序，然后点击临时 FREED 边缘手柄。"
+      }
+    },
+    {
+      "source": "Selector saved locally. Current immediate enforcement remains limited to vetted presets.",
+      "translations": {
+        "hi": "चयनकर्ता स्थानीय रूप से सहेजा गया. वर्तमान तत्काल प्रवर्तन जांचे गए प्रीसेट तक ही सीमित है।",
+        "es": "Selector guardado localmente. La aplicación inmediata actual sigue limitada a ajustes preestablecidos examinados.",
+        "pt": "Seletor salvo localmente. A aplicação imediata atual permanece limitada às predefinições verificadas.",
+        "fr": "Sélecteur enregistré localement. L’application immédiate actuelle reste limitée aux préréglages vérifiés.",
+        "de": "Selektor lokal gespeichert. Die derzeitige sofortige Durchsetzung bleibt auf geprüfte Voreinstellungen beschränkt.",
+        "ar": "تم حفظ المحدد محليًا. يظل التنفيذ الفوري الحالي يقتصر على الإعدادات المسبقة التي تم فحصها.",
+        "ja": "セレクターはローカルに保存されました。現在の即時適用は、引き続き精査されたプリセットに限定されています。",
+        "ko": "선택기가 로컬에 저장되었습니다. 현재의 즉각적인 시행은 심사된 사전 설정으로 제한됩니다.",
+        "zh-Hans": "选择器保存在本地。目前的立即执行仍然仅限于经过审查的预设。"
+      }
+    },
+    {
+      "source": "Sustained short-form session detected. FREED is redirecting to an earned-reset challenge.",
+      "translations": {
+        "hi": "निरंतर लघु-फ़ॉर्म सत्र का पता चला। FREED एक अर्जित-रीसेट चुनौती पर पुनर्निर्देशित कर रहा है।",
+        "es": "Se detectó una sesión sostenida de formato corto. FREED está redireccionando a un desafío de reinicio ganado.",
+        "pt": "Sessão de formato curto sustentada detectada. FREED está redirecionando para um desafio de redefinição conquistada.",
+        "fr": "Session abrégée soutenue détectée. FREED redirige vers un défi de réinitialisation gagnée.",
+        "de": "Andauernde Kurzform-Sitzung erkannt. FREED leitet zu einer verdienten Reset-Challenge weiter.",
+        "ar": "تم اكتشاف جلسة قصيرة الشكل ومستمرة. يقوم FREED بإعادة التوجيه إلى تحدي إعادة التعيين المكتسب.",
+        "ja": "持続的な短い形式のセッションが検出されました。 FREED はアーンド リセット チャレンジにリダイレクトされています。",
+        "ko": "지속되는 짧은 형식의 세션이 감지되었습니다. FREED는 획득 재설정 챌린지로 리디렉션 중입니다.",
+        "zh-Hans": "检测到持续的简短会话。 FREED 正在重定向至赢得重置挑战。"
+      }
+    },
+    {
+      "source": "That target has no allowlisted resource ID, role, and ancestor roles. Retry or choose a vetted preset.",
+      "translations": {
+        "hi": "उस लक्ष्य में कोई अनुमत सूचीबद्ध संसाधन आईडी, भूमिका और पूर्वज भूमिकाएँ नहीं हैं। पुनः प्रयास करें या सत्यापित प्रीसेट चुनें।",
+        "es": "Ese objetivo no tiene ningún ID de recurso, rol ni roles de antepasado incluidos en la lista de permitidos. Vuelva a intentarlo o elija un ajuste preestablecido examinado.",
+        "pt": "Esse destino não tem ID de recurso, função e funções ancestrais na lista de permissões. Tente novamente ou escolha uma predefinição verificada.",
+        "fr": "Cette cible n'a pas d'ID de ressource, de rôle et de rôle d'ancêtre sur liste verte. Réessayez ou choisissez un préréglage vérifié.",
+        "de": "Dieses Ziel hat keine Ressourcen-ID, Rolle und Vorfahrenrollen auf der Zulassungsliste. Versuchen Sie es erneut oder wählen Sie eine überprüfte Voreinstellung.",
+        "ar": "لا يحتوي هذا الهدف على معرف المورد والدور والأدوار الأصلية في القائمة المسموح بها. أعد المحاولة أو اختر إعدادًا مسبقًا تم فحصه.",
+        "ja": "そのターゲットには、ホワイトリストに登録されたリソース ID、ロール、祖先ロールがありません。再試行するか、精査されたプリセットを選択してください。",
+        "ko": "해당 대상에는 허용 목록에 있는 리소스 ID, 역할, 상위 역할이 없습니다. 다시 시도하거나 검증된 사전 설정을 선택하세요.",
+        "zh-Hans": "该目标没有列入许可名单的资源 ID、角色和祖先角色。重试或选择经过审查的预设。"
+      }
+    },
+    {
+      "source": "The active app no longer exposes a usable Accessibility tree. No selector was stored.",
+      "translations": {
+        "hi": "सक्रिय ऐप अब प्रयोग करने योग्य एक्सेसिबिलिटी ट्री को उजागर नहीं करता है। कोई चयनकर्ता संग्रहीत नहीं किया गया था.",
+        "es": "La aplicación activa ya no muestra un árbol de accesibilidad utilizable. No se almacenó ningún selector.",
+        "pt": "O aplicativo ativo não expõe mais uma árvore de acessibilidade utilizável. Nenhum seletor foi armazenado.",
+        "fr": "L'application active n'expose plus d'arborescence d'accessibilité utilisable. Aucun sélecteur n'a été stocké.",
+        "de": "Die aktive App stellt keinen verwendbaren Barrierefreiheitsbaum mehr zur Verfügung. Es wurde kein Selektor gespeichert.",
+        "ar": "لم يعد التطبيق النشط يعرض شجرة إمكانية الوصول القابلة للاستخدام. لم يتم تخزين أي محدد.",
+        "ja": "アクティブなアプリは、使用可能なアクセシビリティ ツリーを公開しなくなります。セレクターが保存されていませんでした。",
+        "ko": "활성 앱은 더 이상 사용 가능한 접근성 트리를 노출하지 않습니다. 저장된 선택기가 없습니다.",
+        "zh-Hans": "活动应用程序不再公开可用的辅助功能树。没有存储选择器。"
+      }
+    },
+    {
+      "source": "The selected app did not expose a usable Accessibility tree. Retry there or choose a vetted preset.",
+      "translations": {
+        "hi": "चयनित ऐप ने प्रयोग करने योग्य एक्सेसिबिलिटी ट्री को उजागर नहीं किया। वहां पुनः प्रयास करें या सत्यापित प्रीसेट चुनें।",
+        "es": "La aplicación seleccionada no expuso un árbol de accesibilidad utilizable. Vuelva a intentarlo allí o elija un ajuste preestablecido examinado.",
+        "pt": "O aplicativo selecionado não expôs uma árvore de acessibilidade utilizável. Tente novamente ou escolha uma predefinição verificada.",
+        "fr": "L'application sélectionnée n'a pas exposé d'arborescence d'accessibilité utilisable. Réessayez ici ou choisissez un préréglage vérifié.",
+        "de": "Die ausgewählte App hat keinen verwendbaren Barrierefreiheitsbaum bereitgestellt. Versuchen Sie es dort noch einmal oder wählen Sie eine geprüfte Voreinstellung.",
+        "ar": "لم يكشف التطبيق المحدد عن شجرة إمكانية الوصول القابلة للاستخدام. أعد المحاولة هناك أو اختر إعدادًا مسبقًا تم فحصه.",
+        "ja": "選択したアプリは、使用可能なアクセシビリティ ツリーを公開していませんでした。そこで再試行するか、精査されたプリセットを選択してください。",
+        "ko": "선택한 앱이 사용 가능한 접근성 트리를 노출하지 않았습니다. 거기서 다시 시도하거나 검증된 사전 설정을 선택하세요.",
+        "zh-Hans": "所选应用程序未公开可用的辅助功能树。在那里重试或选择经过审查的预设。"
+      }
+    },
+    {
+      "source": "The selector did not pass local safety checks. Nothing was stored; retry or choose a vetted preset.",
+      "translations": {
+        "hi": "चयनकर्ता ने स्थानीय सुरक्षा जांच पास नहीं की. कुछ भी संग्रहीत नहीं किया गया था; पुनः प्रयास करें या सत्यापित प्रीसेट चुनें।",
+        "es": "El seleccionador no pasó los controles de seguridad locales. No se almacenó nada; Vuelva a intentarlo o elija un ajuste preestablecido examinado.",
+        "pt": "O seletor não passou nas verificações de segurança locais. Nada foi armazenado; tente novamente ou escolha uma predefinição verificada.",
+        "fr": "Le sélecteur n'a pas réussi les contrôles de sécurité locaux. Rien n'a été stocké ; réessayez ou choisissez un préréglage vérifié.",
+        "de": "Der Selektor hat die örtlichen Sicherheitsprüfungen nicht bestanden. Es wurde nichts gespeichert; Versuchen Sie es erneut oder wählen Sie eine überprüfte Voreinstellung.",
+        "ar": "لم ينجح المحدد في فحوصات السلامة المحلية. لم يتم تخزين أي شيء. أعد المحاولة أو اختر إعدادًا مسبقًا تم فحصه.",
+        "ja": "セレクターは現地の安全検査に合格しませんでした。何も保存されていませんでした。再試行するか、精査されたプリセットを選択してください。",
+        "ko": "선택기가 현지 안전 점검을 통과하지 못했습니다. 아무것도 저장되지 않았습니다. 다시 시도하거나 검증된 사전 설정을 선택하세요.",
+        "zh-Hans": "选择器未通过当地安全检查。没有存储任何内容；重试或选择经过审查的预设。"
+      }
+    },
+    {
+      "source": "The temporary Accessibility overlay could not be created. No selector was stored.",
+      "translations": {
+        "hi": "अस्थायी एक्सेसिबिलिटी ओवरले नहीं बनाया जा सका. कोई चयनकर्ता संग्रहीत नहीं किया गया था.",
+        "es": "No se pudo crear la superposición de accesibilidad temporal. No se almacenó ningún selector.",
+        "pt": "Não foi possível criar a sobreposição temporária de acessibilidade. Nenhum seletor foi armazenado.",
+        "fr": "La superposition d'accessibilité temporaire n'a pas pu être créée. Aucun sélecteur n'a été stocké.",
+        "de": "Das temporäre Barrierefreiheits-Overlay konnte nicht erstellt werden. Es wurde kein Selektor gespeichert.",
+        "ar": "لا يمكن إنشاء تراكب إمكانية الوصول المؤقت. لم يتم تخزين أي محدد.",
+        "ja": "一時的なアクセシビリティ オーバーレイを作成できませんでした。セレクターが保存されていませんでした。",
+        "ko": "임시 접근성 오버레이를 생성할 수 없습니다. 저장된 선택기가 없습니다.",
+        "zh-Hans": "无法创建临时辅助功能叠加层。没有存储选择器。"
+      }
+    },
+    {
+      "source": "Custom Reset Builder",
+      "translations": {
+        "hi": "कस्टम रीसेट बिल्डर",
+        "es": "Generador de reinicio personalizado",
+        "pt": "Construtor de redefinição personalizada",
+        "fr": "Générateur de réinitialisation personnalisée",
+        "de": "Benutzerdefinierter Reset-Builder",
+        "ar": "منشئ إعادة تعيين مخصص",
+        "ja": "カスタムリセットビルダー",
+        "ko": "사용자 정의 재설정 빌더",
+        "zh-Hans": "自定义重置生成器"
+      }
+    },
+    {
+      "source": "Pick one reset.",
+      "translations": {
+        "hi": "एक रीसेट चुनें।",
+        "es": "Elige un reinicio.",
+        "pt": "Escolha um recomeço.",
+        "fr": "Choisissez une pause.",
+        "de": "Wähle einen Neustart.",
+        "ar": "اختر إعادة ضبط واحدة.",
+        "ja": "リセットを一つ選びましょう。",
+        "ko": "재설정을 하나 선택하세요.",
+        "zh-Hans": "选择一个重置。"
+      }
+    },
+    {
+      "source": "Automated guidance · not therapy or emergency care",
+      "translations": {
+        "hi": "स्वचालित मार्गदर्शन · चिकित्सा या आपातकालीन देखभाल नहीं",
+        "es": "Orientación automatizada · no terapia ni atención de emergencia",
+        "pt": "Orientação automatizada · não é terapia ou atendimento de emergência",
+        "fr": "Guidage automatisé · pas de thérapie ni de soins d'urgence",
+        "de": "Automatisierte Anleitung · keine Therapie oder Notfallversorgung",
+        "ar": "التوجيه الآلي · وليس العلاج أو رعاية الطوارئ",
+        "ja": "自動ガイダンス – 治療や救急医療ではありません",
+        "ko": "자동 안내 · 치료나 응급 치료가 아님",
+        "zh-Hans": "自动指导·不是治疗或紧急护理"
+      }
+    },
+    {
+      "source": "Recovery Reset",
+      "translations": {
+        "hi": "पुनर्प्राप्ति रीसेट",
+        "es": "Restablecimiento de recuperación",
+        "pt": "Redefinição de recuperação",
+        "fr": "Réinitialisation de récupération",
+        "de": "Wiederherstellung zurücksetzen",
+        "ar": "إعادة ضبط الاسترداد",
+        "ja": "リカバリリセット",
+        "ko": "복구 재설정",
+        "zh-Hans": "恢复重置"
+      }
+    },
+    {
+      "source": "Premium tools",
+      "translations": {
+        "hi": "प्रीमियम उपकरण",
+        "es": "Herramientas premium",
+        "pt": "Ferramentas premium",
+        "fr": "Outils haut de gamme",
+        "de": "Premium-Tools",
+        "ar": "أدوات متميزة",
+        "ja": "プレミアムツール",
+        "ko": "프리미엄 도구",
+        "zh-Hans": "高级工具"
+      }
+    },
+    {
+      "source": "FREED recovery ready",
+      "translations": {
+        "hi": "FREED पुनर्प्राप्ति तैयार",
+        "es": "Recuperación FREED lista",
+        "pt": "Recuperação FREED pronta",
+        "fr": "Récupération FREED prête",
+        "de": "FREED-Wiederherstellung bereit",
+        "ar": "استرداد FREED جاهز",
+        "ja": "FREED リカバリ準備完了",
+        "ko": "FREED 복구 준비 완료",
+        "zh-Hans": "FREED 恢复就绪"
+      }
+    },
+    {
+      "source": "Open FREED to begin a local recovery challenge.",
+      "translations": {
+        "hi": "स्थानीय पुनर्प्राप्ति चुनौती शुरू करने के लिए FREED खोलें।",
+        "es": "Abra FREED para comenzar un desafío de recuperación local.",
+        "pt": "Abra o FREED para iniciar um desafio de recuperação local.",
+        "fr": "Ouvrez FREED pour lancer un défi de récupération locale.",
+        "de": "Öffnen Sie FREED, um eine lokale Wiederherstellungsherausforderung zu starten.",
+        "ar": "افتح FREED لبدء تحدي الاسترداد المحلي.",
+        "ja": "FREED を開いて、ローカル リカバリ チャレンジを開始します。",
+        "ko": "FREED를 열어 로컬 복구 챌린지를 시작하세요.",
+        "zh-Hans": "打开 FREED 开始本地恢复挑战。"
+      }
+    },
+    {
+      "source": "Recovery Tools",
+      "translations": {
+        "hi": "पुनर्प्राप्ति उपकरण",
+        "es": "Herramientas de recuperación",
+        "pt": "Ferramentas de recuperação",
+        "fr": "Outils de récupération",
+        "de": "Wiederherstellungstools",
+        "ar": "أدوات الاسترداد",
+        "ja": "回復ツール",
+        "ko": "복구 도구",
+        "zh-Hans": "恢复工具"
+      }
+    },
+    {
+      "source": "Screen Time {{context}} shield requested a recovery intervention.",
+      "translations": {
+        "hi": "Screen Time {{context}} शील्ड ने पुनर्प्राप्ति हस्तक्षेप का अनुरोध किया।",
+        "es": "Screen Time {{context}} El escudo solicitó una intervención de recuperación.",
+        "pt": "Screen Time O escudo {{context}} solicitou uma intervenção de recuperação.",
+        "fr": "Le bouclier Screen Time {{context}} a demandé une intervention de récupération.",
+        "de": "Screen Time {{context}} Shield hat einen Wiederherstellungseingriff angefordert.",
+        "ar": "طلب درع Screen Time {{context}} التدخل في عملية الاسترداد.",
+        "ja": "Screen Time {{context}} シールドが回復介入を要求しました。",
+        "ko": "Screen Time {{context}} 실드가 복구 개입을 요청했습니다.",
+        "zh-Hans": "Screen Time {{context}} 屏蔽请求恢复干预。"
+      }
+    },
+    {
+      "source": "FREED content-blocker rules were not found.",
+      "translations": {
+        "hi": "FREED सामग्री-अवरोधक नियम नहीं मिले।",
+        "es": "No se encontraron reglas de bloqueo de contenido FREED.",
+        "pt": "As regras de bloqueio de conteúdo FREED não foram encontradas.",
+        "fr": "Les règles de blocage de contenu FREED sont introuvables.",
+        "de": "FREED-Inhaltsblockerregeln wurden nicht gefunden.",
+        "ar": "لم يتم العثور على قواعد حظر المحتوى FREED.",
+        "ja": "FREED コンテンツ ブロッカー ルールが見つかりませんでした。",
+        "ko": "FREED 콘텐츠 차단 규칙을 찾을 수 없습니다.",
+        "zh-Hans": "未找到 FREED 内容拦截器规则。"
+      }
+    },
+    {
+      "source": "FREED could not load content-blocker rules.",
+      "translations": {
+        "hi": "FREED सामग्री-अवरोधक नियम लोड नहीं कर सका।",
+        "es": "FREED no pudo cargar reglas de bloqueo de contenido.",
+        "pt": "FREED não pôde carregar regras de bloqueio de conteúdo.",
+        "fr": "FREED n'a pas pu charger les règles de blocage de contenu.",
+        "de": "FREED konnte die Content-Blocker-Regeln nicht laden.",
+        "ar": "تعذر على FREED تحميل قواعد حظر المحتوى.",
+        "ja": "FREED はコンテンツ ブロッカー ルールをロードできませんでした。",
+        "ko": "FREED는 콘텐츠 차단 규칙을 로드할 수 없습니다.",
+        "zh-Hans": "FREED 无法加载内容拦截器规则。"
+      }
+    },
+    {
+      "source": "Safari Focus Shield requested a local recovery challenge.",
+      "translations": {
+        "hi": "Safari Focus Shield ने स्थानीय पुनर्प्राप्ति चुनौती का अनुरोध किया।",
+        "es": "Safari Focus Shield solicitó un desafío de recuperación local.",
+        "pt": "Safari Focus Shield solicitou um desafio de recuperação local.",
+        "fr": "Safari Focus Shield a demandé une contestation de récupération locale.",
+        "de": "Safari Focus Shield hat eine lokale Wiederherstellungsherausforderung angefordert.",
+        "ar": "طلب Safari Focus Shield تحدي الاسترداد المحلي.",
+        "ja": "Safari Focus Shield がローカル リカバリ チャレンジを要求しました。",
+        "ko": "Safari Focus Shield가 로컬 복구 시도를 요청했습니다.",
+        "zh-Hans": "Safari Focus Shield 请求本地恢复质询。"
+      }
+    }
+  ]
+}

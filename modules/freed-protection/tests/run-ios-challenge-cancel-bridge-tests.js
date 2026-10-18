@@ -1,0 +1,12 @@
+const fs=require('node:fs'),os=require('node:os'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const scratch=fs.mkdtempSync(path.join(os.tmpdir(),'freed-cancel-bridge-'));
+try{
+ const input=process.argv[2];assert.ok(input,'Supply a native runtime log containing NATIVE_CANCELLED_RECEIPT lines');
+ const packets=fs.readFileSync(input,'utf8').split('\n').filter(line=>line.startsWith('NATIVE_CANCELLED_RECEIPT=')).map(line=>JSON.parse(line.slice('NATIVE_CANCELLED_RECEIPT='.length)));
+ assert.equal(packets.length,2,'Expected actual cancelled completed-step and seeded partial-photo native receipts');
+ const bundled=path.join(scratch,'bridge.cjs');require('esbuild').buildSync({entryPoints:['modules/freed-protection/src/earned-challenge-evidence.ts'],outfile:bundled,bundle:true,platform:'node',format:'cjs',logLevel:'silent'});
+ const {validateEarnedChallengeEvidenceReceipt}=require(bundled),results=[];
+ for(const packet of packets){const validated=validateEarnedChallengeEvidenceReceipt(packet.receipt,packet.offer,packet.begin);const result={method:packet.begin.method,acceptedNative:packet.receipt.accepted,validated:!!validated,phase:validated?.session?.phase};results.push(result);assert.ok(validated,'Actual native cancelled receipt must cross the actual strict TypeScript boundary');assert.equal(validated.session.phase,'cancelled');assert.equal(validated.session.stepProofId,null);assert.deepEqual(validated.session.photoProofIds,[]);assert.deepEqual(validated.session.matchedTargetIds,[]);}
+ const out=process.argv.indexOf('--receipt');if(out>=0){const dir=path.dirname(process.argv[out+1]);fs.mkdirSync(dir,{recursive:true});const saved=path.join(dir,'earned-challenge-evidence.bundle.cjs');fs.copyFileSync(bundled,saved);const hash=p=>({path:p,sha256:crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex')});fs.writeFileSync(process.argv[out+1],JSON.stringify({physicalProof:false,scope:'Actual native output passed through actual strict TS validator; photo is a seeded local state fixture, no target activation/evaluation claim',sources:[input,'modules/freed-protection/src/earned-challenge-evidence.ts','modules/freed-protection/src/earned-app-time.ts',__filename,saved].map(hash),results},null,2)+'\n');}
+ console.log('Actual cancelled completed-step and partial-photo native receipts passed strict TypeScript bridge validation');
+}finally{fs.rmSync(scratch,{recursive:true,force:true});}

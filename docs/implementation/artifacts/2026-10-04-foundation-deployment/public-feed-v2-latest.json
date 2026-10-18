@@ -1,0 +1,31 @@
+{
+  "httpStatus": 200,
+  "body": {
+    "name": "projects/freed-7d5ee/databases/(default)/documents/adult_feed_metadata/latest",
+    "fields": {
+      "publishedAt": {
+        "timestampValue": "2026-10-04T10:14:22.026Z"
+      },
+      "generatedAt": {
+        "timestampValue": "2026-10-04T10:14:22.026Z"
+      },
+      "version": {
+        "stringValue": "oisd-nsfw-small-765c579402614895"
+      },
+      "source": {
+        "stringValue": "oisd-nsfw-small"
+      },
+      "objectKey": {
+        "stringValue": "adult-domain-feeds/oisd-nsfw-small-765c579402614895.json"
+      },
+      "checksum": {
+        "stringValue": "765c579402614895acf4c1eb69023f0e58d1ee6cdb80d43b87082d1631975468"
+      },
+      "domainCount": {
+        "integerValue": "20376"
+      }
+    },
+    "createTime": "2026-10-04T10:14:26.718596Z",
+    "updateTime": "2026-10-04T10:14:26.718596Z"
+  }
+}

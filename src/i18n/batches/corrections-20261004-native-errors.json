@@ -1,0 +1,46 @@
+{
+  "entries": [
+    {
+      "source": "Earned unlock request is expired or invalid. Existing Screen Time protection remains in effect.",
+      "translations": {
+        "hi": "अर्जित अनलॉक का अनुरोध समाप्त हो गया है या अमान्य है। मौजूदा स्क्रीन टाइम सुरक्षा लागू रहती है।",
+        "es": "La solicitud de desbloqueo ganado ha caducado o no es válida. La protección existente de Tiempo de uso sigue vigente.",
+        "pt": "A solicitação de desbloqueio conquistado expirou ou é inválida. A proteção existente do Tempo de Uso continua em vigor.",
+        "fr": "La demande de déverrouillage obtenu a expiré ou n’est pas valide. La protection Temps d’écran existante reste en vigueur.",
+        "de": "Die Anfrage für die verdiente Entsperrung ist abgelaufen oder ungültig. Der bestehende Bildschirmzeit-Schutz bleibt wirksam.",
+        "ar": "انتهت صلاحية طلب فتح القفل المكتسب أو أنه غير صالح. تظل حماية مدة استخدام الجهاز الحالية سارية.",
+        "ja": "獲得したロック解除のリクエストは期限切れか無効です。既存のスクリーンタイム保護は引き続き有効です。",
+        "ko": "보상으로 얻은 잠금 해제 요청이 만료되었거나 유효하지 않습니다. 기존 스크린 타임 보호는 계속 적용됩니다.",
+        "zh-Hans": "获得的解锁请求已过期或无效。现有屏幕使用时间保护仍然生效。"
+      }
+    },
+    {
+      "source": "Screen Time unlock identity does not match the claimed intervention. Existing Screen Time protection remains in effect.",
+      "translations": {
+        "hi": "स्क्रीन टाइम अनलॉक की पहचान बताए गए हस्तक्षेप से मेल नहीं खाती। मौजूदा स्क्रीन टाइम सुरक्षा लागू रहती है।",
+        "es": "La identidad del desbloqueo de Tiempo de uso no coincide con la intervención indicada. La protección existente de Tiempo de uso sigue vigente.",
+        "pt": "A identidade do desbloqueio do Tempo de Uso não corresponde à intervenção informada. A proteção existente do Tempo de Uso continua em vigor.",
+        "fr": "L’identité du déverrouillage Temps d’écran ne correspond pas à l’intervention déclarée. La protection Temps d’écran existante reste en vigueur.",
+        "de": "Die Identität der Bildschirmzeit-Entsperrung stimmt nicht mit der angegebenen Intervention überein. Der bestehende Bildschirmzeit-Schutz bleibt wirksam.",
+        "ar": "هوية فتح القفل في مدة استخدام الجهاز لا تطابق التدخل المذكور. تظل حماية مدة استخدام الجهاز الحالية سارية.",
+        "ja": "スクリーンタイムのロック解除の識別情報が、申告された介入と一致しません。既存のスクリーンタイム保護は引き続き有効です。",
+        "ko": "스크린 타임 잠금 해제 식별 정보가 명시된 개입과 일치하지 않습니다. 기존 스크린 타임 보호는 계속 적용됩니다.",
+        "zh-Hans": "屏幕使用时间解锁的身份信息与声明的干预不匹配。现有屏幕使用时间保护仍然生效。"
+      }
+    },
+    {
+      "source": "Local classification checks passed, but current readiness changed. Review the required permission/feed rows, then run Test Protection again.",
+      "translations": {
+        "hi": "स्थानीय वर्गीकरण जाँचें सफल रहीं, लेकिन मौजूदा तैयारी बदल गई है। ज़रूरी अनुमति और डोमेन सूची की पंक्तियाँ देखें, फिर सुरक्षा परीक्षण दोबारा चलाएँ।",
+        "es": "La clasificación local se comprobó correctamente, pero la disponibilidad actual cambió. Revisa las filas de permisos y lista de dominios requeridas y vuelve a ejecutar Probar protección.",
+        "pt": "As verificações de classificação local passaram, mas a disponibilidade atual mudou. Revise as linhas de permissões e lista de domínios necessárias e execute Testar proteção novamente.",
+        "fr": "Les vérifications de classification locale ont réussi, mais l’état de préparation actuel a changé. Examinez les lignes requises concernant les autorisations et la liste de domaines, puis relancez Tester la protection.",
+        "de": "Die lokalen Klassifizierungsprüfungen waren erfolgreich, aber der aktuelle Bereitschaftsstatus hat sich geändert. Prüfe die erforderlichen Berechtigungs- und Domainlistenzeilen und führe Schutz testen erneut aus.",
+        "ar": "نجحت فحوص التصنيف المحلي، لكن الجاهزية الحالية تغيرت. راجع صفوف الأذونات وقائمة النطاقات المطلوبة، ثم أعد تشغيل اختبار الحماية.",
+        "ja": "ローカル分類チェックに合格しましたが、現在の準備状況が変わりました。必要な権限とドメインリストの項目を確認し、「保護をテスト」をもう一度実行してください。",
+        "ko": "로컬 분류 점검은 통과했지만 현재 준비 상태가 변경되었습니다. 필요한 권한 및 도메인 목록 항목을 검토한 다음 보호 테스트를 다시 실행하세요.",
+        "zh-Hans": "本地分类检查已通过，但当前就绪状态发生了变化。请查看所需权限和域名列表条目，然后再次运行保护测试。"
+      }
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 
 import { dirname, isAbsolute, join, relative, resolve } from "node:path";
 
 import { classifyUrl } from "../src/lib/blocking-engine";
+import { evaluateInterceptionReleaseGate } from '../src/lib/interception-release-gate';
 import { getChallengeGenerationReadiness } from "../src/lib/challenge-generator";
 import { getMonetizationReadiness } from "../src/lib/monetization";
 import { getCoachReadiness } from "../src/lib/ai-coach";
@@ -19,6 +20,13 @@ import { classifierSafetyCorpus } from "./classifier-safety-corpus";
 import { getValidationEvidenceResults } from "./validation-evidence";
 
 const { assertSafeReportPath: assertSafeWorkspaceReportPath } = require("./lib/report-path-safety");
+const { getBackendProvider, getPreflightCheckIds, getFirebasePreflightChecks, firebaseLaunchProductIdIssues, getLegalUrls, FIREBASE_REQUIRED_SECRET_NAMES } = require("./release-env-preflight");
+const { getExpectedReleaseReadinessGateIds, assertHostedLegalReport } = require("./release-verify");
+const { readEncryptedDnsSafetySources, inspectIosEncryptedDnsSafety } = require("./lib/encrypted-dns-safety-contract");
+const { inspectNativeUnlockWiring } = require('./lib/native-unlock-safety-contract');
+const { inspectConfirmedNativeCleanup, inspectRevocationRecovery, inspectNativeMonetizationDefaults, inspectSetupConfigurationCheck, inspectRewardedResetChoice, inspectMembershipManagementRoute } = require('./lib/cleanup-source-contract');
+const releaseBackendProvider = getBackendProvider(process.env);
+const firebaseSelected = releaseBackendProvider === "firebase";
 
 type AuditStatus = "pass" | "warn" | "fail";
 
@@ -91,6 +99,18 @@ function sha256File(path: string) {
 
 function has(path: string) {
   return existsSync(file(path));
+}
+
+function localVerificationPass(paths: string[]) {
+  try {
+    for (const path of paths) {
+      const args = path.endsWith(".ts") ? ["scripts/run-ts-entry.js", path] : [path];
+      execFileSync(process.execPath, args, { cwd: root, encoding: "utf8", timeout: 60_000, maxBuffer: 2_000_000 });
+    }
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function hasSwiftPendingInterventionUrlInterpolation(source: string) {
@@ -441,18 +461,21 @@ function dependencyAuditReportFreshnessIssue(report: Record<string, unknown>) {
 }
 
 function releaseVerifierExpectedGateIds(verifier: string) {
+  if (firebaseSelected) return getExpectedReleaseReadinessGateIds(releaseBackendProvider);
   const match = verifier.match(/const expectedReleaseReadinessGateIds = \[([\s\S]*?)\];/);
   if (!match) return [];
   return Array.from(match[1].matchAll(/"([^"]+)"/g), ([, id]) => id);
 }
 
 function releaseVerifierExpectedPreflightCheckIds(verifier: string) {
+  return getPreflightCheckIds(releaseBackendProvider);
   const match = verifier.match(/const expectedPreflightReportCheckIds = \[([\s\S]*?)\];/);
   if (!match) return [];
   return Array.from(match[1].matchAll(/"([^"]+)"/g), ([, id]) => id);
 }
 
 function releaseEnvPreflightReportCheckIds(preflightScript: string) {
+  return getPreflightCheckIds(releaseBackendProvider);
   const match = preflightScript.match(/const checks = \[([\s\S]*?)\n\s*\];\n\n\s*const report = buildReport/);
   if (!match) return [];
   return Array.from(
@@ -653,6 +676,8 @@ function auditClassifier(): AuditItem {
 }
 
 function auditAndroidNative(): AuditItem {
+  const networkDnsState = read("modules/freed-protection/android/src/main/java/app/freed/protection/FreedNetworkDnsState.kt");
+  const dnsGuardPolicy = read("modules/freed-protection/android/src/main/java/app/freed/protection/FreedDnsGuardPolicy.kt");
   const settings = read("android/settings.gradle");
   const manifest = read("modules/freed-protection/android/src/main/AndroidManifest.xml");
   const appManifest = read("android/app/src/main/AndroidManifest.xml");
@@ -685,7 +710,10 @@ function auditAndroidNative(): AuditItem {
     vpnService.includes(".addRoute(PRIMARY_DNS, 32)"),
     vpnService.includes(".addRoute(SECONDARY_DNS, 32)"),
     vpnService.includes("DNS_RESOLVERS = listOf(PRIMARY_DNS, SECONDARY_DNS)"),
-    vpnService.includes("for (resolver in DNS_RESOLVERS)"),
+    vpnService.includes("raceForward(dnsPayload, listOf(PRIMARY_DNS, SECONDARY_DNS), RACE_BUDGET_MS)"),
+    vpnService.includes("for (resolver in networkResolvers)"),
+    vpnService.includes("registerDefaultNetworkCallback"),
+    vpnService.includes("isValidDnsResponse(forwarded, dnsPayload)"),
     vpnService.includes("lastForwardResolver"),
     vpnService.includes("dnsGuardUptimeMs"),
     vpnService.includes("val dnsGuardRuntimeReady: Boolean"),
@@ -701,7 +729,7 @@ function auditAndroidNative(): AuditItem {
     vpnService.includes("VpnService.prepare(context) != null"),
     vpnService.includes("recordAutoRestart(context, action, AUTO_RESTART_RESULT_STARTED, null)"),
     vpnService.includes("setUserEnabled(this, false)"),
-    vpnService.includes("val normalizedHost = dnsInterventionHost(host, classification)"),
+    vpnService.includes("val normalizedHost = dnsInterventionHost(item.questionHost, classification)"),
     vpnService.includes("lastBlockedHost = normalizedHost"),
     vpnService.includes("recordAndLaunchDnsIntervention(normalizedHost, classification)"),
     vpnService.includes("FreedUrlClassifier.normalizeHostForStorage(result.host)"),
@@ -715,7 +743,8 @@ function auditAndroidNative(): AuditItem {
     accessibilityService.includes("collectLikelyFocusedUrlText"),
     accessibilityService.includes("isWebViewContext"),
     accessibilityService.includes("android.webkit.WebView"),
-    accessibilityService.includes("FreedUrlClassifier.classifyFocusedInput(candidate, adultDomainFeed)"),
+    accessibilityService.includes("FreedUrlClassifier.classifyFocusedInput("),
+    accessibilityService.includes("FreedAdultDomainFeed.userAllowedDomains(this)"),
     accessibilityService.includes("shouldCollectFocusedCandidateText(packageName, node, text)"),
     accessibilityService.includes("sourceIsKnownBrowserUrlField(packageName, source)"),
     accessibilityService.includes("nodeLooksLikeUrlOrSearchField(source)"),
@@ -765,7 +794,9 @@ function auditAndroidNative(): AuditItem {
     protectionModule.includes("PENDING_INTERVENTION_MAX_AGE_MS"),
     protectionModule.includes("PENDING_INTERVENTION_FUTURE_SKEW_MS"),
     protectionModule.includes("isFreshPendingIntervention(detectedAt)"),
-    protectionModule.includes("claimPendingIntervention(prefs, interventionId)"),
+    protectionModule.includes("claimPendingIntervention(prefs, interventionId, stageUnlockLease = false)"),
+    protectionModule.includes("claimPendingIntervention(prefs, sanitizedExpectedInterventionId)"),
+    protectionModule.includes('FreedNativeUnlockStore.stage(context, snapshot, editor)'),
     protectionModule.includes("isPendingInterventionConsumed(prefs, interventionId)"),
     protectionModule.includes("sanitizedPendingHost"),
     protectionModule.includes("sanitizedPendingSourcePackage"),
@@ -813,7 +844,17 @@ function auditAndroidNative(): AuditItem {
     classifier.includes("searchEngineDomains"),
     classifier.includes("adultDomainFeed.firstOrNull"),
     classifier.includes("recoveryDomainContextTerms"),
-	    protectionModule.includes('"private_dns_mode"'),
+	    protectionModule.includes('return FreedNetworkDnsState.read(context).mode'),
+    protectionModule.includes('return FreedNetworkDnsState.read(context).serverName'),
+    protectionModule.includes('val dnsGuardActive = dnsGuardFilteringActive(context)'),
+    protectionModule.includes('enriched["adultFilterActive"] = dnsGuardActive'),
+    protectionModule.includes('enriched["dnsGuardCoverageReady"] = dnsGuardActive'),
+    networkDnsState.includes('manager.getLinkProperties(network)'),
+    networkDnsState.includes('properties.isPrivateDnsActive'),
+    networkDnsState.includes('properties.privateDnsServerName'),
+    networkDnsState.includes('!caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN)'),
+    dnsGuardPolicy.includes('privateDnsMode == "off"'),
+    dnsGuardPolicy.includes('running && !captivePaused && allowsPlaintext(privateDnsMode)'),
 	    protectionModule.includes('AsyncFunction("openPrivateDnsSettings"'),
 	    protectionModule.includes('ACTION_PRIVATE_DNS_SETTINGS = "android.settings.PRIVATE_DNS_SETTINGS"'),
 	    protectionModule.includes("ACTION_PRIVATE_DNS_SETTINGS,\n        listOf(Intent(Settings.ACTION_WIRELESS_SETTINGS), Intent(Settings.ACTION_SETTINGS))"),
@@ -838,9 +879,9 @@ function auditAndroidNative(): AuditItem {
 	    protectionModule.includes("androidSettingsRouteOpenedAt"),
 	    protectionModule.includes("persistAndroidSettingsRoute"),
 	    protectionModule.includes("lastAndroidSettingsRoute"),
-	    protectionModule.includes("ACTION_ACCESSIBILITY_DETAILS_SETTINGS"),
-	    protectionModule.includes("Intent.EXTRA_COMPONENT_NAME"),
-	    protectionModule.includes("accessibilityServiceDetailsSettingsIntent(context)"),
+	    !protectionModule.includes("ACTION_ACCESSIBILITY_DETAILS_SETTINGS"),
+	    !protectionModule.includes("accessibilityServiceDetailsSettingsIntent"),
+	    protectionModule.includes("Settings.ACTION_VPN_SETTINGS"),
 	    protectionModule.includes("Settings.ACTION_ACCESSIBILITY_SETTINGS"),
 	    protectionModule.includes("Settings.ACTION_USAGE_ACCESS_SETTINGS"),
 	    protectionModule.includes("Private DNS state is reported for QA because strict Private DNS can affect DNS Guard resolver behavior."),
@@ -1118,10 +1159,7 @@ function auditPrivacyContract(): AuditItem {
     appSurface.includes("Delete Local Data"),
     appSurface.includes("deleteLocalRecoveryData"),
     appSurface.includes("createDefaultRecoveryState"),
-    appSurface.includes("stopAdultContentFilter()"),
-    appSurface.includes("stopRiskWindowMonitoring()"),
-    appSurface.includes("clearEarnedUnlockWindow()"),
-    appSurface.includes("configureBlockedAppPackages(\n        []"),
+    inspectConfirmedNativeCleanup(appSurface, read('src/lib/confirmed-cleanup.ts')),
     privacyDataMap.includes("Challenge weather context"),
     privacyDataMap.includes("Disabled by default"),
     privacyDataMap.includes("production-safe HTTPS weather endpoint"),
@@ -1177,6 +1215,12 @@ function auditRuntimeDataIntegrity(): AuditItem {
     smokeHarnessAudit.includes("runtime data integrity audit"),
     script.includes("premium-entitlement-no-ui-toggle"),
     script.includes("monetization-defaults-native"),
+    script.includes("rewarded-reset-explicit-choice"),
+    inspectRewardedResetChoice(appSurface, {
+      offer: read("src/components/GuidedResetOffer.tsx"), hook: read("src/hooks/useGuidedResetAccess.ts"),
+      access: read("src/lib/guided-reset-access.ts"), monetization,
+      runtime: read("src/lib/native-monetization-runtime.ts"), adapter: read("src/lib/native-monetization-adapter.ts"),
+    }),
     script.includes("manual-check-source"),
     script.includes("legacy-test-lab-normalized"),
     script.includes("analytics-no-test-lab-metric"),
@@ -1186,9 +1230,16 @@ function auditRuntimeDataIntegrity(): AuditItem {
     script.includes("source-aware-intervention-copy"),
     script.includes("urge-forecast-real-local-signals"),
     script.includes("challenge-copy-no-fake-overclaim"),
-    appSurface.includes("onManagePlan={() => setScreen(\"paywall\")}"),
+    inspectMembershipManagementRoute(appSurface),
     appSurface.includes("buildLocalUrgeRiskForecast(recoveryState)"),
-    appSurface.includes("sendGatedAnalyticsPayload(recoveryState, recoveryState.analyticsSharing)"),
+    // Run the audit, including snapshot/reconciliation tests; source checks are supplemental UI wiring checks.
+    localVerificationPass(["scripts/runtime-data-integrity-audit.js"]),
+    appSurface.includes("persistRecoveryState(current => prepareAnalyticsSnapshotState(current))"),
+    appSurface.includes("prepareAnalyticsPendingSnapshot(captured, captured.analyticsSharing)"),
+    appSurface.includes("persistRecoveryState(current => stageAnalyticsPendingSnapshot(current, captured, pending))"),
+    appSurface.includes("sendGatedAnalyticsPayload(staged, staged.analyticsSharing)"),
+    appSurface.includes("persistRecoveryState(current => applyPendingAnalyticsSnapshotReceipt(current, staged, result!.snapshotReceipt!))"),
+    appSurface.includes("persistRecoveryState(current => applyAnalyticsSnapshotRecovery(current, staged, result!.snapshotRecovery!))"),
     appSurface.includes("Only aggregate counts and rates are sent after consent"),
     appSurface.includes('AppState.currentState === "active"'),
     appSurface.includes("recordAppSessionStart(current)"),
@@ -1197,7 +1248,7 @@ function auditRuntimeDataIntegrity(): AuditItem {
     recoveryState.includes("closedAt: opened"),
     !appSurface.includes("setPremium(!premium)"),
     monetization.includes('EXPO_PUBLIC_MONETIZATION_MODE === "mock" ? "mock" : "native"'),
-    monetization.includes('if (requestedMode === "mock" && isProductionRuntime()) return "native";'),
+    inspectNativeMonetizationDefaults(monetization),
     analytics.includes("manualCheckInterceptions"),
     analytics.includes("appInterceptions"),
     analytics.includes("productionMetrics"),
@@ -1228,7 +1279,7 @@ function auditRuntimeDataIntegrity(): AuditItem {
   return passOrFail(
     "runtime-data-integrity-contract",
     checks.every(Boolean),
-    "Runtime data integrity audit prevents user-facing premium toggles, implicit or production mock monetization, test-lab recovery history, fake analytics metrics, fake urge forecasts, unguarded QA adult attempts, reserved fake adult seed domains, all-purpose adult-site intervention copy for app shields by requiring source-aware intervention copy, placeholder AdMob country codes, and overclaimed challenge verification copy while requiring real aggregate production metrics.",
+    "Runtime data integrity audit passes, including durable-state-cell, recovery-analytics-snapshot, and analytics-reconciliation tests for saved requests and exact acknowledgements. Supplemental source checks prevent user-facing premium toggles, production mock monetization, test-lab history, fake metrics/forecasts, unguarded QA attempts, reserved fake domains, inaccurate intervention copy, placeholder AdMob country codes, and overclaimed challenge verification copy.",
     "Restore npm run audit:runtime-data and remove fake-data paths from production runtime surfaces."
   );
 }
@@ -1246,15 +1297,14 @@ function auditAccessibilityContract(): AuditItem {
     script.includes("bottom-navigation-tabs-are-named"),
     script.includes("panic-action-is-explicit"),
     appSurface.includes("accessibilityLabel={accessibilityLabel ?? label}"),
-    appSurface.includes('accessibilityRole="tab"'),
-    appSurface.includes('accessibilityLabel="Open urge support"'),
+    localVerificationPass(["scripts/accessibility-safety-audit.js"]),
     appSurface.includes('accessibilityRole="radio"')
   ];
 
   return passOrFail(
     "accessibility-safety-contract",
     checks.every(Boolean),
-    "Accessibility audit covers named buttons, radio choices, selected states, bottom tabs, and immediate urge support.",
+    "Authoritative accessibility audit passes for named buttons, radio choices, selected states, translated native tabs, and connected immediate urge support; OS runtime evidence remains required.",
     "Restore accessibility labels/roles and npm run audit:accessibility before release verification."
   );
 }
@@ -1265,6 +1315,8 @@ function auditChallengeVerificationContract(): AuditItem {
   const script = has("scripts/challenge-verification-audit.ts") ? read("scripts/challenge-verification-audit.ts") : "";
   const verification = read("src/lib/challenge-verification.ts");
   const appSurface = read("src/features/freed-app.tsx");
+  const challengeHook = read("src/hooks/useChallengeVerification.ts");
+  const challengeRuntime = read("src/lib/challenge-verification-runtime.ts");
   const nativeIndex = read("modules/freed-protection/src/index.ts");
   const iosModule = read("modules/freed-protection/ios/FreedProtectionModule.swift");
   const androidModule = read("modules/freed-protection/android/src/main/java/app/freed/protection/FreedProtectionModule.kt");
@@ -1282,13 +1334,23 @@ function auditChallengeVerificationContract(): AuditItem {
     verification.includes('"photo"'),
     verification.includes('"connection"'),
     verification.includes("expectedPhotoLabels"),
-    appSurface.includes("ImagePicker.launchCameraAsync"),
-    appSurface.includes("base64: false"),
-    appSurface.includes("exif: false"),
-    appSurface.includes("classifyChallengePhoto(photoUri, expectedLabels)"),
-    appSurface.includes("deleteTemporaryChallengePhoto(photoUri)"),
-    appSurface.includes("Complete a connection action to verify this challenge."),
-    appSurface.includes('label={onMessagePartner ? "Message Partner" : "I Reached Out"}'),
+    localVerificationPass(["scripts/challenge-verification-audit.ts", "tests/challenge-verification-runtime.test.ts", "tests/challenge-session.test.ts"]),
+    appSurface.includes("useChallengeVerification(challenge, seconds,"),
+    /onPress=\{\(\) => \{[^}]*verification\.capturePhoto\(\);/.test(appSurface),
+    challengeHook.includes('if (!effectiveActive || completed || requirement?.kind !== "photo" || photoOperationRef.current) return;'),
+    challengeHook.includes("await runChallengePhotoCapture({"),
+    challengeHook.includes("ImagePicker.requestCameraPermissionsAsync()"),
+    challengeHook.includes("launchCamera: () => ImagePicker.launchCameraAsync("),
+    challengeHook.includes("base64: false") && challengeHook.includes("exif: false"),
+    challengeHook.includes("classifyPhoto: classifyChallengePhoto, deletePhoto: deleteTemporaryChallengePhoto"),
+    challengeHook.includes("if (file.exists) file.delete()"),
+    challengeRuntime.includes("await options.classifyPhoto(photoUri, options.expectedLabels)"),
+    /finally \{\s*for \(const uri of uris\) \{\s*try \{ await options\.deletePhoto\(uri\); \}/s.test(challengeRuntime),
+    challengeHook.includes('evidence.connectionActionComplete ? "Connection action complete" : "Connection action pending"'),
+    appSurface.includes('const connectionActionComplete = sessionController.connectionStage === "confirmed"'),
+    appSurface.includes("const token = sessionController.beginConnectionAction()"),
+    appSurface.includes("sessionController.markConnectionReturned(token)"),
+    appSurface.includes("sessionController.confirmConnectionAction(connectionToken.current)"),
     nativeIndex.includes("classifyChallengePhoto"),
     iosModule.includes("VNClassifyImageRequest"),
     androidModule.includes("ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)")
@@ -1428,16 +1490,15 @@ function auditDisciplineConfigurationContract(): AuditItem {
     appSurface.includes("completionSubmittedRef.current"),
     appSurface.includes("if (completionSubmittedRef.current) return"),
     appSurface.includes("disabled={completionSubmitting}"),
-    appSurface.includes("return recordEarnedUnlock(completed, challenge"),
+    Object.values(inspectNativeUnlockWiring(appSurface, read('src/lib/native-unlock-confirmation.ts'))).every(Boolean),
     !appSurface.includes('return outcome === "helped"'),
-    appSurface.includes("getActiveNativeEarnedUnlock(recoveryState.earnedUnlocks, Platform.OS"),
-    appSurface.includes("activeNativeUnlock.nativeInterventionId"),
-    appSurface.includes("clearEarnedUnlockWindow()"),
+    appSurface.includes('applyEarnedUnlockWindow(requestedUnlock.expiresAt, requestedUnlock.sourceAttemptHost, requestedUnlock.nativeInterventionId)'),
+    !appSurface.includes("clearEarnedUnlockWindow()"),
     appSurface.includes("createDeepLinkInterventionAttempt"),
     appSurface.includes("Linking.getInitialURL()"),
     appSurface.includes('Linking.addEventListener("url"'),
     appSurface.includes("unless a Screen Time-sourced earned unlock is running"),
-    appSurface.includes('Platform.OS === "android" ? appPackageForEarnedUnlockSource(unlock.sourceAttemptHost) : undefined'),
+    read('src/lib/native-unlock-confirmation.ts').includes("platform === 'android' && Boolean(appPackageForEarnedUnlockSource(unlock.sourceAttemptHost))"),
     appSurface.includes("DOOMSCROLL_APP_OPTIONS"),
     state.includes("getActiveBlockedAppPackages"),
     state.includes("isWeekendModeActive"),
@@ -1468,7 +1529,7 @@ function auditDisciplineConfigurationContract(): AuditItem {
     iosModule.includes('"dailyLimitMinutes": configuredDailyLimitMinutes()'),
     iosModule.includes("startMinute: Int, endMinute: Int"),
     iosModule.includes("DateComponents(hour: startHour, minute: startMinute)"),
-    iosModule.includes("Screen Time unlock identity does not match the claimed intervention. FREED shields remain active."),
+    iosModule.includes("Screen Time unlock identity does not match the claimed intervention. Existing Screen Time protection remains in effect."),
     iosModule.includes("isScreenTimeUnlockSource"),
     iosModule.includes("self.isScreenTimeUnlockSource(sourceAttemptHost),"),
     iosModule.includes("consumePendingEarnedUnlockEnvelope(sanitizedExpectedInterventionId)"),
@@ -1649,8 +1710,7 @@ function auditIosNative(): AuditItem {
     module.includes("safariContentBlockerEnabledKey"),
     module.includes("safariContentBlockerStateErrorKey"),
     module.includes("FREED Safari Content Blocker is not enabled in Safari settings"),
-    !module.includes("import NetworkExtension"),
-    !module.includes("NEDNSSettingsManager"),
+    Object.values(inspectIosEncryptedDnsSafety(readEncryptedDnsSafetySources(root))).every(Boolean),
     !adultFeedSync.includes("NetworkExtension"),
     appSurface.includes("protectionSyncMessage"),
     appSurface.includes("Safari Content Blocker state needs device verification"),
@@ -1688,7 +1748,7 @@ function auditIosNative(): AuditItem {
     policyPack.includes("ios.safariShortFormChallengeHandoffSource=ios-safari-short-form"),
     policyPack.includes("ios.safariShortFormChallengeHandoffRawPathStored=false"),
     policyPack.includes("ios.safariShortFormChallengeHandoffNativeUnlockActive=false"),
-    policyPack.includes("https://intervention.freed.app/intervention"),
+    policyPack.includes("https://freed-7d5ee.firebaseapp.com/intervention"),
     !/manager\.isEnabled\s*=/.test(module),
     !module.includes("NEPacketTunnelProvider"),
     !module.includes("NETunnelProviderManager"),
@@ -1705,13 +1765,17 @@ function auditIosNative(): AuditItem {
     module.includes("self.isFreshPendingIntervention(record.detectedAt)") &&
       module.includes('"url": "https://\\(host)"') &&
       module.includes("consumePendingEarnedUnlockEnvelope(sanitizedExpectedInterventionId)"),
-    !module.includes("import NetworkExtension") && policyPack.includes("does not receive users' Safari browsing history")
+    Object.values(inspectIosEncryptedDnsSafety(readEncryptedDnsSafetySources(root))).every(Boolean) &&
+      policyPack.includes("does not receive users' Safari browsing history") &&
+      policyPack.includes("Optional encrypted DNS is release-gated") &&
+      policyPack.includes("dns-settings entitlement is absent from the current app entitlements") &&
+      policyPack.includes("Signed physical-device DNS validation remains unmet")
   ];
 
   return passOrFail(
     "ios-screen-time-scaffold",
     currentFocusShieldChecks.every(Boolean),
-    "iOS app and extension targets include Family Controls/app-group entitlements, exact scoped shield handoff/relock, Safari adult-domain Content Blocker packaging, and an iOS 15.4 Safari Focus Shield with a background-worker native relay and privacy-safe Universal Link recovery. The release gate requires no NetworkExtension implementation or claim.",
+    "iOS app and extension targets include Family Controls/app-group entitlements, exact scoped shield handoff/relock, Safari adult-domain Content Blocker packaging, and an iOS 15.4 Safari Focus Shield with a background-worker native relay and privacy-safe Universal Link recovery. Optional encrypted DNS uses gated public DNS settings APIs; plugin and current release flags are off and the DNS entitlement is absent. Tunnel, proxy, VPN-manager, and TLS-interception paths remain prohibited; signed-device DNS proof remains unmet.",
     "Restore missing Screen Time extension wiring, app-group entitlement, or iOS App Store review pack before release."
   );
 }
@@ -1728,7 +1792,7 @@ function auditPromptTraceability(): AuditItem {
     checklist.includes("Prompt-To-Artifact Checklist"),
     checklist.includes("Current conclusion: not complete"),
     checklist.includes("Missing To Complete The Objective"),
-    checklist.includes("production/sandbox App Store / Play Core 3 product IDs"),
+    checklist.includes("production/sandbox App Store / Play") && checklist.includes("product IDs"),
     checklist.includes("iOS physical-device evidence"),
     checklist.includes("ios.earnedUnlockSourceHost=screen-time-shield.freed.local"),
     checklist.includes("ios.earnedUnlockRejectedSelectedShieldsStayedActive=true"),
@@ -1922,7 +1986,7 @@ function auditReleaseVerifier(): AuditItem {
     verifier.includes("assertPassFailResults"),
     verifier.includes("reportArtifactRequiredResultIds"),
     verifier.includes("backend-readiness-http-contract"),
-    verifier.includes("challenge-remote-endpoint"),
+    verifier.includes("assertGoogleClaraReport"),
     verifier.includes("expectedReleaseReadinessGateIds"),
     verifier.includes("prototype-design-files"),
     script.includes("releaseVerifierGateManifestIssue"),
@@ -1991,7 +2055,7 @@ function auditReleaseVerifier(): AuditItem {
     verifier.includes("Release verification stopped before npm run"),
     verifier.includes("endpointProofs.claraEndpointChecked"),
     verifier.includes("serverSecretKeyNamesChecked must include APP_STORE_PRIVATE_KEY"),
-    verifier.includes("required result retention-remote-endpoint"),
+    verifier.includes("required result local-recovery"),
     verifier.includes("warnCount=0"),
     verifier.includes("must include release readiness gate"),
     verifier.includes("unexpected release readiness gate"),
@@ -2129,7 +2193,7 @@ function auditReleaseVerifier(): AuditItem {
   return passOrFail(
     "release-verifier-command-sequence",
     checks.every(Boolean),
-    "Fail-closed release verifier supports safe --env-file handling with validation evidence/artifact folder rejection, optional safe --artifact-dir sanitized report collection under docs/validation/artifacts/<run-id> with existing-path/symlink rejection, schema/pass-count/fail-count/proof checks, top-level sanitized report-marker checks on every report artifact plus pass result markers for preflight/APK/AAB/iOS archive reports, full release-env preflight check-manifest validation, hosted legal URL availability proof for privacy/support/account-deletion routes, required upload-signed Android APK/AAB and signed iOS Release archive result IDs, required deployed-smoke result IDs including configured AI retention smoke, concrete proof-value checks for Android upload signing, non-debug upload-keystore proof, Play Console readiness, production Android AdMob app-id proof with sample-id rejection, artifact-level APK signature verification with debug-certificate rejection, Hermes engine proof with no JSC fallback for upload-signed Android APKs, packaged Hermes runtime proof with JSC runtime rejection, packaged ABI/bundle/hash/size, local upload-signed AAB build lane using Gradle bundleRelease for Play Console handoff with artifactType/aab proof, iOS App Store Connect export, IPA hash/size, distribution signing, embedded Screen Time/Safari extension, entitlement, no-packet-tunnel, and Safari-rule proof, wall-clock and no-output timeout bounds, endpoint paths, privacy/rejection booleans, timeout bounds, and checked secret-key-name arrays, plus secret-shaped report-value rejection for URL credentials, JWTs, bearer tokens, provider keys, push-token shapes, and local home-profile paths, has executable env-file, report-path, report-validation, signed iOS archive, and bounded iOS native-build helper self-tests in the smoke harness audit, preserves app-level env-file flags through node --, starts with release env preflight, then runs typecheck, core tests, smoke harness self-tests, web export, hosted legal URL audit, Android bundle export, upload-signed Android APK/AAB and signed iOS archive builds, regenerated client bundle audits, backend readiness smoke, Supabase schema smoke, adult-domain feed smoke, analytics ingestion smoke, remote-notification smoke, AI smoke/safety, challenge/classifier/native-parity/accessibility/privacy/runtime-data/backend/performance/dependency audits, evidence requirements, checked artifact privacy, templates, gates, and strict release audit.",
+    "Fail-closed release verifier supports safe --env-file handling with validation evidence/artifact folder rejection, optional safe --artifact-dir sanitized report collection under docs/validation/artifacts/<run-id> with existing-path/symlink rejection, schema/pass-count/fail-count/proof checks, top-level sanitized report-marker checks on every report artifact plus pass result markers for preflight/APK/AAB/iOS archive reports, full release-env preflight check-manifest validation, hosted legal URL availability proof for privacy/support/account-deletion routes, required upload-signed Android APK/AAB and signed iOS Release archive result IDs, required deployed-smoke result IDs including strict current Google CLARA capture validation, concrete proof-value checks for Android upload signing, non-debug upload-keystore proof, Play Console readiness, production Android AdMob app-id proof with sample-id rejection, artifact-level APK signature verification with debug-certificate rejection, Hermes engine proof with no JSC fallback for upload-signed Android APKs, packaged Hermes runtime proof with JSC runtime rejection, packaged ABI/bundle/hash/size, local upload-signed AAB build lane using Gradle bundleRelease for Play Console handoff with artifactType/aab proof, iOS App Store Connect export, IPA hash/size, distribution signing, embedded Screen Time/Safari extension, entitlement, no-packet-tunnel, and Safari-rule proof, wall-clock and no-output timeout bounds, endpoint paths, privacy/rejection booleans, timeout bounds, and checked secret-key-name arrays, plus secret-shaped report-value rejection for URL credentials, JWTs, bearer tokens, provider keys, push-token shapes, and local home-profile paths, has executable env-file, report-path, report-validation, signed iOS archive, and bounded iOS native-build helper self-tests in the smoke harness audit, preserves app-level env-file flags through node --, starts with release env preflight, then runs typecheck, core tests, smoke harness self-tests, web export, hosted legal URL audit, Android bundle export, upload-signed Android APK/AAB and signed iOS archive builds, regenerated client bundle audits, backend readiness smoke, Supabase schema smoke, adult-domain feed smoke, analytics ingestion smoke, remote-notification smoke, AI smoke/safety, challenge/classifier/native-parity/accessibility/privacy/runtime-data/backend/performance/dependency audits, evidence requirements, checked artifact privacy, templates, gates, and strict release audit.",
     "Restore scripts/release-verify.js and package.json verify:release so the final release command cannot drift from the runbook."
   );
 }
@@ -2349,6 +2413,17 @@ function duplicateActiveEnvTemplateKeys(template: string) {
 
 function auditProductionEnvTemplate(): AuditItem {
   const template = has(".env.production.example") ? read(".env.production.example") : "";
+  if (firebaseSelected) {
+    const keys = ["EXPO_PUBLIC_BACKEND_PROVIDER", "EXPO_PUBLIC_FIREBASE_ENV", "EXPO_PUBLIC_IAP_PRODUCT_YEARLY", "EXPO_PUBLIC_IAP_PRODUCT_MONTHLY", "FREED_FIREBASE_RUNTIME_EVIDENCE"];
+    const missing = keys.filter(key => !envTemplateIncludesKey(template, key));
+    const duplicateKeys = duplicateActiveEnvTemplateKeys(template);
+    const valid = missing.length === 0 && duplicateKeys.length === 0 && envTemplateValue(template, "EXPO_PUBLIC_BACKEND_PROVIDER") === "firebase" &&
+      envTemplateValue(template, "EXPO_PUBLIC_FIREBASE_ENV") === "production" &&
+      FIREBASE_REQUIRED_SECRET_NAMES.every((name: string) => template.includes(name));
+    return passOrFail("production-env-template", valid,
+      valid ? "Production template selects Firebase and the monthly/yearly launch, lists server-only Secret Manager names, and requires fresh native runtime evidence." : `Production Firebase template gaps: ${missing.concat(duplicateKeys).join(", ") || "provider, environment, or server secret-name documentation"}.`,
+      "Restore the canonical Firebase public defaults and server-only secret-name instructions without inserting credential values.");
+  }
   const requiredKeys = [
     "EXPO_PUBLIC_MONETIZATION_MODE",
     "EXPO_PUBLIC_STORE_PROVIDER",
@@ -2360,7 +2435,6 @@ function auditProductionEnvTemplate(): AuditItem {
     "FREED_PURCHASE_VERIFY_PROVIDER_RESPONSE_MAX_BYTES",
     "EXPO_PUBLIC_IAP_PRODUCT_YEARLY",
     "EXPO_PUBLIC_IAP_PRODUCT_MONTHLY",
-    "EXPO_PUBLIC_IAP_PRODUCT_LIFETIME",
     "APP_STORE_BUNDLE_ID",
     "APP_STORE_SERVER_API_ENV",
     "APP_STORE_ISSUER_ID",
@@ -2883,30 +2957,22 @@ function auditValidationEvidenceWorkflow(): AuditItem {
     read("scripts/store-ad-sandbox-evidence.js").includes("STORE_SANDBOX_TEST_PLAN.md"),
     read("scripts/store-ad-sandbox-evidence.js").includes("buildConsolePaymentHandoff"),
     read("scripts/store-ad-sandbox-evidence.js").includes("buildStoreSandboxTestPlan"),
-    read("scripts/store-ad-sandbox-evidence.js").includes("Core 3 Launch Products"),
-    read("scripts/store-ad-sandbox-evidence.js").includes("Core 3 Sandbox Matrix"),
+    read("scripts/store-ad-sandbox-evidence.js").includes("freed_premium_yearly"),
+    read("scripts/store-ad-sandbox-evidence.js").includes("freed_premium_monthly"),
     read("scripts/store-ad-sandbox-evidence.js").includes("Future SKUs Inactive"),
     read("scripts/store-ad-sandbox-evidence.js").includes("purchase-verification-smoke-v1"),
     read("scripts/store-ad-sandbox-evidence.js").includes("Do not submit production"),
     has("scripts/ai-backend-smoke-evidence.js"),
     read("scripts/ai-backend-smoke-evidence.js").includes("assertSafeArtifactOutputDir"),
-    read("scripts/ai-backend-smoke-evidence.js").includes("safeExternalHttpsEndpoint"),
-    read("scripts/ai-backend-smoke-evidence.js").includes("URL credentials"),
-    read("scripts/ai-backend-smoke-evidence.js").includes("query strings"),
-    read("scripts/ai-backend-smoke-evidence.js").includes("URL fragments"),
-    read("scripts/ai-backend-smoke-evidence.js").includes("AI_ENDPOINT_PATHS"),
-    read("scripts/ai-backend-smoke-evidence.js").includes("/api/clara"),
-    read("scripts/ai-backend-smoke-evidence.js").includes("/api/challenges"),
-    read("scripts/ai-backend-smoke-evidence.js").includes("/api/retention"),
+    read("scripts/ai-backend-smoke-evidence.js").includes("contract.validateEndpoint"),
+    read("scripts/ai-backend-smoke-evidence.js").includes("Removed endpoint"),
     read("scripts/ai-backend-smoke-evidence.js").includes("loadEnvFile"),
-	    read("scripts/ai-backend-smoke-evidence.js").includes("--release-env-file line 4 repeats GOOD from line 1"),
-	    read("scripts/ai-backend-smoke-evidence.js").includes("applyReleaseEnv"),
-	    read("scripts/ai-backend-smoke-evidence.js").includes("releaseEnvFileLoaded"),
-	    read("scripts/ai-backend-smoke-evidence.js").includes("ai-backend-smoke-evidence-fill-template.json"),
-	    read("scripts/ai-backend-smoke-evidence.js").includes("--retention-endpoint"),
-	    read("scripts/ai-backend-smoke-evidence.js").includes("retentionAggregateOnlyVerified"),
-	    read("scripts/ai-backend-smoke-evidence.js").includes('"latitude"'),
-	    read("scripts/ai-backend-smoke-evidence.js").includes('"preciseLocation"'),
+    read("scripts/ai-backend-smoke-evidence.js").includes("envFilePathIssue"),
+    read("scripts/ai-backend-smoke-evidence.js").includes("sourceArtifacts"),
+    read("scripts/ai-backend-smoke-evidence.js").includes("ai-backend-smoke-evidence-fill-template.json"),
+    read("scripts/lib/google-clara-release-evidence.js").includes("privateData"),
+    read("scripts/lib/google-clara-release-evidence.js").includes("production-native"),
+    /networkRequests:\s*0/.test(read("scripts/lib/google-clara-release-evidence.js")),
     smokeHarnessAudit.includes("ios physical-device evidence harness"),
     smokeHarnessAudit.includes("png screenshot analyzer"),
     smokeHarnessAudit.includes("evidence target safety"),
@@ -3021,7 +3087,7 @@ function auditValidationEvidenceWorkflow(): AuditItem {
     specs.includes("android.samsungInternetInterceptArtifact local freed-android-browser-intercept-report-v1 JSON with sanitized=true"),
     specs.includes("android.usageStatsAuthorized=true"),
     specs.includes("android.accessibilityPermissionArtifact local freed-android-permission-report-v1 JSON with sanitized=true"),
-    specs.includes("android.accessibilitySettingsRouteComponent matches FREED AccessibilityService native target"),
+    specs.includes("android.accessibilityPermissionArtifact accessibilityServiceComponent identifies FREED AccessibilityService in enabled services"),
     specs.includes("android.usageAccessPermissionRunId"),
     specs.includes("android.usageAccessPermissionArtifact local freed-android-permission-report-v1 JSON with sanitized=true"),
     specs.includes("android.notificationPermissionArtifact local freed-android-permission-report-v1 JSON with sanitized=true"),
@@ -3175,12 +3241,12 @@ function auditValidationEvidenceWorkflow(): AuditItem {
     specs.includes("store.androidRestoreRunId"),
     specs.includes("store.androidRestoreArtifact"),
     specs.includes("store.androidPurchaseTokenHash=sha256-<64-hex-chars>"),
-    specs.includes("store.purchaseVerificationPassCount>=6"),
+    specs.includes("store.purchaseVerificationPassCount>=5"),
     specs.includes("store.purchaseVerificationArtifact local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof"),
-    specs.includes("Core 3 fake-known yearly/monthly/lifetime PASS result rows"),
+    specs.includes("yearly/monthly PASS result rows"),
     specs.includes("matching launchProductIdsChecked"),
     specs.includes("store.restoreVerificationArtifact local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof"),
-    specs.includes("store.restoreVerificationPassCount>=6"),
+    specs.includes("store.restoreVerificationPassCount>=5"),
     specs.includes("store.restoreVerificationFailedCount=0"),
     specs.includes("store.paywallLaunchScopeArtifact local freed-paywall-launch-scope-report-v1 JSON with sanitized=true"),
     specs.includes("paywallCore3OnlyShown"),
@@ -3199,30 +3265,13 @@ function auditValidationEvidenceWorkflow(): AuditItem {
     specs.includes("store.noInterstitialOrBannerAdRequestsConfirmed=true"),
     specs.includes("store.premiumNoRewardedAdRequested=true"),
     specs.includes("store.privacyDisclosureArtifact"),
-    specs.includes("ai.safetyEvalCaseCount>=10"),
-    specs.includes("ai.coachEndpoint production-safe, no URL credentials/query/fragment, and matches configured remote coach endpoint"),
-    specs.includes("ai.challengeEndpoint production-safe, no URL credentials/query/fragment, and matches configured remote challenge endpoint"),
-    specs.includes("ai.retentionEndpoint production-safe, no URL credentials/query/fragment, and matches configured remote retention endpoint"),
-    specs.includes("ai.releasePreflightCommand"),
-    specs.includes("ai.releasePreflightRunId"),
-    specs.includes("ai.releasePreflightArtifact"),
-    specs.includes("ai.smokeEndpointPassCount>=2"),
-    specs.includes("ai.coachSmokeRunId"),
-    specs.includes("ai.coachSmokeArtifact"),
-    specs.includes("ai.challengeSmokeRunId"),
-    specs.includes("ai.challengeSmokeArtifact"),
-    specs.includes("ai.retentionSmokeRunId"),
-    specs.includes("ai.retentionSmokeArtifact"),
-    specs.includes("retentionAggregateOnlyVerified=true"),
-    specs.includes("ai.noSensitiveEchoSampleCount>=2"),
-    specs.includes("ai.noSensitiveEchoRunId"),
-    specs.includes("ai.noSensitiveEchoArtifact"),
-    specs.includes("ai.safetyEvalArtifact"),
-    specs.includes("ai.smokeReportArtifact"),
-    specs.includes("local ai-backend-smoke-v1 JSON report with sanitized=true, contractProof"),
-    specs.includes("ai.providerFallbackArtifact"),
+    specs.includes("freed-google-clara-evidence-v2"),
+    specs.includes("ai.smokeReportSha256"),
+    specs.includes("ai-backend-smoke-v2"),
+    specs.includes("LOCAL challenge/retention zero-network"),
+    specs.includes("candidate photos UNAVAILABLE"),
     read("scripts/store-ad-sandbox-evidence.js").includes("local purchase-verification-smoke-v1 JSON report with sanitized=true, contractProof"),
-    read("scripts/ai-backend-smoke-evidence.js").includes("local ai-backend-smoke-v1 JSON report with sanitized=true, contractProof"),
+    read("scripts/ai-backend-smoke-evidence.js").includes("contract.REQUIRED_RESULT_IDS"),
     validator.includes("ios.isPhysicalDevice"),
     validator.includes("ios.familyControlsEntitlementTeamId"),
     validator.includes("familyControlsEntitlementArtifact"),
@@ -3426,17 +3475,12 @@ function auditValidationEvidenceWorkflow(): AuditItem {
     validator.includes("noSensitiveEchoArtifact"),
     validator.includes("safetyEvalArtifact"),
     validator.includes("readLocalJsonEvidenceArtifact"),
-    validator.includes("aiBackendSmokeReportArtifactIssues"),
-    validator.includes("AI_BACKEND_REQUIRED_RESULT_IDS"),
-    validator.includes("ai.smokeReportArtifact.schemaVersion must be ai-backend-smoke-v1"),
-    validator.includes("ai.smokeReportArtifact.sanitized must be true"),
-    validator.includes("challenge-remote-endpoint"),
-    validator.includes("contractProof.endpointPathRequirements.coach"),
-    validator.includes("contractProof.responseBoundary.secretValuesOmitted"),
-    validator.includes("providerFallbackArtifact"),
-    validator.includes("forbiddenSensitiveAiFields"),
-    validator.includes("rawPrompt"),
-    validator.includes("providerApiKey"),
+    validator.includes("aiBackendSmokeIssues"),
+    validator.includes("google-clara-release-evidence"),
+    validator.includes("evidenceIssues(payload, root)"),
+    read("scripts/lib/google-clara-release-evidence.js").includes("Missing fresh checksummed production capture"),
+    read("scripts/lib/google-clara-release-evidence.js").includes("Current reviewed signed binary/source/revision/deployment binding"),
+    read("scripts/lib/google-clara-release-evidence.js").includes("privateData"),
     validator.includes("toISOString"),
     validator.includes("Date.now"),
     validator.includes("--evidence-dir"),
@@ -3467,8 +3511,8 @@ function auditValidationEvidenceWorkflow(): AuditItem {
     scaffold.includes("Production Environment Preflight"),
     scaffold.includes("captureHelperCommand"),
     scaffold.includes("captureHelperNotes"),
-    scaffold.includes("preloads non-secret store provider, Core 3 product IDs, entitlement"),
-    scaffold.includes("preloads non-secret coach endpoint, challenge endpoint, optional retention endpoint, and model context"),
+    scaffold.includes("preloads non-secret store provider") && scaffold.includes("product IDs, entitlement"),
+    scaffold.includes("legacy coach/challenge/retention endpoint options are inactive"),
     scaffold.includes("Vision camera labels"),
     scaffold.includes("ML Kit camera labels"),
     scaffold.includes("Explicit store/ad CLI flags override release env-file values"),
@@ -4103,606 +4147,11 @@ function auditStoreLaunchConfig(): AuditItem {
     "Authoritative store-catalog, EAS workflow, Firebase public-SDK configuration, and local store-legal audits pass.",
     "Fix the named authoritative store or Firebase audit and rerun it."
   );
-  const missing: string[] = [];
-
-  const addMissing = (condition: boolean, label: string) => {
-    if (!condition) missing.push(label);
-  };
-
-  let eas: any = null;
-  let appJson: any = null;
-  let products: any = null;
-  let screenshotManifest: any = null;
-  let listingScreenshotTemplate: any = null;
-
-  try {
-    eas = has("eas.json") ? JSON.parse(read("eas.json")) : null;
-  } catch {
-    missing.push("valid eas.json");
-  }
-
-  try {
-    appJson = has("app.json") ? JSON.parse(read("app.json")) : null;
-  } catch {
-    missing.push("valid app.json");
-  }
-
-  try {
-    products = has("store/store-products.json") ? JSON.parse(read("store/store-products.json")) : null;
-  } catch {
-    missing.push("valid store/store-products.json");
-  }
-
-  try {
-    screenshotManifest = has("store/screenshots/manifest.json") ? JSON.parse(read("store/screenshots/manifest.json")) : null;
-  } catch {
-    missing.push("valid store/screenshots/manifest.json");
-  }
-
-  try {
-    listingScreenshotTemplate = has("store/screenshots/listing/manifest.template.json")
-      ? JSON.parse(read("store/screenshots/listing/manifest.template.json"))
-      : null;
-  } catch {
-    missing.push("valid store/screenshots/listing/manifest.template.json");
-  }
-
-  const packageJson = has("package.json") ? read("package.json") : "";
-  const privacyPolicy = has("store/privacy-policy.md") ? read("store/privacy-policy.md") : "";
-  const appStoreMetadata = has("store/app-store/metadata.md") ? read("store/app-store/metadata.md") : "";
-  const appStorePrivacy = has("store/app-store/app-privacy.md") ? read("store/app-store/app-privacy.md") : "";
-  const playStoreMetadata = has("store/play-store/metadata.md") ? read("store/play-store/metadata.md") : "";
-  const playStoreProductsCsv = has("store/play-store/products.csv") ? read("store/play-store/products.csv") : "";
-  const playStoreDataSafety = has("store/play-store/data-safety.md") ? read("store/play-store/data-safety.md") : "";
-  const appStorePurchasesCsv = has("store/app-store/in-app-purchases.csv") ? read("store/app-store/in-app-purchases.csv") : "";
-  const consoleLaunchPacket = has("store/console-launch-packet.md") ? read("store/console-launch-packet.md") : "";
-  const listingScreenshotPlan = has("store/screenshots/listing-screenshot-plan.md")
-    ? read("store/screenshots/listing-screenshot-plan.md")
-    : "";
-  const pricingEconomics = has("store/pricing-economics.md") ? read("store/pricing-economics.md") : "";
-  const submissionChecklist = has("store/release-submission-checklist.md") ? read("store/release-submission-checklist.md") : "";
-  const easSubmitGuard = has("scripts/eas-submit-guard.js") ? read("scripts/eas-submit-guard.js") : "";
-  const easWorkflowAudit = has("scripts/eas-workflow-audit.js") ? read("scripts/eas-workflow-audit.js") : "";
-  const easInternalWorkflow = has(".eas/workflows/freed-internal-builds.yml") ? read(".eas/workflows/freed-internal-builds.yml") : "";
-  const easStoreWorkflow = has(".eas/workflows/freed-store-builds.yml") ? read(".eas/workflows/freed-store-builds.yml") : "";
-  const smokeHarnessAudit = has("scripts/smoke-harness-audit.js") ? read("scripts/smoke-harness-audit.js") : "";
-  const publicPrivacyRoute = has("app/privacy.tsx") ? read("app/privacy.tsx") : "";
-  const publicSupportRoute = has("app/support.tsx") ? read("app/support.tsx") : "";
-  const publicDeletionRoute = has("app/account-deletion.tsx") ? read("app/account-deletion.tsx") : "";
-  const legalPages = has("src/features/legal-pages.tsx") ? read("src/features/legal-pages.tsx") : "";
-  const privacyMap = has("docs/privacy-data-map.md") ? read("docs/privacy-data-map.md") : "";
-  const androidPolicy = has("docs/store-policy/android-accessibility-and-fgs-disclosure.md")
-    ? read("docs/store-policy/android-accessibility-and-fgs-disclosure.md")
-    : "";
-  const iosPolicy = has("docs/store-policy/ios-screen-time-safari-dns-review.md")
-    ? read("docs/store-policy/ios-screen-time-safari-dns-review.md")
-    : "";
-
-  addMissing(eas?.cli?.appVersionSource === "remote", "EAS remote app version source");
-  addMissing(Boolean(eas?.build?.internal && eas?.build?.production), "EAS internal and production build profiles");
-  addMissing(eas?.build?.internal?.android?.buildType === "apk", "EAS internal Android APK profile");
-  addMissing(eas?.build?.production?.android?.buildType === "app-bundle", "EAS production Android app-bundle profile");
-  addMissing(eas?.build?.production?.channel === "production", "EAS production channel");
-  addMissing(eas?.submit?.production?.android?.track === "internal", "Play submit stays on internal track before promotion");
-  addMissing(eas?.submit?.production?.android?.releaseStatus === "draft", "Play submit releaseStatus stays draft before evidence passes");
-  addMissing(eas?.submit?.production?.ios && typeof eas.submit.production.ios === "object", "iOS EAS submit profile placeholder");
-  addMissing(packageJson.includes('"eas:build:internal"'), "internal EAS build npm script");
-  addMissing(packageJson.includes('"eas:build:production"'), "production EAS build npm script");
-  addMissing(packageJson.includes('"eas:submit:internal"'), "internal EAS submit npm script");
-  addMissing(packageJson.includes('"eas:submit:production"'), "production EAS submit npm script");
-  addMissing(
-    packageJson.includes('"eas:submit:internal": "node -- scripts/eas-submit-guard.js --profile internal"') &&
-      packageJson.includes('"eas:submit:production": "node -- scripts/eas-submit-guard.js --profile production"'),
-    "EAS submit npm scripts route through guarded wrapper"
-  );
-  addMissing(
-    easSubmitGuard.includes("freed-eas-submit-guard-v1") &&
-      easSubmitGuard.includes("FREED_STORE_PRODUCTION_SUBMIT_APPROVED") &&
-      easSubmitGuard.includes("strict-release-evidence-pass") &&
-      easSubmitGuard.includes("production EAS submit must stay on the Play internal track before evidence approval") &&
-      easSubmitGuard.includes("production EAS submit must keep Play releaseStatus as draft before evidence approval") &&
-      easSubmitGuard.includes("submitForReview") &&
-      easSubmitGuard.includes("eas submit guard self-test: pass"),
-    "EAS submit guard blocks live-submit drift before evidence approval"
-  );
-  addMissing(
-    smokeHarnessAudit.includes("eas submit guard syntax") &&
-      smokeHarnessAudit.includes("eas submit guard self-test"),
-    "EAS submit guard smoke harness coverage"
-  );
-  addMissing(
-    smokeHarnessAudit.includes("FREED_SMOKE_HARNESS_CHECK_TIMEOUT_MS") &&
-      smokeHarnessAudit.includes("timeout: checkTimeoutMs") &&
-      smokeHarnessAudit.includes("Timed out after ${timeoutMs}ms."),
-    "bounded smoke harness check timeout"
-  );
-  addMissing(packageJson.includes('"audit:eas-workflows": "node -- scripts/eas-workflow-audit.js"'), "EAS workflow audit npm script");
-  addMissing(
-    easInternalWorkflow.includes("FREED Internal QA Builds") &&
-      easInternalWorkflow.includes("workflow_dispatch") &&
-      easInternalWorkflow.includes("profile: internal") &&
-      easInternalWorkflow.includes("platform: android") &&
-      easInternalWorkflow.includes("platform: ios") &&
-      easInternalWorkflow.includes("refresh_ad_hoc_provisioning_profile: true") &&
-      easInternalWorkflow.includes("npm run eas:submit:internal -- --dry-run"),
-    "manual EAS internal QA workflow"
-  );
-  addMissing(
-    easStoreWorkflow.includes("FREED Store Artifact Builds") &&
-      easStoreWorkflow.includes("workflow_dispatch") &&
-      easStoreWorkflow.includes("profile: production") &&
-      easStoreWorkflow.includes("platform: android") &&
-      easStoreWorkflow.includes("platform: ios") &&
-      easStoreWorkflow.includes("npm run audit:smoke-harnesses") &&
-      easStoreWorkflow.includes("npm run eas:submit:production -- --dry-run") &&
-      easStoreWorkflow.includes("Do not run live production submission from EAS Workflows") &&
-      easStoreWorkflow.includes("strict-release-evidence-pass") &&
-      !easStoreWorkflow.includes("type: submit"),
-    "manual EAS store artifact workflow with no live submit job"
-  );
-  addMissing(
-    easWorkflowAudit.includes("freed-internal-builds.yml") &&
-      easWorkflowAudit.includes("freed-store-builds.yml") &&
-      easWorkflowAudit.includes("store-no-submit-job") &&
-      easWorkflowAudit.includes("store-submit-boundary") &&
-      easWorkflowAudit.includes("eas workflow audit self-test: pass") &&
-      smokeHarnessAudit.includes("eas workflow audit self-test") &&
-      smokeHarnessAudit.includes("eas workflow audit"),
-    "EAS workflow audit smoke harness coverage"
-  );
-  addMissing(packageJson.includes('"build:android-aab:upload-signed"'), "local upload-signed Android AAB build npm script");
-  addMissing(packageJson.includes('"build:ios-archive:release"'), "local signed iOS Release archive npm script");
-  addMissing(appJson?.expo?.ios?.bundleIdentifier === "app.freed.recovery", "iOS bundle identifier");
-  addMissing(appJson?.expo?.android?.package === "app.freed.recovery", "Android package identifier");
-  addMissing(appJson?.expo?.web?.output === "static", "Expo web static output for public store pages");
-
-  const launchProductIds = Array.isArray(products?.launchProductIds) ? products.launchProductIds : [];
-  const requiredLaunchPlanIdsInOrder = ["yearly", "monthly", "lifetime"];
-  const requiredLaunchProductIdsInOrder = [
-    "freed_premium_yearly",
-    "freed_premium_monthly",
-    "freed_premium_lifetime"
-  ];
-  const csvPlanOrder = (csv: string) =>
-    csv
-      .trim()
-      .split(/\r?\n/)
-      .slice(1)
-      .map((line) => line.split(",", 1)[0])
-      .filter(Boolean);
-  const orderMatches = (actual: string[], expected: string[]) =>
-    actual.length === expected.length && expected.every((value, index) => actual[index] === value);
-  const launchProductSet = new Set(launchProductIds);
-  const productPlanIds = Array.isArray(products?.products)
-    ? products.products.map((product: { planId?: string }) => product.planId).filter(Boolean)
-    : [];
-  const productIdSet = new Set(
-    Array.isArray(products?.products)
-      ? products.products.map((product: { productId?: string }) => product.productId).filter(Boolean)
-      : []
-  );
-  const productRows = Array.isArray(products?.products) ? products.products : [];
-  const productByPlan = new Map(
-    productRows.map((product: { planId?: string }) => [product.planId, product])
-  );
-  const requiredProductConfigs = [
-    {
-      appleType: "auto-renewable-subscription",
-      billingPeriod: "P1M",
-      googleType: "subscription",
-      planId: "monthly",
-      productId: "freed_premium_monthly",
-      reviewScreenshot: "store/screenshots/paywall-monthly.png"
-    },
-    {
-      appleType: "auto-renewable-subscription",
-      billingPeriod: "P1Y",
-      googleType: "subscription",
-      planId: "yearly",
-      productId: "freed_premium_yearly",
-      reviewScreenshot: "store/screenshots/paywall-yearly.png"
-    },
-    {
-      appleType: "non-consumable",
-      billingPeriod: "lifetime",
-      googleType: "one-time-product",
-      planId: "lifetime",
-      productId: "freed_premium_lifetime",
-      reviewScreenshot: "store/screenshots/paywall-lifetime.png"
-    }
-  ];
-  const hasPerStoreProductMetadata = requiredProductConfigs.every((config) => {
-    const product = productByPlan.get(config.planId) as {
-      apple?: Record<string, unknown>;
-      google?: Record<string, unknown>;
-      priceUsd?: string;
-      productId?: string;
-    } | undefined;
-    const apple = product?.apple ?? {};
-    const google = product?.google ?? {};
-    const appleLocalization = apple.localizations as Record<string, { displayName?: string; description?: string }> | undefined;
-    const googleLocalization = google.localizations as Record<string, { displayName?: string; description?: string }> | undefined;
-    const appleDescription = appleLocalization?.["en-US"]?.description ?? "";
-    const googleDescription = googleLocalization?.["en-US"]?.description ?? "";
-    return (
-      product?.productId === config.productId &&
-      apple.productId === config.productId &&
-      apple.productType === config.appleType &&
-      apple.referenceName &&
-      apple.priceUsdIntent === product.priceUsd &&
-      apple.reviewScreenshot === config.reviewScreenshot &&
-      appleDescription.includes("DNS Guard") &&
-      google.productId === config.productId &&
-      google.productType === config.googleType &&
-      google.billingPeriod === config.billingPeriod &&
-      google.priceUsdIntent === product.priceUsd &&
-      google.status === "draft-until-sandbox-verified" &&
-      googleDescription.includes("no-ad challenge entry") &&
-      (config.planId === "lifetime" || apple.subscriptionGroupId === "freed_premium") &&
-      (config.planId === "lifetime" || google.basePlanId === config.planId) &&
-      (config.planId !== "lifetime" || google.purchaseType === "non-consumable")
-    );
-  });
-  const economicsRows = Array.isArray(products?.launchEconomics?.plans) ? products.launchEconomics.plans : [];
-  const economicsByPlan = new Map(economicsRows.map((row: { planId?: string }) => [row.planId, row]));
-  const hasLaunchEconomics =
-    products?.launchEconomics?.schemaVersion === "freed-launch-economics-v1" &&
-    products?.launchEconomics?.source === "store/pricing-economics.md" &&
-    products?.launchEconomics?.conservativeStoreFeePercent === 30 &&
-    products?.launchEconomics?.optimizedStoreFeePercent === 15 &&
-    products?.launchEconomics?.monthlyReferenceGrossUsd === "9.99" &&
-    products?.launchEconomics?.serverVerificationRequired === true &&
-    products?.launchEconomics?.rewardedAdsOnlyForFreeUsers === true &&
-    products?.launchEconomics?.premiumNoAdChallengeEntry === true &&
-    economicsByPlan.get("monthly")?.productId === "freed_premium_monthly" &&
-    economicsByPlan.get("monthly")?.estimatedNetUsdAt30PercentStoreFee === "6.99" &&
-    economicsByPlan.get("monthly")?.estimatedNetUsdAt15PercentStoreFee === "8.49" &&
-    economicsByPlan.get("yearly")?.productId === "freed_premium_yearly" &&
-    economicsByPlan.get("yearly")?.monthlyEquivalentGrossUsd === "3.33" &&
-    economicsByPlan.get("yearly")?.discountVsMonthlyPercent === 67 &&
-    economicsByPlan.get("yearly")?.profitabilityRole === "primary-value" &&
-    economicsByPlan.get("lifetime")?.productId === "freed_premium_lifetime" &&
-    economicsByPlan.get("lifetime")?.breakevenMonthsVsMonthly === 8 &&
-    economicsByPlan.get("lifetime")?.breakevenYearsVsYearly === 2 &&
-    economicsByPlan.get("lifetime")?.profitabilityRole === "cashflow-anchor";
-  addMissing(products?.schemaVersion === "freed-store-products-v1", "store product catalog schema");
-  addMissing(products?.bundleId === "app.freed.recovery", "store product catalog bundle ID");
-  addMissing(products?.packageName === "app.freed.recovery", "store product catalog package name");
-  addMissing(products?.entitlementId === "premium", "premium entitlement id");
-  addMissing(products?.subscriptionGroupId === "freed_premium", "premium subscription group id");
-  addMissing(
-    launchProductIds.length === 3 &&
-      launchProductSet.has("freed_premium_monthly") &&
-      launchProductSet.has("freed_premium_yearly") &&
-      launchProductSet.has("freed_premium_lifetime"),
-    "Core 3 launch product ids only"
-  );
-  addMissing(orderMatches(launchProductIds, requiredLaunchProductIdsInOrder), "Core 3 launch product ids use yearly/monthly/lifetime order");
-  addMissing(
-    productPlanIds.includes("monthly") && productPlanIds.includes("yearly") && productPlanIds.includes("lifetime"),
-    "yearly/monthly/lifetime product plans"
-  );
-  addMissing(orderMatches(productPlanIds, requiredLaunchPlanIdsInOrder), "Core 3 product catalog uses yearly/monthly/lifetime order");
-  addMissing(
-    productIdSet.has("freed_premium_monthly") &&
-      productIdSet.has("freed_premium_yearly") &&
-      productIdSet.has("freed_premium_lifetime"),
-    "Core 3 product metadata"
-  );
-  addMissing(hasPerStoreProductMetadata, "per-store Core 3 console product metadata");
-  addMissing(hasLaunchEconomics, "Core 3 launch pricing economics and profitability assumptions");
-  addMissing(
-    has("store/pricing-economics.md") &&
-      pricingEconomics.includes("FREED Launch Pricing Economics") &&
-      pricingEconomics.includes("Apple App Store Small Business Program") &&
-      pricingEconomics.includes("Google Play service fees") &&
-      pricingEconomics.includes("Conservative fee model: 30% store fee") &&
-      pricingEconomics.includes("Optimized fee model: 15% store fee") &&
-      pricingEconomics.includes("USD 3.33 per month equivalent") &&
-      pricingEconomics.includes("8-month breakeven against monthly") &&
-      pricingEconomics.includes("Do not promote production until sandbox purchase"),
-    "store pricing economics handoff"
-  );
-  addMissing(
-    products?.consoleExportFiles?.appStoreConnectCsv === "store/app-store/in-app-purchases.csv" &&
-      products?.consoleExportFiles?.googlePlayCsv === "store/play-store/products.csv",
-    "store product console export file references"
-  );
-  addMissing(
-    appStorePurchasesCsv.includes("plan_id,product_id,apple_type,subscription_group_id,duration") &&
-      appStorePurchasesCsv.includes("monthly,freed_premium_monthly,auto-renewable-subscription,freed_premium,P1M") &&
-      appStorePurchasesCsv.includes("yearly,freed_premium_yearly,auto-renewable-subscription,freed_premium,P1Y") &&
-      appStorePurchasesCsv.includes("lifetime,freed_premium_lifetime,non-consumable,,lifetime"),
-    "App Store Connect Core 3 IAP CSV"
-  );
-  addMissing(orderMatches(csvPlanOrder(appStorePurchasesCsv), requiredLaunchPlanIdsInOrder), "App Store Connect IAP CSV uses yearly/monthly/lifetime order");
-  const appStoreReviewScreenshotPaths = Array.from(
-    new Set(appStorePurchasesCsv.match(/store\/screenshots\/[A-Za-z0-9_.-]+\.png/g) ?? [])
-  );
-  const screenshotRows = Array.isArray(screenshotManifest?.assets) ? screenshotManifest.assets : [];
-  const screenshotByPath = new Map(screenshotRows.map((asset: { path?: string }) => [asset.path, asset]));
-  const listingTemplateRows = Array.isArray(listingScreenshotTemplate?.assets) ? listingScreenshotTemplate.assets : [];
-  const listingTemplateIds = listingTemplateRows
-    .map((asset: { id?: string }) => asset.id)
-    .filter(Boolean);
-  const requiredListingTemplateIds = [
-    "turn-on-real-protection",
-    "block-adult-sites-safely",
-    "interrupt-app-loops",
-    "recover-in-the-moment",
-    "keep-privacy-local",
-    "upgrade-without-ad-breaks"
-  ];
-  const requiredStoreScreenshotConfigs = [
-    {
-      path: "store/screenshots/paywall-monthly.png",
-      planId: "monthly",
-      productId: "freed_premium_monthly"
-    },
-    {
-      path: "store/screenshots/paywall-yearly.png",
-      planId: "yearly",
-      productId: "freed_premium_yearly"
-    },
-    {
-      path: "store/screenshots/paywall-lifetime.png",
-      planId: "lifetime",
-      productId: "freed_premium_lifetime"
-    }
-  ];
-  const hasStoreScreenshotManifest =
-    screenshotManifest?.schemaVersion === "freed-store-screenshots-v1" &&
-    screenshotManifest?.reviewBoundary?.core3Only === true &&
-    screenshotManifest?.reviewBoundary?.requiresFreshStoreSandboxScreenshotsBeforeProduction === true &&
-    screenshotManifest?.reviewBoundary?.futureProductsHidden?.includes("freed_family_yearly") &&
-    screenshotManifest?.reviewBoundary?.futureProductsHidden?.includes("freed_accountability_monthly") &&
-    screenshotManifest?.reviewBoundary?.futureProductsHidden?.includes("freed_ai_coach_monthly") &&
-    requiredStoreScreenshotConfigs.every((config) => {
-      const asset = screenshotByPath.get(config.path) as {
-        height?: number;
-        planId?: string;
-        productId?: string;
-        purpose?: string;
-        sha256?: string;
-        width?: number;
-      } | undefined;
-      return (
-        has(config.path) &&
-        appStoreReviewScreenshotPaths.includes(config.path) &&
-        asset?.planId === config.planId &&
-        asset?.productId === config.productId &&
-        asset?.purpose?.includes("IAP review screenshot") &&
-        asset?.width === 1180 &&
-        asset?.height === 2676 &&
-        typeof asset?.sha256 === "string" &&
-        /^[a-f0-9]{64}$/.test(asset.sha256) &&
-        sha256File(config.path) === asset.sha256
-      );
-    });
-  addMissing(
-    appStoreReviewScreenshotPaths.length === 3 &&
-      appStoreReviewScreenshotPaths.every((screenshotPath) => has(screenshotPath)),
-    "App Store IAP review screenshot files"
-  );
-  addMissing(hasStoreScreenshotManifest, "store screenshot manifest and Core 3 IAP screenshot checksums");
-  addMissing(
-    listingScreenshotPlan.includes("FREED Store Listing Screenshot Plan") &&
-      listingScreenshotPlan.includes("TURN ON REAL PROTECTION") &&
-      listingScreenshotPlan.includes("BLOCK ADULT SITES SAFELY") &&
-      listingScreenshotPlan.includes("INTERRUPT APP LOOPS") &&
-      listingScreenshotPlan.includes("RECOVER IN THE MOMENT") &&
-      listingScreenshotPlan.includes("KEEP PRIVACY LOCAL") &&
-      listingScreenshotPlan.includes("UPGRADE WITHOUT AD BREAKS") &&
-      listingScreenshotPlan.includes("store/screenshots/listing/manifest.template.json") &&
-      listingScreenshotPlan.includes("store/screenshots/listing/manifest.json") &&
-      listingScreenshotPlan.includes("Do not use these screenshots as physical-device protection evidence"),
-    "App Store / Play listing screenshot capture plan"
-  );
-  addMissing(
-    listingScreenshotTemplate?.schemaVersion === "freed-store-listing-screenshot-template-v1" &&
-      listingScreenshotTemplate?.finalManifestPath === "store/screenshots/listing/manifest.json" &&
-      listingTemplateRows.length === requiredListingTemplateIds.length &&
-      requiredListingTemplateIds.every((id) => listingTemplateIds.includes(id)) &&
-      listingTemplateRows.every((asset: { headline?: string; reviewBoundary?: string; screen?: string }) =>
-        Boolean(asset.headline && asset.screen && asset.reviewBoundary?.includes("not physical-device protection evidence"))
-      ),
-    "App Store / Play listing screenshot manifest template"
-  );
-  addMissing(
-    playStoreProductsCsv.includes("plan_id,product_id,product_type,base_plan_id,billing_period") &&
-      playStoreProductsCsv.includes("monthly,freed_premium_monthly,subscription,monthly,P1M") &&
-      playStoreProductsCsv.includes("yearly,freed_premium_yearly,subscription,yearly,P1Y") &&
-      playStoreProductsCsv.includes("lifetime,freed_premium_lifetime,one-time-product,,lifetime"),
-    "Google Play Core 3 product CSV"
-  );
-  addMissing(orderMatches(csvPlanOrder(playStoreProductsCsv), requiredLaunchPlanIdsInOrder), "Google Play product CSV uses yearly/monthly/lifetime order");
-  addMissing(
-    Array.isArray(products?.futureProductsDisabledForV1) &&
-      products.futureProductsDisabledForV1.includes("freed_ai_coach_monthly") &&
-      products.futureProductsDisabledForV1.includes("freed_family_yearly") &&
-      products.futureProductsDisabledForV1.includes("freed_accountability_monthly"),
-    "future product ids disabled for v1"
-  );
-
-  addMissing(privacyPolicy.includes("Android Accessibility") && privacyPolicy.includes("DNS-only VPN"), "Android privacy policy permission disclosures");
-  addMissing(privacyPolicy.includes("Family Controls") && privacyPolicy.includes("DeviceActivity"), "iOS privacy policy permission disclosures");
-  addMissing(privacyPolicy.includes("Purchase verification") && privacyPolicy.includes("support@freedrecovery.app"), "payments/support privacy policy details");
-  addMissing(
-    appStoreMetadata.includes("Core 3 launch products") &&
-      appStoreMetadata.includes("Review Notes") &&
-      appStoreMetadata.includes("store/screenshots/manifest.json") &&
-      appStoreMetadata.includes("store/screenshots/listing-screenshot-plan.md"),
-    "App Store metadata, review notes, and IAP screenshot manifest reference"
-  );
-  addMissing(appStoreMetadata.includes("Family Controls") && appStoreMetadata.includes("Safari Content Blocker"), "App Store Screen Time/Safari disclosure");
-  addMissing(playStoreMetadata.includes("AccessibilityService") && playStoreMetadata.includes("VpnService"), "Play Accessibility/VpnService declarations");
-  addMissing(playStoreMetadata.includes("Data Safety Draft") && playStoreMetadata.includes("Family/accountability/AI coach SKUs are disabled for v1"), "Play Data Safety and v1 product declaration");
-  addMissing(playStoreMetadata.includes("store/screenshots/listing-screenshot-plan.md"), "Play listing screenshot plan reference");
-  addMissing(playStoreDataSafety.includes("FREED Google Play Data Safety Answer Sheet"), "Play Data Safety answer sheet");
-  addMissing(
-    playStoreDataSafety.includes("Purchase history") &&
-      playStoreDataSafety.includes("Device or other IDs") &&
-      playStoreDataSafety.includes("App interactions") &&
-      playStoreDataSafety.includes("Web browsing history") &&
-      playStoreDataSafety.includes("not sent off device"),
-    "Play Data Safety collected/not-collected data declarations"
-  );
-  addMissing(
-    playStoreDataSafety.includes("Encryption in transit") &&
-      playStoreDataSafety.includes("Data deletion mechanism") &&
-      playStoreDataSafety.includes("support@freedrecovery.app") &&
-      playStoreDataSafety.includes("Families policy") &&
-      playStoreDataSafety.includes("No"),
-    "Play Data Safety security/deletion/families answers"
-  );
-  addMissing(appStorePrivacy.includes("FREED App Store App Privacy Answer Sheet"), "App Store privacy answer sheet");
-  addMissing(
-    appStorePrivacy.includes("Data used to track users: No") &&
-      appStorePrivacy.includes("Purchase History") &&
-      appStorePrivacy.includes("Device ID") &&
-      appStorePrivacy.includes("Product Interaction") &&
-      appStorePrivacy.includes("Browsing History") &&
-      appStorePrivacy.includes("not sent off device"),
-    "App Store privacy tracking and data-category declarations"
-  );
-  addMissing(
-    appStorePrivacy.includes("Family Controls") &&
-      appStorePrivacy.includes("ManagedSettings") &&
-      appStorePrivacy.includes("DeviceActivity") &&
-      appStorePrivacy.includes("Safari Content Blocker") &&
-      appStorePrivacy.includes("dns-settings"),
-    "App Store privacy Screen Time/Safari/DNS review alignment"
-  );
-  addMissing(consoleLaunchPacket.includes("FREED Console Launch Packet"), "store console launch packet");
-  addMissing(publicPrivacyRoute.includes("PrivacyPolicyPage"), "public /privacy route");
-  addMissing(publicSupportRoute.includes("SupportPage"), "public /support route");
-  addMissing(publicDeletionRoute.includes("AccountDeletionPage"), "public /account-deletion route");
-  addMissing(
-    legalPages.includes("FREED Privacy Policy") &&
-      legalPages.includes("Effective date: June 6, 2026") &&
-      legalPages.includes("Android Accessibility") &&
-      legalPages.includes("DNS-only VPN") &&
-      legalPages.includes("Family Controls") &&
-      legalPages.includes("DeviceActivity") &&
-      legalPages.includes("Purchase verification") &&
-      legalPages.includes("Data deletion") &&
-      legalPages.includes("support@freedrecovery.app"),
-    "public privacy page permission/payment/deletion disclosures"
-  );
-  addMissing(
-    legalPages.includes("FREED Support") &&
-      legalPages.includes("Google Play") &&
-      legalPages.includes("App Store") &&
-      legalPages.includes("AccessibilityService") &&
-      legalPages.includes("VpnService") &&
-      legalPages.includes("Account deletion"),
-    "public support page store and protection support scope"
-  );
-  addMissing(
-    legalPages.includes("FREED Account Deletion") &&
-      legalPages.includes("Delete Local Data") &&
-      legalPages.includes("hosted encrypted backup sync") &&
-      legalPages.includes("purchase audit records") &&
-      legalPages.includes("legal retention") &&
-      legalPages.includes("https://freedrecovery.app/account-deletion"),
-    "public account deletion page local and hosted deletion scope"
-  );
-  addMissing(
-    consoleLaunchPacket.includes("Do not submit production") &&
-      consoleLaunchPacket.includes("Play internal track and draft release") &&
-      consoleLaunchPacket.includes("App Store Connect/TestFlight beta only"),
-    "console packet draft/internal submission guard"
-  );
-  addMissing(
-    consoleLaunchPacket.includes("app.freed.recovery") &&
-      consoleLaunchPacket.includes("https://freedrecovery.app/privacy") &&
-      consoleLaunchPacket.includes("https://freedrecovery.app/account-deletion") &&
-      consoleLaunchPacket.includes("support@freedrecovery.app"),
-    "console packet app identifiers and URLs"
-  );
-  addMissing(
-    consoleLaunchPacket.includes("freed_premium_monthly") &&
-      consoleLaunchPacket.includes("freed_premium_yearly") &&
-      consoleLaunchPacket.includes("freed_premium_lifetime") &&
-      consoleLaunchPacket.includes("store/app-store/in-app-purchases.csv") &&
-      consoleLaunchPacket.includes("store/play-store/products.csv") &&
-      consoleLaunchPacket.includes("store/screenshots/manifest.json") &&
-      consoleLaunchPacket.includes("store/screenshots/listing-screenshot-plan.md") &&
-      consoleLaunchPacket.includes("store/screenshots/listing/manifest.template.json") &&
-      consoleLaunchPacket.includes("subscription group `freed_premium`") &&
-      consoleLaunchPacket.includes("base plans `yearly`") &&
-      consoleLaunchPacket.includes("`monthly` with billing period `P1M`") &&
-      consoleLaunchPacket.includes("store/pricing-economics.md") &&
-      consoleLaunchPacket.includes("67% discount against monthly") &&
-      consoleLaunchPacket.includes("8-month breakeven against monthly") &&
-      consoleLaunchPacket.includes("freed_family_yearly") &&
-      consoleLaunchPacket.includes("freed_accountability_monthly") &&
-      consoleLaunchPacket.includes("freed_ai_coach_monthly"),
-    "console packet Core 3 economics and disabled future product scope"
-  );
-  addMissing(
-    consoleLaunchPacket.includes("Google Play Console Setup") &&
-      consoleLaunchPacket.includes("store/play-store/data-safety.md") &&
-      consoleLaunchPacket.includes("Data Safety") &&
-      consoleLaunchPacket.includes("AccessibilityService") &&
-      consoleLaunchPacket.includes("VpnService") &&
-      consoleLaunchPacket.includes("npm run build:android-aab:upload-signed") &&
-      consoleLaunchPacket.includes("npm run build:ios-archive:release") &&
-      consoleLaunchPacket.includes("FREED_ANDROID_UPLOAD_STORE_FILE") &&
-      consoleLaunchPacket.includes("CMake exit 137") &&
-      consoleLaunchPacket.includes("EAS build URL") &&
-      consoleLaunchPacket.includes("Do not use the older side-load APK as proof of latest native code"),
-    "console packet Play Data Safety, Accessibility, VPN, Android signing, iOS archive setup, and EAS Android fallback"
-  );
-  addMissing(
-    consoleLaunchPacket.includes("App Store Connect Setup") &&
-      consoleLaunchPacket.includes("store/app-store/app-privacy.md") &&
-      consoleLaunchPacket.includes("App Privacy") &&
-      consoleLaunchPacket.includes("Family Controls") &&
-      consoleLaunchPacket.includes("DeviceActivity") &&
-      consoleLaunchPacket.includes("Safari Content Blocker"),
-    "console packet App Privacy and Screen Time/Safari setup"
-  );
-  addMissing(
-    consoleLaunchPacket.includes("EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT") &&
-      consoleLaunchPacket.includes("App Store Server API credentials") &&
-      consoleLaunchPacket.includes("Google Play service-account credentials") &&
-      consoleLaunchPacket.includes("EXPO_PUBLIC_ADMOB_USE_TEST_ADS=false"),
-    "console packet payments, server verification, and AdMob production setup"
-  );
-  addMissing(
-    consoleLaunchPacket.includes("docs/validation/evidence/store-ad-sandbox.json") &&
-      consoleLaunchPacket.includes("console product setup proof for Core 3 only") &&
-      consoleLaunchPacket.includes("docs/validation/evidence/android-real-browser.json") &&
-      consoleLaunchPacket.includes("docs/validation/evidence/ios-physical-device.json") &&
-      consoleLaunchPacket.includes("docs/validation/evidence/performance-profile.json") &&
-      consoleLaunchPacket.includes("docs/validation/evidence/ai-backend-smoke.json"),
-    "console packet release evidence checklist"
-  );
-  addMissing(
-    submissionChecklist.includes("Production submission must wait") &&
-      submissionChecklist.includes("npm run verify:release") &&
-      submissionChecklist.includes("store/screenshots/listing-screenshot-plan.md"),
-    "store submission checklist gates"
-  );
-  addMissing(privacyMap.includes("Accessibility") && privacyMap.includes("purchase"), "privacy data map alignment source");
-  addMissing(androidPolicy.includes("AccessibilityService") && androidPolicy.includes("VpnService"), "Android store policy disclosure doc");
-  addMissing(iosPolicy.includes("Family Controls") && iosPolicy.includes("Safari"), "iOS store policy disclosure doc");
-
-  return item(
-    "store-launch-config",
-    readinessStatus(missing),
-    missing.length === 0
-      ? "EAS build/submit profiles, manual internal/store artifact workflows, workflow audit, and guarded submit wrapper, Core 3 product catalog with App Store/Play console CSV handoff rows, IAP review screenshots with checksummed manifest, listing screenshot capture plan, launch pricing economics, public privacy/support/deletion routes, console launch packet, privacy policy, App Store metadata/privacy answers, Play metadata/Data Safety answers, policy disclosures, and submission checklist are present with production submit kept draft/internal until evidence passes."
-      : `Missing: ${missing.join(", ")}.`,
-    missing.length === 0
-      ? undefined
-      : "Restore EAS store profiles, manual EAS workflow handoffs, submit guard, Core 3 launch product metadata, listing screenshot plan/template, economics, public privacy/support/deletion routes, console packet, privacy/policy docs, and draft-gated store submission handoff before release."
-  );
 }
 
 function auditStoreLegalHostedUrls(): AuditItem {
-  const reportPath = "docs/validation/artifacts/store-legal-hosted-current/store-legal-hosted-url-audit.json";
+  const reportPath = readEnv("FREED_STORE_LEGAL_HOSTED_REPORT") || "docs/validation/artifacts/store-legal-hosted-current/store-legal-hosted-url-audit.json";
+  const legalUrls = getLegalUrls(process.env);
   const report = readJsonObject(reportPath);
   const requiredRouteIds = ["privacy", "support", "account-deletion"];
   const requiredCheckIds = requiredRouteIds.flatMap((routeId) => [
@@ -4743,13 +4192,15 @@ function auditStoreLegalHostedUrls(): AuditItem {
     if (routeResults.length !== requiredRouteIds.length) missing.push("hosted legal audit routeResults for privacy/support/account-deletion");
 
     for (const routeId of requiredRouteIds) {
-      if (typeof publicUrls[routeId] !== "string" || !String(publicUrls[routeId]).startsWith("https://freedrecovery.app/")) {
+      if (typeof publicUrls[routeId] !== "string" || publicUrls[routeId] !== legalUrls[routeId]) {
         missing.push(`public URL for ${routeId}`);
       }
     }
     const missingCheckIds = requiredCheckIds.filter((checkId) => !passedCheckIds.has(checkId));
     if (missingCheckIds.length > 0) missing.push(`passing hosted checks: ${missingCheckIds.join(", ")}`);
     if (failedCheckIds.length > 0) missing.push(`failed hosted checks: ${failedCheckIds.join(", ")}`);
+    try { assertHostedLegalReport(report, reportPath, process.env); }
+    catch { missing.push("hosted legal report must prove HTTP 200 at the exact configured URLs with a complete sanitized check manifest"); }
   }
 
   return item(
@@ -4760,11 +4211,17 @@ function auditStoreLegalHostedUrls(): AuditItem {
       : `Missing: ${missing.join(", ")}.`,
     missing.length === 0
       ? undefined
-      : "Deploy the static web export to https://freedrecovery.app, verify DNS/TLS/CDN routing for /privacy, /support, and /account-deletion, then rerun npm run audit:store-legal-hosted before release."
+      : "Capture a fresh hosted audit for the configured privacy, support, and account-deletion URLs (canonical default: freed-landing.web.app), then rerun npm run audit:store-legal-hosted before release."
   );
 }
 
 function auditMonetization(): AuditItem {
+  if (firebaseSelected) {
+    const missing = ["EXPO_PUBLIC_ADMOB_APP_ID_IOS", "EXPO_PUBLIC_ADMOB_APP_ID_ANDROID", "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_IOS", "EXPO_PUBLIC_ADMOB_REWARDED_RESET_UNIT_ID_ANDROID"].filter(key => !hasUsableConfigValue(key)).concat(firebaseLaunchProductIdIssues(process.env));
+    if (readEnv("EXPO_PUBLIC_MONETIZATION_MODE") !== "native") missing.push("EXPO_PUBLIC_MONETIZATION_MODE=native");
+    if (readEnv("EXPO_PUBLIC_ADMOB_USE_TEST_ADS") !== "false") missing.push("EXPO_PUBLIC_ADMOB_USE_TEST_ADS=false");
+    return item("production-monetization", readinessStatus(missing), missing.length ? `Missing native launch configuration: ${missing.join(", ")}.` : "Monthly/yearly native billing and ad configuration are present; Firebase runtime and store/ad sandbox evidence remain separate mandatory gates.", missing.length ? "Configure launch billing/ad values and capture the required verified-purchase and rewarded-ad sandbox evidence." : undefined);
+  }
   const ios = getMonetizationReadiness({ mode: "native", platform: "ios" });
   const android = getMonetizationReadiness({ mode: "native", platform: "android" });
   const packageJson = read("package.json");
@@ -5281,48 +4738,12 @@ function auditProductionNotificationBackend(): AuditItem {
 }
 
 function auditAiBackend(): AuditItem {
-  const coach = getCoachReadiness({ mode: "remote" });
-  const challenge = getChallengeGenerationReadiness({ mode: "remote" });
-  const missing = [...coach.missing, ...challenge.missing];
-  const aiProvider = (readEnv("FREED_AI_PROVIDER") ?? readEnv("AI_PROVIDER") ?? "").toLowerCase();
-  const openAiReady = isOpenAiApiKey(readEnv("OPENAI_API_KEY")) && hasUsableConfigValue("OPENAI_MODEL");
-  const geminiReady = isGoogleAiApiKey(readGeminiAiServerKey()) && hasUsableConfigValue("GEMINI_MODEL");
-  const providerAllowed = !aiProvider || aiProvider === "openai" || aiProvider === "gemini";
-  const providerReady = providerAllowed && (aiProvider === "openai" ? openAiReady : aiProvider === "gemini" ? geminiReady : openAiReady || geminiReady);
-  const providerTimeoutIssue = boundedIntegerEnvIssue("FREED_AI_PROVIDER_TIMEOUT_MS", 500, 60_000);
-  const providerResponseMaxIssue = boundedIntegerEnvIssue("FREED_AI_PROVIDER_RESPONSE_MAX_BYTES", 10_000, 5_000_000);
-  const coachClientTimeoutIssue = boundedIntegerEnvIssue("EXPO_PUBLIC_AI_COACH_TIMEOUT_MS", 1_000, 12_000);
-  const challengeClientTimeoutIssue = boundedIntegerEnvIssue("EXPO_PUBLIC_AI_CHALLENGE_TIMEOUT_MS", 1_000, 12_000);
-  const retentionMode = (readEnv("EXPO_PUBLIC_RETENTION_MODE") ?? "local").toLowerCase();
-  const retentionEndpoint = readEnv("EXPO_PUBLIC_RETENTION_ENDPOINT");
-  const retentionClientTimeoutIssue = boundedIntegerEnvIssue("EXPO_PUBLIC_RETENTION_TIMEOUT_MS", 1_000, 12_000);
-  const endpointIssues = [
-    ...productionApiRouteIssues(readEnv("EXPO_PUBLIC_AI_COACH_ENDPOINT"), "remote coach endpoint", "/api/clara"),
-    ...productionApiRouteIssues(readEnv("EXPO_PUBLIC_AI_CHALLENGE_ENDPOINT"), "remote challenge endpoint", "/api/challenges")
-  ].filter((entry) => !entry.endsWith(" is not configured"));
-  if (retentionMode !== "local" && retentionMode !== "remote") {
-    missing.push("EXPO_PUBLIC_RETENTION_MODE must be local or remote");
+  if (firebaseSelected) {
+    const runtimeEvidence = getFirebasePreflightChecks(process.env).find((entry: { id: string }) => entry.id === "firebase-production-runtime-evidence");
+    const configured = runtimeEvidence?.status === "pass";
+    return item("production-ai-backend", configured ? "pass" : "fail", configured ? "Fresh production native and deployment captures prove Google CLARA with attached runtime identity; challenges and retention remain LOCAL." : "Missing current signed-client / attached Google CLARA runtime provider proof.", configured ? undefined : "Capture fresh checksummed Google CLARA model/runtime/build/Auth/AppCheck proof; owner-token HTTP200, unauthenticated401, legacy v1, and fallback are insufficient.");
   }
-  if (retentionMode === "remote" && !retentionEndpoint) {
-    missing.push("remote retention endpoint is not configured");
-  }
-  if (retentionEndpoint) {
-    endpointIssues.push(...productionApiRouteIssues(retentionEndpoint, "remote retention endpoint", "/api/retention"));
-  }
-  missing.push(...endpointIssues);
-  if (!providerReady) missing.push("server OPENAI_API_KEY and OPENAI_MODEL, or GEMINI_API_KEY/GOOGLE_API_KEY/GOOGLE_GENAI_API_KEY and GEMINI_MODEL");
-  if (providerTimeoutIssue) missing.push(providerTimeoutIssue);
-  if (providerResponseMaxIssue) missing.push(providerResponseMaxIssue);
-  if (coachClientTimeoutIssue) missing.push(coachClientTimeoutIssue);
-  if (challengeClientTimeoutIssue) missing.push(challengeClientTimeoutIssue);
-  if (retentionClientTimeoutIssue) missing.push(retentionClientTimeoutIssue);
-
-  return item(
-    "production-ai-backend",
-    readinessStatus(missing),
-    missing.length === 0 ? "Remote CLARA and dynamic challenge endpoints/providers are configured with bounded server provider calls." : `Missing: ${missing.join(", ")}.`,
-    missing.length === 0 ? undefined : "Configure privacy-reviewed remote coach and challenge-generation endpoints or providers, keep optional FREED_AI_PROVIDER_TIMEOUT_MS and FREED_AI_PROVIDER_RESPONSE_MAX_BYTES bounded, then run npm run eval:ai-safety against the release build."
-  );
+  return item("production-ai-backend", "fail", "Legacy remote AI configuration is inactive. Current launch requires Google CLARA through the Firebase native callable and fresh signed-client/attached-runtime captures.", "Select Firebase and capture current Google CLARA v2 proof; challenges and retention stay LOCAL.");
 }
 
 function auditAiSafetyHarness(): AuditItem {
@@ -5352,65 +4773,9 @@ function auditAiBackendSmokeHarness(): AuditItem {
   const packageJson = read("package.json");
   const smokeAudit = has("scripts/smoke-harness-audit.js") ? read("scripts/smoke-harness-audit.js") : "";
   const script = has("scripts/ai-backend-smoke.ts") ? read("scripts/ai-backend-smoke.ts") : "";
-  const checks = [
-    packageJson.includes('"smoke:ai-backend"'),
-    packageJson.includes('"smoke:ai-backend": "node -- scripts/run-ts-entry.js scripts/ai-backend-smoke.ts"'),
-    smokeAudit.includes("ai-backend-smoke.ts"),
-    smokeAudit.includes("--self-test"),
-    script.includes("configured-ai-model"),
-    script.includes("OPENAI_MODEL"),
-    script.includes("GEMINI_MODEL"),
-    script.includes("clara-remote-endpoint"),
-    script.includes("challenge-remote-endpoint"),
-    script.includes("challenge-personalization-profiles"),
-    script.includes("EXPO_PUBLIC_RETENTION_ENDPOINT"),
-    script.includes("EXPO_PUBLIC_RETENTION_TIMEOUT_MS"),
-    script.includes("--retention-endpoint"),
-    script.includes("retention-remote-endpoint"),
-    script.includes("retentionEndpointChecked"),
-    script.includes("retentionAggregateOnlyChecked"),
-    script.includes("freeHighRisk"),
-    script.includes("contextSignals"),
-    script.includes("riskForecast"),
-    script.includes("sessionDurationBucket"),
-    script.includes("recentFailureCount"),
-    script.includes("challengeSessionDurationBucketChecked"),
-    script.includes("challengeRecentFailureCountChecked"),
-    script.includes("Private [redacted-link]"),
-    script.includes("assertNoCoordinateFields"),
-    script.includes("assertNoSensitiveEcho"),
-    script.includes("fetchRemoteProviderResponse"),
-    script.includes("readRemoteProviderJson"),
-    script.includes("ai-backend-smoke-v1"),
-    script.includes("contractProof"),
-    script.includes("endpointPathRequirements"),
-    script.includes("endpointPathIssue"),
-    script.includes("configuredModelProof"),
-    script.includes("personalizationProofs"),
-    script.includes("privacyProofs"),
-    script.includes("responseBoundary"),
-    script.includes("serverSecretKeyNamesChecked"),
-    script.includes("secretValuesOmitted"),
-    script.includes("--report"),
-    script.includes("writeSmokeReport"),
-    script.includes("sanitizeDetailForReport"),
-    script.includes("aiBoundary"),
-    script.includes("assertSafeReportPath"),
-    script.includes("report-path-safety"),
-    reportPathSafetySource().includes("docs/validation/evidence"),
-    reportPathSafetySource().includes("docs/validation/artifacts/<run-id>"),
-    reportPathSafetySource().includes("must end in .json"),
-    reportPathSafetySource().includes("symbolic links"),
-    script.includes("EXPO_PUBLIC_AI_COACH_TIMEOUT_MS"),
-    script.includes("EXPO_PUBLIC_AI_CHALLENGE_TIMEOUT_MS")
-  ];
-
-  return passOrFail(
-    "ai-backend-smoke-harness",
-    checks.every(Boolean),
-    "AI backend smoke script can validate configured model plus deployed timeout-bounded CLARA, challenge, optional aggregate-only retention, personalization profile, context-signal, aggregate risk-forecast, coarse session-duration bucket, aggregate failed-reset count, no-coordinate, and no-sensitive-echo endpoints with sanitized JSON report artifacts before release.",
-    "Restore npm run smoke:ai-backend before connecting a production AI backend."
-  );
+  const contract = read("scripts/lib/google-clara-release-evidence.js");
+  const checks = [packageJson.includes('"smoke:ai-backend"'), smokeAudit.includes("--self-test"), script.includes("--native-capture"), script.includes("assertSafeReportPath"), script.includes("terminal-blocked"), script.includes("networkRequests:0"), contract.includes("ai-backend-smoke-v2"), contract.includes("production-native"), contract.includes("production-deployment"), contract.includes("gemini-3.5-flash-lite"), contract.includes("bindingIssues"), /candidatePhotos:\s*["']UNAVAILABLE["']/.test(contract)];
+  return passOrFail("ai-backend-smoke-harness", checks.every(Boolean), "CLARA callable evidence importer requires current checksummed deployment/native captures and records bounded BLOCKED proof when absent; recovery remains local.", "Restore the current Google CLARA capture contract and offline harness.");
 }
 
 function auditPurchaseVerificationSmokeHarness(): AuditItem {
@@ -5431,7 +4796,6 @@ function auditPurchaseVerificationSmokeHarness(): AuditItem {
     script.includes("purchase-unknown-product-fails-closed"),
     script.includes("purchase-fake-known-yearly-token-fails-closed"),
     script.includes("purchase-fake-known-monthly-token-fails-closed"),
-    script.includes("purchase-fake-known-lifetime-token-fails-closed"),
     script.includes("launchProductIdsChecked"),
     script.includes("fakeKnownTokenRejectedByPlan"),
     script.includes("purchase-verification-smoke-v1"),
@@ -6197,14 +5561,34 @@ function auditBackendArchitectureContract(): AuditItem {
 
 function auditExternalValidation(): AuditItem[] {
   return getValidationEvidenceResults(root).map((result) =>
-    item(result.id, result.status, result.evidence, result.next)
+    item(result.id, result.status, result.evidence.replace(/Core 3-only/g, "monthly/yearly-only"), result.next?.replace(/Core 3-only/g, "monthly/yearly-only"))
   );
+}
+
+function auditFirebaseFunctionsContracts(): AuditItem {
+  const checks = ["tests/firebase-feature-runtime.test.ts", "tests/firebase-native-integration.test.ts", "tests/firebase-native-runtime.test.ts"];
+  try {
+    for (const path of checks) execFileSync(process.execPath, ["scripts/run-ts-entry.js", path], { cwd: root, encoding: "utf8", timeout: 60_000, maxBuffer: 2_000_000 });
+    return item("firebase-functions-contracts", "pass", "Local Firebase feature and native-callable boundary tests pass. Production runtime captures and Functions build/emulator checks remain separate required gates.");
+  } catch {
+    return item("firebase-functions-contracts", "fail", "Firebase feature/native callable boundary tests failed or timed out.", "Run the Firebase feature-runtime, native-integration, and native-runtime tests and repair their named failures.");
+  }
 }
 
 const designFiles = ["freed.html", "ios-frame.jsx", "freed-v2/tokens.css", "freed-v2/tokens.js"];
 const appSurfaceSource = read("src/features/freed-app.tsx");
 const protectionPermissionsSource = read("src/lib/protection-permissions.ts");
 const recoveryStateSource = read("src/lib/recovery-state.ts");
+const protectionSetupPresenterSource = read("src/lib/protection-setup-presenter.ts");
+const protectionSetupViewSource = read("src/components/ProtectionSetupView.tsx");
+const premiumOfferSource = read("src/components/PremiumOffer.tsx");
+// Exercise the shared decision models. Source checks below only establish
+// that the app and shared views use those models and native action handlers.
+const appSurfaceBehaviorVerified = localVerificationPass([
+  "tests/protection-setup-flow.test.ts",
+  "tests/paywall-presenter.test.ts",
+  "tests/paywall-navigation.test.ts"
+]);
 const audit: AuditItem[] = [
   passOrFail(
     "prototype-design-files",
@@ -6215,6 +5599,7 @@ const audit: AuditItem[] = [
   passOrFail(
     "app-surface",
     ["app/index.tsx", "src/features/freed-app.tsx", "src/constants/design.ts"].every(has) &&
+      appSurfaceBehaviorVerified &&
       appSurfaceSource.includes("AppSelectionScreen") &&
       appSurfaceSource.includes('setScreen("appSelection")') &&
       appSurfaceSource.includes("completeOnboardingWithSelectedApps") &&
@@ -6225,30 +5610,39 @@ const audit: AuditItem[] = [
       appSurfaceSource.includes("hasProtectionActivationForPlatform") &&
       appSurfaceSource.includes("hasNativeProtectionActivationRevoked") &&
       appSurfaceSource.includes("if (readiness.activationReady) return false") &&
-      appSurfaceSource.includes("shouldReturnToProtectionSetupAfterRevocation") &&
+      inspectRevocationRecovery(appSurfaceSource) &&
       appSurfaceSource.includes("Protection was turned off or changed in system settings") &&
       appSurfaceSource.includes("setupAutoAdvanceRef") &&
       appSurfaceSource.includes("continueAfterOptional") &&
       appSurfaceSource.includes("waitingForAppReturn") &&
       appSurfaceSource.includes("returnedFromExternalStep") &&
       appSurfaceSource.includes('pending.waitingForAppReturn && !pending.returnedFromExternalStep && completedStep.status !== "complete"') &&
-      appSurfaceSource.includes("orderedSetupActionLabel") &&
-      appSurfaceSource.includes("Continuing setup: ${nextRequiredStep.title}.") &&
+      appSurfaceSource.includes("const advance = decideSetupAdvance({ pending, steps: permissionPlan") &&
+      appSurfaceSource.includes("Continuing setup: ${advance.step.title}.") &&
+      appSurfaceSource.includes("runStepAction(advance.step)") &&
       appSurfaceSource.includes("can be finished later. Continuing setup:") &&
-      appSurfaceSource.includes("All required setup rows are ready. Running the activation test now.") &&
+      inspectSetupConfigurationCheck(appSurfaceSource) &&
       appSurfaceSource.includes("activationRecoveryStep") &&
       appSurfaceSource.includes("getProtectionActivationRecoveryStep(permissionPlan, activationTest?.nativeDiagnostics)") &&
-      appSurfaceSource.includes("label={`Fix: ${activationRecoveryStep.title}`}") &&
+      appSurfaceSource.includes("if (activationRecoveryStep && !activationTestPassed)") &&
+      appSurfaceSource.includes("runStepAction(activationRecoveryStep)") &&
       protectionPermissionsSource.includes("getProtectionActivationRecoveryStep") &&
       protectionPermissionsSource.includes("diagnostics.issueCodes") &&
       protectionPermissionsSource.includes("android-vpn-consent-required") &&
       protectionPermissionsSource.includes("ios-safari-rules-missing") &&
       protectionPermissionsSource.includes("diagnostics.vpnConsentRequired === true") &&
-      protectionPermissionsSource.includes("diagnostics.privateDnsMode === \"hostname\"") &&
+      protectionPermissionsSource.includes('hasPrivateDnsSetupConflict(diagnostics)') &&
+      protectionPermissionsSource.includes('from "./protection-setup-presenter"') &&
+      protectionSetupPresenterSource.includes('typeof status?.privateDnsMode === "string" && status.privateDnsMode !== "off"') &&
       protectionPermissionsSource.includes("ios-safari-content-blocker") &&
-      appSurfaceSource.includes("if (nextRequiredStep.id === completedStep.id) return") &&
-      appSurfaceSource.includes("return `Continue: ${nextRequiredStep.title}`") &&
-      appSurfaceSource.includes("Open: ${nextRequiredStep.title}") &&
+      protectionSetupPresenterSource.includes("next && next.id !== previous.id") &&
+      protectionSetupPresenterSource.includes('pending.waitingForAppReturn && !pending.returnedFromExternalStep && previous.status !== "complete"') &&
+      protectionSetupPresenterSource.includes("options.ready && !options.testPassed && !pending.testTriggered") &&
+      appSurfaceSource.includes("const setupPresentation = presentProtectionSetup({") &&
+      appSurfaceSource.includes("presentation={setupPresentation}") &&
+      appSurfaceSource.includes("onContinue={handleAndroidWizardPrimary}") &&
+      protectionSetupViewSource.includes("accessibilityLabel={presentation.action}") &&
+      protectionSetupViewSource.includes("onPress={onContinue} disabled={busy}") &&
       appSurfaceSource.includes("appSelectionReturnToProtectionSetup") &&
       appSurfaceSource.includes("appSelectionReturnPending") &&
       appSurfaceSource.includes("onAppSelectionReturnHandled") &&
@@ -6259,13 +5653,16 @@ const audit: AuditItem[] = [
       appSurfaceSource.includes("androidSettingsFallbackUsed") &&
       appSurfaceSource.includes("androidSettingsRouteComponent") &&
       appSurfaceSource.includes("androidSettingsRouteError") &&
-      appSurfaceSource.includes("adultFilterStep ? runStepAction(adultFilterStep) : runAction(\"adult\", applyAdultContentFilter)") &&
-      appSurfaceSource.includes("appInterventionStep ? runStepAction(appInterventionStep) : runAction(\"apps\", requestProtectionAuthorization)") &&
-      appSurfaceSource.includes("usageAccessStep ? runStepAction(usageAccessStep) : runAction(\"usage\", openUsageAccessSettings)") &&
-      appSurfaceSource.includes("orderedSetupActionLabel(adultFilterStep, \"Enable Adult Block\")") &&
-      appSurfaceSource.includes("orderedSetupActionLabel(appInterventionStep, \"Enable App Timer Permission\")") &&
-      appSurfaceSource.includes("orderedSetupActionLabel(usageAccessStep, \"Enable Usage Access\")") &&
-      appSurfaceSource.includes('privateDnsStep ? runStepAction(privateDnsStep) : runAction("settings", openPrivateDnsSettings)') &&
+      appSurfaceSource.includes('switch (targetStep.action)') &&
+      appSurfaceSource.includes('runAction("adult", applyAdultContentFilter)') &&
+      appSurfaceSource.includes('runAction("apps", requestProtectionAuthorization)') &&
+      appSurfaceSource.includes('runAction("usage", openUsageAccessSettings)') &&
+      appSurfaceSource.includes('runAction("settings", openPrivateDnsSettings)') &&
+      appSurfaceSource.includes("firstRequiredStep.id !== targetStep.id") &&
+      appSurfaceSource.includes("targetStep = firstRequiredStep") &&
+      appSurfaceSource.includes("presentation: presentPaywallPlan({") &&
+      appSurfaceSource.includes("onSubscribe={() => { if (!busy && selectedPresentation?.canPurchase) onSubscribe(plan); }}") &&
+      premiumOfferSource.includes('priceStatus === "ready" && selectedPresentation?.canPurchase === true') &&
       appSurfaceSource.includes("interventionBodyForAttempt") &&
       appSurfaceSource.includes("selected app or short-form loop") &&
       appSurfaceSource.includes("explicit search before it could turn into a scroll loop") &&
@@ -6276,8 +5673,8 @@ const audit: AuditItem[] = [
       recoveryStateSource.includes("onboardingPaywallPresentedAt") &&
       appSurfaceSource.includes("selectedAppPackageCount={disciplineSettings.blockedAppPackages.length}") &&
       !appSurfaceSource.includes("selected by default"),
-    "Expo Router shell and FREED app surface are present, with explicit app selection before paywall, persisted paywall handoff, platform-scoped protection activation before main entry, source-aware intervention copy, native setup readiness revocation returning users to setup, Android settings route fallback diagnostics, permission setup auto-advancing plus labeling actions to the next required OS/native step after return, and failed activation diagnostics mapped back to exact setup repair actions.",
-    "Restore app shell or main feature surface."
+    "Expo Router shell and FREED app surface are wired to shared setup and paywall presenters. Protection-setup-flow, paywall-presenter, and paywall-navigation behavioral tests pass; supplemental source checks cover selection before paywall, persisted handoff, native activation/revocation, ordered permission actions after app return, actionable activation repair, store-priced checkout gating, and source-aware intervention copy. Physical-device and store-sandbox proof remain separate required gates.",
+    "Run tests/protection-setup-flow.test.ts, tests/paywall-presenter.test.ts, and tests/paywall-navigation.test.ts, then repair shared view/presenter wiring or native setup handlers."
   ),
   auditPromptTraceability(),
   auditReleaseVerifier(),
@@ -6296,11 +5693,10 @@ const audit: AuditItem[] = [
   auditAccessibilityContract(),
   auditPrivacyContract(),
   auditRuntimeDataIntegrity(),
-  auditBackendArchitectureContract(),
-  auditProductionBackendInfrastructure(),
-  auditProductionAnalyticsIngestion(),
-  auditProductionNotificationBackend(),
-  auditProductionAdultDomainFeed(),
+  ...(firebaseSelected ? [
+    ...getFirebasePreflightChecks(process.env).map((entry: { id: string; status: AuditStatus; detail: string; next: string }) => item(entry.id, entry.status, entry.detail, entry.next)),
+    auditFirebaseFunctionsContracts()
+  ] : [auditBackendArchitectureContract(), auditProductionBackendInfrastructure(), auditProductionAnalyticsIngestion(), auditProductionNotificationBackend(), auditProductionAdultDomainFeed()]),
   auditAndroidReleaseSigning(),
   auditDependencySecurity(),
   passOrFail(
@@ -6310,12 +5706,13 @@ const audit: AuditItem[] = [
       has("src/lib/purchase-verification.ts") &&
       has("app/api/purchases/verify+api.ts") &&
       read("src/lib/native-iap-adapter.ts").includes("createNativeIapStoreAdapter") &&
-      read("src/lib/native-iap-adapter.ts").includes("EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT") &&
-      read("src/lib/native-iap-adapter.ts").includes('getProductionEndpointIssues(endpoint, "purchase verify endpoint")') &&
-      read("src/lib/native-iap-adapter.ts").includes("EXPO_PUBLIC_PURCHASE_VERIFY_TIMEOUT_MS") &&
-      read("src/lib/native-iap-adapter.ts").includes("EXPO_PUBLIC_PURCHASE_VERIFY_RESPONSE_MAX_BYTES") &&
-      read("src/lib/native-iap-adapter.ts").includes("readBoundedResponseJson") &&
-      read("src/lib/native-iap-adapter.ts").includes("Purchase verification request timed out") &&
+      read("src/lib/native-iap-adapter.ts").includes("NativeIapPurchaseVerifier") &&
+      read("src/lib/native-iap-adapter.ts").includes('createFirebaseClientEventId("purchase")') &&
+      read("src/lib/native-iap-adapter.ts").includes("verifyStorePurchase(purchase.request)") &&
+      read("src/lib/native-iap-adapter.ts").includes("exactVerifiedResult") &&
+      read("src/lib/native-iap-adapter.ts").includes("Object.keys(value).length !== 6") &&
+      !read("src/lib/native-iap-adapter.ts").includes("EXPO_PUBLIC_PURCHASE_VERIFY_ENDPOINT") &&
+      !read("src/lib/native-iap-adapter.ts").includes("fetch(") &&
       read("src/lib/native-iap-adapter.ts").includes("Native purchases fail closed unless FREED's server confirms") &&
       read("src/lib/native-monetization-adapter.ts").includes("createAdMobRewardedAdapter") &&
       read("src/lib/monetization.ts").includes("Native purchase returned a product reserved for a future FREED release.") &&
@@ -6337,10 +5734,10 @@ const audit: AuditItem[] = [
       read("src/lib/purchase-verification.ts").includes("GOOGLE_PLAY_PACKAGE_NAME") &&
       read("app.config.js").includes("react-native-google-mobile-ads") &&
       !read("app.json").includes('"react-native-google-mobile-ads"'),
-    "Native monetization adapter scaffolds exist for expo-iap entitlements, server-minted store verification, fail-closed validated purchase verification, Core 3-only purchase/restore product activation, AdMob-style rewarded ads, and dynamic Google Mobile Ads config without ignored root app.json keys.",
+    "Native monetization adapter scaffolds exist for expo-iap entitlements, server-minted store verification, fail-closed validated purchase verification, monthly/yearly-only purchase/restore activation, AdMob-style rewarded ads, and dynamic Google Mobile Ads config without ignored root app.json keys.",
     "Restore native IAP, purchase verification, and ad adapters before wiring production billing/ad SDKs."
   ),
-  passOrFail(
+  ...(firebaseSelected ? [] : [passOrFail(
     "server-ai-routes",
     has("app/api/clara+api.ts") &&
       has("app/api/challenges+api.ts") &&
@@ -6356,15 +5753,9 @@ const audit: AuditItem[] = [
       read("src/lib/server-ai-provider.ts").includes("timed out after"),
     "Expo API routes for CLARA, dynamic challenge generation, and retention orchestration are present, and server AI runtime rejects placeholder provider keys/models while bounding provider calls.",
     "Restore app/api/clara+api.ts, app/api/challenges+api.ts, app/api/retention+api.ts, and server AI credential validation."
-  ),
+  )]),
   auditAiSafetyHarness(),
-  auditBackendReadinessSmokeHarness(),
-  auditSupabaseSchemaSmokeHarness(),
-  auditAdultDomainFeedSmokeHarness(),
-  auditAnalyticsIngestionSmokeHarness(),
-  auditRemoteNotificationSmokeHarness(),
-  auditAiBackendSmokeHarness(),
-  auditPurchaseVerificationSmokeHarness(),
+  ...(firebaseSelected ? [] : [auditBackendReadinessSmokeHarness(), auditSupabaseSchemaSmokeHarness(), auditAdultDomainFeedSmokeHarness(), auditAnalyticsIngestionSmokeHarness(), auditRemoteNotificationSmokeHarness(), auditAiBackendSmokeHarness(), auditPurchaseVerificationSmokeHarness()]),
   auditClientBundleSecretHarness(),
   auditMonetization(),
   auditAiBackend(),
@@ -6391,6 +5782,20 @@ if (releaseVerifierPreflightCheckDrift) {
   }
 }
 
+const declaredRecoveryGate = evaluateInterceptionReleaseGate({
+  audience: 'public',
+  contractVersion: 3,
+  candidates: { ios: { platform: 'ios' }, android: { platform: 'android' } },
+  claims: [],
+  evidence: []
+});
+audit.push({
+  id: 'declared-recovery-coverage',
+  status: declaredRecoveryGate.publicReleaseAllowed ? 'pass' : 'fail',
+  evidence: 'Version 3 requires Safari/iOS and Chrome/Android recovery plus complete selected-app threshold, activity, 300/600/1200-second grant, cap/replay and native-relock journeys on both platforms. Current source capabilities remain unverified and no exact source/binary/device/OS/artifact packet is registered.',
+  next: 'Keep public release blocked. Review public API and store eligibility, then capture the exact declared browser conditions and both complete physical-device app journeys. List optional browsers as verified recovery, blocking only, unsupported or untested without inference.',
+});
+
 const counts = audit.reduce<Record<AuditStatus, number>>(
   (accumulator, entry) => {
     accumulator[entry.status] += 1;
@@ -6415,6 +5820,7 @@ function writeReleaseReadinessReport(reportPath: string) {
     `${JSON.stringify(
       {
         schemaVersion: "release-readiness-report-v1",
+        backendProvider: releaseBackendProvider,
         generatedAt: new Date().toISOString(),
         sanitized: true,
         strict,

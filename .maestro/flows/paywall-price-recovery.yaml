@@ -1,0 +1,36 @@
+appId: app.freed.recovery
+name: paywall-price-recovery
+tags:
+  - smoke
+  - external-service
+---
+# Unexecuted smoke scenario. Requires an isolated disposable English/LTR fixture.
+# Full scenario and physical-device receipts remain separate obligations.
+- openLink: "freed:///flow/paywall"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-paywall"
+    timeout: 15000
+# Precondition: isolated unavailable-offering fixture; no checkout is completed.
+- scrollUntilVisible:
+    element: { text: "Retry store prices" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: { text: "Store price unavailable", enabled: false }
+- tapOn: "Retry store prices"
+- runFlow:
+    when:
+      visible: "Retry store prices"
+    commands:
+      - assertVisible: { text: "Store price unavailable", enabled: false }
+- scrollUntilVisible:
+    element: { text: "Continue with Free" }
+    direction: DOWN
+    timeout: 10000
+- assertVisible: { text: "Continue with Free", enabled: true }
+- takeScreenshot: "paywall-price-recovery"

@@ -1,0 +1,71 @@
+{
+  "httpStatus": 200,
+  "body": {
+    "indexes": [
+      {
+        "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/backup_metadata/indexes/CICAgJim14AK",
+        "queryScope": "COLLECTION",
+        "fields": [
+          {
+            "fieldPath": "uid",
+            "order": "ASCENDING"
+          },
+          {
+            "fieldPath": "status",
+            "order": "ASCENDING"
+          },
+          {
+            "fieldPath": "createdAt",
+            "order": "DESCENDING"
+          },
+          {
+            "fieldPath": "__name__",
+            "order": "DESCENDING"
+          }
+        ],
+        "state": "READY",
+        "density": "SPARSE_ALL"
+      },
+      {
+        "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/notification_jobs/indexes/CICAgOjXh4EK",
+        "queryScope": "COLLECTION",
+        "fields": [
+          {
+            "fieldPath": "status",
+            "order": "ASCENDING"
+          },
+          {
+            "fieldPath": "scheduledAt",
+            "order": "ASCENDING"
+          },
+          {
+            "fieldPath": "__name__",
+            "order": "ASCENDING"
+          }
+        ],
+        "state": "READY",
+        "density": "SPARSE_ALL"
+      },
+      {
+        "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/notification_jobs/indexes/CICAgJiUpoMK",
+        "queryScope": "COLLECTION",
+        "fields": [
+          {
+            "fieldPath": "status",
+            "order": "ASCENDING"
+          },
+          {
+            "fieldPath": "claimedAt",
+            "order": "ASCENDING"
+          },
+          {
+            "fieldPath": "__name__",
+            "order": "ASCENDING"
+          }
+        ],
+        "state": "READY",
+        "density": "SPARSE_ALL"
+      }
+    ]
+  }
+}

@@ -15,7 +15,8 @@ import {
   type AiRoute
 } from "./ai.js";
 import { COLLECTIONS, validateServerDocument } from "./contracts.js";
-import { runProtectedMutation, type TransactionalStore } from "./transactional.js";
+import { authorizeAiUsage } from "./ai-quota.js";
+import { type TransactionalStore } from "./transactional.js";
 
 if (!getApps().length) initializeApp();
 
@@ -151,19 +152,25 @@ async function authorizeAiCall(input: {
   route: AiRoute;
   clientEventId: string;
   perMinute: number;
+  consumeDailyQuota?: boolean;
 }) {
   return db.runTransaction(async (transaction) => {
-    const result = await runProtectedMutation(firestoreStore(transaction), {
+    return authorizeAiUsage(firestoreStore(transaction), {
+      uid: input.uid,
+      route: input.route,
       rateLimitPath: `${COLLECTIONS.rateLimits}/${input.uid}_ai-${input.route}`,
       idempotencyPath: `${COLLECTIONS.idempotency}/${input.uid}_ai-${input.route}_${input.clientEventId}`,
       accountTombstonePath: `${COLLECTIONS.deletionTombstones}/${input.uid}`,
+      dailyUsagePath: `${COLLECTIONS.rateLimits}/${input.uid}_ai-clara-daily`,
+      consumeDailyQuota: input.consumeDailyQuota,
       now: Date.now(),
       windowMs: RATE_WINDOW_MS,
       limit: input.perMinute,
       idempotencyTtlMs: IDEMPOTENCY_TTL_MS
-    }, () => undefined);
-    if (result === "applied") return "allowed" as const;
-    return result;
+    }, async (uid) => {
+      const claims = await transaction.get(db.collection(COLLECTIONS.purchaseClaims).where("uid", "==", uid));
+      return claims.docs.map((claim) => claim.data());
+    });
   });
 }
 

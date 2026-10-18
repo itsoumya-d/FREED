@@ -1,0 +1,68 @@
+{
+  "capturedAt": "2026-10-03T02:39:02.383925+00:00",
+  "result": "pass-bounded-helpers",
+  "issue": "Private DNS prevented native DNS startup but recovery selected a generic restart and privacy states did not block automatic starts.",
+  "changedScope": [
+    "src/lib/protection-setup-presenter.ts",
+    "src/lib/protection-permissions.ts",
+    "tests/private-dns-setup-recovery.test.ts"
+  ],
+  "preservedOtherChanges": true,
+  "notEdited": [
+    "src/features/freed-app.tsx",
+    "src/components/ProtectionSetupView.tsx",
+    "Android native sources",
+    "i18n catalogs"
+  ],
+  "api": {
+    "helper": "hasPrivateDnsSetupConflict(status: { privateDnsMode?: string; privateDnsActive?: boolean } | null)",
+    "context": "privateDnsConflict?: boolean",
+    "action": "Open Private DNS settings",
+    "vpnConflictPrecedence": "Existing VPN conflict stays first when both conflicts are supplied"
+  },
+  "newEnglishCopy": [
+    "Android's DNS settings need review before FREED can start web protection. App protection and recovery tools remain available.",
+    "Review Private DNS settings, then return here and check protection again."
+  ],
+  "translationOwner": "root; ten locales required",
+  "verification": {
+    "red": {
+      "tests": 3,
+      "failed": 3,
+      "log": "private-dns-recovery-red.log"
+    },
+    "green": {
+      "tests": 3,
+      "passed": 3,
+      "log": "private-dns-recovery-green.log"
+    },
+    "existingSetup": {
+      "passed": 9,
+      "log": "protection-setup-flow-after-private-dns.log"
+    },
+    "existingConsent": {
+      "passed": 1,
+      "log": "dns-auto-start-after-private-dns.log"
+    },
+    "typecheck": {
+      "exitCode": 0,
+      "log": "typecheck-after-private-dns.log"
+    },
+    "fullIntegratedRunner": "Root-owned final run; not claimed by this bounded helper receipt"
+  },
+  "sourceFiles": [
+    {
+      "path": "src/lib/protection-setup-presenter.ts",
+      "sha256": "4b79490a99436890bf0e5e94da772a8e230059b73c9265ad6f4df4d288b2a106"
+    },
+    {
+      "path": "src/lib/protection-permissions.ts",
+      "sha256": "83b09f169187d2119be0b5d1f160d33b75ae1f833815a62addddc80f18b10acd"
+    },
+    {
+      "path": "tests/private-dns-setup-recovery.test.ts",
+      "sha256": "10e0b01c9a999f9931a6d634d19102c37b0a7e7dd90afc5c0cb1d834f0f4dd95"
+    }
+  ],
+  "apkBoundary": "Previous QA APK remains unchanged and does not contain this later JS fix. No native rebuild/install/signing/device action was performed for the fix."
+}

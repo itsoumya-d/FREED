@@ -1,3 +1,5 @@
+> Current AI release evidence uses [Google CLARA evidence v2](google-clara-evidence-v2.md). Cloud challenge/retention and static AI secret requirements below describe historical v1 evidence only and cannot satisfy current launch acceptance. Import genuine checksummed native/deployment captures; missing proof stays BLOCKED.
+
 # FREED Release Validation Evidence
 
 These files are required before release gates can pass. They must be created from real device, real-browser, normal-browsing corpus, performance profiling, store/ad sandbox, or deployed AI backend smoke runs. Do not set pass markers from intent or desk review.

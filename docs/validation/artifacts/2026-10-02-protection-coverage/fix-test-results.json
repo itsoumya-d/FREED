@@ -1,0 +1,68 @@
+[
+  {
+    "name": "classifier-after-fix",
+    "command": [
+      "node",
+      "scripts/run-ts-entry.js",
+      "scripts/classifier-safety-audit.ts"
+    ],
+    "exitCode": 0,
+    "at": "2026-10-02T10:05:19.650378+00:00",
+    "logSha256": "c2d13131a6de885cf7747d16f7ad2e3014e1d91720b8e3a934851298487c8613"
+  },
+  {
+    "name": "parity-after-fix",
+    "command": [
+      "node",
+      "scripts/run-ts-entry.js",
+      "scripts/android-classifier-parity-audit.ts"
+    ],
+    "exitCode": 0,
+    "at": "2026-10-02T10:05:20.132850+00:00",
+    "logSha256": "3a61149fd7cbcb73a5dade00ac3a6f2bc616e8943b391b2312524b654e0e1a45"
+  },
+  {
+    "name": "intervention-after-fix",
+    "command": [
+      "node",
+      "scripts/run-ts-entry.js",
+      "tests/native-intervention-links.test.ts"
+    ],
+    "exitCode": 0,
+    "at": "2026-10-02T10:05:20.848933+00:00",
+    "logSha256": "00acc1b4a7658855d8a1a1ac6a075f06d2f9b4c46814252d5c1944201eac4ffb"
+  },
+  {
+    "name": "android-routing-after-fix",
+    "command": [
+      "node",
+      "--test",
+      "tests/protection-android-routing.test.js"
+    ],
+    "exitCode": 0,
+    "at": "2026-10-02T10:05:21.730151+00:00",
+    "logSha256": "3e7b7e0d242452578a69b7234ddd2795a046c350afa94a9169efdd3cda20de99"
+  },
+  {
+    "name": "safari-routing-after-fix",
+    "command": [
+      "node",
+      "--test",
+      "tests/protection-safari-routing.test.js"
+    ],
+    "exitCode": 0,
+    "at": "2026-10-02T10:05:35.045273+00:00",
+    "logSha256": "0a2067b6f4bd5a03c5fcc087a96354e61030c11052994103d656ad0845a1f276"
+  },
+  {
+    "name": "dns-safety-after-fix",
+    "command": [
+      "node",
+      "--test",
+      "tests/protection-dns-safety.test.js"
+    ],
+    "exitCode": 0,
+    "at": "2026-10-02T10:05:36.458336+00:00",
+    "logSha256": "1c074e0244d8bfb98b0bcf4eca3594faa3bf3289a3eda2b6084178a7464c4d53"
+  }
+]

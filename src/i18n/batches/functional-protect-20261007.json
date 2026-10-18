@@ -1,0 +1,200 @@
+{
+  "entries": [
+    {
+      "source": "Next step",
+      "translations": {
+        "hi": "अगला चरण",
+        "es": "Siguiente paso",
+        "pt": "Próxima etapa",
+        "fr": "Étape suivante",
+        "de": "Nächster Schritt",
+        "ar": "الخطوة التالية",
+        "ja": "次のステップ",
+        "ko": "다음 단계",
+        "zh-Hans": "下一步"
+      }
+    },
+    {
+      "source": "Check configuration",
+      "translations": {
+        "hi": "कॉन्फ़िगरेशन जाँचें",
+        "es": "Comprobar configuración",
+        "pt": "Verificar configuração",
+        "fr": "Vérifier la configuration",
+        "de": "Konfiguration prüfen",
+        "ar": "تحقق من الإعدادات",
+        "ja": "設定を確認",
+        "ko": "설정 확인",
+        "zh-Hans": "检查配置"
+      }
+    },
+    {
+      "source": "Read the current Screen Time policy and DNS selection together. This check does not test browsing.",
+      "translations": {
+        "hi": "वर्तमान Screen Time नीति और चुने गए DNS को साथ में जाँचें। इस जाँच से ब्राउज़िंग की जाँच नहीं होती।",
+        "es": "Comprueba la política actual de Tiempo de uso y el DNS seleccionado. Esta comprobación no prueba la navegación.",
+        "pt": "Verifique a política atual do Tempo de Uso e o DNS selecionado juntos. Esta verificação não testa a navegação.",
+        "fr": "Vérifiez ensemble la politique actuelle de Temps d’écran et le DNS sélectionné. Cette vérification ne teste pas la navigation.",
+        "de": "Prüfe die aktuelle Bildschirmzeit-Richtlinie und die DNS-Auswahl gemeinsam. Diese Prüfung testet das Surfen nicht.",
+        "ar": "تحقق من سياسة مدة استخدام الجهاز الحالية واختيار DNS معًا. لا يختبر هذا الفحص التصفح.",
+        "ja": "現在のスクリーンタイムのポリシーとDNSの選択をまとめて確認します。この確認では実際の閲覧はテストされません。",
+        "ko": "현재 스크린 타임 정책과 DNS 선택을 함께 확인합니다. 이 확인은 실제 웹 탐색을 테스트하지 않습니다.",
+        "zh-Hans": "一起读取当前屏幕使用时间策略和 DNS 选择。此检查不会测试实际浏览。"
+      }
+    },
+    {
+      "source": "The device did not confirm the policy request. Retry activation.",
+      "translations": {
+        "hi": "डिवाइस ने नीति के अनुरोध की पुष्टि नहीं की। सक्रिय करने का फिर प्रयास करें।",
+        "es": "El dispositivo no confirmó la solicitud de la política. Vuelve a intentar la activación.",
+        "pt": "O dispositivo não confirmou a solicitação da política. Tente ativar novamente.",
+        "fr": "L’appareil n’a pas confirmé la demande de politique. Réessayez l’activation.",
+        "de": "Das Gerät hat die Richtlinienanfrage nicht bestätigt. Versuche die Aktivierung erneut.",
+        "ar": "لم يؤكد الجهاز طلب السياسة. أعد محاولة التفعيل.",
+        "ja": "端末がポリシーの要求を確認できませんでした。もう一度有効にしてください。",
+        "ko": "기기에서 정책 요청을 확인하지 못했습니다. 다시 활성화해 주세요.",
+        "zh-Hans": "设备未确认策略请求。请重试启用。"
+      }
+    },
+    {
+      "source": "Device protection is busy. Wait a moment, then retry activation.",
+      "translations": {
+        "hi": "डिवाइस की सुरक्षा व्यस्त है। थोड़ी देर रुककर सक्रिय करने का फिर प्रयास करें।",
+        "es": "La protección del dispositivo está ocupada. Espera un momento y vuelve a intentar la activación.",
+        "pt": "A proteção do dispositivo está ocupada. Aguarde um momento e tente ativar novamente.",
+        "fr": "La protection de l’appareil est occupée. Patientez un instant, puis réessayez l’activation.",
+        "de": "Der Geräteschutz ist beschäftigt. Warte kurz und versuche die Aktivierung erneut.",
+        "ar": "حماية الجهاز مشغولة. انتظر قليلًا ثم أعد محاولة التفعيل.",
+        "ja": "端末の保護を処理中です。少し待ってから、もう一度有効にしてください。",
+        "ko": "기기 보호가 처리 중입니다. 잠시 기다린 후 다시 활성화해 주세요.",
+        "zh-Hans": "设备保护正在忙碌。请稍等后重试启用。"
+      }
+    },
+    {
+      "source": "Device protection storage is unavailable. Unlock your iPhone and retry activation.",
+      "translations": {
+        "hi": "डिवाइस सुरक्षा का स्टोरेज उपलब्ध नहीं है। iPhone अनलॉक करके सक्रिय करने का फिर प्रयास करें।",
+        "es": "El almacenamiento de protección no está disponible. Desbloquea tu iPhone y vuelve a intentar la activación.",
+        "pt": "O armazenamento da proteção não está disponível. Desbloqueie o iPhone e tente ativar novamente.",
+        "fr": "Le stockage de la protection est indisponible. Déverrouillez votre iPhone et réessayez l’activation.",
+        "de": "Der Speicher für den Geräteschutz ist nicht verfügbar. Entsperre dein iPhone und versuche die Aktivierung erneut.",
+        "ar": "تخزين حماية الجهاز غير متاح. افتح قفل iPhone وأعد محاولة التفعيل.",
+        "ja": "端末保護の保存領域を利用できません。iPhoneのロックを解除し、もう一度有効にしてください。",
+        "ko": "기기 보호 저장 공간을 사용할 수 없습니다. iPhone의 잠금을 해제하고 다시 활성화해 주세요.",
+        "zh-Hans": "设备保护存储不可用。请解锁 iPhone 后重试启用。"
+      }
+    },
+    {
+      "source": "The policy request could not be saved. Retry activation.",
+      "translations": {
+        "hi": "नीति का अनुरोध सहेजा नहीं जा सका। सक्रिय करने का फिर प्रयास करें।",
+        "es": "No se pudo guardar la solicitud de la política. Vuelve a intentar la activación.",
+        "pt": "Não foi possível salvar a solicitação da política. Tente ativar novamente.",
+        "fr": "La demande de politique n’a pas pu être enregistrée. Réessayez l’activation.",
+        "de": "Die Richtlinienanfrage konnte nicht gespeichert werden. Versuche die Aktivierung erneut.",
+        "ar": "تعذّر حفظ طلب السياسة. أعد محاولة التفعيل.",
+        "ja": "ポリシーの要求を保存できませんでした。もう一度有効にしてください。",
+        "ko": "정책 요청을 저장하지 못했습니다. 다시 활성화해 주세요.",
+        "zh-Hans": "无法保存策略请求。请重试启用。"
+      }
+    },
+    {
+      "source": "Allow Screen Time, then retry activation.",
+      "translations": {
+        "hi": "Screen Time की अनुमति दें, फिर सक्रिय करने का प्रयास करें।",
+        "es": "Permite Tiempo de uso y vuelve a intentar la activación.",
+        "pt": "Permita o Tempo de Uso e tente ativar novamente.",
+        "fr": "Autorisez Temps d’écran, puis réessayez l’activation.",
+        "de": "Erlaube Bildschirmzeit und versuche die Aktivierung erneut.",
+        "ar": "اسمح بمدة استخدام الجهاز ثم أعد محاولة التفعيل.",
+        "ja": "スクリーンタイムを許可してから、もう一度有効にしてください。",
+        "ko": "스크린 타임을 허용한 후 다시 활성화해 주세요.",
+        "zh-Hans": "请允许屏幕使用时间，然后重试启用。"
+      }
+    },
+    {
+      "source": "The adult-web policy is unavailable in this installed build.",
+      "translations": {
+        "hi": "इंस्टॉल किए गए इस संस्करण में वयस्क वेबसाइट नीति उपलब्ध नहीं है।",
+        "es": "La política de sitios para adultos no está disponible en esta versión instalada.",
+        "pt": "A política de sites adultos não está disponível nesta versão instalada.",
+        "fr": "La politique des sites pour adultes est indisponible dans cette version installée.",
+        "de": "Die Richtlinie für Websites mit Erwachsenen-Inhalten ist in dieser installierten Version nicht verfügbar.",
+        "ar": "سياسة مواقع البالغين غير متاحة في هذا الإصدار المثبت.",
+        "ja": "インストールされているこのビルドでは、成人向けサイトのポリシーを利用できません。",
+        "ko": "설치된 이 빌드에서는 성인 웹사이트 정책을 사용할 수 없습니다.",
+        "zh-Hans": "当前安装版本不支持成人网站策略。"
+      }
+    },
+    {
+      "source": "iOS did not confirm the adult-web policy. Retry activation and check configuration again.",
+      "translations": {
+        "hi": "iOS ने वयस्क वेबसाइट नीति की पुष्टि नहीं की। सक्रिय करने का फिर प्रयास करें और कॉन्फ़िगरेशन दोबारा जाँचें।",
+        "es": "iOS no confirmó la política de sitios para adultos. Reintenta la activación y comprueba de nuevo la configuración.",
+        "pt": "O iOS não confirmou a política de sites adultos. Tente ativar novamente e verifique a configuração outra vez.",
+        "fr": "iOS n’a pas confirmé la politique des sites pour adultes. Réessayez l’activation et vérifiez à nouveau la configuration.",
+        "de": "iOS hat die Richtlinie für Websites mit Erwachsenen-Inhalten nicht bestätigt. Aktiviere erneut und prüfe die Konfiguration noch einmal.",
+        "ar": "لم يؤكد iOS سياسة مواقع البالغين. أعد محاولة التفعيل وتحقق من الإعدادات مجددًا.",
+        "ja": "iOSが成人向けサイトのポリシーを確認できませんでした。もう一度有効にして、設定を再確認してください。",
+        "ko": "iOS에서 성인 웹사이트 정책을 확인하지 못했습니다. 다시 활성화하고 설정을 다시 확인해 주세요.",
+        "zh-Hans": "iOS 未确认成人网站策略。请重试启用并再次检查配置。"
+      }
+    },
+    {
+      "source": "The device did not accept the policy request. Retry activation.",
+      "translations": {
+        "hi": "डिवाइस ने नीति का अनुरोध स्वीकार नहीं किया। सक्रिय करने का फिर प्रयास करें।",
+        "es": "El dispositivo no aceptó la solicitud de la política. Vuelve a intentar la activación.",
+        "pt": "O dispositivo não aceitou a solicitação da política. Tente ativar novamente.",
+        "fr": "L’appareil n’a pas accepté la demande de politique. Réessayez l’activation.",
+        "de": "Das Gerät hat die Richtlinienanfrage nicht angenommen. Versuche die Aktivierung erneut.",
+        "ar": "لم يقبل الجهاز طلب السياسة. أعد محاولة التفعيل.",
+        "ja": "端末がポリシーの要求を受け付けませんでした。もう一度有効にしてください。",
+        "ko": "기기에서 정책 요청을 수락하지 않았습니다. 다시 활성화해 주세요.",
+        "zh-Hans": "设备未接受策略请求。请重试启用。"
+      }
+    },
+    {
+      "source": "Protection changed while saving. Retry DNS setup.",
+      "translations": {
+        "hi": "सहेजते समय सुरक्षा बदली। DNS सेटअप का फिर प्रयास करें।",
+        "es": "La protección cambió durante el guardado. Vuelve a configurar el DNS.",
+        "pt": "A proteção mudou durante o salvamento. Tente configurar o DNS novamente.",
+        "fr": "La protection a changé pendant l’enregistrement. Réessayez la configuration DNS.",
+        "de": "Der Schutz hat sich beim Speichern geändert. Versuche die DNS-Einrichtung erneut.",
+        "ar": "تغيّرت الحماية أثناء الحفظ. أعد إعداد DNS.",
+        "ja": "保存中に保護の状態が変わりました。DNSの設定をやり直してください。",
+        "ko": "저장 중 보호 상태가 변경되었습니다. DNS 설정을 다시 시도해 주세요.",
+        "zh-Hans": "保存期间保护状态发生变化。请重试 DNS 设置。"
+      }
+    },
+    {
+      "source": "DNS settings are busy. Wait a moment, then retry.",
+      "translations": {
+        "hi": "DNS सेटिंग्स व्यस्त हैं। थोड़ी देर रुककर फिर प्रयास करें।",
+        "es": "Los ajustes DNS están ocupados. Espera un momento y vuelve a intentarlo.",
+        "pt": "As configurações DNS estão ocupadas. Aguarde um momento e tente novamente.",
+        "fr": "Les réglages DNS sont occupés. Patientez un instant, puis réessayez.",
+        "de": "Die DNS-Einstellungen sind beschäftigt. Warte kurz und versuche es erneut.",
+        "ar": "إعدادات DNS مشغولة. انتظر قليلًا ثم أعد المحاولة.",
+        "ja": "DNSの設定を処理中です。少し待ってからやり直してください。",
+        "ko": "DNS 설정이 처리 중입니다. 잠시 기다린 후 다시 시도해 주세요.",
+        "zh-Hans": "DNS 设置正在忙碌。请稍等后重试。"
+      }
+    },
+    {
+      "source": "Request details",
+      "translations": {
+        "hi": "अनुरोध का विवरण",
+        "es": "Detalles de la solicitud",
+        "pt": "Detalhes da solicitação",
+        "fr": "Détails de la demande",
+        "de": "Anfragedetails",
+        "ar": "تفاصيل الطلب",
+        "ja": "要求の詳細",
+        "ko": "요청 세부 정보",
+        "zh-Hans": "请求详情"
+      }
+    }
+  ]
+}

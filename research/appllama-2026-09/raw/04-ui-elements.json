@@ -1,0 +1,564 @@
+{
+  "elements": [
+    {
+      "element": "system-chrome",
+      "name": "System & Permissions",
+      "about": "Status bars, permission prompts and the OS furniture apps design around.",
+      "screens": 3017,
+      "apps": 983,
+      "top_variants": [
+        "Android Status Bar",
+        "Home Indicator",
+        "iOS Status Icons",
+        "iOS Permission Alert",
+        "Bottom Home Indicator",
+        "System Status Bar"
+      ]
+    },
+    {
+      "element": "keyboards",
+      "name": "Keyboards",
+      "about": "Every moment an app hands the screen to the keyboard.",
+      "screens": 1274,
+      "apps": 576,
+      "top_variants": [
+        "iOS Keyboard",
+        "Numeric Keypad",
+        "Onscreen Keyboard",
+        "iOS QWERTY Keyboard",
+        "System Keyboard",
+        "iOS Numeric Keypad"
+      ]
+    },
+    {
+      "element": "tab-bars",
+      "name": "Tab Bars",
+      "about": "Bottom navigation \u2014 classic, floating, pill \u2014 the app's home base.",
+      "screens": 12403,
+      "apps": 1053,
+      "top_variants": [
+        "Bottom Tab Bar",
+        "Bottom Tab Navigation",
+        "Floating Bottom Nav",
+        "Five-Tab Bottom Nav",
+        "Bottom Navigation Bar",
+        "Floating Tab Bar"
+      ]
+    },
+    {
+      "element": "segmented-controls",
+      "name": "Tabs & Segmented Controls",
+      "about": "In-page switchers: segmented pickers and top tab rows.",
+      "screens": 3773,
+      "apps": 918,
+      "top_variants": [
+        "Segmented Progress Bar",
+        "Segmented Tabs",
+        "Segmented Top Tabs",
+        "Segmented Tab Control",
+        "Segmented Control",
+        "Segmented Progress"
+      ]
+    },
+    {
+      "element": "back-controls",
+      "name": "Back Controls",
+      "about": "Chevrons, circles and text links \u2014 how apps let you retreat.",
+      "screens": 13823,
+      "apps": 1200,
+      "top_variants": [
+        "Back Chevron",
+        "Back Icon Button",
+        "Back Arrow",
+        "Back Circle Button",
+        "Circular Back Control",
+        "Back Navigation"
+      ]
+    },
+    {
+      "element": "close-buttons",
+      "name": "Close & Dismiss",
+      "about": "The escape hatch on sheets, paywalls and interstitials.",
+      "screens": 6994,
+      "apps": 1196,
+      "top_variants": [
+        "Close Icon Button",
+        "Close Icon",
+        "Close Circle Button",
+        "Circular Close Control",
+        "Close X Icon",
+        "Close Circle Control"
+      ]
+    },
+    {
+      "element": "fabs",
+      "name": "Floating Action Buttons",
+      "about": "The one action that floats above everything else.",
+      "screens": 1832,
+      "apps": 505,
+      "top_variants": [
+        "Floating Add Button",
+        "Floating Action Button",
+        "Floating Add FAB",
+        "Floating Add Control",
+        "Floating Scan FAB",
+        "Center Scan FAB"
+      ]
+    },
+    {
+      "element": "pagination-dots",
+      "name": "Pagination Dots",
+      "about": "Dot indicators pacing carousels and onboarding decks.",
+      "screens": 2738,
+      "apps": 750,
+      "top_variants": [
+        "Carousel Page Dots",
+        "Pagination Dots",
+        "Page Indicator Dots",
+        "Page Dot Indicator",
+        "Step Progress Dots",
+        "Progress Dots"
+      ]
+    },
+    {
+      "element": "progress",
+      "name": "Progress Indicators",
+      "about": "Bars, steps and rings that keep momentum visible.",
+      "screens": 10305,
+      "apps": 1080,
+      "top_variants": [
+        "Top Progress Bar",
+        "Step Progress Bar",
+        "Progress Bar",
+        "Linear Progress Bar",
+        "Scroll Indicator",
+        "Thin Progress Bar"
+      ]
+    },
+    {
+      "element": "toggles",
+      "name": "Toggles & Switches",
+      "about": "Binary controls, from settings rows to consent screens.",
+      "screens": 4080,
+      "apps": 1093,
+      "top_variants": [
+        "Toggle Switch",
+        "Toggle Switches",
+        "Toggle Switch Rows",
+        "Green Toggle Switches",
+        "Green Toggle Switch",
+        "Unit Toggle Pills"
+      ]
+    },
+    {
+      "element": "search",
+      "name": "Search",
+      "about": "Fields, bars and icons that open the query path.",
+      "screens": 3571,
+      "apps": 830,
+      "top_variants": [
+        "Search Field",
+        "Rounded Search Field",
+        "Search Icon",
+        "Search Icon Button",
+        "Search Input Field",
+        "Search Bar"
+      ]
+    },
+    {
+      "element": "sheets-modals",
+      "name": "Sheets, Modals & Overlays",
+      "about": "Bottom sheets, dialogs, drag handles and the scrims beneath them.",
+      "screens": 11468,
+      "apps": 1307,
+      "top_variants": [
+        "Rounded Bottom Sheet",
+        "Dimmed Backdrop",
+        "Bottom Sheet Modal",
+        "Sheet Drag Handle",
+        "Dimmed App Backdrop",
+        "Dimmed Screen Overlay"
+      ]
+    },
+    {
+      "element": "paywall-components",
+      "name": "Paywall Components",
+      "about": "Plan cards, trial toggles and restore links \u2014 the conversion parts.",
+      "screens": 3989,
+      "apps": 1259,
+      "top_variants": [
+        "Monthly Plan Card",
+        "Restore Purchase Link",
+        "Restore Text Link",
+        "Rounded Trial CTA",
+        "Centered Paywall Title",
+        "Annual Plan Card"
+      ]
+    },
+    {
+      "element": "ratings-social-proof",
+      "name": "Ratings & Social Proof",
+      "about": "Stars, laurels and review moments that borrow trust.",
+      "screens": 7036,
+      "apps": 1236,
+      "top_variants": [
+        "Star Rating Row",
+        "Five Star Rating",
+        "Rounded Start CTA",
+        "Dual Laurel Badges",
+        "Testimonial Card",
+        "Five-Star Rating"
+      ]
+    },
+    {
+      "element": "question-headers",
+      "name": "Question Headers",
+      "about": "The quiz grammar of modern onboarding, one question at a time.",
+      "screens": 1866,
+      "apps": 394,
+      "top_variants": [
+        "Question Header",
+        "Centered Question",
+        "Question Heading",
+        "Centered Question Title",
+        "Centered Question Text",
+        "Question Title"
+      ]
+    },
+    {
+      "element": "icon-buttons",
+      "name": "Icon Buttons",
+      "about": "Share, settings, overflow \u2014 the quiet utility layer.",
+      "screens": 3240,
+      "apps": 965,
+      "top_variants": [
+        "Share Icon Button",
+        "Settings Gear Icon",
+        "Hamburger Menu Icon",
+        "Overflow Menu",
+        "Overflow Menu Icon",
+        "Overflow Menu Button"
+      ]
+    },
+    {
+      "element": "text-links",
+      "name": "Text Links",
+      "about": "Skip, log in, maybe later \u2014 the soft path around the primary action.",
+      "screens": 5802,
+      "apps": 1206,
+      "top_variants": [
+        "Skip Text Link",
+        "Skip Text Action",
+        "Login Text Link",
+        "Footer Text Links",
+        "Secondary Text Link",
+        "Sign In Text Link"
+      ]
+    },
+    {
+      "element": "buttons-ctas",
+      "name": "Buttons & CTAs",
+      "about": "Primary actions in every shape an app ships them.",
+      "screens": 29925,
+      "apps": 1327,
+      "top_variants": [
+        "Rounded Primary CTA",
+        "Rounded Green CTA",
+        "Rounded Continue CTA",
+        "Rounded Blue CTA",
+        "Pill Primary CTA",
+        "Solid Pill Button"
+      ]
+    },
+    {
+      "element": "chips-pills",
+      "name": "Chips & Pills",
+      "about": "Compact selectors, filters, labels and badges.",
+      "screens": 12355,
+      "apps": 1307,
+      "top_variants": [
+        "Filter Chip Row",
+        "Category Filter Chips",
+        "PRO Badge",
+        "Discount Badge",
+        "Filter Chips",
+        "Best Value Badge"
+      ]
+    },
+    {
+      "element": "inputs-fields",
+      "name": "Inputs & Fields",
+      "about": "Text fields, email captures and code entries.",
+      "screens": 3347,
+      "apps": 932,
+      "top_variants": [
+        "Email Input Field",
+        "Text Input Field",
+        "Password Input Field",
+        "Prompt Text Area",
+        "Email Text Field",
+        "Password Visibility Icon"
+      ]
+    },
+    {
+      "element": "lists-rows",
+      "name": "Lists & Rows",
+      "about": "Settings rows, chevron lists, checklists and dividers.",
+      "screens": 17805,
+      "apps": 1320,
+      "top_variants": [
+        "Chevron List Rows",
+        "Settings List Rows",
+        "Chevron Row Actions",
+        "Chevron Rows",
+        "Section Dividers",
+        "Divider Lines"
+      ]
+    },
+    {
+      "element": "cards",
+      "name": "Cards & Option Grids",
+      "about": "Choice cards, option grids and content tiles.",
+      "screens": 19829,
+      "apps": 1315,
+      "top_variants": [
+        "Grouped Settings Cards",
+        "Rounded Option Cards",
+        "Rounded Choice Cards",
+        "Stacked Choice Cards",
+        "Two Column Card Grid",
+        "Two-Column Card Grid"
+      ]
+    },
+    {
+      "element": "nav-headers",
+      "name": "Nav Bars & Headers",
+      "about": "Top bars, page titles and header treatments.",
+      "screens": 13624,
+      "apps": 1252,
+      "top_variants": [
+        "Centered Page Title",
+        "Section Headers",
+        "Top Navigation Bar",
+        "Centered Nav Title",
+        "Top App Bar",
+        "Settings Header"
+      ]
+    },
+    {
+      "element": "carousels-sliders",
+      "name": "Carousels & Sliders",
+      "about": "Horizontal rails, swipe decks and value sliders.",
+      "screens": 2800,
+      "apps": 858,
+      "top_variants": [
+        "Volume Slider",
+        "Carousel Indicators",
+        "Horizontal Carousel",
+        "Range Slider",
+        "Image Carousel",
+        "Book Cover Carousel"
+      ]
+    },
+    {
+      "element": "media-players",
+      "name": "Media & Players",
+      "about": "Players, waveforms and the controls around them.",
+      "screens": 1617,
+      "apps": 466,
+      "top_variants": [
+        "Mini Player Bar",
+        "Mini Audio Player",
+        "Audio Scrubber",
+        "Video Background",
+        "Embedded Video Player",
+        "Persistent Mini Player"
+      ]
+    },
+    {
+      "element": "charts-data",
+      "name": "Charts & Data",
+      "about": "Graphs, calendars, streaks and stat displays.",
+      "screens": 5146,
+      "apps": 1081,
+      "top_variants": [
+        "Floating Map Controls",
+        "Full Screen Map",
+        "Month Calendar Grid",
+        "Phone Mockup Graphic",
+        "Monthly Calendar Grid",
+        "Calendar Month Grid"
+      ]
+    },
+    {
+      "element": "brand-art",
+      "name": "Logos, Mascots & Art",
+      "about": "Wordmarks, mascots and the illustration layer.",
+      "screens": 9113,
+      "apps": 1271,
+      "top_variants": [
+        "Centered Brand Logo",
+        "Profile Avatar",
+        "Mascot Illustration",
+        "Centered App Logo",
+        "Centered Mascot Art",
+        "Centered Brand Mark"
+      ]
+    },
+    {
+      "element": "loading-empty",
+      "name": "Loading & Empty States",
+      "about": "Spinners, skeletons and the moments between content.",
+      "screens": 1797,
+      "apps": 899,
+      "top_variants": [
+        "Loading Spinner",
+        "Empty State Message",
+        "Centered Empty State",
+        "Empty State Copy",
+        "Empty State Icon",
+        "Loading Status Text"
+      ]
+    },
+    {
+      "element": "splash-launch",
+      "name": "Splash & Launch Screens",
+      "about": "The first frame \u2014 a lone app icon on a quiet canvas before the product says a word.",
+      "screens": 842,
+      "apps": 571,
+      "top_variants": [
+        "Centered App Icon",
+        "Minimalist Splash Screen",
+        "Splash Screen",
+        "Minimal Splash Layout",
+        "White Splash Canvas",
+        "Rounded App Icon"
+      ]
+    },
+    {
+      "element": "legal-fine-print",
+      "name": "Legal & Fine Print",
+      "about": "Terms, privacy, consent \u2014 the tiny gray type every app must whisper.",
+      "screens": 2541,
+      "apps": 1064,
+      "top_variants": [
+        "Legal Footer Links",
+        "Footer Legal Links",
+        "Terms Privacy Links",
+        "Underlined Legal Links",
+        "Legal Footer Text",
+        "Legal Consent Copy"
+      ]
+    },
+    {
+      "element": "pickers-dropdowns",
+      "name": "Pickers & Dropdowns",
+      "about": "Wheels, dropdowns and date spinners \u2014 the scrolling machinery of choosing a value.",
+      "screens": 1841,
+      "apps": 682,
+      "top_variants": [
+        "Wheel Time Picker",
+        "Wheel Date Picker",
+        "Language Dropdown",
+        "Date Wheel Picker",
+        "Filter Dropdown",
+        "Outlined Zodiac Picker"
+      ]
+    },
+    {
+      "element": "chat-bubbles",
+      "name": "Chat & Speech Bubbles",
+      "about": "Conversation made visible \u2014 chat threads, coach prompts and the humble speech bubble.",
+      "screens": 1129,
+      "apps": 393,
+      "top_variants": [
+        "Speech Bubble",
+        "Chat Bubble Stack",
+        "User Message Bubble",
+        "Coach Speech Bubble",
+        "Chat Message Bubbles",
+        "Outlined Speech Bubble"
+      ]
+    },
+    {
+      "element": "selected-states",
+      "name": "Checks & Selected States",
+      "about": "Radio dots, checkboxes and the glowing border that says you picked this one.",
+      "screens": 4229,
+      "apps": 1123,
+      "top_variants": [
+        "Radio Selectors",
+        "Selected Checkmark",
+        "Green Check Icons",
+        "Square Checkboxes",
+        "Selected Annual Plan",
+        "Selected Date Circle"
+      ]
+    },
+    {
+      "element": "banners-toasts",
+      "name": "Banners & Toasts",
+      "about": "Upsell strips, sale ribbons and toast confirmations \u2014 little billboards inside the screen.",
+      "screens": 2680,
+      "apps": 890,
+      "top_variants": [
+        "Bottom Banner Ad",
+        "Premium Promo Banner",
+        "Bottom Ad Banner",
+        "Promo Banner",
+        "Hero Image Banner",
+        "Notification Banner"
+      ]
+    },
+    {
+      "element": "typography",
+      "name": "Typography & Text",
+      "about": "Headlines, body copy, captions \u2014 the type doing the heavy lifting on every screen.",
+      "screens": 15523,
+      "apps": 1324,
+      "top_variants": [
+        "Centered Screen Title",
+        "Centered Headline",
+        "Supporting Body Copy",
+        "Centered Intro Copy",
+        "Centered Body Copy",
+        "Centered Feature Title"
+      ]
+    },
+    {
+      "element": "backgrounds",
+      "name": "Backgrounds & Gradients",
+      "about": "The canvas under everything \u2014 minimal whites, moody darks and gradient washes.",
+      "screens": 5808,
+      "apps": 1202,
+      "top_variants": [
+        "Minimal White Canvas",
+        "Minimal White Layout",
+        "Gradient Background",
+        "Dark Fullscreen Canvas",
+        "Minimal White Background",
+        "Black Fullscreen Canvas"
+      ]
+    },
+    {
+      "element": "others",
+      "name": "Others",
+      "about": "The uncharted drawer \u2014 rare, one-off and brand-new labels no family has claimed yet.",
+      "screens": 36427,
+      "apps": 1328,
+      "top_variants": [
+        "Cancel Text Action",
+        "Section Labels",
+        "Full-Bleed Hero Photo",
+        "Bottom Action Bar",
+        "Undo Redo Controls",
+        "Leading Line Icons"
+      ]
+    }
+  ],
+  "hint": "Pass an element id to get_element_screens (or as the `element` filter on search_screens keyword mode) to pull real screens featuring it.",
+  "credits": {
+    "spent": 1,
+    "remaining_this_month": 1002
+  }
+}

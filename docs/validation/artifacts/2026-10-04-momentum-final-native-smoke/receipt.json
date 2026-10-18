@@ -1,0 +1,24 @@
+{
+  "schemaVersion": "freed-final-simulator-smoke-receipt-v1",
+  "capturedAt": "2026-10-04T03:59:47.474031+00:00",
+  "sanitized": true,
+  "installedPackage": "installed-package.json",
+  "installedPackageSha256": "692a998b910901fbe0019bcb92c8104b7de9fab7366c231adcf8eaa1092b6d75",
+  "renderedTodayDark": {
+    "artifact": "today-dark.png",
+    "sha256": "02d951dc571d4c90c306d1ab1e641facea9e678a8ebdc38d1cf591a9f8a46882",
+    "scope": "Observed native rendering only; no complete surface, motion or physical evidence."
+  },
+  "navigationRunnerExitCode": 1,
+  "navigationStatus": "failed-before-flow-execution",
+  "driverError": "iOS driver not ready in time / IOSDriverTimeoutException",
+  "executedNavigationSteps": 0,
+  "cuaFallback": {
+    "observation": "Preferences with dark theme and companion visible",
+    "interaction": "not-verified",
+    "error": "Computer Use server error -10005: noWindowsAvailable"
+  },
+  "requiredNativeCellsPromoted": 0,
+  "physicalTestsPerformed": false,
+  "distributionSigningProven": false
+}

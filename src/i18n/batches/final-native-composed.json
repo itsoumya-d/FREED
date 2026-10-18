@@ -1,0 +1,102 @@
+{
+  "entries": [
+    {
+      "source": "Android VPN consent is needed before FREED can start DNS Guard. Approve the system dialog, then FREED will retry DNS Guard when you return.{{privateDnsNote}}",
+      "translations": {
+        "hi": "FREED को DNS Guard शुरू करने से पहले Android VPN अनुमति चाहिए। सिस्टम संवाद स्वीकार करें; लौटने पर FREED DNS Guard फिर शुरू करेगा।{{privateDnsNote}}",
+        "es": "FREED necesita el consentimiento de VPN de Android para iniciar DNS Guard. Acepta el diálogo del sistema; FREED volverá a intentarlo cuando regreses.{{privateDnsNote}}",
+        "pt": "FREED precisa da aprovação de VPN do Android para iniciar DNS Guard. Aprove o diálogo do sistema; FREED tentará iniciar DNS Guard novamente quando você voltar.{{privateDnsNote}}",
+        "fr": "FREED a besoin de l’autorisation VPN Android pour démarrer DNS Guard. Acceptez la boîte de dialogue système ; FREED réessaiera à votre retour.{{privateDnsNote}}",
+        "de": "FREED benötigt Android-VPN-Zustimmung, um DNS Guard zu starten. Bestätige den Systemdialog; FREED versucht es bei deiner Rückkehr erneut.{{privateDnsNote}}",
+        "ar": "يحتاج FREED إلى موافقة VPN في Android لبدء DNS Guard. وافق على مربع حوار النظام؛ سيحاول FREED تشغيل DNS Guard مجددًا عند عودتك.{{privateDnsNote}}",
+        "ja": "DNS Guard を開始するには Android の VPN 許可が必要です。システムのダイアログで許可すると、FREED に戻ったときに再試行します。{{privateDnsNote}}",
+        "zh-Hans": "FREED 启动 DNS Guard 前需要 Android VPN 授权。请同意系统对话框；返回后 FREED 将重试启动 DNS Guard。{{privateDnsNote}}",
+        "ko": "Android FREED가 DNS Guard를 시작하려면 VPN 동의가 필요합니다. 시스템 대화 상자를 승인하면 FREED는 사용자가 돌아올 때 DNS Guard를 다시 시도합니다.{{privateDnsNote}}"
+      }
+    },
+    {
+      "source": "Enable FREED Protection in Android Accessibility settings.{{privateDnsNote}}",
+      "translations": {
+        "hi": "Android सुलभता सेटिंग्स में FREED Protection चालू करें।{{privateDnsNote}}",
+        "es": "Activa FREED Protection en los ajustes de Accesibilidad de Android.{{privateDnsNote}}",
+        "pt": "Ative FREED Protection nos ajustes de Acessibilidade do Android.{{privateDnsNote}}",
+        "fr": "Activez FREED Protection dans les paramètres d’accessibilité Android.{{privateDnsNote}}",
+        "de": "Aktiviere FREED Protection in den Android-Bedienungshilfen.{{privateDnsNote}}",
+        "ar": "فعّل FREED Protection في إعدادات إمكانية الوصول في Android.{{privateDnsNote}}",
+        "ja": "Android のユーザー補助設定で FREED Protection を有効にしてください。{{privateDnsNote}}",
+        "zh-Hans": "请在 Android 无障碍设置中启用 FREED Protection。{{privateDnsNote}}",
+        "ko": "Android 접근성 설정에서 FREED Protection를 활성화합니다.{{privateDnsNote}}"
+      }
+    },
+    {
+      "source": "FREED Accessibility protection is enabled for supported browsers, focused WebView fields, and opted-in app timers.{{privateDnsNote}}",
+      "translations": {
+        "hi": "FREED सुलभता सुरक्षा समर्थित ब्राउज़र, फ़ोकस किए WebView फ़ील्ड और सहमति वाले ऐप टाइमर के लिए चालू है।{{privateDnsNote}}",
+        "es": "La protección de Accesibilidad de FREED está activada para navegadores compatibles, campos WebView enfocados y temporizadores de apps aceptados.{{privateDnsNote}}",
+        "pt": "A proteção de Acessibilidade do FREED está ativada para navegadores compatíveis, campos WebView em foco e temporizadores de apps aceitos.{{privateDnsNote}}",
+        "fr": "La protection d’accessibilité FREED est activée pour les navigateurs pris en charge, les champs WebView ciblés et les minuteurs d’apps acceptés.{{privateDnsNote}}",
+        "de": "Der FREED-Bedienungshilfenschutz ist für unterstützte Browser, fokussierte WebView-Felder und aktivierte App-Timer eingeschaltet.{{privateDnsNote}}",
+        "ar": "حماية إمكانية الوصول في FREED مفعّلة للمتصفحات المدعومة وحقول WebView المركّز عليها ومؤقتات التطبيقات التي وافقت عليها.{{privateDnsNote}}",
+        "ja": "FREED のユーザー補助による保護は、対応ブラウザー、フォーカス中の WebView フィールド、同意したアプリのタイマーで有効です。{{privateDnsNote}}",
+        "zh-Hans": "FREED 无障碍保护已为受支持浏览器、聚焦的 WebView 字段和已同意的应用计时器启用。{{privateDnsNote}}",
+        "ko": "FREED 접근성 보호는 지원되는 브라우저, 집중된 WebView 필드 및 선택된 앱 타이머에 대해 활성화됩니다.{{privateDnsNote}}"
+      }
+    },
+    {
+      "source": "FREED DNS Guard is filtering DNS-level adult domains with resolver failover.{{privateDnsNote}}",
+      "translations": {
+        "hi": "FREED DNS Guard वैकल्पिक रिज़ॉल्वर के साथ DNS स्तर पर वयस्क डोमेन फ़िल्टर कर रहा है।{{privateDnsNote}}",
+        "es": "FREED DNS Guard filtra dominios para adultos a nivel de DNS con conmutación entre resolutores.{{privateDnsNote}}",
+        "pt": "FREED DNS Guard está filtrando domínios adultos no nível DNS com alternância de resolvedores em caso de falha.{{privateDnsNote}}",
+        "fr": "FREED DNS Guard filtre les domaines pour adultes au niveau DNS avec basculement entre résolveurs.{{privateDnsNote}}",
+        "de": "FREED DNS Guard filtert Erwachsenendomains auf DNS-Ebene mit Resolver-Ausfallsicherung.{{privateDnsNote}}",
+        "ar": "يصفي FREED DNS Guard نطاقات محتوى البالغين على مستوى DNS مع التحويل إلى محلّل بديل عند الفشل.{{privateDnsNote}}",
+        "ja": "FREED DNS Guard は、障害時にリゾルバーを切り替えながら DNS レベルで成人向けドメインをフィルタリングしています。{{privateDnsNote}}",
+        "zh-Hans": "FREED DNS Guard 正在 DNS 层过滤成人内容域名，并支持解析器故障切换。{{privateDnsNote}}",
+        "ko": "FREED DNS Guard는 확인자 장애 조치를 사용하여 DNS 수준 성인 도메인을 필터링하고 있습니다.{{privateDnsNote}}"
+      }
+    },
+    {
+      "source": "FREED DNS Guard is user-enabled and eligible to restore after reboot or app update, but it is not currently running.{{privateDnsNote}}",
+      "translations": {
+        "hi": "FREED DNS Guard उपयोगकर्ता ने चालू किया है और रीबूट या ऐप अपडेट के बाद फिर चल सकता है, पर अभी नहीं चल रहा।{{privateDnsNote}}",
+        "es": "El usuario activó FREED DNS Guard y puede restaurarse tras reiniciar o actualizar la app, pero ahora no está funcionando.{{privateDnsNote}}",
+        "pt": "FREED DNS Guard foi ativado pelo usuário e pode ser restaurado após reiniciar ou atualizar o app, mas não está em execução agora.{{privateDnsNote}}",
+        "fr": "FREED DNS Guard est activé par l’utilisateur et peut être rétabli après un redémarrage ou une mise à jour, mais il ne fonctionne pas actuellement.{{privateDnsNote}}",
+        "de": "FREED DNS Guard wurde vom Nutzer aktiviert und kann nach einem Neustart oder App-Update wiederhergestellt werden, läuft aber derzeit nicht.{{privateDnsNote}}",
+        "ar": "فعّل المستخدم FREED DNS Guard ويمكن استعادته بعد إعادة التشغيل أو تحديث التطبيق، لكنه لا يعمل حاليًا.{{privateDnsNote}}",
+        "ja": "FREED DNS Guard はユーザーが有効にしており、再起動やアプリ更新後に復元できますが、現在は動作していません。{{privateDnsNote}}",
+        "zh-Hans": "FREED DNS Guard 已由用户启用，可在重启或应用更新后恢复，但当前未运行。{{privateDnsNote}}",
+        "ko": "FREED DNS Guard는 사용자가 활성화하고 재부팅 또는 앱 업데이트 후 복원할 수 있지만 현재 실행되고 있지 않습니다.{{privateDnsNote}}"
+      }
+    },
+    {
+      "source": "FREED DNS Guard was user-enabled, but Android VPN permission must be reviewed before it can restart.{{privateDnsNote}}",
+      "translations": {
+        "hi": "FREED DNS Guard उपयोगकर्ता ने चालू किया था, पर फिर चलाने से पहले Android VPN अनुमति की समीक्षा ज़रूरी है।{{privateDnsNote}}",
+        "es": "El usuario había activado FREED DNS Guard, pero hay que revisar el permiso de VPN de Android antes de reiniciarlo.{{privateDnsNote}}",
+        "pt": "FREED DNS Guard foi ativado pelo usuário, mas a permissão de VPN do Android precisa ser revisada antes de reiniciar.{{privateDnsNote}}",
+        "fr": "FREED DNS Guard a été activé par l’utilisateur, mais l’autorisation VPN Android doit être vérifiée avant son redémarrage.{{privateDnsNote}}",
+        "de": "FREED DNS Guard wurde vom Nutzer aktiviert, aber vor dem Neustart muss die Android-VPN-Berechtigung geprüft werden.{{privateDnsNote}}",
+        "ar": "فعّل المستخدم FREED DNS Guard، لكن يجب مراجعة إذن VPN في Android قبل إعادة تشغيله.{{privateDnsNote}}",
+        "ja": "FREED DNS Guard はユーザーが有効にしていましたが、再開する前に Android の VPN 許可を確認する必要があります。{{privateDnsNote}}",
+        "zh-Hans": "FREED DNS Guard 曾由用户启用，但重新启动前需要检查 Android VPN 权限。{{privateDnsNote}}",
+        "ko": "FREED DNS Guard는 사용자가 활성화했지만 Android VPN 권한을 검토해야 다시 시작할 수 있습니다.{{privateDnsNote}}"
+      }
+    },
+    {
+      "source": "unknown error",
+      "translations": {
+        "hi": "अज्ञात त्रुटि",
+        "es": "error desconocido",
+        "pt": "erro desconhecido",
+        "fr": "erreur inconnue",
+        "de": "unbekannter Fehler",
+        "ar": "خطأ غير معروف",
+        "ja": "不明なエラー",
+        "zh-Hans": "未知错误",
+        "ko": "알 수 없는 오류"
+      }
+    }
+  ]
+}

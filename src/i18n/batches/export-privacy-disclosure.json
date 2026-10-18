@@ -1,0 +1,32 @@
+{
+  "entries": [
+    {
+      "source": "Self-reported urge moments: {{count}}",
+      "translations": {
+        "hi": "स्वयं बताई गई तलब के क्षण: {{count}}",
+        "es": "Momentos de impulso informados por ti: {{count}}",
+        "pt": "Momentos de vontade relatados por você: {{count}}",
+        "fr": "Moments d’envie déclarés par vous : {{count}}",
+        "de": "Selbst gemeldete Drangmomente: {{count}}",
+        "ar": "لحظات الرغبة المُبلّغ عنها ذاتيًا: {{count}}",
+        "ja": "自己申告した衝動の回数：{{count}}",
+        "ko": "직접 기록한 충동 순간: {{count}}",
+        "zh-Hans": "自行报告的冲动时刻：{{count}}"
+      }
+    },
+    {
+      "source": "Private notes, contacts, browsing details, and device protection history are not included.",
+      "translations": {
+        "hi": "निजी नोट्स, संपर्क, ब्राउज़िंग विवरण और डिवाइस सुरक्षा का इतिहास शामिल नहीं हैं।",
+        "es": "No se incluyen notas privadas, contactos, detalles de navegación ni el historial de protección del dispositivo.",
+        "pt": "Notas privadas, contatos, detalhes de navegação e histórico de proteção do dispositivo não estão incluídos.",
+        "fr": "Les notes privées, les contacts, les détails de navigation et l’historique de protection de l’appareil ne sont pas inclus.",
+        "de": "Private Notizen, Kontakte, Browserdetails und der Verlauf des Geräteschutzes sind nicht enthalten.",
+        "ar": "لا يتم تضمين الملاحظات الخاصة أو جهات الاتصال أو تفاصيل التصفح أو سجل حماية الجهاز.",
+        "ja": "個人メモ、連絡先、閲覧の詳細、デバイス保護の履歴は含まれません。",
+        "ko": "개인 메모, 연락처, 탐색 세부 정보 및 기기 보호 기록은 포함되지 않습니다.",
+        "zh-Hans": "不包含私人笔记、联系人、浏览详情和设备保护历史。"
+      }
+    }
+  ]
+}

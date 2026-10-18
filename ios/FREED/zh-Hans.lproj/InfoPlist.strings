@@ -1,0 +1,5 @@
+"NSFaceIDUsageDescription" = "FREED 使用设备身份验证来保护恢复设置。";
+"NSCameraUsageDescription" = "FREED 仅在你选择需要验证真实照片的照片挑战时使用相机。";
+"NSLocationWhenInUseUsageDescription" = "FREED 仅临时使用前台位置来验证户外恢复挑战。";
+"NSMotionUsageDescription" = "FREED 仅在进行挑战时使用运动数据来验证实际运动。";
+"NSUserNotificationsUsageDescription" = "FREED 发送支持恢复的状态提醒及保护连续记录的紧急提醒。";

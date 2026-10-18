@@ -6,6 +6,7 @@ const { join, resolve } = require("node:path");
 const ANDROID_APP_LINK_HOST = "freed-7d5ee.firebaseapp.com";
 const ANDROID_APP_LINK_PATH = "/__/auth/links";
 const APPLE_APP_LINK_PATH = "/__/auth/links";
+const APPLE_INTERVENTION_LINK_PATH = "/intervention";
 const ANDROID_APPLICATION_ID = "app.freed.recovery";
 const ANDROID_SIGNING_SHA256_ENV = "FREED_ANDROID_APP_LINK_SIGNING_SHA256";
 const APPLE_TEAM_ID_ENV = "FREED_IOS_DEVELOPMENT_TEAM";
@@ -77,7 +78,7 @@ function associationDocuments(config) {
         details: [
           {
             appID: `${config.appleTeamId}.${ANDROID_APPLICATION_ID}`,
-            components: [{ "/": APPLE_APP_LINK_PATH }]
+            components: [{ "/": APPLE_APP_LINK_PATH }, { "/": APPLE_INTERVENTION_LINK_PATH }]
           }
         ]
       }
@@ -92,10 +93,12 @@ function writeFirebaseEmailLinkAssociationFiles(publicDir, env = process.env) {
   const wellKnown = join(root, ".well-known");
   const assetLinksPath = join(wellKnown, "assetlinks.json");
   const appleAppSiteAssociationPath = join(root, "apple-app-site-association");
+  const wellKnownAppleAppSiteAssociationPath = join(wellKnown, "apple-app-site-association");
 
   mkdirSync(wellKnown, { recursive: true });
   writeFileSync(assetLinksPath, `${JSON.stringify(documents.assetLinks, null, 2)}\n`);
   writeFileSync(appleAppSiteAssociationPath, `${JSON.stringify(documents.appleAppSiteAssociation, null, 2)}\n`);
+  writeFileSync(wellKnownAppleAppSiteAssociationPath, `${JSON.stringify(documents.appleAppSiteAssociation, null, 2)}\n`);
 
   return { assetLinksPath, appleAppSiteAssociationPath, config };
 }
@@ -104,6 +107,7 @@ module.exports = {
   ANDROID_APP_LINK_HOST,
   ANDROID_APP_LINK_PATH,
   APPLE_APP_LINK_PATH,
+  APPLE_INTERVENTION_LINK_PATH,
   ANDROID_APPLICATION_ID,
   ANDROID_SIGNING_SHA256_ENV,
   APPLE_TEAM_ID_ENV,

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "freed-source-bound-audit-v1",
+  "generatedAt": "2026-10-02T11:32:46.338Z",
+  "sanitized": true,
+  "status": "passed",
+  "exitCode": 0,
+  "timedOut": false,
+  "startedAt": "2026-10-02T11:32:45.941Z",
+  "durationMs": 396,
+  "counts": {
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0
+  },
+  "log": "docs/validation/artifacts/2026-10-02-feature-coverage/router-destination-refresh/accessibility-audit.log",
+  "logSha256": "2d739a161874e1e282ff1bbd03a8b0a0d1aa0e3360753279c39ebf9d973e7e28",
+  "command": [
+    "node",
+    "scripts/accessibility-safety-audit.js"
+  ],
+  "executionSourceSnapshot": {
+    "beforeSha256": {
+      "src/features/freed-app.tsx": "660aca960db5e8a80da5243dccad1daecf6f15efbc414f6020a18f2171e3acb4",
+      "src/lib/native-navigation.ts": "dee249d9da63746bd3479999a61902fa4abe4230e181a1adda2bd1f5af2fb692",
+      "src/lib/deep-link-routing.ts": "1e53567b993e349e8723eca847d16b5cdd82ba6a8c6b8a4fb746237d8475dd64",
+      "src/features/use-freed-navigation.ts": "41005290f371895700a594ef7cc57390943469b943ddca5ad5384eed6873bcea",
+      "app/_layout.tsx": "42a22a507077cefa6abb2632830da7964bd79a956d86c4d8fb1338152a34006d",
+      "app/flow/[destination].tsx": "07d5d47e1b36d6ab85424039a6aebba65ada2acd5380ea450dc21515fc8a73c5",
+      "app/onboarding/[destination].tsx": "ee130795cc4a9241f4b641e88d444a50d2432acb4d4d5154cdad87cb7b2e9339",
+      "app/(tabs)/_layout.tsx": "d450fc5a895b2c88a0a0c40b1a926da1fa3f590a8b141f02b059ac0b522e7870",
+      "scripts/accessibility-safety-audit.js": "a81645ebd071339b16cd587603d27e85823710a058a7d2a9a348ad8fd7641027"
+    },
+    "afterSha256": {
+      "src/features/freed-app.tsx": "660aca960db5e8a80da5243dccad1daecf6f15efbc414f6020a18f2171e3acb4",
+      "src/lib/native-navigation.ts": "dee249d9da63746bd3479999a61902fa4abe4230e181a1adda2bd1f5af2fb692",
+      "src/lib/deep-link-routing.ts": "1e53567b993e349e8723eca847d16b5cdd82ba6a8c6b8a4fb746237d8475dd64",
+      "src/features/use-freed-navigation.ts": "41005290f371895700a594ef7cc57390943469b943ddca5ad5384eed6873bcea",
+      "app/_layout.tsx": "42a22a507077cefa6abb2632830da7964bd79a956d86c4d8fb1338152a34006d",
+      "app/flow/[destination].tsx": "07d5d47e1b36d6ab85424039a6aebba65ada2acd5380ea450dc21515fc8a73c5",
+      "app/onboarding/[destination].tsx": "ee130795cc4a9241f4b641e88d444a50d2432acb4d4d5154cdad87cb7b2e9339",
+      "app/(tabs)/_layout.tsx": "d450fc5a895b2c88a0a0c40b1a926da1fa3f590a8b141f02b059ac0b522e7870",
+      "scripts/accessibility-safety-audit.js": "a81645ebd071339b16cd587603d27e85823710a058a7d2a9a348ad8fd7641027"
+    },
+    "stableDuringExecution": true
+  }
+}

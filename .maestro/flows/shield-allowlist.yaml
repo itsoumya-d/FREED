@@ -1,0 +1,32 @@
+appId: app.freed.recovery
+name: shield-allowlist
+tags:
+  - smoke
+  - local-write
+---
+# Requires an English disposable fixture with example.com absent from userAllowedDomains.
+# Add then remove only this disposable domain; no state or Keychain reset.
+- openLink: "freed:///shield/websites"
+- runFlow:
+    when:
+      visible: "Open in.*FREED.*"
+    commands:
+      - tapOn: "Open"
+- extendedWaitUntil:
+    visible:
+      id: "screen-main-shield-websites"
+    timeout: 15000
+- assertVisible: { id: "shield-detail-websites" }
+- scrollUntilVisible:
+    element:
+      id: "shield-allow-domain"
+    direction: DOWN
+    timeout: 10000
+- tapOn:
+    id: "shield-allow-domain"
+- inputText: "example.com"
+- hideKeyboard
+- tapOn: "Add"
+- assertVisible: "Remove example.com from always allow"
+- tapOn: "Remove example.com from always allow"
+- takeScreenshot: "shield-allowlist"

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "freed-store-localization-v1",
+  "status": "draft-not-published",
+  "language": "de",
+  "translationReview": "human-review-pending",
+  "title": "FREED",
+  "appStore": {
+    "locale": "de-DE",
+    "subtitle": "Erholung und Fokus",
+    "description": "FREED hilft Ihnen, explizite Inhalte und Doomscroll-Schleifen mit Recovery-First-Schutz zu durchbrechen. Es kombiniert die Blockierung von Domänen für Erwachsene, bestimmte App-Limits, Screen Time- oder barrierefreie Übergaben und reale Wiederherstellungsherausforderungen, damit Sie zu dem Leben zurückkehren können, das Sie leben wollten.\n\nFREED verlässt sich nicht auf Scham oder Fallen. Das Schutz-Setup erklärt jede Berechtigung, leitet Sie direkt zum erforderlichen Systemautorisierungsbildschirm weiter und bestätigt die Aktivierung mit einem Schutztest, bevor die App die Einrichtung als abgeschlossen markiert.\n\nPremium entfernt berechtigte Reset-Anzeigen und schaltet Prognosen, ausführliche Berichte und Verantwortlichkeits-/Supportkreisberichte frei. Prognosen und Wiederherstellungswerte sind Schätzungen, die auf aufgezeichnetem Verhalten basieren. Für die CLARA-Fernführung gelten Tagesbegrenzungen. Lokale Anleitungen zur Wiederherstellung bleiben verfügbar."
+  },
+  "googlePlay": {
+    "locale": "de-DE",
+    "shortDescription": "Wiederherstellungstools und optionaler Geräteschutz.",
+    "description": "FREED hilft Ihnen, explizite Inhalte und Doomscroll-Schleifen mit Recovery-First-Schutz zu stoppen.\n\nRichten Sie die Blockierung von Domänen für Erwachsene ein, wählen Sie die Apps aus, die Sie in die Irre führen, und lassen Sie sich von FREED zu einer Wiederherstellungsherausforderung führen, wenn Sie eine riskante Website-, Such- oder App-Grenzschwelle erreichen. FREED konzentriert sich darauf, Ihnen zu helfen, sich im Moment zu erholen, anstatt Sie in die Falle zu locken oder zu beschämen.\n\nDas Schutz-Setup leitet Sie direkt zu den erforderlichen Android-Berechtigungsbildschirmen weiter und überprüft dann, ob die Blockierung von Erwachsenendomänen, der Zugriff auf normale Websites, der Nutzungszugriff, die Barrierefreiheit und ausgewählte App-Timer bereit sind, bevor die Aktivierung abgeschlossen ist.\n\nBehalten Sie die Genesungsunterstützung in Ihrer Nähe: Nutzen Sie dringende SOS-Notrufe, Atemübungen, Check-ins, Genesungsherausforderungen, Erinnerungen und eine private Aufzeichnung Ihrer Fortschritte. Die Berechtigungseinrichtung öffnet die nächstgelegene unterstützte Systemseite und überprüft das Ergebnis, wenn Sie zurückkehren. Der Schutzstatus spiegelt die Berechtigungen und Dienste wider, die tatsächlich auf Ihrem Gerät aktiv sind.\n\nFREED Premium bietet eine monatliche und jährliche Abrechnung mit den gleichen Vorteilen: werbefreie Wiederherstellungs-Resets und -Herausforderungen, detailliertere Berichte, geschätzte Prognosen und Support-Circle-Berichte. Die Store-Preise werden in Ihrer Landeswährung angezeigt. Für keinen der Pläne gibt es eine kostenlose Testversion. Stellen Sie Einkäufe wieder her oder verwalten Sie Ihr Abonnement über den Mitgliedschaftsbildschirm. Durch die Kündigung bleibt der Zugriff während des bezahlten Zeitraums erhalten; Wenn der kostenpflichtige Zugriff abläuft oder widerrufen wird, werden bei berechtigten kostenlosen Zurücksetzungen wieder belohnte Anzeigen verwendet. Urgent SOS bleibt werbefrei.\n\nCLARA bietet automatisierte Anleitung statt Therapie. Remote-Antworten sind für kostenlose Benutzer auf drei pro Tag und für Premium-Benutzer auf zwanzig pro Tag beschränkt. Die lokale Führung bleibt verfügbar, wenn der Remote-Dienst nicht verfügbar ist. Wiederherstellungswerte und -prognosen sind Schätzungen, die auf aufgezeichnetem Verhalten basieren, wobei der Status „Daten unzureichend“ vorliegt, wenn nicht genügend Verlauf vorhanden ist.\n\nDie wichtigsten Wiederherstellungstools funktionieren ohne Kontoanmeldung. Kontoverknüpfung und verschlüsseltes Cloud-Backup sind optional. Für den Geräteschutz sind weiterhin die beim Setup erläuterten Berechtigungen erforderlich."
+  },
+  "products": {
+    "freed_premium_yearly": {
+      "displayName": "FREED Premium Jährlich",
+      "description": "Alle Funktionen. Jährliche Zahlung.",
+      "billingPeriod": "P1Y"
+    },
+    "freed_premium_monthly": {
+      "displayName": "FREED Premium Monatlich",
+      "description": "Alle Funktionen. Monatliche Zahlung.",
+      "billingPeriod": "P1M"
+    }
+  },
+  "disclosures": {
+    "subscriptions": "Monats- und Jahresabonnements bieten die gleichen Funktionen und verlängern sich automatisch, bis sie gekündigt werden. Keine kostenlose Testversion. Die Ladenpreise werden vor dem Kauf angezeigt. Verwalten oder stornieren Sie in Ihrem Shop. Bei einer Stornierung bleibt der Zugang normalerweise während des bezahlten Zeitraums erhalten; Zurückerstatteter oder widerrufener Besitz kann den Zugriff früher beenden. SOS ist immer werbefrei.",
+    "privacy": "FREED behält native Selektoren auf Ihrem Gerät. Es werden keine nativen Screenshots, rohen Barrierefreiheitsbäume oder Browserverlauf erfasst. Kontoverknüpfung und verschlüsseltes Cloud-Backup sind optional. Angeforderte Domänen werden über HTTPS an Cloudflare Families gesendet, wenn verschlüsseltes DNS aktiviert ist; Der Anbieter wendet seine Filterrichtlinie an.",
+    "limitations": "iOS schützt ganze ausgewählte Apps, Kategorien und Websites durch Screen Time. Einzelne Oberflächen innerhalb nativer Apps können nicht überprüft werden. Die Android-Inspektion ausgewählter Oberflächen ist bis zur Richtlinien- und physischen Gerätevalidierung freigegeben. CLARA bietet automatisierte Anleitung statt Therapie; Prognosen und Wiederherstellungswerte sind Schätzungen, die auf aufgezeichnetem Verhalten basieren."
+  }
+}

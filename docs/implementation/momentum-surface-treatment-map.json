@@ -1,0 +1,1490 @@
+{
+  "schemaVersion": "momentum-surface-treatment-v1",
+  "scope": "85 source-backed route/tab/nested-state treatments (65 retained and 20 reconciled), plus one separately declared public Basic Help presentation. Source treatment is not native proof.",
+  "surfaces": [
+    {
+      "surface": "splash",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "SplashScreen",
+      "treatment": "Canonical brand plus interactive welcome companion and real startup indicator.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "SplashScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "welcome",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "WelcomeScreen",
+      "treatment": "Brand introduction with Get started, existing-account access, the unchanged adults 18+ genuine-account requirement and independent public Help action; appearance/language preferences stay reachable.",
+      "evidence": "source-composition; behavioral tests; native/runtime cells remain separately classified",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "WelcomeScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "quiz",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "QuizScreen",
+      "treatment": "Lilac question/companion composition, real step counter and selection radios, accent guarded continuation; every quiz step shares this composition.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "QuizScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "planCalculation",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "PlanCalculationScreen",
+      "treatment": "Answered assessment summary and actual calculation path; Continue routes through required account access before the owner-scoped offer, without authorizing protection.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "PlanCalculationScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "appSelection",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "AppSelectionScreen",
+      "treatment": "Yellow target heading and welcome companion, grouped checkbox selections and platform-specific native-picker explanation; original selection validation.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "AppSelectionScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "paywall",
+      "source": "src/components/FunctionalPaywallScreen.tsx",
+      "renderer": "FunctionalPaywallScreen",
+      "treatment": "Real store price and owner-scoped server readiness jointly gate checkout. Free exit remains available; stale callbacks cannot reopen or overwrite another offer.",
+      "evidence": "source-composition; behavioral tests; native/runtime cells remain separately classified",
+      "sourceEvidence": [
+        {
+          "file": "src/components/FunctionalPaywallScreen.tsx",
+          "markers": [
+            "FunctionalPaywallScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "account",
+      "source": "src/components/AccountAccessScreen.tsx",
+      "renderer": "AccountAccessScreen",
+      "treatment": "Mode-specific lilac companion heading, grouped neutral identity/password fields, native providers and preserved account/guest ownership notices.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/components/AccountAccessScreen.tsx",
+          "markers": [
+            "AccountAccessScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "protectionSetup",
+      "source": "src/components/ProtectionSetupView.tsx",
+      "renderer": "ProtectionSetupView",
+      "treatment": "Yellow companion heading, actual stage strip, lime next-step instructions, native permission help and responsive guarded footer.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/components/ProtectionSetupView.tsx",
+          "markers": [
+            "ProtectionSetupView"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "library",
+      "source": "src/features/library-screen.tsx",
+      "renderer": "LibraryScreen",
+      "treatment": "Lilac companion introduction, six colored tool tiles, native search field and bold article previews.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/library-screen.tsx",
+          "markers": [
+            "LibraryScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "today",
+      "source": "src/components/FunctionalToday.tsx",
+      "renderer": "FunctionalToday",
+      "treatment": "Independent protection summary, Breathe/Move/Write/Talk, one next action, check-in and at most two chosen practices. Date history lives in Progress.",
+      "evidence": "source-composition; behavioral tests; native/runtime cells remain separately classified",
+      "sourceEvidence": [
+        {
+          "file": "src/components/FunctionalToday.tsx",
+          "markers": [
+            "FunctionalToday"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "shield",
+      "source": "src/components/ProtectOverview.tsx",
+      "renderer": "ProtectOverview",
+      "treatment": "Displayed as Protect: website protection and app limits independently, optional schedules, technical details under disclosure/Advanced.",
+      "evidence": "source-composition; behavioral tests; native/runtime cells remain separately classified",
+      "sourceEvidence": [
+        {
+          "file": "src/components/ProtectOverview.tsx",
+          "markers": [
+            "ProtectOverview"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "progress",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "AnalyticsScreen",
+      "treatment": "Lime companion introduction, adaptive real-data metric strip, colored report sections and preserving disclosure groups; estimates retain their disclaimers.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "AnalyticsScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "profile",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ProfileScreen",
+      "treatment": "Lilac account/companion introduction, actual identity/membership data, colored management actions and colored preserving profile disclosures.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "ProfileScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "intercept",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "InterceptScreen",
+      "treatment": "Restrained coral companion introduction, actual hold-grounding progress and existing immediate ad-free safety actions; it makes no physiological measurement claim.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "InterceptScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "ad",
+      "source": "src/components/GuidedResetOffer.tsx",
+      "renderer": "GuidedResetOffer",
+      "treatment": "Existing guided-access offer retains tier, protection-origin, ad, cleanup and operation fences, with explicit start/retry/Help/safety actions.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/components/GuidedResetOffer.tsx",
+          "markers": [
+            "GuidedResetOffer"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "challenge",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ChallengeScreen",
+      "treatment": "Lime companion picker; contextual interactive active-challenge heading, actual timed progress, colored steps/verification groups and real completion outcome actions; private custom text stays opaque.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "ChallengeScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "breathing",
+      "source": "src/components/FunctionalBreathingScreen.tsx",
+      "renderer": "FunctionalBreathingScreen",
+      "treatment": "Observed active clock, paused restart, captured finish receipt, optional feedback/practice, durable-id reconciliation and truthful cleanup retry.",
+      "evidence": "source-composition; behavioral tests; native/runtime cells remain separately classified",
+      "sourceEvidence": [
+        {
+          "file": "src/components/FunctionalBreathingScreen.tsx",
+          "markers": [
+            "FunctionalBreathingScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "checkin",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "CheckInScreen",
+      "treatment": "Explicit unanswered mood and urge; sleep and reflection optional. Dated private draft and midnight transfer.",
+      "evidence": "source-composition; behavioral tests; native/runtime cells remain separately classified",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "CheckInScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "coach",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "CoachPanel",
+      "treatment": "Calm companion introduction, distinct message groups and quota/offline disclosures; private input, chips and retry/send actions preserved.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "CoachPanel"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "slip",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "SlipLogScreen",
+      "treatment": "Coral calm-companion introduction with compassionate copy, existing consequence explanation, trigger group, private-note group and original guarded save.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "SlipLogScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "customChallenge",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "CustomChallengeScreen",
+      "treatment": "Lime companion builder introduction, entitlement gate and grouped private title/why/type/intensity/duration/steps/saved-reset controls; original validation.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "CustomChallengeScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "article",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ArticleReaderScreen",
+      "treatment": "Lilac calm-companion article heading carrying the original title/summary, read metadata and 17-point reading body; native library return retained.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "ArticleReaderScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "preferences",
+      "source": "src/components/PreferencesScreen.tsx",
+      "renderer": "PreferencesScreen",
+      "treatment": "Shared companion heading and colored native appearance/language groups with original flags, save failures and RTL restart flow; localization teammate owns this composition.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/components/PreferencesScreen.tsx",
+          "markers": [
+            "PreferencesScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "privacy",
+      "source": "src/features/legal-pages.tsx",
+      "renderer": "LegalPage / PrivacyPolicyPage",
+      "treatment": "Restrained companion introduction and category-headed legal sections with original policy text, effective date and privacy/deletion links.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/legal-pages.tsx",
+          "markers": [
+            "LegalPage",
+            "PrivacyPolicyPage"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "support",
+      "source": "src/features/legal-pages.tsx",
+      "renderer": "LegalPage / SupportPage",
+      "treatment": "Restrained companion introduction, category-headed support sections and original contact/help links; no content or URL replacement.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/legal-pages.tsx",
+          "markers": [
+            "LegalPage",
+            "SupportPage"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "account-deletion",
+      "source": "src/features/legal-pages.tsx; src/components/AccountReauthenticationScreen.tsx",
+      "renderer": "LegalPage / AccountDeletionPage / AccountReauthenticationScreen",
+      "treatment": "Category-headed deletion document and restrained confirmation companion; original irreversible warnings, recent-auth providers and UID checks.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/legal-pages.tsx",
+          "markers": [
+            "LegalPage",
+            "AccountDeletionPage"
+          ]
+        },
+        {
+          "file": "src/components/AccountReauthenticationScreen.tsx",
+          "markers": [
+            "AccountReauthenticationScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "profile/reminders",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ReminderSettingsCard / MomentumSettingHeader",
+      "treatment": "Calm companion/native enable header, actual permission/save status and grouped individual reminders/times; busy enable guard preserved.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "ReminderSettingsCard",
+            "MomentumSettingHeader"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "profile/routine",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "RetentionPlanCard",
+      "treatment": "Lime companion heading with actual retention headline, next action and focus tags in grouped content.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "RetentionPlanCard"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "profile/history",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ProfileDisclosure / ProfileScreen",
+      "treatment": "Lilac colored history disclosure, actual private recorded counts and log-slip action; mounted content/visibility context retained.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "ProfileDisclosure",
+            "ProfileScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "profile/backup/export",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "RecoveryBackupCard",
+      "treatment": "Lilac companion backup heading, neutral passphrase/package fields and original encrypted export/share actions.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "RecoveryBackupCard"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "profile/backup/restore",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "RecoveryBackupCard",
+      "treatment": "Same companion/grouped backup composition with original authenticated restore and private package validation.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "RecoveryBackupCard"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "profile/backup/automatic",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "RecoveryBackupCard",
+      "treatment": "Same companion-led backup grouping; provider identity, automatic opt-in, sync status and owner-fenced controls remain.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "RecoveryBackupCard"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "profile/accountability/partner",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "AccountabilitySettingsCard / MomentumSettingHeader",
+      "treatment": "Lilac companion/native enable header, real last-contact metadata, private contact/template fields and original report gating.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "AccountabilitySettingsCard",
+            "MomentumSettingHeader"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "profile/accountability/support-circle",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "AccountabilitySettingsCard",
+      "treatment": "Companion-led accountability group, preserved private member forms, role/method selection, add/remove and gated reports.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "AccountabilitySettingsCard"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "profile/privacy/deletion-local",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "PrivacySupportCard",
+      "treatment": "Restrained commitment companion carrying actual notice, original local-delete confirmation and busy/error paths.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "PrivacySupportCard"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "profile/privacy/deletion-account",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "PrivacySupportCard / AccountReauthenticationScreen",
+      "treatment": "Restrained companion confirmation hierarchy; original account deletion, recent authentication, cancellation, UID/busy guards and failure notices.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "PrivacySupportCard",
+            "AccountReauthenticationScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "account/email-login",
+      "source": "src/components/AccountAccessScreen.tsx",
+      "renderer": "AccountAccessScreen mode=sign-in",
+      "treatment": "Mode-specific companion heading and grouped email/password/sign-in controls, password reveal and original errors.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/components/AccountAccessScreen.tsx",
+          "markers": [
+            "AccountAccessScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "account/email-create",
+      "source": "src/components/AccountAccessScreen.tsx",
+      "renderer": "AccountAccessScreen mode=create",
+      "treatment": "Mode-specific companion heading, grouped email/password/confirmation fields, exact validation and provider alternatives.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/components/AccountAccessScreen.tsx",
+          "markers": [
+            "AccountAccessScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "account/email-reset",
+      "source": "src/components/AccountAccessScreen.tsx",
+      "renderer": "AccountAccessScreen modes=reset/reset-sent",
+      "treatment": "Mode-specific companion heading with original reset request, raw email confirmation and return actions.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/components/AccountAccessScreen.tsx",
+          "markers": [
+            "AccountAccessScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "account/email-verification",
+      "source": "src/components/AccountAccessScreen.tsx",
+      "renderer": "AccountAccessScreen mode=verify",
+      "treatment": "Mode-specific companion heading with raw identity and original verify/resend/continue-later controls.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/components/AccountAccessScreen.tsx",
+          "markers": [
+            "AccountAccessScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "account/provider-collision",
+      "source": "src/components/AccountAccessScreen.tsx",
+      "renderer": "AccountAccessScreen mode=conflict",
+      "treatment": "Restrained calm companion heading retaining full guest purchase/ownership warning and keep/switch actions.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/components/AccountAccessScreen.tsx",
+          "markers": [
+            "AccountAccessScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "shield/app-selection",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ShieldScreen section=apps",
+      "treatment": "Lime companion detail heading and colored app group with original native switch/package-selection behavior.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "ShieldScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "shield/limits",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ShieldScreen section=apps / SettingStepper",
+      "treatment": "Colored rule/control groups with growing native-sized numeric steppers and original min/max/step values.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "ShieldScreen",
+            "SettingStepper"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "shield/schedules",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ShieldScreen",
+      "treatment": "Native time controls and supported schedule/service states. Android native schedule capability gates timed rules; iOS keeps DeviceActivity sleep. Physical enforcement proof separate.",
+      "evidence": "source-composition; behavioral tests; native/runtime cells remain separately classified",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "ShieldScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "shield/domain-exceptions",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ShieldScreen section=websites / AlwaysAllowSection",
+      "treatment": "Commitment companion heading and category-headed exception group with original domain validation/remove controls.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "ShieldScreen",
+            "AlwaysAllowSection"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "shield/focus-rules",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ShieldScreen section=focus-shield / FocusShieldSection",
+      "treatment": "Interactive detail companion, colored rule grouping and original explicit release/platform diagnostics.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "ShieldScreen",
+            "FocusShieldSection"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "shield/calibration",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "FocusShieldSection",
+      "treatment": "Same detail companion and original gated calibration/rule status flow; presentation never claims unsupported native inspection.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "FocusShieldSection"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "shield/encrypted-dns",
+      "source": "src/components/EncryptedDnsSection.tsx; src/components/ProtectionLayers.tsx",
+      "renderer": "EncryptedDnsSection / ProtectionLayers",
+      "treatment": "Calm companion detail, category-headed actual health layers and DNS state; consent adds restrained commitment companion while preserving enable/disable/settings/refresh guards.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/components/EncryptedDnsSection.tsx",
+          "markers": [
+            "EncryptedDnsSection"
+          ]
+        },
+        {
+          "file": "src/components/ProtectionLayers.tsx",
+          "markers": [
+            "ProtectionLayers"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "shield/diagnostics",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ShieldScreen section=diagnostics / DnsGuardHealthSection",
+      "treatment": "Companion detail heading, colored diagnostics/URL groups, existing disclosure controls and actual verdict/status data.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "ShieldScreen",
+            "DnsGuardHealthSection"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "progress/history",
+      "source": "src/components/RecoveryHistory.tsx",
+      "renderer": "RecoveryHistory",
+      "treatment": "Recorded-day markers and read-only historical answers, notes, dated planned/completed tasks, reset totals/outcomes and available protection events.",
+      "evidence": "source-composition; behavioral tests; native/runtime cells remain separately classified",
+      "sourceEvidence": [
+        {
+          "file": "src/components/RecoveryHistory.tsx",
+          "markers": [
+            "RecoveryHistory"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "progress/milestones",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "AnalyticsScreen / RecoveryHero",
+      "treatment": "Interactive recorded-progress companion and actual milestone/achievement values; no seeded recovery counters.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "AnalyticsScreen",
+            "RecoveryHero"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "progress/reports",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "AnalyticsScreen / MomentumSection",
+      "treatment": "Category-headed real report groups that reveal their existing controls/data while retaining mounted state.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "AnalyticsScreen",
+            "MomentumSection"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "library/search",
+      "source": "src/features/library-screen.tsx",
+      "renderer": "LibraryScreen",
+      "treatment": "Companion introduction and native search field with preserved localized matching and honest no-match state.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/library-screen.tsx",
+          "markers": [
+            "LibraryScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "article/reading",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ArticleReaderScreen",
+      "treatment": "Calm companion header/summary with 17-point reading body and original read metadata/back action.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "ArticleReaderScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "challenge/photo",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ChallengeScreen / useChallengeVerification",
+      "treatment": "Contextual companion challenge heading and colored verification group; actual capture/busy/permission/evidence controls unchanged.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "ChallengeScreen",
+            "useChallengeVerification"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "challenge/motion",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ChallengeScreen / useChallengeVerification",
+      "treatment": "Contextual companion heading, real timed/motion progress and original evidence/permission alternatives.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "ChallengeScreen",
+            "useChallengeVerification"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "challenge/timing",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ChallengeScreen",
+      "treatment": "Contextual companion heading and real session progress, paused/resume/outcome controls; no elapsed-time replacement.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "ChallengeScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "coach/offline",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "CoachPanel",
+      "treatment": "Calm companion hierarchy, exact local-fallback disclosure and original retry/private message controls.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "CoachPanel"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "coach/quota",
+      "source": "src/features/freed-app.tsx; src/components/ClaraCloudControls.tsx",
+      "renderer": "CoachPanel / ClaraCloudControls",
+      "treatment": "Current service-returned cloud allowance and built-in guidance fallback remain explicit alongside the existing owner-fenced private composer and retry actions.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "CoachPanel",
+            "quota={cloudResult?.quota}"
+          ]
+        },
+        {
+          "file": "src/components/ClaraCloudControls.tsx",
+          "markers": [
+            "ClaraCloudControls",
+            "purpose.claraCloudQuota"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "paywall/loading",
+      "source": "src/components/PremiumOffer.tsx",
+      "renderer": "PremiumOffer priceStatus=loading",
+      "treatment": "Companion/benefit composition with actual loading indicator, disabled checkout and reachable free exit.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/components/PremiumOffer.tsx",
+          "markers": [
+            "PremiumOffer"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "paywall/unavailable",
+      "source": "src/components/PremiumOffer.tsx",
+      "renderer": "PremiumOffer unavailable/error",
+      "treatment": "Same category hierarchy with actual price error/retry, disabled checkout and original free exit.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/components/PremiumOffer.tsx",
+          "markers": [
+            "PremiumOffer"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "paywall/ready",
+      "source": "src/components/PremiumOffer.tsx",
+      "renderer": "PremiumOffer priceStatus=ready",
+      "treatment": "Same treatment with preserved exact storefront price/cadence, equal billing choices and verified purchase guard.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/components/PremiumOffer.tsx",
+          "markers": [
+            "PremiumOffer"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "paywall/cancel",
+      "source": "src/components/PremiumOffer.tsx",
+      "renderer": "PremiumOffer onClose / notice",
+      "treatment": "Restrained busy purchase companion and original cancellation/return context and free continuation.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/components/PremiumOffer.tsx",
+          "markers": [
+            "PremiumOffer",
+            "notice"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "paywall/restore",
+      "source": "src/components/PremiumOffer.tsx",
+      "renderer": "PremiumOffer onRestore / notice",
+      "treatment": "Companion-led purchase hierarchy with original restore/manage notices, readiness and busy ownership guards.",
+      "evidence": "source-composition; native visual/motion proof pending",
+      "sourceEvidence": [
+        {
+          "file": "src/components/PremiumOffer.tsx",
+          "markers": [
+            "PremiumOffer",
+            "notice"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "journal",
+      "source": "src/components/JournalScreen.tsx",
+      "renderer": "JournalScreen",
+      "treatment": "Writing-first private editor. Save preserves check-in and marks Journal; unchecking does not erase words. Recoverable midnight draft.",
+      "evidence": "source-composition and tests; isolated native transfer/save observed; no all-language/device proof",
+      "sourceEvidence": [
+        {
+          "file": "src/components/JournalScreen.tsx",
+          "markers": [
+            "JournalScreen"
+          ]
+        }
+      ]
+    },
+    {
+      "surface": "features",
+      "source": "src/components/FeatureDirectory.tsx",
+      "renderer": "FeatureDirectory",
+      "treatment": "Searchable grouped feature actions with current account/device status and reachable Back.",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "if (screen === \"features\")"
+          ]
+        },
+        {
+          "file": "src/components/FeatureDirectory.tsx",
+          "markers": [
+            "feature-directory",
+            "getFeatureStatus"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "movement",
+      "source": "src/components/BasicMovementScreen.tsx",
+      "renderer": "BasicMovementScreen",
+      "treatment": "Local gentle movement instructions and explicit daily record action; Back does not record.",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "if (screen === \"movement\")"
+          ]
+        },
+        {
+          "file": "src/components/BasicMovementScreen.tsx",
+          "markers": [
+            "BasicMovementScreen",
+            "onRecord",
+            "onBack"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "feature",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "renderScreen feature dispatch",
+      "treatment": "Requested catalog destination dispatches through existing premium/journey policy to the current form, report, practice or setup.",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "if (screen === \"feature\")",
+            "FEATURE_DESTINATIONS",
+            "licensedFeatures"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "account/stable-host",
+      "source": "src/components/AccountAccessHost.tsx",
+      "renderer": "AccountAccessHost",
+      "treatment": "App-owned Modal retains account form and operation across route replacements; nested public Help keeps that form mounted.",
+      "sourceEvidence": [
+        {
+          "file": "src/components/AccountAccessHost.tsx",
+          "markers": [
+            "AccountAccessPresentation",
+            "AccountAccessScreen",
+            "helpOpen"
+          ]
+        },
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "renderAccountHost(publicBasicHelp)"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "challenge/choices",
+      "source": "src/components/ResetChoicePicker.tsx",
+      "renderer": "ResetChoicePicker",
+      "treatment": "Capability-filtered Breathe, Find and Move choice groups show actual challenge instructions and durations.",
+      "sourceEvidence": [
+        {
+          "file": "src/components/ResetChoicePicker.tsx",
+          "markers": [
+            "ResetChoicePicker",
+            "reset-choice-picker"
+          ]
+        },
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "selectResetChoices"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "challenge/replacement",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ChallengeScreen choosingReplacement",
+      "treatment": "Choose a different reset pauses the current session and shows the choice picker excluding that challenge.",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "setChoosingReplacement(true)",
+            "excludeId:choosingReplacement",
+            "sessionController.pause()"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "challenge/photo/uncertain",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ChallengeScreen verification status",
+      "treatment": "Photo classifier message and measured confidence remain visible; an unmatched or insufficient-confidence photo does not enable completion and a fresh capture remains available.",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "verification.status",
+            "verification.satisfied",
+            "verification.capturePhoto()"
+          ]
+        },
+        {
+          "file": "src/hooks/useChallengeVerification.ts",
+          "markers": [
+            "classification.message",
+            "photoConfidence",
+            "isChallengeVerificationSatisfied"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "challenge/completion-feedback",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ChallengeScreen done feedback",
+      "treatment": "Saved completion presents optional helped/still-support/skip feedback, while save/cleanup failures retain a retryable notice.",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "if (done)",
+            "Urge Passed",
+            "Still Need Support",
+            "Skip feedback"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "challenge/app-break-request",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "ChallengeScreen canRequestUnlock",
+      "treatment": "An app-break request is shown only when the existing origin/verification authority permits it; the separate request and resulting notice remain explicit.",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "canRequestUnlock",
+            "onRequestBreak",
+            "requestCompletedAppBreak",
+            "breakNotice"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "ad/cleanup-pending",
+      "source": "src/components/GuidedResetOffer.tsx",
+      "renderer": "GuidedResetOffer cleanupPending",
+      "treatment": "Saved-reset discard cleanup retains an explicit retry action and the existing busy/access guard; Help and safety remain separate actions.",
+      "sourceEvidence": [
+        {
+          "file": "src/components/GuidedResetOffer.tsx",
+          "markers": [
+            "cleanupPending",
+            "Retry discarding saved reset"
+          ]
+        },
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "guidedAccess.cleanupPending",
+            "onRetryCleanup={abandonActiveProtectionFlow}"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "shield/encrypted-dns/pending",
+      "source": "src/components/EncryptedDnsSection.tsx",
+      "renderer": "EncryptedDnsSection pending",
+      "treatment": "Pending enable/disable/refresh copy uses actual controller pending state; configuration actions retain the busy guard.",
+      "sourceEvidence": [
+        {
+          "file": "src/components/EncryptedDnsSection.tsx",
+          "markers": [
+            "dns-pending",
+            "pending === 'enable'",
+            "pending === 'disable'"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "shield/encrypted-dns/details",
+      "source": "src/components/EncryptedDnsSection.tsx",
+      "renderer": "EncryptedDnsSection details",
+      "treatment": "Expandable details separate saved configuration, OS enabled state and native network health without inferring active enforcement.",
+      "sourceEvidence": [
+        {
+          "file": "src/components/EncryptedDnsSection.tsx",
+          "markers": [
+            "dns-details",
+            "dns-configuration-state",
+            "dns-os-state",
+            "dns-network-state"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "journal/history-edit",
+      "source": "src/components/JournalScreen.tsx",
+      "renderer": "JournalScreen historicalSelection",
+      "treatment": "Dated private history selection opens the chosen existing note; unsaved drafts block switching and explicit edit-existing save preserves the dated record.",
+      "sourceEvidence": [
+        {
+          "file": "src/components/JournalScreen.tsx",
+          "markers": [
+            "historicalSelection",
+            "hasUnsavedChanges",
+            "edit-existing",
+            "journal-entry-"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "breathing/sound-cues",
+      "source": "src/components/FunctionalBreathingScreen.tsx",
+      "renderer": "FunctionalBreathingScreen soundCues",
+      "treatment": "Optional breathing sound starts off, uses actual cadence cue kinds and activity/running gates, and displays a local unavailable notice when needed.",
+      "sourceEvidence": [
+        {
+          "file": "src/components/FunctionalBreathingScreen.tsx",
+          "markers": [
+            "useState(false)",
+            "useBreathingAudio",
+            "soundUnavailable"
+          ]
+        },
+        {
+          "file": "src/components/MomentumBreathingView.tsx",
+          "markers": [
+            "onSoundCues",
+            "momentum.soundCues"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "coach/composer-retry",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "CoachPanel composer and retry",
+      "treatment": "Independent transcript/composer layout retains the owner-scoped draft and explicit retry/Stop waiting actions after sending or local-save failure.",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "CoachConversationLayout",
+            "sender.retry()",
+            "sender.cancel()",
+            "saveFailed"
+          ]
+        },
+        {
+          "file": "src/components/CoachConversationLayout.tsx",
+          "markers": [
+            "coach-transcript",
+            "coach-composer"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "coach/cloud-consent",
+      "source": "src/components/ClaraCloudControls.tsx",
+      "renderer": "ClaraCloudControls confirming",
+      "treatment": "Cloud switch opens explicit Google-processing consent with enable/keep-built-in actions and a separately opted conversation-context switch.",
+      "sourceEvidence": [
+        {
+          "file": "src/components/ClaraCloudControls.tsx",
+          "markers": [
+            "confirming",
+            "clara-enable-cloud",
+            "clara-context-toggle"
+          ]
+        },
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "changeCloudConsent",
+            "saveCloudChatConsent"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "coach/built-in-guidance",
+      "source": "src/features/freed-app.tsx",
+      "renderer": "CoachPanel built-in guidance",
+      "treatment": "Built-in replies remain available with cloud off or unavailable; reply provider and fallback notice are distinguished from remote replies.",
+      "sourceEvidence": [
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "usedOfflineFallback",
+            "BUILT-IN AND OPTIONAL CLOUD GUIDANCE",
+            "setCloudResult"
+          ]
+        },
+        {
+          "file": "src/components/ClaraCloudControls.tsx",
+          "markers": [
+            "Built-in guidance stays on this device."
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "coach/cloud-daily-quota",
+      "source": "src/components/ClaraCloudControls.tsx",
+      "renderer": "ClaraCloudControls daily quota",
+      "treatment": "Daily allowance exhaustion names the actual service state and leaves built-in guidance; typed remaining/limit values appear only when supplied.",
+      "sourceEvidence": [
+        {
+          "file": "src/components/ClaraCloudControls.tsx",
+          "markers": [
+            "daily-quota-exhausted",
+            "purpose.claraCloudQuota",
+            "quota.remaining",
+            "quota.limit"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "coach/cloud-testing-budget",
+      "source": "src/components/ClaraCloudControls.tsx",
+      "renderer": "ClaraCloudControls testing budget",
+      "treatment": "Testing-allowance exhaustion is shown from its actual service-state value, retaining built-in guidance.",
+      "sourceEvidence": [
+        {
+          "file": "src/components/ClaraCloudControls.tsx",
+          "markers": [
+            "budget-exhausted",
+            "testing allowance"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    },
+    {
+      "surface": "coach/cloud-unavailable",
+      "source": "src/components/ClaraCloudControls.tsx",
+      "renderer": "ClaraCloudControls unavailable",
+      "treatment": "Unavailable cloud state displays a truthful built-in-guidance fallback without claiming a remote response.",
+      "sourceEvidence": [
+        {
+          "file": "src/components/ClaraCloudControls.tsx",
+          "markers": [
+            "unavailable:",
+            "Cloud chat is unavailable. Built-in guidance remains available."
+          ]
+        },
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "state={cloudResult?.serviceState}"
+          ]
+        }
+      ],
+      "evidence": "source-composition only; native layout/control/back/motion/language cells remain pending"
+    }
+  ],
+  "publicPresentations": [
+    {
+      "surface": "public-basic-help",
+      "source": "src/components/BasicHelp.tsx",
+      "renderer": "BasicHelpPresentation",
+      "entrySurfaces": [
+        "splash",
+        "welcome",
+        "account",
+        "paywall"
+      ],
+      "treatment": "Local full-screen modal with immediate Close, comfortable no-hold breathing using shared observed foreground cadence/artwork, optional grounding instruction and restrained calm companion. Nested account presentation preserves mounted drafts/fence. No save/completion, history, reward, SDK or native authority.",
+      "requiredScenarios": [
+        "hydrating or unavailable auth",
+        "no-owner or new-account entry",
+        "unacknowledged offer or billing unavailable",
+        "account keyboard drafts and pending/stale auth",
+        "Close native Back accessibility escape and reopening paused",
+        "foreground pause background lost focus and Reduce Motion",
+        "light dark small screen large text ten languages and RTL"
+      ],
+      "evidence": "local behavioral tests only; iOS/Android native presentation, keyboard, layout, accessibility and measured device motion pending",
+      "kind": "public-presentation",
+      "sourceEvidence": [
+        {
+          "file": "src/components/BasicHelp.tsx",
+          "markers": [
+            "export function BasicHelpPresentation",
+            "public-basic-help"
+          ]
+        },
+        {
+          "file": "src/features/freed-app.tsx",
+          "markers": [
+            "<SplashScreen onHelp=",
+            "<WelcomeScreen",
+            "<FunctionalPaywallScreen",
+            "renderAccountHost(publicBasicHelp)",
+            "<BasicHelpPresentation visible={publicBasicHelp}"
+          ]
+        },
+        {
+          "file": "src/components/AccountAccessHost.tsx",
+          "markers": [
+            "<BasicHelpPresentation visible={helpOpen}"
+          ]
+        }
+      ]
+    }
+  ],
+  "inventoryAccounting": {
+    "retainedTreatmentRows": 65,
+    "reconciledTreatmentRows": 20,
+    "currentTreatmentRows": 85,
+    "publicPresentationRows": 1,
+    "currentReviewUnits": 86,
+    "requiredNativeCells": 3440,
+    "executedCellsPromotedByThisUpdate": 0
+  }
+}

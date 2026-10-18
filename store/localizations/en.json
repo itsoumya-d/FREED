@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "freed-store-localization-v1",
+  "status": "draft-not-published",
+  "language": "en",
+  "translationReview": "source-draft",
+  "title": "FREED",
+  "appStore": {
+    "locale": "en-US",
+    "subtitle": "Recovery and focus",
+    "description": "FREED helps you break explicit-content and doomscroll loops with recovery-first protection. It combines adult-domain blocking, selected app limits, Screen Time or Accessibility-based handoffs, and real-world recovery challenges so you can get back to the life you meant to live.\n\nFREED does not rely on shame or traps. Protection setup explains each permission, sends you directly to the required system authorization screen, and confirms activation with a protection test before the app marks setup complete.\n\nPremium removes eligible reset ads and unlocks forecasts, deep reports, and accountability/support-circle reports. Forecasts and recovery scores are estimates based on recorded behavior. CLARA remote guidance has daily limits; local recovery guidance stays available."
+  },
+  "googlePlay": {
+    "locale": "en-US",
+    "shortDescription": "Recovery tools and optional device protection.",
+    "description": "FREED helps you stop explicit-content and doomscroll loops with recovery-first protection.\n\nSet up adult-domain blocking, choose the apps that tend to pull you into loops, and let FREED guide you into a recovery challenge when you hit a risky site, search, or app-limit threshold. FREED focuses on helping you recover in the moment instead of trapping or shaming you.\n\nProtection setup sends you directly to the required Android permission screens, then checks that adult-domain blocking, normal-site access, Usage Access, Accessibility, and selected app timers are ready before activation completes.\n\nKeep recovery support close: use urgent SOS, breathing exercises, check-ins, recovery challenges, reminders, and a private record of your progress. Permission setup opens the closest supported system page and checks the result when you return. Protection status reflects the permissions and services actually active on your device.\n\nFREED Premium offers monthly and annual billing with the same benefits: ad-free recovery resets and challenges, deeper reports, estimated forecasts, and support-circle reports. Store prices are shown in your local currency. Neither plan has a free trial. Restore purchases or manage your subscription from the membership screen. Cancelling keeps access through the paid period; when paid access expires or is revoked, eligible free resets use rewarded ads again. Urgent SOS remains ad-free.\n\nCLARA provides automated guidance rather than therapy. Remote replies are limited to three per day for free users and twenty per day for Premium; local guidance stays available when the remote service is unavailable. Recovery scores and forecasts are estimates based on recorded behavior, with an insufficient-data state when there is not enough history.\n\nCore recovery tools work without account signup. Account linking and encrypted cloud backup are optional. Device protection still requires the permissions explained during setup."
+  },
+  "products": {
+    "freed_premium_yearly": {
+      "displayName": "FREED Premium Annual",
+      "description": "All Premium features. Yearly billing.",
+      "billingPeriod": "P1Y"
+    },
+    "freed_premium_monthly": {
+      "displayName": "FREED Premium Monthly",
+      "description": "All Premium features. Monthly billing.",
+      "billingPeriod": "P1M"
+    }
+  },
+  "disclosures": {
+    "subscriptions": "Monthly and yearly subscriptions provide the same features and renew automatically until cancelled. No free trial. Store prices are shown before purchase. Manage or cancel in your store. Cancellation normally retains access through the paid period; refunded or revoked ownership can end access earlier. SOS is always ad-free.",
+    "privacy": "FREED keeps native selectors on your device. It does not collect native screenshots, raw accessibility trees or browsing history. Account linking and encrypted cloud backup are optional. Requested domains are sent to Cloudflare Families over HTTPS when encrypted DNS is enabled; the provider applies its filtering policy.",
+    "limitations": "iOS protects whole selected apps, categories and sites through Screen Time. It cannot inspect individual surfaces inside native apps. Android selected-surface inspection is release-gated pending policy and physical-device validation. CLARA provides automated guidance rather than therapy; forecasts and recovery scores are estimates based on recorded behavior."
+  }
+}

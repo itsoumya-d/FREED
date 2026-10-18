@@ -1,0 +1,662 @@
+{
+  "entries": [
+    {
+      "source": "calendar",
+      "translations": {
+        "hi": "कैलेंडर",
+        "es": "calendario",
+        "pt": "calendário",
+        "fr": "calendrier",
+        "de": "Kalender",
+        "ar": "تقويم",
+        "ja": "カレンダー",
+        "ko": "달력",
+        "zh-Hans": "日历"
+      }
+    },
+    {
+      "source": "Check a URL and review permission health.",
+      "translations": {
+        "hi": "URL जाँचें और अनुमति की स्थिति देखें।",
+        "es": "Comprueba una URL y revisa los permisos.",
+        "pt": "Verifique uma URL e revise as permissões.",
+        "fr": "Vérifiez une URL et l’état des autorisations.",
+        "de": "Prüfe eine URL und den Berechtigungsstatus.",
+        "ar": "افحص رابطًا وراجع حالة الأذونات.",
+        "ja": "URLと権限の状態を確認します。",
+        "ko": "URL과 권한 상태를 확인하세요.",
+        "zh-Hans": "检查网址和权限状态。"
+      }
+    },
+    {
+      "source": "Checking access. Connect your account and retry when ready.",
+      "translations": {
+        "hi": "पहुँच की जाँच हो रही है। खाता जोड़ें और तैयार होने पर फिर कोशिश करें।",
+        "es": "Comprobando acceso. Conecta tu cuenta y reintenta cuando esté lista.",
+        "pt": "Verificando acesso. Conecte sua conta e tente quando estiver pronta.",
+        "fr": "Vérification de l’accès. Connectez votre compte et réessayez quand il est prêt.",
+        "de": "Zugriff wird geprüft. Verbinde dein Konto und versuche es erneut, sobald es bereit ist.",
+        "ar": "جارٍ التحقق من الوصول. اربط حسابك وأعد المحاولة عندما يصبح جاهزًا.",
+        "ja": "利用権限を確認中です。アカウントを接続し、準備ができたら再試行してください。",
+        "ko": "이용 권한 확인 중입니다. 계정을 연결하고 준비되면 다시 시도하세요.",
+        "zh-Hans": "正在检查访问权限。请连接账户，准备就绪后重试。"
+      }
+    },
+    {
+      "source": "Checking membership",
+      "translations": {
+        "hi": "सदस्यता जाँच रहे हैं",
+        "es": "Comprobando membresía",
+        "pt": "Verificando assinatura",
+        "fr": "Vérification de l’abonnement",
+        "de": "Mitgliedschaft wird geprüft",
+        "ar": "جارٍ التحقق من العضوية",
+        "ja": "メンバーシップを確認中",
+        "ko": "멤버십 확인 중",
+        "zh-Hans": "正在检查会员资格"
+      }
+    },
+    {
+      "source": "Choose a comfortable movement you can do safely.",
+      "translations": {
+        "hi": "ऐसी आरामदायक गतिविधि चुनें जो आप सुरक्षित कर सकें।",
+        "es": "Elige un movimiento cómodo que puedas hacer con seguridad.",
+        "pt": "Escolha um movimento confortável que possa fazer com segurança.",
+        "fr": "Choisissez un mouvement confortable que vous pouvez faire sans risque.",
+        "de": "Wähle eine angenehme Bewegung, die du sicher ausführen kannst.",
+        "ar": "اختر حركة مريحة يمكنك أداءها بأمان.",
+        "ja": "無理なく安全にできる動きを選んでください。",
+        "ko": "안전하게 할 수 있는 편안한 움직임을 선택하세요.",
+        "zh-Hans": "选择你能安全完成的舒适运动。"
+      }
+    },
+    {
+      "source": "Choose a comfortable shower temperature.",
+      "translations": {
+        "hi": "नहाने के लिए आरामदायक तापमान चुनें।",
+        "es": "Elige una temperatura de ducha cómoda.",
+        "pt": "Escolha uma temperatura confortável para o banho.",
+        "fr": "Choisissez une température de douche confortable.",
+        "de": "Wähle eine angenehme Duschtemperatur.",
+        "ar": "اختر درجة حرارة مريحة للاستحمام.",
+        "ja": "心地よいシャワーの温度を選んでください。",
+        "ko": "편안한 샤워 온도를 선택하세요.",
+        "zh-Hans": "选择舒适的淋浴水温。"
+      }
+    },
+    {
+      "source": "Choose a guided recovery activity.",
+      "translations": {
+        "hi": "एक निर्देशित सुधार गतिविधि चुनें।",
+        "es": "Elige una actividad guiada de recuperación.",
+        "pt": "Escolha uma atividade guiada de recuperação.",
+        "fr": "Choisissez une activité guidée de rétablissement.",
+        "de": "Wähle eine angeleitete Aktivität zur Erholung.",
+        "ar": "اختر نشاط تعافٍ موجّهًا.",
+        "ja": "回復のためのガイド付き活動を選びます。",
+        "ko": "회복을 위한 안내 활동을 선택하세요.",
+        "zh-Hans": "选择一项引导式恢复活动。"
+      }
+    },
+    {
+      "source": "Choose a short walk, gentle stretch or comfortable movement. Stop whenever you need to.",
+      "translations": {
+        "hi": "छोटी सैर, हल्का खिंचाव या आरामदायक गतिविधि चुनें। ज़रूरत हो तो रुक जाएँ।",
+        "es": "Elige un paseo corto, un estiramiento suave o un movimiento cómodo. Para cuando lo necesites.",
+        "pt": "Escolha uma caminhada curta, alongamento suave ou movimento confortável. Pare quando precisar.",
+        "fr": "Choisissez une courte marche, un étirement doux ou un mouvement confortable. Arrêtez-vous dès que nécessaire.",
+        "de": "Wähle einen kurzen Spaziergang, sanftes Dehnen oder eine angenehme Bewegung. Höre jederzeit auf, wenn du es brauchst.",
+        "ar": "اختر مشيًا قصيرًا أو تمددًا لطيفًا أو حركة مريحة. توقف متى احتجت.",
+        "ja": "短い散歩や軽いストレッチなど、無理のない動きを選びましょう。必要なときはいつでも止めてください。",
+        "ko": "짧은 산책, 가벼운 스트레칭 또는 편안한 움직임을 선택하세요. 필요하면 언제든 멈추세요.",
+        "zh-Hans": "选择短距离散步、轻柔拉伸或舒适运动。需要时随时停下。"
+      }
+    },
+    {
+      "source": "Choose a social media boundary for today.",
+      "translations": {
+        "hi": "आज के लिए सोशल मीडिया की सीमा चुनें।",
+        "es": "Elige un límite de redes sociales para hoy.",
+        "pt": "Escolha um limite para redes sociais hoje.",
+        "fr": "Choisissez une limite pour les réseaux sociaux aujourd’hui.",
+        "de": "Wähle für heute eine Grenze für soziale Medien.",
+        "ar": "اختر حدًا لاستخدام وسائل التواصل اليوم.",
+        "ja": "今日のSNSとの境界を決めてください。",
+        "ko": "오늘의 소셜 미디어 사용 경계를 정하세요.",
+        "zh-Hans": "为今天设定社交媒体使用界限。"
+      }
+    },
+    {
+      "source": "Choose access when starting",
+      "translations": {
+        "hi": "शुरू करते समय पहुँच चुनें",
+        "es": "Elige acceso al empezar",
+        "pt": "Escolha o acesso ao começar",
+        "fr": "Choisissez l’accès au démarrage",
+        "de": "Zugriff beim Start wählen",
+        "ar": "اختر الوصول عند البدء",
+        "ja": "開始時に利用方法を選択",
+        "ko": "시작할 때 이용 방법 선택",
+        "zh-Hans": "开始时选择访问方式"
+      }
+    },
+    {
+      "source": "Choose apps and a daily limit; complete required permission steps.",
+      "translations": {
+        "hi": "ऐप और दैनिक सीमा चुनें; ज़रूरी अनुमतियाँ पूरी करें।",
+        "es": "Elige apps y un límite diario; completa los permisos necesarios.",
+        "pt": "Escolha apps e um limite diário; conclua as permissões necessárias.",
+        "fr": "Choisissez les apps et une limite quotidienne ; accordez les autorisations requises.",
+        "de": "Wähle Apps und ein Tageslimit; erteile die erforderlichen Berechtigungen.",
+        "ar": "اختر التطبيقات والحد اليومي وأكمل الأذونات المطلوبة.",
+        "ja": "アプリと1日の制限を選び、必要な権限を設定します。",
+        "ko": "앱과 일일 한도를 선택하고 필요한 권한 설정을 완료하세요.",
+        "zh-Hans": "选择应用和每日限额，并完成所需权限设置。"
+      }
+    },
+    {
+      "source": "Choose distracting apps and a guard mode. Website filtering is optional.",
+      "translations": {
+        "hi": "ध्यान भटकाने वाले ऐप और सुरक्षा मोड चुनें। वेबसाइट फ़िल्टर वैकल्पिक है।",
+        "es": "Elige apps de distracción y un modo de protección. El filtrado web es opcional.",
+        "pt": "Escolha apps distrativos e um modo de proteção. O filtro de sites é opcional.",
+        "fr": "Choisissez les apps distrayantes et un mode de protection. Le filtrage web est facultatif.",
+        "de": "Wähle ablenkende Apps und einen Schutzmodus. Website-Filter sind optional.",
+        "ar": "اختر التطبيقات المشتتة ووضع الحماية. ترشيح المواقع اختياري.",
+        "ja": "気が散るアプリとガードモードを選びます。ウェブサイトのフィルタは任意です。",
+        "ko": "방해되는 앱과 보호 모드를 선택하세요. 웹사이트 필터는 선택 사항입니다.",
+        "zh-Hans": "选择干扰应用和保护模式。网站过滤为可选项。"
+      }
+    },
+    {
+      "source": "Choose distracting apps and when to pause them. Website filtering is optional.",
+      "translations": {
+        "hi": "ध्यान भटकाने वाले ऐप और उन्हें रोकने का समय चुनें। वेबसाइट फ़िल्टर वैकल्पिक है।",
+        "es": "Elige apps de distracción y cuándo pausarlas. El filtrado web es opcional.",
+        "pt": "Escolha apps distrativos e quando pausá-los. O filtro de sites é opcional.",
+        "fr": "Choisissez les apps distrayantes et quand les interrompre. Le filtrage web est facultatif.",
+        "de": "Wähle ablenkende Apps und wann sie pausieren sollen. Website-Filter sind optional.",
+        "ar": "اختر التطبيقات المشتتة ومتى توقفها. ترشيح المواقع اختياري.",
+        "ja": "気が散るアプリと一時停止する時間を選びます。ウェブサイトのフィルタは任意です。",
+        "ko": "방해되는 앱과 멈출 시간을 선택하세요. 웹사이트 필터는 선택 사항입니다.",
+        "zh-Hans": "选择干扰应用及暂停时间。网站过滤为可选项。"
+      }
+    },
+    {
+      "source": "Choose individual applications in Apple's native picker for app guards. FREED receives selection counts and keeps opaque tokens on this device. Categories and domains remain independent legacy scope.",
+      "translations": {
+        "hi": "ऐप सुरक्षा के लिए Apple के मूल चयनकर्ता में अलग-अलग ऐप चुनें। FREED को केवल गिनती मिलती है और अस्पष्ट टोकन इसी डिवाइस पर रहते हैं। श्रेणियाँ और डोमेन पुराने नियमों का स्वतंत्र दायरा हैं।",
+        "es": "Elige apps individuales en el selector nativo de Apple. FREED recibe cantidades y conserva tokens opacos en este dispositivo. Las categorías y dominios mantienen un alcance independiente en reglas anteriores.",
+        "pt": "Escolha apps individuais no seletor nativo da Apple. O FREED recebe contagens e mantém tokens opacos neste dispositivo. Categorias e domínios continuam no escopo independente de políticas anteriores.",
+        "fr": "Choisissez des apps individuelles dans le sélecteur natif Apple. FREED reçoit les nombres de sélections et garde les jetons opaques sur cet appareil. Catégories et domaines conservent leur portée distincte dans les anciennes règles.",
+        "de": "Wähle einzelne Apps in Apples nativer Auswahl. FREED erhält nur Anzahlen und behält undurchsichtige Tokens auf diesem Gerät. Kategorien und Domains bleiben ein unabhängiger Bereich älterer Regeln.",
+        "ar": "اختر تطبيقات فردية في منتقي Apple الأصلي. يستقبل FREED أعداد الاختيارات ويحفظ الرموز غير المقروءة على هذا الجهاز. تبقى الفئات والنطاقات ضمن نطاق مستقل للسياسات القديمة.",
+        "ja": "Appleの標準選択画面で個別のアプリを選んでください。FREEDは選択数のみを受け取り、内容を読めないトークンを端末内に保持します。カテゴリとドメインは従来ルールの独立した範囲です。",
+        "ko": "Apple 기본 선택기에서 개별 앱을 선택하세요. FREED는 선택 개수만 받고 식별 내용을 읽을 수 없는 토큰은 이 기기에 보관합니다. 카테고리와 도메인은 기존 정책의 독립된 범위입니다.",
+        "zh-Hans": "在Apple原生选择器中选择单个应用。FREED只接收选择数量，并将不透明令牌保留在本设备。类别和域名仍属于旧规则的独立范围。"
+      }
+    },
+    {
+      "source": "Choose individual applications in Apple’s picker. Categories and domains remain available to older policies but cannot enable this app guard.",
+      "translations": {
+        "hi": "Apple के चयनकर्ता में अलग-अलग ऐप चुनें। श्रेणियाँ और डोमेन पुराने नियमों में उपलब्ध हैं, लेकिन इस ऐप सुरक्षा को सक्रिय नहीं कर सकते।",
+        "es": "Elige apps individuales en el selector de Apple. Las categorías y dominios siguen disponibles para políticas anteriores, pero no activan esta protección.",
+        "pt": "Escolha apps individuais no seletor da Apple. Categorias e domínios seguem disponíveis para políticas antigas, mas não ativam esta proteção.",
+        "fr": "Choisissez des apps individuelles dans le sélecteur Apple. Catégories et domaines restent disponibles pour les anciennes règles, mais n’activent pas cette protection.",
+        "de": "Wähle einzelne Apps in Apples Auswahl. Kategorien und Domains bleiben für ältere Regeln verfügbar, aktivieren diesen App-Schutz jedoch nicht.",
+        "ar": "اختر تطبيقات فردية في منتقي Apple. تظل الفئات والنطاقات متاحة للسياسات القديمة لكنها لا تفعّل هذه الحماية.",
+        "ja": "Appleの選択画面で個別アプリを選んでください。カテゴリとドメインは旧ポリシーで使えますが、このアプリガードは有効にできません。",
+        "ko": "Apple 선택기에서 개별 앱을 선택하세요. 카테고리와 도메인은 기존 정책에서 사용할 수 있지만 이 앱 보호를 활성화하지 못합니다.",
+        "zh-Hans": "在Apple选择器中选择单个应用。类别和域名仍可用于旧规则，但无法启用此应用保护。"
+      }
+    },
+    {
+      "source": "Choose language, theme and accessibility preferences.",
+      "translations": {
+        "hi": "भाषा, थीम और सुलभता पसंद चुनें।",
+        "es": "Elige idioma, tema y preferencias de accesibilidad.",
+        "pt": "Escolha idioma, tema e preferências de acessibilidade.",
+        "fr": "Choisissez la langue, le thème et les préférences d’accessibilité.",
+        "de": "Wähle Sprache, Design und Einstellungen zur Barrierefreiheit.",
+        "ar": "اختر اللغة والمظهر وتفضيلات سهولة الوصول.",
+        "ja": "言語、テーマ、アクセシビリティ設定を選びます。",
+        "ko": "언어, 테마, 접근성 설정을 선택하세요.",
+        "zh-Hans": "选择语言、主题和辅助功能偏好。"
+      }
+    },
+    {
+      "source": "Choose one guided activity, or use a basic tool now.",
+      "translations": {
+        "hi": "एक निर्देशित गतिविधि चुनें, या अभी साधारण टूल इस्तेमाल करें।",
+        "es": "Elige una actividad guiada o usa una herramienta básica ahora.",
+        "pt": "Escolha uma atividade guiada ou use uma ferramenta básica agora.",
+        "fr": "Choisissez une activité guidée ou utilisez un outil simple maintenant.",
+        "de": "Wähle eine angeleitete Aktivität oder nutze jetzt ein einfaches Werkzeug.",
+        "ar": "اختر نشاطًا موجّهًا أو استخدم أداة بسيطة الآن.",
+        "ja": "ガイド付き活動を1つ選ぶか、基本ツールを今すぐ使えます。",
+        "ko": "안내 활동을 선택하거나 지금 기본 도구를 사용하세요.",
+        "zh-Hans": "选择一项引导活动，或立即使用基础工具。"
+      }
+    },
+    {
+      "source": "Choose reminder timing and permission.",
+      "translations": {
+        "hi": "याद दिलाने का समय और अनुमति चुनें।",
+        "es": "Elige la hora y el permiso de recordatorios.",
+        "pt": "Escolha horário e permissão dos lembretes.",
+        "fr": "Choisissez l’horaire et l’autorisation des rappels.",
+        "de": "Wähle Zeitpunkt und Berechtigung für Erinnerungen.",
+        "ar": "اختر توقيت التذكيرات وإذنها.",
+        "ja": "リマインダーの時刻と権限を設定します。",
+        "ko": "알림 시간과 권한을 선택하세요.",
+        "zh-Hans": "选择提醒时间和权限。"
+      }
+    },
+    {
+      "source": "Choose the boundary you want to keep today.",
+      "translations": {
+        "hi": "आज के लिए अपनी सीमा चुनें।",
+        "es": "Elige el límite que quieres mantener hoy.",
+        "pt": "Escolha o limite que deseja manter hoje.",
+        "fr": "Choisissez la limite que vous souhaitez respecter aujourd’hui.",
+        "de": "Wähle die Grenze, die du heute einhalten möchtest.",
+        "ar": "اختر الحد الذي تريد الالتزام به اليوم.",
+        "ja": "今日守りたい境界を決めてください。",
+        "ko": "오늘 지키고 싶은 경계를 선택하세요.",
+        "zh-Hans": "选择今天想要遵守的界限。"
+      }
+    },
+    {
+      "source": "Choose what you need. Status reflects this device and your current account.",
+      "translations": {
+        "hi": "अपनी ज़रूरत चुनें। स्थिति इस डिवाइस और आपके वर्तमान खाते पर आधारित है।",
+        "es": "Elige lo que necesitas. El estado refleja este dispositivo y tu cuenta actual.",
+        "pt": "Escolha o que precisa. O status reflete este dispositivo e sua conta atual.",
+        "fr": "Choisissez ce dont vous avez besoin. L’état reflète cet appareil et votre compte actuel.",
+        "de": "Wähle, was du brauchst. Der Status bezieht sich auf dieses Gerät und dein aktuelles Konto.",
+        "ar": "اختر ما تحتاجه. الحالة تعكس هذا الجهاز وحسابك الحالي.",
+        "ja": "必要なものを選んでください。状態はこの端末と現在のアカウントを反映します。",
+        "ko": "필요한 기능을 선택하세요. 상태는 이 기기와 현재 계정을 기준으로 표시됩니다.",
+        "zh-Hans": "选择所需功能。状态反映本设备和当前账户。"
+      }
+    },
+    {
+      "source": "coach",
+      "translations": {
+        "hi": "मार्गदर्शक",
+        "es": "orientador",
+        "pt": "orientador",
+        "fr": "accompagnement",
+        "de": "Begleitung",
+        "ar": "مرشد",
+        "ja": "コーチ",
+        "ko": "코치",
+        "zh-Hans": "指导"
+      }
+    },
+    {
+      "source": "cold",
+      "translations": {
+        "hi": "ठंडा",
+        "es": "frío",
+        "pt": "frio",
+        "fr": "froid",
+        "de": "kalt",
+        "ar": "بارد",
+        "ja": "冷たい",
+        "ko": "차가움",
+        "zh-Hans": "冷"
+      }
+    },
+    {
+      "source": "commitment",
+      "translations": {
+        "hi": "प्रतिबद्धता",
+        "es": "compromiso",
+        "pt": "compromisso",
+        "fr": "engagement",
+        "de": "Verpflichtung",
+        "ar": "التزام",
+        "ja": "決意",
+        "ko": "다짐",
+        "zh-Hans": "承诺"
+      }
+    },
+    {
+      "source": "Complete the protection goal you selected. Website and app protection work independently.",
+      "translations": {
+        "hi": "अपना चुना सुरक्षा लक्ष्य पूरा करें। वेबसाइट और ऐप सुरक्षा स्वतंत्र हैं।",
+        "es": "Completa la protección que elegiste. La protección web y de apps son independientes.",
+        "pt": "Conclua a proteção escolhida. A proteção de sites e apps é independente.",
+        "fr": "Terminez l’objectif de protection choisi. Les protections web et des apps sont indépendantes.",
+        "de": "Schließe dein gewähltes Schutzziel ab. Website- und App-Schutz arbeiten unabhängig.",
+        "ar": "أكمل هدف الحماية الذي اخترته. تعمل حماية المواقع والتطبيقات بشكل مستقل.",
+        "ja": "選んだ保護目標を完了してください。ウェブサイトとアプリの保護は独立しています。",
+        "ko": "선택한 보호 목표를 완료하세요. 웹사이트와 앱 보호는 독립적으로 작동합니다.",
+        "zh-Hans": "完成所选保护目标。网站和应用保护独立运行。"
+      }
+    },
+    {
+      "source": "Completed reset could not be saved. Your completion receipt is kept for retry.",
+      "translations": {
+        "hi": "पूरा रीसेट सहेज नहीं सके। पूर्णता का प्रमाण दोबारा सहेजने के लिए रखा है।",
+        "es": "No se pudo guardar el reinicio completado. Se conserva el comprobante para reintentar.",
+        "pt": "Não foi possível salvar a pausa concluída. O comprovante foi mantido para nova tentativa.",
+        "fr": "La pause terminée n’a pas pu être enregistrée. Votre preuve de fin est conservée pour réessayer.",
+        "de": "Der abgeschlossene Neustart konnte nicht gespeichert werden. Der Abschlussbeleg bleibt für einen erneuten Versuch erhalten.",
+        "ar": "تعذر حفظ التهدئة المكتملة. تم الاحتفاظ بإثبات الإكمال لإعادة المحاولة.",
+        "ja": "完了したリセットを保存できませんでした。完了の記録は再試行用に保持しています。",
+        "ko": "완료한 리셋을 저장하지 못했습니다. 재시도를 위해 완료 기록을 보관합니다.",
+        "zh-Hans": "无法保存已完成的重置。完成凭据已保留供重试。"
+      }
+    },
+    {
+      "source": "Configured · check sync in settings",
+      "translations": {
+        "hi": "सेट है · सेटिंग में सिंक जाँचें",
+        "es": "Configurado · revisa la sincronización en ajustes",
+        "pt": "Configurado · confira a sincronização nos ajustes",
+        "fr": "Configuré · vérifiez la synchronisation dans les réglages",
+        "de": "Eingerichtet · Synchronisierung in Einstellungen prüfen",
+        "ar": "معدّ · تحقق من المزامنة في الإعدادات",
+        "ja": "設定済み · 設定で同期を確認",
+        "ko": "설정됨 · 설정에서 동기화 확인",
+        "zh-Hans": "已配置 · 在设置中检查同步"
+      }
+    },
+    {
+      "source": "Configured · review permission",
+      "translations": {
+        "hi": "सेट है · अनुमति जाँचें",
+        "es": "Configurado · revisa el permiso",
+        "pt": "Configurado · confira a permissão",
+        "fr": "Configuré · vérifiez l’autorisation",
+        "de": "Eingerichtet · Berechtigung prüfen",
+        "ar": "معدّ · راجع الإذن",
+        "ja": "設定済み · 権限を確認",
+        "ko": "설정됨 · 권한 확인",
+        "zh-Hans": "已配置 · 检查权限"
+      }
+    },
+    {
+      "source": "Configured app limit reached.",
+      "translations": {
+        "hi": "सेट की गई ऐप सीमा पूरी हुई।",
+        "es": "Se alcanzó el límite de apps configurado.",
+        "pt": "O limite de apps configurado foi atingido.",
+        "fr": "La limite d’apps configurée est atteinte.",
+        "de": "Das eingestellte App-Limit ist erreicht.",
+        "ar": "تم بلوغ حد التطبيقات المحدد.",
+        "ja": "設定したアプリ制限に達しました。",
+        "ko": "설정한 앱 한도에 도달했습니다.",
+        "zh-Hans": "已达到设置的应用限额。"
+      }
+    },
+    {
+      "source": "Configured app schedule is active.",
+      "translations": {
+        "hi": "सेट किया ऐप शेड्यूल सक्रिय है।",
+        "es": "El horario de apps configurado está activo.",
+        "pt": "O horário de apps configurado está ativo.",
+        "fr": "L’horaire d’apps configuré est actif.",
+        "de": "Der eingerichtete App-Zeitplan ist aktiv.",
+        "ar": "جدول التطبيقات المحدد نشط.",
+        "ja": "設定したアプリスケジュールが有効です。",
+        "ko": "설정한 앱 일정이 활성화되었습니다.",
+        "zh-Hans": "设置的应用计划已生效。"
+      }
+    },
+    {
+      "source": "Configured time windows for supported distracting Android packages.",
+      "translations": {
+        "hi": "समर्थित ध्यान भटकाने वाले Android पैकेज के लिए तय समय।",
+        "es": "Ventanas configuradas para paquetes Android de distracción compatibles.",
+        "pt": "Janelas configuradas para pacotes Android distrativos compatíveis.",
+        "fr": "Créneaux configurés pour les paquets Android distrayants compatibles.",
+        "de": "Eingerichtete Zeitfenster für unterstützte ablenkende Android-Pakete.",
+        "ar": "فترات محددة لحزم Android المشتتة المدعومة.",
+        "ja": "対応する気が散るAndroidパッケージに設定した時間帯。",
+        "ko": "지원되는 방해 Android 패키지의 설정 시간대.",
+        "zh-Hans": "为支持的干扰Android包配置的时间段。"
+      }
+    },
+    {
+      "source": "Connect an account before checkout",
+      "translations": {
+        "hi": "खरीद से पहले खाता जोड़ें",
+        "es": "Conecta una cuenta antes de comprar",
+        "pt": "Conecte uma conta antes de comprar",
+        "fr": "Connectez un compte avant l’achat",
+        "de": "Verbinde vor dem Kauf ein Konto",
+        "ar": "اربط حسابًا قبل الشراء",
+        "ja": "購入前にアカウントを接続してください",
+        "ko": "결제 전에 계정을 연결하세요",
+        "zh-Hans": "购买前请连接账户"
+      }
+    },
+    {
+      "source": "Connect an account before checkout.",
+      "translations": {
+        "hi": "खरीद से पहले खाता जोड़ें।",
+        "es": "Conecta una cuenta antes de comprar.",
+        "pt": "Conecte uma conta antes de comprar.",
+        "fr": "Connectez un compte avant l’achat.",
+        "de": "Verbinde vor dem Kauf ein Konto.",
+        "ar": "اربط حسابًا قبل الشراء.",
+        "ja": "購入前にアカウントを接続してください。",
+        "ko": "결제 전에 계정을 연결하세요.",
+        "zh-Hans": "购买前请连接账户。"
+      }
+    },
+    {
+      "source": "Connect an account to continue. Free recovery tools are included.",
+      "translations": {
+        "hi": "जारी रखने के लिए खाता जोड़ें। मुफ़्त सुधार टूल शामिल हैं।",
+        "es": "Conecta una cuenta para continuar. Incluye herramientas de recuperación gratuitas.",
+        "pt": "Conecte uma conta para continuar. Inclui ferramentas gratuitas de recuperação.",
+        "fr": "Connectez un compte pour continuer. Les outils de rétablissement gratuits sont inclus.",
+        "de": "Verbinde ein Konto, um fortzufahren. Kostenlose Hilfen zur Erholung sind enthalten.",
+        "ar": "اربط حسابًا للمتابعة. أدوات التعافي المجانية مشمولة.",
+        "ja": "続けるにはアカウントを接続してください。無料の回復ツールが含まれます。",
+        "ko": "계정을 연결해 계속하세요. 무료 회복 도구가 포함됩니다.",
+        "zh-Hans": "连接账户以继续。包含免费的恢复工具。"
+      }
+    },
+    {
+      "source": "Connect Apple, Google, or email to continue. Your recovery history stays on this device. Encrypted backup is optional.",
+      "translations": {
+        "hi": "जारी रखने के लिए Apple, Google या ईमेल जोड़ें। सुधार का इतिहास इसी डिवाइस पर रहता है। एन्क्रिप्टेड बैकअप वैकल्पिक है।",
+        "es": "Conecta Apple, Google o correo para continuar. Tu historial de recuperación queda en este dispositivo. La copia cifrada es opcional.",
+        "pt": "Conecte Apple, Google ou e-mail para continuar. Seu histórico de recuperação fica neste dispositivo. O backup criptografado é opcional.",
+        "fr": "Connectez Apple, Google ou une adresse e-mail pour continuer. Votre historique reste sur cet appareil. La sauvegarde chiffrée est facultative.",
+        "de": "Verbinde Apple, Google oder E-Mail, um fortzufahren. Dein Verlauf bleibt auf diesem Gerät. Ein verschlüsseltes Backup ist optional.",
+        "ar": "اربط Apple أو Google أو البريد الإلكتروني للمتابعة. يبقى سجل تعافيك على هذا الجهاز. النسخ الاحتياطي المشفّر اختياري.",
+        "ja": "Apple、Google、メールのいずれかを接続して続けてください。回復の履歴はこの端末内に残ります。暗号化バックアップは任意です。",
+        "ko": "Apple, Google 또는 이메일을 연결해 계속하세요. 회복 기록은 이 기기에 보관됩니다. 암호화 백업은 선택 사항입니다.",
+        "zh-Hans": "连接Apple、Google或电子邮件以继续。恢复历史保留在本设备。加密备份为可选项。"
+      }
+    },
+    {
+      "source": "contacts",
+      "translations": {
+        "hi": "संपर्क",
+        "es": "contactos",
+        "pt": "contatos",
+        "fr": "contacts personnels",
+        "de": "Kontakte",
+        "ar": "جهات الاتصال",
+        "ja": "連絡先",
+        "ko": "연락처",
+        "zh-Hans": "联系人"
+      }
+    },
+    {
+      "source": "Continue to account",
+      "translations": {
+        "hi": "खाते की ओर आगे बढ़ें",
+        "es": "Continuar a la cuenta",
+        "pt": "Continuar para a conta",
+        "fr": "Continuer vers le compte",
+        "de": "Weiter zum Konto",
+        "ar": "المتابعة إلى الحساب",
+        "ja": "アカウントへ進む",
+        "ko": "계정으로 계속",
+        "zh-Hans": "继续前往账户"
+      }
+    },
+    {
+      "source": "Cool the water only if it feels safe and comfortable for you.",
+      "translations": {
+        "hi": "पानी ठंडा तभी करें जब आपके लिए सुरक्षित और आरामदायक हो।",
+        "es": "Enfría el agua solo si te resulta seguro y cómodo.",
+        "pt": "Esfrie a água apenas se for seguro e confortável para você.",
+        "fr": "Refroidissez l’eau seulement si cela vous paraît sûr et confortable.",
+        "de": "Kühle das Wasser nur ab, wenn es für dich sicher und angenehm ist.",
+        "ar": "برّد الماء فقط إذا كان ذلك آمنًا ومريحًا لك.",
+        "ja": "自分にとって安全で心地よい場合にだけ水温を下げてください。",
+        "ko": "안전하고 편안하게 느껴질 때만 물 온도를 낮추세요.",
+        "zh-Hans": "只有感觉安全且舒适时才调凉水温。"
+      }
+    },
+    {
+      "source": "Daily plan",
+      "translations": {
+        "hi": "दैनिक योजना",
+        "es": "Plan diario",
+        "pt": "Plano diário",
+        "fr": "Programme quotidien",
+        "de": "Tagesplan",
+        "ar": "خطة يومية",
+        "ja": "毎日のプラン",
+        "ko": "일일 계획",
+        "zh-Hans": "每日计划"
+      }
+    },
+    {
+      "source": "Daily selected-target threshold event for chosen Screen Time tokens.",
+      "translations": {
+        "hi": "चुने Screen Time टोकन के लिए दैनिक सीमा घटना।",
+        "es": "Evento diario de umbral para los tokens Screen Time elegidos.",
+        "pt": "Evento diário de limite para os tokens Screen Time escolhidos.",
+        "fr": "Événement de seuil quotidien pour les jetons Temps d’écran choisis.",
+        "de": "Tägliches Schwellenereignis für gewählte Bildschirmzeit-Tokens.",
+        "ar": "حدث حد يومي لرموز مدة استخدام الجهاز المحددة.",
+        "ja": "選んだスクリーンタイムトークンの1日のしきい値イベント。",
+        "ko": "선택한 스크린 타임 토큰의 일일 임계값 이벤트.",
+        "zh-Hans": "所选屏幕使用时间令牌的每日阈值事件。"
+      }
+    },
+    {
+      "source": "Daily threshold event for selected individual iOS applications.",
+      "translations": {
+        "hi": "चुने हुए अलग-अलग iOS ऐप के लिए दैनिक सीमा घटना।",
+        "es": "Evento de umbral diario para apps individuales iOS seleccionadas.",
+        "pt": "Evento de limite diário para apps individuais iOS selecionados.",
+        "fr": "Événement de seuil quotidien pour les apps iOS individuelles choisies.",
+        "de": "Tägliches Schwellenereignis für ausgewählte einzelne iOS-Apps.",
+        "ar": "حدث حد يومي لتطبيقات iOS الفردية المحددة.",
+        "ja": "選んだ個別のiOSアプリの1日のしきい値イベント。",
+        "ko": "선택한 개별 iOS 앱의 일일 임계값 이벤트.",
+        "zh-Hans": "所选单个iOS应用的每日阈值事件。"
+      }
+    },
+    {
+      "source": "Daily-limit registration readback did not match selected targets and threshold.",
+      "translations": {
+        "hi": "दैनिक सीमा पंजीकरण की पुष्टि चुने लक्ष्य और सीमा से मेल नहीं खाई।",
+        "es": "La lectura del registro diario no coincidió con los objetivos y el umbral elegidos.",
+        "pt": "A leitura do registro diário não correspondeu aos alvos e ao limite escolhidos.",
+        "fr": "La lecture de l’enregistrement quotidien ne correspond pas aux cibles et au seuil choisis.",
+        "de": "Die Rückmeldung der Tageslimit-Registrierung passt nicht zu ausgewählten Zielen und Schwelle.",
+        "ar": "قراءة تسجيل الحد اليومي لم تطابق الأهداف والحد المختارين.",
+        "ja": "1日制限の登録を読み直した結果、選択対象としきい値が一致しませんでした。",
+        "ko": "일일 한도 등록을 다시 읽은 결과 선택 대상과 임계값이 일치하지 않았습니다.",
+        "zh-Hans": "每日限额注册回读与所选目标和阈值不一致。"
+      }
+    },
+    {
+      "source": "data",
+      "translations": {
+        "hi": "डेटा",
+        "es": "datos",
+        "pt": "dados",
+        "fr": "données",
+        "de": "Daten",
+        "ar": "بيانات",
+        "ja": "データ",
+        "ko": "데이터",
+        "zh-Hans": "数据"
+      }
+    },
+    {
+      "source": "delete",
+      "translations": {
+        "hi": "हटाएँ",
+        "es": "eliminar",
+        "pt": "excluir",
+        "fr": "supprimer",
+        "de": "löschen",
+        "ar": "حذف",
+        "ja": "削除",
+        "ko": "삭제",
+        "zh-Hans": "删除"
+      }
+    },
+    {
+      "source": "Device mode: {{mode}} · {{value2}}",
+      "translations": {
+        "hi": "डिवाइस मोड: {{mode}} · {{value2}}",
+        "es": "Modo del dispositivo: {{mode}} · {{value2}}",
+        "pt": "Modo do dispositivo: {{mode}} · {{value2}}",
+        "fr": "Mode de l’appareil : {{mode}} · {{value2}}",
+        "de": "Gerätemodus: {{mode}} · {{value2}}",
+        "ar": "وضع الجهاز: {{mode}} · {{value2}}",
+        "ja": "端末モード：{{mode}} · {{value2}}",
+        "ko": "기기 모드: {{mode}} · {{value2}}",
+        "zh-Hans": "设备模式：{{mode}} · {{value2}}"
+      }
+    },
+    {
+      "source": "Device mode: {{mode}}. Configured: {{value2}}. Authorized: {{value3}}. Ready: {{value4}}. Device blocking: not tested.",
+      "translations": {
+        "hi": "डिवाइस मोड: {{mode}}। सेट: {{value2}}। अनुमति: {{value3}}। तैयार: {{value4}}। डिवाइस पर रोक: नहीं जाँची।",
+        "es": "Modo: {{mode}}. Configurado: {{value2}}. Autorizado: {{value3}}. Listo: {{value4}}. Bloqueo en el dispositivo: sin probar.",
+        "pt": "Modo: {{mode}}. Configurado: {{value2}}. Autorizado: {{value3}}. Pronto: {{value4}}. Bloqueio no dispositivo: não testado.",
+        "fr": "Mode : {{mode}}. Configuré : {{value2}}. Autorisé : {{value3}}. Prêt : {{value4}}. Blocage sur l’appareil : non testé.",
+        "de": "Gerätemodus: {{mode}}. Eingerichtet: {{value2}}. Autorisiert: {{value3}}. Bereit: {{value4}}. Gerätesperre: nicht getestet.",
+        "ar": "وضع الجهاز: {{mode}}. معدّ: {{value2}}. مفوّض: {{value3}}. جاهز: {{value4}}. حظر الجهاز: لم يُختبر.",
+        "ja": "端末モード：{{mode}}。設定済み：{{value2}}。認証済み：{{value3}}。準備完了：{{value4}}。端末のブロック：未テスト。",
+        "ko": "기기 모드: {{mode}}. 설정됨: {{value2}}. 승인됨: {{value3}}. 준비됨: {{value4}}. 기기 차단: 미검증.",
+        "zh-Hans": "设备模式：{{mode}}。已配置：{{value2}}。已授权：{{value3}}。已就绪：{{value4}}。设备拦截：未测试。"
+      }
+    },
+    {
+      "source": "DeviceActivity registration readback did not match the requested window.",
+      "translations": {
+        "hi": "DeviceActivity पंजीकरण की पुष्टि अनुरोधित समय से मेल नहीं खाई।",
+        "es": "La lectura del registro DeviceActivity no coincidió con la ventana solicitada.",
+        "pt": "A leitura do registro DeviceActivity não correspondeu à janela solicitada.",
+        "fr": "La lecture de l’enregistrement DeviceActivity ne correspond pas au créneau demandé.",
+        "de": "Die Rückmeldung der DeviceActivity-Registrierung passt nicht zum angeforderten Zeitfenster.",
+        "ar": "قراءة تسجيل DeviceActivity لم تطابق الفترة المطلوبة.",
+        "ja": "DeviceActivityの登録結果が要求した時間帯と一致しませんでした。",
+        "ko": "DeviceActivity 등록을 다시 읽은 결과 요청한 시간대와 일치하지 않았습니다.",
+        "zh-Hans": "DeviceActivity注册回读与请求的时间段不一致。"
+      }
+    },
+    {
+      "source": "Diagnostics",
+      "translations": {
+        "hi": "निदान",
+        "es": "Diagnóstico",
+        "pt": "Diagnóstico",
+        "fr": "Diagnostic",
+        "de": "Diagnose",
+        "ar": "التشخيص",
+        "ja": "診断",
+        "ko": "진단",
+        "zh-Hans": "诊断"
+      }
+    }
+  ]
+}

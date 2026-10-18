@@ -1,0 +1,317 @@
+{
+  "httpStatus": 200,
+  "body": {
+    "fields": [
+      {
+        "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/aggregate_analytics/fields/expiresAt",
+        "indexConfig": {
+          "indexes": [
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "ASCENDING"
+                }
+              ],
+              "state": "READY"
+            },
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "DESCENDING"
+                }
+              ],
+              "state": "READY"
+            }
+          ],
+          "ancestorField": "projects/freed-7d5ee/databases/(default)/collectionGroups/__default__/fields/*"
+        },
+        "ttlConfig": {
+          "state": "ACTIVE"
+        }
+      },
+      {
+        "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/backend_jobs/fields/expiresAt",
+        "indexConfig": {
+          "indexes": [
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "ASCENDING"
+                }
+              ],
+              "state": "READY"
+            },
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "DESCENDING"
+                }
+              ],
+              "state": "READY"
+            }
+          ],
+          "ancestorField": "projects/freed-7d5ee/databases/(default)/collectionGroups/__default__/fields/*"
+        },
+        "ttlConfig": {
+          "state": "ACTIVE"
+        }
+      },
+      {
+        "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/idempotency/fields/expiresAt",
+        "indexConfig": {
+          "indexes": [
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "ASCENDING"
+                }
+              ],
+              "state": "READY"
+            },
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "DESCENDING"
+                }
+              ],
+              "state": "READY"
+            }
+          ],
+          "ancestorField": "projects/freed-7d5ee/databases/(default)/collectionGroups/__default__/fields/*"
+        },
+        "ttlConfig": {
+          "state": "ACTIVE"
+        }
+      },
+      {
+        "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/leases/fields/expiresAt",
+        "indexConfig": {
+          "indexes": [
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "ASCENDING"
+                }
+              ],
+              "state": "READY"
+            },
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "DESCENDING"
+                }
+              ],
+              "state": "READY"
+            }
+          ],
+          "ancestorField": "projects/freed-7d5ee/databases/(default)/collectionGroups/__default__/fields/*"
+        },
+        "ttlConfig": {
+          "state": "ACTIVE"
+        }
+      },
+      {
+        "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/notification_jobs/fields/expiresAt",
+        "indexConfig": {
+          "indexes": [
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "ASCENDING"
+                }
+              ],
+              "state": "READY"
+            },
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "DESCENDING"
+                }
+              ],
+              "state": "READY"
+            }
+          ],
+          "ancestorField": "projects/freed-7d5ee/databases/(default)/collectionGroups/__default__/fields/*"
+        },
+        "ttlConfig": {
+          "state": "ACTIVE"
+        }
+      },
+      {
+        "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/purchase_audits/fields/expiresAt",
+        "indexConfig": {
+          "indexes": [
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "ASCENDING"
+                }
+              ],
+              "state": "READY"
+            },
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "DESCENDING"
+                }
+              ],
+              "state": "READY"
+            }
+          ],
+          "ancestorField": "projects/freed-7d5ee/databases/(default)/collectionGroups/__default__/fields/*"
+        },
+        "ttlConfig": {
+          "state": "ACTIVE"
+        }
+      },
+      {
+        "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/purchase_notification_receipts/fields/expiresAt",
+        "indexConfig": {
+          "indexes": [
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "ASCENDING"
+                }
+              ],
+              "state": "READY"
+            },
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "DESCENDING"
+                }
+              ],
+              "state": "READY"
+            }
+          ],
+          "ancestorField": "projects/freed-7d5ee/databases/(default)/collectionGroups/__default__/fields/*"
+        },
+        "ttlConfig": {
+          "state": "ACTIVE"
+        }
+      },
+      {
+        "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/push_tokens/fields/expiresAt",
+        "indexConfig": {
+          "indexes": [
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "ASCENDING"
+                }
+              ],
+              "state": "READY"
+            },
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "DESCENDING"
+                }
+              ],
+              "state": "READY"
+            }
+          ],
+          "ancestorField": "projects/freed-7d5ee/databases/(default)/collectionGroups/__default__/fields/*"
+        },
+        "ttlConfig": {
+          "state": "ACTIVE"
+        }
+      },
+      {
+        "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/rate_limits/fields/expiresAt",
+        "indexConfig": {
+          "indexes": [
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "ASCENDING"
+                }
+              ],
+              "state": "READY"
+            },
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "DESCENDING"
+                }
+              ],
+              "state": "READY"
+            }
+          ],
+          "ancestorField": "projects/freed-7d5ee/databases/(default)/collectionGroups/__default__/fields/*"
+        },
+        "ttlConfig": {
+          "state": "ACTIVE"
+        }
+      },
+      {
+        "name": "projects/freed-7d5ee/databases/(default)/collectionGroups/redacted_ai_events/fields/expiresAt",
+        "indexConfig": {
+          "indexes": [
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "ASCENDING"
+                }
+              ],
+              "state": "READY"
+            },
+            {
+              "queryScope": "COLLECTION",
+              "fields": [
+                {
+                  "fieldPath": "expiresAt",
+                  "order": "DESCENDING"
+                }
+              ],
+              "state": "READY"
+            }
+          ],
+          "ancestorField": "projects/freed-7d5ee/databases/(default)/collectionGroups/__default__/fields/*"
+        },
+        "ttlConfig": {
+          "state": "ACTIVE"
+        }
+      }
+    ]
+  }
+}

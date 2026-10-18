@@ -4,8 +4,24 @@
   <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
   <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+  <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
+
+  <queries>
+    <intent><action android:name="android.intent.action.VIEW" /><category android:name="android.intent.category.BROWSABLE" /><data android:scheme="http" /></intent>
+    <intent><action android:name="android.intent.action.VIEW" /><category android:name="android.intent.category.BROWSABLE" /><data android:scheme="https" /></intent>
+    <intent><action android:name="android.intent.action.MAIN" /><category android:name="android.intent.category.LAUNCHER" /></intent>
+    <intent><action android:name="android.intent.action.MAIN" /><category android:name="android.intent.category.HOME" /></intent>
+    <intent><action android:name="android.settings.SETTINGS" /></intent>
+    <intent><action android:name="android.intent.action.DIAL" /><data android:scheme="tel" /></intent>
+    <intent><action android:name="android.intent.action.EMERGENCY_DIAL" /></intent>
+    <intent><action android:name="android.intent.action.SENDTO" /><data android:scheme="smsto" /></intent>
+  </queries>
 
   <application>
+    <activity android:name=".FreedEarnedChallengeCaptureActivity" android:exported="false" android:excludeFromRecents="true" android:theme="@android:style/Theme.Material.Light.NoActionBar" />
+    <provider android:name="androidx.core.content.FileProvider" android:authorities="${applicationId}.freedchallengephotos" android:exported="false" android:grantUriPermissions="true">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/freed_challenge_photo_paths" />
+    </provider>
     <activity
       android:name=".FreedInterventionActivity"
       android:excludeFromRecents="true"
@@ -33,7 +49,7 @@
     <service
       android:name=".FreedAccessibilityService"
       android:exported="false"
-      android:label="FREED Protection"
+      android:label="@string/freed_protection_label"
       android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
       <intent-filter>
         <action android:name="android.accessibilityservice.AccessibilityService" />
@@ -51,6 +67,9 @@
       <intent-filter>
         <action android:name="android.net.VpnService" />
       </intent-filter>
+      <meta-data
+        android:name="android.net.VpnService.SUPPORTS_ALWAYS_ON"
+        android:value="false" />
       <property
         android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
         android:value="User-enabled DNS-only VPN fallback for adult-domain filtering without full traffic proxying." />

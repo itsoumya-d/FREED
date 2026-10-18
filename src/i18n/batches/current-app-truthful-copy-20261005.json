@@ -1,0 +1,1054 @@
+{
+  "entries": [
+    {
+      "source": "With analytics consent, FREED sends absolute UTC-day counts of check-ins and completed challenges for a 14-day window, plus schema and consent versions, opt-in time, and lineage, revision and snapshot identifiers. Records link to your authenticated account UID. Derived rates, streak summaries and challenge categories stay local. Raw URLs, search text, private notes, exact selected app tokens and exact coordinates are excluded.",
+      "translations": {
+        "hi": "एनालिटिक्स की सहमति पर FREED 14 दिनों के लिए UTC-दिन के अनुसार चेक-इन और पूरे किए गए चैलेंज की कुल गिनती भेजता है। साथ में स्कीमा और सहमति संस्करण, सहमति का समय तथा वंश, संशोधन और स्नैपशॉट पहचानकर्ता जाते हैं। रिकॉर्ड आपके प्रमाणित खाते के UID से जुड़े हैं। निकाली गई दरें, स्ट्रीक सारांश और चैलेंज श्रेणियाँ स्थानीय रहती हैं। कच्चे URL, खोज पाठ, निजी नोट्स, चुने गए ऐप के सटीक टोकन और सटीक निर्देशांक शामिल नहीं होते।",
+        "es": "Con consentimiento para analíticas, FREED envía recuentos absolutos de registros y retos completados por día UTC para un período de 14 días, junto con versiones de esquema y consentimiento, fecha de aceptación e identificadores de linaje, revisión e instantánea. Los registros se vinculan al UID de tu cuenta autenticada. Las tasas calculadas, los resúmenes de rachas y las categorías de retos quedan en el dispositivo. Se excluyen URL sin procesar, búsquedas, notas privadas, tokens exactos de apps seleccionadas y coordenadas exactas.",
+        "pt": "Com consentimento para análise, o FREED envia contagens absolutas de check-ins e desafios concluídos por dia UTC em uma janela de 14 dias, além das versões de esquema e consentimento, horário da autorização e identificadores de linhagem, revisão e instantâneo. Os registros se vinculam ao UID da conta autenticada. Taxas calculadas, resumos de sequências e categorias de desafios ficam no dispositivo. URLs brutas, buscas, notas privadas, tokens exatos dos apps selecionados e coordenadas exatas são excluídos.",
+        "fr": "Avec votre consentement aux statistiques, FREED envoie les nombres absolus de bilans et de défis terminés par jour UTC sur 14 jours, ainsi que les versions du schéma et du consentement, la date du consentement et les identifiants de lignée, de révision et de capture. Ces données sont liées au UID de votre compte authentifié. Les taux calculés, résumés de séries et catégories de défis restent locaux. Les URL brutes, recherches, notes privées, jetons exacts des apps choisies et coordonnées exactes sont exclus.",
+        "de": "Mit Zustimmung zur Analyse sendet FREED absolute Anzahlen von Check-ins und abgeschlossenen Aufgaben pro UTC-Tag für 14 Tage sowie Schema- und Einwilligungsversionen, den Zustimmungszeitpunkt und Kennungen für Datenlinie, Revision und Snapshot. Die Datensätze sind mit der UID deines authentifizierten Kontos verknüpft. Berechnete Quoten, Serienzusammenfassungen und Aufgabenkategorien bleiben lokal. Rohe URLs, Suchtexte, private Notizen, genaue Tokens ausgewählter Apps und genaue Koordinaten sind ausgeschlossen.",
+        "ar": "بموافقتك على التحليلات، يرسل FREED الأعداد المطلقة لتسجيلات المتابعة والتحديات المكتملة حسب يوم UTC لفترة 14 يومًا، مع إصدارات المخطط والموافقة ووقت الاشتراك ومعرّفات سلسلة البيانات والمراجعة واللقطة. ترتبط السجلات بمعرّف UID لحسابك الموثق. تبقى المعدلات المحسوبة وملخصات السلاسل وفئات التحديات محلية. تُستبعد عناوين URL الخام ونصوص البحث والملاحظات الخاصة والرموز الدقيقة للتطبيقات المختارة والإحداثيات الدقيقة.",
+        "ja": "分析への同意がある場合、FREEDは14日間のUTC日付ごとのチェックインと完了したチャレンジの絶対数、スキーマと同意のバージョン、同意時刻、データ系統・改訂・スナップショットの識別子を送信します。記録は認証済みアカウントのUIDに紐付きます。計算された割合、連続記録の要約、チャレンジのカテゴリは端末内に残ります。生のURL、検索文、私的なメモ、選択したアプリの正確なトークン、正確な座標は含まれません。",
+        "ko": "분석에 동의하면 FREED는 14일 범위의 UTC 날짜별 체크인 및 완료한 챌린지의 절대 개수와 스키마·동의 버전, 동의 시각, 데이터 계보·수정·스냅샷 식별자를 전송합니다. 기록은 인증된 계정 UID와 연결됩니다. 계산된 비율, 연속 기록 요약, 챌린지 범주는 기기에 남습니다. 원시 URL, 검색 문구, 개인 메모, 선택한 앱의 정확한 토큰 및 정확한 좌표는 제외됩니다.",
+        "zh-Hans": "获得分析同意后，FREED会发送14天范围内按UTC日期统计的签到和已完成挑战的绝对数量，以及架构和同意版本、同意时间、数据谱系、修订和快照标识符。记录与已认证账户的UID关联。计算出的比率、连续记录摘要和挑战类别留在本地。不包含原始URL、搜索文本、私人笔记、所选应用的精确令牌或精确坐标。"
+      }
+    },
+    {
+      "source": "With cloud-chat consent, messages you deliberately send to CLARA are processed by Google Cloud's Gemini service through FREED. If you choose to share conversation context, up to six recent user-authored messages may be included. Browsing activity, journal entries, photos and Screen Time data are not automatically attached. Challenge selection and retention planning stay local. Processing may happen outside your country.",
+      "translations": {
+        "hi": "क्लाउड चैट की सहमति पर, CLARA को जानबूझकर भेजे गए संदेश FREED के माध्यम से Google Cloud की Gemini सेवा द्वारा संसाधित होते हैं। बातचीत का संदर्भ साझा करने पर आपके हाल के अधिकतम छह संदेश शामिल हो सकते हैं। ब्राउज़िंग, जर्नल, तस्वीरें और Screen Time डेटा अपने आप नहीं जुड़ते। चैलेंज चयन और बनाए रखने की योजना स्थानीय रहती है। प्रसंस्करण आपके देश के बाहर हो सकता है।",
+        "es": "Con consentimiento para el chat en la nube, Google Cloud Gemini procesa a través de FREED los mensajes que envías deliberadamente a CLARA. Si compartes contexto, pueden incluirse hasta seis mensajes recientes escritos por ti. La navegación, el diario, las fotos y los datos de Screen Time no se adjuntan automáticamente. La selección de retos y la planificación de continuidad siguen siendo locales. El procesamiento puede realizarse fuera de tu país.",
+        "pt": "Com consentimento para o chat na nuvem, o serviço Gemini do Google Cloud processa pelo FREED as mensagens enviadas deliberadamente ao CLARA. Se você compartilhar contexto, até seis mensagens recentes de sua autoria podem ser incluídas. Navegação, diário, fotos e dados do Screen Time não são anexados automaticamente. A seleção de desafios e o planejamento de continuidade ficam locais. O processamento pode ocorrer fora do seu país.",
+        "fr": "Avec votre consentement au chat cloud, les messages que vous envoyez volontairement à CLARA sont traités par Gemini de Google Cloud via FREED. Si vous partagez le contexte, jusqu’à six de vos messages récents peuvent être inclus. La navigation, le journal, les photos et les données Screen Time ne sont pas joints automatiquement. Le choix des défis et la planification de continuité restent locaux. Le traitement peut avoir lieu hors de votre pays.",
+        "de": "Mit Zustimmung zum Cloud-Chat verarbeitet Google Clouds Gemini-Dienst über FREED die bewusst an CLARA gesendeten Nachrichten. Wenn du Gesprächskontext teilst, können bis zu sechs deiner letzten selbst verfassten Nachrichten enthalten sein. Browseraktivität, Tagebuch, Fotos und Screen-Time-Daten werden nicht automatisch angehängt. Aufgabenauswahl und Kontinuitätsplanung bleiben lokal. Die Verarbeitung kann außerhalb deines Landes erfolgen.",
+        "ar": "بموافقتك على المحادثة السحابية، تعالج خدمة Gemini من Google Cloud عبر FREED الرسائل التي ترسلها عمدًا إلى CLARA. إذا اخترت مشاركة سياق المحادثة، فقد تُضمّن حتى ست رسائل حديثة كتبتها أنت. لا تُرفق أنشطة التصفح أو اليوميات أو الصور أو بيانات Screen Time تلقائيًا. يبقى اختيار التحديات وتخطيط الاستمرارية محليين. قد تتم المعالجة خارج بلدك.",
+        "ja": "クラウドチャットへの同意がある場合、CLARAに意図的に送信したメッセージはFREEDを通じてGoogle CloudのGeminiで処理されます。会話の文脈を共有すると、自分で書いた最近のメッセージが最大6件含まれることがあります。閲覧履歴、日記、写真、Screen Timeデータは自動添付されません。チャレンジの選択と継続計画は端末内で行われます。国外で処理される場合があります。",
+        "ko": "클라우드 채팅에 동의하면 CLARA에 직접 보낸 메시지는 FREED를 통해 Google Cloud의 Gemini 서비스에서 처리됩니다. 대화 맥락을 공유하면 사용자가 작성한 최근 메시지 최대 6개가 포함될 수 있습니다. 탐색 활동, 일지, 사진 및 Screen Time 데이터는 자동으로 첨부되지 않습니다. 챌린지 선택과 지속 계획은 로컬에서 이루어집니다. 국외에서 처리될 수 있습니다.",
+        "zh-Hans": "同意云端聊天后，你主动发送给CLARA的消息会通过FREED由Google Cloud的Gemini服务处理。如果选择共享对话上下文，可能包含最多六条近期由你编写的消息。浏览活动、日记、照片和Screen Time数据不会自动附加。挑战选择和持续计划留在本地。处理可能发生在你的国家之外。"
+      }
+    },
+    {
+      "source": "Google processing and retention follow the applicable service terms and configuration. FREED does not promise a fixed Google retention period or zero retention. Turning cloud chat off stops future messages; a request already sent may finish. Built-in guidance remains available.",
+      "translations": {
+        "hi": "Google का प्रसंस्करण और संग्रह लागू सेवा शर्तों और कॉन्फ़िगरेशन के अनुसार होता है। FREED Google के लिए तय संग्रह अवधि या शून्य संग्रह का वादा नहीं करता। क्लाउड चैट बंद करने से आगे के संदेश रुकते हैं; पहले भेजा गया अनुरोध पूरा हो सकता है। अंतर्निहित मार्गदर्शन उपलब्ध रहता है।",
+        "es": "El procesamiento y la conservación de Google dependen de los términos del servicio y la configuración aplicables. FREED no promete un período fijo ni conservación cero en Google. Desactivar el chat en la nube detiene futuros mensajes; una solicitud enviada puede terminar. La orientación integrada sigue disponible.",
+        "pt": "O processamento e a retenção do Google seguem os termos e a configuração aplicáveis. O FREED não promete um prazo fixo nem retenção zero pelo Google. Desativar o chat na nuvem interrompe mensagens futuras; uma solicitação já enviada pode terminar. A orientação integrada continua disponível.",
+        "fr": "Le traitement et la conservation par Google suivent les conditions et la configuration applicables. FREED ne promet ni durée fixe de conservation par Google ni absence de conservation. Désactiver le chat cloud arrête les futurs messages ; une demande envoyée peut aboutir. Les conseils intégrés restent disponibles.",
+        "de": "Googles Verarbeitung und Aufbewahrung richten sich nach den geltenden Bedingungen und der Konfiguration. FREED verspricht weder eine feste Aufbewahrungsdauer bei Google noch keinerlei Aufbewahrung. Das Abschalten des Cloud-Chats stoppt künftige Nachrichten; eine bereits gesendete Anfrage kann noch abgeschlossen werden. Integrierte Hinweise bleiben verfügbar.",
+        "ar": "تخضع معالجة Google واحتفاظها للسياسات والإعدادات المطبقة. لا يعد FREED بفترة احتفاظ ثابتة لدى Google أو بانعدام الاحتفاظ. إيقاف المحادثة السحابية يوقف الرسائل المستقبلية؛ قد يكتمل طلب سبق إرساله. تبقى الإرشادات المدمجة متاحة.",
+        "ja": "Googleの処理と保存は適用される利用条件と設定に従います。FREEDはGoogleの固定保存期間や保存ゼロを約束しません。クラウドチャットをオフにすると今後の送信は止まりますが、送信済みの要求は完了する場合があります。内蔵ガイダンスは利用できます。",
+        "ko": "Google의 처리 및 보관은 해당 서비스 약관과 설정을 따릅니다. FREED는 Google의 고정 보관 기간이나 보관 없음을 약속하지 않습니다. 클라우드 채팅을 끄면 향후 메시지가 중단되지만 이미 전송된 요청은 완료될 수 있습니다. 기본 안내는 계속 이용할 수 있습니다.",
+        "zh-Hans": "Google的处理和保留遵循适用服务条款及配置。FREED不承诺Google的固定保留期限或零保留。关闭云端聊天会停止后续消息，但已发送的请求仍可能完成。内置指导仍可使用。"
+      }
+    },
+    {
+      "source": "FREED's backend does not persist chat prompts or full provider results. It keeps account-linked quota and request deduplication metadata. Deduplication records have a configured 7-day expiry; physical deletion may occur later. These controls do not set Google's content retention.",
+      "translations": {
+        "hi": "FREED का बैकएंड चैट संकेत या प्रदाता के पूरे परिणाम स्थायी रूप से नहीं रखता। वह खाते से जुड़ी कोटा और अनुरोध दोहराव रोकने की मेटाडेटा रखता है। दोहराव रिकॉर्ड की कॉन्फ़िगर की गई समाप्ति 7 दिन है; वास्तविक हटाना बाद में हो सकता है। ये नियंत्रण Google की सामग्री संग्रह अवधि तय नहीं करते।",
+        "es": "El servidor de FREED no almacena los mensajes del chat ni los resultados completos del proveedor. Conserva metadatos de cuotas y deduplicación de solicitudes vinculados a la cuenta. Los registros de deduplicación caducan según una configuración de 7 días; el borrado físico puede ocurrir después. Estos controles no determinan la conservación del contenido en Google.",
+        "pt": "O backend do FREED não persiste mensagens do chat nem resultados completos do provedor. Mantém metadados de cota e deduplicação de solicitações vinculados à conta. Os registros de deduplicação têm expiração configurada de 7 dias; a exclusão física pode ocorrer depois. Esses controles não definem a retenção de conteúdo pelo Google.",
+        "fr": "Le serveur FREED ne conserve pas les messages du chat ni les résultats complets du fournisseur. Il garde des métadonnées de quotas et de déduplication des requêtes liées au compte. Les enregistrements de déduplication ont une expiration configurée de 7 jours ; la suppression physique peut survenir plus tard. Ces contrôles ne fixent pas la conservation du contenu par Google.",
+        "de": "Das FREED-Backend speichert weder Chat-Eingaben noch vollständige Anbieterantworten dauerhaft. Es hält kontoverknüpfte Metadaten für Kontingente und Anfragededuplizierung vor. Deduplizierungsdatensätze haben eine konfigurierte Ablaufzeit von 7 Tagen; die tatsächliche Löschung kann später erfolgen. Diese Kontrollen bestimmen nicht Googles Inhaltsaufbewahrung.",
+        "ar": "لا يخزن خادم FREED رسائل المحادثة أو نتائج المزود الكاملة بشكل دائم. يحتفظ ببيانات وصفية مرتبطة بالحساب للحصص ومنع تكرار الطلبات. تنتهي صلاحية سجلات منع التكرار وفق إعداد 7 أيام؛ قد يحدث الحذف الفعلي لاحقًا. هذه الضوابط لا تحدد احتفاظ Google بالمحتوى.",
+        "ja": "FREEDのバックエンドはチャット入力やプロバイダーの完全な結果を永続保存しません。アカウントに紐付く利用枠と要求重複排除のメタデータを保持します。重複排除の記録は7日で期限切れになる設定ですが、実際の削除は後になる場合があります。これらの制御はGoogleのコンテンツ保存期間を定めません。",
+        "ko": "FREED 백엔드는 채팅 입력이나 제공자의 전체 결과를 영구 저장하지 않습니다. 계정에 연결된 할당량 및 요청 중복 제거 메타데이터를 보관합니다. 중복 제거 기록은 7일 만료로 설정되어 있으며 실제 삭제는 나중에 이루어질 수 있습니다. 이 제어는 Google의 콘텐츠 보관 기간을 결정하지 않습니다.",
+        "zh-Hans": "FREED后端不持久保存聊天输入或提供商的完整结果。它保留与账户关联的配额和请求去重元数据。去重记录配置为7天到期，实际删除可能更晚。这些控制不决定Google的内容保留期限。"
+      }
+    },
+    {
+      "source": "Analytics records have a configured 14-day expiry: day counters expire 14 days after their UTC-day boundary, and snapshot and receipt metadata 14 days after writing. Expiry makes records eligible for TTL deletion; physical deletion may occur later.",
+      "translations": {
+        "hi": "एनालिटिक्स रिकॉर्ड की कॉन्फ़िगर की गई समाप्ति 14 दिन है: दैनिक गिनती UTC-दिन की सीमा के 14 दिन बाद, और स्नैपशॉट तथा रसीद मेटाडेटा लिखे जाने के 14 दिन बाद समाप्त होती है। समाप्ति के बाद रिकॉर्ड TTL हटाने के योग्य होते हैं; वास्तविक हटाना बाद में हो सकता है।",
+        "es": "Los registros analíticos tienen una caducidad configurada de 14 días: los contadores diarios caducan 14 días después del límite de su día UTC, y los metadatos de instantáneas y recibos, 14 días después de su escritura. La caducidad permite el borrado por TTL; el borrado físico puede ocurrir después.",
+        "pt": "Os registros de análise têm expiração configurada de 14 dias: contadores diários expiram 14 dias após o início do respectivo dia UTC; metadados de instantâneos e recibos, 14 dias após a gravação. A expiração permite a exclusão por TTL; a exclusão física pode ocorrer depois.",
+        "fr": "Les statistiques ont une expiration configurée de 14 jours : les compteurs quotidiens expirent 14 jours après le début de leur jour UTC, et les métadonnées de captures et de reçus 14 jours après leur écriture. L’expiration rend les données éligibles à la suppression TTL ; la suppression physique peut survenir plus tard.",
+        "de": "Analysedatensätze haben eine konfigurierte Ablaufzeit von 14 Tagen: Tageszähler laufen 14 Tage nach Beginn ihres UTC-Tages ab, Snapshot- und Belegmetadaten 14 Tage nach dem Schreiben. Der Ablauf ermöglicht die TTL-Löschung; die tatsächliche Löschung kann später erfolgen.",
+        "ar": "لسجلات التحليلات انتهاء صلاحية مضبوط على 14 يومًا: تنتهي العدادات اليومية بعد 14 يومًا من بداية يوم UTC الخاص بها، وبيانات اللقطات والإيصالات بعد 14 يومًا من كتابتها. يجعل الانتهاء السجلات مؤهلة للحذف عبر TTL؛ قد يحدث الحذف الفعلي لاحقًا.",
+        "ja": "分析記録は14日で期限切れになる設定です。日別カウンターはそのUTC日の開始から14日後、スナップショットと受領記録のメタデータは書き込みから14日後に期限切れになります。期限切れによりTTL削除の対象になりますが、実際の削除は後になる場合があります。",
+        "ko": "분석 기록은 14일 만료로 설정되어 있습니다. 일별 카운터는 해당 UTC 날짜의 시작 시점에서 14일 후, 스냅샷 및 수신 확인 메타데이터는 기록 후 14일에 만료됩니다. 만료되면 TTL 삭제 대상이 되지만 실제 삭제는 나중에 이루어질 수 있습니다.",
+        "zh-Hans": "分析记录配置为14天到期：每日计数器在对应UTC日期起点的14天后到期，快照和回执元数据在写入14天后到期。到期后记录符合TTL删除条件，实际删除可能更晚。"
+      }
+    },
+    {
+      "source": "Use Delete Local Data in Profile for this device, or Delete Account & Data to request account and account-linked hosted data deletion. Store and Google records follow their own terms. Some purchase, fraud-prevention, security, tax, refund or chargeback records may require legal retention.",
+      "translations": {
+        "hi": "इस डिवाइस के लिए प्रोफ़ाइल में स्थानीय डेटा हटाएँ चुनें, या खाता और उससे जुड़े होस्ट किए गए डेटा को हटाने का अनुरोध करने के लिए खाता और डेटा हटाएँ चुनें। स्टोर और Google के रिकॉर्ड उनकी अपनी शर्तों के अनुसार हैं। कुछ खरीद, धोखाधड़ी-रोकथाम, सुरक्षा, कर, रिफंड या चार्जबैक रिकॉर्ड कानूनी कारणों से रखने पड़ सकते हैं।",
+        "es": "Usa Eliminar datos locales en Perfil para este dispositivo, o Eliminar cuenta y datos para solicitar la eliminación de la cuenta y sus datos alojados. Los registros de las tiendas y Google siguen sus propios términos. Algunos registros de compras, fraude, seguridad, impuestos, reembolsos o contracargos pueden requerir conservación legal.",
+        "pt": "Use Excluir dados locais no Perfil para este dispositivo, ou Excluir conta e dados para solicitar a exclusão da conta e dos dados hospedados vinculados. Registros das lojas e do Google seguem seus próprios termos. Alguns registros de compra, fraude, segurança, impostos, reembolsos ou contestações podem exigir retenção legal.",
+        "fr": "Utilisez Supprimer les données locales dans Profil pour cet appareil, ou Supprimer le compte et les données pour demander la suppression du compte et de ses données hébergées. Les magasins et Google appliquent leurs propres conditions. Certains dossiers d’achat, de fraude, de sécurité, de fiscalité, de remboursement ou de contestation peuvent devoir être conservés légalement.",
+        "de": "Wähle im Profil Lokale Daten löschen für dieses Gerät oder Konto und Daten löschen, um die Löschung des Kontos und seiner gehosteten Daten anzufordern. Store- und Google-Datensätze unterliegen eigenen Bedingungen. Manche Kauf-, Betrugspräventions-, Sicherheits-, Steuer-, Erstattungs- oder Rückbuchungsdaten müssen gesetzlich aufbewahrt werden.",
+        "ar": "استخدم حذف البيانات المحلية في الملف الشخصي لهذا الجهاز، أو حذف الحساب والبيانات لطلب حذف الحساب وبياناته المستضافة. تخضع سجلات المتاجر وGoogle لشروطها الخاصة. قد تتطلب سجلات الشراء ومنع الاحتيال والأمان والضرائب والاسترداد والاعتراضات احتفاظًا قانونيًا.",
+        "ja": "この端末のデータにはプロフィールの「ローカルデータを削除」を、アカウントと紐付く保存データの削除要求には「アカウントとデータを削除」を使います。ストアとGoogleの記録はそれぞれの規約に従います。購入、不正防止、セキュリティ、税、返金、支払異議の一部記録は法的保存が必要な場合があります。",
+        "ko": "이 기기의 데이터는 프로필에서 로컬 데이터 삭제를 사용하고, 계정 및 연결된 호스팅 데이터 삭제 요청은 계정 및 데이터 삭제를 사용하세요. 스토어와 Google 기록은 자체 약관을 따릅니다. 일부 구매, 사기 방지, 보안, 세금, 환불 또는 지불 거절 기록은 법적 보관이 필요할 수 있습니다.",
+        "zh-Hans": "在个人资料中选择“删除本地数据”可清理此设备，选择“删除账户和数据”可请求删除账户及其关联的托管数据。商店和Google的记录遵循各自条款。一些购买、防欺诈、安全、税务、退款或拒付记录可能需要依法保留。"
+      }
+    },
+    {
+      "source": "In Profile, choose Delete Account & Data and confirm the signed-in account, including any required recent sign-in or Apple confirmation. FREED requests server-side account and account-linked data deletion before clearing this device and signing out.",
+      "translations": {
+        "hi": "प्रोफ़ाइल में खाता और डेटा हटाएँ चुनें और साइन-इन किए खाते की पुष्टि करें; आवश्यक हालिया साइन-इन या Apple पुष्टि भी करें। FREED इस डिवाइस को साफ़ करने और साइन-आउट से पहले सर्वर पर खाता और उससे जुड़े डेटा को हटाने का अनुरोध करता है।",
+        "es": "En Perfil, elige Eliminar cuenta y datos y confirma la cuenta conectada, incluido cualquier inicio de sesión reciente o confirmación de Apple requerido. FREED solicita la eliminación en el servidor de la cuenta y sus datos antes de limpiar este dispositivo y cerrar sesión.",
+        "pt": "No Perfil, escolha Excluir conta e dados e confirme a conta conectada, incluindo autenticação recente ou confirmação da Apple exigida. O FREED solicita a exclusão da conta e dos dados vinculados no servidor antes de limpar este dispositivo e sair da conta.",
+        "fr": "Dans Profil, choisissez Supprimer le compte et les données et confirmez le compte connecté, avec toute connexion récente ou confirmation Apple requise. FREED demande la suppression du compte et de ses données côté serveur avant de nettoyer cet appareil et de vous déconnecter.",
+        "de": "Wähle im Profil Konto und Daten löschen und bestätige das angemeldete Konto einschließlich erforderlicher erneuter Anmeldung oder Apple-Bestätigung. FREED fordert die serverseitige Löschung des Kontos und verknüpfter Daten an, bevor dieses Gerät bereinigt und die Sitzung beendet wird.",
+        "ar": "في الملف الشخصي، اختر حذف الحساب والبيانات وأكد الحساب المسجل، بما يشمل تسجيل دخول حديث أو تأكيد Apple إذا طُلب. يطلب FREED حذف الحساب وبياناته من الخادم قبل تنظيف هذا الجهاز وتسجيل الخروج.",
+        "ja": "プロフィールで「アカウントとデータを削除」を選び、ログイン中のアカウントを確認します。必要な再ログインやAppleの確認も行ってください。FREEDは端末の消去とログアウトの前に、サーバー上のアカウントと関連データの削除を要求します。",
+        "ko": "프로필에서 계정 및 데이터 삭제를 선택하고 로그인한 계정을 확인하세요. 필요한 최근 로그인이나 Apple 확인도 포함됩니다. FREED는 이 기기를 정리하고 로그아웃하기 전에 서버의 계정 및 연결된 데이터 삭제를 요청합니다.",
+        "zh-Hans": "在个人资料中选择“删除账户和数据”，确认已登录账户，并完成所需的近期登录或Apple确认。FREED先请求删除服务器上的账户及关联数据，再清理此设备并退出登录。"
+      }
+    },
+    {
+      "source": "An accepted request means deletion is in progress, not that every server or provider copy is erased. If rejected or interrupted, retry or contact support. If accepted but device cleanup fails, return to Profile and use Delete Local Data.",
+      "translations": {
+        "hi": "अनुरोध स्वीकार होने का अर्थ है हटाने की प्रक्रिया जारी है, न कि सर्वर या प्रदाता की हर प्रति मिट गई है। अनुरोध अस्वीकार या बाधित हो तो फिर कोशिश करें या सहायता से संपर्क करें। स्वीकार होने के बाद डिवाइस सफ़ाई विफल हो तो प्रोफ़ाइल में लौटकर स्थानीय डेटा हटाएँ चुनें।",
+        "es": "Una solicitud aceptada significa que la eliminación está en curso, no que se hayan borrado todas las copias del servidor o proveedor. Si se rechaza o interrumpe, reintenta o contacta con soporte. Si se acepta pero falla la limpieza del dispositivo, vuelve a Perfil y usa Eliminar datos locales.",
+        "pt": "Uma solicitação aceita significa que a exclusão está em andamento, não que todas as cópias do servidor ou provedor foram apagadas. Se rejeitada ou interrompida, tente novamente ou contate o suporte. Se aceita, mas a limpeza do dispositivo falhar, volte ao Perfil e use Excluir dados locais.",
+        "fr": "Une demande acceptée signifie que la suppression est en cours, pas que toutes les copies du serveur ou du fournisseur ont été effacées. En cas de rejet ou d’interruption, réessayez ou contactez l’assistance. Si la demande est acceptée mais le nettoyage échoue, revenez dans Profil et utilisez Supprimer les données locales.",
+        "de": "Eine angenommene Anfrage bedeutet, dass die Löschung läuft, nicht dass alle Server- oder Anbieterkopien gelöscht sind. Bei Ablehnung oder Unterbrechung erneut versuchen oder den Support kontaktieren. Wird sie angenommen, aber die Gerätebereinigung schlägt fehl, kehre zum Profil zurück und wähle Lokale Daten löschen.",
+        "ar": "قبول الطلب يعني أن الحذف جارٍ، وليس أن كل نسخ الخادم أو المزود مُسحت. إذا رُفض الطلب أو انقطع، أعد المحاولة أو تواصل مع الدعم. إذا قُبل لكن فشل تنظيف الجهاز، ارجع إلى الملف الشخصي واستخدم حذف البيانات المحلية.",
+        "ja": "要求の受付は削除処理中という意味で、サーバーやプロバイダーの全コピーが消えたという意味ではありません。拒否や中断の場合は再試行するかサポートに連絡してください。受付後に端末の消去が失敗した場合は、プロフィールに戻り「ローカルデータを削除」を使ってください。",
+        "ko": "요청 수락은 삭제가 진행 중이라는 뜻이며 모든 서버나 제공자의 사본이 지워졌다는 뜻은 아닙니다. 거절되거나 중단되면 다시 시도하거나 지원팀에 문의하세요. 수락되었지만 기기 정리가 실패하면 프로필로 돌아가 로컬 데이터 삭제를 사용하세요.",
+        "zh-Hans": "请求被接受意味着删除正在进行，并不代表服务器或提供商的每份副本都已擦除。若被拒绝或中断，请重试或联系支持。如果已接受但设备清理失败，请返回个人资料并使用“删除本地数据”。"
+      }
+    },
+    {
+      "source": "Choose a device reset or an account deletion request. Account deletion requests server removal before device cleanup and sign-out; acceptance means deletion is in progress.",
+      "translations": {
+        "hi": "डिवाइस रीसेट या खाता हटाने का अनुरोध चुनें। खाता हटाने में डिवाइस सफ़ाई और साइन-आउट से पहले सर्वर से हटाने का अनुरोध होता है; स्वीकार होना प्रक्रिया जारी होने का अर्थ है।",
+        "es": "Elige restablecer el dispositivo o solicitar la eliminación de la cuenta. La cuenta se solicita eliminar del servidor antes de limpiar el dispositivo y cerrar sesión; la aceptación significa que la eliminación está en curso.",
+        "pt": "Escolha redefinir o dispositivo ou solicitar a exclusão da conta. A exclusão da conta solicita remoção no servidor antes da limpeza do dispositivo e da saída; a aceitação significa que a exclusão está em andamento.",
+        "fr": "Choisissez une réinitialisation de l’appareil ou une demande de suppression du compte. La suppression côté serveur est demandée avant le nettoyage et la déconnexion ; l’acceptation signifie que la suppression est en cours.",
+        "de": "Wähle einen Geräte-Reset oder eine Kontolöschungsanfrage. Die serverseitige Löschung wird vor Gerätebereinigung und Abmeldung angefordert; Annahme bedeutet laufende Löschung.",
+        "ar": "اختر إعادة ضبط الجهاز أو طلب حذف الحساب. يُطلب الحذف من الخادم قبل تنظيف الجهاز وتسجيل الخروج؛ القبول يعني أن الحذف جارٍ.",
+        "ja": "端末のリセットかアカウントの削除要求を選びます。端末の消去とログアウトの前にサーバー削除が要求されます。受付は削除処理中という意味です。",
+        "ko": "기기 초기화 또는 계정 삭제 요청을 선택하세요. 계정 삭제는 기기 정리와 로그아웃 전에 서버 삭제를 요청하며, 수락은 삭제 진행 중을 의미합니다.",
+        "zh-Hans": "选择设备重置或账户删除请求。账户删除会在设备清理和退出登录前请求服务器删除；接受表示删除正在进行。"
+      }
+    },
+    {
+      "source": "In Profile, choose Delete Local Data and confirm. FREED first asks native protection to stop DNS Guard, risk-window monitoring, blocked app configuration and earned unlock windows. After native acknowledgment, it clears local recovery history, drafts, guided progress and cloud-chat consent, and disables automatic backup. If cleanup fails, follow the retry instructions. This device reset does not delete your account, hosted backups or exported copies. System permissions remain controlled by iOS or Android Settings.",
+      "translations": {
+        "hi": "प्रोफ़ाइल में स्थानीय डेटा हटाएँ चुनकर पुष्टि करें। FREED पहले नेटिव सुरक्षा से DNS Guard, जोखिम-अवधि निगरानी, ब्लॉक ऐप कॉन्फ़िगरेशन और अर्जित अनलॉक अवधियाँ रोकने को कहता है। नेटिव पुष्टि के बाद स्थानीय रिकवरी इतिहास, ड्राफ्ट, निर्देशित प्रगति और क्लाउड चैट सहमति साफ़ होती है तथा स्वचालित बैकअप बंद होता है। सफ़ाई विफल हो तो फिर कोशिश करने के निर्देश मानें। यह रीसेट खाता, होस्टेड बैकअप या निर्यात की गई प्रतियाँ नहीं मिटाता। सिस्टम अनुमतियाँ iOS या Android सेटिंग्स के नियंत्रण में रहती हैं।",
+        "es": "En Perfil, elige Eliminar datos locales y confirma. FREED pide primero a la protección nativa que detenga DNS Guard, la vigilancia de períodos de riesgo, la configuración de apps bloqueadas y las ventanas de desbloqueo ganadas. Tras la confirmación nativa, borra el historial local, borradores, progreso guiado y consentimiento del chat, y desactiva las copias automáticas. Si falla, sigue las instrucciones de reintento. Este restablecimiento no elimina la cuenta, copias alojadas ni exportadas. Los permisos siguen controlados por Ajustes de iOS o Android.",
+        "pt": "No Perfil, escolha Excluir dados locais e confirme. O FREED primeiro pede à proteção nativa que pare o DNS Guard, o monitoramento de períodos de risco, a configuração de apps bloqueados e as janelas de desbloqueio obtidas. Após a confirmação nativa, limpa o histórico local, rascunhos, progresso guiado e consentimento do chat, e desativa o backup automático. Se falhar, siga as instruções para tentar novamente. Essa redefinição não exclui a conta, backups hospedados nem cópias exportadas. As permissões continuam controladas pelos Ajustes do iOS ou Android.",
+        "fr": "Dans Profil, choisissez Supprimer les données locales et confirmez. FREED demande d’abord à la protection native d’arrêter DNS Guard, la surveillance des périodes à risque, la configuration des apps bloquées et les créneaux de déblocage gagnés. Après confirmation native, il efface l’historique local, les brouillons, la progression guidée et le consentement au chat, et désactive la sauvegarde automatique. En cas d’échec, suivez les instructions de nouvel essai. Cette réinitialisation ne supprime ni compte, ni sauvegardes hébergées, ni copies exportées. Les autorisations restent contrôlées par les réglages iOS ou Android.",
+        "de": "Wähle im Profil Lokale Daten löschen und bestätige. FREED fordert zunächst die native Schutzfunktion auf, DNS Guard, Risikozeitüberwachung, gesperrte App-Konfiguration und verdiente Entsperrfenster zu stoppen. Nach nativer Bestätigung löscht es lokale Verlaufseinträge, Entwürfe, geführten Fortschritt und Cloud-Chat-Einwilligung und deaktiviert automatische Backups. Bei Fehlern folge den Wiederholungsanweisungen. Dieser Reset löscht weder Konto noch gehostete Backups oder exportierte Kopien. Systemberechtigungen bleiben unter Kontrolle der iOS- oder Android-Einstellungen.",
+        "ar": "في الملف الشخصي، اختر حذف البيانات المحلية وأكد. يطلب FREED أولًا من الحماية الأصلية إيقاف DNS Guard ومراقبة فترات الخطر وإعداد التطبيقات المحظورة وفترات الفتح المكتسبة. بعد إقرار الحماية الأصلية، يمسح سجل التعافي المحلي والمسودات والتقدم الموجّه وموافقة المحادثة السحابية ويعطل النسخ التلقائي. عند الفشل، اتبع تعليمات إعادة المحاولة. لا يحذف هذا الضبط الحساب أو النسخ المستضافة أو المصدّرة. تبقى أذونات النظام تحت تحكم إعدادات iOS أو Android.",
+        "ja": "プロフィールで「ローカルデータを削除」を選び確認します。FREEDはまずネイティブ保護にDNS Guard、リスク時間帯の監視、ブロック対象アプリの設定、獲得した解除時間の停止を要求します。ネイティブ側の確認後、端末内の回復履歴、下書き、ガイド付きの進捗、クラウドチャットの同意を消去し、自動バックアップを無効にします。失敗した場合は再試行の指示に従ってください。このリセットではアカウント、保存済みバックアップ、書き出したコピーは削除されません。システム権限はiOSまたはAndroidの設定で管理されます。",
+        "ko": "프로필에서 로컬 데이터 삭제를 선택하고 확인하세요. FREED는 먼저 네이티브 보호에 DNS Guard, 위험 시간대 모니터링, 차단 앱 설정 및 획득한 잠금 해제 기간을 중지하도록 요청합니다. 네이티브 확인 후 로컬 회복 기록, 초안, 안내 진행 및 클라우드 채팅 동의를 삭제하고 자동 백업을 끕니다. 실패하면 재시도 안내를 따르세요. 이 초기화는 계정, 호스팅 백업 또는 내보낸 사본을 삭제하지 않습니다. 시스템 권한은 iOS 또는 Android 설정에서 관리됩니다.",
+        "zh-Hans": "在个人资料中选择“删除本地数据”并确认。FREED先请求原生保护停止DNS Guard、风险时段监控、被阻止应用配置及已获得的解锁时段。原生确认后，它会清除本地恢复历史、草稿、引导进度及云端聊天同意，并关闭自动备份。若清理失败，请按重试指示操作。此重置不会删除账户、托管备份或导出的副本。系统权限仍由iOS或Android设置管理。"
+      }
+    },
+    {
+      "source": "Account deletion covers associated hosted backups, optional analytics, push registrations, service records and purchase ownership data through the service deletion process. FREED does not promise instantaneous provider authorization revocation or complete erasure of retained copies. Store and Google records follow their own terms.",
+      "translations": {
+        "hi": "खाता हटाने की प्रक्रिया संबंधित होस्टेड बैकअप, वैकल्पिक एनालिटिक्स, पुश पंजीकरण, सेवा रिकॉर्ड और खरीद स्वामित्व डेटा को कवर करती है। FREED प्रदाता की अनुमति तुरंत वापस लेने या रखी गई सभी प्रतियाँ पूरी तरह मिटाने का वादा नहीं करता। स्टोर और Google के रिकॉर्ड उनकी अपनी शर्तों के अनुसार हैं।",
+        "es": "El proceso de eliminación de la cuenta abarca copias alojadas asociadas, analíticas opcionales, registros push, registros del servicio y datos de propiedad de compras. FREED no promete revocar instantáneamente la autorización del proveedor ni borrar por completo las copias conservadas. Los registros de las tiendas y Google siguen sus propios términos.",
+        "pt": "A exclusão da conta abrange backups hospedados associados, análise opcional, registros push, registros do serviço e dados de propriedade de compras pelo processo de exclusão. O FREED não promete revogação instantânea da autorização do provedor nem eliminação completa de cópias retidas. Registros das lojas e do Google seguem seus próprios termos.",
+        "fr": "La suppression du compte couvre les sauvegardes hébergées associées, statistiques facultatives, inscriptions push, dossiers du service et données de propriété des achats selon le processus de suppression. FREED ne promet ni révocation instantanée de l’autorisation du fournisseur ni effacement complet des copies conservées. Les magasins et Google appliquent leurs propres conditions.",
+        "de": "Die Kontolöschung umfasst zugehörige gehostete Backups, optionale Analysen, Push-Registrierungen, Dienstdatensätze und Kaufzuordnungen gemäß dem Löschprozess. FREED verspricht weder sofortigen Widerruf der Anbieterautorisierung noch vollständiges Löschen aufbewahrter Kopien. Stores und Google wenden eigene Bedingungen an.",
+        "ar": "يشمل حذف الحساب النسخ المستضافة المرتبطة والتحليلات الاختيارية وتسجيلات الإشعارات وسجلات الخدمة وبيانات ملكية المشتريات عبر عملية الحذف. لا يعد FREED بإلغاء فوري لتفويض المزود أو محو كامل للنسخ المحتفظ بها. تخضع سجلات المتاجر وGoogle لشروطها الخاصة.",
+        "ja": "アカウント削除はサービスの削除手順に従い、関連する保存済みバックアップ、任意の分析、プッシュ登録、サービス記録、購入所有情報を対象とします。FREEDはプロバイダー認可の即時取消しや保存された全コピーの完全消去を約束しません。ストアとGoogleの記録はそれぞれの規約に従います。",
+        "ko": "계정 삭제는 서비스 삭제 절차에 따라 연결된 호스팅 백업, 선택적 분석, 푸시 등록, 서비스 기록 및 구매 소유권 데이터를 포함합니다. FREED는 제공자 인증의 즉각 철회나 보관된 사본의 완전한 삭제를 약속하지 않습니다. 스토어와 Google 기록은 자체 약관을 따릅니다.",
+        "zh-Hans": "账户删除通过服务删除流程涵盖关联托管备份、可选分析、推送注册、服务记录及购买归属数据。FREED不承诺立即撤销提供商授权或彻底擦除保留的副本。商店和Google的记录遵循各自条款。"
+      }
+    },
+    {
+      "source": "The public account deletion URL is {{ACCOUNT_DELETION_URL}}. Contact support if you cannot access the app.",
+      "translations": {
+        "hi": "सार्वजनिक खाता हटाने का URL {{ACCOUNT_DELETION_URL}} है। ऐप तक पहुँच न हो तो सहायता से संपर्क करें।",
+        "es": "La URL pública para eliminar la cuenta es {{ACCOUNT_DELETION_URL}}. Contacta con soporte si no puedes acceder a la app.",
+        "pt": "A URL pública de exclusão da conta é {{ACCOUNT_DELETION_URL}}. Contate o suporte se não conseguir acessar o app.",
+        "fr": "L’URL publique de suppression du compte est {{ACCOUNT_DELETION_URL}}. Contactez l’assistance si vous ne pouvez pas accéder à l’app.",
+        "de": "Die öffentliche URL zur Kontolöschung ist {{ACCOUNT_DELETION_URL}}. Kontaktiere den Support, wenn du keinen App-Zugriff hast.",
+        "ar": "رابط حذف الحساب العام هو {{ACCOUNT_DELETION_URL}}. تواصل مع الدعم إذا تعذر الوصول إلى التطبيق.",
+        "ja": "公開アカウント削除URLは{{ACCOUNT_DELETION_URL}}です。アプリにアクセスできない場合はサポートに連絡してください。",
+        "ko": "공개 계정 삭제 URL은 {{ACCOUNT_DELETION_URL}}입니다. 앱에 접속할 수 없으면 지원팀에 문의하세요.",
+        "zh-Hans": "公开账户删除网址为{{ACCOUNT_DELETION_URL}}。如无法访问应用，请联系支持。"
+      }
+    },
+    {
+      "source": "Rewarded ads are unavailable. Retry later or open Basic help.",
+      "translations": {
+        "hi": "इनाम वाले विज्ञापन उपलब्ध नहीं हैं। बाद में फिर कोशिश करें या बुनियादी मदद खोलें।",
+        "es": "Los anuncios con recompensa no están disponibles. Reintenta más tarde o abre Ayuda básica.",
+        "pt": "Os anúncios com recompensa estão indisponíveis. Tente mais tarde ou abra Ajuda básica.",
+        "fr": "Les publicités avec récompense sont indisponibles. Réessayez plus tard ou ouvrez Aide de base.",
+        "de": "Belohnungsanzeigen sind nicht verfügbar. Versuche es später erneut oder öffne Einfache Hilfe.",
+        "ar": "إعلانات المكافآت غير متاحة. حاول لاحقًا أو افتح المساعدة الأساسية.",
+        "ja": "リワード広告は利用できません。後で再試行するか基本のサポートを開いてください。",
+        "ko": "보상형 광고를 사용할 수 없습니다. 나중에 다시 시도하거나 기본 도움을 여세요.",
+        "zh-Hans": "奖励广告不可用。请稍后重试或打开基础帮助。"
+      }
+    },
+    {
+      "source": "Optional breathing gives you a quiet activity to focus on. Keep a comfortable pace, skip any holds or counting, and switch resets if needed. No particular feeling or urge change is guaranteed.",
+      "translations": {
+        "hi": "वैकल्पिक श्वास अभ्यास ध्यान देने के लिए एक शांत गतिविधि है। आरामदायक गति रखें, साँस रोकना या गिनना छोड़ सकते हैं, और ज़रूरत पर दूसरा रीसेट चुनें। किसी खास अनुभूति या इच्छा में बदलाव की गारंटी नहीं है।",
+        "es": "La respiración opcional ofrece una actividad tranquila en la que concentrarte. Mantén un ritmo cómodo, omite las retenciones o los conteos y cambia de actividad si lo necesitas. No se garantiza ninguna sensación ni cambio del impulso.",
+        "pt": "A respiração opcional oferece uma atividade tranquila para focar. Mantenha um ritmo confortável, pule as retenções ou contagens e troque de atividade se precisar. Nenhuma sensação ou mudança no impulso é garantida.",
+        "fr": "La respiration facultative offre une activité calme pour votre attention. Gardez un rythme confortable, ignorez les pauses ou le comptage et changez d’activité si nécessaire. Aucune sensation ni modification de l’envie n’est garantie.",
+        "de": "Optionales Atmen bietet eine ruhige Beschäftigung für deine Aufmerksamkeit. Atme angenehm, überspringe Atempausen oder Zählen und wechsle bei Bedarf die Übung. Kein bestimmtes Gefühl oder verändertes Verlangen ist garantiert.",
+        "ar": "التنفس الاختياري نشاط هادئ للتركيز. حافظ على وتيرة مريحة وتجاوز حبس النفس أو العد وغيّر النشاط عند الحاجة. لا تُضمن أي مشاعر محددة أو تغيّر في الرغبة.",
+        "ja": "任意の呼吸は静かに注意を向ける活動です。心地よいペースで、息止めや数えることは省略し、必要なら別の活動に切り替えてください。特定の感覚や衝動の変化は保証されません。",
+        "ko": "선택적인 호흡은 집중할 수 있는 조용한 활동입니다. 편안한 속도를 유지하고 숨 참기나 세기는 건너뛰며 필요하면 다른 활동으로 바꾸세요. 특정 느낌이나 충동 변화는 보장되지 않습니다.",
+        "zh-Hans": "可选呼吸练习提供安静的专注活动。保持舒适节奏，可跳过屏息或计数，必要时换一种活动。不保证任何特定感受或冲动变化。"
+      }
+    },
+    {
+      "source": "This optional reflection makes space to write or notice what matters to you. You choose what to share; no outcome is guaranteed.",
+      "translations": {
+        "hi": "यह वैकल्पिक चिंतन आपको अपनी अहम बातों पर लिखने या ध्यान देने की जगह देता है। क्या साझा करना है, आप चुनते हैं; परिणाम की गारंटी नहीं है।",
+        "es": "Esta reflexión opcional da espacio para escribir u observar lo que te importa. Tú eliges qué compartir; no se garantiza ningún resultado.",
+        "pt": "Esta reflexão opcional dá espaço para escrever ou notar o que importa para você. Você escolhe o que compartilhar; nenhum resultado é garantido.",
+        "fr": "Cette réflexion facultative laisse de la place pour écrire ou observer ce qui compte pour vous. Vous choisissez quoi partager ; aucun résultat n’est garanti.",
+        "de": "Diese optionale Reflexion gibt Raum zum Schreiben oder Wahrnehmen dessen, was dir wichtig ist. Du entscheidest, was du teilst; kein Ergebnis ist garantiert.",
+        "ar": "يتيح هذا التأمل الاختياري مساحة لكتابة أو ملاحظة ما يهمك. تختار ما تشاركه؛ لا تُضمن نتيجة.",
+        "ja": "この任意の振り返りは、大切なことを書く、または気付く時間です。共有する内容は自分で選びます。結果は保証されません。",
+        "ko": "이 선택적 성찰은 중요한 것을 쓰거나 알아차릴 여유를 줍니다. 공유할 내용은 직접 선택하며 결과는 보장되지 않습니다.",
+        "zh-Hans": "此可选反思让你有时间写下或留意重要的事。分享什么由你决定，不保证结果。"
+      }
+    },
+    {
+      "source": "Optional contact offers a chance to connect with a trusted person. Ask for consent and accept no response; you can switch resets.",
+      "translations": {
+        "hi": "वैकल्पिक संपर्क किसी भरोसेमंद व्यक्ति से जुड़ने का अवसर है। सहमति लें और जवाब न मिलने को स्वीकार करें; दूसरा रीसेट चुन सकते हैं।",
+        "es": "El contacto opcional ofrece una oportunidad de conectar con alguien de confianza. Pide consentimiento y acepta que no responda; puedes cambiar de actividad.",
+        "pt": "O contato opcional oferece uma chance de se conectar com alguém de confiança. Peça consentimento e aceite a ausência de resposta; você pode trocar de atividade.",
+        "fr": "Le contact facultatif offre l’occasion d’échanger avec une personne de confiance. Demandez son accord et acceptez l’absence de réponse ; vous pouvez changer d’activité.",
+        "de": "Optionaler Kontakt bietet Gelegenheit zum Austausch mit einer vertrauten Person. Frage nach Zustimmung und akzeptiere auch keine Antwort; du kannst die Übung wechseln.",
+        "ar": "التواصل الاختياري فرصة للتواصل مع شخص موثوق. اطلب موافقته وتقبّل عدم الرد؛ يمكنك تغيير النشاط.",
+        "ja": "任意の連絡は信頼できる人とつながる機会です。同意を求め、返事がなくても受け入れてください。別の活動に切り替えられます。",
+        "ko": "선택적인 연락은 신뢰하는 사람과 연결할 기회입니다. 동의를 구하고 답이 없을 수도 있음을 받아들이세요. 다른 활동으로 바꿀 수 있습니다.",
+        "zh-Hans": "可选联系让你有机会与信任的人交流。先征求同意，接受没有回复；你可以换一种活动。"
+      }
+    },
+    {
+      "source": "This optional activity gives you a concrete task away from the current loop. Adapt it to your space and comfort, or choose another reset.",
+      "translations": {
+        "hi": "यह वैकल्पिक गतिविधि आपको मौजूदा चक्र से हटकर एक ठोस काम देती है। अपनी जगह और सुविधा के अनुसार इसे बदलें, या दूसरा रीसेट चुनें।",
+        "es": "Esta actividad opcional ofrece una tarea concreta fuera del ciclo actual. Adáptala a tu espacio y comodidad o elige otra actividad.",
+        "pt": "Esta atividade opcional oferece uma tarefa concreta fora do ciclo atual. Adapte-a ao seu espaço e conforto ou escolha outra atividade.",
+        "fr": "Cette activité facultative propose une tâche concrète en dehors de la boucle actuelle. Adaptez-la à votre espace et votre confort, ou choisissez une autre activité.",
+        "de": "Diese optionale Aktivität bietet eine konkrete Aufgabe außerhalb der aktuellen Schleife. Passe sie an deinen Raum und dein Wohlbefinden an oder wähle eine andere Übung.",
+        "ar": "يمنحك هذا النشاط الاختياري مهمة ملموسة خارج الحلقة الحالية. عدّلها حسب مكانك وراحتك أو اختر نشاطًا آخر.",
+        "ja": "この任意の活動は今の繰り返しから離れる具体的な作業です。場所や快適さに合わせて調整するか、別の活動を選んでください。",
+        "ko": "이 선택적 활동은 현재 반복에서 벗어나는 구체적인 할 일을 줍니다. 공간과 편안함에 맞게 조정하거나 다른 활동을 선택하세요.",
+        "zh-Hans": "此可选活动让你暂时离开当前循环，做一件具体的事。按空间和舒适程度调整，或选择其他活动。"
+      }
+    },
+    {
+      "source": "Comfortable breathing pause",
+      "translations": {
+        "hi": "आरामदायक श्वास विराम",
+        "es": "Pausa de respiración cómoda",
+        "pt": "Pausa de respiração confortável",
+        "fr": "Pause de respiration confortable",
+        "de": "Angenehme Atempause",
+        "ar": "وقفة تنفس مريحة",
+        "ja": "心地よい呼吸の休憩",
+        "ko": "편안한 호흡 휴식",
+        "zh-Hans": "舒适呼吸休息"
+      }
+    },
+    {
+      "source": "Push up slowly if comfortable; wall pushups are an option.",
+      "translations": {
+        "hi": "आरामदायक हो तो धीरे पुशअप करें; दीवार के सहारे भी कर सकते हैं।",
+        "es": "Sube despacio si te resulta cómodo; puedes hacer flexiones en la pared.",
+        "pt": "Suba devagar se for confortável; flexões na parede são uma opção.",
+        "fr": "Remontez lentement si cela reste confortable ; les pompes au mur sont possibles.",
+        "de": "Drücke dich langsam hoch, wenn angenehm; Liegestütze an der Wand sind möglich.",
+        "ar": "ادفع ببطء إذا كان مريحًا؛ يمكنك استخدام الحائط لتمرين الضغط.",
+        "ja": "心地よければゆっくり押し上げます。壁を使う腕立ても選べます。",
+        "ko": "편안하면 천천히 밀어 올리세요. 벽 팔굽혀펴기도 가능합니다.",
+        "zh-Hans": "舒适时缓慢撑起，也可选择靠墙俯卧撑。"
+      }
+    },
+    {
+      "source": "Step your feet back into a plank if comfortable.",
+      "translations": {
+        "hi": "आरामदायक हो तो पैर पीछे ले जाकर प्लैंक करें।",
+        "es": "Lleva los pies atrás a una plancha si te resulta cómodo.",
+        "pt": "Leve os pés para trás em prancha se for confortável.",
+        "fr": "Reculez les pieds en planche si cela reste confortable.",
+        "de": "Gehe mit den Füßen in die Plank-Position zurück, wenn angenehm.",
+        "ar": "ارجع بقدميك لوضعية اللوح إذا كان مريحًا.",
+        "ja": "心地よければ足を後ろに移してプランクの姿勢にします。",
+        "ko": "편안하면 발을 뒤로 옮겨 플랭크 자세를 취하세요.",
+        "zh-Hans": "舒适时将双脚向后移到平板支撑姿势。"
+      }
+    },
+    {
+      "source": "Skip jumps; rise slowly, or use seated arm movement.",
+      "translations": {
+        "hi": "कूदना छोड़ें; धीरे उठें, या बैठकर बाँहें हिलाएँ।",
+        "es": "Omite los saltos; levántate despacio o mueve los brazos sentado.",
+        "pt": "Pule os saltos; levante devagar ou mova os braços sentado.",
+        "fr": "Évitez les sauts ; relevez-vous lentement ou bougez les bras assis.",
+        "de": "Lass die Sprünge weg; richte dich langsam auf oder bewege die Arme im Sitzen.",
+        "ar": "تجاوز القفز؛ انهض ببطء أو حرّك ذراعيك وأنت جالس.",
+        "ja": "跳ばずにゆっくり立つか、座って腕を動かします。",
+        "ko": "점프는 건너뛰고 천천히 일어나거나 앉아서 팔을 움직이세요.",
+        "zh-Hans": "跳过跳跃，缓慢起身，或坐着活动手臂。"
+      }
+    },
+    {
+      "source": "Alternate knees slowly if comfortable; seated knee lifts are an option.",
+      "translations": {
+        "hi": "आरामदायक हो तो घुटने बारी-बारी धीरे उठाएँ; बैठकर भी उठा सकते हैं।",
+        "es": "Alterna las rodillas lentamente si te resulta cómodo; puedes elevarlas sentado.",
+        "pt": "Alterne os joelhos devagar se for confortável; você pode elevá-los sentado.",
+        "fr": "Alternez lentement les genoux si c’est confortable ; vous pouvez les lever assis.",
+        "de": "Bewege die Knie abwechselnd langsam, wenn angenehm; Knieheben im Sitzen ist möglich.",
+        "ar": "بدّل بين الركبتين ببطء إذا كان مريحًا؛ يمكنك رفعهما وأنت جالس.",
+        "ja": "心地よければ膝を交互にゆっくり動かします。座った膝上げも選べます。",
+        "ko": "편안하면 무릎을 천천히 번갈아 움직이세요. 앉아서 들어도 됩니다.",
+        "zh-Hans": "舒适时缓慢交替活动膝盖，也可坐着抬膝。"
+      }
+    },
+    {
+      "source": "Use each step and a handrail if available.",
+      "translations": {
+        "hi": "हर सीढ़ी का उपयोग करें और उपलब्ध हो तो रेलिंग पकड़ें।",
+        "es": "Pisa cada escalón y usa una barandilla si hay.",
+        "pt": "Use cada degrau e o corrimão, se disponível.",
+        "fr": "Utilisez chaque marche et la rampe si disponible.",
+        "de": "Nutze jede Stufe und ein Geländer, falls vorhanden.",
+        "ar": "استخدم كل درجة والدرابزين إن وُجد.",
+        "ja": "一段ずつ進み、あれば手すりを使います。",
+        "ko": "한 계단씩 이용하고 있으면 난간을 잡으세요.",
+        "zh-Hans": "逐级行走，有扶手时请使用。"
+      }
+    },
+    {
+      "source": "A second gentle inhale is optional; never force it.",
+      "translations": {
+        "hi": "दूसरी हल्की साँस लेना वैकल्पिक है; कभी ज़ोर न दें।",
+        "es": "Una segunda inhalación suave es opcional; nunca la fuerces.",
+        "pt": "Uma segunda inspiração suave é opcional; nunca force.",
+        "fr": "Une seconde inspiration douce est facultative ; ne forcez jamais.",
+        "de": "Ein zweites sanftes Einatmen ist optional; niemals erzwingen.",
+        "ar": "الشهيق اللطيف الثاني اختياري؛ لا تجبره أبدًا.",
+        "ja": "2回目の軽い吸気は任意です。無理に吸わないでください。",
+        "ko": "두 번째 부드러운 들숨은 선택이며 억지로 하지 마세요.",
+        "zh-Hans": "第二次轻柔吸气是可选的，请勿强迫。"
+      }
+    },
+    {
+      "source": "The 7-count hold is optional; skip it whenever needed.",
+      "translations": {
+        "hi": "7 तक गिनकर साँस रोकना वैकल्पिक है; ज़रूरत हो तो छोड़ दें।",
+        "es": "La retención de 7 tiempos es opcional; omítela cuando lo necesites.",
+        "pt": "A retenção de 7 tempos é opcional; pule quando precisar.",
+        "fr": "La pause de 7 temps est facultative ; ignorez-la si nécessaire.",
+        "de": "Die Atempause von 7 Zählschritten ist optional; überspringe sie bei Bedarf.",
+        "ar": "حبس النفس لسبع عدّات اختياري؛ تجاوزه عند الحاجة.",
+        "ja": "7カウントの息止めは任意です。必要なら省いてください。",
+        "ko": "7박자 숨 참기는 선택이며 필요하면 건너뛰세요.",
+        "zh-Hans": "屏息7拍是可选的，需要时可跳过。"
+      }
+    },
+    {
+      "source": "The 4-count hold is optional; skip it whenever needed.",
+      "translations": {
+        "hi": "4 तक गिनकर साँस रोकना वैकल्पिक है; ज़रूरत हो तो छोड़ दें।",
+        "es": "La retención de 4 tiempos es opcional; omítela cuando lo necesites.",
+        "pt": "A retenção de 4 tempos é opcional; pule quando precisar.",
+        "fr": "La pause de 4 temps est facultative ; ignorez-la si nécessaire.",
+        "de": "Die Atempause von 4 Zählschritten ist optional; überspringe sie bei Bedarf.",
+        "ar": "حبس النفس لأربع عدّات اختياري؛ تجاوزه عند الحاجة.",
+        "ja": "4カウントの息止めは任意です。必要なら省いてください。",
+        "ko": "4박자 숨 참기는 선택이며 필요하면 건너뛰세요.",
+        "zh-Hans": "屏息4拍是可选的，需要时可跳过。"
+      }
+    },
+    {
+      "source": "Exhale gently with an optional quiet sound.",
+      "translations": {
+        "hi": "हल्की आवाज़ चाहें तो निकालते हुए धीरे साँस छोड़ें।",
+        "es": "Exhala suavemente con un sonido bajo opcional.",
+        "pt": "Expire suavemente com um som baixo opcional.",
+        "fr": "Expirez doucement, avec un son discret si vous le souhaitez.",
+        "de": "Atme sanft aus, optional mit einem leisen Laut.",
+        "ar": "ازفر بلطف مع صوت هادئ اختياري.",
+        "ja": "希望すれば小さな音を出しながら優しく吐きます。",
+        "ko": "원하면 작은 소리를 내며 부드럽게 내쉬세요.",
+        "zh-Hans": "轻柔呼气，可选择发出轻声。"
+      }
+    },
+    {
+      "source": "Let your breath set a comfortable rhythm.",
+      "translations": {
+        "hi": "साँस को अपनी आरामदायक लय तय करने दें।",
+        "es": "Deja que tu respiración marque un ritmo cómodo.",
+        "pt": "Deixe sua respiração definir um ritmo confortável.",
+        "fr": "Laissez votre souffle trouver un rythme confortable.",
+        "de": "Lass deinen Atem einen angenehmen Rhythmus bestimmen.",
+        "ar": "دع تنفسك يحدد إيقاعًا مريحًا.",
+        "ja": "呼吸が心地よいリズムになるようにします。",
+        "ko": "호흡이 편안한 리듬을 찾도록 하세요.",
+        "zh-Hans": "让呼吸形成舒适节奏。"
+      }
+    },
+    {
+      "source": "Sit comfortably and breathe at your natural pace.",
+      "translations": {
+        "hi": "आराम से बैठें और अपनी स्वाभाविक गति से साँस लें।",
+        "es": "Siéntate cómodamente y respira a tu ritmo natural.",
+        "pt": "Sente confortavelmente e respire no seu ritmo natural.",
+        "fr": "Asseyez-vous confortablement et respirez à votre rythme naturel.",
+        "de": "Sitze bequem und atme in deinem natürlichen Tempo.",
+        "ar": "اجلس براحة وتنفس بوتيرتك الطبيعية.",
+        "ja": "楽に座り、自然なペースで呼吸します。",
+        "ko": "편안히 앉아 자연스러운 속도로 호흡하세요.",
+        "zh-Hans": "舒适地坐下，按自然节奏呼吸。"
+      }
+    },
+    {
+      "source": "Keep breathing gently without a hold.",
+      "translations": {
+        "hi": "बिना रोके हल्के ढंग से साँस लेते रहें।",
+        "es": "Sigue respirando suavemente sin retener el aire.",
+        "pt": "Continue respirando suavemente sem prender o ar.",
+        "fr": "Continuez à respirer doucement sans retenir votre souffle.",
+        "de": "Atme sanft weiter, ohne den Atem anzuhalten.",
+        "ar": "واصل التنفس بلطف دون حبس النفس.",
+        "ja": "息を止めずに優しく呼吸を続けます。",
+        "ko": "숨을 참지 않고 부드럽게 계속 호흡하세요.",
+        "zh-Hans": "继续轻柔呼吸，不要屏息。"
+      }
+    },
+    {
+      "source": "Keep breathing gently; skip holds or counting, or choose another reset.",
+      "translations": {
+        "hi": "हल्के ढंग से साँस लेते रहें; रोकना या गिनना छोड़ दें, या दूसरा रीसेट चुनें।",
+        "es": "Sigue respirando suavemente; omite retenciones o conteos, o elige otra actividad.",
+        "pt": "Continue respirando suavemente; pule retenções ou contagens, ou escolha outra atividade.",
+        "fr": "Continuez à respirer doucement ; ignorez les pauses ou le comptage, ou choisissez une autre activité.",
+        "de": "Atme sanft weiter; überspringe Atempausen oder Zählen oder wähle eine andere Übung.",
+        "ar": "واصل التنفس بلطف؛ تجاوز الحبس أو العد أو اختر نشاطًا آخر.",
+        "ja": "優しく呼吸を続けます。息止めや数えることは省くか、別の活動を選んでください。",
+        "ko": "부드럽게 호흡하세요. 숨 참기나 세기는 건너뛰거나 다른 활동을 선택하세요.",
+        "zh-Hans": "继续轻柔呼吸，可跳过屏息或计数，或选择其他活动。"
+      }
+    },
+    {
+      "source": "Rest comfortably; gentle breathing or a quiet pause is optional.",
+      "translations": {
+        "hi": "आराम से विश्राम करें; हल्की साँस या शांत विराम वैकल्पिक है।",
+        "es": "Descansa cómodamente; respirar suavemente o hacer una pausa tranquila es opcional.",
+        "pt": "Descanse confortavelmente; respirar suavemente ou fazer uma pausa tranquila é opcional.",
+        "fr": "Reposez-vous confortablement ; respirer doucement ou faire une pause calme est facultatif.",
+        "de": "Ruhe bequem; sanftes Atmen oder eine stille Pause sind optional.",
+        "ar": "استرح براحة؛ التنفس اللطيف أو الوقفة الهادئة اختياريان.",
+        "ja": "心地よく休みます。優しい呼吸や静かな休憩は任意です。",
+        "ko": "편안히 쉬세요. 부드러운 호흡이나 조용한 휴식은 선택입니다.",
+        "zh-Hans": "舒适地休息，可选择轻柔呼吸或安静暂停。"
+      }
+    },
+    {
+      "source": "Notice how you feel without expecting a change.",
+      "translations": {
+        "hi": "बदलाव की उम्मीद किए बिना अपने अनुभव पर ध्यान दें।",
+        "es": "Observa cómo te sientes sin esperar un cambio.",
+        "pt": "Note como se sente sem esperar uma mudança.",
+        "fr": "Observez ce que vous ressentez sans attendre de changement.",
+        "de": "Nimm wahr, wie du dich fühlst, ohne eine Veränderung zu erwarten.",
+        "ar": "لاحظ شعورك دون توقع تغيّر.",
+        "ja": "変化を期待せず、今の感じに気付きます。",
+        "ko": "변화를 기대하지 않고 느낌을 알아차리세요.",
+        "zh-Hans": "留意自己的感受，不预期一定会变化。"
+      }
+    },
+    {
+      "source": "Notice the urge without expecting it to fade on a schedule.",
+      "translations": {
+        "hi": "इच्छा पर ध्यान दें, किसी तय समय में कम होने की उम्मीद न करें।",
+        "es": "Observa el impulso sin esperar que desaparezca en un plazo determinado.",
+        "pt": "Observe o impulso sem esperar que diminua em um prazo definido.",
+        "fr": "Observez l’envie sans attendre qu’elle s’efface dans un délai précis.",
+        "de": "Nimm das Verlangen wahr, ohne zu erwarten, dass es nach einem Zeitplan abklingt.",
+        "ar": "لاحظ الرغبة دون توقع زوالها وفق موعد محدد.",
+        "ja": "衝動が決まった時間で消えると期待せずに観察します。",
+        "ko": "충동이 정해진 시간 안에 사라질 것을 기대하지 않고 알아차리세요.",
+        "zh-Hans": "留意冲动，不预期它会按固定时间消退。"
+      }
+    },
+    {
+      "source": "Breathe gently at a comfortable pace.",
+      "translations": {
+        "hi": "आरामदायक गति से हल्की साँस लें।",
+        "es": "Respira suavemente a un ritmo cómodo.",
+        "pt": "Respire suavemente em um ritmo confortável.",
+        "fr": "Respirez doucement à un rythme confortable.",
+        "de": "Atme sanft in einem angenehmen Tempo.",
+        "ar": "تنفس بلطف بوتيرة مريحة.",
+        "ja": "心地よいペースで優しく呼吸します。",
+        "ko": "편안한 속도로 부드럽게 호흡하세요.",
+        "zh-Hans": "以舒适节奏轻柔呼吸。"
+      }
+    },
+    {
+      "source": "Only hug if both people want to; stop whenever either wishes.",
+      "translations": {
+        "hi": "दोनों चाहें तभी गले लगें; किसी की इच्छा होते ही रुकें।",
+        "es": "Abraza solo si ambos quieren; detente cuando cualquiera lo desee.",
+        "pt": "Abrace apenas se ambos quiserem; pare quando qualquer um desejar.",
+        "fr": "Ne faites un câlin que si vous le souhaitez tous les deux ; arrêtez dès que l’un le veut.",
+        "de": "Umarme nur, wenn beide es möchten; höre auf, sobald eine Person es wünscht.",
+        "ar": "تعانقا فقط إذا أراد كلاكما؛ توقف حين يرغب أي منكما.",
+        "ja": "二人とも望む場合のみ抱き合い、どちらかが望んだらやめます。",
+        "ko": "둘 다 원할 때만 안고 어느 쪽이든 원하면 멈추세요.",
+        "zh-Hans": "双方都愿意时才拥抱，任一方希望停止就停止。"
+      }
+    },
+    {
+      "source": "Choose something you enjoy and can comfortably eat.",
+      "translations": {
+        "hi": "कुछ ऐसा चुनें जो पसंद हो और आराम से खा सकें।",
+        "es": "Elige algo que disfrutes y puedas comer cómodamente.",
+        "pt": "Escolha algo de que goste e possa comer confortavelmente.",
+        "fr": "Choisissez quelque chose qui vous plaît et que vous pouvez manger confortablement.",
+        "de": "Wähle etwas, das du magst und angenehm essen kannst.",
+        "ar": "اختر شيئًا تستمتع به ويمكنك تناوله براحة.",
+        "ja": "好きで無理なく食べられるものを選びます。",
+        "ko": "좋아하고 편안하게 먹을 수 있는 것을 고르세요.",
+        "zh-Hans": "选择喜欢且能舒适食用的东西。"
+      }
+    },
+    {
+      "source": "Work at a comfortable pace; pauses are welcome.",
+      "translations": {
+        "hi": "आरामदायक गति से काम करें; विराम ले सकते हैं।",
+        "es": "Trabaja a un ritmo cómodo; puedes hacer pausas.",
+        "pt": "Trabalhe em um ritmo confortável; pausas são bem-vindas.",
+        "fr": "Travaillez à un rythme confortable ; les pauses sont bienvenues.",
+        "de": "Arbeite in angenehmem Tempo; Pausen sind willkommen.",
+        "ar": "اعمل بوتيرة مريحة؛ الاستراحات مرحب بها.",
+        "ja": "無理のないペースで作業します。休憩して構いません。",
+        "ko": "편안한 속도로 일하세요. 쉬어도 됩니다.",
+        "zh-Hans": "按舒适速度做事，可以暂停。"
+      }
+    },
+    {
+      "source": "Return when comfortable; stop or switch resets whenever needed.",
+      "translations": {
+        "hi": "सुविधा हो तो लौटें; ज़रूरत पर रुकें या दूसरा रीसेट चुनें।",
+        "es": "Vuelve cuando te resulte cómodo; detente o cambia de actividad cuando lo necesites.",
+        "pt": "Volte quando for confortável; pare ou troque de atividade quando precisar.",
+        "fr": "Revenez quand cela vous convient ; arrêtez ou changez d’activité si nécessaire.",
+        "de": "Kehre zurück, wenn es angenehm ist; stoppe oder wechsle bei Bedarf die Übung.",
+        "ar": "عد حين يناسبك؛ توقف أو غيّر النشاط عند الحاجة.",
+        "ja": "心地よい時に戻ります。必要ならやめるか別の活動に切り替えてください。",
+        "ko": "편할 때 돌아오세요. 필요하면 멈추거나 다른 활동으로 바꾸세요.",
+        "zh-Hans": "感觉舒适时返回，需要时停止或换一种活动。"
+      }
+    },
+    {
+      "source": "Stop when comfortable; the timer is a guide.",
+      "translations": {
+        "hi": "सुविधा के अनुसार रुकें; टाइमर केवल मार्गदर्शक है।",
+        "es": "Detente cuando te resulte cómodo; el temporizador es una guía.",
+        "pt": "Pare quando for confortável; o cronômetro é uma orientação.",
+        "fr": "Arrêtez quand cela vous convient ; le minuteur sert de repère.",
+        "de": "Höre auf, wenn es angenehm ist; der Timer dient als Orientierung.",
+        "ar": "توقف حين يناسبك؛ المؤقت دليل إرشادي.",
+        "ja": "無理なくやめます。タイマーは目安です。",
+        "ko": "편할 때 멈추세요. 타이머는 참고용입니다.",
+        "zh-Hans": "舒适时停止，计时器仅作参考。"
+      }
+    },
+    {
+      "source": "Choose a calming audio track you already have.",
+      "translations": {
+        "hi": "अपने पास पहले से मौजूद कोई शांत ऑडियो चुनें।",
+        "es": "Elige una pista de audio tranquila que ya tengas.",
+        "pt": "Escolha uma faixa de áudio calma que já tenha.",
+        "fr": "Choisissez un morceau apaisant que vous avez déjà.",
+        "de": "Wähle eine beruhigende Audiospur, die du bereits hast.",
+        "ar": "اختر مقطعًا صوتيًا هادئًا لديك بالفعل.",
+        "ja": "手元にある落ち着く音声を選びます。",
+        "ko": "이미 가지고 있는 차분한 오디오를 선택하세요.",
+        "zh-Hans": "选择已有的舒缓音频。"
+      }
+    },
+    {
+      "source": "Listen at a comfortable volume.",
+      "translations": {
+        "hi": "आरामदायक आवाज़ स्तर पर सुनें।",
+        "es": "Escucha a un volumen cómodo.",
+        "pt": "Ouça em um volume confortável.",
+        "fr": "Écoutez à un volume confortable.",
+        "de": "Höre in angenehmer Lautstärke.",
+        "ar": "استمع بمستوى صوت مريح.",
+        "ja": "心地よい音量で聴きます。",
+        "ko": "편안한 음량으로 들으세요.",
+        "zh-Hans": "以舒适音量收听。"
+      }
+    },
+    {
+      "source": "Use headphones if comfortable; keep eyes open if preferred.",
+      "translations": {
+        "hi": "आरामदायक हो तो हेडफ़ोन लगाएँ; चाहें तो आँखें खुली रखें।",
+        "es": "Usa auriculares si te resultan cómodos; mantén los ojos abiertos si prefieres.",
+        "pt": "Use fones se forem confortáveis; mantenha os olhos abertos se preferir.",
+        "fr": "Utilisez un casque si c’est confortable ; gardez les yeux ouverts si vous préférez.",
+        "de": "Nutze Kopfhörer, wenn angenehm; lass die Augen offen, wenn du möchtest.",
+        "ar": "استخدم سماعات إذا كانت مريحة؛ أبق عينيك مفتوحتين إذا فضلت.",
+        "ja": "心地よければヘッドホンを使います。目は開けたままでも構いません。",
+        "ko": "편안하면 헤드폰을 사용하고 원하면 눈을 뜨고 계세요.",
+        "zh-Hans": "舒适时使用耳机，也可保持睁眼。"
+      }
+    },
+    {
+      "source": "Choose built-in guidance or consented cloud chat if available.",
+      "translations": {
+        "hi": "अंतर्निहित मार्गदर्शन चुनें, या उपलब्ध हो तो सहमति वाला क्लाउड चैट चुनें।",
+        "es": "Elige orientación integrada o chat en la nube con consentimiento si está disponible.",
+        "pt": "Escolha orientação integrada ou chat na nuvem com consentimento, se disponível.",
+        "fr": "Choisissez les conseils intégrés ou, si disponible, le chat cloud avec votre consentement.",
+        "de": "Wähle integrierte Hinweise oder verfügbaren Cloud-Chat mit deiner Zustimmung.",
+        "ar": "اختر الإرشادات المدمجة أو المحادثة السحابية بموافقتك إن توفرت.",
+        "ja": "内蔵ガイダンスか、利用できれば同意済みのクラウドチャットを選びます。",
+        "ko": "기본 안내 또는 가능하면 동의한 클라우드 채팅을 선택하세요.",
+        "zh-Hans": "选择内置指导，或在可用时选择已同意的云端聊天。"
+      }
+    },
+    {
+      "source": "Reflect on what happened before this moment.",
+      "translations": {
+        "hi": "इस पल से पहले क्या हुआ, उस पर विचार करें।",
+        "es": "Reflexiona sobre lo que pasó antes de este momento.",
+        "pt": "Reflita sobre o que aconteceu antes deste momento.",
+        "fr": "Réfléchissez à ce qui s’est passé avant cet instant.",
+        "de": "Denke darüber nach, was vor diesem Moment passiert ist.",
+        "ar": "تأمل ما حدث قبل هذه اللحظة.",
+        "ja": "この瞬間の前に何があったか振り返ります。",
+        "ko": "이 순간 전에 무슨 일이 있었는지 돌아보세요.",
+        "zh-Hans": "回想此刻之前发生了什么。"
+      }
+    },
+    {
+      "source": "Choose one next step that feels manageable.",
+      "translations": {
+        "hi": "अगला एक कदम चुनें जो आसान लगे।",
+        "es": "Elige un siguiente paso que te resulte manejable.",
+        "pt": "Escolha um próximo passo que pareça viável.",
+        "fr": "Choisissez une prochaine étape qui vous semble réalisable.",
+        "de": "Wähle einen nächsten Schritt, der machbar erscheint.",
+        "ar": "اختر خطوة تالية تشعر أنها ممكنة.",
+        "ja": "無理なくできそうな次の一歩を選びます。",
+        "ko": "감당할 수 있는 다음 단계 하나를 고르세요.",
+        "zh-Hans": "选择一个感觉可行的下一步。"
+      }
+    },
+    {
+      "source": "Open a note to plan the next day.",
+      "translations": {
+        "hi": "अगले दिन की योजना बनाने के लिए एक नोट खोलें।",
+        "es": "Abre una nota para planificar el día siguiente.",
+        "pt": "Abra uma nota para planejar o dia seguinte.",
+        "fr": "Ouvrez une note pour planifier le lendemain.",
+        "de": "Öffne eine Notiz, um den nächsten Tag zu planen.",
+        "ar": "افتح ملاحظة لتخطيط اليوم التالي.",
+        "ja": "メモを開いて翌日の計画を立てます。",
+        "ko": "메모를 열어 다음 날을 계획하세요.",
+        "zh-Hans": "打开笔记，计划下一天。"
+      }
+    },
+    {
+      "source": "Write down the next few activities you choose.",
+      "translations": {
+        "hi": "आगे की कुछ गतिविधियाँ लिखें जिन्हें आप चुनते हैं।",
+        "es": "Anota las próximas actividades que elijas.",
+        "pt": "Anote as próximas atividades que escolher.",
+        "fr": "Notez les prochaines activités que vous choisissez.",
+        "de": "Schreibe die nächsten von dir gewählten Aktivitäten auf.",
+        "ar": "اكتب الأنشطة القليلة التالية التي تختارها.",
+        "ja": "自分で選んだ次のいくつかの活動を書きます。",
+        "ko": "직접 선택한 다음 활동 몇 가지를 적으세요.",
+        "zh-Hans": "写下你选择的接下来几项活动。"
+      }
+    },
+    {
+      "source": "Choose an existing trusted contact; FREED does not assign a sponsor.",
+      "translations": {
+        "hi": "पहले से परिचित भरोसेमंद संपर्क चुनें; FREED स्पॉन्सर नियुक्त नहीं करता।",
+        "es": "Elige un contacto de confianza que ya tengas; FREED no asigna un padrino.",
+        "pt": "Escolha um contato de confiança que já tenha; o FREED não designa um padrinho.",
+        "fr": "Choisissez un contact de confiance existant ; FREED n’attribue pas de parrain.",
+        "de": "Wähle einen bestehenden vertrauten Kontakt; FREED weist keinen Sponsor zu.",
+        "ar": "اختر جهة اتصال موثوقة موجودة؛ لا يعيّن FREED مرشد دعم.",
+        "ja": "既存の信頼できる連絡先を選びます。FREEDは支援者を割り当てません。",
+        "ko": "기존의 신뢰하는 연락처를 선택하세요. FREED는 후원자를 배정하지 않습니다.",
+        "zh-Hans": "选择已有的可信联系人；FREED不会分配支持者。"
+      }
+    },
+    {
+      "source": "Ask whether they are available to talk.",
+      "translations": {
+        "hi": "पूछें कि क्या वे बात करने के लिए उपलब्ध हैं।",
+        "es": "Pregunta si está disponible para hablar.",
+        "pt": "Pergunte se está disponível para conversar.",
+        "fr": "Demandez si la personne est disponible pour parler.",
+        "de": "Frage, ob die Person Zeit zum Reden hat.",
+        "ar": "اسأل إن كان متاحًا للحديث.",
+        "ja": "話せる時間があるか尋ねます。",
+        "ko": "대화할 수 있는지 물어보세요.",
+        "zh-Hans": "询问对方是否方便交谈。"
+      }
+    },
+    {
+      "source": "An optional change of environment offers a pause from the current loop. Stay indoors or seated if preferred.",
+      "translations": {
+        "hi": "जगह में वैकल्पिक बदलाव मौजूदा चक्र से विराम देता है। चाहें तो अंदर रहें या बैठें।",
+        "es": "Un cambio de entorno opcional ofrece una pausa del ciclo actual. Quédate dentro o sentado si prefieres.",
+        "pt": "Uma mudança opcional de ambiente oferece uma pausa do ciclo atual. Fique em local fechado ou sentado se preferir.",
+        "fr": "Un changement de lieu facultatif offre une pause dans la boucle actuelle. Restez à l’intérieur ou assis si vous préférez.",
+        "de": "Ein optionaler Umgebungswechsel bietet eine Pause von der aktuellen Schleife. Bleibe drinnen oder sitzen, wenn du möchtest.",
+        "ar": "تغيير المكان الاختياري يتيح وقفة من الحلقة الحالية. ابق في الداخل أو جالسًا إذا فضلت.",
+        "ja": "任意の環境の変化は今の繰り返しから離れる休憩です。室内や座ったままでも構いません。",
+        "ko": "선택적인 환경 변화는 현재 반복에서 잠시 쉴 기회입니다. 원하면 실내에 있거나 앉아 있어도 됩니다.",
+        "zh-Hans": "可选环境变化让你暂离当前循环。也可留在室内或坐着。"
+      }
+    },
+    {
+      "source": "An optional identity reflection makes space to write your reasons during an urge. You choose what to share.",
+      "translations": {
+        "hi": "पहचान पर वैकल्पिक चिंतन इच्छा के दौरान अपने कारण लिखने की जगह देता है। क्या साझा करना है, आप चुनते हैं।",
+        "es": "Una reflexión opcional sobre tu identidad da espacio para escribir tus motivos durante un impulso. Tú eliges qué compartir.",
+        "pt": "Uma reflexão opcional sobre sua identidade dá espaço para escrever seus motivos durante um impulso. Você escolhe o que compartilhar.",
+        "fr": "Une réflexion facultative sur votre identité permet d’écrire vos raisons pendant une envie. Vous choisissez quoi partager.",
+        "de": "Eine optionale Identitätsreflexion gibt Raum, während eines Verlangens deine Gründe aufzuschreiben. Du entscheidest, was du teilst.",
+        "ar": "يتيح تأمل الهوية الاختياري مساحة لكتابة أسبابك أثناء الرغبة. تختار ما تشاركه.",
+        "ja": "任意の自己の振り返りは、衝動がある時に自分の理由を書く時間です。共有する内容は自分で選びます。",
+        "ko": "선택적인 정체성 성찰은 충동이 있을 때 이유를 적을 여유를 줍니다. 공유할 내용은 직접 선택하세요.",
+        "zh-Hans": "可选自我反思让你在冲动时写下自己的理由。分享什么由你决定。"
+      }
+    },
+    {
+      "source": "Optional contact with your accountability partner offers company during an urge. Ask for consent and accept no response.",
+      "translations": {
+        "hi": "अपने जवाबदेही साथी से वैकल्पिक संपर्क इच्छा के दौरान साथ देता है। सहमति लें और जवाब न मिलने को स्वीकार करें।",
+        "es": "El contacto opcional con tu compañero de apoyo ofrece compañía durante un impulso. Pide consentimiento y acepta que no responda.",
+        "pt": "O contato opcional com seu parceiro de apoio oferece companhia durante um impulso. Peça consentimento e aceite a ausência de resposta.",
+        "fr": "Un contact facultatif avec votre partenaire de soutien offre de la compagnie pendant une envie. Demandez son accord et acceptez l’absence de réponse.",
+        "de": "Optionaler Kontakt mit deiner Begleitperson bietet Gesellschaft während eines Verlangens. Frage nach Zustimmung und akzeptiere auch keine Antwort.",
+        "ar": "التواصل الاختياري مع شريك المتابعة يوفر رفقة أثناء الرغبة. اطلب موافقته وتقبّل عدم الرد.",
+        "ja": "任意のサポートパートナーへの連絡は、衝動のある時に人とつながる機会です。同意を求め、返事がなくても受け入れます。",
+        "ko": "지원 파트너와의 선택적인 연락은 충동 중에 함께할 기회입니다. 동의를 구하고 답이 없을 수도 있음을 받아들이세요.",
+        "zh-Hans": "可选地联系支持伙伴，可在冲动时获得陪伴。先征求同意，接受没有回复。"
+      }
+    },
+    {
+      "source": "Optional observation lets you notice an urge while you decide what to do next. No feeling or outcome is guaranteed.",
+      "translations": {
+        "hi": "वैकल्पिक निरीक्षण में इच्छा पर ध्यान देकर अगला कदम चुन सकते हैं। किसी अनुभूति या परिणाम की गारंटी नहीं है।",
+        "es": "La observación opcional permite notar un impulso mientras decides qué hacer después. No se garantiza ninguna sensación ni resultado.",
+        "pt": "A observação opcional permite notar um impulso enquanto decide o que fazer depois. Nenhuma sensação ou resultado é garantido.",
+        "fr": "L’observation facultative permet de remarquer une envie en décidant de la suite. Aucune sensation ni résultat n’est garanti.",
+        "de": "Optionale Beobachtung lässt dich ein Verlangen wahrnehmen, während du deinen nächsten Schritt wählst. Kein Gefühl oder Ergebnis ist garantiert.",
+        "ar": "تتيح الملاحظة الاختيارية ملاحظة الرغبة أثناء تحديد خطوتك التالية. لا يُضمن شعور أو نتيجة.",
+        "ja": "任意の観察では、次に何をするか決めながら衝動に気付けます。感覚や結果は保証されません。",
+        "ko": "선택적인 관찰로 다음 행동을 결정하며 충동을 알아차릴 수 있습니다. 느낌이나 결과는 보장되지 않습니다.",
+        "zh-Hans": "可选观察让你在决定下一步时留意冲动。不保证任何感受或结果。"
+      }
+    },
+    {
+      "source": "Use fewer repetitions if comfortable; stop or switch resets whenever needed.",
+      "translations": {
+        "hi": "आरामदायक हो तो कम दोहराव करें; ज़रूरत पर रुकें या दूसरा रीसेट चुनें।",
+        "es": "Haz menos repeticiones si te resulta cómodo; detente o cambia de actividad cuando lo necesites.",
+        "pt": "Faça menos repetições se for confortável; pare ou troque de atividade quando precisar.",
+        "fr": "Faites moins de répétitions si c’est confortable ; arrêtez ou changez d’activité si nécessaire.",
+        "de": "Mache weniger Wiederholungen, wenn angenehm; stoppe oder wechsle bei Bedarf die Übung.",
+        "ar": "قلل التكرار إذا كان مريحًا؛ توقف أو غيّر النشاط عند الحاجة.",
+        "ja": "心地よい回数に減らし、必要ならやめるか別の活動に切り替えます。",
+        "ko": "편안하면 반복 횟수를 줄이고 필요하면 멈추거나 다른 활동으로 바꾸세요.",
+        "zh-Hans": "按舒适程度减少次数，需要时停止或换一种活动。"
+      }
+    },
+    {
+      "source": "Optional movement offers a break from the screen. Choose a comfortable pace and fewer repetitions; quiet or seated movement is welcome. Stop or switch resets whenever needed. Motion evidence records device movement, not exercise form or repetitions.",
+      "translations": {
+        "hi": "वैकल्पिक हिलना-डुलना स्क्रीन से विराम देता है। आरामदायक गति और कम दोहराव चुनें; शांत या बैठे हुए हिलना भी ठीक है। ज़रूरत पर रुकें या दूसरा रीसेट चुनें। गति का प्रमाण डिवाइस की हलचल दर्ज करता है, व्यायाम की मुद्रा या दोहराव नहीं।",
+        "es": "El movimiento opcional ofrece una pausa de la pantalla. Elige un ritmo cómodo y menos repeticiones; puedes moverte en silencio o sentado. Detente o cambia de actividad cuando lo necesites. La evidencia de movimiento registra el dispositivo, no la forma del ejercicio ni las repeticiones.",
+        "pt": "O movimento opcional oferece uma pausa da tela. Escolha um ritmo confortável e menos repetições; movimentos silenciosos ou sentados são bem-vindos. Pare ou troque de atividade quando precisar. A evidência registra o movimento do dispositivo, não a forma do exercício nem as repetições.",
+        "fr": "Le mouvement facultatif offre une pause de l’écran. Choisissez un rythme confortable et moins de répétitions ; bouger discrètement ou assis est possible. Arrêtez ou changez d’activité si nécessaire. Les données de mouvement enregistrent le déplacement de l’appareil, pas la technique ni les répétitions de l’exercice.",
+        "de": "Optionale Bewegung bietet eine Bildschirmpause. Wähle ein angenehmes Tempo und weniger Wiederholungen; leise Bewegung oder Bewegung im Sitzen sind willkommen. Stoppe oder wechsle bei Bedarf. Bewegungsnachweise erfassen Gerätebewegung, weder Übungsausführung noch Wiederholungen.",
+        "ar": "الحركة الاختيارية تتيح استراحة من الشاشة. اختر وتيرة مريحة وتكرارات أقل؛ الحركة الهادئة أو أثناء الجلوس مرحب بها. توقف أو غيّر النشاط عند الحاجة. يسجل دليل الحركة حركة الجهاز، لا وضعية التمرين أو تكراراته.",
+        "ja": "任意の動きは画面から離れる休憩です。心地よいペースと少ない回数を選び、静かに、または座って動いても構いません。必要ならやめるか切り替えます。動きの証拠は端末の動きを記録し、運動フォームや回数は記録しません。",
+        "ko": "선택적인 움직임은 화면에서 쉬는 기회입니다. 편안한 속도와 적은 횟수를 선택하세요. 조용하거나 앉아서 움직여도 됩니다. 필요하면 멈추거나 바꾸세요. 움직임 증거는 기기 움직임을 기록하며 운동 자세나 반복 횟수를 기록하지 않습니다.",
+        "zh-Hans": "可选活动让你暂离屏幕。选择舒适节奏和较少次数，安静或坐着活动也可以。需要时停止或换一种活动。运动证据记录的是设备移动，而非运动姿势或重复次数。"
+      }
+    },
+    {
+      "source": "Seated device movement pause",
+      "translations": {
+        "hi": "बैठकर डिवाइस हिलाने का विराम",
+        "es": "Pausa de movimiento del dispositivo sentado",
+        "pt": "Pausa de movimento do dispositivo sentado",
+        "fr": "Pause de mouvement de l’appareil en position assise",
+        "de": "Gerätebewegungspause im Sitzen",
+        "ar": "وقفة تحريك الجهاز أثناء الجلوس",
+        "ja": "座って端末を動かす休憩",
+        "ko": "앉아서 기기를 움직이는 휴식",
+        "zh-Hans": "坐姿设备移动休息"
+      }
+    },
+    {
+      "source": "Comfortable water pause",
+      "translations": {
+        "hi": "आरामदायक पानी का विराम",
+        "es": "Pausa con agua a temperatura cómoda",
+        "pt": "Pausa com água em temperatura confortável",
+        "fr": "Pause avec de l’eau à température confortable",
+        "de": "Angenehme Wasserpause",
+        "ar": "وقفة ماء مريح",
+        "ja": "心地よい水の休憩",
+        "ko": "편안한 물 휴식",
+        "zh-Hans": "舒适用水休息"
+      }
+    },
+    {
+      "source": "Choose water at a comfortable temperature, if you want.",
+      "translations": {
+        "hi": "चाहें तो आरामदायक तापमान वाला पानी चुनें।",
+        "es": "Elige agua a una temperatura cómoda, si quieres.",
+        "pt": "Escolha água em temperatura confortável, se quiser.",
+        "fr": "Choisissez de l’eau à une température confortable, si vous le souhaitez.",
+        "de": "Wähle Wasser mit angenehmer Temperatur, wenn du möchtest.",
+        "ar": "اختر ماء بدرجة حرارة مريحة إذا أردت.",
+        "ja": "希望すれば心地よい温度の水を選びます。",
+        "ko": "원하면 편안한 온도의 물을 선택하세요.",
+        "zh-Hans": "如愿意，可选择舒适温度的水。"
+      }
+    },
+    {
+      "source": "Gently rinse your hands or face; no immersion or breath hold.",
+      "translations": {
+        "hi": "हाथ या चेहरा हल्के से धोएँ; डुबोना या साँस रोकना नहीं।",
+        "es": "Enjuaga suavemente las manos o la cara; sin sumergirte ni retener la respiración.",
+        "pt": "Enxágue suavemente as mãos ou o rosto; sem imersão nem prender a respiração.",
+        "fr": "Rincez doucement les mains ou le visage ; sans immersion ni retenue du souffle.",
+        "de": "Spüle Hände oder Gesicht sanft ab; ohne Eintauchen oder Atemanhalten.",
+        "ar": "اشطف يديك أو وجهك بلطف؛ دون غمر أو حبس نفس.",
+        "ja": "手や顔を優しくすすぎます。水に沈めたり息を止めたりしません。",
+        "ko": "손이나 얼굴을 부드럽게 헹구세요. 담그거나 숨을 참지 마세요.",
+        "zh-Hans": "轻柔冲洗手或脸，无需浸没或屏息。"
+      }
+    },
+    {
+      "source": "Pat dry and sit comfortably.",
+      "translations": {
+        "hi": "हल्के से सुखाएँ और आराम से बैठें।",
+        "es": "Seca con toques suaves y siéntate cómodamente.",
+        "pt": "Seque com leves toques e sente confortavelmente.",
+        "fr": "Séchez doucement et asseyez-vous confortablement.",
+        "de": "Tupfe dich trocken und sitze bequem.",
+        "ar": "جفف بلطف واجلس براحة.",
+        "ja": "優しく拭いて楽に座ります。",
+        "ko": "가볍게 닦고 편안히 앉으세요.",
+        "zh-Hans": "轻轻擦干，舒适坐下。"
+      }
+    },
+    {
+      "source": "Stop or choose another reset whenever needed.",
+      "translations": {
+        "hi": "ज़रूरत पर रुकें या दूसरा रीसेट चुनें।",
+        "es": "Detente o elige otra actividad cuando lo necesites.",
+        "pt": "Pare ou escolha outra atividade quando precisar.",
+        "fr": "Arrêtez ou choisissez une autre activité si nécessaire.",
+        "de": "Stoppe oder wähle bei Bedarf eine andere Übung.",
+        "ar": "توقف أو اختر نشاطًا آخر عند الحاجة.",
+        "ja": "必要ならやめるか別の活動を選んでください。",
+        "ko": "필요하면 멈추거나 다른 활동을 선택하세요.",
+        "zh-Hans": "需要时停止或选择其他活动。"
+      }
+    },
+    {
+      "source": "Sit comfortably with your device, away from water.",
+      "translations": {
+        "hi": "पानी से दूर अपने डिवाइस के साथ आराम से बैठें।",
+        "es": "Siéntate cómodamente con tu dispositivo, lejos del agua.",
+        "pt": "Sente confortavelmente com seu dispositivo, longe da água.",
+        "fr": "Asseyez-vous confortablement avec votre appareil, loin de l’eau.",
+        "de": "Sitze bequem mit deinem Gerät, fern von Wasser.",
+        "ar": "اجلس براحة مع جهازك بعيدًا عن الماء.",
+        "ja": "水から離れて端末とともに楽に座ります。",
+        "ko": "물에서 떨어져 기기와 함께 편안히 앉으세요.",
+        "zh-Hans": "带着设备舒适坐下，远离水。"
+      }
+    },
+    {
+      "source": "Gently move the device if comfortable.",
+      "translations": {
+        "hi": "आरामदायक हो तो डिवाइस हल्के से हिलाएँ।",
+        "es": "Mueve suavemente el dispositivo si te resulta cómodo.",
+        "pt": "Mova suavemente o dispositivo se for confortável.",
+        "fr": "Bougez doucement l’appareil si cela reste confortable.",
+        "de": "Bewege das Gerät sanft, wenn angenehm.",
+        "ar": "حرّك الجهاز بلطف إذا كان مريحًا.",
+        "ja": "心地よければ端末を優しく動かします。",
+        "ko": "편안하면 기기를 부드럽게 움직이세요.",
+        "zh-Hans": "舒适时轻轻移动设备。"
+      }
+    },
+    {
+      "source": "Pause or choose another reset if device movement is uncomfortable.",
+      "translations": {
+        "hi": "डिवाइस हिलाना असुविधाजनक हो तो रुकें या दूसरा रीसेट चुनें।",
+        "es": "Haz una pausa o elige otra actividad si mover el dispositivo resulta incómodo.",
+        "pt": "Pause ou escolha outra atividade se mover o dispositivo for desconfortável.",
+        "fr": "Faites une pause ou choisissez une autre activité si bouger l’appareil est inconfortable.",
+        "de": "Pausiere oder wähle eine andere Übung, wenn Gerätebewegung unangenehm ist.",
+        "ar": "توقف أو اختر نشاطًا آخر إذا كان تحريك الجهاز غير مريح.",
+        "ja": "端末を動かすのが不快なら休むか別の活動を選んでください。",
+        "ko": "기기 움직임이 불편하면 쉬거나 다른 활동을 선택하세요.",
+        "zh-Hans": "若设备移动不舒适，请暂停或选择其他活动。"
+      }
+    },
+    {
+      "source": "Water at a comfortable temperature is optional; keep your device dry.",
+      "translations": {
+        "hi": "आरामदायक तापमान का पानी वैकल्पिक है; डिवाइस सूखा रखें।",
+        "es": "El agua a temperatura cómoda es opcional; mantén el dispositivo seco.",
+        "pt": "Água em temperatura confortável é opcional; mantenha o dispositivo seco.",
+        "fr": "L’eau à température confortable est facultative ; gardez votre appareil au sec.",
+        "de": "Wasser mit angenehmer Temperatur ist optional; halte dein Gerät trocken.",
+        "ar": "الماء بدرجة حرارة مريحة اختياري؛ أبق جهازك جافًا.",
+        "ja": "心地よい温度の水は任意です。端末は濡らさないでください。",
+        "ko": "편안한 온도의 물은 선택입니다. 기기는 건조하게 유지하세요.",
+        "zh-Hans": "舒适温度的水是可选的，请保持设备干燥。"
+      }
+    },
+    {
+      "source": "Optional seated device movement gives you a quiet pause. Move your device only if comfortable, or choose another reset. Motion evidence records device movement, not water exposure, shoulder exercise, form or repetitions.",
+      "translations": {
+        "hi": "बैठकर डिवाइस को वैकल्पिक रूप से हिलाना एक शांत विराम है। आरामदायक हो तभी डिवाइस हिलाएँ, या दूसरा रीसेट चुनें। गति का प्रमाण डिवाइस की हलचल दर्ज करता है, पानी के संपर्क, कंधे के व्यायाम, मुद्रा या दोहराव को नहीं।",
+        "es": "El movimiento opcional del dispositivo sentado ofrece una pausa tranquila. Muévelo solo si te resulta cómodo o elige otra actividad. La evidencia registra el movimiento del dispositivo, no la exposición al agua, el ejercicio de hombros, la forma ni las repeticiones.",
+        "pt": "O movimento opcional do dispositivo sentado oferece uma pausa tranquila. Mova-o apenas se for confortável ou escolha outra atividade. A evidência registra o movimento do dispositivo, não a exposição à água, exercícios de ombros, forma nem repetições.",
+        "fr": "Bouger facultativement l’appareil en position assise offre une pause calme. Bougez-le seulement si c’est confortable, ou choisissez une autre activité. Les données enregistrent le mouvement de l’appareil, pas le contact avec l’eau, l’exercice des épaules, la technique ni les répétitions.",
+        "de": "Optionale Gerätebewegung im Sitzen bietet eine ruhige Pause. Bewege das Gerät nur, wenn angenehm, oder wähle eine andere Übung. Der Nachweis erfasst Gerätebewegung, weder Wasserkontakt, Schulterübungen, Ausführung noch Wiederholungen.",
+        "ar": "تحريك الجهاز اختياريًا أثناء الجلوس يتيح وقفة هادئة. حرّكه فقط إذا كان مريحًا أو اختر نشاطًا آخر. يسجل الدليل حركة الجهاز، لا التعرض للماء أو تمرين الكتفين أو الوضعية أو التكرارات.",
+        "ja": "任意の座った端末の動きは静かな休憩です。心地よい場合のみ動かすか、別の活動を選びます。動きの証拠は端末の動きを記録し、水への接触、肩の運動、フォーム、回数は記録しません。",
+        "ko": "앉아서 선택적으로 기기를 움직이면 조용한 휴식이 됩니다. 편안할 때만 움직이거나 다른 활동을 선택하세요. 증거는 기기 움직임을 기록하며 물 노출, 어깨 운동, 자세 또는 반복 횟수를 기록하지 않습니다.",
+        "zh-Hans": "可选坐姿设备移动提供安静的暂停。仅在舒适时移动设备，或选择其他活动。证据记录的是设备移动，而非接触水、肩部运动、姿势或重复次数。"
+      }
+    },
+    {
+      "source": "{{activity}} · {{durationSec}} seconds",
+      "translations": {
+        "hi": "{{activity}} · {{durationSec}} सेकंड",
+        "es": "{{activity}} · {{durationSec}} segundos",
+        "pt": "{{activity}} · {{durationSec}} segundos",
+        "fr": "{{activity}} · {{durationSec}} secondes",
+        "de": "{{activity}} · {{durationSec}} Sekunden",
+        "ar": "{{activity}} · {{durationSec}} ثانية",
+        "ja": "{{activity}} · {{durationSec}}秒",
+        "ko": "{{activity}} · {{durationSec}}초",
+        "zh-Hans": "{{activity}} · {{durationSec}}秒"
+      }
+    },
+    {
+      "source": "{{activity}} for a rising urge",
+      "translations": {
+        "hi": "बढ़ती इच्छा के लिए {{activity}}",
+        "es": "{{activity}} para un impulso creciente",
+        "pt": "{{activity}} para um impulso crescente",
+        "fr": "{{activity}} pour une envie montante",
+        "de": "{{activity}} bei zunehmendem Verlangen",
+        "ar": "{{activity}} عند تصاعد الرغبة",
+        "ja": "衝動が高まる時の{{activity}}",
+        "ko": "충동이 커질 때의 {{activity}}",
+        "zh-Hans": "冲动增强时的{{activity}}"
+      }
+    },
+    {
+      "source": "{{activity}} for late-night moments",
+      "translations": {
+        "hi": "देर रात के पलों के लिए {{activity}}",
+        "es": "{{activity}} para momentos nocturnos",
+        "pt": "{{activity}} para momentos tarde da noite",
+        "fr": "{{activity}} pour les moments nocturnes",
+        "de": "{{activity}} für späte Nachtstunden",
+        "ar": "{{activity}} للحظات الليل المتأخرة",
+        "ja": "夜遅い時の{{activity}}",
+        "ko": "늦은 밤의 {{activity}}",
+        "zh-Hans": "深夜时的{{activity}}"
+      }
+    },
+    {
+      "source": "{{activity}} when bored",
+      "translations": {
+        "hi": "ऊब होने पर {{activity}}",
+        "es": "{{activity}} cuando te aburres",
+        "pt": "{{activity}} quando estiver entediado",
+        "fr": "{{activity}} quand vous vous ennuyez",
+        "de": "{{activity}} bei Langeweile",
+        "ar": "{{activity}} عند الملل",
+        "ja": "退屈な時の{{activity}}",
+        "ko": "지루할 때의 {{activity}}",
+        "zh-Hans": "无聊时的{{activity}}"
+      }
+    },
+    {
+      "source": "{{activity}} for a calm hour",
+      "translations": {
+        "hi": "शांत समय के लिए {{activity}}",
+        "es": "{{activity}} para un momento tranquilo",
+        "pt": "{{activity}} para um momento tranquilo",
+        "fr": "{{activity}} pour un moment calme",
+        "de": "{{activity}} für eine ruhige Stunde",
+        "ar": "{{activity}} لوقت هادئ",
+        "ja": "穏やかな時間の{{activity}}",
+        "ko": "차분한 시간의 {{activity}}",
+        "zh-Hans": "平静时的{{activity}}"
+      }
+    },
+    {
+      "source": "{{activity}} for a fresh morning",
+      "translations": {
+        "hi": "सुबह की शुरुआत के लिए {{activity}}",
+        "es": "{{activity}} para empezar la mañana",
+        "pt": "{{activity}} para começar a manhã",
+        "fr": "{{activity}} pour commencer la matinée",
+        "de": "{{activity}} für einen frischen Morgen",
+        "ar": "{{activity}} لبداية صباح جديدة",
+        "ja": "朝の始まりの{{activity}}",
+        "ko": "상쾌한 아침의 {{activity}}",
+        "zh-Hans": "清晨时的{{activity}}"
+      }
+    },
+    {
+      "source": "{{activity}} for the afternoon dip",
+      "translations": {
+        "hi": "दोपहर की सुस्ती के लिए {{activity}}",
+        "es": "{{activity}} para el bajón de la tarde",
+        "pt": "{{activity}} para a queda de energia à tarde",
+        "fr": "{{activity}} pour le creux de l’après-midi",
+        "de": "{{activity}} für das Nachmittagstief",
+        "ar": "{{activity}} لفتور بعد الظهر",
+        "ja": "午後のひと息の{{activity}}",
+        "ko": "나른한 오후의 {{activity}}",
+        "zh-Hans": "午后低落时的{{activity}}"
+      }
+    },
+    {
+      "source": "{{activity}} for the evening wind-down",
+      "translations": {
+        "hi": "शाम के विश्राम के लिए {{activity}}",
+        "es": "{{activity}} para relajarte por la noche",
+        "pt": "{{activity}} para desacelerar à noite",
+        "fr": "{{activity}} pour ralentir en soirée",
+        "de": "{{activity}} zum abendlichen Entspannen",
+        "ar": "{{activity}} للهدوء المسائي",
+        "ja": "夕方の休憩の{{activity}}",
+        "ko": "저녁 휴식을 위한 {{activity}}",
+        "zh-Hans": "傍晚放松时的{{activity}}"
+      }
+    }
+  ]
+}

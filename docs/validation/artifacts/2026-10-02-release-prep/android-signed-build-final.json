@@ -1,0 +1,186 @@
+{
+  "schema": "freed-android-release-build-report-v1",
+  "artifactType": "aab",
+  "generatedAt": "2026-10-02T01:10:22.554Z",
+  "sanitized": true,
+  "requested": {
+    "arch": "arm64-v8a",
+    "artifact": "aab",
+    "buildIdleTimeoutMs": 600000,
+    "buildTimeoutMs": 2700000,
+    "cmakeVersion": "3.31.0",
+    "engine": "auto",
+    "envFileLoaded": false,
+    "gradleMaxWorkers": 1,
+    "newArchEnabled": true,
+    "nativeBuildJobs": 1,
+    "ndkVersion": "28.2.13676358",
+    "requireUploadSigning": true,
+    "skipCopy": true
+  },
+  "adMob": {
+    "androidAppIdConfigured": true,
+    "androidAppIdSource": "EXPO_PUBLIC_ADMOB_APP_ID_ANDROID",
+    "mode": "production",
+    "productionReady": true,
+    "runtimeManifestAppIdConfigured": true,
+    "runtimeManifestAppIdMode": "production",
+    "runtimeManifestAppIdSource": "EXPO_PUBLIC_ADMOB_APP_ID_ANDROID",
+    "sampleAppIdUsed": false
+  },
+  "environment": {
+    "releaseEnvFileLoaded": false,
+    "releaseEnvFileSource": "",
+    "releaseEnvSecretValuesOmitted": true,
+    "javaHome": "/opt/homebrew/Cellar/openjdk@17/17.0.19/libexec/openjdk.jdk/Contents/Home",
+    "gradleUserHome": "~/.gradle",
+    "gradleMaxWorkers": 1,
+    "newArchEnabled": true,
+    "nativeBuildJobs": 1,
+    "ndkVersion": "28.2.13676358",
+    "cmakeVersion": "3.31.0",
+    "gradleProperties": "~/.gradle/gradle.properties",
+    "foojayResolver": "already-compatible"
+  },
+  "hermesProbe": {
+    "ok": true,
+    "reason": "hermesc responded within 5s"
+  },
+  "selectedEngine": "hermes",
+  "signing": {
+    "missingInputs": [],
+    "mode": "upload-signing",
+    "playConsoleReady": true,
+    "required": true,
+    "storeFileConfigured": true,
+    "storeFileExists": true,
+    "uploadKeystore": {
+      "certificateDn": "CN=FREED Upload, OU=Release, O=FREED, L=Kolkata, ST=West Bengal, C=IN",
+      "certificateSha256Digest": "b75a9c887e138db8c4d5568149d5009d078fee481ec37537349abb36c9cd6a11",
+      "checked": true,
+      "debugSigned": false
+    }
+  },
+  "gradleCommand": [
+    "./gradlew",
+    ":app:bundleRelease",
+    "--no-daemon",
+    "--console=plain",
+    "--max-workers=1",
+    "-Dorg.gradle.parallel=false",
+    "-Pandroid.native.build.maxJobs=1",
+    "-PnewArchEnabled=true",
+    "-PreactNativeArchitectures=arm64-v8a",
+    "-PhermesEnabled=true",
+    "-Pfreed.androidNdkVersion=28.2.13676358",
+    "-Pfreed.androidCmakeVersion=3.31.0"
+  ],
+  "buildResult": "pass",
+  "result": "pass",
+  "localQa": {
+    "result": "not-applicable",
+    "localInstallSupported": false,
+    "localInstallArtifactProduced": false,
+    "sideLoadReady": false,
+    "activationEvidenceRequired": false,
+    "releaseBoundary": "Local side-load QA proves installability only; Play upload still requires non-debug upload signing, production AdMob, release preflight, and physical-device evidence.",
+    "missing": [
+      "local Android install QA requires an APK artifact"
+    ]
+  },
+  "summary": {
+    "passCount": 6,
+    "failCount": 0
+  },
+  "results": [
+    {
+      "id": "android-aab-build",
+      "status": "PASS",
+      "detail": "Android App Bundle built successfully."
+    },
+    {
+      "id": "android-aab-upload-signing",
+      "status": "PASS",
+      "detail": "Android App Bundle used configured Android upload signing for Play Console artifacts."
+    },
+    {
+      "id": "android-aab-admob-app-id",
+      "status": "PASS",
+      "detail": "Android AdMob application id is production-formatted and non-sample."
+    },
+    {
+      "id": "android-aab-admob-runtime-manifest",
+      "status": "PASS",
+      "detail": "Merged Android manifest contains a production-formatted Google Mobile Ads application id."
+    },
+    {
+      "id": "android-aab-react-native-bundle",
+      "status": "PASS",
+      "detail": "React Native release bundle is packaged in the AAB."
+    },
+    {
+      "id": "android-aab-abi",
+      "status": "PASS",
+      "detail": "Packaged native ABIs: arm64-v8a."
+    }
+  ],
+  "finalEngine": "hermes",
+  "androidManifest": {
+    "exists": true,
+    "googleMobileAdsApplicationIdConfigured": true,
+    "googleMobileAdsApplicationIdMode": "production",
+    "path": "android/app/build/intermediates/merged_manifest/release/processReleaseMainManifest/AndroidManifest.xml",
+    "sampleAppIdUsed": false
+  },
+  "installHandoff": {
+    "copiedStableArtifact": "",
+    "copiedTimestampedArtifact": "",
+    "activationReadinessRule": "Activation is saved only after native status confirms DNS Guard, Usage Access, Accessibility, selected app packages, and the activation test confirms adult domains are blocked while normal browsing is allowed.",
+    "deviceSelection": "Attach exactly one physical adb device, or add --device SERIAL to the command.",
+    "installQaOutputDir": "docs/validation/artifacts/android-install-20261002-064022/android-install-qa",
+    "localInstallSupported": false,
+    "playUploadArtifact": true,
+    "protectionFlowDetails": [
+      "android-native-adult-domain-feed: sync the reviewed adult-domain feed in FREED before OS permission prompts",
+      "android-dns-guard: request Android VpnService consent for DNS-only adult-domain blocking",
+      "android-usage-access: open Android Usage Access settings for aggregate selected-app timers",
+      "android-accessibility: open Android Accessibility services and enable FREED Protection for browser and selected-app interruption",
+      "android-doomscroll-apps: choose at least one supported app package and sync blocked-app config",
+      "activation-test: verify adult-domain blocking, normal browsing allow behavior, and fresh native readiness before saving activation"
+    ],
+    "protectionFlowOrder": [
+      "android-native-adult-domain-feed",
+      "android-dns-guard",
+      "android-usage-access",
+      "android-accessibility",
+      "android-doomscroll-apps",
+      "activation-test"
+    ],
+    "protectionFlowOrderString": "android-native-adult-domain-feed>android-dns-guard>android-usage-access>android-accessibility>android-doomscroll-apps>activation-test",
+    "installQaCommand": [],
+    "installQaCommandString": "",
+    "protectionQaCommand": [],
+    "protectionQaCommandString": "",
+    "note": "AAB artifacts are Play upload artifacts. Build an APK when physical-device local install and Android protection QA are needed.",
+    "handoffDocument": "docs/validation/artifacts/2026-10-02-release-prep/ANDROID_AAB_UPLOAD_HANDOFF.md",
+    "handoffDocumentWritten": true
+  },
+  "apk": null,
+  "aab": {
+    "abis": [
+      "arm64-v8a"
+    ],
+    "copied": false,
+    "hasHermesBytecode": false,
+    "hasHermesRuntime": true,
+    "hasReactNativeBundle": true,
+    "hasJscRuntime": false,
+    "path": "android/app/build/outputs/bundle/release/app-release.aab",
+    "sha256": "169e79cb101e5529d040c1cdfbc9e4375ca480a997776434d77ffff5d97ca520",
+    "sizeBytes": 46979303,
+    "sizeMb": "44.8 MB",
+    "sourcePath": "android/app/build/outputs/bundle/release/app-release.aab",
+    "stablePath": "",
+    "timestampedPath": ""
+  }
+}

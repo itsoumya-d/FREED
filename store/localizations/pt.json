@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "freed-store-localization-v1",
+  "status": "draft-not-published",
+  "language": "pt",
+  "translationReview": "human-review-pending",
+  "title": "FREED",
+  "appStore": {
+    "locale": "pt-BR",
+    "subtitle": "Recuperação e foco",
+    "description": "O FREED ajuda a quebrar loops de conteúdo explícito e de rolagem do apocalipse com proteção de recuperação inicial. Ele combina bloqueio de domínio adulto, limites de aplicativos selecionados, Screen Time ou transferências baseadas em acessibilidade e desafios de recuperação do mundo real para que você possa voltar à vida que pretendia viver.\n\nFREED não depende de vergonha ou armadilhas. A configuração da proteção explica cada permissão, direciona você diretamente para a tela de autorização do sistema necessária e confirma a ativação com um teste de proteção antes que o aplicativo marque a configuração como concluída.\n\nPremium remove anúncios redefinidos qualificados e desbloqueia previsões, relatórios detalhados e relatórios de círculo de responsabilidade/suporte. As previsões e pontuações de recuperação são estimativas baseadas no comportamento registrado. A orientação remota CLARA possui limites diários; a orientação de recuperação local permanece disponível."
+  },
+  "googlePlay": {
+    "locale": "pt-BR",
+    "shortDescription": "Ferramentas de recuperação e proteção opcional de dispositivos.",
+    "description": "O FREED ajuda a interromper loops de conteúdo explícito e de rolagem do apocalipse com proteção de recuperação inicial.\n\nConfigure o bloqueio de domínio adulto, escolha os aplicativos que tendem a colocá-lo em loops e deixe o FREED guiá-lo em um desafio de recuperação quando você atingir um site, pesquisa ou limite de aplicativo arriscado. FREED se concentra em ajudá-lo a se recuperar no momento, em vez de prendê-lo ou envergonhá-lo.\n\nA configuração da proteção envia você diretamente para as telas de permissão necessárias do Android e, em seguida, verifica se o bloqueio de domínio adulto, o acesso normal ao site, o acesso de uso, a acessibilidade e os temporizadores de aplicativos selecionados estão prontos antes da conclusão da ativação.\n\nMantenha o suporte de recuperação por perto: use SOS urgente, exercícios respiratórios, check-ins, desafios de recuperação, lembretes e um registro privado do seu progresso. A configuração de permissão abre a página do sistema compatível mais próxima e verifica o resultado quando você retorna. O status de proteção reflete as permissões e serviços realmente ativos no seu dispositivo.\n\nO FREED Premium oferece faturamento mensal e anual com os mesmos benefícios: redefinições e desafios de recuperação sem anúncios, relatórios mais detalhados, previsões estimadas e relatórios do círculo de suporte. Os preços da loja são mostrados na sua moeda local. Nenhum dos planos tem teste gratuito. Restaure compras ou gerencie sua assinatura na tela de assinatura. O cancelamento mantém o acesso durante o período pago; quando o acesso pago expira ou é revogado, as redefinições gratuitas qualificadas usam anúncios premiados novamente. O SOS urgente permanece livre de anúncios.\n\nO CLARA fornece orientação automatizada em vez de terapia. As respostas remotas são limitadas a três por dia para usuários gratuitos e vinte por dia para usuários Premium; a orientação local permanece disponível quando o serviço remoto não está disponível. As pontuações e previsões de recuperação são estimativas baseadas no comportamento registrado, com estado de dados insuficientes quando não há histórico suficiente.\n\nAs principais ferramentas de recuperação funcionam sem inscrição na conta. A vinculação de contas e o backup criptografado na nuvem são opcionais. A proteção do dispositivo ainda requer as permissões explicadas durante a configuração."
+  },
+  "products": {
+    "freed_premium_yearly": {
+      "displayName": "FREED Premium Anual",
+      "description": "Todos os recursos. Pagamento anual.",
+      "billingPeriod": "P1Y"
+    },
+    "freed_premium_monthly": {
+      "displayName": "FREED Premium Mensal",
+      "description": "Todos os recursos. Pagamento mensal.",
+      "billingPeriod": "P1M"
+    }
+  },
+  "disclosures": {
+    "subscriptions": "As assinaturas mensais e anuais oferecem os mesmos recursos e são renovadas automaticamente até serem canceladas. Sem teste gratuito. Os preços da loja são mostrados antes da compra. Gerencie ou cancele em sua loja. O cancelamento normalmente mantém o acesso durante o período pago; a propriedade reembolsada ou revogada pode encerrar o acesso mais cedo. SOS é sempre livre de anúncios.",
+    "privacy": "FREED mantém seletores nativos em seu dispositivo. Ele não coleta capturas de tela nativas, árvores de acessibilidade brutas ou histórico de navegação. A vinculação de contas e o backup criptografado na nuvem são opcionais. Os domínios solicitados são enviados para Cloudflare Families por meio de HTTPS quando o DNS criptografado está ativado; o provedor aplica sua política de filtragem.",
+    "limitations": "O iOS protege aplicativos, categorias e sites inteiros selecionados por meio do Screen Time. Ele não pode inspecionar superfícies individuais dentro de aplicativos nativos. A inspeção de superfície selecionada Android é uma política pendente de liberação e validação de dispositivo físico. O CLARA fornece orientação automatizada em vez de terapia; previsões e pontuações de recuperação são estimativas baseadas no comportamento registrado."
+  }
+}

@@ -6,9 +6,10 @@
 - Package name: app.freed.recovery
 - Short description: Recovery-first adult blocker and app loop interrupter.
 - Category: Health & Fitness
-- Privacy Policy URL: https://freedrecovery.app/privacy
-- Support URL: https://freedrecovery.app/support
-- Account deletion URL: https://freedrecovery.app/account-deletion
+- Support email: soumyadebnath1661@gmail.com
+- Privacy Policy URL: https://freed-landing.web.app/privacy
+- Support URL: https://freed-landing.web.app/support
+- Account deletion URL: https://freed-landing.web.app/account-deletion
 
 ## Full Description
 
@@ -18,7 +19,13 @@ Set up adult-domain blocking, choose the apps that tend to pull you into loops, 
 
 Protection setup sends you directly to the required Android permission screens, then checks that adult-domain blocking, normal-site access, Usage Access, Accessibility, and selected app timers are ready before activation completes.
 
-Premium unlocks no-ad interventions, adaptive recovery challenges, deeper local analytics, and CLARA recovery patterns.
+Keep recovery support close: use urgent SOS, breathing exercises, check-ins, recovery challenges, reminders, and a private record of your progress. Permission setup opens the closest supported system page and checks the result when you return. Protection status reflects the permissions and services actually active on your device.
+
+FREED Premium offers monthly and annual billing with the same benefits: ad-free recovery resets and challenges, deeper reports, estimated forecasts, and support-circle reports. Store prices are shown in your local currency. Neither plan has a free trial. Restore purchases or manage your subscription from the membership screen. Cancelling keeps access through the paid period; when paid access expires or is revoked, eligible free resets use rewarded ads again. Urgent SOS remains ad-free.
+
+CLARA provides automated guidance rather than therapy. Remote replies are limited to three per day for free users and twenty per day for Premium; local guidance stays available when the remote service is unavailable. Recovery scores and forecasts are estimates based on recorded behavior, with an insufficient-data state when there is not enough history.
+
+Core recovery tools work without account signup. Account linking and encrypted cloud backup are optional. Device protection still requires the permissions explained during setup.
 
 ## Play Console Declarations
 
@@ -36,18 +43,18 @@ FREED's DNS Guard service remains visible while protection is active so adult-do
 
 ## Data Safety Draft
 
-- Data collected: store purchase verification metadata when premium is purchased/restored; optional aggregate analytics only after opt-in; optional redacted AI context if remote AI is enabled; optional encrypted backup envelopes if backup sync is enabled.
-- Data not collected: raw browsing history, full URLs, raw search text, screenshots, camera roll media, microphone audio, exact background location, Android Ad ID, private notes, and payment card details.
+- Data collected: account identifiers and an optional email for account linking; store purchase verification metadata when Premium is purchased/restored; optional aggregate analytics after opt-in; optional redacted AI context; opt-in encrypted recovery backup envelopes; opt-in push tokens and service diagnostics; rewarded-ad SDK data as disclosed in the privacy policy.
+- Plaintext browsing inputs, private notes and camera media are excluded from analytics and remote AI payloads. A cloud backup may contain encrypted recovery records, including locally recorded manual inputs; the backup key remains on the device or with the user's passphrase. Native protection configuration and Premium authority are not restored from that backup.
+- Payment card information is handled by the store. Android advertising-ID permissions are removed. Exact background location and microphone audio are not collected.
 - Data sharing: store verification with Apple/Google; optional ad delivery through AdMob rewarded ads; optional backend providers only as disclosed in privacy policy.
 
 ## Launch Products
 
 - `freed_premium_monthly`
 - `freed_premium_yearly`
-- `freed_premium_lifetime`
 
-Family/accountability/AI coach SKUs are disabled for v1.
+US base prices are $9.99/month and $39.99/year, localized by the store. Both subscriptions include all current Premium capabilities. Additional tiers, standalone feature products, and introductory offers are outside this launch.
 
 ## Screenshot Set
 
-Use `store/screenshots/listing-screenshot-plan.md` for Google Play listing screenshot capture requirements, draft benefit copy, source-build boundaries, and retake rules. Keep public listing screenshots separate from the Core 3 IAP review screenshots in `store/screenshots/manifest.json` and separate from physical-device protection evidence.
+Use `store/screenshots/listing-screenshot-plan.md` for Google Play listing screenshot capture requirements, benefit copy, source-build boundaries, and retake rules. Keep public listing screenshots separate from monthly/annual IAP review screenshots and physical-device protection evidence. Capture final assets from the tested release build before submission.

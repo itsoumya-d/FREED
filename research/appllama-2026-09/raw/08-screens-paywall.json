@@ -1,0 +1,181 @@
+{
+  "screens": [
+    {
+      "screen_id": "pay_m8qfz",
+      "name": "Subscription Offer",
+      "flow": "Paywall",
+      "section": "paywall",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2MzMWJjZDQ5YTk5NDk3ZTg1MTMzZGY5ZTkyZjI4YTA0MzMyY2VjMzEud2VicCIsImV4cCI6MTc5MDM4NTQwMn1Kz64TwWnUFr2fcSiT_vk0pIEVMso3R7o.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#000000",
+      "similarity": 0.3754,
+      "app": {
+        "app_id": "607205403",
+        "name": "Marvel Unlimited"
+      }
+    },
+    {
+      "screen_id": "pay_7h8sl",
+      "name": "Plan Selection",
+      "flow": "Paywall",
+      "section": "paywall",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzZhYzEwZDQ3MjYyMzY1OTI1MmI3OWVlYWU0YzcyOWZkZmIxMzdlOGQud2VicCIsImV4cCI6MTc5MDM4NTQwMn3FAP7RGog5RJnG4SooF-gl-wr3uv3wjqg.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#F9F9F9",
+      "similarity": 0.3632,
+      "app": {
+        "app_id": "905953485",
+        "name": "NordVPN: VPN Fast & Secure"
+      }
+    },
+    {
+      "screen_id": "pay_qju42",
+      "name": "Subscription Plan Selection",
+      "flow": "Paywall",
+      "section": "paywall",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2YyMzRlNzgyZjc0M2QxMjRiNjQwNDY0MmJlNDA0YjAxMmQwZGQ0YWMud2VicCIsImV4cCI6MTc5MDM4NTQwMn1K-lxoISYFgD7u4-t0dLHDnUncpleUpB0.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FFFFFF",
+      "similarity": 0.3614,
+      "app": {
+        "app_id": "459387986",
+        "name": "KOMPASS Outdoor & Hiking Maps"
+      }
+    },
+    {
+      "screen_id": "pay_vge4z",
+      "name": "Subscription Plan Offer",
+      "flow": "Paywall",
+      "section": "paywall",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzY3ZTYwMTk2MmNkZDY0Zjk4MzZmZjVhN2E5YWRlMWYwYTYzNTM1ZDgud2VicCIsImV4cCI6MTc5MDM4NTQwMn2M7KRO95guZs5EfEuKKe7ROGeQSLeISw4.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FFFFFF",
+      "similarity": 0.3546,
+      "app": {
+        "app_id": "1577739358",
+        "name": "Align: The Human Design App"
+      }
+    },
+    {
+      "screen_id": "pay_n8qy6",
+      "name": "Manage Subscription",
+      "flow": "Paywall",
+      "section": "paywall",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzcxZGY3MGE4ODM2M2NkNWQxZWQ4M2Y0ZWMxYTQ2NGNhYTg3ODgxZjQud2VicCIsImV4cCI6MTc5MDM4NTQwMn2Bg5pJ02LH2GbLBHWJb5to2GEymkyobGM.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#F2F2F2",
+      "similarity": 0.3517,
+      "app": {
+        "app_id": "6447434453",
+        "name": "Calo: AI Food Calorie Counter"
+      }
+    },
+    {
+      "screen_id": "pay_tgbcd",
+      "name": "Subscription Comparison",
+      "flow": "Paywall",
+      "section": "paywall",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzUzNzgzMWY3NDYxNDA4ZDQwN2JhMWQ1MWRkMTYyMDZkNDdhNDdjMDkud2VicCIsImV4cCI6MTc5MDM4NTQwMn0BIphVZT1RfDGXko7wV1Yt4vhBJSkWgyw.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#F5ECDE",
+      "similarity": 0.3509,
+      "app": {
+        "app_id": "6511242367",
+        "name": "Paladin: Learn History"
+      }
+    },
+    {
+      "screen_id": "pay_fiqex",
+      "name": "Manage Subscription",
+      "flow": "Paywall",
+      "section": "paywall",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzdmYzRmYWI2NjBlZTRhNGQxMzE5MDIxZTBkOTY2M2RjZmMyYmQ2YTAud2VicCIsImV4cCI6MTc5MDM4NTQwMn3gHWXb1qIDCci7h8uxCuyJQGBqkjiuJFE.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#F2F2F2",
+      "similarity": 0.35,
+      "app": {
+        "app_id": "6447434453",
+        "name": "Calo: AI Food Calorie Counter"
+      }
+    },
+    {
+      "screen_id": "pay_bh5jp",
+      "name": "Subscription Settings",
+      "flow": "Paywall",
+      "section": "paywall",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxL2IxYmRjMTE2ZmJkYWY0YjAyYTBiY2E0N2JiYTdhODYwMmUzOWRkNTIud2VicCIsImV4cCI6MTc5MDM4NTQwMn1ahZ2fR_xiic4xI8M5gNqHuINAArsyy8s.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#FFFFFF",
+      "similarity": 0.3465,
+      "app": {
+        "app_id": "1052961520",
+        "name": "Du Chinese: Read&Learn Chinese"
+      }
+    },
+    {
+      "screen_id": "pay_5evzx",
+      "name": "Subscription Offer",
+      "flow": "Paywall",
+      "section": "paywall",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzgzZDRhOGM3NGY4NzFiNjAyOGNlOGM0ODhkY2M3NGNjMTIwNjljNGIud2VicCIsImV4cCI6MTc5MDM4NTQwMn0M0r2F9Agqud_qXDIf8XAqnuSYlF8Timo.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#F4F5F7",
+      "similarity": 0.3463,
+      "app": {
+        "app_id": "294047850",
+        "name": "Le Monde, Live News"
+      }
+    },
+    {
+      "screen_id": "pay_d7kj4",
+      "name": "Premium Yearly Plan",
+      "flow": "Paywall",
+      "section": "paywall",
+      "kind": "image",
+      "media_url": "https://mcp.appllama.io/media/AE57ImsiOiJvcmlnL3YxLzNiM2M0OWQxMzA3YzE0MzIyNDEyN2Q4NTgwOGIxNDYxZGU4MTljYzIud2VicCIsImV4cCI6MTc5MDM4NTQwMn2laKIDoOkYfRangJusPBbnPl2M-IGUQGo.webp",
+      "width": null,
+      "height": null,
+      "duration_ms": null,
+      "dominant_color": "#000000",
+      "similarity": 0.3458,
+      "app": {
+        "app_id": "417571834",
+        "name": "Private Photo Vault - Pic Safe"
+      }
+    }
+  ],
+  "total": null,
+  "next_cursor": "eyJ2IjoxLCJ1IjoiZjYyMTY2ZjgwYjBmNDE3OSIsInQiOiJzZWFyY2hfc2NyZWVucyIsInEiOiI4MDU3MDU3N2UwMGIzMTViODY2NDNmZjIiLCJvIjoxMCwiaHciOjIwLCJleHAiOjE3OTAzODU0MDJ9.rCyT5BiO2QGCxT7GV9BbkbgztGU",
+  "note": "Media URLs in this response are first-party appllama.io links that expire in about 60 minutes. Fetch what you need promptly, or re-request the page for fresh links.",
+  "credits": {
+    "spent": 1,
+    "remaining_this_month": 998
+  }
+}

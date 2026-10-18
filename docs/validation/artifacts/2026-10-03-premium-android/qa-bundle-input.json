@@ -1,0 +1,69 @@
+{
+  "capturedAt": "2026-10-03T01:29:50.256936+00:00",
+  "trackedBundleSha256Before": "e499a7ca1a4b0c1f22546f093a8d807b3f2667b85eb9ec073afa37d8ff0c00b8",
+  "env": {
+    "EXPO_NO_DOTENV": "1",
+    "NODE_ENV": "development",
+    "EXPO_PUBLIC_FIREBASE_USE_EMULATORS": "true",
+    "EXPO_PUBLIC_MONETIZATION_MODE": "mock",
+    "EXPO_PUBLIC_AI_COACH_MODE": "local",
+    "EXPO_PUBLIC_AI_CHALLENGE_MODE": "local",
+    "EXPO_PUBLIC_ADULT_DOMAIN_FEED_ENDPOINT": "",
+    "EXPO_PUBLIC_BACKEND_PROVIDER": "firebase"
+  },
+  "output": "/tmp/freed-premium-android-qa-20261003/assets/index.android.bundle",
+  "dev": true,
+  "minify": false,
+  "maxWorkers": 1,
+  "backendLimit": "Native Firebase Google configuration remains production project label. Auth/Functions are emulator-only in explicit dev mode; Functions demo-project route mismatch may make backend unavailable.",
+  "firstAttempt": {
+    "result": "interrupted-for-memory-contention",
+    "terminatedOwnedPid": 97347,
+    "hostMemoryBytes": 8589934592,
+    "at": "2026-10-03T01:33:27.271170+00:00",
+    "sourceErrorObserved": false,
+    "exitCode": 137,
+    "signal": "SIGKILL after SIGTERM did not exit promptly"
+  },
+  "interruptedAttempts": [
+    {
+      "dev": true,
+      "minify": false,
+      "maxWorkers": 1,
+      "nodeHeapMb": 1024,
+      "log": "qa-dev-bundle-final.log",
+      "interruptedForRemainingExpoCoreNativeCompile": true,
+      "terminatedOwnedPids": [
+        24333
+      ]
+    }
+  ],
+  "finalAttempt": {
+    "dev": true,
+    "minify": false,
+    "maxWorkers": 1,
+    "nodeHeapMb": 1024,
+    "log": "qa-dev-bundle-final.log",
+    "startedAfterNativeBuildExit": true,
+    "result": "pass",
+    "exitCode": 0,
+    "modules": 4068,
+    "transformDurationMs": 3787,
+    "bundleSha256": "58738be36d2f6446b690741e3759bed9e074f9b63fe347b2ba137e7af8ef6a3e",
+    "bundleSizeBytes": 21754534,
+    "sourceHash": "ca1900a6d95b3ebb945b9f2281a69863d7146defb753947a34b47d22e39a96f0",
+    "devHeaderObserved": true,
+    "emulatorHostLiteralObserved": true
+  },
+  "previousExport": {
+    "exitCode": 0,
+    "modules": 4068,
+    "sourceStable": false,
+    "changedPaths": [
+      "src/hooks/use-app-preferences.tsx",
+      "modules/freed-protection/src/index.ts"
+    ]
+  },
+  "trackedBundleUnchanged": true,
+  "trackedBundleUnchangedAfterPackaging": true
+}

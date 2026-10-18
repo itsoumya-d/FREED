@@ -1,0 +1,385 @@
+{
+  "recordedAt": "2026-10-04T23:36:32.739994+00:00",
+  "project": "freed-7d5ee",
+  "region": "asia-south1",
+  "codebase": "freed",
+  "runtime": "nodejs22",
+  "deploymentSourceSha256": "40a415b0eec8ea0f336a3edacbdae29bdc4ca880fbf8fb52ba285702895daece",
+  "deployedFunctionCount": 2,
+  "existingFunctionCount": 18,
+  "existingFunctionsUnchanged": true,
+  "totalActiveFunctionCount": 20,
+  "existingFunctionInventory": [
+    {
+      "function": "startEncryptedBackupUpload",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:07.659890321Z",
+      "revision": "startencryptedbackupupload-00001-sun",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "startEncryptedBackupUpload/function-source.zip",
+        "generation": "1791107215274429"
+      }
+    },
+    {
+      "function": "appleSubscriptionNotifications",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:11.392902670Z",
+      "revision": "applesubscriptionnotifications-00001-juq",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "appleSubscriptionNotifications/function-source.zip",
+        "generation": "1791107215777672"
+      }
+    },
+    {
+      "function": "refreshReviewedAdultDomainFeed",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T10:12:33.376266846Z",
+      "revision": "refreshreviewedadultdomainfeed-00002-kes",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "refreshReviewedAdultDomainFeed/function-source.zip",
+        "generation": "1791108745187083"
+      }
+    },
+    {
+      "function": "cleanupExpiredServerRecords",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:05.201422835Z",
+      "revision": "cleanupexpiredserverrecords-00001-yam",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "cleanupExpiredServerRecords/function-source.zip",
+        "generation": "1791107215782036"
+      }
+    },
+    {
+      "function": "appleSubscriptionNotificationsSandbox",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:15.070549105Z",
+      "revision": "applesubscriptionnotificationssandbox-00001-hud",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "appleSubscriptionNotificationsSandbox/function-source.zip",
+        "generation": "1791107215280947"
+      }
+    },
+    {
+      "function": "getLatestEncryptedBackupDownload",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:04.843994264Z",
+      "revision": "getlatestencryptedbackupdownload-00001-kic",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "getLatestEncryptedBackupDownload/function-source.zip",
+        "generation": "1791107215279121"
+      }
+    },
+    {
+      "function": "backendReadiness",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:43:44.943569466Z",
+      "revision": "backendreadiness-00001-cow",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "backendReadiness/function-source.zip",
+        "generation": "1791106964206369"
+      }
+    },
+    {
+      "function": "deleteEncryptedBackup",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:14.280412419Z",
+      "revision": "deleteencryptedbackup-00001-yij",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "deleteEncryptedBackup/function-source.zip",
+        "generation": "1791107215291638"
+      }
+    },
+    {
+      "function": "dispatchReviewedNotifications",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:08.022311733Z",
+      "revision": "dispatchreviewednotifications-00001-kaf",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "dispatchReviewedNotifications/function-source.zip",
+        "generation": "1791107215517997"
+      }
+    },
+    {
+      "function": "fencePurchaseAccountLink",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:20.500582796Z",
+      "revision": "fencepurchaseaccountlink-00001-vas",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "fencePurchaseAccountLink/function-source.zip",
+        "generation": "1791107215279890"
+      }
+    },
+    {
+      "function": "getReviewedAdultDomainFeed",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T10:12:29.518473507Z",
+      "revision": "getreviewedadultdomainfeed-00002-haw",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "getReviewedAdultDomainFeed/function-source.zip",
+        "generation": "1791108701775482"
+      }
+    },
+    {
+      "function": "requestAccountDeletion",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:09.724979210Z",
+      "revision": "requestaccountdeletion-00001-rid",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "requestAccountDeletion/function-source.zip",
+        "generation": "1791107215017595"
+      }
+    },
+    {
+      "function": "finalizeEncryptedBackupUpload",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:11.646413956Z",
+      "revision": "finalizeencryptedbackupupload-00001-zil",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "finalizeEncryptedBackupUpload/function-source.zip",
+        "generation": "1791107215363041"
+      }
+    },
+    {
+      "function": "registerPushToken",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:09.875712309Z",
+      "revision": "registerpushtoken-00001-hox",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "registerPushToken/function-source.zip",
+        "generation": "1791107215288811"
+      }
+    },
+    {
+      "function": "ingestAggregateAnalytics",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:09.612067787Z",
+      "revision": "ingestaggregateanalytics-00001-mef",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "ingestAggregateAnalytics/function-source.zip",
+        "generation": "1791107215771372"
+      }
+    },
+    {
+      "function": "getEncryptedBackupDownload",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:18.978886249Z",
+      "revision": "getencryptedbackupdownload-00001-zuh",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "getEncryptedBackupDownload/function-source.zip",
+        "generation": "1791107215300763"
+      }
+    },
+    {
+      "function": "retryPendingAccountDeletions",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:06.747786953Z",
+      "revision": "retrypendingaccountdeletions-00001-din",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "retryPendingAccountDeletions/function-source.zip",
+        "generation": "1791107215786706"
+      }
+    },
+    {
+      "function": "getPremiumEntitlement",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T09:47:10.119778323Z",
+      "revision": "getpremiumentitlement-00001-taf",
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "getPremiumEntitlement/function-source.zip",
+        "generation": "1791107215276663"
+      }
+    }
+  ],
+  "deployedFunctions": [
+    {
+      "function": "getJourneyOfferState",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T23:35:56.737560255Z",
+      "runtime": "nodejs22",
+      "entryPoint": "getJourneyOfferState",
+      "codebase": "freed",
+      "region": "asia-south1",
+      "maxInstances": 5,
+      "uri": "https://getjourneyofferstate-yibq7klssa-el.a.run.app",
+      "service": "projects/freed-7d5ee/locations/asia-south1/services/getjourneyofferstate",
+      "revision": "getjourneyofferstate-00001-wis",
+      "serviceAccountEmail": "5477978760-compute@developer.gserviceaccount.com",
+      "secretEnvironmentVariableCount": 0,
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "getJourneyOfferState/function-source.zip",
+        "generation": "1791156907681148"
+      },
+      "sourceArchiveSha256": "31e3b70c4edf3444daba092feee62ca5af3bbfc7a431a68a6e5bf833481a55d6",
+      "sourceMemberSha256": {
+        "lib/contracts.js": "ed9af81fbe76ffb6734999fd58d0e96ccabd5c709c8e8e0c28cd9d8e068a5508",
+        "lib/journey-offer-firebase.js": "85126bf14b0d65aec87433517d3047c554026cf3785a7eb1c71749b52fcd65cc",
+        "lib/journey-offer.js": "5241ae52c11e401a18d68714f6711df6749afb36f8cb1676747f33069ab61bb1",
+        "lib/notifications.js": "0424cfe48ccde844e0cd7a067e770a06beb3b770688835dfa670866401936233",
+        "lib/transactional.js": "bda2fc850a204880ff0dd4a97f2bb07156f40bb3e70929d9fa34a22e2532cb8a",
+        "package.json": "8bd9e61d40a3fbac552a12bfc280290eb5174596d49fb8a4ad2aebb0d2ea0479",
+        "package-lock.json": "79bdd391cbd284cce6852be5ec5d550fa4c626d9392074b582464b5fc78a81c5",
+        "functions.yaml": "aa62de8955510163a534f9e66e93cba4a31e1dc16aaf436c5ccf8ea8a9ef406e"
+      },
+      "advertisedParameters": [],
+      "appCheckEnforcedInVerifiedSource": true,
+      "connectedAuthRequiredInVerifiedSource": true
+    },
+    {
+      "function": "acknowledgeJourneyOffer",
+      "state": "ACTIVE",
+      "updateTime": "2026-10-04T23:35:59.690934784Z",
+      "runtime": "nodejs22",
+      "entryPoint": "acknowledgeJourneyOffer",
+      "codebase": "freed",
+      "region": "asia-south1",
+      "maxInstances": 5,
+      "uri": "https://acknowledgejourneyoffer-yibq7klssa-el.a.run.app",
+      "service": "projects/freed-7d5ee/locations/asia-south1/services/acknowledgejourneyoffer",
+      "revision": "acknowledgejourneyoffer-00001-tac",
+      "serviceAccountEmail": "5477978760-compute@developer.gserviceaccount.com",
+      "secretEnvironmentVariableCount": 0,
+      "source": {
+        "bucket": "gcf-v2-sources-5477978760-asia-south1",
+        "object": "acknowledgeJourneyOffer/function-source.zip",
+        "generation": "1791156949953842"
+      },
+      "sourceArchiveSha256": "31e3b70c4edf3444daba092feee62ca5af3bbfc7a431a68a6e5bf833481a55d6",
+      "sourceMemberSha256": {
+        "lib/contracts.js": "ed9af81fbe76ffb6734999fd58d0e96ccabd5c709c8e8e0c28cd9d8e068a5508",
+        "lib/journey-offer-firebase.js": "85126bf14b0d65aec87433517d3047c554026cf3785a7eb1c71749b52fcd65cc",
+        "lib/journey-offer.js": "5241ae52c11e401a18d68714f6711df6749afb36f8cb1676747f33069ab61bb1",
+        "lib/notifications.js": "0424cfe48ccde844e0cd7a067e770a06beb3b770688835dfa670866401936233",
+        "lib/transactional.js": "bda2fc850a204880ff0dd4a97f2bb07156f40bb3e70929d9fa34a22e2532cb8a",
+        "package.json": "8bd9e61d40a3fbac552a12bfc280290eb5174596d49fb8a4ad2aebb0d2ea0479",
+        "package-lock.json": "79bdd391cbd284cce6852be5ec5d550fa4c626d9392074b582464b5fc78a81c5",
+        "functions.yaml": "aa62de8955510163a534f9e66e93cba4a31e1dc16aaf436c5ccf8ea8a9ef406e"
+      },
+      "advertisedParameters": [],
+      "appCheckEnforcedInVerifiedSource": true,
+      "connectedAuthRequiredInVerifiedSource": true
+    }
+  ],
+  "negativeLiveProbes": [
+    {
+      "function": "getJourneyOfferState",
+      "case": "unauthenticated-valid-envelope",
+      "httpStatus": 401,
+      "response": {
+        "error": {
+          "message": "Unauthenticated",
+          "status": "UNAUTHENTICATED"
+        }
+      }
+    },
+    {
+      "function": "getJourneyOfferState",
+      "case": "missing-data-envelope",
+      "httpStatus": 400,
+      "response": {
+        "error": {
+          "message": "Bad Request",
+          "status": "INVALID_ARGUMENT"
+        }
+      }
+    },
+    {
+      "function": "getJourneyOfferState",
+      "case": "malformed-json",
+      "httpStatus": 400,
+      "response": {
+        "bodySha256": "dc0a4948011b3bf48695d6b088a8ad2a65b902eee0dfa2bff5ec3b7d77e9941c",
+        "bodyBytes": 138
+      }
+    },
+    {
+      "function": "acknowledgeJourneyOffer",
+      "case": "unauthenticated-valid-envelope",
+      "httpStatus": 401,
+      "response": {
+        "error": {
+          "message": "Unauthenticated",
+          "status": "UNAUTHENTICATED"
+        }
+      }
+    },
+    {
+      "function": "acknowledgeJourneyOffer",
+      "case": "missing-data-envelope",
+      "httpStatus": 400,
+      "response": {
+        "error": {
+          "message": "Bad Request",
+          "status": "INVALID_ARGUMENT"
+        }
+      }
+    },
+    {
+      "function": "acknowledgeJourneyOffer",
+      "case": "malformed-json",
+      "httpStatus": 400,
+      "response": {
+        "bodySha256": "dc0a4948011b3bf48695d6b088a8ad2a65b902eee0dfa2bff5ec3b7d77e9941c",
+        "bodyBytes": 138
+      }
+    }
+  ],
+  "positiveAuthenticatedSignedClientProof": false,
+  "positiveDeviceAppCheckProof": false,
+  "personalDataWrittenByLiveProbes": false,
+  "newAccountsCreated": false,
+  "billingOrEntitlementAuthority": false,
+  "newSecrets": false,
+  "manualIamChanges": false,
+  "aiRollout": false,
+  "transportIamReadback": [
+    {
+      "function": "getJourneyOfferState",
+      "service": "projects/freed-7d5ee/locations/asia-south1/services/getjourneyofferstate",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ],
+      "manualIamMutation": false,
+      "meaning": "Public callable transport; Firebase Auth and App Check are enforced by uploaded handler."
+    },
+    {
+      "function": "acknowledgeJourneyOffer",
+      "service": "projects/freed-7d5ee/locations/asia-south1/services/acknowledgejourneyoffer",
+      "bindings": [
+        {
+          "role": "roles/run.invoker",
+          "members": [
+            "allUsers"
+          ]
+        }
+      ],
+      "manualIamMutation": false,
+      "meaning": "Public callable transport; Firebase Auth and App Check are enforced by uploaded handler."
+    }
+  ],
+  "firebaseCliCreationConfiguredPublicCallableTransport": true
+}

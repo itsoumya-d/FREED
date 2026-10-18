@@ -1,0 +1,67 @@
+{
+  "recordedAt": "2026-10-02T07:28:24.735Z",
+  "project": "freed-7d5ee",
+  "codebase": "freed",
+  "runtime": "nodejs22",
+  "main": "lib/foundation.js",
+  "sourceSha256": "75e1a9be3166b5f42080684f25c686b9be697d438ebf062942ca17b891f23ddb",
+  "packageHash": "b77f7bae80bf16b8799fd10da6b8ec2daa620bb60b011f96b251f57aa65e980f",
+  "lockHash": "79bdd391cbd284cce6852be5ec5d550fa4c626d9392074b582464b5fc78a81c5",
+  "compiledFiles": [
+    {
+      "file": "adult-feed-firebase.js",
+      "sha256": "a8e79e1c9edc43d996cc00f93c44e24ebbfc1ebfd1d7482799269410b8572cfe"
+    },
+    {
+      "file": "adult-feed.js",
+      "sha256": "7affc1e8744ba50c76be55693d319925b3e16fb146256866d44baed88453466b"
+    },
+    {
+      "file": "aggregate-analytics.js",
+      "sha256": "7e2ddc4a3c0e3cc9cf84c17de3b23eff5269c12679b34d46811dd64cc403d745"
+    },
+    {
+      "file": "contracts.js",
+      "sha256": "ae3b1fde75263d89bd4d2963026901e1754bd63b7f2c09bfa9f310ef4eb90229"
+    },
+    {
+      "file": "core-data.js",
+      "sha256": "d0546c68444ec5abe949098467c66363b5049bae161b6f7d7183e3bd77521edf"
+    },
+    {
+      "file": "foundation.js",
+      "sha256": "de02fbbc0f005b23134d0400e46f206ea74b223e677298f099b278f91097ccc7"
+    },
+    {
+      "file": "notification-firebase.js",
+      "sha256": "efd552651deb0ec24029bc7d8e440ed7f042914caea8f2efbe76289d2ebf0f3e"
+    },
+    {
+      "file": "notifications.js",
+      "sha256": "0424cfe48ccde844e0cd7a067e770a06beb3b770688835dfa670866401936233"
+    },
+    {
+      "file": "premium-state.js",
+      "sha256": "4c2d1e1cced863ceb804660a34b83993b1dc3b1011f3750d434bcbcd2b8ec6f2"
+    },
+    {
+      "file": "purchase-foundation.js",
+      "sha256": "87cee2bc4a75091aad4366d39cc96daae4d44fcd40c29f76256ba0b8234fbb8f"
+    },
+    {
+      "file": "purchase.js",
+      "sha256": "b7e3346e85d276e8a4c7dd57af7b1a3caa1de8ab9e47397245e05fcf82f4992d"
+    },
+    {
+      "file": "transactional.js",
+      "sha256": "bda2fc850a204880ff0dd4a97f2bb07156f40bb3e70929d9fa34a22e2532cb8a"
+    }
+  ],
+  "includesEnvironmentFiles": false,
+  "credentialValuesOmitted": true,
+  "excludedSecretEntrypoints": [
+    "ai-firebase.js",
+    "purchase-firebase.js",
+    "subscription-notifications.js"
+  ]
+}

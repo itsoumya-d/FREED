@@ -1,6 +1,6 @@
 # iOS Screen Time And Safari Review Pack
 
-Last reviewed: 2026-07-21
+Last source review: 2026-10-03. Signed physical-device DNS validation remains unmet.
 
 This pack is the App Store review source for FREED's iOS protection architecture. Attach final entitlement approval, provisioning, signed-target, Safari extension, and physical-device QA artifacts to `docs/validation/evidence/ios-physical-device.json`.
 
@@ -11,10 +11,13 @@ Apple sources to refresh before submission:
 - Device Activity framework documentation: https://developer.apple.com/documentation/DeviceActivity
 - Safari Content Blocker documentation: https://developer.apple.com/documentation/SafariServices/creating-a-content-blocker
 - Safari Web Extension documentation: https://developer.apple.com/documentation/SafariServices/creating-a-safari-web-extension
+- [DNS settings manager documentation](https://developer.apple.com/documentation/networkextension/nednssettingsmanager)
+- [DNS-over-HTTPS settings documentation](https://developer.apple.com/documentation/networkextension/nednsoverhttpssettings)
+- [Network Extensions entitlement documentation](https://developer.apple.com/documentation/bundleresources/entitlements/com.apple.developer.networking.networkextension)
 
 ## Review Position
 
-FREED uses Apple-supported Screen Time, Safari Content Blocker, and Safari Web Extension APIs for voluntary wellness protection. FREED does not use NetworkExtension and does not use invasive monitoring to inspect other apps.
+FREED's current release uses Screen Time, Safari Content Blocker, and Safari Web Extension APIs for voluntary wellness protection. The source also contains an optional, explicitly opted-in encrypted DNS layer using public `NEDNSSettingsManager` and `NEDNSOverHTTPSSettings` APIs. Optional encrypted DNS is release-gated: its build flags default off, the current app's release and development-preview flags are false, and the dns-settings entitlement is absent from the current app entitlements. FREED does not use invasive monitoring to inspect other apps.
 
 Review-safe purpose:
 
@@ -40,6 +43,18 @@ Explicit platform boundaries:
 - No VPN manager is used.
 - No TLS interception is used.
 - No packet tunnel, VPN manager, full traffic proxying, packet inspection, or MITM HTTPS is used.
+- No DNS proxy, app proxy, or transparent proxy provider is used.
+- No all-domain DNS profile is shipped in the current release.
+
+## Optional Encrypted DNS: Current Release Off
+
+The gated implementation prepares a Cloudflare Families DNS-over-HTTPS configuration at `https://family.cloudflare-dns.com/dns-query`. The app validates the explicit provider and enablement request, reloads system preferences before reporting configuration status, and removes only its own saved DNS configuration when disabled. Apple's DNS settings API requires the person to enable the configuration in Settings; saving it does not prove enablement. The app reads the manager's enabled state and never writes `isEnabled`. These API requirements are described in [Apple's DNS settings manager documentation](https://developer.apple.com/documentation/networkextension/nednssettingsmanager).
+
+If a future signed build enables this layer, `matchDomains = [""]` applies the resolver to system DNS queries; it is not a matched adult-domain profile. Cloudflare would receive DNS queries under its own privacy terms. FREED does not proxy application traffic, inspect HTTPS, retain raw DNS query payloads or browsing history, or grant a challenge unlock from DNS configuration. HTTPS uses platform TLS validation without custom trust overrides. On iOS 26 the source disables DNS failover; behavior on earlier supported iOS versions still requires physical-device validation before making a no-fallback claim. Apps that use their own encrypted DNS or another VPN may bypass system DNS coverage.
+
+The configuration manager cannot establish resolver health or complete blocking coverage. Current iOS status deliberately reports `healthy = null` even when Settings reports an enabled configuration. The Simulator reports the layer unavailable. A development preview is restricted to debug builds and remains unverified; an app preference cannot lift the release gate.
+
+Before changing the release flag, attach matching `dns-settings` entitlement/provisioning and signed-build evidence, explicit opt-in and Settings enable/disable captures, resolver health and adult/normal-domain checks, behavior with another VPN and app-managed encrypted DNS, recovery after resolver failure, and earlier-iOS failover checks. Update the listing, privacy disclosures, and review notes to match the actual submitted build. No approval, signing, enablement, health, or physical-device proof for this optional layer is asserted by this pack.
 
 ## Screen Time Entitlement Request
 
@@ -77,7 +92,7 @@ Safari Focus Shield is a manifest-version-3 Safari Web Extension with a minimum 
 - The content script sends only an allowlisted `{host, rule}` pair to the extension runtime.
 - A nonpersistent background service worker validates the pair and alone calls native messaging.
 - The native extension handler independently validates the same host/rule mapping and publishes a privacy-safe pending record.
-- Recovery opens `https://intervention.freed.app/intervention` as a Universal Link with coarse host/rule metadata; no original URL, path, query, page text, or browsing history is stored.
+- Recovery opens `https://freed-7d5ee.firebaseapp.com/intervention` using an associated app link, with only validated coarse source/rule/host details in the URL fragment. Fragments are not sent to the web server. A user-tapped `freed://intervention` action remains available when native delivery is unavailable. No original URL, path, query, page text, or browsing history is stored, and the link cannot grant Premium or native shield unlock authority. Signed-device delivery and fallback behavior must be verified before release.
 - Safari Focus Shield never creates a native-app Screen Time unlock.
 
 Suggested App Review note:

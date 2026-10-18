@@ -3,20 +3,20 @@
   "tester": "QA",
   "build": "1.0.0 (100)",
   "environment": "App Store sandbox, Play Billing test configuration, AdMob rewarded sandbox unit",
-  "evidence": ["path/to/store-ad-sandbox-report"],
+  "evidence": [
+    "path/to/store-ad-sandbox-report"
+  ],
   "store": {
     "storeProvider": "native-iap",
     "iosProductId": "freed_premium_yearly",
     "androidProductId": "freed_premium_yearly",
     "iosLaunchProductIds": {
       "yearly": "freed_premium_yearly",
-      "monthly": "freed_premium_monthly",
-      "lifetime": "freed_premium_lifetime"
+      "monthly": "freed_premium_monthly"
     },
     "androidLaunchProductIds": {
       "yearly": "freed_premium_yearly",
-      "monthly": "freed_premium_monthly",
-      "lifetime": "freed_premium_lifetime"
+      "monthly": "freed_premium_monthly"
     },
     "launchProductSandboxMatrix": [
       {
@@ -58,29 +58,6 @@
         "purchaseVerificationArtifact": "path/to/monthly-purchase-verification-report",
         "restoreVerificationRunId": "monthly-restore-verification-report-id",
         "restoreVerificationArtifact": "path/to/monthly-restore-verification-report",
-        "iosPurchaseSandbox": true,
-        "iosRestoreSandbox": true,
-        "androidPurchaseSandbox": true,
-        "androidRestoreSandbox": true,
-        "receiptOrEntitlementVerified": true,
-        "restoreEntitlementVerified": true
-      },
-      {
-        "planId": "lifetime",
-        "iosProductId": "freed_premium_lifetime",
-        "androidProductId": "freed_premium_lifetime",
-        "iosPurchaseRunId": "ios-lifetime-purchase-sandbox-run",
-        "iosPurchaseArtifact": "path/to/ios-lifetime-purchase-recording-or-report",
-        "iosRestoreRunId": "ios-lifetime-restore-sandbox-run",
-        "iosRestoreArtifact": "path/to/ios-lifetime-restore-recording-or-report",
-        "androidPurchaseRunId": "android-lifetime-purchase-sandbox-run",
-        "androidPurchaseArtifact": "path/to/android-lifetime-purchase-recording-or-report",
-        "androidRestoreRunId": "android-lifetime-restore-sandbox-run",
-        "androidRestoreArtifact": "path/to/android-lifetime-restore-recording-or-report",
-        "purchaseVerificationRunId": "lifetime-purchase-verification-report-id",
-        "purchaseVerificationArtifact": "path/to/lifetime-purchase-verification-report",
-        "restoreVerificationRunId": "lifetime-restore-verification-report-id",
-        "restoreVerificationArtifact": "path/to/lifetime-restore-verification-report",
         "iosPurchaseSandbox": true,
         "iosRestoreSandbox": true,
         "androidPurchaseSandbox": true,

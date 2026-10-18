@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "freed-paywall-launch-scope-report-v1",
+  "templateStatus": "pending-manual-qa",
+  "sanitized": true,
+  "result": "pending-manual-qa",
+  "paywallLaunchScopeProofUsableForManualEvidence": false,
+  "runId": "2026-09-27T13-24-56-033Z-paywall-launch-scope",
+  "suggestedEvidenceFields": [
+    "store.paywallLaunchScopeArtifact"
+  ],
+  "paywallSourcePath": "src/features/freed-app.tsx",
+  "paywallSourceHash": "sha256-138f0e59d69b0bdc7a4f7cee144901c1aa2496e186809cb0babd62a2810706a2",
+  "monetizationSourcePath": "src/lib/monetization.ts",
+  "monetizationSourceHash": "sha256-01b0e0a5cfb834804d0949eb3955c7ef31f307b7cadcf19ea287b1b5f9e1f89e",
+  "paywallLaunchSourceAuditArtifact": "docs/validation/artifacts/2026-09-27T13-24-56-033Z/store-ad-sandbox-capture/paywall-launch-source-audit.json",
+  "paywallLaunchSourceAuditSchemaVersion": "freed-paywall-launch-source-audit-v1",
+  "launchPlanIdsShown": [
+    "yearly",
+    "monthly"
+  ],
+  "iosLaunchProductIdsShown": {
+    "yearly": "freed_premium_yearly",
+    "monthly": "freed_premium_monthly",
+    "lifetime": "freed_premium_lifetime"
+  },
+  "androidLaunchProductIdsShown": {
+    "yearly": "freed_premium_yearly",
+    "monthly": "freed_premium_monthly",
+    "lifetime": "freed_premium_lifetime"
+  },
+  "postLaunchPlanIdsHidden": [
+    "family",
+    "accountability",
+    "ai-coach"
+  ],
+  "iosPostLaunchProductIdsHidden": {
+    "family": "freed_family_yearly",
+    "accountability": "freed_accountability_monthly",
+    "ai-coach": "freed_ai_coach_monthly"
+  },
+  "androidPostLaunchProductIdsHidden": {
+    "family": "freed_family_yearly",
+    "accountability": "freed_accountability_monthly",
+    "ai-coach": "freed_ai_coach_monthly"
+  },
+  "primaryValuePlanId": "yearly",
+  "restorePurchasesVisible": false,
+  "purchaseButtonsEnabled": false,
+  "yearlyValueAnchorVisible": false,
+  "checks": {
+    "core3PlanIdsVisible": false,
+    "onlyLaunchProductIdsVisible": false,
+    "postLaunchProductIdsHidden": false,
+    "yearlyValueAnchorVisible": false,
+    "monthlyRecurringVisible": false,
+    "lifetimeOneTimeVisible": false,
+    "restorePurchasesVisible": false,
+    "purchaseButtonsEnabled": false,
+    "serverVerificationCopyVisible": false,
+    "premiumNoAdBenefitVisible": false,
+    "noFamilyAccountabilityAiUpsellsVisible": false
+  }
+}

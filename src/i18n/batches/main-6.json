@@ -1,0 +1,256 @@
+{
+  "entries": [
+    {
+      "source": "You are still here. Logging this gives the recovery engine a cleaner pattern and starts the next honest streak now.",
+      "translations": {
+        "hi": "आप अभी भी साथ हैं। यह दर्ज करने से रिकवरी इंजन को साफ़ पैटर्न मिलता है और अगला ईमानदार स्ट्रिक अभी शुरू होता है।",
+        "es": "Sigues aquí. Registrar esto aporta un patrón más claro y empieza ahora la siguiente racha honesta.",
+        "pt": "Você continua aqui. Registrar isso dá um padrão mais claro e começa agora a próxima sequência honesta.",
+        "fr": "Vous êtes toujours là. Ce journal donne un schéma plus clair au moteur de rétablissement et démarre une nouvelle série honnête.",
+        "de": "Du bist noch hier. Der Eintrag gibt dem Erholungssystem ein klareres Muster und startet jetzt die nächste ehrliche Serie.",
+        "ar": "ما زلت هنا. تسجيل هذا يعطي نظام التعافي نمطًا أوضح ويبدأ استمرارية صادقة جديدة الآن.",
+        "ja": "まだここにいます。記録することで回復システムがパターンをつかみ、次の正直な連続記録を今始められます。",
+        "zh-Hans": "你仍在这里。记录这件事能让恢复系统看清模式，并从现在开始新的真实连续记录。",
+        "ko": "당신은 아직 여기에 있습니다. 이를 기록하면 복구 엔진에 더 깔끔한 패턴이 제공되고 이제 다음 정직한 행진이 시작됩니다."
+      }
+    },
+    {
+      "source": "You asked for help before the loop took over. That is a clean rep for self-control.",
+      "translations": {
+        "hi": "चक्र हावी होने से पहले आपने मदद माँगी। यह आत्म-नियंत्रण का सही अभ्यास है।",
+        "es": "Pediste ayuda antes de que el ciclo dominara. Es una buena práctica de autocontrol.",
+        "pt": "Você pediu ajuda antes de o ciclo dominar. É uma boa prática de autocontrole.",
+        "fr": "Vous avez demandé de l’aide avant que la boucle ne prenne le dessus. C’est un bon exercice de contrôle de soi.",
+        "de": "Du hast Hilfe gesucht, bevor die Schleife übernahm. Das ist gute Übung für Selbstkontrolle.",
+        "ar": "طلبت المساعدة قبل أن تسيطر الحلقة. هذا تدريب جيد على ضبط النفس.",
+        "ja": "ループに飲み込まれる前に助けを求めました。それは良い自制の練習です。",
+        "zh-Hans": "你在循环控制你之前寻求了帮助。这是一次有益的自控练习。",
+        "ko": "루프가 인계되기 전에 도움을 요청했습니다. 그것은 자제력에 대한 깨끗한 표현입니다."
+      }
+    },
+    {
+      "source": "You protected the streak and trained the response you want next time.",
+      "translations": {
+        "hi": "आपने स्ट्रिक बचाया और अगली बार चाही गई प्रतिक्रिया का अभ्यास किया।",
+        "es": "Protegiste tu racha y entrenaste la respuesta que quieres la próxima vez.",
+        "pt": "Você protegeu sua sequência e treinou a resposta que quer da próxima vez.",
+        "fr": "Vous avez protégé votre série et entraîné la réponse voulue la prochaine fois.",
+        "de": "Du hast die Serie geschützt und deine gewünschte Reaktion für das nächste Mal geübt.",
+        "ar": "حميت استمراريتك وتدرّبت على الاستجابة التي تريدها في المرة القادمة.",
+        "ja": "連続記録を守り、次に取りたい反応を練習しました。",
+        "zh-Hans": "你保护了连续记录，并练习了下次想要的反应。",
+        "ko": "연속 기록을 보호하고 다음에 원하는 응답을 훈련했습니다."
+      }
+    },
+    {
+      "source": "Your",
+      "translations": {
+        "hi": "आपका",
+        "es": "Tu",
+        "pt": "Seu",
+        "fr": "Votre",
+        "de": "Dein",
+        "ar": "خاصتك",
+        "ja": "自分の",
+        "zh-Hans": "你的",
+        "ko": "당신의"
+      }
+    },
+    {
+      "source": "Your completed reset is waiting to be saved. Try saving again after checking storage.",
+      "translations": {
+        "hi": "पूरा रीसेट सेव होने का इंतज़ार कर रहा है। स्टोरेज जाँचकर फिर सेव करें।",
+        "es": "Tu reinicio completado espera guardarse. Revisa el almacenamiento y reintenta.",
+        "pt": "Seu recomeço concluído aguarda ser salvo. Verifique o armazenamento e tente novamente.",
+        "fr": "Votre pause terminée attend d’être enregistrée. Vérifiez le stockage et réessayez.",
+        "de": "Dein abgeschlossener Neustart wartet auf das Speichern. Prüfe den Speicher und versuche es erneut.",
+        "ar": "إعادة الضبط المكتملة تنتظر الحفظ. تحقّق من التخزين وأعد الحفظ.",
+        "ja": "完了したリセットが保存を待っています。ストレージを確認し再度保存してください。",
+        "zh-Hans": "已完成的重置正在等待保存。检查存储后再次保存。",
+        "ko": "완료된 재설정이 저장되기를 기다리고 있습니다. 저장용량을 확인한 후 다시 저장해 보세요."
+      }
+    },
+    {
+      "source": "Your exceptions apply to ordinary browsing rules. Adult-content rules still apply. Cloudflare's filtering decisions also apply when encrypted DNS is enabled.",
+      "translations": {
+        "hi": "आपके अपवाद सामान्य ब्राउज़िंग नियमों पर लागू होते हैं। वयस्क सामग्री के नियम फिर भी लागू हैं। एन्क्रिप्टेड DNS चालू होने पर Cloudflare के फ़िल्टरिंग निर्णय भी लागू होते हैं।",
+        "es": "Tus excepciones se aplican a las reglas normales de navegación. Las reglas de contenido adulto siguen vigentes. Las decisiones de filtrado de Cloudflare también se aplican al activar DNS cifrado.",
+        "pt": "Suas exceções valem para regras comuns de navegação. As regras de conteúdo adulto continuam valendo. As decisões de filtragem da Cloudflare também valem quando o DNS criptografado está ativo.",
+        "fr": "Vos exceptions concernent les règles ordinaires de navigation. Les règles de contenu adulte restent applicables. Les décisions de filtrage Cloudflare s’appliquent aussi avec le DNS chiffré.",
+        "de": "Deine Ausnahmen gelten für normale Surfregeln. Regeln für Erwachseneninhalte bleiben gültig. Bei aktiviertem verschlüsseltem DNS gelten auch Cloudflares Filterentscheidungen.",
+        "ar": "تنطبق استثناءاتك على قواعد التصفح العادية. تظل قواعد محتوى البالغين سارية. وتنطبق قرارات تصفية Cloudflare أيضًا عند تفعيل DNS المشفّر.",
+        "ja": "例外は通常の閲覧ルールに適用されます。成人向けコンテンツのルールは引き続き適用されます。暗号化DNSを有効にするとCloudflareのフィルタリング判断も適用されます。",
+        "zh-Hans": "你的例外仅适用于普通浏览规则。成人内容规则仍然适用。启用加密 DNS 时，Cloudflare 的过滤决定也会适用。",
+        "ko": "귀하의 예외는 일반적인 검색 규칙에 적용됩니다. 성인용 콘텐츠 규칙은 계속 적용됩니다. Cloudflare의 필터링 결정은 암호화된 DNS가 활성화된 경우에도 적용됩니다."
+      }
+    },
+    {
+      "source": "Your FREED account",
+      "translations": {
+        "hi": "आपका FREED खाता",
+        "es": "Tu cuenta FREED",
+        "pt": "Sua conta FREED",
+        "fr": "Votre compte FREED",
+        "de": "Dein FREED-Konto",
+        "ar": "حسابك في FREED",
+        "ja": "FREEDアカウント",
+        "zh-Hans": "你的 FREED 账户",
+        "ko": "귀하의 FREED 계정"
+      }
+    },
+    {
+      "source": "Your next steps: choose your goal, set up protection, and build a daily practice.",
+      "translations": {
+        "hi": "अगले कदम: लक्ष्य चुनें, सुरक्षा सेट करें और दैनिक अभ्यास बनाएँ।",
+        "es": "Tus próximos pasos: elige tu objetivo, configura protección y crea una práctica diaria.",
+        "pt": "Seus próximos passos: escolha o objetivo, configure a proteção e crie uma prática diária.",
+        "fr": "Vos prochaines étapes : choisissez votre objectif, configurez la protection et créez une pratique quotidienne.",
+        "de": "Deine nächsten Schritte: Ziel wählen, Schutz einrichten und tägliche Übung aufbauen.",
+        "ar": "خطواتك التالية: اختر هدفك وأعد الحماية وابنِ ممارسة يومية.",
+        "ja": "次の手順：目標を選び、保護を設定し、毎日の練習を作ります。",
+        "zh-Hans": "接下来：选择目标、设置保护，并建立每日练习。",
+        "ko": "다음 단계: 목표를 선택하고, 보호 기능을 설정하고, 일일 실천을 구축하세요."
+      }
+    },
+    {
+      "source": "your partner",
+      "translations": {
+        "hi": "आपका साथी",
+        "es": "tu compañero",
+        "pt": "seu parceiro",
+        "fr": "votre partenaire",
+        "de": "dein Partner",
+        "ar": "شريكك",
+        "ja": "パートナー",
+        "zh-Hans": "你的伙伴",
+        "ko": "당신의 파트너"
+      }
+    },
+    {
+      "source": "YOUR QUIZ PREFERENCES",
+      "translations": {
+        "hi": "आपकी प्रश्नावली प्राथमिकताएँ",
+        "es": "TUS PREFERENCIAS DEL CUESTIONARIO",
+        "pt": "SUAS PREFERÊNCIAS DO QUESTIONÁRIO",
+        "fr": "VOS PRÉFÉRENCES DU QUESTIONNAIRE",
+        "de": "DEINE FRAGEBOGENVORLIEBEN",
+        "ar": "تفضيلاتك في الاستبيان",
+        "ja": "アンケートの設定",
+        "zh-Hans": "你的问卷偏好",
+        "ko": "귀하의 퀴즈 기본 설정"
+      }
+    },
+    {
+      "source": "Your recovery history stays private on this device.",
+      "translations": {
+        "hi": "आपका रिकवरी इतिहास इसी डिवाइस पर निजी रहता है।",
+        "es": "Tu historial de recuperación permanece privado en este dispositivo.",
+        "pt": "Seu histórico de recuperação fica privado neste dispositivo.",
+        "fr": "Votre historique de rétablissement reste privé sur cet appareil.",
+        "de": "Dein Erholungsverlauf bleibt auf diesem Gerät privat.",
+        "ar": "يبقى سجل تعافيك خاصًا على هذا الجهاز.",
+        "ja": "回復履歴はこの端末内で非公開のままです。",
+        "zh-Hans": "恢复历史私密保存在此设备上。",
+        "ko": "복구 기록은 이 기기에서 비공개로 유지됩니다."
+      }
+    },
+    {
+      "source": "Your recovery picture",
+      "translations": {
+        "hi": "आपकी रिकवरी की तस्वीर",
+        "es": "Tu panorama de recuperación",
+        "pt": "Seu panorama de recuperação",
+        "fr": "Votre aperçu du rétablissement",
+        "de": "Dein Erholungsbild",
+        "ar": "صورة تعافيك",
+        "ja": "回復の全体像",
+        "zh-Hans": "你的恢复全貌",
+        "ko": "복구 사진"
+      }
+    },
+    {
+      "source": "Your Recovery Preferences",
+      "translations": {
+        "hi": "आपकी रिकवरी प्राथमिकताएँ",
+        "es": "Tus preferencias de recuperación",
+        "pt": "Suas preferências de recuperação",
+        "fr": "Vos préférences de rétablissement",
+        "de": "Deine Erholungsvorlieben",
+        "ar": "تفضيلات تعافيك",
+        "ja": "回復の設定",
+        "zh-Hans": "你的恢复偏好",
+        "ko": "귀하의 복구 기본 설정"
+      }
+    },
+    {
+      "source": "Your routine",
+      "translations": {
+        "hi": "आपकी दिनचर्या",
+        "es": "Tu rutina",
+        "pt": "Sua rotina",
+        "fr": "Votre routine",
+        "de": "Deine Routine",
+        "ar": "روتينك",
+        "ja": "自分の習慣",
+        "zh-Hans": "你的日常习惯",
+        "ko": "당신의 일상"
+      }
+    },
+    {
+      "source": "Your selection stays with Apple.",
+      "translations": {
+        "hi": "आपका चयन Apple के पास रहता है।",
+        "es": "Tu selección permanece con Apple.",
+        "pt": "Sua seleção permanece com a Apple.",
+        "fr": "Votre sélection reste chez Apple.",
+        "de": "Deine Auswahl bleibt bei Apple.",
+        "ar": "يبقى اختيارك لدى Apple.",
+        "ja": "選択内容はAppleに保持されます。",
+        "zh-Hans": "你的选择保留在 Apple。",
+        "ko": "선택 항목은 Apple로 유지됩니다."
+      }
+    },
+    {
+      "source": "Your space",
+      "translations": {
+        "hi": "आपकी जगह",
+        "es": "Tu espacio",
+        "pt": "Seu espaço",
+        "fr": "Votre espace",
+        "de": "Dein Raum",
+        "ar": "مساحتك",
+        "ja": "自分のスペース",
+        "zh-Hans": "你的空间",
+        "ko": "당신의 공간"
+      }
+    },
+    {
+      "source": "YOUR STARTING POINT",
+      "translations": {
+        "hi": "आपका शुरुआती बिंदु",
+        "es": "TU PUNTO DE PARTIDA",
+        "pt": "SEU PONTO DE PARTIDA",
+        "fr": "VOTRE POINT DE DÉPART",
+        "de": "DEIN AUSGANGSPUNKT",
+        "ar": "نقطة بدايتك",
+        "ja": "自分の出発点",
+        "zh-Hans": "你的起点",
+        "ko": "당신의 출발점"
+      }
+    },
+    {
+      "source": "Your trigger",
+      "translations": {
+        "hi": "आपका ट्रिगर",
+        "es": "Tu desencadenante",
+        "pt": "Seu gatilho",
+        "fr": "Votre déclencheur",
+        "de": "Dein Auslöser",
+        "ar": "محفّزك",
+        "ja": "自分のきっかけ",
+        "zh-Hans": "你的触发因素",
+        "ko": "당신의 방아쇠"
+      }
+    }
+  ]
+}

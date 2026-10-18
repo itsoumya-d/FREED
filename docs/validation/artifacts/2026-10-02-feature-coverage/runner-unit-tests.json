@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "freed-feature-runner-unit-receipt-v1",
+  "generatedAt": "2026-10-02T11:06:57.509Z",
+  "sanitized": true,
+  "command": [
+    "node",
+    "--test",
+    "tests/feature-test-manifest.test.js"
+  ],
+  "tests": 13,
+  "passed": 13,
+  "failed": 0,
+  "skipped": 0,
+  "testSha256": "3db1074439e096a94ff4eff44c433e45ff93686e01cb2db476222dfea0f3206c",
+  "librarySha256": "413481b957a116274d9b7788559888044c71fba5ac15d4c01f133d5485d95049",
+  "runnerSha256": "f7c2acbd392719794e60e62ce2828463ed91ddc08cae689ef51768db7eadfc05",
+  "checks": [
+    "99-row exhaustiveness",
+    "missing suite evidence",
+    "UI smoke cannot grant full coverage",
+    "all denominator statuses",
+    "artifact hashes and build identity",
+    "physical frame proof",
+    "traversal/build rejection",
+    "owner simulator rejection",
+    "skip parsing",
+    "disposable fixture binding",
+    "actual failed/skipped/passed child process results",
+    "current installed binary binding",
+    "single-device target restriction",
+    "home-profile path redaction in generated logs and command metadata"
+  ],
+  "nativeExecuted": 0,
+  "liveServiceWrites": 0
+}

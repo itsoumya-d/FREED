@@ -1,0 +1,5 @@
+"NSFaceIDUsageDescription" = "FREEDは回復の設定を保護するために端末認証を使用します。";
+"NSCameraUsageDescription" = "FREEDは、実際の写真で確認が必要な写真チャレンジを選んだときだけカメラを使用します。";
+"NSLocationWhenInUseUsageDescription" = "FREEDは、屋外の回復チャレンジを確認するためだけに、使用中の位置情報を一時的に使用します。";
+"NSMotionUsageDescription" = "FREEDは、実際の動きを確認するため、実行中のチャレンジでのみ動作データを使用します。";
+"NSUserNotificationsUsageDescription" = "FREEDは回復を支えるチェックインや、継続を守るための緊急リマインダーを送信します。";

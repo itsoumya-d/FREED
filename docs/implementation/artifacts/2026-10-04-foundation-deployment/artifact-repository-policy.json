@@ -1,0 +1,29 @@
+{
+  "name": "projects/freed-7d5ee/locations/asia-south1/repositories/gcf-artifacts",
+  "format": "DOCKER",
+  "description": "This repository is created and used by Cloud Functions for storing function docker images.",
+  "labels": {
+    "goog-managed-by": "cloudfunctions"
+  },
+  "createTime": "2026-10-04T09:40:12.645461Z",
+  "updateTime": "2026-10-04T09:42:11.060019Z",
+  "mode": "STANDARD_REPOSITORY",
+  "cleanupPolicies": {
+    "firebase-functions-cleanup": {
+      "id": "firebase-functions-cleanup",
+      "action": "DELETE",
+      "condition": {
+        "tagState": "ANY",
+        "olderThan": "604800s"
+      }
+    }
+  },
+  "satisfiesPzs": true,
+  "vulnerabilityScanningConfig": {
+    "lastEnableTime": "2026-10-04T09:39:55.907713380Z",
+    "enablementState": "SCANNING_DISABLED",
+    "enablementStateReason": "API containerscanning.googleapis.com is not enabled."
+  },
+  "satisfiesPzi": true,
+  "registryUri": "asia-south1-docker.pkg.dev/freed-7d5ee/gcf-artifacts"
+}

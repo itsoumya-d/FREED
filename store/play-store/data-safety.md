@@ -10,7 +10,7 @@ Official source checked: https://support.google.com/googleplay/android-developer
 
 - Does the app collect or share any required user data types? Yes, for store purchase verification, rewarded ads, optional aggregate analytics, optional remote AI, optional hosted encrypted backup sync, optional account/auth backup sync, optional remote notifications, and optional weather context when enabled.
 - Is all collected user data encrypted in transit? Yes, production endpoints must be HTTPS and release preflight rejects unsafe endpoints.
-- Can users request data deletion? Yes. Users can delete local recovery data in Profile and request server/hosted-sync deletion through https://freedrecovery.app/account-deletion or `support@freedrecovery.app` until authenticated account deletion is live.
+- Can users request data deletion? Yes. Users can delete local recovery data in Profile and request server/hosted-sync deletion through https://freed-landing.web.app/account-deletion or `soumyadebnath1661@gmail.com` until authenticated account deletion is live.
 - Is the app committed to the Families policy? No. FREED should be positioned for adult recovery/digital wellbeing and not submitted as a child-directed or Families app.
 - Independent security review badge? No, unless a MASA or equivalent review is completed later.
 
@@ -42,6 +42,9 @@ Official source checked: https://support.google.com/googleplay/android-developer
 ## Security Practices And Deletion
 
 - Encryption in transit: answer Yes for every production endpoint.
-- Data deletion mechanism: answer Yes. Use https://freedrecovery.app/account-deletion, `support@freedrecovery.app`, and in-app Profile local deletion. Hosted sync deletion must remove encrypted envelopes, purchase audit records where legally allowed, analytics events within retention policy, AI audit summaries, push tokens, and backend job/idempotency rows tied to the request.
+- Data deletion mechanism: answer Yes. Use https://freed-landing.web.app/account-deletion, `soumyadebnath1661@gmail.com`, and in-app Profile local deletion. Hosted sync deletion must remove encrypted envelopes, purchase audit records where legally allowed, analytics events within retention policy, AI audit summaries, push tokens, and backend job/idempotency rows tied to the request.
 - Data retention: local recovery state is user-controlled; backend analytics/audit/AI/push/backup rows must follow the retention periods in `docs/backend/supabase-schema.sql` and cleanup route evidence.
 - Optional features must update this sheet before release if they change from disabled to enabled: hosted encrypted backup sync, remote analytics, remote AI, remote retention, remote community, weather context, crash analytics, or any new ad/analytics SDK behavior.
+
+
+Firebase launch configuration (2026-10-01): Google, Apple, email and anonymous Auth use Firebase-managed identities. Purchases are verified server-side. Optional analytics sends only absolute UTC-day check-in/challenge counts, tied to the authenticated Firebase UID for idempotent snapshots; this is data linked to the user and is retained for 14 days. No reflections, browsing URLs/hosts, contacts or private notes are sent in those snapshots. Encrypted backup includes private recovery content, is opt-in, and is encrypted on the device before upload; the server does not have the passphrase. Push registration is opt-in and includes UID, installation ID and FCM token. Declare the production services actually enabled and verify these answers against the signed build before submission.
